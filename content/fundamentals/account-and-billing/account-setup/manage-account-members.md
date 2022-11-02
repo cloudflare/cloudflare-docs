@@ -43,7 +43,7 @@ To add a member to your account:
     </div>
     </details>
 
-5. (Optional) Click **Direct add** to add the member to your account without requiring an email invitation.
+5. (Optional) If the member already has a Cloudflare account, you can click **Direct add** to add the member to your account without requiring an email invitation.
 6. Click **Invite**.
 
 ## Remove account members

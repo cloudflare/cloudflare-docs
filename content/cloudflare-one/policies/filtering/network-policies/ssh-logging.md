@@ -21,13 +21,17 @@ Cloudflare Gateway will take the identity from a token and, using short-lived ce
 
 {{<render file="_ssh-usernames.md">}}
 
-## 2. Generate a short-lived certificate public key
+## 2. Generate a Gateway SSH proxy CA
 
-Instead of traditional SSH keys, short-lived certificates are used to authenticate traffic between Cloudflare and your origin.
+Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin.
 
-To create a root certificate and get its public key: 
+{{<Aside type="note">}}
+Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
+{{</Aside>}}
 
-1. Make a request to the Cloudflare API with your email address and API key as request headers. 
+To generate a Gateway SSH proxy CA and get its public key:
+
+1. Make a request to the Cloudflare API with your email address and [API key](/api) as request headers.
 
     ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/gateway_ca"\
@@ -35,9 +39,7 @@ To create a root certificate and get its public key:
         -H "X-Auth-Key: <API_KEY>"
     ```
 
-    Refer to [Getting access to the Cloudflare API](/api) for help finding your Account ID and API key.
-
-2. A success response will include a `public_key` value. Save the key or keep it somewhere convenient for configuring your server.
+2. A success response will include a `public_key` value. Save the key for configuring your server.
 
 ## 3. Save your public key
 

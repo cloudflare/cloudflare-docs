@@ -12,12 +12,13 @@ Deletes a single rule in a ruleset at the account or zone level.
 
 Use one of the following API endpoints:
 
-| Operation                                         | Method + Endpoint                                                     |
-| ------------------------------------------------- | --------------------------------------------------------------------- |
-| [Delete an individual rule][dr-account] (account) | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
-| Delete an individual rule (zone)                  | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>`       |
+| Operation                                    | Method + Endpoint                                                     |
+| -------------------------------------------- | --------------------------------------------------------------------- |
+| [Delete an account ruleset rule][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
+| [Delete a zone ruleset rule][dr-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>`       |
 
-[dr-account]: https://api.cloudflare.com/#account-rulesets-delete-an-individual-rule
+[dr-account]: https://api.cloudflare.com/#account-rulesets-delete-an-account-ruleset-rule
+[dr-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-zone-ruleset-rule
 
 If the delete operation succeeds, the API method call returns a `200 OK` HTTP status code with the complete ruleset in the response body.
 

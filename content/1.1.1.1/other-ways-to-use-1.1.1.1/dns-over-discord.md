@@ -76,11 +76,9 @@ You can refresh the DNS lookup results by selecting the Refresh button. Selectin
 
 The refresh button is available on all responses to the `/dig` command, including those that resulted in an error, such as an unknown domain or no records found.
 
-<div class="medium-img">
+### Changing DNS provider
 
-![Refreshing dig domain: cloudflare.com](/1.1.1.1/static/dns-over-discord/dig-command-refresh.gif)
-
-</div>
+By default, the DNS over Discord bot uses Cloudflare's 1.1.1.1 DNS service. You can run the DNS lookup with alternate DNS providers by selecting the dropdown below the result. This shows you a list of available providers. Selecting a new provider updates the results in the message. Any user can change the DNS provider.
 
 ## `multi-dig` command
 
@@ -167,11 +165,11 @@ The `/multi-dig` command also provides a refresh button below each set of DNS re
 
 As with the `/dig` command, any user can press the refresh button to refresh the displayed DNS results, including for DNS queries that had previously failed.
 
-<div class="medium-img">
+### Changing DNS provider
 
-![Refreshing multi-dig domain: cloudflare.com types: A AAAA](/1.1.1.1/static/dns-over-discord/multi-dig-command-refresh.gif)
+Like the `/dig` command, you can change the DNS provider when using the `/multi-dig` command. The menu appears after each set of DNS results (or after each block of results if more than 10 record types are requested).
 
-</div>
+This menu can be used be any user to change the DNS provider used for the lookup.
 
 ## `whois` command
 
@@ -202,12 +200,22 @@ Example:
 
 ### `privacy` command
 
-The `/privacy` command displays the privacy policy notice for using the 1.1.1.1 DNS over Discord bot. This notice can also be viewed at [https://dns-over-discord.v4.wtf/privacy](https://dns-over-discord.v4.wtf/privacy).
+The `/privacy` command displays the Privacy Policy notice for using the 1.1.1.1 DNS over Discord bot. You can also [refer to the Privacy Policy page](https://dns-over-discord.v4.wtf/privacy) to access it.
 
 Example:
 
 ```txt
 /privacy
+```
+
+### `terms` command
+
+The `/terms` command displays the Terms of Service notice for using the 1.1.1.1 DNS over Discord bot. You can also [refer to the Terms of Service page](https://dns-over-discord.v4.wtf/terms) to access it.
+
+Example:
+
+```txt
+/terms
 ```
 
 ### `github` command

@@ -38,7 +38,7 @@ _build:
     transport-loglevel: info
     ```
 
-1. Press `space` and then type `:x` to save and exit.
+1. Press `esc` and then type `:x` to save and exit.
 
 1. Run `cloudflared` as a service.
 

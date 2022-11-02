@@ -19,62 +19,76 @@ weight: 6
 
 Split Tunnels mode can be configured to exclude or include IP addresses or domains from going through WARP. This feature is commonly used to run WARP alongside a VPN (in Exclude mode) or to provide access to a specific Tunnel (in Include mode).
 
+{{<Aside type="warning">}}
+
+Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) configuration.
+
+{{</Aside>}}
+
 You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
 
 Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Be sure to make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes.
 
-Domains included in your Split Tunnel configuration are still resolved by Gateway. If you want another DNS Server to handle domain name resolution, add the domain to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) configuration.
-
 To set up Split Tunnels:
 
-1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
 
-2. Under **Split Tunnels**, select the mode you want to choose.
+2. Under **Split Tunnels**, choose a Split Tunnel mode:
 
     - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
     - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway.
 
-3. If you want to add or remove items from your Split Tunnels configuration, click **Manage**.
+3. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
     On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
 
 ## Add an IP address
 
-On the Split Tunnels page, choose **IP Address** from the list of selectors and enter the IP address or CIDR you want to exclude or include. Next, add an optional description in the relevant field. Then, click **Save destination**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
+2. Scroll down to **Split Tunnels** and select **Manage**.
+3. In the **Selector** dropdown, select _IP Address_.
+4. Enter the IP address or CIDR you want to exclude or include.
+5. Enter an optional description and then select **Save destination**.
 
-The IP address will appear in the list of Split Tunnel entries.
+The IP address will appear in the list of Split Tunnel entries. Traffic to these IP addresses will be excluded or included from WARP.
 
 ## Add a domain
 
-On the Split Tunnels page, choose **Domain** from the list of selectors and enter the domain you want to exclude or include. Next, add an optional description in the relevant field. Then, click **Save destination**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
+2. Scroll down to **Split Tunnels** and select **Manage**.
+3. In the **Selector** dropdown, select _Domain_.
+4. Enter a [valid domain](#valid-domains) to exclude or include.
+5. Enter an optional description and then select **Save destination**.
+6. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
-The domain will appear in the list of Split Tunnel entries.
+When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
-Valid domains include:
+### Consequences of adding a domain
 
-- `example.com`
-- `example.example.com`
-- `*.example.com`
+Domain-based split tunneling has a few ramifications you should be aware of before deploying in your organization:
 
-{{<Aside type="warning" header="Using domains in Split Tunnels">}}
+- Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
+- You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you exclude or include a domain hosted by a CDN, such as Cloudflare. If other domains resolve to that same IP, those domains will be excluded or included as well.
+- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
+- WARP must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
 
-Domain-based split tunneling works alongside DNS by dynamically excluding or including the route to the IP address(es) returned in the DNS lookup request. This has a few ramifications you should be aware of before deploying in your organization:
+### Valid domains
 
-1. Routes excluded or included from WARP and Gateway visibility may change day to day, and may be different for each user depending on where they are.
-2. You may inadvertently exclude or include additional hostnames that happen to share an IP address.
-3. Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/policies/filtering/application-app-types/), you will need to ensure you add all domains used by a particular app or service.
-4. If a DNS result has been previously cached, it will not be dynamically added in the Split Tunnel result until the next time the DNS lookup happens.
-
-{{</Aside>}}
+{{<table-wrap>}}
+| Split tunnel domain | Matches        | Does not match |
+| ------------------- | -------------- | --------------- |
+| `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
+| `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
+| `*.example.com`    | subdomains such as `www.example.com` | `example.com` |
+{{</table-wrap>}}
 
 ### Cloudflare Zero Trust domains
 
-Many Cloudflare Zero Trust services rely on traffic going through WARP. If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function.
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP sesssion durations](/cloudflare-one/policies/filtering/enforce-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add the following domains in order for these features to function:
 
-| Feature | Domains to include |
-| --------| ------------------ |
-| [Device posture checks](/cloudflare-one/identity/devices/)| `<your-team-name>.cloudflareaccess.com`, IdP used to authenticate into Access, and the application protected by Access |
-| [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) | `<your-team-name>.cloudflareaccess.com>` and the HTTP or Network resource with the session re-authentication policy |
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
+- The application protected by the Access or Gateway policy
 
 ## Important platform differences
 

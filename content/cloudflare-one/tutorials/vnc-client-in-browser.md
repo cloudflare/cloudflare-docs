@@ -137,7 +137,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
     $ cloudflared tunnel --config path/config.yaml run <NAME>
     ```
 
-3. Follow [this guide](/cloudflare-one/connections/connect-apps/configuration/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
+3. Follow [this guide](/cloudflare-one/connections/connect-apps/do-more-with-tunnels/ports-and-ips/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
 At this point you have a running VNC server and a Cloudflare Tunnel on your machine ready to accept inbound VNC requests.
 

@@ -12,6 +12,12 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/c/developers/zaraz/67
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/zaraz
+  discord: https://discord.gg/2TRr6nSxdd
+
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

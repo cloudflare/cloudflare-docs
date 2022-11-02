@@ -20,7 +20,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 Installing `wrangler`, the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
 ```sh
 $ npm install -g wrangler
@@ -52,12 +52,7 @@ Run `wrangler init` followed by your project name:
 $ wrangler init <YOUR_WORKER>
 ```
 
-In your terminal, you will be asked:
-
-1. `Would you like to use git to manage this Worker? (y/n)` Indicate `y`.
-2. `Would you like to use TypeScript? (y/n)` Indicate `n` to continue with JavaScript for this guide.
-3. `No package.json found. Would you like to create one? (y/n)` Indicate `y`.
-4. `Would you like to create a Worker at <YOUR_WORKER>\src\index.js?` Indicate `y`.
+In your terminal, you will be asked a series of questions related to your project.
 
 {{<Aside type="note" header="TypeScript">}}
 

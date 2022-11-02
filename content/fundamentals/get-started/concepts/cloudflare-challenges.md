@@ -18,9 +18,11 @@ If the visitor passes the challenge, their request is allowed. If they fail, the
 
 ## Available challenges
 
-### Managed challenge
+### Managed challenge (recommended)
 
 Managed challenges are where Cloudflare dynamically chooses the appropriate type of challenge based on the characteristics of a request. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
+
+Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various firewall rules.
 
 Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge, which may include but is not limited to:
 
@@ -37,6 +39,7 @@ Currently, **Managed Challenge** actions are available in the following security
 - [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951)
 - [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128)
 - [Custom rules](/waf/custom-rules/)
+- [Managed Rulesets](/waf/managed-rulesets/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)
 - [Bot Fight Mode](/bots/get-started/free/): You may also see Firewall Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](https://support.cloudflare.com/hc/articles/360035387431#managed-challenge).
 - [Firewall rules](/firewall/)

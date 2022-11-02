@@ -13,6 +13,10 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-wan
+  learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/
+
 externals:
   - title: Magic WAN home
     url: https://www.cloudflare.com/magic-wan/

@@ -5,6 +5,14 @@ title: Limits
 
 # Limits
 
+{{<Aside type="note">}}
+
+We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+
+To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+
+{{</Aside>}}
+
 ## Account plan limits
 
 {{<table-wrap>}}
@@ -18,7 +26,7 @@ title: Limits
 | [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
 | [Number of Workers](#number-of-workers)                                         | 30        | 100       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
-| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 90        |
+| [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
 {{</table-wrap>}}
 
@@ -30,7 +38,7 @@ Request headers observe a total limit of 32 KB, but each header is limited to 16
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
-Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to request a limit beyond 500 MB.
+Cloudflare Enterprise customers may contact their account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to have a request body limit beyond 500 MB.
 
 {{<table-wrap>}}
 
@@ -39,7 +47,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 | Free            | 100MB             |
 | Pro             | 100MB             |
 | Business        | 200MB             |
-| Enterprise      | 500MB             |
+| Enterprise      | 500MB (by default)|
 
 {{</table-wrap>}}
 
@@ -141,7 +149,9 @@ The burst rate and daily request limits apply at the account level, meaning that
 
 ### Burst rate
 
-Accounts using the Workers Free plan are subject to a burst rate limit of 1000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
+Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
+
+Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Overview** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
 
 ### Daily request
 
@@ -240,7 +250,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Worker size
 
-A Worker can be up to 1 MB in size after compression. If needed, you can [request a larger Worker size](https://www.cloudflare.com/larger-scripts-on-workers-early-access/).
+A Worker can be up to 1 MB in size after compression. If needed, you can [request a larger Worker size](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ### Number of Workers
 

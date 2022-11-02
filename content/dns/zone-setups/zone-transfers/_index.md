@@ -8,7 +8,7 @@ meta:
 
 # DNS Zone Transfers
 
-To increase availability and fault tolerance, you can use one or more DNS provider(s) alongside Cloudflare in case one provider becomes unavailable (known as a [peer DNS server](#peer-dns-server)). Your providers will then transfer DNS records between themselves using authoritative ([AXFR](https://datatracker.ietf.org/doc/html/rfc5936)) or incremenal ([IXFR](https://datatracker.ietf.org/doc/html/rfc1995)) zone transfers.
+To increase availability and fault tolerance, you can use one or more DNS provider(s) alongside Cloudflare in case one provider becomes unavailable (known as a [peer DNS server](#peer-dns-server)). Your providers will then transfer DNS records between themselves using authoritative ([AXFR](https://datatracker.ietf.org/doc/html/rfc5936)) or incremental ([IXFR](https://datatracker.ietf.org/doc/html/rfc1995)) zone transfers.
 
 With AXFR, the entire zone will be transferred from the primary to the secondary provider, even if only one record changes. With IXFR, only the changes will be transferred. Cloudflare supports both protocols.
 

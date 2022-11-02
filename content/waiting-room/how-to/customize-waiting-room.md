@@ -19,7 +19,7 @@ Cloudflare offers options to customize the appearance of your waiting room:
 - [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
-- [Support mobile app traffic](/waiting-room/additional-options/mobile-traffic/): Toggle to also enable a JSON response with a user's status in the waiting room.
+- [Return a JSON-friendly waiting room response](/waiting-room/how-to/json-response/): Toggle to also enable a JSON response with a user's status in the waiting room.
 
 ### Default waiting room
 
@@ -100,7 +100,7 @@ When you create a waiting room with custom HTML, you can have access to several 
 
 #### Multiple-language support
 
-Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
+Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTimeMinutes` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
 
 #### Resource hosting
 

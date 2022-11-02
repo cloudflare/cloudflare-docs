@@ -15,7 +15,7 @@ When you upload a video to Stream, it can be streamed using HLS/DASH. However, f
 
 You can enable downloads for an uploaded video once it is ready to view by making an HTTP request to the `/downloads` endpoint.
 
-To get notified when a video is ready to view, refer to [Using webhooks](/stream/edit-manage-videos/manage-video-library/using-webhooks/#notifications).
+To get notified when a video is ready to view, refer to [Using webhooks](/stream/manage-video-library/using-webhooks/#notifications).
 
 The downloads API response will include all available download types for the video, the download URL for each type, and the processing status of the download file.
 
@@ -24,8 +24,8 @@ The downloads API response will include all available download types for the vid
 header: Request
 ---
 curl -X POST \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/downloads
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/downloads
 ```
 
 ```bash
@@ -36,7 +36,7 @@ header: Response
   "result": {
     "default": {
       "status": "inprogress",
-      "url": "https://videodelivery.net/$VIDEOID/downloads/default.mp4",
+      "url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
       "percentComplete": 75.0
     }
   },
@@ -55,8 +55,8 @@ You can view all available downloads for a video by making a `GET` HTTP request 
 header: Request
 ---
 curl -X GET \
--H "Authorization: Bearer $TOKEN" \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream/$VIDEOID/downloads
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/downloads
 ```
 
 ```bash
@@ -67,7 +67,7 @@ header: Response
   "result": {
     "default": {
       "status": "ready",
-      "url": "https://videodelivery.net/$VIDEOID/downloads/default.mp4",
+      "url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
       "percentComplete": 100.0
     }
   },
@@ -84,7 +84,7 @@ You can customize the name of downloadable files by adding the `filename` query 
 In the example below, adding `?filename=MY_VIDEO.mp4` to the URL will change the file name to `MY_VIDEO.mp4`.
 
 `
-https://videodelivery.net/$VIDEOID/downloads/default.mp4?filename=MY_VIDEO.mp4
+https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4?filename=MY_VIDEO.mp4
 `
 
 ## Retrieve downloads
@@ -92,7 +92,7 @@ https://videodelivery.net/$VIDEOID/downloads/default.mp4?filename=MY_VIDEO.mp4
 The generated MP4 download files can be retrieved via the link in the download API response.
 
 ```bash
-curl -L https://videodelivery.net/$VIDEOID/downloads/default.mp4 > download.mp4
+curl -L https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4 > download.mp4
 ```
 
 ## Secure video downloads
@@ -110,8 +110,8 @@ For more details about using signed URLs with videos, refer to [Securing your St
 highlight: [6]
 ---
 {
-    "sub": $VIDEOID,
-    "kid": $KEYID,
+    "sub": <VIDEO_UID>,
+    "kid": <KEY_ID>,
     "exp": 1537460365,
     "nbf": 1537453165,
     "downloadable": true,

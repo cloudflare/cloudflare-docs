@@ -8,7 +8,7 @@ weight: 2
 
 Area 1 uses a variety of factors to determine whether a given email message, domain, URL, or packet is part of a phishing campaign. These small pattern assessments are dynamic in nature and — in many cases — no single pattern will determine the final verdict.
 
-Based on these patterns, Area 1 may add X-Headers to each email message that passes through our system.
+Based on these patterns, Area 1 may add `X-Headers` to each email message that passes through our system.
 
 ## Dispositions
 

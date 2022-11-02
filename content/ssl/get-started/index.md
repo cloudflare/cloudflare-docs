@@ -30,9 +30,9 @@ Cloudflare offers a variety of options for your application's edge certificates:
 
 {{<Aside type="note" header="Note:">}}
 
-{{<render file="../../cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}}
+{{<render file="../../cloudflare-for-platforms/cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}}
 
-For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare-for-saas/security/certificate-management/).
+For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
 
 {{</Aside>}}
 

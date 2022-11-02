@@ -47,7 +47,7 @@ If you already have `cloudflared` installed, make sure to update to the latest v
 
 ## Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) that will connect `cloudflared` to Cloudflare's edge.
 
 1. Begin by creating a Tunnel with an associated name. This example uses the name `grafana`.
 
@@ -63,7 +63,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
 
 2. Create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
-    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
+    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a DigitalOcean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
     ```sh
     $ cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -94,7 +94,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
     $ cloudflared tunnel run grafana
     ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/run-tunnel/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
 
 ## Route private IP ranges through WARP
 
@@ -136,21 +136,23 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
-## Configure the Cloudflare certificate
-
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
-
-To download the Cloudflare certificate, refer to [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). To find the certificate in the Zero Trust Dashboard, go to **Settings** > **Devices** > **Certificates**.
-
 ## Enable the Cloudflare proxy
-
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. 
 
 1. Go to **Settings** > **Network**.
 
-2. Toggle **Proxy** to Enabled. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+2. Enable **Proxy**.
 
-3. Toggle **TLS decryption** to Enabled. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
+This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+
+## (Optional) Enable HTTPS inspection
+
+1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.
+
+    Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
+
+2. Go to **Settings** > **Network** and enable **TLS decryption**.
+
+    This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
 ## Enroll a device
 

@@ -9,6 +9,10 @@ layout: single
 
 Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API. 
 
+We are offering Enterprise customers interested in storing their logs on Cloudflare access to R2 for evaluation and testing. Note that at this time we are not offering an SLA for R2. It should not be used for production use cases where logs are mission-critical. 
+
+During this phase, we will not be charging for R2 usage. We will be providing 30 days notice ahead of any charges. At that time, your account team will reach out to discuss interest in signing a contract for R2 usage. We expect to start charging for R2 in Q4 2022.
+
 Before getting started:
 
 - Create an R2 bucket and set up R2 API tokens.

@@ -33,13 +33,13 @@ If you require additional controls over our public 1.1.1.1 resolver, [contact us
 
 The publicly available endpoints for 1.1.1.1 are detailed in the following table:
 
-{{<table-wrap>}}
+{{<table-wrap style="font-size: 85%">}}
 
-Resolver | IP Addresses | DNS over HTTPS endpoint | DNS over TLS endpoint
----|---|---|---
-1.1.1.1 (unfiltered) | `1.1.1.1` / `1.0.0.1` | `https://cloudflare-dns.com/dns-query` | `cloudflare-dns.com`
-Families (Malware) | `1.1.1.2` / `1.0.0.2` | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
-Families (Adult Content + Malware) | `1.1.1.3` / `1.0.0.3` | `https://family.cloudflare-dns.com/dns-query` | `family.cloudflare-dns.com`
+Resolver | IPv4 address | IPv6 <br /> address | DNS over <br /> HTTPS endpoint | DNS over <br /> TLS endpoint
+--- | --- | --- | --- | ---
+1.1.1.1 <br />(unfiltered) | `1.1.1.1` <br /> `1.0.0.1` | `2606:4700:4700::1111` <br /> `2606:4700:4700::1001` | `https://cloudflare-dns.com/dns-query` | `cloudflare-dns.com`
+Families <br />(Malware) | `1.1.1.2` <br /> `1.0.0.2` | `2606:4700:4700::1112` <br /> `2606:4700:4700::1002` | `https://security.cloudflare-dns.com/dns-query` | `security.cloudflare-dns.com`
+Families <br />(Adult Content + Malware) | `1.1.1.3` <br /> `1.0.0.3` | `2606:4700:4700::1113` <br /> `2606:4700:4700::1003` | `https://family.cloudflare-dns.com/dns-query` | `family.cloudflare-dns.com`
 
 {{</table-wrap>}}
 

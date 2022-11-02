@@ -15,7 +15,7 @@ To create a new allowed pattern:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Allow List** > **Allowed Patterns**.
-4. Click **+ New Pattern**.
+4. Select **+ New Pattern**.
 5. Enter the pattern information:
 
     - **Allowed Pattern**: Enter one of the following types of pattern:
@@ -33,7 +33,7 @@ To create a new allowed pattern:
     - **Notes**: Provide additional notes about the allowed pattern.
 
 6. Choose whether to **Verify Sender**, which applies the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for *Trusted Sender* and *Acceptable Sender*). 
-7. Click **Save**.
+7. Select **Save**.
 
 ### CSV uploads
 

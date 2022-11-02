@@ -22,7 +22,7 @@ Create HTTP Request Header Modification Rules in the **Transform Rules** tab und
 
 4.  Enter a descriptive name for the HTTP Request Header Modification Rule in **Rule name**.
 
-5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/create-edit-delete-rules/#expression-builder-and-editor).
+5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/).
 
     {{<Aside type="note">}}
 Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).

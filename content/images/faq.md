@@ -16,15 +16,15 @@ Below you will find answers to our most commonly asked questions regarding Cloud
 
 ### What is the difference between Cloudflare Images and Image Resizing products?
 
-Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, optimization, and delivery; Image Resizing (IR) only offers resizing and optimization:
+Cloudflare Images is an end-to-end solution that offers storage, resizing, optimization, and delivery; Image Resizing only offers resizing and optimization:
 
 <details>
 <summary>Storage</summary>
 <div>
 
-**CI** - Images are stored at Cloudflare.
+**Cloudflare Images** - Images are stored at Cloudflare.
 
-**IR** - Images can be stored anywhere on the Internet as long as they have public access.
+**Image Resizing** - Images can be stored anywhere on the Internet as long as they have public access.
 
 </div>
 </details>
@@ -33,9 +33,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Billing</summary>
 <div>
 
-**CI** - Cloudflare charges by images served (regardless of them being cached or not), and images stored.
+**Cloudflare Images** - Cloudflare charges by images served (regardless of them being cached or not), and images stored.
 
-**IR** - Cloudflare charges when there are cache misses, and for some [request errors](#are-image-resizing-errors-billed).
+**Image Resizing** - Cloudflare charges when there are cache misses, and for some [request errors](#are-image-resizing-errors-billed).
 
 </div>
 </details>
@@ -44,9 +44,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Delivery</summary>
 <div>
 
-**CI** - Images are served from `imagedelivery.net`.
+**Cloudflare Images** - Images are served from `imagedelivery.net`.
 
-**IR** - Images are served from one of your domains on Cloudflare.
+**Image Resizing** - Images are served from one of your domains on Cloudflare.
 
 </div>
 </details>
@@ -55,9 +55,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Available optimizations</summary>
 <div>
 
-**CI** - For more information on Cloudflare Images optimizations refer to [Edit images](/images/cloudflare-images/transform/).
+**Cloudflare Images** - For more information on Cloudflare Images optimizations refer to [Edit images](/images/cloudflare-images/transform/).
 
-**IR** - For more information on Image Resizing optimizations refer to [URL format options](/images/image-resizing/url-format/#options).
+**Image Resizing** - For more information on Image Resizing optimizations refer to [URL format options](/images/image-resizing/url-format/#options).
 
 </div>
 </details>
@@ -66,9 +66,9 @@ Cloudflare Images (CI) is an end-to-end solution that offers storage, resizing, 
 <summary>Plan availability</summary>
 <div>
 
-**CI** - Available to any plan.
+**Cloudflare Images** - Available to any plan.
 
-**IR** - Available with Pro, Business, and Enterprise plans.
+**Image Resizing** - Available with Pro, Business, and Enterprise plans.
 
 </div>
 </details>
@@ -83,11 +83,11 @@ No, you only get billed for the number of original images. There is no extra cos
 
 ### Is there a limit on the file size for uploaded images?
 
-Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats/) for more information.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/formats-limitations/) for more information.
 
 ### Which file formats does Cloudflare Images support?
 
-Refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats/) for more information.
+Refer to [Supported image formats](/images/cloudflare-images/upload-images/formats-limitations/) for more information.
 
 ### Can Cloudflare Images convert my images to AVIF or WebP?
 

@@ -12,7 +12,7 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 - The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
-For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
+For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
@@ -153,7 +153,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -558,3 +558,7 @@ To solve this you can either do less work per request, or send fewer requests, f
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
 To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact your Cloudflare account team.
+
+#### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
+
+There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.

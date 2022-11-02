@@ -13,6 +13,12 @@ meta:
   author: '@cloudflare'
   image: /workers/static/og-image.png
 
+resources:
+  community: https://community.cloudflare.com/c/developers/workers/40
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
+  learning_center: https://www.cloudflare.com/learning/serverless/what-is-serverless/
+  discord: https://discord.com/channels/595317990191398933/779390076219686943
+
 externals:
   - title: Workers home
     url: https://workers.cloudflare.com

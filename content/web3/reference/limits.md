@@ -15,13 +15,13 @@ The following limits apply to Cloudflare's [IPFS Gateway](/web3/ipfs-gateway/).
 | Feature | Non-Enterprise | Enterprise |
 | --- | --- | --- | --- | 
 | Total gateways | 15 | Unlimited |
-| Gateway types | [DNSLink] | [DNSLink], <br /> [Universal Gateway (coming soon)](/web3/ipfs-gateway/concepts/universal-gateway/)
+| Gateway types | [DNSLink] | [DNSLink], <br /> [Universal Gateway](/web3/ipfs-gateway/concepts/universal-gateway/)
 | Included bandwidth (without additional cost) | 50 GB data transfer | 100 GB data transfer |
 | File size limit | None | None |
 
 ## Ethereum Gateway
 
-The following limits apply to Cloudflare's [Ethereum Gateway](/web3/ipfs-gateway/).
+The following limits apply to Cloudflare's [Ethereum Gateway](/web3/ethereum-gateway/).
 
 | Feature | Non-Enterprise | Enterprise |
 | --- | --- | --- |

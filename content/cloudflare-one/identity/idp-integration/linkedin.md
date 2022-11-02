@@ -18,11 +18,7 @@ To configure LinkedIn as an IdP:
 
 1.  Click **Create App**.
 
-    ![LinkedIn Create App button](/cloudflare-one/static/documentation/identity/linkedin/lin1.png)
-
 1.  Sign in to your LinkedIn account. The **Create an app** screen displays.
-
-    ![LinkedIn Create an app page](/cloudflare-one/static/documentation/identity/linkedin/lin3.png)
 
 1.  Enter an **App name** for your application.
 
@@ -34,8 +30,6 @@ To configure LinkedIn as an IdP:
 
 1.  (optional) Select the **Share on LinkedIn** option to announce that your clients can use LinkedIn to access your app.
 
-    ![LinkedIn Create an app Share Sign in options](/cloudflare-one/static/documentation/identity/linkedin/lin4.png)
-
 1.  Select the **Sign In with LinkedIn** option.
 
 1.  Click the **API Terms of Use** link to read the terms of use.
@@ -46,11 +40,11 @@ To configure LinkedIn as an IdP:
 
 1.  Go to your account Settings page.
 
-    ![LinkedIn account settings](/cloudflare-one/static/documentation/identity/linkedin/lin5.png)
-
 1.  Click the **Auth** tab.
 
 1.  Copy the **Client ID** and **Client Secret**.
+
+    ![LinkedIn account settings where you will copy the Client ID and Client Secret](/cloudflare-one/static/documentation/identity/linkedin/lin5.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 
@@ -63,8 +57,6 @@ To configure LinkedIn as an IdP:
 1.  Click **Save**.
 
 1.  In the **LinkedIn** **Auth** tab, scroll to **OAuth 2.0 settings** and click the **pencil icon** to edit the settings.
-
-    ![LinkedIn OAuth 2.0 settings](/cloudflare-one/static/documentation/identity/linkedin/lin8.png)
 
 1.  Enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 

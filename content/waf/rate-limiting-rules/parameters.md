@@ -25,7 +25,7 @@ The available rate limiting rule parameters are the following:
 
   - Field name in the API: `mitigation_timeout`.
   - Once the rate is reached, the rate limiting rule applies the rule action to further requests for the period of time defined in this field (in seconds).
-  - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `30`, `60` (one minute), `600` (ten minutes), `3600` (one hour), or `86400` (one day).
+  - In the dashboard, select one of the available values, which may vary according to your Cloudflare plan. The available API values are: `10`, `60` (one minute), `3600` (one hour), or `86400` (one day).
   - You cannot define a duration when using one of the challenge actions. In this case, when visitors pass a challenge, their corresponding [request counter](/waf/rate-limiting-rules/request-rate/) is set to zero. When visitors with the same values for the rule characteristics make enough requests to trigger the rate limiting rule again, they will receive a new challenge.
   - When using the API, you must set the `mitigation_timeout` value to `0` when the action is `managed_challenge`, `js_challenge`, or `challenge`.
 
@@ -46,23 +46,27 @@ The available rate limiting rule parameters are the following:
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
   - Use one or more of the following characteristics:
 
-    | Dashboard value           | API value                                     |
-    | ------------------------- | --------------------------------------------- |
-    | N/A (implicitly included) | `cf.colo.id` (mandatory)                      |
-    | _IP with NAT support_     | `cf.unique_visitor_id`                        |
-    | _IP_                      | `ip.src`                                      |
-    | _Country_                 | `ip.geoip.country`                            |
-    | _AS Num_                  | `ip.geoip.asnum`                              |
-    | _Headers_                 | `http.request.headers["<header_name>"]`       |
-    | _Cookie_                  | `http.request.cookies["<cookie_name>"]`       |
-    | _Query_                   | `http.request.uri.args["<query_param_name>"]` |
-    | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                  |
+    | Dashboard value           | API value                                            |
+    | ------------------------- | ---------------------------------------------------- |
+    | N/A (implicitly included) | `cf.colo.id` (mandatory)                             |
+    | _IP_                      | `ip.src`                                             |
+    | _IP with NAT support_     | `cf.unique_visitor_id`                               |
+    | _Country_                 | `ip.geoip.country`                                   |
+    | _AS Num_                  | `ip.geoip.asnum`                                     |
+    | _Host_                    | `http.host`                                          |
+    | _Path_                    | `http.request.uri.path`                              |
+    | _Headers_                 | `http.request.headers["<header_name>"]`              |
+    | _Cookie_                  | `http.request.cookies["<cookie_name>"]`              |
+    | _Query_                   | `http.request.uri.args["<query_param_name>"]`        |
+    | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                         |
+    | N/A (JSON body field)     | `lookup_json_string(http.request.body.raw, "<key>")` |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
   - If you use `http.request.headers["<header_name>"]` in an API request, you must enter the header name in lower case, since Cloudflare normalizes header names at the edge.
   - If you use _Cookie_, refer to [Recommendations](#recommendations) for additional validations you should implement.
   - You should not use _Headers_ or _Cookie_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
+  - For more information on the `lookup_json_string` function, refer to [Functions](/ruleset-engine/rules-language/functions/#function-lookup_json_string) in the Ruleset Engine documentation.
 
 {{<Aside type="note">}}
 
@@ -109,10 +113,9 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
 
 ## Configuration restrictions
 
-If the rule expression includes [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields) or [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), then:
+* If the rule expression includes [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include any of the [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
-* You must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
 ## Recommendations
 

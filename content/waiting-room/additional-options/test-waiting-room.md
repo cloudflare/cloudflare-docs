@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Test a waiting room
-weight: 0
+weight: 9
 ---
 
 # Test a waiting room
@@ -92,7 +92,7 @@ Once the script finishes running, it creates a CSV file with the following field
   <div>
     <ul>
       <li>
-        <strong>job</strong>: The fixed string will either be <strong>main</strong> for phase 1 or{' '}
+        <strong>job</strong>: The fixed string will either be <strong>main</strong> for phase 1 or
         <strong>post</strong> for phase 2
       </li>
       <li>

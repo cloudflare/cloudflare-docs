@@ -12,6 +12,11 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/tag/loadbalancing
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing
+  learning_center: https://www.cloudflare.com/learning/performance/what-is-load-balancing/
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

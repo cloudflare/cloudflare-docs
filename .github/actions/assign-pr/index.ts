@@ -3,7 +3,7 @@
 
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { OWNERS } from '../owners';
+import { OWNERS, REVIEWERS } from '../owners';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
 
@@ -76,35 +76,13 @@ function parse(filename: string): string | void {
       OWNERS[p].forEach(x => PCX.add(x));
     }
 
-    const owners = new Set<string>();
+    const reviewers = new Set<string>();
     const prnumber = pull_request.number;
     const author = pull_request.user.login;
 
     const client = github.getOctokit(token);
 
-    if (PCX.has(author)) {
-      PCX.delete(author); // no self-review
-      console.log('~> request PCX team review');
-      return await client.rest.pulls.requestReviewers({
-        repo: repository.name,
-        owner: repository.owner.login,
-        pull_number: prnumber,
-        /**
-         * We SKIP the "@cloudflare/pcx" handle because of
-         * stupid GITHUB_TOKEN/PAT permission issues. Assign all
-         * PCX team members manually instead, effectively the same.
-         * @note Allowed up to 10 reviewers
-         * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
-         * @todo figure out how to use `team_reviewers: ['pcx']` instead.
-         */
-        reviewers: [...PCX].slice(0, 10)
-      });
-    }
-
-    // ---
-    // At this point, author is external and/or not PCX member.
-    // ~> determine PCX codeowners based on files in PR diff.
-    // ---
+    // Determine reviewers based on files in PR diff.
 
     // https://octokit.github.io/rest.js/v18#pulls-list-files
     const products = await list(client, {
@@ -114,31 +92,60 @@ function parse(filename: string): string | void {
     });
 
     for (const slug of products) {
-      let list = OWNERS[slug];
+      let owners_list = OWNERS[slug];
 
-      if (!list) {
+      if (!owners_list) {
         throw new Error(`Unknown "${slug}" product!`);
       }
 
-      if (list.length > 0) {
-        list.forEach(x => owners.add(x));
+      if (owners_list.length > 0) {
+        owners_list.forEach(x => reviewers.add(x));
+      }
+
+      let reviewers_list = REVIEWERS[slug];
+
+      if (reviewers_list && reviewers_list.length > 0) {
+        reviewers_list.forEach(x => reviewers.add(x));
       }
     }
+
+    if (PCX.has(author)) {
+      const pcx_and_reviewers = new Set([...PCX, ...reviewers]);
+      pcx_and_reviewers.delete(author); // no self-review
+      console.log('~> request PCX team review');
+      return await client.rest.pulls.requestReviewers({
+        repo: repository.name,
+        owner: repository.owner.login,
+        pull_number: prnumber,
+        /**
+         * We SKIP the "@cloudflare/pcx" handle because of
+         * stupid GITHUB_TOKEN/PAT permission issues. Assign all
+         * PCX team members manually instead, effectively the same.
+         * @see https://docs.github.com/en/issues/tracking-your-work-with-issues/assigning-issues-and-pull-requests-to-other-github-users
+         * @todo figure out how to use `team_reviewers: ['pcx']` instead.
+         */
+        reviewers: [...pcx_and_reviewers]
+      });
+    }
+
+    // ---
+    // At this point, author is external and/or not PCX member.
+    // ---
 
     const requested = new Set<string>();
 
     // will throw if already assigned
     for (const u of pull_request.requested_reviewers) {
       requested.add(u.login);
-      owners.delete(u.login);
+      reviewers.delete(u.login);
     }
 
     // cannot self-review
-    owners.delete(author);
+    reviewers.delete(author);
 
-    console.log({ products, owners, requested });
+    console.log({ products, reviewers, requested });
 
-    if (owners.size === 0) {
+    if (reviewers.size === 0) {
       if (requested.size > 0) {
         console.log('~> had reviewers at creation');
       } else if (products.size > 0) {
@@ -158,7 +165,7 @@ function parse(filename: string): string | void {
         repo: repository.name,
         owner: repository.owner.login,
         pull_number: prnumber,
-        reviewers: [...owners],
+        reviewers: [...reviewers],
       });
     }
 

@@ -29,12 +29,7 @@ addEventListener("fetch", event => {
   const request = event.request
   const url = "https://example.com"
 
-  const modifiedRequest = new Request(url, {
-    body: request.body,
-    headers: request.headers,
-    method: request.method,
-    redirect: request.redirect
-  })
+  const modifiedRequest = new Request(url, request)
 
   // ...
 })

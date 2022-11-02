@@ -58,4 +58,4 @@ If you notice traffic imbalances across origin servers in different locations, y
 
 `cloudflared` connections give preference to tunnels that terminate in the same Cloudflare data center. This behavior can impact how connections are weighted and traffic is distributed.
 
-The solution depends on the type of tunnel being used. If running Classic Tunnels, put your origins in different pools. If running [Named Tunnels replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Named Tunnels as distinct origins.
+The solution depends on the type of tunnel being used. If running Classic Tunnels, put your origins in different pools. If running [Named Tunnels replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/) (using a shared ID), switch to separate Named Tunnels as distinct origins.

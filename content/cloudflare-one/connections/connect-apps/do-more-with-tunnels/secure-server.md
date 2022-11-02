@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Secure the Server
-weight: 7
+title: Secure the server
+weight: 1
 ---
 
-# Secure the Server
+# Secure the server
 
 {{<Aside type="note" header="Before you start">}}
 

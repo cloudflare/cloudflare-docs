@@ -51,7 +51,7 @@ export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
 };
 ```
 
-The [entire JWT payload](/cloudflare-one/identity/users/validating-json/#payload) will be made available on `data.cloudflareAccess.JWT.payload`. Be aware that the fields available differ between identity authorizations (for example, a user in a browser) and non-identity authorizations (for example, a service token).
+The [entire JWT payload](/cloudflare-one/identity/authorization-cookie/validating-json/#payload) will be made available on `data.cloudflareAccess.JWT.payload`. Be aware that the fields available differ between identity authorizations (for example, a user in a browser) and non-identity authorizations (for example, a service token).
 
 ### Look up identity
 
@@ -73,7 +73,7 @@ export const onRequest: PagesFunction = async ({ data }) => {
 };
 ```
 
-The `getIdentity` function takes an object with two properties: a `jwt` string, and a `domain` string. It returns a `Promise` of [the object returned by the `/cdn-cgi/access/get-identity` endpoint](/cloudflare-one/identity/users/validating-json/#groups-within-a-jwt). This is particularly useful if you want to use a user's group membership for something like application permissions.
+The `getIdentity` function takes an object with two properties: a `jwt` string, and a `domain` string. It returns a `Promise` of [the object returned by the `/cdn-cgi/access/get-identity` endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity). This is particularly useful if you want to use a user's group membership for something like application permissions.
 
 For convience, this same information can be fetched for the current request's JWT with the `data.cloudflareAccess.JWT.getIdentity` function, (assuming you have already validated the request with the Plugin as above):
 

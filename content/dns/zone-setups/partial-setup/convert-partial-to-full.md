@@ -14,7 +14,7 @@ If you initially set up a partial domain on Cloudflare, you can later migrate it
 
 In the Cloudflare dashboard, either order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading/) for your application.
 
-You also should verify that the [status](/ssl/ssl-tls/certificate-statuses/) of your SSL certificate is **Active**.
+You also should verify that the [status](/ssl/reference/certificate-statuses/) of your SSL certificate is **Active**.
 
 {{<Aside type="note">}}
 

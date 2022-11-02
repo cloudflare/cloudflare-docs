@@ -105,6 +105,6 @@ The following example queries the top 20 logs of traffic dropped by mitigation s
 The `mitigationSystem` field can take one the following values:
 
 * `dosd` for [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/) (Network-layer DDoS Attack Protection or HTTP DDoS Attack Protection).
-* `flowtrackd` for [Advanced TCP Protection](/ddos-protection/managed-rulesets/tcp-protection/).
+* `flowtrackd` for [Advanced TCP Protection](/ddos-protection/tcp-protection/).
 * `magic-firewall` for [Magic Firewall](/magic-firewall/).
 * Empty string for unmitigated traffic.

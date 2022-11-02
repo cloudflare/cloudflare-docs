@@ -1,7 +1,7 @@
 ---
 pcx_content_type: faq
 title: FAQ
-weight: 6
+weight: 7
 ---
 
 # FAQ
@@ -29,11 +29,15 @@ Yes. Refer to [Page Shield](/page-shield/) for more information related to this 
 
 ### Is there a way to prevent Zaraz from loading on specific pages, like under `/wp-admin`?
 
-To prevent Zaraz from loading on specific pages, refer to [Block Zaraz on specific pages or domains](/zaraz/advanced/block-zaraz/).
+To prevent Zaraz from loading on specific pages, refer to [Load Zaraz selectively](/zaraz/advanced/load-selectively/).
 
 ---
 
 ## Tools
+
+### After moving from Google Analytics 4 to Zaraz, I can no longer see demographics data. Why?
+
+You probably have enabled **Hide Originating IP Address** in the [Settings option](/zaraz/get-started/edit-tools-and-actions/) for Google Analytics 4. This tells Zaraz to not send the IP address to Google. To have access to demographics data and anonymize your visitor's IP, you should use [**Anonymize Originating IP Address**](#i-see-two-ways-of-anonymizing-ip-address-information-on-the-third-party-tool-google-analytics-one-in-privacy-and-one-in-additional-fields-which-is-the-correct-one) instead.
 
 ### I see two ways of anonymizing IP address information on the third-party tool Google Analytics: one in Privacy, and one in Additional fields. Which is the correct one?
 
@@ -66,3 +70,7 @@ If you proxy your domain through Cloudflare, you do not need to add any code to 
 ### I am a vendor. How can I integrate my tool with Zaraz?
 
 The Zaraz team is working with third-party vendors to build their own Zaraz integrations using the Zaraz SDK. To request a new tool integration, or to collaborate on our SDK, contact us at zaraz@cloudflare.com.
+
+### Using the `zaraz.ecommerce()` method returns an undefined error.
+
+E-commerce tracking needs to be enabled in [the Zaraz Settings page](/zaraz/reference/settings/#e-commerce-tracking) before you can start using the E-commerce Web API.

@@ -31,7 +31,7 @@ Include or exclude query strings, optimize cache keys, or enable tiered cache to
 - [Choose a cache level](/cache/how-to/set-caching-levels/)
 - [Enable Tiered Cache with Argo](/cache/how-to/enable-tiered-cache/)
 - [Configure custom cache keys (Enterprise only)](/cache/about/cache-keys/)
-- [Enable Prefetch URLs (Enterprise only)](https://support.cloudflare.com/hc/articles/206776707)
+- [Enable Prefetch URLs (Enterprise only)](/fundamentals/speed/prefetch-urls/)
 
 ## Secure your cache configuration
 

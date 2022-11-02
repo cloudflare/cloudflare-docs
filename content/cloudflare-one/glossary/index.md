@@ -9,21 +9,21 @@ layout: single
 
 Review definitions for Cloudflare Zero Trust terms.
 
-## [Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/)
+## Cloudflare Zero Trust
 
-Cloudflare Zero Trust the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
+[Cloudflare Zero Trust](https://www.cloudflare.com/products/zero-trust/) provides the power of Cloudflare’s global network to your internal teams and infrastructure. Cloudflare Zero Trust empowers users with secure, fast and seamless access to any device on the Internet.
 
-## [Cloudflare Access](https://www.cloudflare.com/products/zero-trust/access/)
+## Cloudflare Access
 
-Cloudflare Access replaces corporate VPNs with Cloudflare’s network. Instead of placing internal tools on a private network, customers deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
+[Cloudflare Access](https://www.cloudflare.com/products/zero-trust/access/) replaces corporate VPNs with Cloudflare’s network. Instead of placing internal tools on a private network, customers deploy them in any environment, including hybrid or multi-cloud models, and secure them consistently with Cloudflare’s network.
 
-## [Cloudflare Gateway](https://www.cloudflare.com/products/zero-trust/gateway/)
+## Cloudflare Gateway
 
-Cloudflare Gateway is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
+[Cloudflare Gateway](https://www.cloudflare.com/products/zero-trust/gateway/) is a modern next generation firewall between your user, device or network and the public Internet. Once you setup Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies.
 
-## [Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/)
+## Cloudflare Tunnel
 
-Cloudflare Tunnel (formerly _Argo Tunnel_) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
+[Cloudflare Tunnel](https://www.cloudflare.com/products/tunnel/) (formerly _Argo Tunnel_) establishes a secure outbound connection which runs in your infrastructure to connect the applications and machines to Cloudflare.
 
 ## WARP client
 
@@ -31,17 +31,17 @@ Cloudflare Zero Trust customers can use the Cloudflare WARP application to conne
 
 ---
 
-## [App Launcher](/cloudflare-one/applications/app-launcher/)
+## App Launcher
 
-The App Launcher portal provides end users with a single dashboard from which they can open applications secured by Cloudflare Zero Trust.
+The [App Launcher](/cloudflare-one/applications/app-launcher/) portal provides end users with a single dashboard from which they can open applications secured by Cloudflare Zero Trust.
 
 ## active zone
 
 A DNS zone is a portion of the DNS namespace that is managed by a specific organization or administrator. For a domain to be active on Cloudflare, its nameservers need to be changed to Cloudflare's.
 
-## [application](/cloudflare-one/applications/)
+## application
 
-The resource being protected by Cloudflare Zero Trust. An application can be a subdomain, a path, or a SaaS application.
+The resource being protected by Cloudflare Zero Trust. An [application](/cloudflare-one/applications/) can be a subdomain, a path, or a SaaS application.
 
 ## Authenticated Origin Pulls
 
@@ -103,9 +103,9 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
 
-## [location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/)
+## location
 
-Locations are physical entities like offices, homes, retail stores, movie theatres or a data center.
+[Locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 ## mTLS
 
@@ -129,9 +129,9 @@ A simple identity layer on top of the OAuth 2.0 protocol. It allows Clients to v
 
 [Cloudflare Origin Certificates](/ssl/origin-configuration/origin-ca/) are free SSL certificates issued by Cloudflare for installation on your origin server to facilitate end-to-end encryption for your visitors using HTTPS.
 
-## [policy](/cloudflare-one/policies/)
+## policy
 
-A set of rules that regulate your network activity, such as who logs in to your applications, or which websites your users can reach.
+A [policy](/cloudflare-one/policies/) is a set of rules that regulate your network activity, such as who logs in to your applications, or which websites your users can reach.
 
 ## RDP
 
@@ -139,9 +139,9 @@ _Remote Desktop Protocol_
 
 A protocol, or technical standard, for using a desktop computer remotely. RDP was initially released by Microsoft and is available for most Windows operating systems, but it can be used with Mac operating systems too.
 
-## [SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch)
+## SafeSearch
 
-A feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
+[SafeSearch](/cloudflare-one/policies/filtering/dns-policies/#safesearch) is a feature of search engines that can help you filter explicit or offensive content. When you enable SafeSearch, the search engine filters explicit or offensive content and returns search results that are safe for children, you or at work.
 
 ## SAML
 
@@ -197,7 +197,7 @@ The customizable portion of your [team domain](#team-domain). You can view your 
 | --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
 
-You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. Cloudflare dashboard SSO does not currently support team name changes. If you change your team name, you may need to update your identity provider and other third-party integrations to reflect your new team name.
+To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name).
 
 ## Terraform
 

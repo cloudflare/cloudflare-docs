@@ -57,7 +57,7 @@ To add an Origin CA certificate to your origin web server
   * [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
 
-  {{<Aside type="note">}}If you do not see your server in the list above, search the [Digicert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
+  {{<Aside type="note">}}If you do not see your server in the list above, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
 3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
 4.  Enable SSL and port 443 at your origin web server.
@@ -112,7 +112,7 @@ To automate processes involving Origin CA certificates, use the following API ca
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
-| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` | 
+| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
 | [Create certificate](https://api.cloudflare.com/#origin-ca-create-certificate) | `POST` | `certificates` |
 | [Get certificate](https://api.cloudflare.com/#origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
 | [Revoke certificate](https://api.cloudflare.com/#origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |

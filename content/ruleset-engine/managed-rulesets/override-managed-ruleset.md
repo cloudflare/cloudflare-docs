@@ -10,7 +10,7 @@ To customize the behavior of a Managed Ruleset, override the ruleset at deployme
 
 For example, to test a Managed Ruleset before enforcing it, consider executing the ruleset with all rules set to `log` instead of their default actions. To do this, override the configured behavior of the Managed Ruleset at the ruleset level, so that each rule uses the `log` action.
 
-To define overrides in the Cloudflare dashboard, [edit the configuration of a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-a-managed-ruleset).
+To define overrides in the Cloudflare dashboard, edit the configuration of the Managed Ruleset you previously deployed to a zone or to an account.
 
 ## Working with overrides
 
@@ -126,7 +126,7 @@ curl -X PUT \
   "rules": [
     {
       "action": "execute",
-      "expression": "cf.zone.name eq \"example.com\"",
+      "expression": "(cf.zone.name eq \"example.com\") and (cf.zone.plan eq \"ENT\")",
       "action_parameters": {
         "id": "<MANAGED_RULESET_ID>",
         "overrides": {

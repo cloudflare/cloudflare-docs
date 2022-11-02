@@ -1,5 +1,5 @@
 ---
-title: FAQ
+title: FAQs
 pcx_content_type: navigation
 weight: 202
 meta:

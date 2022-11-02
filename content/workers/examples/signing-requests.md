@@ -142,7 +142,7 @@ async function generateSignedUrl(url) {
 
   // `mac` is an ArrayBuffer, so you need to make a few changes to get
   // it into a ByteString, and then a Base64-encoded string.
-  const base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
+  let base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
   
   // must convert "+" to "-" as urls encode "+" as " " 
   base64Mac = base64Mac.replaceAll("+", "-")

@@ -5,26 +5,28 @@ title: Deploy an Astro site
 
 # Deploy an Astro site
 
-[Astro](https://astro.build) is a new static-site generator that allows you to build faster, SEO-friendly websites that use less client-side JavaScript code. By default, Astro builds websites that have zero JavaScript runtime code.
+[Astro](https://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
+
+Refer to the [Astro Docs](https://docs.astro.build/) to learn more about Astro or for assistance with an Astro project.  
 
 In this guide, you will create a new Astro application and deploy it using Cloudflare Pages.
 
-{{<Aside type="warning">}}
-
-At the time of publication, Astro is in early beta. Refer to the Astro [GitHub repository](https://github.com/snowpackjs/astro) to stay current with the project's status.
-
-{{</Aside>}}
-
 ## Setting up a new project
 
-Create a new project directory (for example, `astro-site`) and then initiate Astro's official setup tool by running [`npm init`](https://docs.npmjs.com/cli/v6/commands/npm-init) in your terminal inside that new `astro-site` directory:
+Create a new project directory and then initiate Astro's official setup tool by running:
 
 ```sh
-$ mkdir astro-site && cd astro-site
-$ npm init astro
+$ npm create astro@latest
+# cd into created project
+$ cd <project-name>
 ```
 
-During `init`, Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+Astro will ask you which project type you would like to set up. Your answers will not affect the rest of this tutorial. Select an answer ideal for your project.
+
+{{<Aside type="note">}}
+Refer to Astro's available templates at [astro.new](https://astro.new).
+{{</Aside>}}
+
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -44,6 +46,49 @@ $ git commit -m "initial commit"
 
 # Send commit to new GitHub repo
 $ git push -u origin main
+```
+
+## Using Pages Functions
+
+[Pages Functions](/pages/platform/functions/) enable you to run server-side code to add dynamic functionality without running a dedicated server.
+
+To get started, create a `functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes. To learn more, refer to [Pages Functions](/pages/platform/functions/).
+
+### Astro Configuration
+
+You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
+
+To enable an SSR site and deploy to Cloudflare Pages, add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) to your project's `package.json` by running:
+
+```sh
+$ npm run astro add cloudflare
+```
+
+### Modes
+
+There are currently two modes supported when using Pages Functions with the [`@astrojs/cloudflare`](https://github.com/withastro/astro/tree/main/packages/integrations/cloudflare#readme) adapter. 
+
+1. **Advanced** mode: This mode is used when you want to run your Function in `advanced` mode. This mode picks up the `_worker.js` in `dist`, or a directory mode where Pages will compile the Worker out of a Functions folder in the project root.  
+
+{{<Aside type="note">}}
+
+If no mode is set, the default is `"advanced"`
+
+{{</Aside>}}
+
+2. **Directory** mode: This mode is used when you want to run your Function in `directory` mode. In this mode, the adapter will compile the client-side part of your application the same way, but it will move the Worker into a `functions` folder in the project root. The adapter will allow you to access your Pages Functions from your `functions` folder, allowing you to add [Pages Plugins](/pages/platform/functions/plugins/) and [Middleware](/pages/platform/functions/#adding-middleware) which can be checked into version control.
+
+To use Directory mode, modify your `astro.config.mjs` file to add `mode: "directory"` to the adapter configuration:
+
+```js
+--- 
+filename: astro.config.mjs
+highlight: [2]
+---
+export default defineConfig({
+  output: 'server',
+  adapter: cloudflare({ mode: "directory" }),
+});
 ```
 
 ## Deploying with Cloudflare Pages
@@ -69,7 +114,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Astro requires Node.js v14.x or later to build successfully. You must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Astro requires Node.js version `14` or later to build successfully. When creating your Pages projct, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
 
 {{</Aside>}}
 

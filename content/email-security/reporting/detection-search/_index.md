@@ -19,10 +19,10 @@ To review all emails — not just those marked with a disposition — use [Mail 
 To access Detection search in the dashboard:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Click the **Search** bar.
+2. Select the **Search** bar.
 3. Enter anything related to a specific detection (for more guidance, refer to [search tips](#search-tips)).
 4. Review the results.
-5. To view the information contained in an email, including a protected preview and the raw SMTP headers, click **Details**. You can also **Download** a message.
+5. To view the information contained in an email, including a protected preview and the raw SMTP headers, select **Details**. You can also **Download** a message.
 
 ## Search tips
 
@@ -50,4 +50,4 @@ billing statement message_id:<Amazon aws Support@email.amazonses.com>
 
 ## Additional notes
 
-When searching for phrases, some terms — such as words less than 3 characters and certain escape words like `and`, `the`, `then`, `their` — are not tokenized. Our search will automatically ignore these terms, both in your search query and in the proposed results.
+When searching for phrases, some terms — such as words less than three characters and certain escape words like `and`, `the`, `then`, `their` — are not tokenized. Our search will automatically ignore these terms, both in your search query and in the proposed results.

@@ -10,7 +10,7 @@ weight: 2
 
 1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Manage Account** > **Configurations** > **Lists**.
 
-1. To view items in a list, click the **Edit** link associated with the list you want to view.
+1. Select **Edit** next to the list you want to view.
 
 The list of items displays sorted by IP address, ascending:
 
@@ -18,7 +18,7 @@ The list of items displays sorted by IP address, ascending:
 
 {{<Aside type="note" header="Note">}}
 
-You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get Lists](https://api.cloudflare.com/#rules-lists-list-lists) operation to fetch them.
+You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get lists](https://api.cloudflare.com/#lists-get-lists) operation to fetch them.
 
 {{</Aside>}}
 
@@ -49,23 +49,21 @@ To add items to an IP List:
 
 1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Manage Account** > **Configurations** > **Lists**.
 
-1. Click the **Edit** button associated with the list that you want to edit.
+1. Select **Edit** next to the list you want to edit.
 
-1. Click **Add items**.
+1. Select **Add items**.
 
 1. To [add items to the list manually](#add-items-to-a-list-manually), use the text inputs in the Lists interface.
 
-1. To [add items in CSV format](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), click **Upload CSV**.
+1. To [add items in CSV format](/firewall/cf-dashboard/rules-lists/manage-items/#add-items-in-csv-format), select **Upload CSV**.
 
 ### Add items to a list manually
 
-1. In the **Add items to list** page, add an IP Address and an optional description in the text inputs.
+1. In the **Add items to list** page, add an IP address and an optional description in the text inputs.
 
-    As you enter information into a text input, a new row of inputs displays below the current one. To delete any of the IP addresses that you have entered, click **X**.
+    As you enter information into a text input, a new row of inputs displays below the current one. To delete any of the IP addresses that you have entered, select **X**.
 
-1. Click **Add to list** to add the new items.
-
-The updated list displays.
+1. Select **Add to list**.
 
 ### Add items in CSV format
 
@@ -73,7 +71,7 @@ The updated list displays.
 
 Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
 
-If you need to replace the entire contents of a list, format the data as an array and use the Update Lists operation in the [Rules Lists API](/firewall/api/cf-lists/endpoints/).
+If you need to replace the entire contents of a list, format the data as an array and use the Update all list items operation in the [Lists API](/firewall/api/cf-lists/endpoints/).
 
 {{</Aside>}}
 
@@ -90,16 +88,16 @@ When uploading a CSV file containing a list of IP addresses and optional descrip
 
 To add items to an IP List by uploading a CSV file:
 
-1.  In the **Add items to list** page, click **Upload CSV**.
+1. In the **Add items to list** page, select **Upload CSV**.
 
-1.  Browse to the location of the CSV file, select it, and click **Open**. The displayed items in the page will include the items loaded from the CSV file.
+2. Browse to the location of the CSV file, select the file, and then select **Open**. The displayed items in the page will include the items loaded from the CSV file.
 
-1.  You can continue to edit the items in the list before adding them:
+3. You can continue to edit the items in the list before adding them:
 
-    - To delete any of the IP addresses that you have entered, click **X**.
+    - To delete any of the IP addresses that you have entered, select **X**.
     - To add extra IP addresses manually, enter the information in the text inputs.
 
-1.  Click **Add to list** to add the new items to your list.
+4. Select **Add to list**.
 
 {{<Aside type="warning" header="Important">}}
 
@@ -114,12 +112,12 @@ When uploading CSV data, keep in mind that duplicate data is treated as follows:
 
 1. [Access the Lists interface](/firewall/cf-dashboard/rules-lists/) available at **Manage Account** > **Configurations** > **Lists**.
 
-1. Click the **Edit** link associated with list from which you want to delete.
+2. Select **Edit** next to the list from which you want to delete items.
 
-1. Select the checkboxes next to the items that you want to delete. To select all the items, use the checkbox in the column header:
+3. Select the checkboxes next to the items you want to delete. To select all the items, use the checkbox in the column header:
 
     ![Selecting individual list items to delete from an IP List](/firewall/static/lists-delete-items.png)
 
-1. Click **Remove** to delete the selected items from the list.
+4. Select **Remove**.
 
-1. Click **Remove** in the confirmation dialog.
+5. In the confirmation dialog, select **Remove** to complete the operation.

@@ -1,7 +1,7 @@
 ---
 title: FAQ
 pcx_content_type: faq
-weight: 9
+weight: 12
 meta:
   title: Frequently asked questions about Cloudflare Stream
 ---
@@ -121,39 +121,26 @@ Below are bitrate recommendations for encoding new videos for Stream:
 
 Videos are removed if the subscription is not renewed within 30 days.
 
-### What domains do I need to add to my allowlist if I use Content Security Policy (CSP) directives on my website?
+### I use Content Security Policy (CSP) on my website. What domains do I need to add to which directives?
 
-If your website uses Content Security Policy (CSP) directives and you use the provided Stream Player, `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
+If your website uses [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) directives, depending on your configuration, you may need to add Cloudflare Stream's domains to particular directives, in order to allow videos to be viewed or uploaded by your users.
+
+If you use the provided [Stream Player](/stream/viewing-videos/using-the-stream-player/), `videodelivery.net` and `*.cloudflarestream.com` must be included in the `frame-src` or `default-src` directive to allow the player's `<iframe>` element to load.
 
 ```http
-Content-Security-Policy: frame-src; 'self' *.videodelivery.net *.cloudflarestream.com
+Content-Security-Policy: frame-src 'self' videodelivery.net *.cloudflarestream.com
 ```
 
-## Stream Live
+If you use your **own** Player, add `*.videodelivery.net` and `*.cloudflarestream.com` to the `media-src`, `img-src` and `connect-src` CSP directives to allow video files and thumbnail images to load.
 
-### Do I need a separate Stream Live subscription to use Stream Live?
+```http
+Content-Security-Policy: media-src 'self' videodelivery.net *.cloudflarestream.com; img-src 'self' *.videodelivery.net *.cloudflarestream.com; connect-src 'self' *.videodelivery.net *.cloudflarestream.com
+```
 
-As long as you have a Cloudflare Stream subscription, you can use all the features of Stream Live. You do not need to add another subscription.
+If you allow users to upload their own videos directly to Cloudflare Stream, add `*.videodelivery.net` and `*.cloudflarestream.com` to the `connect-src` CSP directive.
 
-### How does billing work for Stream Live?
+```http
+Content-Security-Policy: connect-src 'self' *.videodelivery.net *.cloudflarestream.com
+```
 
-Stream Live billing works the same way as Stream On-demand:
-
-- You pay $5 per 1000 minutes of recorded video.
-- You pay $1 per 1000 minutes of delivered video.
-
-All Stream Live videos are automatically recorded. There is no additional cost for encoding and packaging live videos.
-
-### How many live inputs can I create? Are there any other limits?
-
-Some limits apply to the Stream Live Beta:
-
-- You can create up to 1000 live inputs per account.
-- You can configure up to 50 outputs per live input.
-- You should use a maximum recommended bitrate of 12000 kbps.
-
-If your use case requires the limits to be increased, please contact support.
-
-### How does Stream Live handle RTMP reconnections?
-
-As long as your streaming software reconnects, Stream Live will continue to ingest and stream your live video. Make sure the streaming software you use to push RTMP feeds automatically reconnects if the connection breaks. Some apps like OBS reconnect automatically while other apps like FFmpeg require custom configuration.
+To ensure **only** videos from **your** Cloudflare Stream account can be played on your website, replace `*` in `*.cloudflarestream.com` and `*.videodelivery.net` in the examples above with `customer-<CODE>`, replacing `<CODE>` with your unique customer code, which can be found in the Stream Dashboard [here](https://dash.cloudflare.com/?to=/:account/stream). This code is unique to your Cloudflare Account.

@@ -6,16 +6,16 @@ weight: 3
 
 # Add rules to a custom ruleset
 
-To add rules to an existing custom ruleset, use the [Update ruleset](/ruleset-engine/rulesets-api/update/) API operation and pass the rules in an array. Each rule has an expression and an action.
+To add rules to an existing custom ruleset, use the [Update an account ruleset](https://api.cloudflare.com/#account-rulesets-update-an-account-ruleset) API operation and pass the rules in an array. Each rule has an expression and an action.
 
 {{<Aside type="note" header="Choosing the appropriate API method">}}
 
-When you add rules to a ruleset using the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. This method updates the ruleset version number only once.
+When you add rules to a custom ruleset using the [Update an account ruleset](https://api.cloudflare.com/#account-rulesets-update-an-account-ruleset) API operation, you replace all the rules in the ruleset with the rules in the request. Use this API method when adding or updating several rules at once. This method will update the ruleset version number only once.
 
 You can use other API operations depending on the type of operation:
 
-* Add a single rule to an existing custom ruleset — use the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) operation.
-* Update a single rule in a custom ruleset — use the [Update rule](/ruleset-engine/rulesets-api/update-rule/) operation.
+* Add a single rule to an existing custom ruleset — use the [Create account ruleset rule](https://api.cloudflare.com/#account-rulesets-create-account-ruleset-rule) operation.
+* Update a single rule in a custom ruleset — use the [Update an account ruleset rule](https://api.cloudflare.com/#account-rulesets-update-an-account-ruleset-rule) operation.
 
 {{</Aside>}}
 
@@ -89,7 +89,7 @@ header: Response
 
 ## Update rules in a custom ruleset
 
-To update one or more rules in a custom ruleset, use the [Update ruleset](/ruleset-engine/rulesets-api/update/) API operation. Include the ID of the rules you want to modify in the rules array and add the fields you want to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you want to keep.
+To update one or more rules in a custom ruleset, use the [Update an account ruleset](https://api.cloudflare.com/#account-rulesets-update-an-account-ruleset) API operation. Include the ID of the rules you want to modify in the rules array and add the fields you wish to update. The request replaces the entire ruleset with a new version. Therefore, you must include the ID of all the rules you wish to keep.
 
 The following request edits one rule in a custom ruleset and updates the execution order of the rules.
 

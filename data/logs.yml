@@ -13,6 +13,9 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

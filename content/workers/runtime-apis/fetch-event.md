@@ -186,7 +186,7 @@ export default {
 
 ### `passThroughOnException`
 
-The `passThroughOnException` command prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will [fail open](https://community.microfocus.com/t5/Security-Blog/Security-Fundamentals-Part-1-Fail-Open-vs-Fail-Closed/ba-p/283747), which will proxy the request to the origin server as though the Worker was never invoked.
+The `passThroughOnException` command prevents a runtime error response when the Worker script throws an unhandled exception. Instead, the script will [fail open](https://community.microfocus.com/cyberres/b/sws-22/posts/security-fundamentals-part-1-fail-open-vs-fail-closed), which will proxy the request to the origin server as though the Worker was never invoked.
 
 To prevent JavaScript errors from causing entire requests to fail on uncaught exceptions, `passThroughOnException()` causes the Workers runtime to yield control to the origin server.
 

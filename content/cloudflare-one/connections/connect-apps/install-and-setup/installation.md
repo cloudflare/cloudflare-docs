@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Downloads
-weight: 2
+weight: 5
 ---
 
 # Downloads
@@ -35,7 +35,7 @@ Alternatively, download the latest release directly.
 Download and install `cloudflared` via Homebrew:
 
 ```sh
-$ brew install cloudflare/cloudflare/cloudflared
+$ brew install cloudflared
 ```
 
 Alternatively, [download the latest Darwin amd64 release directly](https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-amd64.tgz).

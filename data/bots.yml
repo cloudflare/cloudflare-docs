@@ -12,6 +12,11 @@ meta:
   author: '@cloudflare'
   image: /cf-twitter-card.png
 
+resources:
+  community: https://community.cloudflare.com/c/security/6
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/bots
+  learning_center: https://www.cloudflare.com/learning/bots/what-is-a-bot/
+
 externals:
   - title: Bot Management home
     url: https://www.cloudflare.com/products/bot-management

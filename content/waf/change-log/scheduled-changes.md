@@ -31,6 +31,6 @@ layout: list
       <td>N/A</td>
       <td>N/A</td>
     </tr>
-  </tbody>
+</tbody>
 </table>
 {{</table-wrap>}}

@@ -10,7 +10,7 @@ meta:
 
 ## List object structure and properties
 
-A JSON response for the [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) has this structure:
+A JSON response for the [Lists API](https://api.cloudflare.com/#lists-properties) has this structure:
 
 ```json
 {
@@ -166,7 +166,7 @@ The JSON object properties for a list item are defined as follows:
         </tr>
         <tr>
             <td><code>redirect</code><br />{{<type>}}Object{{</type>}}</td>
-            <td>An object that contains the definition of a URL Redirect. Refer to <a href="/rules/bulk-redirects/reference/parameters/">URL Redirect parameters</a> for details.</td>
+            <td>An object that contains the definition of a URL Redirect. Refer to <a href="/rules/url-forwarding/bulk-redirects/reference/parameters/">URL Redirect parameters</a> for details.</td>
             <td><p>Applies only to Bulk Redirect Lists.</p></td>
         </tr>
         <tr>
@@ -183,4 +183,4 @@ The JSON object properties for a list item are defined as follows:
   </table>
 {{</table-wrap>}}
 
-For a detailed specification, refer to the [Rules Lists API](https://api.cloudflare.com/#rules-lists-properties) documentation.
+For a detailed specification, refer to the [Lists API](https://api.cloudflare.com/#lists-properties) documentation.
