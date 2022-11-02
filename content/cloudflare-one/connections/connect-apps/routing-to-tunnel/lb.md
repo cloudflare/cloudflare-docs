@@ -52,11 +52,11 @@ The application will default to the Cloudflare settings for the load balancer ho
 
 If you have a tunnel to a port or SSH port, do not run a TCP health check.
 
-Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/configuration/local-management/ingress/) that returns a fixed HTTP status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
+Instead, set up a health check endpoint in `cloudflared` — for example, an [ingress entry rule](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/) that returns a fixed HTTP status response — and create an **HTTP** [monitor](/load-balancing/understand-basics/monitors/) for that endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
 
 ### Session affinity and replicas
 
-The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single origin server. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
+The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single origin server. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
 
 ### Local connection preference
 
