@@ -517,7 +517,7 @@ Usage:
 format({string}[, ...])
 ```
 
-This function supports formatting strings, integers, floats, datetimes, intervals, etc, except NULL. We do not support literal `{ and }` in the format string and numbered arguments.
+This function supports formatting strings, integers, floats, datetimes, intervals, etc, except NULL. We do not support literal `{` and `}` characters in the format string.
 
 ## Supported operators
 
