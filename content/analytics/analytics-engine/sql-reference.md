@@ -530,7 +530,10 @@ substring({string}, {offset:integer}[. {length:integer}])
 ```
 
 Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least 1.
-
+Examples:
+```SQL
+SELECT substring('hello world', 6) AS s;
+SELECT substring('hello: world', 1, position(':' IN 'hello: world')-1) AS s;
 ### format
 
 Usage:
