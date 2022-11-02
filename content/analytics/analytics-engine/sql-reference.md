@@ -542,7 +542,9 @@ format({string}[, ...])
 ```
 
 This function supports formatting strings, integers, floats, datetimes, intervals, etc, except NULL. We do not support literal `{` and `}` characters in the format string.
-
+Examples:
+```SQL
+SELECT format('blob1: {}', blob1) AS s FROM dataset;
 ## Supported operators
 
 The following operators are supported:
