@@ -90,7 +90,7 @@ You can set a maximum of eight tags per script. Avoid special characters like `,
 
 {{</Aside>}}
 
-Script tags and bindings can be included on multipart script uploads in the metadata blob. 
+Script tags and bindings can be included on multipart script uploads in the metadata blob.
 
 ```bash
 curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
