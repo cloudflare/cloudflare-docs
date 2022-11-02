@@ -438,6 +438,86 @@ NOW()
 
 Returns the current time as a DateTime.
 
+### length
+
+Usage:
+```SQL
+length({string})
+```
+
+Returns the length of a string. This function is UTF-8 compatible.
+
+### isEmpty
+
+Usage:
+```SQL
+isEmpty({string})
+```
+
+Returns a boolean saying whether the string was empty. This computation can also be done as a binary operation, `{string} = ''`.
+
+### toLower
+
+Usage:
+```SQL
+toLower({string})
+```
+
+Returns the string converted to lowercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
+
+### toUpper
+
+Usage:
+```SQL
+toUpper({string})
+```
+
+Returns the string converted to uppercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
+
+### startsWith
+
+Usage:
+```SQL
+startsWith({string}, {string})
+```
+
+Returns a boolean of whether the first string has the second string at its start.
+
+### endsWith
+
+Usage:
+```SQL
+endsWith({string}, {string})
+```
+
+Returns a boolean of whether the first string contains the second string at its end.
+
+### position
+
+Usage:
+```SQL
+position({needle:string} IN {haystack:string})
+```
+
+Returns the position of one string, `needle`, in another, `haystack`. In SQL, indexes are usually 1-based. That means that position returns 1 if your needle is at the start of the haystack. It only returns 0 if your string is not found.
+
+### substring
+
+Usage:
+```SQL
+substring({string}, {offset:integer}[. {length:integer}]) 
+```
+
+Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least 1.
+
+### format
+
+Usage:
+```SQL
+format({string}[, ...])
+```
+
+This function supports formatting strings, integers, floats, datetimes, intervals, etc, except NULL. We do not support literal `{ and }` in the format string and numbered arguments.
 
 ## Supported operators
 
