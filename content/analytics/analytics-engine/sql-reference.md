@@ -494,7 +494,10 @@ startsWith({string}, {string})
 ```
 
 Returns a boolean of whether the first string has the second string at its start.
-
+Examples:
+```SQL
+SELECT startsWith('prefix ...', 'prefix');
+SELECT startsWith(blob1, 'prefix') FROM your_dataset;
 ### endsWith
 
 Usage:
