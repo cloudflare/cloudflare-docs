@@ -16,6 +16,6 @@ Furthermore, if a flood of packets of an unspecified protocol target your applic
 
 L3/4 DDoS attacks should be detected and mitigated by the [Network-layer DDoS Managed Ruleset](/ddos-protection/managed-rulesets/network/) that is enabled by default. This ruleset detects and mitigates DDoS attacks by dynamically fingerprinting attacks based on packet header fields.
 
-For protecting HTTP/S applications against L7 DDoS attacks and to benefit from caching and additional features, onboard your application to Cloudflare’s Web Application Firewall/Content Delivery Network service — which works in tandem with Cloudflare Spectrum.
+For protecting HTTP/S applications against L7 DDoS attacks and to benefit from caching and additional features, onboard your application to Cloudflare’s Web Application Firewall/Content Delivery Network service, which works in tandem with Cloudflare Spectrum.
 
 Refer to [Cloudflare DDoS Protection](https://developers.cloudflare.com/ddos-protection/), to learn more.
