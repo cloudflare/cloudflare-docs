@@ -506,7 +506,10 @@ endsWith({string}, {string})
 ```
 
 Returns a boolean of whether the first string contains the second string at its end.
-
+Examples:
+```SQL
+SELECT endsWith('prefix suffix', 'suffix');
+SELECT endsWith(blob1, 'suffix') FROM your_dataset;
 ### position
 
 Usage:
