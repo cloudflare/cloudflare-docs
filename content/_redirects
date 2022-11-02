@@ -892,10 +892,6 @@
 /workers/platform/routing/custom-domains/ /workers/platform/triggers/cron-triggers/ 301
 /workers/platform/routing/routes/ /workers/platform/triggers/routing/routes/ 301
 /workers/platform/cron-triggers/ /workers/platform/triggers/custom-domains/ 301
-/workers/platform/routing/ /workers/learning/how-routing-works/ 301
-/workers/platform/routing/custom-domains/ /workers/platform/triggers/cron-triggers/ 301
-/workers/platform/routing/routes/ /workers/platform/triggers/routing/routes/ 301
-/workers/platform/cron-triggers/ /workers/platform/triggers/custom-domains/ 301
 
 # zaraz
 
