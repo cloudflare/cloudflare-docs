@@ -23,9 +23,14 @@
         <td>
             <strong>{{ index $map "ent" }}</strong>
         </td>
+        {{ if $info.ent_plus}}
+        <td>
+            <strong>{{$info.ent_plus}}</strong>
+        </td>
+        {{- end -}}
     </tr>
 {{- range $elem_key, $elem_val := $info -}}
-{{- if and (ne $elem_key "link") (ne $elem_key "title") -}}
+{{- if and (ne $elem_key "link") (ne $elem_key "title") (ne $elem_key "ent_plus") -}}
 <tr>
     <td>
         <p>{{ if .link }}
@@ -36,17 +41,22 @@
     </p>
     </td>
     <td>
-        {{.free}}
+        {{ .free }}
     </td>
     <td>
-        {{.pro}}
+        {{ .pro }}
     </td>
     <td>
-        {{.biz}}
+        {{ .biz }}
     </td>
     <td>
-        {{.ent}}
+        {{ .ent }}
     </td>
+    {{ if .ent_plus }}
+        <td>
+            <strong>{{ .ent_plus }}</strong>
+        </td>
+    {{- end -}}
 </tr>
 {{- end -}}
 {{- end -}}

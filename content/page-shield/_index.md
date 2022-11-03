@@ -2,7 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-layout: single
+layout: list
 meta:
   title: Cloudflare Page Shield
 ---
