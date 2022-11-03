@@ -68,7 +68,7 @@ In this model, more than one tunnel is required with identical configurations. T
 ### When to use load balancers
 
 - To intelligently steer traffic based on latency, geolocation, or other signals.
-- To implement failover logic if a tunnel reaches an inactive state
+- To implement failover logic if a tunnel reaches an inactive state.
 - To get alerted when a tunnel reaches an inactive state.
 - To distribute traffic more evenly across your Cloudflare Tunnel-accessible origins.
 
