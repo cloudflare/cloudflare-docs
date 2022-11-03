@@ -49,7 +49,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - `passThroughOnException()` is not currently available for "Advanced Mode" Pages Functions (Pages Functions which use an `_worker.js` file).
 
-- `passThroughOnException()` is not currently as resilient as it is in Workers. We currently wrap Pages Functions code in a `try`/`catch` block and fallback to calling `env.ASSETS.fetch()`. This means that any critical failures may still throw an error.
+- `passThroughOnException()` is not currently as resilient as it is in Workers. We currently wrap Pages Functions code in a `try`/`catch` block and fallback to calling `env.ASSETS.fetch()`. This means that any critical failures (such as exceeding CPU time or exceeding memory) may still throw an error.
 
 - Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above.  Support for using Durable Objects in local development is actively being worked on and will be available soon.
 
