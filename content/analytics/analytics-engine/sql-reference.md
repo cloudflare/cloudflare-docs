@@ -269,6 +269,10 @@ column 1 value  column 2 value
 
 ## Supported functions
 
+{{<Aside type="note">}}
+Note that function names are not case-sensitive, they can be used both in uppercase or in lowercase.
+{{</Aside>}}
+
 ### COUNT
 
 Usage:
