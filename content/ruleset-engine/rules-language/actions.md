@@ -194,10 +194,10 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
           Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for <a href="/rules/url-forwarding/bulk-redirects/">Bulk Redirects</a> and <a href="/rules/url-forwarding/dynamic-redirects/">Dynamic Redirects</a>.
+          Only available for <a href="/rules/url-forwarding/single-redirects/">Single Redirects</a> and <a href="/rules/url-forwarding/bulk-redirects/">Bulk Redirects</a>.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule or a Dynamic Redirect Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a redirect rule or a bulk redirect rule.
         </p>
       </td>
       <td>Yes</td>
