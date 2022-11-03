@@ -490,7 +490,7 @@ Usage:
 toUpper({string})
 ```
 
-Returns the string converted to uppercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
+Returns the string converted to uppercase. This function is Unicode compatible. The results may not be perfect for all languages and users with strict needs. These users should do the operation in their own code.
 
 Examples:
 ```SQL
