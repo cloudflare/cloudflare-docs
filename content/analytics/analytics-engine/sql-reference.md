@@ -535,7 +535,7 @@ Usage:
 position({needle:string} IN {haystack:string})
 ```
 
-Returns the position of one string, `needle`, in another, `haystack`. In SQL, indexes are usually 1-based. That means that position returns 1 if your needle is at the start of the haystack. It only returns 0 if your string is not found.
+Returns the position of one string, `needle`, in another, `haystack`. In SQL, indexes are usually 1-based. That means that position returns `1` if your needle is at the start of the haystack. It only returns `0` if your string is not found.
 
 Examples:
 ```SQL
