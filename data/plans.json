@@ -77,6 +77,17 @@
   "dns": {
     "title": "DNS",
     "link": "/dns/",
+    "full_setup": {
+      "title": "Full zone setup",
+      "link": "/dns/zone-setups/full-setup/",
+      "availability": {
+        "title": "Avalability",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      }
+    },
     "partial_setup": {
       "title": "Partial zone setup",
       "link": "/dns/zone-setups/partial-setup/",
@@ -288,6 +299,7 @@
           "biz": "Yes",
           "ent": "Yes"
         }
+      }
       },
       "firewall_variables": {
         "title": "Firewall variables",
@@ -334,9 +346,9 @@
         "supported_actions": {
           "title": "Supported actions",
           "link": "/firewall/cf-firewall-rules/actions/",
-          "free": "All except *Log*",
-          "pro": "All except *Log*",
-          "biz": "All except *Log*",
+          "free": "All except Log",
+          "pro": "All except Log",
+          "biz": "All except Log",
           "ent": "All"
         },
         "regex_support": {
@@ -411,8 +423,7 @@
           "advanced": 100
         }
       }
-    }
-},
+    },
     "speed": {
       "title": "Speed",
       "automatic_signed_exchanges": {

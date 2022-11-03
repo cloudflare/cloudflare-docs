@@ -15,7 +15,7 @@ weight: 2
 
 ## Availability
 
-A partial setup is only available to customers on a Business or Enterprise plan.
+{{<feature-table id="dns.partial_setup">}}
 
 ## Reference
 
