@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Bulk Redirects
 layout: single
-weight: 2
+weight: 3
 meta:
   title: Bulk Redirects (beta)
 ---
