@@ -13,7 +13,7 @@ The following table describes Cache Rules availability per plan.
 
 |                  | **Free** | **Pro** | **Business** | **Enterprise** |
 | ---------------  | -------- | ------- | ------------ | -------------- |
-| **Cache Rules**  | 10       | 25      | 50           | 125            |
+| **Cache Rules**  | {{<plan-info id="rules.cache_rules.rules.free">}}       | {{<plan-info id="rules.cache_rules.rules.pro">}}      | {{<plan-info id="rules.cache_rules.rules.biz">}}           | {{<plan-info id="rules.cache_rules.rules.ent">}}            |
 
 
 ## Create Cache Rules in the dashboard

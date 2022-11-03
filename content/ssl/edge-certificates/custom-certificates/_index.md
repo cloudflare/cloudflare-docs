@@ -11,8 +11,6 @@ layout: single
 
 Custom certificates require that you [upload the certificate](uploading/), [manually renew these certificates](/ssl/edge-certificates/custom-certificates/renewing/), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
 
-Currently the Business and Enterprise plan each include one Custom Certificate, and Enterprise customers may purchase additional slots as needed by speaking with their Customer Success Manager.
-
 If you have first-level hostnames not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), if enabled.
 
 ## Certificate Signing Requests (CSRs)
@@ -38,3 +36,7 @@ Each pack only counts as one SSL certificate against your custom certificate quo
 You cannot delete the primary certificate if secondary certificates are present in the pack.
 
 {{</Aside>}}
+
+## Availability
+\
+{{<plan-info id="ssl.custom_certificates.summary">}}

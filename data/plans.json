@@ -1,0 +1,359 @@
+{
+  "cache": {
+    "browser_cache_ttl": {
+      "minimum": {
+        "free": "2 minutes",
+        "pro": "2 minutes",
+        "biz": "2 minutes",
+        "ent": "30 seconds"
+      }
+    },
+    "custom_purge": {
+      "purge_by": {
+        "free": "URL",
+        "pro": "URL",
+        "biz": "URL",
+        "ent": "URL, Hostname, Tag, or Prefix"
+      }
+    },
+    "edge_cache_ttl": {
+      "minimum": {
+        "free": "2 hours",
+        "pro": "1 hour",
+        "biz": "1 second",
+        "ent": "1 second"
+      }
+    },
+    "query_string_sort": {
+      "summary": "Enterprise",
+      "free": "❌",
+      "pro": "❌",
+      "biz": "❌",
+      "ent": "✅"
+    }
+  },
+  "custom_pages": {
+    "custom_pages": {
+      "summary": "Pro or higher",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "origin_error_pages": {
+      "summary": "Enterprise only",
+      "free": "❌",
+      "pro": "❌",
+      "biz": "❌",
+      "ent": "✅"
+    }
+  },
+  "dns": {
+    "partial_setup": {
+      "free": "❌",
+      "pro": "❌",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "subdomain_setup": {
+      "summary": "Enterprise only",
+      "free": "❌",
+      "pro": "❌",
+      "biz": "❌",
+      "ent": "✅"
+    }
+  },
+  "network": {
+    "max_upload_size": {
+      "free": "100 MB",
+      "pro": "100 MB",
+      "biz": "200 MB",
+      "ent": "500 MB"
+    },
+    "response_buffering": {
+      "summary": "Enterprise only",
+      "free": "❌",
+      "pro": "❌",
+      "biz": "❌",
+      "ent": "✅"
+    },
+    "true_client_ip_header": {
+      "summary": "Enterprise only",
+      "free": "❌",
+      "pro": "❌",
+      "biz": "❌",
+      "ent": "✅"
+    }
+  },
+  "rules": {
+    "bulk_redirects": {
+      "rules": {
+        "free": 15,
+        "pro": 15,
+        "biz": 15,
+        "ent": 50
+      },
+      "lists": {
+        "free": 5,
+        "pro": 5,
+        "biz": 5,
+        "ent": 25
+      },
+      "url_redirects": {
+        "free": 20,
+        "pro": 500,
+        "biz": 500,
+        "ent": 10000
+      }
+    },
+    "cache_rules": {
+      "rules": {
+        "free": 10,
+        "pro": 25,
+        "biz": 50,
+        "ent": 125
+      }
+    },
+    "config_rules": {
+      "rules": {
+        "free": 10,
+        "pro": 25,
+        "biz": 50,
+        "ent": 125
+      }
+    },
+    "dynamic_redirects": {
+      "rules": {
+        "free": 10,
+        "pro": 25,
+        "biz": 50,
+        "ent": 125
+      },
+      "regex_support": {
+        "free": "❌",
+        "pro": "❌",
+        "biz": "✅",
+        "ent": "✅"
+      }
+    },
+    "origin_rules": {
+      "rules": {
+        "free": 10,
+        "pro": 25,
+        "biz": 50,
+        "ent": 125
+      },
+      "override_host_header": {
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "✅"
+      },
+      "override_sni": {
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "✅"
+      },
+      "override_dns_record": {
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "✅"
+      },
+      "override_destination_port": {
+        "free": "✅",
+        "pro": "✅",
+        "biz": "✅",
+        "ent": "✅"
+      }
+    },
+    "page_rules": {
+      "rules": {
+        "free": 3,
+        "pro": 20,
+        "biz": 50,
+        "ent": 125
+      }
+    },
+    "transform_rules": {
+      "rules": {
+        "free": 10,
+        "pro": 25,
+        "biz": 50,
+        "ent": 100
+      },
+      "regex_support": {
+        "free": "❌",
+        "pro": "❌",
+        "biz": "✅",
+        "ent": "✅"
+      }
+    }
+  },
+  "security": {
+    "bots": {
+      "bot_analytics": {
+        "summary": "Business or higher",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "✅",
+        "ent": "✅"
+      },
+      "firewall_variables": {
+        "summary": "Enterprise with purchase",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "❌",
+        "ent_purchase": "✅"
+      },
+      "super_bot_fight_mode": {
+        "summary": "Pro or higher",
+        "free": "❌",
+        "pro": "✅",
+        "biz": "✅",
+        "ent": "✅"
+      }
+    },
+    "firewall_rules": {
+      "rules": {
+        "free": 5,
+        "pro": 20,
+        "biz": 100,
+        "ent": 1000
+      },
+      "ip_lists": {
+        "free": 1,
+        "pro": 10,
+        "biz": 10,
+        "ent": 10
+      },
+      "supported_actions": {
+        "free": "All except *Log*",
+        "pro": "All except *Log*",
+        "biz": "All except *Log*",
+        "ent": "All"
+      },
+      "regex_support": {
+        "free": "❌",
+        "pro": "❌",
+        "biz": "✅",
+        "ent": "✅"
+      }
+    },
+    "page_shield": {
+      "script_monitor": {
+        "summary": "Pro or higher",
+        "free": "❌",
+        "pro": "✅",
+        "biz": "✅",
+        "ent": "✅"
+      },
+      "new_script_new_domain_alerts": {
+        "summary": "Business or higher",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "✅",
+        "ent": "✅"
+      },
+      "page_attribution": {
+        "summary": "Business or higher",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "✅",
+        "ent": "✅"
+      },
+      "malicious_scripts": {
+        "summary": "Enterprise",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "✅"
+      },
+      "code_change_detection": {
+        "summary": "Enterprise",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "✅"
+      },
+      "connection_monitor": {
+        "summary": "Enterprise",
+        "free": "❌",
+        "pro": "❌",
+        "biz": "❌",
+        "ent": "✅"
+      }
+    },
+    "rate_limiting": {
+      "rules": {
+        "free": 1,
+        "pro": 2,
+        "biz-ent": 5,
+        "waf_essential": 100,
+        "advanced": 100
+      }
+    }
+  },
+  "speed": {
+    "automatic_signed_exchanges": {
+      "summary": "Pro or higher or [Automatic Platform Optimization](/automatic-platform-optimization/)",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "enhanced_http2_prioritization": {
+      "summary": "Pro or higher",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "image_resizing": {
+      "summary": "Pro or higher",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "mirage": {
+      "summary": "Pro or higher",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "polish": {
+      "summary": "Pro or higher",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    },
+    "prefetch_urls": {
+      "summary": "Enterprise",
+      "free": "❌",
+      "pro": "❌",
+      "biz": "❌",
+      "ent": "✅"
+    },
+    "tcp_turbo": {
+      "summary": "Pro or higher",
+      "free": "❌",
+      "pro": "✅",
+      "biz": "✅",
+      "ent": "✅"
+    }
+  },
+  "ssl": {
+    "custom_certificates": {
+      "summary": "Business and Enterprise customers get 1 certificate and Enterprise customers can purchase additional if needed.",
+      "free": "❌",
+      "pro": "❌",
+      "biz": 1,
+      "ent": "1 (can purchase more)"
+    }
+  }
+}

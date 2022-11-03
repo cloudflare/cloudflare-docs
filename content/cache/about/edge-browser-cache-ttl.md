@@ -9,10 +9,9 @@ pcx_content_type: concept
 
 Edge Cache TTL (Time to Live) specifies how long to cache a resource in the Cloudflare edge network. Edge Cache TTL is not visible in response headers and the minimum Edge Cache TTL depends on plan type.
 
-- Free - 2 hours
-- Pro - 1 hour
-- Business - 1 second
-- Enterprise - 1 second
+|                  | **Free** | **Pro** | **Business** | **Enterprise** |
+| ---------------  | -------- | ------- | ------------ | -------------- |
+| **Minimum Edge Cache TTL**  | {{<plan-info id="cache.edge_cache_ttl.minimum.free">}}       | {{<plan-info id="cache.edge_cache_ttl.minimum.pro">}}      | {{<plan-info id="cache.edge_cache_ttl.minimum.biz">}}           | {{<plan-info id="cache.edge_cache_ttl.minimum.ent">}}            |
 
 For more information on creating page rules, see [Create page rules](/cache/how-to/create-page-rules/).
 
@@ -24,5 +23,9 @@ The Browser Cache TTL sets the expiration for resources cached in a visitor’s 
 - The origin web server does not send a `Cache-Control` or an `Expires` header.
 
 Unless specifically set in a page rule, Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**.
+
+|                  | **Free** | **Pro** | **Business** | **Enterprise** |
+| ---------------  | -------- | ------- | ------------ | -------------- |
+| **Minimum Browser Cache TTL**  | {{<plan-info id="cache.browser_cache_ttl.minimum.free">}}       | {{<plan-info id="cache.browser_cache_ttl.minimum.pro">}}      | {{<plan-info id="cache.browser_cache_ttl.minimum.biz">}}           | {{<plan-info id="cache.browser_cache_ttl.minimum.ent">}}            |
 
 For more information on setting the Browser Cache TTL, see [Set Browser Cache TTL](/cache/how-to/set-browser-ttl/).
