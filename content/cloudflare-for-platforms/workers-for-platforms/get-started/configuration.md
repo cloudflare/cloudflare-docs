@@ -8,18 +8,30 @@ meta:
 
 # Configure Workers for Platforms
 
+This guide will instruct you on setting up Workers for Platforms. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
+
 ---
 ## 1. Create dispatch namespace 
 
-The first step to working with dispatch namespaces is to create a namespace. Once you have [installed and authenticated Wrangler](/workers/get-started/guide/#1-install-wrangler-workers-cli), run the following command to create a new dispatch namespace:
+The first step to working with dispatch namespaces is to create a namespace. 
+
+A dispatch namespace is composed of a collection of user Workers, which are Workers that end users (end developers) create. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace, without needing to explicitly predefine the relationship. 
+
+To create a dispatch namespace, first [install and authenticate Wrangler (the Workers CLI)](/workers/get-started/guide/#1-install-wrangler-workers-cli). Then run the following command to create a new dispatch namespace:
 
 ```sh
 $ wrangler dispatch-namespace create <NAMESPACE_NAME>
 ```
 
-## 2. Create dispatcher
+## 2. Create a dynamic dispatch Worker
 
-The dispatcher Worker calls user Workers from the namespace and executes them. A dispatch namespace binding is used in order to create a dispatcher Worker. After [starting a new project](/workers/get-started/guide/#3-start-a-new-project), add the following to your `wrangler.toml` file.
+The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. Dynamic dispatch Workers are written by Cloudflare platform users to run their own logic before dispatching (routing) the request to user Workers. User Workers are written by end developers to script automated actions, create integrations or modify response payload to return custom content.
+
+Dynamic dispatch Workers can be used to run authentication, create boilerplate functions and sanitize responses, in addition to routing. 
+
+To create a dynamic dispatch Worker, you must set up a dispatch namespace binding.
+
+[Create a new Worker project](/workers/get-started/guide/#3-start-a-new-project), and add the following to your `wrangler.toml` file:
 
 ```toml
 [[dispatch_namespaces]]
@@ -44,20 +56,25 @@ If you are doing your own multipart uploads, include a similar object in your me
 
 ## 3. Upload user Workers to a namespace
 
-This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, wrangler does not support this operation. Workers uploaded this way will not appear on your dashboard.
+This is the same as our standard Worker upload API, but will upload the worker to a dispatch namespace instead of to your account in general. User Workers must be uploaded via the Cloudflare API, Wrangler does not support this operation. Workers uploaded this way will not appear on your dashboard.
 
 ```bash
-curl -X PUT 
-"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>" \
-     -H "X-Auth-Email: <EMAIL>" \
-     -H "X-Auth-Key: <AUTH_KEY>" \
-     -H "Content-Type: application/javascript" \
---data "addEventListener('fetch', event => { event.respondWith(fetch(event.request)) })"
+curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
+-H 'X-Auth-Email: <EMAIL>' \
+-H 'X-Auth-Key: <AUTH_KEY> \
+-H 'Content-Type: application/javascript' \
+--data "addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+})
+
+async function handleRequest(request) {
+  return new Response('Hello world');
+}"
 ```
 
 ## 4. Tag your users' Workers
 
-To help you manage your customers’ Workers, you can use tags to better perform CRUD operations at scale. You can tag scripts based on things like user ID, account ID, project ID, environment, etc, such that when a user deletes their project, you can easily clean up all of their Workers.
+To help you manage your customers’ Workers, use tags to better perform create, read, update, delete (CRUD) operations at scale. You can tag scripts based on things like user ID, account ID, project ID, and environment, such that when a user deletes their project, you can easily clean up all of their Workers.
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>/tags" \
@@ -73,14 +90,15 @@ You can set a maximum of eight tags per script. Avoid special characters like `,
 
 {{</Aside>}}
 
-To tag a script, tags can now be included on multipart script uploads in the metadata blob (alongside bindings, etc.):
+Script tags and bindings can be included on multipart script uploads in the metadata blob.
 
-```json
-{
-    "body_part": "script",
-    "bindings": [...],
-    "tags": ["TAG1", "TAG2", "TAG3"]
-}
+```bash
+curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
+-H 'X-Auth-Email: <EMAIL>' \
+-H 'X-Auth-Key: <AUTH_KEY>' \
+-H 'Content-Type: multipart/form-data' \
+--form 'metadata="{\"main_module\": \"worker.js\", \"bindings\": [{\"name\": \"KV\", \"type\": \"kv_namespace\", \"namespace_id\": \"<KV_NAMESPACE_ID>\"}], \"tags\": [\"customer-123\", \"staging\", \"free-user\"]}"' \
+--form 'worker.js=@"/path/to/worker.js";type=application/javascript+module'
 ```
 
 ### Tags API reference

@@ -1,4 +1,4 @@
-import mermaid from 'mermaid/dist/mermaid.min.js';
+import mermaid from 'mermaid';
 
 export function init() {
   mermaid.initialize({ startOnLoad: true, 'theme': 'neutral' })

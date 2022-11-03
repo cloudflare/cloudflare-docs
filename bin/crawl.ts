@@ -211,15 +211,7 @@ async function task(file: string) {
 
       if (!/https?/.test(resolved.protocol)) return;
 
-      if (resolved.hostname === DEV_DOCS_HOSTNAME) {
-        messages.push({
-          type: "warn",
-          html: content,
-          text: `rewrite in "/absolute/" format: "${target}"`,
-        });
-
-        target = resolved.pathname;
-      } else if ((external = resolved.origin !== placeholder)) {
+      if ((external = resolved.origin !== placeholder)) {
         // only fetch external URLs with `--externals` flag
         exists = EXTERNALS ? await HEAD(target) : true;
       }
