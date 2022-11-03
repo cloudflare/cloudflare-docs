@@ -5,7 +5,9 @@ pcx_content_type: concept
 
 # Purge cache
 
-You can purge cached resources by single-file (recommended), hostname or cache-tag (Enterprise plans only), or all cached content. All users can purge by single-file (by URL) or purge all cached assets. Cloudflare Enterprise users can also purge using hostnames and cache-tags.
+You can purge cached resources by single-file (recommended), all cached content, or other options. 
+
+{{<feature-table id="cache.custom_purge">}}
 
 {{<Aside type="note" header="Note">}}
 

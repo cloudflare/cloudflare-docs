@@ -39,4 +39,4 @@ You cannot delete the primary certificate if secondary certificates are present 
 
 ## Availability
 \
-{{<plan-info id="ssl.custom_certificates.summary">}}
+{{<plan-info id="ssl.custom_certificates.availability.summary">}}
