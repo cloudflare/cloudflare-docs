@@ -1,0 +1,50 @@
+{{- $plan_json := $.Site.Data.plans -}}
+{{- $id := split (.Get "id")  "." -}}
+{{- $info :=  index $plan_json $id -}}
+{{- $map := dict "ent" "Enterprise" "pro" "Pro" "biz"
+"Business" "free" "Free" -}}
+
+<div class="DocsMarkdown--table-wrap">
+<div class="DocsMarkdown--table-wrap-inner">
+<table>
+    <tr>
+        <td>
+        <strong>Feature</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "free" }}</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "pro" }}</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "biz" }}</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "ent" }}</strong>
+        </td>
+    </tr>
+{{- range $elem_key, $elem_val := $info -}}
+{{- if and (ne $elem_key "link") (ne $elem_key "title") -}}
+<tr>
+    <td>
+        {{.title}}
+    </td>
+    <td>
+        {{.free}}
+    </td>
+    <td>
+        {{.pro}}
+    </td>
+    <td>
+        {{.biz}}
+    </td>
+    <td>
+        {{.ent}}
+    </td>
+</tr>
+{{- end -}}
+{{- end -}}
+</table>
+</div>
+</div>

@@ -36,17 +36,9 @@ Cloudflare Transform Rules are available to all customers. Support for regular e
 
 This table outlines the Transform Rules features available with each customer plan:
 
-{{<table-wrap>}}
-
-Feature                                       | Free | Pro | Business | Enterprise
-----------------------------------------------|------|-----|----------|-----------
-Active Transform Rules                        |   {{<plan-info id="rules.transform_rules.rules.free">}} |  {{<plan-info id="rules.transform_rules.rules.pro">}} |       {{<plan-info id="rules.transform_rules.rules.biz">}} |                 {{<plan-info id="rules.transform_rules.rules.ent">}} |
-Regular expression support                   |   {{<plan-info id="rules.transform_rules.regex_support.free">}} |  {{<plan-info id="rules.transform_rules.regex_support.pro">}} |       {{<plan-info id="rules.transform_rules.regex_support.biz">}} |                 {{<plan-info id="rules.transform_rules.regex_support.ent">}} |
-{{</table-wrap>}}
+{{<feature-table id="rules.transform_rules">}}
 
 A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/hc/articles/205065067#12345682) or one of the Administrator roles to access Transform Rules.
-
-***
 
 ## Get started
 

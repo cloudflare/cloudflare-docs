@@ -19,18 +19,16 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 Bulk Redirects and Dynamic Redirects are available on all Cloudflare plans. The exact quotas and features depend on your plan.
 
-| Feature                                         | Free | Pro | Business |     Enterprise     |
-|-------------------------------------------------|-----:|----:|---------:|-------------------:|
-| **Bulk Redirects**                              |      |     |          |                    |
-| Number of Bulk Redirect Rules                   |   {{<plan-info id="rules.bulk_redirects.rules.free">}} |  {{<plan-info id="rules.bulk_redirects.rules.pro">}} |       {{<plan-info id="rules.bulk_redirects.rules.biz">}} |                 {{<plan-info id="rules.bulk_redirects.rules.ent">}} |
-| Number of Bulk Redirect Lists                   |   {{<plan-info id="rules.bulk_redirects.lists.free">}} |  {{<plan-info id="rules.bulk_redirects.lists.pro">}} |       {{<plan-info id="rules.bulk_redirects.lists.biz">}} |                 {{<plan-info id="rules.bulk_redirects.lists.ent">}} |
-| Number of URL redirects across lists            |   {{<plan-info id="rules.bulk_redirects.url_redirects.free">}} |  {{<plan-info id="rules.bulk_redirects.url_redirects.pro">}} |       {{<plan-info id="rules.bulk_redirects.url_redirects.biz">}} |                 {{<plan-info id="rules.bulk_redirects.url_redirects.ent">}}[^1] |
-| **Dynamic Redirects**                           |      |     |          |                    |
-| Number of Dynamic Redirect Rules                |   {{<plan-info id="rules.dynamic_redirects.rules.free">}} |  {{<plan-info id="rules.dynamic_redirects.rules.pro">}} |       {{<plan-info id="rules.dynamic_redirects.rules.biz">}} |                 {{<plan-info id="rules.dynamic_redirects.rules.ent">}} |
-| Dynamic Redirect Rules with regular expressions |   {{<plan-info id="rules.dynamic_redirects.regex_support.free">}} |  {{<plan-info id="rules.dynamic_redirects.regex_support.pro">}} |       {{<plan-info id="rules.dynamic_redirects.regex_support.biz">}} |                 {{<plan-info id="rules.dynamic_redirects.regex_support.ent">}} |
+### Bulk redirects
 
-[^1]: Default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team.
+{{<feature-table id="rules.bulk_redirects">}}
+
+<sup>1</sup> _Default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team._
 
 Bulk Redirects features and quotas are per account and they depend on the highest Cloudflare plan on your account.
+
+### Dynamic Redirects
+
+{{<feature-table id="rules.dynamic_redirects">}}
 
 Dynamic Redirects features and quotas are per zone and depend on the zone plan.

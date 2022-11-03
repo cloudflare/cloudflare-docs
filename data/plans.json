@@ -1,30 +1,41 @@
 {
   "cache": {
+    "title": "Cache",
+    "link": "/cache/",
     "browser_cache_ttl": {
-      "minimum": {
+        "title": "Browser Cache TTL",
+        "link": "/cache/about/edge-browser-cache-ttl/",
+        "minimum": {
+        "title": "Minimum Browser Cache TTL",
         "free": "2 minutes",
         "pro": "2 minutes",
         "biz": "2 minutes",
         "ent": "30 seconds"
-      }
-    },
+    }
+      },
     "custom_purge": {
-      "purge_by": {
+        "title": "Custom purge options",
+        "link": "/cache/how-to/purge-cache/",
         "free": "URL",
         "pro": "URL",
         "biz": "URL",
         "ent": "URL, Hostname, Tag, or Prefix"
-      }
-    },
+      },
     "edge_cache_ttl": {
-      "minimum": {
-        "free": "2 hours",
-        "pro": "1 hour",
-        "biz": "1 second",
-        "ent": "1 second"
-      }
+        "title": "Edge Cache TTL",
+        "link": "/cache/about/edge-browser-cache-ttl/",
+        "minimum": {
+            "title": "Minimum Edge Cache TTL",
+            "free": "2 hours",
+            "pro": "1 hour",
+            "biz": "1 second",
+            "ent": "1 second"
+        }
+        
     },
     "query_string_sort": {
+    "title": "Query string sort",
+    "link": "https://support.cloudflare.com/hc/articles/206776797",
       "summary": "Enterprise",
       "free": "No",
       "pro": "No",
@@ -33,7 +44,10 @@
     }
   },
   "custom_pages": {
+    "title": "Configure Custom Pages",
+    "link": "https://support.cloudflare.com/hc/articles/200172706",
     "custom_pages": {
+      "title": "Customize error and challenge pages",
       "summary": "Pro or higher",
       "free": "No",
       "pro": "Yes",
@@ -41,6 +55,7 @@
       "ent": "Yes"
     },
     "origin_error_pages": {
+      "title": "Enable Origin Error Pages",
       "summary": "Enterprise only",
       "free": "No",
       "pro": "No",
@@ -49,13 +64,19 @@
     }
   },
   "dns": {
+    "title": "DNS",
+    "link": "/dns/",
     "partial_setup": {
+    "title": "Partial zone setup",
+    "link": "/dns/zone-setups/partial-setup/",
       "free": "No",
       "pro": "No",
       "biz": "Yes",
       "ent": "Yes"
     },
     "subdomain_setup": {
+        "title": "Subdomain zone setup",
+        "link": "/dns/zone-setups/subdomain-setup/",
       "summary": "Enterprise only",
       "free": "No",
       "pro": "No",
@@ -64,13 +85,16 @@
     }
   },
   "network": {
+    "title": "Network",
     "max_upload_size": {
+      "title": "Max upload size",
       "free": "100 MB",
       "pro": "100 MB",
       "biz": "200 MB",
       "ent": "500 MB"
     },
     "response_buffering": {
+        "title": "Response buffering",
       "summary": "Enterprise only",
       "free": "No",
       "pro": "No",
@@ -78,6 +102,7 @@
       "ent": "Yes"
     },
     "true_client_ip_header": {
+        "title": "True Client IP Header",
       "summary": "Enterprise only",
       "free": "No",
       "pro": "No",
@@ -86,28 +111,38 @@
     }
   },
   "rules": {
+    "title": "Rules",
+    "link": "/rules/",
     "bulk_redirects": {
-      "rules": {
+        "title": "Bulk Redirects",
+        "link": "/rules/url-forwarding/bulk-redirects/",
+      "num_rules": {
+        "title": "Rules",
         "free": 15,
         "pro": 15,
         "biz": 15,
         "ent": 50
       },
-      "lists": {
+      "total_lists": {
+        "title": "Lists",
         "free": 5,
         "pro": 5,
         "biz": 5,
         "ent": 25
       },
       "url_redirects": {
+        "title": "URL redirects across lists",
         "free": 20,
         "pro": 500,
         "biz": 500,
-        "ent": 10000
+        "ent": "10000 (1)"
       }
     },
     "cache_rules": {
+        "title": "Cache Rules",
+        "link": "/cache/about/cache-rules/",
       "rules": {
+        "title": "Number of rules",
         "free": 10,
         "pro": 25,
         "biz": 50,
@@ -115,7 +150,10 @@
       }
     },
     "config_rules": {
+        "title": "Configuration rules",
+        "link": "/rules/configuration-rules/",
       "rules": {
+        "title": "Number of rules",
         "free": 10,
         "pro": 25,
         "biz": 50,
@@ -123,13 +161,17 @@
       }
     },
     "dynamic_redirects": {
-      "rules": {
+        "title": "Dynamic Redirects",
+        "link": "/rules/url-forwarding/dynamic-redirects/",
+      "num_rules": {
+        "title": "Number of rules",
         "free": 10,
         "pro": 25,
         "biz": 50,
         "ent": 125
       },
       "regex_support": {
+        "title": "Regex support",
         "free": "No",
         "pro": "No",
         "biz": "Yes",
@@ -137,31 +179,38 @@
       }
     },
     "origin_rules": {
-      "rules": {
+        "title": "Origin Rules",
+        "link": "/rules/origin-rules/",
+      "num_rules": {
+        "title": "Number of rules",
         "free": 10,
         "pro": 25,
         "biz": 50,
         "ent": 125
       },
       "override_host_header": {
+        "title": "Override Host header",
         "free": "No",
         "pro": "No",
         "biz": "No",
         "ent": "Yes"
       },
       "override_sni": {
+        "title": "Override SNI",
         "free": "No",
         "pro": "No",
         "biz": "No",
         "ent": "Yes"
       },
       "override_dns_record": {
+        "title": "Override DNS records",
         "free": "No",
         "pro": "No",
         "biz": "No",
         "ent": "Yes"
       },
       "override_destination_port": {
+        "title": "Override destination port",
         "free": "Yes",
         "pro": "Yes",
         "biz": "Yes",
@@ -169,7 +218,10 @@
       }
     },
     "page_rules": {
+        "title": "Page Rules",
+        "link": "https://support.cloudflare.com/hc/articles/218411427",
       "rules": {
+        "title": "Number of rules",
         "free": 3,
         "pro": 20,
         "biz": 50,
@@ -177,13 +229,17 @@
       }
     },
     "transform_rules": {
-      "rules": {
+        "title": "Transform Rules",
+        "link": "/rules/transform/",
+      "num_rules": {
+        "title": "Active Transform Rules",
         "free": 10,
         "pro": 25,
         "biz": 50,
         "ent": 100
       },
       "regex_support": {
+        "title": "Regex support",
         "free": "No",
         "pro": "No",
         "biz": "Yes",
@@ -193,7 +249,11 @@
   },
   "security": {
     "bots": {
+        "title": "Bot products",
+        "link": "/bots/",
       "bot_analytics": {
+        "title": "Bot analytics",
+        "link": "/bots/bot-analytics/",
         "summary": "Business or higher",
         "free": "No",
         "pro": "No",
@@ -201,6 +261,8 @@
         "ent": "Yes"
       },
       "firewall_variables": {
+        "title": "Firewall variables",
+        "link": "/bots/reference/bot-management-variables/",
         "summary": "Enterprise with purchase",
         "free": "No",
         "pro": "No",
@@ -209,6 +271,7 @@
         "ent_purchase": "Yes"
       },
       "super_bot_fight_mode": {
+        "title": "Super Bot Fight Mode",
         "summary": "Pro or higher",
         "free": "No",
         "pro": "Yes",
@@ -217,25 +280,33 @@
       }
     },
     "firewall_rules": {
+        "title": "Firewall rules",
+        "link": "/firewall/",
       "rules": {
+        "title": "Number of rules",
         "free": 5,
         "pro": 20,
         "biz": 100,
         "ent": 1000
       },
       "ip_lists": {
+        "title": "Number of IP lists",
+        "link": "/firewall/cf-firewall-rules/rules-lists/",
         "free": 1,
         "pro": 10,
         "biz": 10,
         "ent": 10
       },
       "supported_actions": {
+        "title": "Supported actions",
+        "link": "/firewall/cf-firewall-rules/actions/",
         "free": "All except *Log*",
         "pro": "All except *Log*",
         "biz": "All except *Log*",
         "ent": "All"
       },
       "regex_support": {
+        "title": "Regex support",
         "free": "No",
         "pro": "No",
         "biz": "Yes",
@@ -243,7 +314,10 @@
       }
     },
     "page_shield": {
+        "title": "Page Shield",
+        "link": "/page-shield/",
       "script_monitor": {
+        "title": "Script monitor",
         "summary": "Pro or higher",
         "free": "No",
         "pro": "Yes",
@@ -251,6 +325,7 @@
         "ent": "Yes"
       },
       "new_script_new_domain_alerts": {
+        "title": "New Script Alerts and New Domain Alerts",
         "summary": "Business or higher",
         "free": "No",
         "pro": "No",
@@ -258,6 +333,7 @@
         "ent": "Yes"
       },
       "page_attribution": {
+        "title": "Page attribution",
         "summary": "Business or higher",
         "free": "No",
         "pro": "No",
@@ -265,6 +341,7 @@
         "ent": "Yes"
       },
       "malicious_scripts": {
+        "title": "Malicious script detection and alerting",
         "summary": "Enterprise",
         "free": "No",
         "pro": "No",
@@ -272,6 +349,7 @@
         "ent": "Yes"
       },
       "code_change_detection": {
+        "title": "Code change detection and alerting",
         "summary": "Enterprise",
         "free": "No",
         "pro": "No",
@@ -279,6 +357,7 @@
         "ent": "Yes"
       },
       "connection_monitor": {
+        "title": "Connection monitor",
         "summary": "Enterprise",
         "free": "No",
         "pro": "No",
@@ -287,7 +366,10 @@
       }
     },
     "rate_limiting": {
+        "title": "Rate Limiting Rules",
+        "link": "/waf/rate-limiting-rules/",
       "rules": {
+        "title": "Number of rules",
         "free": 1,
         "pro": 2,
         "biz-ent": 5,
@@ -297,7 +379,10 @@
     }
   },
   "speed": {
+    "title": "Speed",
     "automatic_signed_exchanges": {
+        "title": "Automatic Signed Exchanges (SXGs)",
+        "link": "/fundamentals/signed-exchanges/signed-exchanges/",
       "summary": "Pro or higher or [Automatic Platform Optimization](/automatic-platform-optimization/)",
       "free": "No",
       "pro": "Yes",
@@ -305,6 +390,8 @@
       "ent": "Yes"
     },
     "enhanced_http2_prioritization": {
+        "title": "Enhanced HTTP/2 Prioritization",
+        "link": "https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/",
       "summary": "Pro or higher",
       "free": "No",
       "pro": "Yes",
@@ -312,6 +399,8 @@
       "ent": "Yes"
     },
     "image_resizing": {
+        "title": "Image Resizing",
+        "link": "/images/image-resizing/",
       "summary": "Pro or higher",
       "free": "No",
       "pro": "Yes",
@@ -319,6 +408,8 @@
       "ent": "Yes"
     },
     "mirage": {
+        "title": "Mirage",
+        "link": "https://support.cloudflare.com/hc/articles/219178057",
       "summary": "Pro or higher",
       "free": "No",
       "pro": "Yes",
@@ -326,6 +417,8 @@
       "ent": "Yes"
     },
     "polish": {
+        "title": "Polish",
+        "link": "/images/polish/",
       "summary": "Pro or higher",
       "free": "No",
       "pro": "Yes",
@@ -333,6 +426,8 @@
       "ent": "Yes"
     },
     "prefetch_urls": {
+        "title": "Prefetch URLs",
+        "link": "/fundamentals/speed/prefetch-urls/",
       "summary": "Enterprise",
       "free": "No",
       "pro": "No",
@@ -340,6 +435,7 @@
       "ent": "Yes"
     },
     "tcp_turbo": {
+        "title": "TCP Turbo",
       "summary": "Pro or higher",
       "free": "No",
       "pro": "Yes",
@@ -348,7 +444,11 @@
     }
   },
   "ssl": {
+    "title": "SSL/TLS",
+        "link": "/ssl/",
     "custom_certificates": {
+        "title": "Custom Certificates",
+        "link": "/ssl/edge-certificates/custom-certificates/",
       "summary": "Business and Enterprise customers get 1 certificate and Enterprise customers can purchase additional if needed.",
       "free": "No",
       "pro": "No",

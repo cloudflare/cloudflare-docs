@@ -20,16 +20,7 @@ The Origin Rule expression will determine when these overrides will be applied.
 
 ## Availability
 
-{{<table-wrap>}}
-|                           | Free | Pro | Business | Enterprise |
-|---------------------------|:----:|:---:|:--------:|:----------:|
-| Number of Origin Rules    |   {{<plan-info id="rules.origin_rules.rules.free">}} |  {{<plan-info id="rules.origin_rules.rules.pro">}} |       {{<plan-info id="rules.origin_rules.rules.biz">}} |                 {{<plan-info id="rules.origin_rules.rules.ent">}} |
-| Override Host header      |   {{<plan-info id="rules.origin_rules.override_host_header.free">}} |  {{<plan-info id="rules.origin_rules.override_host_header.pro">}} |       {{<plan-info id="rules.origin_rules.override_host_header.biz">}} |                 {{<plan-info id="rules.origin_rules.override_host_header.ent">}} |
-| Override SNI              |   {{<plan-info id="rules.origin_rules.override_sni.free">}} |  {{<plan-info id="rules.origin_rules.override_sni.pro">}} |       {{<plan-info id="rules.origin_rules.override_sni.biz">}} |                 {{<plan-info id="rules.origin_rules.override_sni.ent">}} |
-| Override DNS record       |   {{<plan-info id="rules.origin_rules.override_dns_record.free">}} |  {{<plan-info id="rules.origin_rules.override_dns_record.pro">}} |       {{<plan-info id="rules.origin_rules.override_dns_record.biz">}} |                 {{<plan-info id="rules.origin_rules.override_dns_record.ent">}} |
-| Override destination port |   {{<plan-info id="rules.origin_rules.override_destination_port.free">}} |  {{<plan-info id="rules.origin_rules.override_destination_port.pro">}} |       {{<plan-info id="rules.origin_rules.override_destination_port.biz">}} |                 {{<plan-info id="rules.origin_rules.override_destination_port.ent">}} |
-
-{{</table-wrap>}}
+{{<feature-table id="rules.origin_rules">}}
 
 ## Execution order
 
