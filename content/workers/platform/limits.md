@@ -7,9 +7,7 @@ title: Limits
 
 {{<Aside type="note">}}
 
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
-
-To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 {{</Aside>}}
 
@@ -250,7 +248,7 @@ Each environment variable has a size limitation of 5 KB.
 
 ### Worker size
 
-A Worker can be up to 1 MB in size after compression. If needed, you can [request a larger Worker size](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker can be up to 1 MB in size after compression. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ### Number of Workers
 
