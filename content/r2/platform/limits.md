@@ -22,7 +22,7 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 | ------------------------------- | ------------------------------------- |
 | Bucket                          | 1000 buckets per account              |
 | Data storage per bucket         | Unlimited                             |
-| Object metadata size            | 2048 bytes                            |
+| Object metadata size            | 2,048 bytes                           |
 | Object size                     | 5 TB per object<sup>1</sup>           |
 | Maximum upload size<sup>3</sup> | 5 GB<sup>2</sup>                      |
 
