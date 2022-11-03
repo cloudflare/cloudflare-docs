@@ -19,7 +19,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 - To provide additional points of availability for a single tunnel.
 - To allocate failover nodes within your network.
-- To update the configuration of a tunnel without downtime
+- To update the configuration of a tunnel without downtime.
 
 ### Deploy `cloudflared` replicas
 
