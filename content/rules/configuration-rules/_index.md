@@ -23,7 +23,7 @@ The number of available Configuration Rules varies according to your Cloudflare 
 
 |                               | Free | Pro | Business | Enterprise |
 |-------------------------------|:----:|:---:|:--------:|:----------:|
-| Number of Configuration Rules |  10  | 25  |    50    |    125     |
+| Number of Configuration Rules |   {{<plan-info id="rules.config_rules.rules.free">}} |  {{<plan-info id="rules.config_rules.rules.pro">}} |       {{<plan-info id="rules.config_rules.rules.biz">}} |                 {{<plan-info id="rules.config_rules.rules.ent">}} |
 
 {{</table-wrap>}}
 
