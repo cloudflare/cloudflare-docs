@@ -512,6 +512,7 @@ Examples:
 SELECT startsWith('prefix ...', 'prefix');
 SELECT startsWith(blob1, 'prefix') FROM your_dataset;
 ```
+
 ### endsWith
 
 Usage:
