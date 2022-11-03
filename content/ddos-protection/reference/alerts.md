@@ -61,7 +61,7 @@ Cloudflare can issue notifications for different types of DDoS attack alerts.
 
 ### Standard alerts
 
-* **HTTP DDoS Attack Alert**: Alert for HTTP attacks that generate more than 2,000 requests per second.
+* **HTTP DDoS Attack Alert**: Alert for HTTP attacks that generate more than 100 requests per second.
 * **Layer 3/4 DDoS Attack Alert**: Alert for Layer 3/4 attacks that generate more than 20,000 packets per second.
 
 ### Advanced alerts

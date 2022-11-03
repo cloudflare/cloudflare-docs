@@ -348,7 +348,7 @@ When making changes to your Durable Object classes, you must perform a migration
 
   - The Durable Objects being renamed.
 
-- `environment` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `deleted_classes` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The Durable Objects being removed.
 

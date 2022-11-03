@@ -59,7 +59,7 @@ When you avoid this situation - meaning you do not have the **target** of the `C
 
 ## Records pointing to a partial zone within the same account
 
-You could also [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full setup) that points to a record in another zone within your account.
+You could also [create a `CNAME` record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) in a zone (partial or full setup) that points to a record in another partial zone within your account.
 
 In this case, Cloudflare will always resolve the `CNAME` target based on the value at your authoritative DNS provider of the partial target zone.
 

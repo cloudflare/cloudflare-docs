@@ -1,14 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Accessibility
-weight: 3
+weight: 7
 ---
 
 # Accessibility
 
-## Enable or disable the screen reader
+Browser Isolation has a built-in screen reader which enables people with visual impairments to browse isolated pages.
 
-Browser Isolation has a built-in screen reader which enables people with visual impairments to view isolated pages.
+## Enable or disable the screen reader
 
 ### Keyboard shortcut
 

@@ -118,10 +118,12 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 |                    | Usage                                    | Billable Quantity | Price      |
 |--------------------|------------------------------------------|-------------------|------------|
 | Class B Operations | (1,000 assets) * (1,000 reads per asset) |         1,000,000 |      $0.36 |
-| Class A Operations | (1,000 assets) * (1 write per asset)     |             1,000 |      $0.00 |
+| Class A Operations | (1,000 assets) * (1 write per asset)     |             1,000 |      $4.50 |
 | Storage            | (1,000 assets) * (1GB per asset)         |   1,000 GB-months |     $15.00 |
-| **TOTAL**          |                                          |                   | **$15.36** |
+| **TOTAL**          |                                          |                   | **$19.86** |
 {{</table-wrap>}}
+
+(Note the billable quantity is rounded up to the nearest million.)
 
 #### Example 2
 

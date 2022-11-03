@@ -9,7 +9,7 @@ weight: 5
 With Cloudflare Zero Trust, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/connections/connect-devices/agentless/pac-files/) or [Magic WAN](/magic-wan/tutorials/secure-web-gateway/). Since these on-ramps do not require users to log in to Cloudflare WARP, [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) are not supported.
 
 {{<Aside type="note">}}
-If you want to apply Isolate policies based on user identity, you will need to either install the [WARP client](/cloudflare-one/connections/connect-devices/warp/) or manually redirect users to the [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/agentless/clientless-browser-isolation/) URL.
+If you want to apply Isolate policies based on user identity, you will need to either install the [WARP client](/cloudflare-one/connections/connect-devices/warp/) or manually redirect users to the [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) URL.
 {{</Aside>}}
 
 ## Set up non-identity browser isolation
@@ -21,12 +21,4 @@ If you want to apply Isolate policies based on user identity, you will need to e
 3. Enable non-identity browser isolation:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Browser Isolation**.
     2. Turn on **Non-identity on-ramp support**.
-4. Create HTTP policies to isolate websites in a remote browser:
-    1. Go to **Gateway** > **Policies** > **HTTP**.
-    2. Build a non-identity [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the Isolate action. The following example enables isolation for all web traffic:
-
-        | Selector            | Operator | Value           | Action         |
-        | --------------------| ---------| ----------------| -------------- |
-        | Hostname            | matches regex  | `.*` | Isolate        |
-
-For more examples, refer to the list of [common HTTP policies](/cloudflare-one/policies/filtering/http-policies/common-policies/#isolate-high-risk-sites-in-remote-browser).
+4. Build a non-identity [HTTP policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) to isolate websites in a remote browser.

@@ -15,14 +15,14 @@ You can only launch DDoS attacks against your own Internet properties — your z
 
 ## Before you start
 
-You do not have to obtain permission from Cloudflare to launch a DDoS attack simulation against your own Internet properties. However, before launching the simulated attack, you must [open a Support ticket](https://support.cloudflare.com/hc/articles/200172476) and provide the information below. All fields are mandatory unless marked as optional.
+You do not have to obtain permission from Cloudflare to launch a DDoS attack simulation against your own Internet properties. However, before launching the simulated attack, you must [open a Support ticket](https://support.cloudflare.com/hc/articles/200172476) and provide the information below. All fields are mandatory.
 
 ### For WAF/CDN customers
 
 - Attack origin region
 - Attack duration
-- Attack window
-- Attack method _(optional)_
+- Attack date & timeframe
+- Attack method
 - Bandwidth size or range
 - Target IPs/range/zones
 - Contact in case of emergency
@@ -31,8 +31,8 @@ You do not have to obtain permission from Cloudflare to launch a DDoS attack sim
 
 - Attack origin region
 - Attack duration
-- Attack window
-- Attack method _(optional)_
+- Attack date & timeframe
+- Attack method
 - Bandwidth size or range
 - Target IPs/range/zones
 - Target Ports
