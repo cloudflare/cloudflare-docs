@@ -17,7 +17,7 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 ## Availability
 
-Bulk Redirects and Dynamic Redirects are available on all Cloudflare plans. The exact quotas and features depend on your plan.         |
+Bulk Redirects and Dynamic Redirects are available on all Cloudflare plans. The exact quotas and features depend on your plan.
 
 | Feature                                         | Free | Pro | Business |     Enterprise     |
 |-------------------------------------------------|-----:|----:|---------:|-------------------:|
