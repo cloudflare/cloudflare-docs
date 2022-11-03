@@ -29,9 +29,9 @@
 <tr>
     <td>
         <p>{{ if .link }}
-            <a href= {{.link}}>{{.title | .Page.RenderString }}</a>
+            <a href= {{.link}}>{{ .title | markdownify }}</a>
         {{ else }}
-        {{.title}}
+        {{ .title | markdownify }}
         {{ end }}
     </p>
     </td>

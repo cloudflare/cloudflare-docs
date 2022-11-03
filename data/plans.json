@@ -362,7 +362,7 @@
       "page_shield": {
         "title": "Page Shield",
         "link": "/page-shield/",
-        "script_monitor": {
+        "1_script_monitor": {
           "title": "Script monitor",
           "summary": "Pro or higher",
           "free": "No",
@@ -370,15 +370,15 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "new_script_new_domain_alerts": {
-          "title": "New Script Alerts and New Domain Alerts",
+        "2_new_script_new_domain_alerts": {
+          "title": "New Script Alerts<br/> and New Domain Alerts",
           "summary": "Business or higher",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
           "ent": "Yes"
         },
-        "page_attribution": {
+        "3_page_attribution": {
           "title": "Page attribution",
           "summary": "Business or higher",
           "free": "No",
@@ -386,23 +386,23 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "malicious_scripts": {
-          "title": "Malicious script detection and alerting",
+        "4_malicious_scripts": {
+          "title": "Malicious script detection<br/> and alerting",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
         },
-        "code_change_detection": {
-          "title": "Code change detection and alerting",
+        "5_code_change_detection": {
+          "title": "Code change detection<br /> and alerting",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
         },
-        "connection_monitor": {
+        "6_connection_monitor": {
           "title": "Connection monitor",
           "summary": "Enterprise",
           "free": "No",
