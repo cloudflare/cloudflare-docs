@@ -18,9 +18,9 @@ Available for Cloudflare customers on a Business or Enterprise plan.
 
 {{</Aside>}}
 
-- **Page Shield New Scripts Alert**: Triggered daily by any new resources detected in your pages.
+- **Page Shield New Resources Alert**: Triggered daily by any new resources detected in your pages.
 - **Page Shield New Domain Alert**: Triggered hourly by newly detected resources from new host domains.
-- **Page Shield New Script Exceeds Max URL Length Alert**: Triggered when a resource's URL exceeds the maximum allowed length.
+- **Page Shield New Resource Exceeds Max URL Length Alert**: Triggered when a resource URL exceeds the maximum allowed length.
 
 ## Code change alert
 
