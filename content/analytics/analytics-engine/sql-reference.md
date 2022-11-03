@@ -460,7 +460,7 @@ Usage:
 isEmpty({string})
 ```
 
-Returns a boolean saying whether the string was empty. This computation can also be done as a binary operation, `{string} = ''`.
+Returns a boolean saying whether the string was empty. This computation can also be done as a binary operation: `{string} = ''`.
 
 Examples:
 ```SQL
