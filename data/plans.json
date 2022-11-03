@@ -26,41 +26,41 @@
     },
     "query_string_sort": {
       "summary": "Enterprise",
-      "free": "❌",
-      "pro": "❌",
-      "biz": "❌",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "No",
+      "ent": "Yes"
     }
   },
   "custom_pages": {
     "custom_pages": {
       "summary": "Pro or higher",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "origin_error_pages": {
       "summary": "Enterprise only",
-      "free": "❌",
-      "pro": "❌",
-      "biz": "❌",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "No",
+      "ent": "Yes"
     }
   },
   "dns": {
     "partial_setup": {
-      "free": "❌",
-      "pro": "❌",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "subdomain_setup": {
       "summary": "Enterprise only",
-      "free": "❌",
-      "pro": "❌",
-      "biz": "❌",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "No",
+      "ent": "Yes"
     }
   },
   "network": {
@@ -72,17 +72,17 @@
     },
     "response_buffering": {
       "summary": "Enterprise only",
-      "free": "❌",
-      "pro": "❌",
-      "biz": "❌",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "No",
+      "ent": "Yes"
     },
     "true_client_ip_header": {
       "summary": "Enterprise only",
-      "free": "❌",
-      "pro": "❌",
-      "biz": "❌",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "No",
+      "ent": "Yes"
     }
   },
   "rules": {
@@ -130,10 +130,10 @@
         "ent": 125
       },
       "regex_support": {
-        "free": "❌",
-        "pro": "❌",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "Yes",
+        "ent": "Yes"
       }
     },
     "origin_rules": {
@@ -144,28 +144,28 @@
         "ent": 125
       },
       "override_host_header": {
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "Yes"
       },
       "override_sni": {
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "Yes"
       },
       "override_dns_record": {
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "Yes"
       },
       "override_destination_port": {
-        "free": "✅",
-        "pro": "✅",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
       }
     },
     "page_rules": {
@@ -184,10 +184,10 @@
         "ent": 100
       },
       "regex_support": {
-        "free": "❌",
-        "pro": "❌",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "Yes",
+        "ent": "Yes"
       }
     }
   },
@@ -195,25 +195,25 @@
     "bots": {
       "bot_analytics": {
         "summary": "Business or higher",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "Yes",
+        "ent": "Yes"
       },
       "firewall_variables": {
         "summary": "Enterprise with purchase",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "❌",
-        "ent_purchase": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "No",
+        "ent_purchase": "Yes"
       },
       "super_bot_fight_mode": {
         "summary": "Pro or higher",
-        "free": "❌",
-        "pro": "✅",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
       }
     },
     "firewall_rules": {
@@ -236,54 +236,54 @@
         "ent": "All"
       },
       "regex_support": {
-        "free": "❌",
-        "pro": "❌",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "Yes",
+        "ent": "Yes"
       }
     },
     "page_shield": {
       "script_monitor": {
         "summary": "Pro or higher",
-        "free": "❌",
-        "pro": "✅",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
       },
       "new_script_new_domain_alerts": {
         "summary": "Business or higher",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "Yes",
+        "ent": "Yes"
       },
       "page_attribution": {
         "summary": "Business or higher",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "✅",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "Yes",
+        "ent": "Yes"
       },
       "malicious_scripts": {
         "summary": "Enterprise",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "Yes"
       },
       "code_change_detection": {
         "summary": "Enterprise",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "Yes"
       },
       "connection_monitor": {
         "summary": "Enterprise",
-        "free": "❌",
-        "pro": "❌",
-        "biz": "❌",
-        "ent": "✅"
+        "free": "No",
+        "pro": "No",
+        "biz": "No",
+        "ent": "Yes"
       }
     },
     "rate_limiting": {
@@ -299,59 +299,59 @@
   "speed": {
     "automatic_signed_exchanges": {
       "summary": "Pro or higher or [Automatic Platform Optimization](/automatic-platform-optimization/)",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "enhanced_http2_prioritization": {
       "summary": "Pro or higher",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "image_resizing": {
       "summary": "Pro or higher",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "mirage": {
       "summary": "Pro or higher",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "polish": {
       "summary": "Pro or higher",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     },
     "prefetch_urls": {
       "summary": "Enterprise",
-      "free": "❌",
-      "pro": "❌",
-      "biz": "❌",
-      "ent": "✅"
+      "free": "No",
+      "pro": "No",
+      "biz": "No",
+      "ent": "Yes"
     },
     "tcp_turbo": {
       "summary": "Pro or higher",
-      "free": "❌",
-      "pro": "✅",
-      "biz": "✅",
-      "ent": "✅"
+      "free": "No",
+      "pro": "Yes",
+      "biz": "Yes",
+      "ent": "Yes"
     }
   },
   "ssl": {
     "custom_certificates": {
       "summary": "Business and Enterprise customers get 1 certificate and Enterprise customers can purchase additional if needed.",
-      "free": "❌",
-      "pro": "❌",
+      "free": "No",
+      "pro": "No",
       "biz": 1,
       "ent": "1 (can purchase more)"
     }
