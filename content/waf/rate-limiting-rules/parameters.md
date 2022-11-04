@@ -67,6 +67,7 @@ The available rate limiting rule parameters are the following:
   - If you use _Cookie_, refer to [Recommendations](#recommendations) for additional validations you should implement.
   - You should not use _Headers_ or _Cookie_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
   - For more information on the `lookup_json_string` function, refer to [Functions](/ruleset-engine/rules-language/functions/#function-lookup_json_string) in the Ruleset Engine documentation.
+  - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/).
 
 {{<Aside type="note">}}
 
