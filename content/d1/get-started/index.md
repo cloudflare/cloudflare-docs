@@ -14,7 +14,7 @@ $ npx wrangler init
 
 which will include a [**wrangler.toml**](https://developers.cloudflare.com/workers/wrangler/configuration/) configuration file in the project directory.
 
-You can create your first database with our Wrangler CLI. To get started, you will need to install our specific version of Wrangler:
+You can create your first database with our Wrangler CLI. To get started, you will need to install Wrangler:
 
 ```sh
 $ npm install --save-dev wrangler
@@ -88,7 +88,9 @@ $ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
 
 
 ### Write queries within your Worker
-Once you’ve set up your database, you can connect to it within your Worker by using the binding name configured above in Step 3 on the env parameter. For example, if we use the binding name “DB” (specified in wrangler.toml), executing a SQL query within our Worker is as easy as this: 
+Once you’ve set up your database, you can connect to it within your Worker by using the binding name configured above in Step 3 on the env parameter. 
+
+For example, if we use the binding name “DB” (specified in wrangler.toml), executing a SQL query within our Worker is as easy as this: 
 
 ```javascript
 export default {
@@ -109,7 +111,7 @@ export default {
 };
 ```
 
-See the D1 Client API appendix for the full in-Worker API docs.
+See the D1 Client API section of the docs for the full in-Worker API docs.
 
 ## 4. Test and publish with Wrangler 
 
