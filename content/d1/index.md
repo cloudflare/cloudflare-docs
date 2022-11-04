@@ -16,11 +16,13 @@ Built on SQLite, D1 is Cloudflare’s first [queryable relational database at th
 * Store backups of your database in R2 automatically
 * Export your backups to download to your local machine. 
 
-With D1 currently in beta, you can truly go full-stack and build rich apps including eCommerce sites, accounting software, SaaS solutions, CRMs and more. 
+With D1 currently in Alpha, you can truly go full-stack and build rich apps including eCommerce sites, accounting software, SaaS solutions, CRMs and more. 
+
+  
 
 ## Community
 
-Please reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the [D1-open-beta channel](<link>). In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team. 
+Please reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the D1-private-beta channel. In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team. 
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
 
