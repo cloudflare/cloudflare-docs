@@ -468,8 +468,8 @@ Returns a boolean saying whether the string was empty. This computation can also
 
 Examples:
 ```SQL
-SELECT isEmpty('a string');
-SELECT isEmpty(blob1) FROM your_dataset;
+SELECT isEmpty('a string') AS b;
+SELECT isEmpty(blob1) AS b FROM your_dataset;
 ```
 
 ### toLower
