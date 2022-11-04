@@ -543,8 +543,8 @@ Returns the position of one string, `needle`, in another, `haystack`. In SQL, in
 
 Examples:
 ```SQL
-SELECT position(':' IN 'hello: world');
-SELECT position(':' IN blob1) FROM your_dataset;
+SELECT position(':' IN 'hello: world') AS p;
+SELECT position(':' IN blob1) AS p FROM your_dataset;
 ```
 
 ### substring
