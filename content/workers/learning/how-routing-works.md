@@ -1,10 +1,9 @@
 ---
 pcx_content_type: concept
-title: Routing
-layout: single
+title: How routing works
 ---
 
-# Routing
+# How routing works
 
 ## Background
 
