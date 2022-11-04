@@ -27,13 +27,13 @@ Custom Domains are recommended if you want to connect your Worker to the Interne
 
 Custom Domains can stack on top of each other. For example, if you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
 
-![Custom Domains can stack on top of each other, like any external dependencies](workers/learning/media/routes-diagram.png)
+![Custom Domains can stack on top of each other, like any external dependencies](workers/learning/media/custom-domains-subrequest.png)
 
 ## Routes
 
 [Routes](/workers/platform/triggers/routes) are a set of rules that evaluate against a request's URL. Routes are recommended for you if you have a designated application server you always need to communicate with. Calling `fetch()` on the incoming `Request` object will trigger a subrequest to your application server, as defined in the **DNS** settings of your Cloudflare zone.
 
-![Routes work with your applications defined in Cloudflare DNS](./media/routes-diagram.png)
+![Routes work with your applications defined in Cloudflare DNS](workers/learning/media/routes-diagram.png)
 
 Routes can `fetch()` Custom Domains and take precedence if configured on the same hostname. If you would like to run a logging Worker in front of your application, for example, you can create a Custom Domain on your application Worker for `app.example.com`, and create a Route for your logging Worker at `app.example.com/*`.  Calling `fetch()` will invoke the application Worker on your Custom Domain. Note that Routes cannot be the target of a same-zone `fetch()` call.
 
