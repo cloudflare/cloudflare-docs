@@ -3,19 +3,19 @@ title: Terraform example
 pcx_content_type: configuration
 weight: 4
 meta:
-  title: Single Redirects — Terraform example
+  title: Dynamic Redirects — Terraform example
 ---
 
 # Terraform example
 
-The following example defines a single redirect rule for a zone using Terraform. The rule creates a static URL redirect for visitors requesting the contacts page using an old URL.
+The following example defines a single dynamic redirect rule for a zone using Terraform. The rule creates a static redirect for visitors requesting the contacts page using an old URL.
 
 ```tf
-# Single Redirects resource
-resource "cloudflare_ruleset" "single_redirects_example" {
+# Dynamic Redirects resource
+resource "cloudflare_ruleset" "dynamic_redirects_example" {
   zone_id     = "<ZONE_ID>"
   name        = "redirects"
-  description = "Redirects ruleset"
+  description = "Redirect ruleset"
   kind        = "zone"
   phase       = "http_request_dynamic_redirect"
 

@@ -1,9 +1,7 @@
 ---
 pcx_content_type: how-to
-title: Create via API
+title: Create Bulk Redirects via API
 weight: 7
-meta:
-  title: Create Bulk Redirects via API
 ---
 
 # Create Bulk Redirects via API
