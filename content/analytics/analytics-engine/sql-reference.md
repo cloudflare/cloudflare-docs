@@ -498,8 +498,8 @@ Returns the string converted to uppercase. This function is Unicode compatible. 
 
 Examples:
 ```SQL
-SELECT toUpper('string to uppercase');
-SELECT toUpper(blob1) FROM your_dataset;
+SELECT toUpper('string to uppercase') AS s;
+SELECT toUpper(blob1) AS s FROM your_dataset;
 ```
 
 ### startsWith
