@@ -106,6 +106,8 @@ You now have secure, remote access to the RDP server.
     ```
 
     This process will need to be configured to stay alive and autostart. If the process is killed, users will not be able to connect.
+    
+    If the client machine is running Windows, port 3389 may already be consumed locally.  Select an alternative port to 3389 that is not being used. 
 
 3. While `cloudflared access` is running, connect from an RDP client such as Microsoft Remote Desktop:
     1. Open Microsoft Remote Desktop and select **Add a PC**.
