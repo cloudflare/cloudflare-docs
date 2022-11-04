@@ -59,6 +59,6 @@ routes = [
 
 ## What is best for me?
 
-[Custom Domains](/workers/platform/routing/custom-domains/) are recommended for use cases where your application lives on the Cloudflare network, needs to be global by default, and may optionally communicate with any number of dependencies.
+[Custom Domains](/workers/platform/triggers/custom-domains/ are recommended for use cases where your application lives on the Cloudflare network, needs to be global by default, and may optionally communicate with any number of dependencies.
 
 Generally, [Routes](/workers/platform/routing/routes) are good for use cases where the Worker acts like a 'proxy', making small modifications to the Request, Response, or logging data in between the user and the server. 
