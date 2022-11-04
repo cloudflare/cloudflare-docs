@@ -22,6 +22,12 @@ Built on SQLite, D1 is Cloudflare’s first [queryable relational database at th
 
 With D1 currently in Alpha, you can truly go full-stack and build rich apps including eCommerce sites, accounting software, SaaS solutions, CRMs and more.
 
+{{<Aside type="warning">}}
+
+Please note, that while in the Alpha period, there is a possibility of breaking changes. The Alpha is meant for testing purposes and using it for Production traffic is not recommended.
+
+{{</Aside>}} 
+
 ## Features coming soon
 * **Larger databases**: During the alpha period, our databases will be limited to 100MB but we will be looking to support larger databases in the future. If your use case requires a larger database, please reach out!
 * **Read replication**: D1 will create read-only clones of your data and distribute across Cloudflare global network — close to where your users are — and constantly keep them up-to-date with changes.
