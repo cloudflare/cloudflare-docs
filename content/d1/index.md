@@ -19,6 +19,7 @@ With D1 currently in Alpha, you can truly go full-stack and build rich apps incl
 ## Features coming soon
 * **Read replication**: D1 will create read-only clones of your data and distribute across Cloudflare global network — close to where your users are — and constantly keep them up-to-date with changes.
 * **Embedded compute**: Define a chunk of your Worker code that runs directly next to the database, giving you total control and maximum performance—each request first hits your Worker near your users, but depending on the operation, can hand off to another Worker deployed alongside a replica or your primary D1 instance to complete its work.
+* **Larger databases**: During the alpha period, our databases will be limited to 100MB but we will be looking to support larger databases in the future. If your use case requires a larger database, please reach out! 
 
 ## Community
 
