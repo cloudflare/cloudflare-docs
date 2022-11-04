@@ -19,8 +19,6 @@ For zones proxied on Cloudflare, route patterns decide what (if any) script is m
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
-![After selecting Add route, you will be asked to input a route pattern and specify a Worker to assign to that route](../media/add-route-modal.png)
-
 Cloudflare Site routes are comprised of:
 
 - Route URL (refer to [Matching Behavior](#matching-behavior))
