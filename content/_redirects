@@ -888,6 +888,10 @@
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 /workers/get-started/storage-objects/ /workers/platform/storage-objects 301
+/workers/platform/routing/ /workers/learning/how-routing-works/ 301
+/workers/platform/triggers/custom-domains// /workers/platform/triggers/custom-domains/ 301
+/workers/platform/routing/routes/ /workers/platform/triggers/routes/ 301
+/workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 
 # zaraz
 
