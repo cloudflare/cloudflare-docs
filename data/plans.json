@@ -13,6 +13,30 @@
         "ent": "30 seconds"
       }
     },
+    "cache_key": {
+        "title": "Cache keys",
+        "link": "/cache/about/cache-keys/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "Enterprise",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      },
+    "cache_status_code": {
+        "title": "Cache by status code",
+        "link": "/cache/how-to/configure-cache-status-code/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "Enterprise",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      },
     "custom_purge": {
       "title": "Custom purge",
       "link": "/cache/how-to/purge-cache/",
@@ -35,6 +59,18 @@
         "ent": "1 second"
       }
     },
+    "etag_headers": {
+        "title": "ETag Headers",
+        "link": "https://support.cloudflare.com/hc/articles/218505467",
+        "availability": {
+          "title": "Avalability",
+          "summary": "Enterprise",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      },
     "query_string_sort": {
       "title": "Query string sort",
       "link": "https://support.cloudflare.com/hc/articles/206776797",
@@ -77,6 +113,17 @@
   "dns": {
     "title": "DNS",
     "link": "/dns/",
+    "custom_nameservers": {
+        "title": "Custom nameservers",
+        "link": "/dns/additional-options/custom-nameservers/",
+        "availability": {
+          "title": "Avalability",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
     "full_setup": {
       "title": "Full zone setup",
       "link": "/dns/zone-setups/full-setup/",
@@ -114,18 +161,128 @@
   },
   "network": {
     "title": "Network",
+    "0_rtt": {
+        "title": "0-RTT Connection Resumption",
+        "link": "/fundamentals/network/0-rtt-connection-resumption/",
+        "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          }
+    },
+    "grpc": {
+        "title": "gRPC",
+        "link": "https://support.cloudflare.com/hc/articles/360050483011",
+        "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+    "http2": {
+        "title": "HTTP/2",
+        "link": "https://support.cloudflare.com/hc/articles/200168076",
+        "customization": {
+          "title": "Can customize",
+          "summary": "Only Enterprise can customize",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      },
+      "http2_to_origin": {
+        "title": "HTTP/2 to Origin",
+        "link": "/cache/how-to/enable-http2-to-origin/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "http3": {
+        "title": "HTTP/3 (with QUIC)",
+        "link": "https://www.cloudflare.com/learning/performance/what-is-http3/",
+        "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "ip_geolocation": {
+        "title": "IP Geolocation",
+        "link": "https://support.cloudflare.com/hc/articles/200168236",
+        "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "ipv6": {
+        "title": "IPv6 Compatibility",
+        "link": "https://support.cloudflare.com/hc/articles/229666767",
+        "customization": {
+          "title": "Can customize",
+          "summary": "Only Enterprise can customize",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      },
     "max_upload_size": {
       "title": "Max upload size",
+      "link": "/cache/about/default-cache-behavior/",
       "upload_size": {
         "title": "Max upload size",
         "free": "100 MB",
         "pro": "100 MB",
         "biz": "200 MB",
-        "ent": "500 MB"
+        "ent": "500+ MB"
       }
     },
+    "onion_routing": {
+        "title": "Onion Routing",
+        "link": "https://support.cloudflare.com/hc/articles/203306930",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "pseudo_ipv4": {
+        "title": "Pseudo IPv4",
+        "link": "https://support.cloudflare.com/hc/articles/229666767",
+        "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
     "response_buffering": {
       "title": "Response buffering",
+      "link": "https://support.cloudflare.com/hc/articles/206049798",
       "availability": {
         "title": "Avalability",
         "summary": "Enterprise only",
@@ -137,6 +294,7 @@
     },
     "true_client_ip_header": {
       "title": "True Client IP Header",
+      "link": "/fundamentals/get-started/reference/http-request-headers/",
       "availability": {
         "title": "Avalability",
         "summary": "Enterprise only",
@@ -145,7 +303,27 @@
         "biz": "No",
         "ent": "Yes"
       }
-    }
+    },
+    "websockets": {
+        "title": "WebSockets",
+        "link": "https://support.cloudflare.com/hc/articles/200169466",
+        "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+        },
+        "concurrent_connections": {
+            "title": "Volume of concurrent connections",
+            "summary": "Varies by plan",
+            "free": "Low (hobby projects)",
+            "pro": "Medium (Small businesses)",
+            "biz": "High (important applications)",
+            "ent": "Custom (mission-critical applications)"
+        }
+      }
   },
   "rules": {
     "title": "Rules",
@@ -433,6 +611,30 @@
     },
     "speed": {
       "title": "Speed",
+      "amp": {
+        "title": "AMP Real URL",
+        "link": "/fundamentals/signed-exchanges/amp-real-ulr/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "automatic_platform_optimization": {
+        "title": "Automatic Platform Optimization",
+        "link": "/automatic-platform-optimization/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "Included with Pro or higher",
+          "free": "Paid add-on",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
       "automatic_signed_exchanges": {
         "title": "Automatic Signed Exchanges (SXGs)",
         "link": "/fundamentals/signed-exchanges/signed-exchanges/",
@@ -440,6 +642,42 @@
           "title": "Avalability",
           "summary": "Pro or higher or [Automatic Platform Optimization](/automatic-platform-optimization/)",
           "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "auto_minify": {
+        "title": "Auto Minify",
+        "link": "https://support.cloudflare.com/hc/articles/200168196",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "brotli": {
+        "title": "Brotli compression",
+        "link": "https://support.cloudflare.com/hc/articles/200168396",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "early_hints": {
+        "title": "Early Hints",
+        "link": "/cache/about/early-hints",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -462,11 +700,11 @@
         "link": "/images/image-resizing/",
         "availability": {
           "title": "Avalability",
-          "summary": "Pro or higher",
-          "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
+          "summary": "Paid add-on",
+          "free": "Paid add-on",
+          "pro": "Paid add-on",
+          "biz": "Paid add-on",
+          "ent": "Paid add-on"
         }
       },
       "mirage": {
@@ -476,6 +714,18 @@
           "title": "Avalability",
           "summary": "Pro or higher",
           "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "mobile_redirect": {
+        "title": "Mobile redirect",
+        "link": "https://support.cloudflare.com/hc/articles/200168336",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -505,6 +755,18 @@
           "ent": "Yes"
         }
       },
+      "rocket_loader": {
+        "title": "Rocket Loader",
+        "link": "https://support.cloudflare.com/hc/articles/200168056",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
       "tcp_turbo": {
         "title": "TCP Turbo",
         "availability": {
@@ -530,6 +792,122 @@
             "pro": "No",
             "biz": 1,
             "ent": "1 (can purchase more)"
+          }
+        }
+      },
+      "traffic": {
+        "title": "Traffic",
+        "argo": {
+          "title": "Argo Smart Routing",
+          "link": "/argo-smart-routing/",
+          "availability": {
+            "title": "Avalability",
+            "summary": "Paid add-on",
+            "free": "Paid add-on",
+            "pro": "Paid add-on",
+            "biz": "Paid add-on",
+            "ent": "Paid add-on"
+          }
+        },
+        "health_checks": {
+            "title": "Health checks",
+            "link": "https://support.cloudflare.com/hc/articles/4404867308429",
+            "availability": {
+              "title": "Avalability",
+              "summary": "Pro and above",
+              "free": "No",
+              "pro": "Yes",
+              "biz": "Yes",
+              "ent": "Yes"
+            }
+          },
+        "load_balancing": {
+          "title": "Load Balancing",
+          "link": "/load-balancing/",
+          "availability": {
+            "title": "Avalability",
+            "summary": "Paid add-on",
+            "free": "Paid add-on",
+            "pro": "Paid add-on",
+            "biz": "Paid add-on",
+            "ent": "Paid add-on"
+          }
+        },
+        "waiting_room": {
+          "title": "Waiting Room",
+          "link": "/waiting-room/",
+          "ent_plus": "Enterprise with add-on",
+          "1_availability": {
+            "title": "Avalability",
+            "summary": "Business plan or higher",
+            "free": "No",
+            "pro": "No",
+            "biz": "Yes",
+            "ent": "Yes",
+            "ent_plus": "Yes"
+          },
+          "2_rooms": {
+            "title": "Number of rooms",
+            "summary": "Business plan or higher",
+            "free": 0,
+            "pro": 0,
+            "biz": 1,
+            "ent": 1,
+            "ent_plus": "Custom"
+          },
+          "customized_templates": {
+            "title": "Customized templates",
+            "link": "/waiting-room/how-to/customize-waiting-room/",
+            "free": "No",
+            "pro": "No",
+            "biz": "No",
+            "ent": "No",
+            "ent_plus": "Yes"
+          },
+          "queueing_methods": {
+            "title": "Queueing methods",
+            "link": "/waiting-room/reference/queueing-methods/",
+            "free": "No",
+            "pro": "No",
+            "biz": "First In First Out (FIFO)",
+            "ent": "First In First Out (FIFO)",
+            "ent_plus": "All options"
+          },
+          "disable_session_renewal": {
+            "title": "Disable session renewal",
+            "link": "/waiting-room/reference/configuration-settings/",
+            "free": "No",
+            "pro": "No",
+            "biz": "No",
+            "ent": "No",
+            "ent_plus": "Yes"
+          },
+          "json_response": {
+            "title": "JSON-friendly response",
+            "link": "/waiting-room/how-to/json-response/",
+            "free": "No",
+            "pro": "No",
+            "biz": "No",
+            "ent": "No",
+            "ent_plus": "Yes"
+          },
+          "scheduled_events": {
+            "title": "Scheduled events",
+            "link": "/waiting-room/additional-options/create-events/",
+            "free": "No",
+            "pro": "No",
+            "biz": "No",
+            "ent": "No",
+            "ent_plus": "Yes"
+          },
+          "rules": {
+            "title": "Waiting Room rules",
+            "link": "/waiting-room/additional-options/waiting-room-rules/",
+            "free": "No",
+            "pro": "No",
+            "biz": "No",
+            "ent": "No",
+            "ent_plus": "Yes"
           }
         }
       }
