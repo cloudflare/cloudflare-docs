@@ -64,8 +64,8 @@ By following this guide, you have successfully deployed a static version of your
 
 With a static version of your site being served, you can:
 
-- Move your WordPress install to a private URL or subdomain. Refer to [Custom domains](/pages/platform/custom-domains/) to learn more.
-- Run your WordPress instance locally, or put your now-hidden WordPress instance behind [Cloudflare Access](https://www.cloudflare.com/teams/access/) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
-- Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting. Your Cloudflare Pages plan is priced per-request and because you can host up to thirty sites on your account, serving a high number of static WordPress sites can be an order of magnitude cheaper on Pages.
+- Move your WordPress site a custom domain or subdomain. Refer to [Custom domains](/pages/platform/custom-domains/) to learn more.
+- Run your WordPress instance locally, or put your WordPress site behind [Cloudflare Access](https://www.cloudflare.com/teams/access/) to only give access to your contributors. This has a significant effect on the number of attack vectors for your WordPress site and its content.
+- Downgrade your WordPress hosting plan to a cheaper plan. Because the memory and bandwidth requirements for your WordPress instance are now smaller, you can often host it on a cheaper plan, or moving to shared hosting.
 
-Connect with the [Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions and discuss the platform with other developers.
+Connect with the [Cloudflare Developer community on Discord](https://discord.gg/cloudflaredev) to ask questions and discuss the platform with other developers.
