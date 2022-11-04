@@ -1,6 +1,6 @@
 ---
 order: 1
-pcx-content-type: configuration
+pcx_content_type: configuration
 ---
 
 # Get started
@@ -28,9 +28,9 @@ $ npx wrangler login
 
 This will open a login page and request your account access permissions.
 
-## 2. Create your database 
+## 2. Create your database
 
-Once you’ve logged into Wrangler, you can run the following to begin creating your database: 
+Once you’ve logged into Wrangler, you can run the following to begin creating your database:
 
 ```sh
 $ npx wrangler d1 create <database-name>
@@ -61,12 +61,12 @@ d1_databases = [
 ]
 ```
 
-As a note, when you execute the `wrangler d1 create command`, the client API package, which implements the D1 API and database class, is automatically installed. For more info on the D1 Client API, see below in the corresponding section and appendix. 
+As a note, when you execute the `wrangler d1 create command`, the client API package, which implements the D1 API and database class, is automatically installed. For more info on the D1 Client API, see below in the corresponding section and appendix.
 
-## 3. Example D1 database query and response 
+## 3. Example D1 database query and response
 
-### Bootstrap your D1 database 
-With everything installed and your wrangler.toml configured properly, you are now ready to set up your database. Let’s look at a simple example. Say you had a schema.sql file with the following contents: 
+### Bootstrap your D1 database
+With everything installed and your wrangler.toml configured properly, you are now ready to set up your database. Let’s look at a simple example. Say you had a schema.sql file with the following contents:
 
 **schema.sql**
 ```sql
@@ -88,9 +88,9 @@ $ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
 
 
 ### Write queries within your Worker
-Once you’ve set up your database, you can connect to it within your Worker by using the binding name configured above in Step 3 on the env parameter. 
+Once you’ve set up your database, you can connect to it within your Worker by using the binding name configured above in Step 3 on the env parameter.
 
-For example, if we use the binding name “DB” (specified in wrangler.toml), executing a SQL query within our Worker is as easy as this: 
+For example, if we use the binding name “DB” (specified in wrangler.toml), executing a SQL query within our Worker is as easy as this:
 
 ```javascript
 export default {
@@ -113,20 +113,20 @@ export default {
 
 See the D1 Client API section of the docs for the full in-Worker API docs.
 
-## 4. Test and publish with Wrangler 
+## 4. Test and publish with Wrangler
 
-While in your project directory, you can test locally by running: 
+While in your project directory, you can test locally by running:
 
 ```sh
 $ npx wrangler dev --local
 ```
 <Aside header="local is under development">
-  
+
 The local D1 development environment is under active development and may have some incorrect behavior. If you have issues, run npm install wrangler@d1 to make sure you're on the latest version, or provide feedback in Discord.
 
 </Aside>
-  
-When you are ready to deploy, go live by running: 
+
+When you are ready to deploy, go live by running:
 
 $ npx wrangler publish
 
