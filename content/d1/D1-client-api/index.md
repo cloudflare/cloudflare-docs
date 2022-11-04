@@ -68,11 +68,10 @@ The methods stmt.run(), stmt.all() and db.batch() return an object that contains
 {
   results: array, // [] if empty
   lastRowId: integer, // the rowid of the last row inserted or null if it doesn't apply
-  changes: integer, // total # of rows that were inserted/updated/deleted, or 0 if read-only
-  duration: integer, // duration of the operation in milliseconds
+  changes: integer, // total # of rows that were inserted/updated/deleted, or `null`
+  duration: number, // duration of the operation in milliseconds
 }
 ```
-
 
 Example:
 ```js
