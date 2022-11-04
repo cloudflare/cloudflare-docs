@@ -1,21 +1,22 @@
 ---
 title: D1 client API
-pcx-content-type: concept
+weight: 3
+pcx_content_type: concept
 ---
 
-# D1 client API 
+# D1 client API
 
-## Prepared and static statements 
+## Prepared and static statements
 
-As part of our Client API, both static and prepared statements are supported. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks. 
+As part of our Client API, both static and prepared statements are supported. Best practice is to use prepared statements which are precompiled objects used by the database to run the SQL. This is because prepared statements lead to overall faster execution and prevent SQL injection attacks.
 
-Below is an example of a prepared statement: 
+Below is an example of a prepared statement:
 
 ```js
 const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
 ```
 
-However, if you still choose to use a static statement you can use the following as an example: 
+However, if you still choose to use a static statement you can use the following as an example:
 
 ```js
 const stmt = db.prepare('SELECT * FROM users WHERE name = ?1').bind('Joe');
@@ -26,9 +27,9 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?1').bind('Joe');
 We follow the [SQLite convention](https://www.sqlite.org/lang_expr.html#varparam) for prepared statements parameter binding. Currently we only support Ordered (?NNNN) and Anonymous (?) parameters. In the future we will support named parameters as well.
 
 | Syntax | Type | Description |
-| ----- | ----- | -----| 
+| ----- | ----- | -----|
 | `?NNN`| Ordered | A question mark followed by a number NNN holds a spot for the NNN-th parameter. NNN must be between 1 and SQLITE_MAX_VARIABLE_NUMBER |
-| `?` | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead | 
+| `?` | Anonymous | A question mark that is not followed by a number creates a parameter with a number one greater than the largest parameter number already assigned. If this means the parameter number is greater than SQLITE_MAX_VARIABLE_NUMBER, it is an error. This parameter format is provided for compatibility with other database engines. But because it is easy to miscount the question marks, the use of this parameter format is discouraged. Programmers are encouraged to use one of the symbolic formats below or the `?NNN` format above instead |
 
 To bind a parameter we use the method: `stmt.bind()`
 
@@ -47,21 +48,21 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ? AND age = ?').bind( 
 const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind( 41, 'John Doe' );
 ```
 
-## Type conversion 
+## Type conversion
 Type conversion from Javascript inputs to D1 inputs is as follows:
 
 
-| Javascript | D1 | 
+| Javascript | D1 |
 | ----- | ----- |
-| null | `NULL` | 
-| Number | `REAL` | 
-| Number[^1] | `INTEGER` | 
-| String | `TEXT` | 
-| ArrayBuffer | `BLOB` | 
+| null | `NULL` |
+| Number | `REAL` |
+| Number[^1] | `INTEGER` |
+| String | `TEXT` |
+| ArrayBuffer | `BLOB` |
 
-`[^1]`: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER). 
+`[^1]`: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
-* Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`. 
+* Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
 The methods stmt.run(), stmt.all() and db.batch() return an object that contains the results, [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes and the internal duration of the operation in milliseconds.)
@@ -93,7 +94,7 @@ console.log(lastRowId); // 72
 
 ### await stmt.first([column])
 
-Returns the first row of the results. This does not return metadata like the other methods. Instead it returns the object directly. 
+Returns the first row of the results. This does not return metadata like the other methods. Instead it returns the object directly.
 
 Get a specific column from the first row:
 
@@ -181,7 +182,7 @@ console.log(info);
 ```
 
 
- 
+
 ### await db.dump()
 Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
 
@@ -297,12 +298,12 @@ console.log(rows[1].results);
 ## PRAGMA statements
 D1 supports the following [SQLite PRAGMA](https://www.sqlite.org/pragma.html) statements:
 
-| PRAGMA | Description | 
-| ---- | ---- | 
+| PRAGMA | Description |
+| ---- | ---- |
 
 | table_list | Returns information about the tables and views in the schema, one table per row of output
-table_info | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column | 
-| foreign_keys | Query, set, or clear the enforcement of foreign key constraints | 
+table_info | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column |
+| foreign_keys | Query, set, or clear the enforcement of foreign key constraints |
 
 
 
@@ -376,10 +377,10 @@ try {
 
 
 ## Error list
-| Message | Cause | 
-| ----| ---- | 
+| Message | Cause |
+| ----| ---- |
 | `D1_ERROR` | Generic error |
-| `D1_NORESULTS` | No results | 
+| `D1_NORESULTS` | No results |
 | `D1_COLUMN_NOTFOUND` | Column not found |
 | `D1_DUMP_ERROR` | Database dump error |
 | `D1_EXEC_ERROR` | Exec error in line x: y error |
