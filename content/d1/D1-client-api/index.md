@@ -1,5 +1,5 @@
 ---
-title: Supported Wrangler commands
+title: D1 client API
 pcx-content-type: concept
 ---
 
