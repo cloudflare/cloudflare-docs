@@ -16,6 +16,13 @@ Cloudflare Access removes the burden on the end user of generating a key, while 
 
 To protect a resource behind Cloudflare Access, first follow [these instructions](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to secure the server.
 
+{{<Aside type="note">}}
+
+Cloudflare Access short lived certificates can work with any modern SSH server, whether it's behind Access or not.
+However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals.
+
+{{</Aside>}}
+
 ## 2. Ensure Unix usernames match user SSO identities
 
 Cloudflare Access will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure.
