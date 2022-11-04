@@ -18,7 +18,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 - [Gatsby](https://www.gatsbyjs.org/docs/quick-start/), requires Node
 - [Jekyll](https://jekyllrb.com/docs/), requires Ruby
 - [Eleventy](https://www.11ty.io/#quick-start), requires Node
-- [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/workers/tutorials/deploy-a-static-wordpress-site/))
+- [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Pages](/pages/how-to/deploy-a-wordpress-site/))
 
 ## Getting started
 
