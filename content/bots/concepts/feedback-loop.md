@@ -1,11 +1,11 @@
 ---
 pcx_content_type: concept
-title: Bots Feedback Loop
+title: Bot Feedback Loop
 ---
 
-# Bots Feedback Loop
+# Bot Feedback Loop
 
-The Bots Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
+The Bot Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially scoring a request incorrectly. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
 
 ## Availability
 
@@ -36,6 +36,14 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 | Spamming | The abuse of content forms to send spam. |
 | Token Cracking | Identification of valid token codes providing some form of user benefit within the application. | 
 | Vulnerability Scanning | Systematic enumeration and examination of identifiable, guessable and unknown content locations, paths, file names, parameters, in order to find weaknesses and points where a security vulnerability might exist. |
+
+## Submit a report
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **Bots**.
+3. Apply **Bot score filter(s)**.
+4. Select **Report incorrect data** and fill out the form.
+5. Select **Submit**. 
 
 ## Via the API
 
