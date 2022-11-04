@@ -513,8 +513,8 @@ Returns a boolean of whether the first string has the second string at its start
 
 Examples:
 ```SQL
-SELECT startsWith('prefix ...', 'prefix');
-SELECT startsWith(blob1, 'prefix') FROM your_dataset;
+SELECT startsWith('prefix ...', 'prefix') AS b;
+SELECT startsWith(blob1, 'prefix') AS b FROM your_dataset;
 ```
 
 ### endsWith
