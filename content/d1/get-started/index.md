@@ -128,7 +128,7 @@ The local D1 development environment is under active development and may have so
   
 When you are ready to deploy, go live by running: 
 
-npx wrangler publish
+$ npx wrangler publish
 
 
 

@@ -187,12 +187,12 @@ Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
 
 ```js
 const dump = await db.dump()
-return ( new Response(dump, {
+return new Response(dump, {
     status: 200,
     headers: {
         'Content-Type': 'application/octet-stream'
     }
-} );
+};
 ```
 
 

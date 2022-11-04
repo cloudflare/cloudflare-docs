@@ -23,6 +23,6 @@ With D1 currently in Alpha, you can truly go full-stack and build rich apps incl
 
 ## Community
 
-Please reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the [D1-private-beta channel](https://discord.com/channels/595317990191398933/992060581832032316). In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team. 
+Please reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the [#d1-private-beta channel](https://discord.com/channels/595317990191398933/992060581832032316). In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team. 
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
