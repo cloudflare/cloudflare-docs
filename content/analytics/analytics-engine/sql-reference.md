@@ -483,8 +483,8 @@ Returns the string converted to lowercase. This function is Unicode compatible. 
 
 Examples:
 ```SQL
-SELECT toLower('STRING TO DOWNCASE');
-SELECT toLower(blob1) FROM your_dataset;
+SELECT toLower('STRING TO DOWNCASE') AS s;
+SELECT toLower(blob1) AS s FROM your_dataset;
 ```
 
 ### toUpper
