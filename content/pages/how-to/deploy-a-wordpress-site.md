@@ -48,6 +48,8 @@ With your ZIP file downloaded, deploy your site to Pages:
 
 Your WordPress site will now be live on Pages. 
 
+Every time you make a change to your WordPress site, you will need to download a new ZIP file from the WordPress dashboard and redeploy to Cloudflare Pages. Automatic updates are not available with the free version of Simply Static.
+
 ## Limitations
 
 There are some features available in WordPress sites that will not be supported in a static site environment:
