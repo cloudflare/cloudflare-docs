@@ -8,7 +8,7 @@ pcx-content-type: concept
 ## Limits 
 
 While D1 is in Alpha, there are some limits to be aware of prior to begin testing. 
-* **Database size**: You can have a max database size of 100MB. There are no limitations on rows and columns as long as your database falls within the size limitation. 
+* **Database size**: You can have a max database size of 100 MB. There are no limitations on rows and columns as long as your database falls within the size limitation. 
 * **Databases per account**: Create up to 10 D1 databases on a single account. If more is needed, please reach out to the team. 
 * **Backups**: Backups will not be automatic. They must be manually triggered. 
 
