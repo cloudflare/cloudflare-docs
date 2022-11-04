@@ -528,8 +528,8 @@ Returns a boolean of whether the first string contains the second string at its 
 
 Examples:
 ```SQL
-SELECT endsWith('prefix suffix', 'suffix');
-SELECT endsWith(blob1, 'suffix') FROM your_dataset;
+SELECT endsWith('prefix suffix', 'suffix') AS b;
+SELECT endsWith(blob1, 'suffix') AS b FROM your_dataset;
 ```
 
 ### position
