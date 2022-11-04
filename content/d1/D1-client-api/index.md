@@ -60,10 +60,7 @@ Type conversion from Javascript inputs to D1 inputs is as follows:
 | String | `TEXT` | 
 | ArrayBuffer | `BLOB` | 
 
-
-<aside class="[^1]">
-  [^1]: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER). 
-</aside>
+[^1]: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER). 
 
 ## Return object
 The methods stmt.run(), stmt.all() and db.batch() return an object that contains the results, [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes and the internal duration of the operation in milliseconds.)
