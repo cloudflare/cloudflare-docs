@@ -66,7 +66,7 @@ Type conversion from Javascript inputs to D1 inputs is as follows:
 </aside>
 
 ## Return object
-The methods stmt.run(), stmt.all() and db.batch() return an object that contains the results, [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes and the internal duration of the operation in milliseconds.
+The methods stmt.run(), stmt.all() and db.batch() return an object that contains the results, [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes and the internal duration of the operation in milliseconds.)
 
 ```js
 {
