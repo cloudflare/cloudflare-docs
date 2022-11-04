@@ -5,31 +5,39 @@
 "Business" "free" "Free" -}}
 
 <div class="DocsMarkdown--table-wrap">
-<div class="DocsMarkdown--table-wrap-inner">
-<table>
-    <tr>
-        <td>
-        <strong>Feature</strong>
-        </td>
-        <td>
-            <strong>{{ index $map "free" }}</strong>
-        </td>
-        <td>
-            <strong>{{ index $map "pro" }}</strong>
-        </td>
-        <td>
-            <strong>{{ index $map "biz" }}</strong>
-        </td>
-        <td>
-            <strong>{{ index $map "ent" }}</strong>
-        </td>
-        {{ if $info.ent_plus}}
-        <td>
-            <strong>{{$info.ent_plus}}</strong>
-        </td>
-        {{- end -}}
-    </tr>
+    <div class="DocsMarkdown--table-wrap-inner">
+    <table>
+
 {{- range $elem_key, $elem_val := $info -}}
+{{ if and (ne $elem_key "link") (ne $elem_key "title") }}
+<tr>
+    <td>
+            <p><strong>{{ if .link }}
+                <a href= {{.link}}>{{ .title | markdownify }}</a>
+            {{ else }}
+            {{ .title | markdownify }}
+            {{ end }}
+        </strong></p>
+    </td>
+    <td>
+        <strong>{{ index $map "free" }}</strong>
+    </td>
+    <td>
+        <strong>{{ index $map "pro" }}</strong>
+    </td>
+    <td>
+        <strong>{{ index $map "biz" }}</strong>
+    </td>
+    <td>
+        <strong>{{ index $map "ent" }}</strong>
+    </td>
+    {{ if .ent_plus}}
+    <td>
+        <strong>{{.ent_plus}}</strong>
+    </td>
+    {{- end -}}
+</tr>
+{{- range $elem_key, $elem_val := . -}}
 {{- if and (ne $elem_key "link") (ne $elem_key "title") (ne $elem_key "ent_plus") -}}
 <tr>
     <td>
@@ -58,8 +66,11 @@
         </td>
     {{- end -}}
 </tr>
-{{- end -}}
-{{- end -}}
+<tr><td></td></tr>
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
 </table>
 </div>
 </div>

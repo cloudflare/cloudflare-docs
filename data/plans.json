@@ -2,9 +2,29 @@
   "cache": {
     "title": "Cache",
     "link": "/cache/",
+    "always_online": {
+        "title": "Always Online",
+        "link": "/cache/about/always-online/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
     "browser_cache_ttl": {
       "title": "Browser Cache TTL",
       "link": "/cache/about/edge-browser-cache-ttl/",
+      "availability": {
+        "title": "Avalability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "minimum": {
         "title": "Minimum Browser Cache TTL",
         "free": "2 minutes",
@@ -25,6 +45,30 @@
           "ent": "Yes"
         }
       },
+      "cache_level": {
+        "title": "Set caching level",
+        "link": "/cache/how-to/set-caching-levels/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "cache_reserve": {
+        "title": "Cache reserve",
+        "link": "/cache/about/cache-reserve/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "Paid add-on",
+          "free": "Paid add-on",
+          "pro": "Paid add-on",
+          "biz": "Paid add-on",
+          "ent": "Paid add-on"
+        }
+      },
     "cache_status_code": {
         "title": "Cache by status code",
         "link": "/cache/how-to/configure-cache-status-code/",
@@ -37,20 +81,41 @@
           "ent": "Yes"
         }
       },
-    "custom_purge": {
-      "title": "Custom purge",
-      "link": "/cache/how-to/purge-cache/",
-      "options": {
-        "title": "Purge options",
-        "free": "URL",
-        "pro": "URL",
-        "biz": "URL",
-        "ent": "URL, Hostname, Tag, or Prefix"
-      }
-    },
+      "csam": {
+        "title": "CSAM Scanning Tool",
+        "link": "https://support.cloudflare.com/hc/articles/360046106112",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
+      "development mode": {
+        "title": "Development mode",
+        "link": "/cache/reference/development-mode/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      },
     "edge_cache_ttl": {
       "title": "Edge Cache TTL",
       "link": "/cache/about/edge-browser-cache-ttl/",
+      "availability": {
+        "title": "Avalability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "minimum": {
         "title": "Minimum Edge Cache TTL",
         "free": "2 hours",
@@ -71,6 +136,25 @@
           "ent": "Yes"
         }
       },
+      "purge_cache": {
+        "title": "Purge cache",
+        "link": "/cache/how-to/purge-cache/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "options": {
+          "title": "Purge options",
+          "free": "URL",
+          "pro": "URL",
+          "biz": "URL",
+          "ent": "URL, Hostname, Tag, or Prefix"
+        }
+      },
     "query_string_sort": {
       "title": "Query string sort",
       "link": "https://support.cloudflare.com/hc/articles/206776797",
@@ -82,7 +166,19 @@
         "biz": "No",
         "ent": "Yes"
       }
-    }
+    },
+    "tiered_cache": {
+        "title": "Tiered cache",
+        "link": "/cache/about/tiered-cache/",
+        "availability": {
+          "title": "Avalability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
   },
   "custom_pages": {
     "title": "Configure Custom Pages",
@@ -779,6 +875,45 @@
         }
       }
     },
+    "scrape_shield": {
+        "title": "Scrape Shield",
+        "email_obfuscation": {
+          "title": "Email Address Obfuscation",
+          "link": "https://support.cloudflare.com/hc/articles/200170016",
+          "availability": {
+            "title": "Avalability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          }
+        },
+        "hotlink_protection": {
+            "title": "Hotlink Protection",
+            "link": "https://support.cloudflare.com/hc/articles/200170026",
+            "availability": {
+              "title": "Avalability",
+              "summary": "All plans",
+              "free": "Yes",
+              "pro": "Yes",
+              "biz": "Yes",
+              "ent": "Yes"
+            }
+          },
+          "server_side_excludes": {
+            "title": "Server-side Excludes",
+            "link": "https://support.cloudflare.com/hc/articles/200170036",
+            "availability": {
+              "title": "Avalability",
+              "summary": "All plans",
+              "free": "Yes",
+              "pro": "Yes",
+              "biz": "Yes",
+              "ent": "Yes"
+            }
+          }
+      },
       "ssl": {
         "title": "SSL/TLS",
         "link": "/ssl/",
@@ -831,6 +966,15 @@
             "pro": "Paid add-on",
             "biz": "Paid add-on",
             "ent": "Paid add-on"
+          },
+          "analytics": {
+            "title": "Analytics",
+            "link": "/load-balancing/reference/load-balancing-analytics/",
+            "summary": "Pro and higher",
+            "free": "No",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
           }
         },
         "waiting_room": {
@@ -909,6 +1053,76 @@
             "ent": "No",
             "ent_plus": "Yes"
           }
+        }
+      },
+      "web3": {
+        "title": "Web3",
+        "link": "/web3/",
+        "ipfs": {
+          "title": "IPFS Gateways",
+          "link": "/web3/ipfs-gateway/",
+          "1_availability": {
+            "title": "Avalability",
+            "summary": "Usage-based billing",
+            "free": "Yes<br/>(Usage-based billing)",
+            "pro": "Yes<br/>(Usage-based billing)",
+            "biz": "Yes<br/>(Usage-based billing)",
+            "ent": "Yes<br/>(Usage-based billing)"
+          },
+          "2_total_gateways": {
+            "title": "Total gateways",
+            "free": "15",
+            "pro": "15",
+            "biz": "15",
+            "ent": "Unlimited"
+          },
+          "3_gateway_types": {
+            "title": "Gateway types",
+            "free": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
+            "pro": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
+            "biz": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
+            "ent": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/),<br/> [Universal Gateway](/web3/ipfs-gateway/concepts/universal-gateway/)"
+          },
+          "4_included_bandwidth": {
+            "title": "Included bandwidth<br/> (without additional cost)",
+            "free": "50 GB data transfer",
+            "pro": "50 GB data transfer",
+            "biz": "50 GB data transfer",
+            "ent": "100 GB data transfer"
+          },
+          "5_file_size_limit": {
+            "title": "File size limit",
+            "free": "None",
+            "pro": "None",
+            "biz": "None",
+            "ent": "None"
+          }
+        },
+        "ethereum": {
+            "title": "Ethereum Gateways",
+            "link": "/web3/ethereum-gateway/",
+            "1_availability": {
+              "title": "Avalability",
+              "summary": "Usage-based billing",
+              "free": "Yes<br/>(Usage-based billing)",
+              "pro": "Yes<br/>(Usage-based billing)",
+              "biz": "Yes<br/>(Usage-based billing)",
+              "ent": "Yes<br/>(Usage-based billing)"
+            },
+            "2_total_gateways": {
+              "title": "Total gateways",
+              "free": "15",
+              "pro": "15",
+              "biz": "15",
+              "ent": "Unlimited"
+            },
+            "3_included_bandwidth": {
+              "title": "Included bandwidth<br/> (without additional cost)",
+              "free": "500,000 HTTP requests",
+              "pro": "500,000 HTTP requests",
+              "biz": "500,000 HTTP requests",
+              "ent": "1,000,000 HTTP requests"
+            }
         }
       }
     }
