@@ -155,7 +155,7 @@ Workers being rate-limited by Anti-Abuse Protection are also visible from the Cl
 
 ### Daily request
 
-Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/triggers/routing/routes/) in two modes: 1) Fail open and 2) Fail closed.
+Accounts using the Workers Free plan are subject to a daily request limit of 100,000 requests. Free plan daily requests counts reset at midnight UTC. A Worker that fails as a result of daily request limit errors can be configured by toggling its corresponding [route](/workers/platform/triggers/routes/) in two modes: 1) Fail open and 2) Fail closed.
 
 #### Fail open
 
