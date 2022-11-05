@@ -13,13 +13,13 @@ As part of our Client API, both static and prepared statements are supported. Be
 Below is an example of a prepared statement:
 
 ```js
-const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
+const stmt = db.prepare('SELECT * FROM users WHERE name = ?1').bind('Joe');
 ```
 
 However, if you still choose to use a static statement you can use the following as an example:
 
 ```js
-const stmt = db.prepare('SELECT * FROM users WHERE name = ?1').bind('Joe');
+const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
 ```
 
 ## Parameter binding
@@ -152,7 +152,7 @@ console.log(raw);
   [ "Dave", 29 ],
 ]
 */
-console.log(rows.map(row => row.join(',')).join("\n"));
+console.log(raw.map(row => row.join(',')).join("\n"));
 /*
 John,42
 Anthony,37
