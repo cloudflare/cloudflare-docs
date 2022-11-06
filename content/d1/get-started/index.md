@@ -47,7 +47,6 @@ database_name = "<database-name>"
 database_id = "<UUID>"
 ```
 
-
 If you would like to have different D1 databases for different environments, you can specify this within your **wrangler.toml** using the following syntax:
 
 ```toml
@@ -69,8 +68,10 @@ As a note, when you execute the `wrangler d1 create command`, the client API pac
 ### Bootstrap your D1 database
 With everything installed and your wrangler.toml configured properly, you are now ready to set up your database. Let’s look at a simple example. Say you had a schema.sql file with the following contents:
 
-**schema.sql**
 ```sql
+---
+filename: schema.sql
+---
 DROP TABLE IF EXISTS Customers;
 CREATE TABLE Customers (CustomerID INT, CompanyName TEXT, ContactName TEXT, PRIMARY KEY (`CustomerID`));
 INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, "Alfreds Futterkiste", "Maria Anders"),(4, "Around the Horn", "Thomas Hardy"),(11, "Bs Beverages", "Victoria Ashworth"),(13, "Bs Beverages", "Random Name");
@@ -86,7 +87,6 @@ Then validate your new data by running a query through Wrangler using something 
 ```sh
 $ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
 ```
-
 
 ### Write queries within your Worker
 Once you’ve set up your database, you can connect to it within your Worker by using the binding name configured above in Step 3 on the env parameter.
@@ -116,21 +116,42 @@ See the D1 Client API section of the docs for the full in-Worker API docs.
 
 ## 4. Test and publish with Wrangler
 
+### Test locally
+
 While in your project directory, you can test locally by running:
 
 ```sh
 $ npx wrangler dev --local
 ```
+
 <Aside header="local is under development">
 
 The local D1 development environment is under active development and may have some incorrect behavior. If you have issues, run npm install wrangler@d1 to make sure you're on the latest version, or provide feedback in Discord.
 
 </Aside>
 
+### Test remotely
+
+To test remotely, you will need to specify a preview database. We recommend using a separate database for this to make sure your production data is safe. To add this in wrangler.toml you will need to add `preview_database_id` under your D1 binding like so:
+
+```diff
+[[ d1_databases ]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "<database-name>"
+database_id = "<UUID>"
++ preview_database_id = "<other-UUID>"
+```
+
+Once that is done, in your project directory, you can test remotely by running:
+
+```sh
+$ npx wrangler dev
+```
+
+### Publish
+
 When you are ready to deploy, go live by running:
 
+```sh
 $ npx wrangler publish
-
-
-
-
+```
