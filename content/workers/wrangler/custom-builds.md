@@ -9,3 +9,17 @@ weight: 4
 Wrangler provides a capable development environment for a large number of use cases. Sometimes, developers might want to customize how their code is compiled, before being processed by Wrangler. This document describes why you would want to create a custom build, and how custom builds fit together with `wrangler dev` and `wrangler publish`.
 
 
+## Configuration
+
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+[build]
+command = "npm run build"
+cwd = "build_cwd"
+watch_dir = "build_watch_dir"
+```
