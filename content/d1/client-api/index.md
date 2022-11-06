@@ -69,7 +69,7 @@ The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that co
 
 ```js
 {
-  results: array, // [] if empty, or null if it doesn't apply
+  results: array | null, // [] if empty, or null if it doesn't apply
   lastRowId: integer, // the rowid of the last row inserted or null if it doesn't apply
   changes: integer, // total # of rows that were inserted/updated/deleted, or `null`
   duration: number, // duration of the operation in milliseconds
