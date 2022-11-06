@@ -13,13 +13,13 @@ As part of our Client API, both static and prepared statements are supported. Be
 Below is an example of a prepared statement:
 
 ```js
-const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
+const stmt = db.prepare('SELECT * FROM users WHERE name = ?1').bind('Joe');
 ```
 
 However, if you still choose to use a static statement you can use the following as an example:
 
 ```js
-const stmt = db.prepare('SELECT * FROM users WHERE name = ?1').bind('Joe');
+const stmt = db.prepare('SELECT * FROM users WHERE name = "John Doe"');
 ```
 
 ## Parameter binding
@@ -65,14 +65,15 @@ Type conversion from Javascript inputs to D1 inputs is as follows:
 * Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
-The methods stmt.run(), stmt.all() and db.batch() return an object that contains the results, [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes and the internal duration of the operation in milliseconds.)
+The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes, the internal duration of the operation in milliseconds and success status.
 
 ```js
 {
-  results: array, // [] if empty
+  results: array | null, // [] if empty, or null if it doesn't apply
   lastRowId: integer, // the rowid of the last row inserted or null if it doesn't apply
   changes: integer, // total # of rows that were inserted/updated/deleted, or `null`
   duration: number, // duration of the operation in milliseconds
+  success: boolean, // true if the operation was successful, false otherwise
 }
 ```
 
@@ -152,7 +153,7 @@ console.log(raw);
   [ "Dave", 29 ],
 ]
 */
-console.log(rows.map(row => row.join(',')).join("\n"));
+console.log(raw.map(row => row.join(',')).join("\n"));
 /*
 John,42
 Anthony,37
