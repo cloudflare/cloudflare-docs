@@ -32,7 +32,7 @@ If you have not used Wrangler before, it will try to open your web browser to lo
 
 ## 3. Update wrangler.toml
 
-After executing this command, Wrangler will ask you to add a snippet of code to your `wrangler.toml` file that looks something like this:
+After creating your database, Wrangler will ask you to add a snippet of code to your `wrangler.toml` file that looks something like this:
 
 ```toml
 [[ d1_databases ]]
