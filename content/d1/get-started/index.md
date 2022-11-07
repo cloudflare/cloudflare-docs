@@ -18,6 +18,12 @@ $ npx wrangler init my-project -y
 
 This will create new directory (`my-project`), and setup a new Workers project within it. Your new directory will include a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file in the project directory. 
 
+Once Wrangler is finished, run:
+
+```sh
+$ cd my-project
+```
+
 You can now create your first database with the Wrangler CLI. 
 
 ## 2. Create your database
