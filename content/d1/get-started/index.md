@@ -78,12 +78,13 @@ INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds
 You can bootstrap your new D1 database by running:
 
 ```sh
-$ npx wrangler d1 execute <database-name> --file=./schema.sql
+$ npx wrangler d1 execute <database-name> --local --file=./schema.sql
 ```
 
-Then validate your new data by running a query through Wrangler using something like the following command:
+Then validate your data is there by running:
+
 ```sh
-$ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
+$ npx wrangler d1 execute <database-name> --local --command='SELECT * FROM Customers'
 ```
 
 
@@ -117,7 +118,7 @@ export default {
 
 Refer to the [D1 Client API](/d1/client-api/) section of the docs for the full in-Worker API docs.
 
-## 5. Test and publish with Wrangler
+## 5. Developing locally with Wrangler
 
 While in your project directory, you can test locally by running:
 
@@ -129,13 +130,22 @@ $ npx wrangler dev --local
 The local D1 development environment is under active development and may have some incorrect behavior. If you have issues, run `npm install wrangler@d1` to make sure you're on the latest version, or provide feedback in Discord.
 {{</Aside>}}
 
+
+## 6. Publish with Wrangler
+
 When you are ready to deploy, go live by running:
 
 ```sh
 $ npx wrangler publish
 ```
 
+Once deployed, you'll also want to repeat the [bootstrap your database](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read:
 
+```sh
+$ npx wrangler d1 execute <database-name> --file=./schema.sql
+```
 
-
-
+Then validate the data is there by running:
+```sh
+$ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
+```
