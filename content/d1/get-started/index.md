@@ -16,7 +16,7 @@ To get started, run:
 $ npx wrangler init my-project -y
 ```
 
-This will create new directory (`my-project`), and setup a new Workers project within it. Your new directory will include a [**wrangler.toml**](https://developers.cloudflare.com/workers/wrangler/configuration/) configuration file in the project directory. 
+This will create new directory (`my-project`), and setup a new Workers project within it. Your new directory will include a [`wrangler.toml`](https://developers.cloudflare.com/workers/wrangler/configuration/) configuration file in the project directory. 
 
 You can now create your first database with the Wrangler CLI. 
 
@@ -64,7 +64,7 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 ### Bootstrap your D1 database
 
-With everything installed and your wrangler.toml configured properly, you are now ready to set up your database. Let's look at an example. Say you had a schema.sql file with the following contents:
+With everything installed and your `wrangler.toml` configured properly, you are now ready to set up your database. Let's look at an example. Say you had a schema.sql file with the following contents:
 
 ```sql
 ---
@@ -91,7 +91,7 @@ $ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
 
 Once you've set up your database, you can connect to it within your Worker by using the binding name configured above in Step 3 on the `env` parameter.
 
-For example, if we use the binding name "DB" (specified in wrangler.toml), executing a SQL query within our Worker is as easy as this:
+For example, if we use the binding name "DB" (specified in `wrangler.toml`), here's how we would run an SQL query within our Worker:
 
 ```javascript
 ---
@@ -109,13 +109,13 @@ export default {
         .all();
       return Response.json(results);
     }
-    // …
+
     return new Response("Call /api/beverages to see everyone who works at Bs Beverages");
   },
 };
 ```
 
-See the D1 Client API section of the docs for the full in-Worker API docs.
+Refer to the [D1 Client API](/d1/client-api/) section of the docs for the full in-Worker API docs.
 
 ## 5. Test and publish with Wrangler
 
@@ -126,8 +126,7 @@ $ npx wrangler dev --local
 ```
 
 {{<Aside type="note" header="local is under development">}}
-The local D1 development environment is under active development and may have some incorrect behavior. If you have issues, run npm install wrangler@d1 to make sure you're on the latest version, or provide feedback in Discord.
-
+The local D1 development environment is under active development and may have some incorrect behavior. If you have issues, run `npm install wrangler@d1` to make sure you're on the latest version, or provide feedback in Discord.
 {{</Aside>}}
 
 When you are ready to deploy, go live by running:
