@@ -55,6 +55,10 @@ Some customers can [customize the design](/waiting-room/how-to/customize-waiting
 
 If you have this ability, think about how you want the page to appear.
 
+### Prepare your waiting room for mobile application traffic
+
+If you need to manage traffic in a non-browser environment such as a mobile app or web app, use a [JSON-friendly waiting room](/waiting-room/how-to/json-response/) that can be consumed via your API endpoints.
+
 ## Step 3 — Activate your waiting room
 
 Depending on your [queue activation](#queue-activation), you may deploy your waiting room differently.

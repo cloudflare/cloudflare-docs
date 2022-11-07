@@ -15,13 +15,13 @@ A waiting room can be created from the dashboard or via API.
 {{<Aside>}}For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).{{</Aside>}}
 
 1.  Within your application, go to **Traffic** > **Waiting Rooms**.
-2.  Click **Create**.
+2.  Select **Create**.
 3.  Customize the [settings](/waiting-room/reference/configuration-settings/) for your waiting room. For additional guidance refer to [Best practices](/waiting-room/reference/best-practices/).
-4.  Click **Next**.
-5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed.
-6.  Click **Next**.
+4.  Select **Next**.
+5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using Waiting Room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](waiting-room/how-to/json-response/) and toggled on JSON response.
+6.  Select **Next**.
 7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room/).
-8.  Click **Save**. Your new waiting room will be enabled by default.
+8.  Select **Save**. Your new waiting room will be enabled by default.
 
 
 ## Create a waiting room via the API
@@ -57,6 +57,7 @@ The following parameters are optional:
 *  `description` - A description of the waiting room.
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
 *  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://api.cloudflare.com/#waiting-room-properties).
+*  `json_response_enabled` - If you are using Waiting Room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
 
 ## Example
 
