@@ -1,22 +1,16 @@
 ---
 pcx_content_type: reference
-title: DNS Categories
+title: Domain categories
 weight: 6
 ---
 
-# DNS Categories
+# Domain categories
 
-Cloudflare Gateway’s DNS filtering capabilities allow you to block known and potential security risks on the public Internet, as well as specific categories of content. To give you more granular control over how to secure your network, Gateway also provides you with categorized security risks and content categories.
+Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/fundamentals/radar/glossary/#content-categories).
 
-You can block security risks and content categories by creating DNS policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
+You can block security risks and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
 ## Security categories
-
-{{<Aside>}}
-
-If you wish to block a hostname or URL that belongs to a security risk category, you need to block that category. If the security risk category is not configured as blocked, requests to that hostname or URL will appear in your Gateway logs as allowed requests.
-
-{{</Aside>}}
 
 {{<table-wrap>}}
 
@@ -33,7 +27,6 @@ If you wish to block a hostname or URL that belongs to a security risk category,
 | Private IP Address           | Domains that resolve to private IP Addresses.                                                                                                           |
 | Spam                         | Sites that are known for targeting users with unwanted sweepstakes, surveys, and advertisements.                                                        |
 | Spyware                      | Sites that are known to distribute or contain code that displays unwanted advertisements or that gathers user information without the user’s knowledge. |
-
 
 {{</table-wrap>}}
 

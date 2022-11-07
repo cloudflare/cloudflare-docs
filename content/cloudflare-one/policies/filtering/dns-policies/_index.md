@@ -110,7 +110,7 @@ Use this selector to match against the IP address of the authoritative name serv
 
 ### Content Categories
 
-Use this selector to apply DNS policies to traffic directed to specific content categories.
+Use this selector to apply DNS policies to traffic directed to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
 
 | UI name | API example |
 | -- | -- |
@@ -231,11 +231,13 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 ### Security Categories
 
-Use this selector to block traffic directed to specific security categories.
+Use this selector to block traffic directed to specific [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
 
 | UI name | API example |
 | -- | -- |
 | Security Categories | `any(dns.security_category[*] in {1})` |
+
+When creating a DNS block policy for security categories, you can optionally enable **Filter traffic by resolved IP category** in the policy settings. When enabled, Gateway will block queries based on their resolved IP address instead of domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
 
 ### Source Continent
 
