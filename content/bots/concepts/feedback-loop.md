@@ -41,7 +41,7 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Bots**.
-3. Apply **Bot score filter(s)**.
+3. Apply one or more bot score filters.
 4. Select **Report incorrect data** and fill out the form.
 5. Select **Submit**. 
 
