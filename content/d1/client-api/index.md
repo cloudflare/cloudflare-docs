@@ -302,8 +302,8 @@ D1 supports the following [SQLite PRAGMA](https://www.sqlite.org/pragma.html) st
 | PRAGMA | Description |
 | ---- | ---- |
 
-| table_list | Returns information about the tables and views in the schema, one table per row of output
-table_info | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column |
+| table_list | Returns information about the tables and views in the schema, one table per row of output |
+| table_info | This pragma returns one row for each column in the named table. Columns in the result set include the column name, data type, whether or not the column can be NULL, and the default value for the column |
 | foreign_keys | Query, set, or clear the enforcement of foreign key constraints |
 
 
