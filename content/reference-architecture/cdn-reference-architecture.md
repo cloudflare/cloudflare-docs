@@ -82,7 +82,7 @@ Another challenge with DNS-based CDNs is that DNS is not very graceful upon fail
 
 #### 2. Anycast routing
 
-The Cloudflare CDN, which is discussed in more detail in the next section, uses Anycast routing. Anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
+The [Cloudflare CDN](/content/), which is discussed in more detail in the next section, uses Anycast routing. Anycast allows for nodes on a network to have the same IP address. The same IP address is announced from multiple nodes in different locations, and client redirection is handled via the Internet’s routing protocol, BGP.
 
 Using an Anycast-based CDN has several advantages:
 
@@ -123,9 +123,9 @@ In the above diagram, there are a few important key points to understand about t
 
 * The inherent benefits of Anycast are decreased latency, network resiliency, higher availability, and increased security due to larger surface area for absorbing both legitimate traffic loads and DDoS attacks. Cloudflare’s global Anycast edge network spans more than 250 cities across 100+ countries, reaching 95% of the world’s Internet-connected population within 50 milliseconds while providing 100 Tbps of network capacity and DDoS protection capability.
 
-* Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides DNS, DDoS protection, WAF, and other performance, reliability, and security services using the same edge architecture. 
+* Edge nodes within the Cloudflare network cache content from the origin server and are able to respond to requests via a cached copy. Cloudflare also provides [DNS](/dns/), [DDoS protection](/ddos-protection/), [WAF](/waf/), and other performance, reliability, and security services using the same edge architecture. 
 
-* Argo uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and Tiered Cache. Cloudflare leverages Argo to provide an enhanced CDN solution. 
+* [Argo](/argo-smart-routing/) uses optimized routing and caching technology across the Cloudflare network to deliver responses to users more quickly, reliably, and securely. Argo includes Smart Routing and [Tiered Cache](/cache/about/tiered-cache/). Cloudflare leverages Argo to provide an enhanced CDN solution. 
 
 ### Argo Tiered Cache
 
