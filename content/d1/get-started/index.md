@@ -132,11 +132,6 @@ While in your project directory, you can test locally by running:
 $ npx wrangler dev --local
 ```
 
-{{<Aside type="note" header="local is under development">}}
-The local D1 development environment is under active development and may have some incorrect behavior. If you have issues, run `npm install wrangler@d1` to make sure you're on the latest version, or provide feedback in Discord.
-{{</Aside>}}
-
-
 ## 6. Publish with Wrangler
 
 When you are ready to deploy, go live by running:
@@ -155,3 +150,7 @@ Then validate the data is there by running:
 ```sh
 $ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
 ```
+
+## Connect with us
+
+If you have any feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
