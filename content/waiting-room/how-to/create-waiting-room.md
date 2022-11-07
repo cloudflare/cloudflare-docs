@@ -18,7 +18,7 @@ A waiting room can be created from the dashboard or via API.
 2.  Select **Create**.
 3.  Customize the [settings](/waiting-room/reference/configuration-settings/) for your waiting room. For additional guidance refer to [Best practices](/waiting-room/reference/best-practices/).
 4.  Select **Next**.
-5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using Waiting Room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and toggled on JSON response.
+5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using Waiting Room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and enabled a JSON response.
 6.  Select **Next**.
 7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room/).
 8.  Select **Save**. Your new waiting room will be enabled by default.
