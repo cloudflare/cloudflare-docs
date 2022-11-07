@@ -30,5 +30,5 @@ weight: 5
 - Select Internet Protocol Version 6.
 - Click Properties.
 - Click Use The Following DNS Server Addresses.
-- Add the IPv6 address from that we listed based on your location configuration
+- Add the IPv6 address from that we listed based on your DNS location configuration.
 - Click OK.

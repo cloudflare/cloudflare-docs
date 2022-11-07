@@ -39,7 +39,7 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. Click **System** > **Preferences** > **Network Connections**.
 1. Click on the **Wireless** tab, then choose the Wi-Fi network you are currently connected to.
 1. Click **IPv6**.
-1. Add the IPv6 address from that we listed based on your location configuration
+1. Add the IPv6 address from that we listed based on your DNS location configuration.
 1. Click **Apply**.
 
 ### Debian
@@ -57,7 +57,7 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 #### IPv6
 
 1. In the command line, type: `sudo vim /etc/resolv.conf`
-1. Add the IPv6 address from that we listed based on your location configuration.
+1. Add the IPv6 address from that we listed based on your DNS location configuration.
 1. Press the **ESC** key on your keyboard to save and exit vim.
 1. Type `:wq`.
 
@@ -76,7 +76,7 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 
 ### IPv6
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **Locations** tab.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
 1. Expand your location by clicking on it.
 1. Note the **IPv6 address**.
 1. On your computer, go to **System Preferences** > **Network**.
@@ -112,5 +112,5 @@ Alternatively, you can look into using the [WARP client](/cloudflare-one/connect
 1. Select **Internet Protocol Version 6**.
 1. Click **Properties**.
 1. Click **Use The Following DNS Server Addresses**.
-1. Add the IPv6 address that we listed based on your location configuration
+1. Add the IPv6 address that we listed based on your DNS location configuration.
    1.Click **OK**.

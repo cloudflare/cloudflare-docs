@@ -51,9 +51,9 @@ If you see this page, providing as much information as possible to the local IT 
 
 You may not see analytics on the Overview page for the following reasons:
 
-- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
 - **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
-- **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
+- **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
 - **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
 ## I see a "No Browsers Available" alert.

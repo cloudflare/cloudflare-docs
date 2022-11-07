@@ -20,18 +20,18 @@ To filter DNS requests from an individual device such as a laptop or phone:
 2. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
 3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device .
 
-### Connect locations
+### Connect DNS locations
 
 To filter DNS requests from a location such as an office or data center:
 
-1. [Add the location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to your Zero Trust dashboard.
+1. [Add the DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to your Zero Trust dashboard.
 2. On your router, browser, or OS, [forward DNS queries](/cloudflare-one/connections/connect-devices/agentless/) to the address shown in the location setup flow.
 
 {{<Aside type="note">}}
 Gateway identifies locations differently depending on the DNS query protocol:
 
-- **IPv4 queries** match to the source IP address.  Under **Gateway** > **Locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
-- **IPv6, DOT, or DOH queries** match to the unique DNS forwarding address assigned to the location. Ensure that your DNS resolver is configured for the location you want to apply policies to.
+- **IPv4 queries** match to the source IP address.  Under **Gateway** > **DNS Locations**, ensure that the **Source IPv4 Address** parameter is correct for the location you want to apply policies to.
+- **IPv6, DOT, or DOH queries** match to the unique DNS forwarding address assigned to the DNS location. Ensure that your DNS resolver is configured for the location you want to apply policies to.
 {{</Aside>}}
 
 ## 2. Verify device connectivity
