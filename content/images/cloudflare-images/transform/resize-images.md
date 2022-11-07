@@ -6,7 +6,7 @@ weight: 1
 
 # Resize images
 
-Resizing images in Cloudflare Images works by creating variants of your image. Variants let you specify how images should be resized for different use cases. Cloudflare Images ships with a default `public` variant, but you can create up to 20 variants to fit your needs.
+Resizing images in Cloudflare Images works by creating variants of your image. Variants let you specify how images should be resized for different use cases. Cloudflare Images ships with a default `public` variant, but you can create up to 100 variants to fit your needs.
 
 Each variant has several properties, including the width and height of resized images.
 

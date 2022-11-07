@@ -24,6 +24,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
+<!-- - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments. -->
 
 {{<Aside type="note">}}
 
@@ -153,14 +154,10 @@ None of the options for this command are required. Many of these options can be 
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-
   - Run the preview of the Worker directly on your local machine.
-
     {{<Aside type="warning">}}
-
-This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
-
-{{</Aside>}}
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--persist` will store data in the `.wrangler/state` subdirectory.
+    {{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
@@ -244,7 +241,7 @@ None of the options for this command are required. Also, many can be set in your
   - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/cron-triggers/#examples).
+  - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
   - Routes where this Worker will be published.
   - For example: `--route example.com/*`.
@@ -1187,6 +1184,24 @@ Retrieve your user information and test your authentication configuration.
 $ wrangler whoami
 ```
 
+<!-- ## deployments
+
+Retrieve details for the 10 most recent deployments. Details include `Version ID`, `Version number`, `Author email`, `Created on`, and `Latest deploy`.
+
+```sh
+$ wrangler deployments
+```
+
+{{<definitions>}}
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
+{{</definitions>}}
+
+TODO Add examples of logged output
+-->
+
 ---
 
 ## types
@@ -1196,3 +1211,5 @@ Generate types from bindings and module rules in configuration.
 ```sh
 $ wrangler types
 ```
+
+<!--TODO Add examples of DTS generated output -->

@@ -37,5 +37,6 @@ header: Example webhook payload
   },
   "ts": 1642074233
 }
+```
 
 The `event_type` property of the data object will either be `live_input.connected` or `live_input.disconnected`.

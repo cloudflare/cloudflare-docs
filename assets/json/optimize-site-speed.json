@@ -100,7 +100,7 @@
           {
             "url_path": "/rules/url-forwarding/",
             "link_title": "URL forwarding through Cloudflare",
-            "additional_description": "By using Bulk Redirects or Dynamic Redirects for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of making requests travel all the way to your origin server."
+            "additional_description": "By using Single Redirects or Bulk Redirects for URL forwarding, you can perform redirects at Cloudflare’s edge network instead of making requests travel all the way to your origin server."
           },
           {
             "url_path": "/cache/get-started/",

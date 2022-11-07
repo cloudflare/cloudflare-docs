@@ -123,7 +123,52 @@ To review code changes in real time, rewrite the `"Hello World!"` string to `"He
 
 To experiment with more premade Workers, refer to [Workers Examples](/workers/examples/).
 
-## 6. Publish your project
+
+## 6. Write test
+
+We recommend writing tests against your worker, one way to do this is with the [unstable_dev](/workers/wrangler/api/#unstable_dev) API in wrangler which is used for writing unit and end-to-end tests.
+
+One of the prompts from running the `wrangler init` command is a question asking `will you like to write your first test`, and `which test runner you will like to use?`. If you indicate yes and select either vitest or jest as your test runner,  an `index.test.js` file will be created with the following block of code included in the file: 
+
+```js
+const { unstable_dev } = require("wrangler");
+
+describe("Worker", () => {
+	let worker;
+
+	beforeAll(async () => {
+		worker = await unstable_dev(
+			"src/index.js",
+			{},
+			{ disableExperimentalWarning: true }
+		);
+	});
+
+	afterAll(async () => {
+		await worker.stop();
+	});
+
+	it("should return Hello World", async () => {
+		const resp = await worker.fetch();
+		if (resp) {
+			const text = await resp.text();
+			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+		}
+	});
+});
+```
+
+The code block consists of 4 parts:
+
+1. The import statement `const { unstable_dev } = require("wrangler");`, this initializes the `unstable_dev` API so it can be used in the test suite. The `unstable_dev` function accepts three parameters - `await unstable_dev(script, options, apiOptions)`.
+
+2. The `beforeAll()` function for initializing `unstable_dev()`, this helps minimize the overhead required to start the dev server for each individual test, running the dev server for each test will take a longer time to resolve which can end up slowing down the tests.
+
+3. The `afterAll()` function, which calls `await worker.stop()` for stopping the dev server after it runs the test suite.
+
+4. The `await worker.fetch()` function, for checking the response received corresponds with what you were expecting. 
+
+## 7. Publish your project
 
 With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. To set up a `*.workers.dev` subdomain, go to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Workers** > **Your subdomain** > **Change**.
 
