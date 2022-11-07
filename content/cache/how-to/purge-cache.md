@@ -19,7 +19,7 @@ For information on how to use single-file purge to purge assets cached by a Work
 
 With purge by single-file, cached resources are immediately removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
 
-The single-file purge rate limit for the Free subscription is 1000 urls/min. The rate limit is subject to change.
+The single-file purge rate limit for the Free subscription is 200 urls/sec. Pro, Business and Enterprise have a rate limit of 600 urls/sec. The rate limit is subject to change.
 
 A single-file purge performed through your Cloudflare dashboard does not clear objects that contain any of the following:
 
@@ -61,9 +61,11 @@ Purging everything immediately clears all resources from your CDN cache in all C
 3.  Under **Purge Cache**, click **Purge Everything**. A warning window appears.
 4.  If you agree, click **Purge Everything**.
 
+The rate limits are per account. The purge everything rate limit for the Free subscription is 500 purge everything rules per second. Pro, Business have a rate limit of 50 purge everything rules per second.
+
 ## Cache-Tags (Enterprise Only)
 
-Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as web pages, image files, and more. Note that Hostname and Tag purges are only available for Cloudflare Enterprise.
+Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as web pages, image files, and more. Note that Hostname and Tag purges are only available for Cloudflare Enterprise. Enterprise customers have a rate limit of 700 purge rules per second.
 
 ### General workflow for cache-tags
 
