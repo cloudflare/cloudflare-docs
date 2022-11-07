@@ -1,38 +1,38 @@
 ---
 pcx_content_type: how-to
-title: Create via API
+title: Create rule via API
 weight: 3
 meta:
-  title: Create a dynamic redirect via API
+  title: Create a redirect rule via API
 ---
 
-# Create a dynamic redirect via API
+# Create a redirect rule via API
 
-Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a dynamic redirect rule via API.
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a redirect rule via API.
 
 ## Required permissions
 
-The API token used in API requests to manage dynamic redirect rules must have at least the following permission:
+The API token used in API requests to manage redirect rules must have at least the following permission:
 
 * _Zone_ > _Dynamic Redirect_ > _Edit_
 
-## Create a dynamic redirect rule
+## Create a redirect rule
 
-Add dynamic redirect rules to the entry point ruleset of the `http_request_dynamic_redirect` phase at the zone level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
+Add redirect rules to the entry point ruleset of the `http_request_dynamic_redirect` phase at the zone level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
 
-A dynamic redirect rule must have:
+A redirect rule must have:
 
 * `action` set to `redirect`
-* An `action_parameters` object with additional configuration settings — refer to [Available settings](/rules/url-forwarding/dynamic-redirects/settings/) for details.
+* An `action_parameters` object with additional configuration settings — refer to [Available settings](/rules/url-forwarding/single-redirects/settings/) for details.
 
-The following request of the [Create zone ruleset](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single dynamic redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
+The following request of the [Create zone ruleset](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
 -d '{
-  "name": "Dynamic redirects ruleset",
+  "name": "Redirect rules ruleset",
   "kind": "zone",
   "phase": "http_request_dynamic_redirect",
   "rules": [
@@ -62,7 +62,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 {
   "result": {
     "id": "528f4f03bf0da53a29907199625867be",
-    "name": "Dynamic redirects ruleset",
+    "name": "Redirect rules ruleset",
     "kind": "zone",
     "version": "1",
     "rules": [
@@ -104,7 +104,7 @@ curl -X PUT \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
 -d '{
-  "name": "Dynamic redirects ruleset",
+  "name": "Redirect rules ruleset",
   "kind": "zone",
   "phase": "http_request_dynamic_redirect",
   "rules": [
@@ -147,7 +147,7 @@ curl -X PUT \
 {
   "result": {
     "id": "528f4f03bf0da53a29907199625867be",
-    "name": "Dynamic redirects ruleset",
+    "name": "Redirect rules ruleset",
     "description": "",
     "kind": "zone",
     "version": "2",
