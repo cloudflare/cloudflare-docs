@@ -16,7 +16,7 @@ To get started, run:
 $ npx wrangler init my-project -y
 ```
 
-This will create new directory (`my-project`), and setup a new Workers project within it. Your new directory will include a [`wrangler.toml`](https://developers.cloudflare.com/workers/wrangler/configuration/) configuration file in the project directory. 
+This will create new directory (`my-project`), and setup a new Workers project within it. Your new directory will include a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file in the project directory. 
 
 You can now create your first database with the Wrangler CLI. 
 
@@ -72,7 +72,7 @@ filename: "schema.sql"
 ---
 DROP TABLE IF EXISTS Customers;
 CREATE TABLE Customers (CustomerID INT, CompanyName TEXT, ContactName TEXT, PRIMARY KEY (`CustomerID`));
-INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, "Alfreds Futterkiste", "Maria Anders"),(4, "Around the Horn", "Thomas Hardy"),(11, "Bs Beverages", "Victoria Ashworth"),(13, "Bs Beverages", "Random Name");
+INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds Futterkiste', 'Maria Anders'),(4, 'Around the Horn', 'Thomas Hardy'),(11, 'Bs Beverages', 'Victoria Ashworth'),(13, 'Bs Beverages', 'Random Name');
 ```
 
 You can bootstrap your new D1 database by running:
