@@ -3,12 +3,12 @@ title: Available settings
 pcx_content_type: reference
 weight: 10
 meta:
-  title: Available dynamic redirect rules settings
+  title: Available redirect rules settings
 ---
 
 # Available settings
 
-The following sections describe the settings of dynamic redirect rules to configure static and dynamic URL redirects.
+The following sections describe the settings of redirect rules to configure static and dynamic URL redirects.
 
 ## Static URL redirect
 
@@ -26,7 +26,7 @@ A static URL redirect has the following configuration parameters:
 <summary>API information</summary>
 <div>
 
-The full syntax of the `"action_parameters"` field for a dynamic redirect rule performing a static URL redirect is the following:
+The full syntax of the `"action_parameters"` field for a redirect rule performing a static URL redirect is the following:
 
 ```json
  "action_parameters": {
@@ -63,7 +63,7 @@ A dynamic URL redirect has the following configuration parameters:
 <summary>API information</summary>
 <div>
 
-The full syntax of the `"action_parameters"` field for a dynamic redirect rule performing a dynamic URL redirect is the following:
+The full syntax of the `"action_parameters"` field for a redirect rule performing a dynamic URL redirect is the following:
 
 ```json
 "action_parameters": {
