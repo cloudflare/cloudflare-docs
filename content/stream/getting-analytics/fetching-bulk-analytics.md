@@ -8,14 +8,14 @@ weight: 1
 
 Stream provides analytics about both live video and video uploaded to Stream, via the GraphQL API described below, as well as in the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/analytics).
 
-The Stream Analytics API uses the Cloudflare GraphQL Analytics API, which can be used across many Cloudflare products. For more about GraphQL, rate limits, filters, and sorting, refer to the [Cloudflare GraphQL Analytics API docs](analytics/graphql-api).
+The Stream Analytics API uses the Cloudflare GraphQL Analytics API, which can be used across many Cloudflare products. For more about GraphQL, rate limits, filters, and sorting, refer to the [Cloudflare GraphQL Analytics API docs](/analytics/graphql-api).
 
 ## Getting started
 
 1. [Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the **Account Analytics** permission.
 2. Use a GraphQL client of your choice to make your first query. [Postman](https://www.postman.com/) has a built-in GraphQL client which can help you run your first query and introspect the GraphQL schema to understand what is possible.
 
-See the sections below for available metrics, dimensions, fields, and example queries.
+Refer to the sections below for available metrics, dimensions, fields, and example queries.
 
 ## Server side analytics
 
@@ -31,7 +31,7 @@ Stream collects data about the number of minutes of video delivered to viewers f
 | `clientCountryName` | ISO 3166 alpha2 country code from the client who viewed the video                                        |
 | `creator`           | The [Creator ID](/stream/manage-video-library/creator-id/) associated with individual videos, if present |
 
-Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, see [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
+Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
 
 ### Metrics
 
@@ -140,7 +140,7 @@ Client-side analytics are only collected when the [Stream Player](/stream/viewin
 | `deviceOs`          | Device operating system                                           |
 | `deviceType`        | Device type                                                       |
 
-Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, see [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
+Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/).
 
 ### Metrics
 
