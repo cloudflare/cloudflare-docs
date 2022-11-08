@@ -885,7 +885,8 @@
           "title": "Number of rules",
           "free": 1,
           "pro": 2,
-          "biz-ent": 5,
+          "biz": 5,
+          "ent": 5,
           "waf_essential": 100,
           "advanced": 100
         }
