@@ -10,6 +10,8 @@ meta:
 
 The exact method for certificate renewal depends on whether that hostname is proxying traffic through Cloudflare and whether it is a wildcard certificate.
 
+Custom Hostname certificates are valid for 90 days and tried to be renewed 30 days before expiry.
+
 ## Non-wildcard hostnames
 
 If you are using a non-wildcard hostname and proxying traffic through Cloudflare, Cloudflare will try to perform DCV automatically on the hostname’s behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
