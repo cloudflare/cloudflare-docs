@@ -7,28 +7,27 @@
 <div class="DocsMarkdown--table-wrap">
     <div class="DocsMarkdown--table-wrap-inner">
     <table>
-
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <strong>{{ index $map "free" }}</strong>
+            </td>
+            <td>
+                <strong>{{ index $map "pro" }}</strong>
+            </td>
+            <td>
+                <strong>{{ index $map "biz" }}</strong>
+            </td>
+            <td>
+                <strong>{{ index $map "ent" }}</strong>
+            </td>
+        </tr>
 {{- range $elem_key, $elem_val := $info -}}
 {{ if and (ne $elem_key "link") (ne $elem_key "title") }}
 {{-  $title := index . "title" -}}
 {{-  $link := index . "link" -}}
 {{- $properties := index . "properties" -}}
-<tr>
-    <td></td>
-    <td></td>
-    <td>
-        <strong>{{ index $map "free" }}</strong>
-    </td>
-    <td>
-        <strong>{{ index $map "pro" }}</strong>
-    </td>
-    <td>
-        <strong>{{ index $map "biz" }}</strong>
-    </td>
-    <td>
-        <strong>{{ index $map "ent" }}</strong>
-    </td>
-</tr>
 {{- range $properties -}}
 <tr>
     {{- if eq (index . "title") "Availability" -}}
