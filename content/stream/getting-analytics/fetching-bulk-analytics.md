@@ -38,7 +38,6 @@ Some filters, like `date`, can be used with operators, such as `gt` (greater tha
 | Node                                | Field           | Description                                |
 | ----------------------------------- | --------------- | ------------------------------------------ |
 | `streamMinutesViewedAdaptiveGroups` | `minutesViewed` | Minutes of video delivered                 |
-| `streamMinutesViewedAdaptiveGroups` | `count`         | Number of times video playback has started |
 
 ### Example
 
