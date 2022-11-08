@@ -5,12 +5,6 @@ title: Limits
 
 # Limits
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
-{{</Aside>}}
-
 ## Account plan limits
 
 {{<table-wrap>}}
@@ -27,6 +21,12 @@ You can request adjustments to limits that conflict with your project goals by c
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
 {{</table-wrap>}}
+
+{{<Aside type="note">}}
+
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+{{</Aside>}}
 
 ## Request limits
 
@@ -144,6 +144,12 @@ Workers automatically scale onto thousands of Cloudflare edge servers around the
 Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
 
 The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
+
+{{<Aside type="warning">}}
+
+If you are currently being rate limited, upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+
+{{</Aside>}}
 
 ### Burst rate
 
