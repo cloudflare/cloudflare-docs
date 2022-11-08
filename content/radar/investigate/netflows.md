@@ -38,7 +38,7 @@ And here's the abbreviated response:
 },
 ```
 
-We see that `HTTP` traffic values are similar to `ALL` traffic values - this means that most traffic Cloudflare sees as coming from this AS, is traffic to websites protected by Cloudflare.
+We see that `HTTP` traffic values are similar to `ALL` traffic values - this means that most traffic Cloudflare sees as coming from this AS, is traffic to websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) product.
 
 And now, let's look at AS32934, an autonomous system belonging to Facebook:
 

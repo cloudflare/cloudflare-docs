@@ -138,7 +138,7 @@ Inside the `result` property, you should see something like this:
 }
 ```
 
-Traffic dropped to almost 0 during the outage. Charting it (but setting the end date to the January 18 to make it clearer):
+Traffic dropped to almost 0 during the outage. Charting it (but setting the end date to January 18 to make it clearer):
 
 ![Tonga October vs January 2022](/radar/static/tonga_outage.png)
 
