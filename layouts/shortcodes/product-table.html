@@ -34,7 +34,7 @@
 <tr>
     <td>
         <p><strong>{{ if $link }}
-            <a href= {{$link}}>{{ $title | markdownify }}</a>
+            <a href={{$link}}>{{ $title | markdownify }}</a>
         {{ else }}
         {{ $title | markdownify }}
         {{ end }}
@@ -43,7 +43,11 @@
 <td></td>
 {{- end -}}
     </td>
-    <td>{{ .title | markdownify }} </td>
+    <td><p>{{ if .link }}
+        <a href={{.link}}>{{ .title | markdownify }}</a>
+    {{ else }}
+    {{ .title | markdownify }}
+    {{ end }}</p></td>
     <td>
         {{ .free | markdownify }}
     </td>
