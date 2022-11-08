@@ -23,11 +23,4 @@ Cloudflare only caches resources within the Cloudflare data center that serve th
 
 ## Feature availability
 
-
-| | | Free | Pro | Biz | Ent |
-| --- | --- | --- | --- | --- | --- |
-| Product | Availability | No | No | No | Yes |
-| --- | Other property | X | Y | Z | A |
-| --- | Other property 2 | X | Y | Z | A |
-
 {{<product-table id="cache">}}
