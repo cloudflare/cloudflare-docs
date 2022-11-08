@@ -15,7 +15,7 @@ Wrangler 2 introduces some new fields for configuration, while also deprecating 
 Here are common fields that are no longer required.
 
 - `type` is no longer required. Wrangler will infer the correct project type automatically.
-- `zone_id` is no longer required. It can be deduced from the routes directly.
+- `zone_id` is no longer required in most scenarios. It can be deduced from the routes directly **unless** you are using subdomain zones, in which case you must specify it explicitly.
 - `build.upload.format` is no longer used. The format is now inferred automatically from the code.
 - `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
 - `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
@@ -26,6 +26,14 @@ Here are common fields that are no longer required.
 - `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
 - `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/wrangler2/issues/new/choose).
 - `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
+
+## Changes to routes
+
+Please note a breaking change has been introduced to routes: Cloudflare dashboard-defined routes will be **deleted upon deployment** if you have any Wrangler-defined routes.
+
+- Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. 
+- If both are defined, only routes defined in `wrangler.toml` will be valid. 
+- To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your `wrangler.toml` file.
 
 ### New fields
 
@@ -142,8 +150,6 @@ The `wrangler route` command is no longer available to configure a route for a W
 Routes are specified in the `wrangler.toml` configuration file.
 
 ## Other deprecated behaviour
-
-- Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your `wrangler.toml` file.
 
 - Wrangler will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 
