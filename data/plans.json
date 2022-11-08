@@ -6,7 +6,7 @@
         "title": "Always Online",
         "link": "/cache/about/always-online/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -18,7 +18,7 @@
       "title": "Browser Cache TTL",
       "link": "/cache/about/edge-browser-cache-ttl/",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "All plans",
         "free": "Yes",
         "pro": "Yes",
@@ -37,7 +37,7 @@
         "title": "Cache keys",
         "link": "/cache/about/cache-keys/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",
@@ -49,7 +49,7 @@
         "title": "Set caching level",
         "link": "/cache/how-to/set-caching-levels/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -61,7 +61,7 @@
         "title": "Cache reserve",
         "link": "/cache/about/cache-reserve/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Paid add-on",
           "free": "Paid add-on",
           "pro": "Paid add-on",
@@ -73,7 +73,7 @@
         "title": "Cache by status code",
         "link": "/cache/how-to/configure-cache-status-code/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",
@@ -85,7 +85,7 @@
         "title": "CSAM Scanning Tool",
         "link": "https://support.cloudflare.com/hc/articles/360046106112",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -97,7 +97,7 @@
         "title": "Development mode",
         "link": "/cache/reference/development-mode/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -109,7 +109,7 @@
       "title": "Edge Cache TTL",
       "link": "/cache/about/edge-browser-cache-ttl/",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "All plans",
         "free": "Yes",
         "pro": "Yes",
@@ -128,7 +128,7 @@
         "title": "ETag Headers",
         "link": "https://support.cloudflare.com/hc/articles/218505467",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",
@@ -140,7 +140,7 @@
         "title": "Purge cache",
         "link": "/cache/how-to/purge-cache/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -159,7 +159,7 @@
       "title": "Query string sort",
       "link": "https://support.cloudflare.com/hc/articles/206776797",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "Enterprise",
         "free": "No",
         "pro": "No",
@@ -171,7 +171,7 @@
         "title": "Tiered cache",
         "link": "/cache/about/tiered-cache/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -186,7 +186,7 @@
     "custom_pages": {
       "title": "Customize error and challenge pages",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "Pro or higher",
         "free": "No",
         "pro": "Yes",
@@ -197,7 +197,7 @@
     "origin_error_pages": {
       "title": "Enable Origin Error Pages",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "Enterprise only",
         "free": "No",
         "pro": "No",
@@ -213,7 +213,7 @@
         "title": "Custom nameservers",
         "link": "/dns/additional-options/custom-nameservers/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -224,7 +224,7 @@
       "title": "Full zone setup",
       "link": "/dns/zone-setups/full-setup/",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "free": "Yes",
         "pro": "Yes",
         "biz": "Yes",
@@ -235,7 +235,7 @@
       "title": "Partial zone setup",
       "link": "/dns/zone-setups/partial-setup/",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "free": "No",
         "pro": "No",
         "biz": "Yes",
@@ -246,7 +246,7 @@
       "title": "Subdomain zone setup",
       "link": "/dns/zone-setups/subdomain-setup/",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "Enterprise only",
         "free": "No",
         "pro": "No",
@@ -261,7 +261,7 @@
         "title": "0-RTT Connection Resumption",
         "link": "/fundamentals/network/0-rtt-connection-resumption/",
         "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
             "free": "Yes",
             "pro": "Yes",
@@ -273,7 +273,7 @@
         "title": "gRPC",
         "link": "https://support.cloudflare.com/hc/articles/360050483011",
         "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -284,6 +284,14 @@
     "http2": {
         "title": "HTTP/2",
         "link": "https://support.cloudflare.com/hc/articles/200168076",
+        "availability": {
+            "title": "Availability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          },
         "customization": {
           "title": "Can customize",
           "summary": "Only Enterprise can customize",
@@ -297,7 +305,7 @@
         "title": "HTTP/2 to Origin",
         "link": "/cache/how-to/enable-http2-to-origin/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -309,7 +317,7 @@
         "title": "HTTP/3 (with QUIC)",
         "link": "https://www.cloudflare.com/learning/performance/what-is-http3/",
         "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -321,7 +329,7 @@
         "title": "IP Geolocation",
         "link": "https://support.cloudflare.com/hc/articles/200168236",
         "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -332,6 +340,14 @@
       "ipv6": {
         "title": "IPv6 Compatibility",
         "link": "https://support.cloudflare.com/hc/articles/229666767",
+        "availability": {
+            "title": "Availability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          },
         "customization": {
           "title": "Can customize",
           "summary": "Only Enterprise can customize",
@@ -344,6 +360,14 @@
     "max_upload_size": {
       "title": "Max upload size",
       "link": "/cache/about/default-cache-behavior/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "upload_size": {
         "title": "Max upload size",
         "free": "100 MB",
@@ -356,7 +380,7 @@
         "title": "Onion Routing",
         "link": "https://support.cloudflare.com/hc/articles/203306930",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -368,7 +392,7 @@
         "title": "Pseudo IPv4",
         "link": "https://support.cloudflare.com/hc/articles/229666767",
         "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -380,7 +404,7 @@
       "title": "Response buffering",
       "link": "https://support.cloudflare.com/hc/articles/206049798",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "Enterprise only",
         "free": "No",
         "pro": "No",
@@ -392,7 +416,7 @@
       "title": "True Client IP Header",
       "link": "/fundamentals/get-started/reference/http-request-headers/",
       "availability": {
-        "title": "Avalability",
+        "title": "Availability",
         "summary": "Enterprise only",
         "free": "No",
         "pro": "No",
@@ -404,7 +428,7 @@
         "title": "WebSockets",
         "link": "https://support.cloudflare.com/hc/articles/200169466",
         "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
             "free": "Yes",
             "pro": "Yes",
@@ -427,6 +451,14 @@
     "bulk_redirects": {
       "title": "Bulk Redirects",
       "link": "/rules/url-forwarding/bulk-redirects/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "num_rules": {
         "title": "Rules",
         "free": 15,
@@ -452,6 +484,14 @@
     "cache_rules": {
       "title": "Cache Rules",
       "link": "/cache/about/cache-rules/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "rules": {
         "title": "Number of rules",
         "free": 10,
@@ -463,6 +503,14 @@
     "config_rules": {
       "title": "Configuration rules",
       "link": "/rules/configuration-rules/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "rules": {
         "title": "Number of rules",
         "free": 10,
@@ -474,6 +522,14 @@
     "dynamic_redirects": {
       "title": "Dynamic Redirects",
       "link": "/rules/url-forwarding/dynamic-redirects/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "num_rules": {
         "title": "Number of rules",
         "free": 10,
@@ -492,6 +548,14 @@
     "origin_rules": {
       "title": "Origin Rules",
       "link": "/rules/origin-rules/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "num_rules": {
         "title": "Number of rules",
         "free": 10,
@@ -531,6 +595,14 @@
     "page_rules": {
       "title": "Page Rules",
       "link": "https://support.cloudflare.com/hc/articles/218411427",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "rules": {
         "title": "Number of rules",
         "free": 3,
@@ -542,6 +614,14 @@
     "transform_rules": {
       "title": "Transform Rules",
       "link": "/rules/transform/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "num_rules": {
         "title": "Active Transform Rules",
         "free": 10,
@@ -562,37 +642,33 @@
     "bots": {
       "title": "Bot products",
       "link": "/bots/",
+      "availability": {
+        "title": "Availability",
+        "summary": "All plans",
+        "free": "Yes",
+        "pro": "Yes",
+        "biz": "Yes",
+        "ent": "Yes"
+      },
       "bot_analytics": {
         "title": "Bot analytics",
         "link": "/bots/bot-analytics/",
-        "availability": {
-          "title": "Avalability",
-          "summary": "Business or higher",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
           "ent": "Yes"
-        }
-      }
-      },
+        },
       "firewall_variables": {
         "title": "Firewall variables",
         "link": "/bots/reference/bot-management-variables/",
-        "availability": {
-          "title": "Avalability",
-          "summary": "Enterprise with purchase",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "No",
           "ent_purchase": "Yes"
-        }
-      },
+        },
       "super_bot_fight_mode": {
         "title": "Super Bot Fight Mode",
-        "availability": {
-          "title": "Avalability",
-          "summary": "Pro or higher",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -602,6 +678,14 @@
       "firewall_rules": {
         "title": "Firewall rules",
         "link": "/firewall/",
+        "availability": {
+            "title": "Availability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          },
         "rules": {
           "title": "Number of rules",
           "free": 5,
@@ -637,6 +721,14 @@
         "title": "Page Shield",
         "link": "/page-shield/",
         "ent_plus": "Enterprise with add-on",
+        "availability": {
+            "title": "Availability",
+            "summary": "Pro and above",
+            "free": "No",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          },
         "1_script_monitor": {
           "title": "Script monitor",
           "summary": "Pro or higher",
@@ -695,6 +787,14 @@
       "rate_limiting": {
         "title": "Rate Limiting Rules",
         "link": "/waf/rate-limiting-rules/",
+        "availability": {
+            "title": "Availability",
+            "summary": "All plans",
+            "free": "Yes",
+            "pro": "Yes",
+            "biz": "Yes",
+            "ent": "Yes"
+          },
         "rules": {
           "title": "Number of rules",
           "free": 1,
@@ -711,7 +811,7 @@
         "title": "AMP Real URL",
         "link": "/fundamentals/signed-exchanges/amp-real-ulr/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -723,7 +823,7 @@
         "title": "Automatic Platform Optimization",
         "link": "/automatic-platform-optimization/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Included with Pro or higher",
           "free": "Paid add-on",
           "pro": "Yes",
@@ -735,7 +835,7 @@
         "title": "Automatic Signed Exchanges (SXGs)",
         "link": "/fundamentals/signed-exchanges/signed-exchanges/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Pro or higher or [Automatic Platform Optimization](/automatic-platform-optimization/)",
           "free": "No",
           "pro": "Yes",
@@ -747,7 +847,7 @@
         "title": "Auto Minify",
         "link": "https://support.cloudflare.com/hc/articles/200168196",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -759,7 +859,7 @@
         "title": "Brotli compression",
         "link": "https://support.cloudflare.com/hc/articles/200168396",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -771,7 +871,7 @@
         "title": "Early Hints",
         "link": "/cache/about/early-hints",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -783,7 +883,7 @@
         "title": "Enhanced HTTP/2 Prioritization",
         "link": "https://blog.cloudflare.com/better-http-2-prioritization-for-a-faster-web/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Pro or higher",
           "free": "No",
           "pro": "Yes",
@@ -795,7 +895,7 @@
         "title": "Image Resizing",
         "link": "/images/image-resizing/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Paid add-on",
           "free": "Paid add-on",
           "pro": "Paid add-on",
@@ -807,7 +907,7 @@
         "title": "Mirage",
         "link": "https://support.cloudflare.com/hc/articles/219178057",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Pro or higher",
           "free": "No",
           "pro": "Yes",
@@ -819,7 +919,7 @@
         "title": "Mobile redirect",
         "link": "https://support.cloudflare.com/hc/articles/200168336",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -831,7 +931,7 @@
         "title": "Polish",
         "link": "/images/polish/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Pro or higher",
           "free": "No",
           "pro": "Yes",
@@ -843,7 +943,7 @@
         "title": "Prefetch URLs",
         "link": "/fundamentals/speed/prefetch-urls/",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",
@@ -855,7 +955,7 @@
         "title": "Rocket Loader",
         "link": "https://support.cloudflare.com/hc/articles/200168056",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
           "pro": "Yes",
@@ -866,7 +966,7 @@
       "tcp_turbo": {
         "title": "TCP Turbo",
         "availability": {
-          "title": "Avalability",
+          "title": "Availability",
           "summary": "Pro or higher",
           "free": "No",
           "pro": "Yes",
@@ -881,7 +981,7 @@
           "title": "Email Address Obfuscation",
           "link": "https://support.cloudflare.com/hc/articles/200170016",
           "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "All plans",
             "free": "Yes",
             "pro": "Yes",
@@ -893,7 +993,7 @@
             "title": "Hotlink Protection",
             "link": "https://support.cloudflare.com/hc/articles/200170026",
             "availability": {
-              "title": "Avalability",
+              "title": "Availability",
               "summary": "All plans",
               "free": "Yes",
               "pro": "Yes",
@@ -905,7 +1005,7 @@
             "title": "Server-side Excludes",
             "link": "https://support.cloudflare.com/hc/articles/200170036",
             "availability": {
-              "title": "Avalability",
+              "title": "Availability",
               "summary": "All plans",
               "free": "Yes",
               "pro": "Yes",
@@ -921,7 +1021,7 @@
           "title": "Custom Certificates",
           "link": "/ssl/edge-certificates/custom-certificates/",
           "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "Business and Enterprise customers get 1 certificate and Enterprise customers can purchase additional if needed.",
             "free": "No",
             "pro": "No",
@@ -936,7 +1036,7 @@
           "title": "Argo Smart Routing",
           "link": "/argo-smart-routing/",
           "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "Paid add-on",
             "free": "Paid add-on",
             "pro": "Paid add-on",
@@ -948,7 +1048,7 @@
             "title": "Health checks",
             "link": "https://support.cloudflare.com/hc/articles/4404867308429",
             "availability": {
-              "title": "Avalability",
+              "title": "Availability",
               "summary": "Pro and above",
               "free": "No",
               "pro": "Yes",
@@ -960,7 +1060,7 @@
           "title": "Load Balancing",
           "link": "/load-balancing/",
           "availability": {
-            "title": "Avalability",
+            "title": "Availability",
             "summary": "Paid add-on",
             "free": "Paid add-on",
             "pro": "Paid add-on",
@@ -981,8 +1081,8 @@
           "title": "Waiting Room",
           "link": "/waiting-room/",
           "ent_plus": "Enterprise with add-on",
-          "1_availability": {
-            "title": "Avalability",
+          "availability": {
+            "title": "Availability",
             "summary": "Business plan or higher",
             "free": "No",
             "pro": "No",
@@ -990,7 +1090,7 @@
             "ent": "Yes",
             "ent_plus": "Yes"
           },
-          "2_rooms": {
+          "b_rooms": {
             "title": "Number of rooms",
             "summary": "Business plan or higher",
             "free": 0,
@@ -1061,36 +1161,36 @@
         "ipfs": {
           "title": "IPFS Gateways",
           "link": "/web3/ipfs-gateway/",
-          "1_availability": {
-            "title": "Avalability",
+          "availability": {
+            "title": "Availability",
             "summary": "Usage-based billing",
             "free": "Yes<br/>(Usage-based billing)",
             "pro": "Yes<br/>(Usage-based billing)",
             "biz": "Yes<br/>(Usage-based billing)",
             "ent": "Yes<br/>(Usage-based billing)"
           },
-          "2_total_gateways": {
+          "b_total_gateways": {
             "title": "Total gateways",
             "free": "15",
             "pro": "15",
             "biz": "15",
             "ent": "Unlimited"
           },
-          "3_gateway_types": {
+          "c_gateway_types": {
             "title": "Gateway types",
             "free": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
             "pro": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
             "biz": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/)",
             "ent": "[DNSLink](/web3/ipfs-gateway/concepts/dnslink/),<br/> [Universal Gateway](/web3/ipfs-gateway/concepts/universal-gateway/)"
           },
-          "4_included_bandwidth": {
+          "d_included_bandwidth": {
             "title": "Included bandwidth<br/> (without additional cost)",
             "free": "50 GB data transfer",
             "pro": "50 GB data transfer",
             "biz": "50 GB data transfer",
             "ent": "100 GB data transfer"
           },
-          "5_file_size_limit": {
+          "e_file_size_limit": {
             "title": "File size limit",
             "free": "None",
             "pro": "None",
@@ -1101,22 +1201,22 @@
         "ethereum": {
             "title": "Ethereum Gateways",
             "link": "/web3/ethereum-gateway/",
-            "1_availability": {
-              "title": "Avalability",
+            "availability": {
+              "title": "Availability",
               "summary": "Usage-based billing",
               "free": "Yes<br/>(Usage-based billing)",
               "pro": "Yes<br/>(Usage-based billing)",
               "biz": "Yes<br/>(Usage-based billing)",
               "ent": "Yes<br/>(Usage-based billing)"
             },
-            "2_total_gateways": {
+            "b_total_gateways": {
               "title": "Total gateways",
               "free": "15",
               "pro": "15",
               "biz": "15",
               "ent": "Unlimited"
             },
-            "3_included_bandwidth": {
+            "c_included_bandwidth": {
               "title": "Included bandwidth<br/> (without additional cost)",
               "free": "500,000 HTTP requests",
               "pro": "500,000 HTTP requests",

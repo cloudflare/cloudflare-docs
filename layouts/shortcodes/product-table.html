@@ -10,15 +10,11 @@
 
 {{- range $elem_key, $elem_val := $info -}}
 {{ if and (ne $elem_key "link") (ne $elem_key "title") }}
+{{-  $title := index . "title" -}}
+{{-  $link := index . "link" -}}
 <tr>
-    <td>
-            <p><strong>{{ if .link }}
-                <a href= {{.link}}>{{ .title | markdownify }}</a>
-            {{ else }}
-            {{ .title | markdownify }}
-            {{ end }}
-        </strong></p>
-    </td>
+    <td></td>
+    <td></td>
     <td>
         <strong>{{ index $map "free" }}</strong>
     </td>
@@ -31,23 +27,23 @@
     <td>
         <strong>{{ index $map "ent" }}</strong>
     </td>
-    {{ if .ent_plus}}
-    <td>
-        <strong>{{.ent_plus}}</strong>
-    </td>
-    {{- end -}}
 </tr>
-{{- range $elem_key, $elem_val := . -}}
-{{- if and (ne $elem_key "link") (ne $elem_key "title") (ne $elem_key "ent_plus") -}}
+{{- range $elem_key2, $elem_val2 := . -}}
+{{- if and (ne $elem_key2 "link") (ne $elem_key2 "title") (ne $elem_key2 "ent_plus") -}}
+{{- if eq $elem_key2 "availability" -}}
 <tr>
     <td>
-        <p>{{ if .link }}
-            <a href= {{.link}}>{{ .title | markdownify }}</a>
+        <p><strong>{{ if $link }}
+            <a href= {{$link}}>{{ $title | markdownify }}</a>
         {{ else }}
-        {{ .title | markdownify }}
+        {{ $title | markdownify }}
         {{ end }}
-    </p>
+    </strong></p>
+{{- else -}}
+<td></td>
+{{- end -}}
     </td>
+    <td>{{ .title | markdownify }} </td>
     <td>
         {{ .free | markdownify }}
     </td>
@@ -60,13 +56,8 @@
     <td>
         {{ .ent | markdownify }}
     </td>
-    {{ if .ent_plus }}
-        <td>
-            {{ .ent_plus | markdownify }}
-        </td>
-    {{- end -}}
 </tr>
-<tr><td></td></tr>
+
 {{ end }}
 {{ end }}
 {{ end }}
