@@ -140,20 +140,18 @@ $ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-l
 `cloudflared` will generate the required lines to append to the SSH configuration file, similar to the example output below.
 
 ```txt
-Host ssh-bastion.widgetcorp.tech
-  ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1'
-
-Host cfpipe-ssh-bastion.widgetcorp.tech
-  HostName ssh-bastion.widgetcorp.tech
-  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
-  IdentityFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key
-  CertificateFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key-cert.pub
+Match host ssh-bastion.widgetcorp.tech exec "/usr/local/bin/cloudflared access ssh-gen --hostname %h"
+    HostName ssh-bastion.widgetcorp.tech
+    ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+    IdentityFile ~/.cloudflared/vm.example.com-cf_key
+    CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub
 ```
 
 When users authenticate through Cloudflare Access, Cloudflare will generate a certificate for the individual using the username from the identity provider (stripped of the email domain). That certificate will then be presented to the SSH server.
 
 {{<Aside type="note">}}
 
-The username in the identity provider must match the username on the SSH server.
+The username in the identity provider must match the username on the SSH server.  
+To use with a server where the usernames don't match, see the advanced setup in [Short-Lived Certificates](/cloudflare-one/identity/users/short-lived-certificates/)
 
 {{</Aside>}}
