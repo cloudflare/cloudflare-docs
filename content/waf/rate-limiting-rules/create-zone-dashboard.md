@@ -23,7 +23,7 @@ To create a new rate limiting rule:
 
 2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
 
-3. Select **Create rate limiting rule**.
+3. In **Advanced rate limiting**, select **Create rate limiting rule**.
 
 4. In the page that displays, enter a descriptive name for the rule in **Rule name**.
 
