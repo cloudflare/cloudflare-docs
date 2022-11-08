@@ -57,7 +57,7 @@ If you have this ability, think about how you want the page to appear.
 
 ### Prepare your waiting room for mobile application traffic
 
-If you need to manage traffic in a non-browser environment such as a mobile app or web app, use a [JSON-friendly waiting room](/waiting-room/how-to/json-response/) that can be consumed via your API endpoints.
+If you need to manage traffic in a non-browser environment such as a mobile app or web app, use a [JSON-friendly waiting room](/waiting-room/how-to/json-response/) that can be consumed via your API endpoints. Please note that if you have a mobile app or web app that depends on resources that would be protected by a waiting room, you will need to update those clients to handle Waiting Room appropriately.
 
 ## Step 3 — Activate your waiting room
 
