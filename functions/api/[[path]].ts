@@ -1,4 +1,4 @@
-const apiBase = "https://d22c72c1.cloudflare-api-private-test.pages.dev"
+const apiBase = "https://cloudflare-api-docs-frontend.pages.dev"
 
 const rewriteStaticAssets = {
   element: (element: Element) => {
