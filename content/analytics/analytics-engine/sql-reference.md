@@ -273,12 +273,12 @@ column 1 value  column 2 value
 Note that function names are not case-sensitive, they can be used both in uppercase or in lowercase.
 {{</Aside>}}
 
-### COUNT
+### count
 
 Usage:
 ```SQL
-COUNT()
-COUNT(DISTINCT column_name)
+count()
+count(DISTINCT column_name)
 ```
 
 Count is an aggregation function that returns the number of rows in each group or results set.
@@ -288,16 +288,16 @@ Count can also be used to count the number of distinct (unique) values in each c
 Example:
 ```SQL
 -- return the total number of rows
-COUNT()
+count()
 -- return the number of different values in the column
-COUNT(DISTINCT column_name)
+count(DISTINCT column_name)
 ```
 
-### SUM
+### sum
 
 Usage:
 ```SQL
-SUM([DISTINCT] column_name)
+sum([DISTINCT] column_name)
 ```
 
 Sum is an aggregation function that returns the sum of column values across all rows in each group or results set. Sum also supports `DISTINCT`, but in this case it will only sum the unique values in the column.
@@ -305,16 +305,16 @@ Sum is an aggregation function that returns the sum of column values across all 
 Example:
 ```SQL
 -- return the total cost of all items
-SUM(item_cost)
+sum(item_cost)
 -- return the total of all unique item costs
-SUM(DISTINCT item_cost)
+sum(DISTINCT item_cost)
 ```
 
-### AVG
+### avg
 
 Usage:
 ```SQL
-AVG([DISTINCT] column_name)
+avg([DISTINCT] column_name)
 ```
 
 Avg is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, but in this case it will only average the unique values in the column.
@@ -322,16 +322,16 @@ Avg is an aggregation function that returns the mean of column values across all
 Example:
 ```SQL
 -- return the mean item cost
-AVG(item_cost)
+avg(item_cost)
 -- return the mean of unique item costs
-AVG(DISTINCT item_cost)
+avg(DISTINCT item_cost)
 ```
 
-### MIN
+### min
 
 Usage:
 ```SQL
-MIN(column_name)
+min(column_name)
 ```
 
 Min is an aggregation function that returns the minimum value of a column across all rows.
@@ -339,14 +339,14 @@ Min is an aggregation function that returns the minimum value of a column across
 Example:
 ```SQL
 -- return the minimum item cost
-MIN(item_cost)
+min(item_cost)
 ```
 
-### MAX
+### max
 
 Usage:
 ```SQL
-MAX(column_name)
+max(column_name)
 ```
 
 Max is an aggregation function that returns the maximum value of a column across all rows.
@@ -354,90 +354,90 @@ Max is an aggregation function that returns the maximum value of a column across
 Example:
 ```SQL
 -- return the maximum item cost
-MAX(item_cost)
+max(item_cost)
 ```
 
-### QUANTILEWEIGHTED
+### quantileWeighted
 
 Usage:
 ```SQL
-QUANTILEWEIGHTED(q, column_name, weight_column_name) 
+quantileWeighted(q, column_name, weight_column_name) 
 ```
 
-`QUANTILEWEIGHTED` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
+`quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
 
 Example:
 ```SQL
 -- estimate the median value of <double1>
-QUANTILEWEIGHTED(0.5, double1, _sample_interval) 
+quantileWeighted(0.5, double1, _sample_interval) 
 
 -- in a table of query times, estimate the 95th centile query time
-QUANTILEWEIGHTED(0.95, query_time, _sample_interval)
+quantileWeighted(0.95, query_time, _sample_interval)
 ```
 
-### IF
+### if
 
 Usage:
 ```SQL
-IF(<condition>, <true_expression>, <false_expression>)
+if(<condition>, <true_expression>, <false_expression>)
 ```
 
 Returns `<true_expression>` if `<condition>` evaluates to true, else returns `<false_expression>`.
 
 Example:
 ```SQL
-IF(temp > 20, 'It is warm', 'Bring a jumper')
+if(temp > 20, 'It is warm', 'Bring a jumper')
 ```
 
-### INTDIV
+### intDiv
 
 Usage:
 ```SQL
-INTDIV(a, b)
+intDiv(a, b)
 ```
 
 Divide a by b, rounding the answer down to the nearest whole number.
 
 
-### TOUINT32
+### toUInt32
 
 Usage:
 ```SQL
-TOUINT32(<expression>)
+ToUInt32(<expression>)
 ```
 
 Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 32 bit integer.
 
 Behaviour for negative numbers is undefined.
 
-### TODATETIME
+### toDateTime
 
 Usage:
 ```SQL
-TODATETIME(<expression>)
+ToDateTime(<expression>)
 ```
 
-`TODATETIME` converts an expression to a datetime.
+`ToDateTime` converts an expression to a datetime.
 
 Examples:
 ```SQL
 -- double1 contains a unix timestamp in seconds
-TODATETIME(double1)
+ToDateTime(double1)
 
 -- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
-TODATETIME(blob1)
+ToDateTime(blob1)
 
 -- literal values:
-TODATETIME(355924804) -- unix timestamp
-TODATETIME('355924804') -- string containing unix timestamp
-TODATETIME('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
+ToDateTime(355924804) -- unix timestamp
+ToDateTime('355924804') -- string containing unix timestamp
+ToDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
 ```
 
-### NOW
+### now
 
 Usage:
 ```SQL
-NOW()
+now()
 ```
 
 Returns the current time as a DateTime.
