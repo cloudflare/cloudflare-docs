@@ -1,0 +1,49 @@
+.DocsMarkdown a {
+    text-decoration: none;
+  color: inherit;
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.08;
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+  --border-bottom-color-alpha: 0.3;
+  --background-color: rgba(
+    var(--background-color-rgb),
+    var(--background-color-alpha)
+  );
+  --focus-shadow: 0 0 0 var(--focus-size) var(--focus-color);
+  box-shadow: var(--focus-shadow);
+  background-color: var(--background-color);
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+}
+
+[js-focus-visible-polyfill-available] .DocsMarkdown a:focus {
+    outline: none;
+  }
+  
+  .DocsMarkdown a[is-focus-visible] {
+    border-color: transparent;
+  }
+  
+  .DocsMarkdown a:not([is-focus-visible]) {
+    --focus-size: 0;
+  }
+  
+  .DocsMarkdown a:hover {
+    --background-color-alpha: 0.15;
+  }
+  
+  .DocsMarkdown a[data-is-type-link="true"] {
+    background: transparent;
+    border: none;
+  }
+  
+  [theme="dark"] .DocsMarkdown a {
+    --background-color-alpha: 0.03;
+    --border-bottom-color-rgb: var(--orange-rgb);
+    --border-bottom-color-alpha: 0.35;
+    color: var(--code-orange);
+  }
+  
+  [theme="dark"] .DocsMarkdown a:hover {
+    --background-color-alpha: 0.08;
+  }
