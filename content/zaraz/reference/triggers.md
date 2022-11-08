@@ -135,7 +135,7 @@ Triggers an action when a CSS selector becomes visible in the screen.
 
 | Rule type            | CSS Selector |
 | -------------------- | ------------ |
-| _Element Visibility_ | `#my-class` |
+| _Element Visibility_ | `#my-id` |
 
 {{</table-wrap>}}
 
