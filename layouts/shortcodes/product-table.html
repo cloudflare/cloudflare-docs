@@ -30,19 +30,9 @@
     </td>
 </tr>
 {{- range $properties -}}
-{{- if eq (index . "title") "Availability" -}}
 <tr>
-    <td>
-        <p><strong>{{ if $link }}
-            <a href={{$link}}>{{ $title | markdownify }}</a>
-        {{ else }}
-        {{ $title | markdownify }}
-        {{ end }}
-    </strong></p>
-</td>
-{{- else -}}
-<td></td>
-{{- end -}}
+    <td></td>
+
     <td><p>{{ if .link }}
         <a href={{.link}}>{{ .title | markdownify }}</a>
     {{ else }}
@@ -61,7 +51,7 @@
         {{ .ent | markdownify }}
     </td>
 </tr>
-{{ end }}
+{{- end -}}
 {{ end }}
 {{ end }}
 </table>
