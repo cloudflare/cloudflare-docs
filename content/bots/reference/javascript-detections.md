@@ -14,6 +14,14 @@ This detection technique gathers general data about the machines reaching Cloudf
 
 JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile app traffic is unaffected. Additionally, code is not injected again until its 30-minute session life expires. The Picasso script is about 70KB and execution time varies per device from 90ms to around 500ms.
 
+Cloudflare's JavaScript Detection is a non-malicious, privacy-centric proof of work that allows us to use better processes to determine the difference between bots and humans.
+
+The injected script has been augmented with window property checks which are validated by the Challenge Platform (CP). 
+
+The snippets of JavaScript will now contain a source pointing to the challenge platform `/cdn-cgi/challenge-platform/h/d/scripts/invisible.js`. 
+
+The script will then execute, collecting window properties and fingerprints, which will be sent to a new endpoint `/cdn-cgi/challenge-platform/h/d/cv/results/abcdef`.
+
 ## Enable JavaScript detections
 
 For Free customers (Bot Fight Mode), JavaScript detections are automatically enabled and cannot be disabled.
