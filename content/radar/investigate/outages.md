@@ -25,8 +25,7 @@ See the [blog post](https://blog.cloudflare.com/announcing-cloudflare-radar-outa
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/annotations/outages?limit=5&offset=0&dateRange=7d&format=json" \
-  -H "Authorization: Bearer <API_TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

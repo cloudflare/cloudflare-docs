@@ -16,8 +16,7 @@ Cloudflare regularly generates a Domain Ranking based on DNS queries to [1.1.1.1
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&format=json&limit=5" \
-  -H "Authorization: Bearer <API_TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -51,8 +50,7 @@ So, let's get the last domain ranking buckets:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets?limit=5&offset=0&datasetType=RANKING_BUCKET&format=json" \
-  -H "Authorization: Bearer <API_TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -84,7 +82,6 @@ curl -X 'POST' \
   'https://api.cloudflare.com/client/v4/radar/datasets/download?format=json' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer <API_TOKEN>' \
-  -H 'Content-Type: application/json' \
   -d '{
   "datasetId": 72
 }'

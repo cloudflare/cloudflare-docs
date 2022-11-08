@@ -24,8 +24,7 @@ Let's look at the global distribution of mitigated requests by product:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/timeseries_groups?aggInterval=1h&dateRange=1d&name=attacks&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 Looking at the abbreviated response below, we see that DDoS makes up the majority of the requests (which makes sense since by the very nature of this attack type it will perform more requests), followed by WAF and then by IP Reputation.
@@ -64,8 +63,7 @@ We can also filter by _source_ location and look at attacks coming _from_ Great 
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?location=GB&name=attacks_gb&aggInterval=1h&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -91,8 +89,7 @@ Let's look at application layer attacks by target location, in the last 24 hours
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/target?name=attacks_target&limit=5&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -148,8 +145,7 @@ How big an attack is, or the attack magnitude, can be defined by the number of m
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limit=5&dateRange=1d&magnitude=MITIGATED_REQUESTS&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```

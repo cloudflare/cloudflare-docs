@@ -17,10 +17,10 @@ Look at the `result.meta.normalization` property in the response to check which 
 | ---- | ---- |
 | **PERCENTAGE** | Values represent percentages. |
 | **PERCENTAGE_CHANGE** | Values represent a [percentage change](https://en.wikipedia.org/wiki/Relative_change_and_difference#Percentage_change) from a base line period. |
-| **MIN_MAX** | Values have been normalised using [MinMax](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization))|
-| **MIN0_MAX** | Values have been normalised using MinMax, but setting the min to 0. Equivalent to a proportion of the maximum value in the entire response, scaled between 0 and 1.|
+| **MIN_MAX** | Values have been normalized using [MinMax](https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization))|
+| **MIN0_MAX** | Values have been normalized using MinMax, but setting the min to 0. Equivalent to a proportion of the maximum value in the entire response, scaled between 0 and 1.|
 | **RAW_VALUES** | Values are raw and have not been changed. |
 
 
-If we want to compare values, across locations/time ranges/etc, in endpoints that normalize values using `MinMax`, we must do so in the __same__ request, by asking for multiple series. All values will then be normalised using the same minimum and maximum value and can safely be compared against each other (see [Making comparisons](/radar/get-started/making-comparisons)).
+If we want to compare values, across locations/time ranges/etc, in endpoints that normalize values using `MinMax`, we must do so in the __same__ request, by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other (see [Making comparisons](/radar/get-started/making-comparisons)).
 

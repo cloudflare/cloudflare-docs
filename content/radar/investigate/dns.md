@@ -16,8 +16,7 @@ Let's look at the top locations from where DNS queries to `google.com` are comin
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/dns/top/locations?domain=google.com&dateRange=1d&format=json&limit=2" \
-  -H "Authorization: Bearer <API_TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 Most queries come from the United States and Brazil:

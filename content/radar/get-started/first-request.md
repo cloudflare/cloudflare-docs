@@ -38,12 +38,11 @@ Once you have this information, you are ready to make your first request using t
 
 ## Using curl
 
-In the following example, let's look at the percentage distribution of device types, eg. mobile and desktop, traffic, for the last 7 days:
+In the following example, let's look at the percentage distribution of device types, e.g. mobile and desktop, traffic, for the last 7 days:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 You should get something like this:
@@ -74,8 +73,7 @@ Above, you are looking at all traffic but you can look at only traffic classifie
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&botClass=LIKELY_HUMAN&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 The `meta` property in the response will include metadata about the current request. In the example above, it returns the actual date range that was looked at, and what the number values represent (more on [normalization methods](/radar/concepts/normalization)).
@@ -94,8 +92,9 @@ import pandas as pd
 
 cf_api_url = "https://api.cloudflare.com/client/v4"
 params = "dateRange=7d&format=csv"
+my_token = "xxx" # TODO replace
 r = requests.get(f"{cf_api_url}/radar/http/summary/device_type?{params}",
-  headers={ "Authorization": f"Bearer my-token"})
+  headers={ "Authorization": f"Bearer {my_token}"})
 df = pd.read_csv(io.StringIO(r.text))
 df.plot(kind="bar", stacked=True)
 ```

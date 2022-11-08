@@ -22,8 +22,7 @@ Let's look at the worldwide vs Singapore distribution of mitigated attacks by ne
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/timeseries_groups?name=global&dateRange=1d&location=&name=singapore&location=SG&dateRange=1d&aggInterval=1h&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 Looking at the abbreviated response below, we see that globally, at those timestamps, UDP and TCP attacks were pretty evenly split.
@@ -69,8 +68,7 @@ We can also filter by _source_ location and look at attacks coming _from_ Russia
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?location=RU&name=attacks_ru&dateRange=1d&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

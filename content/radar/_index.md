@@ -12,12 +12,12 @@ meta:
 {{<description>}}
 [Cloudflare Radar](https://radar.cloudflare.com) is a hub that showcases global Internet traffic, attacks, and technology trends and insights. It is powered by data from Cloudflare’s global network, as well as aggregated and anonymized data from Cloudflare’s [1.1.1.1](https://blog.cloudflare.com/announcing-1111/) public DNS Resolver.
 
-Using `Cloudflare Radar's API` you can now access Cloudflare's data on global Internet traffic as well.
+Using Radar's API you can now access Cloudflare's data on global Internet traffic as well.
 {{</description>}}
 
 {{<plan type="all">}}
 
-`Radar's API` is free allowing academics, data sleuths and other web enthusiasts to investigate Internet usage across the globe. 
+Radar's API is free allowing academics, data sleuths and other web enthusiasts to investigate Internet usage across the globe. 
 
 Take into account that usage of the API, and its data, is made available under the [CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/).
 
@@ -27,7 +27,7 @@ Take into account that usage of the API, and its data, is made available under t
 
 [Make your first API request](/radar/get-started/first-request/) - Get your feet wet by making your first API request.
 
-[Making comparisons](/radar/get-started/making-comparisons/) - What to know before making comparisons between locations, ASes and others.
+[Making comparisons](/radar/get-started/making-comparisons/) - What to know before making comparisons between locations, [ASes](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) and others.
 
 ## Investigate
 

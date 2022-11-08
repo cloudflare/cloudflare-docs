@@ -6,13 +6,13 @@ weight: 3
 
 # HTTP requests
 
-While in [Netflows](/radar/investigate/netflows) we were looking at bytes and packets reaching our edge routers, here we're a layer above, looking at complete HTTP requests that reach Cloudflare protected websites.
+While in [Netflows](/radar/investigate/netflows) we were looking at bytes and packets reaching our edge routers, here we're a layer above, looking at complete HTTP requests that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) product.
 
 Most of the charts, in the [Adoption and Usage](https://radar.cloudflare.com/adoption-and-usage) section on Radar, come from this data source.
 
 These endpoints can be broadly split into:
 
-- timeseries: a timeseries of a group of metrics, eg. when looking at IP version, displays an IPv4 timeseries and an IPv6 timeseries
+- timeseries: a timeseries of a group of metrics, e.g. when looking at IP version, displays an IPv4 timeseries and an IPv6 timeseries
 - summary: displays a summary of a group of metrics over the specified time range, e.g. IPv4 traffic percentage out of the total traffic during that time period
 - top: a list of the top locations or [ASes](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) ranked by adoption of a specific metric, for example, top locations by mobile device traffic (ie. which locations have a higher percentage of mobile traffic out of the total traffic for that location)
 
@@ -24,8 +24,7 @@ Let's look at traffic by device type globally with and without [bot traffic](/ra
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/timeseries/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 And here's the abbreviated response:
@@ -73,8 +72,7 @@ We could also look at the same information but now asking for a summary of the d
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 The abbreviated response:
@@ -98,8 +96,7 @@ Let's look at another example, global breakdown of traffic by IP version, with a
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/ip_version?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 And we get:
@@ -127,8 +124,7 @@ Which locations have a higher adoption of [IPv6](https://en.wikipedia.org/wiki/I
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_version/IPv6?name=ipv6&botClass=LIKELY_HUMAN&dateRange=28d&format=json&limit=5" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json

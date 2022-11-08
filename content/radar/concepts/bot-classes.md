@@ -13,6 +13,6 @@ Bot traffic is comprised of requests with bot scores from 1 to 29, and non-bot/h
 | Class | Description |
 | ---- | ---- |
 | **Likely Automated** | Bot scores of 1 through 29. |
-| **Likely human** | Bot scores of 30 through 99. |
+| **Likely Human** | Bot scores of 30 through 99. |
 
 

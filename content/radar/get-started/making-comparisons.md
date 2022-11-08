@@ -6,7 +6,7 @@ weight: 3
 
 # Making comparisons
 
-When comparing time series, across locations/time ranges/etc, in endpoints that normalize values using [MinMax](/radar/concepts/normalization), we __must__ do so in the __same__ request, by asking for multiple series. All values will then be normalised using the same minimum and maximum value and can safely be compared against each other.
+When comparing time series, across locations/time ranges/etc, in endpoints that normalize values using [MinMax](/radar/concepts/normalization), we __must__ do so in the __same__ request, by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other.
 
 [Netflows](/radar/investigate/netflows.md) values are normalized using [Min0Max](/radar/concepts/normalization), so we'll use it as an example.
 
@@ -17,8 +17,7 @@ Let's compare the traffic change across different locations, United States and P
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=us_data&dateRange=7d&location=US&name=pt_data&dateRange=7d&location=PT&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 Here, we're asking for 2 timeseries. The 1st series has these parameters:
@@ -70,8 +69,7 @@ Let's compare the same location, United States, across different date ranges, us
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=this_week&dateRange=7d&location=US&name=previous_week&dateRange=7dControl&location=US&format=json" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 So, the 1st series has these parameters:
@@ -105,16 +103,15 @@ Looking at this, we see that the maximum value was reached at `2022-10-27T14:00:
 
 ### Using specific timestamps
 
-We can also ask for specific timestamps. For example, let's look at Tonga in October 2022 versus January 15th, when there was an outage ([more](https://blog.cloudflare.com/tonga-internet-outage/) on this outage).
+We can also ask for specific timestamps. For example, let's look at Tonga in October versus January 2022, when there was an outage ([more](https://blog.cloudflare.com/tonga-internet-outage/) on this outage).
 
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z&location=TO&name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO&format=json&aggInterval=1h" \
-     -H "Authorization: Bearer <API_TOKEN>" \
-     -H "Content-Type: application/json"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-So, the 1st series has these parameters (url encoded):
+So, the 1st series has these parameters (URL encoded):
 
 `
 name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z%&location=TO
@@ -141,7 +138,7 @@ Inside the `result` property, you should see something like this:
 }
 ```
 
-Traffic dropped to almost 0 during the outage. Charting it (but setting the end date to the 18th to make it clearer):
+Traffic dropped to almost 0 during the outage. Charting it (but setting the end date to the January 18 to make it clearer):
 
 ![Tonga October vs January 2022](/radar/static/tonga_outage.png)
 
