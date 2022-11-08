@@ -1436,7 +1436,7 @@
           "ent": "Yes"
         },
         "customization": {
-          "title": "Opt out?",
+          "title": "Can opt out?",
           "summary": "Enterprise only",
           "free": "No",
           "pro": "No",
@@ -1456,6 +1456,112 @@
           "pro": "No",
           "biz": 1,
           "ent": "1 (can purchase more)"
+        }
+      }
+    },
+    "z_custom_hostnames": {
+      "title": "Custom Hostnames",
+      "link": "/cloudflare-for-platforms/cloudflare-for-saas/plans/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_initial_quota": {
+          "title": "Hostnames included",
+          "summary": "100",
+          "free": 100,
+          "pro": 100,
+          "biz": 100,
+          "ent": 100
+        },
+        "c_max_hostnames": {
+          "title": "Max hostnames",
+          "free": 5000,
+          "pro": 5000,
+          "biz": 5000,
+          "ent": "Unlimited, but contact sales if using over 5000."
+        },
+        "custom_analytics": {
+          "title": "[Custom analytics](/cloudflare-for-platforms/cloudflare-for-saas/hostname-analytics/)",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "custom_origin": {
+          "title": "[Custom origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "custom_certificates": {
+          "title": "[Custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "csr": {
+          "title": "[CSR support](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/certificate-signing-requests/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "selectable_ca": {
+          "title": "[Custom analytics](/ssl/reference/certificate-authorities/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "wildcard_custom_hostnames": {
+          "title": "Wildcard custom hostnames",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "non_sni": {
+          "title": "Non-SNI support for SaaS zone",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "mtls": {
+          "title": "[mTLS support](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "waf": {
+          "title": "[WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/)",
+          "free": "WAF rules with current zone plan",
+          "pro": "WAF rules with current zone plan",
+          "biz": "WAF rules with current zone plan",
+          "ent": "Create and apply custom firewall rulesets."
+        },
+        "y_apex": {
+          "title": "Apex proxing/BYOIP",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Paid add-on"
+        },
+        "z_custom_metadata": {
+          "title": "[Custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Paid add-on"
         }
       }
     },
@@ -1483,7 +1589,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No"
+          "ent": "Yes"
         }
       }
     },
