@@ -124,8 +124,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Cache Purge                      | Grants access to purge cache.                                            |
 | DNS Read                         | Grants read access to DNS.                                               |
 | DNS Edit                         | Grants write access to DNS.                                              |
-| Dynamic Redirect Read            | Grants read access to zone level Dynamic Redirect.                       |
-| Dynamic Redirect Edit            | Grants write access to zone level Dynamic Redirect.                      |
+| Dynamic Redirect Read            | Grants read access to zone-level Single Redirects.                       |
+| Dynamic Redirect Edit            | Grants write access to zone-level Single Redirects.                      |
 | Email Routing Rules Read         | Grants read access to Email Routing Rules.                               |
 | Email Routing Rules Edit         | Grants write access to Email Routing Rules.                              |
 | Firewall Services Read           | Grants read access to Firewall resources.                                |

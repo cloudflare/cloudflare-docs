@@ -58,7 +58,7 @@ All users with access to your remote browser can access your Cloudflare Tunnel a
 
 ### Disable remote browser controls
 
-You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/#settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you select the Isolate action.
+You can configure [remote browser controls](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you select the Isolate action.
 
 ## Address bar
 

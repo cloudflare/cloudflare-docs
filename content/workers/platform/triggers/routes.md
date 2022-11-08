@@ -7,7 +7,7 @@ title: Routes
 
 ## Background
 
-Routes allow users to map a URL pattern to a Worker script to enable Workers to run in front of [Custom Domains](/workers/platform/routing/custom-domains) or their own application servers.
+Routes allow users to map a URL pattern to a Worker script to enable Workers to run in front of [Custom Domains](/workers/platform/triggers/custom-domains/) or their own application servers.
 
 ## Customize your routes
 
@@ -18,8 +18,6 @@ For zones proxied on Cloudflare, route patterns decide what (if any) script is m
 3. A Worker to invoke.
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
-
-![After selecting Add route, you will be asked to input a route pattern and specify a Worker to assign to that route](../media/add-route-modal.png)
 
 Cloudflare Site routes are comprised of:
 
@@ -135,6 +133,6 @@ All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/
 
 {{<Aside type="warning">}}
 
-If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [Custom Domain](/workers/platform/routing/custom-domains) pointing to your Worker instead.
+If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [Custom Domain](/workers/platform/triggers/custom-domains/) pointing to your Worker instead.
 
 {{</Aside>}}

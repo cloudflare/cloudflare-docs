@@ -478,7 +478,7 @@
 /rules/transform/create-url-rewrite-rule/ /rules/transform/url-rewrite/create-dashboard/ 301
 /rules/transform/url-rewrite/parameters/ /rules/transform/url-rewrite/reference/parameters/ 301
 /rules/transform/use-cases/ /rules/transform/url-rewrite/examples/ 301
-/rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/dynamic-redirects/settings/ 301
+/rules/url-forwarding/dynamic-redirects/parameters/ /rules/url-forwarding/single-redirects/settings/ 301
 
 # ruleset-engine
 /ruleset-engine/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
@@ -888,6 +888,11 @@
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 /workers/get-started/storage-objects/ /workers/platform/storage-objects 301
+/workers/platform/routing/ /workers/learning/how-routing-works/ 301
+/workers/platform/routing/custom-domains/ /workers/platform/triggers/custom-domains/ 301
+/workers/platform/routing/routes/ /workers/platform/triggers/routes/ 301
+/workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
+/workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 
 # zaraz
 
@@ -1042,6 +1047,7 @@
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
+/rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /tenant/tutorial/* /tenant/get-started/ 301
 

@@ -8,12 +8,6 @@ weight: 2
 
 Occasionally, you may want to upgrade or downgrade the plan associated with a specific Cloudflare domain.
 
-{{<Aside type="note">}}
-
-If you are an Enterprise customer, contact your Customer Success Manager to change/cancel your subscriptions, upgrade/downgrade plans, or delete your account.
-
-{{</Aside>}}
-
 ## Limitations
 
 If you decide to downgrade or remove a domain, Cloudflare does not issue refunds. Refer to our [billing policy](https://support.cloudflare.com/hc/articles/200170286) for more information.

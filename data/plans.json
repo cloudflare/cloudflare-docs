@@ -519,9 +519,9 @@
         "ent": 125
       }
     },
-    "dynamic_redirects": {
-      "title": "Dynamic Redirects",
-      "link": "/rules/url-forwarding/dynamic-redirects/",
+    "single_redirects": {
+      "title": "Single Redirects",
+      "link": "/rules/url-forwarding/single-redirects/",
       "availability": {
         "title": "Availability",
         "summary": "All plans",
