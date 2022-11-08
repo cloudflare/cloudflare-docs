@@ -7,7 +7,7 @@ pcx_content_type: concept
 
 You can purge cached resources by single-file (recommended), all cached content, or other options. 
 
-{{<feature-table id="cache.custom_purge">}}
+{{<feature-table id="cache.purge_cache">}}
 
 {{<Aside type="note" header="Note">}}
 

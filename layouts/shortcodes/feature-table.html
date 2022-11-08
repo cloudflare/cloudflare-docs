@@ -1,6 +1,7 @@
 {{- $plan_json := $.Site.Data.plans -}}
 {{- $id := split (.Get "id")  "." -}}
 {{- $info :=  index $plan_json $id -}}
+{{- $properties := index $info "properties" -}}
 {{- $map := dict "ent" "Enterprise" "pro" "Pro" "biz"
 "Business" "free" "Free" -}}
 
@@ -8,9 +9,7 @@
 <div class="DocsMarkdown--table-wrap-inner">
 <table>
     <tr>
-        <td>
-        <strong>Feature</strong>
-        </td>
+        <td></td>
         <td>
             <strong>{{ index $map "free" }}</strong>
         </td>
@@ -29,8 +28,7 @@
         </td>
         {{- end -}}
     </tr>
-{{- range $elem_key, $elem_val := $info -}}
-{{- if and (ne $elem_key "link") (ne $elem_key "title") (ne $elem_key "ent_plus") -}}
+{{- range $elem_key, $elem_val := $properties -}}
 <tr>
     <td>
         <p>{{ if .link }}
@@ -58,7 +56,6 @@
         </td>
     {{- end -}}
 </tr>
-{{- end -}}
 {{- end -}}
 </table>
 </div>

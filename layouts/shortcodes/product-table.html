@@ -12,6 +12,10 @@
 {{ if and (ne $elem_key "link") (ne $elem_key "title") }}
 {{-  $title := index . "title" -}}
 {{-  $link := index . "link" -}}
+{{- $properties := index . "properties" -}}
+<script>
+    console.log({{$properties}})
+</script>
 <tr>
     <td></td>
     <td></td>
@@ -28,8 +32,10 @@
         <strong>{{ index $map "ent" }}</strong>
     </td>
 </tr>
-{{- range $elem_key2, $elem_val2 := . -}}
-{{- if and (ne $elem_key2 "link") (ne $elem_key2 "title") (ne $elem_key2 "ent_plus") -}}
+{{- range $elem_key2, $elem_val2 := $properties -}}
+<script>
+    console.log({{$elem_key2}})
+</script>
 {{- if eq $elem_key2 "availability" -}}
 <tr>
     <td>
@@ -61,7 +67,6 @@
         {{ .ent | markdownify }}
     </td>
 </tr>
-{{ end }}
 {{ end }}
 {{ end }}
 {{ end }}
