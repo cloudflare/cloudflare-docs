@@ -39,10 +39,10 @@
         {{ $title | markdownify }}
         {{ end }}
     </strong></p>
+</td>
 {{- else -}}
 <td></td>
 {{- end -}}
-    </td>
     <td><p>{{ if .link }}
         <a href={{.link}}>{{ .title | markdownify }}</a>
     {{ else }}
