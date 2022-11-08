@@ -77,6 +77,6 @@ $ curl "http://http-preval.example.com/.well-known/pki-validation/ca3-0052344e54
 ca3-be794c5f757b468eba805d1a705e44f6
 ```
  
-On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate.
+The token is valid for once check cycle. On the next check cycle, Cloudflare will ask the CA to recheck the URL, complete validation, and issue the certificate.
  
 {{<render file="_ssl-for-saas-validate-patch.md">}}
