@@ -13,9 +13,6 @@
 {{-  $title := index . "title" -}}
 {{-  $link := index . "link" -}}
 {{- $properties := index . "properties" -}}
-<script>
-    console.log({{$properties}})
-</script>
 <tr>
     <td></td>
     <td></td>
@@ -32,11 +29,8 @@
         <strong>{{ index $map "ent" }}</strong>
     </td>
 </tr>
-{{- range $elem_key2, $elem_val2 := $properties -}}
-<script>
-    console.log({{$elem_key2}})
-</script>
-{{- if eq $elem_key2 "availability" -}}
+{{- range $properties -}}
+{{- if eq (index . "title") "Availability" -}}
 <tr>
     <td>
         <p><strong>{{ if $link }}
