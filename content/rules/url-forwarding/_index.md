@@ -23,7 +23,7 @@ Single Redirects and Bulk Redirects are available on all Cloudflare plans. The e
 
 {{<feature-table id="rules.bulk_redirects">}}
 
-<sup>1</sup> _Default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team._
+For *URL redirects across lists*, this table provides the default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team.
 
 ### Single Redirects
 

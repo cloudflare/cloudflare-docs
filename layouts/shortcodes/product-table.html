@@ -42,11 +42,11 @@
     <td></td>
     {{- else -}}
     <td></td>
-    <td><p>{{ if .link }}
+    <td><p><em>{{ if .link }}
         <a href={{.link}}>{{ .title | markdownify }}</a>
     {{ else }}
     {{ .title | markdownify }}
-    {{ end }}</p></td>
+    {{ end }}</em></p></td>
     {{- end -}}
     <td>
         {{ .free | markdownify }}
