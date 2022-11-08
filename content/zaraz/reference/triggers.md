@@ -127,6 +127,44 @@ Refer to [**Create a trigger**](/zaraz/get-started/create-trigger/) to learn how
 
 {{</table-wrap>}}
 
+### Element Visibility
+
+Triggers an action when a CSS selector becomes visible in the screen.
+
+{{<table-wrap>}}
+
+| Rule type            | CSS Selector |
+| -------------------- | ------------ |
+| _Element Visibility_ | `#my-class` |
+
+{{</table-wrap>}}
+
+### Scroll depth
+
+Triggers an action when the users scrolls a predetermined amount of pixels. This can be a fixed amount of pixels or a percentage of the screen.
+
+**Example with pixels**
+
+{{<table-wrap>}}
+
+| Rule type            | CSS Selector |
+| -------------------- | ------------ |
+| _Scroll Depth_ | `100px` |
+
+{{</table-wrap>}}
+
+---
+
+**Example with a percentage of the screen**
+
+{{<table-wrap>}}
+
+| Rule type            | CSS Selector |
+| -------------------- | ------------ |
+| _Scroll Depth_ | `45%` |
+
+{{</table-wrap>}}
+
 ### Form submission
 
 Tracks form submissions using CSS selectors. Select the **Validate** toggle button to only fire the trigger when the form has no validation errors.
