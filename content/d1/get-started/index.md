@@ -129,7 +129,7 @@ Refer to the [D1 Client API](/d1/client-api/) section of the docs for the full i
 While in your project directory, you can test locally by running:
 
 ```sh
-$ npx wrangler dev --local
+$ npx wrangler dev --local --persist
 ```
 
 ## 6. Publish with Wrangler
