@@ -10,7 +10,7 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ## Before you begin
 
-### Partner account setup
+### Channel and Alliance partner account setup
 
 Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
 
