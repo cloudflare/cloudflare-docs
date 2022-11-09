@@ -203,3 +203,7 @@ You can block security risks and content categories by creating DNS or HTTP poli
 | 32          | Security Risks         | 161            | Unreachable                                |
 
 {{</table-wrap>}}
+
+## Filter by resolved IP category
+
+When creating a DNS block policy for security or content categories, you can optionally enable **Filter traffic by resolved IP category** in the policy settings. When enabled, Gateway will block queries based on their resolved IP address in addition to the domain name. This setting may increase the number of false positives because domains in the blocked category can share IP addresses with legitimate domains.
