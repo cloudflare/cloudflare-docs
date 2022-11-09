@@ -6,6 +6,14 @@ weight: 11
 
 # Changelog
 
+## 2022-11-01
+
+### Create an unlimited number of live inputs
+
+Cloudflare Stream now has no limit on the number of [live inputs](https://api.cloudflare.com/#stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+
+For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
+
 ## 2022-10-05
 
 ### AV1 Codec support for live streams and recordings (beta)
