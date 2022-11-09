@@ -1423,6 +1423,20 @@
         }
       }
     },
+    "authenticated_origin_pulls": {
+      "title": "Authenticated origin pull",
+      "link": "/ssl/origin-configuration/authenticated-origin-pull/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "backup_certificates": {
       "title": "Backup Certificates",
       "link": "/ssl/edge-certificates/backup-certificates/",
@@ -1459,9 +1473,9 @@
         }
       }
     },
-    "edge_certificate_options": {
-      "title": "Options for edge certificates",
-      "link": "/ssl/edge-certificates/additional-options/",
+    "always_use_https": {
+      "title": "Always Use HTTPS",
+      "link": "/ssl/edge-certificates/additional-options/always-use-https/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1470,82 +1484,99 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "total_tls": {
-          "title": "Total TLS",
-          "link": "/ssl/edge-certificates/additional-options/total-tls/",
-          "summary": "Total TLS is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
-          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
-        },
-        "always_use_https": {
-          "title": "Always Use HTTPS",
-          "link": "/ssl/edge-certificates/additional-options/always-use-https/",
+        }
+      }
+    },
+    "automatic_https_rewrites": {
+      "title": "Automatic HTTPS Rewrites",
+      "link": "/ssl/edge-certificates/additional-options/automatic-https-rewrites/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "All plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "automatic_https_rewrites": {
-          "title": "Automatic HTTPS Rewrites",
-          "link": "/ssl/edge-certificates/additional-options/automatic-https-rewrites/",
+        }
+      }
+    },
+    "cert_transparency": {
+      "title": "Certificate Transparency Monitoring",
+      "link": "/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "All plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "cert_transparency": {
-          "title": "Certificate Transparency Monitoring",
-          "link": "/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/",
+        }
+      }
+    },
+    "opportunistic_encryption": {
+      "title": "Opportunistic Encryption",
+      "link": "/ssl/edge-certificates/additional-options/opportunistic-encryption/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "All plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "opportunistic_encryption": {
-          "title": "Opportunistic Encryption",
-          "link": "/ssl/edge-certificates/additional-options/opportunistic-encryption/",
+        }
+      }
+    },
+    "hsts": {
+      "title": "HTTP Strict Transport Security",
+      "link": "/ssl/edge-certificates/additional-options/http-strict-transport-security/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "All plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "hsts": {
-          "title": "HTTP Strict Transport Security",
-          "link": "/ssl/edge-certificates/additional-options/http-strict-transport-security/",
+        }
+      }
+    },
+    "tls_13": {
+      "title": "TLS 1.3",
+      "link": "/ssl/edge-certificates/additional-options/tls-13/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "All plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "tls_13": {
-          "title": "TLS 1.3",
-          "link": "/ssl/edge-certificates/additional-options/tls-13/",
+        }
+      }
+    },
+    "minimum_tls": {
+      "title": "Minimum TLS Version",
+      "link": "/ssl/edge-certificates/additional-options/minimum-tls/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "All plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "minimum_tls": {
-          "title": "Minimum TLS Version",
-          "link": "/ssl/edge-certificates/additional-options/minimum-tls/",
-          "summary": "All plans.",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "csr": {
-          "title": "Certificate Signing Requests",
-          "link": "/ssl/edge-certificates/additional-options/certificate-signing-requests/",
+        }
+      }
+    },
+    "csr": {
+      "title": "Certificate Signing Requests",
+      "link": "/ssl/edge-certificates/additional-options/certificate-signing-requests/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
           "free": "No",
           "pro": "No",
@@ -1660,6 +1691,42 @@
         }
       }
     },
+    "custom_origin_trust_store": {
+      "title": "Custom origin trust store",
+      "link": "/ssl/origin-configuration/custom-origin-trust-store/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+        }
+      }
+    },
+    "encryption_modes": {
+      "title": "SSL/TLS encryption mode",
+      "link": "/ssl/origin-configuration/ssl-modes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "ssl_only_pull": {
+          "title": "Strict (SSL-Only Origin Pull)",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
     "keyless_ssl": {
       "title": "Keyless SSL",
       "link": "/ssl/keyless-ssl/",
@@ -1674,9 +1741,9 @@
         }
       }
     },
-    "origin_server": {
-      "title": "Protection for origin servers",
-      "link": "/ssl/edge-certificates/additional-options/",
+    "origin_certificates": {
+      "title": "Origin certificates",
+      "link": "/ssl/origin-configuration/origin-ca/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1685,54 +1752,10 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "b_authenticated_origin_pulls": {
-          "title": "Authenticated origin pull",
-          "link": "/ssl/origin-configuration/authenticated-origin-pull/",
-          "summary": "All plans.",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "custom_origin_trust_store": {
-          "title": "Custom origin trust store",
-          "link": "/ssl/origin-configuration/custom-origin-trust-store/",
-          "summary": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
-          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
-        },
-        "encryption_modes": {
-          "title": "SSL/TLS encryption mode",
-          "link": "/ssl/origin-configuration/ssl-modes/",
-          "summary": "All but one mode is available to all plans. **Strict (SSL-Only Origin Pull)** is only available to Enterprise customers.",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes (and includes **Strict (SSL-Only Origin Pull)**)"
-        },
-        "origin_certificates": {
-          "title": "Origin certificates",
-          "link": "/ssl/origin-configuration/origin-ca/",
-          "summary": "All plans.",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "ssl_tls_recommender": {
-          "title": "SSL/TLS Recommender",
-          "link": "/ssl/origin-configuration/ssl-tls-recommender/",
-          "summary": "All plans.",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
         }
       }
     },
+
     "staging_environment": {
       "title": "Staging environment",
       "link": "/ssl/edge-certificates/staging-environment/",
@@ -1744,6 +1767,34 @@
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
+        }
+      }
+    },
+    "ssl_tls_recommender": {
+      "title": "SSL/TLS Recommender",
+      "link": "/ssl/origin-configuration/ssl-tls-recommender/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "total_tls": {
+      "title": "Total TLS",
+      "link": "/ssl/edge-certificates/additional-options/total-tls/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Total TLS is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
+          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
         }
       }
     },
