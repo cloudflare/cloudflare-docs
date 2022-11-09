@@ -1730,9 +1730,7 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        
-
+        }
       }
     },
     "staging_environment": {
