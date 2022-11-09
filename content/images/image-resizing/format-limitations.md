@@ -43,7 +43,7 @@ Since some image formats require longer computational times than others, Cloudfl
 
 Resizing requests might not be fulfilled with the format the user expects due to these trade-offs Cloudflare has to make. Images differ in size, transformations, codecs and all of these different aspects influence what compression codecs are used.
 
-Cloudflare tries to choose the requested codec, but we operate on a best-effort basis and there are limits that our system needs to follow in order to satisfy all customers.
+Cloudflare tries to choose the requested codec, but we operate on a best-effort basis and there are limits that our system needs to follow to satisfy all customers.
 
 AVIF encoding, in particular, can be an order of magnitude slower than encoding to other formats. Cloudflare will fall back to WebP or JPEG if the image is too large to be encoded quickly.
 
@@ -66,9 +66,9 @@ Hard limits refers to the maximum image size to process. Soft limits refers to t
 - AVIF image with 3,200 x 1,500 pixels: ✅
 - JPEG image with 12,500 x 5,000 pixels: ❌
 
-All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example 10,000 x 10,000 pixels large).
+All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
-GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, we recommend using [video formats like MP4 and WebM instead](/stream/).
+GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
 
 {{<Aside type="warning" header="Important">}}
 SVG files are passed through without resizing. This format is inherently scalable and does not need resizing. Cloudflare does not support the HEIC (HEIF) format and does not plan to support it.
