@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how to
 title: Get live viewer counts
+weight: 2
 ---
 
 # Live viewer counts for third party players
@@ -14,5 +15,5 @@ https://customer-<CODE>.cloudflarestream.com/<INPUT_ID>/views
 Below is a response for a live video with several active viewers:
 
 ```json
-{"liveViewers": 113}
+{ "liveViewers": 113 }
 ```
