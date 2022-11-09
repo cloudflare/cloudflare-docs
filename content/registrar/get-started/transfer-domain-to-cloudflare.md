@@ -58,7 +58,7 @@ This code is often referred to as an authorization code, auth code, authinfo cod
 
 ### 5. Initiate your transfer to Cloudflare
 
-Go to the **Account Home** > [**Registrar**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare will display the zones available for transfer.
+Go to the **Account Home** > **Domain Registration** > [**Transfer Domains**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare will display the zones available for transfer.
 
 You will be presented with the price for each transfer. When you transfer a domain, you are required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting **x**.
 
@@ -107,7 +107,7 @@ Registrants transferring a `.us` domain will always receive a FOA email.
 
 ## Transfer statuses
 
-You can check the status of your transfer in **Account Home** > **Overview** > **Domain Registration** for your domain. Below, you can find a list of the possible transfer statuses.
+You can check the status of your transfer in **Account Home** > **Domain Registration** > **Manage Domains** for your domain. Below, you can find a list of the possible transfer statuses.
 
 - **Transfer in progress**: Your request has been submitted by Cloudflare to your previous registrar. Cloudflare is now waiting on them to confirm they have received the request. If this status persists for more than a day (24 hours), ensure that the domain has been unlocked at your current registrar and any WHOIS privacy services have been removed.
 
