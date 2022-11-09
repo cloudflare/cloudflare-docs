@@ -17,7 +17,7 @@ title: Limits
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
-| [Number of Workers](#number-of-workers)                                         | 30        | 100       |
+| [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
@@ -263,7 +263,7 @@ A Worker must be able to be parsed and execute its global scope (top-level code 
 
 ### Number of Workers
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 Workers at any given time. Free Workers accounts are limited to a maximum of 30 Workers at any given time.
+Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
 
 {{<Aside type="note">}}
 
