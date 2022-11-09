@@ -20,7 +20,7 @@ For more on creating and managing live inputs, get started with the [docs](/stre
 
 When playing live video, Cloudflare Stream now provides significantly more accurate estimates of the bandwidth needs of each quality level to client video players. This ensures that live video plays at the highest quality that viewers have adequate bandwidth to play.
 
-As live video is streamed to Cloudflare, we transcode it to make it available to viewers at mulitple quality levels. During transcoding, we learn about the real bandwidth needs of each segment of video at each quality level, and use this to provide the most accurate estimate of the bandwidth requirements in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
+As live video is streamed to Cloudflare, we transcode it to make it available to viewers at mulitple quality levels. During transcoding, we learn about the real bandwidth needs of each segment of video at each quality level, and use this to provide an estimate of the bandwidth requirements of each quality level the in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
 
 If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS manifest will be lower, ensuring that the most viewers possible view the highest quality level, since it requires relatively little bandwidth. Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the HLS manifest will be higher, ensuring that viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
 
