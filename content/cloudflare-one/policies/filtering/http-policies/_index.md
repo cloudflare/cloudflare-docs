@@ -101,6 +101,10 @@ A list of supported applications and their ID numbers is available through the [
 
 ### Destination Continent
 
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
+
 The continent to which the request is destined. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
 
 - AF – Africa
@@ -118,6 +122,10 @@ The continent to which the request is destined. Geolocation is determined from t
 
 ### Destination Country
 
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
+
 The country that the request is destined for. Geolocation is determined from the target IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
 | UI name        | API example                  |
@@ -125,6 +133,10 @@ The country that the request is destined for. Geolocation is determined from the
 | Destination Country IP Geolocation | `http.dst.geo.country == "RU"` |
 
 ### Destination IP
+
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
