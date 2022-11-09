@@ -1,4 +1,91 @@
 {
+  "analytics": {
+    "title": "Analytics",
+    "graphql": {
+      "title": "GraphQL Analytics API",
+      "link": "/analytics/graphql-api/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "instant_logs": {
+      "title": "Instant Logs",
+      "link": "/logs/instant-logs/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and higher",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "logpull": {
+      "title": "Logpull",
+      "link": "/logs/instant-logs/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "logpush": {
+      "title": "Logpush",
+      "link": "/logs/about/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "traffic": {
+      "title": "Traffic analytics",
+      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "detail": {
+          "title": "Level of detail",
+          "free": "Requests, bandwidth, unique visitors",
+          "pro": "Same as Free, but able to see historical trends and filter by characteristics",
+          "biz": "Same as Pro",
+          "ent": "Same as Pro"
+        },
+        "historical_data": {
+          "title": "Historical data",
+          "free": "30 days",
+          "pro": "7 days",
+          "biz": "30 days",
+          "ent": "30 days"
+        }
+      }
+    }
+  },
   "cache": {
     "title": "Cache",
     "link": "/cache/",
@@ -34,6 +121,20 @@
           "pro": "2 minutes",
           "biz": "2 minutes",
           "ent": "30 seconds"
+        }
+      }
+    },
+    "cache_analytics": {
+      "title": "Cache analytics",
+      "link": "/cache/about/cache-analytics/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All paid plans",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
         }
       }
     },
@@ -352,6 +453,37 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    }
+  },
+  "email": {
+    "title": "Email",
+    "email_routing": {
+      "title": "Email Routing",
+      "link": "/email-routing/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "email_security": {
+      "title": "Area 1 Email Security",
+      "link": "/email-security/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All paid plans",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -1163,6 +1295,105 @@
       }
     }
   },
+  "scrape_shield": {
+    "title": "Scrape Shield",
+    "email_obfuscation": {
+      "title": "Email Address Obfuscation",
+      "link": "https://support.cloudflare.com/hc/articles/200170016",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "hotlink_protection": {
+      "title": "Hotlink Protection",
+      "link": "https://support.cloudflare.com/hc/articles/200170026",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "server_side_excludes": {
+      "title": "Server-side Excludes",
+      "link": "https://support.cloudflare.com/hc/articles/200170036",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    }
+  },
+  "spectrum": {
+    "title": "Spectrum",
+    "spectrum": {
+      "title": "Spectrum",
+      "link": "/spectrum/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Paid add-on",
+          "free": "Paid add-on",
+          "pro": "Paid add-on",
+          "biz": "Paid add-on",
+          "ent": "Paid add-on"
+        },
+        "tcp": {
+          "title": "TCP",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "udp": {
+          "title": "UDP",
+          "link": "/spectrum/reference/limitations/#udp",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
+        "v_minecraft": {
+          "title": "Minecraft (one app allowed)",
+          "link": "/spectrum/reference/limitations/#minecraft",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "w_ssh": {
+          "title": "SSH (one app allowed)",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "z_rdp": {
+          "title": "RDP (one app allowed)",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    }
+  },
   "speed": {
     "title": "Speed",
     "amp": {
@@ -1354,51 +1585,6 @@
           "title": "Availability",
           "summary": "Pro or higher",
           "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    }
-  },
-  "scrape_shield": {
-    "title": "Scrape Shield",
-    "email_obfuscation": {
-      "title": "Email Address Obfuscation",
-      "link": "https://support.cloudflare.com/hc/articles/200170016",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "All plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "hotlink_protection": {
-      "title": "Hotlink Protection",
-      "link": "https://support.cloudflare.com/hc/articles/200170026",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "All plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        }
-      }
-    },
-    "server_side_excludes": {
-      "title": "Server-side Excludes",
-      "link": "https://support.cloudflare.com/hc/articles/200170036",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "All plans",
-          "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -2046,6 +2232,32 @@
           "pro": "500,000 HTTP requests",
           "biz": "500,000 HTTP requests",
           "ent": "1,000,000 HTTP requests"
+        }
+      }
+    }
+  },
+  "zaraz": {
+    "title": "Zaraz",
+    "zaraz": {
+      "title": "Zaraz",
+      "link": "/zaraz/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "preview_mode": {
+          "title": "Preview mode",
+          "link": "/zaraz/advanced/preview-mode/",
+          "summary": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "free": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "pro": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "biz": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "ent": "Included with a [Workers Paid Plan](/workers/platform/pricing/)"
         }
       }
     }
