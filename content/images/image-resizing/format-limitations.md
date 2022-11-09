@@ -25,13 +25,6 @@ weight: 3
 * SVG
 * AVIF
 
-{{<Aside type="warning" header="Important">}}
-SVG files are passed through without resizing. This format is inherently scalable and does not need resizing. Cloudflare does not support the HEIC (HEIF) format and does not plan to support it.
-
-AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
-
-{{</Aside>}}
-
 ## Supported features
 
 Image Resizing can:
@@ -76,3 +69,10 @@ Hard limits refers to the maximum image size to process. Soft limits refers to t
 All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example 10,000 x 10,000 pixels large).
 
 GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, we recommend using [video formats like MP4 and WebM instead](/stream/).
+
+{{<Aside type="warning" header="Important">}}
+SVG files are passed through without resizing. This format is inherently scalable and does not need resizing. Cloudflare does not support the HEIC (HEIF) format and does not plan to support it.
+
+AVIF format is supported on a best-effort basis. Images that cannot be compressed as AVIF will be served as WebP instead.
+
+{{</Aside>}}
