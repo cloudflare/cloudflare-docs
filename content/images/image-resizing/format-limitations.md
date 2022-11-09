@@ -56,9 +56,7 @@ AVIF encoding, in particular, can be an order of magnitude slower than encoding 
 
 ### Limits per format
 
-All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example 10,000 x 10,000 pixels large).
-
-{{<Aside type="note">}} Hard limits refers to the maximum image size to process. Soft limits refers to the limits existing when the system is overloaded. {{</Aside>}}
+Hard limits refers to the maximum image size to process. Soft limits refers to the limits existing when the system is overloaded.
 
 #### Hard limits on the longest side (width or height):
 
@@ -75,6 +73,6 @@ All images uploaded have to be less than 70 MB. The maximum image area is limite
 - AVIF image with 3,200 x 1,500 pixels: ✅
 - JPEG image with 12,500 x 5,000 pixels: ❌
 
-{{<Aside type="note">}}
+All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example 10,000 x 10,000 pixels large).
+
 GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, we recommend using [video formats like MP4 and WebM instead](/stream/).
-{{</Aside>}}
