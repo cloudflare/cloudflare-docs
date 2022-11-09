@@ -1459,6 +1459,101 @@
         }
       }
     },
+    "edge_certificate_options": {
+      "title": "Options for edge certificates",
+      "link": "/ssl/edge-certificates/additional-options/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "total_tls": {
+          "title": "Total TLS",
+          "link": "/ssl/edge-certificates/additional-options/total-tls/",
+          "summary": "Total TLS is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
+          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+        },
+        "always_use_https": {
+          "title": "Always Use HTTPS",
+          "link": "/ssl/edge-certificates/additional-options/always-use-https/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "automatic_https_rewrites": {
+          "title": "Automatic HTTPS Rewrites",
+          "link": "/ssl/edge-certificates/additional-options/automatic-https-rewrites/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "cert_transparency": {
+          "title": "Certificate Transparency Monitoring",
+          "link": "/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "opportunistic_encryption": {
+          "title": "Opportunistic Encryption",
+          "link": "/ssl/edge-certificates/additional-options/opportunistic-encryption/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "hsts": {
+          "title": "HTTP Strict Transport Security",
+          "link": "/ssl/edge-certificates/additional-options/http-strict-transport-security/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "tls_13": {
+          "title": "TLS 1.3",
+          "link": "/ssl/edge-certificates/additional-options/tls-13/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "minimum_tls": {
+          "title": "Minimum TLS Version",
+          "link": "/ssl/edge-certificates/additional-options/minimum-tls/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "csr": {
+          "title": "Certificate Signing Requests",
+          "link": "/ssl/edge-certificates/additional-options/certificate-signing-requests/",
+          "summary": "Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+        }
+      }
+    },
     "z_custom_hostnames": {
       "title": "Custom Hostnames",
       "link": "/cloudflare-for-platforms/cloudflare-for-saas/plans/",
@@ -1577,6 +1672,67 @@
           "biz": "No",
           "ent": "Paid add-on"
         }
+      }
+    },
+    "origin_server": {
+      "title": "Protection for origin servers",
+      "link": "/ssl/edge-certificates/additional-options/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_authenticated_origin_pulls": {
+          "title": "Authenticated origin pull",
+          "link": "/ssl/origin-configuration/authenticated-origin-pull/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "custom_origin_trust_store": {
+          "title": "Custom origin trust store",
+          "link": "/ssl/origin-configuration/custom-origin-trust-store/",
+          "summary": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+        },
+        "encryption_modes": {
+          "title": "SSL/TLS encryption mode",
+          "link": "/ssl/origin-configuration/ssl-modes/",
+          "summary": "All but one mode is available to all plans. **Strict (SSL-Only Origin Pull)** is only available to Enterprise customers.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes (and includes **Strict (SSL-Only Origin Pull)**)"
+        },
+        "origin_certificates": {
+          "title": "Origin certificates",
+          "link": "/ssl/origin-configuration/origin-ca/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "ssl_tls_recommender": {
+          "title": "SSL/TLS Recommender",
+          "link": "/ssl/origin-configuration/ssl-tls-recommender/",
+          "summary": "All plans.",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        
+
       }
     },
     "staging_environment": {
