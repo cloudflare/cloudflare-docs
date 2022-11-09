@@ -51,20 +51,11 @@ AVIF encoding, in particular, can be an order of magnitude slower than encoding 
 
 Hard limits refers to the maximum image size to process. Soft limits refers to the limits existing when the system is overloaded.
 
-#### Hard limits on the longest side (width or height):
-
-- **AVIF**: 3,200 pixels
-- **Other**: 12,000 pixels
-
-#### Soft limits on the longest side (width or height):
-
-- **AVIF** - 640 pixels
-- **WebP** - 2,560 pixels for lossy, 1920 pixels for lossless
-
-**Examples:**
-
-- AVIF image with 3,200 x 1,500 pixels: ✅
-- JPEG image with 12,500 x 5,000 pixels: ❌
+File format  | Hard limits on the longest side (width or height) | Soft limits on the longest side (width or height)
+------------ | ------------------------------------------------- | -------------------------------------------------
+AVIF         | 3,200 pixels                                      | 640 pixels
+Other        | 12,000 pixels                                     | N/A
+WebP         | N/A                                               | 2,560 pixels for lossy; 1920 pixels for lossless
 
 All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
