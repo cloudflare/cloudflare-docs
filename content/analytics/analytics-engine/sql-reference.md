@@ -425,7 +425,7 @@ Examples:
 toDateTime(double1)
 
 -- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
-ToDateTime(blob1)
+toDateTime(blob1)
 
 -- literal values:
 ToDateTime(355924804) -- unix timestamp
