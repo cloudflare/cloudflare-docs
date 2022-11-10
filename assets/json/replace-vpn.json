@@ -157,7 +157,7 @@
             "additional_description": "For initial testing, users should manually authenticate the client to their organization’s Cloudflare Zero Trust instance."
           },
           {
-            "url_path": "https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/",
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/",
             "link_title": "Define split tunnels settings",
             "additional_description": "This will determine what traffic WARP does and does not proxy.<br/><br/>If you added private network routes in the <code>10.0.0.0</code> range, ensure that these IP addresses are included in WARP."
           },

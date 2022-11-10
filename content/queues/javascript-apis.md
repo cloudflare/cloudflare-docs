@@ -60,12 +60,13 @@ These APIs allow a consumer Worker to consume messages from a Queue.
 
 To define a consumer Worker, add a `queue` function to the default export of the Worker. This will allow it to receive messages from the Queue.
 
-By default, all messages in the batch will be acknowledged as soon as the following conditions are met:
+By default, all messages in the batch will be acknowledged as soon as all of the following conditions are met:
 
 1. The `queue` function has returned.
 2. If the `queue` function returned a promise, the promise has resolved.
+3. Any promises passed to `waitUntil()` have resolved.
 
-If the `queue` function throws or the promise returned by it is rejected then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
+If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
 
 ```ts
 export default {
@@ -87,7 +88,7 @@ addEventListener("queue", (event) => {
 });
 ```
 
-In service worker syntax, `event` provides the same fields and methods as `MessageBatch`, as defined below, in addition to [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). In this syntax, because the event handler must be synchronous and thus cannot wait on any I/O, a batch of messages will not be acknowledged until all promises passed to `event.waitUntil()` have resolved successfully. Any rejected promises passed to `event.waitUntil()` will cause the batch to be considered failed, necessitating a retry. If you are interested in seeing this behavior change in the future, please [email the Queues team](mailto:queues@cloudflare.com) or join the [`#queues-beta` channel in the Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) to share your thoughts.
+In service worker syntax, `event` provides the same fields and methods as `MessageBatch`, as defined below, in addition to [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil).
 
 ### `MessageBatch`
 

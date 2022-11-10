@@ -23,7 +23,7 @@ During onboarding, you [specify IP addresses to configure endpoint health checks
 
 ## Tunnel health checks
 
-Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) and IPsec tunnels that route traffic from Cloudflare to your origin network. Magic Transit and Magic WAN rel on health checks to steer traffic to the best available routes.
+Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) and IPsec tunnels that route traffic from Cloudflare to your origin network. Magic Transit and Magic WAN rely on health checks to steer traffic to the best available routes.
 
 During onboarding, you [specify the tunnel endpoints](/magic-transit/how-to/configure-tunnels/) the tunnel probes originating from Cloudflare's edge network will target.
 

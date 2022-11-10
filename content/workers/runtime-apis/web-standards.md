@@ -101,6 +101,8 @@ Both `TextEncoder` and `TextDecoder` support UTF-8 encoding/decoding.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API).
 
+The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoderStream) and [`TextDecoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoderStream) classes are also available.
+
 ---
 
 ## URL API

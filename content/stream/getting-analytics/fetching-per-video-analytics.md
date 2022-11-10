@@ -4,7 +4,11 @@ title: Fetch per-video analytics
 weight: 3
 ---
 
-# Fetch per-video analytics
+# Fetch per-video analytics (deprecated)
+
+{{<Aside type="warning" header="This API is deprecated and will be removed on Feb 1, 2023">}}
+The [Stream GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics) provides the same functionality, with additional filters and metrics, as well as the ability to fetch data about mutliple videos in a single API request. Queries are faster, more reliable, and built on a shared analytics system that you can use across many Cloudflare products.
+{{</Aside>}}
 
 Cloudflare measures the following metrics for every video play:
 

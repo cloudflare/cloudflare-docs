@@ -62,7 +62,7 @@ $ kubectl get pods
 ```
 
 ## Routing with Cloudflare Tunnel
-The tunnel can be created through the dashboard using [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). Instead of running the command to install a connector you will select docker as the environment and copy just the token rather than the whole command. Configure the tunnel to route to k8.example.com from the service http://web-service:80. Create the cloudflared-deployement.yml file with the following content.
+The tunnel can be created through the dashboard using [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). Instead of running the command to install a connector you will select docker as the environment and copy just the token rather than the whole command. Configure the tunnel to route to k8.example.com from the service http://web-service:80. Create the cloudflared-deployment.yml file with the following content.
 ```yaml
 apiVersion: apps/v1
 kind: Deployment

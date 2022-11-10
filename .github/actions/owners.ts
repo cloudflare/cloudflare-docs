@@ -21,6 +21,7 @@ export const OWNERS: Record<string, string[]> = {
   "client-ip-geolocation": ["pedrosousa"],
   "cloudflare-for-platforms": ["kodster28"],
   "cloudflare-one": ["ranbel"],
+  d1: ["deadlypants1973"],
   "ddos-protection": ["pedrosousa"],
   dns: ["kodster28"],
   "email-routing": ["marciocloudflare"],
@@ -65,6 +66,7 @@ export const OWNERS: Record<string, string[]> = {
 
 export const REVIEWERS: Record<string, string[]> = {
   analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov", "jimhawkridge", "46bit"],
+  d1: ["nevikashah", "WalshyDev"],
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   pages: ["WalshyDev"],
   turnstile: ["migueldemoura", "punkeel", "worenga"],

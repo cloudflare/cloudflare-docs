@@ -5,7 +5,7 @@ title: 1.1.1.1 Public DNS Resolver
 
 # 1.1.1.1 Public DNS Resolver
 
-_Last updated September 30, 2020_
+_Last updated October 21, 2022_
 
 ## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
@@ -45,18 +45,23 @@ Aside from APNIC, Cloudflare will not share the Public Resolver Logs with any th
 
 The Public Resolver Logs we store consist entirely of the following fields:
 
-* ns ip
-* ns name
-* ede
-* reused
+
+* answerData type
+* answerData 
+* coloID (unique Cloudflare data center ID)
 * date
 * dateTime
-* srcAsNum
-* srcIPVersion
 * dstIPVersion
 * dstIPv6
 * dstIPv4
 * dstPort
+* ede
+* ednsVersion
+* ednsPayload
+* ednsNsid
+* metalId (unique Cloudflare data center ID)
+* ns ip
+* ns name
 * protocol
 * queryName
 * queryType
@@ -65,9 +70,6 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * queryDo
 * querySize
 * queryEdns
-* ednsVersion
-* ednsPayload
-* ednsNsid
 * responseType
 * responseCode
 * responseSize
@@ -75,11 +77,10 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * responseTimeMs
 * responseCached
 * responseMinTTL
-* answerData type
-* answerData
+* reused
+* srcAsNum
+* srcIPVersion
 * validationState
-* coloID (unique Cloudflare data center ID)
-* metalId (unique Cloudflare data center ID)
 
 Additionally, recursive resolvers perform outgoing queries to various authoritative nameservers in the DNS hierarchy that are logged in subrequest fields. These logs are used for the operation and debugging of our public DNS resolver service.
 

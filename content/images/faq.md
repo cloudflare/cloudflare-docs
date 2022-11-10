@@ -79,7 +79,7 @@ Refer to [Cloudflare Images](https://www.cloudflare.com/products/cloudflare-imag
 
 ### Do I get charged for creating and storing variants?
 
-No, you only get billed for the number of original images. There is no extra cost for generating variants. You can configure up to 20 variants.
+No, you only get billed for the number of original images. There is no extra cost for generating variants. You can configure up to 100 variants.
 
 ### Is there a limit on the file size for uploaded images?
 

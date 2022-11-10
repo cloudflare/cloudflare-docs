@@ -104,7 +104,7 @@ Asset purges are free operations.
 
 Cache Reserve will also be purged along with edge cache when you send a purge by URL request.
 
-Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate the Cache Reserve asset, but assets purged this way will still incur storage costs until their retention TTL expires.
+Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
 
 {{<Aside type="note">}}Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.{{</Aside>}}
 
@@ -118,10 +118,12 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 |                    | Usage                                    | Billable Quantity | Price      |
 |--------------------|------------------------------------------|-------------------|------------|
 | Class B Operations | (1,000 assets) * (1,000 reads per asset) |         1,000,000 |      $0.36 |
-| Class A Operations | (1,000 assets) * (1 write per asset)     |             1,000 |      $0.00 |
+| Class A Operations | (1,000 assets) * (1 write per asset)     |             1,000 |      $4.50 |
 | Storage            | (1,000 assets) * (1GB per asset)         |   1,000 GB-months |     $15.00 |
-| **TOTAL**          |                                          |                   | **$15.36** |
+| **TOTAL**          |                                          |                   | **$19.86** |
 {{</table-wrap>}}
+
+(Note the billable quantity is rounded up to the nearest million.)
 
 #### Example 2
 
