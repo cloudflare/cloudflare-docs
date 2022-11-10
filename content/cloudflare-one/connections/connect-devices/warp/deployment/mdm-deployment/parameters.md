@@ -87,8 +87,6 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
-
-
 **Value Type:** `integer`
 
 **Value:**
@@ -113,63 +111,51 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 
 ### `override_api_endpoint`
 
-Overrides the IP address the WARP client will use to communicate with the client
-orchestration API. This parameter is only usable by clients with a version newer
-than 2022.10.0.0. Most IT admins should not set this setting as it will redirect
-all API traffic to a new IP. If the parameter is used, please be sure to update
-your organization's firewall to ensure this IP is allowed through.
+{{<Aside type="note">}}
+Requires WARP version 2022.10.0.0 or later.
+{{</Aside>}}
 
-Although the IP has changed the domain name used will remain the same, meaning
-this new IP address may not terminate the TLS connection.
+Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) used by the WARP client to communicate with the client orchestration API. If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+
+This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all API traffic to a new IP.
 
 **Value Type:** `string`
 
-**Value:**
+**Value:** `1.2.3.4` &mdash; Redirect all client orchestration API calls to `1.2.3.4`.
 
-- `1.2.3.4` &mdash; Redirect all client orchestration API calls to 1.2.3.4.
-
-The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will
-fail to parse the entire mdm file.
+The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
 ### `override_doh_endpoint`
 
-Overrides the IP address the WARP client will use to resolve DNS queries using
-DNS over HTTPS. This parameter is only usable by clients with a version newer
-than 2022.10.0.0. Most IT admins should not set this setting as it will redirect
-all DNS over HTTPS traffic to a new IP. If the parameter is used, please be sure
-to update your organization's firewall to ensure this IP is allowed through.
+{{<Aside type="note">}}
+Requires WARP version 2022.10.0.0 or later.
+{{</Aside>}}
 
-Although the IP has changed the domain name used will remain the same, meaning
-this new IP address may not terminate the TLS connection.
+Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) used by the WARP client to resolve DNS queries via DNS over HTTPS (DoH). If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+
+This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all DoH traffic to a new IP.
 
 **Value Type:** `string`
 
-**Value:**
+**Value:** `1.2.3.4` &mdash; Redirect all DNS over HTTPS lookups to `1.2.3.4`.
 
-- `1.2.3.4` &mdash; Redirect all client DNS over HTTPS lookups to 1.2.3.4.
-
-The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will
-fail to parse the entire mdm file.
+The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
 ### `override_warp_endpoint`
 
-Overrides the socket address the WARP client will use to send WARP traffic. This
-parameter is only usable by clients with a version newer than 2022.10.0.0. Most
-IT admins should not set this setting as it will redirect all WARP traffic to a
-new IP. If the parameter is used, please be sure to update your organization's
-firewall to ensure this IP is allowed through.
+{{<Aside type="note">}}
+Requires WARP version 2022.10.0.0 or later.
+{{</Aside>}}
 
-Although the IP has changed, the keys used to encrypt the traffic will remain
-the same, meaning this new IP address may not terminate the WARP connection.
+Overrides the [IP address and UDP port](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge.  If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+
+This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all WARP traffic to a new IP.
 
 **Value Type:** `string`
 
-**Value:**
+**Value:** `1.2.3.4:500` &mdash; Redirect all WARP traffic to `1.2.3.4` on port `500`.
 
-- `1.2.3.4:500` &mdash; Redirect all client WARP traffic to 1.2.3.4 at port 500.
-
-The string must be a valid IPv4 or IPv6 socket address (contain the IP and
-port), otherwise the WARP client will fail to parse the entire mdm file.
+The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
 
 ## Authentication with service tokens
 
