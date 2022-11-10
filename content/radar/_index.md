@@ -45,6 +45,8 @@ Take into account that usage of the API, and its data, is made available under t
 
 [Outages](/radar/investigate/outages/) - Access Internet outages data across the globe.
 
+Ready to start your own data explorations? Take a look [here](https://blog.cloudflare.com/tag/cloudflare-radar/) for inspiration.
+
 ---
 
 ## Next steps

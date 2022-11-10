@@ -69,7 +69,7 @@ Having data on a given outage, we can look at its impact, through both [Netflows
 
 ## Next steps
 
-After all this, you should be ready to start your own data explorations using Cloudflare Radar's data. Happy investigating!
+After all this, you should be ready to start your own data explorations using Cloudflare Radar's data. Take a look [here](https://blog.cloudflare.com/tag/cloudflare-radar/) for inspiration. Happy investigating!
 
 {{<button-group>}}
   {{<button type="primary" href="https://api.cloudflare.com/#radar-netflows-properties">}}API Reference{{</button>}}
