@@ -1,7 +1,7 @@
 ---
 weight: 5
 title: Getting help
-pcx_content_type: troubleshooting
+pcx_content_type: concept
 ---
 
 - Having a problem with the command line?
