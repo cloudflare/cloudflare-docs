@@ -14,7 +14,7 @@ When you [create a load balancer](/load-balancing/how-to/create-load-balancer/),
 
 For customers on non-Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, and `CNAME` records.
 
-For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, **SRV**, and **TXT** records.
+For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, and **SRV** records.
 
 ## Priority order
 
