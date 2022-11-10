@@ -422,7 +422,7 @@ toDateTime(<expression>)
 Examples:
 ```SQL
 -- double1 contains a unix timestamp in seconds
-ToDateTime(double1)
+toDateTime(double1)
 
 -- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
 ToDateTime(blob1)
