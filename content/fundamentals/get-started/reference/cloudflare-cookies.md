@@ -51,7 +51,7 @@ The `cf_ob_info` cookie provides information on:
 
 The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from the Always Online cache on the designated port. Applicable values are: 0, 80, and 443. The `cf_ob_info` and `cf_use_ob` cookies are persistent cookies that expire after 30 seconds.
 
-### \_\_cfwaitingroom for Cloudflare Waiting Rooms
+### \_\_cfwaitingroom for Cloudflare Waiting Room
 
 [Cloudflare’s Waiting Room](/waiting-room/) product enables a waiting room for a particular host and path combination within a zone. Visitors are put in the waiting room and provided an estimate of when they will be allowed to access the application, if not immediately available.
 

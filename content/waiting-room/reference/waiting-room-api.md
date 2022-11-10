@@ -5,7 +5,7 @@ title: API commands
 
 # API commands
 
-Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
+Cloudflare Waiting Room redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 
 The [Cloudflare Waiting Room API](https://api.cloudflare.com/#waiting_rooms) provides an interface for programmatically managing waiting rooms.
 
