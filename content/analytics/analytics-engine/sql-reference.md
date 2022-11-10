@@ -428,9 +428,9 @@ toDateTime(double1)
 toDateTime(blob1)
 
 -- literal values:
-ToDateTime(355924804) -- unix timestamp
-ToDateTime('355924804') -- string containing unix timestamp
-ToDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
+toDateTime(355924804) -- unix timestamp
+toDateTime('355924804') -- string containing unix timestamp
+toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
 ```
 
 ### now
