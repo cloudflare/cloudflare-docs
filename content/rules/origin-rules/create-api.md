@@ -54,7 +54,7 @@ $ curl -X PUT \
 -d '{
   "rules": [
     {
-      "expression": "(http.request.uri.query contains \"/eu/\")",
+      "expression": "http.request.uri.query contains \"/eu/\"",
       "description": "My first Origin Rule",
       "action": "route",
       "action_parameters": {
@@ -86,7 +86,7 @@ header: Response
         "action_parameters": {
           "host_header": "eu_server.example.net"
         },
-        "expression": "(http.request.uri.query contains \"/eu/\")",
+        "expression": "http.request.uri.query contains \"/eu/\"",
         "description": "My first Origin Rule",
         "last_updated": "2022-06-02T14:42:04.219025Z",
         "ref": "<RULE_REF>"
