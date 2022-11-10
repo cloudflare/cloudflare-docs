@@ -62,12 +62,14 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/annotations/outages?limi
 }
 ```
 
+Refer to the [API reference](https://api.cloudflare.com/#radar-annotations-get-outages-annotations) for this endpoint.
+
+Having data on a given outage, we can look at its impact, through both [Netflows](/radar/investigate/netflows) (e.g. [Tonga outage](/radar/get-started/making-comparisons/#using-specific-timestamps) and [others](https://blog.cloudflare.com/q3-2022-internet-disruption-summary/)) and [HTTP](/radar/investigate/http-requests) data (e.g. did it affect more mobile than desktop traffic?).
+
 
 ## Next steps
 
-After all this, you should be ready to start your own data explorations using `Radar's API`.
-
-Take into account that usage of the API, and its data, is made available under the [CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/).
+After all this, you should be ready to start your own data explorations using Cloudflare Radar's data. Happy investigating!
 
 {{<button-group>}}
   {{<button type="primary" href="https://api.cloudflare.com/#radar-netflows-properties">}}API Reference{{</button>}}

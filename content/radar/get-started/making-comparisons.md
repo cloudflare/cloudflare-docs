@@ -8,10 +8,9 @@ weight: 3
 
 When comparing time series, across locations/time ranges/etc, in endpoints that normalize values using [MinMax](/radar/concepts/normalization), we __must__ do so in the __same__ request, by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other.
 
-[Netflows](/radar/investigate/netflows.md) values are normalized using [Min0Max](/radar/concepts/normalization), so we'll use it as an example.
+[Netflows](/radar/investigate/netflows.md) values are normalized using [Min0Max](/radar/concepts/normalization), so we'll use it as an example ([API reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series)).
 
 ## Comparing locations
-
 
 Let's compare the traffic change across different locations, United States and Portugal (using [alpha-2 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)), for the last 7 days:
 
@@ -32,7 +31,7 @@ and the 2nd series has these:
 name=pt_data&dateRange=7d&location=PT
 `
 
-All of these parameters are arrays and it's the position in the array that defines the series the filter belongs to.
+All of these parameters are arrays and it's the position in the array that defines the series the filter belongs to. For more information on the available parameters refer to the [endpoint's reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series).
 
 The response (shortened below for brevity) uses the provided `name` property to wrap the timestamps and corresponding values. Charting these, it would be obvious that Cloudflare received much less traffic from Portugal than from the United States.
 
@@ -60,7 +59,7 @@ The response (shortened below for brevity) uses the provided `name` property to 
 }
 ```
 
-We can make comparisons in most endpoints, not just endpoints that use `MinMax`.
+Take into account that comparisons can be made in most endpoints, not just endpoints that use `MinMax`.
 
 
 ## Comparing date ranges
@@ -99,11 +98,11 @@ And now, inside the `result` property, you should see something like this:
 }
 ```
 
-Looking at this, we see that the maximum value was reached at `2022-10-27T14:00:00Z` (all Radar timestamps are in  `UTC`). We also see what the date range shortcuts `7d` and `7dControl` were resolved to.
+Looking at this, we see that the maximum value was reached at `2022-10-27T14:00:00Z` (all Radar timestamps are in  `UTC`). We also see what the date range shortcuts `7d` and `7dControl` were resolved to at the time this was run.
 
 ### Using specific timestamps
 
-We can also ask for specific timestamps. For example, let's look at Tonga in October versus January 2022, when there was an outage ([more](https://blog.cloudflare.com/tonga-internet-outage/) on this outage).
+We can also ask for specific timestamps. For example, let's look at [Tonga](https://blog.cloudflare.com/tonga-internet-outage/) in October versus January 2022, when there was an outage.
 
 
 ```bash
@@ -123,7 +122,7 @@ and the 2nd series has these:
 name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO
 `
 
-We also asked for an [aggregation interval](/radar/concepts/aggregation-intervals) of 1 hour (`aggInterval=1h`), so that all results could be placed here (both `format` and `aggInterval` are not arrays and apply globally to all series in the request).
+We also asked for an [aggregation interval](/radar/concepts/aggregation-intervals) of 1 hour (`aggInterval=1h`), so that all results could be placed here (both `format` and `aggInterval` are not arrays, as specified in the [API reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series), and apply globally to all series in the request).
 
 Inside the `result` property, you should see something like this:
 

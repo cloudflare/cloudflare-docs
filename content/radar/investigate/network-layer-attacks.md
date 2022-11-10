@@ -25,7 +25,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/timeserie
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-Looking at the abbreviated response below, we see that globally, at those timestamps, UDP and TCP attacks were pretty evenly split.
+Looking at the abbreviated response below, we see that globally, at those timestamps, `UDP` and `TCP` attacks were pretty evenly split.
 
 ```json
 {
@@ -59,6 +59,7 @@ Looking at the abbreviated response below, we see that globally, at those timest
 
 We can also see that the distribution of network layer attacks coming _from_ Singapore or, more accurately, reaching our data center located in Singapore, differs quite a bit from the worldwide distribution, at those times, clearly favoring [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) attack methods.
 
+For more information refer to the [API reference](https://api.cloudflare.com/#radar-attacks-get-layer-3-attacks-time-series) for this endpoint.
 
 ## Summary
 
@@ -94,6 +95,8 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?l
 ```
 
 We see that attacks coming from Russia to other locations, at the time above, tend to use the [UDP](https://www.cloudflare.com/en-gb/learning/ddos/glossary/user-datagram-protocol-udp/) network protocol.
+
+For more information refer to the [API reference](https://api.cloudflare.com/#radar-attacks-get-layer-3-attacks-by-network-protocol,-over-time) for this endpoint.
 
 
 ## Next steps

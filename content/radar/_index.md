@@ -4,7 +4,7 @@ pcx_content_type: overview
 layout: overview
 weight: 1
 meta:
-  title: Cloudflare Radar API
+  title: Cloudflare Radar
 ---
 
 # {{<beta>}}Cloudflare Radar{{</beta>}}
@@ -25,7 +25,7 @@ Take into account that usage of the API, and its data, is made available under t
 
 ## Get Started
 
-[Make your first API request](/radar/get-started/first-request/) - Get your feet wet by making your first API request.
+[Make your first Radar API request](/radar/get-started/first-request/) - Get your feet wet by making your first API request.
 
 [Making comparisons](/radar/get-started/making-comparisons/) - What to know before making comparisons between locations, [ASes](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) and others.
 
@@ -35,7 +35,7 @@ Take into account that usage of the API, and its data, is made available under t
 
 [HTTP traffic](/radar/investigate/http-requests) - Investigate adoption and usage of Internet protocols, versions and traffic types, using HTTP traffic.
 
-[Network level attacks](/radar/investigate/network-layer-attacks/) - Investigate Layer 3/4 level cyber attacks trends and patterns.
+[Network level attacks](/radar/investigate/network-layer-attacks/) - Investigate Layer 3/4 cyber attacks trends and patterns.
 
 [Application level attacks](/radar/investigate/application-layer-attacks/) - Investigate Layer 7 cyber attacks trends and patterns.
 

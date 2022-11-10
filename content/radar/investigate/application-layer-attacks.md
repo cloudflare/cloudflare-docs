@@ -6,7 +6,11 @@ weight: 3
 
 # Application layer attacks
 
-While in [HTTP requests](/radar/investigate/http-requests) we were looking at all kinds of web requests, here we're looking at only mitigated requests. These requests can be mitigated by one of several Cloudflare products, e.g. [WAF](/waf), [DDos Protection](/ddos-protection), [Bot Management](/bots) and others.
+While in [HTTP requests](/radar/investigate/http-requests) we were looking at all kinds of web requests, here we're looking at only _mitigated_ HTTP requests. These requests can be mitigated by one of several Cloudflare products, e.g. [WAF](/waf), [DDos Protection](/ddos-protection), [Bot Management](/bots) and others.
+
+{{<Aside type="note" header="Mitigated Traffic">}}
+Mitigated Traffic is any eyeball HTTP request that had a “terminating” action applied to by the Cloudflare platform. These include actions like BLOCK or CHALLENGE (such as captchas or JavaScript based challenges).
+ {{</Aside>}}
 
 Since we're looking at attacks, we can look at both sides of an attack, the source location of the attack and the target location of the attack. For the source of the attack, the location associated with the IP, that the attack is coming from, is used (take into account that the human orchestrator of the attack may be in a different location than the computer the attack is originating from). For the target location of the attacks, we're using the billing location associated with the zone under attack.
 
@@ -18,7 +22,7 @@ Like in [HTTP requests](/radar/investigate/http-requests), these endpoints can b
 
 ## Timeseries
 
-### Example: global percentage breakdown by attack mitigation product, per hour
+### Example: hourly global percentage breakdown by attack mitigation product
 
 Let's look at the global distribution of mitigated requests by product:
 
@@ -54,6 +58,7 @@ Looking at the abbreviated response below, we see that DDoS makes up the majorit
 }
 ```
 
+For more information refer to the [API reference](https://api.cloudflare.com/#radar-attacks-get-layer-7-attacks-by-mitigation-technique-over-time) for this endpoint.
 
 ## Summary
 
@@ -80,12 +85,13 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?l
 
 This can read as, 75% of all mitigated requests coming from Great Britain were mitigated by the [WAF](/waf) product.
 
+For more information refer to the [API reference](https://api.cloudflare.com/#radar-attacks-get-a-summary-of-layer-7-attacks) for this endpoint.
 
 ## Top
 
 ### Example: Top target locations
 
-Let's look at application layer attacks by target location, in the last 24 hours:
+Let's look at the top locations being targeted in application layer attacks, in the last 24 hours:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locations/target?name=attacks_target&limit=5&dateRange=1d&format=json" \
@@ -133,15 +139,15 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locat
 }
 ```
 
-Take into account that, as said above, target location comes from the billing location of the zone under attack.
+Mitigated requests to zones with a billing address located in Belgium make up about 18% of all mitigated requests, during the specified date range.
 
-
+For more information refer to the [API reference](https://api.cloudflare.com/#radar-attacks-get-layer-7-top-target-locations) for this endpoint.
 
 ### Example: Top attacks
 
-What source-target location pairs constitute the biggest attacks in the last 24 hours?
+Which source-target location pairs constitute the biggest attacks in the last 24 hours?
 
-How big an attack is, or the attack magnitude, can be defined by the number of mitigated requests (the default) or by the number of total zones affected.
+How big an attack is, or the attack magnitude, can be defined by the number of mitigated requests (the default) or by the number of total zones under attack.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attacks?limit=5&dateRange=1d&magnitude=MITIGATED_REQUESTS&format=json" \
@@ -189,6 +195,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/attac
 
 This can be read as, 3.79% of all mitigated requests are from and to the US, 3.6% of all mitigated requests are from the US to Belgium, etc. This is using attack magnitude as the sum of mitigated requests, we could instead use another metric, the number of unique zones attacked by using `attack_magnitude=AFFECTED_ZONES`.
 
+For more information refer to the [API reference](https://api.cloudflare.com/#radar-attacks-get-layer-7-top-attack-pairs-origin-and-target-locations) for this endpoint.
 
 ## Next steps
 
