@@ -5,25 +5,29 @@ title: Deployments
 
 # Deployments
 
-Deployments are a set of static historical ‘snapshots’ of your Worker. They include the code, configuration, and bindings associated with your Worker. A change to any of these will trigger a new deployment to be made on Cloudflare’s network.
+Deployments are a set of static historical ‘snapshots’ of your Worker. They include the code, configuration, and bindings associated with your Worker. A change to any of these will trigger a new deployment on Cloudflare’s network.
 
-Only **one** deployment is active at any time – always the latest deployment. That deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your optional workers.dev preview.
+Only **one** deployment is active at any time. Currently this is the latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your optional workers.dev preview.
 
 You can view a list of your deployments in the Cloudflare dashboard under the **‘Deployments’** tab within any Worker’s detail view. You can also use the `wrangler deployments` command to list out the most recent deployments.
 
 ### Deployments are triggered by:
+
 * Changes to a Worker’s bindings, code, or configuration in the Cloudflare dashboard
 * Changes to a Worker’s bindings, code, or configuration in the API
 * Changes to a Worker’s bindings, code, or configuration in the CLI via [wrangler publish](/workers/wrangler/commands#publish)
 
-### Deployments consist of:
-* `id`: A unique Cloudflare-generated identifier
-* `deployment_number`: An auto-incrementing integer indicating the deployment number
-* `metadata`: An object containing information about the deployment
-* `author_id` - A Cloudflare-generated unique identifier
-* `author_name` - A string representing the user or token information of the author of the deployment
-* `source` - A string representing the interface that was used to author the deployment. One of `["api" | "dash" | "wrangler" | "terraform" | "other"]`.
-* `created_on` - A timestamp indicating deployment date and time
+### Deployments consist of : 
+
+|   |   |   |   |   |
+|---|---|---|---|---|
+| `id` | A unique Cloudflare-generated identifier |
+| `deployment_number` | An auto-incrementing integer indicating the deployment number |
+| `metadata` | An object containing information about the deployment |
+| `author_id`  | A Cloudflare-generated unique identifier |
+| `author_name`  | A string representing the user or token information of the author of the deployment |
+| `source`  | A string representing the interface that was used to author the deployment. One of: `"api", "dash", "wrangler", "terraform", "other"`. |
+| `created_on`  | A timestamp indicating deployment date and time |
 
 If you see an unwanted change, you can always issue a new deployment using your interface of choice.
 
