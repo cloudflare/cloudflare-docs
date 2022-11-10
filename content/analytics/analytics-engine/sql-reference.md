@@ -403,7 +403,7 @@ Divide a by b, rounding the answer down to the nearest whole number.
 
 Usage:
 ```SQL
-ToUInt32(<expression>)
+toUInt32(<expression>)
 ```
 
 Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 32 bit integer.
