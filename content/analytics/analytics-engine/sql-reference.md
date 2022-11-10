@@ -414,7 +414,7 @@ Behaviour for negative numbers is undefined.
 
 Usage:
 ```SQL
-ToDateTime(<expression>)
+toDateTime(<expression>)
 ```
 
 `ToDateTime` converts an expression to a datetime.
