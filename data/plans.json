@@ -169,6 +169,8 @@
     "cache_reserve": {
       "title": "Cache reserve",
       "link": "/cache/about/cache-reserve/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -392,6 +394,8 @@
     "dns_firewall": {
       "title": "DNS Firewall",
       "link": "/dns/dns-firewall/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -432,6 +436,8 @@
     "zone_transfers": {
       "title": "DNS Zone Transfers",
       "link": "/dns/zone-setups/zone-transfers/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1345,6 +1351,8 @@
     "spectrum": {
       "title": "Spectrum",
       "link": "/spectrum/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1497,6 +1505,8 @@
     "image_resizing": {
       "title": "Image Resizing",
       "link": "/images/image-resizing/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1598,6 +1608,8 @@
     "advanced_certificates": {
       "title": "Advanced Certificates",
       "link": "/ssl/edge-certificates/advanced-certificate-manager/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1654,6 +1666,13 @@
           "summary": "Business and Enterprise customers get one certificate by default and Enterprise customers can purchase additional custom certificates if needed.",
           "free": "No",
           "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "quantity": {
+          "title": "Certificates included",
+          "free": 0,
+          "pro": 0,
           "biz": 1,
           "ent": "1 (can purchase more)"
         }
@@ -1760,6 +1779,8 @@
     "csr": {
       "title": "Certificate Signing Requests",
       "link": "/ssl/edge-certificates/additional-options/certificate-signing-requests/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1774,6 +1795,8 @@
     "z_custom_hostnames": {
       "title": "Custom Hostnames",
       "link": "/cloudflare-for-platforms/cloudflare-for-saas/plans/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1880,6 +1903,8 @@
     "custom_origin_trust_store": {
       "title": "Custom origin trust store",
       "link": "/ssl/origin-configuration/custom-origin-trust-store/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1916,6 +1941,8 @@
     "keyless_ssl": {
       "title": "Keyless SSL",
       "link": "/ssl/keyless-ssl/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1973,6 +2000,8 @@
     "total_tls": {
       "title": "Total TLS",
       "link": "/ssl/edge-certificates/additional-options/total-tls/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2004,6 +2033,8 @@
     "argo": {
       "title": "Argo Smart Routing",
       "link": "/argo-smart-routing/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2046,6 +2077,8 @@
     "load_balancing": {
       "title": "Load Balancing",
       "link": "/load-balancing/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2168,6 +2201,8 @@
     "ipfs": {
       "title": "IPFS Gateways",
       "link": "/web3/ipfs-gateway/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2210,6 +2245,8 @@
     "ethereum": {
       "title": "Ethereum Gateways",
       "link": "/web3/ethereum-gateway/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
