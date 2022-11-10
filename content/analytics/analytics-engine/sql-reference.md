@@ -69,11 +69,11 @@ SELECT
 
 SELECT
     blob2 AS probe_name,
-    IF(double3 <= 0, 'FREEZING', 'NOT FREEZING') AS description -- use of functions
+    if(double3 <= 0, 'FREEZING', 'NOT FREEZING') AS description -- use of functions
 
 SELECT
     blob2 AS probe_name,
-    AVG(double3) AS avg_temp -- aggregation function
+    avg(double3) AS avg_temp -- aggregation function
 ```
 
 ### FROM clause
@@ -133,7 +133,7 @@ WHERE double1 + double2 > 4
 WHERE blob1 = 'test1' OR blob2 = 'test2'
 
 -- expression using inequalities, functions and operators
-WHERE IF(unit = 'f', (temp-32)/1.8, temp) <= 0
+WHERE if(unit = 'f', (temp-32)/1.8, temp) <= 0
 ```
 
 ### GROUP BY clause
@@ -150,7 +150,7 @@ For example. If you had a table of temperature readings:
 -- return the average temperature for each probe
 SELECT 
     blob1 AS probe_name, 
-    AVG(double1) AS average_temp
+    avg(double1) AS average_temp
 FROM temperature_readings
 GROUP BY probe_name
 ```
