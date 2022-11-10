@@ -417,7 +417,7 @@ Usage:
 toDateTime(<expression>)
 ```
 
-`ToDateTime` converts an expression to a datetime.
+`toDateTime` converts an expression to a datetime.
 
 Examples:
 ```SQL
