@@ -97,6 +97,8 @@ which would lead to a response like this:
 }
 ```
 
+Cloudflare sees more traffic from AS174 than it sees from AS3243.
+
 ## Next steps
 
 {{<button-group>}}
