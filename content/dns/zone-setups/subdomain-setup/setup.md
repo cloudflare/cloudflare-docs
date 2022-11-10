@@ -10,15 +10,29 @@ meta:
 
 When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to create a child domain depend on the parent domain's setup and whether the child domain already exists.
 
+<div class="mermaid">
+    flowchart TD
+      accTitle: DNS resolution flow with CNAME target in same partial zone
+      A[<code>example.com</code>] --> B[<code>docs.example.com</code>]
+      A[<code>example.com</code>] --> C[<code>blog.example.com</code>]
+      subgraph Parent domain
+        A
+      end
+      subgraph Child domain
+        B
+        C
+      end
+</div>
+
 ---
 
 ## Parent domain on full setup
 
 If the parent domain is using a [full setup](/dns/zone-setups/full-setup/)[^1], your child domain setup depends on whether the child domain already exists.
 
-### Subdomain does not exist
+### Subdomain does not exist in the parent domain
 
-If you have not yet created your child domain:
+If you have not yet created a DNS record covering your child domain in the parent domain:
 
 1. [Add the child domain](/fundamentals/get-started/setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
@@ -33,11 +47,11 @@ If you have not yet created your child domain:
 
 4. After a few minutes, the child domain will be active.
 5. Create the various [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for your child domain.
-6. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/).
+6. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/) on the child domain.
 
-### Subdomain already exists
+### Subdomain already exists in the parent domain
 
-If you have already created your child domain:
+If you have already created a DNS record covering your child domain in the parent domain:
 
 1. [Add the child domain](/fundamentals/get-started/setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. In your child domain, [re-create all DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that relate to your child domain. This includes all DNS records deeper than the delegated subdomain, meaning that if you are delegating `www.example.com`, you should also move over records for `api.www.example.com`.
@@ -47,7 +61,7 @@ If you have already created your child domain:
     <br/>
 
 3. In the parent domain, make sure that you migrate over any settings ([Firwall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
-4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains.
+4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 5. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
 6. Within the **DNS** settings of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records).
 7. Within the **DNS** settings of the parent zone, leave one address record and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
@@ -62,7 +76,7 @@ If you have already created your child domain:
 
 8. Flush the address records of your child domain in public resolvers ([1.1.1.1](https://1.1.1.1/purge-cache/) and [8.8.8.8](https://developers.google.com/speed/public-dns/cache)).
 9. Within a short period of time, the child domain should be active.
-10. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/).
+10. (Optional) [Enable DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/) on the child domain.
 
 ---
 
@@ -70,19 +84,20 @@ If you have already created your child domain:
 
 If the parent domain is using a [partial setup](/dns/zone-setups/partial-setup/)[^2], your child domain setup depends on whether the child domain already exists.
 
-### Subdomain does not exist
+### Subdomain does not exist in the parent domain
 
-If you have not yet created your child domain:
+If you have not yet created a DNS record covering your child domain in the parent domain:
 
 1. [Add the child domain](/fundamentals/get-started/setup/add-site/) in the same or a new account.
 2. Convert the child zone to [a partial setup](/dns/zone-setups/partial-setup/setup/#step-1--add-your-domain-to-cloudflare).
 3. Create the various [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) needed for your child domain.
 4. [Add the TXT verification record](/dns/zone-setups/partial-setup/setup/#step-2--verify-ownership-for-your-domain) at your authoritative DNS provider.
 5. Within a short period of time, the child domain should be active.
+6. Add a [`CNAME` record](/dns/zone-setups/partial-setup/setup/#step-3--add-dns-records) at your authoritative DNS provider.
 
-### Subdomain already exists
+### Subdomain already exists in the parent domain
 
-If you have already created your child domain:
+If you have already created a DNS record covering your child domain in the parent domain:
 
 1. [Add the child domain](/fundamentals/get-started/setup/add-site/) in the same or a new account.
 2. Convert the child zone to [a partial setup](/dns/zone-setups/partial-setup/setup/#step-1--add-your-domain-to-cloudflare).
