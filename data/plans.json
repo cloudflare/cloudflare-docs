@@ -77,7 +77,7 @@
           "ent": "Same as Pro"
         },
         "historical_data": {
-          "title": "Historical data",
+          "title": "Historical time",
           "free": "30 days",
           "pro": "7 days",
           "biz": "30 days",
@@ -374,6 +374,26 @@
           "pro": "No",
           "biz": "Yes",
           "ent": "Yes"
+        }
+      }
+    },
+    "dns_analytics": {
+      "title": "DNS Analytics",
+      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "historical_data": {
+          "title": "Historical time",
+          "free": "6 hours",
+          "pro": "24 hours",
+          "biz": "7 days",
+          "ent": "30 days"
         }
       }
     },
@@ -1014,8 +1034,8 @@
           "biz": "All except DoS",
           "ent": "All"
         },
-        "duration": {
-          "title": "Time Window",
+        "historical_data": {
+          "title": "Historical time",
           "free": "Up to the last 24 hours",
           "pro": "Up to the last 24 hours",
           "biz": "Up to the last 72 hours",
@@ -1968,7 +1988,6 @@
         }
       }
     },
-
     "staging_environment": {
       "title": "Staging environment",
       "link": "/ssl/edge-certificates/staging-environment/",
@@ -2024,6 +2043,78 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        }
+      }
+    }
+  },
+  "support": {
+    "title": "Support",
+    "a_tickets": {
+      "title": "Ticket Support",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "response_time": {
+          "title": "Initial ticket response time",
+          "free": "N/A",
+          "pro": "N/A",
+          "biz": "8-72 hrs (P1-P4 issues)",
+          "ent": "1hr (urgent issues)"
+        }
+      }
+    },
+    "b_chat": {
+      "title": "Chat Support",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "phone": {
+      "title": "24x7x365 Emergency Phone Support",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "uptime_guarantees": {
+      "title": "Uptime guarantees",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "b_sla": {
+          "title": "SLA",
+          "free": "N/A",
+          "pro": "N/A",
+          "biz": "100%",
+          "ent": "100%"
+        },
+        "service_credits": {
+          "title": "Service credits",
+          "free": "N/A",
+          "pro": "N/A",
+          "biz": "1x",
+          "ent": "10x (Standard)<br/>25x (Premium)"
         }
       }
     }
