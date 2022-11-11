@@ -14,7 +14,7 @@ You can view a list of your deployments in the Cloudflare dashboard under the **
 ### Deployments are triggered by:
 
 * Changes to a Worker’s bindings, code, or configuration in the Cloudflare dashboard
-* Changes to a Worker’s bindings, code, or configuration in the API
+* Changes to a Worker’s bindings, code, or configuration in the REST API
 * Changes to a Worker’s bindings, code, or configuration in the CLI via [wrangler publish](/workers/wrangler/commands#publish)
 
 ### Deployments consist of : 
@@ -74,9 +74,9 @@ The Metadata binding object definition is as follows:
 }
 ```
 
-## Triggering a new Deployment
+## Creating a new Deployment
 
-New Deployments will be issued whenever you change code, configuration, or bindings.
+New Deployments will be created whenever you change code, configuration, or bindings.
 
 Updates to code can be as small as a simple whitespace change. Any changes to code will trigger a new deployment.
 
