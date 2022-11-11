@@ -122,7 +122,7 @@
       {
         "type": "module",
         "title": "Customize Web Application Firewall (WAF)",
-        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/analytics/'>detailed analysis</a> of your application traffic.",
+        "description": "Use a variety of rules to customize the behavior of your application's firewall. This step may require <a href='/waf/security-analytics/'>detailed analysis</a> of your application traffic.",
         "estimated_time": 120,
         "pages": [
           {
@@ -162,7 +162,7 @@
       {
         "type": "module",
         "title": "Customize other security settings",
-        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/analytics/'>detailed analysis</a> of your application traffic.",
+        "description": "Update various settings to further refine how your application processes incoming traffic. This step may require <a href='/waf/security-analytics/'>detailed analysis</a> of your application traffic.",
         "estimated_time": 120,
         "pages": [
           {

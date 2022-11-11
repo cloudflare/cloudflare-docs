@@ -8,7 +8,7 @@ meta:
 
 # Security Events — Paid plans
 
-Security Events is available at **Security** > **Events**.
+Security Events is available at **Security** > **Overview**.
 
 ## Adjusting displayed data
 
