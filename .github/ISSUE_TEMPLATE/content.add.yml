@@ -33,14 +33,15 @@ body:
         - Load Balancing
         - Logs
         - Magic Firewall
+        - Magic Network Monitoring
         - Magic Transit
         - Magic WAN
         - Network Error Logging
         - Network Interconnect
         - Page Shield
         - Pages
-        - Partners
         - Pub/Sub
+        - Queues
         - R2
         - Railgun
         - Randomness Beacon
