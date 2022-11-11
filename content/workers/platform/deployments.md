@@ -19,8 +19,8 @@ You can view a list of your deployments in the Cloudflare dashboard under the **
 
 ### Deployments consist of : 
 
-|   |   |   |   |   |
-|---|---|---|---|---|
+|                  |   |
+|------------------|---|
 | `id` | A unique Cloudflare-generated identifier |
 | `metadata` | An object containing information about the deployment |
 | `metadata.author_id`  | A Cloudflare-generated unique identifier |
@@ -32,11 +32,13 @@ If you see an unwanted change, you can always issue a new deployment using your 
 
 ## Interacting with Deployments
 
-### wrangler
+### wrangler publish
 
 The [`wrangler publish`](/workers/wrangler/commands#publish) command will output information about the most recent deployment created.
 
 ![wrangler publish](../media/wrangler-publish-output.png)
+
+### wrangler deployments
 
 The [`wrangler deployments`](/workers/wrangler/commands#deployments) command will output information about the most recent deployments.
 
@@ -83,7 +85,6 @@ Updates to bindings include a change to the value or variable name of a binding,
 Changes to configuration include:
 
 * Changing a Worker’s usage model
-* Changing a Worker’s name
 * Changing a Worker’s secret or environment variable names and values
 
 ## Author and Source
