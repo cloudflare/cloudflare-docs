@@ -7,7 +7,7 @@ title: Deployments
 
 Deployments are a set of static historical ‘snapshots’ of your Worker. They include the code, configuration, and bindings associated with your Worker. A change to any of these will trigger a new deployment on Cloudflare’s network.
 
-Only **one** deployment is active at any time. Currently this is the latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your optional workers.dev preview.
+Only **one** deployment is active at any time. Currently this is the latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your optional `workers.dev` preview.
 
 You can view a list of your deployments in the Cloudflare dashboard under the **‘Deployments’** tab within any Worker’s detail view. You can also use the `wrangler deployments` command to list out the most recent deployments.
 
@@ -22,21 +22,25 @@ You can view a list of your deployments in the Cloudflare dashboard under the **
 |   |   |   |   |   |
 |---|---|---|---|---|
 | `id` | A unique Cloudflare-generated identifier |
-| `deployment_number` | An auto-incrementing integer indicating the deployment number |
 | `metadata` | An object containing information about the deployment |
-| `author_id`  | A Cloudflare-generated unique identifier |
-| `author_name`  | A string representing the user or token information of the author of the deployment |
-| `source`  | A string representing the interface that was used to author the deployment. One of: `"api", "dash", "wrangler", "terraform", "other"`. |
-| `created_on`  | A timestamp indicating deployment date and time |
+| `metadata.author_id`  | A Cloudflare-generated unique identifier |
+| `metadata.author_email`  | A string representing the user or token information of the author of the deployment |
+| `metadata.source`  | A string representing the interface that was used to author the deployment. One of: `"api", "dash", "wrangler", "terraform", "other"`. |
+| `metadata.created_on`  | A timestamp indicating deployment date and time |
 
 If you see an unwanted change, you can always issue a new deployment using your interface of choice.
 
 ## Interacting with Deployments
+
 ### wrangler
 
 The [`wrangler publish`](/workers/wrangler/commands#publish) command will output information about the most recent deployment created.
 
+![wrangler publish](../media/wrangler-publish-output.png)
+
 The [`wrangler deployments`](/workers/wrangler/commands#deployments) command will output information about the most recent deployments.
+
+![wrangler deployments](../media/wrangler-deployments-output.png)
 
 ### Deployments in the dashboard
 
@@ -63,21 +67,21 @@ The Metadata binding object definition is as follows:
 	name: string,
 	deployment: {
 		id: string,
-		number: int,
-		author_name: string,
-source: string,
-timestamp: datetime
+		timestamp: datetime
 	}
 }
 ```
 
-## What constitutes an ‘update’?
+## Triggering a new Deployment
+
+New Deployments will be issued whenever you change code, configuration, or bindings.
 
 Updates to code can be as small as a simple whitespace change. Any changes to code will trigger a new deployment.
 
 Updates to bindings include a change to the value or variable name of a binding, or any CRUD operation on an individual binding. Notably, this does not include changes to the target resource itself – only the binding (e.g., changing the code of a Worker “B” that is connected via a Service binding from Worker “A” will not trigger a new deployment on Worker “A”).
 
 Changes to configuration include:
+
 * Changing a Worker’s usage model
 * Changing a Worker’s name
 * Changing a Worker’s secret or environment variable names and values
