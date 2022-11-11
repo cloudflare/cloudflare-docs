@@ -5,13 +5,17 @@ title: Set up IPsec tunnels
 
 # Set up IPsec tunnels
 
-Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. 
-
-To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
+Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
 
 Before you begin, make sure you already have an Account ID and API Key.
 
 For a list of compatible devices, refer to [Device compatibility](/magic-wan/reference/device-compatibility/).
+
+{{<Aside type="note" header="Note:">}}
+
+Magic WAN only supports IKEv2.
+
+{{</Aside>}}
 
 ## IPsec process
 
