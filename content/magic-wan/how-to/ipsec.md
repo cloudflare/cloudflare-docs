@@ -11,7 +11,7 @@ Before you begin, make sure you already have an Account ID and API Key.
 
 For a list of compatible devices, refer to [Device compatibility](/magic-wan/reference/device-compatibility/).
 
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note" header="Note">}}
 
 Magic WAN only supports IKEv2.
 
