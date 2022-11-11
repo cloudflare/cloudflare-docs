@@ -5,6 +5,12 @@ title: Deployments
 
 # Deployments
 
+{{<Aside type="note">}}
+
+Deployments are currently in Public Beta.
+
+{{</Aside>}}
+
 Deployments are a set of static historical ‘snapshots’ of your Worker. They include the code, configuration, and bindings associated with your Worker. A change to any of these will trigger a new deployment on Cloudflare’s network.
 
 Only **one** deployment is active at any time. Currently this is the latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your optional `workers.dev` preview.

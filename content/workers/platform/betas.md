@@ -16,3 +16,4 @@ These are the betas relevant to Cloudflare Workers.
 | Queues                        | ✅          |               |[Docs](/queues)                                                             |
 | TCP Workers                   | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-socket-workers/)             |
 | Workers Analytics Engine      |             | ✅            |[Blog](https://blog.cloudflare.com/workers-analytics-engine/)               |
+| Workers Deployments      |             | ✅            |[Docs](/workers/platform/deployments)               |
