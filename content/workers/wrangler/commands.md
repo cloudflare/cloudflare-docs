@@ -1186,10 +1186,22 @@ $ wrangler whoami
 
 ## deployments
 
-Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Deployment number`, `Author email`, `Created on`, and `Latest deploy`.
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
 
 ```sh
 $ wrangler deployments
+
+Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Created on: 2022-11-11T15:49:08.117218Z
+Author: example@cloudflare.com
+Source: Dashboard
+ 
+Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
+Created on: 2022-11-11T15:51:20.79936Z
+Author: example@cloudflare.com
+Source: Wrangler
+🟩Active
+
 ```
 
 {{<definitions>}}
