@@ -17,19 +17,6 @@ You can view a list of your deployments in the Cloudflare dashboard under the **
 * Changes to a Worker’s bindings, code, or configuration in the REST API
 * Changes to a Worker’s bindings, code, or configuration in the CLI via [wrangler publish](/workers/wrangler/commands#publish)
 
-### Deployments consist of : 
-
-|                  |   |
-|------------------|---|
-| `id` | A unique Cloudflare-generated identifier |
-| `metadata` | An object containing information about the deployment |
-| `metadata.author_id`  | A Cloudflare-generated unique identifier |
-| `metadata.author_email`  | A string representing the user or token information of the author of the deployment |
-| `metadata.source`  | A string representing the interface that was used to author the deployment. One of: `"api", "dash", "wrangler", "terraform", "other"`. |
-| `metadata.created_on`  | A timestamp indicating deployment date and time |
-
-If you see an unwanted change, you can always issue a new deployment using your interface of choice.
-
 ## Interacting with Deployments
 
 ### wrangler publish
@@ -48,7 +35,7 @@ The [`wrangler deployments`](/workers/wrangler/commands#deployments) command wil
 
 The Deployments tab of your Cloudflare dashboard will include information about historical deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
 
-### Metadata binding
+<!-- ### Metadata binding
 
 Deployment information is optionally available directly within your Worker code. This information is presented as a Metadata binding, and can be configured at any custom variable name. To configure in dashboard, head to your Worker > Settings > Variables > Metadata binding, and click ‘Add binding’. Optionally configure a variable name (e.g. CF_METADATA).
 
@@ -72,7 +59,7 @@ The Metadata binding object definition is as follows:
 		timestamp: datetime
 	}
 }
-```
+```  -->
 
 ## Creating a new Deployment
 
@@ -92,3 +79,16 @@ Changes to configuration include:
 When you deploy changes to your Worker, Cloudflare will track the user, token, or interface from which your code was last deployed. This is useful to understand and audit who or what is making changes to your applications.
 
 The author of a deployment is available in the Cloudflare dashboard, displayed after a wrangler publish, visible via [wrangler documentation](/workers/wrangler/commands#deployments) command, accessible in [Cloudflare’s API](https://api.cloudflare.com/), and optionally from your Worker code in the [Metadata binding](/workers/platform/deployments#metadata-binding).
+
+<!-- ### Deployments consist of : 
+
+|   |   |
+|------------------|---|
+| `id` | A unique Cloudflare-generated identifier |
+| `metadata` | An object containing information about the deployment |
+| <span style="white-space: nowrap;">`metadata.author_id`</span>  | A Cloudflare-generated unique identifier |
+| <span style="white-space: nowrap;">`metadata.author_email`</span>  | A string representing the user or token information of the author of the deployment |
+| <span style="white-space: nowrap;">`metadata.source`</span>  | A string representing the interface that was used to author the deployment. One of: `"api", "dash", "wrangler", "terraform", "other"`. |
+| <span style="white-space: nowrap;">`metadata.created_on`</span>  | A timestamp indicating deployment date and time |
+
+If you see an unwanted change, you can always issue a new deployment using your interface of choice. -->
