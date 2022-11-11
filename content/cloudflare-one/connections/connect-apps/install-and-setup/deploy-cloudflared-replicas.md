@@ -55,7 +55,7 @@ You can run the same tunnel across various `cloudflared` processes for up to 100
 
 {{<Aside type="note" header="Deploy replicas with Kubernetes">}}
   
-For information about running `cloudflared` instances in a Kubernetes deployment, refer to our [examples](https://github.com/cloudflare/argo-tunnel-examples/tree/master/named-tunnel-k8s) on GitHub.
+For information about running `cloudflared` instances in a Kubernetes deployment, refer to the [tutorial](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
   
 {{</Aside>}}
 
