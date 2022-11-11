@@ -57,152 +57,25 @@ Terraform functions through a working directory that contains the configuration 
     $ cd gcp-tunnel
     ```
 
-## 5. Create Terraform configuration
+## 5. Create Terraform configuration files
 
 ### Define input variables
 
-The following variables will be passed into your GCP and Cloudflare configuration.
-
-1. In your Terraform directory, create a `.tf` file:
-
-    ```sh
-    $ touch variables.tf
-    ```
-
-2. Open the file in a text editor and copy and paste the following:
-
-    ```txt
-    ---
-    filename: variables.tf
-    ---
-    # GCP variables
-    variable "gcp_project_id" {
-      description = "Google Cloud Platform (GCP) project ID"
-      type        = string
-    }
-    
-    variable "zone" {
-      description = "Geographical zone for the GCP VM instance"
-      type        = string
-    }
-    
-    variable "machine_type" {
-      description = "Machine type for the GCP VM instance"
-      type        = string
-    }
-
-    # Cloudflare variables
-    variable "cloudflare_zone" {
-      description = "Domain used to expose the GCP VM instance to the Internet"
-      type        = string
-    }
-    
-    variable "cloudflare_zone_id" {
-      description = "Zone ID for your domain"
-      type        = string
-    }
-    
-    variable "cloudflare_account_id" {
-      description = "Account ID for your Cloudflare account"
-      type        = string
-      sensitive   = true
-    }
-    
-    variable "cloudflare_email" {
-      description = "Email address for your Cloudflare account"
-      type        = string
-      sensitive   = true
-    }
-    
-    variable "cloudflare_token" {
-      description = "Cloudflare API token created at https://dash.cloudflare.com/profile/api-tokens"
-      type        = string
-    }
-    ```
-
-3. Save the file.
+{{<render file="_terraform_input_variables.md">}}
 
 ### Assign values to the variables
 
-1. In your Terraform directory, create a `.tfvars` file:
-
-    ```sh
-    $ touch terraform.tfvars
-    ```
-
-    Terraform will automatically use these variables if the file is named `terraform.tfvars`, otherwise the variable file will need to be manually passed in.
-
-2. Open the file in a text editor and add the following variables. Be sure to modify the example with your own values.
-
-    ```txt
-    ---
-    filename: terraform.tfvars
-    ---
-    cloudflare_zone           = "example.com"
-    cloudflare_zone_id        = "023e105f4ecef8ad9ca31a8372d0c353"
-    cloudflare_account_id     = "372e67954025e0ba6aaa6d586b9e0b59"
-    cloudflare_email          = "user@example.com"
-    cloudflare_token          = "y3AalHS_E7Vabk3c3lX950F90_Xl7YtjSlzyFn_X"
-    gcp_project_id            = "testvm-123"
-    zone                      = "us-central1-a"
-    machine_type              = "e2-medium"
-    ```
-
-3. Save the file.
-
-{{<Aside type="warning">}}
- To prevent accidentally exposing sensitive credentials, do not save `terraform.tfvars` in your version control system. For example, if your version control is git, add `terraform.tfvars` to your `.gitignore` file.
-{{</Aside>}}
+{{<render file="_terraform_variable_values.md">}}
 
 ### Configure Terraform providers
 
-You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
-
-1. In your Terraform directory, create a `.tf` file:
-
-    ```sh
-    $ touch providers.tf
-    ```
-
-2. Open the file in a text editor and copy and paste the following providers. The `random` provider is used to generate a tunnel secret.
-
-    ```txt
-    ---
-    filename: providers.tf
-    ---
-    terraform {
-      required_providers {
-        cloudflare = {
-          source = "cloudflare/cloudflare"
-        }
-        google = {
-          source = "hashicorp/google"
-        }
-        random = {
-          source = "hashicorp/random"
-        }
-      }
-      required_version = ">= 0.13"
-    }
-
-    # Providers
-    provider "cloudflare" {
-      api_token    = var.cloudflare_token
-    }
-    provider "google" {
-      project    = var.gcp_project_id
-    }
-    provider "random" {
-    }
-    ```
-
-3. Save the file.
+{{<render file="_terraform_providers.md">}}
 
 ### Configure Cloudflare resources
 
 The following configuration will modify settings in your Cloudflare account. 
 
-1. In your Terraform directory, create a `.tf` file:
+1. In your `gcp_tunnel` directory, create a `.tf` file:
 
     ```sh
     $ touch Cloudflare-config.tf
@@ -264,7 +137,7 @@ The following configuration will modify settings in your Cloudflare account.
 
 The following configuration defines the specifications for the GCP virtual machine and creates a startup script to run upon boot.
 
-1. In your Terraform directory, create a `.tf` file:
+1. In your `gcp_tunnel` directory, create a `.tf` file:
 
     ```sh
     $ touch GCP-config.tf
@@ -323,7 +196,7 @@ The following configuration defines the specifications for the GCP virtual machi
 
 The following script will install `cloudflared`, create a permissions and configuration file for the tunnel, and set up the tunnel to run as a service. This example also installs a lightweight HTTP application that you can use to test connectivity.
 
-1. In your Terraform directory, create a Terraform template file:
+1. In your `gcp_tunnel` directory, create a Terraform template file:
 
     ```sh
     $ touch install-tunnel.tftpl

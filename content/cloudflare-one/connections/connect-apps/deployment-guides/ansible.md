@@ -12,7 +12,7 @@ Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup proc
 
 ## Prerequisites
 
-If you have never worked with Terraform before, we recommend that you first review our [Terraform guide](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/). As described in the Terraform guide, you will need:
+If you have never worked with Terraform before, we recommend that you first review our [Terraform guide](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/). To complete the steps in this guide, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
 - [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/)
@@ -24,11 +24,9 @@ If you have never worked with Terraform before, we recommend that you first revi
 
 Refer to the [Ansible installation instructions](https://docs.ansible.com/ansible/latest/installation_guide/index.html).
 
-## 2. Create the Ansible playbook
+## 2. Create a configuration directory
 
-Ansible playbooks are YAML files that declare the configuration that Ansible will deploy.
-
-1. Create a folder for your configuration:
+1. Create a folder for your Terraform and Ansible configuration files:
 
     ```sh
     $ mkdir gcp-tunnel
@@ -40,169 +38,21 @@ Ansible playbooks are YAML files that declare the configuration that Ansible wil
     $ cd gcp-tunnel
     ```
 
-3. Create a `.yml` file:
+## 3. Create Terraform configuration files
 
-    ```sh
-    $ touch playbook.yml
-    ```
+### Define input variables
 
-4. 
-- [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) define how Ansible will deploy. For example, the `vars_files` keyword specifies where variable definitions are stored, and the `tasks` keyword specifies the actions Ansible will perform.
+{{<render file="_terraform_input_variables.md">}}
 
-Ansible uses modules to specify what tasks to complete. For example the `copy` module creates a copy of a file in the deployment. In this guide the copy module uses the content keyword to declare what will be in the file rather than providing a source file.
+### Assign values to variables
 
-  ```yml
-    ---
-    filename: playbook.yml
-    ---
-    ---
-    - hosts: all
-      become: yes
-    # In order to run the tunnels certain values will need to be passed in to the VM
-    vars_files:
-      - ./tf_ansible_vars_file.yml
-    # The tasks section specifies the actions that will take place on the VM
-    tasks:
-      - name: download cloudflared package
-        shell: wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-      - name: depackage cloudflared
-        shell: sudo dpkg -i cloudflared-linux-amd64.deb
-      - name: Create cloudflared service directory 
-        shell: mkdir -p /etc/cloudflared/
-      - name: Creating the ingress rules and the config file for cloudflared
-        copy:
-          dest: "/etc/cloudflared/config.yml"
-          content: |
-            tunnel: "{{ tunnel_id }}"
-            credentials-file: /etc/cloudflared/cert.json
-            logfile: /var/log/cloudflared.log
-            loglevel: info    
-            ingress:
-              - hostname: "ssh.{{ zone }}"
-                service: ssh://localhost:22
-              - service: http_status:404
-      - name: Creating cred.json file for cloudflared
-        copy:
-          dest: "/etc/cloudflared/cert.json"
-          content: |
-            {
-              "AccountTag"   : "{{ account | quote }}",
-              "TunnelID"     : "{{ tunnel_id | quote }}",
-              "TunnelName"   : "{{ tunnel_name | quote }}",
-              "TunnelSecret" : "{{ secret | quote }}"
-            }
-      - name: Installing cloudflared as a service
-        shell: cloudflared service install
-      - name: Start cloudflared service
-        systemd:
-          name: cloudflared
-          state: started
-          enabled: true
-          masked: no
-  ```
+{{<render file="_terraform_variable_values.md">}}
 
-## 2. Create Terraform configuration
+### Configure Terraform providers
 
-The Terraform configuration files should all be stored in one folder in order for Terraform to deploy everything properly.
+{{<render file="_terraform_providers.md">}}
 
-The tunnel will be created through the Cloudflare Terraform provider. Using Terraform to deploy tunnels will require saving sensitive identification information. This can be stored in a .tfvars file and then passed in as a variable to the .tf file. This file should not be saved by the version control used in order to prevent accidentally exposing this information. If the version control is git, this file should be included in the .gitignore file. Terraform will automatically use these variables if the file is named terraform.tfvars, otherwise the variable file will need to be manually passed in. 
-
-```sh
-cloudflare_zone           = <domain that tunnel will route to>
-cloudflare_zone_id      = <located on overview page for zone>
-cloudflare_account_id = <located in url of dashboard>
-cloudflare_email          = <email associated with account>
-cloudflare_token          = <created at https://dash.cloudflare.com/profile/api-tokens>
-gcp_project_id            = <which project the instance will be located in>
-zone                            = <the zone that the instance will be located in>
-machine_type             = <the machine type specifies memory and cpu>
-name                           = <name of gcp account -- needed for accessing instance>
-```
-
-A .tf file is needed to specify all of the providers that Terraform will use to deploy. The cloudflare provider is used to create the tunnel. The google provider is used to create the VM instance. The random provider is needed to generate a secret id for the tunnel. The variables from the terraform.tfvars file need to be retrieved as well so that their content can be accessed.
-
-```sh
-terraform {
-  required_providers {
-    cloudflare = {
-      source = "cloudflare/cloudflare"
-    }
-    google = {
-      source = "hashicorp/google"
-    }
-    random = {
-      source = "hashicorp/random"
-    }
-    template = {
-      source = "hashicorp/template"
-    }
-  }
-  required_version = ">= 0.13"
-}
-
-# Providers
-provider "cloudflare" {
-  account_id = var.cloudflare_account_id
-  api_token    = var.cloudflare_token
-}
-
-provider "google" {
-  project    = var.gcp_project_id
-}
-
-provider "random" {
-}
-
-# GCP variables
-variable "gcp_project_id" {
-  description = "Google Cloud Platform (GCP) Project ID."
-  type        = string
-}
-
-variable "zone" {
-  description = "GCP zone name."
-  type        = string
-}
-
-variable "machine_type" {
-  description = "GCP VM instance machine type."
-  type        = string
-}
-
-variable "name" {
-  description = "GCP account name."
-  type        = string
-}
-
-# Cloudflare Variables
-
-variable "cloudflare_zone" {
-  description = "The Cloudflare Zone to use."
-  type        = string
-}
-
-variable "cloudflare_zone_id" {
-  description = "The Cloudflare UUID for the Zone to use."
-  type        = string
-}
-
-variable "cloudflare_account_id" {
-  description = "The Cloudflare UUID for the Account the Zone lives in."
-  type        = string
-  sensitive   = true
-}
-
-variable "cloudflare_email" {
-  description = "The Cloudflare user."
-  type        = string
-  sensitive   = true
-}
-
-variable "cloudflare_token" {
-  description = "The Cloudflare user's API token."
-  type        = string
-}
-```
+### Configure Cloudflare resources
 
 Terraform is used to create the tunnel that will be running. It can also create the DNS record that the tunnel will route to.
 
@@ -229,24 +79,7 @@ resource "cloudflare_record" "ssh_app" {
 }
 ```
 
-The tunnel id and other requirements for running the tunnel will be exported to tf_ansible_vars_file.yml. Ansible will then use this file to access the ids and secrets needed.
-
-```sh
-resource "local_file" "tf_ansible_vars_file" {
-  content = <<-DOC
-    # Ansible vars_file containing variable values from Terraform.
-    # Generated by Terraform mgmt configuration.
-    tunnel_id: ${cloudflare_argo_tunnel.auto_tunnel.id}
-    account: ${var.cloudflare_account_id}
-    tunnel_name: ${cloudflare_argo_tunnel.auto_tunnel.name}
-    secret: ${random_id.tunnel_secret.b64_std}
-    zone: ${var.cloudflare_zone}
-    DOC
-
-  filename = "./tf_ansible_vars_file.yml"
-}
-```
-
+### Configure GCP resources
 Terraform can deploy GCP VM instances. Instead of having to use a bash script for any internal configuration of the instance, Ansible is used to complete that. All Terraform needs to accomplish for Ansible to deploy is install Python3 on the instance. 
 ```sh
 # OS the server will use
@@ -301,8 +134,90 @@ resource "google_compute_instance" "origin" {
   ]
 }
 ```
+
+### Export Tunnel variables to Ansible
+
+The tunnel id and other requirements for running the tunnel will be exported to tf_ansible_vars_file.yml. Ansible will then use this file to access the ids and secrets needed.
+
+```sh
+resource "local_file" "tf_ansible_vars_file" {
+  content = <<-DOC
+    # Ansible vars_file containing variable values from Terraform.
+    # Generated by Terraform mgmt configuration.
+    tunnel_id: ${cloudflare_argo_tunnel.auto_tunnel.id}
+    account: ${var.cloudflare_account_id}
+    tunnel_name: ${cloudflare_argo_tunnel.auto_tunnel.name}
+    secret: ${random_id.tunnel_secret.b64_std}
+    zone: ${var.cloudflare_zone}
+    DOC
+
+  filename = "./tf_ansible_vars_file.yml"
+}
+```
+
+## 4. Create the Ansible playbook
+
+Ansible playbooks are YAML files that declare the configuration that Ansible will deploy. 
+3. Create a `.yml` file:
+
+    ```sh
+    $ touch playbook.yml
+    ```
+
+4. Add the following content to your `playbook.yml` file:
+
+  ```yml
+    ---
+    - hosts: all
+      become: yes
+    # Import tunnel variables into the VM
+    vars_files:
+      - ./tf_ansible_vars_file.yml
+    # Execute the following commands on the VM
+    tasks:
+      - name: download cloudflared package
+        shell: wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+      - name: depackage cloudflared
+        shell: sudo dpkg -i cloudflared-linux-amd64.deb
+      - name: Create cloudflared service directory 
+        shell: mkdir -p /etc/cloudflared/
+      - name: Creating the ingress rules and the config file for cloudflared
+        copy:
+          dest: "/etc/cloudflared/config.yml"
+          content: |
+            tunnel: "{{ tunnel_id }}"
+            credentials-file: /etc/cloudflared/cert.json
+            logfile: /var/log/cloudflared.log
+            loglevel: info    
+            ingress:
+              - hostname: "ssh.{{ zone }}"
+                service: ssh://localhost:22
+              - service: http_status:404
+      - name: Creating cred.json file for cloudflared
+        copy:
+          dest: "/etc/cloudflared/cert.json"
+          content: |
+            {
+              "AccountTag"   : "{{ account | quote }}",
+              "TunnelID"     : "{{ tunnel_id | quote }}",
+              "TunnelName"   : "{{ tunnel_name | quote }}",
+              "TunnelSecret" : "{{ secret | quote }}"
+            }
+      - name: Installing cloudflared as a service
+        shell: cloudflared service install
+      - name: Start cloudflared service
+        systemd:
+          name: cloudflared
+          state: started
+          enabled: true
+          masked: no
+  ```
+  
+  [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) define how Ansible will execute the configuration. In the example above, the `vars_files` keyword specifies where variable definitions are stored, and the `tasks` keyword specifies the actions Ansible will perform.
+
+  [Modules](https://docs.ansible.com/ansible/2.9/user_guide/modules.html) specify what tasks to complete. In this example, the `copy` module creates a file and populates it with content.
  
-## Deployment
+## 5. Deploy the configuration
 Once the configuration files are created, it can be deployed through Terraform. The Ansible deployment happens within the Terraform deployment when the `ansible-playbook` command is run. First, to initialize the working directory run the `terraform init` command. This will set up the directory so that your infrastructure can be deployed.
 
 Before actually deploying your infrastructure, a preview of everything that will be created can be displayed using the `terraform plan` command. Then to deploy the infrastructure use the `terraform apply` command. It may take several minutes for the GCP instance and tunnel to come online. When you check your Cloudflare dashboard the new records, application, policy, and tunnel will be visible.
