@@ -55,7 +55,7 @@ The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from t
 
 [Cloudflare’s Waiting Room](/waiting-room/) product enables a waiting room for a particular host and path combination within a zone. Visitors are put in the waiting room and provided an estimate of when they will be allowed to access the application, if not immediately available.
 
-The `__cfwaitingroom` cookie is only used to track visitors that access a Waiting Room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the Waiting Room is active. For more details, see [Waiting Room cookie](/waiting-room/reference/waiting-room-cookie/).
+The `__cfwaitingroom` cookie is only used to track visitors that access a waiting room enabled host and path combination for a zone. Visitors using a browser that does not accept cookies cannot visit the host and path combination while the waiting room is active. For more details, refer to [Waiting Room cookies](/waiting-room/reference/waiting-room-cookie/).
 
 ### \_\_cfruid to support Cloudflare Rate Limiting (previous version)
 

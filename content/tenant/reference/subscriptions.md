@@ -60,7 +60,7 @@ The following table lists sample values for various application performance and 
 | [Load balancing](/load-balancing/) | `PARTNERS_LOAD_BALANCING`, `PARTNERS_LOAD_BALANCING_ENT`, `LOAD_BALANCING_BASIC_PLUS` |
 | [Rate limiting](/waf/rate-limiting-rules/) | `PARTNERS_RATE_LIMITING` |
 | [Spectrum](/spectrum/) | `PARTNERS_SPECTRUM` |
-| [Waiting room](/waiting-room/) | `WAITING_ROOMS_BASIC` |
+| [Waiting Room](/waiting-room/) | `WAITING_ROOMS_BASIC` |
 
 ## Getting new subscriptions
 

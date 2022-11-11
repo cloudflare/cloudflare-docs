@@ -29,12 +29,12 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](ht
 
 | Operation                                                                             | Method + URL stub                                             | Notes                              |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------- |
-| [List Waiting Rooms](https://api.cloudflare.com/#waiting-room-list-waiting_rooms)     | `GET zones/{:zone_identifier}/waiting_rooms`                  | List all waiting rooms for a zone. |
-| [Create Waiting Room](https://api.cloudflare.com/#waiting-room-create-waiting_room)   | `POST zones/{:zone_identifier}/waiting_rooms`                 | Create a waiting room.             |
-| [Waiting Room Details](https://api.cloudflare.com/#waiting-room-waiting-room-details) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Fetch a waiting room.              |
-| [Update a Waiting Room](https://api.cloudflare.com/#waiting-room-update-waiting-room) | `PUT zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Update a waiting room.             |
-| [Delete a Waiting Room](https://api.cloudflare.com/#waiting-room-delete-waiting-room) | `DELETE zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Delete a waiting room.             |
-| [Patch a Waiting Room](https://api.cloudflare.com/#waiting-room-patch-waiting-room)   | `PATCH zones/{:zone_identifier}/waiting_rooms/{:identifier}`  | Patch a configured waiting room.   |
+| [List waiting rooms](https://api.cloudflare.com/#waiting-room-list-waiting_rooms)     | `GET zones/{:zone_identifier}/waiting_rooms`                  | List all waiting rooms for a zone. |
+| [Create waiting room](https://api.cloudflare.com/#waiting-room-create-waiting_room)   | `POST zones/{:zone_identifier}/waiting_rooms`                 | Create a waiting room.             |
+| [Waiting room details](https://api.cloudflare.com/#waiting-room-waiting-room-details) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Fetch a waiting room.              |
+| [Update waiting room](https://api.cloudflare.com/#waiting-room-update-waiting-room) | `PUT zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Update a waiting room.             |
+| [Delete waiting room](https://api.cloudflare.com/#waiting-room-delete-waiting-room) | `DELETE zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Delete a waiting room.             |
+| [Patch waiting room](https://api.cloudflare.com/#waiting-room-patch-waiting-room)   | `PATCH zones/{:zone_identifier}/waiting_rooms/{:identifier}`  | Patch a configured waiting room.   |
 
 ## Fetch the current status of a waiting room
 

@@ -12,9 +12,9 @@ Cloudflare Waiting Room protects websites by queueing site visitors when a websi
 
 ## Benefits
 
-Waiting rooms protect **your origin server** by preventing surges in legitimate traffic that may overload your origin.
+Waiting Room protects **your origin server** by preventing surges in legitimate traffic that may overload your origin.
 
-Waiting Rooms also benefit **your visitors** by:
+Waiting Room also benefits **your visitors** by:
 
 - Keeping your application online and preventing them from reaching error pages.
 - Showing estimated wait times that are continuously updated.
@@ -33,7 +33,7 @@ Once you have [created and activated a waiting room](/waiting-room/get-started/)
   - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/waiting-room/reference/configuration-settings/#session-duration/).
   - Because waiting rooms support dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration/), new spots appear more quickly and estimated wait times are lower and more accurate.
 
-![Waiting room process flow showing how a request is managed by Cloudflare and placed in a waiting room before reaching the origin website](/waiting-room/static/waiting-room-process-flow.png)
+![Waiting Room process flow showing how a request is managed by Cloudflare and placed in a waiting room before reaching the origin website](/waiting-room/static/waiting-room-process-flow.png)
 
 ## Availability
 
@@ -46,9 +46,9 @@ Access to certain features depends on a customer's [plan type](/waiting-room/pla
 
 ## Prerequisites
 
-- Cloudflare’s CDN is required to use the waiting room feature.
+- Cloudflare’s CDN is required to use the Waiting Room feature.
 - Configure a [proxied DNS record](/dns/manage-dns-records/how-to/create-dns-records/) or a [proxied load balancer](/load-balancing/understand-basics/proxy-modes/) for the waiting room’s hostname. A DNS record is not auto-configured after a waiting room is created.
-- Visitors must enable cookies. Refer to [Waiting room cookie](/waiting-room/reference/waiting-room-cookie/) for information on how cookies are used in Cloudflare Waiting Room.
+- Visitors must enable cookies. Refer to [Waiting Room cookies](/waiting-room/reference/waiting-room-cookie/) for information on how cookies are used in Cloudflare Waiting Room.
 
 {{<button-group>}}
   {{<button type="primary" href="/waiting-room/get-started/">}}Get started{{</button>}}
