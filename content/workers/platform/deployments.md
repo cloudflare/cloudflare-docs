@@ -78,7 +78,7 @@ Changes to configuration include:
 
 When you deploy changes to your Worker, Cloudflare will track the user, token, or interface from which your code was last deployed. This is useful to understand and audit who or what is making changes to your applications.
 
-The author of a deployment is available in the Cloudflare dashboard, displayed after a wrangler publish, visible via [wrangler documentation](/workers/wrangler/commands#deployments) command, accessible in [Cloudflare’s API](https://api.cloudflare.com/), and optionally from your Worker code in the [Metadata binding](/workers/platform/deployments#metadata-binding).
+The author of a deployment is available in the Cloudflare dashboard, visible via [wrangler documentation](/workers/wrangler/commands#deployments) command, and accessible in [Cloudflare’s REST API](https://api.cloudflare.com/).
 
 <!-- ### Deployments consist of : 
 
