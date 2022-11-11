@@ -156,7 +156,7 @@ None of the options for this command are required. Many of these options can be 
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine.
     {{<Aside type="warning">}}
-This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's edge (for example, this includes your data stored on KV). To persist data locally, use the `--persist` flag to tell Wrangler to store data in the `.wrangler/state` subdirectory.
     {{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
