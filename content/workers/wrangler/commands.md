@@ -1200,7 +1200,7 @@ Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
 Created on: 2022-11-11T15:51:20.79936Z
 Author: example@cloudflare.com
 Source: Wrangler
-🟩Active
+🟩 Active
 
 ```
 
