@@ -99,30 +99,6 @@ export default {
 
   - The object's key.
 
-- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
-
-  - The object's value.
-
-- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
-
-  - Whether the object's value has been consumed or not.
-
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
-
-  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
-
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to an string containing the object's value.
-
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to the given object containing the object's value.
-
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to a binary Blob containing the object's value.
-
 - {{<code>}}version{{<param-type>}}string{{</param-type>}}{{</code>}}
 
   - Random unique string associated with a specific upload of a key.
@@ -162,6 +138,36 @@ export default {
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
+
+## `R2ObjectBody` definition
+
+`R2ObjectBody` represents an object's metadata combined with its body. It is returned when you `GET` an object from an R2 bucket. It inherits all keys from [`R2Object`](#r2object-definition).
+
+{{<definitions>}}
+
+- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
+
+  - The object's value.
+
+- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+
+  - Whether the object's value has been consumed or not.
+
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
+
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to an string containing the object's value.
+
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to the given object containing the object's value.
+
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to a binary Blob containing the object's value.
 
 {{</definitions>}}
 
