@@ -6,64 +6,89 @@ pcx_content_type: configuration
 
 # Get started
 
-## 1. Install Wrangler and login
+This guide will instruct you through setting up and deploying your first D1 database. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
+## 1.  Install and authenticate Wrangler
 
-To use Wrangler to manage D1, you will need to have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later.
+You will use [Wrangler](/workers/wrangler/get-started/), a command-line tool for building Cloudflare Workers, to manage D1. 
 
-To get started, run:
+To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
+
+Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. Install Wrangler by running:
+
+```sh
+$ npm install -g wrangler
+```
+
+or install with `yarn`:
+
+```sh
+$ yarn global add wrangler
+```
+
+To authenticate Wrangler, run:
+
+```sh
+$ wrangler login
+```
+
+You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+
+To start a new Worker project, run:
 
 ```sh
 $ npx wrangler init my-project -y
 ```
 
-This will create new directory (`my-project`), and setup a new Workers project within it. Your new directory will include a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file in the project directory. 
+This will create new directory (`my-project`) and a new Workers project within it. Your new directory will include a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file which is how your `my-project` Worker will manage your D1 database.
 
-Once Wrangler is finished, run:
+## 2. Create your database
+
+To create your first database, go to your project directory:
 
 ```sh
 $ cd my-project
 ```
 
-You can now create your first database with the Wrangler CLI. 
-
-## 2. Create your database
-
-Run the following command to begin creating your database:
+and then run:
 
 ```sh
-$ npx wrangler d1 create <database-name>
+$ npx wrangler d1 create <DATABASE_NAME>
 ```
 
-If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account, before creating your database.
+This will create a new D1 database.
 
-## 3. Update wrangler.toml
+## 3. Bind your Worker to your D1 database
 
-After creating your database, Wrangler will ask you to add a snippet of code to your `wrangler.toml` file that looks something like this:
+[Bindings](/workers/platform/bindings/) allow your Workers to interact with resources, such as D1. Binding your Worker to your D1 database allows you to . After creating your database, Wrangler will prompt you to add the following to your `wrangler.toml`:
 
 ```toml
 [[ d1_databases ]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "<database-name>"
+binding = "<BINDING_NAME>"
+database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
 ```
 
+Your binding name is set by you in this step and is available at `env.<BINDING_NAME>`.
 
-If you would like to have different D1 databases for different environments, you can specify this within your `wrangler.toml` using the following syntax:
+To specify different D1 databases for different environments, use the following syntax in your `wrangler.toml`:
 
 ```toml
+# describe what is happening here
 [env.staging]
 d1_databases = [
-    { binding = "DB", database_name = "<database1-name>", database_id = "<UUID>" },
+    { binding = "DB", database_name = "<DATABASE1_NAME>", database_id = "<UUID>" },
 ]
 
+# describe what is happening here
 [env.production]
 d1_databases = [
-    { binding = "DB", database_name = "<database2-name>", database_id = "<UUID>" },
+    { binding = "DB", database_name = "<DATABASE2_NAME>", database_id = "<UUID>" },
 ]
 ```
 
-{{<Aside type="note" header="Note">}}
-When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, see [D1 Client API](/d1/client-api/)
+{{<Aside type="note">}}
+
+When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/client-api/).
 {{</Aside>}}
 
 ## 4. Example D1 database query and response
