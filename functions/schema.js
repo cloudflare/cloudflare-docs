@@ -1,5 +1,5 @@
 export async function onRequestGet() {
-  const schemaUrl = "https://raw.githubusercontent.com/cloudflare/api-schemas/json/openapi.json"
+  const schemaUrl = "https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.json"
 
   const req = new Request(schemaUrl)
 
