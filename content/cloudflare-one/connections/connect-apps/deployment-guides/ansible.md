@@ -2,23 +2,59 @@
 pcx_content_type: how-to
 title: Ansible
 weight: 8
-hidden: true
 ---
-# Deploy `cloudflared` with Ansible
-Ansible is a software tool that enables at scale management of infrastructure. Ansible is agentless, so all it needs to function is the ability to SSH to the target and having Python installed on the target. Configuration through Ansible is done in a yaml file.
 
-Ansible can be integrated with Terraform in order to take advantage of the features in both. Terraform is better than Ansible at deployment and Cloudflare is a Terraform provider, while Ansible is better for configuring the deployment.
+# Deploy Tunnels with Ansible and Terraform
 
-This guide will go over how to deploy a tunnel on a GCP instance through Terraform and Ansible.
+Ansible is a software tool that enables at scale management of infrastructure. Ansible is agentless — all it needs to function is the ability to SSH to the target and Python installed on the target.
 
-## Install and Setup
-In order to use Ansible to deploy tunnels in GCP you will need to have [Ansible installed](https://docs.ansible.com/ansible/latest/installation_guide/index.html), [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli), and the [GCP CLI configured](https://cloud.google.com/sdk/docs/install).
+Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup process. This guide provides an example Terraform configuration file that deploys a virtual machine in Google Cloud Project and creates a Cloudflare Tunnel in your Zero Trust account. After deploying these resources with Terraform, you can then use Ansible to install and configure the `cloudflared` tunnel connector on the GCP server.
 
-### Creating the Ansible Playbook
-The configuration files will all need to be stored in one folder in order for Terraform to deploy everything properly.
+## Prerequisites
 
-Ansible playbooks declare the configuration that Ansible will deploy. The playbook is written in a .yml files. [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) are used to define how Ansible will deploy. For example, the vars_files keyword specifies where any variables that the .yml file will use are stored. The tasks keyword specifies the actions that Ansible will actually perform. Ansible uses modules to specify what actions to complete. For example the copy module is used to create a copy of a file in the deployment. In this guide the copy module uses the content keyword to declare what will be in the file rather than providing a source file. 
-  ```sh
+If you have never worked with Terraform before, we recommend that you first review our [Terraform guide](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/). As described in the Terraform guide, you will need:
+
+- [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)
+- [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/)
+- [Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli)
+- [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install)
+- [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
+
+## 1. Install Ansible
+
+Refer to the [Ansible installation instructions](https://docs.ansible.com/ansible/latest/installation_guide/index.html).
+
+## 2. Create the Ansible playbook
+
+Ansible playbooks are YAML files that declare the configuration that Ansible will deploy.
+
+1. Create a folder for your configuration:
+
+    ```sh
+    $ mkdir gcp-tunnel
+    ```
+
+2. Change into the directory:
+
+    ```sh
+    $ cd gcp-tunnel
+    ```
+
+3. Create a `.yml` file:
+
+    ```sh
+    $ touch playbook.yml
+    ```
+
+4. 
+- [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) define how Ansible will deploy. For example, the `vars_files` keyword specifies where variable definitions are stored, and the `tasks` keyword specifies the actions Ansible will perform.
+
+Ansible uses modules to specify what tasks to complete. For example the `copy` module creates a copy of a file in the deployment. In this guide the copy module uses the content keyword to declare what will be in the file rather than providing a source file.
+
+  ```yml
+    ---
+    filename: playbook.yml
+    ---
     ---
     - hosts: all
       become: yes
@@ -65,7 +101,10 @@ Ansible playbooks declare the configuration that Ansible will deploy. The playbo
           masked: no
   ```
 
-### Terraform Configuration
+## 2. Create Terraform configuration
+
+The Terraform configuration files should all be stored in one folder in order for Terraform to deploy everything properly.
+
 The tunnel will be created through the Cloudflare Terraform provider. Using Terraform to deploy tunnels will require saving sensitive identification information. This can be stored in a .tfvars file and then passed in as a variable to the .tf file. This file should not be saved by the version control used in order to prevent accidentally exposing this information. If the version control is git, this file should be included in the .gitignore file. Terraform will automatically use these variables if the file is named terraform.tfvars, otherwise the variable file will need to be manually passed in. 
 
 ```sh
