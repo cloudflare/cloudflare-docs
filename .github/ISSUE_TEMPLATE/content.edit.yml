@@ -21,7 +21,6 @@ body:
         - China Network
         - Client IP Geolocation
         - Cloudflare for Platforms
-        - Cloudflare One
         - DDoS Protection
         - DNS
         - Email Routing
@@ -62,6 +61,7 @@ body:
         - Web3
         - Workers
         - Zaraz
+        - Zero Trust
 
   - type: textarea
     id: location-urls
