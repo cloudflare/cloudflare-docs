@@ -972,6 +972,13 @@
           "ent": "No",
           "ent_purchase": "Yes"
         },
+        "r_bot_fight_mode": {
+          "title": "Bot Fight Mode",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
         "super_bot_fight_mode": {
           "title": "Super Bot Fight Mode",
           "free": "No",
