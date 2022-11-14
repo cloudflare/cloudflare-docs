@@ -11,7 +11,7 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-{{<Aside>}}
+{{<Aside type="note">}} 
   
 All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/billing/) for more information on Pages Functions pricing. 
 
