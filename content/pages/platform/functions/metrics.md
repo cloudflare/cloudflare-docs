@@ -12,6 +12,8 @@ Functions metrics aggregate request data for an individual Pages project. To vie
 
 There are three metrics that can help you understand the health of your Function in a given moment: requests success, error metrics and invocation statuses.
 
+![](/pages/platform/functions/media/metrics.png)
+
 ### Requests
 In the metrics graph you can see historical request counts broken down into total requests, successful requests and errored requests, as well as subrequests in the next tab. 
 * **Total**: All incoming requests registered by a Function. Requests blocked by [WAF](https://www.cloudflare.com/waf/) or other security features will not count.
