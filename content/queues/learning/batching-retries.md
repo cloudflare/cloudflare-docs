@@ -32,6 +32,12 @@ When determining what size and timeout settings to configure, you will want to t
 
 When a message is failed to be delivered, the default behaviour is to retry delivery three times before marking the delivery is failed (see [Dead Letter Queues](#dead-letter-queues)). You can set `max_retries` (defaults to 3) when configuring your consumer, but in most cases we recommend leaving this as the default.
 
+{{<Aside type="note">}}
+
+Each retry counts as an additional "read" operation per [Queues pricing](https://developers.cloudflare.com/queues/pricing).
+
+{{</Aside>}}
+
 **Note**: When a single message within a batch fails to be delivered, the entire batch is retried. For example, if a batch of 10 messages is delivered, but the 8th message fails to be delivered, all 10 messages will be retried and thus re-delivered to your consumer in full.
 
 ## Dead Letter Queues
