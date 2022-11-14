@@ -72,7 +72,7 @@ The following variables will be passed into your GCP and Cloudflare configuratio
 
 2. Open the file in a text editor and copy and paste the following:
 
-  {{<render file="_terraform_input_variables.md">}}
+{{<render file="_terraform_input_variables.md">}}
 
 3. Save the file.
 
