@@ -27,17 +27,52 @@ Developers can create multiple queues, and creating multiple queues can be usefu
 * Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out
 * Configure different batching strategies for each consumer connected to a queue.
 
+**For most applications, a single producer per queue with multiple queues** is easier to reason with, and allows you to 
+
 ## Producers
 
-A producer is the term for a client that is publishing or _producing_ messages on to a queue.
+A producer is the term for a client that is publishing or _producing_ messages on to a queue. A producer is configured by [binding](https://developers.cloudflare.com/workers/platform/bindings/) a queue to a Worker and writing messages to the queue by calling that binding.
 
-A queue can have multiple producers: for example, you may have multiple Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producers associated with a queue.
+For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `.send()` on the binding:
+
+```ts
+export default {
+    async fetch(req: Request, env: Environment): Promise<Response> {
+        let message = request.json()
+        await env.MY_FIRST_QUEUE.send(message) # This will throw an exception if the send fails for any reason
+    }
+};
+```
+
+A queue can have multiple producers: for example, you may have multiple Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producers that can write to a single queue. Additionally, multiple queues can be bound to a single Worker: that Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
 
 ## Consumers
 
-A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue.
+A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
+
+```ts
+export default {
+    async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+        # Do something with messages in the batch
+        # i.e. write to R2 storage, D1 database, or POST to an external API 
+        # You can also iterate over each message in the batch by looping over batch.messages
+    }
+ },
+};
+```
+
+You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your `wrangler.toml` manually:
+
+```toml
+[[queues.consumers]]
+  queue = "<your-queue-name>"
+  max_batch_size = 100 # optional
+  max_batch_timeout = 30 # optional
+```
 
 Importantly, each queue can only have one active consumer: this allows Cloudflare Queues to achieve "at least once" delivery and minimize the risk of duplicate messages beyond that.
+
+Notably, you can use associate the same consumer with multiple queues: the `queue` handler that defines your consumer will be invoked the same. The `MessageBatch` that is passed to your `queue` handler includes a `name` property with the name the batch was consumed from. This can reduce the amount of code you need to write, and allow you to process messages based on the name of your queues.
 
 ## Messages
 
