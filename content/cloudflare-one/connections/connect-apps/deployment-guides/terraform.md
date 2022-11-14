@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Terraform
-weight: 8
+weight: 1
 ---
 
 # Deploy Tunnels with Terraform
@@ -61,7 +61,20 @@ Terraform functions through a working directory that contains the configuration 
 
 ### Define input variables
 
-{{<render file="_terraform_input_variables.md">}}
+
+The following variables will be passed into your GCP and Cloudflare configuration.
+
+1. In your `gcp_tunnel` directory, create a `.tf` file:
+
+    ```sh
+    $ touch variables.tf
+    ```
+
+2. Open the file in a text editor and copy and paste the following:
+
+  {{<render file="_terraform_input_variables.md">}}
+
+3. Save the file.
 
 ### Assign values to the variables
 

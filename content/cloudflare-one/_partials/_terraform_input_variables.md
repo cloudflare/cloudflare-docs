@@ -5,63 +5,51 @@ _build:
   list: never
 ---
 
-The following variables will be passed into your GCP and Cloudflare configuration.
+```txt
+---
+filename: variables.tf
+---
+# GCP variables
+variable "gcp_project_id" {
+  description = "Google Cloud Platform (GCP) project ID"
+  type        = string
+}
 
-1. In your `gcp_tunnel` directory, create a `.tf` file:
+variable "zone" {
+  description = "Geographical zone for the GCP VM instance"
+  type        = string
+}
 
-    ```sh
-    $ touch variables.tf
-    ```
+variable "machine_type" {
+  description = "Machine type for the GCP VM instance"
+  type        = string
+}
 
-2. Open the file in a text editor and copy and paste the following:
+# Cloudflare variables
+variable "cloudflare_zone" {
+  description = "Domain used to expose the GCP VM instance to the Internet"
+  type        = string
+}
 
-    ```txt
-    ---
-    filename: variables.tf
-    ---
-    # GCP variables
-    variable "gcp_project_id" {
-      description = "Google Cloud Platform (GCP) project ID"
-      type        = string
-    }
-    
-    variable "zone" {
-      description = "Geographical zone for the GCP VM instance"
-      type        = string
-    }
-    
-    variable "machine_type" {
-      description = "Machine type for the GCP VM instance"
-      type        = string
-    }
+variable "cloudflare_zone_id" {
+  description = "Zone ID for your domain"
+  type        = string
+}
 
-    # Cloudflare variables
-    variable "cloudflare_zone" {
-      description = "Domain used to expose the GCP VM instance to the Internet"
-      type        = string
-    }
-    
-    variable "cloudflare_zone_id" {
-      description = "Zone ID for your domain"
-      type        = string
-    }
-    
-    variable "cloudflare_account_id" {
-      description = "Account ID for your Cloudflare account"
-      type        = string
-      sensitive   = true
-    }
-    
-    variable "cloudflare_email" {
-      description = "Email address for your Cloudflare account"
-      type        = string
-      sensitive   = true
-    }
-    
-    variable "cloudflare_token" {
-      description = "Cloudflare API token created at https://dash.cloudflare.com/profile/api-tokens"
-      type        = string
-    }
-    ```
+variable "cloudflare_account_id" {
+  description = "Account ID for your Cloudflare account"
+  type        = string
+  sensitive   = true
+}
 
-3. Save the file.
+variable "cloudflare_email" {
+  description = "Email address for your Cloudflare account"
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudflare_token" {
+  description = "Cloudflare API token created at https://dash.cloudflare.com/profile/api-tokens"
+  type        = string
+}
+```
