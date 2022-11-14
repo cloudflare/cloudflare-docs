@@ -141,7 +141,7 @@ export default {
 
 ## `R2ObjectBody` definition
 
-`R2ObjectBody` represents an object's metadata combined with its body. It is returned when you `GET` an object from an R2 bucket. It inherits all keys from [`R2Object`](#r2object-definition).
+`R2ObjectBody` represents an object's metadata combined with its body. It is returned when you `GET` an object from an R2 bucket. The full list of keys for `R2ObjectBody` includes the list below and all keys inherited from [`R2Object`](#r2object-definition).
 
 {{<definitions>}}
 
