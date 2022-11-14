@@ -15,8 +15,8 @@ There are three metrics that can help you understand the health of your Function
 ### Requests
 In the metrics graph you can see historical request counts broken down into total requests, successful requests and errored requests, as well as subrequests in the next tab. 
 * **Total**: All incoming requests registered by a Function. Requests blocked by [WAF](https://www.cloudflare.com/waf/) or other security features will not count.
-* **Success**: Requests that returned a Success or Client Disconnected invocation status. 
-* **Errors**: Requests that returned a Script Threw Exception, Exceeded Resources, or Internal Error invocation status 
+* **Success**: Requests that returned a Success or Client Disconnected [invocation status](#invocation-statuses). 
+* **Errors**: Requests that returned a Script Threw Exception, Exceeded Resources, or Internal Error [invocation status](#invocation-statuses)
 * **Subrequests**: Requests triggered by calling fetch from within a Function. When your Function fetches a static asset, it will count as a subrequest.  A subrequest that throws an uncaught error will not be counted.
 
 Request traffic data may display a drop off near the last few minutes displayed in the graph for time ranges less than six hours. This does not reflect a drop in traffic, but a slight delay in aggregation and metrics delivery.
