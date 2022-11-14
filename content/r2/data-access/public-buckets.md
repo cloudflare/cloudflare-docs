@@ -21,7 +21,7 @@ To configure firewall rules, caching, access controls, or bot management for you
 
 ## Connect your bucket to a custom domain
 
-Domain access through a custom domain allows you to use features such as access management, Cache and bot management.
+Domain access through a custom domain allows you to use features such as access management, [Cache](../../cache/about/cache-rules/), and bot management.
 
 To connect a custom domain to your bucket:
 
