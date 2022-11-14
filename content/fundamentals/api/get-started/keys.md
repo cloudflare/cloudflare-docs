@@ -20,7 +20,7 @@ API keys have multiple limitations when compared to API tokens:
 
 - **Lack of advanced limits on usage** - API tokens can be limited to specific time windows and expire or be limited to use from specific IP ranges.
 
-For these reasons, API keys are not recommended for new customers. Current customers using API keys are encouraged to migrate and use API tokens instead. Refer to the [API schema docs](https://api.cloudflare.com/#getting-started-requests) for more information about using API keys.
+For these reasons, API keys are not recommended for new customers. Current customers using API keys are encouraged to migrate and use API tokens instead.
 
 ## View your API key
 
