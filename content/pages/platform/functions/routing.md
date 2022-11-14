@@ -6,48 +6,31 @@ weight: 4
 
 # Functions routing
 
-Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions. A `PagesFunction` type is declared in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions.
+Functions utilize file-based routing, where the directory structure indicates the designated routes that your functions will run on. A directory can also have as many levels as you’d like. For example, say you had the following directory: 
 
-For example, assume this directory structure:
+|---- …
+|---- functions
+      |___ index.js
+      |___ helloworld.js
+      |___ howdyworld.js
+      |___ fruits
+            |___ index.js
+            |___ apple.js
+            |___ banana.js	
 
-    ├── ...
-    ├── functions
-    |   └── api
-    │       ├── [[path]].ts
-    │       ├── [username]
-    │       │   └── profile.ts
-    │       ├── time.ts
-    │       └── todos
-    │           ├── [[path]].ts
-    │           ├── [id].ts
-    │           └── index.ts
-    └── ...
+Then the following routes will be generated based on the file structure, mapping the URL pattern to the /functions file that will be invoked: 
 
-The following routes will be generated based on the file structure, mapping the URL pattern to the `/functions` file that will be invoked:
+| File path                   | Route                     |
+|-----------------------------|---------------------------|
+| /functions/index.js         | example.com               |
+| /functions/helloworld.js    | example.com/helloworld    |
+| /functions/howdyworld.js    | example.com/howdyworld    |
+| /functions/fruits/index.js  | example.com/fruits        |
+| /functions/fruits/apple.js  | example.com/fruits/apple  |
+| /functions/fruits/banana.js | example.com/fruits/banana |
 
-    /api/time => ./functions/api/time.ts
-    /api/todos => ./functions/api/todos/index.ts
-    /api/todos/* => ./functions/api/todos/[id].ts
-    /api/todos/*/** => ./functions/api/todos/[[path]].ts
-    /api/*/profile => ./functions/api/[username]/profile.ts
-    /api/** => ./functions/api/[[path]].ts
-
-## Path segments
-
-In the [example above](/pages/platform/functions/#functions-routing):
-
-- A `*` denotes a placeholder for a single path segment (for example, `/todos/123`).
-- A `**` matches one or more path segments (for example, `/todos/123/dates/confirm`).
-
-When naming your files:
-
-- `[name]` is a placeholder for a single path segment.
-- `[[name]]` matches any depth of route below this point.
-
-{{<Aside type="note" header="Route specificity">}}
-
-More specific routes (that is, those with fewer wildcards) take precedence over less specific routes.
-
+{{<Aside type="note">}}
+Trailing slash is optional - both /foo and /foo/ will be routed to `/functions/foo.js` or `/functions/foo/index.js`
 {{</Aside>}}
 
-When a filename includes a placeholder, the `name` must be alphanumeric and cannot contain spaces. In turn, the URL segment(s) that match the placeholder will be available under the `context.params` object using the filename placeholder as the key.
+Note that if no Function is matched, it will fall back to a static asset if there is one. Otherwise the Function will fall back to the [default routing behavior](/pages/platform/serving-pages/) for Pages' static assets.
