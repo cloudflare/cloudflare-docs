@@ -4,6 +4,8 @@ title: API Reference
 weight: 3
 ---
 
+# API reference
+
 The following APIs are used within Functions. 
 
 ## Methods
