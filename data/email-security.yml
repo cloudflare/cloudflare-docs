@@ -9,7 +9,7 @@ meta:
   title: Cloudflare Area 1 Email Security docs
   description: Cloudflare Area 1 Horizon is a cloud based service that stops phishing attacks, the biggest cybersecurity threat, across all traffic vectors - email, web and network.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /core-services-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email/security
