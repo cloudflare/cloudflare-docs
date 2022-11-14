@@ -169,10 +169,9 @@ export const onRequest = [
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-// TODO(walshy): Figure out how to even do this in TS
 import { extraLogging } from "middlewares.ts";
 
-export const onRequest = [
+export const onRequest: PagesFunction[] = [
   extraLogging,
 
   async ({ request }) => {
