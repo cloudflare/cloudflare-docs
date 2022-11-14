@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Local Development
-weight: 7
+weight: 5
 ---
 
 # Local development

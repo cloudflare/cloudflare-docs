@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: TypeScript
-weight: 1
+weight: 7
 ---
 
 # TypeScript

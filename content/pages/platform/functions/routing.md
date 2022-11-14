@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Routing
-weight: 4
+weight: 2
 ---
 
 # Functions routing

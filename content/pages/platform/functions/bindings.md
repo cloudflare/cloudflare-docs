@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Bindings
-weight: 5
+weight: 6
 ---
 
 # Bindings
