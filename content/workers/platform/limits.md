@@ -253,15 +253,15 @@ There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
 
-### Worker size
+## Worker size
 
 A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
-### Worker startup time
+## Worker startup time
 
 A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
-### Number of Workers
+## Number of Workers
 
 Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
 
