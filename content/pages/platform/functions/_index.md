@@ -427,8 +427,6 @@ Service bindings allow for you to call a Worker from within your Function with z
 2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **Service bindings**. 
 3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
 
-![Follow the instructions above to edit a Service Binding and add a Variable name](/pages/platform/media/)
-
 ### Use Service bindings locally
 
 Service bindings are not currently supported in local development.
