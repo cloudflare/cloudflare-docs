@@ -419,6 +419,17 @@ export async function onRequestGet({ env }) {
 }
 ```
 
+### Service binding
+
+Service bindings allow for you to call a Worker from within your Function with zero latency. To add a service binding to your project: 
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **Service bindings**. 
+3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+
+### Use Service bindings locally
+
+Service bindings are not currently supported in local development.
 
 ### Environment variable
 
