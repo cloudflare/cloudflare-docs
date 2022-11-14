@@ -9,7 +9,7 @@ meta:
   title: Cloudflare D1 docs
   description: Documentation for Cloudflare D1, a SQL database.
   author: '@cloudflare'
-  image: /workers/static/og-image.png
+  image: /dev-products-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
