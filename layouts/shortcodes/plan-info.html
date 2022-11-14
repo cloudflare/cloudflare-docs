@@ -1,0 +1,5 @@
+{{- $plan_json := $.Site.Data.plans -}}
+{{- $id := split (.Get "id")  "." -}}
+{{- $info :=  index $plan_json $id -}}
+
+{{ $info | string | markdownify }}

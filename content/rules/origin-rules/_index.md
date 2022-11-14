@@ -20,16 +20,7 @@ The Origin Rule expression will determine when these overrides will be applied.
 
 ## Availability
 
-{{<table-wrap>}}
-|                           | Free | Pro | Business | Enterprise |
-|---------------------------|:----:|:---:|:--------:|:----------:|
-| Number of Origin Rules    |  10  | 25  |    50    |    125     |
-| Override Host header      |  —   |  —  |    —     |    Yes     |
-| Override SNI              |  —   |  —  |    —     |    Yes     |
-| Override DNS record       |  —   |  —  |    —     |    Yes     |
-| Override destination port | Yes  | Yes |   Yes    |    Yes     |
-
-{{</table-wrap>}}
+{{<feature-table id="rules.origin_rules">}}
 
 ## Execution order
 
