@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Middleware
-weight: 4
+weight: 5
 ---
 
 # Middleware 

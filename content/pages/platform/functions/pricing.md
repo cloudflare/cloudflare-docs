@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Pricing
-weight: 11
+weight: 12
 ---
 
 # Pricing 

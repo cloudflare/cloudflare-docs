@@ -1,8 +1,8 @@
 ---
 type: overview
 pcx-content-type: navigation
-title: Functions examples
-weight: 100
+title: Examples
+weight: 4
 layout: list
 ---
 

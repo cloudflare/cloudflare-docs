@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Metrics
-weight: 10
+weight: 11
 ---
 
 # Metrics 

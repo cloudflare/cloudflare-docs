@@ -1,7 +1,7 @@
 ---
 pcx-content-type: how-to
 title: Advanced Mode
-weight: 8
+weight: 9
 ---
 
 # Advanced mode
