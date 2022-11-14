@@ -34,4 +34,4 @@ To maintain Audit Logs query performance, the Audit Logs API was modified on 201
 
 ## Retention
 
-Audit Logs are retained for 18 months before being deleted. Enterprise customers can use [Log Push](https://developers.cloudflare.com/logs/about/) to store Audit Logs for longer periods of time.
+Audit Logs are retained for 18 months before being deleted. Enterprise customers can use [Log Push](/logs/about/) to store Audit Logs for longer periods of time.
