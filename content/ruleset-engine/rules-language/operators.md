@@ -252,7 +252,7 @@ To avoid ambiguity when working with logical operators, use grouping symbols so 
 
 The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
 
-Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
+Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
 
 
 ### Group expressions
