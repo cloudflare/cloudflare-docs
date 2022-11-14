@@ -6,24 +6,19 @@ weight: 1
 
 # Get Started
 
-## Built with Cloudflare Workers
+To deploy your first Function, you’ll need to create a /functions directory at the root of your project. Writing your Functions files in this directory will automatically generate a Worker with custom functionality at predesignated routes. For example, let’s take the Function: 
 
-Cloudflare Workers provides a serverless [execution environment](https://www.cloudflare.com/en-gb/learning/serverless/what-is-serverless/) that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+```js
+---
+filename: helloworld.js
+---
+export const onRequest = (context) => {
+  return new Response("Hello, world!")
+}
+```
 
-Previously, you could only add dynamic functionality to your Pages site by manually deploying a Worker using Wrangler, which meant that your application is written across both Pages and Workers. 
+The `onRequest` handler takes a "request context" object which we'll cover in more detail below. The handler must return a `Response` or a `Promise` of a `Response`.
 
-Functions allow you to leverage the Workers platform directly from within a Pages project by utilizing a project's filesystem convention. In addition, Functions enable you to deploy your entire site – static and dynamic content – when you `git push`.
+This function will run on the `/helloworld` route and returns “hello world!”.  The reason this function is available on this route is because the file is named `helloworld.js`. Similarly, if this file was called `howdyworld.js`, this function would run on `/howdyworld`.
 
-{{<Aside type="note" header="Functions is currently in beta">}}
-You can track current issues that the Pages team is fixing in Known issues. Let us know any unreported issues by posting in the Cloudflare Developers Discord.
-{{</Aside>}}
-
-## Setup
-
-To get started, create a `/functions` directory at the root of your project. Writing your Functions files in this directory automatically generates a Worker with custom functionality at the predesignated routes.
-
-Now that you have your `/functions` directory setup, get started [writing your first function](/pages/platform/functions/first-function/)
-
-## Demo
-
-To get started with your first Pages project with Functions, refer to the [demo blog post on how to build an image sharing application](http://blog.cloudflare.com/building-full-stack-with-pages). In this demo, you will build a JSON API with Functions (storing data on KV and Durable Objects), integrate with [Cloudflare Images](/images/) and [Cloudflare Access](/cloudflare-one/), and use React for your front end.
+Let’s take a closer look at how this routing behavior works and how to further customize this.
