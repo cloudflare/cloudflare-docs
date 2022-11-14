@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: Pricing and limits
+title: Pricing
 weight: 11
 ---
 
