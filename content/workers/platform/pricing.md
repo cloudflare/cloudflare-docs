@@ -13,7 +13,7 @@ All included usage is on a monthly basis.
 
 {{<Aside>}}
   
-Note that all [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. See [here](/pages/platform/functions/billing/) for more information on Pages Functions pricing. 
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/billing/) for more information on Pages Functions pricing. 
 
 {{</Aside>}}
 
