@@ -57,20 +57,20 @@ Refer to the [Waiting Room cookies](/waiting-room/reference/waiting-room-cookie/
 
 ## Advancing in the queue
 
-In a browser environment, the page automatically refreshes every `refreshIntervalSeconds` to ensure that the user advances in the queue. In a non-browser environment, where the waiting room JSON-friendly API is being consumed, it is expected that your backend service (or API) also refreshes/makes a request to the waiting room configured endpoint every `refreshIntervalSeconds` to ensure the advancing of the user in the queue.
+In a browser environment, the page automatically refreshes every `refreshIntervalSeconds` to ensure that the user advances in the queue. In a non-browser environment, where the Waiting Room JSON-friendly API is being consumed, it is expected that your backend service (or API) also refreshes/makes a request to the Waiting Room configured endpoint every `refreshIntervalSeconds` to ensure the advancing of the user in the queue.
 
 These are some of the places where the JSON-friendly response can be consumed (this list is not exhaustive):
 
 1. In a mobile app traffic
-    - **Integrate waiting room variables** – Create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
+    - **Integrate Waiting Room variables** – Create a new template in your mobile app to receive the JSON response. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
     - **Allow cookies** – As mentioned above, a waiting room [requires cookies](/waiting-room/reference/waiting-room-cookie/), and your mobile app will need to support cookies. For ease of use, consider using a cookie manager like [CookieJar](https://pkg.go.dev/net/http#CookieJar).
-    - **Consume JSON data** - Make a request to the waiting room endpoint with the `Accept: application/json` header.
+    - **Consume JSON data** - Make a request to the Waiting Room endpoint with the `Accept: application/json` header.
 
 2. Inside Cloudflare Workers (or in your own backend service)
-    - **Integrate waiting room variables** – Expect a JSON response in your backend API. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
+    - **Integrate Waiting Room variables** – Expect a JSON response in your backend API. For a full list of these variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
     - **Include cookies in the request header** – As mentioned above, a waiting room [requires cookies](/waiting-room/reference/waiting-room-cookie/), and your backend API will need to support cookies. For ease of use, consider using a cookie manager like [CookieJar](https://pkg.go.dev/net/http#CookieJar).
     - **Enable JSON response** - Via the dashboard or via the API.
-    - **Consume JSON data** - Make a request to the waiting room endpoint with the `Accept: application/json` header.
+    - **Consume JSON data** - Make a request to the Waiting Room endpoint with the `Accept: application/json` header.
         
         Here is an example, demonstrating the usage of the waiting room endpoint inside a Worker. The request headers include the necessary `accept` and `cookie` header values that are required by the Waiting Room API. The accept header ensures that a JSON-friendly response is returned, if a user is queued. Otherwise, if the request is sent to the origin, then whatever the response origin returns gets returned back. In this example, a hardcoded `__cfwaitingroom` value is embedded in the cookie field. In a real-life application, however, we expect that a cookie returned by the Waiting Room API is used in each of the subsequent requests to ensure that the user is placed accordingly in the queue and let through to the origin when it is the users turn.
 
