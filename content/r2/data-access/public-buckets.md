@@ -21,6 +21,8 @@ To configure firewall rules, caching, access controls, or bot management for you
 
 ## Custom domains
 
+### Caching
+
 Domain access through a custom domain allows you to use Cloudflare Cache to accelerate access to your R2 bucket.
 
 {{<Aside type="note" header="Enabling cache for all file types">}}
@@ -29,12 +31,16 @@ By default, only certain file types are cached. To cache all files in your bucke
 
 {{</Aside>}}
 
-Restricting access to the bucket behind your custom domain is possible by making use of features like Cloudflare WAF or Access.
+### Access control
+
+Restricting access to the bucket behind your custom domain is possible by utilizing Cloudflare's existing security products:
+- Buckets that should only be accessible by your teammates can be protected by making use of [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps).
+- When dynamic authentication of a wide userbase is required, you can make use of [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S).
 
 {{<Aside type="warning" header="Warning">}}
 
-Make sure that public access through [r2.dev is disabled](### Disable managed public access for your bucket)
-when you want to restrict access to your bucket through features like WAF or Cloudflare Access.
+Make sure that public access through [r2.dev is disabled](#disable-managed-public-access-for-your-bucket)
+when you want to restrict access to your bucket with products like WAF or Cloudflare Access.
 Otherwise your bucket will remain publicly available through your r2.dev subdomain.
 
 {{</Aside>}}
