@@ -1,5 +1,5 @@
 ---
-title: Get started
+title: Environments
 pcx_content_type: configuration
 ---
 
@@ -7,7 +7,7 @@ pcx_content_type: configuration
 
 Environments are different contexts that your code runs in. The Cloudflare developer platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
 
-To specify different D1 databases for different environments, use the following syntax in your `wrangler.toml`:
+To specify different D1 databases for different environments, use the following syntax in your `wrangler.toml` file:
 
 ```toml
 # This is a staging environment

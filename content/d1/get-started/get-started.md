@@ -8,7 +8,7 @@ pcx_content_type: get-started
 
 This guide will instruct you through setting up and deploying your first database with D1. This guide assumes you already have a Cloudflare account.
 
-## 1.  Install and authenticate Wrangler
+## 1. Install and authenticate Wrangler
 
 You will use [Wrangler](/workers/wrangler/get-started/), a command-line tool for building Cloudflare Workers, to access D1. 
 
@@ -40,7 +40,7 @@ This will create a new Worker project directory (`my-project`). Your new directo
 
 {{<Aside type="note">}}
 
-Indicating `-y` will affirmatively to all of Wrangler's initialization questions. This will create a `package.json` file, an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. It will also create a `fetch` handler instead of a `scheduled` handler.
+Indicating `-y` will answer affirmatively to all of Wrangler's initialization questions. This will create a `package.json` file, an `index.ts` file instead of a `index.js` file, and Wrangler will also generate a `tsconfig.json` file in the root of your project. It will also create a `fetch` handler instead of a `scheduled` handler.
 
 {{</Aside>}}
 
@@ -73,7 +73,7 @@ database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
 ```
 
-Set your binding name by updating the `<BINDING_NAME>` value. Your binding is available in your Worker at `env.<BINDING_NAME>`. The `database_name` and `database_id` can be found in your terminal after you ran the `create` command in step 3. 
+Set your binding name by updating the `<BINDING_NAME>` value. Your binding is available in your Worker at `env.<BINDING_NAME>`. You will find the values for `database_name` and `database_id` in your terminal after you run the `create` command in step 3. 
 
 {{<Aside type="note">}}
 
@@ -85,11 +85,11 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 ### Configure your D1 database
 
-With your `wrangler.toml` configured properly, set up your database. You will use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `my-project` Worker directory you created in step 2:
+With `wrangler.toml` configured properly, set up your database. You will use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `my-project` Worker directory you created in step 2:
 
 ```sql
 ---
-filename: "schema.sql"
+filename: schema.sql
 ---
 DROP TABLE IF EXISTS Customers;
 CREATE TABLE Customers (CustomerID INT, CompanyName TEXT, ContactName TEXT, PRIMARY KEY (`CustomerID`));
@@ -99,13 +99,13 @@ INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds
 You will configure your database to run and test locally first. Bootstrap your new D1 database by running:
 
 ```sh
-$ wrangler d1 execute <database-name> --local --file=./schema.sql
+$ wrangler d1 execute <DATABASE_NAME> --local --file=./schema.sql
 ```
 
 Then validate your data is in your database by running:
 
 ```sh
-$ wrangler d1 execute <database-name> --local --command='SELECT * FROM Customers'
+$ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers'
 ```
 
 ### Write queries within your Worker
@@ -154,7 +154,7 @@ $ wrangler dev --local --persist
 
 ## 6. Deploy your database
 
-To deploy your database to production, you must first repeat the [bootstrap your database](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read.
+To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read.
 
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 
@@ -165,7 +165,7 @@ $ wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
 Then validate the data is in production by running:
 
 ```sh
-$ wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
+$ wrangler d1 execute <DATABASE_NAME> --command='SELECT * FROM Customers'
 ```
 
 Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
@@ -175,6 +175,7 @@ $ wrangler publish
 ```
 
 By finishing this guide, you have created a D1 database, a Worker to access that database and deployed your project.
+
 ## Next steps
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
