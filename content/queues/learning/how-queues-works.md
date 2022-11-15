@@ -27,7 +27,7 @@ Developers can create multiple queues, and creating multiple queues can be usefu
 * Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out
 * Configure different batching strategies for each consumer connected to a queue.
 
-**For most applications, a single producer per queue with multiple queues** is easier to reason with, and allows you to 
+**For most applications, a single producer per queue with multiple queues** is easier to reason with, and allows you to logically separate the processing for each of your queues.
 
 ## Producers
 
@@ -57,7 +57,6 @@ export default {
         # i.e. write to R2 storage, D1 database, or POST to an external API 
         # You can also iterate over each message in the batch by looping over batch.messages
     }
- },
 };
 ```
 
@@ -76,6 +75,6 @@ Notably, you can use associate the same consumer with multiple queues: the `queu
 
 ## Messages
 
-A message is the object you are producing to, and consuming from, a queue. Any serializable object can be published to a queue: for most developers, this means either simple strings or JSON objects.
+A message is the object you are producing to and consuming from a queue. Any serializable object can be published to a queue: for most developers, this means either simple strings or JSON objects.
 
 Messages themselves can be batched when delivered to the consumer, and messages within a batch are treated as "all or nothing" when determining retries. If the "last" message in a batch fails to be processed, the entire batch will be retried.

@@ -64,8 +64,8 @@ estimated bill resembling the following:
 
 |                     | Total Usage                  | Free Usage | Billed Usage | Price       |
 | ------------------- | ---------------------------- | ---------- | ------------ | ----------- |
-| Standard operations | 2 \* 3 \* 100 \* 1,000,000   | 1,000,000  | 299,000,000  | $119.60     |
+| Standard operations | 2 \* 3 \* 100 \* 1,000,000   | 1,000,000  | 599,000,000  | $239.60     |
 |                     | (2x ops for > 64KB messages) |            |              |             |
-| **TOTAL**           |                              |            |              | **$119.60** |
+| **TOTAL**           |                              |            |              | **$239.60** |
 
 {{</table-wrap>}}
