@@ -138,7 +138,7 @@ export default {
 }
 ```
 
-Replace `MY_QUEUE` with the name you have set for your queue in step 3.
+Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
 
 Every time you get a message on the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages. In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to storage objects, like R2, or a database, like D1.
 
