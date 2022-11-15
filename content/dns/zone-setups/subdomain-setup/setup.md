@@ -70,7 +70,6 @@ If you have already created a DNS record covering your child domain in the paren
 
     {{<Aside type="note">}}Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
     {{</Aside>}}
-    <br/>
 
 3. In the parent domain, make sure that you migrate over any settings ([Firwall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
@@ -117,7 +116,6 @@ If you have already created a DNS record covering your child domain in the paren
 
     {{<Aside type="note">}}Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
     {{</Aside>}}
-    <br/>
 
 4. In the parent domain, make sure that you migrate over any settings ([Firwall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 5. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains.
