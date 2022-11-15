@@ -1579,12 +1579,13 @@
       "title": "Image Resizing",
       "link": "/images/image-resizing/",
       "paid_add_on": true,
-      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "paid_add_on_plans": ["pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
           "summary": "Paid add-on",
-          "free": "Paid add-on",
+          "free": "No",
+          "lite": "No",
           "pro": "Paid add-on",
           "biz": "Paid add-on",
           "ent": "Paid add-on"
