@@ -10,7 +10,9 @@ meta:
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a redirect rule via API.
 
-## Required permissions
+## Prerequisites
+
+{{<render file="url-forwarding/_requires-proxied-site.md">}}
 
 The API token used in API requests to manage redirect rules must have at least the following permission:
 
