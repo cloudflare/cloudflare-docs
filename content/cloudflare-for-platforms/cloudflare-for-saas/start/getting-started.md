@@ -175,7 +175,7 @@ As a SaaS provider, you must remove a customer's custom hostname from your zone 
 <summary>Using the API</summary>
 <div>
 
-To delete a custom hostname and any issued certificates using the API, use a [DELETE command](/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
+To delete a custom hostname and any issued certificates using the API, use a [DELETE command](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
 
 </div>
 </details>

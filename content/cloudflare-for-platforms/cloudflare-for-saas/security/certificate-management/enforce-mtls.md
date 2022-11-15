@@ -12,7 +12,7 @@ meta:
 
 [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) allows you to choose a cryptographic standard per custom hostname. Cloudflare recommends TLS 1.2 to comply with the Payment Card Industry (PCI) Security Standards Council. 
 
-[Cipher suites](/ssl/reference/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can specify configurations for cipher suites [on your zone](/api/operations/zone-settings-change-ciphers-setting) as a whole and cipher suites on [individual custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) via the API.
+[Cipher suites](/ssl/reference/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can specify configurations for cipher suites [on your zone](https://developers.cloudflare.com/api/operations/zone-settings-change-ciphers-setting) as a whole and cipher suites on [individual custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) via the API.
 
 ## Enable mTLS
 
@@ -46,7 +46,7 @@ For security and regulatory reasons, you may want to only allow connections from
 <summary>Restrict cipher suites for zone</summary>
 <div>
 
-Refer to [change ciphers setting on a zone](/api/operations/zone-settings-change-ciphers-setting).
+Refer to [change ciphers setting on a zone](https://developers.cloudflare.com/api/operations/zone-settings-change-ciphers-setting).
 
 </div>
 </details>
