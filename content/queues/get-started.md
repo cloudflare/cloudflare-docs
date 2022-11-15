@@ -1,7 +1,7 @@
 ---
 title: Guide
 pcx_content_type: get-started
-weight: 1
+weight: 2
 meta:
   title: Get started guide
 ---
@@ -90,7 +90,7 @@ You will now configure your producer Worker to take a request it receives from t
 ```toml
 ---
 filename: src/index.ts
-highlight: 4
+highlight: [4]
 ---
 export default {
  async fetch(request: Request, env: Environment): Promise<Response> {
@@ -123,6 +123,7 @@ To create a consumer Worker, open your `index.ts` file and add the following `qu
 ```sh
 ---
 filename: src/index.ts
+highlight: [4]
 ---
 export default {
  async fetch(request: Request, env: Environment): Promise<Response> {
