@@ -6,7 +6,7 @@ pcx_content_type: get-started
 
 # Get started
 
-This guide will instruct you through setting up and deploying your first database with D1. This guide assumes you already have a Cloudflare account and are enrolled in Alpha testing.
+This guide will instruct you through setting up and deploying your first database with D1. This guide assumes you already have a Cloudflare account.
 
 ## 1.  Install and authenticate Wrangler
 
@@ -33,10 +33,16 @@ After installing Wrangler, if you are unauthenticated, you will be directed to a
 You will use a Worker to access your D1 database. Start a new Worker project named `my-project` by running:
 
 ```sh
-$ npx wrangler init my-project -y
+$ wrangler init my-project -y
 ```
 
 This will create a new Worker project directory (`my-project`). Your new directory will include a [`wrangler.toml`](/workers/wrangler/configuration/) configuration file which is how your `my-project` Worker will access your D1 database.
+
+{{<Aside type="note">}}
+
+Indicating `-y` will affirmatively to all of Wrangler's initialization questions. This will create a `package.json` file, an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. It will also create a `fetch` handler instead of a `scheduled` handler.
+
+{{</Aside>}}
 
 ## 3. Create your database
 
@@ -49,7 +55,7 @@ $ cd my-project
 Then run the following command and give your database a name:
 
 ```sh
-$ npx wrangler d1 create <DATABASE_NAME>
+$ wrangler d1 create <DATABASE_NAME>
 ```
 
 This will create a new D1 database.
@@ -58,7 +64,7 @@ This will create a new D1 database.
 
 You must create a binding for your Worker to connect to your D1 database. [Bindings](/workers/platform/bindings/) allow your Workers to access resources, like D1, on the Cloudflare developer platform. You create bindings by updating your `wrangler.toml` file.
 
-To bind your Worker to your database, add the following to your `wrangler.toml` file:
+To bind your D1 database to your Worker, add the following to your `wrangler.toml` file:
 
 ```toml
 [[ d1_databases ]]
@@ -75,11 +81,11 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 {{</Aside>}}
 
-## 4. Run a query and response in your D1 database
+## 4. Run a query against your D1 database
 
 ### Configure your D1 database
 
-With your `wrangler.toml` configured properly, set up your database. You will use the following example `schema.sql` file to configure your database.
+With your `wrangler.toml` configured properly, set up your database. You will use the following example `schema.sql` file to configure your database. Copy the following code and save it as a `schema.sql` file in the `my-project` Worker directory you created in step 2:
 
 ```sql
 ---
@@ -93,27 +99,31 @@ INSERT INTO Customers (CustomerID, CompanyName, ContactName) VALUES (1, 'Alfreds
 You will configure your database to run and test locally first. Bootstrap your new D1 database by running:
 
 ```sh
-$ npx wrangler d1 execute <database-name> --local --file=./schema.sql
+$ wrangler d1 execute <database-name> --local --file=./schema.sql
 ```
 
-Then validate your data is there by running:
+Then validate your data is in your database by running:
 
 ```sh
-$ npx wrangler d1 execute <database-name> --local --command='SELECT * FROM Customers'
+$ wrangler d1 execute <database-name> --local --command='SELECT * FROM Customers'
 ```
 
 ### Write queries within your Worker
 
 After you have set up your database, you will run an SQL query from within your Worker. 
 
-First, go to your Worker project and open the `index.js` file. The `index.js` file is where you configure your Worker's interactions with D1. Paste the following code snippet into your `index.js` file and, on the `env` parameter, replace `<BINDING_NAME>` with the binding name you set in step 4:
+First, go to your Worker project and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1. Paste the following code snippet into your `index.ts` file and, on the `env` parameter, replace `<BINDING_NAME>` with the binding name you set in step 4:
 
 ```javascript
 ---
-filename: "src/index.js"
+filename: "src/index.ts"
 ---
+export interface Env {
+  <BINDING_NAME>: D1Database;
+}
+
 export default {
-  async fetch(request, env) {
+  async fetch(request: Request, env: Env) {
     const { pathname } = new URL(request.url);
 
     if (pathname === "/api/beverages") {
@@ -125,7 +135,9 @@ export default {
       return Response.json(results);
     }
 
-    return new Response("Call /api/beverages to see everyone who works at Bs Beverages");
+    return new Response(
+      "Call /api/beverages to see everyone who works at Bs Beverages"
+    );
   },
 };
 ```
@@ -137,27 +149,29 @@ After configuring your Worker, test your project locally.
 While in your project directory, test your database locally by running:
 
 ```sh
-$ npx wrangler dev --local --persist
+$ wrangler dev --local --persist
 ```
 
 ## 6. Deploy your database
 
-To deploy your database, run:
+To deploy your database to production, you must first repeat the [bootstrap your database](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read.
+
+First, bootstrap your database with the `schema.sql` file you created in step 4:
 
 ```sh
-$ npx wrangler publish
+$ wrangler d1 execute <DATABASE_NAME> --file=./schema.sql
 ```
 
-Next, repeat the [bootstrap your database](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read:
+Then validate the data is in production by running:
 
 ```sh
-$ npx wrangler d1 execute <database-name> --file=./schema.sql
+$ wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
 ```
 
-Then validate the data is there by running:
+Finally, deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:
 
 ```sh
-$ npx wrangler d1 execute <database-name> --command='SELECT * FROM Customers'
+$ wrangler publish
 ```
 
 By finishing this guide, you have created a D1 database, a Worker to access that database and deployed your project.
