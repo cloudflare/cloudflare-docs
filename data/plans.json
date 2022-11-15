@@ -492,7 +492,7 @@
     },
     "subdomain_setup": {
       "title": "Subdomain zone setup",
-      "link": "https://support.cloudflare.com/hc/articles/360026440252",
+      "link": "/dns/zone-setups/subdomain-setup/",
       "properties": {
         "availability": {
           "title": "Availability",

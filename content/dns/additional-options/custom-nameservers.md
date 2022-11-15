@@ -34,7 +34,7 @@ For both account-level and zone-level custom nameservers, you have to configure 
 Once you configure account-level custom nameservers, these nameservers can be applied and used by any zones in that account, excluding:
 
 - [Reverse zones](/dns/additional-options/reverse-zones/)
-- [Subdomain zones](https://support.cloudflare.com/hc/en-us/articles/360026440252)
+- [Subdomain zones](/dns/zone-setups/subdomain-setup/)
 - Zones in [partial setup](/dns/zone-setups/partial-setup/) - because these zones are not using Cloudflare's Authoritative DNS.
 
 {{<Aside type="note">}}
