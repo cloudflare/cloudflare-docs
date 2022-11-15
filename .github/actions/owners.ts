@@ -28,11 +28,13 @@ export const OWNERS: Record<string, string[]> = {
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
+  "http-applications": [], // TODO
   images: ["marciocloudflare"],
   "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],
   logs: ["angelampcosta"],
   "magic-firewall": ["dcpena"],
+  "magic-network-monitoring": [], // TODO
   "magic-transit": ["dcpena"],
   "magic-wan": ["dcpena"],
   "network-error-logging": ["dcpena"],

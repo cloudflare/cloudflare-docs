@@ -13,3 +13,7 @@ Signed exchanges (SXG) is an open standard that makes it possible to cryptograph
 This performance improvement also has consequences for SEO. SXGs improve [Core Web Vitals](/analytics/web-analytics/understanding-web-analytics/core-web-vitals/), such as the Largest Contentful Paint (LCP). Cloudflare found that SXGs improve LCP for 85% of the sites tested and time to first byte (TTFB) for 98% of websites.
 
 For more information about signed exchanges, [refer to our blog post](https://blog.cloudflare.com/automatic-signed-exchanges/).
+
+## Availability
+
+{{<feature-table id="speed.automatic_signed_exchanges">}}

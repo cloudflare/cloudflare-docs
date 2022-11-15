@@ -15,7 +15,7 @@ For example, if your team uses Okta® but you are collaborating with someone out
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Authenticaton**.
 2. Under **Login methods**, select **Add new**.
 3. Select **One-time PIN**.
-4. If your organization uses a 3rd party email scanning service (for example, Mimecast or Barracuda), add `no-reply@notify.cloudflare.com` to your Allow List.
+4. If your organization uses a 3rd party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to your Allow List.
 
 To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/policies/access/policy-management/#add-a-policy).
 

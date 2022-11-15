@@ -12,7 +12,7 @@ URL prefetching means that Cloudflare pre-populates the cache with content a vis
 
 ## Availability
 
-This feature is only available to customers on an Enterprise plan.
+{{<feature-table id="speed.prefetch_urls">}}
 
 ---
 

@@ -22,15 +22,6 @@ layout: list
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>2022-11-07</td>
-      <td>2022-11-14</td>
-      <td>Block</td>
-      <td>N/A</td>
-      <td>...128f1556</td>
-      <td>SQLi - Libinject with Exceptions</td>
-      <td>N/A</td>
-    </tr>
 </tbody>
 </table>
 {{</table-wrap>}}

@@ -204,6 +204,26 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
     </tr>
     <tr>
       <td>
+        <strong>Route</strong><br />
+        <br />
+        API value:<br />
+        <code>route</code>
+      </td>
+      <td>
+        <p>
+          Adjusts the <code>Host</code> header, Server Name Indication (SNI), resolved hostname, and/or resolved destination port of incoming requests.
+        </p>
+        <p>
+          Only available for <a href="/rules/origin-rules/">Origin Rules</a>, in the <code>http_request_origin</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create an origin rule.
+        </p>
+      </td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>
         <strong>Set Configuration</strong><br />
         <br />
         API value:<br />
@@ -228,5 +248,5 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Cloudflare Firewall Rules, a security feature which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+Cloudflare Firewall Rules, a security product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 {{</Aside>}}

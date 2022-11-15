@@ -166,7 +166,10 @@ async function checkSignature(formData, headers) {
   let expectedSignature = await createHexSignature(formData);
   let actualSignature = headers.get('X-Hub-Signature');
 
-  return expectedSignature === actualSignature;
+  const expectedBuffer = Buffer.from(expectedSignature, 'hex');
+  const actualBuffer = Buffer.from(actualSignature, 'hex');
+  return expectedBuffer.byteLength == actualBuffer.byteLength &&
+             crypto.timingSafeEqual(expectedBuffer, actualBuffer);
 }
 ```
 

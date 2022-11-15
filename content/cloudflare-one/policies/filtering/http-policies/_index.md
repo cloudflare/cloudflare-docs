@@ -99,7 +99,13 @@ A list of supported applications and their ID numbers is available through the [
 | -- | -- |
 | Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
 
+For more information, refer to our list of [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
+
 ### Destination Continent
+
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
 
 The continent to which the request is destined. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
 
@@ -118,6 +124,10 @@ The continent to which the request is destined. Geolocation is determined from t
 
 ### Destination Country
 
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
+
 The country that the request is destined for. Geolocation is determined from the target IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
 
 | UI name        | API example                  |
@@ -125,6 +135,10 @@ The country that the request is destined for. Geolocation is determined from the
 | Destination Country IP Geolocation | `http.dst.geo.country == "RU"` |
 
 ### Destination IP
+
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
@@ -184,11 +198,13 @@ With the Device Posture selector, admins can use signals from end-user devices t
 | --- | --- |
 | Passed Device Posture Checks | `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})` |
 
-### Security Categories
+### Security Risks
 
 | UI name | API example |
 | -- | -- |
-| Security Categories | `any(http.request.uri.category[*] in {1})` |
+| Security Risks | `any(http.request.uri.category[*] in {1})` |
+
+For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories-1).
 
 ### Source Continent
 

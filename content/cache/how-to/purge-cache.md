@@ -5,7 +5,9 @@ pcx_content_type: concept
 
 # Purge cache
 
-You can purge cached resources by single-file (recommended), hostname or cache-tag (Enterprise plans only), or all cached content. All users can purge by single-file (by URL) or purge all cached assets. Cloudflare Enterprise users can also purge using hostnames and cache-tags.
+You can purge cached resources by single-file (recommended), all cached content, or other options. 
+
+{{<feature-table id="cache.purge_cache">}}
 
 {{<Aside type="note" header="Note">}}
 
@@ -232,7 +234,7 @@ For a Cache Key based on device type, purge the asset by passing the `CF-Device-
 See the example API request below to purge all mobile assets on the root web page.
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
     -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
     -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
 ```
@@ -242,7 +244,7 @@ See the example API request below to purge all mobile assets on the root web pag
 Purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
     -H "X-Auth-Email: user@example.com"
     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 ```
