@@ -76,7 +76,7 @@ To create a peer using the dashboard:
 
 ### Using the API
 
-To create a peer DNS server using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-peer--create-peer) request.
+To create a peer DNS server using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-peer--create-peer) request.
 
 ## Step 3 - Link peer to primary zone (optional)
 
@@ -95,7 +95,7 @@ To create a secondary zone using the dashboard:
 
 ### Using the API
 
-To link a primary zone to a peer using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-primary-zone--create-primary-zone-configuration) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
+To link a primary zone to a peer using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-primary-zone--create-primary-zone-configuration) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
 
 ## Step 4 - Create an ACL
 
@@ -145,7 +145,7 @@ When you enable outgoing zone transfers, this will send a DNS NOTIFY message to 
 
 ### Using the API
 
-To enable outgoing zone transfers using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-primary-zone--enable-outgoing-zone-transfers) request.
+To enable outgoing zone transfers using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-primary-zone--enable-outgoing-zone-transfers) request.
 
 ## Step 8 - Add secondary nameservers to registrar
 

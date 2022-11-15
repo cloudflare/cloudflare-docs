@@ -50,7 +50,7 @@ Because Gateway evaluates network and HTTP policies on every request, it maintai
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](https://api.cloudflare.com/#device-posture-rules-create-device-posture-rule).
+By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](https://developers.cloudflare.com/api/operations/device-posture-rules-create-device-posture-rule).
 
 #### Service provider checks
 

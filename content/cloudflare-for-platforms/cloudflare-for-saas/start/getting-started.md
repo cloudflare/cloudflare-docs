@@ -66,7 +66,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 <summary>Using the API</summary>
 <div>
 
-Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://developers.cloudflare.com/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
 
 </div>
 </details>

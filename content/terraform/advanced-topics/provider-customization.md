@@ -19,7 +19,7 @@ You can customize the Cloudflare Terraform provider using configuration paramete
 
 ### Increase the frequency of API requests
 
-The `api.cloudflare.com` endpoint has a default rate limit of 1,200 calls per five minute period, or four requests per second (refer to the rate limiting section under [Requests](https://api.cloudflare.com/#getting-started-requests) for updates). Enterprise customers may request a limit increase by contacting their Customer Success Manager.
+The `api.cloudflare.com` endpoint has a default rate limit of 1,200 calls per five minute period, or four requests per second (refer to the rate limiting section under [Requests](/fundamentals/api/) for updates). Enterprise customers may request a limit increase by contacting their Customer Success Manager.
 
 Even with an updated rate limit, Terraform will need to stay below the defined threshold or the Cloudflare API will respond with `HTTP 429 - Too Many Requests` responses. When this happens, the Cloudflare Terraform provider will back off before retrying.
 

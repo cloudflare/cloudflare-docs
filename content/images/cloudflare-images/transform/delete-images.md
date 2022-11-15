@@ -21,7 +21,7 @@ Your image(s) will be deleted from your account.
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-For detailed information on using the API, refer to the [API endpoint](https://api.cloudflare.com/#cloudflare-images-delete-image) documentation.
+For detailed information on using the API, refer to the [API endpoint](https://developers.cloudflare.com/api/operations/cloudflare-images-delete-image) documentation.
 
 Here is an example of how to delete an image through an API call:
 

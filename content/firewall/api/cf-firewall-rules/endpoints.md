@@ -15,15 +15,15 @@ To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the 
 https://api.cloudflare.com/client/v4/
 ```
 
-For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
 
 {{<Aside type="note">}}
 
 The Firewall Rules API endpoints require a value for `<ZONE_ID>`.
 
-To retrieve a list of zones associated with your account, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation and note the zone ID associated with the domain whose firewall rules you want to manage.
+To retrieve a list of zones associated with your account, use the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) operation and note the zone ID associated with the domain whose firewall rules you want to manage.
 
 {{</Aside>}}
 
@@ -42,7 +42,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
   <tbody>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-create-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-create-firewall-rules">
           Create firewall rules
         </a>
       </td>
@@ -53,7 +53,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-list-of-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-list-of-firewall-rules">
           List firewall rules
         </a>
       </td>
@@ -66,7 +66,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-get-individual-firewall-rule">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-get-individual-firewall-rule">
           Get a firewall rule
         </a>
       </td>
@@ -79,7 +79,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-update-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-update-firewall-rules">
           Update firewall rules
         </a>
       </td>
@@ -93,7 +93,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-update-individual-firewall-rule">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-update-individual-firewall-rule">
           Update a firewall rule
         </a>
       </td>
@@ -106,7 +106,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-delete-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-delete-firewall-rules">
           Delete firewall rules
         </a>
       </td>
@@ -123,7 +123,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#firewall-rules-delete-individual-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-delete-individual-firewall-rules">
           Delete a firewall rule
         </a>
       </td>

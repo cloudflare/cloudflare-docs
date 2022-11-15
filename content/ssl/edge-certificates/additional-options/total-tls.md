@@ -34,7 +34,7 @@ To enable Total TLS in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To enable Total TLS with the API, send a [`PATCH`](https://api.cloudflare.com/#total-tls-enable-or-disable-total-tls) request with the `enabled` parameter set to your desired setting (`true` or `false`).
+To enable Total TLS with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/total-tls-enable-or-disable-total-tls) request with the `enabled` parameter set to your desired setting (`true` or `false`).
 
 You can also specify a desired certificate authority by adding a value to the `certificate_authority` parameter.
  

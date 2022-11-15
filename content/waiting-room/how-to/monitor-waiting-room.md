@@ -32,7 +32,7 @@ The **Status** column displays the current state of the waiting room:
 
 ## Status in the API
 
-[Check whether traffic is queueing in a configured waiting room](https://api.cloudflare.com/#waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
+[Check whether traffic is queueing in a configured waiting room](https://developers.cloudflare.com/api/operations/waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
 
 ```shell
 GET zones/{zone_identifier}/waiting_rooms/{identifier}/status
@@ -49,7 +49,7 @@ To check whether a configured waiting room is suspended or whether the traffic i
 GET zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
-The endpoint above [fetches all settings](https://api.cloudflare.com/#waiting-room-waiting-room-details) for a configured waiting room:
+The endpoint above [fetches all settings](https://developers.cloudflare.com/api/operations/waiting-room-waiting-room-details) for a configured waiting room:
 
       "success": true,
       "errors": [],

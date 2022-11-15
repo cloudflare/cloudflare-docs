@@ -98,7 +98,7 @@ You can apply DNS policies to a growing list of popular web applications. Refer 
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
+A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-properties).
 
 ### Authoritative Nameserver IP
 

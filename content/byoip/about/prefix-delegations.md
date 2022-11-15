@@ -15,7 +15,7 @@ CDN delegations only have an effect if you are using [SSL for SaaS](/cloudflare-
 
 ## API calls for prefix delegations
 
-API calls for delegations can be found at [Prefix Delegations](https://api.cloudflare.com/#ip-address-management-prefix-delegation-properties).
+API calls for delegations can be found at [Prefix Delegations](https://developers.cloudflare.com/api/operations/ip-address-management-prefix-delegation-properties).
 
 ## Dashboard for prefix delegations
 

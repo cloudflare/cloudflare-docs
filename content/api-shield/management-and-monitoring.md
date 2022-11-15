@@ -70,5 +70,5 @@ Customers viewing analytics have the ability to toggle detailed metrics view bet
 
 ## Using the Cloudflare API
 
-You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management’s API documentation](https://api.cloudflare.com/#api-shield-endpoint-management-properties) for more information.
+You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management’s API documentation](https://developers.cloudflare.com/api/operations/api-shield-endpoint-management-properties) for more information.
 

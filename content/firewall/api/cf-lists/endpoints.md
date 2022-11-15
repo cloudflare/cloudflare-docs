@@ -9,19 +9,19 @@ layout: list
 
 {{<content-column>}}
 
-To invoke a [Lists API](https://api.cloudflare.com/#lists-properties) operation, append the endpoint to the Cloudflare API base URL:
+To invoke a [Lists API](https://developers.cloudflare.com/api/operations/lists-properties) operation, append the endpoint to the Cloudflare API base URL:
 
 `https://api.cloudflare.com/client/v4/`
 
-For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
 
 {{<Aside type="note">}}
 
 The Lists API endpoints require a value for `<ACCOUNT_ID>`.
 
-To retrieve a list of accounts to which you have access, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
+To retrieve a list of accounts to which you have access, use the [List Accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) operation and note the IDs of the accounts you want to manage.
 
 {{</Aside>}}
 
@@ -42,7 +42,7 @@ The Lists API supports the operations outlined below. Visit the associated links
   <tbody>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-create-a-list">Create a list</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-create-a-list">Create a list</a>
       </td>
       <td>
         <code class="InlineCode">POST accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
@@ -51,7 +51,7 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-get-lists">Get lists</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-get-lists">Get lists</a>
       </td>
       <td>
         <code class="InlineCode">GET accounts/&lt;ACCOUNT_ID&gt;/rules/lists</code>
@@ -62,7 +62,7 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-get-a-list">Get a list</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-get-a-list">Get a list</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -76,7 +76,7 @@ The Lists API supports the operations outlined below. Visit the associated links
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-update-a-list">Update a list</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-update-a-list">Update a list</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -88,13 +88,13 @@ The Lists API supports the operations outlined below. Visit the associated links
           Updates the <code class="InlineCode">description</code> of a list. You cannot edit the <code class="InlineCode">name</code> or <code class="InlineCode">kind</code>, and you cannot update items in a list.
         </p>
         <p>
-          To update an item in a list, use the <a href="https://api.cloudflare.com/#lists-update-all-list-items">Update all list items</a> operation.
+          To update an item in a list, use the <a href="https://developers.cloudflare.com/api/operations/lists-update-all-list-items">Update all list items</a> operation.
         </p>
       </td>
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-delete-a-list">Delete a list</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-delete-a-list">Delete a list</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -114,7 +114,7 @@ The Lists API supports the operations outlined below. Visit the associated links
 
 Nearly all the operations for managing items in a list are asynchronous. When you add or delete a large amount of items to or from a list, there may be a delay before the bulk operation is complete.
 
-Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get bulk operation status](https://api.cloudflare.com/#lists-get-bulk-operation-status) endpoint and specify the ID of the operation you want to monitor.
+Asynchronous list operations return an `operation_id`, which you can use to monitor the status of an API operation. To monitor the status of an asynchronous operation, use the [Get bulk operation status](https://developers.cloudflare.com/api/operations/lists-get-bulk-operation-status) endpoint and specify the ID of the operation you want to monitor.
 
 When you make requests to a list while a bulk operation on that list is in progress, the requests are queued and processed in sequence (first in, first out). Requests for successful asynchronous operations return an `HTTP 201` status code.
 
@@ -131,7 +131,7 @@ When you make requests to a list while a bulk operation on that list is in progr
   <tbody>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-get-list-items">Get list items</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-get-list-items">Get list items</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -146,7 +146,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-get-a-list-item">Get a list item</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-get-a-list-item">Get a list item</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -159,7 +159,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-create-list-items">Create list items</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-create-list-items">Create list items</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -179,7 +179,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-update-all-list-items">Update all list items</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-update-all-list-items">Update all list items</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -201,7 +201,7 @@ When you make requests to a list while a bulk operation on that list is in progr
     </tr>
     <tr>
       <td>
-        <a href="https://api.cloudflare.com/#lists-delete-list-items">Delete list items</a>
+        <a href="https://developers.cloudflare.com/api/operations/lists-delete-list-items">Delete list items</a>
       </td>
       <td>
         <code class="InlineCode">

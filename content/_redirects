@@ -856,7 +856,7 @@
 /workers/tooling/ /workers/wrangler/ 301
 /workers/tooling/api/ https://developers.cloudflare.com/api/operations/worker-script-list-workers 301
 /workers/tooling/api/bindings/ /workers/platform/scripts/#resource-bindings 301
-/workers/tooling/api/requests/ https://api.cloudflare.com/#getting-started-requests 301
+/workers/tooling/api/requests/ /fundamentals/api/ 301
 /workers/tooling/api/routes/ /workers/platform/routing/routes/ 301
 /workers/tooling/api/scripts/ /workers/platform/scripts/ 301
 /workers/tooling/playground/ /workers/learning/playground/ 301

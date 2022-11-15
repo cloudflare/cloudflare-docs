@@ -26,17 +26,17 @@ To invoke a Rulesets API operation, append the endpoint to the Cloudflare API ba
 https://api.cloudflare.com/client/v4
 ```
 
-For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
 
 {{<Aside>}}
 
 The Rulesets API endpoints require a value for `<ACCOUNT_ID>` or `<ZONE_ID>`.
 
-To retrieve a list of accounts you have access to, use the [List Accounts](https://api.cloudflare.com/#accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
+To retrieve a list of accounts you have access to, use the [List Accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) operation. Note the IDs of the accounts you want to manage.
 
-To retrieve a list of zones you have access to, use the [List Zones](https://api.cloudflare.com/#zone-list-zones) operation. Note the IDs of the zones you want to manage.
+To retrieve a list of zones you have access to, use the [List Zones](https://developers.cloudflare.com/api/operations/zone-list-zones) operation. Note the IDs of the zones you want to manage.
 
 {{</Aside>}}
 

@@ -25,7 +25,7 @@ Cloudflare also recommends limiting the use of the token via client IP address f
 
 ## Creating API tokens with the API
 
-Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](https://api.cloudflare.com/#user-api-tokens-properties) for more information.
+Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](https://developers.cloudflare.com/api/operations/user-api-tokens-properties) for more information.
 
 To create a token:
 
@@ -76,7 +76,7 @@ API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
  
-Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](https://api.cloudflare.com/#user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
+Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](https://developers.cloudflare.com/api/operations/user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
   {{</Aside>}}
 
 ##### Account
@@ -100,7 +100,7 @@ For user resources, you can only reference yourself, which is denoted as:`"com.c
 
 #### Permission groups
 
-Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/fundamentals/api/reference/permissions/) or fetch the permission groups [via the API](https://api.cloudflare.com/#permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
+Determine what permission groups should be applied. Refer to the full list of permission groups either in [the documentation](/fundamentals/api/reference/permissions/) or fetch the permission groups [via the API](https://developers.cloudflare.com/api/operations/permission-groups-list-permission-groups). It is only required to pass the `id` of the permission group in the policy. Permission groups are scoped to specific resources, so a permission group in a policy will only apply to the resource type it is scoped for.
 
 ### 2. Define the restrictions
 

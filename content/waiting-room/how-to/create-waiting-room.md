@@ -28,7 +28,7 @@ A waiting room can be created from the dashboard or via API.
 
 {{<Aside>}}For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).{{</Aside>}}
 
-Create a waiting room by appending the following endpoint in the [Waiting Room API](https://api.cloudflare.com/#waiting-room-create-waiting-room) to the Cloudflare API base URL.
+Create a waiting room by appending the following endpoint in the [Waiting Room API](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room) to the Cloudflare API base URL.
 
 ```txt
 POST zones/{zone_identifier}/waiting_rooms
@@ -40,9 +40,9 @@ The Cloudflare API base URL is:
 https://api.cloudflare.com/client/v4
 ```
 
-For authentication instructions, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://api.cloudflare.com/#getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
 
 Configure your waiting room with the following required parameters in the `data` field:
 
@@ -56,7 +56,7 @@ The following parameters are optional:
 *  `path` - The path within the host for which you want to configure a waiting room. The waiting room will be enabled for all subpaths as well.
 *  `description` - A description of the waiting room.
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
-*  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://api.cloudflare.com/#waiting-room-properties).
+*  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://developers.cloudflare.com/api/operations/waiting-room-properties).
 *  `json_response_enabled` - If you are using this waiting room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
 
 ## Example
