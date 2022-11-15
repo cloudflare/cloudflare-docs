@@ -38,7 +38,7 @@ Additionally:
 
 * Each retry incurs a read operation. A batch of 10 messages that is retried would incur 10 operations for each retry.
 * Messages that reach the maximum retries and that are written to a [Dead Letter Queue](https://developers.cloudflare.com/queues/batching-retries) incur a write operation for each 64 KB chunk. A message that was retried 3 times (the default), fails delivery on the fourth time and is written to a Dead Letter Queue would incur five (5) read operations.
-* Messages that are written to a queue, but that reach the maximum persistency duration (or "expire") before they are read, incur only a write and delete operation per 64KB chunk.
+* Messages that are written to a queue, but that reach the maximum persistence duration (or "expire") before they are read, incur only a write and delete operation per 64 KB chunk.
 
 ### Examples
 
