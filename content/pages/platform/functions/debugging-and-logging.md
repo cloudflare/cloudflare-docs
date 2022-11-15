@@ -1,5 +1,5 @@
 # Debugging & Logging 
-For every deployment of your Pages project, you can access the logs of your Functions using the Cloudflare dashboard or the [`wrangler` CLI](https://developers.cloudflare.com/workers/wrangler/commands/#deployment-tail).
+For every deployment of your Pages project, you can access the logs of your Functions using the Cloudflare dashboard or the [`wrangler` CLI](/workers/wrangler/commands/#deployment-tail).
 
 Logs are a powerful debugging tool that can help you test and monitor the behavior of your Pages Functions once they have been deployed. 
 
@@ -78,5 +78,5 @@ Note that:
 
 - Logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
 - Logs will not display if the Function’s requests per second are over 100 for the last 5 minutes.
-- Logs from any [Durable Objects](https://developers.cloudflare.com/pages/platform/functions/#durable-object-namespace) your Functions bind to, will show up in the dashboard.
+- Logs from any [Durable Objects](/pages/platform/functions/bindings/#durable-object-namespaces) your Functions bind to, will show up in the dashboard.
 - A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.
