@@ -26,4 +26,6 @@ These are the maximum allowed sizes and dimensions Cloudflare Images supports:
 - Images have a 10 megabyte (MB) size limit.
 - Animated GIFs, including all frames, are limited to 100 megapixels (MP).
 
+For image transformations, Cloudflare Images has similar limits to [Image Resizing](/images/image-resizing/format-limitations/#format-limitations). 
+
 {{<render file="_svg.md">}}
