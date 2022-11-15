@@ -16,7 +16,7 @@ Currently, the migrations system aims to be simple yet effective. With our imple
 * List unapplied migrations
 * Apply remaining migrations
 
-Every migration in the `migrations` folder has a specified version number and can thus be in sequential order. Every migration file is just an SQL file, where you can specify queries to be ran. 
+Every migration in the `migrations` folder has a specified version number and can thus be in sequential order. Every migration file is just an SQL file, where you can specify queries to be run. 
 
 If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
 
