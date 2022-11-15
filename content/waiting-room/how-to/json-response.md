@@ -51,9 +51,9 @@ header: Response
 
 ## Cookies in the request header
 
-Waiting Room is driven by a waiting room cookie, that determines the position of the user in the queue. Because of this, the cookie must be included in each of the subsequent requests to the waiting room API for the user. This is mandatory regardless of a user having been queued or not. If a request does not include a cookie, the waiting room will assume a new user and will return a new cookie in the response header. Consequently, this will place the user at the end of the queue. Thus, when consuming the waiting room in a non-browser environment it is important to include the waiting room cookie in the request header.
+Waiting Room is driven by a waiting room cookie, that determines the position of the user in the queue. Because of this, the cookie must be included in each of the subsequent requests to the Waiting Room API for the user. This is mandatory regardless of a user having been queued or not. If a request does not include a cookie, the waiting room will assume a new user and will return a new cookie in the response header. Consequently, this will place the user at the end of the queue. Thus, when consuming the waiting room in a non-browser environment it is important to include the waiting room cookie in the request header.
 
-Refer to the [waiting room cookies](/waiting-room/reference/waiting-room-cookie/), for more information.
+Refer to the [Waiting Room cookies](/waiting-room/reference/waiting-room-cookie/), for more information.
 
 ## Advancing in the queue
 
@@ -72,7 +72,7 @@ These are some of the places where the JSON-friendly response can be consumed (t
     - **Enable JSON response** - Via the dashboard or via the API.
     - **Consume JSON data** - Make a request to the waiting room endpoint with the `Accept: application/json` header.
         
-        Here is an example, demonstrating the usage of the waiting room endpoint inside a Worker. The request headers include the necessary `accept` and `cookie` header values that are required by the waiting room API. The accept header ensures that a JSON-friendly response is returned, if a user is queued. Otherwise, if the request is sent to the origin, then whatever the response origin returns gets returned back. In this example, a hardcoded `__cfwaitingroom` value is embedded in the cookie field. In a real-life application, however, we expect that a cookie returned by the waiting room API is used in each of the subsequent requests to ensure that the user is placed accordingly in the queue and let through to the origin when it is the users turn.
+        Here is an example, demonstrating the usage of the waiting room endpoint inside a Worker. The request headers include the necessary `accept` and `cookie` header values that are required by the Waiting Room API. The accept header ensures that a JSON-friendly response is returned, if a user is queued. Otherwise, if the request is sent to the origin, then whatever the response origin returns gets returned back. In this example, a hardcoded `__cfwaitingroom` value is embedded in the cookie field. In a real-life application, however, we expect that a cookie returned by the Waiting Room API is used in each of the subsequent requests to ensure that the user is placed accordingly in the queue and let through to the origin when it is the users turn.
 
 ```bash
 const waitingroomSite = 'https://examples.cloudflareworkers.com/waiting-room';
@@ -104,7 +104,7 @@ addEventListener('fetch', event => {
 
 {{<Aside type="note">}}
 
-Only Advanced waiting room customers can support JSON-friendly format with their waiting rooms. For more details, refer to our [Plans page](/waiting-room/plans/).
+Only Advanced Waiting Room customers can support JSON-friendly format with their waiting rooms. For more details, refer to our [Plans page](/waiting-room/plans/).
 
 {{</Aside>}}
 

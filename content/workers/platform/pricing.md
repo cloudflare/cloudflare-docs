@@ -5,11 +5,17 @@ title: Pricing
 
 # Pricing
 
-By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
-The Workers Paid plan includes Workers, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
+The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
 
 All included usage is on a monthly basis.
+
+{{<Aside type="note">}} 
+  
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/billing/) for more information on Pages Functions pricing. 
+
+{{</Aside>}}
 
 ## Workers
 

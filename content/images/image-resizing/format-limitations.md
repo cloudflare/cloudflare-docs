@@ -57,7 +57,7 @@ AVIF         | 3,200 pixels                                      | 640 pixels
 Other        | 12,000 pixels                                     | N/A
 WebP         | N/A                                               | 2,560 pixels for lossy; 1920 pixels for lossless
 
-All images uploaded have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
+All images have to be less than 70 MB. The maximum image area is limited to 100 megapixels (for example, 10,000 x 10,000 pixels large).
 
 GIF animations are limited to a total of 100 megapixels (the sum of sizes of all frames). Note that GIF is an outdated format and has very inefficient compression. High-resolution animations will be slow to process and will have very large file sizes. For video clips, Cloudflare recommends using [video formats like MP4 and WebM instead](/stream/).
 

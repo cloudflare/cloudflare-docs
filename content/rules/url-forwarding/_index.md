@@ -19,18 +19,16 @@ Use the following Cloudflare products to perform URL redirects, according to you
 
 Single Redirects and Bulk Redirects are available on all Cloudflare plans. The exact quotas and features depend on your plan.
 
-| Feature                                         | Free | Pro | Business |     Enterprise     |
-|-------------------------------------------------|-----:|----:|---------:|-------------------:|
-| **Single Redirects**                            |      |     |          |                    |
-| Number of redirect rules                        |   10 |  25 |       50 |                125 |
-| Redirect rules with regular expressions         |    — |   — |      Yes |                Yes |
-| **Bulk Redirects**                              |      |     |          |                    |
-| Number of Bulk Redirect Rules                   |   15 |  15 |       15 |                 50 |
-| Number of Bulk Redirect Lists                   |    5 |   5 |        5 |                 25 |
-| Number of URL redirects across lists            |   20 | 500 |      500 | 10,000<sup>1</sup> |
+### Bulk redirects
 
-<sup>1</sup> _Default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team._
+{{<feature-table id="rules.bulk_redirects">}}
 
-Single Redirects features and quotas are per zone and depend on the zone plan.
+For *URL redirects across lists*, this table provides the default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team.
 
 Bulk Redirects features and quotas are per account and they depend on the highest Cloudflare plan on your account.
+
+### Single Redirects
+
+{{<feature-table id="rules.single_redirects">}}
+
+Single Redirects features and quotas are per zone and depend on the zone plan.

@@ -146,8 +146,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
 | Sanitize Read                    | Grants read access to sanitization.                                      |
 | Sanitize Edit                    | Grants write access to sanitization.                                     |
-| Waiting Rooms Read               | Grants read access to Waiting Rooms.                                     |
-| Waiting Rooms Edit               | Grants write access to Waiting Rooms.                                    |
+| Waiting Room Read               | Grants read access to Waiting Room.                                     |
+| Waiting Room Edit               | Grants write access to Waiting Room.                                    |
 | Web3 Hostnames Read              | Grants read access to Web3 Hostnames.                                    |
 | Web3 Hostnames Edit              | Grants write access to Web3 Hostnames.                                   |
 | Workers Routes Read              | Grants read access to Cloudflare Workers and Workers KV Storage.         |

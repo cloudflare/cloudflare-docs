@@ -25,9 +25,17 @@ Cloudflare domains on Business or Enterprise plans can set Custom Nameservers at
   - Create account-level nameservers via the [API](https://api.cloudflare.com/#account-level-custom-nameservers-properties) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
   - Create zone-level nameservers via the dashboard or [API](https://api.cloudflare.com/#zone-edit-zone)
 
+## Restrictions
+
+For both account-level and zone-level custom nameservers, you have to configure at least two custom nameservers and no more than five.
+
 ## Account-level nameservers
 
-Once you configure account-level custom nameservers, these nameservers can be applied and used by any zones in that account.
+Once you configure account-level custom nameservers, these nameservers can be applied and used by any zones in that account, excluding:
+
+- [Reverse zones](/dns/additional-options/reverse-zones/)
+- [Subdomain zones](https://support.cloudflare.com/hc/en-us/articles/360026440252)
+- Zones in [partial setup](/dns/zone-setups/partial-setup/) - because these zones are not using Cloudflare's Authoritative DNS.
 
 {{<Aside type="note">}}
 
@@ -119,6 +127,4 @@ To remove zone-level custom nameservers (and their associated, read-only DNS rec
 "vanity_name_servers": []
 ```
 
-## Restrictions
 
-For both account-level and zone-level custom nameservers, you have to configure at least two custom nameservers and no more than five.
