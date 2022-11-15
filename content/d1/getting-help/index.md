@@ -6,28 +6,20 @@ pcx_content_type: concept
 
 # Getting help
 
-We have a few places you can go to get help, depending on the issue you're facing.
+Refer to the following list of troubleshooting options if you run into an error.
 
-## Having a problem with the command line?
+## Wrangler (command-line)
 
-Getting unexpected errors when using wrangler? 
+If you are having issues with Wrangler, report issues in the [wrangler2 GitHub repository](https://github.com/cloudflare/wrangler2/issues/new/choose).
 
-You can report issues in the [wrangler2 Github repository](https://github.com/cloudflare/wrangler2/issues/new/choose).
+## Community support
 
-## Need help getting started?
+To get help from other members of the community building things on D1, join the `#d1-open-alpha` channel on the [Cloudflare Developer Discord](https://discord.gg/cloudflaredev).
 
-Want to get help from other members of the community building things on D1? 
+## Connect with the D1 team
 
-Join the `#d1-open-alpha` channel on our [Discord](https://discord.gg/cloudflaredev).
+To discuss an issue with the D1 team, open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/d1).
 
-## Discussion for the D1 team?
+## Documentation
 
-Want to discuss something in long-form? 
-
-Open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/d1)
-
-## Problem with these docs?
-
-Noticed something out of date or incorrect with the D1 docs? 
-
-You can report issues with the documentation in the [cloudflare-docs Github repository](https://github.com/cloudflare/cloudflare-docs/issues/new/choose)
+To flag a problem in the D1 documentation, report documentation issues in the [cloudflare-docs GitHub repository](https://github.com/cloudflare/cloudflare-docs/issues/new/choose).
