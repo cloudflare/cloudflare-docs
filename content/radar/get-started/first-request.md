@@ -51,7 +51,7 @@ This response means that 41% of the requests are classified as coming from mobil
 {{<Aside type="note" >}} Cloudflare Radar attempts to provide trends and insights into general Internet usage, using the traffic that goes through Cloudflare infrastructure. As such, Cloudflare Radar only provides data on traffic coming from end-users, unless otherwise specified (for example, origin fetches are excluded).
 {{</Aside>}}
 
-Above, you are looking at _all_ traffic but you can also look at just traffic classified as coming from humans (the default in [Cloudflare Radar](https://radar.cloudflare.com)) by adding `botClass=LIKELY_HUMAN`, or only at traffic coming from bots `botClass=LIKELY_AUTOMATED` (more on [bot classes](/radar/concepts/bot-classes)). For example:
+The previous example returns all traffic from bots and humans. However, you can access just the traffic classified as coming from humans (the default in [Cloudflare Radar](https://radar.cloudflare.com)) by adding `botClass=LIKELY_HUMAN`. You can also access traffic coming only from bots with `botClass=LIKELY_AUTOMATED` (refer to [bot classes](/radar/concepts/bot-classes) for more information). For example:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&botClass=LIKELY_AUTOMATED&format=json" \
