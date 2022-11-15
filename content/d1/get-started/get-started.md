@@ -26,13 +26,7 @@ or install with `yarn`:
 $ yarn global add wrangler
 ```
 
-To authenticate Wrangler, run:
-
-```sh
-$ wrangler login
-```
-
-You will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
+After installing Wrangler, if you are unauthenticated, you will be directed to a web page asking you to log in to the Cloudflare dashboard. After you have logged in, you will be asked if Wrangler can make changes to your Cloudflare account. Scroll down and select **Allow** to continue.
 
 ## 2. Create your Worker
 
@@ -46,7 +40,7 @@ This will create a new Worker project directory (`my-project`). Your new directo
 
 ## 3. Create your database
 
-To create your first database, go to your project directory:
+To create your first database, go to your Worker project directory:
 
 ```sh
 $ cd my-project
