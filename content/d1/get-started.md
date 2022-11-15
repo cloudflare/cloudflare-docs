@@ -151,6 +151,9 @@ While in your project directory, test your database locally by running:
 ```sh
 $ wrangler dev --local --persist
 ```
+When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
+
+To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL (for example, `localhost:8787/api/beverages`). After doing this, you should see your data being displayed in the browser.
 
 ## 6. Deploy your database
 
