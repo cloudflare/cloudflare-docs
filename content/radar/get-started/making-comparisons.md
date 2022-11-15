@@ -1,39 +1,35 @@
 ---
 pcx_content_type: reference
-title: Making comparisons
-weight: 3
+title: Make comparisons
+weight: 2
 ---
 
-# Making comparisons
+# Make comparisons
 
-When comparing time series, across locations/time ranges/etc, in endpoints that normalize values using [MinMax](/radar/concepts/normalization), we __must__ do so in the __same__ request, by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other.
+When comparing time series, across locations/time ranges/etc., in endpoints that normalize values using [min-max](/radar/concepts/normalization), you must do so in the same request. This is done by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other.
 
-[Netflows](/radar/investigate/netflows.md) values are normalized using [Min0Max](/radar/concepts/normalization), so we'll use it as an example ([API reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series)).
+[Netflows](/radar/investigate/netflows) values are normalized using [min0-max](/radar/concepts/normalization), so we will use it as an example. Refer to [Get NetFlow time series](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series) for more information.
 
-## Comparing locations
+## Compare locations
 
-Let's compare the traffic change across different locations, United States and Portugal (using [alpha-2 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)), for the last 7 days:
+In the following example, we will compare the traffic change across two different locations — United States and Portugal. The example will use [alpha-2 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements), for the last seven days:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=us_data&dateRange=7d&location=US&name=pt_data&dateRange=7d&location=PT&format=json" \
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-Here, we're asking for 2 timeseries. The 1st series has these parameters:
+In the example above we are asking for two timeseries. The first series has the following parameters:
 
-`
-name=us_data&dateRange=7d&location=US
-`
+`name=us_data&dateRange=7d&location=US`
 
-and the 2nd series has these:
+The second series has the following parameters:
 
-`
-name=pt_data&dateRange=7d&location=PT
-`
+`name=pt_data&dateRange=7d&location=PT`
 
-All of these parameters are arrays and it's the position in the array that defines the series the filter belongs to. For more information on the available parameters refer to the [endpoint's reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series).
+All of these parameters are arrays and it is the position in the array that defines the series the filter belongs to. Refer to [NetFlow's endpoint](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series) for more information on the available parameters.
 
-The response (shortened below for brevity) uses the provided `name` property to wrap the timestamps and corresponding values. Charting these, it would be obvious that Cloudflare received much less traffic from Portugal than from the United States.
+The response (shortened below for brevity) uses the provided `name` property to wrap the timestamps and corresponding values. If we chart this data, it becomes obvious that Cloudflare received much less traffic from Portugal than from the United States.
 
 ```json
 {
@@ -59,31 +55,27 @@ The response (shortened below for brevity) uses the provided `name` property to 
 }
 ```
 
-Take into account that comparisons can be made in most endpoints, not just endpoints that use `MinMax`.
+Comparisons can be made in most endpoints, not just endpoints that use `min-max`.
 
 
-## Comparing date ranges
+## Compare date ranges
 
-Let's compare the same location, United States, across different date ranges, using the shortcuts `7d` and `7dControl`, which respectively mean, the last 7 days, and the last 7 days before those, so this week versus the previous week.
+In the next example, we will compare the United States across different date ranges using the shortcuts `7d` and `7dControl`. These mean the last seven days and the last seven days before those, respectively — or, in other words, this week versus the previous week.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=this_week&dateRange=7d&location=US&name=previous_week&dateRange=7dControl&location=US&format=json" \
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-So, the 1st series has these parameters:
+The first series has these parameters:
 
-`
-name=this_week&dateRange=7d&location=US
-`
+`name=this_week&dateRange=7d&location=US`
 
-and the 2nd series has these:
+The second series has the following parameters:
 
-`
-name=previous_week&dateRange=7dControl&location=US
-`
+`name=previous_week&dateRange=7dControl&location=US`
 
-And now, inside the `result` property, you should see something like this:
+Now, in the `result` property, you should get something like this:
 
 ```json
 {
@@ -98,33 +90,28 @@ And now, inside the `result` property, you should see something like this:
 }
 ```
 
-Looking at this, we see that the maximum value was reached at `2022-10-27T14:00:00Z` (all Radar timestamps are in  `UTC`). We also see what the date range shortcuts `7d` and `7dControl` were resolved to at the time this was run.
+Examining this information, we can conclude that the maximum value was reached at `2022-10-27T14:00:00Z` (all Radar timestamps are in Coordinated Universal Time (UTC)). We can also check what the date range shortcuts `7d` and `7dControl` were resolved to at the time this was run.
 
-### Using specific timestamps
+### Use specific timestamps
 
-We can also ask for specific timestamps. For example, let's look at [Tonga](https://blog.cloudflare.com/tonga-internet-outage/) in October versus January 2022, when there was an outage.
-
+You can also request for specific timestamps. In the following example, we will ask for data relative to [Tonga](https://blog.cloudflare.com/tonga-internet-outage/) in October versus January 2022, when there was an outage.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z&location=TO&name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO&format=json&aggInterval=1h" \
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-So, the 1st series has these parameters (URL encoded):
+The first series has these parameters (URL encoded):
 
-`
-name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z%&location=TO
-`
+`name=tonga&dateStart=2022-10-15T02%3A00%3A00Z&dateEnd=2022-10-15T05%3A00%3A00Z%&location=TO`
 
-and the 2nd series has these:
+The second series has these parameters:
 
-`
-name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO
-`
+`name=tonga_outage&dateStart=2022-01-15T02%3A00%3A00Z&&dateEnd=2022-01-15T05%3A00%3A00Z&location=TO`
 
-We also asked for an [aggregation interval](/radar/concepts/aggregation-intervals) of 1 hour (`aggInterval=1h`), so that all results could be placed here (both `format` and `aggInterval` are not arrays, as specified in the [API reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series), and apply globally to all series in the request).
+In the above example, we requested for an [aggregation interval](/radar/concepts/aggregation-intervals) of one hour (`aggInterval=1h`), so that the results could be shown in this page. `format` and `aggInterval` are not arrays, as specified in the [API reference](https://api.cloudflare.com/#radar-netflows-get-netflow-time-series), and apply globally to all series in the request.
 
-Inside the `result` property, you should see something like this:
+The `result` property should return a response like this:
 
 ```json
 "tonga": {
@@ -137,14 +124,11 @@ Inside the `result` property, you should see something like this:
 }
 ```
 
-Traffic dropped to almost 0 during the outage. Charting it (but setting the end date to January 18 to make it clearer):
+This shows how traffic dropped to almost zero during the outage. If we chart it and set the end date to January 18 to make it clearer, we get the following:
 
 ![Tonga October vs January 2022](/radar/static/tonga_outage.png)
 
 
 ## Next steps
 
-{{<button-group>}}
-  {{<button type="primary" href="/radar/investigate/netflows">}}Investigate Netflows{{</button>}}
-  {{<button type="secondary" href="/radar/investigate">}}Investigate others{{</button>}}
-{{</button-group>}}
+Refer to the Investigate section to drill down on the data Radar returns, such as [NetFlows](/radar/investigate/netflows).

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Get Started
+title: Get started
 weight: 3
 ---
 
-# Get Started
+# Get started
 
 {{<directory-listing>}}
