@@ -10,7 +10,7 @@ weight: 11
 
 ### Deprecating the "per-video" Analytics API
 
-The [“per-video” analytics API](/stream/getting-analytics/fetching-per-video-analytics/) is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) 1 by Feb 1, 2023. After this date, the per-video analytics API will be no longer available.
+The [“per-video” analytics API](/stream/getting-analytics/fetching-per-video-analytics/) is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
 
 The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can [use across many Cloudflare products](/analytics/graphql-api/features/data-sets/).
 
