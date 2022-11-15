@@ -18,7 +18,7 @@ As a SaaS provider, you may want to configure and manage Cloudflare for SaaS [vi
 | [Create custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname)                                  | In the `validation_records` object of the response, use the `txt_name` and `txt_record` listed  to validate the custom hostname. |
 | [Custom hostname details](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details)                                |
 | [Edit custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname)                                      | When sent with an `ssl` object that matches the existing value, indicates that hostname should restart domain control validation (DCV). |
-| [Delete custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-delete-custom-hostname-and-any-issued-ssl-certificates-) | Also deletes any associated SSL/TLS certificates.                                                                                       |
+| [Delete custom hostname](/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) | Also deletes any associated SSL/TLS certificates.                                                                                       |
 
 ## Fallback origins
 

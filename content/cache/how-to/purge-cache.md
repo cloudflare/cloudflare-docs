@@ -149,7 +149,7 @@ There are several limitations regarding purge by prefix:
 
 - Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
 - Purge requests are limited to 30 prefixes per request.
-- [Purge rate-limits apply](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host)
+- [Purge rate-limits apply](/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix)
 - URI query strings & fragments cannot purge by prefix:
   - `www.example.com/foo?a=b` (query string)
   - `www.example.com/foo#bar` (fragment)
@@ -225,7 +225,7 @@ Purge resources that use Cache Keys via the [Cloudflare API](https://api.cloudfl
 
 Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/create-cache-keys/). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
-To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host) & [Purge Everything](https://api.cloudflare.com/#zone-purge-all-files) are not impacted by the use of custom Cache Keys.
+To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix) & [Purge Everything](https://api.cloudflare.com/#zone-purge-all-files) are not impacted by the use of custom Cache Keys.
 
 ### Purge by device type
 

@@ -10,7 +10,7 @@ meta:
 
 With [**Advanced Certificate Manager**](/ssl/edge-certificates/advanced-certificate-manager/) or within [**SSL for SaaS**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections to specific cipher suites. Currently, this functionality is only available when using the API:
 
-- [Zone](https://api.cloudflare.com/#zone-settings-change-ciphers-setting)
+- [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Hostname (SSL for SaaS only)](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname)
 
 ## Cipher suite values
