@@ -65,19 +65,21 @@ Type conversion from Javascript inputs to D1 inputs is as follows:
 * Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
-The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), the internal duration of the operation in milliseconds and success status.
+The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
 {
   results: array | null, // [] if empty, or null if it doesn't apply
-  duration: number, // duration of the operation in milliseconds
   success: boolean, // true if the operation was successful, false otherwise
+  meta: {
+    duration: number, // duration of the operation in milliseconds
+  }
 }
 ```
 
 Example:
 ```js
-const { duration } = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)').bind( "John", 42 ).run();
+const { duration } = (await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)').bind( "John", 42 ).run()).meta;
 
 console.log(duration); // 0.172
 ```
@@ -177,8 +179,10 @@ const info = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)')
 console.log(info);
 /*
 {
-  duration: 62,
   success: true
+  meta: {
+    duration: 62,
+  }
 }
 */
 ```
@@ -227,8 +231,10 @@ console.log(young);
 /*
 {
   results: [...],
-  duration: 31,
   success: true
+  meta: {
+    duration: 31,
+  }
 }
 */
  const old = await stmt.bind(80).all();
@@ -236,13 +242,13 @@ console.log(old);
 /*
 {
   results: [...],
-  duration: 29,
   success: true
+  meta: {
+    duration: 29,
+  }
 }
 */
 ```
-
-
 
 ## Batch statements
 Batching sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.
