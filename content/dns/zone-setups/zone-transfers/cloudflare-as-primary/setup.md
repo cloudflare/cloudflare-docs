@@ -16,7 +16,7 @@ With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-pri
 
 If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), we allow you to set a `CNAME` record on the zone apex because we do [`CNAME` Flattening](/dns/additional-options/cname-flattening/). 
 
-If you take advantage of this behavior within Cloudflare (using an unproxied `CNAME` record on your zone apex) while using outgoing zone transfers for this zone, Cloudflare will not transfer out the target hostname of the CNAME record but instead the flattened IP address(es) that also get served as DNS responses from Cloudflare authoritative nameservers.
+If you take advantage of this behavior within Cloudflare (using an unproxied `CNAME` record on your zone apex) while using outgoing zone transfers for this zone, Cloudflare will not transfer out the target hostname of the `CNAME` record but instead the flattened IP address(es) that also get served as DNS responses from Cloudflare authoritative nameservers.
 
 ### Proxied records
 
