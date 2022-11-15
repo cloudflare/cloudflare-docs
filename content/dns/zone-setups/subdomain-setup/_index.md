@@ -20,7 +20,7 @@ Subdomain setups are also useful when different subdomains require entirely diff
 
 ## Availability
 
-A subdomain setup is only available to customers on an Enterprise plan.
+{{<feature-table id="dns.subdomain_setup">}}
 
 ## Notes
 
