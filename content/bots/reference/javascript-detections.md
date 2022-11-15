@@ -14,6 +14,8 @@ This detection technique gathers general data about the machines reaching Cloudf
 
 JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile app traffic is unaffected. Additionally, code is not injected again until its 30-minute session life expires. The Picasso script is about 70KB and execution time varies per device from 90ms to around 500ms.
 
+The snippets of JavaScript will contain a source pointing to the challenge platform with paths that start with `/cdn-cgi/challenge-platform/...`. 
+
 ## Enable JavaScript detections
 
 For Free customers (Bot Fight Mode), JavaScript detections are automatically enabled and cannot be disabled.

@@ -15,10 +15,10 @@ jobs:
     name: Compiles
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
       - uses: peaceiris/actions-hugo@v2
@@ -40,8 +40,8 @@ jobs:
   #   name: Lint
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
   #       with:
   #         node-version: 16
   #     - name: (env) pnpm

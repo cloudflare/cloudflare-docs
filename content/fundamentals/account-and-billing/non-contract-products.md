@@ -22,8 +22,12 @@ To enable a non-contract service, use the **Dashboard link** in the following ta
 | Cloudflare for SaaS | [Cloudflare for SaaS dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames) | [Cloudflare for SaaS docs](/cloudflare-for-platforms/cloudflare-for-saas/) | [Cloudflare for SaaS community](https://discord.com/channels/595317990191398933/897916119782928394) |
 | Images | [Images dashboard](https://dash.cloudflare.com/?to=/:account/images) | [Images docs](/images/cloudflare-images/) | [Images community](https://community.cloudflare.com/c/developers/images/63) |
 | Load Balancing | [Load Balancing dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing) | [Load Balancing docs](/load-balancing/) | [Load Balancing community](https://community.cloudflare.com/tag/loadbalancing) |
+| Advanced Rate Limiting | [Rate Limiting dashboard](https://dash.cloudflare.com/?to=/:account/:zone/security/waf/rate-limiting-rules) | [Rate Limiting docs](/waf/rate-limiting-rules/) | [Rate Limiting community](https://community.cloudflare.com/c/security/6) |
 | Stream | [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream) | [Stream docs](/stream/) | [Stream community](https://community.cloudflare.com/tag/cloudflarestream) |
+| Waiting Room | [Waiting Room Room dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic/waiting-rooms) | [Waiting Room docs](/waiting-room/) | [Waiting Room community](https://community.cloudflare.com/) |
+| Web3 | [Web3 dashboard](https://dash.cloudflare.com/?to=/:account/:zone/web3) | [Web3 docs](/web3/) | [Web3 discord](https://discord.com/channels/595317990191398933/1024792052313096192) |
 | Workers | [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers) | [Workers docs](/workers/) | [Workers discord](https://discord.com/channels/595317990191398933/779390076219686943) |
+| Zero Trust | [Zero Trust dashboard](https://dash.teams.cloudflare.com/) | [Zero Trust docs](/cloudflare-one/) | [Zero Trust community](https://community.cloudflare.com/c/security/access/51) |
 
 Once you enable the product or feature, it will not be an officially contracted service until you purchase it. Cloudflare will reach out in case you have any questions or feedback, and provide you with a sales quote if you are enjoying the product.
 

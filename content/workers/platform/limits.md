@@ -5,12 +5,6 @@ title: Limits
 
 # Limits
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
-{{</Aside>}}
-
 ## Account plan limits
 
 {{<table-wrap>}}
@@ -21,12 +15,19 @@ You can request adjustments to limits that conflict with your project goals by c
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
-| [Number of Workers](#number-of-workers)                                         | 30        | 100       |
+| [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
+| [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
+| [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
 {{</table-wrap>}}
+
+{{<Aside type="note">}}
+
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+{{</Aside>}}
 
 ## Request limits
 
@@ -145,6 +146,12 @@ Cloudflare’s abuse protection methods do not affect well-intentioned traffic. 
 
 The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
+{{<Aside type="warning">}}
+
+If you are currently being rate limited, upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+
+{{</Aside>}}
+
 ### Burst rate
 
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
@@ -246,13 +253,17 @@ There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
 
-### Worker size
+## Worker size
 
-A Worker can be up to 1 MB in size after compression. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
-### Number of Workers
+## Worker startup time
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 Workers at any given time. Free Workers accounts are limited to a maximum of 30 Workers at any given time.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+## Number of Workers
+
+Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
 
 {{<Aside type="note">}}
 

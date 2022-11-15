@@ -6,7 +6,7 @@ weight: 9
 
 # Test a waiting room
 
-Follow this tutorial to ensure your Waiting Room queues and admits users as expected.
+Follow this tutorial to ensure your waiting room queues and admits users as expected.
 
 {{<Aside type="warning" header="Warning:">}}
 This tutorial uses an open-sourced load testing tool that is not created or supported by Cloudflare.
