@@ -15,7 +15,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Incremental builds are currently not supported in Cloudflare Pages.
 
-- Uploading a `/functions` directory through the Direct Upload dashboard UI does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
+- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
