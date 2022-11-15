@@ -5,8 +5,7 @@ _build:
   list: never
 ---
 
-
-1. In your `gcp_tunnel` directory, create a `.tfvars` file:
+1. In your configuration directory, create a `.tfvars` file:
 
     ```sh
     $ touch terraform.tfvars
@@ -14,7 +13,7 @@ _build:
 
     Terraform will automatically use these variables if the file is named `terraform.tfvars`, otherwise the variable file will need to be manually passed in.
 
-2. Open the file in a text editor and add the following variables. Be sure to modify the example with your own values.
+2. Add the following variables to `terraform.tfvars`. Be sure to modify the example with your own values.
 
     ```txt
     ---
@@ -29,8 +28,6 @@ _build:
     zone                      = "us-central1-a"
     machine_type              = "e2-medium"
     ```
-
-3. Save the file.
 
 {{<Aside type="warning">}}
  To prevent accidentally exposing sensitive credentials, do not save `terraform.tfvars` in your version control system. For example, if your version control is git, add `terraform.tfvars` to your `.gitignore` file.

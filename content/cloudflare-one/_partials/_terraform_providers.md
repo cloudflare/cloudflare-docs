@@ -5,15 +5,16 @@ _build:
   list: never
 ---
 
+
 You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
 
-1. In your `gcp_tunnel` directory, create a `.tf` file:
+1. In your configuration directory, create a `.tf` file:
 
     ```sh
     $ touch providers.tf
     ```
 
-2. Open the file in a text editor and copy and paste the following providers. The `random` provider is used to generate a tunnel secret.
+2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
 
     ```txt
     ---
@@ -43,5 +44,4 @@ You will need to declare the [providers](https://registry.terraform.io/browse/pr
     }
     provider "random" {
     }
-
-3. Save the file.
+    ```

@@ -5,6 +5,16 @@ _build:
   list: never
 ---
 
+The following variables will be passed into your GCP and Cloudflare configuration.
+
+1. In your configuration directory, create a `.tf` file:
+
+    ```sh
+    $ touch variables.tf
+    ```
+
+2. Open the file in a text editor and copy and paste the following:
+
     ```txt
     ---
     filename: variables.tf
