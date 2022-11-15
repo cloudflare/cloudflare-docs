@@ -5,6 +5,7 @@ pcx_content_type: concept
 ---
 
 # Migrations
+
 Database migrations are a way of versioning your changes made to your database. Migrations are stored in a `migrations` folder inside your project directory and will contain versioned `.sql` files. This enables you to store and track changes throughout database development. 
 
 
@@ -21,6 +22,7 @@ If applying a migration results in an error, this migration will be rolled back,
 
 
 ### Create a migration
+
 To create a new migration, run the migrations create command.
 
 ```sh
@@ -41,6 +43,7 @@ $ wrangler d1 migrations list <database>
 
 
 ### Apply migrations
+
 To apply any unapplied migrations, you can run the following:
 
 ```sh
@@ -55,6 +58,7 @@ When running the apply command in a CI/CD environment or another non-interactive
 
 
 ## Wrangler customizations
+
 By default, the migrations are created in the `migrations/` folder relative to your `wrangler.toml`. Creating migrations will keep a record of applied migrations in the `d1_migrations` table. 
 
 This location and table name can be customized in your `wrangler.toml`, inside the D1 binding.
@@ -62,7 +66,7 @@ This location and table name can be customized in your `wrangler.toml`, inside t
 
 ```toml
 [[ d1_databases ]]
-binding = "DB" # i.e. available in your Worker on env.DB
+binding = "<Binding-name>" # i.e. if you set this to "DB", it will be available in your Worker on env.DB
 database_name = "<database-name>"
 database_id = "<UUID>"
 preview_database_id = "<UUID>"
