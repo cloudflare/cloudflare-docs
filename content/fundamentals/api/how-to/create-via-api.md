@@ -25,7 +25,7 @@ Cloudflare also recommends limiting the use of the token via client IP address f
 
 ## Creating API tokens with the API
 
-Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](https://developers.cloudflare.com/api/operations/user-api-tokens-properties) for more information.
+Once you create an API token that can create other tokens, you can now use it in the API. Refer to the [API schema docs](https://developers.cloudflare.com/api/operations/user-api-tokens-create-token) for more information.
 
 To create a token:
 
@@ -76,7 +76,7 @@ API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 {{<Aside type="note">}}
  
-Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](https://developers.cloudflare.com/api/operations/user-properties), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
+Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](https://developers.cloudflare.com/api/operations/user-user-details), [Account](https://api.cloudflare.com/#accounts-list-accounts), and [Zone](https://api.cloudflare.com/#zone-list-zones) documentation for more details.
   {{</Aside>}}
 
 ##### Account

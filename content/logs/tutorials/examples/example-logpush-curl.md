@@ -11,7 +11,7 @@ You can manage your Cloudflare Logpush service from the command line using cURL.
 Before getting started, review:
 
 - [API configuration](/logs/get-started/api-configuration/)
-- [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-properties)
+- [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs)
 
 {{<Aside type="note">}}
 

@@ -17,7 +17,7 @@ https://api.cloudflare.com/client/v4/
 
 For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
 
 {{<Aside type="note">}}
 
@@ -53,7 +53,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-list-of-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-list-firewall-rules">
           List firewall rules
         </a>
       </td>
@@ -66,7 +66,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-get-individual-firewall-rule">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-get-a-firewall-rule">
           Get a firewall rule
         </a>
       </td>
@@ -93,7 +93,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-update-individual-firewall-rule">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-update-a-firewall-rule">
           Update a firewall rule
         </a>
       </td>
@@ -123,7 +123,7 @@ The Cloudflare Firewall Rules API supports the operations outlined below. Visit 
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-delete-individual-firewall-rules">
+        <a href="https://developers.cloudflare.com/api/operations/firewall-rules-delete-a-firewall-rule">
           Delete a firewall rule
         </a>
       </td>

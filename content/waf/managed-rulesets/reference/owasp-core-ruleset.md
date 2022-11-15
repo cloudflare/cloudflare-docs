@@ -92,7 +92,7 @@ highlight: [4,5]
       </div>
     </details>
 
-2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get zone entry point ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-get-entrypoint-ruleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get zone entry point ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
 
     <details>
       <summary>Request</summary>
@@ -303,7 +303,7 @@ highlight: [12]
       </div>
     </details>
 
-3.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get zone entry point ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-get-entrypoint-ruleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+3.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get zone entry point ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
 
     <details>
       <summary>Request</summary>

@@ -9,13 +9,13 @@ layout: list
 
 {{<content-column>}}
 
-To invoke a [Lists API](https://developers.cloudflare.com/api/operations/lists-properties) operation, append the endpoint to the Cloudflare API base URL:
+To invoke a [Lists API](https://developers.cloudflare.com/api/operations/lists-get-lists) operation, append the endpoint to the Cloudflare API base URL:
 
 `https://api.cloudflare.com/client/v4/`
 
 For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
 
 {{<Aside type="note">}}
 

@@ -17,8 +17,8 @@ Use one of the following API endpoints:
 | [Create account ruleset rule][ar-account] | `POST /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules` |
 | [Create zone ruleset rule][ar-zone] | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules` |
 
-[ar-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-account-ruleset-rule
-[ar-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-zone-ruleset-rule
+[ar-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset-rule
+[ar-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset-rule
 
 Invoking this method creates a new version of the ruleset.
 

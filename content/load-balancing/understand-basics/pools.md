@@ -20,7 +20,7 @@ For more details about how origins and pools become unhealthy, refer to [Origin 
 
 ## Properties
 
-For an up-to-date list of pool properties, refer to [Pool properties](https://developers.cloudflare.com/api/operations/load-balancer-pools-properties) in our API documentation.
+For an up-to-date list of pool properties, refer to [Pool properties](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-list-pools) in our API documentation.
 
 ---
 

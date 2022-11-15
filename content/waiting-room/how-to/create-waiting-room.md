@@ -42,7 +42,7 @@ https://api.cloudflare.com/client/v4
 
 For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
 
 Configure your waiting room with the following required parameters in the `data` field:
 
@@ -56,7 +56,7 @@ The following parameters are optional:
 *  `path` - The path within the host for which you want to configure a waiting room. The waiting room will be enabled for all subpaths as well.
 *  `description` - A description of the waiting room.
 *  `session_duration` - Lifetime of a cookie (in minutes) set by Cloudflare for users who get access to the route.
-*  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://developers.cloudflare.com/api/operations/waiting-room-properties).
+*  `custom_page_html` - HTML code to customize the appearance of your waiting room. Cloudflare provides a sample HTML template that enables the display of estimated wait time on the waiting room page. The default waiting room is used if `custom_page_html` is not specified. Refer to [Waiting Room API properties](https://developers.cloudflare.com/api/operations/waiting-room-list-waiting-rooms).
 *  `json_response_enabled` - If you are using this waiting room to manage traffic for your mobile app or API, make sure you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) and set `json_response_enabled` to `true`.
 
 ## Example

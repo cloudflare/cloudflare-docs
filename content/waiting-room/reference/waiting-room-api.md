@@ -7,11 +7,11 @@ title: API commands
 
 Cloudflare Waiting Room redirect visitors to virtual waiting rooms when they are trying to access web pages that have high volumes of traffic.
 
-The [Cloudflare Waiting Room API](https://developers.cloudflare.com/api/operations/waiting_rooms) provides an interface for programmatically managing waiting rooms.
+The [Cloudflare Waiting Room API](https://developers.cloudflare.com/api/operations/waiting-room-list-waiting-rooms) provides an interface for programmatically managing waiting rooms.
 
 ## Request URL format
 
-To invoke a [Cloudflare Waiting Room API](https://developers.cloudflare.com/api/operations/waiting-room-properties) operation, append the endpoint to the Cloudflare API base URL:
+To invoke a [Cloudflare Waiting Room API](https://developers.cloudflare.com/api/operations/waiting-room-list-waiting-rooms) operation, append the endpoint to the Cloudflare API base URL:
 
 ```shell
 https://api.cloudflare.com/client/v4
@@ -19,7 +19,7 @@ https://api.cloudflare.com/client/v4
 
 For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
 
 <style>
   table { width: 100% }

@@ -65,7 +65,7 @@ The **Priority** column in the rules list displays the priority value for each r
 
 ## Working with priority ordering
 
-Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update firewall rules command to set the `priority` property. Refer to [Cloudflare API: Firewall rules](https://developers.cloudflare.com/api/operations/firewall-rules-properties) for details.
+Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update firewall rules command to set the `priority` property. Refer to [Cloudflare API: Firewall rules](https://developers.cloudflare.com/api/operations/firewall-rules-list-firewall-rules) for details.
 
 While your priority numbering scheme can be arbitrary, keep the following in mind:
 

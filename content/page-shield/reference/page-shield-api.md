@@ -6,7 +6,7 @@ weight: 5
 
 # Page Shield API
 
-You can change the Page Shield status and fetch information about the currently monitored scripts and connections using the [Page Shield API](https://developers.cloudflare.com/api/operations/page-shield-properties).
+You can change the Page Shield status and fetch information about the currently monitored scripts and connections using the [Page Shield API](https://developers.cloudflare.com/api/operations/page-shield-get-page-shield-settings).
 
 For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
@@ -16,7 +16,7 @@ Refer to [API deprecations](/fundamentals/api/reference/deprecations/#page-shiel
 
 ## Endpoints
 
-You can obtain the complete endpoint by appending the [Page Shield API](https://developers.cloudflare.com/api/operations/page-shield-properties) endpoints listed below to the Cloudflare API base URL.
+You can obtain the complete endpoint by appending the [Page Shield API](https://developers.cloudflare.com/api/operations/page-shield-get-page-shield-settings) endpoints listed below to the Cloudflare API base URL.
 
 The Cloudflare API base URL is:
 

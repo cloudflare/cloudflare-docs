@@ -17,8 +17,8 @@ Use one of the following API endpoints:
 | [Create account ruleset][cr-account] | `POST /accounts/<ACCOUNT_ID>/rulesets` |
 | [Create zone ruleset][cr-zone] | `POST /zones/<ZONE_ID>/rulesets` |
 
-[cr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-account-ruleset
-[cr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-zone-ruleset
+[cr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset
+[cr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset
 
 The following parameters are required:
 

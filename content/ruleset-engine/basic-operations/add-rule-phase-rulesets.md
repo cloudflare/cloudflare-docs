@@ -102,7 +102,7 @@ header: Response
 <summary>Example: Add a single rule to a phase entry point ruleset at the zone level</summary>
 <div>
 
-The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Create zone ruleset rule](https://developers.cloudflare.com/api/operations/zone-rulesets-create-zone-ruleset-rule) API operation.
+The following example adds a single rule to a phase entry point ruleset (with ID `<RULESET_ID>`) at the zone level using the [Create zone ruleset rule](https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset-rule) API operation.
 
 ```json
 ---

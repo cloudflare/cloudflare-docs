@@ -14,7 +14,7 @@ The following values are samples and not exhaustive. For the complete list of su
 
 ## Zone plans
 
-When creating or updating a [zone plan](https://developers.cloudflare.com/api/operations/zone-subscription-properties), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
+When creating or updating a [zone plan](https://developers.cloudflare.com/api/operations/zone-subscription-zone-subscription-details), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
 
 | Partner program | Available subscriptions |
 | --- | --- |

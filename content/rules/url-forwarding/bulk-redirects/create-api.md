@@ -127,7 +127,7 @@ A Bulk Redirect Rule must have:
 * `action` set to `redirect`
 * An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/rules/url-forwarding/bulk-redirects/reference/json-objects/#bulk-redirect-rule) for details.
 
-The following request of the [Create account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-create-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
+The following request of the [Create account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
@@ -187,7 +187,7 @@ The response will be similar to the following:
 }
 ```
 
-If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-update-account-ruleset) operation instead, like in the following example:
+If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset) operation instead, like in the following example:
 
 ```json
 curl -X PUT \

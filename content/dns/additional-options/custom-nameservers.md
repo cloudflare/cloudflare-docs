@@ -19,10 +19,10 @@ When using [subdomain support](/dns/zone-setups/subdomain-setup/), a parent and 
 Cloudflare domains on Business or Enterprise plans can set Custom Nameservers at Cloudflare:
 
 - Enterprise plans:
-  - Create account-level nameservers via the [API](https://developers.cloudflare.com/api/operations/account-level-custom-nameservers-properties)
+  - Create account-level nameservers via the [API](https://developers.cloudflare.com/api/operations/account-level-custom-nameservers-list-account-custom-nameservers)
   - Create zone-level nameservers via the dashboard or [API](https://developers.cloudflare.com/api/operations/zone-edit-zone)
 - Business plans:
-  - Create account-level nameservers via the [API](https://developers.cloudflare.com/api/operations/account-level-custom-nameservers-properties) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
+  - Create account-level nameservers via the [API](https://developers.cloudflare.com/api/operations/account-level-custom-nameservers-add-account-custom-nameserver) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
   - Create zone-level nameservers via the dashboard or [API](https://developers.cloudflare.com/api/operations/zone-edit-zone)
 
 ## Restrictions

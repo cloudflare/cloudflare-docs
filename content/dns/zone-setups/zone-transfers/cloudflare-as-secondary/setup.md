@@ -81,7 +81,7 @@ To create a peer server using the dashboard:
 
 ### Using the API
 
-To create a peer DNS server using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-peer--create-peer) request.
+To create a peer DNS server using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-peer)-create-peer) request.
 
 ## Step 3 - Create the Secondary Zone
 

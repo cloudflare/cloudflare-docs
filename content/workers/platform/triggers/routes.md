@@ -25,7 +25,7 @@ Cloudflare Site routes are comprised of:
 - Worker script to execute on matching requests
 - Failure mode for rate-limited accounts on the Free plan (refer to [daily request limits](/workers/platform/limits/#request-limits))
 
-The Routes REST API documentation can be found [in the Workers API docs](https://developers.cloudflare.com/api/operations/worker-routes-properties).
+The Routes REST API documentation can be found [in the Workers API docs](https://developers.cloudflare.com/api/operations/worker-routes-list-routes).
 
 If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
 

@@ -30,4 +30,4 @@ To create a new ACL using the dashboard:
 
 ## Using the API
 
-To create a new ACL using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-acl--create-acl) request.
+To create a new ACL using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-acl)-create-acl) request.

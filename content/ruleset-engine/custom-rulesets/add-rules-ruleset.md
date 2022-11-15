@@ -14,7 +14,7 @@ When you add rules to a custom ruleset using the [Update an account ruleset](htt
 
 You can use other API operations depending on the type of operation:
 
-* Add a single rule to an existing custom ruleset — use the [Create account ruleset rule](https://developers.cloudflare.com/api/operations/account-rulesets-create-account-ruleset-rule) operation.
+* Add a single rule to an existing custom ruleset — use the [Create account ruleset rule](https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset-rule) operation.
 * Update a single rule in a custom ruleset — use the [Update an account ruleset rule](https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset-rule) operation.
 
 {{</Aside>}}

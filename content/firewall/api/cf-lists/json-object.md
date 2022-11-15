@@ -183,4 +183,4 @@ The JSON object properties for a list item are defined as follows:
   </table>
 {{</table-wrap>}}
 
-For a detailed specification, refer to the [Lists API](https://developers.cloudflare.com/api/operations/lists-properties) documentation.
+For a detailed specification, refer to the [Lists API](https://developers.cloudflare.com/api/operations/lists-get-lists) documentation.

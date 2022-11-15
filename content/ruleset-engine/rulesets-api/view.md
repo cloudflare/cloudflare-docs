@@ -172,10 +172,10 @@ Use one of the following API endpoints:
 | [List account entry point ruleset versions][lev-account]   | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions` |
 | [List zone entry point ruleset versions][lev-zone]         | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions`       |
 
-[lv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-account-ruleset-versions
-[lv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-zone-ruleset-versions
-[lev-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-entry-point-ruleset-s-versions
-[lev-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-a-zone-entry-point-ruleset-s-versions
+[lv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-ruleset'-s-versions
+[lv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-a-zone-ruleset'-s-versions
+[lev-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-entry-point-ruleset'-s-versions
+[lev-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-a-zone-entry-point-ruleset'-s-versions
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
@@ -318,7 +318,7 @@ Returns a list of all the rules in a Managed Ruleset with a specific tag.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [List rules in account ruleset version by tag][lrbt] | `GET /accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/<VERSION_NUMBER>/by_tag/<TAG_NAME>` |
 
-[lrbt]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-ruleset-version-s-rules-by-tag
+[lrbt]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-ruleset-version'-s-rules-by-tag
 
 ### Example
 

@@ -57,4 +57,4 @@ Beyond the analytics provided for your properties, you can also access analytics
 
 ## GraphQL APIs
 
-If you would like to have more control over how you visualize the analytic and log information available on the Cloudflare dashboard, use the [GraphQL Analytics API](/analytics/graphql-api/) to build customized views. This API replaces and expands on the previous [Zone Analytics API](https://developers.cloudflare.com/api/operations/zone-analytics-properties).
+If you would like to have more control over how you visualize the analytic and log information available on the Cloudflare dashboard, use the [GraphQL Analytics API](/analytics/graphql-api/) to build customized views. This API replaces and expands on the previous [Zone Analytics API](https://developers.cloudflare.com/api/operations/zone-analytics-(-deprecated)-get-dashboard).

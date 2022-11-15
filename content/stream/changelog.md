@@ -81,7 +81,7 @@ You can now change the start and end times of a video uploaded to Cloudflare Str
 
 ### Live inputs
 
-The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://developers.cloudflare.com/api/operations/stream-live-inputs-properties).
+The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://developers.cloudflare.com/api/operations/stream-live-inputs-list-live-inputs).
 
 ## 2022-05-24
 

@@ -24,8 +24,8 @@ weight: 1
 
 To enable a Managed Transform via API:
 
-1. Check the Managed Transform's current status and availability using the [Get all managed headers](https://developers.cloudflare.com/api/operations/managed-headers-api-list-all-managed-headers) operation.
-2. Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Change state of managed headers](https://developers.cloudflare.com/api/operations/managed-headers-api-change-state-of-managed-headers) operation.
+1. Check the Managed Transform's current status and availability using the [Get all managed headers](https://developers.cloudflare.com/api/operations/managed-transforms-list-managed-transforms) operation.
+2. Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Change state of managed headers](https://developers.cloudflare.com/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
 
 ### 1. Get list of available Managed Transforms
 

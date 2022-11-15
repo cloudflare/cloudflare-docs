@@ -22,7 +22,7 @@ Health checks associated with load balancers are different from **Standalone hea
 
 ## Properties
 
-For an up-to-date list of monitor properties, refer to [Monitor properties](https://developers.cloudflare.com/api/operations/load-balancer-monitors-properties) in our API documentation.
+For an up-to-date list of monitor properties, refer to [Monitor properties](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-list-monitors) in our API documentation.
 
 ---
 

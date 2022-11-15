@@ -44,7 +44,7 @@ This method returns a `Promise` that you should `await` on in order to verify a 
 
 The maximum size of a value is 25 MiB.
 
-You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [write data via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair).
+You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [write data via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
@@ -86,7 +86,7 @@ The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-va
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair).
+You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 #### Metadata
 
@@ -206,7 +206,7 @@ async function handleRequest(request) {
 }
 ```
 
-You can also [list keys on the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-a-namespace-s-keys).
+You can also [list keys on the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
 
 Changes may take up to 60 seconds to be visible when listing keys.
 

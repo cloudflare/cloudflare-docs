@@ -17,7 +17,7 @@ https://api.cloudflare.com/client/v4/
 
 For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
-For help with endpoints and pagination, refer to [Getting Started: Endpoints](https://developers.cloudflare.com/api/operations/getting-started-endpoints).
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
 
 {{<Aside type="note">}}
 
@@ -63,7 +63,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-list-individual-filter">Get a filter</a>
+        <a href="https://developers.cloudflare.com/api/operations/filters-get-a-filter">Get a filter</a>
       </td>
       <td>
         <code class="InlineCode">
@@ -112,7 +112,7 @@ The Cloudflare Filters API supports the operations outlined below. Visit the pag
     </tr>
     <tr>
       <td>
-        <a href="https://developers.cloudflare.com/api/operations/filters-delete-individual-filter">Delete a filter</a>
+        <a href="https://developers.cloudflare.com/api/operations/filters-delete-a-filter">Delete a filter</a>
       </td>
       <td>
         <code class="InlineCode">
