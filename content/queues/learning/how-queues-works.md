@@ -71,7 +71,33 @@ You then connect that consumer to a queue with `wrangler queues consumer <queue-
 
 Importantly, each queue can only have one active consumer: this allows Cloudflare Queues to achieve "at least once" delivery and minimize the risk of duplicate messages beyond that.
 
-Notably, you can use associate the same consumer with multiple queues: the `queue` handler that defines your consumer will be invoked the same. The `MessageBatch` that is passed to your `queue` handler includes a `name` property with the name the batch was consumed from. This can reduce the amount of code you need to write, and allow you to process messages based on the name of your queues.
+Notably, you can use associate the same consumer with multiple queues: the `queue` handler that defines your consumer will be invoked the same.
+
+* The `MessageBatch` that is passed to your `queue` handler includes a `queue` property with the name of the queue the batch was read from.
+* This can reduce the amount of code you need to write, and allow you to process messages based on the name of your queues.
+
+For example, a consumer configured to consume messages from multiple queues would resemble the following:
+
+```ts
+export default {
+    async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+        # MessageBatch has a `queue` property we can switch on
+        switch (batch.queue) {
+            case "log-queue":
+                // Write the batch to R2
+                break;
+            case "debug-queue":
+                // Write the message to the console or to another queue
+                break;
+            case "email-reset":
+                // Trigger a password reset email via an external API
+                break;
+            default:
+                // Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
+        }
+    }
+};
+```
 
 ## Messages
 
