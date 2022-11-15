@@ -21,7 +21,13 @@ To configure firewall rules, caching, access controls, or bot management for you
 
 ## Custom domains
 
-Domain access through a custom domain allows you to use features such as access management, Cache and bot management.
+Domain access through a custom domain allows you to use features such as Access Management, WAF, Cache and Bot Management to accelerate and protect access to your R2 bucket.
+
+{{<Aside type="note" header="Enabling cache for all file types">}}
+
+By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, see [Default Cache Behavior](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+
+{{</Aside>}}
 
 ### Connect your bucket to a custom domain
 
