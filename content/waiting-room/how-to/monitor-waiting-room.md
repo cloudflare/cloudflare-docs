@@ -10,7 +10,7 @@ You can monitor the status of your waiting rooms using the [dashboard](#status-i
 
 Note that the **Total active users** and **Queued users** shown in the dashboard, as well as through API endpoints are estimates. That data corresponding to each of these metrics is cached for around 30 seconds after the time it takes to be synced from all data centers globally. Therefore, the status will range between 20-50 seconds in the past, depending on the exact moment the data was queried, aggregated, as well as the age of the cache.
 
-{{<Aside>}}Future work will create a separate area of application analytics for Cloudflare Waiting Rooms.{{</Aside>}}
+{{<Aside>}}Future work will create a separate area of application analytics for Cloudflare Waiting Room.{{</Aside>}}
 
 ## Status in the dashboard
 

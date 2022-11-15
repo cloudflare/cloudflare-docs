@@ -7,7 +7,7 @@ product:
 
 meta:
   title: Cloudflare Waiting Room docs
-  description: Cloudflare Waiting Rooms redirect visitors to virtual waiting rooms
+  description: Cloudflare Waiting Room redirects visitors to virtual waiting rooms
     when they are trying to access web pages that have high volumes of traffic.
   author: '@cloudflare'
   image: /core-services-preview.png

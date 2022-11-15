@@ -42,7 +42,7 @@ To create a new bypass rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Within your application, go to **Traffic** > **Waiting Rooms**.
-3. Expand a Waiting Room and select **Go to rules**.
+3. Expand a waiting room and select **Go to rules**.
 4. Select **Create new Bypass rule**.
 5. Enter a descriptive name for the rule in **Rule name**.
 6. Under **When incoming requests match**, define the rule expression. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
