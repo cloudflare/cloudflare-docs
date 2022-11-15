@@ -71,7 +71,7 @@ If you have already created a DNS record covering your child domain in the paren
     {{<Aside type="note">}}Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
     {{</Aside>}}
 
-3. In the parent domain, make sure that you migrate over any settings ([Firwall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
+3. In the parent domain, make sure that you migrate over any settings ([Firewall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 5. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
 6. Within the **DNS** settings of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records).
@@ -117,7 +117,7 @@ If you have already created a DNS record covering your child domain in the paren
     {{<Aside type="note">}}Cloudflare recommends [exporting](/dns/manage-dns-records/how-to/import-and-export/#export-records) records from the parent domain, deleting all unnecessary records, and then [importing](/dns/manage-dns-records/how-to/import-and-export/#import-records) the records into your new zone.
     {{</Aside>}}
 
-4. In the parent domain, make sure that you migrate over any settings ([Firwall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
+4. In the parent domain, make sure that you migrate over any settings ([Firewall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 5. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains.
 6. [Add the TXT verification record](/dns/zone-setups/partial-setup/setup/#step-2--verify-ownership-for-your-domain) at your authoritative DNS provider.
 7. Within a short period of time, the child domain should be active.
