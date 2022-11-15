@@ -123,7 +123,6 @@ To create a consumer Worker, open your `index.ts` file and add the following `qu
 ```sh
 ---
 filename: src/index.ts
-highlight: 4
 ---
 export default {
  async fetch(request: Request, env: Environment): Promise<Response> {
