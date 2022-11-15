@@ -1,22 +1,21 @@
 ---
 pcx_content_type: reference
-title: Domains Ranking
-weight: 3
+title: Domains ranking
+weight: 5
 ---
-
 
 # Domains ranking
 
-Cloudflare regularly generates a Domain Ranking based on DNS queries to [1.1.1.1](https://1.1.1.1/dns/), our public DNS resolver.  Check the [blog post](https://blog.cloudflare.com/radar-domain-rankings/) for more information but, in short, we generate 2 kinds of listings:
+Cloudflare regularly generates a domain ranking based on DNS queries to [1.1.1.1](/1.1.1.1/),  Cloudflare's public DNS resolver.  Refer to the [blog post](https://blog.cloudflare.com/radar-domain-rankings/) for a deep dive. In short, Cloudflare generates two types of listings:
 
-- Ordered list of the top 100 most popular domains globally and per country. Last 24 hours, updated daily.
-- Unordered global most popular domains datasets divided into buckets of the following sizes: 200, 500, 1,000, 2,000, 5,000, 10,000, 20,000, 50,000, 100,000, 200,000, 500,000, 1,000,000. Last 7 days, updated weekly.
+- An ordered list of the top 100 most popular domains globally and per country. This includes the last 24 hours and is updated daily.
+- An unordered global most popular domains dataset, divided into buckets of the following number of domains: 200, 500, 1,000, 2,000, 5,000, 10,000, 20,000, 50,000, 100,000, 200,000, 500,000, 1,000,000. It includes the last seven days and is updated weekly.
 
-### Example: Get the current ordered top domains in the Cloudflare ranking
+## Example: Get the current ordered top domains in the Cloudflare ranking
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&format=json&limit=5" \
-  -H "Authorization: Bearer <API_TOKEN>"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -42,17 +41,17 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&for
 }
 ```
 
-For more information refer to the [API reference](https://api.cloudflare.com/#radar-ranking-get-domains-rank-top) for this endpoint.
+For more information refer to [Get Domains Rank top](https://api.cloudflare.com/#radar-ranking-get-domains-rank-top).
 
-### Example: Get the last top X ranking bucket
+## Example: Get the last top `x` ranking bucket
 
-As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank for the top 100 domains, but for the remainder it only provides ranking buckets, e.g. top 200k, top 1 million, etc. These are available through our [datasets](https://api.cloudflare.com/#radar-datasets-get-datasets) endpoints.
+As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million, etc.. These are available through Cloudflare's [datasets endpoints](https://api.cloudflare.com/#radar-datasets-get-datasets).
 
-So, let's get the last available domain ranking buckets:
+In the following example we will request the last available domain ranking buckets:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets?limit=5&offset=0&datasetType=RANKING_BUCKET&format=json" \
-  -H "Authorization: Bearer <API_TOKEN>"
+     -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ```json
@@ -74,12 +73,8 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets?limit=5&offset=
 ]
 ```
 
-Now, if you're interested in a specific top, e.g. the top 1000000, go through the list and look at the `meta.top` property and then having the `id`, the download url for that dataset can be fetched using the [download](https://api.cloudflare.com/#radar-datasets-get-dataset-download-url) endpoint.
-
+If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset`](https://api.cloudflare.com/#radar-datasets-get-dataset-download-url) endpoint.
 
 ## Next steps
 
-{{<button-group>}}
-  {{<button type="primary" href="/radar/investigate/outages">}}Investigate Outages{{</button>}}
-  {{<button type="secondary" href="/radar/investigate">}}Investigate others{{</button>}}
-{{</button-group>}}
+Refer to [Investigate outages](/radar/investigate/outages/) to get data from outages occurring around the world.

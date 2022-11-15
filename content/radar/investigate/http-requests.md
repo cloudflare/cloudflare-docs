@@ -1,37 +1,37 @@
 ---
 pcx_content_type: reference
 title: HTTP requests
-weight: 3
+weight: 2
 ---
 
 # HTTP requests
 
-While in [Netflows](/radar/investigate/netflows) we were looking at bytes and packets reaching our edge routers, here we're a layer above, looking at complete eyeball HTTP requests that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) product.
+While in [Netflows](/radar/investigate/netflows/) we were examining bytes and packets reaching Cloudflare's edge routers, in HTTP requests we are a layer above in the [OSI model](https://en.wikipedia.org/wiki/OSI_model). In HTTP requests we examine complete HTTP requests from end users that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
 
 {{<Aside type="note">}}
-HTTP traffic includes both HTTP and HTTPS traffic coming from end users (i.e. eyeball traffic).
- {{</Aside>}}
+HTTP traffic includes both HTTP and HTTPS traffic coming from end users.
+{{</Aside>}}
 
-Most of the charts, in the [Adoption and Usage](https://radar.cloudflare.com/adoption-and-usage) section on Radar, come from this data source.
+Most of the charts in the [Adoption and Usage](https://radar.cloudflare.com/adoption-and-usage) section on Radar come from this data source.
 
 These endpoints can be broadly split into:
 
-- timeseries: a timeseries of a group of metrics, e.g. when looking at IP version, displays an IPv4 timeseries and an IPv6 timeseries
-- summary: displays a summary of a group of metrics over the specified time range, e.g. IPv4 traffic percentage out of the total HTTP traffic during that time period
-- top: a list of the top locations or [ASes](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) ranked by adoption of a specific metric, for example, top locations by mobile device traffic (ie. which locations have a higher percentage of mobile traffic out of the total traffic for that location)
+- `timeseries`: A time series of a group of metrics. For example, when looking at IP version, displays an IPv4 time series and an IPv6 time series.
+- `summary`: Displays a summary of a group of metrics over the specified time range. For example, IPv4 traffic percentage out of the total HTTP traffic during that time period.
+- `top`: A list of the top locations or [Autonomous Systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) (ASes) ranked by adoption of a specific metric. For example, top locations by mobile device traffic (like which locations have a higher percentage of mobile traffic out of the total traffic for that location).
 
 ## Timeseries
 
 ### Example: hourly breakdown by device type
 
-Let's look at traffic by device type globally with and without [bot traffic](/radar/concepts/bot-classes) (parameters for the `human` series: `name=human&botClass=LIKELY_HUMAN&dateRange=1d` and for the `bot` series: `name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d`):
+In this example, we will request traffic by device type globally, with and without [bot traffic](/radar/concepts/bot-classes/). Parameters for the `human` series are `name=human&botClass=LIKELY_HUMAN&dateRange=1d`. For the `bot` series, the parameters are `name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d`:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/timeseries/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-And here's the abbreviated response:
+Here is the abbreviated response:
 
 ```json
 {
@@ -61,37 +61,37 @@ And here's the abbreviated response:
 }
 ```
 
-Mobile devices tend to be considerably more present when looking at human generated traffic vs bot generated traffic.
+Mobile devices tend to be considerably more present when examining human generated traffic versus bot generated traffic.
 
 {{<Aside type="note">}}
-Take into account that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent), so ultimately this depends on the user agent(s) that bots use.
+Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use.
  {{</Aside>}}
 
-For more information refer to the [API reference](https://api.cloudflare.com/#radar-http-get-time-series-of-device-types) for this endpoint.
+For more information refer to [Get time series of device types](https://api.cloudflare.com/#radar-http-get-time-series-of-device-types).
 
 ## Summary
 
 ### Example: overall breakdown by device type and human/bot traffic
 
-We could also look at the same information but now asking for a summary of the device type breakdown over the _entire_ period, instead of per hour like we did above.
+We can also look at the same information asking for a summary of the device type breakdown over the entire period, instead of a per hour breakdown like in the example before.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-The abbreviated response:
+Here is the abbreviated response:
 
 ```json
 "human": {
-	"mobile": "54.967243",
-	"desktop": "44.974006",
-	"other": "0.058751"
+  "mobile": "54.967243",
+  "desktop": "44.974006",
+  "other": "0.058751"
 },
 "bot": {
-	"desktop": "83.275452",
-	"mobile": "16.707455",
-	"other": "0.017093"
+  "desktop": "83.275452",
+  "mobile": "16.707455",
+  "other": "0.017093"
 }
 ```
 
@@ -99,17 +99,16 @@ For more information refer to the [API reference](https://api.cloudflare.com/#ra
 
 ### Example: breakdown by IP version and human/bot traffic
 
-Let's look at another example, global breakdown of traffic by IP version, with and without bots:
+In the following example, we will examine global breakdown of traffic by IP version, with and without bots:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/ip_version?name=human&botClass=LIKELY_HUMAN&dateRange=1d&name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d&format=json&aggInterval=1h" \
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-And we get:
+This returns the following:
 
 ```json
-
 "human": {
   "IPv4": "76.213647",
   "IPv6": "23.786353"
@@ -120,16 +119,17 @@ And we get:
 }
 ```
 
-Bots tend to use more IPv4.
+Bots tend to use more IPv4 addresses.
 
-It's also interesting to know how our own ISP fares in IPv6 adoption. If you know your ISP's ASN (or check [here](https://radar.cloudflare.com/ip)), you can use the `asn` parameter (check the [API reference](https://api.cloudflare.com/#radar-http-get-a-summary-of-ip-versions) for other parameters) to find out.
+It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](https://api.cloudflare.com/#radar-http-get-a-summary-of-ip-versions) for other parameters.
 
+If you do not know your ISP’s ASN, you use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
 ## Tops
 
 ### Example: top locations by IPv6 traffic
 
-Which locations have a higher adoption of [IPv6](https://en.wikipedia.org/wiki/IPv6) in the last 28 days?
+In the following example, we will find which locations had a higher adoption of [IPv6](https://en.wikipedia.org/wiki/IPv6) in the last 28 days.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_version/IPv6?name=ipv6&botClass=LIKELY_HUMAN&dateRange=28d&format=json&limit=5" \
@@ -162,13 +162,10 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_ve
 ]
 ```
 
-Seems like India is leading the charge.
+According to the returned data, India is leading in IPv6 adoption.
 
 For more information refer to the [API reference](https://api.cloudflare.com/#radar-http-get-top-locations-by-ip-version) for this endpoint.
 
 ## Next steps
 
-{{<button-group>}}
-  {{<button type="primary" href="/radar/investigate/application-layer-attacks">}}Investigate application layer attacks{{</button>}}
-  {{<button type="secondary" href="/radar/investigate">}}Investigate others{{</button>}}
-{{</button-group>}}
+Refer to [Application layer attacks](/radar/investigate/application-layer-attacks/) to learn more about mitigfated HTTP requests.
