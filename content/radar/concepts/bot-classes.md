@@ -8,11 +8,11 @@ weight: 2
 
 A bot class in Radar is a grouping of [bot scores](/bots/concepts/bot-score).
 
-Bot traffic is comprised of requests with bot scores from 1 to 29, and non-bot/human traffic of bot scores above or equal to 30.
+Scores between 1 to 29 are classified as bot traffic. Scores equal or above 30 are classified as non-bot/human traffic.
 
 | Class | Description |
 | ---- | ---- |
-| **Likely Automated** | Bot scores of 1 through 29. |
-| **Likely Human** | Bot scores of 30 through 99. |
+| **Likely automated** | Bot scores of 1 through 29. |
+| **Likely human** | Bot scores of 30 through 99. |
 
 

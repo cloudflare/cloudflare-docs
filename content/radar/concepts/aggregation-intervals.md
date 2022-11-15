@@ -1,22 +1,21 @@
 ---
 pcx_content_type: concept
-title: Aggregation Intervals
-weight: 2
+title: Aggregation intervals
+weight: 1
 ---
 
-# Aggregation Intervals
+# Aggregation intervals
 
-When requesting time series, data may be returned in one of a series of aggregation intervals, or frequencies, if none is specified, according to the date range. As a general principle, the longer the date range, the bigger the aggregation interval.
+Aggregation intervals allow you to return data in a specified interval (or frequency). If no interval is defined, data will be returned in the default aggregation interval (or frequency). As a general principle, the longer the date range, the bigger the aggregation interval.
 
-For example, when requesting 1 day of data, the default aggregation interval is 15 minutes, when requesting more than 1 month of data, the default is 1 day.
-
+For example, when requesting one day of data, the default aggregation interval is 15 minutes. When requesting more than one month of data, the default is one day.
 
 ## Method
 
 | Aggregation Interval | Description |
 | ---- | ---- |
-| **15m** | 15 minutes frequency. |
-| **1h** | 1 hour frequency. |
-| **1d** | 1 day frequency. |
+| `15m` | 15 minutes frequency. |
+| `1h` | One hour frequency. |
+| `1d` | One day frequency. |
 
 
