@@ -42,26 +42,30 @@ Additionally:
 
 ### Examples
 
-If an application writes one million messages a day (in a 30 day month), and each message is less than 64 KB in size, the estimated bill for the month would be:
+If an application writes, reads and deletes (consumes) one million messages a
+day (in a 30 day month), and each message is less than 64 KB in size, the
+estimated bill for the month would be:
 
 {{<table-wrap>}}
 
-|                     | Total Usage     | Free Usage | Billed Usage | Price      |
-| ------------------- | --------------- | ---------- | ------------ | ---------- |
-| Standard operations | 30 \* 1,000,000 | 1,000,000  | 29,000,000   | $11.60     |
-|                     |                 |            |              |            |
-| **TOTAL**           |                 |            |              | **$11.60** |
+|                     | Total Usage           | Free Usage | Billed Usage | Price      |
+| ------------------- | --------------------- | ---------- | ------------ | ---------- |
+| Standard operations | 3 \* 30 \* 1,000,000  | 1,000,000  | 89,000,000   | $35.60     |
+|                     | (write, read, delete) |            |              |            |
+| **TOTAL**           |                       |            |              | **$35.60** |
 
 {{</table-wrap>}}
 
-An application that sends 100 million ~127KB messages (each message counts as two 64KB chunks) per month would have an estimated bill resembling the following:
+An application that writes, reads and deletes (consumes) 100 million ~127KB
+messages (each message counts as two 64KB chunks) per month would have an
+estimated bill resembling the following:
 
 {{<table-wrap>}}
 
-|                     | Total Usage                  | Free Usage | Billed Usage | Price      |
-| ------------------- | ---------------------------- | ---------- | ------------ | ---------- |
-| Standard operations | 2 * 100 \* 99,000,000        | 1,000,000  | 199,000,000  | $79.60     |
-|                     | (2x ops for > 64KB messages) |            |              |            |
-| **TOTAL**           |                              |            |              | **$79.60** |
+|                     | Total Usage                  | Free Usage | Billed Usage | Price       |
+| ------------------- | ---------------------------- | ---------- | ------------ | ----------- |
+| Standard operations | 2 \* 3 \* 100 \* 1,000,000   | 1,000,000  | 299,000,000  | $119.60     |
+|                     | (2x ops for > 64KB messages) |            |              |             |
+| **TOTAL**           |                              |            |              | **$119.60** |
 
 {{</table-wrap>}}
