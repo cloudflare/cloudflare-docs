@@ -57,13 +57,37 @@ While developing locally, you can interact with your KV namespace by adding `-k 
 2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Objects**.
 3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
 
-Here is an example of how to use Durable Objects in your Function, our DO binding is named "DURABLE_OBJECT":
+Here is an example of how to use Durable Objects in your Function with a DO binding is named "DURABLE_OBJECT":
 
-// TODO
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+export async function onRequestGet(context) {  
+  const id = context.env.DURABLE_OBJECT.newUniqueId();
+  const stub = context.env.DURABLE_OBJECT.get(id);
 
-### Interact with your Durable Objects locally
+  // Pass the request down to the durable object
+  return stub.fetch(context.request);
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+interface Env {
+  DURABLE_OBJECT: DurableObjectNamespace;
+}
 
-// TODO
+export const onRequestGet: PagesFunction<Env> = async (context) => {
+  const id = context.env.DURABLE_OBJECT.newUniqueId();
+  const stub = context.env.DURABLE_OBJECT.get(id);
+
+  // Pass the request down to the durable object
+  return stub.fetch(context.request);
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
 
 ## R2 buckets
 
