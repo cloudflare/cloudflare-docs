@@ -111,7 +111,6 @@ First, go to your Worker project and open the `index.js` file. The `index.js` fi
 ```javascript
 ---
 filename: "src/index.js"
-highlight: 6
 ---
 export default {
   async fetch(request, env) {
