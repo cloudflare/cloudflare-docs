@@ -146,6 +146,8 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
       Replace with capture groups:<br />
       `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
+      Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
+
 {{<Aside type="warning">}}
 You can only use the `regex_replace()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 {{</Aside>}}
