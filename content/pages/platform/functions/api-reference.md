@@ -47,13 +47,25 @@ The env.ASSETS.fetch() function allows you to fetch a static asset. Requests to 
 The following are the properties on the context object which are passed through on the onRequest methods:
 
   - `request` [{{<type>}}Request{{</type>}}](/workers/runtime-apis/request/)
-      
+ 
       This is the incoming [Request](/workers/runtime-apis/request/).
   
   - `functionPath` {{<type>}}string{{</type>}}
+  
+      This is the path of the request. 
+    
   - {{<code>}}waitUntil(promise{{<param-type>}}Promise&lt;any&gt;{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+  
+      Read [here](/workers/runtime-apis/fetch-event/#waituntil) for more info on `waitUntil()`.
+  
   - {{<code>}}passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+  
+      Read [here](/workers/runtime-apis/fetch-event/#passthroughonexception) for more info on `passThroughOnException()`. Note that this will not work on an [advanced mode project](/pages/platform/functions/advanced-mode/)
+  
   - {{<code>}}next(input?{{<param-type>}}Request | string{{</param-type>}}, init?{{<param-type>}}RequestInit{{</param-type>}}){{</code>}} {{<type>}}Promise&lt;Response&gt;{{</type>}}
+  
+      Passes the request through to the next Function or to the asset server if no other Function is available. 
+  
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
   - `param` [{{<type>}}Params&lt;P&gt;{{</type>}}](#params)
   - `data` [{{<type>}}Data{{</type>}}](#data)
@@ -61,7 +73,7 @@ The following are the properties on the context object which are passed through 
 {{</definitions>}}
 
 ### EnvWithFetch
+Holds the environment variables, secrets, and bindings for this Function. This also holds the ASSETS binding which is how you can fallback to the asset server. 
 
 ### Params
-
-### Data
+Holds the values from the [dynamic routes](/pages/platform/functions/routing/#dynamic-routes)
