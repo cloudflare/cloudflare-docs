@@ -45,7 +45,8 @@ Otherwise your bucket will remain publicly available through your r2.dev subdoma
 
 {{</Aside>}}
 
-### Connect your bucket to a custom domain
+### Custom domains configuration
+#### Connect your bucket to a custom domain
 
 To connect a custom domain to your bucket:
 
@@ -83,7 +84,7 @@ There are a few restrictions when using custom domains to access R2 buckets:
 
 {{</Aside>}}
 
-### Disable domain access
+#### Disable domain access
 
 Disabling a domain will turn off public access to your bucket through that domain. Access through other domains or the managed `r2.dev` subdomain are unaffected.
 The specified domain will also remain connected to R2 until you remove it or delete the bucket.
@@ -101,7 +102,7 @@ To disable a domain:
 
 ![Not Allowed](/r2/static/public-buckets-not-allowed-2.png)
 
-### Remove domain
+#### Remove domain
 
 Removing a domain will remove custom domain configuration that you have set up on the dashboard. Your bucket will still be publicly accessible.
 
