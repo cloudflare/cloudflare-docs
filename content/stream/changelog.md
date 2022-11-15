@@ -6,6 +6,16 @@ weight: 11
 
 # Changelog
 
+## 2022-11-07
+
+### Deprecating the "per-video" Analytics API
+
+The [“per-video” analytics API](/stream/getting-analytics/fetching-per-video-analytics/) is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
+
+The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can [use across many Cloudflare products](/analytics/graphql-api/features/data-sets/).
+
+For more about this change and how to migrate existing API queries, refer to [this post](https://community.cloudflare.com/t/migrate-to-the-stream-graphql-analytics-api-by-feb-1st-2023/433252) and the [GraphQL Analytics API docs](/stream/getting-analytics/fetching-bulk-analytics/).
+
 ## 2022-11-01
 
 ### Create an unlimited number of live inputs
