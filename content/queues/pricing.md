@@ -18,6 +18,7 @@ Cloudflare Queues charges for the total number of operations against each of you
 
 * An operation is counted for each 64 KB of data that is written, read, or deleted.
 * Messages larger than 64KB are charged as if they were multiple messages: for exampele, a 65KB message and a 127KB message would both incur two read, write and delete operations.
+* A KB is defined as 1,000 bytes, and each message includes approximately 100 bytes of internal metadata.
 * Operations are per message, not per batch. A batch of 10 messages (the default batch size), if processed, would incur 10x write, 10x read, and 10x delete operations: one for each message in the batch.
 * There are no data transfer ("egress") or throughput (bandwidth) charges.
 
