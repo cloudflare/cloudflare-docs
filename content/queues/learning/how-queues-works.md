@@ -106,4 +106,4 @@ export default {
 
 A message is the object you are producing to and consuming from a queue. Any serializable object can be published to a queue: for most developers, this means either simple strings or JSON objects.
 
-Messages themselves can be batched when delivered to the consumer, and messages within a batch are treated as "all or nothing" when determining retries. If the "last" message in a batch fails to be processed, the entire batch will be retried.
+Messages themselves can be batched when delivered to the consumer, and messages within a batch are treated as all or nothing when determining retries. If the last message in a batch fails to be processed, the entire batch will be retried.
