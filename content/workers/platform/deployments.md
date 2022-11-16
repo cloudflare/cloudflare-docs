@@ -27,19 +27,15 @@ Deployments are triggered by:
 
 ### wrangler publish
 
-The [`wrangler publish`](/workers/wrangler/commands#publish) command will output the identifier of the newly generated deployment.
-
-![wrangler publish](../media/wrangler-publish-output.png)
+The [`wrangler publish`](/workers/wrangler/commands#publish) command will publish your Worker, and additionally output the identifier of the newly generated deployment.
 
 ### wrangler deployments
 
-The [`wrangler deployments`](/workers/wrangler/commands#deployments) command will output information about the most recent deployments.
-
-![wrangler deployments](../media/wrangler-deployments-output.png)
+The [`wrangler deployments`](/workers/wrangler/commands#deployments) command will output detailed information about the most recent deployments, including source, timestamp, identifier, and author.
 
 ### Deployments in the dashboard
 
-The Deployments tab of your Cloudflare dashboard will include information about historical deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
+The Deployments tab of your Cloudflare dashboard will include information about previous deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
 
 <!-- ### Metadata binding
 
