@@ -27,7 +27,7 @@ Deployments are triggered by:
 
 ### wrangler publish
 
-The [`wrangler publish`](/workers/wrangler/commands#publish) command will output information about the most recent deployment created.
+The [`wrangler publish`](/workers/wrangler/commands#publish) command will output the identifier of the newly generated deployment.
 
 ![wrangler publish](../media/wrangler-publish-output.png)
 
