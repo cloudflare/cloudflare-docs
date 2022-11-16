@@ -1,6 +1,7 @@
 {
     "path": "/learning-paths/optimize-site-speed/",
     "title": "Optimize site speed",
+    "priority": 4,
     "description": "Learn more about how Cloudflare can accelerate your website and improve performance.",
     "products": [
       "Cloudflare Essentials",
