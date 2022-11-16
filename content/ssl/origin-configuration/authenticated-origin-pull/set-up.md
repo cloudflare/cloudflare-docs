@@ -124,6 +124,6 @@ Hostname certificates take precedence over zone certificates.
 
 ### Delete a certificate
 
-Client certificates are not deleted from Cloudflare upon expiration unless a [delete](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-delete-certificate) or [replace](https://api.cloudflare.com/#zone-level-authenticated-origin-pulls-upload-certificate) request is sent to the Cloudflare API.
+Client certificates are not deleted from Cloudflare upon expiration unless a [delete](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-delete-certificate) or [replace](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-upload-certificate) request is sent to the Cloudflare API.
 
 However, requests are dropped at your origin if your origin only accepts a valid client certificate.

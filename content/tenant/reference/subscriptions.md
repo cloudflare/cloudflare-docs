@@ -10,7 +10,7 @@ When [provisioning services for an account](/tenant/how-to/manage-subscriptions/
 
 The subscriptions available to you will vary depending on your current partner program ([Self-Service Partner Program](https://www.cloudflare.com/cloudflare-partners-self-serve-program-closed-beta/) or [Enterprise Resellers and MSP Program](https://portal.cloudflarepartners.com)).
 
-The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](https://developers.cloudflare.com/api/operations/zone-rate-plan-list-available-rate-plans) or [account subscriptions](https://api.cloudflare.com/#account-subscriptions-list-subscriptions) endpoints.
+The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](https://developers.cloudflare.com/api/operations/zone-rate-plan-list-available-rate-plans) or [account subscriptions](https://developers.cloudflare.com/api/operations/account-subscriptions-list-subscriptions) endpoints.
 
 ## Zone plans
 

@@ -82,7 +82,7 @@ To edit a monitor in the dashboard:
 
 When you edit a monitor with the API, your request type depends on how much you want to edit.
  
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-patch-monitor) request. For broader changes, use a [PUT](https://api.cloudflare.com/#account-load-balancer-monitors-update-monitor) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-patch-monitor) request. For broader changes, use a [PUT](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-update-monitor) request.
  
 {{</tab>}}
 {{</tabs>}}

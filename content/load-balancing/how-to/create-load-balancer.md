@@ -50,7 +50,7 @@ To edit a load balancer in the dashboard:
  
 When you edit a load balancer with the API, your request type depends on how much you want to edit.
 
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](https://api.cloudflare.com/#load-balancers-update-load-balancer) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](https://developers.cloudflare.com/api/operations/load-balancers-update-load-balancer) request.
  
 {{</tab>}}
 {{</tabs>}}

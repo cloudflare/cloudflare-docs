@@ -60,7 +60,7 @@ To edit DNS records in the dashboard:
 
 {{<tab label="api" no-code="true">}}
 
-To update part of a record with the API, use a [PATCH request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-patch-dns-record). If you want to overwrite the entire existing record, use a [PUT request](https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record).
+To update part of a record with the API, use a [PATCH request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-patch-dns-record). If you want to overwrite the entire existing record, use a [PUT request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-update-dns-record).
 
 {{</tab>}}
 {{</tabs>}}
