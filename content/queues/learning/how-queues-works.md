@@ -23,8 +23,8 @@ Queues are designed to be reliable, and messages written to a queue should never
 
 Developers can create multiple queues. Creating multiple queues can be useful to:
 
-* Separate different use-cases and processing requirements: for example, a logging queue vs. a password reset queue. 
-* Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out
+* Separate different use-cases and processing requirements: for example, a logging queue vs. a password reset queue.
+* Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out.
 * Configure different batching strategies for each consumer connected to a queue.
 
 **For most applications, a single producer per queue with multiple queues** is easier to reason with, and allows you to logically separate the processing for each of your queues.
