@@ -21,7 +21,7 @@ A queue is a buffer or list that automatically scales as messages are written to
 
 Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumer) has successfully consumed the message.
 
-Developers can create multiple queues, and creating multiple queues can be useful to:
+Developers can create multiple queues. Creating multiple queues can be useful to:
 
 * Separate different use-cases and processing requirements: for example, a logging queue vs. a password reset queue. 
 * Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out
