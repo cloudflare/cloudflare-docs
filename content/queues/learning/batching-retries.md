@@ -34,7 +34,7 @@ When a message is failed to be delivered, the default behaviour is to retry deli
 
 {{<Aside type="note">}}
 
-Each retry counts as an additional "read" operation per [Queues pricing](https://developers.cloudflare.com/queues/pricing).
+Each retry counts as an additional read operation per [Queues pricing](https://developers.cloudflare.com/queues/pricing).
 
 {{</Aside>}}
 
