@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Terraform
-weight: 1
+weight: 7
 ---
 
 # Deploy Tunnels with Terraform

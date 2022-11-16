@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: GCP
-weight: 8
+weight: 5
 ---
 
 # Deploy `cloudflared` in GCP

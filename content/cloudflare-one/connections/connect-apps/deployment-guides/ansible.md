@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Ansible
-weight: 2
+weight: 1
 ---
 
 # Deploy Tunnels with Ansible and Terraform

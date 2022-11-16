@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Kubernetes
-weight: 41
+weight: 6
 ---
 
 # Kubernetes
