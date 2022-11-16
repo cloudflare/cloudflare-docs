@@ -74,7 +74,7 @@ filename: wrangler.toml
 
 Importantly, each queue can only have one active consumer. This allows Cloudflare Queues to achieve at least once delivery and minimize the risk of duplicate messages beyond that.
 
-Notably, you can use associate the same consumer with multiple queues: the `queue` handler that defines your consumer will be invoked the same.
+Notably, you can use the same consumer with multiple queues. The queue handler that defines your consumer Worker will be invoked by the queues it is connected to.
 
 * The `MessageBatch` that is passed to your `queue` handler includes a `queue` property with the name of the queue the batch was read from.
 * This can reduce the amount of code you need to write, and allow you to process messages based on the name of your queues.
