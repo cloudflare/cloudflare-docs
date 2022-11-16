@@ -19,7 +19,7 @@ Batching can:
 
 There are two ways to configure how messages are batched, and these can be configured when associating your consumer with a queue.
 
-* `max_batch_size` - the _maximum_ size of a batch delivered to a consumer (defaults to 10 messages)
+* `max_batch_size` - The maximum size of a batch delivered to a consumer (defaults to 10 messages).
 * `max_batch_timeout` - the _maximum_ amount of time the queue will wait before delivering a batch to a consumer (defaults to 5 seconds)
 
 Both `max_batch_size` and `max_batch_timeout` work together: whichever limit is reached first will trigger the delivery of a batch.
