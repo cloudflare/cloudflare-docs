@@ -7,7 +7,7 @@ layout: list
 
 # Delivery guarantees
 
-Delivery guarantees define how strongly a messaging system enforces the delivery of messages it processes
+Delivery guarantees define how strongly a messaging system enforces the delivery of messages it processes.
 
 Each mode comes with a number of trade-offs. As you make stronger guarantees about message delivery, the system needs to perform more checks and acknowledgments to ensure that messages are delivered, or maintain state to ensure a message is only delivered the specified number of times. This increases the latency of the system and reduces the overall throughput of the system. Each message may require an additional internal acknowledgements, and an equivalent number of additional roundtrips, before it can be considered delivered.
 
