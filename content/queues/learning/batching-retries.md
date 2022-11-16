@@ -13,9 +13,9 @@ When configuring a [consumer Worker](https://developers.cloudflare.com/queues/le
 
 Batching can:
 
-1. Reduce the total number of times your consumer needs to be invoked (which can reduce costs)
-2. Allow you to batch messages when writing to an external API or service (reducing writes)
-3. "Smooth" out load over time, especially if your producers are associated with user-facing activity
+1. Reduce the total number of times your consumer Worker needs to be invoked (which can reduce costs).
+2. Allow you to batch messages when writing to an external API or service (reducing writes).
+3. Disperse load over time, especially if your producer Workers are associated with user-facing activity.
 
 There are two ways to configure how messages are batched, and these can be configured when associating your consumer with a queue.
 
