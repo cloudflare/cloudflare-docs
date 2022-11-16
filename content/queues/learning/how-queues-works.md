@@ -15,7 +15,7 @@ There are four major concepts to understand with Queues:
 3. [Consumers](#consumers)
 4. [Messages](#messages)
 
-## What is a Queue
+## What is a queue
 
 A queue is a buffer or list that automatically scales as messages are written to it, and allows a consumer Worker to pull messages from that same queue.
 
