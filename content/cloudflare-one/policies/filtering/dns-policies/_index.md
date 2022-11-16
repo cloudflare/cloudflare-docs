@@ -166,7 +166,7 @@ Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (D
 
 ### Domain
 
-Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and all subdomains of `example.com`.
+Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
 | UI name | API example |
 | -- | -- |
@@ -174,11 +174,11 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Host
 
-Use this selector to match against only the hostname specified—for example, if you want to block only `example.com` but not `subdomain.example.com`.
+Use this selector to match against only the hostname specified. — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example |
 | -- | -- |
-| Host | `dns.fqdn == "www.example.com"` |
+| Host | `dns.fqdn == "test.example.com"` |
 
 ### Location
 
