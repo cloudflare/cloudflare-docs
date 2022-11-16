@@ -16,7 +16,7 @@ look at GraphQL [clients][2].
 GraphQL API expects JSON with two essentials fields: "query" and "variables".
 
 A query should be stripped from newline symbols and sent as a single-line string
-when variables is an object full of values for all placeholders used in the
+when the variables is an object full of values for all placeholders used in the
 query:
 
 ```json

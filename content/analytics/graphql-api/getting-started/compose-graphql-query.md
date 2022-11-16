@@ -6,7 +6,7 @@ weight: 51
 
 # Compose a query in GraphiQL
 
-Many clients could help play around [the semantics][1] of GraphQL and explore
+Many clients might need help using [the semantics][1] of GraphQL and exploring
 the possibilities of Cloudflare GraphQL API.
 
 This page details how to use a [GraphiQL client][2] to compose and execute a
@@ -107,7 +107,7 @@ the configured GraphQL API endpoint:
 The GraphiQL client allows you to use placeholders for value and supply them via
 the `variables` part of the payload.
 
-Placeholder names should start with `$` character, and you don't need to wrap
+Placeholder names should start with `$` character, and you do not need to wrap
 placeholders in quotes when you use them in the query.
 
 Values for placeholders should be provided in JSON format, in which placeholders

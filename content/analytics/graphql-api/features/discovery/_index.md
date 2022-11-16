@@ -5,6 +5,8 @@ weight: 3
 layout: single
 ---
 
+# Discovery
+
 GraphQL API supports [introspection][1] to explore nodes and provides a way to
 retrieve the user's [limits][2] for every node.
 

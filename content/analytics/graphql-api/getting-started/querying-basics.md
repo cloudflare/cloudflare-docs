@@ -27,10 +27,10 @@ A typical query against the Cloudflare GraphQL schema is made up of four main
 components:
 
 * `viewer` - is the root node,
-* `zones` or `accounts` - indicates the scope of the query, i.e. the domain area
-  or account you want to query. The `viewer` can access one `zones` or
+* `zones` or `accounts` - indicate the scope of the query, that is the domain
+  area or account you want to query. The `viewer` can access one `zones` or
   `accounts`, or both,
-* **data node** or **dataset** - represents the data you want to query. `zones`
+* **data node** or **dataset** - represent the data you want to query. `zones`
   or `accounts` may contain one or more datasets. To find out more about
   discovering nodes, please refer to [introspection][1],
 * **fieldset** - a set of fields or nested fields of the **dataset**.
@@ -133,8 +133,8 @@ header: A sample of a response for a query above
 
 ## Query multiple datasets in a single GraphQL API request
 
-As discussed above, a query might contain one or multiple nodes (datasets). At
-the API level, the data extraction would be done simultaneously, but the
+As previously mentioned, a query might contain one or multiple nodes (datasets).
+At the API level, the data extraction would be done simultaneously, but the
 response would be delayed until all dataset queries got their results. If any
 fails during the execution, the entire query will be terminated, and the error
 will be returned.

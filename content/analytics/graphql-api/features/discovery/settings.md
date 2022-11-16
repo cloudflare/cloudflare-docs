@@ -43,15 +43,15 @@ header: Using a settings node on accounts nodes
 
 Every subnode of `settings` node could consist of these fields:
 
-* `enabled` - shows whether the node is available for a requester or not
+* `enabled` - shows whether the node is available for a requester or not;
 * `availableFields` - shows the list of fields available for a requester. If
-  it's a nested field, the path will be returned, like `sum_requests`
+  it's a nested field, the path will be returned, like `sum_requests`;
 * `maxPageSize` - retrieves the maximum number of records that can be returned
 * `maxNumberOfFields` - answers on how many fields could be used in a single
-  query for that node
-* `notOlderThan` - returns a number of seconds on how far back in time query can
-  read
-* `maxDuration` - shows how wide the requested time range could be
+  query for that node;
+* `notOlderThan` - returns a number of seconds on how far back in time a query
+  can read;
+* `maxDuration` - shows how wide the requested time range could be.
 
 ## A sample query
 
@@ -102,7 +102,7 @@ header: firewallEventsAdaptive limits for a given user
 }
 ```
 
-To get more details on how to execute queries, please head to our how to get
+To get more details on how to execute queries, please refer to our how to get
 started [guides][3].
 
 [1]: </analytics/graphql-api/limits/>

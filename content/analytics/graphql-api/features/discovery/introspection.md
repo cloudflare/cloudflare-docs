@@ -6,39 +6,40 @@ weight: 41
 
 # Introspection
 
-Cloudflare GraphQL API has a dynamic schema. We expose more than 70 datasets
-across zone and account scopes and constantly expand the list. We also deprecate
-datasets to replace existing datasets with more capable alternatives.
+Cloudflare GraphQL API has a dynamic schema and exposes more than 70 datasets
+across zone and account scopes. We constantly expand the list and replace
+existing ones with more capable alternatives.
 
 To tackle the schema question, GraphQL provides an [introspection][1] mechanism.
-It is part of GraphQL specification and allows you to explore the graph of the
-datasets and fields.
+It is part of the GraphQL specification and allows you to explore the graph of
+the datasets and fields.
 
 The introspection results provide an overview of ALL available nodes and fields,
 their descriptions and deprecation status.
 
 Although GraphQL has `query`, `subscription`, and `mutation` operations,
-Cloudflare GraphQL API supports only `query` operation.
+Cloudflare GraphQL API only supports `query` operation.
 
 ## Description and Beta mode
 
 With details on data exposed by a given node or a field, descriptions also
-indicate whether it's in the Beta mode or not. Beta nodes are for testing and
+indicate whether it is in Beta mode. Beta nodes (or fields) are for testing and
 exploration and are usually available for customers on more extensive plans.
 Please do not rely on beta data nodes since they are subject to change or
 removal without notice.
 
 ## Deprecation
 
-Introspection provides information about deprecation status. We use it as a
-notification about replacement plans. If the sunset date is provided, please
-migrate to a replacement node(s) before that date to avoid disruption.
+Introspection provides information about deprecation status. Cloudflare uses it
+as a notification about replacement plans. If the sunset date is provided,
+please migrate to a replacement node(s) before that date to avoid any
+disruption.
 
 ## Availability
 
 Some of the nodes might only be available to query for some users. Please refer
-to the [settings][2] node to get a comprehensive picture of availability and
-personal limits on a given node.
+to the [settings][2] node for more details about availability and personal
+limits on a given node.
 
 ## Explore documentation
 
@@ -46,8 +47,8 @@ The most convenient way to introspect the schema is to use a documentation
 [explorer][3] that usually is a part of a GraphQL client (like GraphiQL, Altair,
 etc).
 
-Alternatively, you can do it manually by using `__schema` node with needed
-directives.
+Alternatively, you can also do it manually by using `__schema` node with the
+needed directives.
 
 ```graphql
 ---
@@ -143,7 +144,7 @@ fragment FullType on __Type {
 }
 ```
 
-To get more details on how to send a GraphQL request with curl, please check
+For more details on how to send a GraphQL request with curl, please refer to
 [this guide][4].
 
 [1]: <https://graphql.org/learn/introspection/>

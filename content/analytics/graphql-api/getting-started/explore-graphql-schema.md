@@ -6,7 +6,7 @@ weight: 41
 
 # Explore the GraphQL schema
 
-Many GraphQL clients are support surfing GraphQL schema by taking care of
+Many GraphQL clients are support browsing GraphQL schema by taking care of
 [introspection][1]. In this page, we will cover GraphiQL and Altair clients.
 
 [GraphiQL][2] and [Altair][3] are open-source GraphQL clients that provide a
@@ -15,17 +15,17 @@ bonus, they also allow you to browse GraphQL schema.
 
 ## Prerequisites
 
-Before you begin, don't forget to [configure][4] the API endpoint and HTTP
+Before you begin, do not forget to [configure][4] the API endpoint and HTTP
 headers.
 
 The screenshots below are done from GraphiQL. However, Altair provides the same
-functionality and you won't find any difficulties following the same
+functionality and you will not find any difficulties following the same
 instructions to explore the schema.
 
 ## Open the Documentation Explorer
 
-To open the GraphiQL Documentation Explorer, click the **Docs** link in header
-of the response pane:
+To open the GraphiQL Documentation Explorer, click the **Docs** link in the
+header of the response pane:
 
 ![Clicking GraphiQL Docs link to open Documentation Explorer][5]
 
@@ -46,7 +46,8 @@ When you first open the **Documentation Explorer** pane, the `mutation` and
 
 ![Documentation Explorer displaying mutation and query nodes][7]
 
-In this example `query` is the name of a root, and `Query` is the type definition.
+In this example, `query` is the name of a root, and `Query` is the type
+definition.
 
 ## Find the fields available for a type definition
 

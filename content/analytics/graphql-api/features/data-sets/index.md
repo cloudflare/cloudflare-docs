@@ -11,9 +11,9 @@ Cloudflare Analytics offers a range of datasets, including both general and
 product-specific ones. Datasets use a consistent naming scheme that explicitly
 identifies the type of data they return:
 
-* **Domain** - Each dataset is named after the field it describes and associated
-  with a set of nodes. Product-specific data nodes incorporate the name of the
-  relevant product, as set of `loadBalancingRequests*` nodes.
+* **Domain** - Each dataset is named after the field it describes and is
+  associated with a set of nodes. Product-specific data nodes incorporate the
+  name of the relevant product, for instance `loadBalancingRequests*` nodes.
 
 * **Adaptive Sampling** - Nodes that represent data acquired using adaptive
   sampling incorporate the `Adaptive` suffix. For more details, please see

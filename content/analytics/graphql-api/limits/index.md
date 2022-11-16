@@ -38,10 +38,10 @@ the Cloudflare API.
 
 Each data node has its limits, such as:
 
-* how far back in time can data be requested
-* the maximum time period (in seconds) that can be requested in one query
-* the maximum number of fields that can be requested in one query
-* the maximum number of records that can be returned in one query
+* how far back in time can data be requested,
+* the maximum time period (in seconds) that can be requested in one query,
+* the maximum number of fields that can be requested in one query,
+* the maximum number of records that can be returned in one query.
 
 Node limits are tied to requested `zoneTag` or `accountTag`. Larger plans have
 access to a greater selection of datasets and can query over broader historical
