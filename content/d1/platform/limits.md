@@ -9,7 +9,7 @@ While D1 is in Alpha, there are some limits to be aware of prior to begin testin
 
 * **Database size**: You can have a max database size of 100 MB. There are no limitations on rows and columns as long as your database falls within the size limitation.
 * **Databases per account**: Create up to 10 D1 databases on a single account. If you need more, reach out to the team.
-* **Backups**: Backups will not be automatic. You must trigger them manually.
+* **Backups**: Backups run every hour automatically. Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
 
 {{<Aside type="note">}}
 
