@@ -86,6 +86,10 @@ df = pd.read_csv(io.StringIO(r.text))
 df.plot(kind="bar", stacked=True)
 ```
 
+### Notebooks
+
+A [notebook](https://jupyter.org/) is a web-based interactive computing application, where text, code, and code outputs, like charts, can be combined into a single document. Refer to Radar's companion [colaboratory notebook](https://colab.research.google.com/github/cloudflare/radar-notebooks/blob/main/notebooks/example.ipynb) for more examples on how the API can be used in your own projects.
+
 
 ## Next steps
 
