@@ -5,8 +5,8 @@
   "products": [
     "Analytics",
     "Magic WAN",
-    "Cloudflare Zero Trust",
-    "Cloudflare Logs"
+    "Zero Trust",
+    "Logs"
   ],
   "category": ["Analytics Integrations"],
   "elements": [

@@ -10,10 +10,10 @@
 {{ $category_array := slice }}
 {{- range $data -}}
 {{ with .products }}
-{{- $product_array = union $product_array . -}}
+{{- $product_array = sort (union $product_array .) -}}
 {{- end -}}
 {{ with .category }}
-{{- $category_array = union $category_array . -}}
+{{- $category_array = sort (union $category_array .) -}}
 {{- end -}}
 {{- end -}}
 
