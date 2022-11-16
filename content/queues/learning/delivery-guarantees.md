@@ -13,7 +13,7 @@ Each mode comes with a number of trade-offs. As you make stronger guarantees abo
 
 * **Queues provides _at least once_ delivery by default** in order to optimize for reliability.
 * This means that messages are guaranteed to be delivered at least once, and in rare occassions, may be delivered more than once.
-* For the vast majority of applications, this is the right balance between "don't lose any messages" and "minimize end-to-end latency", as "exactly once" delivery incurs additional overheads in any messaging system.
+* For the majority of applications, this is the right balance between not losing any messages and minimizing end-to-end latency, as exactly once delivery incurs additional overheads in any messaging system.
 
 In cases where processing the same message more than once would introduce intended behaviour, generating a unique ID when writing the message to the queue and using that as the primary key on database inserts and/or as an idempotency key to de-duplicate the message after processing. For example, using this idempotency key as the ID in an upstream email API or payment API will allow those services to reject the duplicate on your behalf, without you having to carry additional state in your application.
 
