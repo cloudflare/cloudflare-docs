@@ -24,6 +24,12 @@ Refer to [Create a service token](/cloudflare-one/identity/service-tokens/#creat
 
 Refer to [Install the WARP client on your devices](/cloudflare-one/setup/#install-the-warp-client-on-your-devices) in the Cloudflare Zero Trust documentation for more information.
 
+{{<Aside type="note">}}
+
+You must log out and log back in with at least one WARP device to ensure the configuration updates on your device.
+
+{{</Aside>}}
+
 ## 3. Configure Split Tunnels
 
 [Configure Split Tunnels](/cloudflare-one/tutorials/split-tunnel/) from your Zero Trust dashboard to only include traffic from the private IP addresses you want to acceess.
