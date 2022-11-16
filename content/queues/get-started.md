@@ -140,7 +140,7 @@ Published <YOUR-WORKER-NAME> (0.29 sec)
 
 Copy your `*.workers.dev` subdomain and paste it into a new browser tab. Refresh the page a few times to start publishing requests to your queue. Your browser should return the `Success` response after writing the request to the queue each time.
 
-You have built a queue and a producer Worker to publish messages to the queue. You will now create a consumer Worker to consume the messages published to your queue. Without a consumer Worker, the messages will stay on the queue until they expire, which defaults to five (5) days.
+You have built a queue and a producer Worker to publish messages to the queue. You will now create a consumer Worker to consume the messages published to your queue. Without a consumer Worker, the messages will stay on the queue until they expire, which defaults to four (4) days.
 
 ## 5. Create your consumer Worker
 
@@ -188,16 +188,16 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
  # Required: this should match the name of the queue you created in step 3.
  # If you misspell the name, you will receive an error when attempting to publish your Worker.
  max_batch_size = 10 # optional: defaults to 10
- max_batch_timeout = 10 # optional: defaults to 3 seconds
+ max_batch_timeout = 5 # optional: defaults to 5 seconds
 ```
 
 Replace `YOUR_QUEUE_NAME` with the queue you created in step 3.
 
-In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `10` seconds, whichever happens first. 
+In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first. 
 
 `max_batch_size` (defaults to 10) helps to reduce the amount of times your consumer Worker needs to be called. Instead of being called for every message, it will only be called after 10 messages have entered the queue.
 
-`max_batch_timeout` (defaults to 3 seconds) helps to reduce wait time. If the producer Worker is not sending up to 10 messages to the queue for the consumer Worker to be called, the consumer Worker will be called every 10 seconds to receive messages that are waiting in the queue.
+`max_batch_timeout` (defaults to 5 seconds) helps to reduce wait time. If the producer Worker is not sending up to 10 messages to the queue for the consumer Worker to be called, the consumer Worker will be called every 10 seconds to receive messages that are waiting in the queue.
 
 ### Publish your consumer Worker
 
