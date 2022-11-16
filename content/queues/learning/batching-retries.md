@@ -17,7 +17,7 @@ Batching can:
 2. Allow you to batch messages when writing to an external API or service (reducing writes).
 3. Disperse load over time, especially if your producer Workers are associated with user-facing activity.
 
-There are two ways to configure how messages are batched, and these can be configured when associating your consumer with a queue.
+There are two ways to configure how messages are batched. You configure batching when connecting your consumer Worker to a queue.
 
 * `max_batch_size` - The maximum size of a batch delivered to a consumer (defaults to 10 messages).
 * `max_batch_timeout` - the _maximum_ amount of time the queue will wait before delivering a batch to a consumer (defaults to 5 seconds)
