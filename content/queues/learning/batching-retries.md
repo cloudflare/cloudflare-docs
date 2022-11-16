@@ -42,7 +42,7 @@ Each retry counts as an additional read operation per [Queues pricing](https://d
 
 ## Dead Letter Queues
 
-A Dead Letter Queue, or "DLQ", is a common concept in a messaging system, and represents where messages are sent when a delivery failure occurs with a consumer after `max_retries` is reached. A Dead Letter Queue is just like any other queue, and can be produced to and consumed from independently. 
+A Dead Letter Queue (DLQ) is a common concept in a messaging system, and represents where messages are sent when a delivery failure occurs with a consumer after `max_retries` is reached. A Dead Letter Queue is just like any other queue, and can be produced to and consumed from independently. 
 
 With Cloudflare Queues, a Dead Letter Queue is configured as part of your consumer. For example, the following consumer configuration would send messages to our DLQ named "my-other-queue" after retrying delivery (by default, 3 times):
 
