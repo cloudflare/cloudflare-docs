@@ -21,7 +21,7 @@ Using Radar's API you can access Cloudflare's data on global Internet traffic.
 
 Radar's API is free, allowing academics, data sleuths and other web enthusiasts to investigate Internet usage across the globe.
 
-Usage of the API and its data is made available under the [CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/).
+Data available via Radar API endpoints is made available under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
 
 ---
 
