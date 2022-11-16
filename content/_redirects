@@ -406,6 +406,7 @@
 /pages/how-to/elderjs/ /pages/framework-guides/elderjs/ 301
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
+/platform/functions/billing/ /platform/functions/pricing/ 301
 
 # partners
 /partners/ /learning-paths/technology-partner-integrations/ 301

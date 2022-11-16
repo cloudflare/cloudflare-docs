@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
+weight: 12
 ---
 
 # Pricing
@@ -13,7 +14,7 @@ All included usage is on a monthly basis.
 
 {{<Aside type="note">}} 
   
-All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/billing/) for more information on Pages Functions pricing. 
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
 
 {{</Aside>}}
 
