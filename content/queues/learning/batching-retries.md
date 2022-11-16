@@ -52,4 +52,4 @@ With Cloudflare Queues, a Dead Letter Queue is configured as part of your consum
   dead_letter_queue = "my-other-queue"
 ```
 
-**Importantly, in order to process messages placed on our DLQ, you need to set up a consumer associated with that queue as well**. Messages otherwise delivered to a DLQ without an active consumer will persist for four (4) days before being deleted from the queue.
+To process messages placed on your DLQ, you need to set up a consumer associated with that queue. Messages delivered to a DLQ without an active consumer will persist for four (4) days before being deleted from the queue.
