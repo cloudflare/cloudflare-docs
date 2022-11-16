@@ -9,7 +9,7 @@ layout: list
 
 ## Batching
 
-When configuring a [consumer](https://developers.cloudflare.com/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
+When configuring a [consumer Worker](https://developers.cloudflare.com/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
 
 Batching can:
 
