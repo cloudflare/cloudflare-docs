@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Cloudflare Queues requires the [Workers paid plan](https://developers.cloudflare.com/workers/platform/pricing/) to use, but does not increase your monthly subscription cost.
+Cloudflare Queues requires the [Workers Paid plan](https://developers.cloudflare.com/workers/platform/pricing/) to use, but does not increase your monthly subscription cost.
 
 {{</Aside>}}
 
