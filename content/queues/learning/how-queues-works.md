@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-A queue can have multiple producers: for example, you may have multiple Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producers that can write to a single queue. Additionally, multiple queues can be bound to a single Worker: that Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
+A queue can have multiple producers. For example, you may have multiple Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue. Additionally, multiple queues can be bound to a single Worker. That single Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
 
 ## Consumers
 
