@@ -13,15 +13,15 @@ Deployments are currently in Public Beta.
 
 Deployments are a set of static historical ‘snapshots’ of your Worker. They include the code, configuration, and bindings associated with your Worker. A change to any of these will trigger a new deployment on Cloudflare’s network.
 
-Only **one** deployment is active at any time. Currently this is the latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your optional `workers.dev` preview.
+Only one deployment is active at any time. The active deployment is your latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your `*.workers.dev` subdomain.
 
-You can view a list of your deployments in the Cloudflare dashboard under the **‘Deployments’** tab within any Worker’s detail view. You can also use the `wrangler deployments` command to list out the most recent deployments.
+You can view a list of your deployments in the Cloudflare dashboard > **Workers** > **your Worker project** > **Deployments**. You can also use the `wrangler deployments` command to list out the most recent deployments.
 
-### Deployments are triggered by:
+Deployments are triggered by:
 
-* Changes to a Worker’s bindings, code, or configuration in the Cloudflare dashboard
-* Changes to a Worker’s bindings, code, or configuration in the REST API
-* Changes to a Worker’s bindings, code, or configuration in the CLI via [wrangler publish](/workers/wrangler/commands#publish)
+* Changes to a Worker’s bindings, code, or configuration in the Cloudflare dashboard.
+* Changes to a Worker’s bindings, code, or configuration in the REST API.
+* Changes to a Worker’s bindings, code, or configuration in the CLI via [wrangler publish](/workers/wrangler/commands#publish).
 
 ## Interacting with Deployments
 
@@ -73,18 +73,18 @@ New Deployments will be created whenever you change code, configuration, or bind
 
 Updates to code can be as small as a simple whitespace change. Any changes to code will trigger a new deployment.
 
-Updates to bindings include a change to the value or variable name of a binding, or any CRUD operation on an individual binding. Notably, this does not include changes to the target resource itself – only the binding (e.g., changing the code of a Worker “B” that is connected via a Service binding from Worker “A” will not trigger a new deployment on Worker “A”).
+Updates to bindings include a change to the value or variable name of a binding, or any CRUD operation on an individual binding. Notably, this does not include changes to the target resource itself. For example, changing the code of a Worker B that is connected via a service binding from Worker A will not trigger a new deployment on Worker A. Only changes to the service binding between Worker A and Worker B will trigger a new deployment.
 
 Changes to configuration include:
 
-* Changing a Worker’s usage model
-* Changing a Worker’s secret or environment variable names and values
+* Changing a Worker’s usage model.
+* Changing a Worker’s secret or environment variable names and values.
 
-## Author and Source
+## Author and source
 
 When you deploy changes to your Worker, Cloudflare will track the user, token, or interface from which your code was last deployed. This is useful to understand and audit who or what is making changes to your applications.
 
-The author of a deployment is available in the Cloudflare dashboard, visible via [wrangler documentation](/workers/wrangler/commands#deployments) command, and accessible in [Cloudflare’s REST API](https://api.cloudflare.com/).
+The author of a deployment is available in the Cloudflare dashboard, visible via [`wrangler deployments`](/workers/wrangler/commands#deployments) command, and accessible in [Cloudflare’s REST API](https://api.cloudflare.com/).
 
 <!-- ### Deployments consist of : 
 
