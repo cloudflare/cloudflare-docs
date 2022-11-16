@@ -56,9 +56,7 @@ estimated bill for the month would be:
 
 {{</table-wrap>}}
 
-An application that writes, reads and deletes (consumes) 100 million ~127 KB
-messages (each message counts as two 64 KB chunks) per month would have an
-estimated bill resembling the following:
+An application that writes, reads and deletes (consumes) 100 million ~127 KB messages (each message counts as two 64 KB chunks) per month would have an estimated bill resembling the following:
 
 {{<table-wrap>}}
 
