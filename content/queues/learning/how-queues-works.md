@@ -72,7 +72,7 @@ filename: wrangler.toml
   max_batch_timeout = 30 # optional
 ```
 
-Importantly, each queue can only have one active consumer: this allows Cloudflare Queues to achieve "at least once" delivery and minimize the risk of duplicate messages beyond that.
+Importantly, each queue can only have one active consumer. This allows Cloudflare Queues to achieve at least once delivery and minimize the risk of duplicate messages beyond that.
 
 Notably, you can use associate the same consumer with multiple queues: the `queue` handler that defines your consumer will be invoked the same.
 
