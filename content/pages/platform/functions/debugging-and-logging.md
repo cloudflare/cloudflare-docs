@@ -1,4 +1,11 @@
+---
+pcx-content-type: how-to
+title: Debugging and logging
+weight: 12
+---
+
 # Debugging & Logging 
+
 For every deployment of your Pages project, you can access the logs of your Functions using the Cloudflare dashboard or the [`wrangler` CLI](/workers/wrangler/commands/#deployment-tail).
 
 Logs are a powerful debugging tool that can help you test and monitor the behavior of your Pages Functions once they have been deployed. 
@@ -65,7 +72,7 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 }
 ```
 
-`wrangler pages deployment tail` gives you much more granular control over how you can customize a logging session to better suit your needs. Please refer to the [wrangler pages deployment tail documentation]() for available configuration options.
+`wrangler pages deployment tail` gives you much more granular control over how you can customize a logging session to better suit your needs.
 
 ## View logs in the Cloudflare Dashboard
 
