@@ -63,6 +63,9 @@ export default {
 You then connect that consumer to a queue with `wrangler queues consumer <queue-name> <worker-script-name>` or by defining a `[[queues.consumers]]` configuration in your `wrangler.toml` manually:
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[queues.consumers]]
   queue = "<your-queue-name>"
   max_batch_size = 100 # optional
