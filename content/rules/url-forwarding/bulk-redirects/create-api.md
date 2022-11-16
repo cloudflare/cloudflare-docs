@@ -21,7 +21,7 @@ The API token used in API requests to manage Bulk Redirects objects (lists, list
 
 ## 1. Create a Bulk Redirect List via API
 
-Use the [Create a list](https://api.cloudflare.com/#lists-create-a-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
+Use the [Create a list](https://developers.cloudflare.com/api/operations/lists-create-a-list) operation to create a new Bulk Redirect List. The list `kind` must be `redirect`.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists" \
@@ -58,7 +58,7 @@ For more information on list operations, refer to the [Lists API](/firewall/api/
 
 ## 2. Add items to the list
 
-Use the [Create list items](https://api.cloudflare.com/#lists-create-list-items) operation to add URL Redirect items to the list:
+Use the [Create list items](https://developers.cloudflare.com/api/operations/lists-create-list-items) operation to add URL Redirect items to the list:
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/f848b6ccb07647749411f504d6f88794/items" \
@@ -94,7 +94,7 @@ The response will be similar to the following:
 }
 ```
 
-This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](https://api.cloudflare.com/#lists-get-bulk-operation-status) method:
+This is an asynchronous operation. The response will contain an `operation_id` which you will use to check if the operation completed successfully using the [Get bulk operation status](https://developers.cloudflare.com/api/operations/lists-get-bulk-operation-status) method:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/bulk_operations/92558f8b296d4dbe9d0419e0e53f6622" \
@@ -127,7 +127,7 @@ A Bulk Redirect Rule must have:
 * `action` set to `redirect`
 * An `action_parameters` object with additional configuration settings — refer to [API JSON objects: Bulk Redirect Rule](/rules/url-forwarding/bulk-redirects/reference/json-objects/#bulk-redirect-rule) for details.
 
-The following request of the [Create account ruleset](https://api.cloudflare.com/#account-rulesets-create-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
+The following request of the [Create account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset) operation creates a phase entry point ruleset for the `http_request_redirect` phase at the account level, and defines a single redirect rule. Use this operation if you have not created a phase entry point ruleset for the `http_request_redirect` phase yet.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
@@ -187,7 +187,7 @@ The response will be similar to the following:
 }
 ```
 
-If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update account ruleset](https://api.cloudflare.com/#account-rulesets-update-account-ruleset) operation instead, like in the following example:
+If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update account ruleset](https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset) operation instead, like in the following example:
 
 ```json
 curl -X PUT \

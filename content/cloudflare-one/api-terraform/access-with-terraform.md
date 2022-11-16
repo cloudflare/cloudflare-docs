@@ -192,4 +192,4 @@ The example below shows how you can configure an identity provider and attach it
     }
     ```
 
-These are the basics to get up and running with Access and Terraform. See our [API documentation](https://api.cloudflare.com/#access-organizations-properties) for other endpoints that can be managed via Terraform.
+These are the basics to get up and running with Access and Terraform. Refer to our [API documentation](https://developers.cloudflare.com/api/) for other endpoints that can be managed via Terraform.

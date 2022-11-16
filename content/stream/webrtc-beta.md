@@ -20,7 +20,7 @@ WebRTC streaming is currently in beta, and we'd love to hear what you think. Joi
 
 ## Step 1: Create a live input
 
-[Use the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create), or make a POST request to the [`/live_inputs` API endpoint](https://api.cloudflare.com/#stream-live-inputs-create-a-live-input)
+[Use the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create), or make a POST request to the [`/live_inputs` API endpoint](https://developers.cloudflare.com/api/operations/stream-live-inputs-create-a-live-input)
 
 ```bash
 ---

@@ -14,7 +14,7 @@ Once you have the token, you are ready to make your first request to Radar's API
 
 ## Example using cURL
 
-In the following example, we will access the global percentage distribution of device types (like mobile and desktop traffic) for the last seven days. For more information, refer to [Get a summary of device types](https://api.cloudflare.com/#radar-http-get-a-summary-of-device-types) endpoint:
+In the following example, we will access the global percentage distribution of device types (like mobile and desktop traffic) for the last seven days. For more information, refer to [Get a summary of device types](https://developers.cloudflare.com/api/operations/radar-http-get-a-summary-of-device-types) endpoint:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type?dateRange=7d&format=json" \

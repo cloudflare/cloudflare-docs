@@ -71,8 +71,8 @@ You can enable one of three options:
 
 Session affinity is a property of load balancers, which you can set with the following endpoints:
 
-- [Create a load balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer)
-- [Edit a load balancer](https://api.cloudflare.com/#load-balancers-update-load-balancer)
+- [Create a load balancer](https://developers.cloudflare.com/api/operations/load-balancers-create-load-balancer)
+- [Edit a load balancer](https://developers.cloudflare.com/api/operations/load-balancers-update-load-balancer)
 
 Customize the behavior of session affinity by using the `session_affinity`, `session_affinity_ttl`, and `session_affinity_attributes` parameters.
 

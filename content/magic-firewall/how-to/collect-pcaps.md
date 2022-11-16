@@ -64,7 +64,7 @@ Currently, you can only send one collect request per minute for simple PCAPs, an
 </summary>
 <div class="special-class" markdown="1">
 
-For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://api.cloudflare.com/#magic-pcap-collection-create-full-pcap-request). Note that full packet captures require two more parameters than simple packets.
+For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://api.cloudflare.com/#magic-pcap-collection-create-full-pcap-requestt). Note that full packet captures require two more parameters than simple packets.
 
 The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and simple packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
 

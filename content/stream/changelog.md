@@ -20,7 +20,7 @@ For more about this change and how to migrate existing API queries, refer to [th
 
 ### Create an unlimited number of live inputs
 
-Cloudflare Stream now has no limit on the number of [live inputs](https://api.cloudflare.com/#stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+Cloudflare Stream now has no limit on the number of [live inputs](https://developers.cloudflare.com/api/operations/stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
 
 For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
 
@@ -81,7 +81,7 @@ You can now change the start and end times of a video uploaded to Cloudflare Str
 
 ### Live inputs
 
-The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://api.cloudflare.com/#stream-live-inputs-properties).
+The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://developers.cloudflare.com/api/operations/stream-live-inputs-list-live-inputs).
 
 ## 2022-05-24
 

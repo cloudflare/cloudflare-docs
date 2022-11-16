@@ -13,7 +13,7 @@ The Lists API supports different types of lists:
 
 *   Use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/) to define lists of redirects that you enable by creating a Bulk Redirect Rule.
 
-The [Lists API](https://api.cloudflare.com/#lists-properties) provides an interface for programmatically managing these types of lists.
+The [Lists API](https://developers.cloudflare.com/api/operations/lists-get-lists) provides an interface for programmatically managing these types of lists.
 
 To use an IP List in a rule expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language documentation.
 

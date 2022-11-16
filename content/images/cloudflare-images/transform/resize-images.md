@@ -34,7 +34,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
   --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
 ```
 
-Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-variants-properties) for more information regarding creating variants via API.
+Refer to the [API documentation](https://developers.cloudflare.com/api/operations/cloudflare-images-variants-list-variants) for more information regarding creating variants via API.
 
 {{</tab>}}
 {{</tabs>}}
