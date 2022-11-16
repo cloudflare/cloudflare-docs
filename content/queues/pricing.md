@@ -42,9 +42,7 @@ Additionally:
 
 ### Examples
 
-If an application writes, reads and deletes (consumes) one million messages a
-day (in a 30 day month), and each message is less than 64 KB in size, the
-estimated bill for the month would be:
+If an application writes, reads and deletes (consumes) one million messages a day (in a 30 day month), and each message is less than 64 KB in size, the estimated bill for the month would be:
 
 {{<table-wrap>}}
 
