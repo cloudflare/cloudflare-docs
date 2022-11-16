@@ -1209,7 +1209,7 @@
           "ent_plus": "Yes"
         },
         "c_new_script_new_domain_alerts": {
-          "title": "New Script Alerts<br/> and New Domain Alerts",
+          "title": "New Resources Alerts<br/> and New Domain Alerts",
           "summary": "Business or higher",
           "free": "No",
           "pro": "No",
@@ -1246,6 +1246,15 @@
         },
         "h_connection_monitor": {
           "title": "Connection monitor",
+          "summary": "Business or higher",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes",
+          "ent_plus": "Yes"
+        },
+        "i_malicious_connections": {
+          "title": "Malicious connection detection<br/> and alerting",
           "summary": "Enterprise",
           "free": "No",
           "pro": "No",

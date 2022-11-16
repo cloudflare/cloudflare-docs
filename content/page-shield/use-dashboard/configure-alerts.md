@@ -12,7 +12,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Only available to customers on Business and Enterprise plans.
+Only available to customers on a Business or Enterprise plan.
 
 {{</Aside>}}
 
