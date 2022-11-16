@@ -47,6 +47,9 @@ A Dead Letter Queue (DLQ) is a common concept in a messaging system, and represe
 With Cloudflare Queues, a Dead Letter Queue is configured as part of your consumer. For example, the following consumer configuration would send messages to our DLQ named `"my-other-queue"` after retrying delivery (by default, 3 times):
 
 ```toml
+---
+filename: wrangler.toml
+---
 [[queues.consumers]]
   queue = "my-queue"
   dead_letter_queue = "my-other-queue"
