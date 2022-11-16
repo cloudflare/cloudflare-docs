@@ -22,7 +22,7 @@ Queues is in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-be
 2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
 3. Select **Enable Queues Beta**.
 
-Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](https://developers.cloudflare.com/queues/pricing/) for more details.
+Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/pricing/) for more details.
 
 ## 2. Install Wrangler
 
@@ -172,7 +172,7 @@ Replace `MY_QUEUE` with the name you have set for your binding from your `wrangl
 
 Every time messages are published to the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages.
 
-In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](https://developers.cloudflare.com/r2)), write to a database (like [D1](https://developers.cloudflare.com/d1)), or further process messages before calling an external API, such as an [email API](https://developers.cloudflare.com/workers/tutorials/) or a data warehouse with your legacy cloud provider.  
+In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](/r2/)), write to a database (like [D1](/d1/)), or further process messages before calling an external API, such as an [email API](/workers/tutorials/) or a data warehouse with your legacy cloud provider.  
 
 ### Connect the consumer Worker to your queue
 
