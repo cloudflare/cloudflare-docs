@@ -65,7 +65,7 @@ Mobile devices tend to be considerably more present when examining human generat
 
 {{<Aside type="note">}}
 Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use.
- {{</Aside>}}
+{{</Aside>}}
 
 For more information refer to [Get time series of device types](https://api.cloudflare.com/#radar-http-get-time-series-of-device-types).
 
@@ -123,7 +123,7 @@ Bots tend to use more IPv4 addresses.
 
 It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](https://api.cloudflare.com/#radar-http-get-a-summary-of-ip-versions) for other parameters.
 
-If you do not know your ISP’s ASN, you use [Radar](https://radar.cloudflare.com/ip) to find what it is.
+If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
 ## Tops
 

@@ -15,7 +15,7 @@ Get access to Cloudflare's data on global Internet traffic.
 
 {{<plan type="all">}}
 
-[Cloudflare Radar](https://radar.cloudflare.com) is a hub that showcases global Internet traffic, attacks, and technology trends and insights. It is powered by data from Cloudflare’s global network, as well as aggregated and [anonymized](https://developers.cloudflare.com/1.1.1.1/privacy/public-dns-resolver/) data from Cloudflare’s [1.1.1.1 public DNS resolver](/1.1.1.1/).
+[Cloudflare Radar](https://radar.cloudflare.com) is a hub that showcases global Internet traffic, attacks, and technology trends and insights. It is powered by data from Cloudflare’s global network, as well as aggregated and [anonymized](/1.1.1.1/privacy/public-dns-resolver/) data from Cloudflare’s [1.1.1.1 public DNS resolver](/1.1.1.1/).
 
 Using Radar's API you can access Cloudflare's data on global Internet traffic.
 

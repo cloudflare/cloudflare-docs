@@ -48,7 +48,7 @@ A successful response will look similar to the following:
 This response means that 41% of the requests are classified as coming from mobile devices, while 58% are desktop traffic.
 
 
-{{<Aside type="note" >}} Cloudflare Radar attempts to provide trends and insights into general Internet usage, using the traffic that goes through Cloudflare infrastructure. As such, Cloudflare Radar only provides data on traffic coming from end-users, unless otherwise specified (for example, origin fetches are excluded).
+{{<Aside type="note">}}Cloudflare Radar attempts to provide trends and insights into general Internet usage, using the traffic that goes through Cloudflare infrastructure. As such, Cloudflare Radar only provides data on traffic coming from end-users, unless otherwise specified (for example, origin fetches are excluded).
 {{</Aside>}}
 
 The previous example returns all traffic from bots and humans. However, you can access just the traffic classified as coming from humans (the default in [Cloudflare Radar](https://radar.cloudflare.com)) by adding `botClass=LIKELY_HUMAN`. You can also access traffic coming only from bots with `botClass=LIKELY_AUTOMATED` (refer to [bot classes](/radar/concepts/bot-classes) for more information). For example:
@@ -58,16 +58,15 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/http/summary/device_type
      -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-Running the above, do you see any differences between both in the distribution of mobile vs desktop traffic?
+Running the above, can you find any differences between both in the distribution of mobile versus desktop traffic?
 
 {{<Aside type="note" header="The <code>result.meta</code> property">}}
 The `result.meta` property in the response includes metadata about the current request. In the example above, `meta.dateRange` returns the date range specified in the query, while `meta.normalization` returns the type of normalization applied to the data (refer to [Normalization methods](/radar/concepts/normalization) for more information).
 
-When querying for timeseries, `result.meta` will also include the returned [aggregation interval](/radar/concepts/aggregation-intervals) in `meta.aggInterval`.
+When querying for time series, `result.meta` will also include the returned [aggregation interval](/radar/concepts/aggregation-intervals) in `meta.aggInterval`.
 
 When present, `meta.confidenceInfo.level` will also provide an indication of how much confidence Cloudflare has in the data. Confidence levels are affected either by internal issues affecting data quality or by Cloudflare not having sufficient data for a given location or Autonomous System (AS). In these cases, confidence level will be below `5` (refer to [Confidence levels](/radar/concepts/confidence-levels) for more information).
 {{</Aside>}}
-
 
 ## Use Python
 

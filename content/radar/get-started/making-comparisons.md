@@ -12,7 +12,7 @@ When comparing time series, across locations/time ranges/etc., in endpoints that
 
 ## Compare locations
 
-In the following example, we will compare the traffic change across two different locations — United States and Portugal. The example will use [alpha-2 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements), for the last seven days:
+In the following example, we will compare the traffic change across two different locations — United States and Portugal. The example will use [alpha-2 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) for the last seven days:
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=us_data&dateRange=7d&location=US&name=pt_data&dateRange=7d&location=PT&format=json" \
@@ -56,7 +56,6 @@ The response (shortened below for brevity) uses the provided `name` property to 
 ```
 
 Comparisons can be made in most endpoints, not just endpoints that use `min-max`.
-
 
 ## Compare date ranges
 
@@ -127,7 +126,6 @@ The `result` property should return a response like this:
 This shows how traffic dropped to almost zero during the outage. If we chart it and set the end date to January 18 to make it clearer, we get the following:
 
 ![Tonga October vs January 2022](/radar/static/tonga_outage.png)
-
 
 ## Next steps
 
