@@ -8,7 +8,7 @@ meta:
 
 # Script and connection statuses
 
-Cloudflare classifies scripts and connections according to the following:
+Cloudflare classifies scripts and connections (also known as resources) according to the following:
 
 * The number of times a script/connection was reported.
 * Whether the script/connection is considered malicious or not.
@@ -25,6 +25,6 @@ Use Page Shield's dashboards to review the scripts loaded in your domain and the
 
 All scripts considered malicious will appear in the Active Scripts dashboard, regardless of their status. The same applies to connections shown in the Active Connections dashboard.
 
-Malicious script detection is only available to Enterprise customers with a paid add-on.
+Malicious script/connection detection is only available to Enterprise customers with a paid add-on.
 
 {{</Aside>}}

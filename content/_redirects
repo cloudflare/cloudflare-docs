@@ -184,6 +184,7 @@
 /ddos-protection/managed-rulesets/tcp-protection/configure-api/ /ddos-protection/tcp-protection/api/ 301
 /ddos-protection/managed-rulesets/tcp-protection/configure-dashboard/ /ddos-protection/tcp-protection/setup/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
+/ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 
 # dns
 /dns/zone-setups/secondary-dns/ /dns/zone-setups/zone-transfers/ 301
@@ -422,6 +423,10 @@
 /page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
 /page-shield/reference/script-monitor-api/ /page-shield/reference/page-shield-api/ 301
 /page-shield/use-dashboard/configure-reporting-endpoint/ /page-shield/reference/settings/#csp-reporting-endpoint 301
+
+# radar
+/fundamentals/radar/ /radar/ 301
+/fundamentals/radar/glossary/ /radar/glossary/ 301
 
 # railgun
 /railgun/user-guide/introduction/ /railgun/about/ 301
