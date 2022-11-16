@@ -17,7 +17,7 @@ There are four major concepts to understand with Queues:
 
 ## What is a Queue
 
-A queue is the core concept underpinning Cloudflare Queues: a queue can be thought of as a buffer or list that automatically scales as messages are written to it, and allows a consumer to pull messages from that same queue.
+A queue is a buffer or list that automatically scales as messages are written to it, and allows a consumer Worker to pull messages from that same queue.
 
 Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumer) has successfully consumed the message.
 
