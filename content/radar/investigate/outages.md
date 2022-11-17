@@ -65,4 +65,4 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/annotations/outages?limi
 
 Refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-annotations-get-outages-annotations) for more information regarding this endpoint.
 
-Having data on a given outage allows you to examine its impact through both [Netflows](/radar/investigate/netflows) (like in the [Tonga outage](/radar/get-started/making-comparisons/#use-specific-timestamps) and [others](https://blog.cloudflare.com/q3-2022-internet-disruption-summary/)) and [HTTP](/radar/investigate/http-requests) data (for example, did the outage affect more mobile than desktop traffic?).
+Having data on a given outage allows you to examine its impact through both [Netflows](/radar/investigate/netflows/) (like in the [Tonga outage](/radar/get-started/making-comparisons/#use-specific-timestamps) and [others](https://blog.cloudflare.com/q3-2022-internet-disruption-summary/)) and [HTTP](/radar/investigate/http-requests/) data (for example, did the outage affect more mobile than desktop traffic?).
