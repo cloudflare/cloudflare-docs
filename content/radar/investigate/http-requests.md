@@ -127,7 +127,7 @@ It is also interesting to know how your ISP fares in IPv6 adoption. If you know 
 
 If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
-### Tops
+### Top
 
 #### Example: top locations by IPv6 traffic
 

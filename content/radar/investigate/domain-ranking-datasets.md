@@ -15,7 +15,7 @@ Cloudflare regularly generates a domain ranking based on DNS queries to [1.1.1.1
 
 ### Top
 
-### Example: Get the current ordered top domains in the Cloudflare ranking
+#### Example: Get the current ordered top domains in the Cloudflare ranking
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&format=json&limit=5" \
@@ -47,7 +47,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&for
 
 For more information refer to [Get Domains Rank top](https://developers.cloudflare.com/api/operations/radar-ranking-get-domains-rank-top).
 
-### Example: Get the last top `x` ranking bucket
+#### Example: Get the last top `x` ranking bucket
 
 As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million, etc.. These are available through Cloudflare's [datasets endpoints](https://developers.cloudflare.com/api/operations/radar-datasets-get-datasets).
 
