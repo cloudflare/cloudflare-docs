@@ -151,7 +151,6 @@ When users authenticate through Cloudflare Access, Cloudflare will generate a ce
 
 {{<Aside type="note">}}
 
-The username in the identity provider must match the username on the SSH server.  
-To use with a server where the usernames don't match, see the advanced setup in [Short-Lived Certificates](/cloudflare-one/identity/users/short-lived-certificates/)
+The setup described in this tutorial requires the username in the identity provider to match the username on the SSH server. To use with a server where the usernames do not match, refer to the [advanced setup instructions](/cloudflare-one/identity/users/short-lived-certificates/#2-ensure-unix-usernames-match-user-sso-identities).
 
 {{</Aside>}}
