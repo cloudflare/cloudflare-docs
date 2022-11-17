@@ -6,7 +6,7 @@ weight: 2
 
 # DNS
 
-Access aggregated and anonymized DNS queries to Cloudflare's [1.1.1.1](/1.1.1.1//) public resolver service.
+Access aggregated and anonymized DNS queries to Cloudflare's [1.1.1.1](/1.1.1.1/) public resolver service.
 
 ## List of endpoints
 
