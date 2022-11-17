@@ -10,6 +10,12 @@ You can access logs and exceptions for your Workers using the dashboard or [`wra
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
+{{<Aside type="note">}}
+
+To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush).
+
+{{</Aside>}}
+
 ## Adding custom logs
 
 Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.

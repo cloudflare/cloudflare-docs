@@ -1,0 +1,74 @@
+---
+pcx_content_type: concept
+title: Logpush
+---
+
+# Workers Trace Events Logpush
+
+[Cloudflare Logpush](/logs/about/) supports the ability to send Workers Trace Event Logs to any of our [supported destinations](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available to customers on our Cloudflare Enterprise and Workers Paid plan.
+
+## <What are we doing here?>
+
+Check your account permissions. Logpush permissions are different than Workers permissions. 
+ 
+Super Administrators, Administrators and the Log Share roles have full access to Logpush. Alternatively, create a new API token scoped at the Account level with Logs Edit permissions. 
+ 
+## Create a Logpush job
+
+The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/get-started/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
+ 
+```
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
+-H 'X-Auth-Key: <API_KEY>' \
+-H 'X-Auth-Email: <EMAIL>' \
+-H 'Content-Type: application/json' \
+-d '{
+"name": "workers_logpush",
+"logpull_options": "fields=Event,EventTimestampMs,Outcome,Exceptions,Logs,ScriptName",
+"destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
+"dataset": "workers_trace_events",
+"enabled": true
+}'| jq .
+```
+
+In Logpush, you can configure [filters](/logs/reference/filters/) and a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) to have more control of the volume of data that is sent to your configured destination. For example, if you only want to receive logs for resulted in an exception, add the following under `logpull_options` to your <what file?>:
+ 
+`"filter":"{\"where\": {\"key\":\"Outcome\",\"operator\":\"!eq\",\"value\":\"exception\"}}"`
+
+## Enable logging on your Workers script 
+ 
+Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an environment. Any new scripts with this property will automatically get picked up by the Logpush job. 
+ 
+```toml
+---
+filename: wrangler.toml
+---
+
+# Top-level configuration
+
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2022-07-12"
+
+workers_dev = false
+logpush = true
+route = { pattern = "example.org/*", zone_name = "example.org" }
+```
+
+Configure via API:
+
+```
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/scripts/<SCRIPT_NAME>" \
+-H 'X-Auth-Key: <API_KEY>' \
+-H 'X-Auth-Email: <EMAIL>' \
+--form 'metadata={"main_module": "my-worker.js", "logpush": true}' \
+--form '"my-worker.js"=@./my-worker.js;type=application/javascript+module'
+```
+
+## Limits
+
+The Logs and Exceptions fields have the following limits in place.
+
+* Message size: Maximum of 150 characters per log line
+* Array limit: 20 elements
+* Log message array: This is a nested array and we have a limit of 3 elements
