@@ -37,7 +37,6 @@ you can see how `echo` piped together with `tr` to provide a proper payload with
 ---
 header: Example bash script that uses curl to query Analytics API
 ---
-```bash
 echo '{ "query":
   "{
     viewer {
