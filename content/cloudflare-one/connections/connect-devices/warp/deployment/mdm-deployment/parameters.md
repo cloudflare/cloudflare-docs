@@ -32,7 +32,7 @@ This field is only required to enforce DNS policies when deploying the client in
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific policy location. This value is only necessary if deploying without a team name or in an organization with multiple policy locations.
+Instructs the client to direct all DNS queries to a specific Gateway DNS location. This value is only necessary if deploying without a team name or in an organization with multiple DNS locations.
 
 **Value Type:** `string`
 
@@ -186,7 +186,7 @@ The automatically generated secret when you created your [service token](/cloudf
 ## Frequently Asked Questions
 
 - **What happens if I don't supply a Gateway DoH subdomain?**
-  If you specify an `organization`, we will automatically use the default location specified in Gateway.
+  If you specify an `organization`, we will automatically use the default DNS location specified in Gateway.
 
 - **How do I obtain logs in the event of an issue with client?**
   The macOS and Windows clients installations each contain an application in their installed folders called `warp-diag` that can be used to obtain logs.
