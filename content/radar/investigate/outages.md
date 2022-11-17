@@ -10,13 +10,13 @@ weight: 7
 
 Refer the [blog post](https://blog.cloudflare.com/announcing-cloudflare-radar-outage-center/) for more information but, in short, Radar provides the following information:
 
-- Location: Where was the outage?
-- ASN: What autonomous system experienced a disruption in connectivity?
-- Type: How broad was the outage? Did connectivity fail nationwide, or at a sub-national level? Did just a single network provider have an outage?
-- Scope: If it was a sub-national/regional outage, what state or city was impacted? If it was a network-level outage, which one was it?
-- Cause: Insight into the likely cause of the outage, based on publicly available information. Historically, some outages have been government directed shutdowns, while others are caused by severe weather or natural disasters, or by infrastructure issues such as cable cuts, power outages, or filtering/blocking.
-- Start time: When did the outage start?
-- End time: When did the outage end?
+- **Location**: Where was the outage?
+- **ASN**: What autonomous system experienced a disruption in connectivity?
+- **Type**: How broad was the outage? Did connectivity fail nationwide, or at a sub-national level? Did just a single network provider have an outage?
+- **Scope**: If it was a sub-national/regional outage, what state or city was impacted? If it was a network-level outage, which one was it?
+- **Cause**: Insight into the likely cause of the outage, based on publicly available information. Historically, some outages have been government directed shutdowns, while others are caused by severe weather or natural disasters, or by infrastructure issues such as cable cuts, power outages, or filtering/blocking.
+- **Start time**: When did the outage start?
+- **End time**: When did the outage end?
 
 ## List of endpoints
 
