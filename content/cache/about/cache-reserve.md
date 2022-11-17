@@ -54,7 +54,7 @@ Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to i
 
 Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/reference/log-fields/zone/http_requests/) Logpush field.
 
-Cache Reserve monthtly operations and storage usage are viewable in the dashboard.
+Cache Reserve monthly operations and storage usage are viewable in the dashboard.
 
 ## Pricing
 
