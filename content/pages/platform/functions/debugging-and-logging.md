@@ -72,7 +72,7 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 }
 ```
 
-`wrangler pages deployment tail` gives you much more granular control over how you can customize a logging session to better suit your needs.
+`wrangler pages deployment tail` gives you much more granular control over how you can customize a logging session to better suit your needs. Please refer to the [wrangler pages deployment tail documentation](/workers/wrangler/commands/#deployment-tail) for available configuration options
 
 ## View logs in the Cloudflare Dashboard
 
