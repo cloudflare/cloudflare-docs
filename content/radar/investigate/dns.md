@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: DNS
-weight: 2
+weight: 3
 ---
 
 # DNS

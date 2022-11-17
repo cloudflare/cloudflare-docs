@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
 title: HTTP requests
-weight: 2
+weight: 1
 ---
 
 # HTTP requests
 
-While in [Netflows](/radar/investigate/netflows/) we were examining bytes and packets reaching Cloudflare's edge routers, in HTTP requests we are a layer above in the [OSI model](https://en.wikipedia.org/wiki/OSI_model). In HTTP requests we examine complete HTTP requests from end users that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
+While in [Netflows](/radar/investigate/netflows/) we can inspect bytes and packets reaching Cloudflare's edge routers, in HTTP requests we are a layer above in the [OSI model](https://en.wikipedia.org/wiki/OSI_model). HTTP requests examines complete HTTP requests from end users that reach websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
 
 {{<Aside type="note">}}
 HTTP traffic includes both HTTP and HTTPS traffic coming from end users.
