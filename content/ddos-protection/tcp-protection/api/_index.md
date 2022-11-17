@@ -73,6 +73,8 @@ Delete all allowlisted prefixes | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_t
 
 ### SYN Flood Protection operations
 
+#### Rules
+
 {{<table-wrap>}}
 
 Operation | Method and endpoint / Description
@@ -86,7 +88,24 @@ Delete all SYN flood rules | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_pr
 
 {{</table-wrap>}}
 
+#### Filters
+
+{{<table-wrap>}}
+
+Operation | Method and endpoint / Description
+----------|----------------------------------
+List SYN flood filters | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters`<br>Fetches all SYN flood filters in the account.
+Add a SYN flood filter | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters`<br>Adds a SYN flood filter to the account.
+Get a SYN flood filter | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters/<FILTER_ID>`<br>Fetches the details of an existing SYN flood filter in the account.
+Update a SYN flood filter | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters/<FILTER_ID>`<br>Updates an existing SYN flood filter in the account.
+Delete a SYN flood filter | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters/<FILTER_ID>`<br>Deletes an existing SYN flood filter from the account.
+Delete all SYN flood filters | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters`<br>Deletes all existing SYN flood filters from the account.
+
+{{</table-wrap>}}
+
 ### Out-of-state TCP Protection operations
+
+#### Rules
 
 {{<table-wrap>}}
 
@@ -98,6 +117,21 @@ Get an out-of-state TCP rule | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_pro
 Update an out-of-state TCP rule | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Updates an existing out-of-state TCP rule in the account.
 Delete an out-of-state TCP rule | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Deletes an existing out-of-state TCP rule from the account.
 Delete all out-of-state TCP rules | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules`<br>Deletes all existing out-of-state TCP rules from the account.
+
+{{</table-wrap>}}
+
+#### Filters
+
+{{<table-wrap>}}
+
+Operation | Method and endpoint / Description
+----------|----------------------------------
+List out-of-state TCP filters | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Fetches all out-of-state TCP filters in the account.
+Add a out-of-state TCP filter | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Adds a out-of-state TCP filter to the account.
+Get a out-of-state TCP filter | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Fetches the details of an existing out-of-state TCP filter in the account.
+Update a out-of-state TCP filter | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Updates an existing out-of-state TCP filter in the account.
+Delete a out-of-state TCP filter | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Deletes an existing out-of-state TCP filter from the account.
+Delete all out-of-state TCP filters | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Deletes all existing out-of-state TCP filters from the account.
 
 {{</table-wrap>}}
 
