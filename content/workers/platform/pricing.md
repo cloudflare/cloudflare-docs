@@ -71,7 +71,7 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 - (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
-## Workers Trave Events Logpush
+## Workers Trace Events Logpush
 
 Workers Logpush is only available on the Workers Paid plan. 
 

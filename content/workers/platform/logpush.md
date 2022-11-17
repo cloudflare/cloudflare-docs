@@ -5,13 +5,17 @@ title: Logpush
 
 # Workers Trace Events Logpush
 
-[Cloudflare Logpush](/logs/about/) supports the ability to send Workers Trace Event Logs to any of our [supported destinations](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available to customers on our Cloudflare Enterprise and Workers Paid plan.
+[Cloudflare Logpush](/logs/about/) supports the ability to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](https://developers.cloudflare.com/workers/platform/pricing/#workers-trace-events-logpush).
 
-## <What are we doing here?>
+## Verify your Logpush access
 
-Check your account permissions. Logpush permissions are different than Workers permissions. 
+To configure a Logpush job, verify that your Cloudflare account role is able to use Logpush. To check your role:
+
+1. Sign into the Cloudflare dashboard](https://dash.cloudflare.com). 
+2. Select your account and scroll down to **Manage Account* > **Members**.
+3. Check your account permissions. Roles with Logpush configuration access are different than Workers permissions. Super Administrators, Administrators and the Log Share roles have full access to Logpush
  
-Super Administrators, Administrators and the Log Share roles have full access to Logpush. Alternatively, create a new API token scoped at the Account level with Logs Edit permissions. 
+Alternatively, create a new [API token](/fundamentals/api/get-started/create-token/) scoped at the Account level with Logs Edit permissions. 
  
 ## Create a Logpush job
 
@@ -31,13 +35,13 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush
 }'| jq .
 ```
 
-In Logpush, you can configure [filters](/logs/reference/filters/) and a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) to have more control of the volume of data that is sent to your configured destination. For example, if you only want to receive logs for resulted in an exception, add the following under `logpull_options` to your <what file?>:
+In Logpush, you can configure [filters](/logs/reference/filters/) and a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) to have more control of the volume of data that is sent to your configured destination. For example, if you only want to receive logs for resulted in an exception, add the following under `logpull_options`:
  
 `"filter":"{\"where\": {\"key\":\"Outcome\",\"operator\":\"!eq\",\"value\":\"exception\"}}"`
 
-## Enable logging on your Workers script 
+## Enable logging on your Worker
  
-Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an environment. Any new scripts with this property will automatically get picked up by the Logpush job. 
+Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/platform/environments). Any new Workers with this property will automatically get picked up by the Logpush job. 
  
 ```toml
 ---
@@ -55,7 +59,7 @@ logpush = true
 route = { pattern = "example.org/*", zone_name = "example.org" }
 ```
 
-Configure via API:
+Configure via multipart script upload API:
 
 ```
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/scripts/<SCRIPT_NAME>" \
