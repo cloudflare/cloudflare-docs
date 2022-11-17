@@ -395,7 +395,7 @@ This command will output:
 3. The `http.sslcainfo` defines the CA Certificate store. To append the Cloudflare certificate to the CA bundle, update `http.sslcainfo`.
 
 ```git
-gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
+gc .\Cloudflare_CA.pem | ac $(git config --get http.sslcainfo)
 ```
 
 #### Git on Mac and Linux
