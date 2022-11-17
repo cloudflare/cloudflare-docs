@@ -10,9 +10,11 @@ weight: 1
 
 Netflows includes all types of traffic from Cloudflare's routers, not just traffic to websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
 
-## Timeseries
+## List of endpoints
 
-### Example: filtering by product
+### Timeseries
+
+#### Example: filtering by product
 
 Besides comparing time series across locations or date ranges (discussed in [Making comparisons](/radar/get-started/making-comparisons/)), we can also examine `ALL` traffic versus only `HTTP` traffic using the `product` filter. For more information, refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-net-flows-get-net-flow-time-series) for this endpoint. 
 

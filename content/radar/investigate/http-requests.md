@@ -20,9 +20,11 @@ These endpoints can be broadly split into:
 - `summary`: Displays a summary of a group of metrics over the specified time range. For example, IPv4 traffic percentage out of the total HTTP traffic during that time period.
 - `top`: A list of the top locations or [Autonomous Systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) (ASes) ranked by adoption of a specific metric. For example, top locations by mobile device traffic (like which locations have a higher percentage of mobile traffic out of the total traffic for that location).
 
-## Timeseries
+## List of endpoints
 
-### Example: hourly breakdown by device type
+### Timeseries
+
+#### Example: hourly breakdown by device type
 
 In this example, we will request traffic by device type globally, with and without [bot traffic](/radar/concepts/bot-classes/). Parameters for the `human` series are `name=human&botClass=LIKELY_HUMAN&dateRange=1d`. For the `bot` series, the parameters are `name=bot&botClass=LIKELY_AUTOMATED&dateRange=1d`:
 
@@ -69,9 +71,9 @@ Note that device classification comes from the [User-agent](https://developer.mo
 
 For more information refer to [Get time series of device types](https://developers.cloudflare.com/api/operations/radar-http-get-time-series-of-device-types).
 
-## Summary
+### Summary
 
-### Example: overall breakdown by device type and human/bot traffic
+#### Example: overall breakdown by device type and human/bot traffic
 
 We can also look at the same information asking for a summary of the device type breakdown over the entire period, instead of a per hour breakdown like in the example before.
 
@@ -97,7 +99,7 @@ Here is the abbreviated response:
 
 For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-http-get-a-summary-of-device-types) for this endpoint.
 
-### Example: breakdown by IP version and human/bot traffic
+#### Example: breakdown by IP version and human/bot traffic
 
 In the following example, we will examine global breakdown of traffic by IP version, with and without bots:
 
@@ -125,9 +127,9 @@ It is also interesting to know how your ISP fares in IPv6 adoption. If you know 
 
 If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
-## Tops
+### Tops
 
-### Example: top locations by IPv6 traffic
+#### Example: top locations by IPv6 traffic
 
 In the following example, we will find which locations had a higher adoption of [IPv6](https://en.wikipedia.org/wiki/IPv6) in the last 28 days.
 
