@@ -165,6 +165,8 @@ None of the options for this command are required. Many of these options can be 
     {{<Aside type="warning">}}
     When developing on Wrangler there there is currently a libc++ dependency that needs to be installed on your machine. This can be done by running `sudo apt-get install libc++-dev` on Linux.
     {{</Aside>}}
+- `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - This will write/read to/from real KV namespaces. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 - `--node-compat` {{<type>}}boolean{{</type>}}
