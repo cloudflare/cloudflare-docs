@@ -81,7 +81,7 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 {{</Aside>}}
 
-## 4. Run a query against your D1 database
+## 5. Run a query against your D1 database
 
 ### Configure your D1 database
 
@@ -144,7 +144,7 @@ export default {
 
 After configuring your Worker, test your project locally.
 
-## 5. Develop locally with Wrangler
+## 6. Develop locally with Wrangler
 
 While in your project directory, test your database locally by running:
 
