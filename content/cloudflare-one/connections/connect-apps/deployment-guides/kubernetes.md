@@ -86,12 +86,24 @@ spec:
       - command:
         - cloudflared
         - tunnel
+        # Metrics is a tunnel command and not a subcommand so it must come before the run command
+        - --metrics
+        - 0.0.0.0:2000
         - run
         args:
         - --token
         - <token value>
         image: cloudflare/cloudflared:latest
         name: cloudflared
+        livenessProbe:
+          httpGet:
+          # Cloudflared has a /ready endpoint which returns 200 if and only if
+          # it has an active connection to the edge.
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
 ```
 This file will be deployed with the following command.
 ```sh
