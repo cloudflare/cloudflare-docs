@@ -37,8 +37,8 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
 
-- Be cacheable, e.g. according to [Cache Rules](/cache/about/cache-rules/), [Cache Level](/cache/how-to/set-caching-levels/), etc.
-- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), etc.)
+- Be cacheable, according to Cloudflare's standard [cacheability factors](https://developers.cloudflare.com/cache),
+- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/about/cache-rules/)),
 - Have a Content-Length response header.
 
 ## Limits
