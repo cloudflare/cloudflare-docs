@@ -110,6 +110,9 @@ To investigate a possibly ongoing attack, select **View Dashboard**.
 
 ## Final remarks
 
+* DDoS Alerts are currently only available for DDoS attacks that were detected and mitigated by the [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available DDoS attacks that were detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/)
+system.
+
 * If you configure more than one alert type for the same kind of attack (for example, both an HTTP DDoS Attack Alert and an Advanced HTTP DDoS Attack Alert) you may get more than one notification when an attack occurs. To avoid receiving duplicate notifications, delete one of the configured alerts.
 
 * Events listed under [Firewall Events](/waf/analytics/paid-plans/) with the `Connection Close` mitigation action are not covered by DDoS alerts. Cloudflare only sends notifications when the mitigation action is one of the following: `force-conn-close`, `block`, `ratelimit`, or `captcha`.
