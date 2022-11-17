@@ -57,7 +57,7 @@ Here is the abbreviated response:
         "startTime": "2022-11-03T13:00:00Z",
         "endTime": "2022-11-04T13:00:00Z"
       },
-      "normalization": "PERCENTAGE",
+      "normalization": "PERCENTAGE"
     }
   }
 }
