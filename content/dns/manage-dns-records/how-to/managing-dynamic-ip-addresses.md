@@ -10,7 +10,7 @@ Some hosting providers dynamically update their customer's IP addresses. These c
 
 ## Cloudflare API
 
-Create a script to monitor IP address changes and then have that script push changes to the [Cloudflare API](https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record).
+Create a script to monitor IP address changes and then have that script push changes to the [Cloudflare API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-update-dns-record).
 
 ## ddclient
 

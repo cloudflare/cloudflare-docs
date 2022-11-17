@@ -10,7 +10,9 @@ meta:
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a redirect rule via API.
 
-## Required permissions
+## Prerequisites
+
+{{<render file="url-forwarding/_requires-proxied-site.md">}}
 
 The API token used in API requests to manage redirect rules must have at least the following permission:
 
@@ -25,7 +27,7 @@ A redirect rule must have:
 * `action` set to `redirect`
 * An `action_parameters` object with additional configuration settings — refer to [Available settings](/rules/url-forwarding/single-redirects/settings/) for details.
 
-The following request of the [Create zone ruleset](https://api.cloudflare.com/#zone-rulesets-create-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
+The following request of the [Create zone ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
@@ -96,7 +98,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 </div>
 </details>
 
-If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update zone ruleset](https://api.cloudflare.com/#zone-rulesets-update-zone-ruleset) operation instead, like in the following example:
+If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update zone ruleset](https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-ruleset) operation instead, like in the following example:
 
 ```json
 curl -X PUT \

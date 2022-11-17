@@ -32,7 +32,7 @@ Gateway allows you to build DNS, Network, and HTTP policies based on application
 
 ### Applications
 
-When you [create a policy for applications](#creating-policies-with-applications-and-app-types) from the Zero Trust dashboard, the _Value_ drop-down menu lists all supported applications and their respective app types. To view an up-to-date list outside of the UI, please refer to the [Gateway API guide](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
+When you [create a policy for applications](#creating-policies-with-applications-and-app-types) from the Zero Trust dashboard, the _Value_ drop-down menu lists all supported applications and their respective app types. To view an up-to-date list outside of the UI, please refer to the [Gateway API guide](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings).
 
 ### App types
 

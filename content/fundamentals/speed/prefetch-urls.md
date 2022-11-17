@@ -12,7 +12,7 @@ URL prefetching means that Cloudflare pre-populates the cache with content a vis
 
 ## Availability
 
-This feature is only available to customers on an Enterprise plan.
+{{<feature-table id="speed.prefetch_urls">}}
 
 ---
 
@@ -34,7 +34,7 @@ To enable **Prefetch URLs** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Prefetch URLs** with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-prefetch-preload-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Prefetch URLs** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-prefetch-preload-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
  
 {{</tab>}}
 {{</tabs>}}

@@ -59,7 +59,7 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 
 ### Supported options in "Upload-Metadata"
 
-Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
+Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://developers.cloudflare.com/api/operations/stream-videos-list-videos).
 
 {{<definitions>}}
 

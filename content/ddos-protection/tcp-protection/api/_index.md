@@ -12,7 +12,7 @@ meta:
 
 You can configure Advanced TCP Protection using the Advanced TCP Protection API.
 
-The Advanced TCP Protection API only supports API token authentication. For more information on API authentication, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+The Advanced TCP Protection API only supports API token authentication. For more information on API authentication, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
 For examples of API calls, refer to [Common API calls](/ddos-protection/tcp-protection/api/examples/).
 
@@ -103,4 +103,4 @@ Delete all out-of-state TCP rules | `DELETE accounts/<ACCOUNT_ID>/magic/advanced
 
 ## Pagination
 
-The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Requests: Pagination](https://api.cloudflare.com/#getting-started-requests) in the API documentation.
+The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Requests: Pagination](/fundamentals/api/) in the API documentation.

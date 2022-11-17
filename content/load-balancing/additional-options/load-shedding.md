@@ -57,7 +57,7 @@ To enable load shedding for a specific pool via the dashboard:
 
 ### Configure via API
 
-To enable load shedding for a specific pool via the API, [update the values](https://api.cloudflare.com/#account-load-balancer-pools-update-pool) for the pool's `load_shedding` object.
+To enable load shedding for a specific pool via the API, [update the values](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-update-pool) for the pool's `load_shedding` object.
 
 <details>
 <summary>Example request</summary>

@@ -65,23 +65,23 @@ Type conversion from Javascript inputs to D1 inputs is as follows:
 * Booleans will be turned into integers where 1 is `TRUE` and 0 is `FALSE`.
 
 ## Return object
-The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), [lastRowId](https://www.sqlite.org/c3ref/last_insert_rowid.html) (if applicable), number of write changes, the internal duration of the operation in milliseconds and success status.
+The methods `stmt.run()`, `stmt.all()` and `db.batch()` return an object that contains the results (if applicable), the success status, and a meta object with the internal duration of the operation in milliseconds.
 
 ```js
 {
   results: array | null, // [] if empty, or null if it doesn't apply
-  lastRowId: integer, // the rowid of the last row inserted or null if it doesn't apply
-  changes: integer, // total # of rows that were inserted/updated/deleted, or `null`
-  duration: number, // duration of the operation in milliseconds
   success: boolean, // true if the operation was successful, false otherwise
+  meta: {
+    duration: number, // duration of the operation in milliseconds
+  }
 }
 ```
 
 Example:
 ```js
-const { lastRowId } = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)').bind( "John", 42 ).run();
+const { duration } = (await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)').bind( "John", 42 ).run()).meta;
 
-console.log(lastRowId); // 72
+console.log(duration); // 0.172
 ```
 
 ## Query statement methods
@@ -111,6 +111,10 @@ const stmt = db.prepare('SELECT COUNT(*) AS total FROM users');
 const values = await stmt.first();
 console.log(values); // { total: 50 }
 ```
+
+If the query returns no rows, then first() will return ```null```.
+
+If the query returns rows, but ```column``` does not exist, then first() will throw the ```D1_ERROR``` exception.
 
 ### await stmt.all( [column] )
 Returns all rows and metadata.
@@ -175,9 +179,10 @@ const info = await db.prepare('INSERT INTO users (name, age) VALUES (?1, ?2)')
 console.log(info);
 /*
 {
-  lastRowId: 56
-  changes: 1
-  duration: 62
+  success: true
+  meta: {
+    duration: 62,
+  }
 }
 */
 ```
@@ -209,7 +214,7 @@ console.log(out);
 /*
 {
   count: 80,
-  duration: 7655
+  duration: 76
 }
 */
 ```
@@ -226,9 +231,10 @@ console.log(young);
 /*
 {
   results: [...],
-  lastRowId: 0
-  changes: 0
-  duration: 31
+  success: true
+  meta: {
+    duration: 31,
+  }
 }
 */
  const old = await stmt.bind(80).all();
@@ -236,14 +242,13 @@ console.log(old);
 /*
 {
   results: [...],
-  lastRowId: 0
-  changes: 0
-  duration: 29
+  success: true
+  meta: {
+    duration: 29,
+  }
 }
 */
 ```
-
-
 
 ## Batch statements
 Batching sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.
@@ -375,12 +380,11 @@ try {
 */
 ```
 
-
 ## Error list
+
 | Message | Cause |
 | ---- | ---- |
 | `D1_ERROR` | Generic error |
-| `D1_NORESULTS` | No results |
 | `D1_COLUMN_NOTFOUND` | Column not found |
 | `D1_DUMP_ERROR` | Database dump error |
 | `D1_EXEC_ERROR` | Exec error in line x: y error |

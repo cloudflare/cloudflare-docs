@@ -98,7 +98,7 @@ You can apply DNS policies to a growing list of popular web applications. Refer 
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
+A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings).
 
 ### Authoritative Nameserver IP
 
@@ -110,7 +110,7 @@ Use this selector to match against the IP address of the authoritative name serv
 
 ### Content Categories
 
-Use this selector to apply DNS policies to traffic directed to specific content categories.
+Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
 
 | UI name | API example |
 | -- | -- |
@@ -166,7 +166,7 @@ Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (D
 
 ### Domain
 
-Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and all subdomains of `example.com`.
+Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
 
 | UI name | API example |
 | -- | -- |
@@ -174,11 +174,11 @@ Use this selector to match against a domain and all subdomains — for example,
 
 ### Host
 
-Use this selector to match against only the hostname specified—for example, if you want to block only `example.com` but not `subdomain.example.com`.
+Use this selector to match against only the hostname specified. — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
 
 | UI name | API example |
 | -- | -- |
-| Host | `dns.fqdn == "www.example.com"` |
+| Host | `dns.fqdn == "test.example.com"` |
 
 ### Location
 
@@ -231,7 +231,7 @@ Use this selector to filter based on the IP addresses that the query resolves to
 
 ### Security Categories
 
-Use this selector to block traffic directed to specific security categories.
+Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
 
 | UI name | API example |
 | -- | -- |

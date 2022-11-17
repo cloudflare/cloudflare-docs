@@ -11,7 +11,7 @@ When you use HTTP applications, you can edit various configuration settings, inc
 Generally, you are allowed to edit all of the zone-level configurations except for the following:
 
 - DNS
-- Traffic (Load Balancing, Waiting Rooms, Health Checks, and more)
+- Traffic (Load Balancing, Waiting Room, Health Checks, and more)
 - Zero Trust and Access policies
 - SSL certifications (though you can test these with a separate [staging certificates](/ssl/edge-certificates/staging-environment/) feature)
 

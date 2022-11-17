@@ -1066,6 +1066,45 @@ $ wrangler pages deployment list [OPTIONS]
 
 {{</definitions>}}
 
+### `deployment tail`
+
+Start a session to livestream logs from your deployed Pages Functions.
+
+```sh
+$ wrangler pages deployment tail [DEPLOYMENT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DEPLOYMENT` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The name of the project you would like to tail.
+- `--environment` {{<type>}}"production"|"preview"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment.
+- `--format` {{<type>}}"json"|"pretty"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The format of the log entries.
+- `--status` {{<type>}}"ok"|"error"|"canceled"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by invocation status.
+- `--header` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by HTTP header.
+- `--method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by HTTP method.
+- `--sampling-rate` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Add a percentage of requests to log sampling rate.
+- `--search` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by a text match in `console.log` messages.
+- `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
+{{</Aside>}}
+
+After starting `wrangler pages deployment tail`, you will receive a live stream of console and exception logs for each request your Functions receive.
+
 ### `publish`
 
 Deploy a directory of static assets as a Pages deployment.

@@ -17,7 +17,7 @@ When you order an [advanced certificate](/ssl/edge-certificates/advanced-certifi
 
 {{<Aside type="note">}}
 
-For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack).
+For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](https://developers.cloudflare.com/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack).
 
 {{</Aside>}}
 

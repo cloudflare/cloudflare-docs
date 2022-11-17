@@ -186,7 +186,7 @@ Example: `"example.com/*"`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -206,7 +206,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -214,7 +214,7 @@ Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{<definitions>}}
 
@@ -224,7 +224,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -639,6 +639,6 @@ It is a recommended best practice to treat `wrangler.toml` as a source of truth 
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wranglr.toml`. Currently, there is no way to disable this behaviour.
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. Currently, there is no way to disable this behaviour.
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

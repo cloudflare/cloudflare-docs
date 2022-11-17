@@ -34,7 +34,7 @@ To enable **Automatic HTTPS Rewrites** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-automatic-https-rewrites-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Automatic HTTPS Rewrites** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-automatic-https-rewrites-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
  
 {{</tab>}}
 {{</tabs>}}

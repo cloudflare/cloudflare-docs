@@ -21,6 +21,8 @@ To view Gateway activity logs, log in to your [Zero Trust dashboard](https://das
 
 By default, Gateway logs all events, including DNS queries and HTTP requests that are allowed and not a risk. You can choose to disable logs or only log blocked requests. To customize what type of events are recorded, log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and navigate to **Settings** > **Network**. Under **Activity Logging**, indicate your DNS, Network, and HTTP log preferences.
 
+These settings will only apply to logs displayed on the Zero Trust dashboard. [Logpush data](#export-gateway-logs-with-logpush) is unaffected.
+
 ## DNS logs
 
 ### Explanation of the fields
@@ -131,7 +133,7 @@ This feature is only available on the Zero Trust Enterprise plan.
 
 You can configure the automatic export of Gateway logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
 
-This feature builds on Cloudflare's Logpush Service — refer to the Logpush documentation to find a list of available fields for[DNS](/logs/reference/log-fields/account/gateway_dns/), [Network](/logs/reference/log-fields/account/gateway_network/), and [HTTP](/logs/reference/log-fields/account/gateway_http/) logs.
+This feature builds on Cloudflare's Logpush Service — refer to the Logpush documentation to find a list of available fields for [DNS](/logs/reference/log-fields/account/gateway_dns/), [Network](/logs/reference/log-fields/account/gateway_network/), and [HTTP](/logs/reference/log-fields/account/gateway_http/) logs.
 
 To enable Logpush for Gateway logs:
 

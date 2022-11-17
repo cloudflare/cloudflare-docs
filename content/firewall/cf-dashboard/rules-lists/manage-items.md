@@ -18,7 +18,7 @@ The list of items displays sorted by IP address, ascending:
 
 {{<Aside type="note" header="Note">}}
 
-You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get lists](https://api.cloudflare.com/#lists-get-lists) operation to fetch them.
+You cannot download a list in CSV format from the dashboard. If you need to download the contents of a list to your device, use the [Get lists](https://developers.cloudflare.com/api/operations/lists-get-lists) operation to fetch them.
 
 {{</Aside>}}
 
