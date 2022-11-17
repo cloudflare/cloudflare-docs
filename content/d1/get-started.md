@@ -155,7 +155,7 @@ When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhos
 
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL (for example, `localhost:8787/api/beverages`). After doing this, you should see your data being displayed in the browser.
 
-## 6. Deploy your database
+## 7. Deploy your database
 
 To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read.
 
