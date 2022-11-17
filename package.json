@@ -13,6 +13,7 @@
     "postbuild": "tsm bin/highlight.ts restore"
   },
   "dependencies": {
+    "@cloudflare/util-sparrow": "^5.3.45",
     "fromnow": "3.0.1",
     "mermaid": "9.1.7"
   },

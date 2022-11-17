@@ -3,6 +3,7 @@ import * as contents from "./contents";
 import * as timeago from "./timeago";
 import * as mermaid from "./mermaid-diagrams";
 import * as navs from "./navlinks";
+import * as sparrow from "./sparrow";
 
 declare global {
   interface Window {
@@ -25,4 +26,5 @@ declare global {
   events.activeTab();
   events.tabs();
   mermaid.init();
+  sparrow.init();
 })();
