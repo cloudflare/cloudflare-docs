@@ -50,7 +50,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 ## Usage
 
-Like the standard CDN, Cache Reserve also uses the CF-Cache-Status header to indicate cache statuses like MISS, HIT, and REVALIDATED. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
+Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to indicate cache statuses like `MISS`, `HIT`, and `REVALIDATED`. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
 
 Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/reference/log-fields/zone/http_requests/) Logpush field.
 
