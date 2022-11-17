@@ -33,7 +33,7 @@ You can create and switch between environments in the dashboard:
 
 We have temporarily disabled the creation of Service Environments while we are improving this feature.
 
-We recommend using [Deployments](/workers/platforms/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
+We recommend using [Deployments](/workers/platform/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
 
 {{</Aside>}}
 

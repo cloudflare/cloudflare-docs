@@ -7,7 +7,7 @@ title: Environments
 
 {{<Aside type="note">}}
 
-We recommend using [Deployments](/workers/platforms/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
+We recommend using [Deployments](/workers/platform/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
 
 We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
 
@@ -361,7 +361,7 @@ Error: ⚠️  Your environment should only include `workers_dev` or `route`. If
 
 {{<Aside type="note">}}
 
-We recommend using [Deployments](/workers/platforms/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
+We recommend using [Deployments](/workers/platform/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
 
 We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
 
