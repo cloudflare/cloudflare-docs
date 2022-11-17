@@ -163,7 +163,7 @@ None of the options for this command are required. Many of these options can be 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
     {{<Aside type="warning">}}
-    When developing on Wrangler there there is currently a libc++ dependency that needs to be installed on your machine. This can be done by running `sudo apt-get install libc++-dev` on Linux.
+    When developing on Wrangler there there is currently a `libc++1` dependency that needs to be installed on your machine.
     {{</Aside>}}
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
