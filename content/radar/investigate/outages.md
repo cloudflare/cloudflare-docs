@@ -18,7 +18,11 @@ Refer the [blog post](https://blog.cloudflare.com/announcing-cloudflare-radar-ou
 - Start time: When did the outage start?
 - End time: When did the outage end?
 
-## Example: Get outages in the last 7 days
+## List of endpoints
+
+### Outages
+
+#### Example: Get outages in the last 7 days
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/annotations/outages?limit=5&offset=0&dateRange=7d&format=json" \
