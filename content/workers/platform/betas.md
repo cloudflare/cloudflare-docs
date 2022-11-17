@@ -15,4 +15,5 @@ These are the betas relevant to Cloudflare Workers.
 | Pub/Sub                       | ✅           |              |[Docs](/pub-sub)                                                            |
 | Queues                        | ✅          |               |[Docs](/queues)                                                             |
 | TCP Workers                   | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-socket-workers/)             |
-| Workers Analytics Engine      |             | ✅            |[Docs](/analytics/analytics-engine/)                                        |
+| Workers Analytics Engine      |             | ✅            |[Docs](/analytics/analytics-engine/)               |
+| Workers Deployments           |             | ✅            |[Docs](/workers/platform/deployments)               |

@@ -24,7 +24,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
-<!-- - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments. -->
+- [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
 
 {{<Aside type="note">}}
 
@@ -1223,12 +1223,24 @@ Retrieve your user information and test your authentication configuration.
 $ wrangler whoami
 ```
 
-<!-- ## deployments
+## deployments
 
-Retrieve details for the 10 most recent deployments. Details include `Version ID`, `Version number`, `Author email`, `Created on`, and `Latest deploy`.
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
 
 ```sh
 $ wrangler deployments
+
+Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Created on: 2022-11-11T15:49:08.117218Z
+Author: example@cloudflare.com
+Source: Dashboard
+ 
+Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
+Created on: 2022-11-11T15:51:20.79936Z
+Author: example@cloudflare.com
+Source: Wrangler
+🟩 Active
+
 ```
 
 {{<definitions>}}
@@ -1238,8 +1250,6 @@ $ wrangler deployments
 
 {{</definitions>}}
 
-TODO Add examples of logged output
--->
 
 ---
 
