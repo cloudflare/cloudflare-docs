@@ -1187,7 +1187,7 @@ $ wrangler whoami
 
 ## deployments
 
-Retrieve details for the 10 most recent deployments. Details include `Version ID`, `Version number`, `Author email`, `Created on`, and `Latest deploy`.
+Retrieve details for the 10 most recent deployments.
 
 ```sh
 $ wrangler deployments
