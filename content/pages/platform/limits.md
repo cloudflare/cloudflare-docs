@@ -21,7 +21,8 @@ Builds will timeout after 20 minutes.
 
 ## Deployments
 
-Active deployments are limited to the most recent 10,000 excluding aliased deployments and production. Inactive deployments will return a 522 error and will need to be re-deployed. 
+Pages projects can have up to 10,000 active deployments. These are the most recent 10,000 deployments, excluding aliased deployments and production. Inactive deployments will return a `522` error and will need to be redeployed. All deployments are visible in the Cloudflare dashboard, but only the most recent 10,000 will be able to serve traffic.
+
 
 ## Custom domains
 
