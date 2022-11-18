@@ -71,7 +71,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/
 
 ## Limits
 
-The Logs and Exceptions fields have the following limits in place.
+The `logs` and `exceptions` fields have the following limits in place.
 
 * Message size: Maximum of 150 characters per log line
 * Array limit: 20 elements
