@@ -16,8 +16,6 @@ The API also allows sending multiple events in batches.
 HTTP Events API is only available for accounts on a [Workers Paid plan](/workers/platform/pricing/).
 {{</Aside>}}
 
----
-
 ##  Use the API
 
 ### Configure the API endpoint
@@ -49,19 +47,20 @@ The endpoint you have configured for the API will receive `POST` requests with a
 }
 ```
 
-Note the payload must contain an `events` array. Each Event Object in this array corresponds to one event you want Zaraz to process. The above example is similar to calling `zaraz.track('transaction successful', { value: "200" })` using the Web API.
+The payload must contain an `events` array. Each Event Object in this array corresponds to one event you want Zaraz to process. The above example is similar to calling `zaraz.track('transaction successful', { value: "200" })` using the Web API.
 
 The Event Object holds the `client` object, in which you can pass information about the event itself. Every key you include in the Event Object will be available as a _Track Property_ in the Zaraz dashboard.
 
 There are two reserved keys:
-- `__zarazTrack`: The value of this key will be available as _Track Name_. This is what you will usually build your triggers around. Setting this to `transaction successful` is the same as using the Web API and calling `zaraz.track("transaction successful")`.
-- `__zarazEcommerce`: This key needs to be set to `true` if you want Zaraz to process the event as an e-commerce event.
+
+* `__zarazTrack`: The value of this key will be available as _Track Name_. This is what you will usually build your triggers around. Setting this to `transaction successful` is the same as using the Web API and calling `zaraz.track("transaction successful")`.
+* `__zarazEcommerce`: This key needs to be set to `true` if you want Zaraz to process the event as an e-commerce event.
 
 #### The `system` key
 
 In addition to the `client` key, you can use the `system` key to include information about the device from which the event originated. For example, you can submit the `User-Agent` string, the cookies and the screen resolution. Zaraz will use this information when connecting to different third-party tools. Since some tools depend on certain fields, it is often useful to include all the information you can.
 
-The same payload from before can resemble the following example when we add the `system` information:
+The same payload from before will resemble the following example, when we add the `system` information:
 
 ```json
 {
@@ -88,9 +87,7 @@ The same payload from before can resemble the following example when we add the 
 
 For all available system keys, refer to the table below:
 
-{{<table-wrap>}}
-
-| Property | Type | Description |
+| Property | Type <div style="width: 70px"> | Description |
 | --- | --- | --- |
 | `system.cookies` | Object | A key-value object holding cookies from the device associated with the event. |
 | `system.device.ip` | String | The IP address of the device associated with the event. |
@@ -103,15 +100,11 @@ For all available system keys, refer to the table below:
 | `system.page.referrer` | String | The URL of the referrer page in the time the event took place.  |
 | `system.page.encoding` | String | The encoding of the page associated with the event. |
 
-{{</table-wrap>}}
-
 ### Process API responses
 
 For each Event Object in your payload, Zaraz will respond with a Result Object. The Result Objects order matches the order of your Event Objects.
 
 Depending on what tools you are loading using Zaraz, the body of the response coming from the API might include information you will want to process. This is because some tools do not have a complete server-side implementation and still depend on cookies, client-side JavaScript or similar mechanisms. Each Result Object can include the following information:
-
-{{<table-wrap>}}
 
 | Result key | Description |
 | --- | --- | --- |
@@ -120,6 +113,4 @@ Depending on what tools you are loading using Zaraz, the body of the response co
 | `return` | Information that tools return. |
 | `cookies` | Cookies that tools want to set for the user. |
 
-{{</table-wrap>}}
-
-Note that you do not have to process the information above, but some tools might depend on this to work properly. You can start using the HTTP Events API without processing the information in the table above and adjust accordingly later.
+You do not have to process the information above, but some tools might depend on this to work properly. You can start using the HTTP Events API without processing the information in the table above, and adjust accordingly later.
