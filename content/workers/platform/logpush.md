@@ -11,9 +11,9 @@ title: Logpush
 
 To configure a Logpush job, verify that your Cloudflare account role is able to use Logpush. To check your role:
 
-1. Sign into the Cloudflare dashboard](https://dash.cloudflare.com). 
-2. Select your account and scroll down to **Manage Account* > **Members**.
-3. Check your account permissions. Roles with Logpush configuration access are different than Workers permissions. Super Administrators, Administrators and the Log Share roles have full access to Logpush
+1. Sign into the [Cloudflare dashboard](https://dash.cloudflare.com). 
+2. Select your account and scroll down to **Manage Account** > **Members**.
+3. Check your account permissions. Roles with Logpush configuration access are different than Workers permissions. Super Administrators, Administrators and the Log Share roles have full access to Logpush.
  
 Alternatively, create a new [API token](/fundamentals/api/get-started/create-token/) scoped at the Account level with Logs Edit permissions. 
  
