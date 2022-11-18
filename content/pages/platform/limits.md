@@ -21,7 +21,7 @@ Builds will timeout after 20 minutes.
 
 ## Deployments
 
-There is a limit of 10,000 active deployments, inactive deployments will return a 522 error and will need to be re-deployed. The latest aliased deployments are always active and so is production.
+Active deployments are limited to the most recent 10,000 excluding aliased deployments and production. Inactive deployments will return a 522 error and will need to be re-deployed. 
 
 ## Custom domains
 
