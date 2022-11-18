@@ -31,7 +31,7 @@ jobs:
 
       - run: pnpm install
 
-      - run: hugo --minify
+      - run: make build
 
       - name: Broken Links
         run: pnpm run crawl
