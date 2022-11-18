@@ -69,10 +69,9 @@ United Kingdom  | `example.com` | `https://gb.example.com` | `301`
 France          | `example.com` | `https://fr.example.com` | `301`
 United States   | `example.com` | (unchanged)              | n/a
 
+## Remove locale information from URL path
 
-## Redirect blog visitors according to new URL structure
-
-This example dynamic redirect for zone `example.com` will redirect visitors from an old URL structure for the blog (`/posts/<YYYY>-<MM>-<DD>-<title>`) to the new structure `/posts/<YYYY>/<MM>/<DD>/<title>`.
+This example dynamic redirect for zone `example.com` will redirect visitors from an old URL format that included the locale (for example, `/en-us/<page_name>`) to the new format `/<page_name>`.
 
 {{<example>}}
 
@@ -80,16 +79,17 @@ This example dynamic redirect for zone `example.com` will redirect visitors from
 
 * **Field:** _URI Path_
 * **Operator:** _matches regex_
-* **Value:** `^/posts/[0-9]+-[0-9]+-[0-9]+-.+`
+* **Value:** `^/[A-Za-z]{2}-[A-Za-z]{2}/`
 
 If you are using the Expression Editor:<br>
-`http.request.uri.path matches "^/posts/[0-9]+-[0-9]+-[0-9]+-.+"`
+`http.request.uri.path matches "^/[A-Za-z]{2}-[A-Za-z]{2}/"`
 
 **Then**
 
 * **Type:** _Dynamic_
-* **Expression:** `regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.+)$", "/posts/${1}/${2}/${3}/${4}")`
+* **Expression:** `regex_replace(http.request.uri.path, "^/[A-Za-z]{2}-[A-Za-z]{2}/(.*)", "/${1}")`
 * **Status code:** _301_
+* **Preserve query string:** Enabled
 
 {{</example>}}
 
@@ -97,7 +97,10 @@ The function [`regex_replace()`](/ruleset-engine/rules-language/functions/#funct
 
 For example, the redirect rule would perform the following redirects:
 
-Request URL                                | Target URL                                 | Status code
--------------------------------------------|--------------------------------------------|------------
-`example.com/posts/2022-11-01-hello-world` | `example.com/posts/2022/11/01/hello-world` | `301`
-`example.com/posts/`                       | (unchanged)                                | n/a
+Request URL                             | Target URL                        | Status code
+----------------------------------------|-----------------------------------|------------
+`example.com/en-us/meet-our-team`       | `example.com/meet-our-team`       | `301`
+`example.com/pt-BR/meet-our-team`       | `example.com/meet-our-team`       | `301`
+`example.com/en-us/calendar?view=month` | `example.com/calendar?view=month` | `301`
+`example.com/meet-our-team`             | (unchanged)                       | n/a
+`example.com/robots.txt`                | (unchanged)                       | n/a
