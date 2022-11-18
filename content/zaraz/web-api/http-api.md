@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: HTTP API
 meta:
   title: HTTP Events API
-weight: 5
+weight: 4
 ---
 
 # HTTP Events API
@@ -22,17 +22,19 @@ HTTP Events API is only available for accounts on a [Workers Paid plan](/workers
 
 ### Configure the API endpoint
 
-The API is disabled unless you configure an endpoint for it. The endpoint will determine under what URL the API will be accessible. For example, if you set the endpoint to be `/zaraz/api`, and your domain is `example.com`, requests to the API will go to `https://example.com/zaraz/api`.
+The API is disabled unless you configure an endpoint for it. The endpoint determines under what URL the API will be accessible. For example, if you set the endpoint to be `/zaraz/api`, and your domain is `example.com`, requests to the API will go to `https://example.com/zaraz/api`.
+
+To enable the API endpoint:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **Settings**.
 3. Under **Endpoints** > **HTTP Events API**, set your desired path. Remember the path is relative to your domain, and it must start with a `/`.
 
-To avoid getting the API used by unwanted actors, we recommend choosing a unique path.
+{{<Aside type="warning" header="Important">}}To avoid getting the API used by unwanted actors, Cloudflare recommends choosing a unique path.{{</Aside>}}
 
 ### Send events
 
-The endpoint you have configured for the API will receive POST requests with a JSON payload. Below, there is an example payload:
+The endpoint you have configured for the API will receive `POST` requests with a JSON payload. Below, there is an example payload:
 
 ```json
 {
