@@ -71,6 +71,20 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 - (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
+## Workers Trace Events Logpush
+
+Workers Logpush is only available on the Workers Paid plan. 
+
+{{<table-wrap>}}
+
+|                             | Paid plan                          |
+| --------------------------- | ---------------------------------- |
+| Requests <sup>1</sup>       | 10 million / month, +$0.05/million |
+
+{{</table-wrap>}}
+
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
+
 ## Workers KV
 
 {{<table-wrap>}}

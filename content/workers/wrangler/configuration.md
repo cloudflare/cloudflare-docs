@@ -128,6 +128,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
   - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
 
+- `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+
 {{</definitions>}}
 
 ## Non-inheritable keys
