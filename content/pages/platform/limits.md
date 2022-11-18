@@ -19,6 +19,10 @@ Each time you push new code to your Git repository, Pages will build and deploy 
 
 Builds will timeout after 20 minutes.
 
+## Deployments
+
+There is a limit of 10,000 active deployments, inactive deployments will return a 522 error and will need to be re-deployed. The latest aliased deployments are always active and so is production.
+
 ## Custom domains
 
 A Cloudflare Pages project can be attached to a certain number of domains per plan.
