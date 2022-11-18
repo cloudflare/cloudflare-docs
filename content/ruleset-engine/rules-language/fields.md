@@ -321,7 +321,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-ip-geoip-is-in-european-union">
       <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
       </td>
   </tr>
