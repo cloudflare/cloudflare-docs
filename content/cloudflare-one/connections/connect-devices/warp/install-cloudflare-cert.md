@@ -454,7 +454,11 @@ The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utilit
 
 #### Google Cloud SDK and Kaniko
 
-Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). 
+Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate).
+
+### Google Drive for desktop
+
+To trust the Cloudflare root certificate in the Google Drive desktop application, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
 ### AWS CLI
 

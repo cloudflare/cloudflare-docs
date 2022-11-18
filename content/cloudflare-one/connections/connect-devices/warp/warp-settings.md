@@ -156,7 +156,7 @@ When the toggle is enabled, users who manually logged in to their organization o
 
 When the toggle is enabled, users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add/remove software from their device.
 
-## Auto Connect
+## Auto connect
 
 <details>
 <summary>Feature availability</summary>
@@ -198,7 +198,7 @@ When the toggle is enabled, the **Send Feedback** button in the WARP client appe
 - `https://support.example.com` Use an https:// link to open your companies internal help site.
 - `mailto:yoursupport@example.com` Use a mailto: link to open your default mail client.
 
-## Service Mode
+## Service mode
 
 <details>
 <summary>Feature availability</summary>
@@ -217,11 +217,6 @@ Allows you to choose the operational mode of the client. See [WARP Modes](/cloud
 - **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.
 - **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
 
----
+## Session duration
 
-## Integrated experiences
-
-Cloudflare Zero Trust allows you to perform one-click actions to accelerate Office 365 traffic. Navigate to **Settings** > **Network** on the Zero Trust dash and either:
-
-- **Create a Do Not Inspect policy** that bypasses inspection for Office 365 traffic. This policy uses the [domains and IP address specified by Microsoft for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service), and in addition to that, it uses our own Cloudflare’s intelligence to determine which traffic is part of this app type.
-- **Exclude Office 365 Traffic** by adding your application’s IP address as a split tunnel entry. This uses the [IP addresses specified by Microsoft for Office 365](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service).
+You can require users to re-authenticate their device after a certain amount of time has elapsed. Unlike the other WARP settings listed on this page, session durations are managed through a Gateway policy. Refer to [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) for more information.

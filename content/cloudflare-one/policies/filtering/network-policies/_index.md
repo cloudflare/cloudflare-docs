@@ -65,8 +65,6 @@ You can apply Network policies to a growing list of popular web applications. Re
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings).
-
 ### Destination Continent
 
 The continent that the request is destined for. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:

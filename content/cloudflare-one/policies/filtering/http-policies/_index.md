@@ -91,8 +91,6 @@ You can apply HTTP policies to a growing list of popular web applications. Refer
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings).
-
 ### Content Categories
 
 | UI name | API example |
