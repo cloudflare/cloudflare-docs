@@ -1,7 +1,7 @@
 ---
 pcx_content_type: faq
 title: FAQ
-weight: 7
+weight: 8
 ---
 
 # FAQ
