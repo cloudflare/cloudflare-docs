@@ -9,11 +9,11 @@ title: Logpush
 
 ## Verify your Logpush access
 
-To configure a Logpush job, verify that your Cloudflare account role is able to use Logpush. To check your role:
+To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
 
-1. Sign into the [Cloudflare dashboard](https://dash.cloudflare.com). 
+1. Sign in to the [Cloudflare dashboard](https://dash.cloudflare.com). 
 2. Select your account and scroll down to **Manage Account** > **Members**.
-3. Check your account permissions. Roles with Logpush configuration access are different than Workers permissions. Super Administrators, Administrators and the Log Share roles have full access to Logpush.
+3. Check your account permissions. Roles with Logpush configuration access are different than Workers permissions. Super Administrators, Administrators, and the Log Share roles have full access to Logpush.
  
 Alternatively, create a new [API token](/fundamentals/api/get-started/create-token/) scoped at the Account level with Logs Edit permissions. 
  
@@ -21,7 +21,7 @@ Alternatively, create a new [API token](/fundamentals/api/get-started/create-tok
 
 The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/get-started/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
  
-```
+```json
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs' \
 -H 'X-Auth-Key: <API_KEY>' \
 -H 'X-Auth-Email: <EMAIL>' \
@@ -41,7 +41,7 @@ In Logpush, you can configure [filters](/logs/reference/filters/) and a [samplin
 
 ## Enable logging on your Worker
  
-Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/platform/environments). Any new Workers with this property will automatically get picked up by the Logpush job. 
+Enable logging on your Worker by adding a new property, `logpush = true`, to your `wrangler.toml` file. This can be added either in the top-level configuration or under an [environment](/workers/platform/environments/). Any new Workers with this property will automatically get picked up by the Logpush job. 
  
 ```toml
 ---
@@ -61,7 +61,7 @@ route = { pattern = "example.org/*", zone_name = "example.org" }
 
 Configure via multipart script upload API:
 
-```
+```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/scripts/<SCRIPT_NAME>" \
 -H 'X-Auth-Key: <API_KEY>' \
 -H 'X-Auth-Email: <EMAIL>' \
@@ -75,4 +75,4 @@ The Logs and Exceptions fields have the following limits in place.
 
 * Message size: Maximum of 150 characters per log line
 * Array limit: 20 elements
-* Log message array: This is a nested array and we have a limit of 3 elements
+* Log message array: A nested array with a limit of three elements

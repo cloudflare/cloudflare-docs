@@ -83,7 +83,7 @@ Workers Logpush is only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-<sup>1</sup> Workers Logpush charges for request logs that make it to your end destination after filtering or sampling has been applied. 
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
 
 ## Workers KV
 

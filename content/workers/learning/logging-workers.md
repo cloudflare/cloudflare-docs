@@ -12,7 +12,7 @@ The Workers platform captures all `console.log`'s and uncaught exceptions, in ad
 
 {{<Aside type="note">}}
 
-To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush).
+To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush/).
 
 {{</Aside>}}
 
