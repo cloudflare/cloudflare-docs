@@ -52,4 +52,4 @@ When you have both rules and filters configured, the execution mode is determine
 
 1. If there is a match for one of the configured filters, use the filter's execution mode.
 2. If no filter matched, use the execution mode determined by existing rules.
-3. If there are no configured rules, disable Advanced TCP Protection.
+3. If no rules match, disable Advanced TCP Protection.
