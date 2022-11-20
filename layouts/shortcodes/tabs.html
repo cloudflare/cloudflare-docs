@@ -1,5 +1,6 @@
 {{- $text := .Get "labels" -}} {{- $labels := split $text " | " -}}
 {{ $unique_id := substr (md5 .Inner) 0 16 }}
+
 <div class="tabs-wrapper" tab-wrapper-id="{{$unique_id}}">
   <nav role="navigation" class="tabs">
     <ul class="tab-active" block-id="{{$unique_id}}">

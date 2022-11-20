@@ -17,8 +17,8 @@ Learn how to set up a bucket for use with full packet captures.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Buckets** tab.
 4. Select **Add a bucket**.
 5. Under **Bucket configuration**, select a bucket service and select **Next**.
@@ -82,7 +82,7 @@ header: Ownership challenge response example
     "status": "pending",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -117,7 +117,7 @@ header: Bucket validation response
     "status": "success",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "2022-04-27T14:54:46.440548Z",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -144,8 +144,8 @@ View a list of all buckets configured on your account.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
@@ -174,7 +174,7 @@ header: Bucket list response example
       "status": "success",
       "submitted": "2022-04-26T16:58:24.550762Z",
       "validated": "2022-04-26T17:01:18.426458Z",
-      "destinaton_conf": "s3://test-bucket?region=us-east-1",
+      "destination_conf": "s3://test-bucket?region=us-east-1",
       "filename": "ownership-challenge-1234.txt"
     },
   ],

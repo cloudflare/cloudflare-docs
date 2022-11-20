@@ -58,6 +58,12 @@ highlight: [4]
 
 An invisible input with the name `cf-turnstile-response` is added and will be sent to the server with the other fields.
 
+{{<Aside type= "Note">}}
+
+A form is not protected by having a widget rendered. The corresponding token that is a result of a widget being rendered also needs to be verified using the siteverify API.
+
+{{</Aside>}}
+
 ### Disable implicit rendering 
 
 You can disable implicit rendering by replacing the script from:
@@ -134,14 +140,15 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
-| `size` | `data-size` | The widget size. Can take the following values: `normal`, `invisible`, `compact`. |
+| `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
+| `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry upon failure. |
+| `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 
 ## Widget size
 
-The Turnstile widget can take 3 different sizes:
+The Turnstile widget can have two different sizes when using the Managed or Non-interactive modes:
 
 | Size | Width | Height |
 | --- | --- | --- |
-| normal | 300px | 65px |
-| compact | 130px | 120px |
-| invisible | 0px | 0px |
+| Normal | 300px | 65px |
+| Compact | 130px | 120px |

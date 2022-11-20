@@ -5,13 +5,17 @@ title: Set up IPsec tunnels
 
 # Set up IPsec tunnels
 
-Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. 
-
-To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
+Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's edge and define static routes to direct traffic down the correct tunnel. To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
 
 Before you begin, make sure you already have an Account ID and API Key.
 
 For a list of compatible devices, refer to [Device compatibility](/magic-wan/reference/device-compatibility/).
+
+{{<Aside type="note" header="Note">}}
+
+Magic WAN only supports IKEv2.
+
+{{</Aside>}}
 
 ## IPsec process
 
@@ -25,13 +29,13 @@ Review the information below to learn more about phases to establish IPsec conne
 
 ## 1. Create IPsec tunnels
 
-Create a POST request using the API to [Create IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-create-ipsec-tunnels).
+Create a POST request using the API to [Create IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
 
 ## 2. Generate the PSK for the IPsec tunnels
 
 You can provide your own PSK or use the command below to have Cloudflare generate a PSK for you.
 
-Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-generate-pre-shared-key-psk-for-ipsec-tunnels) and initiate your session.
+Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-generate-pre-shared-key-(-psk)-for-i-psec-tunnels) and initiate your session.
 
 ## 3. Set up static routes
 

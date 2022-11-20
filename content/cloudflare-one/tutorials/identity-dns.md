@@ -34,7 +34,7 @@ Navigate to the Gateway section of the Zero Trust Dashboard and open the `Polici
 
 This first rule will allow users of your marketing team to reach social media. Select **DNS Content Categories** and choose **Social Media** from the options.
 
-Next, click **+Add condition** to add a second rule. In this rule, select **User Group Names**. You can also select individual user emails or group IDs, as well as locations. Input the name of the group in your identity provider that should be allowed to reach social media.
+Next, click **+Add condition** to add a second rule. In this rule, select **User Group Names**. You can also select individual user emails or group IDs, as well as DNS locations. Input the name of the group in your identity provider that should be allowed to reach social media.
 
 ![Add Rule](/cloudflare-one/static/secure-web-gateway/id-dns/add-second-rule.png)
 
@@ -46,7 +46,7 @@ You can now build a rule that will block social media for the rest of your organ
 
 ![Block Criteria](/cloudflare-one/static/secure-web-gateway/id-dns/add-first-rule.png)
 
-The rule does not need any additional criteria. This policy will apply to all locations and users in your organization, regardless of how DNS queries are sent.
+The rule does not need any additional criteria. This policy will apply to all DNS locations and users in your organization, regardless of how DNS queries are sent.
 
 In the **Action** section, select **Block** and save the rule at the top of the page.
 

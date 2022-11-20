@@ -1,27 +1,76 @@
 ---
 title: Overview
 pcx_content_type: overview
-weight: 2
+layout: overview
+weight: 1
 meta:
   title: Cloudflare Rules
 ---
 
 # Cloudflare Rules
 
-Cloudflare Rules allows you to perform adjustments to the URI and HTTP headers of requests and responses, and trigger certain actions when a request matches a URL pattern.
+{{<plan type="all">}}
 
-## Main features
+Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
 
-* **Transform Rules**: Adjust the URI path, query string, and HTTP headers of requests and responses at the edge.
+---
 
-* **URL normalization**: Modify the URLs of incoming requests so that they conform to a consistent formatting standard.
+## Products
 
-* **Page Rules**: Trigger certain actions when a request matches a URL pattern. For more information, refer to [Understanding and configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427).
+{{<feature header="Transform Rules" href="/rules/transform/">}}
+Adjust the URI path, query string, and HTTP headers of requests and responses at the edge.
+{{</feature>}}
 
-## Related features
+{{<feature header="URL normalization" href="/rules/normalization/" cta="Configure URL normalization">}}
+Modify the URLs of incoming requests so that they conform to a consistent formatting standard.
+{{</feature>}}
 
-The following Cloudflare security features also allow you to define rules for different purposes:
+{{<feature header="URL forwarding" href="/rules/url-forwarding/">}}
+Redirect visitors from a source URL to a target URL with a specific HTTP status code. Use Single Redirects or Bulk Redirects depending on your use case.
+{{</feature>}}
 
-* [Firewall rules](/firewall/)
-* [Custom rules](/waf/custom-rules/)
-* [Rate limiting rules](/waf/rate-limiting-rules/)
+{{<feature header="Origin Rules" href="/rules/origin-rules/">}}
+Customize where the incoming traffic will go and with which parameters. Override request properties such as `Host` header, destination hostname, and destination port.
+{{</feature>}}
+
+{{<feature header="Configuration Rules" href="/rules/configuration-rules/">}}
+Customize Cloudflare configuration settings for matching incoming requests.
+{{</feature>}}
+
+{{<feature header="Custom error responses" href="/rules/custom-error-responses/" cta="Configure custom error responses">}}
+Define custom responses for errors returned by an origin server or by a Cloudflare product, including Workers.
+{{</feature>}}
+
+{{<feature header="Page Rules" href="https://support.cloudflare.com/hc/articles/218411427">}}
+Trigger certain actions when a request matches a URL pattern.
+{{</feature>}}
+
+---
+
+## Related products
+
+{{<related header="Firewall rules" href="/firewall/" product="firewall">}}
+Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
+{{</related>}}
+
+{{<related header="Custom rules" href="/waf/custom-rules/" product="waf">}}
+Control incoming traffic by filtering requests to a zone. You can block or challenge incoming requests according to rules you define.
+{{</related>}}
+
+{{<related header="Rate limiting rules" href="/waf/rate-limiting-rules/" product="waf">}}
+Define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
+{{</related>}}
+
+{{<related header="Cache rules" href="/cache/about/cache-rules/" product="cache">}}
+Customize the cache properties of your HTTP requests.
+{{</related>}}
+
+---
+
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="Plans" href="https://www.cloudflare.com/plans/#overview" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
+
+{{</resource-group>}}

@@ -11,9 +11,7 @@ Use Cache Rules to customize cache properties of your HTTP requests. For example
 
 The following table describes Cache Rules availability per plan.
 
-|                  | **Free** | **Pro** | **Business** | **Enterprise** |
-| ---------------  | -------- | ------- | ------------ | -------------- |
-| **Cache Rules**  | 10       | 25      | 50           | 125            |
+{{<feature-table id="cache.cache_rules">}}
 
 
 ## Create Cache Rules in the dashboard

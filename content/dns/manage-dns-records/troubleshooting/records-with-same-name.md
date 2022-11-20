@@ -1,6 +1,6 @@
 ---
 title: Add records
-pcx_content_type: navigation
+pcx_content_type: troubleshooting
 weight: 11
 meta:
   title: Troubleshooting — Cannot add DNS records with the same name

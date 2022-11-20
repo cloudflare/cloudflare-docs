@@ -20,7 +20,7 @@ With the [upcoming change](/ssl/reference/migration-guides/digicert-update/custo
 {{<render file="_ssl-for-saas-create-hostname.md">}}
 <br>
  
-- [**API**](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
+- [**API**](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details): Within the `ssl` object, refer to the values present in the `validation_records` array (specifically `emails`).
 - **Dashboard**: When viewing an individual certificate at **SSL/TLS** > **Custom Hostnames**, refer to the value for **Certificate validation email recipients**.
  
 {{<render file="../../ssl/_partials/_email-validation-process.md">}}

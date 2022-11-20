@@ -1,15 +1,22 @@
 ---
 pcx_content_type: concept
 title: Pricing
+weight: 12
 ---
 
 # Pricing
 
-By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
-The Workers Paid plan includes Workers, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
+The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
 
 All included usage is on a monthly basis.
+
+{{<Aside type="note">}} 
+  
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
+
+{{</Aside>}}
 
 ## Workers
 
@@ -63,6 +70,20 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 - (10 million requests - included 1 million requests) x $0.15 / 1,000,000 requests = $1.35
 - (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
+
+## Workers Trace Events Logpush
+
+Workers Logpush is only available on the Workers Paid plan. 
+
+{{<table-wrap>}}
+
+|                             | Paid plan                          |
+| --------------------------- | ---------------------------------- |
+| Requests <sup>1</sup>       | 10 million / month, +$0.05/million |
+
+{{</table-wrap>}}
+
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
 
 ## Workers KV
 
@@ -153,7 +174,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 {{</table-wrap>}}
 
 1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
-2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 request units.
+2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
 3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 5.  Each alarm write is billed as a single write request unit.

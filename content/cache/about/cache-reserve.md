@@ -15,11 +15,11 @@ The retention period of an asset is how long we will keep the asset in Cache Res
 
 Assets must [meet certain criteria](#cache-reserve-asset-eligibility) to use Cache Reserve.
 
-Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below.
+Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below. While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free.
 
 ## Enable Cache Reserve
 
-You can enable Cache Reserve from the dashboard or via API. In both situations, you need a paid Cache Reserve Plan.
+You can enable Cache Reserve from the dashboard or [via API](https://api.cloudflare.com/#zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
 
 To enable Cache Reserve through the dashboard:
 
@@ -33,20 +33,28 @@ To enable Cache Reserve through the dashboard:
 
 If you are an Enterprise customer and are interested in Cache Reserve, contact your account team to get help with your configuration.
 
-Documentation for enabling Cache Reserve via API, is forthcoming.
-
 ## Cache Reserve asset eligibility
 
-Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must have:
+Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
 
-- Content-Length response header
-- Freshness time-to-live of at least 10 hours (set by any means such as Cache-Control / CDN-Cache-Control origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), etc.)
+- Be cacheable, according to Cloudflare's standard [cacheability factors](https://developers.cloudflare.com/cache),
+- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/about/cache-rules/)),
+- Have a Content-Length response header.
 
 ## Limits
 
 - Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
+- Requests to [R2 public buckets linked to a zone's domain](/r2/data-access/public-buckets/) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
+
+## Usage
+
+Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to indicate cache statuses like `MISS`, `HIT`, and `REVALIDATED`. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
+
+Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/reference/log-fields/zone/http_requests/) Logpush field.
+
+Cache Reserve monthly operations and storage usage are viewable in the dashboard.
 
 ## Pricing
 
@@ -98,13 +106,15 @@ Class A operations are performed based on cache misses from Cloudflare’s CDN. 
 
 Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache. 
 
-#### Free operations
+#### Purge
 
-Free operations include purging assets.
+Asset purges are free operations.
 
-Cache Reserve will also be purged along with edge cache when you send a purge by URL request. Other purge methods such as purge by tag or prefix will invalidate the asset in Cache Reserve, but assets purged this way will still incur storage costs until they expire.
+Cache Reserve will also be purged along with edge cache when you send a purge by URL request.
 
-While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free. 
+Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to revalidate on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
+
+{{<Aside type="note">}}Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.{{</Aside>}}
 
 ## Cache Reserve billing examples
 
@@ -116,10 +126,12 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 |                    | Usage                                    | Billable Quantity | Price      |
 |--------------------|------------------------------------------|-------------------|------------|
 | Class B Operations | (1,000 assets) * (1,000 reads per asset) |         1,000,000 |      $0.36 |
-| Class A Operations | (1,000 assets) * (1 write per asset)     |             1,000 |      $0.00 |
+| Class A Operations | (1,000 assets) * (1 write per asset)     |             1,000 |      $4.50 |
 | Storage            | (1,000 assets) * (1GB per asset)         |   1,000 GB-months |     $15.00 |
-| **TOTAL**          |                                          |                   | **$15.36** |
+| **TOTAL**          |                                          |                   | **$19.86** |
 {{</table-wrap>}}
+
+(Note the billable quantity is rounded up to the nearest million.)
 
 #### Example 2
 

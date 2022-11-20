@@ -191,7 +191,15 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
     newRequest.headers.set('cf-access-client-id', CF_ACCESS_CLIENT_ID)
     newRequest.headers.set('cf-access-client-secret', CF_ACCESS_CLIENT_SECRET)
     try {
-        return await fetch(newRequest)
+        const response = await fetch(newRequest);     
+
+        // Copy over the response   
+        const modifiedResponse = new Response(response.body, response);
+
+        // Delete the set-cookie from the response so it doesn't override existing cookies
+        modifiedResponse.headers.delete("set-cookie")
+
+        return  modifiedResponse;
     } catch (e) {
         return new Response(JSON.stringify({ error: e.message }), { status: 500 })
     }

@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To create an account subscription, send a [POST](https://api.cloudflare.com/#account-subscriptions-create-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions` endpoint and include the following values:
+To create an account subscription, send a [POST](https://developers.cloudflare.com/api/operations/account-subscriptions-create-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
     

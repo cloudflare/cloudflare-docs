@@ -41,7 +41,7 @@ curl -X PUT \
       "action_parameters": {
         "id": "<CLOUDFLARE_MANAGED_RULESET_ID>"
       },
-      "expression": "(cf.zone.name in {\"example.com\" \"anotherexample.com\"}) and (cf.zone.plan eq \"ENT\")",
+      "expression": "(cf.zone.name in {\"example.com\" \"anotherexample.com\"}) and cf.zone.plan eq \"ENT\"",
       "description": "Execute Cloudflare Managed Ruleset on my account-level phase entry point"
     }
   ]
@@ -68,7 +68,7 @@ header: Response
           "id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
           "version": "latest"
         },
-        "expression": "(cf.zone.name in {\"example.com\" \"anotherexample.com\"}) and (cf.zone.plan eq \"ENT\")",
+        "expression": "(cf.zone.name in {\"example.com\" \"anotherexample.com\"}) and cf.zone.plan eq \"ENT\"",
         "description": "Execute Cloudflare Managed Ruleset on my account-level phase entry point",
         "last_updated": "2021-03-18T18:30:08.122758Z",
         "ref": "<RULE_REF>",

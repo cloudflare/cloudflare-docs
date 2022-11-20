@@ -9,6 +9,12 @@ Magic WAN uses a static configuration to route traffic through [Anycast tunnels]
 
 Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 
+{{<Aside type="note">}}
+
+To enable TCP download optimization for eligible traffic, contact your account team.
+
+{{</Aside>}}
+
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
 ![Example route priorities](/magic-transit/static/mt-traffic-steering-ecmp-baseline.png)

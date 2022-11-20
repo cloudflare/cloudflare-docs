@@ -36,7 +36,7 @@ The phases execute in the order they appear in the table.
 | `http_request_origin` | [Origin Rules](/rules/origin-rules/) |
 | `http_request_cache_settings` | [Cache Rules](/cache/about/cache-rules/) |
 | `http_config_settings` | [Configuration Rules](/rules/configuration-rules/) |
-| `http_request_dynamic_redirect` | [Dynamic Redirects](/rules/url-forwarding/dynamic-redirects/) |
+| `http_request_dynamic_redirect` | [Single Redirects](/rules/url-forwarding/single-redirects/) |
 | `ddos_l7`* | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/configure-api/) |
 | `http_request_firewall_custom` | [Web Application Firewall (WAF)](/waf/custom-rules/create-api/) |
 | `http_ratelimit` | [Rate limiting rules](/waf/rate-limiting-rules/create-api/) |

@@ -5,7 +5,7 @@ title: REST API
 
 # REST API
 
-The [Pages API](https://api.cloudflare.com/#pages-project-properties) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/pages/platform/deploy-hooks/) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
+The [Pages API](https://developers.cloudflare.com/api/operations/pages-project-get-projects) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/pages/platform/deploy-hooks/) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
 ## How to use the API
 
@@ -56,7 +56,7 @@ export default {
 }
 ```
 
-After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/cron-triggers/) for more details.
+After you have deployed the JavaScript Worker, set a cron trigger through the Workers dashboard to run this script periodically. Refer to [Cron Triggers](/workers/platform/triggers/cron-triggers/) for more details.
 
 ### Deleting old deployments after a week
 
@@ -96,7 +96,7 @@ export default {
 }
 ```
 
-After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/cron-triggers/) for more details.
+After you have deployed the JavaScript Worker, you can set a cron trigger through the Workers dashboard to run this script periodically. Refer to the [Cron Triggers guide](/workers/platform/triggers/cron-triggers/) for more details.
 
 ### Sharing project information
 
@@ -160,6 +160,6 @@ export default {
 
 ## Related resources
 
-- [Pages API Docs](https://api.cloudflare.com/#pages-project-properties)
+- [Pages API Docs](https://developers.cloudflare.com/api/operations/pages-project-get-projects)
 - [Workers Getting Started Guide](/workers/get-started/guide/)
-- [Workers Cron Triggers](/workers/platform/cron-triggers/)
+- [Workers Cron Triggers](/workers/platform/triggers/cron-triggers/)

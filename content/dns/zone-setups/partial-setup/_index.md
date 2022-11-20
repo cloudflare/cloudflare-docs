@@ -15,9 +15,15 @@ weight: 2
 
 ## Availability
 
-A partial setup is only available to customers on a Business or Enterprise plan.
+{{<feature-table id="dns.partial_setup">}}
 
-## Limitations
+## Reference
+
+### DNS resolution
+
+With a partial zone, Cloudflare resolves [DNS records differently](/dns/zone-setups/partial-setup/dns-resolution/) than for full zones.
+
+### CNAME flattening
 
 A partial (`CNAME`) setup requires the proxied hostname to be pointed to Cloudflare via a `CNAME` record. Since [`CNAME` records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`), you can only proxy your zone apex to Cloudflare if your authoritative DNS provider supports [`CNAME` Flattening](/dns/additional-options/cname-flattening/).
 

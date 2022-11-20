@@ -12,7 +12,7 @@ meta:
 
 You can configure Advanced TCP Protection using the Advanced TCP Protection API.
 
-The Advanced TCP Protection API only supports API token authentication. For more information on API authentication, refer to [Getting Started: Requests](https://api.cloudflare.com/#getting-started-requests) in the Cloudflare API documentation.
+The Advanced TCP Protection API only supports API token authentication. For more information on API authentication, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
 
 For examples of API calls, refer to [Common API calls](/ddos-protection/tcp-protection/api/examples/).
 
@@ -62,12 +62,12 @@ Delete all prefixes | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protectio
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-List allowlisted prefixes | `GET accounts/<ACCOUNT_ID>/configs/allowlist`<br>Fetches all prefixes in the account allowlist.
-Add an allowlisted prefix | `POST accounts/<ACCOUNT_ID>/configs/allowlist`<br>Adds a prefix to the allowlist.
-Get an allowlisted prefix | `GET accounts/<ACCOUNT_ID>/configs/allowlist/<ALLOWLIST_ID>`<br>Fetches the details of an existing prefix in the allowlist.
-Update an allowlisted prefix | `PATCH accounts/<ACCOUNT_ID>/configs/allowlist/<ALLOWLIST_ID>`<br>Updates an existing prefix in the allowlist.
-Delete an allowlisted prefix | `DELETE accounts/<ACCOUNT_ID>/configs/allowlist/<ALLOWLIST_ID>`<br>Deletes an existing prefix from the allowlist.
-Delete all allowlisted prefixes | `DELETE accounts/<ACCOUNT_ID>/configs/allowlist`<br>Deletes all existing prefixes from the allowlist.
+List allowlisted prefixes | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist`<br>Fetches all prefixes in the account allowlist.
+Add an allowlisted prefix | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist`<br>Adds a prefix to the allowlist.
+Get an allowlisted prefix | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist/<ALLOWLIST_ID>`<br>Fetches the details of an existing prefix in the allowlist.
+Update an allowlisted prefix | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist/<ALLOWLIST_ID>`<br>Updates an existing prefix in the allowlist.
+Delete an allowlisted prefix | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist/<ALLOWLIST_ID>`<br>Deletes an existing prefix from the allowlist.
+Delete all allowlisted prefixes | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist`<br>Deletes all existing prefixes from the allowlist.
 
 {{</table-wrap>}}
 
@@ -77,12 +77,12 @@ Delete all allowlisted prefixes | `DELETE accounts/<ACCOUNT_ID>/configs/allowlis
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-List SYN flood rules | `GET accounts/<ACCOUNT_ID>/configs/syn_protection/rules`<br>Fetches all SYN flood rules in the account.
-Add a SYN flood rule | `POST accounts/<ACCOUNT_ID>/configs/syn_protection/rules`<br>Adds a SYN flood rule to the account.
-Get a SYN flood rule | `GET accounts/<ACCOUNT_ID>/configs/syn_protection/rules/<RULE_ID>`<br>Fetches the details of an existing SYN flood rule in the account.
-Update a SYN flood rule | `PATCH accounts/<ACCOUNT_ID>/configs/syn_protection/rules/<RULE_ID>`<br>Updates an existing SYN flood rule in the account.
-Delete a SYN flood rule | `DELETE accounts/<ACCOUNT_ID>/configs/syn_protection/rules/<RULE_ID>`<br>Deletes an existing SYN flood rule from the account.
-Delete all SYN flood rules | `DELETE accounts/<ACCOUNT_ID>/configs/syn_protection/rules`<br>Deletes all existing SYN flood rules from the account.
+List SYN flood rules | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules`<br>Fetches all SYN flood rules in the account.
+Add a SYN flood rule | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules`<br>Adds a SYN flood rule to the account.
+Get a SYN flood rule | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules/<RULE_ID>`<br>Fetches the details of an existing SYN flood rule in the account.
+Update a SYN flood rule | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules/<RULE_ID>`<br>Updates an existing SYN flood rule in the account.
+Delete a SYN flood rule | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules/<RULE_ID>`<br>Deletes an existing SYN flood rule from the account.
+Delete all SYN flood rules | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules`<br>Deletes all existing SYN flood rules from the account.
 
 {{</table-wrap>}}
 
@@ -92,15 +92,15 @@ Delete all SYN flood rules | `DELETE accounts/<ACCOUNT_ID>/configs/syn_protectio
 
 Operation | Method and endpoint / Description
 ----------|----------------------------------
-List out-of-state TCP rules | `GET accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Fetches all out-of-state TCP rules in the account.
-Add an out-of-state TCP rule | `POST accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Adds an out-of-state TCP rule to the account.
-Get an out-of-state TCP rule | `GET accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Fetches the details of an existing out-of-state TCP rule in the account.
-Update an out-of-state TCP rule | `PATCH accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Updates an existing out-of-state TCP rule in the account.
-Delete an out-of-state TCP rule | `DELETE accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Deletes an existing out-of-state TCP rule from the account.
-Delete all out-of-state TCP rules | `DELETE accounts/<ACCOUNT_ID>/configs/tcp_flow_protection/rules`<br>Deletes all existing out-of-state TCP rules from the account.
+List out-of-state TCP rules | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules`<br>Fetches all out-of-state TCP rules in the account.
+Add an out-of-state TCP rule | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules`<br>Adds an out-of-state TCP rule to the account.
+Get an out-of-state TCP rule | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Fetches the details of an existing out-of-state TCP rule in the account.
+Update an out-of-state TCP rule | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Updates an existing out-of-state TCP rule in the account.
+Delete an out-of-state TCP rule | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules/<RULE_ID>`<br>Deletes an existing out-of-state TCP rule from the account.
+Delete all out-of-state TCP rules | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules`<br>Deletes all existing out-of-state TCP rules from the account.
 
 {{</table-wrap>}}
 
 ## Pagination
 
-The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Requests: Pagination](https://api.cloudflare.com/#getting-started-requests) in the API documentation.
+The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Requests: Pagination](/fundamentals/api/) in the API documentation.

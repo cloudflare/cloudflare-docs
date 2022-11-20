@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Azure
-weight: 8
+weight: 3
 ---
 
 # Deploy `cloudflared` in Azure

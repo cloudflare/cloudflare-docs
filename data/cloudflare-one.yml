@@ -15,7 +15,7 @@ meta:
     and endpoint security providers. These docs contain step-by-step, use case
     driven, tutorials to use Cloudflare One products.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /zt-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/security/access/51

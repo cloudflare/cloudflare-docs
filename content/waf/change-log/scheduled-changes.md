@@ -20,17 +20,17 @@ layout: list
       <th>Description</th>
       <th>Comments</th>
     </tr>
+    <tr>
+      <th>2022-11-16</th>
+      <th>2022-11-28</th>
+      <th>Block</th>
+      <th>N/A</th>
+      <th>...b8ef67d7</th>
+      <th>SQLi - Equation</th>
+      <th>N/A</th>
+    </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>2022-10-24</td>
-      <td>2022-10-31</td>
-      <td>Block</td>
-      <td>100552</td>
-      <td>...b9cfd82d</td>
-      <td>JXPath RCE - CVE:CVE-2022-41852</td>
-      <td>N/A</td>
-    </tr>
 </tbody>
 </table>
 {{</table-wrap>}}

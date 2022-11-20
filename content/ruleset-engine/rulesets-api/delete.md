@@ -24,8 +24,8 @@ Use one of the following API endpoints:
 | [Delete an account ruleset][dr-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
 | [Delete a zone ruleset][dr-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>`       |
 
-[dr-account]: https://api.cloudflare.com/#account-rulesets-delete-an-account-ruleset
-[dr-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-zone-ruleset
+[dr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-delete-an-account-ruleset
+[dr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-delete-a-zone-ruleset
 
 If the delete operation succeeds, the API method call returns a `204 No Content` HTTP status code.
 
@@ -61,8 +61,8 @@ Use one of the following API endpoints:
 | [Delete an account ruleset version][drv-account] | `DELETE /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>` |
 | [Delete a zone ruleset version][drv-zone]        | `DELETE /zones/<ZONE_ID>/rulesets/<RULESET_ID>/versions/<VERSION_NUMBER>`       |
 
-[drv-account]: https://api.cloudflare.com/#account-rulesets-delete-an-account-ruleset-version
-[drv-zone]: https://api.cloudflare.com/#zone-rulesets-delete-a-zone-ruleset-version
+[drv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-delete-an-account-ruleset-version
+[drv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-delete-a-zone-ruleset-version
 
 If the delete operation succeeds, the method call returns a `204 No Content` HTTP status code.
 

@@ -14,13 +14,13 @@ If you are interested in [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for
  
 ## Prerequisites
  
-WAF for SaaS is available with certain Enterprise plans. To verify access, contact your account manager.
+WAF for SaaS is available for customers on an Enterprise plan.
  
 If you would like to deploy a managed ruleset at the account level, refer to the [Ruleset Engine documentation](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/). 
  
 Ensure you have reviewed [Get Started with Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) and familiarize yourself with [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/). 
  
-Customers can automate the [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname).
+Customers can automate the [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) tagging by adding it to the custom hostnames at creation. For more information on tagging a custom hostname with custom metadata, refer to the [API documentation](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-edit-custom-hostname).
  
 ---
  

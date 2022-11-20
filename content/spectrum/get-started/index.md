@@ -7,9 +7,9 @@ layout: single
 
 # Get started
 
-Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic.
+Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Configuration options](/spectrum/reference/configuration-options/) for more configuration details.
 
-To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via API.
+To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via [API](https://developers.cloudflare.com/api/operations/spectrum-applications-list-spectrum-applications).
 
 ## Create a Spectrum application using an IP address
 
@@ -20,13 +20,14 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 <div>
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Click **Spectrum**.
-3.  Click **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
-4.  Under **Domain**, enter the domain that will use Spectrum.
-5.  Under **Edge Port**, enter the port Cloudflare should use your application.
-6.  Under **Origin**, enter your application's origin IP and port.
-7.  If your application requires the client IP and supports [Proxy Protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/), enable **Proxy Protocols**. Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to the origin application.
-8.  Click **Add**.
+2.  Select **Spectrum**.
+3.  Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
+4.  Select your **Application Type**.
+5.  Under **Domain**, enter the domain that will use Spectrum.
+6.  Under **Edge Port**, enter the port Cloudflare should use for your application.
+7.  Under **Origin**, enter your application's origin IP and port.
+8.  If your application requires the client IP and supports [Proxy Protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/), enable **Proxy Protocols**. Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to the origin application.
+9.  Select **Add**.
 
 </div>
 </details>
@@ -91,12 +92,13 @@ To create a Spectrum application using a CNAME record, you will need to create a
 <div>
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Click **Spectrum**.
-3.  Click **Create an Application**. 
-4.  Under **Domain**, enter the domain that will use Spectrum.
-5.  Under **Edge Port**, enter the port Cloudflare should use your application.
-6.  Under **Origin**, enter your CNAME Record name.
-7.  Click **Add**.
+2.  Select **Spectrum**.
+3.  Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
+5.  Select your **Application Type**.
+6.  Under **Domain**, enter the domain that will use Spectrum.
+7.  Under **Edge Port**, enter the port Cloudflare should use for your application.
+8.  Under **Origin**, enter your `CNAME` record name.
+9.  Select **Add**.
 
 </div>
 </details>
@@ -142,18 +144,27 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 ## Create a Spectrum application using a Load Balancer
 
-To create a Spectrum application using a Load Balancer, you will need to generate a Load Balancer from the dashboard or via the API. Follow the [Create a load balancer](/load-balancing/how-to/create-load-balancer/) workflow for help.
+To create a Spectrum application using a Load Balancer, you will need to generate a Load Balancer from the dashboard or via the API. Refer to the [Create a load balancer](/load-balancing/how-to/create-load-balancer/) workflow for help.
+
+{{<Aside>}}
+
+To prevent issues with DNS resolution for a Spectrum application, do not use the same Spectrum hostname as a current Load Balancing hostname.
+
+{{</Aside>}}
 
 <details>
 <summary>Add your application via Dashboard</summary>
 <div>
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Click **Spectrum**.
-3.  Click **Create an Application**.
-4.  Under **Origin**, select **Load Balancer**.
-5.  Select the load balancer from the menu.
-6.  Click **Submit**.
+2.  Select **Spectrum**.
+3.  Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
+4.  Select your **Application Type**.
+5.  Under **Domain**, enter the domain that will use Spectrum.
+6.  Under **Edge Port**, enter the port Cloudflare should use for your application.
+7.  Under **Origin**, select **Load Balancer**.
+8.  Select the load balancer you want to use from the dropdown. Disabled load balancers will not show on the **Load Balancer** menu.
+9.  Select **Add**.
 
 </div>
 </details>

@@ -42,7 +42,7 @@ These options should be used when a Worker wants to send messages to a Queue.
 
 ## Consumer
 
-These options should be used when a Worker wants to receive messages from a Queue.
+These options should be used when a Worker wants to receive messages from a Queue. Refer to [Limits](/queues/limits) to review the maximum values for each of these options.
 
 ```toml
 [[queues.consumers]]
@@ -73,7 +73,8 @@ These options should be used when a Worker wants to receive messages from a Queu
 
 - {{<code>}}dead_letter_queue{{<param-type>}}string{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of another Queue to send a message if it fails and cannot be delivered. If one is not defined, messages will be discarded.
+  - The name of another Queue to send a message if it fails processing at least `max_retries` times.
+  - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
   - If there is no Queue with the specified name, it will be created automatically.
 
 {{</definitions>}}

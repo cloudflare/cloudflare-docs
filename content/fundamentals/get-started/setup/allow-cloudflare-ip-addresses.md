@@ -44,9 +44,9 @@ For example, you might [update your iptables](https://www.linode.com/docs/guides
 
 ```sh
 # For IPv4 addresses
-$ iptables -A INPUT -p tcp --dport http,https -j DROP
+$ iptables -A INPUT -p tcp -m multiport --dports http,https -j DROP
 # For IPv6 addresses
-$ ip6tables -A INPUT -p tcp --dport http,https -j DROP
+$ ip6tables -A INPUT -p tcp -m multiport --dports http,https -j DROP
 ```
 
 For more specific guidance, contact your hosting provider or website administrator.
