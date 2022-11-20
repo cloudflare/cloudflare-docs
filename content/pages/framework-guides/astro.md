@@ -120,7 +120,7 @@ Astro requires Node.js version `14` or later to build successfully. When creatin
 
 After completing configuration, select **Save and Deploy**.
 
-You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
+You will see your first deployment of a pipeline in progress. Pages installs all dependencies and builds the project as specified.
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
