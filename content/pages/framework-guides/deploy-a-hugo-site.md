@@ -11,7 +11,7 @@ In this guide, you will create a new Hugo application and deploy it using Cloudf
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-Go to the [Deploying with Cloudflare Pages](/pages/framework-guides/deploy-a-hugo-site/#deploying-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/#connect-to-your-git-provider).
+Go to the [Deploying with Cloudflare Pages](/pages/framework-guides/deploy-a-hugo-site/#deploying-with-cloudflare-pages) section if you already have a Hugo site hosted with your [Git provider](/pages/get-started/#connect-to-your-git-provider).
 
 ## Installing Hugo
 
