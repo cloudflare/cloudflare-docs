@@ -10,7 +10,7 @@ Middlewares are reusable chunks of logic that can be executed before or after fo
 
 ## Adding middleware
 
-Middleware is similar to standard Functions except they are always defined in a file named `_middleware.js`. A `_middleware.js` file exports a Pages Function request handler that will run on requests which would match any sibling and child Pages Functions in the folder structure. For example, `functions/users/_middleware.js` file will match requests for `/functions/user/nevi`, `/functions/users/nevi/123` and `functions/users`.
+Middleware is similar to standard Functions except they are always defined in a file named `_middleware.js`. A `_middleware.js` file exports a Pages Function request handler that will run on requests which would match any sibling and child Pages Functions in the folder structure. For example, `functions/users/_middleware.js` file will match requests for `/functions/users/nevi`, `/functions/users/nevi/123` and `functions/users`.
 
 If you want to run a middleware on your entire application, including in front of static files, you can create a `functions/_middleware.js` file.
 
