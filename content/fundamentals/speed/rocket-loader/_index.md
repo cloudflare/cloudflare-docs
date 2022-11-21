@@ -10,7 +10,7 @@ Rocket Loader prioritizes your website's content (text, images, fonts etc) by de
 
 This type of loading (known as asynchronous loading) leads to earlier rendering of your page content. Rocket Loader handles both inline and external scripts, while maintaining order of execution. Cloudflare will detect incompatible browsers and disable Rocket Loader.
 
-On pages with JavaScript, this results in a much faster loading experience for your users and improves the following performance metrics:
+On pages with JavaScript, this results in a [much faster loading experience](https://www.cloudflare.com/learning/performance/test-the-speed-of-a-website/) for your users and improves the following performance metrics:
 
 - Time to First Paint (TTFP)
 - Time to First Contentful Paint (TTFCP)
