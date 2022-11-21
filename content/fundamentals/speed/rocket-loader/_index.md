@@ -6,7 +6,7 @@ weight: 1
 
 # Rocket Loader
 
-Rocket Loader prioritizes your website's content (text, images, fonts etc) by deferring the loading of all of your JavaScript until after rendering.
+Rocket Loader prioritizes your website's content (text, images, fonts, and more) by deferring the loading of all of your JavaScript until after rendering.
 
 This type of loading (known as asynchronous loading) leads to earlier rendering of your page content. Rocket Loader handles both inline and external scripts, while maintaining order of execution. Cloudflare will detect incompatible browsers and disable Rocket Loader.
 
