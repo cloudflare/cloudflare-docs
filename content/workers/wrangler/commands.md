@@ -170,7 +170,7 @@ None of the options for this command are required. Many of these options can be 
     - The XCode command line tools, which can be installed with xcode-select --install
       {{</Aside>}}
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - This will write/read to/from real KV namespaces. Note this flag requires `--experimental-local` to be enabled.
+  - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 - `--node-compat` {{<type>}}boolean{{</type>}}
