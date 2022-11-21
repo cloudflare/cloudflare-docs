@@ -15,7 +15,7 @@ The following table describes Cache Rules availability per plan.
 
 ## Order and priority
 
-Cache rules are unique, unlike Page Rules, and this is how they are applied:
+Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 1. Cache Rules are stackable, this means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied.
 
