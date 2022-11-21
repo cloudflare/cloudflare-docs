@@ -13,6 +13,13 @@ The following table describes Cache Rules availability per plan.
 
 {{<feature-table id="cache.cache_rules">}}
 
+## Order and priority
+
+Cache rules are unique, unlike Page Rules, and this is how they are applied:
+
+1. Cache Rules are stackable, this means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied.
+
+2. If we have conflicting settings, then ordering matters and rules will be applied in order. In this case, the last rule will override the previous one. For example, if you have a rule to cache everything on `example.com/images/*` and another one to bypass cache on `example.com/*`, the last rule will override the first one.
 
 ## Create Cache Rules in the dashboard
 
