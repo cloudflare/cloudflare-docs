@@ -86,7 +86,8 @@ Configure your bypass rule with the following required and optional parameters:
 <summary>Bypass a path under your waiting room and all of its subpaths</summary>
 <div>
 
-If your waiting room is configured at `example.com/` and you would like all traffic visiting `example.com/bypassme` and all of its subpaths. In this example, we also want to prevent any subrequests on this path of `js`, `css`, or `png` to bypass the waiting room.
+If your waiting room is configured at `example.com/` and you would like all traffic visiting `example.com/bypassme` and all of its subpaths. In this example, we also want to ensure any subrequests of `js`, `css`, or `png` from also bypass the waiting room to ensure all assets are loaded properly on the paths being bypassed. Note that in this example, all requests ending in `js`, `css` or `png` will bypass the waiting room regardless of the subpath. If this is not your intended use case, please alter the expression to suit your specific requirements and site architecture.
+
 
 ```json
 curl -X POST \
@@ -94,7 +95,7 @@ curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
         "description": "subpath bypass",
-        "expression": "starts_with(http.request.uri.path, \"/bypassme\") and not (ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\"))",
+        "expression": "starts_with(http.request.uri.path, \"/bypassme\") or ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\")",
         "action": "bypass_waiting_room"
 }'
 ```
