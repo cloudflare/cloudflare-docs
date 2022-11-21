@@ -70,3 +70,7 @@ This is an example of a custom pathname to host Zaraz's initialization script:
 ```txt
 /my-server/my-scripts/start.js
 ```
+
+### HTTP Events API
+
+Refer to [HTTP Events API](/zaraz/http-events-api/) for more information on this endpoint.
