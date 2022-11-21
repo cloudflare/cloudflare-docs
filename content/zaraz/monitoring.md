@@ -8,7 +8,7 @@ weight: 5
 
 Zaraz Monitoring shows you different metrics regarding Zaraz. This helps you to detect issues when they occur. For example, if a third-party analytics provider stops collecting data, you can use the information presented by Zaraz Monitoring to find where in the workflow the problem occurred.
 
-You can also check activity data in the **Activity last 24hr** section, when you access [Tools](/zaraz/get-started/add-tool/) and [Triggers](/zaraz/get-started/create-trigger/) in the dashboard.
+You can also check activity data in the **Activity last 24hr** section, when you access [tools](/zaraz/get-started/add-tool/), [actions](/zaraz/get-started/create-actions/) and [triggers](/zaraz/get-started/create-trigger/) in the dashboard.
 
 To use Zaraz Monitoring:
 
