@@ -25,7 +25,6 @@ The following table includes a sample of covered attack vectors:
 
 {{</table-wrap>}}
 
-
 ## Getting additional DNS protection
 
 The Network-layer DDoS Attack Protection Managed Ruleset provides protection against some types of DNS attacks. For better DNS protection, consider the following options:
