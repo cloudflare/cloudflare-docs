@@ -34,6 +34,12 @@ When Area 1 adds a disposition header to an email message, that header matches t
 X-Area1Security-Disposition: [Value]
 ```
 
+Note that emails with a disposition of `SPAM` will be tagged with `UCE` (unsolicited commercial emails) in their headers:
+
+```txt
+X-Area1Security-Disposition: UCE
+```
+
 ## Attributes
 
 Traffic that flows through Area 1 can also receive one or more **Attributes**, which indicate that a specific condition has been met.
