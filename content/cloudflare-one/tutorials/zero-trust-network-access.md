@@ -32,7 +32,7 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 To start, enroll your devices into the WARP client. The WARP client is responsible for forwarding your traffic to Cloudflare and eventually to your private network.
 
-1. Define [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) under **Settings** > **Devices** > **Device enrollment permissions** > **Manage**.
+1. Define [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) under **Settings** > **Devices** > **Device enrollment permissions** > **Manage**.
 
     In this example, we require that users have a hard key inserted and are connecting from the United States.
 

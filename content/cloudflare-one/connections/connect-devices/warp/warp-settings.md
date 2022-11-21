@@ -1,18 +1,70 @@
 ---
-pcx_content_type: reference
+pcx_content_type: how-to
 title: WARP settings
 weight: 7
 ---
 
 # WARP settings
 
-This page describes the WARP configuration options available on the Zero Trust dashboard. To configure these settings, open the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **Settings** > **WARP Client**.
+WARP settings define the WARP client modes and permissions available to end users. Admins can configure these settings on the Zero Trust dashboard under **Settings** > **WARP Client**.
 
 {{<Aside type="note" header="Managed deployments">}}
 If you are deploying [WARP with device management software](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), we recommend only supplying `organization` in your [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) and managing all other settings via the dashboard. Any settings you configure on the dashboard will be overridden by the local policy deployed by your management software. To ensure dashboard settings are applied as intended, remove the corresponding parameters from your managed deployment configuration.
 {{</Aside>}}
 
-## Admin override
+## Manage device enrollment
+
+To specify which users in your organization can enroll new devices or revoke connected devices:
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+2. In the **Device enrollment** card, select **Manage**.
+3. In the **Rules** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can enroll or revoke devices.
+4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with.
+5. Choose a global **Session duration** for enrolled devices. Users will need to re-authenticate their device after their session expires. To customize session durations for different users or applications, refer to [session duration policies](/cloudflare-one/policies/filtering/enforce-sessions/).
+6. Select **Save**.
+
+Your device enrollment rules are now active. To see which devices have been enrolled or revoked, go to **My Team** > **Devices**
+
+## WARP profiles
+
+With Cloudflare Zero Trust, you can build device settings profiles and apply them to different users or groups in your organization.
+
+### Create a new profile
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**
+2. In the **Profile settings** card, select **Create profile**.
+3. Enter any name for the profile.
+4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/filtering/network-policies/#operators), and [Values](/cloudflare-one/policies/filtering/network-policies/#value).
+5. Configure [WARP client settings](#settings) for these devices.
+
+{{<Aside type="note">}}
+At this time, **Split Tunnels** and **Local Domain Fallback** can only be modified after you save the profile.
+{{</Aside>}}
+
+6. Select **Save**.
+
+Your profile will appear in the **Profile settings** list. You can rearrange the profiles in the list according to your desired [order of precedence](#order-of-precedence).
+
+### Selectors
+
+| Selector | Description| WARP mode required |
+| -------  | ---------- | -----------------  |
+| User Email | Email address of a user <br /> `user-name@company.com` | Gateway with WARP |
+| User Group Emails | Email address of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br />  `contractors@company.com` | Gateway with WARP |
+| User Group IDs | ID of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br /> `12jf495bhjd7893ml09o` | Gateway with WARP |
+| User Group Names | Name of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br />  `developers` | Gateway with WARP |
+| Operating System | `MacOS` | Any mode |
+| Operating System Version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode |
+
+### Order of precedence
+
+Profiles are evaluated from top to bottom as shown in the UI and follows the first match principle — once a device matches a profile, evaluation stops and no subsequent profiles can override the decision.
+
+The **Default setting** profile is always at the bottom of the list, meaning that it will only apply if the device does not match any of the previous profiles. If you make another custom profile the default, all settings will be copied over into the **Default setting** profile.
+
+## Settings
+
+### Admin override
 
 <details>
 <summary>Feature availability</summary>
@@ -27,45 +79,35 @@ If you are deploying [WARP with device management software](/cloudflare-one/conn
 
 {{<Aside type="note">}}
 
-This feature needs the <b>Lock WARP switch</b> feature to be set to <b>True</b>. You can enable the feature via MDM or under <b>Settings</b> > <b>Devices</b> on the Zero Trust Dashboard.
+In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch) must also be enabled.
 
 {{</Aside>}}
 
-When this toggle is **enabled**, you can provide end users with an one-time password that will allow them to toggle off the WARP client in case they need to work around a temporary network issue (for example, an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection).
+When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public WiFi, or a firewall at a customer site blocking the connection).
 
-When the toggle is **disabled**, one-time passwords will not be generated, and end users will not be able to toggle the client off when \*_Switch Locked_ is true.
+You can also set a **Timeout** to define how long the WARP client is allowed to be paused once the end user disables it. Once the timeout expires, the WARP client will automatically reconnect.
 
-You can also set a timeout to define how long the WARP client is allowed to be paused once the end user disables it. Once the time is up, the WARP client will automatically reconnect.
+#### Retrieve the override code
 
-When you want to allow a user to disable the WARP client:
+To retrieve the one-time code for a user:
 
-1.  Log in to the Zero Trust Dashboard and ensure the **Admin override** toggle is enabled.
-1.  Retrieve the 7-digit override code for their device by navigating to **My Team** > **Devices** > **Connected devices**, clicking on **View** for the desired device, and scrolling down to **User details**.
-1.  Copy the code and share it with the end user for them to enter on their device.
+1. Enable **Admin override**.
+2. Go to **My Team** > **Devices**.
+3. Select **View** for a connected device.
+4. Scroll down to **User details** and copy the 7-digit **Override code**.
+5. Share this code with the end user for them to enter on their device.
 
-Users will then need to open the WARP client on their devices, navigate to **Preferences** > **Advanced** > **Enter code**, and enter the override code in the pop-up window. The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
+#### Enter the override code
 
-## Device enrollment permissions
+To turn off the WARP client on a user device:
 
-<details>
-<summary>Feature availability</summary>
-<div>
+1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
+2. Select **Enter code**.
+3. Enter the override code in the pop-up window.
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | Any mode                                                                                  | All plans                                                     |
+The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
 
-</div>
-</details>
-
-Cloudflare Zero Trust allows you to establish which users in your organization can enroll new devices or revoke access to connected devices. To do that, you can create a device enrollment rule on the Zero Trust dashboard:
-
-1.  Navigate to **Settings** > **WARP Client**.
-1.  In the **Device enrollment permissions** card, click **Manage**.
-1.  In the rule builder, configure one or more rules to define who can enroll or revoke devices.
-1.  Click **Save**.
-
-## Captive portal detection
+### Captive portal detection
 
 <details>
 <summary>Feature availability</summary>
@@ -73,16 +115,16 @@ Cloudflare Zero Trust allows you to establish which users in your organization c
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems    | WARP with Gateway                                                                         | All plans                                                     |
+| All systems    | Gateway with WARP                                                                         | All plans                                                     |
 
 </div>
 </details>
 
-Captive Portal detection is the ability for the WARP client to detect a third-party onboarding flow before Internet access is obtained. This is most frequent in places such as airports, cafes, and hotels.
+Captive portal detection is the ability for the WARP client to detect a third-party onboarding flow before Internet access is obtained. Captive portals typically occur in places such as airports, cafes, and hotels.
 
-When the toggle is enabled, the WARP client will automatically turn off when it detects a captive portal, and it will automatically turn on after the amount of time you specify in the card.
+When `Enabled`, the WARP client will automatically turn off when it detects a captive portal, and it will automatically turn back on after the **Timeout** duration.
 
-## Mode switch
+### Mode switch
 
 <details>
 <summary>Feature availability</summary>
@@ -90,20 +132,14 @@ When the toggle is enabled, the WARP client will automatically turn off when it 
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | WARP with Gateway                                                                         | All plans                                                     |
+| All systems | Gateway with WARP                                                                         | All plans                                                     |
 
 </div>
 </details>
 
-When the toggle is enabled, users have the option to switch between [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/#gateway-with-doh). When the toggle is disabled, end users will not be able to switch between modes.
+When `Enabled`, end users have the option to switch between [Gateway with WARP](/cloudflare-one/connections/connect-devices/warp/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/#gateway-with-doh). This feature does not support switching between any other modes.
 
-{{<Aside type="note">}}
-
-  This feature only allow switching between <b>Gateway with WARP</b> and <b>Gateway with DoH</b>. It does not support any other modes.
-
-{{</Aside>}}
-
-## Lock WARP switch
+### Lock WARP switch
 
 <details>
 <summary>Feature availability</summary>
@@ -120,13 +156,12 @@ Allows the user to turn off the WARP switch and disconnect the client.
 
 **Value:**
 
-- `Disabled` &mdash; (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-- `Enabled` &mdash; The user is prevented from turning off the switch. The WARP Agent will start in the connected state when this is enabled.
+- `Disabled`: (default) The user is able to turn the switch on or off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+- `Enabled`: The user is prevented from turning off the switch. The WARP client will always start in the connected state.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
-
-## Allow device to leave organization
+### Allow device to leave organization
 
 <details>
 <summary>Feature availability</summary>
@@ -139,9 +174,11 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 </div>
 </details>
 
-When the toggle is enabled, users who manually logged in to their organization on WARP are prevented from leaving that organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
+**Value:**
+- `Enabled`: (default) Users who manually enrolled their device are allowed to log out from your Zero Trust organization.
+- `Disabled`: Users who manually enrolled their device are prevented from leaving your Zero Trust organization. This disables the **Logout from Zero Trust** and **Reset All Settings** button in the WARP client interface. If the WARP client has been deployed with a management tool and a local policy exists, then this switch is bypassed and clients are always prevented from leaving.
 
-## Allow updates
+### Allow updates
 
 <details>
 <summary>Feature availability</summary>
@@ -154,9 +191,9 @@ When the toggle is enabled, users who manually logged in to their organization o
 </div>
 </details>
 
-When the toggle is enabled, users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add/remove software from their device.
+When `Enabled`, users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add or remove software from their device.
 
-## Auto connect
+### Auto connect
 
 <details>
 <summary>Feature availability</summary>
@@ -169,36 +206,16 @@ When the toggle is enabled, users will receive update notifications when a new v
 </div>
 </details>
 
+When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch) above.
 
-When the toggle is enabled, the client will automatically reconnect if it has been disabled for the specified Timeout value. This setting is best used in conjunction with [Lock WARP Switch](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch) above.
-
-We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified, the default state the app will always be Connected (ex. after reboot, after initial install, etc.)
+We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
 
 **Value:**
 
-- `0` &mdash; Allow the switch to stay in the off position indefinitely until the user turns it back on.
-- `1` to `1440` &mdash; Turn switch back on automatically after the specified number of minutes.
+- `0`: Allow the switch to stay in the off position indefinitely until the user turns it back on.
+- `1` to `1440`: Turn switch back on automatically after the specified number of minutes.
 
-
-## Support URL
-
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
-
-</div>
-</details>
-
-When the toggle is enabled, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
-
-- `https://support.example.com` Use an https:// link to open your companies internal help site.
-- `mailto:yoursupport@example.com` Use a mailto: link to open your default mail client.
-
-## Service mode
+### Support URL
 
 <details>
 <summary>Feature availability</summary>
@@ -211,12 +228,64 @@ When the toggle is enabled, the **Send Feedback** button in the WARP client appe
 </div>
 </details>
 
-Allows you to choose the operational mode of the client. See [WARP Modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) for a detailed description of each mode.
+When `Enabled`, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
+
+- `https://support.example.com`: Use an https:// link to open your companies internal help site.
+- `mailto:yoursupport@example.com`: Use a`mailto: link to open your default mail client.
+
+### Service mode
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems | Any mode                                                                                  | All plans                                                     |
+
+</div>
+</details>
+
+Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) for a detailed description of each mode.
 
 - **Gateway with WARP** DNS and Device traffic is encrypted and processed by Gateway. This mode is required if you want to enable HTTP rules, Browser Isolation, Anti-Virus scanning and DLP.
 - **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.
 - **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
 
-## Session duration
+### Split Tunnels
 
-You can require users to re-authenticate their device after a certain amount of time has elapsed. Unlike the other WARP settings listed on this page, session durations are managed through a Gateway policy. Refer to [WARP session duration](/cloudflare-one/policies/filtering/enforce-sessions/) for more information.
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems | Any mode                                                                                  | All plans                                                     |
+
+</div>
+</details>
+
+Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) documentation.
+
+### Local Domain Fallback
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems | Any mode                                                                                  | All plans                                                     |
+
+</div>
+</details>
+
+Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) documentation.
+
+## Verify settings
+
+To check the WARP client settings on a specific device, open a terminal on the device and run:
+
+```sh
+$ warp-cli settings
+```

@@ -13,7 +13,7 @@ We will walk through how to initialize a service on a Linux VM in Azure, and rou
 ## Prerequisites
 
 - Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) into your Cloudflare Zero Trust account.
 
 ## Create your environment
 
