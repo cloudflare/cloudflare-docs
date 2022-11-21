@@ -67,7 +67,7 @@ The following are the properties on the context object which are passed through 
       Passes the request through to the next Function or to the asset server if no other Function is available. 
   
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
-  - `param` [{{<type>}}Params&lt;P&gt;{{</type>}}](#params)
+  - `params` [{{<type>}}Params&lt;P&gt;{{</type>}}](#params)
   - `data` [{{<type>}}Data{{</type>}}](#data)
   
 {{</definitions>}}

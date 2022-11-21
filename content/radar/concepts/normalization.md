@@ -20,4 +20,4 @@ Refer to the `result.meta.normalization` property in the response to check which
 | `MIN0_MAX` | Values have been normalized using min-max, but setting the minimum value to `0`. Equivalent to a proportion of the maximum value in the entire response, scaled between 0 and 1.|
 | `RAW_VALUES` | Values are raw and have not been changed. |
 
-If you want to compare values across locations/time ranges/etc., in endpoints that normalize values using min-max, you must do so in the same request. This is done by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other. Refer to [Making comparisons](/radar/get-started/making-comparisons) for more information.
+If you want to compare values across locations/time ranges/etc., in endpoints that normalize values using min-max, you must do so in the same request. This is done by asking for multiple series. All values will then be normalized using the same minimum and maximum value and can safely be compared against each other. Refer to [Make comparisons](/radar/get-started/making-comparisons/) for more information.

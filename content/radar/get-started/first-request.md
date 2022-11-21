@@ -93,4 +93,4 @@ A [notebook](https://jupyter.org/) is a web-based interactive computing applicat
 
 ## Next steps
 
-Refer to [Making comparisons](/radar/get-started/making-comparisons) to learn how to compare data.
+Refer to [Make comparisons](/radar/get-started/making-comparisons/) to learn how to compare data.

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: E-commerce
-weight: 6
+weight: 3
 meta:
   title: zaraz.ecommerce
 ---

@@ -10,9 +10,9 @@ meta:
 
 ## Before removing your domain
 
-If you are an Enterprise customer, contact your Customer Success Manager to change/cancel your subscriptions, upgrade/downgrade plans and delete accounts.
-
 If you experience website issues, we recommend [temporarily pausing Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/) to evaluate your website's performance.
+
+If you need to re-add the domain in a different account, make sure the current settings have been saved. For example, you may [Import and export DNS records](/dns/manage-dns-records/how-to/import-and-export/).
 
 ### Actions outside of Cloudflare
 

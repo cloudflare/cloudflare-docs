@@ -24,7 +24,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
-<!-- - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments. -->
+- [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
 
 {{<Aside type="note">}}
 
@@ -1066,6 +1066,45 @@ $ wrangler pages deployment list [OPTIONS]
 
 {{</definitions>}}
 
+### `deployment tail`
+
+Start a session to livestream logs from your deployed Pages Functions.
+
+```sh
+$ wrangler pages deployment tail [DEPLOYMENT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DEPLOYMENT` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The name of the project you would like to tail.
+- `--environment` {{<type>}}"production"|"preview"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment.
+- `--format` {{<type>}}"json"|"pretty"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The format of the log entries.
+- `--status` {{<type>}}"ok"|"error"|"canceled"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by invocation status.
+- `--header` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by HTTP header.
+- `--method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by HTTP method.
+- `--sampling-rate` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Add a percentage of requests to log sampling rate.
+- `--search` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by a text match in `console.log` messages.
+- `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
+{{</Aside>}}
+
+After starting `wrangler pages deployment tail`, you will receive a live stream of console and exception logs for each request your Functions receive.
+
 ### `publish`
 
 Deploy a directory of static assets as a Pages deployment.
@@ -1184,12 +1223,24 @@ Retrieve your user information and test your authentication configuration.
 $ wrangler whoami
 ```
 
-<!-- ## deployments
+## deployments
 
-Retrieve details for the 10 most recent deployments. Details include `Version ID`, `Version number`, `Author email`, `Created on`, and `Latest deploy`.
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
 
 ```sh
 $ wrangler deployments
+
+Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Created on: 2022-11-11T15:49:08.117218Z
+Author: example@cloudflare.com
+Source: Dashboard
+ 
+Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
+Created on: 2022-11-11T15:51:20.79936Z
+Author: example@cloudflare.com
+Source: Wrangler
+🟩 Active
+
 ```
 
 {{<definitions>}}
@@ -1199,8 +1250,6 @@ $ wrangler deployments
 
 {{</definitions>}}
 
-TODO Add examples of logged output
--->
 
 ---
 

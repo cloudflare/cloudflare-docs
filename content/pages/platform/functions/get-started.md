@@ -12,13 +12,13 @@ To deploy your first Function, you’ll need to create a /functions directory at
 ---
 filename: helloworld.js
 ---
-export const onRequest = (context) => {
+export function onRequest(context) {
   return new Response("Hello, world!")
 }
 ```
 
 The `onRequest` handler takes a "request context" object which we'll cover in more detail below. The handler must return a `Response` or a `Promise` of a `Response`.
 
-This function will run on the `/helloworld` route and returns “hello world!”.  The reason this function is available on this route is because the file is named `helloworld.js`. Similarly, if this file was called `howdyworld.js`, this function would run on `/howdyworld`.
+This function will run on the `/helloworld` route and returns "hello world!".  The reason this function is available on this route is because the file is named `helloworld.js`. Similarly, if this file was called `howdyworld.js`, this function would run on `/howdyworld`.
 
 Let’s take a closer look at how this routing behavior works and how to further customize this.

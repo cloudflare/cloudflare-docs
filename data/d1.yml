@@ -13,7 +13,7 @@ meta:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.com/channels/595317990191398933/779390076219686943
+  discord: https://discord.com/invite/cloudflaredev
 
 externals:
   - title: Workers home

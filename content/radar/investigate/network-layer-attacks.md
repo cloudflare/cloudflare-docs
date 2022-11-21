@@ -15,9 +15,11 @@ Unlike what happens in [Application Layer Attacks](/radar/investigate/applicatio
 When filtering by location or autonomous system (AS), we are filtering by the source location/AS of the attack 
  — which can be very different to the location of the human orchestrator of the attack. Refer to [botnets](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-botnet/) for more information.
 
-## Timeseries
+## List of endpoints
 
-### Example: hourly percentage breakdown by attack method
+### Timeseries
+
+#### Example: hourly percentage breakdown by attack method
 
 In the following example, we will examine the worldwide versus Singapore distribution of mitigated attacks by network protocol:
 
@@ -62,9 +64,9 @@ We can also conclude that the distribution of network layer attacks coming from 
 
 For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-attacks-get-layer-3-attacks-time-series) for this endpoint.
 
-## Summary
+### Summary
 
-### Example: Russia - overall percentage breakdown by network protocol
+#### Example: Russia - overall percentage breakdown by network protocol
 
 We can also filter by source location and examine attacks coming from Russia:
 

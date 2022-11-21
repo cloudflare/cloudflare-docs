@@ -92,7 +92,7 @@ When enabling Authenticated Origin Pull per hostname, all proxied traffic to the
 Save the certificate ID `id` since it is required for the next step.
 {{</Aside>}}
 
-1.  On a specific hostname, [enable Authenticated Origin Pull](https://developers.cloudflare.com/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
+2.  On a specific hostname, [enable Authenticated Origin Pull](https://developers.cloudflare.com/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication).
 
 ### Replace a client cert (without downtime)
 
