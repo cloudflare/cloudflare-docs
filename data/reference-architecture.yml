@@ -4,7 +4,8 @@ logo: <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://
 product:
   title: Reference Architecture
   url: /reference-architecture/
- 
+  wrap: true
+
 meta:
   title: Cloudflare Reference Architecture docs
   description: Review best practices and diagrams explaining how to address common Internet security and performance challenges using Cloudflare products. 
