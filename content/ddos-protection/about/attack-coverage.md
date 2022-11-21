@@ -27,7 +27,7 @@ The following table includes a sample of covered attack vectors:
 
 ## Getting additional DNS protection
 
-The Network-layer DDoS Attack Protection Managed Ruleset provides protection against some types of DNS attacks. For better DNS protection, consider the following options:
+The Network-layer DDoS Attack Protection Managed Ruleset provides protection against some types of DNS attacks. For advanced DNS protection, consider the following options:
 
 * Use Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/).
 * If you wish to run your own nameservers, use [DNS Firewall](/dns/dns-firewall/) to get additional protection against DNS attacks like random prefix attacks.
