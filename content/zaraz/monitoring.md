@@ -21,4 +21,4 @@ To use Zaraz Monitoring:
 - **Loads**: Counts how many times Zaraz was loaded on pages of your website. When [Single Page Application support](/zaraz/reference/settings/#single-page-application-support) is enabled, Loads will count every change of navigation as well. 
 - **Tracks**: Counts how many times a specific event was tracked by Zaraz. It includes the [Pageview event](/zaraz/get-started/), [Track events](/zaraz/web-api/track/), and [E-commerce events](/zaraz/web-api/ecommerce/).
 - **Triggers**: Counts how many times a specific trigger was activated. It includes the built-in [Pageview trigger](/zaraz/get-started/create-trigger/) and any other trigger you set in Zaraz.
-- **Actions**: Counts how many times a [specific action](/zaraz/get-started/create-actions/) was activated. It includes the pre-configured Pageview action, and any other action you set in Zaraz.
+- **Actions**: Counts how many times a [specific action](/zaraz/get-started/create-actions/) was activated. It includes the pre-configured Pageview action, and any other actions you set in Zaraz.
