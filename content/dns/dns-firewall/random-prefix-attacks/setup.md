@@ -28,6 +28,6 @@ Once you receive a `200` success response from the API, queries identified as be
 
 {{<Aside type="note">}}
 
-If you do not specify otherwise in your API call, Cloudflare automatically sets the `"only_when_origin_unhealthy"` parameter to true, which means that Cloudflare will only mitigate attacks when we detect that the origin is down (possibly as a result of an attack). This setting can also be changed via the API, using a request similar to the ones shown above.
+If you do not specify otherwise in your API call, Cloudflare automatically sets the `"only_when_origin_unhealthy"` parameter to true, which means that Cloudflare will only mitigate attacks when we detect that the origin is unresponsive (possibly as a result of an attack). This setting can also be changed via the API, using a request similar to the ones shown above.
 
 {{</Aside>}}
