@@ -20,10 +20,10 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
 <div class="mermaid">
     flowchart TD
       accTitle: Random prefix attacks diagram
-      A[Request to <code>example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
-      B --> C[<code>com.</code> TLD NS]
-      C --<code>NXDOMAIN error</code>--> B
-      B --<code>NXDOMAIN error</code>--> A
+      A[End user query to <code>example.com</code>] --"1)"--> B[<code>1.1.1.1 resolver</code>]
+      B --"2)"--> C[<code>com.</code> TLD NS]
+      C --"3)" <code>NXDOMAIN error</code>--> B
+      B --"4)" <code>NXDOMAIN error</code>--> A
       D[Authoritative NS]
 </div>
 <br/>
@@ -35,12 +35,12 @@ These attacks are successful because they target subdomains, which require a res
 <div class="mermaid">
     flowchart TD
       accTitle: Random prefix attacks diagram
-      A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
-      B -- #1 --> C[<code>com.</code> TLD NS]
-      C -- Query Authoritative NS --> B
-      B -- #2 --> D[Authoritative NS]
-      D --<code>NXDOMAIN error</code>--> B
-      B --<code>NXDOMAIN error</code>--> A
+      A[End user query to <code>random.example.com</code>] --"1)"--> B[<code>1.1.1.1 resolver</code>]
+      B -- "2)" --> C[<code>com.</code> TLD NS]
+      C -- "3)" Query Authoritative NS --> B
+      B -- "4)" --> D[Authoritative NS]
+      D --"5)" <code>NXDOMAIN error</code>--> B
+      B --"6)" <code>NXDOMAIN error</code>--> A
 </div>
 <br/>
 
