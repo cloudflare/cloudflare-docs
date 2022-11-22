@@ -8,7 +8,7 @@ weight: 15
 
 {{<render file="_always-use-https-definition.md">}}
 
-Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
+Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 
 ## Encrypt all visitor traffic
 
