@@ -13,6 +13,13 @@ The following table describes Cache Rules availability per plan.
 
 {{<feature-table id="cache.cache_rules">}}
 
+## Order and priority
+
+Cache rules are unique, unlike Page Rules. This is how they are applied:
+
+1. Cache Rules are stackable. This means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied.
+
+2. If you have conflicting settings, then ordering matters and rules will be applied in the order they appear in your Cloudflare dashboard, from bottom to top. For example, if the top rule is set to cache everything on `example.com/images/*` and the bottom rule is set to bypass cache on `example.com/*`, then because we apply rules from bottom to top, cache will be bypassed for all URLS that match `example.com/*`.
 
 ## Create Cache Rules in the dashboard
 
