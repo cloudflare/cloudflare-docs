@@ -1,14 +1,14 @@
 ---
-title: Use cases
+title: Example rules
 pcx_content_type: configuration
 weight: 5
 meta:
-  title: Single Redirects common use cases
+  title: Single Redirects — Example rules
 ---
 
-# Common use cases
+# Example rules
 
-The following use cases go through example single redirect rule configurations and sample incoming request URLs.
+The following sections contain common single redirect rule configurations and sample incoming request URLs.
 
 ## Redirect visitors to the new URL of a page
 
@@ -22,7 +22,7 @@ This example static redirect for zone `example.com` will redirect visitors reque
 * **Operator:** _equals_
 * **Value:** `/contact-us/`
 
-If you are using the Expression Editor:<br>
+If you are using the Expression Editor, enter the following expression:<br>
 `http.request.uri.path eq "/contact-us/"`
 
 **Then**
@@ -81,7 +81,7 @@ This example dynamic redirect for zone `example.com` will redirect visitors from
 * **Operator:** _matches regex_
 * **Value:** `^/[A-Za-z]{2}-[A-Za-z]{2}/`
 
-If you are using the Expression Editor:<br>
+If you are using the Expression Editor, enter the following expression:<br>
 `http.request.uri.path matches "^/[A-Za-z]{2}-[A-Za-z]{2}/"`
 
 **Then**
