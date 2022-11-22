@@ -15,15 +15,16 @@ meta:
 
 ### Queries for nonexistent domains
 
-If the request only involved nonexistent domains, the `NXDOMAIN` errors would only be served by the top-level domain (TLD) nameservers for `com.`.
+If the request only involved nonexistent domains, the `NXDOMAIN` errors would only be served by the top-level domain (TLD) nameservers for `com.`. This means that the queries never reach the authoritative nameservers.
 
 <div class="mermaid">
     flowchart TD
       accTitle: Random prefix attacks diagram
-      A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
+      A[Request to <code>example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
       B --> C[<code>com.</code> TLD NS]
       C --<code>NXDOMAIN error</code>--> B
       B --<code>NXDOMAIN error</code>--> A
+      D[Authoritative NS]
 </div>
 <br/>
 
@@ -35,8 +36,10 @@ These attacks are successful because they target subdomains, which require a res
     flowchart TD
       accTitle: Random prefix attacks diagram
       A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
-      B --> C[Authoritative NS]
-      C --<code>NXDOMAIN error</code>--> B
+      B --> C[<code>com.</code> TLD NS]
+      C -- Query Authoritative NS --> B
+      B --> D[Authoritative NS]
+      D --<code>NXDOMAIN error</code>--> B
       B --<code>NXDOMAIN error</code>--> A
 </div>
 <br/>
