@@ -24,7 +24,6 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
       B --> C[<code>com.</code> TLD NS]
       C --<code>NXDOMAIN error</code>--> B
       B --<code>NXDOMAIN error</code>--> A
-      D[Authoritative NS]
 </div>
 <br/>
 
