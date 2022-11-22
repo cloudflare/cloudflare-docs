@@ -123,3 +123,7 @@ User feature fields add features about the end-user (client) into the Cache Key.
 - `device_type` classifies a request as `mobile`, `desktop`, or `tablet` based on the User Agent
 - `geo` includes the client’s country, derived from the IP address
 - `lang` includes the first language code contained in the `Accept-Language` header sent by the client
+
+## Limitations
+
+The Prefetch feature is not compatible with Custom Cache Key Page rule. When a customer uses a Custom Cache Key Page Rule, the custom cache key is used to cache all their assets. However, when a customer uses Prefetch, the Prefetch feature does not honor the Custom Cache key Page Rule and simply caches the prefetched assets under a default cache key. In this case, a cache key mismatch. The Prefetch feature prefetches assets and stores them in cache with the default cache key, then when the browser requests these assets, the custom cache key page rule is used and the assets are retrieved with the custom cache key. This is a cache `MISS` and so the request goes back to the origin.
