@@ -76,10 +76,6 @@ Once the creator grants permission to their camera and microphone, live video an
 
 You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/id/draft-ietf-wish-whip-04.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
-{{<Aside>}}
-[Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/) is not yet supported, but will be supported soon. Some WHIP clients require Trickle ICE.
-{{</Aside>}}
-
 ## Step 3: Play live video using WHEP
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
