@@ -279,7 +279,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Don't actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
 
 {{</definitions>}}
 
