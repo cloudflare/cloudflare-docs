@@ -12,6 +12,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
+- [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -260,6 +261,27 @@ None of the options for this command are required. Also, many can be set in your
 {{</definitions>}}
 
 ---
+
+## delete
+
+Delete your Worker and all associated Cloudflare developer platform resources.
+
+```sh
+$ wrangler delete [SCRIPT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `SCRIPT` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker.
+- `--name` {{<type>}}string{{</type>}}
+  - Name of the Worker.
+- `--env` {{<type>}}string{{</type>}}
+  - Perform on a specific environment.
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+
+{{</definitions>}}
 
 ## `kv:namespace`
 
