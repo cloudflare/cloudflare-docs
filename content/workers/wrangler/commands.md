@@ -264,7 +264,7 @@ None of the options for this command are required. Also, many can be set in your
 
 ## delete
 
-Delete your Worker, its bindings, and any associated Workers Sites or asset KV namespaces from Cloudflare.
+Delete your Worker, and all associated Cloudflare developer platform resources.
 
 ```sh
 $ wrangler delete [SCRIPT] [OPTIONS]
