@@ -261,6 +261,27 @@ None of the options for this command are required. Also, many can be set in your
 
 ---
 
+## delete
+
+Delete your Worker, its bindings, and any associated Workers Sites or asset KV namespaces from Cloudflare.
+
+```sh
+$ wrangler delete [SCRIPT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `SCRIPT` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker.
+- `--name` {{<type>}}string{{</type>}}
+  - Name of the Worker.
+- `--env` {{<type>}}string{{</type>}}
+  - Perform on a specific environment.
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Don't actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+
+{{</definitions>}}
+
 ## `kv:namespace`
 
 Manage Workers KV namespaces.
