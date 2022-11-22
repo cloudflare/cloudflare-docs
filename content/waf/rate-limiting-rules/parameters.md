@@ -60,6 +60,7 @@ The available rate limiting rule parameters are the following:
     | _Query_                   | `http.request.uri.args["<query_param_name>"]`        |
     | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                         |
     | _JSON String_             | `lookup_json_string(http.request.body.raw, "<key>")` |
+    | _Body_                    | `http.request.body.raw`                              |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
