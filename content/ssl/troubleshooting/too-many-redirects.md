@@ -1,12 +1,14 @@
 ---
 title: ERR_TOO_MANY_REDIRECTS
 pcx_content_type: troubleshooting
-weight: 1
+weight: 2
 ---
 
 # ERR_TOO_MANY_REDIRECTS
 
-After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. This occurs when visitors get stuck in a redirect loop.
+After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, your visitors' browsers might display `ERR_TOO_MANY_REDIRECTS` or `The page isn’t redirecting properly` errors. 
+
+This error occurs when visitors get stuck in a redirect loop.
 
 <div class="mermaid">
 flowchart LR
