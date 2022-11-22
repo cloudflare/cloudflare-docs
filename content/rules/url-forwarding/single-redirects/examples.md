@@ -8,7 +8,7 @@ meta:
 
 # Example rules
 
-The following sections contain common single redirect rule configurations and sample incoming request URLs.
+The following sections contain example single redirect rule configurations.
 
 ## Redirect visitors to the new URL of a page
 
