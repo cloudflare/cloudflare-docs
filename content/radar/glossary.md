@@ -22,6 +22,22 @@ Data packets hop from one AS to another until they reach their final destination
 
 Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much like the post office processing mail, BGP picks the most efficient routes for delivering Internet traffic. A BGP announcement is a way for an AS to say to another, "When you receive traffic to this network prefix, please send it to me". That message is then processed and (possibly) forwarded to other ASes, allowing for every AS in the path to learn where to send traffic to that network prefix. Learn more [here](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-bgp/).
 
+## BGP Route Leaks
+
+[BGP route leaks](https://www.rfc-editor.org/rfc/rfc7908.html) are defined as the propagation of routing announcements beyond their intended scope.
+In Cloudflare Radar, you can view the detected route leak events on the corresponding ASN pages. The columns in the table are defined as follows:
+
+* `From`: the AS from which the routes are learned from
+* `By`: the AS that leaked the routes, or the "leaker"
+* `To`: the AS that received and propagated the leaked routes
+* `Start` and `End`: the starting and ending time of a route leak event
+* `BGP Msgs.`: the number of BGP announcements that contain leaked routes
+* `Prefixes`: the number of IP prefixes a route leak event affects
+* `Origins`: the number of origin ASes a route leak event affects
+* `Vatange Points`: the number of route collectors that observed a route leak event
+
+Learn more about our route leak detection system design and usages [here](https://blog.cloudflare.com/route-leak-detetion).
+
 ## Certificates
 
 Encryption is a critical part of a safe Internet. SSL/TLS is the standard security technology for establishing an encrypted link between a client and a server.
