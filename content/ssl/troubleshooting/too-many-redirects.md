@@ -49,8 +49,8 @@ Redirect loops will occur if your origin server automatically redirects all HTTP
 <div class="mermaid">
 flowchart TD
 accTitle: Redirect loops illustration for Flexible mode
-A[Request for <code>https://example.com</code>] --> B[Redirect to <code>http://example.com</code>]
-B --> C[Redirect to <code>https://example.com</code>]
+A[Request for <code>https://example.com</code>] --> B[Encryption mode redirects to <code>http://example.com</code>]
+B --> C[Origin server redirects to <code>https://example.com</code>]
 C --> B
 subgraph Cloudflare
 B
@@ -72,8 +72,8 @@ Redirect loops will occur if your origin server automatically redirects all HTTP
 <div class="mermaid">
 flowchart TD
 accTitle: Redirect loops illustration for Full or Full (strict) mode
-A[Request for <code>http://example.com</code>] --> B[Redirect to <code>https://example.com</code>]
-B --> C[Redirect to <code>http://example.com</code>]
+A[Request for <code>http://example.com</code>] --> B[Encryption mode redirects to <code>https://example.com</code>]
+B --> C[Origin server redirects to <code>http://example.com</code>]
 C --> B
 subgraph Cloudflare
 B
@@ -99,8 +99,8 @@ Redirect loops will occur if your origin server automatically redirects all HTTP
 <div class="mermaid">
 flowchart TD
 accTitle: Redirect loops illustration for Always Use HTTPS
-A[Request for <code>https://example.com</code>] --> B[Redirect to <code>http://example.com</code>]
-B --> C[Redirect to <code>https://example.com</code>]
+A[Request for <code>http://example.com</code>] --> B[Always Use HTTPS redirects to <code>https://example.com</code>]
+B --> C[Origin server redirects to <code>http://example.com</code>]
 C --> B
 subgraph Cloudflare
 B
@@ -122,19 +122,24 @@ Redirect loops will occur if your origin server automatically redirects all HTTP
 <div class="mermaid">
 flowchart TD
 accTitle: Redirect loops illustration for HTTP Strict Transport Security
-A[Request for <code>https://example.com</code>] --> B[Redirect to <code>http://example.com</code>]
-B --> C[Redirect to <code>https://example.com</code>]
+A[Request for <code>https://example.com</code>] --> B[Encryption mode redirects to <code>http://example.com</code>]
+B --> C[HSTS redirects to <code>https://example.com</code>]
 C --> B
+C --> D[Origin server redirects to <code>http://example.com</code>]
+D --> C
 subgraph Cloudflare
 B
+C
 end
 subgraph Origin server
-C
+D
 end
 </div>
 <br/>
 
-To solve this issue, remove HTTPS redirects from your origin server, update your domain's encryption mode to [**Flexible**](/ssl/origin-configuration/ssl-modes/flexible/) or higher, or [disable **HTTP Strict Transport Security (HSTS)**](/ssl/edge-certificates/additional-options/http-strict-transport-security/).
+To solve this issue, remove HTTPS redirects from your origin server and make sure your domain's encryption mode is [**Flexible**](/ssl/origin-configuration/ssl-modes/flexible/) or higher.
+
+Alternatively, you could [disable **HTTP Strict Transport Security (HSTS)**](/ssl/edge-certificates/additional-options/http-strict-transport-security/).
 
 ---
 
@@ -148,7 +153,7 @@ accTitle: Redirect loops illustration for redirect rules
 A[Request for <code>https://a.example.com</code>] --> B[Redirect to <code>http://b.example.com</code>]
 B --> C[Redirect to <code>https://a.example.com</code>]
 C --> B
-subgraph Redirect loop
+subgraph Cloudflare
 B
 C
 end
