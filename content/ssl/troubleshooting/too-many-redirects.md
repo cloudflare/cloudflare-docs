@@ -139,7 +139,7 @@ end
 
 To solve this issue, remove HTTPS redirects from your origin server and make sure your domain's encryption mode is [**Flexible**](/ssl/origin-configuration/ssl-modes/flexible/) or higher.
 
-Alternatively, you could [disable **HTTP Strict Transport Security (HSTS)**](/ssl/edge-certificates/additional-options/http-strict-transport-security/).
+Alternatively, [disable **HTTP Strict Transport Security (HSTS)**](/ssl/edge-certificates/additional-options/http-strict-transport-security/).
 
 ---
 
