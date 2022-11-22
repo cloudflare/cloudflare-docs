@@ -18,14 +18,13 @@ meta:
 If the request only involved nonexistent domains, the `NXDOMAIN` errors would only be served by the top-level domain (TLD) nameservers for `com.`.
 
 <div class="mermaid">
-    flowchart RL
+    flowchart TD
       accTitle: Random prefix attacks diagram
-      A[Request to <code>random.com</code>] --> B[<code>1.1.1.1</code>]
+      A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
       B --> C[<code>com.</code> TLD NS]
-      C --<code>NXDOMAIN error</code>--> A
-      subgraph DNS resolver
-        B
-      end
+      C --<code>NXDOMAIN error</code>--> B
+      B --<code>NXDOMAIN error</code>--> A
+      D[Authoritative NS]
 </div>
 <br/>
 
@@ -34,22 +33,18 @@ If the request only involved nonexistent domains, the `NXDOMAIN` errors would on
 These attacks are successful because they target subdomains, which require a response from a domain's authoritative nameservers. 
 
 <div class="mermaid">
-    flowchart RL
+    flowchart TD
       accTitle: Random prefix attacks diagram
-      A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1</code>]
+      A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
       B --> C[Authoritative NS]
-      C --<code>NXDOMAIN error</code>--> A
-      subgraph DNS resolver
-        B
-      end
+      C --<code>NXDOMAIN error</code>--> B
+      B --<code>NXDOMAIN error</code>--> A
 </div>
 <br/>
 
-With an attack against a subdomain, the resolver will resolve the query and is forced to fully resolve it against the authoritative since these random subdomains are likely not cached by the resolver. The lookup for the zone NS will be cached. If the client sends enough of these queries, and the authoritative cannot handle the query load, it will fall over, taking the zone down for all queries, not just the attacker.
+With an attack against a subdomain of an existing domain, the resolver is forced to fully resolve it against the authoritative nameservers since these random subdomains are likely not cached by the resolver or any other proxy. If an attacker sends enough of these queries, and the authoritative nameservers cannot handle the query load, it will become unresponsive or even fall over, taking all zones it is hosting down, not just the attacked zone.
 
 This attack is difficult to mitigate for a few reasons. From the perspective of the authoritative nameservers, the attacker appears to be Cloudflare (`1.1.1.1`) since that is the source of the queries, blocking Cloudflare is not an option since that will block legitimate traffic.
-
-Additionally, it is hard for the authoritative nameservers to process lots of uncached negative queries, since they are the most expensive (checking empty non-terminals). Even with some caching, it is impossible to already know the answer to every possible query ahead of time, especially when the zone data is too large to fit in memory.
 
 ## Solution
 
