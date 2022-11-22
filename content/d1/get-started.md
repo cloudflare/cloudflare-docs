@@ -77,7 +77,7 @@ Set your binding name by updating the `<BINDING_NAME>` value. Your binding is av
 
 {{<Aside type="note">}}
 
-When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/client-api/).
+When you execute the `wrangler d1 create` command, the client API package (which implements the D1 API and database class) is automatically installed. For more information on the D1 Client API, refer to [D1 Client API](/d1/platform/client-api/).
 
 {{</Aside>}}
 
@@ -183,5 +183,5 @@ By finishing this guide, you have created a D1 database, a Worker to access that
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
-* [Supported Wrangler commands for D1](/d1/wrangler-commands/)
-* [D1 client API](/d1/client-api/)
+* [Supported Wrangler commands for D1](/d1/platform/wrangler-commands/)
+* [D1 client API](/d1/platform/client-api/)
