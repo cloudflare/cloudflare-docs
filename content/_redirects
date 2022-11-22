@@ -177,7 +177,7 @@
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
-/cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 30
+/cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
 
 # d1
 /d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
