@@ -16,7 +16,7 @@ meta:
 Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). Create an entire database in a few quick steps by importing data or defining your tables and writing your queries within a Worker or through our API. With D1 you can:
 
 * Interact with and push changes to your database directly through Wrangler
-* Create and modify your database directly from the D1 dashboard (located under the Workers section in the side navigation) 
+* Create and modify your database directly from the Cloudflare dashboard
 * Store backups of your database in R2
 * Export your backups to download to your local machine.
 
@@ -24,7 +24,7 @@ With D1 currently in Alpha, you can truly go full-stack and build rich apps incl
 
 {{<Aside type="warning">}}
 
-Please note, that while in the Alpha period, there is a possibility of breaking changes. The Alpha is meant for testing purposes and using it for Production traffic is not recommended.
+While in the Alpha period, there is a possibility of breaking changes. The Alpha is meant for testing purposes and using it for Production traffic is not recommended.
 
 {{</Aside>}} 
 
