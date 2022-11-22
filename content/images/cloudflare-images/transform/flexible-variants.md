@@ -7,7 +7,7 @@ weight: 2
 
 # Flexible variants
 
-If you need more flexibility than regular variants allow, you can create flexible variants. Flexible variants allow you to create variants with dynamic resizing. This option is not enabled by default. Flexible variants can be enabled through the dashboard or via API.
+If you need more flexibility than regular variants allow, you can create flexible variants. Flexible variants allow you to create variants with dynamic resizing. This option is not enabled by default. You can enable flexible variants through the dashboard or via API.
 
 {{<Aside type="warning" header="Warning">}}
 
