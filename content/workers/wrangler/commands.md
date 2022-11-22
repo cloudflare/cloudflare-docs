@@ -264,7 +264,7 @@ None of the options for this command are required. Also, many can be set in your
 
 ## delete
 
-Delete your Worker, and all associated Cloudflare developer platform resources.
+Delete your Worker and all associated Cloudflare developer platform resources.
 
 ```sh
 $ wrangler delete [SCRIPT] [OPTIONS]
