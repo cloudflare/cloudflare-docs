@@ -36,9 +36,9 @@ These attacks are successful because they target subdomains, which require a res
     flowchart TD
       accTitle: Random prefix attacks diagram
       A[Request to <code>random.example.com</code>] --> B[<code>1.1.1.1 resolver</code>]
-      B --> C[<code>com.</code> TLD NS]
+      B -- #1 --> C[<code>com.</code> TLD NS]
       C -- Query Authoritative NS --> B
-      B --> D[Authoritative NS]
+      B -- #2 --> D[Authoritative NS]
       D --<code>NXDOMAIN error</code>--> B
       B --<code>NXDOMAIN error</code>--> A
 </div>
