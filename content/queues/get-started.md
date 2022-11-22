@@ -162,7 +162,7 @@ export default {
    return new Response("Success!");
  }
  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-   let messages = await JSON.stringify(batch.messages)
+   let messages = JSON.stringify(batch.messages)
    console.log(`consumed from our queue: ${messages}`)
  }
 }
