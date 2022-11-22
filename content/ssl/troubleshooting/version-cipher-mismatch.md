@@ -11,7 +11,7 @@ After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloud
 This error occurs when your domain or subdomain is not covered by an SSL/TLS certificate, which is usually caused by:
 
 - A [delay in certificate activation](#certificate-activation).
-- An [expired Custom certificate](/ssl/edge-certificates/custom-certificates/)
+- An [expired Custom certificate](#certificate-expiration)
 - A [multi-level subdomain](#multi-level-subdomains) (`test.dev.example.com`).
 
 ---
