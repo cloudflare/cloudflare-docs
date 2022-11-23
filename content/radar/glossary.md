@@ -25,7 +25,7 @@ Border Gateway Protocol (BGP) is the routing protocol for the Internet. Much lik
 ## BGP Route Leaks
 
 [BGP route leaks](https://www.rfc-editor.org/rfc/rfc7908.html) are defined as the propagation of routing announcements beyond their intended scope.
-In Cloudflare Radar, you can view the detected route leak events on the corresponding ASN pages. The columns in the table are defined as follows:
+In Cloudflare Radar, you can inspect the detected route leak events on the corresponding autonomous system number (ASN) pages. The columns in the table are defined as follows:
 
 * `From`: The autonomous system (AS) from which the routes are learned from.
 * `By`: The AS that leaked the routes, or the leaker.
