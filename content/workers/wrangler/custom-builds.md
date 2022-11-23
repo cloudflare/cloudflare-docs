@@ -4,7 +4,7 @@ title: Custom builds
 weight: 4
 ---
 
-# Custom builds 
+# Custom builds
 
 With the release of Wrangler 2, it is no longer necessary to use webpack (and similar bundlers) to bundle your code. Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `dev` and `publish` commands, and bundles your Worker project into a single Worker script. 
 
