@@ -14,8 +14,8 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
 
 1. Open `cloudflared.service`.
 
-    ```bash
-    sudo systemctl edit --full cloudflared.service
+    ```sh
+    $ sudo systemctl edit --full cloudflared.service
     ```
 
 2. Modify the `cloudflared tunnel run` command with the desired configuration flag. The following example changes the tunnel `protocol` to QUIC:
@@ -42,14 +42,14 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
 
 1. Stop the `cloudflared` service.
 
-    ```bash
-    sudo launchctl stop com.cloudflare.cloudflared
+    ```sh
+    $ sudo launchctl stop com.cloudflare.cloudflared
     ```
 
 2. Unload the configuration file.
 
-    ```bash
-    sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+    ```sh
+    $ sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
     ```
 
 3. Open `/Library/LaunchDaemons/com.cloudflare.cloudflared.plist` in a text editor.
@@ -78,14 +78,14 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
 
 5. Load the updated configuration file.
 
-    ```bash
-    sudo launchctl load /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
+    ```sh
+    $ sudo launchctl load /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
     ```
 
 6. Start the `cloudflared` service.
 
-    ```bash
-    sudo launchctl start com.cloudflare.cloudflared
+    ```sh
+    $ sudo launchctl start com.cloudflare.cloudflared
     ```
 
 ## Windows

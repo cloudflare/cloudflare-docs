@@ -629,8 +629,8 @@ To configure this on macOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY
 
 Example:
 
-```bash
-HTTP_PROXY=http://localhost:8080 wrangler dev
+```sh
+$ HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
 
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.

@@ -38,10 +38,10 @@ Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addr
 1. SSH into your Azure instance using the command line.
 
     ```sh
-    cd Downloads
+    $ cd Downloads
     ```
     ```sh
-    ssh -i <private key path> azureuser@20.115.124.241
+    $ ssh -i <private key path> azureuser@20.115.124.241
     ```
 
 1. Run `sudo su` to gain full admin rights to the Virtual Machine.
@@ -49,10 +49,10 @@ Create two Ubuntu 20.04 LTS VMs, and make sure you record their internal IP addr
 1. Install `cloudflared` on your instance. In this example, we are running a Debian-based instance, so download the Debian build of `cloudflared`:
 
     ```sh
-    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+    $ wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
     ```
     ```sh
-    dpkg -i cloudflared-linux-amd64.deb
+    $ dpkg -i cloudflared-linux-amd64.deb
     ```
 
 1.  Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.

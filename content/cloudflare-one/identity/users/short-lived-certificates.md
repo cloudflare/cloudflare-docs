@@ -62,7 +62,7 @@ On the client side, [configure your device](/cloudflare-one/connections/connect-
 To save time, you can use the following cloudflared command to print the required configuration command:
 
 ```sh
-cloudflared access ssh-config --hostname vm.example.com --short-lived-cert
+$ cloudflared access ssh-config --hostname vm.example.com --short-lived-cert
 ```
 
 If you prefer to configure manually, this is an example of the generated SSH config:

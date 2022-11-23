@@ -21,7 +21,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
 --data '{"notificationUrl":"<WEBHOOK_NOTIFICATION_URL>"}'
 ```
 
-```bash
+```json
 ---
 header: Example response
 ---
@@ -98,7 +98,7 @@ Example: POST body for successful video encoding
 </summary>
  <div class="special-class" markdown="1">
 
- ```bash
+ ```json
 {
   "uid": "b236bde30eb07b9d01318940e5fc3eda",
   "creator": null,
