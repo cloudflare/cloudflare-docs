@@ -244,9 +244,10 @@ func main() {
     message = 'string from step 2'
 
     OpenSSL::HMAC.hexdigest('sha256', key, message)
+```
 
-In JavaScript (for example, to use in Cloudflare Workers):
-
+**In JavaScript (for example, to use in Cloudflare Workers)**
+```javascript
     const key = 'secret from the Cloudflare API';
     const message = 'string from step 2';
 
