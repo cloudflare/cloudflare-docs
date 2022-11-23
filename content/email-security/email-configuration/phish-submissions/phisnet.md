@@ -52,3 +52,15 @@ Only admin users can deploy PhishNet on the entire Office 365 account. Non-admin
 You have now installed PhishNet for Office 365. After the process is complete, PhishNet will show up on the Integrated Apps screen.
 
 ## Submit phish with PhishNet
+
+1. Open the message you would like to flag as either spam or phish.
+
+2. Select the PhishNet logo in the task pane, near the other action buttons - such as reply and forward.
+
+{{<Aside type="note">}}If you cannot find the PhishNet icon, select the **More actions** menu (the three dots menu).{{</Aside>}}
+
+3. Under **Select Submission Type**, select the type of your submission - Spam or Phish.
+
+4. Select **Submit Report**.
+
+Once the email has been successfully submitted to Cloudflare Area 1 for review, PhisNet will show you a **Submission Complete** message.
