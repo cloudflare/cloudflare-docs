@@ -1,11 +1,11 @@
 ---
 pcx_content_type: concept
-title: URL forwarding
+title: Redirects
 weight: 5
 layout: single
 ---
 
-# URL forwarding
+# Redirects
 
 URL forwarding, also known as URL redirection, navigates the user from a source URL to a target URL with a specific HTTP status code.
 
