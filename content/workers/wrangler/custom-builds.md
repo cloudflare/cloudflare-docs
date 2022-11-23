@@ -4,13 +4,29 @@ title: Custom builds
 weight: 4
 ---
 
-# Custom builds
+# Custom builds 
 
-Wrangler provides a capable development environment for a large number of use cases. Sometimes, developers might want to customize how their code is compiled, before being processed by Wrangler. This document describes why you would want to create a custom build, and how custom builds fit together with `wrangler dev` and `wrangler publish`.
+With the release of Wrangler 2, it is no longer necessary to use webpack (and similar bundlers) to bundle your code. Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `dev` and `publish` commands, and bundles your Worker project into a single Worker script. 
 
+Sometimes, you might want to customize how your code is compiled, before being processed by Wrangler. 
 
-## Configuration
+Within a `[build]` section in your `wrangler.toml`, we have the following options for configuring your custom build. 
 
+{{<definitions>}}
+
+- `command` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The command used to build your Worker. On Linux and macOS, the command is executed in the `sh` shell and the `cmd` shell for Windows. The `&&` and `||` shell operators may be used. This command will be run as part of `wrangler dev` and `wrangler publish`.
+
+- `cwd` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The directory in which the command is executed.
+
+- `watch_dir` {{<type>}}string | string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The directory to watch for changes while using `wrangler dev`. Defaults to the current working directory.
+
+{{</definitions>}}
 
 Example:
 
