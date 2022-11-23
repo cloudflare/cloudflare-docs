@@ -16,7 +16,8 @@ But how does your load balancer _know_ which servers can handle the traffic? We 
 
 Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
+
+{{<render file="_health-check-diagram.md">}}
 
 ---
 
@@ -37,7 +38,7 @@ If **Health Check Regions** for a pool is set to **All Data Centers (Enterprise)
 
 {{</Aside>}}
 
-For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
+For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
 
 ---
 

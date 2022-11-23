@@ -12,7 +12,7 @@ You can create IP Access rules in the Cloudflare dashboard or via API.
 
 ## Using the dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Navigate to **Security** > **WAF** > **Tools**.
 3. Under **IP Access Rules**, enter the following details:
 
@@ -25,5 +25,5 @@ You can create IP Access rules in the Cloudflare dashboard or via API.
 
 ## Using the API
 
-Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [Get IP Access rules](https://api.cloudflare.com/#ip-access-rules-for-a-user-get-ip-access-rules).
+Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [Get IP Access rules](https://developers.cloudflare.com/api/operations/ip-access-rules-for-a-user-list-ip-access-rules).
 

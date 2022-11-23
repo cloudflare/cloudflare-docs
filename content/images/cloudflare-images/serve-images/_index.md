@@ -13,7 +13,7 @@ To serve images uploaded to Cloudflare Images, you need three pieces of informat
 * Image ID.
 * Variant name.
 
-Assuming you have at least one image uploaded to Images, you will find the basic URL format on your Images Dashboard:
+Assuming you have at least one image uploaded to Images, you will find the basic URL format on your Images dashboard, under **Developer Resources**:
 
 ![Serving images with Cloudflare Images](/images/static/image-delivery-url.png)
 
@@ -23,7 +23,7 @@ A typical image delivery URL looks like this:
 https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT_NAME>
 ```
 
-In this example, you need to replace `<ACCOUNT_HASH>` with your Images account hash and the `<IMAGE_ID>` and `<VARIANT_NAME>` to begin serving images. 
+In this example, you need to replace `<ACCOUNT_HASH>` with your Images account hash, and the `<IMAGE_ID>` and `<VARIANT_NAME>` to begin serving images. 
 
 All the information you need to create an image delivery URL is under the **Developer Resources** section. You can also select **Preview** next to the image you want to serve. This will open a preview of the image with an **Image URL** you can copy. This link will have a fully formed Images URL. Here is an example of what that looks like:
 

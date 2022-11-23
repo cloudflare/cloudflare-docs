@@ -21,29 +21,31 @@ body:
         - Cache
         - China Network
         - Client IP Geolocation
-        - Cloudflare for SaaS
-        - Cloudflare One
+        - Cloudflare for Platforms
         - DDoS Protection
         - DNS
         - Email Routing
         - Email Security
         - Firewall
         - Fundamentals
+        - HTTP Applications
         - Image Optimization
         - Load Balancing
         - Logs
         - Magic Firewall
+        - Magic Network Monitoring
         - Magic Transit
         - Magic WAN
         - Network Error Logging
         - Network Interconnect
         - Page Shield
         - Pages
-        - Partners
         - Pub/Sub
+        - Queues
         - R2
         - Railgun
         - Randomness Beacon
+        - Reference Architecture
         - Registrar
         - Rules
         - Ruleset Engine
@@ -54,12 +56,14 @@ body:
         - Tenant
         - Terraform
         - Time Services
+        - Turnstile
         - WAF
         - Waiting Room
         - WARP Client
         - Web3
         - Workers
         - Zaraz
+        - Zero Trust
 
   - type: input
     id: subject

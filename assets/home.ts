@@ -6,5 +6,6 @@ import * as filterResults from './learning-paths';
   timeago.init();
   events.focus();
   events.mobile();
+  events.load();
   filterResults.filterResults();
 })();

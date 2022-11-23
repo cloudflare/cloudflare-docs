@@ -8,21 +8,21 @@ weight: 1
 
 You can start a live stream using the Stream dashboard or the API. After you subscribe to Stream, you can create Live Inputs and begin sending your live video to Cloudflare Stream using RTMPS or SRT. SRT supports newer video codecs and makes using accessibility features, such as captions and multiple audio tracks, easier.
 
-## Using the dashboard
+## Use the dashboard
 
-**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create)
+**Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create).
 
-![Screenshot of creating a live input via the Stream Dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
+![Create live input field from dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
 
 **Step 2:** Copy the RTMPS URL and key, and use them with your live streaming application. We recommend using [Open Broadcaster Software (OBS)](https://obsproject.com/) to get started.
 
-![Screenshot of copying a RTMPS stream key from the Stream Dashboard](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
+![Example of RTMPS URL field](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
 
 **Step 3:** Go live and preview your live stream in the Stream Dashboard
 
-In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos)
+In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos).
 
-## Using the API
+## Use the API
 
 To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint:
 
@@ -62,7 +62,7 @@ header: Response
 
 #### Optional API parameters
 
-[API Reference Docs for `/live_inputs`](https://api.cloudflare.com/#stream-live-inputs-create-live-inputs)
+[API Reference Docs for `/live_inputs`](https://developers.cloudflare.com/api/operations/stream-live-inputs-create-a-live-input)
 
 {{<definitions>}}
 
@@ -84,31 +84,43 @@ header: Response
 
 {{</definitions>}}
 
-## Managing live inputs
+## Manage live inputs
 
 You can update live inputs by making a `PUT` request:
 
 ```bash
-curl -X PUT \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id --data '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
+---
+header: Request
+---
+curl -X PUT \
+-H "Authorization: Bearer <API_TOKEN>" \
+-D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 Delete a live input by making a `DELETE` request:
 
 ```bash
-curl -X DELETE \ -H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+---
+header: Request
+---
+curl -X DELETE \
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 ## Requirements and known limitations
 
 ### Requirements
 
-- You must set [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) to be between 2 to 10 seconds. The default in most encoding software, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
-- Closed GOPs required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoding software such as OBS.
+- Stream supports a maximum ingest bitrate of 12000 Kbps.
+- You must set [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 10 seconds. The default in most encoding software, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
+- Closed GOPs are required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoding software such as OBS.
 - Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs. Stream Live supports ADTS but does not presently support LATM.
 - Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
-### Known limitations:
+### Known limitations
 
-- Stream Live currently only supports HLS (HTTP Live Streaming), and recordings are only kept for the last seven days of the stream.
+- Playback of live streams using DASH is not currently supported
 - Watermarks cannot yet be used with live videos.
 - If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.

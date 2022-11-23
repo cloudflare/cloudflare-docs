@@ -16,7 +16,7 @@ To add a [prefix](/ddos-protection/tcp-protection/concepts/#prefixes) to Advance
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-2. Go to **Account Home** > **Firewall Rulesets** > **DDoS**.
+2. Go to **Account Home** > **Application Security** > **DDoS** > **Advanced TCP Protection**.
 
 3. Under **General settings** > **Prefixes**, select **Edit**.
 

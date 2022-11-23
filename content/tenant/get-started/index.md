@@ -10,7 +10,7 @@ Having access to Cloudflare’s provisioning capabilities allows you to more eas
 
 ## Before you begin
 
-### Partner account setup
+### Channel and Alliance partner account setup
 
 Before using the Tenant API, you need to [create an account](/fundamentals/account-and-billing/account-setup/create-account/), [verify your email address](/fundamentals/account-and-billing/account-setup/verify-email-address/), and [add your billing information](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
 
@@ -18,9 +18,9 @@ After you sign your partner agreement with Cloudflare, Cloudflare will add [cert
 
 ### API access
 
-You also need to [retrieve your API key](/api/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
+You also need to [retrieve your API key](/fundamentals/api/get-started/keys/#view-your-api-key) to authenticate your requests to the Tenant API.
 
-For more details on using the Cloudflare API, refer to our [API overview](https://api.cloudflare.com/#getting-started-endpoints).
+For more details on using the Cloudflare API, refer to our [API overview](/fundamentals/api/).
 
 ## Step 1 - Create an account
 
@@ -62,13 +62,13 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<CUSTOMER_ACCOUNT_ID
 
 In most cases, you will want to create new users with a role of `Administrator` which always has the id `05784afa30c1afe1440e79d9351c7430`.
 
-If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](https://api.cloudflare.com/#account-roles-list-roles) request to the API.
+If your customer is on an Enterprise plan, they have access to a broader set of user roles. To get a full list of available roles, send a [`GET`](https://developers.cloudflare.com/api/operations/account-roles-list-roles) request to the API.
 
 ### Option 2 - Access via an interface
 
 If you want greater control over how customers use Cloudflare or if you want your customers to use an existing dashboard of yours that they already know, use the Cloudflare API to build this experience.
 
-This means that you will be making API calls to Cloudflare on behalf of your customers. To avoid getting [rate limited](/api/limits/) by our API, Cloudflare recommend that you create accounts and users for each of your customers. Changes made by customer `A` should go through user `A` and changes made by customer `B` should go through user `B`.
+This means that you will be making API calls to Cloudflare on behalf of your customers. To avoid getting [rate limited](/fundamentals/api/reference/limits/) by our API, Cloudflare recommend that you create accounts and users for each of your customers. Changes made by customer `A` should go through user `A` and changes made by customer `B` should go through user `B`.
 
 {{<Aside type="note">}}
 
@@ -122,7 +122,7 @@ header: Response
 
 Now that you have a customer account and customer users (or service users), you need to create a zone.
 
-To do this, send a [`POST`](https://api.cloudflare.com/#zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
+To do this, send a [`POST`](https://developers.cloudflare.com/api/operations/zone-create-zone) request to the `/zones` endpoint (including the customer account ID you received in [Step 1](#step-1---create-an-account)).
 
 ```sh
 ---

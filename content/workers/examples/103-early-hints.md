@@ -21,8 +21,10 @@ Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view 
 
 {{</Aside>}}
 
+{{<tabs labels="js/esm | ts/esm">}}
+{{<tab label="js/esm" default="true">}}
 ```js
-const CSS = `body { color: red; }`;
+const CSS = "body { color: red; }";
 const HTML = `
 <!doctype html>
 <html lang="en">
@@ -37,26 +39,67 @@ const HTML = `
 </html>
 `;
 
-async function handleRequest(request) {
-  // If request is for test.css, serve the raw CSS
-  if (/test\.css$/.test(request.url)) {
-    return new Response(CSS, {
-      headers: {
-        'content-type': 'text/css',
-      },
-    });
-  } else {
-    // Serve raw HTML using Early Hints for the CSS file
-    return new Response(HTML, {
-      headers: {
-        'content-type': 'text/html',
-        'Link': '</test.css>; rel=preload; as=style',
-      },
-    });
+export default {
+  async fetch(req) {
+    // If request is for test.css, serve the raw CSS
+    if (/test\.css$/.test(req.url)) {
+      return new Response(CSS, {
+        headers: {
+          "content-type": "text/css",
+        },
+      });
+    } else {
+      // Serve raw HTML using Early Hints for the CSS file
+      return new Response(HTML, {
+        headers: {
+          "content-type": "text/html",
+          link: "</test.css>; rel=preload; as=style",
+        },
+      });
+    }
   }
 }
-
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
 ```
+{{</tab>}}
+{{<tab label="ts/esm">}}
+```js
+const CSS = "body { color: red; }";
+const HTML = `
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Early Hints test</title>
+    <link rel="stylesheet" href="/test.css">
+</head>
+<body>
+    <h1>Early Hints test page</h1>
+</body>
+</html>
+`;
+
+const handler: ExportedHandler = {
+  async fetch(req) {
+    // If request is for test.css, serve the raw CSS
+    if (/test\.css$/.test(req.url)) {
+      return new Response(CSS, {
+        headers: {
+          "content-type": "text/css",
+        },
+      });
+    } else {
+      // Serve raw HTML using Early Hints for the CSS file
+      return new Response(HTML, {
+        headers: {
+          "content-type": "text/html",
+          link: "</test.css>; rel=preload; as=style",
+        },
+      });
+    }
+  }
+};
+
+export default handler;
+```
+{{</tab>}}
+{{</tabs>}}

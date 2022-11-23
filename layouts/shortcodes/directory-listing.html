@@ -6,7 +6,7 @@
   {{- $x := .RelPermalink -}}
   {{- $self := eq $x $current -}}
   {{- $delta := sub (len (split $x "/")) $len -}}
-  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
+  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) (not .Params.hidden) -}}
   <li>
     {{ $link := printf "[%s](%s)" .Title .RelPermalink -}}
     {{- .Page.RenderString $link -}}

@@ -13,8 +13,6 @@ In the Cloudflare dashboard, there are two options for editing [expressions](/ru
 
 In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions).
 
-Both interfaces are available in the **Create firewall rule** page.
-
 ## Expression Builder
 
 The Expression Builder allows you to visually create rule expressions by using drop-down lists and entering field values to define one or multiple sub-expressions.
@@ -54,6 +52,14 @@ ip.geoip.country ne "MY"
 ```
 
 Only the Expression Editor supports nested expressions such as the one above. If you create a rule with nested expressions in the Expression Editor and try to switch to the Expression Builder, a dialog will warn you that the expression is not supported in the builder. You will be prompted to **Discard changes** and switch to the Expression Builder or **Cancel** and continue working in the editor.
+
+{{<Aside type="note" header="Note">}}
+String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
+
+```txt
+lower(http.request.uri.path) contains "/wp-login.php"
+```
+{{</Aside>}}
 
 ## Expression validation
 

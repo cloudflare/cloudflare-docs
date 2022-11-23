@@ -38,6 +38,12 @@ Verify your Internet Routing Registry (IRR) entries match corresponding origin a
 
 If you are using a Cloudflare IP, you do not need to verify your IRR entries.
 
+### Optional: RPKI check for prefix validation
+
+You can also use the Resource Public Key Infrastructure (RPKI) as an additional option to validate your prefixes.
+
+To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
+
 ## Set maximum segment size
 
 ![Breakdown of packet maximum segment size as it moves through Magic Transit workflow](/magic-transit/static/mss-values-and-packet.png)

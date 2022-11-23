@@ -15,13 +15,13 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Incremental builds are currently not supported in Cloudflare Pages.
 
-- A Direct Upload of a `/functions` directory does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
+- Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/platform/direct-upload/#using-functions)).
+
+- Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
 ## Git configuration 
 
-- After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Remove/delete your Pages project and create a new one pointing at a different repository if you need to update it.
-
-- A GitHub or GitLab account cannot be attached to more than one Cloudflare account.
+- After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Delete your Pages project and create a new one pointing at a different repository if you need to update it.
 
 ## Build configuration
 
@@ -33,6 +33,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. An [equivalent](/pages/platform/functions/) to Netlify's Serverless Functions is currently in beta.
 
 ## Custom Domains
+
 - It is currently not possible to add a custom domain with a wildcard, for example, `*.domain.com`.
 
 - It is currently not possible to add a custom domain with a Worker already routed on that domain.
@@ -41,14 +42,17 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Cloudflare's Load Balancer does not work with `*.pages.dev` projects; an `Error 1000: DNS points to prohibited IP` will appear.
 
-- When adding a custom domain, the domain may get stuck verifying due to being unable to validate a request for an SSL on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/pki-validation/*`.
+- When adding a custom domain, the domain will not verify if Cloudflare cannot validate a request for an SSL certificate on that hostname. In order for the SSL to validate, ensure Cloudflare Access or a Cloudflare Worker is allowing requests to the validation path: `http://{domain_name}/.well-known/acme-challenge/*`.
 
 
 ## Pages Functions
 
 - [Functions (beta)](/pages/platform/functions/) does not currently support adding/removing polyfills, so your bundler (for example, Webpack) may not run.
 
-- Currently, Durable Objects are not supported in local development mode. To use Durable Objects in your Pages application, deploy a Worker containing a Durable Object. Then add it as a binding to your Pages project as shown in the section above.  Support for using Durable Objects in local development is actively being worked on and will be available soon.
+- `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
+
+- `passThroughOnException()` is not currently as resilient as it is in Workers. We currently wrap Pages Functions code in a `try`/`catch` block and fallback to calling `env.ASSETS.fetch()`. This means that any critical failures (such as exceeding CPU time or exceeding memory) may still throw an error.
+
 
 ## Enabling Access on your `*.pages.dev` domain
 

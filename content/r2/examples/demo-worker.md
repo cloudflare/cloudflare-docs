@@ -13,7 +13,7 @@ interface Env {
   MY_BUCKET: R2Bucket
 }
 
-function parseRange(encoded: string | null): undefined | { offset: number, length: number } {
+function parseRange(encoded: string | null): undefined | { offset: number, end: number, length: number } {
   if (encoded === null) {
     return
   }

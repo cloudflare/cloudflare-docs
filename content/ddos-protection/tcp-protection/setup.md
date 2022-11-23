@@ -26,7 +26,9 @@ You cannot add unapproved prefixes to Advanced TCP Protection. Contact your acco
 
 ## Step 3 – (optional) Add IP addresses or prefixes to the allowlist
 
-[Add prefixes to the allowlist](/ddos-protection/tcp-protection/how-to/add-prefix-allowlist/) if their traffic should bypass Advanced TCP Protection rules. You can also use the allowlist to exclude a subset of an onboarded prefix from Advanced TCP Protection rules.
+[Add prefixes to the allowlist](/ddos-protection/tcp-protection/how-to/add-prefix-allowlist/) if their traffic should bypass Advanced TCP Protection rules.
+
+The allowlist only applies to source IPs — it does not apply to your own IPs or prefixes. To exclude a subset of an onboarded prefix from Advanced TCP Protection, refer to [Exclude a prefix or a prefix subset](/ddos-protection/tcp-protection/how-to/exclude-prefix/).
 
 ## Step 4 – Create a global configuration
 
@@ -34,5 +36,5 @@ You cannot add unapproved prefixes to Advanced TCP Protection. Contact your acco
 
 ## Step 5 – Enable Advanced TCP Protection
 
-1. Go to **Account Home** > **Firewall Rulesets** > **DDoS** in the dashboard.
-2. Under **Advanced TCP Protection** > **General settings**, toggle the feature status to **Enabled**.
+1. In the Cloudflare dashboard, go to **Account Home** > **Application Security** > **DDoS** > **Advanced TCP Protection**.
+2. Under **General settings**, toggle the feature status to **Enabled**.

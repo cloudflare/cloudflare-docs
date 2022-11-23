@@ -1,13 +1,19 @@
-{{- $data := .Site.Data.learning_paths -}}
+{{ $data := slice }}
+{{ $fileplaceholder := "" }}
+{{- range readDir "./assets/json/" -}}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+{{- $file_data := getJSON $fileplaceholder -}}
+{{ $data = $data | append $file_data }}
+{{- end -}}
 {{- $numTrails := len $data -}}
 {{ $product_array := slice }}
 {{ $category_array := slice }}
 {{- range $data -}}
 {{ with .products }}
-{{- $product_array = union $product_array . -}}
+{{- $product_array = sort (union $product_array .) -}}
 {{- end -}}
 {{ with .category }}
-{{- $category_array = union $category_array . -}}
+{{- $category_array = sort (union $category_array .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -41,11 +47,11 @@
 </div>
 
 <div class="pathGrid" id="pathGrid">
-    {{- range $data }}
+    {{- range sort $data "priority" }}
     <div class="individualPath">
         <p class="pathHeading">Learning path</p>
         <a href="{{ .path }}"><h2>{{ .title }}</h2></a>
-        <p>{{ .description }}</p>        
+        <p>{{ .description | markdownify }}</p>        
     </div>
     {{- end -}}
 </div>

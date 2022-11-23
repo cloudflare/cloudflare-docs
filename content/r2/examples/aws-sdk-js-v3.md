@@ -101,7 +101,9 @@ console.log(
 //   }
 ```
 
-You can also generate resigned links that can be used to share public read or write access to a bucket temporarily.
+## Generate presigned URLs
+
+You can also generate presigned links that can be used to share public read or write access to a bucket temporarily.
 
 ```ts
 // Use the expiresIn property to determine how long the presigned link is valid.

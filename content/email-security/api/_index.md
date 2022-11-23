@@ -10,4 +10,4 @@ Area 1 offers Application Programming Interfaces (APIs) to expose our phishing c
 
 All API requests are initiated using normal HTTP requests (`GET`/`POST`/`DELETE`) and responses are returned in JSON. Authentication to the APIs uses HTTP Basic Authentication over HTTPS.
 
-For more details, refer to our [API documentation](/email-security/static/API_Documentation_1.30.0.pdf).
+For more details, refer to our [API documentation (PDF)](/email-security/static/API_Documentation_1.30.0.pdf).

@@ -104,7 +104,7 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
 ```bash
-sudo cat Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
+echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 ```
 
 ### iOS
@@ -347,7 +347,7 @@ This command will output:
 3. Append the Cloudflare certificate to this CA Store by running:
 
 ```bash
-cat /Library/Keychains/System.keychain Cloudflare_CA.crt >> $(python -m certifi)
+echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
 ```
 
 4. If needed, configure system variables to point to this CA Store.
@@ -454,7 +454,11 @@ The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utilit
 
 #### Google Cloud SDK and Kaniko
 
-Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). 
+Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate).
+
+### Google Drive for desktop
+
+To trust the Cloudflare root certificate in the Google Drive desktop application, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
 ### AWS CLI
 
@@ -471,9 +475,20 @@ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
 
 Alternatively, you can add this manually to your `composer.json` file under the `config` key.
 
-### IntelliJ IDEA
+### JetBrains
 
-Instructions on how to install the Cloudflare root certificate are available [here](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+To install the Cloudflare root certificate on JetBrains products, refer to the links below:
+
+- [AppCode](https://www.jetbrains.com/help/objc/settings-tools-server-certificates.html)
+- [CLion](https://www.jetbrains.com/help/clion/settings-tools-server-certificates.html)
+- [DataGrip](https://www.jetbrains.com/help/datagrip/settings-tools-server-certificates.html)
+- [DataSpell](https://www.jetbrains.com/help/dataspell/settings-tools-server-certificates.html)
+- [GoLand](https://www.jetbrains.com/help/go/settings-tools-server-certificates.html)
+- [IntelliJ IDEA](https://www.jetbrains.com/help/idea/settings-tools-server-certificates.html)
+- [PhpStorm](https://www.jetbrains.com/help/phpstorm/settings-tools-server-certificates.html)
+- [PyCharm](https://www.jetbrains.com/help/pycharm/settings-tools-server-certificates.html)
+- [Rider](https://www.jetbrains.com/help/rider/Settings_Tools_Server_Certificates.html)
+- [WebStorm](https://www.jetbrains.com/help/webstorm/settings-tools-server-certificates.html)
 
 ### Minikube
 

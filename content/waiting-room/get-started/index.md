@@ -33,7 +33,7 @@ Specify the URL for your page by setting the `hostname` and `path` in your [conf
 You can direct visitors to your high-traffic page:
 
 - Directly (via URL)
-- Indirectly (via [a redirect](/rules/bulk-redirects/))
+- Indirectly (via [a redirect](/rules/url-forwarding/bulk-redirects/))
 
 ### Queue activation
 
@@ -54,6 +54,10 @@ Create your waiting room by:
 Some customers can [customize the design](/waiting-room/how-to/customize-waiting-room/) of their waiting room by editing the page's HTML and CSS.
 
 If you have this ability, think about how you want the page to appear.
+
+### Prepare your waiting room for mobile application traffic
+
+If you need to manage traffic in a non-browser environment such as a mobile app or web app, use a [JSON-friendly waiting room](/waiting-room/how-to/json-response/) that can be consumed via your API endpoints. Please note that if you have a mobile app or web app that depends on resources that would be protected by a waiting room, you will need to update those clients to handle Waiting Room appropriately.
 
 ## Step 3 — Activate your waiting room
 

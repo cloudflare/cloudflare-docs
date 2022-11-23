@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Use the Stream Player
-weight: 1
+weight: 2
 layout: single
 ---
 

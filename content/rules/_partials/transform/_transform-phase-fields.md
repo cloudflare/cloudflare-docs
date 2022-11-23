@@ -5,7 +5,6 @@ _build:
   list: never
 ---
 
-*   `cf.colo.id`
 *   `cf.edge.server_ip`
 *   `cf.edge.server_port`
 *   `cf.edge.client_port`

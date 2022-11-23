@@ -55,9 +55,9 @@ Origin drain is not supported for load balancers in [DNS-only mode (gray cloud)]
 
 {{</Aside>}}
 
-### Zero Downtime Failover
+### Zero-Downtime Failover
 
-Zero Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
+Zero-Downtime Failover automatically sends traffic to origin servers within a pool during transient network issues. This helps reduce errors shown to your users when issues occur in between active health monitors. 
 
 You can enable one of three options:
 
@@ -71,8 +71,8 @@ You can enable one of three options:
 
 Session affinity is a property of load balancers, which you can set with the following endpoints:
 
-- [Create a load balancer](https://api.cloudflare.com/#load-balancers-create-load-balancer)
-- [Edit a load balancer](https://api.cloudflare.com/#load-balancers-update-load-balancer)
+- [Create a load balancer](https://developers.cloudflare.com/api/operations/load-balancers-create-load-balancer)
+- [Edit a load balancer](https://developers.cloudflare.com/api/operations/load-balancers-update-load-balancer)
 
 Customize the behavior of session affinity by using the `session_affinity`, `session_affinity_ttl`, and `session_affinity_attributes` parameters.
 

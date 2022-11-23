@@ -10,7 +10,7 @@ layout: list
 
 {{<render file="_hsts-definition.md">}}
 
-HSTS adds an HTTP header that directs [compliant web browsers](/ssl/ssl-tls/browser-compatibility/) to:
+HSTS adds an HTTP header that directs [compliant web browsers](/ssl/reference/browser-compatibility/) to:
 
 - Transform HTTP links to HTTPS links
 - Prevent users from bypassing SSL browser warnings
@@ -65,7 +65,7 @@ To enable HSTS using the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To enable HSTS with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-security-header-hsts-setting) request with the `value` object that includes your HSTS settings.
+To enable HSTS with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-security-header-(-hsts)-setting) request with the `value` object that includes your HSTS settings.
  
 {{</tab>}}
 {{</tabs>}}
@@ -97,7 +97,7 @@ To disable HSTS on your website:
     <tr>
       <td>Enable HSTS (Strict-Transport-Security)</td>
       <td>Yes</td>
-      <td>Serves HSTS headers to browsers for all HTTPS requests.</td>
+      <td>Serves HSTS headers to browsers for all HTTPS requests. HTTP (non-secure) requests will not contain the header.</td>
       <td>Off / On</td>
     </tr>
     <tr>

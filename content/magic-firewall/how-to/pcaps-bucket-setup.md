@@ -14,27 +14,11 @@ You can configure an Amazon S3 or Google Cloud Platform bucket to use as a targe
 
 Learn how to set up a bucket for use with full packet captures.
 
-<details>
-<summary>
-  API
-</summary>
- <div class="special-class" markdown="1">
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
-Before you can begin using a bucket, you must first enable destinations. 
-
-Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) documentation and follow the steps for those specific services.
-
-</div>
-</details>
-
-<details>
-<summary>
-  Dashboard
-</summary>
- <div class="special-class" markdown="1">
-
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
 3. From the **Packet captures** page, select the **Buckets** tab.
 4. Select **Add a bucket**.
 5. Under **Bucket configuration**, select a bucket service and select **Next**.
@@ -43,8 +27,15 @@ Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-vi
 
 The **Prove ownership** step of the **Bucket configuration** displays.
 
-</div>
-</details
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+Before you can begin using a bucket, you must first enable destinations. 
+
+Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#manage-via-api) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#manage-via-api) documentation and follow the steps for those specific services.
+
+{{</tab>}}
+{{</tabs>}}
 
 Next, validate the bucket and confirm ownership.
 
@@ -52,11 +43,17 @@ Next, validate the bucket and confirm ownership.
 
 After the initial bucket set up, you need to confirm you own the bucket via an ownership challenge. After you validate your bucket, you can begin using it to collect full packet captures.
 
-<details>
-<summary>
-  API
-</summary>
- <div class="special-class" markdown="1">
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. From the **Prove ownership** step of the **Bucket configuration**, locate the **Ownership token** field.
+2. In the **Ownership token** field, enter the ownership token for your service provider.
+3. When you are done, select **Create**. The **Packet captures** page displays.
+
+The **Buckets** tab displays a list of the buckets associated with your account. Refer to the **Status** column to see the status of your bucket configuration.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 The `bucket` field should be the URI of the bucket. For Amazon S3, the `bucket` field is in the form `s3://<bucket-name>/<directory>?region=<bucket-region>`, and for Google Cloud Storage the form is `gs://<bucket-name>/<directory>`.
 
@@ -85,7 +82,7 @@ header: Ownership challenge response example
     "status": "pending",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -120,7 +117,7 @@ header: Bucket validation response
     "status": "success",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "2022-04-27T14:54:46.440548Z",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -131,23 +128,8 @@ header: Bucket validation response
 
 If the `status` shows `success`, the bucket is configured and ready to use.
 
-</div>
-</details>
-
-<details>
-<summary>
-  Dashboard
-</summary>
- <div class="special-class" markdown="1">
-
-1. From the **Prove ownership** step of the **Bucket configuration**, locate the **Ownership token** field.
-2. In the **Ownership token** field, enter the ownership token for your service provider.
-3. When you are done, select **Create**. The **Packet captures** page displays.
-
-The **Buckets** tab displays a list of the buckets associated with your account. Refer to the **Status** column to see the status of your bucket configuration.
-
-</div>
-</details
+{{</tab>}}
+{{</tabs>}}
 
 The bucket status displays one of the following options:
 
@@ -159,11 +141,17 @@ The bucket status displays one of the following options:
 
 View a list of all buckets configured on your account.
 
-<details>
-<summary>
-  API
-</summary>
- <div class="special-class" markdown="1">
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
+2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
+3. From the **Packet captures** page, select the **Buckets** tab.
+
+The list of buckets associated with your account displays.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
 
 ```bash
 ---
@@ -186,7 +174,7 @@ header: Bucket list response example
       "status": "success",
       "submitted": "2022-04-26T16:58:24.550762Z",
       "validated": "2022-04-26T17:01:18.426458Z",
-      "destinaton_conf": "s3://test-bucket?region=us-east-1",
+      "destination_conf": "s3://test-bucket?region=us-east-1",
       "filename": "ownership-challenge-1234.txt"
     },
   ],
@@ -195,21 +183,7 @@ header: Bucket list response example
   "messages": []
 }
 ```
-</div>
-</details>
-
-<details>
-<summary>
-  Dashboard
-</summary>
- <div class="special-class" markdown="1">
-
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
-3. From the **Packet captures** page, select the **Buckets** tab.
-
-The list of buckets associated with your account displays.
-</div>
-</details>
+{{</tab>}}
+{{</tabs>}}
 
 To learn how to collect packet captures, refer to [Collect packet captures](/magic-firewall/how-to/collect-pcaps).

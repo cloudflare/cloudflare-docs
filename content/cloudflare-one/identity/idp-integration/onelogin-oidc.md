@@ -52,7 +52,7 @@ To set up OneLogin as your identity provider:
 
 1.  Under **Login methods**, click **Add new**.
 
-1.  Select Centrify as your IdP.
+1.  Select OneLogin as your IdP.
 
 1.  Paste in your copied **Client ID** and **Client secret**.
 

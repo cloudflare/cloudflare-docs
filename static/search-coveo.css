@@ -24,6 +24,10 @@
   background: transparent !important;
 }
 
+[theme="dark"] .CoveoOmnibox.magic-box .magic-box-input .magic-box-underlay [data-id=FieldQuery][data-success=true]:before, [theme="dark"] .CoveoOmnibox.magic-box .magic-box-input .magic-box-underlay [data-id=FieldQuery][data-success=false]>[data-success=true][data-id=FieldQuery_0]:before {
+  background-color: #F6821F !important;
+}
+
 .CoveoSearchInterface, .CoveoSearchInterface input[type=text],
 .CoveoSearchInterface .magic-box,
 .CoveoSearchInterface .magic-box-clear-svg,

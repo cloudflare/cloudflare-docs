@@ -1,7 +1,7 @@
 ---
 title: Available Notifications
 pcx_content_type: concept
-weight: 7
+weight: 2
 layout: single
 ---
 
@@ -226,7 +226,7 @@ Purchase of Magic Transit and/or BYOIP.
 
 **Who is it for?**
 
-WAF/CDN customers with the Advanced DDoS add-on who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
+WAF/CDN customers with the Advanced DDoS Protection subscription who want to receive a notification when Cloudflare has mitigated an attack with certain characteristics.
 
 **Other options / filters**
 
@@ -321,7 +321,7 @@ Customers who want to be warned about status changes (enabled/disabled) in their
 
 Multiple filters available:
 
-- Customers can search for and add pools from their list of pools. 
+- Customers can search for and add pools from their list of pools.
 - Customers can also choose the trigger that fires the notification. Available triggers are:
   - Load Balancing pool enabled
   - Load Balancing pool disabled
@@ -350,7 +350,7 @@ Customers who want to be warned about [changes in health status](/load-balancing
 
 Multiple filters available:
 
-- Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected). 
+- Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
 - Customers can also choose the trigger that fires the notification. Available options are:
   - *Health status trigger*:
     - Becomes unhealthy or healthy
@@ -368,6 +368,37 @@ All Cloudflare plans with [Load Balancing purchase](/load-balancing/how-to/enabl
 **What should you do if you receive one?**
 
 Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-analytics/) to review changes in health status over time.
+
+</div>
+</details>
+
+## Logpush
+
+<details>
+<summary>Failing Logpush Job Disabled</summary>
+<div>
+
+**Who is it for?**
+
+This is for any customer who uses Logpush and wants to monitor their job health.
+
+
+**Other options / filters**
+
+- Notification Name
+  - Custom name for this notification
+- Description (optional)
+  - Custom description for this notification
+- Notification Email (can be multiple emails)
+  - Email address of recipient for this notification
+
+**Included with**
+
+Enterprise plans.
+
+**What should you do if you receive one?**
+
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
 </div>
 </details>
@@ -434,7 +465,7 @@ Enterprise customers who want to receive a notification when Cloudflare is unabl
 
 Multiple filters available:
 
-- Customers can search and add domains from their list of domains. 
+- Customers can search and add domains from their list of domains.
 - Customers can also choose the trigger that fires the notification. Available triggers are:
   - Low sensitivity
   - Medium sensitivity
@@ -484,7 +515,7 @@ All Cloudflare plans.
 
 **Who is it for?**
 
-BYOIP customers who want to receive a notification when their prefixes are advertised in places they should not be.
+[BYOIP customers](/byoip/) who want to receive a notification when their prefixes are advertised in places they should not be.
 
 **Other options / filters**
 
@@ -509,7 +540,7 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 
 **Who is it for?**
 
-Access customers that use client certificates for mutual TLS authentication. 
+Access customers that use client certificates for mutual TLS authentication.
 
 **Other options / filters**
 
@@ -517,7 +548,7 @@ None.
 
 **Included with**
 
-Access and Cloudflare for SaaS.
+[Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
 
 **What should you do if you receive one?**
 
@@ -527,12 +558,12 @@ Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrati
 </details>
 
 <details>
-<summary>Dedicated SSL Alert</summary>
+<summary>Advanced Certificate Alert</summary>
 <div>
 
 **Who is it for?**
 
-Customers with dedicated certificates that want to be alerted on validation, issuance, renewal, and expiration of certificates.
+Customers with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) that want to be alerted on validation, issuance, renewal, and expiration of certificates.
 
 **Other options / filters**
 
@@ -540,7 +571,7 @@ None.
 
 **Included with**
 
-When a dedicated certificate is validated, issued, renewed, or expired.
+When an advanced certificate is validated, issued, renewed, or expired.
 
 **What should you do if you receive one?**
 
@@ -555,7 +586,7 @@ Action only needed if notification is about a certificate that failed to be issu
 
 **Who is it for?**
 
-Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server. 
+Customers that upload their own certificate to use with hostname-level Authenticated Origin Pull (AOP) to secure connections from Cloudflare to their origin server.
 
 **Other options / filters**
 
@@ -567,7 +598,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates). 
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
 
 </div>
 </details>
@@ -579,6 +610,8 @@ Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configu
 **Who is it for?**
 
 Customers with custom hostname certificates who want to receive a notification on validation, issuance, renewal, and expiration of certificates.
+
+For more details around data formatting for webhooks, refer to the [Cloudflare for SaaS docs](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/webhook-definitions/).
 
 **Other options / filters**
 
@@ -633,7 +666,7 @@ None.
 Authenticated Origin Pull
 
 **What should you do if you receive one?**
-Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/). 
+Upload a renewed certificate to use for [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/).
 
 </div>
 </details>
@@ -819,7 +852,7 @@ Customers who are using Stream and want to receive webhooks with the status of t
 
 **Other options / filters**
 
-Customers can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs. 
+Customers can input Stream Live IDs to receive notifications only about those inputs. If left blank, customers will receive a list for all inputs.
 
 The following input states will fire notifications. Customers can toggle them on or off:
 
@@ -847,7 +880,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 
@@ -872,7 +905,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
 
-For more information, refer to [WAF alerts](/waf/alerts/).
+For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
 **Other options / filters**
 

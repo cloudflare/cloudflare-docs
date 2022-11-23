@@ -10,7 +10,7 @@ weight: 1
 
 If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
 
-Once you order a certificate, you can review the [certificate's status](/ssl/ssl-tls/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://developers.cloudflare.com/api/operations/certificate-packs-list-certificate-packs).
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -31,7 +31,7 @@ To create a new advanced certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To create a new certificate using the API, send a [POST request](https://api.cloudflare.com/#certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+To create a new certificate using the API, send a [POST request](https://developers.cloudflare.com/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
  
 {{</tab>}}
 {{</tabs>}}
@@ -59,7 +59,7 @@ To delete an advanced certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To delete a certificate using the API, send a [DELETE request](https://api.cloudflare.com/#certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
+To delete a certificate using the API, send a [DELETE request](https://developers.cloudflare.com/api/operations/certificate-packs-delete-advanced-certificate-manager-certificate-pack) to the Cloudflare API.
  
 {{</tab>}}
 {{</tabs>}}
@@ -68,7 +68,7 @@ To delete a certificate using the API, send a [DELETE request](https://api.cloud
 
 ## Restart validation
 
-To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](https://api.cloudflare.com/#certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
+To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](https://developers.cloudflare.com/api/operations/certificate-packs-restart-validation-for-advanced-certificate-manager-certificate-pack) to the API.
 
 ---
 
@@ -76,7 +76,7 @@ To restart validation for a certificate in a `validation_timed_out` status, send
 
 {{<render file="_cipher-suites-definition.md">}}
 
-For more details, refer to [Disable cipher suites](/ssl/ssl-tls/cipher-suites/#disable-cipher-suites).
+For more details, refer to [Disable cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/).
 
 ---
 
@@ -90,6 +90,6 @@ For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/ch
 
 {{<Aside type="warning">}}
 
-Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/ssl-tls/migration-guides/dcv-update/).
+Due to recent changes, HTTP DCV validation will soon not be allowed for wildcard certificates or certificates with multiple Subject Alternative Names (SANs). For more details and next steps, refer to [Changes to HTTP DCV](/ssl/reference/migration-guides/dcv-update/).
 
 {{</Aside>}}

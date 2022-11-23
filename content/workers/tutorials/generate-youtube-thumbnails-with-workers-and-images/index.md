@@ -56,7 +56,7 @@ $ curl --request POST \
  --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'url=<PATH_TO_IMAGE>' \
  --form 'metadata={"key":"value"}' \
- --form 'requireSignedURLs=false' 
+ --form 'requireSignedURLs=false'
 
 ```
 
@@ -94,7 +94,7 @@ Now that we've uploaded the image we'll be using it as a background for our thum
 The next phase of this tutorial is to create a worker that will enable you to transform text to image so this can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/templates/tree/main/worker-rust). Go ahead and clone the repository and run it locally.
 
 ```sh
-$ npm init cloudflare worker-to-text worker-rust
+$ npx wrangler generate worker-to-text worker-rust
 ```
 
 In the `lib.rs` file, add the following code block:
@@ -474,7 +474,7 @@ filename: index.js
 highlight: [2, 3]
 ---
 if (url.pathname === '/thumbnail') {
- const imageURL = “https://github.com/lauragift21/social-image-demo/blob/1ed9044463b891561b7438ecdecbdd9da48cdb03/assets/cover.png?raw=true”
+ const imageURL = "https://github.com/lauragift21/social-image-demo/blob/1ed9044463b891561b7438ecdecbdd9da48cdb03/assets/cover.png?raw=true"
  fetch(imageURL, {
    cf: {
      image: {}
@@ -496,7 +496,7 @@ fetch(imageURL, {
      height: 720,
      draw: [
        {
-         url: 'https://text-to-image.examples.workers.dev',         
+         url: 'https://text-to-image.examples.workers.dev',
          left: 40,
        },
      ],

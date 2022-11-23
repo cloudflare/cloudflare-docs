@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Configure webhooks
+weight: 2
 ---
 
 # Configure webhooks
@@ -98,6 +99,12 @@ Cloudflare has an [example tool](https://github.com/cloudflare/cf-webhook-relay/
          <p>2. If SSL is enabled on the token, the port must be 443. If SSL is not enabled on the token, the port must be 8088.</p>
          <p>3. SSL must be enabled on the server.</p>         
       </td>
+   </tr>
+      <!-- Teams    -->
+   <tr>
+      <td valign="top"> <a target="_blank" rel="noopener noreferrer" href="https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook">Sack</a></td>
+      <td>The secret is part of the URL. Cloudflare parses this information automatically and there is no input needed from the user.</td>
+      <td>URL is provided by Teams when the Incoming Webhook connector is created.</td>
    </tr>
    <!-- generic webhook    -->
    <tr>

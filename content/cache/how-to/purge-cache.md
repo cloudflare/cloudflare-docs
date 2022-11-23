@@ -5,13 +5,17 @@ pcx_content_type: concept
 
 # Purge cache
 
-You can purge cached resources by single-file (recommended), hostname or cache-tag (Enterprise plans only), or all cached content. All users can purge by single-file (by URL) or purge all cached assets. Cloudflare Enterprise users can also purge using hostnames and cache-tags.
+You can purge cached resources by single-file (recommended), all cached content, or other options. 
+
+{{<feature-table id="cache.purge_cache">}}
 
 {{<Aside type="note" header="Note">}}
 
 Purge requests appear in Cloudflare Logs and are identified by the PURGE method and the Cloudflare-branded User Agent.
 
 {{</Aside>}}
+
+For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
 
 ## Purge by single-file (by URL)
 
@@ -68,7 +72,7 @@ Cache-tag purging makes multi-file purging easier because you can bulk purge by 
 1.  Add tags to the `Cache-Tag HTTP` response header from your origin web server for your web content, such as pages, static assets, etc.
 2.  [Ensure your web traffic is proxied](/dns/manage-dns-records/reference/proxied-dns-records/) through Cloudflare.
 3.  Cloudflare associates the tags in the `Cache-Tag HTTP` header with the content being cached.
-4.  Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host-or-prefix).
+4.  Use specific cache-tags to purge your Cloudflare CDN cache of all content containing that cache-tag from your dashboard or [using our API](https://developers.cloudflare.com/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix).
 5.  Cloudflare forces a [cache miss](/cache/about/default-cache-behavior/#cloudflare-cache-responses) on content with the purged cache-tag.
 
 {{<Aside type="warning" header="Warning">}}
@@ -92,8 +96,8 @@ When your content reaches our edge network, Cloudflare:
 - A single HTTP response can have more than one `Cache-Tag HTTP` header field.
 - The minimum length of a cache-tag is 1 byte.
 - Individual tags don’t have a maximum length, but the aggregate `Cache-Tag HTTP` header cannot exceed 16 KB after the header field name, which is approximately 1000 unique tags. Length includes whitespace and commas but does not include the header field name.
-- For cache purges, the maximum length of cache-tags in an API call is 120 characters.
-- The `Cache-Tag HTTP` header must accept all valid characters allowable in HTTP headers, as specified in [RFC-5987](https://tools.ietf.org/html/rfc5987).
+- For cache purges, the maximum length of a cache-tag in an API call is 1024 characters.
+- The `Cache-Tag HTTP` header must only contain UTF-8 encoded characters.
 - Spaces are not allowed in cache-tags.
 - Case does not matter. For example, `Tag1` and `tag1` are considered the same.
 
@@ -145,7 +149,7 @@ There are several limitations regarding purge by prefix:
 
 - Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
 - Purge requests are limited to 30 prefixes per request.
-- [Purge rate-limits apply](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host)
+- [Purge rate-limits apply](https://developers.cloudflare.com/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix)
 - URI query strings & fragments cannot purge by prefix:
   - `www.example.com/foo?a=b` (query string)
   - `www.example.com/foo#bar` (fragment)
@@ -158,13 +162,70 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 {{</Aside>}}
 
+### Purge by prefix normalization
+
+Using purge by prefix normalization, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service respects the [URL normalization](/rules/normalization/) and purges the normalized URL.
+
+#### How does URL Normalization work
+
+Take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](/rules/normalization/).
+
+<table>
+  <tbody>
+    <th colspan="5" rowspan="1">
+      Request from visitor to EDGE
+    </th>
+    <th colspan="5" rowspan="1">
+      What Cloudflare cache sees with Normalize Incoming URLs ON
+    </th>
+    <th colspan="5" rowspan="1">
+      What Cloudflare cache sees with Normalize Incoming URLs OFF
+    </th>
+    <tr>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg</code> 
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg</code>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/hello/img_1.jpg</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/hello/img_1.jpg</code>
+      </td>
+      <td colspan="5" rowspan="1">
+        <code>https://cloudflare.com/hello/img_1.jpg</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+As shown above, with URL normalization **ON**, visitors to the two URLs, `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg` and `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`, will be served the same cached asset. Purging `https://cloudflare.com/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D9%85%D9%88%D9%82%D8%B9-%D8%A7%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A/img_1.jpg` will purge that asset for both visitors.
+
 ## Purge cache key resources
 
 Purge resources that use Cache Keys via the [Cloudflare API](https://api.cloudflare.com/#zone-purge-files-by-url). If you use [Cloudflare’s Purge by URL](https://api.cloudflare.com/#zone-purge-files-by-url), include the headers and query strings that are in your custom Cache Key. 
 
 Currently, it is not possible to purge a URL stored through Cache API that uses a custom cache key set by a Worker. Instead, use a [custom key created by Page Rules](/cache/how-to/create-cache-keys/). Alternatively, purge your assets using purge everything, purge by tag, purge by host or purge by prefix.
 
-To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](https://api.cloudflare.com/#zone-purge-files-by-cache-tags-or-host) & [Purge Everything](https://api.cloudflare.com/#zone-purge-all-files) are not impacted by the use of custom Cache Keys.
+To purge `device_type` or `geo,` use `CF-Device-Type` or `CF-IPCountry`. `lang` cannot currently be purged. [Purge by Tag / Host](https://developers.cloudflare.com/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix) & [Purge Everything](https://api.cloudflare.com/#zone-purge-all-files) are not impacted by the use of custom Cache Keys.
 
 ### Purge by device type
 
@@ -173,7 +234,7 @@ For a Cache Key based on device type, purge the asset by passing the `CF-Device-
 See the example API request below to purge all mobile assets on the root web page.
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
     -H "X-Auth-Email: user@example.com" -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41"
     -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/","headers":{"CF-Device-Type":"mobile"}}]}'
 ```
@@ -183,7 +244,7 @@ See the example API request below to purge all mobile assets on the root web pag
 Purge resources for a location-based Cache Key by specifying the two-letter country code. Spain is used in the example below.
 
 ```bash
-    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_tag}/purge_cache"
+    curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
     -H "X-Auth-Email: user@example.com"
     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" -H "Content-Type: application/json" --data '{"files":[{"url":"http://my.website.com/", "headers":{"Cf-Ipcountry":"ES"}}]}'
 ```

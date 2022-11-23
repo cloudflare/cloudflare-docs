@@ -25,7 +25,7 @@ Pages comes with built in caching defaults that are optimized for caching as muc
 
 {{<Aside type="note" header="Purging the cache">}}
 
-If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="/cache/how-to/purge-cache/#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served."
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > <a href="/cache/how-to/purge-cache/#purge-everything">**Purge Everything**</a> in the dashboard to ensure the latest build gets served.
 
 {{</Aside>}}
 
@@ -34,3 +34,7 @@ For browser caching, Pages always sends `Etag` headers for `200 OK` responses, w
 Pages currently returns `200` responses for HTTP range requests; however, the team is working on adding spec-compliant `206` partial responses.
 
 Pages will also serve Gzip and Brotli responses whenever possible.
+
+## Asset retention
+
+We will insert assets into the cache on a per-data center basis. Assets have a time-to-live (TTL) of one week but can also disappear at any time. If you do a new deploy, the assets could exist in that data center up to one week.

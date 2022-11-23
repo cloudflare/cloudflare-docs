@@ -8,7 +8,9 @@ weight: 3
 
 You can monitor the status of your waiting rooms using the [dashboard](#status-in-the-dashboard) or the [API](#status-in-the-api).
 
-{{<Aside>}}Future work will create a separate area of application analytics for Cloudflare Waiting Rooms.{{</Aside>}}
+Note that the **Total active users** and **Queued users** shown in the dashboard, as well as through API endpoints are estimates. That data corresponding to each of these metrics is cached for around 30 seconds after the time it takes to be synced from all data centers globally. Therefore, the status will range between 20-50 seconds in the past, depending on the exact moment the data was queried, aggregated, as well as the age of the cache.
+
+{{<Aside>}}Future work will create a separate area of application analytics for Cloudflare Waiting Room.{{</Aside>}}
 
 ## Status in the dashboard
 
@@ -30,7 +32,7 @@ The **Status** column displays the current state of the waiting room:
 
 ## Status in the API
 
-[Check whether traffic is queueing in a configured waiting room](https://api.cloudflare.com/#waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
+[Check whether traffic is queueing in a configured waiting room](https://developers.cloudflare.com/api/operations/waiting-room-get-waiting-room-status) by appending the following endpoint to the Cloudflare API base URL:
 
 ```shell
 GET zones/{zone_identifier}/waiting_rooms/{identifier}/status
@@ -47,7 +49,7 @@ To check whether a configured waiting room is suspended or whether the traffic i
 GET zones/{zone_identifier}/waiting_rooms/{identifier}
 ```
 
-The endpoint above [fetches all settings](https://api.cloudflare.com/#waiting-room-waiting-room-details) for a configured waiting room:
+The endpoint above [fetches all settings](https://developers.cloudflare.com/api/operations/waiting-room-waiting-room-details) for a configured waiting room:
 
       "success": true,
       "errors": [],
@@ -87,7 +89,7 @@ The value of `queue_all` indicates whether all traffic is forced to queue in the
 
 ## Queueing activation
 
-Waiting rooms queue traffic at the data-center level to increase scalability, letting each data center make decisions independently.
+Waiting Room queues traffic at the data-center level to increase scalability, letting each data center make decisions independently.
 
 Because of this design, a waiting room might queue traffic from a specific data center before the waiting room reaches its limit of `new_users_per_minute` or `total_active_users`.
 

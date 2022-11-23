@@ -11,7 +11,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting 
 
 {{<Aside type="note">}}
 
-For API guidance on the previous version of rate limiting rules, refer to the [Cloudflare API documentation](https://api.cloudflare.com/#rate-limits-for-a-zone-properties).
+For API guidance on the previous version of rate limiting rules, refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits).
 
 {{</Aside>}}
 
@@ -60,7 +60,7 @@ curl -X PUT \
 
 ### Example B - Rate limiting with a custom response
 
-This example request defines a [custom response](/waf/rate-limiting-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
+This example request defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
 ```json
 ---

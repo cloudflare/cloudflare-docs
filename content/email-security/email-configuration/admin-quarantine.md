@@ -24,4 +24,4 @@ These email messages will then be sent to the original recipients from the `quar
 
 ## Further guidance
 
-For additional help, refer to our [Admin Quarantine guide](/email-security/static/Admin_Quarantine.pdf).
+For additional help, refer to our [Admin Quarantine guide (PDF)](/email-security/static/Admin_Quarantine.pdf).

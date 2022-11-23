@@ -6,7 +6,7 @@ weight: 1
 
 # Get started
 
-This section covers best practices for setting up DNS, HTTP, and Network filtering policies.
+This section covers best practices for setting up [DNS](/cloudflare-one/policies/filtering/initial-setup/dns/), [HTTP](/cloudflare-one/policies/filtering/initial-setup/http/), and [network](/cloudflare-one/policies/filtering/initial-setup/network/) filtering policies.
 
 For each type of policy, we recommend the following workflow:
 
@@ -14,5 +14,3 @@ For each type of policy, we recommend the following workflow:
 2. Verify that Gateway is successfully proxying traffic from your devices.
 3. Set up basic security and compatibility policies (recommended for most use cases).
 4. Customize your configuration to the unique needs of your organization.
-
-{{<directory-listing>}}

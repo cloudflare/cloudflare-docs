@@ -6,13 +6,15 @@ weight: 1
 
 # Resize images
 
-Resizing images in Cloudflare Images works by creating variants of your image. Variants let you specify how images should be resized for different use cases. Cloudflare Images ships with a default `public` variant, but you can create up to 20 variants to fit your needs.
+Resizing images in Cloudflare Images works by creating variants of your image. Variants let you specify how images should be resized for different use cases. Cloudflare Images ships with a default `public` variant, but you can create up to 100 variants to fit your needs.
 
 Each variant has several properties, including the width and height of resized images.
 
 ![Configure variants in Cloudflare Images](/images/static/variants.png)
 
 ## How to resize an image
+
+{{<Aside type="note">}}Cloudflare Images does not resize SVGs. Refer to [SVG files](/images/cloudflare-images/upload-images/formats-limitations/#svg-files) for more information.{{</Aside>}}
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -32,7 +34,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/images/
   --data '{"id":"<NAME_OF_THE_VARIANT>","options":{"fit":"scale-down","metadata":"none","width":1366,"height":768},"neverRequireSignedURLs":true}
 ```
 
-Refer to the [API documentation](https://api.cloudflare.com/#cloudflare-images-variants-properties) for more information regarding creating variants via API.
+Refer to the [API documentation](https://developers.cloudflare.com/api/operations/cloudflare-images-variants-list-variants) for more information regarding creating variants via API.
 
 {{</tab>}}
 {{</tabs>}}

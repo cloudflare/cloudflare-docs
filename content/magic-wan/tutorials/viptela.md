@@ -133,9 +133,18 @@ To create a Secure Internet Gateway (SIG) using vManage:
 
 For compatibility, you will need to disable replay protection, which is not an option through the templates, by creating a CLI template in addition to the feature template created in the previous step.
 
-![CLI configuration used to disable replay](/magic-wan/static/viptela-cli-config.png)
+```txt
+crypto ipsec profile {{ipsec_profile_name}}
+no set security-association replay window-size 512
+set security-association replay disable
 
-In the image above, replay is disabled and the `local key-id` is set to a variable so that a Cloudflare tunnel ID with the format `xxxxxx_YYYYYYY` can be added.
+crypto ikev2 profile {{ikev2_profile_name}}
+identity local key-id {{ipsec-key-id}}
+```
+
+In the example above, replay is disabled and the `local key-id` is set to a variable so that a Cloudflare tunnel ID (**HEX ID**, **FQDN ID**, or **User ID**) can be added.
+
+To use the **FQDN ID**, remove `ipsec.cloudflare.com` from the end of the value after pasting it into the **ipsec-key-id** field. To use the  **User ID**, remove the `@` symbol and everything to the right of it after pasting it into the **ipsec-key-id** field.
 
 ## 3. Create tunnels in vManage
 
@@ -163,6 +172,12 @@ From **vManage**, click **Configuration** > **Templates**. You should see the ne
 
 In the example below, the template is the **GCP-Branch-Template**. Note that **VPN0** is the default, and the WAN interface used to build the tunnel needs to be part of VPN0.
 
+For the **ipsec-key-id** field, you can use one of the following options from the IPsec tunnel information in the Cloudflare dashboard:
+
+- **HEX ID**
+- **FQDN ID**: Remove `ipsec.cloudflare.com` from the end of the value after pasting it into the **ipsec-key-id** field.
+- **User ID**: Remove the `@` symbol and everything to the right of it after pasting it into the **ipsec-key-id** field.
+
 ![Update template fields for IPsec tunnel](/magic-wan/static/viptela-update-device-template-ipsec.png)
 </div>
 </details>
@@ -187,7 +202,7 @@ Refer to [Configure tunnel endpoints](/magic-wan/how-to/configure-tunnels) for m
 </summary>
  <div class="special-class" markdown="1">
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-create-ipsec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)

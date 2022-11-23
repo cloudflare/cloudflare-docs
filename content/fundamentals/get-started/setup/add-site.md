@@ -28,7 +28,7 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 2. In the top navigation bar, click **Add site**.
 3. Enter your website’s root domain (`example.com`) and then click **Add Site**.
     
-    {{<Aside type="note">}}For help with `not a registered domain` errors, refer to [Unregistered domains](/fundamentals/get-started/setup/troubleshooting/unregistered-domains/).
+    {{<Aside type="note">}}If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
     {{</Aside>}}
     
 4. Select your plan level. For more details on features and pricing, refer to [our Plans page](https://www.cloudflare.com/plans/#compare-features).

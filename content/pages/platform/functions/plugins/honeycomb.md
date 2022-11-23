@@ -16,6 +16,27 @@ $ npm install @cloudflare/pages-plugin-honeycomb
 
 ## Usage
 
+The following usage example uses environment variables you will need to set in your Pages project settings. 
+
+```typescript
+---
+filename: functions/_middleware.ts
+---
+import honeycombPlugin from "@cloudflare/pages-plugin-honeycomb";
+
+export const onRequest: PagesFunction<{
+  HONEYCOMB_API_KEY: string
+  HONEYCOMB_DATASET: string
+}> = (context) => {
+  return honeycombPlugin({
+    apiKey: context.env.HONEYCOMB_API_KEY,
+    dataset: context.env.HONEYCOMB_DATASET,
+  })(context);
+}
+```
+
+Alternatively, you can hard-code (not advisable for API key) your settings the following way:
+
 ```typescript
 ---
 filename: functions/_middleware.ts

@@ -16,7 +16,7 @@ The Slack integration detects a variety of user security, data loss prevention, 
 
 ## Integration permissions
 
-For the Slack integration to function, CASB requires the following Slack API scopes:
+For the Slack integration to function, Cloudflare CASB requires the following Slack API permissions:
 
 * `channels:read`
 * `files:read`

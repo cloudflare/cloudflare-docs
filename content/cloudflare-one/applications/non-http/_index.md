@@ -10,10 +10,10 @@ layout: single
 You can connect applications to Cloudflare Zero Trust over a number of different protocols.
 
 *   [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/)
-*   [Connect through Access over RDP](/cloudflare-one/tutorials/rdp/)
+*   [Connect through Access over RDP](/cloudflare-one/connections/connect-apps/use_cases/rdp/)
 *   [Connect through Access over SSH](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
 *   [Connect through Access using kubectl](/cloudflare-one/tutorials/kubectl/)
-*   [Connect through Access over SMB](/cloudflare-one/tutorials/smb/)
+*   [Connect through Access over SMB](/cloudflare-one/connections/connect-apps/use_cases/smb/)
 
 ## Rendering in the browser
 

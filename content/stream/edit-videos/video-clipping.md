@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how to
+pcx_content_type: how to
 title: Clip videos
 ---
 
@@ -7,7 +7,7 @@ title: Clip videos
 
 With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only want to share a five minute clip from the middle of the video, you can clip the video to remove the content before and after the five minute clip.
 
-Refer to the [Video clipping API documentation](https://api.cloudflare.com/#stream-video-clipping-properties) for more information.
+Refer to the [Video clipping API documentation](https://developers.cloudflare.com/api/operations/stream-video-clipping-clip-videos-given-a-start-and-end-time) for more information.
 
 {{<Aside type="note" header="Note:">}}
 
@@ -17,7 +17,7 @@ Video clipping does not work with recordings of live streams.
 
 ## Prerequisites
 
-Before you can clip a video, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/api/tokens/create/).
+Before you can clip a video, you will need an API token. For more information on creating an API token, refer to [Creating API tokens](/fundamentals/api/get-started/create-token/).
 
 ## Required parameters
 

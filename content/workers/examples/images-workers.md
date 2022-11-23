@@ -30,7 +30,7 @@ export default {
 		// A request to something like cdn.example.com/83eb7b2-5392-4565-b69e-aff66acddd00/public
 		// will fetch "https://imagedelivery.net/<accountHash>/83eb7b2-5392-4565-b69e-aff66acddd00/public"
 
-		return new Response(`https://imagedelivery.net/${accountHash}${pathname}`);
+		return fetch(`https://imagedelivery.net/${accountHash}${pathname}`);
 	}
 };
 ```
@@ -47,7 +47,7 @@ export default {
 		// A request to something like cdn.example.com/83eb7b2-5392-4565-b69e-aff66acddd00/public
 		// will fetch "https://imagedelivery.net/<accountHash>/83eb7b2-5392-4565-b69e-aff66acddd00/public"
 
-		return new Response(`https://imagedelivery.net/${accountHash}${pathname}`);
+		return fetch(`https://imagedelivery.net/${accountHash}${pathname}`);
 	}
 };
 ```

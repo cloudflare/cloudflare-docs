@@ -11,7 +11,7 @@ An email rule is a pair of a custom email address and a destination address. Thi
 ## Custom addresses
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Routes**.
+2. Go to **Email** > **Email Routing** > **Routes**.
 3. Select **Create address**.
 4. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email`).
 5. In the **Action** drop-down menu, choose what this email rule should do. You can choose between _Send to_ or _Drop_. Refer to [Email rule actions](#email-rule-actions) for more information.
@@ -37,7 +37,7 @@ To prevent spamming unintended recipients, all email rules are automatically dis
 ### Disable an email rule
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Routes**.
+2. Go to **Email** > **Email Routing** > **Routes**.
 3. In **Custom addresses**, identify the email rule you want to pause, and toggle the status button to **Disabled**.
 
 Your email rule is now disabled and will not forward emails to a destination address. To forward emails again, toggle the email rule status button to **Active**.
@@ -45,7 +45,7 @@ Your email rule is now disabled and will not forward emails to a destination add
 ### Edit custom addresses
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Routes**.
+2. Go to **Email** > **Email Routing** > **Routes**.
 3. In **Custom addresses**, identify the email rule you want to edit, and select **Edit**.
 4. Make the appropriate changes to this custom address.
 
