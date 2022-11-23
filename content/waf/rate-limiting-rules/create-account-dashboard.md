@@ -23,7 +23,7 @@ Both operations are available in the dashboard in Account Home > **Application S
 
 To create a new custom rate limiting ruleset:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
 2. Navigate to Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
 
@@ -63,7 +63,7 @@ To create a new custom rate limiting ruleset:
 
 To deploy a custom rate limiting ruleset to one or more zones on an Enterprise plan:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
 2. Navigate to Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
 
