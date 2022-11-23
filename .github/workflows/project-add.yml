@@ -1,0 +1,22 @@
+# https://github.com/marketplace/actions/add-to-github-projects
+name: Add open issues and PRs to project
+
+on:
+  issues:
+    types:
+      - opened
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    name: Add open issues and PRs to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/orgs/cloudflare/projects/4
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          # The PAT must be created and added by a repo admin per https://github.com/actions/add-to-project#creating-a-pat-and-adding-it-to-your-repository
+          # See also https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
