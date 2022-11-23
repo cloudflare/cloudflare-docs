@@ -42,14 +42,15 @@ Each type of advanced TCP protection (SYN flood protection and out-of-state TCP 
 * For each type of TCP protection (SYN flood protection or out-of-state TCP protection), you can only create one filter for each mode.
 {{</Aside>}}
 
-When you create more than one filter, their evaluation order is based on the filter's mode. A filter with `enabled` mode will be evaluated first (checking it for an expression match), then a filter with `monitoring` mode, and finally a filter with `disabled` mode.
-
 ---
 
 ## Determining the execution mode
 
 When you have both rules and filters configured, the execution mode is determined according to the following:
 
-1. If there is a match for one of the configured filters, use the filter's execution mode.
+1. If there is a match for one of the configured filters, use the filter's execution mode. The filter evaluation order  is based on their mode, in the following order:
+    1. Filter with `enabled` mode
+    2. Filter with `monitoring` mode
+    3. Filter with `disabled` mode
 2. If no filter matched, use the execution mode determined by existing rules.
 3. If no rules match, disable Advanced TCP Protection.
