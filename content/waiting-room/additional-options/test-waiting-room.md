@@ -40,9 +40,9 @@ To run our test plan select the **play** button to get the test started. This sh
   - Contains a Cookie jar for cookies persistence
   - Repeats for 20 times
 
-    - Makes a request to the origin site with waiting room enabled
-    - Logs request details
-    - Pauses for 10 seconds before refreshing the page to make another request to the origin site
+    - Makes a request to the origin site with waiting room enabled.
+    - Logs request details.
+    - Pauses for 10 seconds before refreshing the page to make another request to the origin site.
 
 ![User attributes](/waiting-room/static/user-attributes.png)
 
