@@ -15,7 +15,7 @@ Both operations are available in the dashboard in Account Home > **Application S
 
 * For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
 
-* At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rulesets/) with one or more rate limiting rules. The concept of "custom rate limiting ruleset" exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
+* At the API level, custom rate limiting rulesets are regular [custom rulesets](/waf/custom-rulesets/) with one or more rate limiting rules. The concept of custom rate limiting ruleset exists only in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level.
 
 {{</Aside>}}
 
