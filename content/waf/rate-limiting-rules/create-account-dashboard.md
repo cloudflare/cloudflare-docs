@@ -77,7 +77,7 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 Deployed custom rate limiting rulesets will only apply to incoming traffic of zones on an Enterprise plan. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `AND zone.level eq "ENT"` in your expression so that the rule only applies to zones on an Enterprise plan.
     {{</Aside>}}
 
-8. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
+6. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
 
 The **Rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
 
