@@ -37,8 +37,8 @@ To run our test plan select the **play** button to get the test started. This sh
 
 - Each simulated user has the following attributes:
 
-  - Contains a Cookie jar for cookies persistence
-  - Repeats for 20 times
+  - Contains a cookie jar for cookies persistence.
+  - Repeats for 20 times.
 
     - Makes a request to the origin site with waiting room enabled.
     - Logs request details.
