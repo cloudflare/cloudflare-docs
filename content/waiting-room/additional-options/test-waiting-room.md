@@ -105,5 +105,5 @@ The first minute mark, 15:35:00 UTC, shows 137 active users past the waiting roo
 
 {{<Aside type="note" header="Note">}}
 
-Please obtain your API Token from the dashboard. Make sure your API Token grants access to the “Analytics” resource. For more on how to get the API Token please follow the guide [here](/analytics/graphql-api/getting-started/authentication/api-token-auth/).
+Obtain your API token from the dashboard. Make sure your API token grants access to the **Analytics** resource. For more information on how to get the API token, follow the [Configure Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) guide.
 {{</Aside>}}
