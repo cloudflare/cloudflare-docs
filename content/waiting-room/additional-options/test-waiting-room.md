@@ -46,7 +46,7 @@ To run our test plan select the **play** button to get the test started. This sh
 
 ![User attributes](/waiting-room/static/user-attributes.png)
 
-Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/test_plan.html#thread_group) performs the above action once and the user traffic ramps up within the first minute and keeps a sustained traffic for the next three minutes before users leave the site. You can send more or less traffic than what is being sent in this example by updating these properties.
+Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/test_plan.html#thread_group) performs the above action once. The user traffic ramps up within the first minute and keeps a sustained traffic for the next three minutes before users leave the site. You can send more or less traffic than what is being sent in this example by updating these properties.
 
 ![Visualizing number of threads](/waiting-room/static/threads.png)
 
