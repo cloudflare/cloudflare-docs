@@ -103,7 +103,7 @@ From our test, we see the following results (these are extracted from results of
 
 The first minute mark, 15:35:00 UTC, shows 137 active users past the waiting room. This is because our traffic was set to gradually ramp up within the first minute and the test did not start exactly at the minute mark. When data was aggregated for the following minute, 15:36:00 UTC, the waiting room reported the total 200 users active we expected on the site as each “user” made subrequests. The active user count remained stable at 200 as long as it received subrequests from the traffic sent by the load test.
 
-{{<Aside type="note" header="Note:">}}
+{{<Aside type="note" header="Note">}}
 
 Please obtain your API Token from the dashboard. Make sure your API Token grants access to the “Analytics” resource. For more on how to get the API Token please follow the guide [here](/analytics/graphql-api/getting-started/authentication/api-token-auth/).
 {{</Aside>}}
