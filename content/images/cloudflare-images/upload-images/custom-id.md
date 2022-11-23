@@ -59,4 +59,4 @@ When [serving images](/images/cloudflare-images/serve-images), you can include n
 
 ## Custom IDs and private images
 
-Images with a [custom ID](/images/cloudflare-images/upload-images/custom-id) cannot be made private using [signed URL tokens](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens).
+Images with a [custom ID](/images/cloudflare-images/upload-images/custom-id/) cannot be made private using [signed URL tokens](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/).
