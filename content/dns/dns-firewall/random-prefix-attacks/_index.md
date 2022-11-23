@@ -7,7 +7,6 @@ weight: 4
 # Random prefix attack mitigation
 
 {{<render file="_random-prefix-attack-definition.md">}}
-<br/>
 
 As part of [DNS Firewall](/dns/dns-firewall/), Cloudflare can protect your upstream authoritative nameservers from these attacks by blocking DNS queries that are determined to be part of an attack and thus preventing them from reaching your authoritative nameservers, where they could cause harm by overloading resources. This protection is an opt-in feature because of the potential for false positives.
 
