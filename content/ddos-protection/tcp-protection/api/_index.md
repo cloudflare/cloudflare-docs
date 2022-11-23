@@ -127,10 +127,10 @@ Delete all out-of-state TCP rules | `DELETE accounts/<ACCOUNT_ID>/magic/advanced
 Operation | Method and endpoint / Description
 ----------|----------------------------------
 List out-of-state TCP filters | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Fetches all out-of-state TCP filters in the account.
-Add a out-of-state TCP filter | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Adds a out-of-state TCP filter to the account.
-Get a out-of-state TCP filter | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Fetches the details of an existing out-of-state TCP filter in the account.
-Update a out-of-state TCP filter | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Updates an existing out-of-state TCP filter in the account.
-Delete a out-of-state TCP filter | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Deletes an existing out-of-state TCP filter from the account.
+Add an out-of-state TCP filter | `POST accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Adds an out-of-state TCP filter to the account.
+Get an out-of-state TCP filter | `GET accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Fetches the details of an existing out-of-state TCP filter in the account.
+Update an out-of-state TCP filter | `PATCH accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Updates an existing out-of-state TCP filter in the account.
+Delete an out-of-state TCP filter | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters/<FILTER_ID>`<br>Deletes an existing out-of-state TCP filter from the account.
 Delete all out-of-state TCP filters | `DELETE accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters`<br>Deletes all existing out-of-state TCP filters from the account.
 
 {{</table-wrap>}}
