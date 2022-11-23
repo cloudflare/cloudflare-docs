@@ -31,7 +31,7 @@ This sample plan simulates 200 active users visiting the site, slowly ramping up
 
 ## 2. Run sample plan
 
-In order to run our test plan click on the **play** button to get the test started which should take roughly around 3-4 minutes.
+To run our test plan select the **play** button to get the test started. This should take roughly around 3-4 minutes.
 
 ![Navigation bar](/waiting-room/static/navigation.png)
 
