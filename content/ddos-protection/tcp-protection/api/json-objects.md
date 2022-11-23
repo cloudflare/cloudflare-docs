@@ -68,7 +68,7 @@ The `rate_sensitivity` and `burst_sensitivity` field values must be one of `low`
  }
 ```
 
-The `expression` field is a [Rules language expression](/ruleset-engine/rules-language/expressions/) up to 8192 characters that can include the following fields:
+The `expression` field is a [Rules language expression](/ruleset-engine/rules-language/expressions/) up to 8,192 characters that can include the following fields:
 
 * `ip.src`
 * `ip.dst`
