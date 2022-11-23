@@ -25,7 +25,7 @@ Before you start this tutorial, ensure you have:
 
 ## 1. Download sample script
 
-First, download the [sample](https://github.com/yj7o5/cf-waiting-room-testing/blob/main/plan.jmx) jmeter plan (configuration file) from GitHub.
+First, download the [sample](https://github.com/yj7o5/cf-waiting-room-testing/blob/main/plan.jmx) JMeter plan (configuration file) from GitHub.
 
 This sample plan simulates 200 active users visiting the site, slowly ramping up traffic within the first minute and then maintaining 200 active users for the next three minutes. The test plan for this tutorial follows the setup outlined in the next steps.
 
