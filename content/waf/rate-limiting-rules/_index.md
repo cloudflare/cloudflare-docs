@@ -76,7 +76,7 @@ For availability information related to the previous version of rate limiting ru
 
 You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.
 
-To configure rate limiting rules in the Cloudflare dashboard, refer to the following pages:
+To configure rate limiting rules in the Cloudflare dashboard, refer to the following resources:
 * [Create rate limiting rules in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/)
 * [Create rate limiting rules in the dashboard for an account](/waf/rate-limiting-rules/create-account-dashboard/)
 
