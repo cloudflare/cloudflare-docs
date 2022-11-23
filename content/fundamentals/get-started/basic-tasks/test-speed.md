@@ -26,7 +26,7 @@ If your domain is not yet active on Cloudflare or you want to measure the before
 
 - [GTmetrix](https://gtmetrix.com/)
 - [Lighthouse](https://developer.chrome.com/docs/lighthouse/)
-- [WebPageTes](https://www.webpagetest.org/)
+- [WebPageTest](https://www.webpagetest.org/)
 
 If you use these third-party tools, you should do the following to test website speed:
 
