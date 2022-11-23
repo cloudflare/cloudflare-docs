@@ -6,7 +6,7 @@ weight: 9
 
 # Test a waiting room
 
-Follow this tutorial to test your waiting room behavior in response to load. To accurately simulate traffic through your waiting room with a load test, run your test script or planner for a period of time longer than a minute, ideally more than 2-3 minutes. You can run a load test using a variety of tools including [loader.io](http://loader.io), [jmeter](http://jmeter.apache.org), [postman.com](http://postman.com). You can also write a plain shell script to simulate user requests (each representing a distinct user).
+Follow this tutorial to test your waiting room behavior in response to load. To accurately simulate traffic through your waiting room with a load test, run your test script or planner for a period of time longer than a minute, ideally more than 2-3 minutes. You can run a load test using a variety of tools including [loader.io](http://loader.io), [jmeter](http://jmeter.apache.org), and [postman.com](http://postman.com). You can also write a plain shell script to simulate user requests (each representing a distinct user).
 
 {{<Aside type="warning" header="Warning:">}}
 This tutorial uses an open-sourced load testing tool that is not created or supported by Cloudflare.
