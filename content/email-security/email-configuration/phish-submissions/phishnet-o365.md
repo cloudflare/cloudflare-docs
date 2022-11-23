@@ -1,21 +1,23 @@
 ---
 title: PhishNet - Office 365
+meta:
+    title: PhishNet - Office 365 (Beta)
 pcx_content_type: how-to
 weight: 1
 ---
 
-# PhishNet - Office 365
+{{<beta>}}PhishNet - Office 365{{</beta>}}
 
-PhishNET is an add-in button that helps users in organizations to submit phish samples that were missed by Area 1 detection directly to Area 1. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
+PhishNET is an add-in button that helps users to submit directly to Area 1 phish samples missed by Area 1's detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
 
 ## Prerequisites
 
-To set up PhishNet with Office 365, you will need the following:
+To set up PhishNet with Office 365, you will need:
 
-— Area 1 account with admin access.
+- An Area 1 account with admin access.
 - Admin access to Microsoft.com
 
-Only admin users can deploy PhishNet on the entire Office 365 account. Non-admin users can deploy PhishNet for themselves, but no other users will have access to it.
+{{<Aside type="note">}} Only admin users can deploy PhishNet for all users in Office 365. Non-admin users can deploy PhishNet for themselves, but no other users will have access to it.{{</Aside>}}
 
 ## Set up PhishNet for Office 365
 
@@ -31,17 +33,17 @@ Only admin users can deploy PhishNet on the entire Office 365 account. Non-admin
 
 6. Select the **Settings** (gear icon).
 
-7. Go to **Email Configuration** > **Phish Submissions** > **PhisNet O365**.
+7. Go to **Email Configuration** > **Phish Submissions** > **PhishNet O365**.
 
-8. Select **Copy** to copy the URL to install PhishNet to Office 365.
+8. Select **Copy** to copy the URL. This URL will let you install PhishNet in Office 365.
 
-9. Go back to the Microsoft Admin tab.
+9. Go back to the Microsoft admin browser tab.
 
-10. Select **Provide link to manifest file**, and paste the URL you copied from your Area 1 dashboard.
+10. From **Upload Apps to deploy**, select **Provide link to manifest file**, and paste the URL you copied from your Area 1 dashboard.
 
-11. Select **Validate** and wait for a success message to appear below the input. Then, select **Next**.
+11. Select **Validate**. Wait for a success message to appear below the input. Then, select **Next**.
 
-12. Under **Assign users**, select **Entire Organization**. Select **Next**.
+12. Under **Assign users**, select **Entire Organization**, and then select **Next**.
 
 13. In **App Permissions and Capabilities**, make sure PhishNet has the correct permissions: `Outlook: ReadWriteMailbox, SendReceiveData`. Then, select **Next**.
 
@@ -63,4 +65,4 @@ You have now installed PhishNet for Office 365. After the process is complete, P
 
 4. Select **Submit Report**.
 
-Once the email has been successfully submitted to Cloudflare Area 1 for review, PhisNet will show you a **Submission Complete** message.
+Once the email has been successfully submitted to Cloudflare Area 1 for review, PhishNet will show you a **Submission Complete** message.
