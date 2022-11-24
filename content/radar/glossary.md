@@ -34,7 +34,7 @@ In Cloudflare Radar, you can inspect the detected route leak events on the corre
 * `BGP Msgs.`: The number of BGP announcements that contain leaked routes.
 * `Prefixes`: The number of IP prefixes a route leak event affects.
 * `Origins`: The number of origin ASes a route leak event affects.
-* `Vatange Points`: The number of route collectors that observed a route leak event.
+* `Vantage Points`: The number of route collectors that observed a route leak event.
 
 Learn more about our route leak detection system design and usages  in [How we detect route leaks and our new Cloudflare Radar route leak service](https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/) blog post.
 
