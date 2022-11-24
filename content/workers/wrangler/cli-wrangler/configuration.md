@@ -556,7 +556,7 @@ If your project is written using CommonJS modules, you will need to re-export yo
     You will need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
     have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
-  - Defaults:
+Defaults:
 
 ```toml
 [build.upload]
