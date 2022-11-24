@@ -10,7 +10,7 @@ meta:
 
 You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
-`zaraz.ecommerce()` allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
+`zaraz.ecommerce()` allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. It is an `async` function, so you can choose to `await` it if you'd like to make sure it completed before running other code.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
