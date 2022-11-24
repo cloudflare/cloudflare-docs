@@ -126,4 +126,4 @@ User feature fields add features about the end-user (client) into the Cache Key.
 
 ## Limitations
 
-The Prefetch feature is not compatible with Page Rules defining a custom cache key. When a customer uses a custom cache key Page Rule, the custom cache key is used to cache all their assets. However, when a customer uses Prefetch, the Prefetch feature does not honor the custom cache key Page Rule and simply caches the prefetched assets under a default cache key, causing a cache key mismatch. The Prefetch feature prefetches assets and stores them in cache with the default cache key. Then, when the browser requests these assets, the custom cache key Page Rule is used and the assets are retrieved with the custom cache key. This is a cache `MISS` and so the request goes back to the origin.
+The Prefetch feature is not compatible with the custom cache keys. With custom cache key Page Rules or Cache Rules, the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.
