@@ -559,20 +559,20 @@ If your project is written using CommonJS modules, you will need to re-export yo
   - Defaults:
 
     ```toml
-    [build.upload]
-    format = "modules"
-    main = "./worker.mjs"
+[build.upload]
+format = "modules"
+main = "./worker.mjs"
 
-    # You do not need to include these default rules in your `wrangler.toml`, they are implicit.
-    # The default rules are treated as the last two rules in the list.
+# You do not need to include these default rules in your `wrangler.toml`, they are implicit.
+# The default rules are treated as the last two rules in the list.
 
-    [[build.upload.rules]]
-    type = "ESModule"
-    globs = ["**/*.mjs"]
+[[build.upload.rules]]
+type = "ESModule"
+globs = ["**/*.mjs"]
 
-    [[build.upload.rules]]
-    type = "CommonJS"
-    globs = ["**/*.js", "**/*.cjs"]
+[[build.upload.rules]]
+type = "CommonJS"
+globs = ["**/*.js", "**/*.cjs"]
     ```
 
   - `type` {{<prop-meta>}}required{{</prop-meta>}}
