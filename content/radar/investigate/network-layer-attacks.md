@@ -12,7 +12,7 @@ Network layer attacks show [DDoS](https://www.cloudflare.com/en-gb/learning/ddos
 Unlike what happens in [Application Layer Attacks](/radar/investigate/application-layer-attacks/), in network layer attacks location attribution does not use the location associated with the client's IP address. Instead, it uses the location of the data center itself. This is due to [IP spoofing](https://www.cloudflare.com/en-gb/learning/ddos/glossary/ip-spoofing/).
 {{</Aside>}}
 
-When filtering by location or autonomous system (AS), we are filtering by the source location/AS of the attack 
+When filtering by location or autonomous system (AS), we are filtering by the source location/AS of the attack
  — which can be very different to the location of the human orchestrator of the attack. Refer to [botnets](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-botnet/) for more information.
 
 ## List of endpoints
@@ -62,7 +62,7 @@ If we inspect the abbreviated response below, we can conclude that globally, at 
 
 We can also conclude that the distribution of network layer attacks coming from Singapore  — or, more accurately, reaching Cloudflare's data center located in Singapore — differs quite a bit from the worldwide distribution. At those times, the distribution of network layer attacks clearly favors [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/).
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-attacks-get-layer-3-attacks-time-series) for this endpoint.
+For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer3Timeseries) for this endpoint.
 
 ### Summary
 
@@ -99,7 +99,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer3/summary?l
 
 The response shows that the attacks coming from Russia to other locations tended to use the [UDP](https://www.cloudflare.com/en-gb/learning/ddos/glossary/user-datagram-protocol-udp/) network protocol at those timestamps.
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-attacks-get-layer-3-attacks-by-network-protocol,-over-time) for this endpoint.
+For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer3TimeseriesGroups) for this endpoint.
 
 
 ## Next steps
