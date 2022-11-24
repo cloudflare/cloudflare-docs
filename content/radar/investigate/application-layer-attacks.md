@@ -143,7 +143,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locat
 
 During the specified date range, mitigation requests to zones with a billing address located in Belgium represent 18%.
 
-For more information refer to [Get layer 7 top target locations](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer7TopOriginLocations).
+For more information refer to [Get layer 7 top target locations](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer7TopTargetLocations).
 
 #### Example: Top attacks
 
