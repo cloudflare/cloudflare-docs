@@ -60,7 +60,7 @@ From the abbreviated response below, we can conclude that distributed denial-of-
 }
 ```
 
-For more information refer to [Get layer 7 attacks by mitigation technique, over time](https://developers.cloudflare.com/api/operations/radar-attacks-get-attacks-layer-7-time-series).
+For more information refer to [Get layer 7 attacks by mitigation technique, over time](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer7Timeseries).
 
 ### Summary
 
@@ -87,7 +87,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/summary?l
 
 This response means that 75% of all mitigated requests coming from Great Britain were mitigated by the [WAF](/waf/) product.
 
-For more information refer to [Get a summary of layer 7 attacks](https://developers.cloudflare.com/api/operations/radar-attacks-get-a-summary-of-layer-7-attacks).
+For more information refer to [Get a summary of layer 7 attacks](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer7Summary).
 
 ### Top
 
@@ -143,7 +143,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/attacks/layer7/top/locat
 
 During the specified date range, mitigation requests to zones with a billing address located in Belgium represent 18%.
 
-For more information refer to [Get layer 7 top target locations](https://developers.cloudflare.com/api/operations/radar-attacks-get-layer-7-top-target-locations).
+For more information refer to [Get layer 7 top target locations](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer7TopOriginLocations).
 
 #### Example: Top attacks
 
@@ -197,11 +197,11 @@ A typical response will be similar to the following:
 }]
 ```
 
-This means that 3.79% of all mitigated requests are from and to the US, 3.6% of all mitigated requests are from the US to Belgium, etc.. 
+This means that 3.79% of all mitigated requests are from and to the US, 3.6% of all mitigated requests are from the US to Belgium, etc..
 
 This response came from a query that is using attack `magnitude` as the sum of mitigated requests. To use the number of unique zones attacked as the metric, for example, use `attack_magnitude=AFFECTED_ZONES`.
 
-For more information refer to [Get layer 7 top attack pairs](https://developers.cloudflare.com/api/operations/radar-attacks-get-layer-7-top-attack-pairs-(-origin-and-target-locations)).
+For more information refer to [Get layer 7 top attack pairs](https://developers.cloudflare.com/api/operations/radar_get_AttacksLayer7TopAttacks).
 
 ## Next steps
 
