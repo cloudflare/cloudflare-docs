@@ -558,7 +558,7 @@ If your project is written using CommonJS modules, you will need to re-export yo
 
   - Defaults:
 
-    ```toml
+```toml
 [build.upload]
 format = "modules"
 main = "./worker.mjs"
@@ -573,7 +573,7 @@ globs = ["**/*.mjs"]
 [[build.upload.rules]]
 type = "CommonJS"
 globs = ["**/*.js", "**/*.cjs"]
-    ```
+```
 
   - `type` {{<prop-meta>}}required{{</prop-meta>}}
 
