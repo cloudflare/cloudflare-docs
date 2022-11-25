@@ -22,8 +22,8 @@ Since video ids are effectively public within signed URLs, you will need to turn
 
 Restricting viewing can be done by updating the video's metadata.
 
-```bash
-curl -X POST -H "Authorization: Bearer <API_TOKEN>" "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" -H "Content-Type: application/json" -d "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
+```sh
+$ curl -X POST -H "Authorization: Bearer <API_TOKEN>" "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>" -H "Content-Type: application/json" -d "{\"uid\": \"<VIDEO_UID>\", \"requireSignedURLs\": true }"
 ```
 
 Response:
@@ -163,8 +163,8 @@ If you are generating a high-volume of tokens, it is best to generate new tokens
 
 ### Step 1: Call the `/stream/key` endpoint *once* to obtain a key
 
-```bash
-curl -X POST -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys"
+```sh
+$ curl -X POST -H "Authorization: Bearer <API_TOKEN>"  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/keys"
 ```
 
 The response will return `pem` and `jwk` values.
@@ -319,20 +319,23 @@ Depending on the rule type, accessRules support 2 additional properties:
 
 ***Example 1: Block views from a specific country***
 
-    ...
-    "accessRules": [
-    	{
-    		"type": "ip.geoip.country",
-    		"action": "block",
-    		"country": ["US", "DE", "MX"],
-    	},
-    ]
+```
+...
+"accessRules": [
+	{
+		"type": "ip.geoip.country",
+		"action": "block",
+		"country": ["US", "DE", "MX"],
+	},
+]
+```
 
 The first rule matches on country, US, DE, and MX here. When that rule matches, the block action will have the token considered invalid. If the first rule doesn't match, there are no further rules to evaluate. The behavior in this situation is to consider the token valid.
 
 ***Example 2: Allow only views from specific country or IPs***
 
-```...
+```
+...
 "accessRules": [
 	{
 		"type": "ip.geoip.country",
@@ -372,7 +375,7 @@ In the dashboard, you will see a text box by each video labeled `Enter allowed o
 
 You can also control embed limitation programmatically using the Stream API. `uid` in the example below refers to the video id.
 
-```sh
+```bash
 curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d "{\"uid\": \"<VIDEO_UID>\", \"allowedOrigins\": [\"example.com\"]}" \

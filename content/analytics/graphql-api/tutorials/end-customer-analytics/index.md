@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Querying HTTP events by hostname with GraphQL
 ---
  

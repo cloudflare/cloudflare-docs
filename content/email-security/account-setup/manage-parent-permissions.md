@@ -19,6 +19,6 @@ To update parent permissions:
 
     - **No external account access**: Shuts off all access from the parent account (including Area 1).
     - **Allow external account view-only access** (default): Allows a parent user to view the customer's portal, including settings.
-    - **Allow external account admin access**: Allows a parent user to administer the customer account on their behalf. By selecting this option the customer is acknowledging consent for outside administration of their account.
+    - **Allow external account Super Admin access**: Allows a parent user to administer the customer account on their behalf. By selecting this option the customer is acknowledging consent for outside administration of their account.
 
 5. Select **Save**.

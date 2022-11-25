@@ -41,7 +41,7 @@ Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using
 
 Installing `wrangler`, the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://www.npmjs.com/get-npm), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
 ```sh
 $ npm install -g wrangler
@@ -143,7 +143,7 @@ To create a new MQTT Broker called `example-broker` in the `my-namespace` namesp
 
 
 ```sh
-$ wrangler pubsub namespace create example-broker --namespace=my-namespace
+$ wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
 
 You should receive a success response that resembles the following:

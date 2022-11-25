@@ -1,10 +1,64 @@
 ---
 pcx_content_type: changelog
 title: Changelog
-weight: 8
+weight: 11
 ---
 
 # Changelog
+
+## 2022-11-07
+
+### Deprecating the "per-video" Analytics API
+
+The [“per-video” analytics API](/stream/getting-analytics/fetching-per-video-analytics/) is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
+
+The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can [use across many Cloudflare products](/analytics/graphql-api/features/data-sets/).
+
+For more about this change and how to migrate existing API queries, refer to [this post](https://community.cloudflare.com/t/migrate-to-the-stream-graphql-analytics-api-by-feb-1st-2023/433252) and the [GraphQL Analytics API docs](/stream/getting-analytics/fetching-bulk-analytics/).
+
+## 2022-11-01
+
+### Create an unlimited number of live inputs
+
+Cloudflare Stream now has no limit on the number of [live inputs](https://developers.cloudflare.com/api/operations/stream-live-inputs-properties) you can create. Stream is designed to allow your end-users to go live — live inputs can be created quickly on-demand via a single API request for each of user of your platform or app.
+
+For more on creating and managing live inputs, get started with the [docs](/stream/stream-live/).
+
+## 2022-10-20
+
+### More accurate bandwidth estimates for live video playback
+
+When playing live video, Cloudflare Stream now provides significantly more accurate estimates of the bandwidth needs of each quality level to client video players. This ensures that live video plays at the highest quality that viewers have adequate bandwidth to play.
+
+As live video is streamed to Cloudflare, we transcode it to make it available to viewers at mulitple quality levels. During transcoding, we learn about the real bandwidth needs of each segment of video at each quality level, and use this to provide an estimate of the bandwidth requirements of each quality level the in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
+
+If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS manifest will be lower, ensuring that the most viewers possible view the highest quality level, since it requires relatively little bandwidth. Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the HLS manifest will be higher, ensuring that viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
+
+This change is particularly helpful if you're building a platform or application that allows your end users to create their own live streams, where these end users have their own streaming software and hardware that you can't control. Because this new functionality adapts based on the live video we receive, rather than just the configuration advertised by the broadcaster, even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements, causing playback quality to decrease unnecessarily. Your end users don't have to be OBS Studio experts in order to get high quality video playback.
+
+No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream.
+
+## 2022-10-05
+
+### AV1 Codec support for live streams and recordings (beta)
+
+Cloudflare Stream now supports playback of live videos and live recordings using the [AV1 codec](https://aomedia.org/av1/), which uses 46% less bandwidth than H.264.
+
+For more, read the [blog post](https://blog.cloudflare.com/av1-cloudflare-stream-beta) or the get started with the [docs](/stream/viewing-videos/av1-playback).
+
+## 2022-09-27
+
+### WebRTC live streaming and playback (beta)
+
+Cloudflare Stream now supports live video streaming over WebRTC, with sub-second latency, to unlimited concurrent viewers.
+
+For more, read the [blog post](https://blog.cloudflare.com/webrtc-whip-whep-cloudflare-stream) or the get started with example code in the [docs](/stream/webrtc-beta).
+
+## 2022-09-15
+
+### Manually control when you start and stop simulcasting
+
+You can now enable and disable individual live outputs via the API or Stream dashboard, allowing you to control precisely when you start and stop simulcasting to specific destinations like YouTube and Twitch. For more, [read the docs](/stream/stream-live/simulcasting/#control-when-you-start-and-stop-simulcasting).
 
 ## 2022-08-15
 
@@ -21,13 +75,13 @@ No action is required from you, unless you use Content Security Policy (CSP) on 
 
 ### Clip videos using the Stream API
 
-You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-manage-videos/edit-videos/video-clipping/).
+You can now change the start and end times of a video uploaded to Cloudflare Stream. For more information, refer to [Clip videos](/stream/edit-videos/video-clipping/).
 
 ## 2022-07-26
 
 ### Live inputs
 
-The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://api.cloudflare.com/#stream-live-inputs-properties).
+The Live Inputs API now supports optional pagination, search, and filter parameters. For more information, refer to the [Live Inputs API documentation](https://developers.cloudflare.com/api/operations/stream-live-inputs-list-live-inputs).
 
 ## 2022-05-24
 

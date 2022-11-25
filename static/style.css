@@ -1099,6 +1099,7 @@ html {
 }
 
 .CodeBlock--token-deleted,
+.CodeBlock--token-deleted-sign,
 .CodeBlock--token-namespace {
   color: var(--code-red);
 }
@@ -1108,7 +1109,8 @@ html {
   cursor: help;
 }
 
-.CodeBlock--token-inserted {
+.CodeBlock--token-inserted,
+.CodeBlock--token-inserted-sign {
   color: var(--code-green);
 }
 
@@ -1543,6 +1545,13 @@ code.InlineCode-is-nowrap,
   .InlineCode.InlineCode-is-type {
     padding: 0 2px;
   }
+}
+
+.InlineCode--name,
+.InlineCode.InlineCode-is-name {
+  font-size: 1em;
+  font-weight: 700;
+  --background: transparent;
 }
 
 .Link {
@@ -2257,10 +2266,10 @@ html[is-docs-page] body {
   --sixty-four-px-rem: 3.7647058824rem;
   --docs-content-gap: var(--sixty-four-px-rem);
   --docs-header-height: var(--sixty-four-px-rem);
-  --docs-sidebar-width: 18.25rem;
+  --docs-sidebar-width: 21.25rem;
   --docs-body-sidebar-width: var(--docs-sidebar-width);
   --docs-page-side-padding: 1rem;
-  --docs-max-page-width: 1440px;
+  --docs-max-page-width: 1640px;
   --docs-page-width: var(--docs-max-page-width);
   --docs-sidebars-combined-width: calc(
     var(--docs-sidebar-width) + var(--docs-body-sidebar-width)
@@ -2382,6 +2391,10 @@ html[is-docs-page] body {
 
   .DocsToolbar.collapsed {
     left: 4.5em;
+  }
+
+  .DocsFooter.collapsed {
+    margin-left: 4.5em;
   }
 
   .DocsContent.collapsed {
@@ -4730,7 +4743,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin-left: var(--docs-sidebar-width);
   padding: 3.5rem 0;
   padding-left: var(--docs-content-gap);
-  padding-right: calc(var(--docs-body-sidebar-width) + var(--docs-content-gap));
+  padding-right: var(--docs-content-gap);
   --border-color: rgba(var(--color-rgb), 0.08);
   border-top: 1px solid var(--border-color);
 }
@@ -4746,9 +4759,9 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   display: grid;
   grid-template-columns: 2.5em 1fr;
   grid-auto-rows: 3em;
-
   padding-bottom: 2em;
 }
+
 .AdditionalResources--icon {
   color: inherit;
   flex-shrink: 0;
@@ -4768,10 +4781,19 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     display: block;
     margin-bottom: 0.5em;
   }
+}
 
-  .DocsFooter--content-dot-spacer {
-    display: none;
-  }
+.DocsFooterResources {
+  display: flex;
+  justify-content:baseline;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+  width: 100%;
+  font-size: .9em;
+}
+
+.DocsFooterResources > * {
+  padding-right: 1em;
 }
 
 .DocsCodeExamplesOverview {
@@ -5088,7 +5110,7 @@ pre {
 
 .tabs {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 1rem;
   box-shadow: 0 1px rgba(var(--shadow-color-rgb), 0.12);
   height: 2.4rem;
 }
@@ -5107,7 +5129,7 @@ pre {
 }
 
 [theme="dark"] .tabs > ul {
-  background-color: rgb(var(--accent-color-rgb));
+  background-color: rgba(var(--color-rgb),.1)
 }
 
 .tabs > ul > li {
@@ -5209,6 +5231,33 @@ pre {
 .tab-content > .CodeBlock {
   border-radius: 0;
 }
+
+.noCodeTab {
+  padding: 1em .75em .75em .5em;
+  background: linear-gradient(var(--background-color),
+    rgba(var(--background-color-rgb)));
+  border: 1px solid rgb(216 216 218);
+  color: inherit;
+}
+
+[theme="dark"] .noCodeTab {
+  border: 1px solid #404242;
+  border-top: none;
+  background-color: rgb(var(--background-color-rgb));
+}
+
+.noCodeTab > pre {
+  margin-bottom: 2em;
+}
+
+.noCodeTab > *:last-child {
+  margin-bottom: 0;
+}
+
+.noCodeLabel {
+  font-family: var(--sans-serif-font-family);
+}
+
 .skip-link {
   background: #f3f3f4;
   z-index: 1;
@@ -5309,7 +5358,7 @@ pre {
 /* 'Features' section */
 .DocsMarkdown--feature-group {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) 1fr;
+  grid-template-columns: minmax(0, 3fr) .85fr;
   gap: 1em;
   align-items: center;
 }
@@ -5317,7 +5366,11 @@ pre {
 .DocsMarkdown--feature-button {
   display: flex;
   justify-content: flex-end;
-  white-space: nowrap;
+}
+
+.DocsMarkdown--feature-button a {
+  text-align: center;
+  font-size: clamp(0.7em, var(--font-size), 1em);
 }
 
 @media (max-width: 768px) {
@@ -5417,3 +5470,6 @@ pre {
   background: rgba(110, 110, 110, 0.5);
 }
 
+ .mermaid {
+  background: #f5f5f5 !important;
+}

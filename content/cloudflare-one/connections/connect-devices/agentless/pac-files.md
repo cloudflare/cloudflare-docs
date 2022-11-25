@@ -106,9 +106,8 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 2. Verify that nothing is returned by a `curl` command:
 
-    ```bash
+    ```sh
     $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
-    $
     ```
 
 {{<Aside type="note">}}
@@ -172,9 +171,10 @@ The following example demonstrates the setup procedure for Firefox.
 
 You can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
+{{<Aside type="note">}}
+When a browser is connected to Gateway by a proxy endpoint, the browser does not perform DNS lookups. Only HTTP policies will apply.
+{{</Aside>}}
+
 ## Limitations
 
 At this time, the agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) or mTLS authentication.
-
-[Browser Isolation](/cloudflare-one/policies/browser-isolation/) is disabled by default, because the lack of user identity information poses a potential security risk. If you want to apply Isolate policies, request access from your account team.
-

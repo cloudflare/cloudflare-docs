@@ -6,7 +6,7 @@ weight: 1
 
 # Manage account members
 
-If your account is an **Admin**, you have the ability to add, edit, and delete users and - if those users lose their two-factor authentication (2FA) device - reset their 2FA.
+If your account is a **Super Admin**, you have the ability to add, edit, and delete users and - if those users lose their two-factor authentication (2FA) device - reset their 2FA.
 
 ## Add user
 

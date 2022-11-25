@@ -11,7 +11,10 @@ meta:
     processed by our network. Find out about the connecting client, Cloudflare's
     actions, and the response from the origin server
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /core-services-preview.png
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/analytics/logs
 
 externals:
   - title: Cloudflare homepage

@@ -14,9 +14,9 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create URL Rewrite Rule
 
 When creating a URL Rewrite Rule via API, make sure you:
 
-* Set the rule action to `rewrite`
-* Define the [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/) in the `action_parameters` field according to the type of URL rewrite (static or dynamic)
-* Deploy the rule to the `http_request_transform` phase at the zone level
+* Set the rule action to `rewrite`.
+* Define the [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/#api-information) in the `action_parameters` field according to the type of URL rewrite (static or dynamic).
+* Deploy the rule to the `http_request_transform` phase at the zone level.
 
 ***
 
@@ -35,8 +35,8 @@ Follow this workflow to create a URL Rewrite Rule for a given zone via API:
 
 The API token used in API requests to manage URL Rewrite Rules must have at least the following permissions:
 
-* Transform Rules: Edit
-* Account Rulesets: Read
+* _Account_ > _Transform Rules_ > _Edit_
+* _Account_ > _Account Rulesets_ > _Read_
 
 ## Examples
 

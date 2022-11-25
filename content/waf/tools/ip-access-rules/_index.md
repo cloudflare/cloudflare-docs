@@ -32,4 +32,4 @@ Block by country is only available on the Enterprise plan. Other customers may p
 
 ## Related resources
 
-To learn more about protection options provided by Cloudflare to protect your website against malicious traffic and bad actors, refer to [Secure your website](/fundamentals/get-started/task-guides/secure-your-website/).
+To learn more about protection options provided by Cloudflare to protect your website against malicious traffic and bad actors, refer to [Secure your website](/learning-paths/application-security/).

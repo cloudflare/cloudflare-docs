@@ -30,5 +30,5 @@ credentials.
 
 Currently very few clients support delegated credentials, and only a
 handful of certificate authorities will issue certificates with the
-extension. We have had success with Digicert. Firefox 77 and later
+extension. We have had success with DigiCert. Firefox 77 and later
 support delegated credentials.

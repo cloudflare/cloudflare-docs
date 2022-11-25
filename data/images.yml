@@ -11,7 +11,12 @@ meta:
   description: Choose between Cloudflare Images and Cloudflare Image Resizing, two
     products tailored to your different needs.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /dev-products-preview.png
+
+resources:
+  community: https://community.cloudflare.com/c/developers/images
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/images
+  discord: https://discord.com/channels/595317990191398933/973591562615390228
 
 externals:
   - title: Cloudflare homepage

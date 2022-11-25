@@ -50,4 +50,4 @@ billing statement message_id:<Amazon aws Support@email.amazonses.com>
 
 ## Additional notes
 
-When searching for phrases, some terms — such as words less than 3 characters and certain escape words like `and`, `the`, `then`, `their` — are not tokenized. Our search will automatically ignore these terms, both in your search query and in the proposed results.
+When searching for phrases, some terms — such as words less than three characters and certain escape words like `and`, `the`, `then`, `their` — are not tokenized. Our search will automatically ignore these terms, both in your search query and in the proposed results.

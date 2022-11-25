@@ -46,7 +46,7 @@ To deploy your project with Pages:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Pages** > **Create a project** > **Connect to git**.
 3. Select your new GitHub repository.
-4. In the **Set up builds and deployments**, set `npm run dev` as the **Build command**, and `dist` as the **Build output directory**.
+4. In the **Set up builds and deployments**, set `npm run build` as the **Build command**, and `dist` as the **Build output directory**.
 5. Select **Environment variables (advanced)** > **+ Add variable** > configure a `NODE_VERSION` variable with a value of any version of Node greater than `14.18` -- this example uses `16`:
 
 After completing configuration, select **Save and Deploy**.
@@ -55,8 +55,8 @@ You will see your first deploy pipeline in progress. Pages installs all dependen
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 
-Additionally, you will have access to [preview deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
+Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
 ## Learn more
 
-By completing this guide, you have successfully deployed your Vite3 site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](https://developers.cloudflare.com/pages/framework-guides/).
+By completing this guide, you have successfully deployed your Vite3 site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).

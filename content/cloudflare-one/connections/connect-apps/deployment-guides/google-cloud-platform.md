@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: GCP
-weight: 8
+weight: 5
 ---
 
 # Deploy `cloudflared` in GCP
@@ -39,9 +39,9 @@ To start, you will need to navigate to the Google Cloud Console and create a pro
     - **Firewall:** Allow HTTP/HTTPS traffic (if necessary)
     - **Networking, Disks, Security, Management, Sole-Tenancy:** Management
 
-1.  Add a startup script for testing access. Here is an example:
+1.  In the **Management** section, add a startup script for testing access. Here is an example:
 
-    ```sh
+    ```bash
     #!/bin/bash
     apt update
     apt -y install apache2
@@ -65,15 +65,15 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
 1.  Next, install `cloudflared` on your Virtual Machine. In this example, we are running a Debian-based VM Instance, so you will first download the debian build of `cloudflared`.
 
     ```sh
-    wget <https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64>
-    mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
-    chmod a+x /usr/local/bin/cloudflared
+    $ wget <https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64>
+    $ mv ./cloudflared-linux-amd64 /usr/local/bin/cloudflared
+    $ chmod a+x /usr/local/bin/cloudflared
     ```
 
 1.  Run the following command to ensure you have the most updated `cloudflared` version. The command should auto-run after pasting.
 
     ```sh
-    cloudflared update
+    $ cloudflared update
     ```
 
 1.  Run the following command to authenticate `cloudflared` with your Cloudflare account. The command will launch a browser window where you will be prompted to log in with your Cloudflare account and pick any zone you have added to Cloudflare.
@@ -91,7 +91,7 @@ Now that you have your Virtual Machine up and running in GCP, you can login into
 1.  Route your tunnel. In this example, we will expose the smallest range available. We can add more IP routes later if necessary.
 
     ```sh
-    cloudflared tunnel route ip add 10.128.0.4/32 GCP-01
+    $ cloudflared tunnel route ip add 10.128.0.4/32 GCP-01
     ```
 
 {{<render file="_cloudflared-cloud-deployment.md">}}

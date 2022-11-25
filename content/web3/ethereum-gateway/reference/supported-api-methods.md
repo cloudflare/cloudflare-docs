@@ -27,7 +27,7 @@ For a full list of RPC API methods, refer to the [JSON-RPC specification](https:
 | eth_mining                              |                     ✅                       |
 | eth_hashrate                            |                     ❌                       |
 | eth_gasPrice                            |                     ✅                       |
-| eth_feeHistory                          |                     ❌                       |
+| eth_feeHistory                          |                     ✅                       |
 | eth_accounts                            |                     ❌                       |
 | eth_blockNumber                         |                     ✅                       |
 | eth_chainId                             |                     ✅                       |

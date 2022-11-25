@@ -9,6 +9,10 @@ meta:
 
 To configure Zaraz's general settings, select [**Zaraz**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz) > **Settings**.
 
+## Workflow
+
+Allows you to choose between working in Real-time or Preview & Publish modes. By default, Zaraz instantly publishes all changes you make in your account. Choosing Preview & Publish lets you test your settings before committing to them. Refer to [Preview mode](/zaraz/advanced/preview-mode/) for more information.
+
 ## Web API
 
 ### Debug Key
@@ -17,7 +21,7 @@ The debug key is used to enable Debug Mode. Refer to [Debug mode](/zaraz/web-api
 
 ### E-commerce tracking
 
-Toggle this option on to enable the Zaraz E-commerce API. Refer to [Ecommerce](/zaraz/web-api/ecommerce/) for more information.
+Toggle this option on to enable the Zaraz E-commerce API. Refer to [E-commerce](/zaraz/web-api/ecommerce/) for more information.
 
 ## Compatibility
 
@@ -58,7 +62,7 @@ When toggled on, the Zaraz script will also be injected into `iframe` elements.
 Specify custom URLs for Zaraz's scripts. You need to use a valid pathname:
 
 ```txt
-/<PATHNAME>/<FILE.JS>>
+/<PATHNAME>/<FILE.JS>
 ```
 
 This is an example of a custom pathname to host Zaraz's initialization script:
@@ -66,3 +70,7 @@ This is an example of a custom pathname to host Zaraz's initialization script:
 ```txt
 /my-server/my-scripts/start.js
 ```
+
+### HTTP Events API
+
+Refer to [HTTP Events API](/zaraz/http-events-api/) for more information on this endpoint.

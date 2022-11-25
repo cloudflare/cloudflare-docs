@@ -8,12 +8,11 @@ meta:
 
 # Track your history
 
-In the [Initialize Terraform](/terraform/tutorial/initialize-terraform/) tutorial, you created and applied some basic Cloudflare configuration. Terraform applied this configuration to your account because you provided your email address and API token at the top of the `cloudflare.tf` file.
+In the [Initialize Terraform](/terraform/tutorial/initialize-terraform/) tutorial, you created and applied some basic Cloudflare configuration. Terraform applied this configuration to your zone because you provided your API token at the top of the `cloudflare.tf` file that has access to this zone.
 
 ```sh
-$ head -n13 cloudflare.tf | tail -n4
+$ head -n13 cloudflare.tf | tail -n3
 provider "cloudflare" {
-  email = "you@example.com"
   api_token = "your-api-token"
 }
 ```
@@ -22,19 +21,16 @@ In this tutorial, you will store your configuration in GitHub where it can be tr
 
 ## 1. Use environment variables for authentication
 
-As a good security practice, remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading these values from the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_TOKEN` environment variables, as in the following example:
+As a good security practice, remove your Cloudflare credentials from anything that will be committed to a repository. The Cloudflare Terraform provider supports reading the credentials (and other configuration) [from environment variables](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs#schema), as in the following example:
 
 ```bash
-$ sed -ie 's/^.*email =.*$/  # email pulled from $CLOUDFLARE_EMAIL/' cloudflare.tf
 $ sed -ie 's/^.*api_token =.*$/  # token pulled from $CLOUDFLARE_API_TOKEN/' cloudflare.tf
 
-$ head -n13 cloudflare.tf | tail -n4
+$ head -n13 cloudflare.tf | tail -n3
 provider "cloudflare" {
-  # email pulled from $CLOUDFLARE_EMAIL
   # token pulled from $CLOUDFLARE_API_TOKEN
 }
 
-$ export CLOUDFLARE_EMAIL=you@example.com
 $ export CLOUDFLARE_API_TOKEN=your-api-token
 ```
 

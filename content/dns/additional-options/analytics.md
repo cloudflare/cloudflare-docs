@@ -18,7 +18,7 @@ For a quick summary, view your DNS analytics in the dashboard:
 2. Select your zone.
 3. Go to **Analytics** > **DNS**.
 
-For more detailed metrics, you can use the [Cloudflare API](https://api.cloudflare.com/#dns-analytics-properties).
+For more detailed metrics, you can use the [Cloudflare API](https://developers.cloudflare.com/api/operations/dns-analytics-table).
 
 ## Logs
 

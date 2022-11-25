@@ -59,7 +59,7 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 
 ### Supported options in "Upload-Metadata"
 
-Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
+Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://developers.cloudflare.com/api/operations/stream-videos-list-videos).
 
 {{<definitions>}}
 
@@ -77,7 +77,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 - `thumbnailtimestamppct`
 
-  - Specify the default thumbnail [timestamp percentage](/stream/edit-manage-videos/edit-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
+  - Specify the default thumbnail [timestamp percentage](/stream/viewing-videos/displaying-thumbnails/). Note that percentage is a floating point value between 0.0 and 1.0.
 
 - `watermark`
 
@@ -87,7 +87,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 ### Additional supported headers
 
-Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/edit-manage-videos/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
+Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
 
 ### Getting the video ID when using TUS
 
@@ -103,12 +103,12 @@ For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<A
 
 You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
-```bash
-pip install -U tus.py
+```sh
+$ pip install -U tus.py
 ```
 
-```bash
-tus-upload --chunk-size 52428800 --header Authorization "Bearer <API_TOKEN>" <PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
+```sh
+$ tus-upload --chunk-size 52428800 --header Authorization "Bearer <API_TOKEN>" <PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -182,8 +182,8 @@ Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functiona
 
 1. Install tus-js-client
 
-```bash
-npm install tus-js-client
+```sh
+$ npm install tus-js-client
 ```
 
 1. Set up an index.js and configure:

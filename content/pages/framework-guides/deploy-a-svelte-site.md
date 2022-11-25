@@ -12,7 +12,7 @@ You will use [`SvelteKit`](https://kit.svelte.dev/), the official Svelte framewo
 
 {{<Aside type="warning">}}
 
-**Note:** At this guide's time of publication, SvelteKit is still in beta. However, the Svelte team is confident that the steps below are stable. This guide will be updated as needed, both during and after the beta phase.
+At this guide's time of publication, SvelteKit is still in beta. However, the Svelte team is confident that the steps below are stable. This guide will be updated as needed, both during and after the beta phase.
 
 {{</Aside>}}
 
@@ -62,7 +62,6 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Production branch     | `main`             |
 | Build command         | `npm run build`    |
 | Build directory       | `build`            |
-| Environment Variables | `NODE_VERSION: 17` |
 
 </div>
 
@@ -70,7 +69,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning">}}
 
-**Important:** SvelteKit requires Node.js >=16.9 or later to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `17` or greater.
+SvelteKit requires Node.js version 16 to build successfully. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) > **Pages** > **Settings** > **Environment Variables** section and add a `NODE_VERSION` variable with a value of `16` or greater. When creating your project, expand **Environment variables (Advanced)** to add a `NODE_VERSION` variable.
 
 {{</Aside>}}
 
@@ -113,12 +112,12 @@ To add the SvelteKit Cloudflare adapter to your application:
 ---
 filename: svelte.config.js
 ---
-++ import adapter from '@sveltejs/adapter-cloudflare';
-++
++ import adapter from '@sveltejs/adapter-cloudflare';
++
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
-++  adapter: adapter(),
++   adapter: adapter(),
     // ... truncated ...
   }
 };
@@ -151,7 +150,7 @@ declare namespace App {
 }
 
 ```
-4. Access the added KV or Durable objects namespace in your endpoint with `env` : 
+4. Access the added KV or Durable objects namespace in your endpoint with `env`: 
 
 ```js
 export async function post({ request, platform }) {
@@ -187,26 +186,25 @@ Then, in the `svelte.config.js` file, update the adapter selection:
 filename:  svelte.config.js
 ---
 
-++ import adapter from '@sveltejs/adapter-static';
-++
++ import adapter from '@sveltejs/adapter-static';
++
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
-++  adapter: adapter(
-++  {
-++     // default options are shown. On some platforms
-++    // these options are set automatically — see below
-++    pages: 'build',
-++    assets: 'build',
-++    fallback: null,
-++    precompress: false
-++  }
-++),
-++ prerender: {
-++     // This can be false if you're using a fallback (i.e. SPA mode)
-++      default: true
-++  }
-  
++   adapter: adapter(
++     {
++       // default options are shown. On some platforms
++       // these options are set automatically — see below
++       pages: 'build',
++       assets: 'build',
++       fallback: null,
++       precompress: false
++     }
++   ),
++   prerender: {
++     // This can be false if you're using a fallback (i.e. SPA mode)
++     default: true
++   }
   }
 };
 

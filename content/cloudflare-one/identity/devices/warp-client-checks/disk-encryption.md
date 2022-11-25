@@ -14,7 +14,7 @@ meta:
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
+| macOS, Windows | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -43,7 +43,7 @@ Operating systems determine disk encryption in various ways. The following infor
 1. Run the `/usr/sbin/system_profiler SPStorageDataType` command to return a list of drivers on the system and note the value of **Mount Point**.
 
     ```sh
-    % /usr/sbin/system_profiler SPStorageDataType
+    $ /usr/sbin/system_profiler SPStorageDataType
     Storage:
 
         Data:
@@ -56,7 +56,7 @@ Operating systems determine disk encryption in various ways. The following infor
 1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show **Yes** for the disk to be considered encrypted.
 
     ```sh
-    % diskutil info /System/Volumes/Data | grep FileVault
+    $ diskutil info /System/Volumes/Data | grep FileVault
       FileVault:                 Yes
     ```
 
@@ -69,3 +69,11 @@ All disks on the system must be encrypted for the posture check to pass.
 1. **Protection Status** must be set to **On**.
 
 All disks on the system must be encrypted for the posture check to pass.
+
+### On Linux
+
+Disk encryption checks are not currently supported on Linux.
+
+### On iOS, Android and ChromeOS
+
+These platforms are always encrypted and so no disk encryption check is supported.

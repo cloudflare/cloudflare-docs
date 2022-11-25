@@ -6,13 +6,13 @@ pcx_content_type: how-to
 
 # Rules
 
-You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](https://api.cloudflare.com/#account-rulesets-properties). If you are a new Magic Transit customer, you may not have a root ruleset created for your account. To view examples for root rulesets, review the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
+You can check for an existing root ruleset from the dashboard or via the [Account rulesets API](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets). If you are a new Magic Transit customer, you may not have a root ruleset created for your account. To view examples for root rulesets, review the [Magic Firewall Terraform documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/magic_firewall_ruleset).
 
 By default, you can create a maximum of 100 rules. We recommend you create lists of IP addresses to reference within rules to streamline rule management.
 
 ## Add a rule
 
-1.  From your dashboard, click **Firewall Rulesets**.
+1.  From your dashboard, click **Application Security**.
 2.  Click **Magic Firewall**.
 3.  Click **Add a Rule**.
 4.  Fill out the information for your new rule.
@@ -28,7 +28,7 @@ To disable an existing rule, from the **Magic Firewall Rules** page, set the **E
 
 ## Update a rule
 
-1.  From your dashboard, click **Firewall Rulesets**.
+1.  From your dashboard, click **Application Security**.
 2.  Click **Magic Firewall**. A list of firewall rules displays.
 3.  Locate the rule you want to edit and click **Edit**.
 4.  Update the rule with your changes and click **Edit rule**.

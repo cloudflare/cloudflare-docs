@@ -2,7 +2,7 @@
 title: Analytics
 pcx_content_type: concept
 type: overview
-weight: 9
+weight: 10
 layout: list
 meta:
   title: Firewall Analytics
@@ -28,17 +28,7 @@ Firewall Analytics captures all traffic actioned or flagged by a Cloudflare secu
 
 The available features vary according to your Cloudflare plan:
 
-{{<table-wrap>}}
-
-Feature                  | Free                | Pro                 | Business            | Enterprise
--------------------------|---------------------|---------------------|---------------------|-------------------
-Dashboard features       | Activity log only   | All except DoS      | All except DoS      | All
-Time window              | Up to last 24 hours | Up to last 24 hours | Up to last 72 hours | Up to last 30 days
-Print report             | –                   | Yes                 | Yes                 | Yes
-Export records           | –                   | –                   | Up to 500 events    | Up to 500 events
-L4 DoS attacks mitigated | –                   | –                   | –                   | Last 7 days
-
-{{</table-wrap>}}
+{{<feature-table id="security.firewall_analytics">}}
 
 ## Known limitations
 

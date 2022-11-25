@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: concept
 title: Deprecations
 weight: 2
 ---
@@ -142,6 +142,8 @@ The `wrangler route` command is no longer available to configure a route for a W
 Routes are specified in the `wrangler.toml` configuration file.
 
 ## Other deprecated behaviour
+
+- Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your `wrangler.toml` file.
 
 - Wrangler will no longer use `index.js` in the directory where `wrangler dev` is called as the entry point to a Worker. Use the `main` configuration field, or explicitly pass it as a command line argument, for example: `wrangler dev index.js`.
 

@@ -34,6 +34,8 @@ Here is an example of an URL with `<OPTIONS>` set to `width=80,quality=75` and a
 <img src="/cdn-cgi/image/width=80,quality=75/uploads/avatar1.jpg" />
 ```
 
+{{<render file="_ir-svg-aside.md">}}
+
 ## Options
 
 You must specify at least one option. Options are comma-separated (spaces are not allowed anywhere). Names of options can be specified in full or abbreviated.

@@ -12,7 +12,11 @@ meta:
     to share your primary email address, and Email Routing will forward your
     email messages for you.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /core-services-preview.png
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/email/routing/overview
+  discord: https://discord.com/channels/595317990191398933/930503753583435836
 
 externals:
   - title: Cloudflare homepage

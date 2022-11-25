@@ -17,11 +17,11 @@ Advanced certificates allow you multiple customization options:
 *   Include the zone apex and less than 50 hosts as covered hostnames.
 *   Cover more than one level of subdomain.
 *   Select the preferred validation method (HTTP, TXT, or Email).
-*   Choose the certificate validity period (14, 30, 90, or 365 days).
+*   Choose the certificate validity period (14, 30, or 90 days).
 *   Choose the Certificate Authority to issue the certificate.
 *   Remove Cloudflare branding that are normally present on Universal certificates.
 *   Select a custom trust store for origin authentication.
-*   Control [cipher suites used for TLS](/ssl/ssl-tls/cipher-suites/#disable-cipher-suites).
+*   Control [cipher suites used for TLS](/ssl/reference/cipher-suites/customize-cipher-suites/).
 
 {{<Aside type="note">}}
 

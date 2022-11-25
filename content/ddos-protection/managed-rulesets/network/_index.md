@@ -29,7 +29,7 @@ To adjust rule behavior, do one of the following:
 
 You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 
-Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Available expression fields](/ddos-protection/managed-rulesets/network/fields/) for more information on the available fields for expressions of Network-layer DDoS Attack Protection Managed Ruleset overrides.
+Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
 
 ## Availability
 
@@ -37,6 +37,9 @@ The Network-layer DDoS Attack Protection Managed Ruleset protects Cloudflare cus
 
 ## Related Cloudflare products
 
-Magic Transit customers can create custom [Magic Firewall](/magic-firewall/) rules to block additional network-layer attacks.
+Magic Transit customers can configure the following additional products:
+
+* Enable [Advanced TCP Protection](/ddos-protection/tcp-protection/) to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods or SYN and SYN-ACK floods.
+* Create custom [Magic Firewall](/magic-firewall/) rules to block additional network-layer attacks.
 
 Spectrum customers can use [IP Access](/waf/tools/ip-access-rules/) rules to block additional network-layer attacks.

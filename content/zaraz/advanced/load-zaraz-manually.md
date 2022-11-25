@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Load Zaraz manually
-weight: 0
+weight: 5
 ---
 
 # Load Zaraz manually

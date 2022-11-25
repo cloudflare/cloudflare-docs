@@ -29,8 +29,6 @@ Make sure you create [Access policies](/cloudflare-one/policies/access/) before 
 
 1.  Select **Self-hosted**.
 
-    ![Access Saas and Self-Hosted](/cloudflare-one/static/documentation/applications/add-saas-application.png)
-
     You are now ready to start configuring your app.
 
 1.  Choose an **application name** and set a **session duration**.
@@ -57,8 +55,6 @@ If you are having issues specifying a custom logo, check that the image is serve
     {{</Aside>}}
 
 1.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
-
-    ![Select identity providers](/cloudflare-one/static/documentation/applications/saas-idp.png)
 
 1.  Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 

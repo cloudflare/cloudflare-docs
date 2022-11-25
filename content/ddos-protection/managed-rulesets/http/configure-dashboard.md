@@ -17,19 +17,23 @@ Tag and rule configurations have greater priority than ruleset configurations.
 
 For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
+{{<Aside type="warning" header="Important note for API users">}}
+{{<render file="_ddos-custom-expressions-api-only.md">}}
+{{</Aside>}}
+
 ## Configure all the rules in the ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 1. Go to **Security** > **DDoS**.
 
-1. Next to **HTTP DDoS attack protection**, click **Configure**.
+1. Next to **HTTP DDoS attack protection**, select **Configure**.
 
 1. In **Ruleset configuration**, select the action and sensitivity values for all the rules in the HTTP DDoS Attack Protection Managed Ruleset.
 
     ![Configuring the action and sensitivity of all the rules in the HTTP DDoS Managed Ruleset.](/ddos-protection/static/ddos/ddos-configure-ruleset.png)
 
-1. Click **Save**.
+1. Select **Save**.
 
 ## Configure one or more rules
 
@@ -37,9 +41,9 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Go to **Security** > **DDoS**.
 
-1. Next to **HTTP DDoS attack protection**, click **Configure**.
+1. Next to **HTTP DDoS attack protection**, select **Configure**.
 
-1. In **Rule configuration**, click **Browse rules**.
+1. In **Rule configuration**, select **Browse rules**.
 
 1. Search for the rules you wish to configure using the available filters. You can search for tags.
 
@@ -49,6 +53,4 @@ For more information on the available parameters and allowed values, refer to [M
 
     To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-1. Click **Next**.
-
-1. Click **Save**.
+1. Select **Next** and then select **Save**.

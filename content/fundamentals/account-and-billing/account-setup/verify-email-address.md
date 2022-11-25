@@ -18,6 +18,12 @@ To verify your email:
 2. Click the link in the email.
 3. Log into Cloudflare to verify the email address associated with your account.
 
+{{<Aside type="note">}}
+
+If someone else used your email to sign up for a Cloudflare account, you can remove this account by going to our [unintended registration](https://dash.cloudflare.com/unintended-registration) page and entering the information at the end of your confirmation email.
+
+{{</Aside>}}
+
 ## Resend verification emails
 
 If you cannot find your verification email or your email has expired, you can request another verification email:

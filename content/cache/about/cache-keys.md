@@ -43,7 +43,7 @@ There are a couple of common reasons to change the Cache Key Template. You might
 
 {{<Aside type="note" header="Note">}}
 
-`$scheme` is the protocol (HTTP or HTTPS) sent to your origin web server and not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](https://support.cloudflare.com/hc/articles/200170416) influences caching decisions. For instance, Cloudflare only attempts to connect to your origin web server via HTTP when [Flexible SSL](/ssl/origin-configuration/ssl-modes/#flexible) is utilized. Thus, Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
+`$scheme` is the protocol (HTTP or HTTPS) sent to your origin web server and not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](/ssl/origin-configuration/ssl-modes/) influences caching decisions. For instance, Cloudflare only attempts to connect to your origin web server via HTTP when [Flexible SSL](/ssl/origin-configuration/ssl-modes/flexible/) is utilized. Thus, Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
 
 {{</Aside>}}
 
@@ -123,3 +123,7 @@ User feature fields add features about the end-user (client) into the Cache Key.
 - `device_type` classifies a request as `mobile`, `desktop`, or `tablet` based on the User Agent
 - `geo` includes the client’s country, derived from the IP address
 - `lang` includes the first language code contained in the `Accept-Language` header sent by the client
+
+## Limitations
+
+The Prefetch feature is not compatible with the custom cache keys. With custom cache key Page Rules or Cache Rules, the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.
