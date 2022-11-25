@@ -86,7 +86,7 @@ To test the application protected by an mTLS policy:
     This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
 
     ```sh
-    curl -sv https://auth.example.com
+    $ curl -sv https://auth.example.com
     ```
 
     Without a client certificate in the request, a `403 forbidden` response displays and the site cannot be accessed.
@@ -94,7 +94,7 @@ To test the application protected by an mTLS policy:
 2. Now, add your client certificate information to the request:
 
     ```sh
-    curl -sv https://auth.example.com --cert example.pem --key key.pem
+    $ curl -sv https://auth.example.com --cert example.pem --key key.pem
     ```
 
 When the authentication process completes successfully, a `CF_Authorization Set-Cookie` header returns in the response.

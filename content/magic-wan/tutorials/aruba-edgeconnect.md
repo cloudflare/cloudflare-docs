@@ -203,33 +203,33 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
 --data '{"ipsec_tunnels":[{"name":"EdgeConnect_IPSEC_1","customer_endpoint":"35.188.72.56","cloudflare_endpoint":"172.64.241.205","interface_address":"192.168.10.11/31","description":"Tunnel for EdgeConnect - GCP Central"}]}'
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_tunnels": [
-{
-"id": "tunnel_id",
-"interface_address": "192.168.10.11/31",
-"created_on": "2022-04-14T19:57:43.938376Z",
-"modified_on": "2022-04-14T19:57:43.938376Z",
-"name": "EdgeConnect_IPSEC_1",
-"cloudflare_endpoint": "172.64.241.205",
-"customer_endpoint": "35.188.72.56",
-"description": "Tunnel for EdgeConnect - GCP Central",
-"health_check": {
-"enabled": true,
-"target": "35.188.72.56",
-"type": "reply"
-}
-}
-]
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+    "ipsec_tunnels": [
+      {
+        "id": "tunnel_id",
+        "interface_address": "192.168.10.11/31",
+        "created_on": "2022-04-14T19:57:43.938376Z",
+        "modified_on": "2022-04-14T19:57:43.938376Z",
+        "name": "EdgeConnect_IPSEC_1",
+        "cloudflare_endpoint": "172.64.241.205",
+        "customer_endpoint": "35.188.72.56",
+        "description": "Tunnel for EdgeConnect - GCP Central",
+        "health_check": {
+          "enabled": true,
+          "target": "35.188.72.56",
+          "type": "reply"
+        }
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 

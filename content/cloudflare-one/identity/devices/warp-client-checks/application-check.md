@@ -61,7 +61,7 @@ When setting up new device posture checks, we recommend first testing them witho
 
 1. Create a directory.
 
-    ```sh
+    ```bash
     ~/Desktop % mkdir tmp
 
     ~/Desktop % cd tmp
@@ -69,14 +69,14 @@ When setting up new device posture checks, we recommend first testing them witho
 
 1. Run the following command to extract certificates for the WARP application:
 
-    ```sh
+    ```bash
     ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
     ```
 
 1. Next, run the following command to extract the SHA1 thumbprint:
 
-    ```sh
-    $ ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :
+    ```bash
+    ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :
     SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E
     ```
 
@@ -99,7 +99,7 @@ The SHA-256 value almost always changes between versions of a file/application.
 1. Use the `shasum` command to find the SHA256 value of the file. For example:
 
     ```sh
-    shasum -a 256 myfile
+    $ shasum -a 256 myfile
     ```
 
 ### On Windows

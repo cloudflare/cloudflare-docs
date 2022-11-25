@@ -101,6 +101,10 @@ Workers Logpush is only available on the Workers Paid plan.
 
 1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
 
+## Queues
+
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/pricing/).
+
 ## Durable Objects
 
 Durable Objects are only available on the Workers Paid plan.

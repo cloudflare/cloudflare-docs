@@ -184,7 +184,7 @@ spec:
 
 The MongoDB pod and the SSH jump host will share a Unix socket over an empty directory volume. The `entrypoint.sh` file run by the jump host, example below, will start an OpenSSH server.
 
-```sh
+```bash
 #!/bin/sh
 export TZ=America/Chicago
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -204,7 +204,9 @@ Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
-`$ cloudflared login`
+```sh
+$ cloudflared login
+```
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 

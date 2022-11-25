@@ -57,4 +57,6 @@ The manifest file should contain URIs, protocol-relative URLs or full URLs, sepa
 
 ## Limitations
 
-Cloudflare will only prefetch files listed in the manifest file if the resources are those [cached by default](/cache/about/default-cache-behavior#default-cached-file-extensions).
+- Cloudflare will only prefetch files listed in the manifest file if the resources are those [cached by default](/cache/about/default-cache-behavior#default-cached-file-extensions).
+
+- Prefetch is not compatible with the custom cache key configuration. For more information, refer to [Cache Key limitations](/cache/about/cache-keys/#limitations).

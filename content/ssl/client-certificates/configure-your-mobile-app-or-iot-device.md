@@ -97,7 +97,7 @@ addEventListener('fetch', event => {
 
 To validate the API before adding mTLS authentication, POST a random temperature reading:
 
-```bash
+```sh
 $ TEMPERATURE=$(echo $((361 + RANDOM %11)) | awk '{printf("%.2f",$1/10.0)}')
 $ TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 

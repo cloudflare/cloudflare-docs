@@ -45,11 +45,11 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&for
 }
 ```
 
-For more information refer to [Get Domains Rank top](https://developers.cloudflare.com/api/operations/radar-ranking-get-domains-rank-top).
+For more information refer to [Get Domains Rank top](https://developers.cloudflare.com/api/operations/radar_get_RankingTop).
 
 #### Example: Get the last top `x` ranking bucket
 
-As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million, etc.. These are available through Cloudflare's [datasets endpoints](https://developers.cloudflare.com/api/operations/radar-datasets-get-datasets).
+As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million, etc.. These are available through Cloudflare's [datasets endpoints](https://developers.cloudflare.com/api/operations/radar_get_DatasetList).
 
 In the following example we will request the last available domain ranking buckets:
 
@@ -77,7 +77,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/datasets?limit=5&offset=
 ]
 ```
 
-If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset`](https://developers.cloudflare.com/api/operations/radar-datasets-get-dataset-download-url) endpoint.
+If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset`](https://developers.cloudflare.com/api/operations/radar_post_DatasetDownload) endpoint.
 
 ## Next steps
 

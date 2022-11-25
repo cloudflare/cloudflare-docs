@@ -28,7 +28,7 @@ Cloudflare issues the following **Edge Pathing Statuses**:
 
 For example:
 
-```bash
+```sh
 $ jq -r .EdgePathingSrc logs.json | sort -n | uniq -c | sort -n | tail
 1 err
 5 user
@@ -56,7 +56,7 @@ $ jq -r .EdgePathingOp logs.json | sort -n | uniq -c | sort -n | tail
 
 For example:
 
-```bash
+```sh
 $ jq -r .EdgePathingStatus logs.json | sort -n | uniq -c | sort -n | tail
 1 dnsErr
 5 ip
@@ -96,7 +96,7 @@ This is how you can see where a request terminates. Requests with only an **edge
 
 For example, the following query shows the status code and pathing information for all requests that terminated at the Cloudflare edge:
 
-```bash
+```sh
 $ jq -r 'select(.OriginResponseStatus == null) | select(.CacheResponseStatus == null) |"\(.EdgeResponseStatus) / \(.EdgePathingSrc) / \(.EdgePathingStatus) / \(.EdgePathingOp)"' logs.json | sort -n | uniq -c | sort -n
 1 403 / macro / nr / wl
 1 409 / err / dnsErr / errHost

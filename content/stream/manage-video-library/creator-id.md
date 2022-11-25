@@ -20,7 +20,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/
 
 **Response**
 
-```bash
+```json
 ---
 highlight: [35]
 ---
@@ -104,7 +104,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/
 
 **Response**
 
-```bash
+```json
 ---
 highlight: [8]
 ---
@@ -143,7 +143,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream?a
 
 **Response**
 
-```bash
+```json
 ---
 highlight: [36]
 ---
