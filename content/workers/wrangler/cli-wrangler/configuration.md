@@ -556,24 +556,24 @@ If your project is written using CommonJS modules, you will need to re-export yo
     You will need to specify rules to use Text, Data, and CompiledWasm modules, or when you wish to
     have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
-  - Defaults:
+Defaults:
 
-    ```toml
-    [build.upload]
-    format = "modules"
-    main = "./worker.mjs"
+```toml
+[build.upload]
+format = "modules"
+main = "./worker.mjs"
 
-    # You do not need to include these default rules in your `wrangler.toml`, they are implicit.
-    # The default rules are treated as the last two rules in the list.
+# You do not need to include these default rules in your `wrangler.toml`, they are implicit.
+# The default rules are treated as the last two rules in the list.
 
-    [[build.upload.rules]]
-    type = "ESModule"
-    globs = ["**/*.mjs"]
+[[build.upload.rules]]
+type = "ESModule"
+globs = ["**/*.mjs"]
 
-    [[build.upload.rules]]
-    type = "CommonJS"
-    globs = ["**/*.js", "**/*.cjs"]
-    ```
+[[build.upload.rules]]
+type = "CommonJS"
+globs = ["**/*.js", "**/*.cjs"]
+```
 
   - `type` {{<prop-meta>}}required{{</prop-meta>}}
 
