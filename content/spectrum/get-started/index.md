@@ -213,4 +213,4 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 You can now proxy traffic through Cloudflare without additional configuration. As you run traffic through Cloudflare, you will see the last minute of traffic from **Spectrum** in the dashboard.
 
-If you have any feedback, please [let us know](https://community.cloudflare.com/c/security/spectrum).
+If you have any feedback, please [let us know](https://community.cloudflare.com/c/website-application-performance/spectrum/48).
