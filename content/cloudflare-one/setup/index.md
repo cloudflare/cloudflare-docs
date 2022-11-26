@@ -27,7 +27,7 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 ## Install the WARP client on your devices
 
-If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next step you need to take:
+If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next steps you need to take:
 
 1. **Set up a login method.** Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust Dashboard. This is the login method your users will utilize when authenticating to add a new device to your Zero Trust setup.
 
