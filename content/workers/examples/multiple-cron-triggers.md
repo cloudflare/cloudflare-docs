@@ -42,7 +42,7 @@ async function triggerEvent(event) {
 
 ```js
 export default {
-	async scheduled(controller, env, ctx) {
+	async scheduled(event, env, ctx) {
 		// Write code for updating your API
     switch (event.cron) {
       // You can set up to three schedules maximum.
