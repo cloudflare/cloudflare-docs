@@ -81,7 +81,7 @@ export default {
 
     for (const deployment of deployments.result) {
       // Check if the deployment was created within the last x days (as defined by `expirationDays` above)
-      if ((Date.now() - new Date(deploy.created_on)) / 86400000 > expirationDays) {
+      if ((Date.now() - new Date(deployment.created_on)) / 86400000 > expirationDays) {
         // Delete the deployment
         await fetch(`${endpoint}/${deployment.id}`, {
           method: "DELETE",
