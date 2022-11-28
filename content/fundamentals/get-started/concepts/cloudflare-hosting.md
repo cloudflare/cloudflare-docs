@@ -16,7 +16,7 @@ Cloudflare generally cannot remove content from the Internet that it does not ho
 
 ## Where Cloudflare does provide hosting
 
-In some cases, Cloudflare does host web content. 
+When developers use Cloudflare Developer Platform products to build an application or website, the nature of those products mean Cloudflare is hosting online content.
 
 These cases include (but are not limited to):
 
