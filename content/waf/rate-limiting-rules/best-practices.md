@@ -42,8 +42,8 @@ The following example rule allows up to 10 requests per minute from the same IP 
 
 {{<table-wrap>}}
 Setting                  | Value
--------------------------|--------------------------
-Matching criteria | URI Path equals `/status` and Request Method equals `GET` and IP Source Address is not in list `partner_ips`
+-------------------------|-------------------------------------------------------------------------------------------------------------
+Matching criteria        | URI Path equals `/status` and Request Method equals `GET` and IP Source Address is not in list `partner_ips`
 Expression               | `http.request.uri.path eq "/status" and http.request.method eq "GET" and not ip.src in $partner_ips`
 Counting characteristics | IP
 Rate (Requests / Period) | 10 requests / 1 minute
@@ -167,24 +167,24 @@ Your security team might want to consider setting up a limit on the number of ti
 
 {{<table-wrap>}}
 Setting                  | Value
--------------------------|-------------------------------------------------
-Matching criteria | URI Path equals `/merchant` and URI Query String contains `action=lookup_price`
-Expression | `http.request.uri.path eq "/merchant" and http.request.uri.query contains "action=lookup_price"`
+-------------------------|-------------------------------------------------------------------------------------------------
+Matching criteria        | URI Path equals `/merchant` and URI Query String contains `action=lookup_price`
+Expression               | `http.request.uri.path eq "/merchant" and http.request.uri.query contains "action=lookup_price"`
 Counting characteristics | IP
 Rate (Requests / Period) | 10 requests / 2 minutes
-Action | Managed Challenge
+Action                   | Managed Challenge
 {{</table-wrap>}}
 
 **Rule #2**
 
 {{<table-wrap>}}
 Setting                  | Value
--------------------------|-------------------------------------------------
-Matching criteria | URI Path equals `/merchant` and URI Query String contains `action=lookup_price`
-Expression | `http.request.uri.path eq "/merchant" and http.request.uri.query contains "action=lookup_price"`
+-------------------------|-------------------------------------------------------------------------------------------------
+Matching criteria        | URI Path equals `/merchant` and URI Query String contains `action=lookup_price`
+Expression               | `http.request.uri.path eq "/merchant" and http.request.uri.query contains "action=lookup_price"`
 Counting characteristics | IP
 Rate (Requests / Period) | 20 requests / 5 minute
-Action | Block
+Action                   | Block
 {{</table-wrap>}}
 
 These two rate limiting rules match requests performing a selected action (look up price, in this example) and use `IP` as the counting characteristic. Similarly to the [previous `/login` example](#protecting-against-credential-stuffing), the two rules will help reduce false positives in case of persistent (but legitimate) visitors.
@@ -193,12 +193,12 @@ To limit the lookup of a specific `product_id` via query string parameter, you c
 
 {{<table-wrap>}}
 Setting                  | Value
--------------------------|-------------------------------------------------
-Matching criteria | URI Path equals `/merchant`
-Expression | `http.request.uri.path eq "/merchant"`
+-------------------------|---------------------------------------
+Matching criteria        | URI Path equals `/merchant`
+Expression               | `http.request.uri.path eq "/merchant"`
 Counting characteristics | Query (`product_id`)
 Rate (Requests / Period) | 50 requests / 10 seconds
-Action | Block
+Action                   | Block
 {{</table-wrap>}}
 
 _This example rule requires Advanced Rate Limiting._
