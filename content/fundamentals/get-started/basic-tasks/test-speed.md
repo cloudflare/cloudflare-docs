@@ -45,7 +45,7 @@ Based on the results of these speed tests, you may want to explore other ways to
 
 {{<Aside type="note">}}
 
-Cloudflare does not consider Time-to-First-Byte (TTFB) the most important measure of page load speed. If you are concerned about a slower TTFB while using Cloudflare, refer to our blog post about [Cloudflare and TTFB](http://blog.cloudflare.com/ttfb-time-to-first-byte-considered-meaningles/).
+Cloudflare does not consider Time to First Byte (TTFB) the most important measure of page load speed. If you are concerned about a slower TTFB while using Cloudflare, refer to our blog post about [Cloudflare and TTFB](http://blog.cloudflare.com/ttfb-time-to-first-byte-considered-meaningles/).
 
 {{</Aside>}}
 
