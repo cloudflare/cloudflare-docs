@@ -125,4 +125,4 @@ Refer to [Querying Workers Analytics Engine from Grafana](../grafana/) for more 
 
 ## Limits
 
-Cloudflarea can supply up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes. Finally, there is also a limit of 25 writes per request.
+Cloudflare will accept up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes. Finally, there is also a limit of 25 writes per request.
