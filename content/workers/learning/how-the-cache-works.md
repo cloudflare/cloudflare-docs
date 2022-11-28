@@ -98,5 +98,5 @@ When to use the Cache API:
 This [template](/workers/examples/cache-api/) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/workers/platform/limits/#cache-api-limits).
 
 {{<Aside type="warning" header="Warning">}}
-Cache API within workers does not support tiered caching.
+Cache API within Workers does not support tiered caching.
 {{</Aside>}}
