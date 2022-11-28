@@ -17,12 +17,8 @@ subgraph Account
         B[DNS]
     end
     subgraph Zone - example2.com
-        C[DNS]
+        C[Cache rules]
         D[Waiting Room]
-    end
-    subgraph Zone - subdomain.example.com
-        E[DNS]
-        F[Cache rules]
     end
     Workers
     K[Account members]
