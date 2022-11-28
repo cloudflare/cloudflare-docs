@@ -8,7 +8,7 @@ meta:
 
 # Rate limiting rule examples
 
-The examples below include sample rate limiting rule configurations that address common rate limiting use cases.
+The examples below include sample rate limiting rule configurations.
 
 ## Example 1
 
