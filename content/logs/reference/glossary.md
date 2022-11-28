@@ -89,7 +89,7 @@ The security levels and the challenge display criteria are:
 
 #### Total Threats Stopped
 
-Total Threats Stopped indicates the number of suspicious and bad requests aimed at your site.
+Total threats stopped indicates the number of suspicious and bad requests aimed at your site.
 
 #### Bad browser score
 
