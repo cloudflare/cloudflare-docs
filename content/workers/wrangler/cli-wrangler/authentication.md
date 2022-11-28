@@ -52,7 +52,7 @@ Defining environment variables inline will override the default credentials stor
 
 ### API token
 
-1.  In **Overview**, select [**Get your API token**](/api/get-started/create-token/).
+1.  In **Overview**, select [**Get your API token**](/fundamentals/api/get-started/create-token/).
 2.  After being taken to the **Profile** page, select **Create token**.
 3.  Under the **API token templates** section, find the **Edit Cloudflare Workers** template and select **Use template**.
 4.  Fill out the rest of the fields and then select **Continue to summary**, where you can select **Create Token** and issue your token for use.
@@ -75,7 +75,7 @@ Defining environment variables inline will override the default credentials stor
 
 After getting your token or key, you can set up your default credentials on your local machine by running `wrangler config`:
 
-```bash
+```sh
 $ wrangler config
 Enter API token:
 superlongapitoken
@@ -83,7 +83,7 @@ superlongapitoken
 
 Use the `--api-key` flag to instead configure with email and global API key:
 
-```bash
+```sh
 $ wrangler config --api-key
 Enter email:
 testuser@example.com

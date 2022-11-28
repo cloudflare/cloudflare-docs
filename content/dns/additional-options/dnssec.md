@@ -8,11 +8,7 @@ weight: 3
 
 DNS Security Extensions (DNSSEC) adds an extra layer of authentication to DNS, ensuring requests are not routed to a spoofed domain.
 
-{{<Aside type="note">}}
-
 For additional background on DNSSEC, visit the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/dns-security/).
-
-{{</Aside>}}
 
 ---
 
@@ -44,6 +40,16 @@ You now need to add a **DS** record to your registrar.
 Cloudflare automatically adds **DS** records for domains using Cloudflare Registrar or those using `.ch` and `.cz` top-level domains.
 
 {{</Aside>}}
+
+---
+
+## Other DNSSEC setup options
+
+If you are using Cloudflare as your Secondary DNS provider and want to configure DNSSEC on your secondary zone(s), you have [three options](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#dnssec) depending on your setup.
+
+If you want to set up DNSSEC on a subdomain zone, refer to [Subdomain DNSSEC](/dns/zone-setups/subdomain-setup/dnssec/).
+
+---
 
 ## Troubleshooting
 

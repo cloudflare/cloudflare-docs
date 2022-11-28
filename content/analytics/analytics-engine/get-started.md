@@ -8,9 +8,16 @@ meta:
 
 # Get started with Workers Analytics Engine
 
-There are three steps to get started with Workers Analytics Engine:
+There are four steps to get started with Workers Analytics Engine:
 
-## 1. Configure your dataset and binding in Wrangler
+## 1. Enable Analytics Engine for your account
+
+* Log into the Cloudflare dashboard.
+* Navigate to the **Workers** page.
+* Click **Set up** in the right hand side bar.
+* Click **Enable Analytics Engine**
+
+## 2. Configure your dataset and binding in Wrangler
 
 All data in Workers Analytics Engine is written to a dataset. A dataset is conceptually like a table in SQL: the rows and columns should have consistent meaning.
 
@@ -35,7 +42,7 @@ name = "<BINDING_NAME>"
 dataset = "<DATASET_NAME>"
 ```
 
-## 2. Write data from the Workers Runtime API
+## 3. Write data from the Workers Runtime API
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles.
 
@@ -43,7 +50,7 @@ A double is just a number type field that can be aggregated in some way – for 
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
 
-Up to twenty blobs, twenty doubles and one index can be supplied. The total size of all blobs must not exceed 5120 bytes and the index must not be more than 32 bytes.
+Up to twenty blobs, twenty doubles, and one index can be supplied per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes.
 
 This is how it translates into code:
 
@@ -60,7 +67,7 @@ This is how it translates into code:
 
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
 
-## 3. Query data using GraphQL and SQL API
+## 4. Query data using GraphQL and SQL API
 
 Data can be queried using either [GraphQL](/analytics/graphql-api/) or the [SQL API](../sql-api/).
 

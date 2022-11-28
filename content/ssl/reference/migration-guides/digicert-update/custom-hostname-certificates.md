@@ -21,7 +21,7 @@ This table provides a summary of the differences between DigiCert and our other 
 | Area | DigiCert | Other CAs | Actions required |
 | --- | --- | --- | --- |
 | Domain Control <br/> Validation (DCV) | To get a certificate issued for a wildcard custom hostname, one TXT DCV record is required to complete Domain Control Validation. | To get a certificate issued for a wildcard custom hostname, two TXT DCV records will be required to complete validation. | [Wildcard custom hostnames](#wildcard-custom-hostnames) will require additional DCV tokens. [Non-wildcard custom hostnames](#non-wildcard-custom-hostnames) will automatically renew as long as the hostname is proxying through Cloudflare. |
-| API | Customers can choose `“digicert”` as the issuing CA when using the [custom hostnames API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname). | Customers can only choose `“lets_encrypt”` or `“google”` when using the [custom hostnames API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname). | If you are currently using DigiCert as the issuing CA when creating custom hostnames, [switch your integration](#update-values) to use Let’s Encrypt or Google. |
+| API | Customers can choose `“digicert”` as the issuing CA when using the [custom hostnames API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname). | Customers can only choose `“lets_encrypt”` or `“google”` when using the [custom hostnames API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname). | If you are currently using DigiCert as the issuing CA when creating custom hostnames, [switch your integration](#update-values) to use Let’s Encrypt or Google. |
 | DCV Methods | CNAME and Email DCV are available. | CNAME and Email DCV will be deprecated. Customers will be required to use [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#http) or [DNS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record) DCV. | When certificates come up for renewal that are using CNAME or Email DCV, Cloudflare will automatically choose HTTP DCV as the default method for non-wildcard custom hostnames and TXT DCV for wildcard custom hostnames. |
 | Validity period | Custom hostname certificates have a 1 year validity period. | Custom hostnames certificates will have a 90 day validity period. | If you are using [wildcard custom hostnames](#wildcard-custom-hostnames), your customers will need to place DCV tokens at their DNS provider more frequently. [Non-wildcard custom hostname certificates](#non-wildcard-custom-hostnames) will automatically renew, as long as the hostname is actively proxying through Cloudflare. Cloudflare will handle the renewals at a more frequent rate. |
 {{</table-wrap>}}
@@ -36,7 +36,7 @@ Also, the maximum validity period for certificates will be decreased from 1 year
 
 ### Before January 23, 2023
 
-If your system integrates with the SSL for SaaS API to [create custom hostnames](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
+If your system integrates with the SSL for SaaS API to [create custom hostnames](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
 - The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record).
@@ -49,9 +49,9 @@ We recommend that you migrate all your current custom hostnames away from DigiCe
 
 To identify certificates that are coming up for renewal, set up [notifications](/fundamentals/notifications/notification-available/#ssltls) for **SSL for SaaS Custom Hostnames Alert** events.
 
-You can also send a [GET](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) request to the API and look for certificates with a `ssl_status` of `pending_validation` and a `certificate_authority` of `digicert` within the SSL object.
+You can also send a [GET](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-list-custom-hostnames) request to the API and look for certificates with a `ssl_status` of `pending_validation` and a `certificate_authority` of `digicert` within the SSL object.
 
-To find wildcard custom hostnames specifically that are using DigiCert certificates, send a [GET](https://api.cloudflare.com/#custom-hostname-for-a-zone-list-custom-hostnames) request and include `?certificate_authority=digicert&wildcard=true` in the request parameter.
+To find wildcard custom hostnames specifically that are using DigiCert certificates, send a [GET](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-list-custom-hostnames) request and include `?certificate_authority=digicert&wildcard=true` in the request parameter.
 
 #### Update values
 
@@ -82,7 +82,7 @@ After your DigiCert certificate is renewed, the API will return a new certificat
 
 For non-wildcard hostnames, you can use HTTP DCV to automatically perform DCV as long as the custom hostname is proxying traffic through Cloudflare. Cloudflare will complete DCV on the hostname's behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
 
-If your hostname is using another validation method, you will need to [update](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) the `"method"` field in the SSL object to be `"http"`.
+If your hostname is using another validation method, you will need to [update](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) the `"method"` field in the SSL object to be `"http"`.
 
 If the custom hostname is not proxying traffic through Cloudflare, then the custom hostname domain owner will need to add the TXT or HTTP DCV token for the new certificate to validate and issue. As the SaaS provider, you will be responsible for sharing this token with the custom hostname domain owner.
 

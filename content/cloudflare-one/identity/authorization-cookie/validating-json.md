@@ -16,7 +16,7 @@ The public key for the signing key pair is located at `https://<your-team-name>.
 
 By default, the Access rotates the signing key every 6 weeks. This means you will need to programmatically or manually update your keys as they rotate. Previous keys remain valid for 7 days after rotation to allow time for you to make the update.
 
-You can also manually rotate the key using the [API](https://api.cloudflare.com/#access-keys-configuration-rotate-access-keys). This can be done for testing or security purposes.
+You can also manually rotate the key using the [API](https://developers.cloudflare.com/api/operations/access-key-configuration-rotate-access-keys). This can be done for testing or security purposes.
 
 As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs` contains two public keys: the current key used to sign all new tokens, and the previous key that has been rotated out.
 
@@ -63,7 +63,7 @@ As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cd
 
 {{<Aside type="note" header="Avoid key rotation issues">}}
 - Validate tokens using the external endpoint rather than saving the public key as a hard-coded value. 
-- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired cached value. from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
+- Do not fetch the current key from `public_cert`, since your origin may inadvertently read an expired value from an outdated cache. Instead, match the `kid` value in the JWT to the corresponding certificate in `public_certs`.
 {{</Aside>}}
 
 ## Verify the JWT manually

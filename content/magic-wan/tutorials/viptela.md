@@ -202,7 +202,7 @@ Refer to [Configure tunnel endpoints](/magic-wan/how-to/configure-tunnels) for m
 </summary>
  <div class="special-class" markdown="1">
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-create-ipsec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)
@@ -234,33 +234,33 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
      --data '{"ipsec_tunnels":[{"name":"IPSec_cisco","customer_endpoint":"35.239.85.133","cloudflare_endpoint":"172.64.241.205","interface_address":"10.49.0.11/31","description":"Tunnel for Cisco 8000v"}]}'
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_tunnels": [
-{
-"id": "XXXXXXXXXX",
-"interface_address": "10.49.0.11/31",
-"created_on": "2022-05-03T23:03:19.104194Z",
-"modified_on": "2022-05-03T23:03:19.104194Z",
-"name": "IPsec_cisco",
-"cloudflare_endpoint": "172.64.241.205",
-"customer_endpoint": "35.239.85.133",
-"description": "Tunnel for Cisco 8000v",
-"health_check": {
-"enabled": true,
-"target": "35.239.85.133",
-"type": "reply"
-}
-}
-]
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+    "ipsec_tunnels": [
+      {
+        "id": "XXXXXXXXXX",
+        "interface_address": "10.49.0.11/31",
+        "created_on": "2022-05-03T23:03:19.104194Z",
+        "modified_on": "2022-05-03T23:03:19.104194Z",
+        "name": "IPsec_cisco",
+        "cloudflare_endpoint": "172.64.241.205",
+        "customer_endpoint": "35.239.85.133",
+        "description": "Tunnel for Cisco 8000v",
+        "health_check": {
+          "enabled": true,
+          "target": "35.239.85.133",
+          "type": "reply"
+        }
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -278,22 +278,22 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
      -H "Content-Type: application/json"
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_id": "<ipsec_id>",
-"ipsec_tunnel_id": "<tunnel_id>",
-"psk": "XXXXXXXXXX",
-"psk_metadata": {
-"last_generated_on": "2022-05-06T17:37:03.70965667Z"
-}
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+    "ipsec_id": "<ipsec_id>",
+    "ipsec_tunnel_id": "<tunnel_id>",
+    "psk": "XXXXXXXXXX",
+    "psk_metadata": {
+      "last_generated_on": "2022-05-06T17:37:03.70965667Z"
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 </div>

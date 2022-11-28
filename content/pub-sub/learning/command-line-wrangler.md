@@ -71,7 +71,7 @@ Commands:
 
 The available `wrangler pubsub broker` sub-commands include:
 
-```sh
+```bash
 $ wrangler pubsub broker --help
 
 Interact with your Pub/Sub Brokers
@@ -94,7 +94,7 @@ Commands:
 To create a [Namespace](/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces):
 
 ```sh
-wrangler pubsub namespace create NAMESPACE_NAME
+$ wrangler pubsub namespace create NAMESPACE_NAME
 ```
 
 ### Create a Broker
@@ -102,7 +102,7 @@ wrangler pubsub namespace create NAMESPACE_NAME
 To create a [Broker](/pub-sub/learning/how-pubsub-works/#brokers-and-namespaces) within a Namespace:
 
 ```sh
-wrangler pubsub broker create BROKER_NAME --namespace=NAMESPACE_NAME
+$ wrangler pubsub broker create BROKER_NAME --namespace=NAMESPACE_NAME
 ```
 
 ### Issue an Auth Token
@@ -116,7 +116,7 @@ You can issue client credentials for a Pub/Sub Broker directly via Wrangler. Not
 To issue a single token:
 
 ```sh
-wrangler pubsub broker issue BROKER_NAME --namespace=NAMESPACE_NAME 
+$ wrangler pubsub broker issue BROKER_NAME --namespace=NAMESPACE_NAME 
 ```
 
 You can use `--number=<NUM>` to issue multiple tokens at once, and `--expiration=<DURATION>` to set an expiry (e.g. `4h` or `30d`) on the issued tokens. 
@@ -126,7 +126,7 @@ You can use `--number=<NUM>` to issue multiple tokens at once, and `--expiration
 To revoke one or more tokens—which will immediately prevent that token from being used to authenticate—use the `revoke` sub-command and pass the unique token ID (or `JTI`):
 
 ```sh
-wrangler pubsub broker revoke BROKER_NAME --namespace=NAMESPACE_NAME --jti=JTI_ONE --jti=JTI_TWO
+$ wrangler pubsub broker revoke BROKER_NAME --namespace=NAMESPACE_NAME --jti=JTI_ONE --jti=JTI_TWO
 ```
 
 ## Filing Bugs

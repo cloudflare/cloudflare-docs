@@ -50,7 +50,7 @@ These code alterations only occur on the cacheable objects found at Cloudflare's
 Review the list of Cloudflare features that function in this manner.
 
 - [Auto Minify](https://support.cloudflare.com/hc/articles/200168196)
-- [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056)
+- [Rocket Loader](/fundamentals/speed/rocket-loader/)
 - [Polish](/images/polish/)
 - [Mirage](https://support.cloudflare.com/hc/articles/219178057)
 - [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)

@@ -70,7 +70,7 @@ export default {
 
 - {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
+  - Retrieves the `R2ObjectBody` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
 
 - {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
@@ -98,30 +98,6 @@ export default {
 - {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
 
   - The object's key.
-
-- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
-
-  - The object's value.
-
-- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
-
-  - Whether the object's value has been consumed or not.
-
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
-
-  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
-
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to an string containing the object's value.
-
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to the given object containing the object's value.
-
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to a binary Blob containing the object's value.
 
 - {{<code>}}version{{<param-type>}}string{{</param-type>}}{{</code>}}
 
@@ -162,6 +138,36 @@ export default {
 - {{<code>}}writeHttpMetadata(headers{{<param-type>}}Headers{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
+
+## `R2ObjectBody` definition
+
+`R2ObjectBody` represents an object's metadata combined with its body. It is returned when you `GET` an object from an R2 bucket. The full list of keys for `R2ObjectBody` includes the list below and all keys inherited from [`R2Object`](#r2object-definition).
+
+{{<definitions>}}
+
+- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
+
+  - The object's value.
+
+- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+
+  - Whether the object's value has been consumed or not.
+
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
+
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to an string containing the object's value.
+
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to the given object containing the object's value.
+
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to a binary Blob containing the object's value.
 
 {{</definitions>}}
 
@@ -388,7 +394,7 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
 ## Checksums
 
-If an additional checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property.
+If a checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property. The MD5 checksum will be included by default for non-multipart objects.
 
 {{<definitions>}}
 

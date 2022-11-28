@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Using Service Worker syntax
-weight: 9
+weight: 10
 ---
 
 # Using Service Worker syntax

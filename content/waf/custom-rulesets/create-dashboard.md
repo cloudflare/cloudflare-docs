@@ -10,7 +10,7 @@ weight: 2
 Create custom rulesets in **Application Security** > **WAF** > **Custom rulesets**. After creating a custom ruleset, you must deploy it to your account to apply its rules.
 
 {{<Aside type="note">}}
-Account-level WAF configuration is only available for Enterprise customers with the WAF Advanced plan.
+Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 {{</Aside>}}
 
 ## Create a custom ruleset
@@ -58,7 +58,7 @@ To enable the custom ruleset you created, you must deploy it to your account.
 6. Under **Execution scope**, review the scope of the deployed custom ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
     {{<Aside type="warning">}}
-Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and (cf.zone.plan eq "ENT")` so that the rule only applies to domains on an Enterprise plan.
+Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
     {{</Aside>}}
 
 7. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.

@@ -65,7 +65,7 @@ Alternatively, download the client from one of the following links after checkin
       <td>
         <strong>OS Ver</strong>
       </td>
-      <td>Mojave, Catalina, Big Sur, Monterey</td>
+      <td>Mojave, Catalina, Big Sur, Monterey, Ventura</td>
     </tr>
     <tr>
       <td>

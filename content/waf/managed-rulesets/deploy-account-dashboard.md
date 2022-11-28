@@ -11,7 +11,7 @@ meta:
 You can enable and configure Managed Rulesets for an account in **Account Home** > **Application Security** > **WAF** > **Managed rulesets**.
 
 {{<Aside type="note">}}
-Account-level WAF configuration is only available for Enterprise customers with the WAF Advanced plan.
+Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 {{</Aside>}}
 
 To deploy a Managed Ruleset for a single zone, refer to [Deploy a Managed Ruleset in the dashboard for a zone](/waf/managed-rulesets/deploy-zone-dashboard/).
@@ -33,7 +33,7 @@ To deploy a Managed Ruleset for a single zone, refer to [Deploy a Managed Rulese
 6. Under **Execution scope**, review the scope of the deployed Managed Ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
     {{<Aside type="warning">}}
-Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and (cf.zone.plan eq "ENT")` so that the rule only applies to domains on an Enterprise plan.
+Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
     {{</Aside>}}
 
 7. (Optional) Specify overrides for [all the rules in the Managed Ruleset](#configure-field-values-for-all-the-rules). You can also create overrides for [specific rules or tags](#configure-rules-in-bulk-in-a-managed-ruleset).

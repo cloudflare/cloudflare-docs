@@ -1,5 +1,5 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: configuration
 title: Configuration
 weight: 3
 ---
@@ -10,7 +10,7 @@ Wrangler optionally uses a `wrangler.toml` configuration file to customize the d
 
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
-## Sample wrangler.toml configuration
+## Sample `wrangler.toml` configuration
 
 ```toml
 ---
@@ -128,6 +128,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
   - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
 
+- `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+
 {{</definitions>}}
 
 ## Non-inheritable keys
@@ -186,7 +190,7 @@ Example: `"example.com/*"`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -206,15 +210,15 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
-Example: `{ pattern = "example.com/*", zone_id = "foo" }`
+Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{<definitions>}}
 
@@ -224,7 +228,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/routing/custom-domains/).
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -239,7 +243,7 @@ route = { pattern = "example.com", custom_domain = true }
 
 ## Triggers
 
-Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/platform/cron-triggers/#supported-cron-expressions).
+Triggers allow you to define the `cron` expression to invoke your Worker's `scheduled` function. Refer to [Supported cron expressions](/workers/platform/triggers/cron-triggers/#supported-cron-expressions).
 
 {{<definitions>}}
 
@@ -332,7 +336,7 @@ durable_objects.bindings = [
 
 #### Migrations
 
-When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](https://developers.cloudflare.com/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
+When making changes to your Durable Object classes, you must perform a migration. Refer to [Configuring Durable Object classes with migrations](/workers/learning/using-durable-objects#configuring-durable-object-classes-with-migrations).
 
 {{<definitions>}}
 
@@ -348,7 +352,7 @@ When making changes to your Durable Object classes, you must perform a migration
 
   - The Durable Objects being renamed.
 
-- `environment` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `deleted_classes` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The Durable Objects being removed.
 
@@ -625,8 +629,8 @@ To configure this on macOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY
 
 Example:
 
-```bash
-HTTP_PROXY=http://localhost:8080 wrangler dev
+```sh
+$ HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
 
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
@@ -638,5 +642,7 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 It is a recommended best practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
+
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. Currently, there is no way to disable this behaviour.
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

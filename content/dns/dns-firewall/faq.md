@@ -56,7 +56,7 @@ EDNS limits the effectiveness of the DNS cache.
 
 {{</Aside>}}
 
-Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
+Some resolvers might not be sending any EDNS data. When you set the `ecs_fallback` parameter to `true` via the [API](https://developers.cloudflare.com/api/operations/dns-firewall-update-dns-firewall-cluster), DNS Firewall will forward the IP subnet of the resolver instead only if there is no EDNS data present in incoming the DNS query.
 
 </div>
 </details>
@@ -65,7 +65,7 @@ Some resolvers might not be sending any EDNS data. When you set the `ecs_fallbac
 <summary>Does DNS Firewall cache negative answers?</summary>
 <div>
 
-Not by default, but you can set `negative_cache_ttl` via the [API](https://api.cloudflare.com/#dns-firewall-update-dns-firewall-cluster). This will affect the TTL of responses with status `REFUSED` or `NXDOMAIN`.
+Not by default, but you can set `negative_cache_ttl` via the [API](https://developers.cloudflare.com/api/operations/dns-firewall-update-dns-firewall-cluster). This will affect the TTL of responses with status `REFUSED` or `NXDOMAIN`.
 
 </div>
 </details>

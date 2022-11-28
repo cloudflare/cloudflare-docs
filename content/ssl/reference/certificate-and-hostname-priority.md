@@ -29,7 +29,7 @@ For any given hostname, Cloudflare uses the following order to determine which c
     | 5        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/) |
     | 6        | [Universal](/ssl/edge-certificates/universal-ssl/)               |
 
-4.  **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued certificate.
+4.  **Certificate recency**: If the hostname and certificate type are the same, Cloudflare deploys the most recently issued or renewed certificate.
 
 {{<Aside type="warning">}}
 

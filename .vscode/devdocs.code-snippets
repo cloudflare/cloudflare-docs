@@ -119,4 +119,19 @@
         "description": "Adds a new tabs section with two tabs for dashboard and API instructions",
         "scope": "markdown"
     },
+    "Create collapsible details section": {
+      "prefix": ["detailssection", "collapsible"],
+      "body": [
+        "<details>",
+        "<summary>${1:header}</summary>",
+        "<div>",
+        "",
+        "$0$TM_SELECTED_TEXT",
+        "",
+        "</div>",
+        "</details>",
+      ],
+      "description": "Creates a new collapsible <details> element with a title and a body",
+      "scope": "markdown"
+  },
 }

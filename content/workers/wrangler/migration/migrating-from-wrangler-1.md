@@ -69,7 +69,7 @@ $ wrangler dev
 
 Here is an example of some warnings and errors:
 
-```sh
+```bash
  ⛅️ wrangler 2.0.0
 -------------------------------------------------------
 ▲ [WARNING] Processing wrangler.toml configuration:

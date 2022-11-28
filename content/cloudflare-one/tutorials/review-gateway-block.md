@@ -29,7 +29,7 @@ You can use Cloudflare Gateway to filter and log DNS queries from devices on any
 
 ## Review Gateway events
 
-In this example, a Cloudflare Gateway DNS filtering rule has been applied to all locations to block social media.
+In this example, a Cloudflare Gateway DNS filtering rule has been applied to all DNS locations to block social media.
 
 ![Policies](/cloudflare-one/static/secure-web-gateway/review-gateway-block/block-social.png)
 

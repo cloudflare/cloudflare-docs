@@ -7,24 +7,44 @@ layout: single
 
 # Data Loss Prevention
 
-With Cloudflare Data Loss Prevention (DLP) and Secure Web Gateway, you can inspect HTTP traffic for the presence of sensitive data such as social security numbers and credit card numbers. DLP scans the entire HTTP body, which may include uploaded or downloaded Microsoft Office documents (Office 2007 and later), chat messages, forms, and other web content. Visibility varies depending on the site or application. DLP does not scan non-HTTP traffic such as email, nor does it scan any traffic that bypasses Cloudflare Gateway (for example, traffic that matches a [_Do Not Inspect_](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) rule).
+{{<Aside type="note">}}
+Data Loss Prevention is only available on Enterprise plans.
+{{</Aside>}}
+
+With Cloudflare Data Loss Prevention (DLP) and Secure Web Gateway, you can inspect HTTP traffic for the presence of sensitive data such as social security numbers and credit card numbers. DLP scans the entire HTTP body, which may include uploaded or downloaded Microsoft Office documents (Office 2007 and later), PDFs, chat messages, forms, and other web content. Visibility varies depending on the site or application. DLP does not scan non-HTTP traffic such as email, nor does it scan any traffic that bypasses Cloudflare Gateway (for example, traffic that matches a [_Do Not Inspect_](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) rule).
 
 To perform DLP filtering, first configure a DLP Profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regexes specified in the DLP profile.
 
 ## Prerequisites
 
-* Enrolled in the [DLP Beta program](https://www.cloudflare.com/zero-trust/dlp-waitlist/)
-* Enabled [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/)
+Enable [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
 
 ## 1. Configure a DLP Profile
 
+Cloudflare DLP provides [predefined profiles](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/predefined-profiles/) for common detections, or you can define your own regexes in a custom profile.
+
+### Use a predefined profile
+
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DLP Profiles**.
-2. Choose a [predefined DLP Profile](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/predefined-profiles/) and select **Configure**.
+2. Choose a predefined profile and select **Configure**.
 3. Enable one or more **Detection entries** according to your preferences. The DLP Profile matches using the OR logical operator — if multiple entries are enabled, your data needs to match only one of the entries.
-{{<Aside type="note">}}
-DLP scans will not start until you create an HTTP policy.
-{{</Aside>}}
 4. Select **Save profile**.
+
+### Build a custom profile
+
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DLP Profiles**.
+2. Select **Create Profile**.
+3. Enter a name and optional description for the profile.
+4. Select **Add detection entry** and give it a name.
+5. In **Value**, enter a regular expression that defines the text pattern you want to detect. Regexes are written in Rust, and we recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
+
+    For example, `test\d\d` will detect the word `test` followed by 2 digits.
+6. Select **Done** to save and enable the detection entry.
+7. Select **Save profile**.
+
+{{<Aside type="warning" header="Important">}}
+DLP scans will not start until you [create an HTTP policy](#2-create-a-dlp-policy).
+{{</Aside>}}
 
 ## 2. Create a DLP policy
 
@@ -49,9 +69,21 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 
 4. Select **Create policy**.
 
-DLP scanning is now enabled. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/configuration-guides).
+DLP scanning is now enabled.
 
-## 3. View DLP logs
+## 3. Test DLP
+
+You can test your DLP policy on any device connected to your Zero Trust organization. To perform a basic test:
+
+1. Go to [dlptest.com](http://dlptest.com/http-post/).
+2. Enter a text message or upload a file containing the sensitive data.
+3. Select **Submit** to send the request.
+
+If the data matches your DLP policy, you will see the request in your [DLP logs](#4-view-dlp-logs).
+
+Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/filtering/http-policies/data-loss-prevention/configuration-guides).
+
+## 4. View DLP logs
 
 By default, Gateway logs all HTTP requests in the [Gateway Activity log](/cloudflare-one/analytics/logs/gateway-logs/#http-logs). To view DLP logs:
 

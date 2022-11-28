@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You can access these tokens using the API with the [`GET` request](https://api.cloudflare.com/#certificate-packs-get-certificate-pack) and including `status=pending_validation` as a request parameter.
+You can access these tokens using the API with the [`GET` request](https://developers.cloudflare.com/api/operations/certificate-packs-get-certificate-pack) and including `status=pending_validation` as a request parameter.
 
 For example, here are two tokens highlighted in the API response for a wildcard certificate.
 

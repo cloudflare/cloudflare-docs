@@ -5,9 +5,13 @@ title: Cloudflare Ray ID
 
 # Cloudflare Ray ID
 
-A **Cloudflare Ray ID** is a unique identifier given to every request that goes through Cloudflare.
+A **Cloudflare Ray ID** is an identifier given to every request that goes through Cloudflare.
 
 Ray IDs are particularly useful when evaluating Firewall Events for patterns or false positives or more generally understanding your application traffic.
+
+{{<Aside type="warning">}}
+Ray IDs are not guaranteed to be unique for every request. In some situations, different requests may have the same Ray ID.
+{{</Aside>}}
 
 ## Look up Ray IDs
 

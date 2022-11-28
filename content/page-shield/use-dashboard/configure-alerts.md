@@ -1,7 +1,7 @@
 ---
 title: Configure alerts
 pcx_content_type: how-to
-weight: 3
+weight: 4
 meta:
   title: Configure Page Shield alerts
 ---
@@ -12,7 +12,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Only available to customers on Business and Enterprise plans.
+Only available to customers on a Business or Enterprise plan.
 
 {{</Aside>}}
 

@@ -321,7 +321,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-ip-geoip-is-in-european-union">
       <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
       </td>
   </tr>
@@ -646,6 +646,15 @@ The Cloudflare Rules language supports these dynamic fields:
         Example values: <code class="InlineCode">54</code>
         </td>
     </tr>
+    <tr id="field-sip">
+        <td><p><code>sip</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+       Determines if packets are valid L7 protocol <a href="https://datatracker.ietf.org/doc/html/rfc2543">SIP</a>. Requires UDP packets to operate. <br />
+       Use a guard clause as shown below to ensure the packet is UDP (wirefilter):<br />
+       <code class="InlineCode">ip.proto == "udp"</code>
+        </td>
+    </tr>
     <tr id="field-tcp">
         <td><p><code>tcp</code><br />{{<type>}}String{{</type>}}</p>
         </td>
@@ -968,7 +977,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan with a paid add-on, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 

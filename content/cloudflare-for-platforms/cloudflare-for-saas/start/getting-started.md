@@ -12,7 +12,7 @@ weight: 1
 
 Before you can start creating custom hostnames, you need to have access to [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/#availability).
 
-If you have not used the Cloudflare API previously, review our [API Quickstart](/api/).
+If you have not used the Cloudflare API previously, review our [API documentation](/fundamentals/api/).
 
 If there are multiple proxied DNS records for one zone, Cloudflare must prioritize which record controls the zone settings and associated origin server. Adding a new custom hostname may take priority over your current settings or cause your settings to no longer apply. To prevent overriding or voiding your settings, review [Hostname priority (Cloudflare for SaaS)](/ssl/reference/certificate-and-hostname-priority/#hostname-priority-ssl-for-saas)
  
@@ -36,7 +36,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 
 2. [Create two DNS records](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records).
 
-  *   A proxied *A* or *AAAA* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
+  *   A proxied *A*, *AAAA*, or *CNAME* record pointing to the IP address of your **fallback origin** (where Cloudflare will send custom hostname traffic).
   *   A *CNAME* record that points your **CNAME target** to your fallback origin (can be a wildcard such as `*.customers.saasprovider.com`).
 
   | Record          | Type  | Name                              | Content                           |
@@ -66,7 +66,7 @@ We suggest using a domain other than your main company domain (example.cloud ins
 <summary>Using the API</summary>
 <div>
 
-Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://api.cloudflare.com/#custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
+Using the hostname from the A or AAAA record you just created, [update the fallback origin value](https://developers.cloudflare.com/api/operations/custom-hostname-fallback-origin-for-a-zone-update-fallback-origin-for-custom-hostnames).
 
 </div>
 </details>
@@ -175,7 +175,7 @@ As a SaaS provider, you must remove a customer's custom hostname from your zone 
 <summary>Using the API</summary>
 <div>
 
-To delete a custom hostname and any issued certificates using the API, use a [DELETE command](https://api.cloudflare.com/#custom-hostname-for-a-zone-delete-custom-hostname-and-any-issued-ssl-certificates-) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
+To delete a custom hostname and any issued certificates using the API, use a [DELETE command](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-delete-custom-hostname-(-and-any-issued-ssl-certificates)) on the `DELETE zones/:zone_identifier/custom_hostnames/:identifier` endpoint.
 
 </div>
 </details>

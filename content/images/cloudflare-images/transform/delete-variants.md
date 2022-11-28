@@ -24,7 +24,7 @@ Deleting a variant is a global action that will affect other images that contain
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-For detailed information on using the API, refer to the [API endpoint](https://api.cloudflare.com/#cloudflare-images-variants-delete-a-variant) documentation.
+For detailed information on using the API, refer to the [API endpoint](https://developers.cloudflare.com/api/operations/cloudflare-images-variants-delete-a-variant) documentation.
 
 The following example deletes a variant through an API call:
 

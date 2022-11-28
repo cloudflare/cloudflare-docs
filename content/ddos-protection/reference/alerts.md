@@ -24,6 +24,8 @@ You will not receive duplicate DDoS alerts within the same one-hour time frame.
 
 Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
+{{<render file="_alerts-and-reports-independent.md">}}
+
 ## Set up a notification for DDoS alerts
 
 To set up a notification:
@@ -61,7 +63,7 @@ Cloudflare can issue notifications for different types of DDoS attack alerts.
 
 ### Standard alerts
 
-* **HTTP DDoS Attack Alert**: Alert for HTTP attacks that generate more than 2,000 requests per second.
+* **HTTP DDoS Attack Alert**: Alert for HTTP attacks that generate more than 100 requests per second.
 * **Layer 3/4 DDoS Attack Alert**: Alert for Layer 3/4 attacks that generate more than 20,000 packets per second.
 
 ### Advanced alerts
@@ -97,7 +99,7 @@ Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |        –        |    
 Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2</sup> |       Yes       |       Yes
 Advanced Layer 3/4 DDoS Attack Alert |        –        |        –        | Yes<sup>2</sup> | Yes<sup>2</sup>
 
-<sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS add-on._ <br>
+<sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS Protection subscription._ <br>
 <sup>2</sup> _Only available on an Enterprise plan._
 
 ## Example notification
@@ -109,6 +111,8 @@ The following image shows an example notification delivered via email:
 To investigate a possibly ongoing attack, select **View Dashboard**.
 
 ## Final remarks
+
+* DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system.
 
 * If you configure more than one alert type for the same kind of attack (for example, both an HTTP DDoS Attack Alert and an Advanced HTTP DDoS Attack Alert) you may get more than one notification when an attack occurs. To avoid receiving duplicate notifications, delete one of the configured alerts.
 

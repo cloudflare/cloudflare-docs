@@ -69,11 +69,11 @@ SELECT
 
 SELECT
     blob2 AS probe_name,
-    IF(double3 <= 0, 'FREEZING', 'NOT FREEZING') AS description -- use of functions
+    if(double3 <= 0, 'FREEZING', 'NOT FREEZING') AS description -- use of functions
 
 SELECT
     blob2 AS probe_name,
-    AVG(double3) AS avg_temp -- aggregation function
+    avg(double3) AS avg_temp -- aggregation function
 ```
 
 ### FROM clause
@@ -133,7 +133,7 @@ WHERE double1 + double2 > 4
 WHERE blob1 = 'test1' OR blob2 = 'test2'
 
 -- expression using inequalities, functions and operators
-WHERE IF(unit = 'f', (temp-32)/1.8, temp) <= 0
+WHERE if(unit = 'f', (temp-32)/1.8, temp) <= 0
 ```
 
 ### GROUP BY clause
@@ -150,7 +150,7 @@ For example. If you had a table of temperature readings:
 -- return the average temperature for each probe
 SELECT 
     blob1 AS probe_name, 
-    AVG(double1) AS average_temp
+    avg(double1) AS average_temp
 FROM temperature_readings
 GROUP BY probe_name
 ```
@@ -269,12 +269,16 @@ column 1 value  column 2 value
 
 ## Supported functions
 
-### COUNT
+{{<Aside type="note">}}
+Note that function names are not case-sensitive, they can be used both in uppercase or in lowercase.
+{{</Aside>}}
+
+### count
 
 Usage:
 ```SQL
-COUNT()
-COUNT(DISTINCT column_name)
+count()
+count(DISTINCT column_name)
 ```
 
 Count is an aggregation function that returns the number of rows in each group or results set.
@@ -284,16 +288,16 @@ Count can also be used to count the number of distinct (unique) values in each c
 Example:
 ```SQL
 -- return the total number of rows
-COUNT()
+count()
 -- return the number of different values in the column
-COUNT(DISTINCT column_name)
+count(DISTINCT column_name)
 ```
 
-### SUM
+### sum
 
 Usage:
 ```SQL
-SUM([DISTINCT] column_name)
+sum([DISTINCT] column_name)
 ```
 
 Sum is an aggregation function that returns the sum of column values across all rows in each group or results set. Sum also supports `DISTINCT`, but in this case it will only sum the unique values in the column.
@@ -301,16 +305,16 @@ Sum is an aggregation function that returns the sum of column values across all 
 Example:
 ```SQL
 -- return the total cost of all items
-SUM(item_cost)
+sum(item_cost)
 -- return the total of all unique item costs
-SUM(DISTINCT item_cost)
+sum(DISTINCT item_cost)
 ```
 
-### AVG
+### avg
 
 Usage:
 ```SQL
-AVG([DISTINCT] column_name)
+avg([DISTINCT] column_name)
 ```
 
 Avg is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, but in this case it will only average the unique values in the column.
@@ -318,16 +322,16 @@ Avg is an aggregation function that returns the mean of column values across all
 Example:
 ```SQL
 -- return the mean item cost
-AVG(item_cost)
+avg(item_cost)
 -- return the mean of unique item costs
-AVG(DISTINCT item_cost)
+avg(DISTINCT item_cost)
 ```
 
-### MIN
+### min
 
 Usage:
 ```SQL
-MIN(column_name)
+min(column_name)
 ```
 
 Min is an aggregation function that returns the minimum value of a column across all rows.
@@ -335,14 +339,14 @@ Min is an aggregation function that returns the minimum value of a column across
 Example:
 ```SQL
 -- return the minimum item cost
-MIN(item_cost)
+min(item_cost)
 ```
 
-### MAX
+### max
 
 Usage:
 ```SQL
-MAX(column_name)
+max(column_name)
 ```
 
 Max is an aggregation function that returns the maximum value of a column across all rows.
@@ -350,94 +354,227 @@ Max is an aggregation function that returns the maximum value of a column across
 Example:
 ```SQL
 -- return the maximum item cost
-MAX(item_cost)
+max(item_cost)
 ```
 
-### QUANTILEWEIGHTED
+### quantileWeighted
 
 Usage:
 ```SQL
-QUANTILEWEIGHTED(q, column_name, weight_column_name) 
+quantileWeighted(q, column_name, weight_column_name) 
 ```
 
-`QUANTILEWEIGHTED` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
+`quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
 
 Example:
 ```SQL
 -- estimate the median value of <double1>
-QUANTILEWEIGHTED(0.5, double1, _sample_interval) 
+quantileWeighted(0.5, double1, _sample_interval) 
 
 -- in a table of query times, estimate the 95th centile query time
-QUANTILEWEIGHTED(0.95, query_time, _sample_interval)
+quantileWeighted(0.95, query_time, _sample_interval)
 ```
 
-### IF
+### if
 
 Usage:
 ```SQL
-IF(<condition>, <true_expression>, <false_expression>)
+if(<condition>, <true_expression>, <false_expression>)
 ```
 
 Returns `<true_expression>` if `<condition>` evaluates to true, else returns `<false_expression>`.
 
 Example:
 ```SQL
-IF(temp > 20, 'It is warm', 'Bring a jumper')
+if(temp > 20, 'It is warm', 'Bring a jumper')
 ```
 
-### INTDIV
+### intDiv
 
 Usage:
 ```SQL
-INTDIV(a, b)
+intDiv(a, b)
 ```
 
 Divide a by b, rounding the answer down to the nearest whole number.
 
 
-### TOUINT32
+### toUInt32
 
 Usage:
 ```SQL
-TOUINT32(<expression>)
+toUInt32(<expression>)
 ```
 
 Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 32 bit integer.
 
 Behaviour for negative numbers is undefined.
 
-### TODATETIME
+### toDateTime
 
 Usage:
 ```SQL
-TODATETIME(<expression>)
+toDateTime(<expression>)
 ```
 
-`TODATETIME` converts an expression to a datetime.
+`toDateTime` converts an expression to a datetime.
 
 Examples:
 ```SQL
 -- double1 contains a unix timestamp in seconds
-TODATETIME(double1)
+toDateTime(double1)
 
 -- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
-TODATETIME(blob1)
+toDateTime(blob1)
 
 -- literal values:
-TODATETIME(355924804) -- unix timestamp
-TODATETIME('355924804') -- string containing unix timestamp
-TODATETIME('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
+toDateTime(355924804) -- unix timestamp
+toDateTime('355924804') -- string containing unix timestamp
+toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
 ```
 
-### NOW
+### now
 
 Usage:
 ```SQL
-NOW()
+now()
 ```
 
 Returns the current time as a DateTime.
 
+### length
+
+Usage:
+```SQL
+length({string})
+```
+
+Returns the length of a string. This function is UTF-8 compatible.
+
+Examples:
+```SQL
+SELECT length('a string') AS s;
+SELECT length(blob1) AS s FROM your_dataset;
+```
+
+### isEmpty
+
+Usage:
+```SQL
+isEmpty({string})
+```
+
+Returns a boolean saying whether the string was empty. This computation can also be done as a binary operation: `{string} = ''`.
+
+Examples:
+```SQL
+SELECT isEmpty('a string') AS b;
+SELECT isEmpty(blob1) AS b FROM your_dataset;
+```
+
+### toLower
+
+Usage:
+```SQL
+toLower({string})
+```
+
+Returns the string converted to lowercase. This function is Unicode compatible. This may not be perfect for all languages and users with stringent needs, should do the operation in their own code.
+
+Examples:
+```SQL
+SELECT toLower('STRING TO DOWNCASE') AS s;
+SELECT toLower(blob1) AS s FROM your_dataset;
+```
+
+### toUpper
+
+Usage:
+```SQL
+toUpper({string})
+```
+
+Returns the string converted to uppercase. This function is Unicode compatible. The results may not be perfect for all languages and users with strict needs. These users should do the operation in their own code.
+
+Examples:
+```SQL
+SELECT toUpper('string to uppercase') AS s;
+SELECT toUpper(blob1) AS s FROM your_dataset;
+```
+
+### startsWith
+
+Usage:
+```SQL
+startsWith({string}, {string})
+```
+
+Returns a boolean of whether the first string has the second string at its start.
+
+Examples:
+```SQL
+SELECT startsWith('prefix ...', 'prefix') AS b;
+SELECT startsWith(blob1, 'prefix') AS b FROM your_dataset;
+```
+
+### endsWith
+
+Usage:
+```SQL
+endsWith({string}, {string})
+```
+
+Returns a boolean of whether the first string contains the second string at its end.
+
+Examples:
+```SQL
+SELECT endsWith('prefix suffix', 'suffix') AS b;
+SELECT endsWith(blob1, 'suffix') AS b FROM your_dataset;
+```
+
+### position
+
+Usage:
+```SQL
+position({needle:string} IN {haystack:string})
+```
+
+Returns the position of one string, `needle`, in another, `haystack`. In SQL, indexes are usually 1-based. That means that position returns `1` if your needle is at the start of the haystack. It only returns `0` if your string is not found.
+
+Examples:
+```SQL
+SELECT position(':' IN 'hello: world') AS p;
+SELECT position(':' IN blob1) AS p FROM your_dataset;
+```
+
+### substring
+
+Usage:
+```SQL
+substring({string}, {offset:integer}[. {length:integer}]) 
+```
+
+Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least `1`.
+
+Examples:
+```SQL
+SELECT substring('hello world', 6) AS s;
+SELECT substring('hello: world', 1, position(':' IN 'hello: world')-1) AS s;
+```
+
+### format
+
+Usage:
+```SQL
+format({string}[, ...])
+```
+
+This function supports formatting strings, integers, floats, datetimes, intervals, etc, except `NULL`. The function does not support literal `{` and `}` characters in the format string.
+
+Examples:
+```SQL
+SELECT format('blob1: {}', blob1) AS s FROM dataset;
+```
 
 ## Supported operators
 
@@ -470,6 +607,8 @@ The following operators are supported:
 | `<=` | less than or equal to |
 | `>=` | greater than or equal to |
 | `<>` or `!=` | not equal |
+| `IN` | true if the preceding expression's value is in the list<br>`column IN ('a', 'list', 'of', 'values')` |
+| `NOT IN` | true if the preceding expression's value is not in the list<br>`column NOT IN ('a', 'list', 'of', 'values')` |
 
 {{</table-wrap>}}
 

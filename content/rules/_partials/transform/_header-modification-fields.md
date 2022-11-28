@@ -8,7 +8,6 @@ _build:
 *   `cf.bot_management.*`
 *   `cf.client.bot`
 *   `cf.threat_score`
-*   `cf.colo.id`
 *   `cf.edge.server_ip`
 *   `cf.edge.server_port`
 *   `cf.edge.client_port`

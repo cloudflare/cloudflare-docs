@@ -26,8 +26,8 @@ To make a `POST` call, you must have a Cloudflare account role with `edit` permi
 
 ### Check whether log retention is turned on:
 
-```bash
-curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
+```sh
+$ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" | jq .
 ```
 
 #### Response:
@@ -55,7 +55,7 @@ curl -s -H "X-Auth-Email: <EMAIL>" -H "X-Auth-Key: <API_KEY>" POST "https://api.
 
 #### Response:
 
-```bash
+```json
 {
   "errors": [],
   "messages": [],

@@ -28,7 +28,6 @@ Before integrating a device posture check in a Gateway or Access policy, you sho
 
 ![Device posture results in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
 
-
 ## 3. Build a device posture policy
 
 You can now use your device posture check in an [Access policy](/cloudflare-one/policies/access/) or a Gateway [network policy](/cloudflare-one/policies/filtering/network-policies/common-policies/#enforce-device-posture). In Access, the enabled device posture attributes will appear in the list of available [selectors](/cloudflare-one/policies/access/#selectors). In Gateway, the attributes will appear when you choose the [Passed Device Posture Check](/cloudflare-one/policies/filtering/network-policies/#device-posture) selector.
@@ -40,3 +39,19 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 * The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 * `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
 * The application protected by the Access or Gateway policy.
+
+## Policy enforcement rate
+
+Access detects changes in device posture at the same rate as the [polling frequency](#polling-frequency) configured for the posture check.
+
+Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
+
+### Polling frequency
+
+#### WARP client checks
+
+By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](https://developers.cloudflare.com/api/operations/device-posture-rules-create-device-posture-rule).
+
+#### Service provider checks
+
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. The polling frequency also sets the expiration time for the device posture result.

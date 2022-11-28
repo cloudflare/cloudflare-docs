@@ -10,17 +10,17 @@ _build:
 1.  Make a directory for your configuration file.
 
     ```sh
-    mkdir /etc/cloudflared
+    $ mkdir /etc/cloudflared
     ```
 
     ```sh
-    cd /etc/cloudflared
+    $ cd /etc/cloudflared
     ```
 
 1.  Build a configuration file. Before moving forward and entering vim, copy your Tunnel ID and credentials path to a notepad.
 
     ```sh
-    vim config.yml
+    $ vim config.yml
     ```
 
 1. Type `i` to begin editing the file and copy-paste the following settings in it.
@@ -43,15 +43,15 @@ _build:
 1. Run `cloudflared` as a service.
 
 ```sh
-cloudflared service install
+$ cloudflared service install
 ```
 
 ```sh
-systemctl start cloudflared
+$ systemctl start cloudflared
 ```
 
 ```sh
-systemctl status cloudflared
+$ systemctl status cloudflared
 ```
 
 Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Access policies](/cloudflare-one/policies/access/) to secure your private resources.

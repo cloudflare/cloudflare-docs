@@ -40,7 +40,7 @@ To view logs for identity-based authentication events:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-The [Access authentication logs](https://api.cloudflare.com/#access-authentication-logs-properties) API endpoint provides a custom URL to export audit log events for your account.
+The [Access authentication logs](https://developers.cloudflare.com/api/operations/access-authentication-logs-get-access-authentication-logs) API endpoint provides a custom URL to export audit log events for your account.
 
 ```curl
 ---
@@ -104,7 +104,7 @@ Requests blocked by a non-identity policy not appear in the Zero Trust dashboard
 ### Log retention
 Block policy decisions are retained for a week. Authentication logs are retained for six months.
 
-## Per-Request Audit Logs
+## Per-request audit Logs
 
 Users who have authenticated through Access have access to authorized URL paths for the duration of their session. Cloudflare provides several ways to audit these requests.
 
