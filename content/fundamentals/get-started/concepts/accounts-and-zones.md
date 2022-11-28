@@ -76,6 +76,6 @@ Each user account has a profile that contains several settings related to the sp
 
 ### Navigation
 
-To access your profile, click the user icon and then **My Profile** from any page within the Cloudflare dashboard.
+To access your profile, click the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 ![Use the Profile icon to access your profile settings](/fundamentals/static/images/get-started/profile-navigation.png)
