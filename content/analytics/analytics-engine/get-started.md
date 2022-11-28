@@ -50,8 +50,6 @@ A double is just a number type field that can be aggregated in some way – for 
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
 
-Up to twenty blobs, twenty doubles, and one index can be supplied per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes.
-
 This is how it translates into code:
 
 ```js
@@ -124,3 +122,7 @@ ORDER BY t, avg_humidity DESC
 This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
 
 Refer to [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
+
+## Limits
+
+Cloudflarea can supply up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes. Finally, there is also a limit of 25 writes per request.
