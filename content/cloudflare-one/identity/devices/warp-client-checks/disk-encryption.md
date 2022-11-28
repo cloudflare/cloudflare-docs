@@ -43,7 +43,7 @@ Operating systems determine disk encryption in various ways. The following infor
 1. Run the `/usr/sbin/system_profiler SPStorageDataType` command to return a list of drivers on the system and note the value of **Mount Point**.
 
     ```sh
-    % /usr/sbin/system_profiler SPStorageDataType
+    $ /usr/sbin/system_profiler SPStorageDataType
     Storage:
 
         Data:
@@ -56,7 +56,7 @@ Operating systems determine disk encryption in various ways. The following infor
 1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show **Yes** for the disk to be considered encrypted.
 
     ```sh
-    % diskutil info /System/Volumes/Data | grep FileVault
+    $ diskutil info /System/Volumes/Data | grep FileVault
       FileVault:                 Yes
     ```
 

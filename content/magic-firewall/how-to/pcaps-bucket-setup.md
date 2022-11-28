@@ -72,7 +72,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/o
 
 The response shows the filename of the ownership-challenge text file placed within the bucket. Find the file in your bucket and copy the contents of the file.
 
-```bash
+```json
 ---
 header: Ownership challenge response example
 ---
@@ -107,7 +107,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/o
 }'
 ```
 
-```bash
+```json
 ---
 header: Bucket validation response
 ---
@@ -163,7 +163,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ow
 -H "X-Auth-Key: ${auth_key}"
 ```
 
-```bash
+```json
 ---
 header: Bucket list response example
 ---

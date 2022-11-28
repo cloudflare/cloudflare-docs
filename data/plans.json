@@ -1605,7 +1605,7 @@
     },
     "rocket_loader": {
       "title": "Rocket Loader",
-      "link": "https://support.cloudflare.com/hc/articles/200168056",
+      "link": "/fundamentals/speed/rocket-loader/",
       "properties": {
         "availability": {
           "title": "Availability",

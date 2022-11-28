@@ -1,5 +1,4 @@
 ---
-weight: 2
 title: Wrangler commands
 pcx_content_type: concept
 ---

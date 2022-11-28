@@ -12,6 +12,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
+- [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -154,13 +155,25 @@ None of the options for this command are required. Many of these options can be 
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
   - Run the preview of the Worker directly on your local machine.
     {{<Aside type="warning">}}
-This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
+    This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
     {{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
+    {{<Aside type="warning">}}
+
+When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
+
+On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+
+      {{</Aside>}}
+      
+- `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
 - `--node-compat` {{<type>}}boolean{{</type>}}
@@ -260,6 +273,27 @@ None of the options for this command are required. Also, many can be set in your
 {{</definitions>}}
 
 ---
+
+## delete
+
+Delete your Worker and all associated Cloudflare developer platform resources.
+
+```sh
+$ wrangler delete [SCRIPT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `SCRIPT` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker.
+- `--name` {{<type>}}string{{</type>}}
+  - Name of the Worker.
+- `--env` {{<type>}}string{{</type>}}
+  - Perform on a specific environment.
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+
+{{</definitions>}}
 
 ## `kv:namespace`
 
@@ -1234,7 +1268,7 @@ Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on: 2022-11-11T15:49:08.117218Z
 Author: example@cloudflare.com
 Source: Dashboard
- 
+
 Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
 Created on: 2022-11-11T15:51:20.79936Z
 Author: example@cloudflare.com
@@ -1249,7 +1283,6 @@ Source: Wrangler
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
-
 
 ---
 

@@ -29,7 +29,7 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 
 2. Next, run your newly created tunnel.
 
-    ```bash
+    ```sh
     $ cloudflared tunnel run <NAME>
     ```
 
@@ -37,7 +37,7 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 
 3. In a separate window or on another host, run the same command again:
 
-    ```bash
+    ```sh
     $ cloudflared tunnel run <NAME>
     ```
 
@@ -45,7 +45,7 @@ To deploy multiple instances of `cloudflared`, you can create and configure one 
 
 4. Next, run `tunnel info` to show each `cloudflared` instance running your tunnel:
 
-   ```bash
+   ```sh
     $ cloudflared tunnel info <NAME>
    ```
 

@@ -36,7 +36,7 @@ To generate a single token for a broker named `example-broker` in `your-namespac
 
 For example, to generate five valid tokens with an automatically generated Client ID for each token:
 
-```bash
+```sh
 $ wrangler pubsub broker issue example-broker --number=5 --expiration=48h
 ```
 
@@ -79,7 +79,7 @@ To revoke a credential, which immediately invalidates it and prevents any client
 
 This will add the token to a revocation list. When using JWTs, you can revoke the JWT based on its unique `jti` claim. To revoke multiple tokens at once, provide a list of token identifiers.
 
-```bash
+```sh
 $ wrangler pubsub broker revoke example-broker --namespace=NAMESPACE_NAME --jti=JTI_ONE --jti=JTI_TWO
 ```
 
@@ -96,7 +96,7 @@ Credentials can be set to expire at a Broker-level that applies to all credentia
 
 To set an expiry for each set of credentials issued by setting the `expiration` value when requesting credentials: in this case, we specify 1 day (`1d`):
 
-```bash
+```sh
 $ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --expiration=1d
 ```
 
@@ -111,7 +111,7 @@ This will return a token that expires 1 day (24 hours) from issuance:
 
 To set a Broker-level global expiration on an existing Pub/Sub Broker, set the `expiration` field on the Broker to the seconds any credentials issued should inherit:
 
-```bash
+```sh
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --expiration=7d
 ```
 

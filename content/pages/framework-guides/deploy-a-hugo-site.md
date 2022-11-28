@@ -11,7 +11,7 @@ In this guide, you will create a new Hugo application and deploy it using Cloudf
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-Go to the [Deploying with Cloudflare Pages](/pages/framework-guides/deploy-a-hugo-site/#deploying-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/#connect-to-your-git-provider).
+Go to [Deploying with Cloudflare Pages](/pages/framework-guides/deploy-a-hugo-site/#deploying-with-cloudflare-pages) if you already have a Hugo site hosted with your [Git provider](/pages/get-started/#connect-to-your-git-provider).
 
 ## Installing Hugo
 
@@ -210,9 +210,9 @@ Every time you commit new code to your Hugo site, Cloudflare Pages will automati
 
 ## Using a specific Hugo version
 
-You can set the `HUGO_VERSION` environment variable in your Pages project > **Settings**  > **Environment variables**, to use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases).
+To use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases), create the `HUGO_VERSION` environment variable in your Pages project > **Settings**  > **Environment variables**. Set the value as the Hugo version you want to specify.
 
-For example, `HUGO_VERSION`: `0.101.0`
+For example, `HUGO_VERSION`: `0.106.0`.
 
 ## Learn more
 

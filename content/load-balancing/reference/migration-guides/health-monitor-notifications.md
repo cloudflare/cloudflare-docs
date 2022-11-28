@@ -153,7 +153,7 @@ If needed, you can remove legacy notifications by using the dashboard.
 
 <div>
 
-Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, toggle the **Health Check Notifications** on your pool to **Off**.
+Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, you must remove all notification email addresses from the field.
 
 </div>
 </details>

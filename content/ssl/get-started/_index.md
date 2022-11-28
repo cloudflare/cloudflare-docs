@@ -15,7 +15,7 @@ Follow the steps below to enable SSL/TLS protection for your application.
 
 ## Prerequisites
 
-- [Create an account and register an application](https://support.cloudflare.com/hc/articles/360059655691)
+- [Create an account and register an application](/fundamentals/get-started/setup/)
 
 ---
 

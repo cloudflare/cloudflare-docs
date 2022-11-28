@@ -1,8 +1,10 @@
 ---
 pcx_content_type: how-to
 type: overview
-title: Create rate limiting rules via API
+title: Create via API
 weight: 16
+meta:
+  title: Create rate limiting rules via API
 ---
 
 # Create rate limiting rules via API

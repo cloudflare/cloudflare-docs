@@ -62,7 +62,7 @@ When toggled on, the Zaraz script will also be injected into `iframe` elements.
 Specify custom URLs for Zaraz's scripts. You need to use a valid pathname:
 
 ```txt
-/<PATHNAME>/<FILE.JS>>
+/<PATHNAME>/<FILE.JS>
 ```
 
 This is an example of a custom pathname to host Zaraz's initialization script:

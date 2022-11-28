@@ -1,7 +1,7 @@
 ---
 pcx_content_type: faq
 title: FAQ
-weight: 8
+weight: 9
 ---
 
 # FAQ
@@ -14,6 +14,10 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 ---
 
 ## General
+
+### Zaraz does not appear to be working. Is there a way to check where the problem is?
+
+Yes. You can use the metrics in [Zaraz Monitoring](/zaraz/monitoring/) to help you find where in the workflow the problem occurred.
 
 ### Is Zaraz compatible with Content Security Policies (CSP)?
 

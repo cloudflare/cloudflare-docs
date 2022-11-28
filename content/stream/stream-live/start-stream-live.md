@@ -88,11 +88,11 @@ header: Response
 
 You can update live inputs by making a `PUT` request:
 
-```bash
+```sh
 ---
 header: Request
 ---
-curl -X PUT \
+$ curl -X PUT \
 -H "Authorization: Bearer <API_TOKEN>" \
 -D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
@@ -100,11 +100,11 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:i
 
 Delete a live input by making a `DELETE` request:
 
-```bash
+```sh
 ---
 header: Request
 ---
-curl -X DELETE \
+$ curl -X DELETE \
 -H "Authorization: Bearer <API_TOKEN>" \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```

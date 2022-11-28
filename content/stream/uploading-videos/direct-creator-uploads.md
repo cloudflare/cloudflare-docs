@@ -41,7 +41,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/direct_upload 
 ```
 
 <!-- videodelivery.net is correct domain. See STREAM-4364 -->
-```bash
+```json
 ---
 header: Response
 ---
