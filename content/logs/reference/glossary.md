@@ -56,7 +56,7 @@ Static content is any file that is stored in a server and is the same every time
 
 #### Dynamic content
 
-Dynamic content is content that changes based on factors specific to the user such as time of visit, location, and device. News websites or social media are examples of this type of content. This type of website content every time it is requested has to be fetched from the origin server.
+Dynamic content is content that changes based on factors specific to the user such as time of visit, location, and device. News websites or social media are examples of this type of content. For this type of website, content has to be fetched from the origin server every time it is requested.
 
 ### HTTP Response codes
 
