@@ -10,7 +10,7 @@ meta:
 
 You can use `zaraz.track()` anywhere inside the `<body>` tag of a page.
 
-`zaraz.track()` allows you to track custom events on your website, that might happen in real time. It is an `async` function, so you can choose to `await` it if you'd like to make sure it completed before running other code.
+`zaraz.track()` allows you to track custom events on your website, that might happen in real time. It is an `async` function, so you can choose to `await` it if you would like to make sure it completed before running other code.
 
 Example of user events you might be interested in tracking are successful sign-ups, calls-to-action clicks, or purchases. Common examples for other types of events are tracking the impressions of specific elements on a page, or loading a specific widget.
 
