@@ -12,7 +12,7 @@ weight: 132
 
 #### Request
 
-A request is a communicative message that is transmitted between the client, or web browser, to a server. Each request that has been processed through the Cloudflare network generates a record
+A request is a message that is sent between a client, or web browser, to a server. Each request that has been processed through the Cloudflare network generates a record.
 
 #### Origin requests
 
@@ -147,23 +147,23 @@ A /32 IPv6 range that was blocked based on the user configuration set in [Cloudf
 
 #### NoRecord
 
-​​The value NoRecord indicates that no record was found about a request/IP, so it cannot be classified.
+​​The value `NoRecord` indicates that no record was found about a request/IP, so it cannot be classified.
 
-#### Allowlist
+#### AllowList
 
-The value Allowlist indicates that the request was sent from an allowlisted IP address.
+The value `AllowList` indicates that the request was sent from an allowlisted IP address.
 
 #### SearchEngine
 
-The value SearchEngine indicates the search engine used to send the request.
+The value `SearchEngine` indicates the search engine used to send the request.
 
 #### BadHost
 
-The value BadHost indicates that a bad host header or no host header was used in the request.
+The value `BadHost` indicates that a bad host header or no host header was used in the request.
 
 #### Tor
 
-The value Tor indicates that the request was made using a Tor browser.
+The value `Tor` indicates that the request was made using a Tor browser.
 
 #### WAF Events
 
