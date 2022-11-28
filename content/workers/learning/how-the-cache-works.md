@@ -96,3 +96,7 @@ When to use the Cache API:
 - When you want to programmatically access a Response from a cache without relying on a `fetch` request. For example, you can check to see if you have already cached a `Response` for the `https://example.com/slow-response` endpoint. If so, you can avoid the slow request.
 
 This [template](/workers/examples/cache-api/) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/workers/platform/limits/#cache-api-limits).
+
+{{<Aside type="warning" header="Warning">}}
+Cache API within workers does not support tiered caching.
+{{</Aside>}}
