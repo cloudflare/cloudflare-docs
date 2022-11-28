@@ -205,9 +205,9 @@ _This example rule requires Advanced Rate Limiting._
 
 You could follow the same pattern of rate limiting rules to protect applications handling reservations and bookings.
 
-### Prevent content scraping (via JSON body)
+### Prevent content scraping (via body)
 
-Consider an application that handles the operation and its parameters through the request body. For example, the `lookup_price` operation could look like the following:
+Consider an application that handles the operation and its parameters through the request body in JSON format. For example, the `lookup_price` operation could look like the following:
 
 ```txt
 POST https://api.store.com/merchant
@@ -234,7 +234,6 @@ Action                   | Managed Challenge
 
 _This example rule requires Advanced Rate Limiting and payload inspection._
 
-
 You could also limit the number of lookups of each `product_id` regardless of the client making the requests by deploying a rule like the following:
 
 {{<table-wrap>}}
@@ -250,7 +249,7 @@ Action                   | Block
 _This example rule requires Advanced Rate Limiting and payload inspection._
 
 {{<Aside type="note">}}
-If the request body is not JSON, you can use the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/#field-http-request-body-raw) field and [regular expressions](/ruleset-engine/rules-language/operators/#comparison-operators) to achieve the same goal.
+If the request body is not JSON, you can use the [`http.request.body.raw`](/ruleset-engine/rules-language/fields/#field-http-request-body-raw) field and regular expressions (along with the [`matches` operator](/ruleset-engine/rules-language/operators/#comparison-operators)) to achieve the same goal.
 {{</Aside>}}
 
 ### Limit requests from bots
@@ -339,7 +338,7 @@ _This example rule requires Advanced Rate Limiting._
 
 The counting characteristic can be any header, key, token, cookie, query parameter, or even JSON body field, since some APIs include a session ID or user ID as part of the JSON body. Refer to the following sections for additional information:
 * If your unique identifier is in the URI path, refer to [Protect resources](#protect-resources).
-* If your unique identifier is in the JSON body, refer to [Prevent content scraping (via JSON body)](#prevent-content-scraping-via-json-body).
+* If your unique identifier is in the JSON body, refer to [Prevent content scraping (via body)](#prevent-content-scraping-via-body).
 
 ### Protect resources
 
