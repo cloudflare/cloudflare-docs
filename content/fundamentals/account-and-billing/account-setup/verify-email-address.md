@@ -38,4 +38,4 @@ If you cannot find your verification email or your email has expired, you can re
 
 ## Verification issues
 
-If you experience issues with your verification link, click the link in a different browser or in an incognito window.
+If you experience issues with your verification link, click the link in a different browser or an incognito window.

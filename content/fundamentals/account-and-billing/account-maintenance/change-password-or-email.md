@@ -20,7 +20,7 @@ For added account security, consider changing your [API tokens](/fundamentals/ap
 
 {{<Aside type="note">}}
 
-If your administrator has [configured Single sign-on (SSO)](/cloudflare-one/applications/configure-apps/dash-sso-apps/), you cannot change your **Authentication** settings.
+If your administrator has [enabled Single sign-on (SSO)](/cloudflare-one/applications/configure-apps/dash-sso-apps/), you cannot change your **Authentication** settings.
 
 {{</Aside>}}
 
@@ -39,6 +39,6 @@ To change the email address associated with your Cloudflare account:
 
 {{<Aside type="note">}}
 
-If your administrator has [configured Single sign-on (SSO)](/cloudflare-one/applications/configure-apps/dash-sso-apps/), you cannot change the email address associated with your account.
+If your administrator has [enabled Single sign-on (SSO)](/cloudflare-one/applications/configure-apps/dash-sso-apps/), you cannot change the email address associated with your account.
 
 {{</Aside>}}
