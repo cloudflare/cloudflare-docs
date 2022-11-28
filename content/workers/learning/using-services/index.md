@@ -7,25 +7,24 @@ layout: single
 
 # Workers Services
 
-{{<Aside type="note">}}
+Workers Services are the new building blocks for deploying applications on Cloudflare Workers. Workers Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects, or even other services, as well as environment variables and secrets.
 
-We have temporarily disabled the creation of Service Environments while we are improving this feature.
+{{<Aside type="note" header="Workers versus Workers Services?">}}
+
+Workers Services are synonymous with Workers. In the legacy Workers model, Workers were created by writing scripts. Workers scripts could not communicate with each other. In the Workers Services model, Workers Services are made up of Workers Environments that are a collection of bindings, environment variables, secrets, and script deployments. The introduction of Workers Services also adds Worker-to-Worker communication functionality via Workers Service bindings.
 
 {{</Aside>}}
 
-Workers Services are the new building blocks for deploying applications on Cloudflare Workers. Workers Services are made of environments, which are scripts that can contain bindings to KV stores, Durable Objects, or even other services, as well as environment variables and secrets. Workers Services can have multiple environments and can set up pipelines for promoting a deployment from one environment to another.
+Unlike a traditional Workers script, a Workers Service is composable, which allows Workers services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, deployment managers, or traffic gateways.
 
-Unlike a traditional Workers script, a Workers Service is composable, which allows Workers services to talk to each other; allowing you to develop new kinds of services like routers, middlewares, deployment managers, or traffic gateways. Workers Services also support multiple environments, allowing you to test changes in a preview environment, then promote those changes to production when you are ready – or execute your own custom deployment strategies.
+{{<Aside type="note">}}
 
-Each Workers Service comes with a production environment and the ability to create or clone dozens of preview environments. Every aspect of an environment is overridable: the code, environment variables, and resource bindings, like KV namespaces and Durable Objects.
+To enable a seamless transition to Workers Services, all scripts have been automatically migrated to Services with one production environment. No action is needed from the user.
 
-You can create and switch between environments in the dashboard:
+{{</Aside>}}
 
-1.  Go to **Workers**.
-2.  Choose your **Worker**.
-3.  Select **production** > **Create environment**.
+Each Workers Service comes with a production environment. Every aspect of an environment is overridable: the code, environment variables, and resource bindings, like KV namespaces and Durable Objects.
 
-![Select Create environment to begin configuring a new environment](./media/create-environment.png)
 
 ## Service environments
 
