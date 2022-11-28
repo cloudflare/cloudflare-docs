@@ -1,12 +1,12 @@
 ---
-title: Common use cases
+title: Rule examples
 pcx_content_type: configuration
 weight: 20
 meta:
-  title: Common rate limiting use cases
+  title: Rate limiting rule examples
 ---
 
-# Common rate limiting use cases
+# Rate limiting rule examples
 
 The examples below include sample rate limiting rule configurations that address common rate limiting use cases.
 
