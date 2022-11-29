@@ -415,7 +415,7 @@ Durable Objects is generally available. However, there are some known limitation
 
 Uniqueness is enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception. If the event completes without ever accessing storage, it may not ever realize that the Object was no longer current.
 
-In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling wrangler tail or dashboard logs requires a software update.
+In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling `wrangler tail` or dashboard logs requires a software update.
 
 ### Development tools
 
