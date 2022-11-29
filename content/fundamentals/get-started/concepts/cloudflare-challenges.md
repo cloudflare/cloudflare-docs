@@ -29,6 +29,7 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 - A non-interactive challenge page (similar to the current [JS Challenge](#js-challenge)).
 - An invisible proof of work challenge to the browser.
 - A custom interactive challenge (such as click a button).
+- Private Access Tokens (using recent Apple operating systems).
 - A CAPTCHA challenge.
 
 #### Available products

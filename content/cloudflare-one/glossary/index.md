@@ -77,11 +77,15 @@ DoH uses port 443, which is the standard HTTPS traffic port, to wrap the DNS req
 
 ## DoH subdomain
 
-Each location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a _unique id_). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **Locations**, expand the location card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
+Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previously known as a _unique id_). If your organization uses DNS policies, you will need to enter your location's DoH subdomain as part of the WARP client settings. To find a location's DoH subdomain, navigate to **Gateway** > **DNS Locations**, expand the card for any given location, and get the subdomain of the DNS over HTTPS hostname. In the example below, the DoH subdomain is: `9y65g5srsm`.
 
 | DNS over HTTPS hostname                               | DoH subdomain |
 | ----------------------------------------------------- | ------------- |
 | `https://9y65g5srsm.cloudflare-gateway.com/dns-query` | `9y65g5srsm`  |
+
+## DNS location
+
+[DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 ## DNS over TLS
 
@@ -102,10 +106,6 @@ An identity provider (IdP or IDP) stores and manages users' digital identities. 
 ## JSON web token
 
 An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
-
-## location
-
-[Locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
 ## mTLS
 

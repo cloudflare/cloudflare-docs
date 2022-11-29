@@ -26,7 +26,7 @@ You can search these audit logs by user email or domain and filter by date range
 
 ### Using the API
 
-To get audit logs from the Cloudflare API, send a [GET request](https://api.cloudflare.com/#audit-logs-properties).
+To get audit logs from the Cloudflare API, send a [GET request](https://developers.cloudflare.com/api/operations/audit-logs-get-account-audit-logs).
 
 We recommending using the API for downloading historical audit log data.
 

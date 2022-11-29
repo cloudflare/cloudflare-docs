@@ -282,7 +282,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## Rocket Loader
 
-Enable or disable [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056) [^12] for matching requests.
+Enable or disable [Rocket Loader](/fundamentals/speed/rocket-loader/) [^12] for matching requests.
 
 <details>
 <summary>API information</summary>

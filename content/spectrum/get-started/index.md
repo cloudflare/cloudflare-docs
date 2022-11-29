@@ -9,7 +9,7 @@ layout: single
 
 Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Configuration options](/spectrum/reference/configuration-options/) for more configuration details.
 
-To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via [API](https://api.cloudflare.com/#spectrum-applications-properties).
+To create a Spectrum application, you can either use an IP address, a CNAME Record or a Load Balancer. Independently of the method you use, you can create the application through the dashboard or via [API](https://developers.cloudflare.com/api/operations/spectrum-applications-list-spectrum-applications).
 
 ## Create a Spectrum application using an IP address
 
@@ -50,7 +50,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8
 
 **Example data:**
 
-```bash
+```json
 {
   "success": true,
   "errors": [],
@@ -213,4 +213,4 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{ZONE_ID}/spectrum/apps
 
 You can now proxy traffic through Cloudflare without additional configuration. As you run traffic through Cloudflare, you will see the last minute of traffic from **Spectrum** in the dashboard.
 
-If you have any feedback, please [let us know](https://community.cloudflare.com/c/security/spectrum).
+If you have any feedback, please [let us know](https://community.cloudflare.com/c/website-application-performance/spectrum/48).

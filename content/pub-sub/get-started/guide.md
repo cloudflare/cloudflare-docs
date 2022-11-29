@@ -19,9 +19,8 @@ This guide will:
 - Create a `<broker>.<namespace>.cloudflarepubsub.com` endpoint ready to publish and subscribe to using any MQTT v5.0 compatible client.
 - Help you send your first message to the Pub/Sub Broker.
 
-Before you begin, you should be familiar with using the command line and the curl command for making HTTP requests.
+Before you begin, you should be familiar with using the command line and running basic terminal commands.
 
-In the future, we will be adding support for Pub/Sub to [wrangler](/workers/wrangler/) (our developer CLI) and the Cloudflare dashboard to make creating and managing Pub/Sub Brokers easier.
 
 ## Prerequisite: Create a Cloudflare account
 
@@ -143,7 +142,7 @@ To create a new MQTT Broker called `example-broker` in the `my-namespace` namesp
 
 
 ```sh
-$ wrangler pubsub namespace create example-broker --namespace=my-namespace
+$ wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
 
 You should receive a success response that resembles the following:

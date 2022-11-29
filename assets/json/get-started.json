@@ -1,6 +1,7 @@
 {
     "path": "/learning-paths/get-started/",
     "title": "Get started with Cloudflare",
+    "priority": 1,
     "description": "Set up your application to benefit from Cloudflare's speed, security, and reliability.",
     "products": [
       "Cloudflare Essentials",

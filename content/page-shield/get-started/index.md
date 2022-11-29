@@ -29,7 +29,7 @@ Depending on your plan, you may be able to [review the connections](/page-shield
 
 {{<Aside type="note">}}
 
-Only available to customers on Business and Enterprise plans.
+Only available to customers on a Business or Enterprise plan.
 
 {{</Aside>}}
 

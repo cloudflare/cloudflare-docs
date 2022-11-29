@@ -1,6 +1,7 @@
 {
     "path": "/learning-paths/optimize-site-speed/",
     "title": "Optimize site speed",
+    "priority": 4,
     "description": "Learn more about how Cloudflare can accelerate your website and improve performance.",
     "products": [
       "Cloudflare Essentials",
@@ -69,7 +70,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200168056",
+            "url_path": "/fundamentals/speed/rocket-loader/",
             "link_title": "Rocket Loader",
             "additional_description": "Defer JavaScript loading until after page content (applied through client-side JavaScript)."
           },

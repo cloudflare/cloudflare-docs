@@ -25,8 +25,8 @@ Use one of the following API endpoints:
 | [List account rulesets][lr-account] | `GET /accounts/<ACCOUNT_ID>/rulesets` |
 | [List zone rulesets][lr-zone]       | `GET /zones/<ZONE_ID>/rulesets`       |
 
-[lr-account]: https://api.cloudflare.com/#account-rulesets-list-account-rulesets
-[lr-zone]: https://api.cloudflare.com/#zone-rulesets-list-zone-rulesets
+[lr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets
+[lr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-zone-rulesets
 
 The result includes rulesets across all phases at a given level (account or zone). The `phase` field in each result element indicates the phase where that ruleset is defined.
 
@@ -93,10 +93,10 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset][gep-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 | [Get a zone entry point ruleset][gep-zone]       | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint`       |
 
-[gr-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset
-[gr-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset
-[gep-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-entry-point-ruleset
-[gep-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-entry-point-ruleset
+[gr-account]: https://developers.cloudflare.com/api/operations/account-rulesets-get-an-account-ruleset
+[gr-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-ruleset
+[gep-account]: https://developers.cloudflare.com/api/operations/account-rulesets-get-an-account-entry-point-ruleset
+[gep-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset
 
 {{<Aside type="warning" header="Important">}}
 
@@ -172,10 +172,10 @@ Use one of the following API endpoints:
 | [List account entry point ruleset versions][lev-account]   | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions` |
 | [List zone entry point ruleset versions][lev-zone]         | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions`       |
 
-[lv-account]: https://api.cloudflare.com/#account-rulesets-list-account-ruleset-versions
-[lv-zone]: https://api.cloudflare.com/#zone-rulesets-list-zone-ruleset-versions
-[lev-account]: https://api.cloudflare.com/#account-rulesets-list-an-account-entry-point-ruleset-s-versions
-[lev-zone]: https://api.cloudflare.com/#zone-rulesets-list-a-zone-entry-point-ruleset-s-versions
+[lv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-ruleset'-s-versions
+[lv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-a-zone-ruleset'-s-versions
+[lev-account]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-entry-point-ruleset'-s-versions
+[lev-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-list-a-zone-entry-point-ruleset'-s-versions
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
@@ -245,10 +245,10 @@ Use one of the following API endpoints:
 | [Get an account entry point ruleset version][gerv-account] | `GET /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>` |
 | [Get a zone entry point ruleset version][gerv-zone]        | `GET /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint/versions/<VERSION_NUMBER>`       |
 
-[grv-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-ruleset-version
-[grv-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-ruleset-version
-[gerv-account]: https://api.cloudflare.com/#account-rulesets-get-an-account-entry-point-ruleset-version
-[gerv-zone]: https://api.cloudflare.com/#zone-rulesets-get-a-zone-entry-point-ruleset-version
+[grv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-get-an-account-ruleset-version
+[grv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-ruleset-version
+[gerv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-get-an-account-entry-point-ruleset-version
+[gerv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset-version
 
 You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a Managed Ruleset.
 
@@ -318,7 +318,7 @@ Returns a list of all the rules in a Managed Ruleset with a specific tag.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [List rules in account ruleset version by tag][lrbt] | `GET /accounts/<ACCOUNT_ID>/rulesets/<MANAGED_RULESET_ID>/versions/<VERSION_NUMBER>/by_tag/<TAG_NAME>` |
 
-[lrbt]: https://api.cloudflare.com/#account-rulesets-list-an-account-ruleset-version-s-rules-by-tag
+[lrbt]: https://developers.cloudflare.com/api/operations/account-rulesets-list-an-account-ruleset-version'-s-rules-by-tag
 
 ### Example
 

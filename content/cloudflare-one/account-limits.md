@@ -31,7 +31,7 @@ This page lists the default account limits for rules, applications, fields, and 
 | DNS Logpush jobs                       | 5     |
 | HTTP Logpush jobs                      | 5     |
 | Lists                                  | 100   |
-| Locations                              | 250   |
+| DNS locations                          | 250   |
 | Number of DNS policies per account     | 500   |
 | Number of HTTP policies per account    | 500   |
 | Number of Network policies per account | 500   |

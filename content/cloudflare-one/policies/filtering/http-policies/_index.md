@@ -91,8 +91,6 @@ You can apply HTTP policies to a growing list of popular web applications. Refer
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
-
 ### Content Categories
 
 | UI name | API example |
@@ -146,9 +144,11 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 ### Domain
 
+Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
+
 | UI name | API example |
 | -- | -- |
-| Domain | `http.request.domains == "a.example.com"` |
+| Domain | `any(http.request.domains[*] == "example.com")` |
 
 ### Download and Upload Mime Type
 
@@ -168,13 +168,15 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### Host
 
+Use this selector to match only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
+
 | UI name | API example |
 | -- | -- |
-| Host | `http.request.host == ".*example\.com"` |
+| Host | `http.request.host == "test.example.com"` |
 
-{{<Aside type="note" header="Host or Domain?">}}
+{{<Aside type="note">}}
 
-The `Host` selector matches the exact entry input by a customer in the value field or list. The `Domain` selector matches the exact entry and all subdomains in the value field or list.
+Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this website, use the [Domain](#domain) selector instead of the Host selector.
 
 {{</Aside>}}
 

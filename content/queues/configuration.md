@@ -12,18 +12,6 @@ Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/get-start
 
 Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. Use the options below to configure your Queue.
 
-{{<Aside type="warning" header="Warning">}}
-
-Queues support is not yet available in a full Wrangler release. It will be soon, but in the meantime please instead install the `wrangler@queues` npm package by running `npm install -D wrangler@queues` within your project.
-
-{{</Aside>}}
-
-{{<Aside type="note">}}
-
-Queues are currently only configurable via [Wrangler](/workers/wrangler/get-started/). Support for configuring Queues in the dashboard will be coming soon.
-
-{{</Aside>}}
-
 {{<Aside type="note">}}
 
 Below are options for Queues, refer to the Wrangler documentation for a full reference of [`wrangler.toml`](/workers/wrangler/configuration/).

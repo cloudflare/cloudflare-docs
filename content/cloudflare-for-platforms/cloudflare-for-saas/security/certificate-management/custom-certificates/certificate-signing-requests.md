@@ -111,7 +111,7 @@ EOF
 ))
 ```
 
-With the request body built, [create the custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
+With the request body built, [create the custom hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname) with the supplied custom certificate. If you intend to use the certificate with multiple hostnames, make multiple API calls replacing the `hostname` field.
 
 ---
 

@@ -19,7 +19,7 @@ GET user/load_balancing_analytics/events
 
 If a health check fails, the breakdown will include the reason.
 
-For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Check Events](https://api.cloudflare.com/#load-balancer-healthcheck-events-list-healthcheck-events)_.
+For a list of optional parameters, which are useful for filtering log results, see _[Cloudflare API: Health Check Events](https://developers.cloudflare.com/api/operations/load-balancer-healthcheck-events-list-healthcheck-events)_.
 
 Common troubleshooting causes and solutions are listed below.
 

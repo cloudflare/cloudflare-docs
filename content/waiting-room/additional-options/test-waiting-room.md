@@ -6,9 +6,9 @@ weight: 9
 
 # Test a waiting room
 
-Follow this tutorial to ensure your Waiting Room queues and admits users as expected.
+Follow this tutorial to test your waiting room behavior in response to load. To accurately simulate traffic through your waiting room with a load test, run your test script or planner for a period of time longer than a minute, ideally more than 2-3 minutes. You can run a load test using a variety of tools including [loader.io](http://loader.io), [jmeter](http://jmeter.apache.org), and [postman.com](http://postman.com). You can also write a plain shell script to simulate user requests (each representing a distinct user).
 
-{{<Aside type="warning" header="Warning:">}}
+{{<Aside type="warning" header="Warning">}}
 This tutorial uses an open-sourced load testing tool that is not created or supported by Cloudflare.
 {{</Aside>}}
 
@@ -18,126 +18,92 @@ This tutorial uses an open-sourced load testing tool that is not created or supp
 
 Before you start this tutorial, ensure you have:
 
-- Fulfilled all the [prerequisites](/waiting-room/#prerequisites)
-- Previously [created a waiting room](/waiting-room/get-started/)
-- Updated the [sample script](#1-download-sample-script) to ensure your waiting room captures when a "simulated user" enters and is released from your waiting room (if you [customized the design](/waiting-room/how-to/customize-waiting-room/) of your waiting room)
+- All the [prerequisites](/waiting-room/#prerequisites) completed.
+- For this tutorial, we will use an open source tool from Apache, [JMeter](https://jmeter.apache.org/). You can download the binary from [JMeter's website](https://jmeter.apache.org/download_jmeter.cgi). 
 
 ---
 
 ## 1. Download sample script
 
-First, download the [sample script](https://github.com/kcantrel/test-cf-waitingroom/blob/master/simulate_requests) from GitHub.
+First, download the [sample](https://github.com/yj7o5/cf-waiting-room-testing/blob/main/plan.jmx) JMeter plan (configuration file) from GitHub.
 
-This script simulates users entering a waiting room. It divides traffic into two phases (`Phase 1` and `Phase 2`) so you can test wait times as load increases and then decreases.
+This sample plan simulates 200 active users visiting the site, slowly ramping up traffic within the first minute and then maintaining 200 active users for the next three minutes. The test plan for this tutorial follows the setup outlined in the next steps.
 
-## 2. Run sample script
+## 2. Run sample plan
 
-Once you have downloaded the script, run it with the following command-line arguments:
+To run our test plan select the **play** button to get the test started. This should take roughly around 3-4 minutes.
 
-- `-n <num_secs_p1>`: Number of seconds to send requests during phase 1
-- `-m <num_secs_p2>`: Number of seconds to send requests during phase 2, which is fixed at 1 request per second
-- `-s <sleep_time_p1>`: Amount of time to sleep between requests during phase 1 (fractional time accepted, such as `.3`)
-- `-o <results>`: File to store the per-session statistics
-- `URL`: Endpoint protected by a Cloudflare Waiting Room
+![Navigation bar](/waiting-room/static/navigation.png)
+
+- Each simulated user has the following attributes:
+
+  - Contains a Cookie jar for cookies persistence.
+  - Repeats for 20 times.
+
+    - Makes a request to the origin site with waiting room enabled.
+    - Logs request details.
+    - Pauses for 10 seconds before refreshing the page to make another request to the origin site.
+
+![User attributes](/waiting-room/static/user-attributes.png)
+
+Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/test_plan.html#thread_group) performs the above action once. The user traffic ramps up within the first minute and keeps a sustained traffic for the next three minutes before users leave the site. You can send more or less traffic than what is being sent in this example by updating these properties.
+
+![Visualizing number of threads](/waiting-room/static/threads.png)
+
+## 3. Analyze results
+
+To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test. 
+
+
 
 <details>
-  <summary>Example script run</summary>
+  <summary>Example Curl Statement</summary>
   <div>
-    <strong>Function</strong>
 
-    simulate_requests -s .1 -n 60 -m 60 -o results https://example.com/tickets/1234/
-
-<strong>Output</strong>
-
-    Sending 600 requests to https://example.com/tickets/1234/ at a rate of 10.00 per second. Or 600 per minute.
-
-    Wed 10 Mar 2021 10:48:59 AM CST
-    ...................................................................................................................a.aa.aa.a..
-    Wed 10 Mar 2021 10:50:00 AM CST
-
-    Now doing 1 request per second for 60 seconds.
-    babdacdbeacbc.abbedcbacbddaccdaeebbcabedccaebddbcacedb.cadcedbacabcbeacbbabdcdbaaebddcbcabeeadbcbacadedabbaacd.dabecbabbdecbdaegehgjkfjifggfihjhghhfhifkfj.gjighhgfiihgdihkffiejgjjigggjkijkk
-    Wed 10 Mar 2021 10:51:01 AM CST
-
-    Waiting for jobs to finish
-    hgiibjjjjcjhjgbgiggikihhjcihhhhlkkknmjjmmjnnonokklmmklnmonmlonoompollplommpmmpolpoqmponngoonqjimqmgjmmnkmogmqoiqpoqolmmqonghpppjpiopoopqomkqnnqgnmqnnppopnqrpptqtrrrrpsrqtrusrtsvusvsrrvstttrvsvsvussrtuwtvrtsvtrvsqunrmtrrrsqnqptvsuqturwsvstnmwuwtusvsvwsouspqtuuvsvrvwtwssvqtuuuwspvoxyzyyvwvzwxyxyyAzyyzABxBBzyxyxxBBACzzyxAvwsyzxztzvuvtCACyvxstuutvCw
-    Wed 10 Mar 2021 10:54:22 AM CST
+```bash
+echo '{
+  "operationName": "UsersQueuedOverTimeQuery",
+  "variables": {
+    "filter": {
+      "datetime_geq": "2022-10-17T15:34:00Z",
+      "datetime_leq": "2022-10-17T15:40:00Z",
+      "waitingRoomId": "<YOUR_WAITING_ROOM_ID>"
+    },
+    "zoneId": "<YOUR_ZONE_ID>"
+  },
+  "query": "query UsersQueuedOverTimeQuery($zoneId: string, $filter: ZoneWaitingRoomAnalyticsAdaptiveGroupsFilter_InputObject) {\n  viewer {\n    zones(filter: {zoneTag: $zoneId}) {\n      timeseries: waitingRoomAnalyticsAdaptiveGroups(limit: 5000, filter: $filter, orderBy: [datetimeMinute_ASC]) {\n        avg {\n          totalActiveUsers\n          totalActiveUsersConfig\n          totalQueuedUsers\n          __typename\n        }\n        max {\n          totalQueuedUsers\n          totalActiveUsers\n          totalActiveUsersConfig\n          __typename\n        }\n        min {\n          totalActiveUsersConfig\n          __typename\n        }\n        dimensions {\n          ts: datetimeMinute\n          __typename\n        }\n        __typename\n      }\n      total: waitingRoomAnalyticsAdaptiveGroups(limit: 1, filter: $filter) {\n        max {\n          totalQueuedUsers\n          totalActiveUsers\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"
+}' | tr -d '\n' | curl \
+  -X POST \
+```
 
 </div>
 </details>
 
-As the script runs, it will output characters with each character representing:
+From our test, we see the following results (these are extracted from results of the query for readability):
 
-- A user session that advanced past the waiting room
-- The amount of time the user spent in the waiting room:
-  - 0 seconds: `.`
-  - 10 seconds: `a`
-  - 20 seconds: `b`
-  - 30 seconds: `c`<br/>
-    ...
-  - 260 seconds: `A`
-  - 270 seconds: `B`<br/>
-    ...
-  - 530 seconds: `0`
-  - 540 seconds: `1`<br/>
-    ...
-  - Greater than 620 seconds: `!`
+- 15:35:00 UTC              
+  - `"totalActiveUsers": 137,`
+  - `"totalActiveUsersConfig": 300,`
+  - `"totalQueuedUsers": 0`
 
-## 3. Analyze results
+- 15:36:00 UTC
+  - `"totalActiveUsers": 200,`
+  - `"totalActiveUsersConfig": 300,`
+  - `"totalQueuedUsers": 0`
 
-Once the script finishes running, it creates a CSV file with the following fields:
+- 15:37:00 UTC
+  - `"totalActiveUsers": 200,`
+  - `"totalActiveUsersConfig": 300,`
+  - `"totalQueuedUsers": 0`
 
-<details>
-  <summary>Fields in CSV file</summary>
-  <div>
-    <ul>
-      <li>
-        <strong>job</strong>: The fixed string will either be <strong>main</strong> for phase 1 or
-        <strong>post</strong> for phase 2
-      </li>
-      <li>
-        <strong>status</strong>: Status of the last response of the session:
-      </li>
-      <ul>
-        <li>
-          0: curl command received an HTTP status code of <code>200</code>
-        </li>
-        <li>
-          1: curl command did not receive any HTTP status codes, which typically means the curl
-          command itself failed
-        </li>
-        <li>
-          2: curl command received an HTTP status code of something other than <code>200</code>
-        </li>
-      </ul>
-      <li>
-        <strong>wait_time</strong>: Number of seconds the user waited in the waiting room
-      </li>
-      <li>
-        <strong>wr_cnt_before</strong>: Number of users in the waiting room when the session first
-        started
-      </li>
-      <li>
-        <strong>wr_cnt_after</strong>: Number of users in the waiting room when the session made it
-        past the waiting room
-      </li>
-      <li>
-        <strong>start_time</strong>: Time when the session first started (in UNIX epoch seconds)
-      </li>
-      <li>
-        <strong>end_time</strong>: Time when the session made it past the waiting room (in UNIX
-        epoch seconds)
-      </li>
-    </ul>
-  </div>
-</details>
+- 15:38:00 UTC
+  - `"totalActiveUsers": 200,`
+  - `"totalActiveUsersConfig": 300,`
+  - `"totalQueuedUsers": 0`
 
-To visualize your results, open your CSV file within a spreadsheet application. For example, here is a basic chart that shows the amount of time a user waited verses the time they first tried to get to the web service:
+The first minute mark, 15:35:00 UTC, shows 137 active users past the waiting room. This is because our traffic was set to gradually ramp up within the first minute and the test did not start exactly at the minute mark. When data was aggregated for the following minute, 15:36:00 UTC, the waiting room reported the total 200 users active we expected on the site as each “user” made subrequests. The active user count remained stable at 200 as long as it received subrequests from the traffic sent by the load test.
 
-![Visualizing waiting room test data by using a graphing tool](/waiting-room/static/test-waiting-room.png)
+{{<Aside type="note" header="Note">}}
 
-In this example, you can clearly see when the script entered the second phase — with a reduced rate of new users per second — leading to decreased wait times.
-
-## 4. Adjust waiting room (optional)
-
-Based on the results of your test, you may want to adjust [the settings](/waiting-room/reference/configuration-settings/) of your waiting room.
+Obtain your API token from the dashboard. Make sure your API token grants access to the **Analytics** resource. For more information on how to get the API token, follow the [Configure Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) guide.
+{{</Aside>}}

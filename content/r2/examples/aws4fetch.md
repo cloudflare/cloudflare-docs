@@ -20,8 +20,6 @@ const R2_URL = `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`;
 const client = new AwsClient({
   accessKeyId: ACCESS_KEY_ID,
   secretAccessKey: SECRET_ACCESS_KEY,
-  service: "s3",
-  region: "auto",
 });
 
 const ListBucketsResult = await client.fetch(R2_URL);

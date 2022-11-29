@@ -401,7 +401,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 {{</definitions>}}
 
-This command will forward the JSON response from the [List Routes API](https://api.cloudflare.com/#worker-routes-list-routes). Each object within the JSON list will include the route id, route pattern, and the assigned Worker name for the route. Piping this through a tool such as `jq` will render the output nicely.
+This command will forward the JSON response from the [List Routes API](https://developers.cloudflare.com/api/operations/worker-routes-list-routes). Each object within the JSON list will include the route id, route pattern, and the assigned Worker name for the route. Piping this through a tool such as `jq` will render the output nicely.
 
 ```sh
 $ wrangler route delete $ID [--env $ENVIRONMENT_NAME]

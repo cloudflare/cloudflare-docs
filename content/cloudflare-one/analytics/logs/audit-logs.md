@@ -40,7 +40,7 @@ To view logs for identity-based authentication events:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-The [Access authentication logs](https://api.cloudflare.com/#access-authentication-logs-properties) API endpoint provides a custom URL to export audit log events for your account.
+The [Access authentication logs](https://developers.cloudflare.com/api/operations/access-authentication-logs-get-access-authentication-logs) API endpoint provides a custom URL to export audit log events for your account.
 
 ```curl
 ---

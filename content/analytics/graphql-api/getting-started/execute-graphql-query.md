@@ -1,72 +1,80 @@
 ---
 pcx_content_type: how-to
-title: Use curl to query the Analytics API
+title: Execute a GraphQL query with curl
 weight: 61
 ---
 
-# Use curl to query the Analytics API
+# Execute a GraphQL query with curl
 
-You can submit a [query built with the GraphiQL client](/analytics/graphql-api/getting-started/compose-graphql-query/) as the payload in the `data` field of a POST request to the Analytics API.
+Using a plain curl to send a query provides the ability to slice-n-dice with the
+results and apply post-processing if needed. For example, [converting][1]
+results received from GraphQL API into a CSV format.
 
-The advantage of executing a request with [curl](https://curl.se/) is that you can redirect the response to a file and execute other post processing methods.
+For more functionality, like auto-completion, schema exploring, etc., you can
+look at GraphQL [clients][2].
 
-The GraphQL endpoint requires valid JSON, so you must pass the query as the `value` part of a JSON `key:value` pair with a key named `query`.
+GraphQL API expects JSON with two essentials fields: "query" and "variables".
 
-Pass the list of variables in another JSON `key:value` pair with a key named `variables`.
+A query should be stripped from newline symbols and sent as a single-line string
+when the variables is an object full of values for all placeholders used in the
+query:
 
-The script below returns the firewall events in one zone over the last 24 hours:
+```json
+---
+header: A payload structure for GraphQL API
+---
+{
+  "query": "{viewer { ... }}",
+  "variables": {}
+}
+```
+
+It is still possible to use a human-friendly query though. In the example below
+you can see how `echo` piped together with `tr` to provide a proper payload with
+`curl`:
 
 ```bash
 ---
 header: Example bash script that uses curl to query Analytics API
 ---
-#!/bin/bash
-#
-# This script fetches the last 24 hours of firewall events for the ZoneID passed
-# in as the first parameter using the global key passed in as the second parameter.
-######################################################################################
-
-ZoneID="$1"
-global_key="$2"
-Email="user@domain.com"
-#
-# Calculate 24 hours back and produce the start and end times in the appropriate format.
-back_seconds=60*60*24  # 24 hours
-end_epoch=$(date +'%s')
-let start_epoch=$end_epoch-$back_seconds
-start_date=$(date --date="@$start_epoch" +'%Y-%m-%dT%H:%M:%SZ')
-end_date=$(date --date="@$end_epoch" +'%Y-%m-%dT%H:%M:%SZ')
-
-PAYLOAD='{ "query":
-  "query {
+echo '{ "query":
+  "{
     viewer {
       zones(filter: { zoneTag: $zoneTag }) {
-      firewallEventsAdaptive(
-        filter: $filter
-        limit: 10000
-        orderBy: [datetime_DESC, rayName_DESC]
-      ) {
-          action,
-          datetime,
-          rayName,
-          clientRequestHTTPHost,
+        firewallEventsAdaptive(
+          filter: $filter
+          limit: 10
+          orderBy: [datetime_DESC]
+        ) {
+          action
+          clientAsn
+          clientCountryName
+          clientIP
+          clientRequestPath
+          clientRequestQuery
+          datetime
+          source
           userAgent
         }
       }
     }
-  }",'
-PAYLOAD="$PAYLOAD
-
-  \"variables\": {
-    \"zoneTag\": \"$ZoneID\",
-    \"filter\": {
-      \"datetime_gt\": \"$start_date\",
-      \"datetime_leq\": \"$end_date\"
+  }",
+  "variables": {
+    "zoneTag": "<zone-tag>",
+    "filter": {
+      "datetime_geq": "2022-07-24T11:00:00Z",
+      "datetime_leq": "2022-07-24T12:00:00Z"
     }
   }
-}"
-
-# Run query to GraphQL API endpoint
-
-curl -s -X POST -H "Content-Type: application/json" -H "X-Auth-Email: $Email" -H  "X-Auth-Key: $global_key" --data "$(echo $PAYLOAD)" https://api.cloudflare.com/client/v4/graphql/
+}' | tr -d '\n' | curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
+  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
+  -s \
+  -d @- \
+  https://api.cloudflare.com/client/v4/graphql/
 ```
+
+[1]: </analytics/graphql-api/tutorials/export-graphql-to-csv/>
+[2]: </analytics/graphql-api/getting-started/compose-graphql-query/>

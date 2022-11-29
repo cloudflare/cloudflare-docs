@@ -64,7 +64,7 @@ Currently, you can only send one collect request per minute for simple PCAPs, an
 </summary>
 <div class="special-class" markdown="1">
 
-For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://api.cloudflare.com/#magic-pcap-collection-create-full-pcap-request). Note that full packet captures require two more parameters than simple packets.
+For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://developers.cloudflare.com/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than simple packets.
 
 The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and simple packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
 
@@ -92,7 +92,7 @@ header: Full PCAP example request
 
 While the collection is in progress, the response returns the `status` field as `pending`. You must wait for the PCAP collection to complete before downloading the file. When the PCAP is ready to download, the status changes to `success`.
 
-```bash
+```json
 ---
 header: Full PCAP example response
 ---
@@ -124,7 +124,7 @@ header: Full PCAP example response
 </summary>
 <div class="special-class" markdown="1">
 
-To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](https://api.cloudflare.com/#magic-pcap-collection-create-simple-pcap-request).
+To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](https://developers.cloudflare.com/api/operations/magic-pcap-collection-create-pcap-request).
 
 Leave `filter_v1` to collect all packets without any filtering.
 
@@ -153,7 +153,7 @@ header: Simple PCAP example request
 
 The response is a JSON body that contains the details of the job running to build the packet capture. The response contains a unique identifier for the packet capture request along with the details sent in the request.
 
-```bash
+```json
 ---
 header: Simple PCAP example response
 ---
@@ -208,7 +208,7 @@ To check the status of a running job, send a request to the endpoint and specify
 
 The response will be similar to the one received when requesting a PCAP collection.
 
-```bash
+```json
 ---
 header: Simple PCAP example result
 ---
@@ -311,7 +311,7 @@ header: List request example
 
 The response returns an array that includes up to 50 sent requests, which includes completed and ongoing requests.
 
-```bash
+```json
 ---
 header: List response example
 ---

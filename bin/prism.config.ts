@@ -220,7 +220,7 @@ function normalize(tokens: (Token | string)[]) {
   return lines;
 }
 
-export function highlight(code: string, lang: string): string {
+export function highlight(code: string, lang: string, file: string): string {
   lang = langs[lang] || lang || 'txt';
   let grammar = Prism.languages[lang.toLowerCase()];
 
@@ -257,7 +257,15 @@ export function highlight(code: string, lang: string): string {
     }
   }
 
-  let highlights = new Set(JSON.parse(frontmatter.highlight || '[]').map((x: number) => x - 1));
+  let highlights: Set<number>;
+
+  try {
+    highlights = new Set(JSON.parse(frontmatter.highlight || '[]').map((x: number) => x - 1));
+  } catch (err) {
+    process.stderr.write(`[ERROR] ${file}\nSyntax highlighting error: You must specify the lines to highlight as an array (e.g., '[2]'). Found '${frontmatter.highlight}'.\n`);
+    // still throwing the original error because it could be something else
+    throw err;
+  }
 
   // tokenize & build custom string output
   let tokens = Prism.tokenize(code, grammar);

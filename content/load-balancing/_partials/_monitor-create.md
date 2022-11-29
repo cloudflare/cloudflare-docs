@@ -44,6 +44,6 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
 
 {{<Aside type="note" header="Note:">}}
 
-To increase confidence in pool status, increase the `consecutive_up` and `consecutive_down` fields when [creating a monitor with the API](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To become healthy or unhealthy, monitored origins must pass this health check the consecutive number of times specified in these parameters.
+To increase confidence in pool status, increase the `consecutive_up` and `consecutive_down` fields when [creating a monitor with the API](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor). To become healthy or unhealthy, monitored origins must pass this health check the consecutive number of times specified in these parameters.
 
 {{</Aside>}}

@@ -24,6 +24,8 @@ You will not receive duplicate DDoS alerts within the same one-hour time frame.
 
 Cloudflare automatically sends weekly summaries of detected and mitigated DDoS attacks to Magic Transit and Spectrum BYOIP customers. For more information, refer to [DDoS reports](/ddos-protection/reference/reports/).
 
+{{<render file="_alerts-and-reports-independent.md">}}
+
 ## Set up a notification for DDoS alerts
 
 To set up a notification:
@@ -109,6 +111,8 @@ The following image shows an example notification delivered via email:
 To investigate a possibly ongoing attack, select **View Dashboard**.
 
 ## Final remarks
+
+* DDoS alerts are currently only available for DDoS attacks detected and mitigated by the [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/). Alerts are not yet available for DDoS attacks detected and mitigated by the [Advanced TCP Protection](/ddos-protection/tcp-protection/) system.
 
 * If you configure more than one alert type for the same kind of attack (for example, both an HTTP DDoS Attack Alert and an Advanced HTTP DDoS Attack Alert) you may get more than one notification when an attack occurs. To avoid receiving duplicate notifications, delete one of the configured alerts.
 

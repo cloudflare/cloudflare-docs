@@ -321,7 +321,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-ip-geoip-is-in-european-union">
       <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
       </td>
   </tr>
@@ -977,7 +977,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan with a paid add-on, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 

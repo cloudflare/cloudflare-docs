@@ -22,5 +22,5 @@ Every Cloudflare API element is fixed to a version number. The latest version is
 For specific guidance on making API calls, refer to the following resources:
 
 *   The product's [Developer Docs section](/products/) for how-to guides.
-*   [API schema docs](https://api.cloudflare.com) for request and response payloads for each endpoint.
+*   [API schema docs](/api) for request and response payloads for each endpoint.
 *   If you are using [golang](https://github.com/cloudflare/cloudflare-go) or [Hashicorp's Terraform](https://github.com/cloudflare/terraform-provider-cloudflare), use our first-party libraries to integrate with Cloudflare's API.

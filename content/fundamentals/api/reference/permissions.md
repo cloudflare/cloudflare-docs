@@ -14,7 +14,7 @@ Permissions are segmented into three categories based on resource:
 
 Each category contains permission groups related to those resources. DNS permissions belong to the Zone category, while Billing permissions belong to the Account category. Below is a list of the available token permissions.
 
-To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://api.cloudflare.com/#permission-groups-list-permission-groups) endpoint.
+To obtain an updated list of token permissions, including the permission ID and the scope of each permission, use the [List permission groups](https://developers.cloudflare.com/api/operations/permission-groups-list-permission-groups) endpoint.
 
 ## User permissions
 
@@ -146,8 +146,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
 | Sanitize Read                    | Grants read access to sanitization.                                      |
 | Sanitize Edit                    | Grants write access to sanitization.                                     |
-| Waiting Rooms Read               | Grants read access to Waiting Rooms.                                     |
-| Waiting Rooms Edit               | Grants write access to Waiting Rooms.                                    |
+| Waiting Room Read               | Grants read access to Waiting Room.                                     |
+| Waiting Room Edit               | Grants write access to Waiting Room.                                    |
 | Web3 Hostnames Read              | Grants read access to Web3 Hostnames.                                    |
 | Web3 Hostnames Edit              | Grants write access to Web3 Hostnames.                                   |
 | Workers Routes Read              | Grants read access to Cloudflare Workers and Workers KV Storage.         |
