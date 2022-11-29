@@ -12,6 +12,8 @@ Custom builds are a way for you to customize how your code is compiled, before b
 With the release of Wrangler 2, it is no longer necessary to use custom builds to bundle your code via webpack and similar bundlers. Wrangler runs [esbuild](https://esbuild.github.io/) by default as part of the `dev` and `publish` commands, and bundles your Worker project into a single Worker script. 
 {{</Aside>}}
 
+## Configure custom builds
+
 Custom builds are configured by adding a `[build]` section in your `wrangler.toml`, and using the following options for configuring your custom build. 
 
 {{<definitions>}}
