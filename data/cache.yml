@@ -6,7 +6,7 @@ product:
   url: /cache/
 
 meta:
-  title: Cloudflare Cache docs
+  title: Cloudflare Cache (CDN) docs
   description: Cloudflare makes customer websites faster by storing a copy of the
     website’s content on our servers. Caching static resources at Cloudflare
     reduces your server load and bandwidth, with no extra charges for bandwidth
