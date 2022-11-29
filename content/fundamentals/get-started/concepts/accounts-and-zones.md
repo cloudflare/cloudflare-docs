@@ -6,7 +6,7 @@ weight: 4
 
 # Accounts, zones, and profiles
 
-Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: organization accounts, zones, and user accounts.
+Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: organization accounts, zones, and user profiles.
 
 <div class="mermaid">
 flowchart LR
@@ -23,7 +23,7 @@ subgraph Organization account
     Workers
     K[Account members]
 end
-subgraph "User account (profile)"
+subgraph User profile
     G[Email address]
     H[Language]
     I[Communication preferences]
@@ -68,7 +68,7 @@ If you need to change to another zone, use the forward arrow next to the zone na
 
 ---
 
-## User accounts
+## User profiles
 
 Each user account has a profile that contains several settings related to the specific user, including [Communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/), [Language preferences](/fundamentals/account-and-billing/account-setup/customize-account/language-preference/), and more.
 
