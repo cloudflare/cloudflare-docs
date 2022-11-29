@@ -6,12 +6,12 @@ weight: 4
 
 # Accounts, zones, and profiles
 
-Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: user profiles, organization accounts, and zones.
+Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: user profiles, accounts, and zones.
 
 <div class="mermaid">
 flowchart LR
-accTitle: Organization accounts contain zones and user profiles contain user settings
-subgraph Organization account
+accTitle: Accounts contain zones and user profiles contain user settings
+subgraph Account
     subgraph Zone - example.com
         A[WAF]
         B[DNS]
@@ -34,7 +34,7 @@ end
 
 ## User profiles
 
-Each user account has a profile that contains several settings related to the specific user, including [Communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/), [Language preferences](/fundamentals/account-and-billing/account-setup/customize-account/language-preference/), and more.
+Each user has a profile that contains several settings, such as [Communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/) and [Language preferences](/fundamentals/account-and-billing/account-setup/customize-account/language-preference/).
 
 ### Navigation
 
@@ -44,11 +44,11 @@ To access your profile, click the user icon and then **My Profile** from any pag
 
 ---
 
-## Organization accounts
+## Accounts
 
-An organization account can contain one or more zones. A user account can be part of one or more organization accounts.
+An account refers to an organization account. Accounts contain one or more users and can contain one or more zones. A user can be part of one or more accounts.
 
-There are also several account-level products - such as [Workers](/workers/), [Pages](/pages/), [Security Center](/security-center/), [Bulk redirects](/rules/url-forwarding/bulk-redirects/), and more - that can affect some or all zones contained within that account.
+There are also several account-level products - such as [Workers](/workers/), [Pages](/pages/), [Security Center](/security-center/), and [Bulk redirects](/rules/url-forwarding/bulk-redirects/) - that can affect some or all zones contained within that account.
 
 After you [log in](https://dash.cloudflare.com) and select an account - but before you select a zone - the sidebar will list account-level products.
 
@@ -56,9 +56,9 @@ Accounts also have their own settings, including [account billing profiles](/fun
 
 ### Navigation
 
-When you log into the [Cloudflare dashboard](https://dash.cloudflare.com), you can access all organization accounts where your user account is a member.
+When you log into the [Cloudflare dashboard](https://dash.cloudflare.com), you can access all accounts where your user is a member.
 
-To access organization account settings and account-level products from within a zone, use the **Account Home** option from the **Profile** dropdown.
+To access account settings and account-level products from within a zone, use the **Account Home** option from the **Profile** dropdown.
 
 ![Use the Account Home option in the Profile dropdown to access account settings and products](/fundamentals/static/images/get-started/account-navigation-profile.png)
 
@@ -72,14 +72,14 @@ You can also use the back button near the zone name.
 
 Domains (or [subdomains](/dns/zone-setups/subdomain-setup/)) that are added to Cloudflare become zones.
 
-Zone-level services - such as [Load Balancers](/load-balancing/), [Cache rules](/cache/about/cache-rules/), and more - only affect that domain.
+Zone-level services - such as [Load Balancers](/load-balancing/) and [Cache rules](/cache/about/cache-rules/) - only affect that zone and not other zones, even if they are contained within the same account.
 
 ### Navigation
 
-When you log into the [Cloudflare dashboard](https://dash.cloudflare.com) and choose an organization account, there will be a list of all zones within that account.
+When you log into the [Cloudflare dashboard](https://dash.cloudflare.com) and choose an account, there will be a list of all zones within that account.
 
 Once you are within a zone, items within the sidebar will be zone-related products.
 
-If you need to change to another zone, use the forward arrow next to the zone name or by go back to the homepage of your organization account.
+If you need to change to another zone, use the forward arrow next to the zone name or by go back to the homepage of your account.
 
 ![Use the forward button near the account name to switch between zones in an account](/fundamentals/static/images/get-started/zone-navigation.png)
