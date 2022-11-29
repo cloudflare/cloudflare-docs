@@ -65,7 +65,7 @@ Cloudflare Load Balancers support the following unproxied fields:
     </tr>
       <tr>
       <td>Question</td>
-      <td valign="top"><code>dns.qry.typ</code><br />{{<type>}}boolean{{</type>}}</td>
+      <td valign="top"><code>dns.qry.qu</code><br />{{<type>}}boolean{{</type>}}</td>
       <td>
         <p>A boolean indicating that the received DNS message was a question.</p>
       </td>
