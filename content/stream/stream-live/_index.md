@@ -31,7 +31,7 @@ Stream transcodes and makes live streams available at multiple quality levels by
 
 ### How it works
 
-As live video is streamed to Cloudflare, Stream transcodes it to make it available to viewers at mulitple quality levels. During transcoding, Stream determines every video segment’s actual bandwidth needs for each quality level. This information provides a bandwidth requirement estimate for each quality level in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
+As live video is streamed to Cloudflare, Stream transcodes it to make it available to viewers at multiple quality levels. During transcoding, Stream determines every video segment’s actual bandwidth needs for each quality level. This information provides a bandwidth requirement estimate for each quality level in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
 
 If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS manifest will be lower to ensure as many viewers as possible view the highest quality level because it requires relatively little bandwidth. Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the HLS manifest will be higher to ensure viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
 
