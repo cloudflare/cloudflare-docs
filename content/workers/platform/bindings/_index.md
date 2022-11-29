@@ -13,3 +13,4 @@ There are multiple types of bindings available today:
 2. KV namespace bindings for communication between a Worker and a KV namespace.
 3. R2 bucket bindings for communication between a Worker and an R2 bucket.
 4. Durable Object bindings for communication between a Worker and a Durable Object.
+5. Queue bindings for communication between a Worker and a Queue
