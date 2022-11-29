@@ -87,6 +87,16 @@ export default {
 
   - Returns an {{<code>}}R2Objects{{</code>}} containing a list of {{<code>}}R2Object{{</code>}} contained within the bucket. By default, returns the first 1000 entries.
 
+- {{<code>}}createMultipartUpload(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2MultipartOptions{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2MultipartUpload{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Creates a multipart upload.
+  - Returns Promise which resolves to a {{<code>}}R2MultipartUpload{{</code>}} object representing the newly created multipart upload. Once the multipart upload has been created, the multipart upload can be immediately interacted with globally, either through the workers API, or through the S3 API.
+
+- {{<code>}}resumeMultipartUpload(key{{<param-type>}}string{{</param-type>}}, uploadId{{<param-type>}}string{{</param-type>}}) {{<type>}}R2MultipartUpload{{</type>}}{{</code>}}
+
+  - Returns an object representing a multipart upload with the given key and uploadId.
+  - The resumeMultipartUpload does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the multipart object.
+
 {{</definitions>}}
 
 ## `R2Object` definition
@@ -171,13 +181,56 @@ export default {
 
 {{</definitions>}}
 
+## `R2MultipartUpload` definition
+
+A `R2MultipartUpload` is created when you call `createMultipartUpload` or `resumeMultipartUpload`.
+`R2MultipartUpload` is a representation of an ongoing multipart upload.
+
+Uncompleted multipart uploads will be automatically aborted after 7 days.
+
+{{<Aside type="note">}}
+
+A `R2MultipartUpload` object does not guarantee that there is an active underlying multipart upload corresponding to that object.
+
+A multipart upload can be completed or aborted at any time, either through the S3 API, or by a parralel invocation of your worker. Therefore it is important to add the necessary error handling code around each operation on a `R2MultipartUpload` object in case the underlying multipart upload no longer exists.
+
+{{</Aside>}}
+
+{{<definitions>}}
+
+- {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
+
+  - The key for the multipart upload.
+
+- {{<code>}}uploadId{{<param-type>}}string{{</param-type>}}{{</code>}}
+
+  - The uploadId for the multipart upload.
+
+- {{<code>}}uploadPart(partNumber{{<param-type>}}number{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2UploadedPart{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Uploads a single part with the specified part number to this multipart upload.
+  - Returns an `R2UploadedPart` object containing the etag and partNumber. These `R2UploadedPart` objects are required when completing the multipart upload.
+
+
+- {{<code>}}abort() {{<type>}}Promise\<{{<param-type>}}void{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Aborts the multipart upload. Returns a promise that resolves when the upload has been successfully aborted.
+
+- {{<code>}}complete(uploadedParts{{<param-type>}}R2UploadedPart{{</param-type>}}[]) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Completes the multipart upload with the given parts.
+  - Returns a promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
+
+{{</definitions>}}
+
+
 ## Method-specific types
 
 ### R2GetOptions
 
 {{<definitions>}}
 
-- {{{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
+- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
   
@@ -254,6 +307,20 @@ Only a single hashing algorithm can be specified at once.
 - {{<code>}}sha512{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A SHA-512 hash to use to check the received object's integrity.
+
+{{</definitions>}}
+
+### R2MultipartOptions
+
+{{<definitions>}}
+
+- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
+
+- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - A map of custom, user-defined metadata that will be stored with the object.
 
 {{</definitions>}}
 
@@ -392,7 +459,7 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
  {{</definitions>}}
 
-## Checksums
+### Checksums
 
 If a checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property. The MD5 checksum will be included by default for non-multipart objects.
 
@@ -417,5 +484,22 @@ If a checksum was provided when using the `put()` binding, it will be available 
 - {{<code>}}sha512{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The SHA-512 checksum of the object.
+
+{{</definitions>}}
+
+### R2UploadedPart
+
+A `R2UploadedPart` object represents a part that has been uploaded.
+`R2UploadedPart` objects are returned from uploadPart operations and must be passed to completeMultipartUpload operations.
+
+{{<definitions>}}
+
+- {{<code>}}partNumber{{</code>}} {{<param-type>}}number{{</param-type>}}
+
+  - The number of the part.
+
+- {{<code>}}etag{{</code>}} {{<param-type>}}string{{</param-type>}}
+
+  - The etag of the part.
 
 {{</definitions>}}
