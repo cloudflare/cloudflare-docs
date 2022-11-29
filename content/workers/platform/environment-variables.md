@@ -55,6 +55,24 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
+if using [module workers](https://developers.cloudflare.com/workers/learning/migrating-to-module-workers/) then you will need to add your environment variables explicity.
+```js
+export interface Env {
+  API_TOKEN: string;
+}
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    console.log(env.API_TOKEN)
+  }
+}
+```
+
+
+
 ### Adding secrets via wrangler
 
 Secrets are defined by running [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) in your terminal, where `<KEY>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <KEY> -e` or `wrangler secret put <KEY> --env`. Keep a detailed list of the secrets used in your code in your `wrangler.toml` file, like the example under `[vars]`:
