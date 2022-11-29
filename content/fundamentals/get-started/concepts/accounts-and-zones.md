@@ -38,6 +38,8 @@ An organization account can contain one or more zones. A user account can be par
 
 There are also several account-level products - such as [Workers](/workers/), [Pages](/pages/), [Security Center](/security-center/), [Bulk redirects](/rules/url-forwarding/bulk-redirects/), and more - that can affect some or all zones contained within that account.
 
+After you [log in](https://dash.cloudflare.com) and select an account - but before you select a zone - the sidebar will list account-level products.
+
 Accounts also have their own settings, including [account billing profiles](/fundamentals/account-and-billing/account-setup/create-billing-profile/), [account members](/fundamentals/account-and-billing/account-setup/manage-account-members/), [IP lists](/firewall/cf-firewall-rules/rules-lists/), and more.
 
 ### Navigation
