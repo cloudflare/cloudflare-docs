@@ -37,7 +37,7 @@ If a live stream contains content with low visual complexity, like a slideshow p
 
 ### How you benefit
 
-The live stream bitrate estimates Stream provides are particularly helpful when you are building a platform or application that allows your end users to create their own live streams, and end users have their own streaming software and hardware you cannot control. This functionality adapts based on the live video Stream receives rather than just the configuration advertised by the broadcaster. Even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements which can cause playback quality to decrease unnecessarily. 
+The live stream bitrate estimates Stream provides are particularly helpful when you are building a platform or application that allows your end users to create their own live streams, and when end users have their own streaming software and hardware you cannot control. This functionality adapts based on the live video Stream receives rather than just the configuration advertised by the broadcaster. Even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements which can cause playback quality to decrease unnecessarily. 
 
 Your end users do not have to be OBS Studio experts in order to get high quality video playback, and no work is required on your end — dynamic live bitrate applies to all live inputs for all Cloudflare Stream customers.
 
