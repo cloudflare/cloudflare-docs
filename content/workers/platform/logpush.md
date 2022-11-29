@@ -9,6 +9,8 @@ title: Logpush
 
 ## Verify your Logpush access
 
+Workers Logpush requires a Wrangler version of `2.2.0` or higher. Check your version by running `wrangler version`. Update Wrangler by running `npm update -g wrangler`.
+
 To configure a Logpush job, verify that your Cloudflare account role can use Logpush. To check your role:
 
 1. Sign in to the [Cloudflare dashboard](https://dash.cloudflare.com). 
