@@ -38,7 +38,7 @@ Each user has a profile that contains several settings, such as [Communication p
 
 ### Navigation
 
-To access your profile, click the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
+To access your profile, select the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 ![Use the Profile icon to access your profile settings](/fundamentals/static/images/get-started/profile-navigation.png)
 
