@@ -14,13 +14,13 @@ Wrangler has launched a new version. If you previously had Wrangler 1 installed 
 
 Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/). To use it, you will need to have [`npm`](https://www.npmjs.com/get-npm) and [`Node.js`](https://nodejs.org/en/) installed. Wrangler requires a Node version of `16.13.0` or later.
 
-To get started with Wrangler run:
+To create a Worker project with Wrangler, run:
 
 ```sh
 $ npx wrangler init my-project
 ```
 
-This will create new directory (`my-project`), and setup a new Workers project within it. To start developing your worker, run:
+This will create new directory (`my-project`). To start developing your Worker, run:
 
 ```sh
 $ cd my-project && npm start
@@ -40,5 +40,22 @@ When you are ready to deploy your Worker to Cloudflare's edge network, run:
 ```sh
 $ npm run deploy
 ```
+
+## Update Wrangler
+
+To update Wrangler, run:
+
+```sh
+$ npm update -g wrangler
+```
+
+To update Wrangler only in your current directory, run either of the following commands:
+
+```sh
+$ npm upgrade wrangler --save
+$ npm update wranger --save
+```
+
+## Related resources
 
 For a detailed list of the commands that Wrangler supports, refer to [Commands](/workers/wrangler/commands/). To learn more about Wrangler's configuration file, refer to [Configuration](/workers/wrangler/configuration/).
