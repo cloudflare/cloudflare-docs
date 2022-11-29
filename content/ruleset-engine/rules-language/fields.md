@@ -483,6 +483,35 @@ The Cloudflare Rules language supports these dynamic fields:
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
       </p></td>
     </tr>
+    <tr id="field-cf-waf-score">
+        <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>A global score from 1 to 99 that combines the score of each WAF attack vector into a single score.<br/>
+      This is the standard <a href="/waf/about/waf-attack-score/">WAF attack score</a> to detect variants of attack patterns.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-sqli">
+        <td><code>cf.waf.score.sqli</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-xss">
+        <td><code>cf.waf.score.xss</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-rce">
+        <td><code>cf.waf.score.rce</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
