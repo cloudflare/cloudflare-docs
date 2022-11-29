@@ -415,7 +415,7 @@ Durable Objects is generally available. However, there are some known limitation
 
 Uniqueness is enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception. If the event completes without ever accessing storage, it may not ever realize that the Object was no longer current.
 
-In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself).
+In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling wrangler tail or dashboard logs requires a software update.
 
 ### Development tools
 
@@ -555,10 +555,14 @@ A single instance of a Durable Object cannot do more work than is possible on a 
 
 To solve this you can either do less work per request, or send fewer requests, for example, by splitting the requests among more instances of the Durable Object.
 
-#### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
-
-To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact your Cloudflare account team.
-
 #### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
 
 There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+
+#### Error: Durable Object reset because its code was updated.
+
+Refer to [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness). "Reset" in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
+
+#### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
+
+To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact your Cloudflare account team.
