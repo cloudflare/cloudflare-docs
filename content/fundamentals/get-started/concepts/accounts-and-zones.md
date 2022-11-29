@@ -6,7 +6,7 @@ weight: 4
 
 # Accounts, zones, and profiles
 
-Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: organization accounts, zones, and user profiles.
+Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: user profiles, organization accounts, and zones.
 
 <div class="mermaid">
 flowchart LR
@@ -32,6 +32,18 @@ end
 
 ---
 
+## User profiles
+
+Each user account has a profile that contains several settings related to the specific user, including [Communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/), [Language preferences](/fundamentals/account-and-billing/account-setup/customize-account/language-preference/), and more.
+
+### Navigation
+
+To access your profile, click the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+![Use the Profile icon to access your profile settings](/fundamentals/static/images/get-started/profile-navigation.png)
+
+---
+
 ## Organization accounts
 
 An organization account can contain one or more zones. A user account can be part of one or more organization accounts.
@@ -46,7 +58,11 @@ Accounts also have their own settings, including [account billing profiles](/fun
 
 When you log into the [Cloudflare dashboard](https://dash.cloudflare.com), you can access all organization accounts where your user account is a member.
 
-To access organization account settings from within a zone, either use the back button near the zone name or the **Account Home** option from the **Profile** dropdown.
+To access organization account settings and account-level products from within a zone, use the **Account Home** option from the **Profile** dropdown.
+
+![Use the Account Home option in the Profile dropdown to access account settings and products](/fundamentals/static/images/get-started/account-navigation-profile.png)
+
+You can also use the back button near the zone name.
 
 ![Use the back button near the account name to move from a zone to your account](/fundamentals/static/images/get-started/account-navigation.png)
 
@@ -67,15 +83,3 @@ Once you are within a zone, items within the sidebar will be zone-related produc
 If you need to change to another zone, use the forward arrow next to the zone name or by go back to the homepage of your organization account.
 
 ![Use the forward button near the account name to switch between zones in an account](/fundamentals/static/images/get-started/zone-navigation.png)
-
----
-
-## User profiles
-
-Each user account has a profile that contains several settings related to the specific user, including [Communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/), [Language preferences](/fundamentals/account-and-billing/account-setup/customize-account/language-preference/), and more.
-
-### Navigation
-
-To access your profile, click the user icon and then **My Profile** from any page within the [Cloudflare dashboard](https://dash.cloudflare.com).
-
-![Use the Profile icon to access your profile settings](/fundamentals/static/images/get-started/profile-navigation.png)
