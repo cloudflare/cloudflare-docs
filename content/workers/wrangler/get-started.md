@@ -43,16 +43,27 @@ $ npm run deploy
 
 ## Update Wrangler
 
+To check your Wrangler version, run:
+
+```sh
+$ wrangler version
+```
+
 To update Wrangler, run:
 
 ```sh
 $ npm update -g wrangler
 ```
 
-To update Wrangler only in your current directory, run either of the following commands:
+To update Wrangler only in your current directory, run:
 
 ```sh
 $ npm upgrade wrangler --save
+```
+
+or
+
+```sh
 $ npm update wranger --save
 ```
 
