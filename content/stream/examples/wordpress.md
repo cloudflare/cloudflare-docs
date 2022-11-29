@@ -1,8 +1,6 @@
 ---
 type: example
 summary: Upload videos to WordPress using the Stream WordPress plugin.
-tags:
-  - Playback
 pcx_content_type: configuration
 title: Stream WordPress plugin
 layout: example
