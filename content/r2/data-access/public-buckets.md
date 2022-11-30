@@ -12,7 +12,7 @@ Public Bucket is a feature that allows users to expose the contents of their R2 
 
 Public buckets can be set up in two ways:
 
-1. The first exposes your bucket as a custom domain under your control.
+1. The first exposes your bucket as a custom domain.
 2. The second exposes your bucket as an `*.r2.dev` Cloudflare managed subdomain.
 
 You may choose to do one or both options to test out public buckets.
@@ -33,9 +33,10 @@ By default, only certain file types are cached. To cache all files in your bucke
 
 ### Access control
 
-Restricting access to the bucket behind your custom domain is possible by utilizing Cloudflare's existing security products:
-- Buckets that should only be accessible by your teammates can be protected by making use of [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps).
-- When dynamic authentication of a wide userbase is required, you can make use of [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S).
+To restrict access to your custom domain's bucket, use Cloudflare's existing security products:
+
+- [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protect buckets that should only be accessible by your teammates.
+- [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S): Restrict access to documents, files, and media to selected users by providing them with an access token.
 
 {{<Aside type="warning" header="`r2.dev` public access">}}
 
