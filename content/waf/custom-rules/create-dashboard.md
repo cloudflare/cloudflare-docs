@@ -36,24 +36,10 @@ To create a new custom rule:
 
 7. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-8. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
+8. (Optional) If you selected the _Block_ action, you can [configure the response](#configuring-the-response-for-blocked-requests).
 
 9. To save and deploy your rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-## Configuring a custom response for blocked requests
+## Configuring the response for blocked requests
 
-When you select the _Block_ action in a custom rule you can optionally define a custom response.
-
-The custom response has three settings:
-
-* **Response type**: Choose a content type or the default WAF block response from the list. The available custom response types are the following:
-
-    | Dashboard value | API value |
-    |---|---|
-    | Custom HTML | `"text/html"` |
-    | Custom Text | `"text/plain"` |
-    | Custom JSON | `"application/json"` |
-    | Custom XML | `"text/xml"` |
-
-* **Response code**: Choose an HTTP status code for the response, in the range 400-499. The default response code is 403.
-* **Response body**: The body of the response. Configure a valid body according to the response type you selected.
+{{<render file="_custom-response-blocked-requests.md">}}

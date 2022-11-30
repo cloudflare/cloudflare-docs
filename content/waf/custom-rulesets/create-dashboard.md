@@ -33,7 +33,7 @@ Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 
 8. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-9. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configuring-a-custom-response-for-blocked-requests).
+9. (Optional) If you selected the _Block_ action, you can [configure the response](#configuring-the-response-for-blocked-requests).
 
 10. Select **Add rule**.
 
@@ -63,6 +63,6 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 7. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
 
-## Configuring a custom response for blocked requests
+## Configuring the response for blocked requests
 
 {{<render file="_custom-response-blocked-requests.md">}}
