@@ -39,9 +39,7 @@ Restricting access to the bucket behind your custom domain is possible by utiliz
 
 {{<Aside type="warning" header="Warning">}}
 
-Make sure that public access through [r2.dev is disabled](#disable-managed-public-access-for-your-bucket)
-when you want to restrict access to your bucket with products like WAF or Cloudflare Access.
-Otherwise your bucket will remain publicly available through your r2.dev subdomain.
+Disable public access to your [`r2.dev` subdomain](#disable-managed-public-access-for-your-bucket) when using products like WAF or Cloudflare Access. If you do not disable public access, your bucket will remain publicly available through your `r2.dev` subdomain.
 
 {{</Aside>}}
 
