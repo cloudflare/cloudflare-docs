@@ -985,9 +985,9 @@ The Rules language includes fields that represent properties of an HTTP request 
 
 {{<Aside type="warning">}}
 
-The value of `http.request.body.*` fields has a maximum size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will contain the full size of the request without any truncation.
 
-The maximum body size applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
+The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
 
 {{</Aside>}}
 
@@ -1020,6 +1020,15 @@ The Cloudflare Rules language supports these HTTP body fields:
          <p>Indicates whether the HTTP request body is truncated.
          </p>
          <p>When true, <code class="InlineCode">http.request.body</code> fields may not contain all of the HTTP request body.
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-size">
+      <td valign="top"><code>http.request.body.size</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>The total size of the HTTP request body (in bytes).
+         </p>
+         <p>Note: This field may have a value larger than the one returned by <code>len(http.request.body.raw)</code>, since the <code>http.request.body.raw</code> field only considers the first 128 KB of the request.
          </p>
       </td>
     </tr>
