@@ -56,4 +56,5 @@ $ npm update wranger --save
 
 ## Related resources
 
-For a detailed list of the commands that Wrangler supports, refer to [Commands](/workers/wrangler/commands/). To learn more about Wrangler's configuration file, refer to [Configuration](/workers/wrangler/configuration/).
+* [Commands](/workers/wrangler/commands/) - A detailed list of the commands that Wrangler supports. 
+* [Configuration](/workers/wrangler/configuration/) - Learn more about Wrangler's configuration file.
