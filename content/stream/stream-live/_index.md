@@ -25,21 +25,25 @@ Stream handles video streaming end-to-end, from ingestion through delivery.
 
 As long as your streaming software reconnects, Stream Live will continue to ingest and stream your live video. Make sure the streaming software you use to push RTMP feeds automatically reconnects if the connection breaks. Some apps like OBS reconnect automatically while other apps like FFmpeg require custom configuration.
 
-## Bitrate estimates at each quality level
+## Bitrate estimates at each quality level (bitrate ladder)
 
-Stream transcodes and makes live streams available at multiple quality levels by estimating a live stream's bitrate.These estimates ensure that live video plays at the highest quality a viewer has adequate bandwidth to play.
+Cloudflare Stream transcodes and makes live streams available to viewers at multiple quality levels. This is commonly referred to as [Adaptive Bitrate Streaming (ABR)](https://www.cloudflare.com/learning/video/what-is-adaptive-bitrate-streaming).
+
+With ABR, client video players need to be provided with estimates of how much bandwidth will be needed to play each quality level (ex: 1080p). Stream creates and updates these estimates dynamically by analyzing the bitrate of your users' live streams. This ensures that live video plays at the highest quality a viewer has adequate bandwidth to play, even in cases where the broadcaster's software or hardware provides incomplete or inaccurate information about the bitrate of their live content.
 
 ### How it works
 
-As live video is streamed to Cloudflare, Stream transcodes it to make it available to viewers at multiple quality levels. During transcoding, Stream determines every video segment’s actual bandwidth needs for each quality level. This information provides a bandwidth requirement estimate for each quality level in HLS (`.m3u8`) and DASH (`.mpd`) manifests.
 
-If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS manifest will be lower to ensure as many viewers as possible view the highest quality level because it requires relatively little bandwidth. Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the HLS manifest will be higher to ensure viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
+If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS and DASH manifests will be lower —  a stream like this has a low bitrate and requires relatively little bandwidth, even at high resolution.  This ensures that as many viewers as possible view the highest quality level.
+
+Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the manifest will be higher — a stream like this has a high bitrate and requires more bandwidth. This ensures that viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
 
 ### How you benefit
 
-The live stream bitrate estimates Stream provides are particularly helpful when you are building a platform or application that allows your end users to create their own live streams, and when end users have their own streaming software and hardware you cannot control. This functionality adapts based on the live video Stream receives rather than just the configuration advertised by the broadcaster. Even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements which can cause playback quality to decrease unnecessarily. 
+If you're building a creator platform or any application where your end users create their own live streams, your end users likely use streaming software or hardware that you cannot control. In practice, these live streaming setups often send inaccurate or incomplete information about the bitrate of a given live stream, or are misconfigured by end users.
 
-Your end users do not have to be OBS Studio experts in order to get high quality video playback, and no work is required on your end — dynamic live bitrate applies to all live inputs for all Cloudflare Stream customers.
+Stream adapts based on the live video that we actually receive, rather than blindly trusting the advertised bitrate. This means that even in cases where your end users' settings are less than ideal, client video players will still receive the most accurate bitrate estimates possible, ensuring the highest quality video playback for your viewers, while avoiding pushing configuration complexity back onto your users.
+
 
 ## Billing
 
