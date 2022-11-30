@@ -37,7 +37,7 @@ Restricting access to the bucket behind your custom domain is possible by utiliz
 - Buckets that should only be accessible by your teammates can be protected by making use of [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps).
 - When dynamic authentication of a wide userbase is required, you can make use of [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S).
 
-{{<Aside type="warning" header="Warning">}}
+{{<Aside type="warning" header="`r2.dev` public access">}}
 
 Disable public access to your [`r2.dev` subdomain](#disable-managed-public-access-for-your-bucket) when using products like WAF or Cloudflare Access. If you do not disable public access, your bucket will remain publicly available through your `r2.dev` subdomain.
 
