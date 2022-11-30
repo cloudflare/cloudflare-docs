@@ -5,7 +5,7 @@ summary: Block other websites from linking to your content. This is useful for
 tags:
   - Security
   - Headers
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Hot-link protection
 weight: 1001
 layout: example

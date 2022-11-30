@@ -1,6 +1,6 @@
 ---
 title: Communication preferences
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Communication preferences

@@ -1,6 +1,7 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Web Analytics FAQ
+layout: single
 ---
 
 # Web Analytics FAQ
@@ -43,6 +44,10 @@ Since only one JS snippet can be rendered and used per page, you cannot have mul
 
 {{</Aside>}}
 
+### My website is proxied through Cloudflare, but Web Analytic's automatic setup is not working.
+
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
+
 ---
 
 ## Setup
@@ -59,13 +64,13 @@ Using a domain proxied through Cloudflare with [automatic setup] will report sta
 
 Yes. Instead of embedding the script using a tag manager as shown here:
 
-```bash
+```html
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "$SITE_TOKEN"}'></script>
 ```
 
 Add the following script:
 
-```bash
+```html
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN'></script>
 ```
 

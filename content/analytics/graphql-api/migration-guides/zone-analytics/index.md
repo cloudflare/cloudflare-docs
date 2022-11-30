@@ -1,12 +1,12 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Zone Analytics to GraphQL Analytics
 weight: 12
 ---
 
 # Zone Analytics to GraphQL Analytics
 
-The [Zone Analytics API](https://api.cloudflare.com/#zone-analytics-properties) allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
+The [Zone Analytics API](https://developers.cloudflare.com/api/operations/zone-analytics-(-deprecated)-get-dashboard) allows you to get request data by zone. It offers optional `since` and `until` parameters to specify the request time period and a `continuous` parameter to indicate whether the time period should be moved backward to find a period with completely aggregated data.
 
 For example, here is a sample curl call to get data for a two minute period:
 

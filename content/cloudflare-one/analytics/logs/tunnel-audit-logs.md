@@ -1,12 +1,12 @@
 ---
-pcx-content-type: reference
-title: Tunnel Audit logs
+pcx_content_type: reference
+title: Tunnel audit logs
 weight: 6
 ---
 
-# Tunnel Audit logs
+# Tunnel audit logs
 
-Audit Logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log) which you can find by clicking on your name or email in the upper right-hand corner of the dashboard. The following actions are logged:
+Audit logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log) which you can find by clicking on your name or email in the upper right-hand corner of the dashboard. The following actions are logged:
 
 | Action       | Description                                                                                         |
 | ------------ | --------------------------------------------------------------------------------------------------- |

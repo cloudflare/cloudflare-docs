@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Using Durable Objects
-weight: 0
+weight: 11
 ---
 
 # Using Durable Objects
@@ -12,9 +12,11 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 - The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
-For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects).
+For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
+
+[The Workers community on Discord](https://discord.gg/cloudflaredev) has a #durable-objects channel where you can ask questions, show off what you are building, and discuss Durable Objects with other developers.
 
 ## Using Durable Objects
 
@@ -151,7 +153,7 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 {{</Aside>}}
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. They also provide a method for guaranteeing work within a Durable Object will complete without relying on incoming requests to keep the object alive. For more discussion about alarms, refer to the [announcement blog post](https://blog.cloudflare.com/durable-objects-alarms/).
 
 ## Instantiating and communicating with a Durable Object
 
@@ -171,7 +173,7 @@ When a Worker talks to a Durable Object, it does so through a stub object. The c
 
 The fetch handler in the example below implements the Worker that talks to the Durable Object. Note that the fetch handler is written using a new kind of Workers syntax based on ES Modules. This syntax is required for scripts that export Durable Objects classes, but is not required for scripts that make calls to Durable Objects. However, Workers written in the modules syntax (including Durable Objects) cannot share a script with Workers written in the Service Worker syntax.
 
-We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) not only because it is convenient, but also because as of today it is not possible to upload a script to the runtime that does not implement a fetch handler.
+We recommend following this approach of implementing Durable Objects and a corresponding fetch handler in the same script (written in the modules format) for convenience, but it is not required.
 
 ES Modules differ from regular JavaScript files in that they have imports and exports. [As shown earlier](/workers/learning/using-durable-objects/#writing-a-class-that-defines-a-durable-object), you wrote `export class DurableObjectExample` when defining our class. To implement a fetch handler, you must export a method named `fetch` in an `export default {}` block.
 
@@ -219,7 +221,7 @@ export default {
 
 Learn more about communicating with a Durable Object in the [Workers Durable Objects API reference](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker).
 
-{{<Aside header="String-derived IDs versus system-generated IDs">}}
+{{<Aside type="note" header="String-derived IDs versus system-generated IDs">}}
 
 In the above example, you used a string-derived object ID by calling the `idFromName()` function on the binding. You can also ask the system to generate random unique IDs. System-generated unique IDs have better performance characteristics, but require that you store the ID somewhere in order to access the object again later. Refer to the [API reference documentation](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for more information.
 
@@ -376,7 +378,7 @@ You should provide an `--old-tag` value whenever possible. This value should be 
 
 The list of CLI migration arguments that can be added to `wrangler publish` is as follows:
 
-```sh
+```bash
 --old-tag <tag name> # Optional if your script does not have a migration tag set yet.
 --new-tag <tag name> # new-tag and old-tag are optional if you only use CLI migrations.
 
@@ -413,7 +415,7 @@ Durable Objects is generally available. However, there are some known limitation
 
 Uniqueness is enforced upon starting a new event (such as receiving an HTTP request), and upon accessing storage. After an event is received, if the event takes some time to execute and does not ever access its durable storage, then it is possible that the Durable Object instance may no longer be current, and some other instance of the same Object ID will have been created elsewhere. If the event accesses storage at this point, it will receive an exception. If the event completes without ever accessing storage, it may not ever realize that the Object was no longer current.
 
-In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself).
+In particular, a Durable Object may be superseded in this way in the event of a network partition or a software update (including either an update of the Durable Object's class code, or of the Workers system itself). Enabling `wrangler tail` or dashboard logs requires a software update.
 
 ### Development tools
 
@@ -553,6 +555,14 @@ A single instance of a Durable Object cannot do more work than is possible on a 
 
 To solve this you can either do less work per request, or send fewer requests, for example, by splitting the requests among more instances of the Durable Object.
 
+#### Error: Your account is generating too much load on Durable Objects. Please back off and try again later.
+
+There is a limit on how quickly you can [create new objects or lookup different existing objects](/workers/runtime-apis/durable-objects/#obtaining-an-object-stub). Those lookups are usually cached, meaning attempts for the same set of recently accessed objects should be successful, so catching this error and retrying after a short wait is safe. If possible, also consider spreading those lookups across multiple requests.
+
+#### Error: Durable Object reset because its code was updated.
+
+Refer to [Global Uniqueness](/workers/learning/using-durable-objects/#global-uniqueness). "Reset" in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
+
 #### Error: Durable Object storage operation exceeded timeout which caused object to be reset.
 
-To prevent indefinite locking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact support.
+To prevent indefinite blocking, there is a limit on how much time storage operations can take. In objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).

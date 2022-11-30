@@ -1,6 +1,6 @@
 ---
 title: Verify IRR entries
-pcx-content-type: reference
+pcx_content_type: reference
 ---
 
 # Verify IRR entries

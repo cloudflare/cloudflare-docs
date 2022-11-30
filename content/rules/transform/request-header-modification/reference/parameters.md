@@ -1,6 +1,6 @@
 ---
 title: API parameter reference
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 4
 meta:
   title: Request header modification API parameter reference

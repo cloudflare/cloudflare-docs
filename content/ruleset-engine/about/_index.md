@@ -1,6 +1,6 @@
 ---
 title: About
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 meta:
   title: About Ruleset Engine

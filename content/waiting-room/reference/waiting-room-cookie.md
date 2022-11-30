@@ -1,11 +1,11 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Cookies
 ---
 
 # Cookies
 
-A waiting room only uses the `__cfwaitingroom` cookie when a visitor requests access to a host and path combination with an enabled and associated waiting room. When the waiting room is suspended, traffic goes to the origin and the `__cfwaitingroom` cookie is not created. The `__cfwaitingroom` cookie is encrypted and cookies copied to another device will not work.
+A waiting room only uses the `__cfwaitingroom` cookie when a visitor requests access to a host and path combination with an enabled and associated waiting room. When the waiting room is suspended, traffic goes to the origin and the `__cfwaitingroom` cookie is not created. The `__cfwaitingroom` cookie is encrypted to prevent modification by users.
 
 {{<Aside type="warning" header="Important:">}}
 
@@ -15,7 +15,7 @@ Cloudflare Waiting Room requires the `__cfwaitingroom` cookie. When a waiting ro
 
 ## Cookie expiration time
 
-- While a visitor stays in a waiting room, the `__cfwaitingroom` cookie is set to expire in 24 hours.
+- While a visitor stays in a waiting room, `__cfwaitingroom` cookie expiration is always set to five minutes, but renews every 20 seconds automatically as long as the visitor does not close the tab or leaves your application.
 - When the visitor accesses the application, the `__cfwaitingroom` cookie expires after an interval (specified by [session_duration](/waiting-room/reference/configuration-settings/#session-duration)).
 
 ## Cookie function

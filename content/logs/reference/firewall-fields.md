@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Firewall fields
 weight: 124
 ---
@@ -23,13 +23,12 @@ The Firewall fields contain rules to block requests that contain specific types 
 | `connectionClose`                      | Close          | Close connection.                                                                            |
 | `challengeSolved`                      | Allow          | Allow once CAPTCHA challenge solved.                                                         |
 | `challengeFailed`                      | Drop           | Block following invalid CAPTCHA solve attempt.                                               |
-| `challengeBypassed`                    | Allow          | CAPTCHA challenge not issued because visitor had previously passed a CAPTCHA challenge.      |
+| `challengeBypassed`                    | Allow          | CAPTCHA challenge is not issued again because the visitor had previously passed a CAPTCHA challenge and a valid `cf_clearance` cookie is present.  |
 | `jschallengeSolved`                    | Allow          | Allow once JS challenge solved.                                                              |
 | `jschallengeFailed`                    | Drop           | Drop if JS challenge failed.                                                                 |
 | `jschallengeBypassed`                  | Allow          | JS challenge not issued because the visitor had previously passed a JS or CAPTCHA challenge. |
 | `bypass`                               | Allow          | Bypass all subsequent firewall rules.                                                        |
 | `managedChallenge`                     | Challenge Drop | Issue managed challenge.                                                                     |
-| `managedChallengeSkipped`              | Allow          | Skip managed challenge and allow.                                                            |
 | `managedChallengeNonInteractiveSolved` | Allow          | Allow once the managed challenge is solved via non-interactive interstitial page.            |
 | `managedChallengeInteractiveSolved`    | Allow          | Allow once the managed challenged is solved via interactive interstitial page.               |
 | `managedChallengeBypassed`             | Allow          | Challenge was not presented because visitor had clearance from previous challenge.           |

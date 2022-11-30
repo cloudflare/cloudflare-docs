@@ -1,7 +1,8 @@
 ---
-pcx-content-type: overview
+pcx_content_type: overview
 title: DNS Firewall
 weight: 9
+layout: single
 ---
 
 # DNS Firewall
@@ -35,10 +36,11 @@ DNS Firewall provides the following benefits while allowing organizations total 
 
 ## Availability
 
-DNS Firewall is only available to customers on the [Enterprise plan](https://www.cloudflare.com/plans/enterprise/).
+{{<feature-table id="dns.dns_firewall">}}
 
 ## Resources
 
 *   [Setup](/dns/dns-firewall/setup/)
 *   [Analytics](/dns/dns-firewall/analytics/)
+*   [Random prefix attack mitigation](/dns/dns-firewall/random-prefix-attacks/)
 *   [FAQs](/dns/dns-firewall/faq/)

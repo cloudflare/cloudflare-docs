@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: AV scanning
-weight: 7
+weight: 8
 ---
 
 # AV scanning

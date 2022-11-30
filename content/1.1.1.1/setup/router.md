@@ -1,6 +1,6 @@
 ---
 weight: 10
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Router
 meta:
     title: Set up 1.1.1.1 on a router

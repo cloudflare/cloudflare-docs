@@ -1,6 +1,6 @@
 ---
 title: CDN-Cache-Control
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # CDN-Cache-Control

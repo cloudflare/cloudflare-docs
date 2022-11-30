@@ -4,7 +4,7 @@ summary: Fetch weather data from an API using the user's geolocation data.
 tags:
   - Originless
   - Geolocation
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: 'Geolocation: Weather application'
 weight: 1001
 layout: example

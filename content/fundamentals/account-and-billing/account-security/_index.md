@@ -1,7 +1,7 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Account security
-weight: 2
+weight: 3
 ---
 
 # Account security

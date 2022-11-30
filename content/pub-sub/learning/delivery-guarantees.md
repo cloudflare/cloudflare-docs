@@ -1,6 +1,6 @@
 ---
 title: Delivery guarantees
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 3
 layout: list
 ---

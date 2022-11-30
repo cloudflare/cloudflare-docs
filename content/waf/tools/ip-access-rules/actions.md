@@ -1,6 +1,6 @@
 ---
 title: Actions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 4
 meta:
   title: IP Access rules actions
@@ -14,7 +14,7 @@ An IP Access rule can perform one of the following actions:
 
 * **Allow**: Excludes visitors from all security checks, including [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086), [I'm Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076), and the WAF. Use this option when a trusted visitor is being blocked by Cloudflare's default security features. The _Allow_ action takes precedence over the _Block_ action. Note that allowing a given country code will not bypass the Cloudflare Web Application Firewall (WAF) .
 
-* **Managed Challenge**: Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from a list of possible actions. For more information, refer to [Understanding Cloudflare Captchas, Managed Challenge, and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136#managed-challenge).
+* **Managed Challenge**: Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from a list of possible actions. For more information, refer to [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge).
 
 * **JavaScript Challenge**: Presents the [I'm Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076) interstitial page to visitors. The visitor or client must support JavaScript. Useful for blocking DDoS attacks with minimal impact to legitimate visitors.
 

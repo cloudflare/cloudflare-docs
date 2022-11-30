@@ -5,7 +5,7 @@ tags:
   - Middleware
   - Caching
   - Cache API
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Cache POST requests
 weight: 1001
 layout: example

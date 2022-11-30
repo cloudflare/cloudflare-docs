@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Extended DNS error codes
 layout: list
 ---
@@ -19,10 +19,10 @@ layout: list
 <table>
     <thead>
         <tr>
-            <th style="width:5%">Code Number</th>
-            <th style="width:20%">Code Name</th>
-            <th style="width:35%">Example Output</th>
-            <th style="width:40%">Next Steps</th>
+            <th style="width:5%">Code number</th>
+            <th style="width:20%">Code name</th>
+            <th style="width:35%">Example output</th>
+            <th style="width:40%">Next steps</th>
         </tr>
     </thead>
     <tbody>
@@ -47,7 +47,11 @@ layout: list
         <tr>
             <td>6</td>
             <td>DNSSEC Bogus</td>
-            <td><code>EDE: 6 (DNSSEC Bogus): (proof of non-existence of example.com. A)</code></td>
+            <td>
+                <code>EDE: 6 (DNSSEC Bogus): (proof of non-existence of example.com. A)</code>
+                <br/><br/>
+                <code>EDE: 6 (DNSSEC Bogus): (found duplicate CNAME records for example.com. (1 duplicate RRs))</code>
+            </td>
             <td>This domain did not pass DNSSEC validation. The signatures for the target record, or the proof of non-existence of the target records, are invalid. Check your <a href="/dns/">DNS configuration</a>.</td>
         </tr>
         <tr>
@@ -72,7 +76,7 @@ layout: list
             <td>10</td>
             <td>RRSIGs Missing</td>
             <td><code>EDE: 10 (RRSIGs Missing): (for DNSKEY example.com., id = 12345)</code></td>
-            <td>This domain did not pass DNSSEC validation. 1.1.1.1 was unable to retrieve Resource Record Signatures (RRSigs) to verify the authenticity of the records. Check your <a href="/dns/">DNS configuration</a>.</td>
+            <td>1.1.1.1 was unable to retrieve Resource Record Signatures (RRSigs) to verify the authenticity of the records. Check your <a href="/dns/">DNS configuration</a> and the response code. If the response code is not <code>SERVFAIL</code> this error indicates that there is a key rollover at the zone, or a key that is only used to sign the Zone Signing Key (ZSK).</td>
         </tr>
         <tr>
             <td>11</td>

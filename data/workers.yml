@@ -11,7 +11,13 @@ meta:
     environment that allows you to create entirely new applications or augment
     existing ones without configuring or maintaining infrastructure.
   author: '@cloudflare'
-  image: /workers/static/og-image.png
+  image: /dev-products-preview.png
+
+resources:
+  community: https://community.cloudflare.com/c/developers/workers/40
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
+  learning_center: https://www.cloudflare.com/learning/serverless/what-is-serverless/
+  discord: https://discord.com/invite/cloudflaredev
 
 externals:
   - title: Workers home

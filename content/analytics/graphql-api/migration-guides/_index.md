@@ -1,5 +1,5 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Migration guides
 weight: 61
 ---
@@ -12,7 +12,7 @@ If you are currently using the deprecated `httpRequests1mByColoGroups` or `httpR
 
 ## Zone Analytics migrations
 
-If you are currently using the [Zone Analytics API](https://api.cloudflare.com/#zone-analytics-properties), the following guide will help you migrate your queries to the new GraphQL Analytics API:
+If you are currently using the [Zone Analytics API](https://developers.cloudflare.com/api/operations/zone-analytics-(-deprecated)-get-dashboard), the following guide will help you migrate your queries to the new GraphQL Analytics API:
 
 *   [Zone Analytics to GraphQL Analytics](/analytics/graphql-api/migration-guides/zone-analytics/)
 *   [Zone Analytics Colos Endpoint to GraphQL Analytics](/analytics/graphql-api/migration-guides/zone-analytics-colos/)

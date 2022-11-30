@@ -1,7 +1,7 @@
 ---
 title: 2020-07-07 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 967
 layout: list
 meta:

@@ -1,9 +1,9 @@
 ---
 type: overview
 hideChildren: true
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Tutorials
-weight: 10
+weight: 11
 
 layout: table
 column_text: Type

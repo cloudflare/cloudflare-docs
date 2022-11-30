@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-pcx-content-type: faq
+pcx_content_type: faq
 weight: 6
 meta:
   title: Troubleshooting Keyless SSL
@@ -19,7 +19,7 @@ To check logs, use a command similar to the following.
 
 To enable debug logging, use a command similar to the following.
 
-```bash
+```sh
 $ cd /etc/keyless
 $ sudo -u keyless gokeyless --loglevel 0
 ```

@@ -1,6 +1,6 @@
 ---
 title: Recommended client libraries
-pcx-content-type: reference
+pcx_content_type: reference
 type: example
 summary: A list of client libraries vetted by Cloudflare.
 ---

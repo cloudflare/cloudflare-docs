@@ -1,6 +1,6 @@
 ---
 title: Setup
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: Set up DNS Firewall
@@ -18,7 +18,7 @@ Prior to setting up DNS Firewall, you need:
 
 ## Configure DNS Firewall
 
-### Create a Firewall Cluster
+### Create a DNS Firewall cluster
 
 #### Using the dashboard
 
@@ -42,7 +42,7 @@ If you forget to save your new IP addresses, find your cluster and click **IP Ad
 
 #### Using the API
 
-You can also create a Firewall Cluster by sending a [POST request](https://api.cloudflare.com/#dns-firewall-create-dns-firewall-cluster) to the API.
+You can also create a DNS Firewall cluster by sending a [POST request](https://developers.cloudflare.com/api/operations/dns-firewall-create-dns-firewall-cluster) to the API.
 
 ### Update registrar settings
 

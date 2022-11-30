@@ -1,6 +1,6 @@
 ---
 title: WritableStream DefaultWriter
-pcx-content-type: configuration
+pcx_content_type: configuration
 meta:
   title: WritableStreamDefaultWriter
 ---
@@ -46,11 +46,10 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
 - {{<code>}}abort(reason{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
-      *   Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
+  - Aborts the stream. This method returns a promise that fulfills with a response `undefined`. `reason` is an optional human-readable string indicating the reason for cancellation. `reason` will be passed to the underlying sink’s abort algorithm. If this writable stream is one side of a [TransformStream](/workers/runtime-apis/streams/transformstream/), then its abort algorithm causes the transform’s readable side to become errored with `reason`.
 
-        {{<Aside type="warning" header="Warning">}}
-
-  Any data not yet written is lost upon abort.
+  {{<Aside type="warning" header="Warning">}}
+Any data not yet written is lost upon abort.
   {{</Aside>}}
 
 - `close()` {{<type>}}Promise\<void>{{</type>}}
@@ -61,14 +60,14 @@ writeArrayToStream([1, 2, 3, 4, 5], writableStream)
 
   - Releases the writer’s lock on the stream. Once released, the writer is no longer active. You can call this method before all pending `write(chunk)` calls are resolved. This allows you to queue a `write` operation, release the lock, and begin piping into the writable stream from another source, as shown in the example below.
 
-    ```js
-    let writer = writable.getWriter();
-    // Write a preamble.
-    writer.write(new TextEncoder().encode('foo bar'));
-    // While that’s still writing, pipe the rest of the body from somewhere else.
-    writer.releaseLock();
-    await someResponse.body.pipeTo(writable);
-    ```
+```js
+let writer = writable.getWriter();
+// Write a preamble.
+writer.write(new TextEncoder().encode('foo bar'));
+// While that’s still writing, pipe the rest of the body from somewhere else.
+writer.releaseLock();
+await someResponse.body.pipeTo(writable);
+```
 
 - {{<code>}}write(chunk{{<param-type>}}any{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 

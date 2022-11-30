@@ -1,5 +1,5 @@
 ---
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Concepts
 weight: 2
 meta:
@@ -13,5 +13,5 @@ As you get started with Cloudflare's IPFS Gateway, you may want to read through 
 {{<directory-listing>}}
 
 {{<Aside type="note">}}
-For help with additional concepts, refer to the [IPFS documentation](https://docs.ipfs.io/concepts/).
+For help with additional concepts, refer to the [IPFS documentation](https://docs.ipfs.tech/concepts/).
 {{</Aside>}}

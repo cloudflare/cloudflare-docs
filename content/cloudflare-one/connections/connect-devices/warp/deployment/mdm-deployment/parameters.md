@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Parameters
 weight: 2
 ---
@@ -32,7 +32,7 @@ This field is only required to enforce DNS policies when deploying the client in
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific policy location. This value is only necessary if deploying without a team name or in an organization with multiple policy locations.
+Instructs the client to direct all DNS queries to a specific Gateway DNS location. This value is only necessary if deploying without a team name or in an organization with multiple DNS locations.
 
 **Value Type:** `string`
 
@@ -73,7 +73,7 @@ Allows the user to turn off the WARP switch and disconnect the client.
 **Value:**
 
 - `false` &mdash; (default) The user is able to turn the switch on/off at their discretion. When the switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
-- `true` &mdash; The user is prevented from turning off the switch.
+- `true` &mdash; The user is prevented from turning off the switch. The WARP client will automatically start in the connected state.
 
 On new deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
 
@@ -85,7 +85,7 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `auto_connect`
 
-If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi.
+If switch has been turned off by user, the client will automatically turn itself back on after the specified number of minutes. We recommend keeping this set to a very low value &mdash; usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified for `auto_connect` the default state of the WARP client will always be Connected (for example, after the initial install or a reboot).
 
 **Value Type:** `integer`
 
@@ -109,19 +109,67 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 - `https://<support.example.com>` &mdash; Use an `https://` link to open your company's internal help site.
 - `mailto:<yoursupport@example.com>` &mdash; Use a `mailto:` link to open your default mail client.
 
+### `override_api_endpoint`
+
+{{<Aside type="note">}}
+Requires WARP version 2022.10.0.0 or later.
+{{</Aside>}}
+
+Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) used by the WARP client to communicate with the client orchestration API. If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+
+This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all API traffic to a new IP.
+
+**Value Type:** `string`
+
+**Value:** `1.2.3.4` &mdash; Redirect all client orchestration API calls to `1.2.3.4`.
+
+The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
+
+### `override_doh_endpoint`
+
+{{<Aside type="note">}}
+Requires WARP version 2022.10.0.0 or later.
+{{</Aside>}}
+
+Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) used by the WARP client to resolve DNS queries via DNS over HTTPS (DoH). If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+
+This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all DoH traffic to a new IP.
+
+**Value Type:** `string`
+
+**Value:** `1.2.3.4` &mdash; Redirect all DNS over HTTPS lookups to `1.2.3.4`.
+
+The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
+
+### `override_warp_endpoint`
+
+{{<Aside type="note">}}
+Requires WARP version 2022.10.0.0 or later.
+{{</Aside>}}
+
+Overrides the [IP address and UDP port](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge.  If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+
+This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all WARP traffic to a new IP.
+
+**Value Type:** `string`
+
+**Value:** `1.2.3.4:500` &mdash; Redirect all WARP traffic to `1.2.3.4` on port `500`.
+
+The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
+
 ## Authentication with service tokens
 
 {{<Aside>}}
 Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity-based rules.
 {{</Aside>}}
 
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a pre-generated [Service Token](/cloudflare-one/identity/service-tokens/).
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a [service token](/cloudflare-one/identity/service-tokens/). Before you can authenticate clients using the service token, you must add a new rule to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) that includes the token, with the **Rule action** set to `Service Auth`.
 
 Both `auth_client_id` and `auth_client_secret` are required when using this authentication method.
 
 ### `auth_client_id`
 
-The automatically generated ID when you created your [Service Token](/cloudflare-one/identity/service-tokens/).
+The automatically generated ID when you created your [service token](/cloudflare-one/identity/service-tokens/).
 
 **Value Type:** `string`
 
@@ -129,7 +177,7 @@ The automatically generated ID when you created your [Service Token](/cloudflare
 
 ### `auth_client_secret`
 
-The automatically generated secret when you created your [Service Token](/cloudflare-one/identity/service-tokens/).
+The automatically generated secret when you created your [service token](/cloudflare-one/identity/service-tokens/).
 
 **Value Type:** `string`
 
@@ -138,7 +186,7 @@ The automatically generated secret when you created your [Service Token](/cloudf
 ## Frequently Asked Questions
 
 - **What happens if I don't supply a Gateway DoH subdomain?**
-  If you specify an `organization`, we will automatically use the default location specified in Gateway.
+  If you specify an `organization`, we will automatically use the default DNS location specified in Gateway.
 
 - **How do I obtain logs in the event of an issue with client?**
   The macOS and Windows clients installations each contain an application in their installed folders called `warp-diag` that can be used to obtain logs.

@@ -1,7 +1,8 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Understanding the basics
 weight: 12
+layout: single
 ---
 
 # Understanding the basics
@@ -36,7 +37,7 @@ To turn the resulting log data into a JSON array with one array element per log 
 
 The following is a sample log with default fields:
 
-```bash
+```json
 {
     "ClientIP": "89.163.242.206",
     "ClientRequestHost": "www.theburritobot.com",

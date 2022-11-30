@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Network policies
 weight: 3
 layout: single
@@ -65,8 +65,6 @@ You can apply Network policies to a growing list of popular web applications. Re
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
-
 ### Destination Continent
 
 The continent that the request is destined for. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
@@ -114,7 +112,7 @@ With the Device Posture selector, admins can use signals from end-user devices t
 
 | UI name        | API example                                                                                                                                                             |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Device Posture | `any(device_posture.checks.failed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})`, `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})"` |
+| Passed Device Posture Check | `any(device_posture.checks.failed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})`, `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})"` |
 
 ### Protocol
 
@@ -181,7 +179,7 @@ The IP address of the user making the request.
 
 ### Source Port
 
-The IP address of the user making the request.
+The source port of the user making the request.
 
 | UI name     | API example              |
 | ----------- | ------------------------ |

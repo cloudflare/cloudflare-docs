@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Enable Universal SSL certificates
 weight: 2
 ---
@@ -7,15 +7,13 @@ weight: 2
 # Enable Universal SSL certificates
 
 {{<render file="_universal-ssl-definition.md">}}
+<br />
 
-\
 The process for activating a Universal SSL certificate depends on your domain's DNS setup.
 
 ## Full DNS setup
 
-For an authoritative or full domain — domains that changed their [domain nameservers](/dns/zone-setups/full-setup/) – your domain should **automatically** receive its Universal SSL certificate between **15 minutes to 24 hours** of domain activation. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
-
-This certificate covers your root domain (`example.com`) and all first-level subdomains (`subdomain.example.com`).
+{{<render file="_universal-ssl-enable-full.md">}}
 
 ### Minimize downtime
 
@@ -41,4 +39,4 @@ Unless you cover and validate multiple subdomains with an [advanced certificate]
 
 ## Verify your certificate is active
 
-Once you enable Universal SSL, you can review the [certificate's status](/ssl/ssl-tls/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://api.cloudflare.com/#certificate-packs-list-certificate-packs).
+Once you enable Universal SSL, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](https://developers.cloudflare.com/api/operations/certificate-packs-list-certificate-packs).

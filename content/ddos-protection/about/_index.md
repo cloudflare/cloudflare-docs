@@ -1,6 +1,6 @@
 ---
 title: About
-pcx-content-type: concept
+pcx_content_type: concept
 layout: single
 weight: 4
 meta:

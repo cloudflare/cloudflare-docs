@@ -1,6 +1,6 @@
 ---
 title: Regions API
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 0
 meta:
   title: Cloudflare Load Balancing Regions API
@@ -20,7 +20,7 @@ There are two main optional parameters for the Region API:
 - country_code is a string containing a two-letter alpha-2 country code per ISO 3166-1. For example: /load_balancers/regions?country_code=US
 - subdivision_code is a string containing a two-letter subdivision code for the U.S. and Canada per ISO 3166-2. For example: /load_balancers/regions?subdivision_code=CA
 
-For additional details and examples on using the Region Mapping API, see [Cloudflare’s API documentation](https://api.cloudflare.com/#load-balancer-regions-properties).
+For additional details and examples on using the Region Mapping API, see [Cloudflare’s API documentation](https://developers.cloudflare.com/api/operations/load-balancer-regions-list-regions).
 
 ## List of Load Balancer regions
 

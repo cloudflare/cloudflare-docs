@@ -1,6 +1,6 @@
 ---
 title: Configure in the dashboard
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 4
 meta:
   title: Configure URL normalization in the dashboard

@@ -1,7 +1,7 @@
 ---
 title: Account maintenance
-pcx-content-type: navigation
-weight: 3
+pcx_content_type: navigation
+weight: 4
 ---
 
 # Account maintenance

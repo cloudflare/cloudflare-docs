@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: URL upload
 weight: 3
 meta:
@@ -10,7 +10,7 @@ meta:
 
 Sometimes it can be useful to use a URL of an image instead of uploading its data. To accommodate this need, Cloudflare Images provides an option to use a URL to migrate images to Cloudflare without fetching them first.
 
-To learn more about the supported image formats you can upload, refer to [Supported image formats](/images/cloudflare-images/upload-images/supported-formats). Refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn more about API tokens.
+To learn more about the supported image formats you can upload, refer to [Supported image formats](/images/cloudflare-images/upload-images/formats-limitations). Refer to [Make your first API request](/images/cloudflare-images/api-request/) to learn more about API tokens.
 
 Below is an example of how to use the upload via URL feature:
 
@@ -47,7 +47,7 @@ You will then receive a response similar to this:
 
 If your origin server returns an error while fetching the images, the API response will return a `4xx` error.
 
-Refer to [Upload an image using a single HTTP request](https://api.cloudflare.com/#cloudflare-images-upload-an-image-using-a-single-http-request) for more information.
+Refer to [Upload an image using a single HTTP request](https://developers.cloudflare.com/api/operations/cloudflare-images-upload-an-image-via-url) for more information.
 
 {{<Aside type="note" header="Note">}}
 

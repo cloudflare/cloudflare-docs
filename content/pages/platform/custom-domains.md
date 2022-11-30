@@ -1,11 +1,17 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Custom domains
 ---
 
 # Custom domains
 
-When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site. 
+When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site.
+
+{{<Aside type="note" header="Purging the cache">}}
+
+If Page Rules or other cache settings are used on your custom domain, that may lead to stale assets being served after a new build. You can resolve this by selecting **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/#purge-everything) in the dashboard to ensure the latest build gets served.
+
+{{</Aside>}}
 
 ## Add a custom domain
 
@@ -19,15 +25,19 @@ To add a custom domain:
 
 ![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
 
-If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](/#configure-nameservers). 
+### Add a custom apex domain
 
-If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](/#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site.
+If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers). 
 
-### Configure nameservers
+#### Configure nameservers
 
 To use a custom apex domain (for example, `example.com`) with your Pages project, [configure your nameservers to point to Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/). If your nameservers are successfully pointed to Cloudflare, Cloudflare will proceed by creating a CNAME record for you.
 
-### Add a custom CNAME record 
+### Add a custom subdomain
+
+If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site.
+
+#### Add a custom CNAME record 
 
 If you do not want to point your nameservers to Cloudflare, you must create a custom CNAME record to use a subdomain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain, for example, `shop.example.com`. This record should point to your custom Pages subdomain, for example, `<YOUR_SITE>.pages.dev`.
 
@@ -39,7 +49,7 @@ If your site is already managed as a Cloudflare zone, the CNAME record will be a
 
 {{<Aside type="note">}}
 
-To ensure a custom domain is added successfully, you must go through the [Add a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
+To ensure a custom domain is added successfully, you must go through the [Add a custom domain](#add-a-custom-domain) process described above. Manually adding a custom CNAME record pointing to your Cloudflare Pages site - without first associating the domain (or subdomains) in the Cloudflare Pages dashboard - will result in your domain failing to resolve at the CNAME record address, and display a [`522` error](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#522error).
 
 {{</Aside>}}
 
@@ -62,3 +72,26 @@ Next, in the **Pages** dashboard:
 3.  Select the **three dot icon** next to your custom domain > **Remove domain**.
 
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
+
+## Known issues
+
+### CAA records
+
+Certification Authority Authorization (CAA) records allow you to restrict certificate issuance to specific Certificate Authorities (CAs).
+
+This can cause issues when adding a [custom domain](/pages/platform/custom-domains/) to your Pages project if you have CAA records that do not allow Cloudflare to issue a certificate for your custom domain.
+
+To resolve this, add the necessary CAA records to allow Cloudflare to issue a certificate for your custom domain.
+
+```
+example.com.            300     IN      CAA     0 issue "comodoca.com"
+example.com.            300     IN      CAA     0 issue "digicert.com; cansignhttpexchanges=yes"
+example.com.            300     IN      CAA     0 issue "letsencrypt.org"
+example.com.            300     IN      CAA     0 issue "pki.goog; cansignhttpexchanges=yes"
+example.com.            300     IN      CAA     0 issuewild "comodoca.com"
+example.com.            300     IN      CAA     0 issuewild "digicert.com; cansignhttpexchanges=yes"
+example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
+example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
+```
+
+Refer to the [Certification Authority Authorization (CAA) FAQ](https://support.cloudflare.com/hc/en-us/articles/115000310832-Certification-Authority-Authorization-CAA-FAQ) for more information.

@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Automated exposed credentials check
-weight: 8
+weight: 9
 ---
 
 # Automated exposed credentials check
@@ -18,11 +18,13 @@ This feature is available to all paid plans.
 
 The WAF provides two mechanisms for this check:
 
-*   The [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/exposed-credentials-check/), which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
+*   The [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/reference/exposed-credentials-check/), which contains predefined rules for popular CMS applications. By enabling this ruleset for a given zone, you immediately enable checks for exposed credentials for these well-known applications.
 
 *   The ability to [write custom rules](#exposed-credentials-checks-in-custom-rules) for a zone that check for exposed credentials according to your criteria for specific applications.
 
-Cloudflare updates the databases of exposed credentials supporting the exposed credentials check feature on a regular basis. The username/password credentials in clear text never leave the Cloudflare network. The WAF only uses an anonymized version of the username when determining if there are previously exposed credentials with that username.
+Cloudflare updates the databases of exposed credentials supporting the exposed credentials check feature on a regular basis.
+
+The username and password credentials in clear text never leave the Cloudflare network. The WAF only uses an anonymized version of the username and password when determining if there are previously exposed credentials. Cloudflare follows the approach based on the _k_-Anonymity mathematical property described in the following blog post: [Validating Leaked Passwords with k-Anonymity](https://blog.cloudflare.com/validating-leaked-passwords-with-k-anonymity/).
 
 ## Available actions
 
@@ -47,6 +49,6 @@ Currently, exposed credentials checks in custom rules are only available via API
 
 {{</Aside>}}
 
-Besides enabling the [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/exposed-credentials-check/), you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials. Rules that check for exposed credentials run before rate limiting rules.
+Besides enabling the [Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/reference/exposed-credentials-check/), you can also check for exposed credentials in custom rules. One common use case is to create custom rules on the end user authentication endpoints of your application to check for exposed credentials. Rules that check for exposed credentials run before rate limiting rules.
 
 To check for exposed credentials in a custom rule, include the exposed credentials check in the rule definition and specify how to obtain the username and password values from the HTTP request. For more information, refer to [Create a custom rule checking for exposed credentials](/waf/exposed-credentials-check/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).

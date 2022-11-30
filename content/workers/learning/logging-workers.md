@@ -1,7 +1,7 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Logging from Workers
-weight: 0
+weight: 4
 ---
 
 # Logging from Workers
@@ -9,6 +9,12 @@ weight: 0
 You can access logs and exceptions for your Workers using the dashboard or [`wrangler tail`](/workers/wrangler/commands/#tail).
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
+
+{{<Aside type="note">}}
+
+To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush/).
+
+{{</Aside>}}
 
 ## Adding custom logs
 
@@ -38,7 +44,7 @@ async function handleRequest(request) {
 After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. Your terminal will display:
 
 ```sh
-☁  logging-example [master] ⚡  wrangler tail --format=pretty
+$ wrangler tail --format=pretty
 [2021-08-18 17:06:55] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/
  | [Info] Request came from city: Pacifica in country: US
 [2021-08-18 17:06:56] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/favicon.ico

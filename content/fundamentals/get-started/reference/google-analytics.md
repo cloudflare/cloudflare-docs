@@ -1,6 +1,6 @@
 ---
 title: Cloudflare and Google Analytics
-pcx-content-type: reference
+pcx_content_type: reference
 meta:
   title: Using Google Analytics with Cloudflare
 ---

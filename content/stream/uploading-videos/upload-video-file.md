@@ -1,10 +1,10 @@
 ---
-pcx-content-type: how-to
-title: Upload video file
+pcx_content_type: how-to
+title: Upload a video file
 weight: 3
 ---
 
-# Upload video file
+# Upload a video file
 
 ## Basic Uploads (for small videos)
 
@@ -16,9 +16,9 @@ Make an HTTP request with content-type header set to `multipart/form-data` and i
 
 ```bash
 curl -X POST \
--H "Authorization: Bearer $TOKEN" \
+-H "Authorization: Bearer <API_TOKEN>" \
 -F file=@/Users/kyle/Desktop/video.mp4 \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
 {{<Aside>}}
@@ -59,7 +59,7 @@ The tus protocol allows you to add optional parameters [in the `Upload-Metadata`
 
 ### Supported options in "Upload-Metadata"
 
-Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://api.cloudflare.com/#stream-videos-properties).
+Setting arbitrary metadata values in the `Upload-Metadata` header sets values the [meta key in Stream API](https://developers.cloudflare.com/api/operations/stream-videos-list-videos).
 
 {{<definitions>}}
 
@@ -85,13 +85,17 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 {{</definitions>}}
 
+### Additional supported headers
+
+Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
+
 ### Getting the video ID when using TUS
 
 When an initial TUS request is made, Stream responds with a URL in the location header. While this URL may contain the video ID, it is not recommend to parse this URL to get the ID.
 
 Instead, the `stream-media-id` HTTP header in the response should be used to retrieve the video ID.
 
-For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream` with the TUS protocol, the response will contain a HTTP header like this:
+For example, a request made to `https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream` with the TUS protocol, the response will contain a HTTP header like this:
 
     stream-media-id: cab807e0c477d01baq20f66c3d1dfc26cf
 
@@ -99,12 +103,12 @@ For example, a request made to `https://api.cloudflare.com/client/v4/accounts/$A
 
 You will also need to download a tus client. This tutorial will use the [tus Python client](https://github.com/tus/tus-py-client), available through pip, Python's package manager.
 
-```bash
-pip install -U tus.py
+```sh
+$ pip install -U tus.py
 ```
 
-```bash
-tus-upload --chunk-size 52428800 --header Authorization "Bearer $TOKEN" $PATH_TO_VIDEO https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/stream
+```sh
+$ tus-upload --chunk-size 52428800 --header Authorization "Bearer <API_TOKEN>" <PATH_TO_VIDEO> https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream
 ```
 
 In the beginning of the response from tus, you’ll see the endpoint for getting information about your newly uploaded video.
@@ -141,7 +145,7 @@ func main() {
 	defer f.Close()
 
 	headers := make(http.Header)
-	headers.Add("Authorization", "Bearer $TOKEN")
+	headers.Add("Authorization", "Bearer <API_TOKEN>")
 
 	config := &tus.Config{
 		ChunkSize:           50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
@@ -178,8 +182,8 @@ Please see [go-tus](https://github.com/eventials/go-tus) on GitHub for functiona
 
 1. Install tus-js-client
 
-```bash
-npm install tus-js-client
+```sh
+$ npm install tus-js-client
 ```
 
 1. Set up an index.js and configure:
@@ -198,9 +202,9 @@ var size = fs.statSync(path).size;
 var mediaId = '';
 
 var options = {
-  endpoint: 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT ID}/stream',
+  endpoint: 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream',
   headers: {
-    Authorization: 'Bearer $TOKEN',
+    Authorization: 'Bearer <API_TOKEN>',
   },
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
   resume: true,
@@ -208,7 +212,7 @@ var options = {
     filename: 'test.mp4',
     filetype: 'video/mp4',
     defaulttimestamppct: 0.5,
-    watermark: '$WATERMARKUID',
+    watermark: '<WATERMARK_UID>',
   },
   uploadSize: size,
   onError: function (error) {

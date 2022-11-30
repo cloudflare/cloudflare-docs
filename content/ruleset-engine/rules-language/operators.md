@@ -1,6 +1,6 @@
 ---
 title: Operators and grouping symbols
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 3
 layout: list
@@ -28,12 +28,6 @@ This is the general pattern for using comparison operators:
 ```
 
 The Rules language supports these comparison operators:
-
-{{<Aside type="warning" header="Important">}}
-
-Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.
-
-{{</Aside>}}
 
 {{<table-wrap style="width:100%">}}
 
@@ -75,7 +69,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>
-         <code class="InlineCode">ip.src <strong>ne</strong> 93.184.216.0</code>
+         <code class="InlineCode">ip.src <strong>ne</strong> 203.0.113.0</code>
       </td>
     </tr>
     <tr>
@@ -134,7 +128,7 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       </td>
     </tr>
     <tr>
-      <td>Matches<br />regex</td>
+      <td>Matches<br />regex*</td>
       <td><code class="InlineCode">matches</code></td>
       <td><code class="InlineCode">~</code></td>
       <td>&#x2705;</td>
@@ -152,12 +146,22 @@ Access to the `matches` operator requires a Cloudflare Business or Enterprise pl
       <td>&#x2705;</td>
       <td>&#x2705;</td>
       <td>
-         <code class="InlineCode">ip.src <strong>in</strong> { 93.184.216.0 93.184.216.1 }</code>
+         <code class="InlineCode">ip.src <strong>in</strong> { 203.0.113.0 203.0.113.1 }</code>
       </td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
+
+\* _Access to the `matches` operator requires a Cloudflare Business or Enterprise plan._
+
+{{<Aside type="note" header="Comparing string values">}}
+String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
+
+```txt
+lower(http.request.uri.path) contains "/wp-login.php"
+```
+{{</Aside>}}
 
 ## Logical operators
 
@@ -189,7 +193,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">not</code></td>
       <td><code class="InlineCode">!</code></td>
       <td>
-         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in 93.184.216.0/24 )</code>
+         <code class="InlineCode"><strong>not</strong> ( http.host eq "www.cloudflare.com" and ip.src in 203.0.113.0/24 )</code>
       </td>
       <td>1</td>
    </tr>
@@ -198,7 +202,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">and</code></td>
       <td><code class="InlineCode">&amp;&amp;</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in 93.184.216.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>and</strong> ip.src in 203.0.113.0/24</code>
       </td>
       <td>2</td>
    </tr>
@@ -208,7 +212,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">xor</code></td>
       <td><code class="InlineCode">^^</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in 93.184.216.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>xor</strong> ip.src in 203.0.113.0/24</code>
       </td>
       <td>3</td>
    </tr>
@@ -217,7 +221,7 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
       <td><code class="InlineCode">or</code></td>
       <td><code class="InlineCode">||</code></td>
       <td>
-         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>or</strong> ip.src in 93.184.216.0/24</code>
+         <code class="InlineCode">http.host eq "www.cloudflare.com" <strong>or</strong> ip.src in 203.0.113.0/24</code>
       </td>
       <td>4</td>
    </tr>
@@ -226,12 +230,6 @@ Each logical operator has an [order of precedence](#order-of-precedence). The or
 {{</table-wrap>}}
 
 ### Order of precedence
-
-{{<Aside type="warning" header="Important">}}
-
-To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
-
-{{</Aside>}}
 
 When writing compound expressions, it is important to be aware of the precedence of logical operators so that your expression is evaluated the way you expect.
 
@@ -248,15 +246,14 @@ If these operators had no order of precedence, it would not be clear which of tw
 
 Since the logical `and` operator has precedence over logical `or`, the `and` operator must be evaluated first. Interpretation 1 is correct.
 
+To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
+
 ## Grouping symbols
 
-{{<Aside type="warning" header="Important">}}
-
-Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](https://api.cloudflare.com) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
-
-{{</Aside>}}
-
 The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
+
+Only the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/firewall/cf-dashboard/edit-expressions/#expression-builder) does not.
+
 
 ### Group expressions
 

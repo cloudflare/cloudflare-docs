@@ -1,6 +1,6 @@
 ---
 title: TXT
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 1
 meta:
   title: TXT method — Domain Control Validation — SSL/TLS
@@ -10,9 +10,21 @@ meta:
 
 {{<render file="_txt-validation-definition.md">}}
 
-## Limitations
+---
 
-If your domain is already active with a partial DNS setup — with Cloudflare or another DNS provider — you cannot use a TXT record for DCV. That domain's TXT record needs to be reserved for forwarding traffic to Cloudflare.
+## Zone setups
+
+### Full zones
+
+{{<render file="_full-zone-acm-dcv.md">}}
+
+### Partial zones
+
+For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
+
+{{<render file="_partial-zone-acm-dcv.md">}}
+
+---
 
 ## Setup
 
@@ -20,14 +32,25 @@ If your domain is already active with a partial DNS setup — with Cloudflare or
 
 {{<render file="_generic-validation-process.md">}}
 
-### View DCV values
+### Get DCV values
 
-{{<render file="_generic-view-validation-status.md">}}
+{{<render file="_txt-validation-preamble.md">}}
 
-Once you locate your certificate, find the following values:
+{{<tabs labels="API | Dashboard">}}
+{{<tab label="api" no-code="true">}}
 
-*   **API**: `txt_name` and `txt_value`
-*   **Dashboard**: **Certificate validation TXT name** and **Certificate validation TXT value**
+{{<render file="_txt-validation-api.md">}}
+
+{{</tab>}}
+
+{{<tab label="dashboard" no-code="true">}}
+
+{{<render file="_txt-validation-dashboard.md">}}
+
+{{</tab>}}
+{{</tabs>}}
+
+You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
 
 ### Update DNS records
 
@@ -40,3 +63,5 @@ At your authoritative DNS provider, create a TXT record named the `txt_name` and
 ## Renew DCV tokens
 
 {{<render file="_dcv-token-renewal.md">}}
+
+[^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.

@@ -1,7 +1,7 @@
 ---
 title: Glossary
-pcx-content-type: glossary
-weight: 8
+pcx_content_type: glossary
+weight: 10
 ---
 
 # Glossary
@@ -20,7 +20,7 @@ An allowlist list of items (usually websites, IP addresses, email addresses, etc
 
 ## API key
 
-An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](https://api.cloudflare.com/#getting-started-endpoints).
+An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](/api/).
 
 **Related terms:** API token
 
@@ -88,7 +88,7 @@ Certificate pinning is a security mechanism used to prevent on-path attacks on t
 
 A set of encryption algorithms for establishing a secure communications connection. There are several cipher suites in wide use, and a client and server agree on the cipher suite to use when establishing the TLS connection. Support of multiple cipher suites allows compatibility across various clients.
 
-**Relevant links:** [cipher suites documentation](/ssl/ssl-tls/cipher-suites/)
+**Relevant links:** [cipher suites documentation](/ssl/reference/cipher-suites/)
 
 ## cloud
 
@@ -225,7 +225,7 @@ The Internet is a global system of computer networks that provides a wide range 
 
 Locations in Cloudflare for Teams are physical entities like offices, homes, retail stores, movie theatres or a data center.
 
-**Relevant links:** [Locations](/cloudflare-one/policies/filtering/dns-policies/locations/)
+**Relevant links:** [Locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/)
 
 ## member or user
 

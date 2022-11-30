@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: tutorial
 title: Perform planned maintenance
 weight: 6
 ---

@@ -1,6 +1,6 @@
 ---
 weight: 3
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Android
 meta:
     title: Set up 1.1.1.1 on Android
@@ -47,11 +47,11 @@ Before making changes, take note of any DNS addresses you might have and save th
 
 1. Open **Settings** > **WiFi**.
 2. Press down and hold the name of the network you are currently connected to.
-3. Click **Modify Network**.
+3. Select **Modify Network**.
 4. Select the checkbox **Show Advanced Options**.
 5. Change the IP Settings to **Static**.
 6. {{<render file="_all-ipv4.md">}}
 7. {{<render file="_all-ipv6.md">}}
-8. Click **Save**. You may need to disconnect from the WiFi and reconnect for the changes to take place.
+8. Select **Save**. You may need to disconnect from the WiFi and reconnect for the changes to take place.
 
 {{<render file="_captive-portals.md">}}

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: External Evaluation rules
 weight: 4
 ---
@@ -76,17 +76,18 @@ You can set up External Evaluation rules using any API service, but to get start
 
 1. Open `index.js` and modify the `externalEvaluation` function to perform logic on any identity-based data sent by Access.
 
+{{<Aside type="note">}}
+- Sample code is available in our [Github repository](https://github.com/cloudflare/workers-access-external-auth-example).
+- To view a list of identity-based data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
+{{</Aside>}}
+
 2. Publish the Worker to your Workers account.
 
     ```sh
     $ wrangler publish
     ```
 
-    The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
-
-{{<Aside type="note" header="What identity-based data is available?">}}
-To view a list of available data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, visit `https://www.example.com/cdn-cgi/access/get-identity`.
-{{</Aside>}}
+The Worker will be deployed to your `*.workers.dev` subdomain at `my-worker.<YOUR_SUBDOMAIN>.workers.dev`.
 
 ### 3. Generate a key
 

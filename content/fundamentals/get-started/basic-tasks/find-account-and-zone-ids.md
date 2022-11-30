@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Find zone and account IDs
 weight: 1
 ---
@@ -19,4 +19,4 @@ To find your zone and account IDs:
 
     ![Screenshot of the API section on the Overview page of a zone](/fundamentals/static/images/get-started/dash-overview-api-close-view.png)
 
-For more guidance on setting up API tokens and using the API, refer to our [Cloudflare API Documentation](/api/).
+For more guidance on setting up API tokens and using the API, refer to our [Cloudflare API Documentation](/fundamentals/api/).

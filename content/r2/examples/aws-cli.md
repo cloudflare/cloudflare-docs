@@ -1,7 +1,7 @@
 ---
 title: Configure `aws` CLI for R2
 summary: Example of how to configure `aws` CLI to use R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---
@@ -48,6 +48,8 @@ $ aws s3api list-objects-v2 --endpoint-url https://<accountid>.r2.cloudflarestor
 #     ]
 # }
 ```
+
+## Generate presigned URLs
 
 You can also generate presigned links which allow you to share public access to a file temporarily.
 

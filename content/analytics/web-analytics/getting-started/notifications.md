@@ -1,6 +1,6 @@
 ---
 title: Notifications
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 2
 meta:
   title: Notifications for Web Analytics

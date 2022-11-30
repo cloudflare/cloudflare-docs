@@ -1,7 +1,7 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Browser Isolation with firewall
-weight: 9
+weight: 8
 ---
 
 # Browser Isolation with firewall

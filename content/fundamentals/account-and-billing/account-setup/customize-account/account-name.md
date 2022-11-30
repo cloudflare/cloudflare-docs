@@ -1,6 +1,6 @@
 ---
 title: Account name
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Account name

@@ -1,6 +1,6 @@
 ---
 title: Secure compromised account
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 5
 ---
 
@@ -24,11 +24,11 @@ To prevent future compromises, make sure that you have [Two-Factor Authenticatio
 
 ### API keys
 
-{{<render file="../../api/_partials/_change-api-key.md">}}
+{{<render file="_api-change-api-key.md">}}
 
 ### API tokens
 
-{{<render file="../../api/_partials/_roll-token.md">}}
+{{<render file="_api-roll-token.md">}}
 
 ## Step 5 - Review the audit log
 

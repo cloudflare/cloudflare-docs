@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Time to Live (TTL)
 weight: 3
 ---
@@ -24,4 +24,4 @@ It may take longer than 5 minutes for you to actually experience record changes,
 
 ## Unproxied records
 
-For **DNS only** records, you can choose a TTL between **30 seconds** and **1 day**.
+For **DNS only** records, you can choose a TTL between **30 seconds** (Enterprise) or **60 seconds** (non-Enterprise) and **1 day**.

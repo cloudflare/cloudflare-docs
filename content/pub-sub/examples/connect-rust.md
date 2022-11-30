@@ -1,6 +1,6 @@
 ---
 title: Connect with Rust
-pcx-content-type: reference
+pcx_content_type: reference
 type: example
 summary: Connect to a Broker using a Rust-based MQTT client.
 ---

@@ -1,6 +1,6 @@
 ---
 title: Page Rule integration with APO
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 12
 ---
 

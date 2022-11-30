@@ -1,6 +1,6 @@
 ---
 title: Share and export data
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 3
 meta:
   title: Share and export Network Analytics data

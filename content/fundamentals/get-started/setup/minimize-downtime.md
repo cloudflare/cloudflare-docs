@@ -1,6 +1,6 @@
 ---
 title: Minimize downtime
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 4
 ---
 
@@ -37,7 +37,7 @@ Finish the [DNS setup](/dns/zone-setups/) for your domain, moving the [domain st
 
 ## Step 3 — Verify SSL/TLS edge certificates
 
-Before proxying your traffic through Cloudflare, [verify](/ssl/ssl-tls/certificate-statuses/#monitor-certificate-statuses) that Cloudflare has an active **Edge Certificate** for your domain.
+Before proxying your traffic through Cloudflare, [verify](/ssl/reference/certificate-statuses/#monitor-certificate-statuses) that Cloudflare has an active **Edge Certificate** for your domain.
 
 For more details about timing and certificate recommendations, refer to [Certificate issuance](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup).
 

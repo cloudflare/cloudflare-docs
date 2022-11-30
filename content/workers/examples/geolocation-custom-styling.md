@@ -4,7 +4,7 @@ summary: Personalize website styling based on localized user time.
 tags:
   - Originless
   - Geolocation
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: 'Geolocation: Custom Styling'
 weight: 1001
 layout: example

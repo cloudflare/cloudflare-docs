@@ -1,6 +1,6 @@
 ---
 title: Configure
-pcx-content-type: how-to
+pcx_content_type: how-to
 type: overview
 layout: list
 meta:
@@ -51,21 +51,8 @@ To validate the hostname, you must include the _Hostname_ field explicitly in th
 
 9.  After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
-    <div class="large-img">
-      <img
-        alt="Review your endpoints and associated actions before deploying your schema validation"
-        src="/api-shield/static/api-shield-review-endpoints-step.png"
-      />
-    </div>
-
 10. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 
 11. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
-
-    {{<Aside type="warning">}}
-
-Currently, request body validations are not supported.
-
-     {{</Aside>}}
 
 12. Click **Done**.

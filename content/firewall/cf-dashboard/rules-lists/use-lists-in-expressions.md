@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Use lists in expressions
 weight: 3
 ---
@@ -16,7 +16,7 @@ To use an IP List in the [Expression Builder](/firewall/cf-dashboard/edit-expres
 
 1. Select an IP List from the **Value** drop-down list. Depending on your plan, you may be able to select an [IP List managed by Cloudflare](/firewall/cf-firewall-rules/rules-lists/#managed-ip-lists).
 
-1. When you are done composing your rule, click **Deploy** to commit your changes and enable your rule. Click **Save as draft** if you are not ready to enable the rule.
+1. When you are done composing your rule, select **Deploy** to commit your changes and enable your rule. If you are not ready to enable the rule, select **Save as draft**.
 
 ## Expression Editor
 

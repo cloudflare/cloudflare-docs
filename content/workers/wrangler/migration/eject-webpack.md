@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Ejecting webpack
 weight: 3
 ---
@@ -30,7 +30,7 @@ Wrangler will continue to take care of it. Remove `type = webpack` from your `wr
 
 ### I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to handle JSX, TypeScript, WebAssembly, HTML files, and other non-standard filetypes.
 
-As of Wrangler 2, Wrangler has built-in support for this use case due to the [module system](/workers/wrangler/module-system/).
+As of Wrangler 2, Wrangler has built-in support for this use case. Refer to [Bundling](/workers/wrangler/bundling/) for more details.
 
 The Workers runtime handles JSX and TypeScript. You can `import` any modules you need into your code and the Workers runtime includes them in the built Worker automatically.
 
@@ -46,7 +46,7 @@ Wrangler 2 drops support for project types, including `type = webpack` and confi
 
 To do that, you will need to add it as a dependency:
 
-```sh
+```
 npm install --save-dev webpack@^4.46.0 webpack-cli wranglerjs-compat-webpack-plugin
 # or
 yarn add --dev webpack@4.46.0 webpack-cli wranglerjs-compat-webpack-plugin

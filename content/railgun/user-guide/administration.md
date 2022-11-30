@@ -1,7 +1,7 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Administration
-weight: 10
+weight: 4
 ---
 
 # Administration
@@ -12,12 +12,13 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 
 ## Adding a Railgun
 
-1. Navigate to the [Railgun page](https://dash.cloudflare.com/?to=/:account/configurations/railgun).
-2. In **Enter new Railgun name text box**, enter a descriptive title for your Railgun, and click the `Create` button.
-3. Within your Railgun configuration file, update `activation.public_ip` to the public IP or a hostname which resolves to the public IP of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
-4. Start the Railgun daemon so that it can proceed with activation.
-5. If everything went smoothly, the red icon will change to a green checkmark after refreshing the page and the Railgun can then be toggled on.
-6. If the Railgun fails to activate, check your logs for errors and [contact support](https://support.cloudflare.com/hc/articles/200172476) if the issue persists.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Manage Account** > **Configurations** > **Railgun**.
+3. In **Enter new Railgun name** text box, enter a descriptive title for your Railgun, and select **Create**.
+4. Within your Railgun configuration file, update `activation.public_ip` to the public IP (or a hostname which resolves to the public IP) of your Railgun’s server and set the `activation.token` to the activation key displayed on the page.
+5. Start the Railgun daemon so that it can proceed with activation.
+6. If everything went smoothly, the red icon will change to a green check mark after refreshing the page, and the Railgun can then be toggled on.
+7. If the Railgun fails to activate, check your logs for errors and [contact support](/railgun/user-guide/troubleshooting/potential-problems/#support) if the issue persists.
 
 ## Enabling Railgun
 
@@ -26,9 +27,12 @@ Railgun can be load-balanced and multiple Railgun daemons can be used per activa
 
 ## Collecting and Reporting Statistics
 
-Railgun can report statistics via syslog, JSON via a HTTP POST request, or through its own simple HTTP server when enabled. To enable statistics collection, first set `stats.enabled` to `1` within the main Railgun configuration file (`railgun.conf`). To enable syslog statistics reporting, set `stats.log` to `1`. To enable reporting via an HTTP POST request of JSON data to the specified URL, set `stats.url` to a valid URL. `stats.interval` determines how frequently stats will be logged or POSTed in minutes.
+Railgun can report statistics via `syslog`, JSON via an HTTP `POST` request, or through its own simple HTTP server when enabled. To enable statistics collection, start by setting `stats.enabled` to `1` within the main Railgun configuration file (`railgun.conf`). Then:
 
-If `stats.listen` is set to a non-empty `host:post` string, Railgun will spawn a local HTTP server and listen on that interface awaiting a `GET /` HTTP request. The response will be JSON-encoded statistics. The statistics returned will change according to `stats.interval`. If the Railgun statistics port is not protected via a firewall, the host portion should be set to a loopback interface (e.g., `127.0.0.1` or `localhost`) to prevent external access. An example response follows:
+* To enable `syslog` statistics reporting, set `stats.log` to `1`. 
+* To enable reporting via an HTTP `POST` request of JSON data to the specified URL, set `stats.url` to a valid URL. `stats.interval` determines how frequently (in minutes) stats will be logged or POSTed.
+
+If `stats.listen` is set to a non-empty `host:post` string, Railgun will spawn a local HTTP server and listen on that interface awaiting a `GET /` HTTP request. The response will be JSON-encoded statistics. The statistics returned will change according to `stats.interval`. If the Railgun statistics port is not protected via a firewall, the host portion should be set to a loopback interface (like `127.0.0.1` or `localhost`) to prevent external access. The folowing is an example response:
 
 ```sh
 $ curl -v http://127.0.0.1:22408/

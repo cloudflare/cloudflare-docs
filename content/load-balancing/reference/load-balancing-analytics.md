@@ -1,6 +1,6 @@
 ---
 title: Analytics
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 46
 meta:
   title: Load balancing analytics
@@ -50,7 +50,7 @@ To view latency information for your load balancer, go to **Traffic** > **Load B
 
 **Logs** provide a history of all origin server status changes and how they affect your load balancing pools. Load Balancing only logs events that represent a status change for an origin, from healthy to unhealthy or vice versa.
 
-To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**. You can also access healthcheck logs [using the API](https://api.cloudflare.com/#load-balancer-healthcheck-events-list-healthcheck-events).
+To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**. You can also access healthcheck logs [using the API](https://developers.cloudflare.com/api/operations/load-balancer-healthcheck-events-list-healthcheck-events).
 
 ## GraphQL Analytics
 

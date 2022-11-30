@@ -4,7 +4,7 @@ summary: Protect sensitive data to prevent data loss, and send alerts to a
   webhooks server in the event of a data breach.
 tags:
   - Security
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Data loss prevention
 weight: 1001
 layout: example

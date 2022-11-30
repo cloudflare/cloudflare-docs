@@ -1,6 +1,6 @@
 ---
 title: DNS records
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 0
 meta:
   title: DNS records for load balancing
@@ -14,7 +14,7 @@ When you [create a load balancer](/load-balancing/how-to/create-load-balancer/),
 
 For customers on non-Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, and `CNAME` records.
 
-For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, **SRV**, and **TXT** records.
+For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, and **SRV** records.
 
 ## Priority order
 

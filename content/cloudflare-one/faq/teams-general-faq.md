@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: General
 weight: 3
 ---
@@ -29,3 +29,15 @@ These browsers are supported:
 - Firefox® (current release, last release)
 - Chrome® (current release, last release)
 - Safari® (current release, last release)
+
+## What data localization services are supported?
+
+As part of our Regional Services, Cloudflare Zero Trust will only perform TLS decryption and store logs within the region provisioned for your account.
+
+Services available in all [supported regions](https://support.cloudflare.com/hc/en-us/articles/360061946171-Data-Localization-Suite#h_7olRZn8DdrDsw79Rqfs05n):
+- Ensure that Cloudflare Gateway proxies all network, HTTP, and HTTPS traffic through regional data centers.
+- Maintain local storage for all [Zero Trust logs](/cloudflare-one/analytics/logs/).
+
+Additional services available in the United States:
+- Ensure that all reverse proxy requests for applications protected by Access will only occur in FedRAMP-compliant data centers.
+- [Configure Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#region) to only connect to data centers within the United States, regardless of where the software was deployed.

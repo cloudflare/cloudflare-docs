@@ -4,7 +4,7 @@ summary: Send debugging information in an errored response to a logging service.
 tags:
   - Debugging
   - Logging
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Debugging logs
 weight: 1001
 layout: example

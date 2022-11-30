@@ -1,6 +1,6 @@
 ---
 title: Overview
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 1
 meta:
   title: Cache

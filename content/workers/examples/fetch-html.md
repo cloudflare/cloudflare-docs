@@ -4,7 +4,7 @@ summary: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
 tags:
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Fetch HTML
 weight: 3
 layout: example

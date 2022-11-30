@@ -1,12 +1,12 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Gateway Analytics
 weight: 3
 ---
 
 # Gateway Analytics
 
-To see the top Allowed and Blocked requests across all of your locations, navigate to **Analytics** > **Gateway**. You can filter the data by selecting a specific location and/or time.
+To see the top Allowed and Blocked requests across all of your DNS locations, navigate to **Analytics** > **Gateway**. You can filter the data by selecting a specific location and/or time.
 
 - **Requests** — This chart shows an overview of the number of requests made by end users within the time period you specify. It shows a breakdown of requests based on the decision Gateway took (either Allowed or Blocked).
 

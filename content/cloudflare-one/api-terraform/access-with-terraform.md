@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Terraform
 weight: 4
 ---
@@ -38,7 +38,7 @@ weight: 4
 
 2.  Next, we need to export our environment variables and secrets:
 
-    ```bash
+    ```sh
     $ export CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
     $ export CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
     ```
@@ -156,7 +156,7 @@ To do so:
 
 2.  Next, apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
 
-    ```bash
+    ```sh
     $ terraform apply --auto-approve
     ```
 
@@ -192,4 +192,4 @@ The example below shows how you can configure an identity provider and attach it
     }
     ```
 
-These are the basics to get up and running with Access and Terraform. See our [API documentation](https://api.cloudflare.com/#access-organizations-properties) for other endpoints that can be managed via Terraform.
+These are the basics to get up and running with Access and Terraform. Refer to our [API documentation](https://developers.cloudflare.com/api/) for other endpoints that can be managed via Terraform.

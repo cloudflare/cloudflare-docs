@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Access groups
 weight: 2
 ---
@@ -33,8 +33,8 @@ Once the group is set up, you can use it to configure rules within your applicat
 
 To create and manage groups:
 
-1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **My Teams** section.
-1.  Open the Groups tab.
+1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to the **Access** section.
+1.  Open the Access Groups tab.
 1.  Click **Add a Group**.
 1.  Enter a name for the group.
 1.  Specify as many rules as needed to define your user group.
@@ -45,23 +45,7 @@ To create and manage groups:
 
 ## Group criteria
 
-Group criteria determine whether or not a user is a member of a particular group.
-
-Groups follow the same [logic](/cloudflare-one/policies/) as rules for Zero Trust policies in Access.
-
-Group criteria help define whether to include or exclude a team member from a group. Here is a list of criteria and examples:
-
-- **Emails** — `you@company.com`
-- **Emails ending in** — `@company.com`
-- **Access groups** — `example-team`
-- **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6)
-- **Everyone** — allows, denies, or bypasses access to everyone.
-- **Country** – uses the IP address to determine country
-- **Valid Certificate** - The request will need to present any valid client certificate
-- **Common Name** - The request will need to present a valid certificate with an expected common name
-- **Any Access Service Token** - The request will need to present the headers for any service token created for this account
-- **Service Token** - The request will need to present the correct service token headers configured for the specific application
-- **Identity provider groups** — Employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an identity provider that passes groups using SAML or OAuth Scope.
+Group criteria determine whether or not a user is a member of a particular group. Since groups are simply a collection of Access rules, they use the same [rule types](/cloudflare-one/policies/access/#rule-types) and [selectors](/cloudflare-one/policies/access/#selectors) shown in the Access policy builder.
 
 ## Using groups for IP-based rules
 

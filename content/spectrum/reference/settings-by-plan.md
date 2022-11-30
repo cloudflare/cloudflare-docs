@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: reference
+pcx_content_type: reference
 title: Settings by plan
 weight: 0
 layout: list
@@ -30,6 +30,6 @@ Spectrum properties requiring an Enterprise plan:
 
 {{<content-column>}}
 
-Review the [Spectrum API documentation](https://api.cloudflare.com/#spectrum-applications-properties) for example API requests.
+Review the [Spectrum API documentation](https://developers.cloudflare.com/api/operations/spectrum-applications-list-spectrum-applications) for example API requests.
 
 {{</content-column>}}

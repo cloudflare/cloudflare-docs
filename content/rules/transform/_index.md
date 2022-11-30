@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Transform Rules
 weight: 3
 layout: single
@@ -36,18 +36,9 @@ Cloudflare Transform Rules are available to all customers. Support for regular e
 
 This table outlines the Transform Rules features available with each customer plan:
 
-{{<table-wrap>}}
-
-Feature                                       | Free | Pro | Business | Enterprise
-----------------------------------------------|------|-----|----------|-----------
-Active Transform Rules                        | 10   | 25  | 50       | 100
-Regular expression support                    | No   | No  | Yes      | Yes
-
-{{</table-wrap>}}
+{{<feature-table id="rules.transform_rules">}}
 
 A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/hc/articles/205065067#12345682) or one of the Administrator roles to access Transform Rules.
-
-***
 
 ## Get started
 

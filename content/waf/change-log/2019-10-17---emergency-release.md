@@ -1,7 +1,7 @@
 ---
 title: 2019-10-17 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 996
 layout: list
 meta:

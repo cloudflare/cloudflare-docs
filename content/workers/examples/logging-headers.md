@@ -3,7 +3,7 @@ type: example
 summary: Examine the contents of a Headers object by logging to console with a Map.
 tags:
   - Debugging
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Logging headers to console
 weight: 1001
 layout: example
@@ -85,7 +85,7 @@ The `Map` approach works for simple calls to `console.log()`. If you need to str
 
 Even though a `Map` stores its data in enumerable properties, those properties are [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)-keyed. Because of this, `JSON.stringify()` will [ignore Symbol-keyed properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#symbols_and_json.stringify) and you will receive an empty `{}`.
 
-Instead, you can take advantage of the iterability of the `Headers` object in a new way by applying the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) (`...`) to it.
+Instead, you can take advantage of the iterability of the `Headers` object in a new way by applying the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) (`...`) to it.
 
 ```js
 let requestHeaders = JSON.stringify([...request.headers], null, 2)

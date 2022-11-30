@@ -1,7 +1,7 @@
 ---
 title: Configure `boto3` for R2
 summary: Example of how to configure `boto3` to use R2.
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 1001
 layout: example
 ---

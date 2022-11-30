@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 title: Configuration settings
 weight: 2
@@ -77,8 +77,7 @@ You can customize a variety of options for your waiting rooms.
         Wildcards and query parameters are not supported.
       </td>
       <td>
-        If your server does not allow letter casing, use numbers in your <code>path</code> or
-        redirect traffic with a Page Rule.
+        If your server does not allow letter casing, use numbers in your <code>path</code>.
       </td>
     </tr>
     <tr>

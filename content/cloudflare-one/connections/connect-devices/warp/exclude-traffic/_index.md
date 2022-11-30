@@ -1,14 +1,14 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Bypass WARP
 weight: 6
 ---
 
-# Excluding traffic from WARP
+# Traffic excluded from WARP
 
-When the WARP client is deployed, all DNS requests and/or network traffic on the device are processed by Cloudflare by default. However, under certain circumstances, you may need to exclude DNS requests and/or explicitly exclude or include network traffic.
+When the WARP client is deployed on a device, Cloudflare processes all DNS requests and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS requests or network traffic from WARP.
 
-To do that, there are three settings you can configure:
+There are three settings you can configure:
 
 *   **Use [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/)** to instruct the WARP client to send DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
 
@@ -27,3 +27,21 @@ DNS requests to domain names entered here will not be encrypted, monitored or su
 Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, managed or monitored by Cloudflare Gateway.
 
 {{</Aside>}}
+
+## How the WARP client handles DNS requests
+
+When you use the WARP client together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow.
+
+<div class="mermaid">
+flowchart TD
+accTitle: WARP traffic is evaluated and routed through various parts of the Cloudflare network
+A[WARP User requests resource] -- Domain does not match Local Domain Fallback --> C{WARP client resolves query according to Gateway DNS policies}
+A -- Domain matches Local Domain Fallback --> D[WARP client proxies DNS traffic to specified fallback server]
+D -- Resolver IP included in Tunnel per Split Tunnel configuration --> E[Query sent via WARP Tunnel to be resolved]
+D -- Resolver IP not included in Tunnel per Split Tunnel configuration --> F{Query sent to resolver IP outside WARP Tunnel} 
+E -- Matches CF Gateway block policy --> G{Traffic blocked by CF}
+E -- "Passes CF Gateway network policies (allowed or unblocked)" --> H[Evaluated by Cloudflare Tunnel routes]
+H -- Tunnel routes do not include resolver IP --> I{CF Gateway proxies query to resolver IP via normal WARP egress route}
+H -- Tunnel routes include resolver IP --> J[Cloudflare Tunnel advertises route that includes Resolver IP]
+J --> L{Private resolver returns IP address to WARP client}
+</div>

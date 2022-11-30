@@ -1,11 +1,11 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Add a custom domain to a branch
 ---
 
 # Add a custom domain to a branch
 
-In this tutorial, you will learn how to add a custom domain (`staging.example.com`) that will point to a specific branch (`staging`) on your Pages project.
+In this guide, you will learn how to add a custom domain (`staging.example.com`) that will point to a specific branch (`staging`) on your Pages project.
 
 This will allow you to have a custom domain that will always show the latest build for a specific branch on your Pages project.
 

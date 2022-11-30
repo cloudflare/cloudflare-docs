@@ -1,6 +1,6 @@
 ---
 title: Expressions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 21
 meta:
   title: Load Balancing expressions

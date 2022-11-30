@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Framework guides
 layout: table
 weight: 4

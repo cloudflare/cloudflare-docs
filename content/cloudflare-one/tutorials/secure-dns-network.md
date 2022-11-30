@@ -2,7 +2,7 @@
 updated: 2020-11-28
 category: 🛡️ Web Gateway
 difficulty: Beginner
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Filter DNS on home or office network
 ---
 
@@ -32,11 +32,11 @@ Before you begin, you'll need to follow [these instructions](/cloudflare-one/set
 - Zero Trust Free
 - Zero Trust Standard
 
-## Add a location
+## Add a DNS location
 
-During the Gateway onboarding flow, the dashboard will prompt you to configure a location for the IP you are currently using. Gateway will automatically detect the IP of your current network and assign it to the location being created.
+During the Gateway onboarding flow, the dashboard will prompt you to configure a DNS location for the IP you are currently using. Gateway will automatically detect the IP of your current network and assign it to the DNS location being created.
 
-If you want to create a different location, one that you are not currently using, you can add a new location from the `Locations` page in the `Gateway` Section.
+If you want to create a different location, one that you are not currently using, you can add a new DNS location from **Gateway** > **DNS Locations**.
 
 ## Create a Gateway policy
 
@@ -48,7 +48,7 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 ![Block Threats](/cloudflare-one/static/secure-web-gateway/secure-dns-network/block-threats.png)
 
-The policy will block security threats for any location in your Cloudflare Zero Trust deployment. If you want to only block the security risks selected above for the location created previously, add an `AND` rule to the selector. Choose `Location` and check the location to include in this policy.
+The policy will block security threats for any DNS location in your Cloudflare Zero Trust deployment. If you want to only block the security risks selected above for the location created previously, add an `AND` rule to the selector. Choose `DNS Location` and check the location to include in this policy.
 
 ![Include Location](/cloudflare-one/static/secure-web-gateway/secure-dns-network/include-location.png)
 
@@ -64,7 +64,7 @@ The rule will appear in your DNS policies list.
 
 You will need to make a one-time change to your router to use Cloudflare Gateway for DNS filtering for all devices in your network.
 
-Instructions to change your router's DNS settings are available in the Zero Trust dashboard. Navigate to the `Locations` page and expand the location you want to configure. Click `Setup instructions`.
+Instructions to change your router's DNS settings are available in the Zero Trust dashboard. Navigate to **Gateway** > **DNS Locations** and expand the location you want to configure. Click `Setup instructions`.
 
 ![Expand Location](/cloudflare-one/static/secure-web-gateway/secure-dns-network/expand-location.png)
 

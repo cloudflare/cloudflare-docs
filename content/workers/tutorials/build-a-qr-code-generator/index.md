@@ -2,8 +2,9 @@
 updated: 2020-03-09
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Build a QR code generator
+layout: single
 ---
 
 # Build a QR code generator
@@ -16,7 +17,7 @@ In this tutorial, you will build and publish a serverless function that generate
 
 This guide will teach you how to build and publish serverless functions. This guide does not assume prior experience with serverless functions or Cloudflare Workers.
 
-If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
+If you would like to review the code for this tutorial, the final version of the codebase is [available on GitHub](https://github.com/codewithkristian/workers-qr-code-generator). You can take the code provided in the example repository, customize it, and deploy it for use in your own projects.
 
 ## Init
 
@@ -283,6 +284,6 @@ $ wrangler publish
 
 ## Related resources
 
-In this tutorial, you built and published a serverless function to Cloudflare Workers for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/signalnerve/workers-qr-code-generator).
+In this tutorial, you built and published a serverless function to Cloudflare Workers for generating QR codes. If you would like to see the full source code for this application, you can find it [on GitHub](https://github.com/codewithkristian/workers-qr-code-generator).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

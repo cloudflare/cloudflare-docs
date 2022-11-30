@@ -1,6 +1,6 @@
 ---
 title: Access Cloudflare resources
-pcx-content-type: reference
+pcx_content_type: reference
 layout: list
 weight: 5
 ---

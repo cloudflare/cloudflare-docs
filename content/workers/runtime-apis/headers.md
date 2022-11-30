@@ -1,5 +1,5 @@
 ---
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Headers
 ---
 
@@ -30,7 +30,19 @@ headers.get('x-foo'); //=> "hello, world"
 
 - Despite the fact that the `Headers.getAll` method has been made obsolete, Cloudflare still offers this method but only for use with the `Set-Cookie` header. This is because cookies will often contain date strings, which include commas. This can make parsing multiple values in a `Set-Cookie` header more difficult. Any attempts to use `Headers.getAll` with other header names will throw an error. A brief history `Headers.getAll` is available in this [GitHub issue](https://github.com/whatwg/fetch/issues/973).
 
-- In Cloudflare Workers, the `Headers.get` method returns a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/API/USVString) instead of a [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/API/ByteString), which is specified by the spec. For most scenarios, this should have no noticeable effect. To compare the differences between these two string classes, refer to this [Playground example](https://cloudflareworkers.com/#97c644202d0ef43fd73acb6b045529e8:https://tutorial.cloudflareworkers.com).
+- Due to [RFC 6265](https://www.rfc-editor.org/rfc/rfc6265) prohibiting folding multiple `Set-Cookie` headers into a single header, the `Headers.append` method will allow you to set multiple `Set-Cookie` response headers instead of appending the value onto the existing header.
+
+```js
+const headers = new Headers();
+
+headers.append("Set-Cookie", "cookie1=value_for_cookie_1; Path=/; HttpOnly;");
+headers.append("Set-Cookie", "cookie2=value_for_cookie_2; Path=/; HttpOnly;");
+
+console.log(headers.getAll("Set-Cookie"));
+// Array(2) [ cookie1=value_for_cookie_1; Path=/; HttpOnly;, cookie2=value_for_cookie_2; Path=/; HttpOnly; ]
+```
+
+- In Cloudflare Workers, the `Headers.get` method returns a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) instead of a [`ByteString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), which is specified by the spec. For most scenarios, this should have no noticeable effect. To compare the differences between these two string classes, refer to this [Playground example](https://cloudflareworkers.com/#97c644202d0ef43fd73acb6b045529e8:https://tutorial.cloudflareworkers.com).
 
 ## Cloudflare headers
 
@@ -65,7 +77,7 @@ The intended purpose of this header is to provide a means for recipients (for ex
 
 {{<Aside type="note">}}
 
-When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the `cf.worker.upstream_zone`(https://tinyurl.com/2wx4senh) dynamic field, which contains the same value and exists for the same purpose.
+When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/#standard-fields) dynamic field, which contains the same value and exists for the same purpose.
 
 {{</Aside>}}
 

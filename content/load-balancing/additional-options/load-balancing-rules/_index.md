@@ -1,6 +1,6 @@
 ---
 title: Custom load balancing rules
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 18
 meta:
   title: Custom rules

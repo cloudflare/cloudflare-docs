@@ -1,6 +1,6 @@
 ---
 title: Main differences
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 3
 meta:
   title: Main differences between Network Analytics v1 and Network Analytics v2

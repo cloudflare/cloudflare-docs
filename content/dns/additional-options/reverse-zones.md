@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Reverse zones and PTR records
 weight: 0
 ---
@@ -28,8 +28,7 @@ Any customer can create PTR records, but only Enterprise customers can create re
 
 The following Cloudflare customers can create reverse zones (for example, `2.0.192.in-addr.arpa`):
 
-- Enterprise customers with an IPv4 address space can add the IPv4 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
-- Enterprise customers with an IPv6 address space need to contact their account team to get the IPv6 reverse zone added to their account.
+- Enterprise customers with an IPv4 or IPv6 address space can add the IPv4 or IPv6 reverse zone for their IP space to their account, and create the required PTR records for forward resolution.
 - DNS Firewall customers need to contact their account team to add PTR records for the IPs used for their DNS Firewall clusters.
 
 If your account does not meet these qualifications and you do not own the IP prefix you want to add PTR records on, contact the owner of the IP address based on a [whois lookup](https://whois.icann.org/en).
@@ -58,8 +57,6 @@ To use PTR records, you need to create a reverse DNS zone and add a PTR record f
 
          </div>
          </details>
-
-         {{<Aside type="warning">}}Enterprise customers can only add reverse zones for IPv4 addresses. If you want to add zones for IPv6 addresses, contact your account team.{{</Aside>}}
 
 3.  If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
 

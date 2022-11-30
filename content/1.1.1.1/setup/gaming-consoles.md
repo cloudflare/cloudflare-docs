@@ -1,6 +1,6 @@
 ---
 weight: 5
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Gaming consoles
 meta:
     title: Set up 1.1.1.1 on gaming consoles
@@ -44,20 +44,19 @@ The following instructions work on New Nintendo 3DS, New Nintendo 3DS XL, New Ni
 3. Select your Internet connection and then select **Change Settings**.
 4. Select **Change DNS**.
 5. Set **Auto-Obtain DNS** to **No**.
-6. Click **Detailed Setup**.
+6. Select **Detailed Setup**.
 7. Set **Primary DNS** and **Secondary DNS** to:
     {{<render file="_ipv4.md">}}
 8. If you are able to add more DNS servers, you can add the IPv6 addresses as well:
     {{<render file="_ipv6.md">}}
-9. Click **Save**.
-10. Click **OK**.
+9. Select **Save** > **OK**.
 
 ## Nintendo Switch
 
 1. Press the home button and select **System Settings**.
 2. Scroll down and select **Internet** > **Internet Settings**.
 3. Select your Internet connection and then select **Change Settings**.
-4. Click **DNS Settings** > **Manual**.
+4. Select **DNS Settings** > **Manual**.
 5. Set **Primary DNS** and **Secondary DNS** to:
     {{<render file="_ipv4.md">}}
-6. Press **Save** > **OK**.
+6. Select **Save** > **OK**.

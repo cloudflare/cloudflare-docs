@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: SAML | Jumpcloud
 weight: 5
 ---
@@ -20,7 +20,7 @@ To set up JumpCloud SAML as your identity provider:
 
     If you do not have a certificate, this command generates one using OpenSSL:
 
-    ```bash
+    ```sh
     $ openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
     Generating RSA private key, 2048 bit long modulus
     .................................................................................+++++
@@ -42,8 +42,6 @@ To set up JumpCloud SAML as your identity provider:
     ```
 
 1.  In JumpCloud, select **Applications** in the left-side menu.
-
-    ![JumpCloud Add Application](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-1.png)
 
 1.  Click the + icon at the top-left of the screen to add an application.
 
@@ -73,11 +71,9 @@ To set up JumpCloud SAML as your identity provider:
 
 1.  Leave other settings at default.
 
-1.  Click **save**.
+1.  Click **save**. Remember to assign this application to users or groups.
 
-    Remember to assign this application to users or groups.
-
-    ![JumpCloud Application dialog](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
+    ![JumpCloud Application dialog with group added to application](/cloudflare-one/static/documentation/identity/jumpcloud/jumpcloud-saml-2.png)
 
 1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
 

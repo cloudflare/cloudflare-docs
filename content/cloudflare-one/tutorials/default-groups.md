@@ -1,7 +1,7 @@
 ---
 updated: 2021-01-26
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Create reuseable Zero Trust rules
 ---
 

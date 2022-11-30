@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Configure exposed credentials checks via API
 weight: 4
 ---
@@ -8,7 +8,7 @@ weight: 4
 
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
-*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/exposed-credentials-check/#configure-via-api).
+*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/reference/exposed-credentials-check/#configure-via-api).
 *   Create custom rules that check for exposed credentials.
 
 ## Create a custom rule checking for exposed credentials
@@ -41,7 +41,7 @@ You can use the `exposed_credential_check` object in rules with one of the follo
 
 To create and deploy a custom ruleset, follow the workflow described in [Work with custom rulesets](/ruleset-engine/custom-rulesets/).
 
-### Example A 
+### Example A
 
 This example creates a new custom ruleset with a rule that checks for exposed credentials. The rule has a match if both the rule expression and the `exposed_credential_check` result are `true`. When there is a match, the rule will log the request with exposed credentials in the Cloudflare logs.
 
@@ -128,7 +128,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
             "value": "1"
           }
         }
-      },      
+      },
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
       "exposed_credential_check": {
         "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
@@ -169,7 +169,7 @@ highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
               "value": "1"
             }
           }
-        },      
+        },
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
         "exposed_credential_check": {
           "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",

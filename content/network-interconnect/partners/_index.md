@@ -1,12 +1,12 @@
 ---
-title: Partners
-pcx-content-type: reference
+title: Technology Partners
+pcx_content_type: reference
 weight: 4
 meta:
-  title: Partner Program
+  title: Technology Partner Program
 ---
 
-# Partner Program
+# Technology Partner Program
 
 ## Virtual Private Interconnection
 

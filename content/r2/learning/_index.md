@@ -1,7 +1,7 @@
 ---
 title: Learning
-pcx-content-type: navigation
-weight: 2
+pcx_content_type: navigation
+weight: 4
 ---
 
 # Learning

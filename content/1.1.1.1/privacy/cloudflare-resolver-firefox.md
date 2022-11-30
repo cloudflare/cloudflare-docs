@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Cloudflare Resolver for Firefox
 ---
 
@@ -13,7 +13,7 @@ Every time you type a web address, such as www.mozilla.org or www.firefox.com, i
 
 For most Internet users, the DNS resolver that they use is either the one that comes with the operating system running on their machines or the one that is set by their network provider. In some cases, these resolvers leave a lot to be desired because of their susceptibility to unwanted spying and other security threats.
 
-To counter such threats, Mozilla has partnered with Cloudflare to provide direct DNS resolution from within the Firefox browser using the Cloudflare Resolver for Firefox. What this means is that whenever you click on or type a web address in the Firefox browser your DNS lookup request will be sent over a secure channel to the Cloudflare Resolver for Firefox rather than to an unknown DNS resolver, significantly decreasing the odds of any unwanted spying or man in the middle attacks.
+To counter such threats, Mozilla has partnered with Cloudflare to provide direct DNS resolution from within the Firefox browser using the Cloudflare Resolver for Firefox. What this means is that whenever you select or type a web address in the Firefox browser your DNS lookup request will be sent over a secure channel to the Cloudflare Resolver for Firefox rather than to an unknown DNS resolver, significantly decreasing the odds of any unwanted spying or man in the middle attacks.
 
 ### What information does the Cloudflare resolver for Firefox collect?
 

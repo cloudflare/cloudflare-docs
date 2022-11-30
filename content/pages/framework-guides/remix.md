@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Deploy a Remix site
 ---
 
@@ -26,7 +26,7 @@ After selecting your deployment option, change the directory to your project and
 
 ```sh
 # choose Cloudflare Pages
-$ cd [whatever you named the project]
+$ cd <YOUR_PROJECT>
 $ npm run dev
 ```
 

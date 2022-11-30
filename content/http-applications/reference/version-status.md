@@ -1,6 +1,6 @@
 ---
 title: Version status
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 ---
 

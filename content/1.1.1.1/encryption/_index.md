@@ -1,6 +1,6 @@
 ---
 weight: 3
-pcx-content-type: reference
+pcx_content_type: reference
 title: Encryption
 layout: single
 meta:

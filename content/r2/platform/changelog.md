@@ -1,9 +1,119 @@
 ---
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Changelog
+weight: 3
 ---
 
 # Changelog
+
+## 2022-11-21
+
+- Fixed a bug in `ListObjects` where `startAfter` would skip over objects with keys that have numbers right after the `startAfter` prefix.
+- Add worker bindings for multipart uploads.
+
+## 2022-11-17
+
+- Unconditionally return HTTP 206 on ranged requests to match behavior of other S3 compatible implementations.
+- Fixed a CORS bug where `AllowedHeaders` in the CORS config were being treated case-sensitively.
+
+## 2022-11-08
+
+- Copying multipart objects via `CopyObject` is re-enabled.
+- `UploadPartCopy` is re-enabled.
+
+## 2022-10-28
+
+- Multipart upload part sizes are always expected to be of the same size, but this enforcement is now done when you complete an upload instead of being done very time you upload a part.
+- Fixed a performance issue where concurrent multipart part uploads would get rejected.
+
+## 2022-10-26
+
+- Fixed ranged reads for multipart objects with part sizes unaligned to 64KiB.
+
+## 2022-10-19
+
+- `HeadBucket` now sets `x-amz-bucket-region` to `auto` in the response.
+
+## 2022-10-06
+
+- Temporarily disabled `UploadPartCopy` while we investigate an issue.
+
+## 2022-09-29
+
+- Fixed a CORS issue where `Access-Control-Allow-Headers` was not being set for preflight requests.
+
+## 2022-09-28
+
+- Fixed a bug where CORS configuration was not being applied to S3 endpoint.
+- No-longer render the `Access-Control-Expose-Headers` response header if `ExposeHeader` is not defined.
+- Public buckets will no-longer return the `Content-Range` response header unless the response is partial.
+- Fixed CORS rendering for the S3 `HeadObject` operation.
+- Fixed a bug where no matching CORS configuration could result in a `403` response.
+- Temporarily disable copying objects that were created with multipart uploads.
+- Fixed a bug in the Workers bindings where an internal error was being returned for malformed ranged `.get` requests.
+
+## 2022-09-27
+
+- CORS preflight responses and adding CORS headers for other responses is now implemented for S3 and public buckets. Currently, the only way to configure CORS is via the S3 API.
+- Fixup for bindings list truncation to work more correctly when listing keys with custom metadata that have `"` or when some keys/values contain certain multi-byte UTF-8 values.
+- The S3 `GetObject` operation now only returns `Content-Range` in response to a ranged request.
+
+## 2022-09-19
+
+- The R2 `put()` binding options can now be given an `onlyIf` field, similar to `get()`, that performs a conditional upload.
+- The R2 `delete()` binding now supports deleting multiple keys at once.
+- The R2 `put()` binding now supports user-specified SHA-1, SHA-256, SHA-384, SHA-512 checksums in options.
+- User-specified object checksums will now be available in the R2 `get()` and `head()` bindings response. MD5 is included by default for non-multipart uploaded objects.
+
+## 2022-09-06
+
+- The S3 `CopyObject` operation now includes `x-amz-version-id` and `x-amz-copy-source-version-id` in the response headers for consistency with other methods.
+- The `ETag` for multipart files uploaded until shortly after Open Beta uploaded now include the number of parts as a suffix.
+
+## 2022-08-17
+
+- The S3 `DeleteObjects` operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 `DeleteObject` operation was not affected by this.
+- Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations. 
+
+## 2022-08-06
+
+- Uploads will automatically infer the `Content-Type` based on file body if one is not explicitly set in the `PutObject` request. This functionality will come to multipart operations in the future.
+
+## 2022-07-30
+
+- Fixed S3 conditionals to work properly when provided the `LastModified` date of the last upload, bindings fixes will come in the next release.
+- `If-Match` / `If-None-Match` headers now support arrays of ETags, Weak ETags and wildcard (`*`) as per the HTTP standard and undocumented AWS S3 behavior.
+
+## 2022-07-21
+
+- Added dummy implementation of the following operation that mimics the response that a basic AWS S3 bucket will return when first created:
+  - `GetBucketAcl`
+
+## 2022-07-20
+
+- Added dummy implementations of the following operations that mimic the response that a basic AWS S3 bucket will return when first created:
+  - `GetBucketVersioning`
+  - `GetBucketLifecycleConfiguration`
+  - `GetBucketReplication`
+  - `GetBucketTagging`
+  - `GetObjectLockConfiguration`
+
+## 2022-07-19
+
+- Fixed an S3 compatibility issue for error responses with MinIO .NET SDK and any other tooling that expects no `xmlns` namespace attribute on the top-level `Error` tag.
+- List continuation tokens prior to 2022-07-01 are no longer accepted and must be obtained again through a new `list` operation.
+- The `list()` binding will now correctly return a smaller limit if too much data would otherwise be returned (previously would return an `Internal Error`).
+
+## 2022-07-14
+
+- Improvements to 500s: we now convert errors, so things that were previously concurrency problems for some operations should now be `TooMuchConcurrency` instead of `InternalError`. We've also reduced the rate of 500s through internal improvements.
+- `ListMultipartUpload` correctly encodes the returned `Key` if the `encoding-type` is specified.
+
+## 2022-07-13
+
+- S3 XML documents sent to R2 that have an XML declaration are not rejected with `400 Bad Request` / `MalformedXML`.
+- Minor S3 XML compatability fix impacting Arq Backup on Windows only (not the Mac version). Response now contains XML declaration tag prefix and the xmlns attribute is present on all top-level tags in the response.
+- Beta `ListMultipartUploads` support.
 
 ## 2022-07-06
 
@@ -57,7 +167,7 @@ title: Changelog
 
 ## 2022-05-16
 
-- Add support for virtual-hosted style paths, such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com`.
+- Add support for S3 [virtual-hosted style paths](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html), such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com` instead of path-based routing (`<ACCOUNT_ID>.r2.cloudflarestorage.com/<BUCKET>`).
 - Implemented `GetBucketLocation` for compatibility with external tools, this will always return a `LocationConstraint` of `auto`.
 
 ## 2022-05-06
@@ -85,7 +195,7 @@ title: Changelog
 - The S3 API `CopyObject` source parameter now requires a leading slash.
 - The S3 API `CopyObject` operation now returns a `NoSuchBucket` error when copying to a non-existent bucket instead of an internal error.
 - Enforce the requirement for `auto` in SigV4 signing and the `CreateBucket` `LocationConstraint` parameter.
-- The S3 API `CreateBucket` operation now returns the proper `location` response header. 
+- The S3 API `CreateBucket` operation now returns the proper `location` response header.
 
 ## 2022-04-14
 
@@ -95,7 +205,7 @@ title: Changelog
 - Fixed a bug where deleting an object and then another object which is a prefix of the first could result in errors.
 - The S3 API `DeleteObjects` operation no longer returns an error even though an object has been deleted in some cases.
 - Fixed a bug where `startAfter` and `continuationToken` were not working in list operations.
-- The S3 API `ListObjects` operation now correctly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response. 
+- The S3 API `ListObjects` operation now correctly renders `Prefix`, `Delimiter`, `StartAfter` and `MaxKeys` in the response.
 - The S3 API `ListObjectsV2` now correctly honors the `encoding-type` parameter.
 - The S3 API `PutObject` operation now works with `POST` requests for `s3cmd` compatibility.
 

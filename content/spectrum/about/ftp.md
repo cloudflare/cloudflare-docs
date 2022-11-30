@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: FTP
 weight: 0
 ---
@@ -64,6 +64,10 @@ Example configuration for [vsftpd](https://security.appspot.com/vsftpd.html):
 > pasv_addr_resolve=YES
 > pasv_promiscuous=YES
 > ```
+
+## SFTP
+
+Unlike FTP or FTPS, enabling Spectrum for SFTP does not require extra configuration. When setting up a Spectrum application for SSH, select port 22 and TCP.
 
 ## Related
 

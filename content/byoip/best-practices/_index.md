@@ -1,6 +1,6 @@
 ---
 title: Best practices
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 5
 ---
 

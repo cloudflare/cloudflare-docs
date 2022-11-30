@@ -1,5 +1,5 @@
 ---
-pcx-content-type: faq
+pcx_content_type: faq
 title: Troubleshooting
 weight: 4
 ---
@@ -14,7 +14,7 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/policies/access/cors/#list-of-cors-settings).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/#list-of-cors-settings).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
@@ -51,9 +51,9 @@ If you see this page, providing as much information as possible to the local IT 
 
 You may not see analytics on the Overview page for the following reasons:
 
-- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
 - **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
-- **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
+- **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
 - **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
 ## I see a "No Browsers Available" alert.
@@ -65,16 +65,9 @@ If you encounter this error please [file feedback](/cloudflare-one/policies/brow
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
-## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
+## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-<div class="small-img">
-  <img alt="Google Error 400" src="/cloudflare-one/static/documentation/faq/google-error-400.png" />
-</div>
-
-This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
-
-1.  In the Google Admin console, navigate to **Security** > **API controls**.
-2.  Check the _Trust internal, domain-owned apps_ option.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
@@ -130,6 +123,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/users/session-management/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
 ## Connections are timing out after 270 seconds
 
@@ -145,5 +139,5 @@ If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
-This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare Dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
-Cloudflare Dashboard SSO does not currently support team domain changes. Contact your account team for more details.
+This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
+Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.

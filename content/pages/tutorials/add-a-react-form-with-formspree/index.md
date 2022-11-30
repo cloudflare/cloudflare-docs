@@ -2,7 +2,8 @@
 updated: 2021-11-30
 difficulty: Beginner
 content_type: 📝 Tutorial
-pcx-content-type: tutorial
+pcx_content_type: tutorial
+layout: single
 title: Add a React form with Formspree
 ---
 
@@ -48,8 +49,8 @@ Next, you will build the form component using a helper library from Formspree, [
 
 Install it with:
 
-```bash
-npm install --save @formspree/react
+```sh
+$ npm install --save @formspree/react
 ```
 
 Then paste the following code snippet into the `ContactForm.js` file:
@@ -74,7 +75,7 @@ export default function ContactForm() {
       <input id="email" type="email" name="email" required />
       <ValidationError prefix="Email" field="email" errors={state.errors} />
 
-      <label for="message">Message</label>
+      <label htmlFor="message">Message</label>
       <textarea id="message" name="message" required></textarea>
       <ValidationError prefix="Message" field="message" errors={state.errors} />
 

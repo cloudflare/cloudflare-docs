@@ -1,6 +1,6 @@
 ---
 type: overview
-pcx-content-type: navigation
+pcx_content_type: navigation
 hideChildren: true
 title: FAQ
 Weight: 130

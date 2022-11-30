@@ -2,7 +2,7 @@
 updated: 2021-03-16
 category: 🔐 Zero Trust
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Output an app's token to a variable with one command
 ---
 

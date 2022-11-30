@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Add CAA records
 weight: 7
 ---
@@ -28,13 +28,28 @@ You should [create CAA records](#create-caa-records) in Cloudflare if each of th
 
 If you have [AMP Real URL](https://support.cloudflare.com/hc/articles/360029367652) enabled, Cloudflare automatically adds CAA records for each our CA providers when necessary.
 
-If Cloudflare has automatically added CAA records on your behalf, these records will not appear in the Cloudflare dashboard. However, if you run a command line query using `dig`, you can see any existing CAA records, including those added by Cloudflare.
+If Cloudflare has automatically added CAA records on your behalf, these records will not appear in the Cloudflare dashboard. However, if you run a command line query using `dig`, you can see any existing CAA records, including those added by Cloudflare (replacing `example.com` with your own domain on Cloudflare):
+
+```bash
+➜  ~ dig example.com caa +short
+0 issue "digicert.com; cansignhttpexchanges=yes"
+0 issuewild "digicert.com; cansignhttpexchanges=yes"
+0 issue "comodoca.com"
+0 issue "letsencrypt.org"
+0 issue "pki.goog; cansignhttpexchanges=yes"
+0 issuewild "comodoca.com"
+0 issuewild "letsencrypt.org"
+0 issuewild "pki.goog; cansignhttpexchanges=yes"
+```
 
 ## Create CAA records
 
 Create a CAA record for each Certificate Authority (CA) that you plan to use for your domain.
 
-To add a CAA record:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To add a CAA record in the dashboard, 
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Navigate to **DNS**.
@@ -45,7 +60,13 @@ To add a CAA record:
 7.  For **CA domain name**, enter the CA name.
 8.  Click **Save**.
 9.  Repeat for each CA associated with your domain.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To create a CAA record via the API, use this [POST endpoint](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record).
+ 
+{{</tab>}}
+{{</tabs>}}
 
 Once you have finished creating all the records, you can review them in the list of records appearing under the DNS Records panel.
-
-To create these records via the API, use this [POST endpoint](https://api.cloudflare.com/#dns-records-for-a-zone-create-dns-record).

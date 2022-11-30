@@ -1,6 +1,6 @@
 ---
 title: Extended ruleset
-pcx-content-type: configuration
+pcx_content_type: configuration
 weight: 3
 meta:
   title: Extended suggested ruleset
@@ -27,7 +27,7 @@ You can also create a list from the dashboard from **Configurations** > **Lists*
 
 Endpoint devices do not operate as servers, which means:
 
-- They receive traffic from standard common ports — for example 80 or 443 — towards their ephemeral ports, above 32768 in modern operating systems (1025 in older XP).
+- They receive traffic from standard common ports — for example 80 or 443 — towards their ephemeral ports, above 32768 in modern operating systems (above 1025 in older Windows Server 2003 and Windows XP).
 - Connections flow outwards, not inwards, and therefore do not receive TCP SYN or ACK packets.
 - They typically only need client TCP and UDP, with no requirement for ingress ICMP.
 
@@ -110,7 +110,7 @@ The following is an example of suggested rules, but you should only make changes
 ### Suggested rules
 
 **Rule ID**: 1 <br/>
-**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYNACKs) <br/>
+**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
 **Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Microsoft 365
 weight: 3
 ---
@@ -15,7 +15,7 @@ The Microsoft 365 (M365) integration detects a variety of user security, data lo
 
 ## Integration permissions
 
-For the Microsoft 365 integration to function, CASB requires the following delegated Microsoft Graph API scopes for access:
+For the Microsoft 365 integration to function, Cloudflare CASB requires the following delegated Microsoft Graph API permissions:
 
 * `Application.Read.All`
 * `Calendars.Read`

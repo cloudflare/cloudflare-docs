@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: SAML | Keycloak
 weight: 10
 ---
@@ -14,15 +14,13 @@ To set up Keycloak (SAML) as your identity provider:
 
 1.  In Keycloak, select **Clients** in the navigation bar and create a new client.
 
-    ![SAML Client](/cloudflare-one/static/documentation/identity/keycloak/create-client.png)
-
 1.  Under **Client ID**, enter your [team domain](/cloudflare-one/glossary/#team-domain) followed by this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    ![SAML Client](/cloudflare-one/static/documentation/identity/keycloak/configure-client.png)
+    ![SAML Client interface with team domain and callback in Client ID](/cloudflare-one/static/documentation/identity/keycloak/configure-client.png)
 
 1.  Change the `Name ID Format` to `email`
 
@@ -38,7 +36,7 @@ To set up Keycloak (SAML) as your identity provider:
 
 1.  Set the built-in protocol mapper for the `email` property.
 
-    ![Mapper](/cloudflare-one/static/documentation/identity/keycloak/protocol-mapper.png)
+    ![Protocol Mapper with email property set](/cloudflare-one/static/documentation/identity/keycloak/protocol-mapper.png)
 
     Next, you will need to integrate with Cloudflare Access.
 

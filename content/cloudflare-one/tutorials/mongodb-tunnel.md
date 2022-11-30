@@ -2,7 +2,7 @@
 updated: 2020-12-29
 category: 🌐 Connections
 difficulty: Advanced
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: MongoDB SSH
 ---
 
@@ -184,7 +184,7 @@ spec:
 
 The MongoDB pod and the SSH jump host will share a Unix socket over an empty directory volume. The `entrypoint.sh` file run by the jump host, example below, will start an OpenSSH server.
 
-```sh
+```bash
 #!/bin/sh
 export TZ=America/Chicago
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -204,7 +204,9 @@ Next, you can use `cloudflared` to connect to Cloudflare's Edge using Cloudflare
 
 Once installed, run the following command to authenticate the instance of `cloudflared` into your Cloudflare account.
 
-`$ cloudflared login`
+```sh
+$ cloudflared login
+```
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
@@ -218,7 +220,7 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 
 ### Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/create-tunnel/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -232,7 +234,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 The credentials file is separate from the `cert.pem` file. Unlike the `cert.pem` file, the credentials file consists of a token that authenticates only the Named Tunnel you just created. Formatted as `JSON`, the file cannot make changes to your Cloudflare account or create additional Tunnels.
 
-If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, see the table in [this section](/cloudflare-one/connections/connect-apps/create-tunnel/).
+If you are done creating Tunnels, you can delete the `cert.pem` file, leave only the credentials file, and continue to manage DNS records directly in the Cloudflare dashboard or API. For additional information on the different functions of the two files, refer to the list of [useful terms](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem).
 
 Store the `JSON` file as a Kubernetes secret.
 

@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: hCaptcha
 weight: 1
 ---
@@ -23,7 +23,7 @@ filename: functions/register.ts
 import hCaptchaPlugin from "@cloudflare/pages-plugin-hcaptcha";
 
 export const onRequestPost: PagesFunction[] = [
-  hcaptchaPlugin({
+  hCaptchaPlugin({
     secret: "0x0000000000000000000000000000000000000000",
     sitekey: "10000000-ffff-ffff-ffff-000000000001",
   }),

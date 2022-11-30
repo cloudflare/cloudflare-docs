@@ -1,7 +1,7 @@
 ---
 title: Business
 type: document
-pcx-content-type: reference
+pcx_content_type: reference
 hidden: true
 weight: 3
 meta:

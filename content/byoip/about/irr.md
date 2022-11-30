@@ -1,6 +1,6 @@
 ---
 title: Internet Routing Registry
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Internet Routing Registry

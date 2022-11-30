@@ -1,6 +1,6 @@
 ---
 title: SSH proxy and command logs
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 2
 ---
 
@@ -21,13 +21,17 @@ Cloudflare Gateway will take the identity from a token and, using short-lived ce
 
 {{<render file="_ssh-usernames.md">}}
 
-## 2. Generate a short-lived certificate public key
+## 2. Generate a Gateway SSH proxy CA
 
-Instead of traditional SSH keys, short-lived certificates are used to authenticate traffic between Cloudflare and your origin.
+Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin.
 
-To create a root certificate and get its public key: 
+{{<Aside type="note">}}
+Other short-lived CAs, such as those used to [secure SSH servers behind Cloudflare Access](/cloudflare-one/identity/users/short-lived-certificates/), are incompatible with the Gateway SSH proxy. For SSH logging to work, you must create a new CA using the `gateway_ca` API endpoint.
+{{</Aside>}}
 
-1. Make a request to the Cloudflare API with your email address and API key as request headers. 
+To generate a Gateway SSH proxy CA and get its public key:
+
+1. Make a request to the Cloudflare API with your email address and [API key](/api) as request headers.
 
     ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/gateway_ca"\
@@ -35,9 +39,7 @@ To create a root certificate and get its public key:
         -H "X-Auth-Key: <API_KEY>"
     ```
 
-    Refer to [Getting access to the Cloudflare API](/api) for help finding your Account ID and API key.
-
-2. A success response will include a `public_key` value. Save the key or keep it somewhere convenient for configuring your server.
+2. A success response will include a `public_key` value. Save the key for configuring your server.
 
 ## 3. Save your public key
 
@@ -53,8 +55,8 @@ To create a root certificate and get its public key:
 
 Cloudflare's SSH proxy only works with servers running on the default port 22. Open the `sshd_config` file and verify that no other `Port` values are specified.
 
-```bash
-cat /etc/ssh/sshd_config
+```sh
+$ cat /etc/ssh/sshd_config
 ```
 
 ## 6. Restart your SSH server
@@ -84,7 +86,7 @@ Users can use any SSH client to connect to the target resource, as long as they 
 {{<Aside type="note">}}
 If the target resource is already in a user’s `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
 
-```bash
+```sh
 $ ssh-keygen -R <targetIP or Hostname>
 ```
 
@@ -98,7 +100,7 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
 
 2. Using the `ssh-log-cli` utility, generate a public and private key pair.
 
-    ```bash
+    ```sh
     $ ./ssh-log-cli generate-key-pair -o sshkey
     $ ls
     README.md	ssh-log-cli	sshkey	sshkey.pub
@@ -120,7 +122,7 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
 3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#configure-ssh-command-logging):
 
-    ```bash
+    ```sh
     $ ./ssh-log-cli decrypt -i sshlog -k sshkey
     ```
 

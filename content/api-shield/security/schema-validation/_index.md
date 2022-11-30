@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Schema Validation
 weight: 5
 ---
@@ -28,10 +28,19 @@ The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (
 
 ## Limitations
 
-Currently, API Shield cannot validate some features of API schemas, including the following: request body validations, all responses, external references, non-basic path templating, or unique items.
+Currently, API Shield cannot validate some features of API schemas, including the following: all responses, external references, non-basic path templating, or unique items.
 
 Regular expression support is a paid add-on in the Enterprise plan.
 
+## Body Inspection
+API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.
+
+{{<Aside type="note" header="Note:">}}
+
+Customers who already use Schema Validation but uploaded their schemas prior to the implementation of this feature must re-upload their schemas to receive Body Inspection benefits.
+
+{{</Aside>}}
+
 ## Availability
 
-Schema Validation is only available for Enterprise customers. If you are interested in using this product, contact your account team.
+Schema Validation is only available for Enterprise customers. If you are interested in using this feature, contact your account team.

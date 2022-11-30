@@ -4,7 +4,7 @@ summary: Deliver an HTML page from an HTML string directly inside the Worker scr
 demo: https://returning-html.workers-sites-examples.workers.dev
 tags:
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Return small HTML page
 weight: 1
 layout: example

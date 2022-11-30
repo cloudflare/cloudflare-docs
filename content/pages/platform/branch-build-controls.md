@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: Branch build controls
 ---
 
@@ -9,7 +9,7 @@ When connected to your git source, Pages allows you to control which environment
 
 ### Skip builds
 
-Without any configuration required, you can choose to skip a build and deployment on an adhoc basis. By adding the `[CISkip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, Pages will omit that build/deployment. The prefixes are case insensitive. 
+Without any configuration required, you can choose to skip a build and deployment on an adhoc basis. By adding the `[CI Skip]`, `[CI-Skip]`, `[Skip CI]`, `[Skip-CI]` or `[CF-Pages-Skip]` flag as a prefix in your commit message, Pages will omit that build/deployment. The prefixes are case insensitive. 
 
 However, if you would like to configure your project’s settings for automatic deployments without having to use CI Skip, go to your Pages project > **Settings** > **Build & deployments** and select the configuration option for either the production deployment or the preview deployment.
 

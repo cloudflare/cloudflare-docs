@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: How origins and pools become unhealthy
 weight: 5
 ---
@@ -14,13 +14,10 @@ But how does your load balancer _know_ which servers can handle the traffic? We 
 
 ## Components
 
-Dynamic load balancing happens through a combination of:
+Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
 
-- [**Origin pools**](/load-balancing/understand-basics/pools/): Contain one or more origin servers.
-- [**Monitors**](/load-balancing/understand-basics/monitors/): Are attached to individual origin servers and issue health checks at regular intervals.
-- **Health checks**: Are issued by a monitor at regular interval and — depending on the monitor settings — return a **pass** or **fail** value to make sure an origin is still able to receive traffic.
 
-![Dynamic load balancing involves pools, origins, monitors, and health checks](/load-balancing/static/images/load-balancer-components.png)
+{{<render file="_health-check-diagram.md">}}
 
 ---
 
@@ -41,7 +38,7 @@ If **Health Check Regions** for a pool is set to **All Data Centers (Enterprise)
 
 {{</Aside>}}
 
-For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
+For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
 
 ---
 
@@ -86,3 +83,8 @@ If a load balancer reaches **Critical** health and the pool serving as your fall
 
 - If Cloudflare proxies your hostname, you will see a 530 HTTP/1016 Origin DNS failure.
 - If Cloudflare does not proxy your hostname, you will see the SOA record.
+
+
+[^1]: Groups that contain one or more origin servers.
+[^2]: Are attached to individual origin servers and issue health checks at regular intervals.
+[^3]: Which are issued by a monitor at regular interval and — depending on the monitor settings — return a **pass** or **fail** value to make sure an origin is still able to receive traffic.

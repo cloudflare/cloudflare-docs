@@ -1,7 +1,7 @@
 ---
 updated: 2022-06-24
 category: 🔐 Zero Trust
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Connect to Google Workspace through Access
 ---
 
@@ -20,7 +20,7 @@ This tutorial covers how to configure Cloudflare Access as a single sign-on prov
 3. Fill in the following information:
     - **Application**: _Google_.
     - **Entity ID**: `google.com`
-    - **Assertion Consumer Service URL**: `https://google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
+    - **Assertion Consumer Service URL**: `https://www.google.com/a/<your_domain.com>/acs`, where `<your_domain.com>` is your Google Workspace domain.
     - **Name ID Format**: _Email_.
 
 {{<Aside type="warning">}}

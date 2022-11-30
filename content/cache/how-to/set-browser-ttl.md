@@ -1,6 +1,6 @@
 ---
 title: Set Browser Cache TTL
-pcx-content-type: concept
+pcx_content_type: concept
 meta:
   title: Browser Cache TTL
 ---

@@ -4,7 +4,7 @@ summary: Rewrite URL links in HTML using the HTMLRewriter. This is useful for
   JAMstack websites.
 tags:
   - HTMLRewriter
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Rewrite links
 weight: 1001
 layout: example

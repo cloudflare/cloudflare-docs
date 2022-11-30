@@ -1,5 +1,5 @@
 ---
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 title: Setup
 weight: 2
 meta:
@@ -12,27 +12,21 @@ With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-pri
 
 ## Limitations
 
-### CNAME at zone apex
+### DNS-only CNAME at zone apex
 
 If you are using Cloudflare as your [primary DNS provider](/dns/zone-setups/full-setup/), we allow you to set a `CNAME` record on the zone apex because we do [`CNAME` Flattening](/dns/additional-options/cname-flattening/). 
 
-If you take advantage of this behavior within Cloudflare (using a `CNAME` record on your zone apex), Cloudflare will also transfer out the `CNAME` value during outgoing zone transfers. This setup can lead to issues if your secondary DNS provider does not support `CNAME` flattening or cannot handle `CNAME` records on the zone apex.
-
-{{<Aside type="note">}}
-
-Cloudflare is actively working to transfer flattened IPs to the secondary DNS provider.
-
-{{</Aside>}}
+If you take advantage of this behavior within Cloudflare (using an unproxied `CNAME` record on your zone apex) while using outgoing zone transfers for this zone, Cloudflare will not transfer out the target hostname of the `CNAME` record but instead the flattened IP address(es) that also get served as DNS responses from Cloudflare authoritative nameservers.
 
 ### Proxied records
 
 If your zone has [proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/), you may also experience issues with outgoing zone transfers.
 
-When Cloudflare performs outgoing transfers, we also transfer out the IP or hostname of each DNS record. This means that - if Cloudflare (as primary) and your secondary provider are both authoritative - they will not reply with the same response for proxied DNS records. Cloudflare would respond with two [Cloudflare edge IP addresses](https://www.cloudflare.com/ips) and your secondary provider would respond with the origin IP or hostname.
+When Cloudflare performs outgoing transfers, we transfer out the origin IP or hostname of each DNS record. This means that - if Cloudflare (as primary) and your secondary provider are both authoritative - they will not reply with the same response for proxied DNS records. Cloudflare would respond with two [Cloudflare edge IP addresses](https://www.cloudflare.com/ips) and your secondary provider would respond with the origin IP or hostname.
 
 {{<Aside type="note">}}
 
-Cloudflare is actively working to support outgoing zone transfers of proxied records.
+If you need Cloudflare to transfer out edge IP addresses instead of origin IP addresses or hostnames for proxied records, reach out to your account team for further instructions.
 
 {{</Aside>}}
 
@@ -82,7 +76,7 @@ To create a peer using the dashboard:
 
 ### Using the API
 
-To create a peer DNS server using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-peer--create-peer) request.
+To create a peer DNS server using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-peer)-create-peer) request.
 
 ## Step 3 - Link peer to primary zone (optional)
 
@@ -101,7 +95,7 @@ To create a secondary zone using the dashboard:
 
 ### Using the API
 
-To link a primary zone to a peer using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-primary-zone--create-primary-zone-configuration) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
+To link a primary zone to a peer using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-primary-zone)-create-primary-zone-configuration) request with the ID of the peer you [previously created](#step-2---create-peer-dns-server-optional).
 
 ## Step 4 - Create an ACL
 
@@ -151,7 +145,7 @@ When you enable outgoing zone transfers, this will send a DNS NOTIFY message to 
 
 ### Using the API
 
-To enable outgoing zone transfers using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-primary-zone--enable-outgoing-zone-transfers) request.
+To enable outgoing zone transfers using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-primary-zone)-enable-outgoing-zone-transfers) request.
 
 ## Step 8 - Add secondary nameservers to registrar
 

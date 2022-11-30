@@ -1,6 +1,6 @@
 ---
 title: Filename encoding and interoperability problems
-pcx-content-type: reference
+pcx_content_type: concept
 ---
 
 ## Filename encoding and interoperability problems

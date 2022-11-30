@@ -1,6 +1,6 @@
 ---
 title: Additional DNS records
-pcx-content-type: configuration
+pcx_content_type: configuration
 meta:
   title: Load balance additional DNS records
 ---

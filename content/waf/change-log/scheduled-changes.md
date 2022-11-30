@@ -1,6 +1,6 @@
 ---
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
@@ -13,26 +13,24 @@ layout: list
   <thead>
     <tr>
       <th>Announcement Date</th>
-      <th>Change Date</th>
-      <th>Ruleset</th>
-      <th>Rule ID</th>
+      <th>Release Date</th>
+      <th>Release Behavior</th>
       <th>Legacy Rule ID</th>
+      <th>Rule ID</th>
       <th>Description</th>
-      <th>Previous Action</th>
-      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+    <tr>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-    </tr>
-  </tbody>
+</tbody>
 </table>
 {{</table-wrap>}}

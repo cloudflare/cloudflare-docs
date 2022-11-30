@@ -1,6 +1,6 @@
 ---
 title: Response Header Modification Rules
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 4
 meta:
   title: HTTP Response Header Modification Rules
@@ -25,6 +25,8 @@ To modify HTTP headers in the **request**, refer to [HTTP Request Header Modific
 * You cannot modify or remove HTTP response headers whose name starts with `cf-` or `x-cf-`.
 
 * You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
+
+* Currently you cannot reference [IP Lists](/firewall/cf-firewall-rules/rules-lists/) in expressions of HTTP Response Header Modification Rules.
 
 * The HTTP response header removal operation will remove all response headers with the provided name.
 

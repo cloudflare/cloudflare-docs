@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: URL format
 weight: 4
 ---
@@ -33,6 +33,8 @@ Here is an example of an URL with `<OPTIONS>` set to `width=80,quality=75` and a
 ```html
 <img src="/cdn-cgi/image/width=80,quality=75/uploads/avatar1.jpg" />
 ```
+
+{{<render file="_ir-svg-aside.md">}}
 
 ## Options
 

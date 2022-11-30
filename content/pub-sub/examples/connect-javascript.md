@@ -1,6 +1,6 @@
 ---
 title: Connect with JavaScript (Node.js)
-pcx-content-type: reference
+pcx_content_type: reference
 type: example
 summary: Use MQTT.js with the token authentication mode configured on a broker.
 ---

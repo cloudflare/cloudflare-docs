@@ -1,6 +1,6 @@
 ---
 title: JSON object
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 1
 meta:
   title: Firewall rules JSON object
@@ -10,7 +10,7 @@ meta:
 
 ## Firewall rule example JSON response
 
-A JSON response for the [Firewall Rules API](https://api.cloudflare.com/#firewall-rules-properties) has this structure:
+A JSON response for the [Firewall Rules API](https://developers.cloudflare.com/api/operations/firewall-rules-list-firewall-rules) has this structure:
 
 ```json
 {

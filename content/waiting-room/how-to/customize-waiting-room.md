@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Customize a waiting room
 weight: 2
 ---
@@ -19,7 +19,7 @@ Cloudflare offers options to customize the appearance of your waiting room:
 - [Custom waiting room](#custom-waiting-room): Edit template text or create your own HTML code:
   - Customize both HTML or CSS content, including fonts, colors, static images, additional languages and more.
   - Edit content directly in the dashboard or import relevant files.
-- [Support mobile app traffic](/waiting-room/additional-options/mobile-traffic/): Toggle to also enable a JSON response with a user's status in the waiting room.
+- [Return a JSON-friendly waiting room response](/waiting-room/how-to/json-response/): Toggle to also enable a JSON response with a user's status in the waiting room.
 
 ### Default waiting room
 
@@ -96,11 +96,11 @@ The following script within the `<body>` section after `<main>` fetches the wait
 
 #### Available variables
 
-When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
+When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room).
 
 #### Multiple-language support
 
-Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
+Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTimeMinutes` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
 
 #### Resource hosting
 
@@ -136,7 +136,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
      --data '{"custom_page_html":"<p>Include custom HTML here</p>"}'
 ```
 
-```bash
+```json
 {
   "success": true,
   "errors": [],
@@ -198,7 +198,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 
 The preview endpoint returns a temporary URL in the response body where you can preview your custom page:
 
-```bash
+```json
 {
   "result": {
     "preview_url": "https://waitingrooms.dev/preview/111111111111"
@@ -213,7 +213,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 ### Preview the default or current waiting room web page
 
-After [generating a preview URL](https://api.cloudflare.com/#waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
+After [generating a preview URL](https://developers.cloudflare.com/api/operations/waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
 ```txt
 GET https://waitingrooms.dev/preview/{preview-id}

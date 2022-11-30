@@ -1,7 +1,7 @@
 ---
 type: overview
 hideChildren: true
-pcx-content-type: navigation
+pcx_content_type: navigation
 title: Examples
 weight: 2
 layout: list

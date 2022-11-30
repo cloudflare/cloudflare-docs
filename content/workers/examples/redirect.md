@@ -4,7 +4,7 @@ summary: Redirect requests from one URL to another or from one set of URLs to
   another set.
 tags:
   - Middleware
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Redirect
 weight: 6
 layout: example

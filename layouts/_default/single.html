@@ -1,5 +1,6 @@
 {{ define "main" }}
   <div class="DocsPage">
+    {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
     {{- partial "sidebar.nav" . -}}
 
@@ -13,7 +14,7 @@
 
       <div id="docs-content" data-reach-skip-nav-content></div>
 
-      <div class="DocsContent" page-type="document">
+      <div class="DocsContent" id="main" page-type="document">
         <article class="DocsMarkdown">
           {{- .Content -}}
         </article>

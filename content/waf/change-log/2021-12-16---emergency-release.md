@@ -1,7 +1,7 @@
 ---
 title: 2021-12-16 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 923
 layout: list
 meta:

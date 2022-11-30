@@ -1,5 +1,5 @@
 ---
-pcx-content-type: concept
+pcx_content_type: concept
 title: How authenticated origin pulls work
 weight: 1
 ---

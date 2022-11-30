@@ -1,5 +1,5 @@
 ---
-pcx-content-type: reference
+pcx_content_type: reference
 title: Resize with Cloudflare Workers
 weight: 6
 ---
@@ -15,6 +15,8 @@ Here are a few examples of the flexibility Workers give you:
 * **Implement content negotiation**. This is useful to adapt image sizes, formats and quality dynamically based on the device and condition of the network.
 
 The resizing feature is accessed via the [options](/workers/runtime-apis/request/#requestinitcfproperties) of a `fetch()` [subrequest inside a Worker](/workers/runtime-apis/fetch/).
+
+{{<render file="_ir-svg-aside.md">}}
 
 ## Fetch options
 
@@ -40,7 +42,7 @@ These typings are also available in [our Workers TypeScript definitions library]
 
 ## Configure a Worker
 
-Create a new script in the Workers section of the Cloudflare Dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
+Create a new script in the Workers section of the Cloudflare dashboard. Scope your Worker script to a path dedicated to serving assets, such as `/images/*` or `/assets/*`. Only supported image formats can be resized. Attempting to resize any other type of resource (CSS, HTML) will result in an error.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -68,7 +70,7 @@ addEventListener("fetch", event => {
 }
 ```
 
-## Lack of preview in the Dashboard
+## Lack of preview in the dashboard
 
 {{<Aside type="note" header="Note">}}
 
@@ -178,3 +180,9 @@ async function handleRequest(request) {
 ```
 
 When testing image resizing, please deploy the script first. Resizing will not be active in the online editor in the dashboard.
+
+## Warning about `cacheKey`
+
+Resized images are always cached. They are cached as additional variants under a cache entry for the URL of the full-size source image in the `fetch` subrequest. Do not worry about using many different Workers or many external URLs — they do not influence caching of resized images, and you do not need to do anything for resized images to be cached correctly.
+
+If you use the `cacheKey` fetch option to unify caches of multiple different source URLs, you must not add any resizing options to the `cacheKey`, as this will fragment the cache and hurt caching performance. The `cacheKey` option is meant for the full-size source image URL only, not for its resized variants.

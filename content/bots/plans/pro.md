@@ -1,7 +1,7 @@
 ---
 title: Pro
 type: document
-pcx-content-type: reference
+pcx_content_type: reference
 hidden: true
 weight: 2
 meta:

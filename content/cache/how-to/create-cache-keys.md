@@ -1,6 +1,6 @@
 ---
 title: Create custom cache keys
-pcx-content-type: how-to
+pcx_content_type: how-to
 ---
 
 # Create custom cache keys

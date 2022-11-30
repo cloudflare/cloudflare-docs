@@ -1,7 +1,8 @@
 ---
 title: Overview
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 1
+layout: list
 ---
 
 # Overview
@@ -14,3 +15,7 @@ As part of that, we are proud to be the first Internet performance and security 
   {{<button type="primary" href="/ssl/get-started/">}}Get started{{</button>}}
   {{<button type="secondary" href="https://www.cloudflare.com/learning/ssl/what-is-ssl/" target="_blank">}}Learn more{{</button>}}
 {{</button-group>}}
+
+## Available features
+
+{{<product-table id="ssl">}}

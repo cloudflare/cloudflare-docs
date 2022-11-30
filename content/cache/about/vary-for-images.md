@@ -1,6 +1,6 @@
 ---
 title: Vary for images
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Vary for images

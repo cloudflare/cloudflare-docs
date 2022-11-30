@@ -11,7 +11,4 @@ All of the framework guides assume you already have a fundamental understanding 
 
 If you clone with SSH, you must [generate SSH keys](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) on each computer you use to push or pull from GitHub.
 
-Related resources:
-
-*   https://guides.github.com/introduction/git-handbook/
-*   https://git-scm.com/book/en/v2
+Refer to the [GitHub documentation](https://guides.github.com/introduction/git-handbook/) and [Git documentation](https://git-scm.com/book/en/v2) for more information.

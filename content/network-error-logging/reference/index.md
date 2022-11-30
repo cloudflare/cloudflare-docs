@@ -1,6 +1,7 @@
 ---
 title: Reference
-pcx-content-type: reference
+pcx_content_type: reference
+layout: single
 meta:
   title: Failures
 ---

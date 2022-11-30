@@ -1,6 +1,6 @@
 ---
 weight: 4
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Azure
 meta:
     title: Set up 1.1.1.1 on Azure
@@ -13,4 +13,4 @@ meta:
 3. Navigate to the virtual network associated with your virtual machine (VM).
 4. Select **DNS Servers** > **Custom**, and add two entries:
     {{<render file="_ipv4.md">}}
-5. Click **Save**.
+5. Select **Save**.

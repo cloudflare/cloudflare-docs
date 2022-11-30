@@ -1,12 +1,12 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Configure GraphQL client endpoint and HTTP headers
 weight: 41
 ---
 
 # Configure GraphQL client endpoint and HTTP headers
 
-1.  Launch [GraphiQL](https://electronjs.org/apps/graphiql).
+1.  Launch [GraphiQL](https://graphql.org/swapi-graphql).
 2.  Click **Edit HTTP Headers**.
     ![Clicking Edit HTTP Headers](/analytics/static/images/GraphiQL-edit-http-headers.png)
     The **Edit HTTP Headers** window appears.

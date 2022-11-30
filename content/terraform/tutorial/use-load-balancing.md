@@ -1,6 +1,6 @@
 ---
 title: 4 – Improve performance
-pcx-content-type: tutorial
+pcx_content_type: tutorial
 weight: 5
 meta:
   title: Improve performance and reliability
@@ -157,7 +157,6 @@ resource "cloudflare_load_balancer_monitor" "get-root-https" {
   path           = "/"
   interval       = 60
   retries        = 2
-  check_regions  = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
   description    = "GET / over HTTPS - expect 200"
 }
 EOF
@@ -191,7 +190,7 @@ resource "cloudflare_load_balancer_pool" "www-servers" {
   description        = "www origins"
   enabled            = true
   minimum_origins    = 1
-  notification_email = "you@example.com"
+  check_regions  = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 }
 EOF
 ```

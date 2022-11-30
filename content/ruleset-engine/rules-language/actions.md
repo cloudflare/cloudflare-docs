@@ -1,6 +1,6 @@
 ---
 title: Actions
-pcx-content-type: reference
+pcx_content_type: reference
 type: overview
 weight: 5
 layout: list
@@ -194,13 +194,53 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
           Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for <a href="/rules/bulk-redirects/">Bulk Redirect Rules</a>, in the <code>http_request_redirect</code> phase.
+          Only available for <a href="/rules/url-forwarding/single-redirects/">Single Redirects</a> and <a href="/rules/url-forwarding/bulk-redirects/">Bulk Redirects</a>.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a redirect rule or a bulk redirect rule.
         </p>
       </td>
       <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Route</strong><br />
+        <br />
+        API value:<br />
+        <code>route</code>
+      </td>
+      <td>
+        <p>
+          Adjusts the <code>Host</code> header, Server Name Indication (SNI), resolved hostname, and/or resolved destination port of incoming requests.
+        </p>
+        <p>
+          Only available for <a href="/rules/origin-rules/">Origin Rules</a>, in the <code>http_request_origin</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create an origin rule.
+        </p>
+      </td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Set Configuration</strong><br />
+        <br />
+        API value:<br />
+        <code>set_config</code>
+      </td>
+      <td>
+        <p>
+          Changes the configuration settings of one or more Cloudflare products.
+        </p>
+        <p>
+          Only available for <a href="/rules/configuration-rules/">Configuration Rules</a>, in the <code>http_config_settings</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/configuration-rules/create-dashboard/">create a Configuration Rule</a>.
+        </p>
+      </td>
+      <td>No</td>
     </tr>
   </tbody>
 </table>
@@ -208,5 +248,5 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Cloudflare Firewall Rules, a security feature which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+Cloudflare Firewall Rules, a security product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 {{</Aside>}}

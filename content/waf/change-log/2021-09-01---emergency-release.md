@@ -1,7 +1,7 @@
 ---
 title: 2021-09-01 – Emergency
 type: table
-pcx-content-type: changelog
+pcx_content_type: changelog
 weight: 931
 layout: list
 meta:

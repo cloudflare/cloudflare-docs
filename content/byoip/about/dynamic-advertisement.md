@@ -1,6 +1,6 @@
 ---
 title: Dynamic advertisement
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Dynamic advertisement

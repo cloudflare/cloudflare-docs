@@ -3,7 +3,7 @@ type: example
 summary: Redirect a response based on the country code in the header of a visitor.
 tags:
   - Originless
-pcx-content-type: configuration
+pcx_content_type: configuration
 title: Country code redirect
 weight: 1001
 layout: example

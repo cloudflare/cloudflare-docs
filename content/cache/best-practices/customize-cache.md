@@ -1,6 +1,6 @@
 ---
 title: Customize cache
-pcx-content-type: concept
+pcx_content_type: concept
 ---
 
 # Customize cache

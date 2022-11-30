@@ -1,6 +1,6 @@
 ---
 title: Overview
-pcx-content-type: overview
+pcx_content_type: overview
 weight: 2
 meta:
   title: Ruleset Engine

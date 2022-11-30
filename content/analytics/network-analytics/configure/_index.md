@@ -1,6 +1,6 @@
 ---
 title: Configuring Network Analytics
-pcx-content-type: navigation
+pcx_content_type: navigation
 weight: 4
 meta:
   title: Configuring Cloudflare Network Analytics v2

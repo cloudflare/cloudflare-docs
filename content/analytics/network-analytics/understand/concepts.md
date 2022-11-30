@@ -1,6 +1,6 @@
 ---
 title: Concepts
-pcx-content-type: concept
+pcx_content_type: concept
 weight: 2
 meta:
   title: Network Analytics v2 concepts

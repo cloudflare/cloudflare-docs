@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Google Workspace
 weight: 13
 ---
@@ -35,7 +35,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 7. You will see a warning that you need to configure a consent screen. Select **Configure Consent Screen**.
 
 8. To configure the consent screen:
-    1. Choose **Internal** as the User Type. Cloudflare Access will gather information about users in your Google Workspace account, but not other accounts.
+    1. Choose **Internal** as the User Type. This limits authorization requests to users in your Google Workspace and blocks users who have regular Gmail addresses.
     2. Name the application, add a support email, and input contact fields. Google Cloud Platform requires an email in your account.
     3. The **Scopes** page can be left blank.
     4. The summary page will load and you can save and exit.

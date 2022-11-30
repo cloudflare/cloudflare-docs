@@ -1,6 +1,6 @@
 ---
 title: Available fields and functions
-pcx-content-type: reference
+pcx_content_type: reference
 weight: 3
 meta:
   title: Available fields and functions in URL Rewrite Rules
@@ -15,6 +15,8 @@ A URL Rewrite Rule filter expression (that is, the expression that defines which
 {{<render file="transform/_transform-phase-fields.md">}}
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
+
+The maximum length of a filter expression is 4,096 characters.
 
 ## Rewrite expressions
 

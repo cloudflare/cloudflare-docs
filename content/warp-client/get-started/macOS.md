@@ -1,6 +1,6 @@
 ---
 title: macOS
-pcx-content-type: how-to
+pcx_content_type: how-to
 weight: 0
 meta:
   title: macOS desktop client
@@ -11,7 +11,7 @@ meta:
 1. [Download Cloudflare WARP for macOS](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release).
 2. Navigate to your predefined download folder and open the `.pkg` file.
 3. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
-4. Click **Next** and **Accept** Cloudflare's privacy policy.
+4. Select **Next** and **Accept** Cloudflare's privacy policy.
 5. Turn on the toggle to enable WARP.
 
 WARP is now running and protecting your Internet connection.
@@ -33,7 +33,7 @@ This is the daemon service responsible for establishing the wireguard tunnel and
 
 ### Log files
 
-The macOS application places log files in two locations based on what part of the app is logging information. These logs are included with a feedback submission, when you click the checkbox in **Feedback** > **Share debug information**.
+The macOS application places log files in two locations based on what part of the app is logging information. These logs are included with a feedback submission, when you select the checkbox in **Feedback** > **Share debug information**.
 
 - **Daemon and install logs**: `/Library/Application Support/Cloudflare`.
 - **Application GUI logs**: `/Users/<your local username>/Library/Logs/Cloudflare`.

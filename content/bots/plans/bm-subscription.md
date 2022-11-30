@@ -1,7 +1,7 @@
 ---
 title: Enterprise Bot Management
 type: document
-pcx-content-type: reference
+pcx_content_type: reference
 hidden: true
 weight: 4
 meta:

@@ -1,7 +1,8 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 3
+layout: single
 ---
 
 # Get started
@@ -12,9 +13,9 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 - A Cloudflare account
 
-## Start from the Cloudflare Dashboard
+## Start from the Cloudflare dashboard
 
-1. On your Account Home in the [Cloudflare Dashboard](https://dash.cloudflare.com/), click on the **Zero Trust** icon.
+1. On your Account Home in the [Cloudflare dashboard](https://dash.cloudflare.com/), click on the **Zero Trust** icon.
 
 2. On the onboarding screen, choose a [team name](/cloudflare-one/glossary/#team-name).
 
@@ -22,11 +23,11 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 4. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
 
-    ![Cloudflare Zero Trust Dashboard Home](/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
+    ![Cloudflare Zero Trust dashboard home](/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
 
 ## Install the WARP client on your devices
 
-If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next step you need to take:
+If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next steps you need to take:
 
 1. **Set up a login method.** Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust Dashboard. This is the login method your users will utilize when authenticating to add a new device to your Zero Trust setup.
 
