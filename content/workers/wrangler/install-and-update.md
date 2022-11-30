@@ -12,7 +12,7 @@ This is an installation guide for the new version of Wrangler. If you previously
 
 {{</Aside>}}
 
-Wrangler is a command-line tool for building [Cloudflare Workers](https://workers.cloudflare.com/).
+Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler
 
