@@ -33,7 +33,6 @@ With ABR, client video players need to be provided with estimates of how much ba
 
 ### How it works
 
-
 If a live stream contains content with low visual complexity, like a slideshow presentation, the bandwidth estimates provided in the HLS and DASH manifests will be lower —  a stream like this has a low bitrate and requires relatively little bandwidth, even at high resolution.  This ensures that as many viewers as possible view the highest quality level.
 
 Conversely, if a live stream contains content with high visual complexity, like live sports with motion and camera panning, the bandwidth estimates provided in the manifest will be higher — a stream like this has a high bitrate and requires more bandwidth. This ensures that viewers with inadequate bandwidth switch down to a lower quality level, and their playback does not buffer.
