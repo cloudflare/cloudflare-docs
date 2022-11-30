@@ -160,7 +160,7 @@ You can review if your bucket is publicly accessible by going to your bucket and
 
 ### Disable managed public access for your bucket
 
-Your bucket will not be exposed to the Internet as an `r2.dev subdomain` after you disable public access. If you have connected other domains, the bucket will remain accessible on those domains.
+Your bucket will not be exposed to the Internet as an `r2.dev` subdomain after you disable public access. If you have connected other domains, the bucket will remain accessible on those domains.
 
 To disable public access for your bucket:
 
