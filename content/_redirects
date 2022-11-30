@@ -906,6 +906,7 @@
 /workers/platform/routing/routes/ /workers/platform/triggers/routes/ 301
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
+/workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 
 # zaraz
 
