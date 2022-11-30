@@ -985,7 +985,7 @@ The Rules language includes fields that represent properties of an HTTP request 
 
 {{<Aside type="warning">}}
 
-All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will always have the full size of the request, without any truncation.
+All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will contain the full size of the request without any truncation.
 
 The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
 
