@@ -139,7 +139,7 @@ For an example of this in practice, refer to the [`websocket-template`](https://
 
 ## Writing a WebSocket client
 
-Cloudflare Workers supports the `new WebSocket(url)` constructor, and so a Worker can establish a WebSocket connection to a remote server in the same manner as the client implementation described above.
+Cloudflare Workers supports the `new WebSocket(url)` constructor. A Worker can establish a WebSocket connection to a remote server in the same manner as the client implementation described above.
 
 Additionally, Cloudflare supports establishing WebSocket connections by making a fetch request to a URL with the `Upgrade` header set.
 
@@ -173,7 +173,7 @@ async function websocket(url) {
 }
 ```
 
-## WebSocket Compression
+## WebSocket compression
 
 Cloudflare Workers does not currently support WebSocket compression. This means that, unlike browsers, using `new WebSocket(url)` in a Worker will not set `Sec-WebSocket-Extensions: permessage-deflate`.
 
