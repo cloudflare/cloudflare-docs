@@ -68,13 +68,13 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Creating and adding a binding to your Remix application
+## Create and add a binding to your Remix application
 
-A [binding](/pages/platform/functions/#adding-bindings) is how your Function (Worker) interacts with external resources. You can add KV, Durable Object, and plain-text bindings to your project. A binding is a runtime variable that the Workers runtime provides to your code. You can also use these bindings in development with [Wrangler](https://developers.cloudflare.com/workers/wrangler/get-started/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as KV, Durable Object, R2, and D1. 
 
-To add a KV namespace or Durable Object binding to your Remix application, refer to [Functions](/pages/platform/functions/#adding-bindings).
+To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
 
-### Using a binding in your Remix application
+### Use a binding in your Remix application
 
 If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv). 
 
@@ -83,7 +83,7 @@ The following code block shows an example of accessing a KV namespace in Remix.
 ```typescript
 ---
 filename: app/routes/products/$productId.tsx
-highlight: [9,10,11,12,13,18,21]
+highlight: [9,10,11,12,13,17,24]
 ---
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare"; 
@@ -117,7 +117,19 @@ export default function Product() {
 
 ```
 
-Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. 
+Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. For example:
+
+```ts
+export const loader = async ({
+  context,
+  params,
+}: LoaderArgs) => {
+  const id = context.PRODUCTS_DO.idFromName(params.productId);
+  const stub = context.PRODUCTS_DO.get(id);
+  const response = await stub.fetch(request);
+  const data = await response.json() as { name: string };
+  return json(data);
+};
 
 You have to do this because there is no way to export the Durable Object class from a Pages Function. 
 
