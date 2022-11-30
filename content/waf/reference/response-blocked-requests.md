@@ -1,11 +1,12 @@
 ---
-_build:
-  publishResources: false
-  render: never
-  list: never
+title: Response for blocked requests
+pcx_content_type: reference
+weight: 1
 ---
 
-By default, when you select the _Block_ action in a rule the WAF will send a response according to the preferred content type defined in the received `Accept` header value (if any):
+# Response for blocked requests
+
+By default, when you select the _Block_ action in a rule, the WAF will send a response according to the preferred content type defined in the received `Accept` header value (if any):
 
 Preferred content type          | Format of _Block_ action response
 --------------------------------|----------------------
@@ -15,7 +16,9 @@ Preferred content type          | Format of _Block_ action response
 `text/plain`                    | Plain text
 Other / Not defined             | HTML
 
-You can define a custom response, which has the following settings:
+## Custom response
+
+You can define a custom response for blocked requests. A custom response has the following settings:
 
 * **Response type**: Choose a content type or the default block response from the list. The available custom response types are the following:
 

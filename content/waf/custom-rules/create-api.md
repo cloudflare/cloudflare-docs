@@ -47,7 +47,7 @@ curl -X PUT \
 
 ### Example B
 
-This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
+This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/reference/response-blocked-requests/) for blocked requests:
 
 ```json
 ---

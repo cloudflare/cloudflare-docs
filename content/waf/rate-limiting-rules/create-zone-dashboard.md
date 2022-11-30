@@ -33,7 +33,7 @@ To create a new rate limiting rule:
 
 6. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests in the conditions you specified when the request limit is reached.
 
-7. (Optional) If you selected the _Block_ action, you can [configure the response](#configuring-the-response-for-blocked-requests) for requests exceeding the configured rate limit.
+7. (Optional) If you selected the _Block_ action, you can [configure the response](/waf/reference/response-blocked-requests/) for requests exceeding the configured rate limit.
 
 8. Under **For**, select the mitigation timeout in **Duration**. This is the time period during which Cloudflare applies the select action once the rate is reached.
 
@@ -46,7 +46,3 @@ To create a new rate limiting rule:
 12. (Optional) Under **Cache status**, disable **Also apply rate limiting to cached assets** to consider only the requests that reach the origin when determining the rate.
 
 13. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
-
-## Configuring the response for blocked requests
-
-{{<render file="_custom-response-blocked-requests.md">}}

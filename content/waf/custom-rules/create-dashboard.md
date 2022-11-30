@@ -36,10 +36,6 @@ To create a new custom rule:
 
 7. Select the rule action from the **Choose action** drop-down list. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-8. (Optional) If you selected the _Block_ action, you can [configure the response](#configuring-the-response-for-blocked-requests).
+8. (Optional) If you selected the _Block_ action, you can [configure the response](/waf/reference/response-blocked-requests/).
 
 9. To save and deploy your rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
-
-## Configuring the response for blocked requests
-
-{{<render file="_custom-response-blocked-requests.md">}}
