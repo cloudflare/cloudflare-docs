@@ -98,5 +98,5 @@ When to use the Cache API:
 This [template](/workers/examples/cache-api/) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/workers/platform/limits/#cache-api-limits).
 
 {{<Aside type="warning" header="Warning">}}
-Cache API within Workers does not support tiered caching.
+Cache API within Workers does not support tiered caching. Tiered Cache concentrates connections to origin servers so they come from a small number of data centers rather than the full set of network locations. Cache API is local to a data center, this means that `cache.match` does a lookup, `cache.put` stores a response, and `cache.delete` removes a stored response only in the cache of the data center that the Worker handling the request is in. Because these methods apply only to local cache, they will not work with tiered cache.
 {{</Aside>}}
