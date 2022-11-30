@@ -70,7 +70,7 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 
 ## Create and add a binding to your Remix application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as KV, Durable Object, R2, and D1. 
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/). 
 
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
 
