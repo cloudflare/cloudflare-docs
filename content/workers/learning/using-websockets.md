@@ -175,7 +175,7 @@ async function websocket(url) {
 
 ## WebSocket compression
 
-Cloudflare Workers does not currently support WebSocket compression. This means that, unlike browsers, using `new WebSocket(url)` in a Worker will not set `Sec-WebSocket-Extensions: permessage-deflate`.
+Cloudflare Workers does not currently support WebSocket compression. This means that, unlike browsers, using `new WebSocket(url)` in a Worker will not set the `Sec-WebSocket-Extensions: permessage-deflate` header.
 
 ## Durable Objects and WebSocket state
 
