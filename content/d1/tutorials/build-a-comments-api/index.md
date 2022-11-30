@@ -26,11 +26,10 @@ In this example, we’ll use [Hono](https://github.com/honojs/hono), an Express.
 $ npm install hono
 ```
 
-Then, in `src/index.ts`, we’ll initialize a new Hono app, and define a few endpoints - `GET /API/posts/:slug/comments`, and `POST /get/api/:slug/comments`. Using Hono, it's easy to create a few request handlers, including the ability to pattern match on a `slug` key:
+Then, in `src/index.js`, we’ll initialize a new Hono app, and define a few endpoints - `GET /API/posts/:slug/comments`, and `POST /get/api/:slug/comments`. Using Hono, it's easy to create a few request handlers, including the ability to pattern match on a `slug` key:
 
 ```js
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
 
 const app = new Hono()
 
@@ -64,12 +63,6 @@ database_name = "d1-example"
 database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
 ```
 
-{{<Aside type="notice" header="Beta notice">}}
-
-Note that this directive, the `[[d1_databases]]` field, currently requires a beta version of wrangler. You can install this for your project using the command `npm install -D wrangler/beta`.
-
-{{</Aside>}}
-
 With the database configured in `wrangler.toml`, you can interact with it from the command line, and inside your Workers function.
 
 ## Interact with D1
@@ -88,28 +81,27 @@ Executing on d1-example:
 └─────────────────┘
 ```
 
-You can also pass a SQL file - perfect for initial data seeding in a single command. Create `src/schema.sql`, which will create a new `comments` table for your project:
+You can also pass a SQL file - perfect for initial data seeding in a single command. Create `schemas/schema.sql`, which will create a new `comments` table for your project:
 
 ```SQL
-drop table if exists comments;
-create table comments (
-  id integer primary key autoincrement,
-  author text not null,
-  body text not null,
-  post_slug text not null
+DROP TABLE IF EXISTS comments;
+CREATE TABLE IF NOT EXISTS comments (
+  id integer PRIMARY KEY AUTOINCREMENT,
+  author text NOT NULL,
+  body text NOT NULL,
+  post_slug text NOT NULL
 );
-create index idx_comments_post_id on comments (post_slug);
+CREATE INDEX idx_comments_post_slug ON comments (post_slug);
 
 -- Optionally, uncomment the below query to create data
 
--- insert into comments (author, body, post_slug)
--- values ("Kristian", "Great post!", "hello-world");
+-- INSERT INTO COMMENTS (author, body, post_slug) VALUES ("Kristian", "Great post!", "hello-world");
 ```
 
 With the file created, execute the schema file against the D1 database by passing it with the flag `--file`:
 
 ```sh
-$ wrangler d1 execute d1-example --file src/schema.sql
+$ wrangler d1 execute d1-example --file schemas/schema.sql
 ```
 
 ## Executing SQL
@@ -160,13 +152,13 @@ app.post('/api/posts/:slug/comments', async c => {
 
 With your application ready for deployment, you can use Wrangler to quickly build and publish your project to your Cloudflare account.
 
-Begin by running `wrangler whoami` to confirm that you are logged in to yuor Cloudflare account. If you are not logged in, Wrangler will prompt you to login, creating an API key that you can use to make authenticated requests automatically from your local machine.
+Begin by running `wrangler whoami` to confirm that you are logged in to your Cloudflare account. If you are not logged in, Wrangler will prompt you to login, creating an API key that you can use to make authenticated requests automatically from your local machine.
 
 Once you've logged in, confirm that your `wrangler.toml` file is configured similarly to what is seen below. You can change the `name` field to a project name of your choice:
 
 ```toml
 name = "d1-example"
-main = "src/index.ts"
+main = "src/index.js"
 compatibility_date = "2022-07-15"
 
 [[ d1_databases ]]
@@ -179,7 +171,7 @@ Now, run `wrangler publish` to publish your project to Cloudflare Workers. When 
 
 ```sh
 # Note: Your workers.dev deployment URL may be different
-$ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments | jq
+$ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 [
   {
     "id": 1,
@@ -194,7 +186,7 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 This application is just an API backend, best served for use with a frontend UI for actually creating and viewing comments. If you'd like to test this backend with a prebuild frontend UI, visit the example UI at [codewithkristian/d1-frontend-app](https://github.com/codewithkristian/d1-frontend-app). Notably, the [`loadComments` and `submitComment` functions](https://github.com/codewithkristian/d1-frontend-app/blob/master/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
-Note that interacting with this API from a frontend will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your backend API. Luckily, Hono has a quick way to enable this for your application. Import the `cors` module and add it as middleware to your API in `src/index.ts`:
+Note that interacting with this API from a frontend will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your backend API. Luckily, Hono has a quick way to enable this for your application. Import the `cors` module and add it as middleware to your API in `src/index.js`:
 
 ```typescript
 ---
