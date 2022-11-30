@@ -87,11 +87,11 @@ Valid options for the `options` object include: {{<definitions>}}
   - Creates a clone of a [`Response`](#response) object.
 
 - `json()` {{<type-link href="#response">}}Response{{</type-link>}}
-  
+
   - Creates a new response with a JSON-serialized payload.
-  
+
 - `redirect()` {{<type-link href="#response">}}Response{{</type-link>}}
-  
+
   - Creates a new response with a different URL.
 
 {{</definitions>}}
@@ -119,6 +119,25 @@ Valid options for the `options` object include: {{<definitions>}}
   - Takes a [`Response`](#response) stream, reads it to completion, and returns a promise that resolves with a [`USVString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) (text).
 
 {{</definitions>}}
+
+### Set the `Content-Length` header
+
+The `Content-Length` header will be automatically set by the runtime based on whatever the data source for the `Response` is. Any value manually set by user code in the `Headers` will be ignored. To have a `Content-Length` header with a specific value specified, the `body` of the `Response` must be either a `FixedLengthStream` or a fixed-length value just as a string or `TypedArray`.
+
+A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed number of bytes to be written to it.
+
+```js
+  const { writable, readable } = new FixedLengthStream(11);
+
+  const enc = new TextEncoder();
+  const writer = writable.getWriter();
+  writer.write(enc.encode("hello world"));
+  writer.end();
+
+  return new Response(readable);
+```
+
+Using any other type of `ReadableStream` as the body of a response will result in chunked encoding being used.
 
 ---
 
