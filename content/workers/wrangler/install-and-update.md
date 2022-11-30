@@ -16,7 +16,11 @@ Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler
 
-To install [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. After you have installed npm and Node.js, run:
+To install [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node version of `16.13.0` or later. 
+
+### Install Wrangler globally
+
+After you have installed npm and Node.js, run:
 
 ```sh
 $ npm install -g wrangler
@@ -28,6 +32,20 @@ or install with `yarn`:
 $ yarn global add wrangler
 ```
 
+### Install Wrangler locally
+
+To install a local version of Wrangler, run:
+
+```sh
+$ npm install wrangler
+```
+
+or install with `yarn`:
+
+```sh
+$ yarn add wrangler
+```
+
 ## Update Wrangler
 
 To check your Wrangler version, run:
@@ -36,13 +54,17 @@ To check your Wrangler version, run:
 $ wrangler version
 ```
 
-To update Wrangler, run:
+### Update Wrangler globally
+
+To update Wrangler globally, you must be outside of a project folder (and there is no parent directory containing a `package.json`) and run:
 
 ```sh
 $ npm update -g wrangler
 ```
 
-To update Wrangler only in your current directory, run:
+### Update Wrangler locally
+
+To update Wrangler only in your current directory containing a `package.json`, run:
 
 ```sh
 $ npm upgrade wrangler --save
@@ -53,6 +75,12 @@ or
 ```sh
 $ npm update wranger --save
 ```
+
+{{<Aside type="warning" header="`npx wrangler innit`">}}
+
+`npx wrangler` will use the latest version of Wrangler except when there is already a Wrangler version installed in the current folder. In this case, it will use that version instead. Running `npx wrangler init` will install a local version of Wrangler in the project directory.
+
+{{</Aside>}}
 
 ## Related resources
 
