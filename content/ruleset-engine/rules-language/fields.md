@@ -1138,7 +1138,7 @@ The Cloudflare Rules language supports these HTTP response fields:
    <tr id="field-http-response-code">
       <td valign="top"><code>http.response.code</code><br />{{<type>}}Integer{{</type>}}</td>
       <td>
-         <p>Represents the HTTP status code returned by the origin.
+         <p>Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">403</code>
