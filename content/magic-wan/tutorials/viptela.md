@@ -6,7 +6,7 @@ weight: 2
 
 # Cisco Viptela SD-WAN
 
-Cloudflare partners with Cisco's 8000k router SD-WAN solution to provide users with an integrated solution. The Viptela appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels – GRE and IPsec – are set up between these appliances and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco 8000k router in the SD-WAN mode for north-south (Internet-bound) use cases.
+Cloudflare partners with Cisco's 8000 router SD-WAN solution to provide users with an integrated solution. The Viptela appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels – GRE and IPsec – are set up between these appliances and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco 8000 router in the SD-WAN mode for north-south (Internet-bound) use cases.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ Before setting up a connection between Cisco Viptela and Cloudflare, you must ha
 - Purchased Magic WAN and Secure Web Gateway.
 - Cloudflare provision Magic WAN and Secure Web Gateway.
 - Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
-- Cisco 8000k SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- Cisco 8000 SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
 - A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. The software version used on Cisco was `20.6.2/17.6.2`.
 
 ## Example scenario
