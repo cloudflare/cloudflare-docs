@@ -153,7 +153,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `webp` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/).
+    *   Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](/images/polish/).
 
 {{</definitions>}}
 
@@ -380,7 +380,7 @@ This code snippet will throw during script startup, and the `"fetch"` event list
 
 ***
 
-### Setting the `Content-Length` header
+### Set the `Content-Length` header
 
 The `Content-Length` header will be automatically set by the runtime based on whatever the data source for the `Request` is. Any value manually set by user code in the `Headers` will be ignored. To have a `Content-Length` header with a specific value specified, the `body` of the `Request` must be either a `FixedLengthStream` or a fixed-length value just as a string or `TypedArray`.
 

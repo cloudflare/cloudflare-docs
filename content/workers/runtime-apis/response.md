@@ -120,7 +120,7 @@ Valid options for the `options` object include: {{<definitions>}}
 
 {{</definitions>}}
 
-### Setting the `Content-Length` header
+### Set the `Content-Length` header
 
 The `Content-Length` header will be automatically set by the runtime based on whatever the data source for the `Response` is. Any value manually set by user code in the `Headers` will be ignored. To have a `Content-Length` header with a specific value specified, the `body` of the `Response` must be either a `FixedLengthStream` or a fixed-length value just as a string or `TypedArray`.
 
@@ -137,7 +137,7 @@ A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed
   return new Response(readable);
 ```
 
-Using any other type of `ReadableStream` as the body of a response will result in Chunked-Encoding being used.
+Using any other type of `ReadableStream` as the body of a response will result in chunked encoding being used.
 
 ---
 
