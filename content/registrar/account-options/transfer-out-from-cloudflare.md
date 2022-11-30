@@ -22,7 +22,7 @@ Anyone with super-admin and admin permissions for a zone can also manage your do
 ## 1. Unlock your domain at Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Registrar**.
+2. Go to **Domain Registration**.
 3. Find the domain you want to transfer, and select **Manage**.
 4. Select **Configuration** > **Unlock**.
 5. Select **Confirm and Unlock** to confirm that you want to unlock your domain.
@@ -43,7 +43,7 @@ If you lose your authentication code, you can get a new one by:
 ## Transfer a .UK domain to another registrar
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Registrar**.
+2. Go to **Domain Registration**.
 3. Find the domain you want to transfer, and select **Manage**.
 4. Select **Configuration** > **Unlock**.
 5. Enter the IPS tag of the registrar you wish to transfer to.
