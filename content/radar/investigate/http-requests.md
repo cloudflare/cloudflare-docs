@@ -69,7 +69,7 @@ Mobile devices tend to be considerably more present when examining human generat
 Note that device classification comes from the [User-agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) header. Ultimately, this classification depends on the user agent(s) that bots use.
 {{</Aside>}}
 
-For more information refer to [Get time series of device types](https://developers.cloudflare.com/api/operations/radar-http-get-time-series-of-device-types).
+For more information refer to [Get time series of device types](https://developers.cloudflare.com/api/operations/radar_get_TimeseriesDeviceType).
 
 ### Summary
 
@@ -97,7 +97,7 @@ Here is the abbreviated response:
 }
 ```
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-http-get-a-summary-of-device-types) for this endpoint.
+For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_SummaryDeviceType) for this endpoint.
 
 #### Example: breakdown by IP version and human/bot traffic
 
@@ -123,7 +123,7 @@ This returns the following:
 
 Bots tend to use more IPv4 addresses.
 
-It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-http-get-a-summary-of-ip-versions) for other parameters.
+It is also interesting to know how your ISP fares in IPv6 adoption. If you know your ISP’s autonomous system number (ASN), you can use the `asn` parameter to query for this information. Refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_SummaryIpVersion) for other parameters.
 
 If you do not know your ISP’s ASN, you can use [Radar](https://radar.cloudflare.com/ip) to find what it is.
 
@@ -166,7 +166,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/http/top/locations/ip_ve
 
 According to the returned data, India is leading in IPv6 adoption.
 
-For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar-http-get-top-locations-by-ip-version) for this endpoint.
+For more information refer to the [API reference](https://developers.cloudflare.com/api/operations/radar_get_HttpTopLocationsByIpVersion) for this endpoint.
 
 ## Next steps
 

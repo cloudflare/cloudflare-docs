@@ -21,12 +21,12 @@ layout: list
       <th>Comments</th>
     </tr>
     <tr>
-      <th>2022-11-16</th>
-      <th>2022-11-28</th>
-      <th>Block</th>
       <th>N/A</th>
-      <th>...b8ef67d7</th>
-      <th>SQLi - Equation</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
+      <th>N/A</th>
       <th>N/A</th>
     </tr>
   </thead>

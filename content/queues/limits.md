@@ -24,7 +24,6 @@ Many of these limits will increase during the Public Beta of Queues. If you have
 | Maximum batch size                      | 100 messages                      |
 | Maximum batch wait time                 | 30 seconds                        |
 | Maximum message throughput <sup>1</sup> | 100 messages per second           |
-| Maximum batch wait time                 | 30 seconds                        |
 | Maximum retention period                | 4 days (96 hours)                 |
 
 {{</table-wrap>}}

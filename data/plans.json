@@ -413,6 +413,7 @@
           "title": "Historical time",
           "free": "6 hours",
           "pro": "24 hours",
+          "pro_plus": "36 hours",
           "biz": "7 days",
           "ent": "30 days"
         }
@@ -668,6 +669,7 @@
           "title": "Max upload size",
           "free": "100 MB",
           "pro": "100 MB",
+          "pro_plus": "200 MB",
           "biz": "200 MB",
           "ent": "500+ MB"
         }
@@ -904,6 +906,7 @@
           "title": "Number of rules",
           "free": 3,
           "pro": 20,
+          "pro_plus": 30,
           "biz": 50,
           "ent": 125
         }
@@ -956,6 +959,7 @@
           "link": "/bots/bot-analytics/",
           "free": "No",
           "pro": "No",
+          "pro_plus": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
@@ -968,9 +972,17 @@
           "ent": "No",
           "ent_purchase": "Yes"
         },
+        "r_bot_fight_mode": {
+          "title": "Bot Fight Mode",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
         "super_bot_fight_mode": {
           "title": "Super Bot Fight Mode",
           "free": "No",
+          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -1030,6 +1042,7 @@
         "dashboard_features": {
           "title": "Dashboard features",
           "free": "Activity log only",
+          "lite": "All except DoS",
           "pro": "All except DoS",
           "biz": "All except DoS",
           "ent": "All"
@@ -1079,7 +1092,9 @@
         "rules": {
           "title": "Number of rules",
           "free": "5",
+          "lite": "20",
           "pro": "20",
+          "pro_plus": "40",
           "biz": "100",
           "ent": "1,000"
         },
@@ -1161,6 +1176,7 @@
           "summary": "All paid plans",
           "link": "/waf/managed-rulesets/",
           "free": "No",
+          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -1265,7 +1281,7 @@
       }
     },
     "rate_limiting": {
-      "title": "Rate Limiting Rules",
+      "title": "Rate Limiting Rules (new version)",
       "link": "/waf/rate-limiting-rules/",
       "properties": {
         "availability": {
@@ -1287,6 +1303,38 @@
         }
       }
     },
+    "rate_limiting_previous": {
+      "title": "Rate Limiting Rules (previous version)",
+      "link": "https://support.cloudflare.com/hc/articles/115001635128",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "rules": {
+          "title": "Number of rules",
+          "free": 1,
+          "lite": 10,
+          "pro": 10,
+          "pro_plus": 15,
+          "biz": 15,
+          "ent": 100
+        },
+        "z_header_rules": {
+          "title": "Number of header rules",
+          "free": 1,
+          "lite": 1,
+          "pro": 1,
+          "pro_plus": 10,
+          "biz": 10,
+          "ent": 10
+        }
+      }
+    },
     "user_agent_rules": {
       "title": "User Agent Blocking",
       "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
@@ -1302,7 +1350,9 @@
         "rules": {
           "title": "Number of rules",
           "free": "10",
+          "lite": "50",
           "pro": "50",
+          "pro_plus": "250",
           "biz": "250",
           "ent": "1,000"
         }
@@ -1316,6 +1366,7 @@
           "title": "Availability",
           "summary": "All plans",
           "free": "No",
+          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -1323,7 +1374,9 @@
         "rules": {
           "title": "Number of rules",
           "free": 0,
+          "lite": 3,
           "pro": 3,
+          "pro_plus": 10,
           "biz": 10,
           "ent": 200
         }
@@ -1535,12 +1588,13 @@
       "title": "Image Resizing",
       "link": "/images/image-resizing/",
       "paid_add_on": true,
-      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "paid_add_on_plans": ["pro", "biz", "ent"],
       "properties": {
         "availability": {
           "title": "Availability",
           "summary": "Paid add-on",
-          "free": "Paid add-on",
+          "free": "No",
+          "lite": "No",
           "pro": "Paid add-on",
           "biz": "Paid add-on",
           "ent": "Paid add-on"
@@ -1695,6 +1749,7 @@
           "summary": "Business and Enterprise customers get one certificate by default and Enterprise customers can purchase additional custom certificates if needed.",
           "free": "No",
           "pro": "No",
+          "pro_plus": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
@@ -1702,6 +1757,7 @@
           "title": "Certificates included",
           "free": 0,
           "pro": 0,
+          "pro_plus": 1,
           "biz": 1,
           "ent": "1 (can purchase more)"
         }
@@ -2084,6 +2140,7 @@
           "title": "Availability",
           "free": "No",
           "pro": "No",
+          "pro_plus": "No",
           "biz": "Yes",
           "ent": "Yes"
         }

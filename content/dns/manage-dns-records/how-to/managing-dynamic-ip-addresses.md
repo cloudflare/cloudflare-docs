@@ -14,7 +14,7 @@ Create a script to monitor IP address changes and then have that script push cha
 
 ## ddclient
 
-[ddclient](https://sourceforge.net/p/ddclient/wiki/Home/) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
+[ddclient](https://github.com/ddclient/ddclient) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
 
 ## DNS-O-Matic
 
