@@ -39,7 +39,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 
-**Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
+**Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Security events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
 **You cannot test firewall rules that reference [IP Lists](/firewall/cf-dashboard/rules-lists/)**.
 

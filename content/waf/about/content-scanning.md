@@ -81,7 +81,7 @@ The content scanner will automatically decode Base64 strings.
 
 Use Security Analytics and HTTP logs to validate that malicious content objects are being detected correctly.
 
-Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate firewall events (available in **Security** > **Overview**) that will allow you to validate your configuration.
+Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
 
 ### 4. Create a WAF custom rule
 

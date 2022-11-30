@@ -35,7 +35,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
-    2\. Navigate to **Security** > **Overview**.
+    2\. Navigate to **Security** > **Events**.
 
     3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
