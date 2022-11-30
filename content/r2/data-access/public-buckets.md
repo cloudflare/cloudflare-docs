@@ -117,7 +117,7 @@ To remove a domain:
 
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
 
-## Managed public buckets through r2.dev
+## Managed public buckets through `r2.dev`
 ### Enable managed public access for your bucket
 
 Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a `r2.dev` Cloudflare subdomain.
