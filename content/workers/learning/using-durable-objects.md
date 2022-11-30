@@ -231,7 +231,7 @@ In the above example, you used a string-derived object ID by calling the `idFrom
 
 {{<Aside type="warning" header="Custom Wrangler installation instructions">}}
 
-You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/get-started/) in order to manage Durable Objects.
+You must use [Wrangler version 1.19.3 or greater](/workers/wrangler/install-and-update/) in order to manage Durable Objects.
 
 {{</Aside>}}
 

@@ -26,7 +26,7 @@ Queues is included in the monthly subscription cost of your Paid Workers plan, a
 
 ## 2. Install Wrangler
 
-You will use [Wrangler](/workers/wrangler/get-started/), a command-line tool for building Cloudflare Workers, to access Queues.
+You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access Queues.
 
 To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 
