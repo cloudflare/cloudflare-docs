@@ -27,7 +27,7 @@ Domain access through a custom domain allows you to use Cloudflare Cache to acce
 
 {{<Aside type="note" header="Enabling cache for all file types">}}
 
-By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, see [Default Cache Behavior](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/about/default-cache-behavior/#default-cached-file-extensions)
 
 {{</Aside>}}
 
