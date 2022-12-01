@@ -12,7 +12,7 @@ weight: 6
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP with Gateway                                                                         | All plans                                                     |
+| All systems       | Any mode                                                                         | All plans                                                     |
 
 </div>
 </details>
