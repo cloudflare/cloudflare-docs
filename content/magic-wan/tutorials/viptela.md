@@ -118,4 +118,4 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 IPSec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/tutorials/cisco-ios-xe/) for more information. 
 
-Coming soon: IPsec tunnel creation in SD-WAN mode.
+**Coming soon: IPsec tunnel creation in SD-WAN mode.**
