@@ -162,7 +162,7 @@ main = "src/index.js"
 compatibility_date = "2022-07-15"
 
 [[ d1_databases ]]
-binding = "DB" # i.e. available in your Worker on env.DB
+binding = "DB" # available in your Worker on env.DB
 database_name = "<YOUR_DATABASE_NAME>"
 database_id = "<YOUR_DATABASE_UUID>"
 ```
