@@ -22,6 +22,12 @@ For more details on the mechanics of CNAME flattening, refer to the [blog post](
 
 ## Set up CNAME flattening
 
+{{<Aside type="note">}}
+
+If we have CNAME target on same zone, we do CNAME flattening all the time and ignore CNAME flattening configuration.
+
+{{</Aside>}}
+
 ### For your root domain
 
 `CNAME` flattening occurs by default for all plans when your domain uses a `CNAME` record for its root domain (`example.com`).

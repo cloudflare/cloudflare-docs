@@ -14,7 +14,7 @@ The release cycle for new rules happens on a 7-day cycle, typically every Monday
 
 Cloudflare is very proactive in responding to new vulnerabilities, which may need to be released outside of the 7-day cycle, defined as an Emergency Release.
 
-If you do notice a new or updated rule generating an increased volume of firewall events, you can disable or change the rule from its _Default_ action. Once you change a rule to use an action other than the default one, Cloudflare will not be able to override the rule action.
+If you do notice a new or updated rule generating an increased volume of security events, you can disable or change the rule from its _Default_ action. Once you change a rule to use an action other than the default one, Cloudflare will not be able to override the rule action.
 
 <p>{{<button type="primary" href="/waf/change-log/scheduled-changes/">}}View scheduled changes{{</button>}}</p>
 

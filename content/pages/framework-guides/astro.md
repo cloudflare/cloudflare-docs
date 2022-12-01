@@ -114,13 +114,13 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Astro requires Node.js version `14` or later to build successfully. When creating your Pages projct, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Astro requires Node.js version `14` or later to build successfully. When creating your Pages project, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
 
 {{</Aside>}}
 
 After completing configuration, select **Save and Deploy**.
 
-You will see your first deploy pipeline in progress. Pages installs all dependencies and builds the project as specified.
+You will see your first deployment in progress. Pages installs all dependencies and builds the project as specified.
 
 Cloudflare Pages will automatically rebuild your project and deploy it on every new pushed commit.
 

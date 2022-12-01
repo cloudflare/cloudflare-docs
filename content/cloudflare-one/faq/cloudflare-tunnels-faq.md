@@ -32,9 +32,9 @@ You can still use Tunnel with Partial Setup. You will need to create a new DNS r
 
 Tunnel can expose web applications to the internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:
 
-```bash
-netcat -zv [your-server’s-ip-address] 80
-netcat -zv [your-server’s-ip-address] 443
+```sh
+$ netcat -zv [your-server’s-ip-address] 80
+$ netcat -zv [your-server’s-ip-address] 443
 ```
 
 If your server is still responding on those ports, you will see:

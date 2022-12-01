@@ -3,18 +3,18 @@ pcx_content_type: reference
 title: Free plan
 weight: 2
 meta:
-  title: Firewall Analytics — Free plan
+  title: Security Events — Free plan
 ---
 
-# Firewall Analytics — Free plan
+# Security Events — Free plan
 
-Firewall Analytics is available at **Security** > **Overview**.
+Security Events is available at **Security** > **Events**.
 
 ## Adjusting displayed data
 
-You can apply multiple filters and exclusions to narrow the scope of Firewall Analytics, as well as adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed in the **Activity Log**.
+You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed in the **Activity Log**.
 
-![Example of adding a new filter in Firewall Analytics for the Allow action](/waf/static/analytics-add-filter-free.png)
+![Example of adding a new filter in Security Events for the Allow action](/waf/static/analytics-add-filter-free.png)
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
@@ -26,6 +26,6 @@ You can apply multiple filters and exclusions to narrow the scope of Firewall An
 
 {{<render file="_analytics-activity-log.md">}}
 
-## Share Firewall Analytics filters
+## Share Security Events filters
 
 {{<render file="_analytics-share-url.md">}}

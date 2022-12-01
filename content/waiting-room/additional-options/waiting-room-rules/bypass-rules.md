@@ -16,9 +16,9 @@ To indicate where you want your bypass rules to apply, write [custom logic](/rul
 - [HTTP request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields)
 - [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)
 
-Please be advised that the waiting room will not apply to all the traffic that matches the expressions written for bypass rules and will not be counted as active users. No waiting room features, including but not limited to, Event pre-queuing, Reject queueing method, or Queue-all will apply to this traffic. Be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
+Please be advised that the waiting room will not apply to all the traffic that matches the expressions written for bypass rules and will not be counted as active users. No Waiting Room features, including but not limited to, Event pre-queuing, Reject queueing method, or Queue-all will apply to this traffic. Be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
 
-{{<Aside type="note">}}Only some customers can create waiting room rules. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
+{{<Aside type="note">}}Only some customers can create Waiting Room rules. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 
 ## Common Use Cases
 
@@ -42,7 +42,7 @@ To create a new bypass rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Within your application, go to **Traffic** > **Waiting Rooms**.
-3. Expand a Waiting Room and select **Go to rules**.
+3. Expand a waiting room and select **Go to rules**.
 4. Select **Create new Bypass rule**.
 5. Enter a descriptive name for the rule in **Rule name**.
 6. Under **When incoming requests match**, define the rule expression. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
@@ -59,7 +59,7 @@ For examples and usage, refer to [Operators and grouping symbols](/ruleset-engin
 
 ## Manage Rules via the Waiting Room API
 
-You can manage, delete, and create bypass rules for your waiting room via the [Waiting Room API’s](https://api.cloudflare.com/#waiting-room-list-waiting-room-rules). A bypass rule is a Waiting Room Rule that utilizes the `bypass_waiting_room` action.
+You can manage, delete, and create bypass rules for your waiting room via the [Waiting Room API’s](https://developers.cloudflare.com/api/operations/waiting-room-list-waiting-room-rules). A bypass rule is a Waiting Room Rule that utilizes the `bypass_waiting_room` action.
 
 When creating a Bypass Waiting Room Rule via API, make sure you:
 
@@ -86,7 +86,8 @@ Configure your bypass rule with the following required and optional parameters:
 <summary>Bypass a path under your waiting room and all of its subpaths</summary>
 <div>
 
-If your waiting room is configured at `example.com/` and you would like all traffic visiting `example.com/bypassme` and all of its subpaths. In this example, we also want to prevent any subrequests on this path of `js`, `css`, or `png` to bypass the waiting room.
+If your waiting room is configured at `example.com/` and you would like all traffic visiting `example.com/bypassme` and all of its subpaths. In this example, we also want to ensure any subrequests of `js`, `css`, or `png` from also bypass the waiting room to ensure all assets are loaded properly on the paths being bypassed. Note that in this example, all requests ending in `js`, `css` or `png` will bypass the waiting room regardless of the subpath. If this is not your intended use case, please alter the expression to suit your specific requirements and site architecture.
+
 
 ```json
 curl -X POST \
@@ -94,7 +95,7 @@ curl -X POST \
 -H "Authorization: Bearer <API_TOKEN>" \
 -d '{
         "description": "subpath bypass",
-        "expression": "starts_with(http.request.uri.path, \"/bypassme\") and not (ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\"))",
+        "expression": "starts_with(http.request.uri.path, \"/bypassme\") or ends_with(http.request.uri.path, \".js\") or ends_with(http.request.uri.path, \".css\") or ends_with(http.request.uri.path, \".png\")",
         "action": "bypass_waiting_room"
 }'
 ```
@@ -122,7 +123,7 @@ curl -X POST \
 
 ### Other API options for managing bypass rules
 
-Through the Waiting Room API, you can also do the following to manage bypass rule by using the waiting room rules API calls:
+Through the Waiting Room API, you can also do the following to manage bypass rules by using the Waiting Room rules API calls:
 
 - **List Waiting Room Rules**:  Lists rules for a waiting room.
 - **Replace Waiting Room Rules**:  Replaces all rules for a waiting room.

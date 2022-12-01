@@ -6,4 +6,4 @@ weight: 3
 
 # Analytics
 
-To access analytics for your DNS Firewall, use the [Cloudflare API](https://api.cloudflare.com/#dns-firewall-analytics-properties).
+To access analytics for your DNS Firewall, use the [Cloudflare API](https://developers.cloudflare.com/api/operations/dns-firewall-analytics-table). Alternatively, [set up Logpush](/logs/about/) to deliver [DNS Firewall logs](/logs/reference/log-fields/account/dns_firewall_logs/) to a storage service, SIEM, or log management provider in order to access DNS Firewall analytics there.

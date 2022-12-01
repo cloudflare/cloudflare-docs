@@ -146,8 +146,10 @@ The `ends_with()` function is not available in [firewall rules](/firewall/).
       Replace with capture groups:<br />
       `regex_replace("/foo/a/path", "^/foo/([^/]*)/(.*)$", "/bar/${2}/${1}") == "/bar/path/a/"`
 
+      Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<num>}` in the replacement string, where `<num>` is the number of the capture group.
+
 {{<Aside type="warning">}}
-You can only use the `regex_replace()` function in [rewrite expressions of Transform Rules](/rules/transform/). Additionally, the first argument must be a field under `http.request.headers` or `http.request.uri`.
+You can only use the `regex_replace()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 {{</Aside>}}
 
 - <code id="function-remove_bytes">{{<name>}}remove_bytes{{</name>}}({{<type>}}bytes{{</type>}})</code> {{<type>}}bytes{{</type>}}
@@ -182,7 +184,7 @@ The `starts_with()` function is not available in [firewall rules](/firewall/).
     ```
 
 {{<Aside type="warning">}}
-You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [Dynamic Redirects](/rules/url-forwarding/dynamic-redirects/).
+You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 {{</Aside>}}
 
 - <code id="function-upper">{{<name>}}upper{{</name>}}({{<type>}}String{{</type>}})</code> {{<type>}}String{{</type>}}

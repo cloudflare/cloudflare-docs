@@ -26,11 +26,11 @@ Using a [TXT](#dns-txt-record) or [HTTP](#http-token) validation method helps yo
 
 #### DNS TXT Record
 
-When creating a Custom Hostname with the TXT method through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
+When creating a Custom Hostname with the TXT method through the [API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname), a TXT ownership_verification record is provided for your customer to add to their DNS for the ownership validation check. When the TXT record is added, the Custom Hostname will be marked as **Active** in the Cloudflare SSL/TLS app under the Custom Hostnames tab.
 
 #### HTTP Token
 
-When creating a Custom Hostname with the HTTP through the [API](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
+When creating a Custom Hostname with the HTTP through the [API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname), an HTTP ownership_verification token is provided. HTTP verification is used mainly by organizations with a large deployed base of custom domains with HTTPS support. Serving the HTTP token from your origin web server allows hostname verification before proxying domain traffic through Cloudflare.
 
 Cloudflare sends GET requests to the http_url using `User-Agent: Cloudflare Custom Hostname Verification`.
 

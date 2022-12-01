@@ -65,7 +65,7 @@ The template project contains the following files and directories:
   ```
 
   {{<Aside type="note">}}
-  Refer to the documentation on [Routes](/workers/platform/routing/routes/) to configure a `route` properly.
+  Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
   {{</Aside>}}
 
 Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).

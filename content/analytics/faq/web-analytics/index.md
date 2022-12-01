@@ -64,13 +64,13 @@ Using a domain proxied through Cloudflare with [automatic setup] will report sta
 
 Yes. Instead of embedding the script using a tag manager as shown here:
 
-```bash
+```html
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "$SITE_TOKEN"}'></script>
 ```
 
 Add the following script:
 
-```bash
+```html
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js?token=$SITE_TOKEN'></script>
 ```
 

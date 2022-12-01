@@ -412,7 +412,8 @@ html[is-site-page] .DocsContent {
     vertical-align: middle
 }
 
-.ProductGrid--link svg path {
+.ProductGrid--link svg path,
+.ProductGrid--link svg rect {
     fill: #6d767b
 }
 
@@ -420,7 +421,8 @@ html[is-site-page] .DocsContent {
     font-weight: 500
 }
 
-[theme=dark] .ProductGrid--link svg path {
+[theme=dark] .ProductGrid--link svg path,
+[theme=dark] .ProductGrid--link svg rect {
     fill: #888f96
 }
 

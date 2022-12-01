@@ -10,8 +10,4 @@ Cloudflare Tunnel creates a secure, outbound-only connection between your servic
 
 ## Environments
 
-- [AWS](/cloudflare-one/connections/connect-apps/deployment-guides/aws/)
-- [Azure](/cloudflare-one/connections/connect-apps/deployment-guides/azure/)
-- [GCP](/cloudflare-one/connections/connect-apps/deployment-guides/google-cloud-platform/)
-- [Kubernetes](/cloudflare-one/connections/connect-apps/deployment-guides/kubernetes/)
-- [Terraform](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/)
+{{<directory-listing>}}

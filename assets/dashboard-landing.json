@@ -469,7 +469,7 @@
         },
         {
           "url_path": "/waf/analytics/",
-          "title": "Firewall analytics"
+          "title": "Security Events"
         },
         {
           "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",

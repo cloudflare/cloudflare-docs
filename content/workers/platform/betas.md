@@ -13,6 +13,7 @@ These are the betas relevant to Cloudflare Workers.
 | D1 Database                   | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-d1/)                         |
 | Green Compute                 |              |  ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
 | Pub/Sub                       | ✅           |              |[Docs](/pub-sub)                                                            |
-| Queues                        | ✅          |               |[Docs](/queues)                                                             |
+| Queues                        |              |  ✅          |[Docs](/queues)                                                             |
 | TCP Workers                   | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-socket-workers/)             |
-| Workers Analytics Engine      |             | ✅            |[Blog](https://blog.cloudflare.com/workers-analytics-engine/)               |
+| Workers Analytics Engine      |             | ✅            |[Docs](/analytics/analytics-engine/)               |
+| Workers Deployments           |             | ✅            |[Docs](/workers/platform/deployments)               |

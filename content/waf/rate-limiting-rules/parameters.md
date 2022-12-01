@@ -59,7 +59,8 @@ The available rate limiting rule parameters are the following:
     | _Cookie_                  | `http.request.cookies["<cookie_name>"]`              |
     | _Query_                   | `http.request.uri.args["<query_param_name>"]`        |
     | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                         |
-    | N/A (JSON body field)     | `lookup_json_string(http.request.body.raw, "<key>")` |
+    | _JSON String_             | `lookup_json_string(http.request.body.raw, "<key>")` |
+    | _Body_                    | `http.request.body.raw`                              |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
@@ -67,6 +68,7 @@ The available rate limiting rule parameters are the following:
   - If you use _Cookie_, refer to [Recommendations](#recommendations) for additional validations you should implement.
   - You should not use _Headers_ or _Cookie_ as the only characteristic of a rate limiting rule. Refer to [Recommendations](#recommendations) for details.
   - For more information on the `lookup_json_string` function, refer to [Functions](/ruleset-engine/rules-language/functions/#function-lookup_json_string) in the Ruleset Engine documentation.
+  - You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/).
 
 {{<Aside type="note">}}
 

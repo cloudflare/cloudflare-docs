@@ -38,7 +38,7 @@ If **Health Check Regions** for a pool is set to **All Data Centers (Enterprise)
 
 {{</Aside>}}
 
-For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://api.cloudflare.com/#account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
+For greater accuracy and consistency when changing origin health status, you can also set the `consecutive_up` and `consecutive_down` parameters via the [Create Monitor API endpoint](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-create-monitor). To change from healthy to unhealthy, an origin will have to be marked healthy a consecutive number of times (specified by `consecutive_down`). The same applies — from unhealthy to healthy — for `consecutive_up`.
 
 ---
 

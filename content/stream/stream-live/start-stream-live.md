@@ -62,7 +62,7 @@ header: Response
 
 #### Optional API parameters
 
-[API Reference Docs for `/live_inputs`](https://api.cloudflare.com/#stream-live-inputs-create-live-inputs)
+[API Reference Docs for `/live_inputs`](https://developers.cloudflare.com/api/operations/stream-live-inputs-create-a-live-input)
 
 {{<definitions>}}
 
@@ -88,36 +88,39 @@ header: Response
 
 You can update live inputs by making a `PUT` request:
 
-```bash
+```sh
 ---
 header: Request
 ---
-curl -X PUT \ 
--H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id 
--D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}'
+$ curl -X PUT \
+-H "Authorization: Bearer <API_TOKEN>" \
+-D '{"meta": {"name":"test stream 1"},"recording": { "mode": "automatic", "timeoutSeconds": 10 }}' \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 Delete a live input by making a `DELETE` request:
 
-```bash
+```sh
 ---
 header: Request
 ---
-curl -X DELETE \ 
--H "Authorization: Bearer <API_TOKEN>" \https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
+$ curl -X DELETE \
+-H "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
 ## Requirements and known limitations
 
 ### Requirements
 
-- You must set [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) to be between 2 to 10 seconds. The default in most encoding software, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
-- Closed GOPs required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoding software such as OBS.
+- Stream supports a maximum ingest bitrate of 12000 Kbps.
+- You must set [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 10 seconds. The default in most encoding software, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
+- Closed GOPs are required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is default in most encoding software such as OBS.
 - Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs. Stream Live supports ADTS but does not presently support LATM.
 - Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
 ### Known limitations
 
-- Stream Live currently only supports HLS (HTTP Live Streaming), and recordings are only kept for the last seven days of the stream.
+- Playback of live streams using DASH is not currently supported
 - Watermarks cannot yet be used with live videos.
 - If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.

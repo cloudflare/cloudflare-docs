@@ -1,7 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Create Bulk Redirects in the dashboard
+title: Create in the dashboard
 weight: 6
+meta:
+  title: Create Bulk Redirects in the dashboard
 ---
 
 # Create Bulk Redirects in the dashboard

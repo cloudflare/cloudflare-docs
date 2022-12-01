@@ -6,7 +6,7 @@ weight: 2
 
 # Cisco Viptela SD-WAN
 
-Cloudflare partners with Cisco's 8000k router SD-WAN solution to provide users with an integrated solution. The Viptela appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels – GRE and IPsec – are set up between these appliances and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco 8000k router in the SD-WAN mode for north-south (Internet-bound) use cases.
+Cloudflare partners with Cisco's 8000 router SD-WAN solution to provide users with an integrated solution. The Viptela appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels – GRE and IPsec – are set up between these appliances and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco 8000 router in the SD-WAN mode for north-south (Internet-bound) use cases.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ Before setting up a connection between Cisco Viptela and Cloudflare, you must ha
 - Purchased Magic WAN and Secure Web Gateway.
 - Cloudflare provision Magic WAN and Secure Web Gateway.
 - Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
-- Cisco 8000k SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- Cisco 8000 SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
 - A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. The software version used on Cisco was `20.6.2/17.6.2`.
 
 ## Example scenario
@@ -202,7 +202,7 @@ Refer to [Configure tunnel endpoints](/magic-wan/how-to/configure-tunnels) for m
 </summary>
  <div class="special-class" markdown="1">
 
-For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://api.cloudflare.com/#magic-ipsec-tunnels-create-ipsec-tunnels).
+For additional information on creating IPsec tunnels, refer to [API documentation for IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
 
 - `X-Auth-Email`: Your Cloudflare email ID
 - `X-Auth-Key`: Seen in the URL (dash.cloudflare.com/<X-Auth-Key>/....)
@@ -234,33 +234,33 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
      --data '{"ipsec_tunnels":[{"name":"IPSec_cisco","customer_endpoint":"35.239.85.133","cloudflare_endpoint":"172.64.241.205","interface_address":"10.49.0.11/31","description":"Tunnel for Cisco 8000v"}]}'
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_tunnels": [
-{
-"id": "XXXXXXXXXX",
-"interface_address": "10.49.0.11/31",
-"created_on": "2022-05-03T23:03:19.104194Z",
-"modified_on": "2022-05-03T23:03:19.104194Z",
-"name": "IPsec_cisco",
-"cloudflare_endpoint": "172.64.241.205",
-"customer_endpoint": "35.239.85.133",
-"description": "Tunnel for Cisco 8000v",
-"health_check": {
-"enabled": true,
-"target": "35.239.85.133",
-"type": "reply"
-}
-}
-]
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+    "ipsec_tunnels": [
+      {
+        "id": "XXXXXXXXXX",
+        "interface_address": "10.49.0.11/31",
+        "created_on": "2022-05-03T23:03:19.104194Z",
+        "modified_on": "2022-05-03T23:03:19.104194Z",
+        "name": "IPsec_cisco",
+        "cloudflare_endpoint": "172.64.241.205",
+        "customer_endpoint": "35.239.85.133",
+        "description": "Tunnel for Cisco 8000v",
+        "health_check": {
+          "enabled": true,
+          "target": "35.239.85.133",
+          "type": "reply"
+        }
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 
@@ -278,22 +278,22 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/magic/i
      -H "Content-Type: application/json"
 ```
 
-```bash
+```json
 ---
 header: Response
 ---
 {
-"result": {
-"ipsec_id": "<ipsec_id>",
-"ipsec_tunnel_id": "<tunnel_id>",
-"psk": "XXXXXXXXXX",
-"psk_metadata": {
-"last_generated_on": "2022-05-06T17:37:03.70965667Z"
-}
-},
-"success": true,
-"errors": [],
-"messages": []
+  "result": {
+    "ipsec_id": "<ipsec_id>",
+    "ipsec_tunnel_id": "<tunnel_id>",
+    "psk": "XXXXXXXXXX",
+    "psk_metadata": {
+      "last_generated_on": "2022-05-06T17:37:03.70965667Z"
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
 }
 ```
 </div>

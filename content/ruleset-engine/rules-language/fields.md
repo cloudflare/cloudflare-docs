@@ -321,7 +321,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-ip-geoip-is-in-european-union">
       <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
       </td>
   </tr>
@@ -977,7 +977,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan with a paid add-on, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 
@@ -985,9 +985,9 @@ The Rules language includes fields that represent properties of an HTTP request 
 
 {{<Aside type="warning">}}
 
-The value of `http.request.body.*` fields has a maximum size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will contain the full size of the request without any truncation.
 
-The maximum body size applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
+The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
 
 {{</Aside>}}
 
@@ -1020,6 +1020,15 @@ The Cloudflare Rules language supports these HTTP body fields:
          <p>Indicates whether the HTTP request body is truncated.
          </p>
          <p>When true, <code class="InlineCode">http.request.body</code> fields may not contain all of the HTTP request body.
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-size">
+      <td valign="top"><code>http.request.body.size</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>The total size of the HTTP request body (in bytes).
+         </p>
+         <p>Note: This field may have a value larger than the one returned by <code>len(http.request.body.raw)</code>, since the <code>http.request.body.raw</code> field only considers the first 128 KB of the request.
          </p>
       </td>
     </tr>
@@ -1138,7 +1147,7 @@ The Cloudflare Rules language supports these HTTP response fields:
    <tr id="field-http-response-code">
       <td valign="top"><code>http.response.code</code><br />{{<type>}}Integer{{</type>}}</td>
       <td>
-         <p>Represents the HTTP status code returned by the origin.
+         <p>Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">403</code>

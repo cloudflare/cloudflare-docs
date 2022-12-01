@@ -6,6 +6,7 @@ weight: 10
 
 # Changelog
 
+
 ## 2022-10-28
 
 - Renamed the `[data-]expired-callback` callback to [`[data-]timeout-callback`](/turnstile/get-started/client-side-rendering/#configurations) (called when the challenge times out)
@@ -24,3 +25,7 @@ weight: 10
 ## 2022-10-11
 
 - Added [`turnstile.remove`](/turnstile/get-started/client-side-rendering/#remove-a-widget)
+
+## 2022-11-11
+
+- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior

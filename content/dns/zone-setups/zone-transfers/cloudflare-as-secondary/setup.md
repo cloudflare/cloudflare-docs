@@ -22,6 +22,8 @@ Your primary DNS provider should allow traffic from the IP address and port spec
 
 It should also have updated [Access Control Lists (ACLs)](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#cloudflare-as-secondary) to prevent zone transfers from being blocked.
 
+We strongly recommend configuring [DNS NOTIFY](https://datatracker.ietf.org/doc/html/rfc1996) at your primary DNS provider to ensure your secondary zone on Cloudflare is updated with the most recent changes as quickly as possible. In order to do so, set up [Cloudflare NOTIFY IPs](/dns/zone-setups/zone-transfers/access-control-lists/cloudflare-ip-addresses/#notify-ips) at your primary DNS provider.
+
 You will also need the following information from your Primary DNS provider:
 
 - **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
@@ -79,7 +81,7 @@ To create a peer server using the dashboard:
 
 ### Using the API
 
-To create a peer DNS server using the API, send a [POST](https://api.cloudflare.com/#secondary-dns-peer--create-peer) request.
+To create a peer DNS server using the API, send a [POST](https://developers.cloudflare.com/api/operations/secondary-dns-(-peer)-create-peer) request.
 
 ## Step 3 - Create the Secondary Zone
 
@@ -104,7 +106,7 @@ To create a secondary zone using the dashboard:
 
 ### Using the API
 
-To create a secondary zone using the API, send a [POST](https://api.cloudflare.com/#zone-create-zone) request with the `type` parameter set to `"secondary"`.
+To create a secondary zone using the API, send a [POST](https://developers.cloudflare.com/api/operations/zone-create-zone) request with the `type` parameter set to `"secondary"`.
 
 ## Step 4 - Update registrar
 

@@ -29,10 +29,10 @@ For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/m
 
 The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy WAF Managed Rulesets.
 
-* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://api.cloudflare.com/#accounts-list-accounts) API operation.
-* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://api.cloudflare.com/#zone-list-zones) API operation.
+* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) API operation.
+* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://developers.cloudflare.com/api/operations/zone-list-zones) API operation.
 
-The deployment of WAF Managed Rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF Managed Rulesets, use the [List account rulesets](https://api.cloudflare.com/#account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing WAF Managed Rulesets.
+The deployment of WAF Managed Rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF Managed Rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing WAF Managed Rulesets.
 
 ## Deploy WAF Managed Rulesets
 
