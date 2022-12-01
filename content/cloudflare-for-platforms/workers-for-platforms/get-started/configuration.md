@@ -8,7 +8,7 @@ meta:
 
 # Configure Workers for Platforms
 
-This guide will instruct you on setting up Workers for Platforms. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing. Moreover, this feature is not enabled by default. Please contact your account manager, or reach out on Discord on more information on how to get Workers for Platforms enabled for your account.
+This guide will instruct you on setting up Workers for Platforms. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing. Moreover, this feature is not enabled by default. Please contact your account manager, or reach out on Discord for more information on how to get Workers for Platforms enabled for your account.
 
 ---
 ## 1. Create dispatch namespace 
