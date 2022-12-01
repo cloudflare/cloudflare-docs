@@ -8,9 +8,9 @@ meta:
 
 # Workers Analytics Engine SQL Reference
 
-## SHOW statement
+## `SHOW TABLES` statement
 
-`SHOW` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker. 
+`SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker.
 
 ```SQL
 SHOW TABLES
@@ -18,6 +18,24 @@ SHOW TABLES
 ```
 
 Refer to [FORMAT clause](#format-clause) for the available `FORMAT` options.
+
+## `SHOW TIMEZONES` statement
+
+`SHOW TIMEZONES` can be used to list all of the timezones supported by the SQL API. Most common timezones are supported.
+
+```SQL
+SHOW TIMEZONES
+[FORMAT <format>]
+```
+
+## `SHOW TIMEZONE` statement
+
+`SHOW TIMEZONE` responds with the current default timezone in use by SQL API. This should always be `Etc/UTC`.
+
+```SQL
+SHOW TIMEZONE
+[FORMAT <format>]
+```
 
 ## SELECT statement
 
@@ -410,38 +428,6 @@ Converts any numeric expression, or expression resulting in a string representat
 
 Behaviour for negative numbers is undefined.
 
-### toDateTime
-
-Usage:
-```SQL
-toDateTime(<expression>)
-```
-
-`toDateTime` converts an expression to a datetime.
-
-Examples:
-```SQL
--- double1 contains a unix timestamp in seconds
-toDateTime(double1)
-
--- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
-toDateTime(blob1)
-
--- literal values:
-toDateTime(355924804) -- unix timestamp
-toDateTime('355924804') -- string containing unix timestamp
-toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
-```
-
-### now
-
-Usage:
-```SQL
-now()
-```
-
-Returns the current time as a DateTime.
-
 ### length
 
 Usage:
@@ -576,6 +562,139 @@ Examples:
 SELECT format('blob1: {}', blob1) AS s FROM dataset;
 ```
 
+See also: [formatDateTime](#formatDateTime)
+
+### toDateTime
+
+Usage:
+```SQL
+toDateTime(<expression>)
+```
+
+`toDateTime` converts an expression to a datetime.
+
+Examples:
+```SQL
+-- double1 contains a unix timestamp in seconds
+toDateTime(double1)
+
+-- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
+toDateTime(blob1)
+
+-- literal values:
+toDateTime(355924804) -- unix timestamp
+toDateTime('355924804') -- string containing unix timestamp
+toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
+```
+
+### now
+
+Usage:
+```SQL
+now()
+```
+
+Returns the current time as a DateTime.
+
+### toDateTime
+
+Usage:
+```SQL
+toDateTime('<a date string>'[, 'timezone string'])
+```
+
+`toDateTime` converts either an integer or string into a `DateTime`. Integers will be interpreted as Unix timestamps. Strings should be in `YYYY-MM-DD HH:MM:SS` format. This function does not support ISO 8601-style timezones in strings, instead you must provide the timezone using the second optional argument.
+
+Examples:
+```SQL
+-- intepret a date in the default timezone (UTC)
+toDateTime('2022-12-01 16:17:00')
+
+-- interpret a date relative to New York time
+toDateTime('2022-12-01 16:17:00', 'America/New_York')
+```
+
+### toUnixTimestamp
+
+Usage:
+```SQL
+toUnixTimestamp(<datetime>)
+```
+
+`toUnixTimestamp` converts a datetime into an integer unix timestamp.
+
+Examples:
+```SQL
+-- get the current unix timestamp
+toUnixTimestamp(now())
+```
+
+### formatDateTime
+
+Usage:
+```SQL
+formatDateTime(<datetime expression>, <format string>[, <timezone string>])
+```
+
+`formatDateTime` prints a datetime as a string according to a provided format string. The format
+
+Examples:
+```SQL
+-- prints the current YYYY-MM-DD in UTC
+formatDateTime(now(), '%Y-%m-%d')
+
+-- prints YYYY-MM-DD in the datetime's timezone
+formatDateTime(<a datetime with a timezone>, '%Y-%m-%d')
+formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d')
+
+-- prints YYYY-MM-DD in UTC
+formatDateTime(<a datetime with a timezone>, '%Y-%m-%d', 'Etc/UTC')
+formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d', 'Etc/UTC')
+```
+
+### toStartOfInterval
+
+Usage:
+```SQL
+toStartOfInterval(<datetime>, INTERVAL '<n>' <unit>[, <timezone string>])
+```
+
+`toStartOfInterval` rounds down a datetime to the nearest offset of a provided interval. This can
+be useful for grouping data into equal-sized time ranges.
+
+Examples:
+```SQL
+-- round the current time down to the nearest 15 minutes
+toStartOfInterval(now(), INTERVAL '15' MINUTE)
+
+-- round a timestamp down to the day
+toStartOfInterval(timestamp, INTERVAL '1' DAY)
+
+-- count the number of datapoints filed in each hourly window
+SELECT
+  toStartOfInterval(timestamp, INTERVAL '1' HOUR) AS hour,
+  sum(_sample_interval) AS count
+FROM your_dataset
+GROUP BY hour
+ORDER BY hour ASC
+```
+
+## extract
+
+Usage:
+```SQL
+extract(<time unit> from <datetime>)
+```
+
+`extract` returns an integer number of time units from a datetime. It supports
+`YEAR`, `MONTH`, `DAY`, `HOUR`, `MINUTE` and `SECOND`.
+
+Examples:
+```SQL
+-- extract the number of seconds from a timestamp (returns 15 in this example)
+extract(SECOND from toDateTime('2022-06-06 11:15:15'))
+```
+
 ## Supported operators
 
 The following operators are supported:
@@ -611,6 +730,8 @@ The following operators are supported:
 | `NOT IN` | true if the preceding expression's value is not in the list<br>`column NOT IN ('a', 'list', 'of', 'values')` |
 
 {{</table-wrap>}}
+
+We also support the `BETWEEN` operator for checking a value is in an inclusive range: `a [NOT] BETWEEN b AND c`.
 
 ### Boolean operators
 
