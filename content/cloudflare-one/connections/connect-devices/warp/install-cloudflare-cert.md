@@ -318,7 +318,13 @@ If your organization is using Firefox, the browser may need additional configura
 
 The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation).
 
-To update the bundle to include the Cloudflare certificate, run the following command:
+1. Download the Cloudflare root certificate
+
+```sh
+curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+```
+
+2. To update the bundle to include the Cloudflare certificate, run the following command:
 
 ```sh
 $ gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
@@ -344,13 +350,19 @@ This command will output:
 
     ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
 
-3. Append the Cloudflare certificate to this CA Store by running:
+3. Download the Cloudflare root certificate
+
+```sh
+wget https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+```
+
+4. Append the Cloudflare certificate to this CA Store by running:
 
 ```sh
 $ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
 ```
 
-4. If needed, configure system variables to point to this CA Store.
+5. If needed, configure system variables to point to this CA Store.
 
 <!---->
 
