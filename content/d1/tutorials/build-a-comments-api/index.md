@@ -8,7 +8,7 @@ title: Build a Comments API
 
 # Build a Comments API
 
-In this tutorial, you'll learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
+In this tutorial, you will learn how to use D1 to add comments to a static blog site. To do this, you will construct a new D1 database, and build a JSON API that allows the creation and retrieval of comments.
 
 ## Set up your project
 
@@ -26,7 +26,7 @@ In this example, you will use [Hono](https://github.com/honojs/hono), an Express
 $ npm install hono
 ```
 
-Then, in `src/index.js`, we’ll initialize a new Hono app, and define a few endpoints - `GET /API/posts/:slug/comments`, and `POST /get/api/:slug/comments`. Using Hono, it's easy to create a few request handlers, including the ability to pattern match on a `slug` key:
+Next, in `src/index.js`, initialize a new Hono app, and define the following endpoints - `GET /API/posts/:slug/comments`, and `POST /get/api/:slug/comments`:
 
 ```js
 import { Hono } from 'hono'
@@ -124,7 +124,7 @@ In this function, you accept a `slug` URL query parameter and set up a new SQL s
 
 ## Insert data
 
-So far, you've built read-only access to your data. Next, you can define another endpoint function that allows creating new comments, by inserting data into the database:
+By completing the previous step, you have built read-only access to your data. Next, you will define another endpoint function in `src/index.js` that allows creating new comments, by inserting data into the database:
 
 ```js
 app.post('/api/posts/:slug/comments', async c => {
