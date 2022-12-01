@@ -6,9 +6,9 @@ weight: 6
 
 # Monitor exposed credentials events
 
-The Firewall **Activity log** contains entries for requests with exposed credentials identified by rules with the _Log_ action.
+The **Activity log** in Security Events shows entries for requests with exposed credentials identified by rules with the _Log_ action.
 
-Check for exposed credentials events in the Firewall Analytics dashboard (**Security** > **Overview** tab), filtering by a specific Rule ID. For more information on filtering firewall events, refer to [Adjusting displayed data](/waf/analytics/paid-plans/#adjusting-displayed-data).
+Check for exposed credentials events in the Security Events dashboard (**Security** > **Events** tab), filtering by a specific Rule ID. For more information on filtering security events, refer to [Adjusting displayed data](/waf/analytics/paid-plans/#adjusting-displayed-data).
 
 {{<Aside type="warning" header="Important">}}
 

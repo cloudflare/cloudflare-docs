@@ -42,7 +42,7 @@ Currently, **Managed Challenge** actions are available in the following security
 - [Custom rules](/waf/custom-rules/)
 - [Managed Rulesets](/waf/managed-rulesets/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)
-- [Bot Fight Mode](/bots/get-started/free/): You may also see Firewall Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](https://support.cloudflare.com/hc/articles/360035387431#managed-challenge).
+- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](https://support.cloudflare.com/hc/articles/360035387431#managed-challenge).
 - [Firewall rules](/firewall/)
 - [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
 
