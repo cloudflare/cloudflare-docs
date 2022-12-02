@@ -109,7 +109,7 @@ $ curl -X DELETE \
 https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:input_id
 ```
 
-## Requirements and imitations
+## Recommendations, requirements and limitations
 
 ### Recommendations
 
