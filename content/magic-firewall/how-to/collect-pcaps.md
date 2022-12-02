@@ -33,11 +33,11 @@ For help determining which data center to select for a packet capture, visit htt
 
 **Simple and Full**
 
-- `time_limit`: The minimum value is `1` and maximum value is `300`.
-- `packet_limit`: The minimum value is `1` and maximum value is `10000`.
+- `time_limit`: The minimum value is `1` seconds and maximum value is `300` seconds.
+- `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
 
 **Full**
-- `byte_limit`: The minimum value is `1` and maximum value is `1000000000`.
+- `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes.
 
 
 {{<tabs labels="Dashboard | API">}}
