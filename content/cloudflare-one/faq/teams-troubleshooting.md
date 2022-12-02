@@ -24,7 +24,7 @@ To install the Cloudflare root certificate, follow the steps found [here](/cloud
 ## I see a Cloudflare Gateway error page when browsing to a website.
 
 <div class="medium-img">
-  <img alt="Questions" src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
+  <img alt="Example of a Cloudflare Gateway error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
 </div>
 
 We present an HTTP error page in the following cases:
@@ -47,7 +47,7 @@ If you see this page, providing as much information as possible to the local IT 
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
-![Overview empty](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
+![An error displayed in the Gateway Overview page instead of analytics.](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
 
 You may not see analytics on the Overview page for the following reasons:
 
