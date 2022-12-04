@@ -419,6 +419,16 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-bot_management-js_detection-passed">
+        <td><p><code>cf.bot_management.js_detection.passed</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+          <p>Indicates whether the visitor has previous passed a JS Detection.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/javascript-detections/">JavaScript detections</a>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-client-bot">
         <td><code>cf.client.bot</code><br />{{<type>}}Boolean{{</type>}}</td>
         <td>
