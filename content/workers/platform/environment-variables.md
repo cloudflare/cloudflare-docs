@@ -5,11 +5,11 @@ title: Environment variables
 
 # Environment variables
 
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
+In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available on the `env` parameter within your `fetch` handler.
 
-## Environmental variables with module workers
+## Environmental variables with service worker format
 
-When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
+When deploying a Service Worker, any [bindings](/workers/platform/environment-variables/) will be available as global runtime variables instead of being passed to the handler on the `env` parameter. If you have the environment variable `API_TOKEN` then you will access it with `API_TOKEN`, for example: `console.log(API_TOKEN)`.
 
 ## Environment variables via wrangler
 
@@ -42,18 +42,24 @@ API_TOKEN = "example_production_token"
 STRIPE_TOKEN = "pk_xyz1234"
 ```
 
-These environment variables can then be accessed within your Worker script as global variables. They will be plaintext strings.
+These environment variables can then be accessed within your Worker script from the `env` parameter. They will be plaintext strings.
 
 ```js
-// Worker code:
-console.log(API_TOKEN);
-//=> (default) "example_dev_token"
-//=> (env.production) "example_production_token"
+export default {
+  fetch(request, env) {
+    // Worker code:
+    console.log(env.API_TOKEN);
+    //=> (default) "example_dev_token"
+    //=> (env.production) "example_production_token"
 
-console.log(STRIPE_TOKEN);
-//=> (default) "pk_xyz1234_test"
-//=> (env.production) "pk_xyz1234"
+    console.log(env.STRIPE_TOKEN);
+    //=> (default) "pk_xyz1234_test"
+    //=> (env.production) "pk_xyz1234"
+  }
+}
 ```
+
+If you're using service worker format (`addEventListener`) then they will be available in the global scope meaning you will need to do `API_TOKEN` (e.g. `console.log(API_TOKEN)`).
 
 ### Adding secrets via wrangler
 

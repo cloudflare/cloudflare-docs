@@ -34,8 +34,6 @@ The layout of an example `[env.dev]` environment is displayed below:
 filename: wrangler.toml
 ---
 name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
 
 [env.dev]
 name = "your-worker-dev"
@@ -57,9 +55,7 @@ The `workers_dev` key is missing from this example, but because a route is speci
 ---
 filename: wrangler.toml
 ---
-type = "webpack"
 name = "my-worker"
-account_id = "12345678901234567890"
 
 # These fields specify that the Worker
 # will deploy to a custom domain
@@ -85,9 +81,7 @@ This `wrangler.toml` file has no environments defined and will publish `my-worke
 ---
 filename: wrangler.toml
 ---
-type = "webpack"
 name = "my-worker"
-account_id = "12345678901234567890"
 
 # this field specifies that the worker
 # should be deployed to *.workers.dev
@@ -116,9 +110,7 @@ The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.
 ---
 filename: wrangler.toml
 ---
-type = "webpack"
 name = "my-worker-dev"
-account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
 route = "dev.example.com/*"
 vars = { ENVIRONMENT = "dev" }
@@ -164,10 +156,14 @@ Any defined [environment variables](/workers/platform/environment-variables/) (t
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
 ```js
-if (ENVIRONMENT === "staging") {
-  // staging-specific code
-} else if (ENVIRONMENT === "production") {
-  // production-specific code
+export default {
+  fetch(request, env) {
+    if (env.ENVIRONMENT === "staging") {
+      // staging-specific code
+    } else if (env.ENVIRONMENT === "production") {
+      // production-specific code
+    }
+  }
 }
 ```
 
@@ -180,8 +176,6 @@ In order to deploy your code to your `*.workers.dev` subdomain, include `workers
 filename: wrangler.toml
 ---
 name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
 route = "example.com/*"
 
@@ -212,8 +206,6 @@ If you want to connect multiple environments to your `*.workers.dev` subdomain, 
 filename: wrangler.toml
 ---
 name = "my-worker-dev"
-type = "webpack"
-account_id = "12345678901234567890"
 workers_dev = true
 
 [env.production]
@@ -251,56 +243,9 @@ When you create a Service or Environment, Cloudflare automatically registers an 
 
 {{</Aside>}}
 
-## Custom webpack configurations
-
-You can specify different webpack configurations for different environments.
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker-dev"
-type = "webpack"
-account_id = "12345678901234567890"
-workers_dev = true
-webpack_config = "webpack.dev.js"
-
-[env.production]
-name = "my-worker"
-webpack_config = "webpack.config.js"
-
-[env.staging]
-name = "my-worker-staging"
-```
-
-Your default `wrangler build`, `wrangler preview`, and `wrangler publish` commands will all build with `webpack.dev.js`. Any commands tied to the staging environment will also use this configuration; for example, `wrangler build -e staging`, `wrangler preview -e staging`, and `wrangler publish -e staging`.
-
-The build commands `wrangler build -e production`, `wrangler preview -e production`, and `wrangler publish -e production` would all use your `webpack.config.js` file.
-
 ---
 
 ## Invalid configurations
-
-### Multiple types
-
-You cannot specify multiple `type` values. The `type` must be specified at the top level of your `wrangler.toml` file.
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
-route = "example.com/*"
-workers_dev = true
-
-[env.staging]
-type = "rust"
-```
-
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env staging` setting.
 
 ### Same name for multiple environments
 
@@ -311,8 +256,6 @@ You cannot specify multiple environments with the same name. If this were allowe
 filename: wrangler.toml
 ---
 name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
 route = "example.com/*"
 
@@ -335,8 +278,6 @@ Error: ⚠️  Each name in your `wrangler.toml` must be unique, this name is du
 
 ```toml
 name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
 zone_id = "09876543210987654321"
 route = "example.com/*"
 workers_dev = true
