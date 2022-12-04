@@ -500,12 +500,6 @@ The Cloudflare Rules language supports these dynamic fields:
         <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
       </td>
     </tr>
-    <tr id="cf.bot_management.js_score">
-    <td><code>js_score</code>
-    <td>
-      <p>Customers should not use <code>js_score</code> when creating Bot Management firewall rules because it will always be blank.</p>
-   </td>
-   </tr>
   </tbody>
 </table>
 
