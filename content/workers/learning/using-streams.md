@@ -8,7 +8,7 @@ weight: 12
 
 The [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) is a web standard API that allows JavaScript to programmatically access and process streams of data.
 
-Workers do not need to prepare an entire response body before delivering it to `event.respondWith()`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
+Workers do not need to prepare an entire response body before returning it in `fetch`. You can use [`TransformStream`](/workers/runtime-apis/streams/transformstream/) to stream a response body after sending the front matter (that is, HTTP status line and headers). This allows you to minimize:
 
 - The visitor’s time-to-first-byte.
 - The buffering done in the Worker.
@@ -26,23 +26,21 @@ The two primitives developers use to perform active streaming are [`TransformStr
 A basic pass-through usage of streams:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(fetchAndStream(event.request));
-});
+export default {
+  async fetchAndStream(request) {
+    // Fetch from origin server.
+    let response = await fetch(request);
 
-async function fetchAndStream(request) {
-  // Fetch from origin server.
-  let response = await fetch(request);
+    // Create an identity TransformStream (a.k.a. a pipe).
+    // The readable side will become our new response body.
+    let { readable, writable } = new TransformStream();
 
-  // Create an identity TransformStream (a.k.a. a pipe).
-  // The readable side will become our new response body.
-  let { readable, writable } = new TransformStream();
+    // Start pumping the body. NOTE: No await!
+    response.body.pipeTo(writable);
 
-  // Start pumping the body. NOTE: No await!
-  response.body.pipeTo(writable);
-
-  // ... and deliver our Response while that’s running.
-  return new Response(readable, response);
+    // ... and deliver our Response while that’s running.
+    return new Response(readable, response);
+  }
 }
 ```
 

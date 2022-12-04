@@ -45,22 +45,20 @@ If you are interested in how Cloudflare handles security with the Workers runtim
 Most Workers scripts are a variation on the default Workers flow:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  return new Response('Hello worker!', { status: 200 });
+export default {
+  fetch(request) {
+    return new Response('Hello worker!', { status: 200 });
+  }
 }
 ```
 
-When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/fetch-event/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the point of the `respondWith` call all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
+When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/fetch-event/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the returned `Response` all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
 
 ## Distributed execution
 
 Isolates are resilient and continuously available for the duration of a request, but in rare instances isolates may be evicted. When a script hits official [limits](/workers/platform/limits/) or when resources are exceptionally tight on the machine the request is running on, the runtime will selectively evict isolates after their events are properly resolved.
-  
-Like all other JavaScript platforms, a single Workers instance may handle multiple requests including concurrent requests in a single-threaded event loop. That means that other requests may (or may not) be processed during awaiting any `async` tasks (such as `fetch`) if other requests come in while processing a request. 
+
+Like all other JavaScript platforms, a single Workers instance may handle multiple requests including concurrent requests in a single-threaded event loop. That means that other requests may (or may not) be processed during awaiting any `async` tasks (such as `fetch`) if other requests come in while processing a request.
 Because there is no guarantee that any two user requests will be routed to the same or a different instance of your Worker, we recommend you do not use or mutate global state.
 
 ## Related resources

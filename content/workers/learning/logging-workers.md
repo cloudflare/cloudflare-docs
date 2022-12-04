@@ -21,23 +21,21 @@ To push your Worker logs to a third-party provider, refer to [Logpush](/workers/
 Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
 /**
  * Respond with hello worker text
  * @param {Request} request
  */
-async function handleRequest(request) {
-  const { cf } = request;
-  const { city, country } = cf;
+export default {
+  async fetch(request) {
+    const { cf } = request;
+    const { city, country } = cf;
 
-  console.log(`Request came from city: ${city} in country: ${country}`);
+    console.log(`Request came from city: ${city} in country: ${country}`);
 
-  return new Response("Hello worker!", {
-    headers: { "content-type": "text/plain" },
-  });
+    return new Response("Hello worker!", {
+      headers: { "content-type": "text/plain" },
+    });
+  }
 }
 ```
 
@@ -139,26 +137,24 @@ Exceptions will show up under the `exceptions` field in the JSON returned by `wr
 
 A Worker can make HTTP requests to any HTTP service on the public Internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
-When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
+When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`ctx.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
 ```js
-addEventListener("fetch", (event) => {
-  event.respondWith(handleEvent(event));
-});
+export default {
+  async handleEvent(request, env, ctx) {
+    // ...
 
-async function handleEvent(event) {
-  // ...
+    // Without ctx.waitUntil(), the `postLog` function may or may not complete.
+    ctx.waitUntil(postLog(data));
+    return fetch(request);
+  },
 
-  // Without event.waitUntil(), the `postLog` function may or may not complete.
-  event.waitUntil(postLog(stack));
-  return fetch(event.request);
-}
-
-function postLog(data) {
-  return fetch("https://log-service.example.com/", {
-    method: "POST",
-    body: data,
-  });
+  postLog(data) {
+    return fetch("https://log-service.example.com/", {
+      method: "POST",
+      body: data,
+    });
+  }
 }
 ```
 
@@ -167,14 +163,12 @@ function postLog(data) {
 By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 ```js
-addEventListener("fetch", (event) => {
-  event.passThroughOnException();
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  // An error here will return the origin response, as if the Worker wasn’t present.
-  // ...
-  return fetch(request);
+export default {
+  fetch(request, env, ctx) {
+    ctx.passThroughOnException();
+    // An error here will return the origin response, as if the Worker wasn’t present.
+    // ...
+    return fetch(request);
+  }
 }
 ```

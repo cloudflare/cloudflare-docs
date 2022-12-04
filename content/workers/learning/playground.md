@@ -17,12 +17,10 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 When you arrive in the playground, you will see this default code:
 
 ```js
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  return new Response('Hello world');
+export default {
+  fetch(request) {
+    return new Response('Hello world');
+  }
 }
 ```
 
