@@ -14,12 +14,12 @@ By default, Cloudflare Gateway creates a rule that includes the hostnames used b
 
 This tutorial skips inspection for additional applications beyond those in the list curated by Cloudflare.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
 - Configure that policies precedence in your Gateway configuration
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 5 minutes
 

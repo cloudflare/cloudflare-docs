@@ -10,14 +10,14 @@ title: Require Gateway connections
 
 You can build rules in Cloudflare Access that require users to connect through your organization's Cloudflare Gateway configuration before they reach on-premise applications or login to [SaaS applications](https://blog.cloudflare.com/cloudflare-access-for-saas/).
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Add Cloudflare Gateway to your Zero Trust account
 - Enroll devices in Cloudflare Gateway
 - View enrolled devices
 - Build a rule in Access to require Cloudflare Gateway
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 40 minutes
 

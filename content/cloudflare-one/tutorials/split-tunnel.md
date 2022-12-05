@@ -9,12 +9,12 @@ title: Configure local domains and split tunnel mode
 
 You can configure Cloudflare Zero Trust to exclude domains and IP addresses from being sent to the Cloudflare proxy. When excluded, domains will rely on local DNS resolution.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Manage the default lists of excluded domains and IP addresses
 - Add a domain or IP address to the exclusion list
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

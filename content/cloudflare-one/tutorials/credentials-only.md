@@ -10,13 +10,13 @@ title: Connect without long-lived API keys
 
 You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to connect applications and servers to Cloudflare's network without leaving sensitive API keys lingering in your environment. These applications can be both public-facing or protected by [Cloudflare Access](/cloudflare-one/glossary/#cloudflare-access).
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a server to Cloudflare
 - Keep that connection running after deleting the initial authentication file
 - Give that application a hostname where users can reach the resource
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 

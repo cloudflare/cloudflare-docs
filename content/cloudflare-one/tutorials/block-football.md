@@ -12,14 +12,14 @@ You can use Cloudflare Gateway and the Cloudflare WARP client to inspect HTTP tr
 
 In this mode, the Cloudflare WARP client runs on user devices and proxies all Internet-bound traffic to Cloudflare's network. Cloudflare's network will then inspect the HTTP traffic to apply policies based on user identity and destination. You can also decide to [exclude some traffic from inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) while filtering all other traffic.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a Gateway policy to block URLs that contain a hostname
 - Create a Gateway policy to block URLs that contain a URL path
 - Enroll devices into Gateway
 - Review the block events in the Gateway logs
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 35 minutes
 
