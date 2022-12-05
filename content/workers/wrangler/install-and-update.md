@@ -76,7 +76,7 @@ or
 $ npm update wranger --save
 ```
 
-{{<Aside type="warning" header="`npx wrangler innit`">}}
+{{<Aside type="warning" header="`npx wrangler init`">}}
 
 Running `npx wrangler` will use the latest version of Wrangler except when there is already a Wrangler version installed in the current folder. In this case, it will use the locally installed version instead. Running `npx wrangler init` will install a local version of Wrangler in the newly created project directory.
 
