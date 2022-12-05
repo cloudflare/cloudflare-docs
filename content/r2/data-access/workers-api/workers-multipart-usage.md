@@ -273,11 +273,15 @@ upload_file(worker_endpoint, filename, partsize)
 
 ## State management
 
-The stateful nature of multipart uploads doesn't easily map to the usage model of Workers, which are inherently stateless.
-In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application. This is in contrast with multipart uploads in a worker, which will often be completed over multiple invocations of that worker, thereby making state management more challenging.
-In order to overcome this, the state associated with a multipart upload, namely the uploadId and which parts have been uploaded, needs to be kept track of somewhere outside of the worker.
+The stateful nature of multipart uploads does not easily map to the usage model of Workers, which are inherently stateless.
+In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application.
+This is different from multipart uploads in a Worker, which will often be completed over multiple invocations of that Worker.
+This makes state management more challenging. 
 
-In this example, the state of the multipart upload is tracked in the client application which sends requests to the worker, with the necessary state contained in each request.
-Keeping track of the multipart state in the client application enables maximal flexibility and allows for parralel and unordered uploads of each part.
+To overcome this, the state associated with a multipart upload, namely the `uploadId` and which parts have been uploaded, needs to be kept track of somewhere outside of the Worker.
 
-When keeping track of this state in the client is impossible, alternative designs can be considered. For example, you could track the uploadId and which parts have been uploaded in a durable object, or other database.
+In this example, the state of the multipart upload is tracked in the client application which sends requests to the Worker, with the necessary state contained in each request.
+Keeping track of the multipart state in the client application enables maximal flexibility and allows for parallel and unordered uploads of each part.
+
+When keeping track of this state in the client is impossible, alternative designs can be considered.
+For example, you could track the uploadId and which parts have been uploaded in a Durable Object or other database.
