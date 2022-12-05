@@ -20,7 +20,7 @@ Queues is currently in [Public Beta](https://blog.cloudflare.com/cloudflare-queu
 
 {{<Aside type="note">}}
 
-Before you can use Queues for the first time, you **must** enable it via [the dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Paid Workers plan to enable Queues.
+Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Paid Workers plan to enable Queues.
 
 {{</Aside>}}
 
