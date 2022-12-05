@@ -9,6 +9,8 @@ layout: single
 
 # Configure your CDN
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -215,11 +217,11 @@ async function handleRequest(event) {
 And with that, you are finished writing the code for this tutorial. The final version of your script should like this:
 
 ```js
-addEventListener('fetch', event => {
+addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event));
 });
 
-const BUCKET_NAME = 'hugo-workers';
+const BUCKET_NAME = "hugo-workers";
 const BUCKET_URL = `http://storage.googleapis.com/${BUCKET_NAME}`;
 
 async function serveAsset(event) {
@@ -229,7 +231,7 @@ async function serveAsset(event) {
 
   if (!response) {
     response = await fetch(`${BUCKET_URL}${url.pathname}`);
-    const headers = { 'cache-control': 'public, max-age=14400' };
+    const headers = { "cache-control": "public, max-age=14400" };
     response = new Response(response.body, { ...response, headers });
     event.waitUntil(cache.put(event.request, response.clone()));
   }
@@ -237,14 +239,14 @@ async function serveAsset(event) {
 }
 
 async function handleRequest(event) {
-  if (event.request.method === 'GET') {
+  if (event.request.method === "GET") {
     let response = await serveAsset(event);
     if (response.status > 399) {
       response = new Response(response.statusText, { status: response.status });
     }
     return response;
   } else {
-    return new Response('Method not allowed', { status: 405 });
+    return new Response("Method not allowed", { status: 405 });
   }
 }
 ```

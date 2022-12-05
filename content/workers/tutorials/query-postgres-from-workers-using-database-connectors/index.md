@@ -11,6 +11,8 @@ layout: single
 
 <TutorialsBeforeYouStart />
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 ## Overview
 
 In this tutorial, you will learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
@@ -120,33 +122,33 @@ The template script includes a simple query to select a number (`SELECT 42;`) th
 
 // Parse the URL, and get the 'pagila-table' query parameter (which may not exist)
 const url = new URL(request.url);
-const pagilaTable = url.searchParams.get('pagila-table');
+const pagilaTable = url.searchParams.get("pagila-table");
 
 let result;
 // if pagilaTable is defined, run a query on the Pagila dataset
 if (
   [
-    'actor',
-    'address',
-    'category',
-    'city',
-    'country',
-    'customer',
-    'film',
-    'film_actor',
-    'film_category',
-    'inventory',
-    'language',
-    'payment',
-    'payment_p2020_01',
-    'payment_p2020_02',
-    'payment_p2020_03',
-    'payment_p2020_04',
-    'payment_p2020_05',
-    'payment_p2020_06',
-    'rental',
-    'staff',
-    'store',
+    "actor",
+    "address",
+    "category",
+    "city",
+    "country",
+    "customer",
+    "film",
+    "film_actor",
+    "film_category",
+    "inventory",
+    "language",
+    "payment",
+    "payment_p2020_01",
+    "payment_p2020_02",
+    "payment_p2020_03",
+    "payment_p2020_04",
+    "payment_p2020_05",
+    "payment_p2020_06",
+    "rental",
+    "staff",
+    "store",
   ].includes(pagilaTable)
 ) {
   result = await client.queryObject(`SELECT * FROM ${pagilaTable};`);
@@ -223,5 +225,6 @@ $ docker compose down
 If you found this tutorial useful, continue building with other Cloudflare Workers tutorials below.
 
 <!-- - [Authorize users with Auth0](/workers/tutorials/authorize-users-with-auth0/) -->
+
 - [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
 - [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
