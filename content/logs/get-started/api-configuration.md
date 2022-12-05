@@ -156,40 +156,7 @@ curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 
 ## Options
 
-Logpush repeatedly delivers logs on your behalf and uploads them to your destination.
-
-The options that you can customize are:
-
-1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
-2.  **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
-3.  **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
-
-{{<Aside type="note" header="Note">}}
-The **CVE-2021-44228** parameter can only be set through the API at this time. Updating your Logpush job through the dashboard will set this option to false.
-{{</Aside>}}
-
-To check if the selected **logpull_options** are valid:
-
-```bash
-$ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin 
--d '{ "logpull_options":"fields=RayID,ClientIP,EdgeStartTimestamp&timestamps=rfc3339&CVE-2021-44228=true”,
-"dataset": "http_requests", 
-}' | jq .
-```
-
-Response
-
-```json
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "valid": true,
-    "message": "",
-  },
-  "success": true
-}
-```
+Logpull_options has been replaced with Custom Log Formatting output_options. Please refer to the [Log Output Options](/logs/get-started/log-output-options/) documentation for instructions on configuring these options and updating your existing jobs to use these options.
 
 ## Filter
 
@@ -201,13 +168,16 @@ Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10
 
 ## Max Upload Parameters
 
-These parameters can be used to gain control of batch size in the case that a destination has specific requirements. Files will be sent based on whichever parameter is hit first.
+These parameters can be used to gain control of batch size in the case that a destination has specific requirements. Files will be sent based on whichever parameter is hit first. If these options are not set, the system uses our internal defaults of 30s, 100k records, or the destinations globally defined limits.
 
 1.  **max_upload_bytes** (optional): The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
 2.  **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+3.  **max_upload_interval_seconds** (optional): The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
 
 {{<Aside type="note" header="Note">}}
-Parameters **max_upload_bytes** and **max_upload_records** are not configurable for Edge Log Delivery.
+- There are no maximum value limits for these parameters, however, setting them too high may result in data loss.
+
+- Parameters **max_upload_bytes** and **max_upload_records** are not configurable for Edge Log Delivery.
 {{</Aside>}}
 
 ## Custom fields
