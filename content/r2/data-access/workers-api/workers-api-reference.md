@@ -95,7 +95,7 @@ export default {
 - {{<code>}}resumeMultipartUpload(key{{<param-type>}}string{{</param-type>}}, uploadId{{<param-type>}}string{{</param-type>}}) {{<type>}}R2MultipartUpload{{</type>}}{{</code>}}
 
   - Returns an object representing a multipart upload with the given key and uploadId.
-  - The resumeMultipartUpload does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the multipart object.
+  - The resumeMultipartUpload operation does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the `R2MultipartUpload` object.
 
 {{</definitions>}}
 
