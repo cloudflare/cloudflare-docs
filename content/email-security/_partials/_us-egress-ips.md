@@ -50,4 +50,4 @@ _build:
 - **IPv6**:
   - `2405:8100:c400::/38`
 
-[^1]: Office 365 does not support this range, and limits IPv4 address ranges to `/24` subnets. If you use Office 365, you will have to use the broken down `/24` subnet IP addresses. Refer to **Office 365 `/24` addresses** for a list of these IPv4 addresses.
+[^1]: Office 365 does not support this subnet mask range. If you use Office 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to **Office 365 `/24` addresses** for a list of these IPv4 addresses.
