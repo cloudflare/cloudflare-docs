@@ -8,16 +8,11 @@ meta:
 
 # Use the R2 multipart API from Workers
 
-{{<Aside type="note">}}
+By following this guide, you will create a Worker through which your applications can perform multipart uploads.
+This example worker could serve as a basis for your own use case where you can add authentication to the worker, or even add extra validation logic when uploading each part.
+This guide also contains an example Python application that uploads files to this worker.
 
-This guide assumes you've already set up the R2 binding for your worker. See [Use R2 from Workers](/r2/data-access/workers-api/workers-api-usage) for instructions on how to do so.
-
-{{</Aside>}}
-
-In this guide we'll show how to create a worker which allows your applications to perform multipart uploads through this worker.
-This could serve as a basis for your use case where you could add extra validation and authentication.
-This guide also contains an example python application that uploads files to this worker.
-
+This guide assumes you have set up the [R2 binding](/workers/platform/bindings/) for your Worker. Refer to [Use R2 from Workers](/r2/data-access/workers-api/workers-api-usage) for instructions on setting up an R2 binding.
 
 ## An example Worker using the multipart API
 
