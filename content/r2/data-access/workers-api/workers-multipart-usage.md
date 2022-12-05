@@ -16,6 +16,7 @@ This guide assumes you've already set up the R2 binding for your worker. See [Us
 
 In this guide we'll show how to create a worker which allows your applications to perform multipart uploads through this worker.
 This could serve as a basis for your use case where you could add extra validation and authentication.
+This guide also contains an example python application that uploads files to this worker.
 
 
 ## An example worker using the multipart API
@@ -188,7 +189,7 @@ export default {
 
 ## Using the worker to perform a multipart upload
 
-This example application uploads a file to the worker in multiple parts.
+This example application uploads a file to the worker described in the previous section in multiple parts.
 It uses Python's built in ThreadPoolExecutor to parralelize the uploading of parts to the worker,
 thereby greatly increasing upload speeds.
 Http requests to the worker are made with the [requests](https://pypi.org/project/requests/) library.
