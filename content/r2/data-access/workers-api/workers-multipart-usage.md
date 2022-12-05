@@ -179,9 +179,13 @@ export default {
 };
 ```
 
+After publishing this worker with `wrangler publish`, you can use this worker to perform multipart uploads in a variety of ways.
+You can send requests from your existing application to this worker to perform uploads, or you can use a script to upload files through this worker.
+The next section shows an example of a Python script which uploads a chosen file on your machine to this worker.
+
 ## Perform a multipart upload using the Worker
 
-This example application uploads a file to the Worker in multiple parts. 
+This example application uploads a local file to the Worker in multiple parts.
 It uses Python's built-in `ThreadPoolExecutor` to parallelize the uploading of parts to the Worker, which increases upload speeds.
 HTTP requests to the Worker are made with the [requests](https://pypi.org/project/requests/) library.
 
