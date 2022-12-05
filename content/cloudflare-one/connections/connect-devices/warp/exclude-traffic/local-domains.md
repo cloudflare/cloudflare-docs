@@ -6,17 +6,6 @@ weight: 6
 
 # Configure Local Domain Fallback
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP with Gateway                                                                         | All plans                                                     |
-
-</div>
-</details>
-
 By default, Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processings. Excluded domains are listed on the Zero Trust dashboard under **Settings** > **Network** > **Local Domain Fallback** . All domains in that list rely on the local DNS resolver configured for the device on its primary interface or the DNS server specified when you add a new local domain. Domains added to this list are not subject to Gateway DNS policies or DNS logging. The WARP Client proxies these requests directly to the configured fallback servers.
 
 {{<Aside type="warning">}}

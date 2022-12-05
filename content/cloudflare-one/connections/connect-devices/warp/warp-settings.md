@@ -115,7 +115,7 @@ The WARP client will now show as `Disconnected` and will mention the time when i
 
 | Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems    | Gateway with WARP                                                                         | All plans                                                     |
+| All systems    | Any mode                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -132,7 +132,7 @@ When `Enabled`, the WARP client will automatically turn off when it detects a ca
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Gateway with WARP                                                                         | All plans                                                     |
+| All systems | Any mode                                                                        | All plans                                                     |
 
 </div>
 </details>
@@ -275,7 +275,7 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Any mode                                                                                  | All plans                                                     |
+| All systems | Gateway with WARP, Gateway with DoH   | All plans                                                     |
 
 </div>
 </details>
