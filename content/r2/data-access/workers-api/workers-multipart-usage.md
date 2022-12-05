@@ -187,19 +187,17 @@ export default {
 };
 ```
 
-## Using the worker to perform a multipart upload
+## Perform a multipart upload using the Worker
 
-This example application uploads a file to the worker described in the previous section in multiple parts.
-It uses Python's built in ThreadPoolExecutor to parralelize the uploading of parts to the worker,
-thereby greatly increasing upload speeds.
-Http requests to the worker are made with the [requests](https://pypi.org/project/requests/) library.
+This example application uploads a file to the Worker in multiple parts. 
+It uses Python's built-in `ThreadPoolExecutor` to parallelize the uploading of parts to the Worker, which increases upload speeds.
+HTTP requests to the Worker are made with the [requests](https://pypi.org/project/requests/) library.
 
-Using the multipart API in this manner also allows you to upload files larger than the
-[workers request body size limit](/workers/platform/limits#request-limits) through a worker.
+Utilizing the multipart API in this way also allows you to use the Worker to upload files larger than the [Workers request body size limit](/workers/platform/limits#request-limits).
 The uploading of individual parts is still subject to this limit.
 
-You can pass the file you want to upload as an argument when running this script: `python3 mpuscript.py myfile`.
-That will upload the file `myfile` from your machine to your bucket through the worker.
+Pass the file you want to upload as an argument when running this script: `python3 mpuscript.py myfile`.
+That will upload the file `myfile` from your machine to your bucket through the Worker.
 
 
 ```python
