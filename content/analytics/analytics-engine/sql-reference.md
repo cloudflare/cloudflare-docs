@@ -8,7 +8,7 @@ meta:
 
 # Workers Analytics Engine SQL Reference
 
-## `SHOW TABLES` statement
+## SHOW TABLES statement
 
 `SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker.
 
@@ -19,7 +19,7 @@ SHOW TABLES
 
 Refer to [FORMAT clause](#format-clause) for the available `FORMAT` options.
 
-## `SHOW TIMEZONES` statement
+## SHOW TIMEZONES statement
 
 `SHOW TIMEZONES` can be used to list all of the timezones supported by the SQL API. Most common timezones are supported.
 
@@ -28,7 +28,7 @@ SHOW TIMEZONES
 [FORMAT <format>]
 ```
 
-## `SHOW TIMEZONE` statement
+## SHOW TIMEZONE statement
 
 `SHOW TIMEZONE` responds with the current default timezone in use by SQL API. This should always be `Etc/UTC`.
 
@@ -568,10 +568,10 @@ See also: [formatDateTime](#formatDateTime)
 
 Usage:
 ```SQL
-toDateTime(<expression>)
+toDateTime(<expression>[, 'timezone string'])
 ```
 
-`toDateTime` converts an expression to a datetime.
+`toDateTime` converts an expression to a datetime. This function does not support ISO 8601-style timezones; if your time is not in UTC then you must provide the timezone using the second optional argument.
 
 Examples:
 ```SQL
@@ -585,6 +585,9 @@ toDateTime(blob1)
 toDateTime(355924804) -- unix timestamp
 toDateTime('355924804') -- string containing unix timestamp
 toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
+
+-- interpret a date relative to New York time
+toDateTime('2022-12-01 16:17:00', 'America/New_York')
 ```
 
 ### now
@@ -595,24 +598,6 @@ now()
 ```
 
 Returns the current time as a DateTime.
-
-### toDateTime
-
-Usage:
-```SQL
-toDateTime('<a date string>'[, 'timezone string'])
-```
-
-`toDateTime` converts either an integer or string into a `DateTime`. Integers will be interpreted as Unix timestamps. Strings should be in `YYYY-MM-DD HH:MM:SS` format. This function does not support ISO 8601-style timezones in strings, instead you must provide the timezone using the second optional argument.
-
-Examples:
-```SQL
--- intepret a date in the default timezone (UTC)
-toDateTime('2022-12-01 16:17:00')
-
--- interpret a date relative to New York time
-toDateTime('2022-12-01 16:17:00', 'America/New_York')
-```
 
 ### toUnixTimestamp
 
@@ -636,7 +621,9 @@ Usage:
 formatDateTime(<datetime expression>, <format string>[, <timezone string>])
 ```
 
-`formatDateTime` prints a datetime as a string according to a provided format string. The format
+`formatDateTime` prints a datetime as a string according to a provided format string. See
+[ClickHouse's docs](https://clickhouse.com/docs/en/sql-reference/functions/date-time-functions/#formatdatetime)
+for a list of supported formatting options.
 
 Examples:
 ```SQL
