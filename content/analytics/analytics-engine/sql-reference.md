@@ -562,7 +562,7 @@ Examples:
 SELECT format('blob1: {}', blob1) AS s FROM dataset;
 ```
 
-See also: [formatDateTime](#formatDateTime)
+See also: [formatDateTime](#formatdatetime)
 
 ### toDateTime
 
