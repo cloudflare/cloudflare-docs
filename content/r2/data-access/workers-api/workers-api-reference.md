@@ -90,7 +90,7 @@ export default {
 - {{<code>}}createMultipartUpload(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2MultipartOptions{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2MultipartUpload{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Creates a multipart upload.
-  - Returns Promise which resolves to a {{<code>}}R2MultipartUpload{{</code>}} object representing the newly created multipart upload. Once the multipart upload has been created, the multipart upload can be immediately interacted with globally, either through the workers API, or through the S3 API.
+  - Returns Promise which resolves to an `R2MultipartUpload` object representing the newly created multipart upload. Once the multipart upload has been created, the multipart upload can be immediately interacted with globally, either through the Workers API, or through the S3 API.
 
 - {{<code>}}resumeMultipartUpload(key{{<param-type>}}string{{</param-type>}}, uploadId{{<param-type>}}string{{</param-type>}}) {{<type>}}R2MultipartUpload{{</type>}}{{</code>}}
 
@@ -183,16 +183,15 @@ export default {
 
 ## `R2MultipartUpload` definition
 
-A `R2MultipartUpload` is created when you call `createMultipartUpload` or `resumeMultipartUpload`.
-`R2MultipartUpload` is a representation of an ongoing multipart upload.
+An `R2MultipartUpload` object is created when you call `createMultipartUpload` or `resumeMultipartUpload`. `R2MultipartUpload` is a representation of an ongoing multipart upload.
 
 Uncompleted multipart uploads will be automatically aborted after 7 days.
 
 {{<Aside type="note">}}
 
-A `R2MultipartUpload` object does not guarantee that there is an active underlying multipart upload corresponding to that object.
+An `R2MultipartUpload` object does not guarantee that there is an active underlying multipart upload corresponding to that object.
 
-A multipart upload can be completed or aborted at any time, either through the S3 API, or by a parralel invocation of your worker. Therefore it is important to add the necessary error handling code around each operation on a `R2MultipartUpload` object in case the underlying multipart upload no longer exists.
+A multipart upload can be completed or aborted at any time, either through the S3 API, or by a parallel invocation of your Worker. Therefore it is important to add the necessary error handling code around each operation on a `R2MultipartUpload` object in case the underlying multipart upload no longer exists.
 
 {{</Aside>}}
 
@@ -214,12 +213,12 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 - {{<code>}}abort() {{<type>}}Promise\<{{<param-type>}}void{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Aborts the multipart upload. Returns a promise that resolves when the upload has been successfully aborted.
+  - Aborts the multipart upload. Returns a Promise that resolves when the upload has been successfully aborted.
 
 - {{<code>}}complete(uploadedParts{{<param-type>}}R2UploadedPart{{</param-type>}}[]) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Completes the multipart upload with the given parts.
-  - Returns a promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
+  - Returns a Promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
 
 {{</definitions>}}
 
@@ -487,10 +486,9 @@ If a checksum was provided when using the `put()` binding, it will be available 
 
 {{</definitions>}}
 
-### R2UploadedPart
+### `R2UploadedPart`
 
-A `R2UploadedPart` object represents a part that has been uploaded.
-`R2UploadedPart` objects are returned from uploadPart operations and must be passed to completeMultipartUpload operations.
+An `R2UploadedPart` object represents a part that has been uploaded. `R2UploadedPart` objects are returned from `uploadPart` operations and must be passed to `completeMultipartUpload` operations.
 
 {{<definitions>}}
 

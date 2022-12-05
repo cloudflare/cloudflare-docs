@@ -6,7 +6,7 @@ meta:
   title: Use the R2 multipart API from Workers
 ---
 
-# Use the R2 multipart API from workers
+# Use the R2 multipart API from Workers
 
 {{<Aside type="note">}}
 
@@ -19,7 +19,7 @@ This could serve as a basis for your use case where you could add extra validati
 This guide also contains an example python application that uploads files to this worker.
 
 
-## An example worker using the multipart API
+## An example Worker using the multipart API
 
 This worker exposes a HTTP API which enables applications to use the multipart API through the worker.
 
@@ -273,7 +273,7 @@ def upload_part(filename, partsize, url, uploadId, index):
 upload_file(worker_endpoint, filename, partsize)
 ```
 
-## A note on state management
+## State management
 
 The stateful nature of multipart uploads doesn't easily map to the usage model of Workers, which are inherently stateless.
 In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application. This is in contrast with multipart uploads in a worker, which will often be completed over multiple invocations of that worker, thereby making state management more challenging.
