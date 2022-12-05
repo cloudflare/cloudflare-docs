@@ -679,7 +679,7 @@ extract(<time unit> from <datetime>)
 Examples:
 ```SQL
 -- extract the number of seconds from a timestamp (returns 15 in this example)
-extract(SECOND from toDateTime('2022-06-06 11:15:15'))
+extract(SECOND from toDateTime('2022-06-06 11:30:15'))
 ```
 
 ## Supported operators
