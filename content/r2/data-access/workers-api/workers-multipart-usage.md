@@ -16,15 +16,12 @@ This guide assumes you have set up the [R2 binding](/workers/platform/bindings/)
 
 ## An example Worker using the multipart API
 
-This worker exposes a HTTP API which enables applications to use the multipart API through the worker.
+The following example Worker exposes an HTTP API which enables applications to use the multipart API through the Worker.
 
-In this example, each request is routed based on the HTTP method, and the action request parameter.
-As your worker becomes more complicated, you might consider utilizing a serverless web framework
-such as hono to handle the routing for you.
+In this example, each request is routed based on the HTTP method and the action request parameter.
+As your Worker becomes more complicated, consider utilizing a serverless web framework such as [Hono](https://honojs.dev/) to handle the routing for you.
 
-The worker includes any new information about the state of the multipart upload in the response to each request.
-For the request which creates the multipart upload, the uploadId is returned. For requests uploading a part, the part number and etag are returned.
-In turn, the client keeps track of this state, and includes the uploadId in subsequent requests, and the etag and part number of each part when completing a multipart upload.
+The following example Worker includes any new information about the state of the multipart upload in the response to each request. For the request which creates the multipart upload, the `uploadId` is returned. For requests uploading a part, the part number and etag are returned. In turn, the client keeps track of this state, and includes the uploadId in subsequent requests, and the etag and part number of each part when completing a multipart upload.
 
 ```js
 interface Env {
