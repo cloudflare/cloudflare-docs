@@ -73,24 +73,20 @@ filename: wrangler.toml
 ---
 account_id = "95e..."
 name = "docs-site-blah"
-type = "webpack"
 workers_dev = false
 
 [site]
 bucket = "./public"
-entry-point = "workers-site"
 
 [env.production]
 name = "docs-site"
-route = "https://example.com/docs*"
-zone_id = "351c.."
 account_id = "b54f07a.."
+route = { pattern = "https://example.com/docs*", zone_name = "example.com" }
 
 [env.staging]
-zone_id = "ef47a..."
 account_id = "95e5d..."
 name = "docs-site-staging"
-route = "https://staging.example.com/docs*"
+route = { pattern = "https://staging.example.com/docs*", zone_name = "staging.example.com" }
 ```
 
 ## Storage limits
@@ -114,7 +110,6 @@ If you want to include only a certain set of files or directories in your `bucke
 ```toml
 [site]
 bucket = "./public"
-entry-point = "workers-site"
 include = ["included_dir"] # must be an array.
 ```
 
@@ -127,7 +122,6 @@ If you want to exclude files or directories in your `bucket`, you can add an `ex
 ```toml
 [site]
 bucket = "./public"
-entry-point = "workers-site"
 exclude = ["excluded_dir"] # must be an array.
 ```
 

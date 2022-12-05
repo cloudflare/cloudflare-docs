@@ -61,7 +61,7 @@ The template project contains the following files and directories:
 - Publish your site to a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone:
 
   ```toml
-  route = "https://example.com/*"
+  route = { pattern = "https://example.com/*", zone_name = "example.com" }
   ```
 
   {{<Aside type="note">}}
