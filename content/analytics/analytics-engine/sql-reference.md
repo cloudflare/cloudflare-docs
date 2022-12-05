@@ -47,7 +47,7 @@ SELECT <expression_list>
 [FROM <table>|(<subquery>)]
 [WHERE <expression>]
 [GROUP BY <expression>, ...]
-[ORDER BY <expression_list>] 
+[ORDER BY <expression_list>]
 [LIMIT <n>|ALL]
 [FORMAT <format>]
 ```
@@ -74,13 +74,13 @@ SELECT *
 
 -- alias columns to more descriptive names
 SELECT
-    blob2 AS probe_name, 
-    double3 AS temperature 
+    blob2 AS probe_name,
+    double3 AS temperature
 ```
 
 Additionally, expressions using supported [functions](#supported-functions) and [operators](#supported-operators) can be used in place of column names:
 ```SQL
-SELECT 
+SELECT
     blob2 AS probe_name,
     double3 AS temp_c,
     double3*1.8+32 AS temp_f -- compute a value
@@ -106,11 +106,11 @@ FROM <table_name>|(subquery)
 Examples:
 ```SQL
 -- query data written to a workers dataset called "temperatures"
-FROM temperatures  
+FROM temperatures
 
 -- use a subquery to manipulate the table
 FROM (
-    SELECT 
+    SELECT
         blob1 AS probe_name,
         count() as num_readings
     FROM
@@ -166,8 +166,8 @@ GROUP BY <expression>, ...
 For example. If you had a table of temperature readings:
 ```SQL
 -- return the average temperature for each probe
-SELECT 
-    blob1 AS probe_name, 
+SELECT
+    blob1 AS probe_name,
     avg(double1) AS average_temp
 FROM temperature_readings
 GROUP BY probe_name
@@ -185,7 +185,7 @@ Usage:
 ORDER BY <expression> [ASC|DESC], ...
 ```
 
-`<expression>` can just be a column name. 
+`<expression>` can just be a column name.
 
 `ASC` or `DESC` determines if the ordering is ascending or descending. `ASC` is the default, and can be omitted.
 
@@ -379,7 +379,7 @@ max(item_cost)
 
 Usage:
 ```SQL
-quantileWeighted(q, column_name, weight_column_name) 
+quantileWeighted(q, column_name, weight_column_name)
 ```
 
 `quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
@@ -387,7 +387,7 @@ quantileWeighted(q, column_name, weight_column_name)
 Example:
 ```SQL
 -- estimate the median value of <double1>
-quantileWeighted(0.5, double1, _sample_interval) 
+quantileWeighted(0.5, double1, _sample_interval)
 
 -- in a table of query times, estimate the 95th centile query time
 quantileWeighted(0.95, query_time, _sample_interval)
@@ -537,7 +537,7 @@ SELECT position(':' IN blob1) AS p FROM your_dataset;
 
 Usage:
 ```SQL
-substring({string}, {offset:integer}[. {length:integer}]) 
+substring({string}, {offset:integer}[. {length:integer}])
 ```
 
 Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least `1`.
