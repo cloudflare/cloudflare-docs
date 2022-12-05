@@ -14,7 +14,7 @@ _build:
   - `158.51.64.0/26`
   - `158.51.65.0/26`
   - `134.195.26.0/24`
-- **Office 365 `/24` addresses (to use instead of the `/19` subnet):**
+- **Office 365 `/24` addresses (to be used instead of the `/19` subnet):**
   - `104.30.32.0/24`
   - `104.30.33.0/24`
   - `104.30.34.0/24`
