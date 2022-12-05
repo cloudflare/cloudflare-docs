@@ -280,7 +280,7 @@ This makes state management more challenging.
 
 To overcome this, the state associated with a multipart upload, namely the `uploadId` and which parts have been uploaded, needs to be kept track of somewhere outside of the Worker.
 
-In this example, the state of the multipart upload is tracked in the client application which sends requests to the Worker, with the necessary state contained in each request.
+In the example worker and python application described in this guide, the state of the multipart upload is tracked in the client application which sends requests to the Worker, with the necessary state contained in each request.
 Keeping track of the multipart state in the client application enables maximal flexibility and allows for parallel and unordered uploads of each part.
 
 When keeping track of this state in the client is impossible, alternative designs can be considered.
