@@ -11,7 +11,7 @@ Wrangler is a command-line tool for building and managing Cloudflare's Developer
 
 {{<Aside type="note">}}
 
-Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/get-started/#update).
+Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/install-and-update/#update-wrangler).
 
 {{</Aside>}}
 
