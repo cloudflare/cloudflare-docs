@@ -99,7 +99,7 @@ Identity-based authentication logs contain the following fields:
 
 ### Non-identity authentication
 
-Requests blocked by a non-identity policy not appear in the Zero Trust dashboard. To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+Requests blocked by a identity policies appear in the Zero Trust dashboard. To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
 
 ### Log retention
 Block policy decisions are retained for a week. Authentication logs are retained for six months.
