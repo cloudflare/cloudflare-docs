@@ -15,8 +15,6 @@ Use NEL reports to view information such as:
 - The last mile network a request failed from
 - The Cloudflare data center the request was most likely meant for
 
-{{<render file="_beta.md">}}
-
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
 2.  Click **Analytics** > **Origin Reachability**.
 
