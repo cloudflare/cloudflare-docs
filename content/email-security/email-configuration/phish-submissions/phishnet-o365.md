@@ -17,7 +17,9 @@ To set up PhishNet with Office 365, you will need:
 - An Area 1 account with admin access.
 - Admin access to Microsoft.com
 
-{{<Aside type="note">}} Only admin users can deploy PhishNet for all users in Office 365. Non-admin users can deploy PhishNet for themselves, but no other users will have access to it.{{</Aside>}}
+{{<Aside type="note">}}
+Only admin users can deploy PhishNet for all users in Office 365. Non-admin users can deploy PhishNet for themselves, but no other users will have access to it.
+{{</Aside>}}
 
 ## Set up PhishNet for Office 365
 
@@ -59,7 +61,9 @@ You have now installed PhishNet for Office 365. After the process is complete, P
 
 2. Select the PhishNet logo in the task pane, near the other action buttons - such as reply and forward.
 
-{{<Aside type="note">}}If you cannot find the PhishNet icon, select the **More actions** menu (the three dots menu).{{</Aside>}}
+{{<Aside type="note">}}
+If you cannot find the PhishNet icon, select the **More actions** menu (the three dots menu).
+{{</Aside>}}
 
 3. Under **Select Submission Type**, select the type of your submission - Spam or Phish.
 

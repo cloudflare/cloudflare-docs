@@ -8,7 +8,7 @@ weight: 6
 
 As part of your email configuration, administrators and email recipients can submit missed phish samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses) so Cloudflare can process them and take necessary action.
 
-Sometimes phish is missed as Cloudlare Area 1 uses several techniques to make a detection. These include preemptively crawling the web to identify campaigns, machine learning, custom signatures, among others. In order for Area 1 to identify why phish was missed, we need to run the original samples through our module and identify why some of our modules did not score the sample high enough to elevate it to malicious.
+Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a detection. These include preemptively crawling the web to identify campaigns, machine learning, custom signatures, among others. In order for Area 1 to identify why phish was missed, we need to run the original samples through our module and identify why some of our modules did not score the sample high enough to elevate it to malicious.
 
 ## How to submit phish
 
@@ -24,7 +24,7 @@ After you or your users submit a phish sample, Area 1 adds that sample directly 
 
 ### Phish submission feedback
 
-Use the following keywords to search for submitted phish samples on Area 1 portal search:
+Use the following keywords to search for submitted phish samples on Area 1 portal detection search:
 
 - `phish_submission`
 - `user_malicious_submission`
@@ -45,4 +45,6 @@ To enable PSR:
 3. In **Email Configuration**, go to **Retract Settings** > **Auto-Retract**.
 3. Enable **Phish Submission Response (Beta)**.
 
-{{<Aside type="note">}}PSR works only for the phish samples submitted to [user submission addresses]((https://horizon.area1security.com/support/service-addresses)). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.{{</Aside>}}
+{{<Aside type="note">}}
+PSR works only for the phish samples submitted to [user submission addresses]((https://horizon.area1security.com/support/service-addresses)). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
+{{</Aside>}}
