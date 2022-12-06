@@ -105,7 +105,7 @@ Next, toggle **TLS decryption** to _Enabled_. This will tell Cloudflare to begin
 
 The user will be prompted to log in with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Gateway with WARP toggled on in the Teams workflow.](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+![Gateway with WARP enabled in the Teams workflow.](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Confirm blocks
 
