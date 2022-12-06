@@ -15,7 +15,7 @@ When you first get started with Area 1, you will need to set up a way to connect
 Send messages to Area 1 via BCC configurations within your email provider:
 
    - [GSuite BCC Setup](/email-security/deployment/api/setup/gsuite-bcc-setup)
-   - [Office 365 BCC Setup](/email-security/deployment/api/setup/office365-bcc-setup)
+   - [Microsoft Exchange BCC Setup](/email-security/deployment/api/setup/exchange-bcc-setup)
 
 ## Journalling setup
 
