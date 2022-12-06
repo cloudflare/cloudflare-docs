@@ -14,7 +14,7 @@ Edge Logstream jobs do not support this yet.
 
 Previously, Logpush jobs could be customized by specifying the list of fields, sampling rate, and timestamp format in **logpull_options** as [URL-encoded parameters](/logs/get-started/api-configuration/#options). For example:
 
-```JSON
+```json
 {
     "id": 146,
     "dataset": "http_requests",
