@@ -40,3 +40,7 @@ The HP Velocity driver has a bug which will cause a blue screen error on devices
 ## Cisco Meraki
 
 Cisco Meraki devices have a bug where WARP traffic can sometimes be identified as [`Statistical-P2P`](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/qos_nbar/prot_lib/config_library/pp4600/nbar-prot-pack4600/s.html#wp1488575851) and de-prioritised or dropped entirely. To resolve the issue, disable `Statistical-P2P` on the Cisco Meraki device.
+
+## Windows Teredo Devices
+
+If you attempt to use a [Windows Teredo device](https://learn.microsoft.com/en-us/windows/win32/teredo/about-teredo) that will conflict with the WARP client. Both Teredo and WARP will try to control IPv6 traffic on your primary intereface and they may end up fighting with eachother.
