@@ -72,7 +72,7 @@ Regardless of whether your traffic is proxied, you have access to the following 
 
 If your traffic is proxied through Cloudflare, you have access to all the fields listed under [Fields supported regardless of proxy](#fields-supported-regardless-of-proxy) in addition to the following fields:
 
-Note that many of these fields are referenced from the [Rules language documentation](/ruleset-engine/rules-language/fields/).
+Many of these fields are referenced from the [Rules language documentation](/ruleset-engine/rules-language/fields/).
 
 <table style="width:100%">
   <thead>
