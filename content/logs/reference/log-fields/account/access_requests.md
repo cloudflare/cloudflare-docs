@@ -17,7 +17,6 @@ The descriptions below detail the fields available for `access_requests`.
 | Action | What type of record is this. <em>login</em> \| <em>logout</em> | string |
 | Allowed |  |  |
 | AppDomain | The domain of the Application that Access is protecting | string |
-| AppType | The type of the Application that Access is protecting | string |
 | AppUUID | Access Application UUID | string |
 | Connection | Identity provider used for the login | string |
 | Country | Request's country of origin | string |

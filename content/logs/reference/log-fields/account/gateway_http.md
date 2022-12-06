@@ -32,6 +32,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | HTTPVersion | Version name for the HTTP request | string |
 | IsIsolated | If the requested was isolated with Cloudflare Browser Isolation or not | bool |
 | PolicyID | The gateway policy UUID applied to the request, if any | string |
+| PolicyName | The name of the gateway policy applied to the request, if any | string |
 | Referer | Contents of the referer header in the HTTP request | string |
 | RequestID | Cloudflare request ID. This might be empty on bypass action | string |
 | SourceIP | Source ip of the request | string |
