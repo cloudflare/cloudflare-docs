@@ -28,8 +28,6 @@ You can configure domains to use the device's local resolver. Cloudflare Zero Tr
 
 1.  Scroll down to **Local Domain Fallback** and click **Manage**.
 
-    ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
-
 By default, Cloudflare Zero Trust excludes common top-level domains used for local resolution. Everything listed will be excluded. To delete a default domain from this list, toggle the box to the left of the domain name and click **Confirm delete**.
 
 To add a domain to the default list, input the domain in the `Domain` field. You can add an optional description and click **Add**.
@@ -41,8 +39,6 @@ You can deploy Cloudflare Zero Trust in split tunnel mode and exclude IP address
 1.  On the Zero Trust Dashboard, navigate to **Settings > Network**.
 
 1.  Scroll down to **Local Domain Fallback** and click **Manage**.
-
-    ![Network Settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 By default, Cloudflare Zero Trust excludes IP addresses commonly used for private routing, including those defined in [RFC 1918](https://tools.ietf.org/html/rfc1918). Everything listed under **Split Tunnel entries** will be excluded. To delete an IP address from the list of excluded IP addresses, toggle the box to the left of the IP address range and click **Confirm delete**.
 
