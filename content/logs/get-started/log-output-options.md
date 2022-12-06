@@ -67,7 +67,7 @@ The **output_options** object has the following settings:
 - **field_delimiter**: string to join fields. Will be ignored when **record_template** is set.
 
 - **timestamp_format**: string to specify format for timestamps, such as `unixnano`, `unix`, or `rfc3339`. Default `unixnano`.
-- **sample_rate**: floating number to specify sampling rate (default 1.0: no sampling). Sampling is applied on top of andregardless of the current sample_interval of the data.
+- **sample_rate**: floating number to specify sampling rate (default 1.0: no sampling). Sampling is applied on top of filtering, and regardless of the current sample_interval of the data.
 - **CVE-2021-44228**: bool, default false. If set to true, will cause all occurrences of `${` in the generated files to be replaced with `x{`.
 
 ## Examples
