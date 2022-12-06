@@ -17,6 +17,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
@@ -819,6 +820,76 @@ List R2 bucket in the current account.
 ```sh
 $ wrangler r2 bucket list
 ```
+
+---
+
+## `r2 object`
+
+Interact with R2 objects.
+
+{{<Aside type="note">}}
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+{{</Aside>}}
+
+### `get`
+
+Fetch an object from an R2 bucket.
+
+```sh
+$ wrangler r2 object get <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The source object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+### `put`
+
+Create an object in an R2 bucket.
+
+```sh
+$ wrangler r2 object put <OBJECTPATH> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Enables the file to be piped in, rather than specified with the --file option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies presentational information for the object.
+- `--content-encoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+- `--content-language` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The language the content is in.
+- `--cache-control` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The date and time at which the object is no longer cacheable.
+{{</definitions>}}
+
+### `delete`
+
+Delete an object in an R2 bucket
+
+```sh
+$ wrangler r2 object delete <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
 
 ---
 
