@@ -10,10 +10,11 @@ meta:
 
 This guide will instruct you on setting up Workers for Platforms. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
 
+## Prerequisite: Enable Workers for Platforms
+
+Workers for Platforms is available for Enterprise customers only. To enable Workers for Platforms, contact your Cloudflare account team.
 ---
 ## 1. Create dispatch namespace 
-
-The first step to working with dispatch namespaces is to create a namespace. 
 
 A dispatch namespace is composed of a collection of user Workers, which are Workers that end users (end developers) create. With dispatch namespaces, a dynamic dispatch Worker can be used to call any user Worker in a namespace, without needing to explicitly predefine the relationship. 
 
