@@ -1,8 +1,7 @@
 ---
 pcx_content_type: concept
 title: Comparing Wrangler v1 & v2
-aliases: [/workers/wrangler/compare-v1-v2/]
-weight: 11
+weight: 1
 ---
 
 # New in Wrangler v2
@@ -32,7 +31,7 @@ Prefer a video format? The following video describes some of the major changes i
 
 ### Commands
 
-| Command     | 1   | 2   | Notes                                          |
+| Command     | v1  | v2  | Notes                                          |
 | ----------- | --- | --- | ---------------------------------------------- |
 | `publish`   | ✅  | ✅  |
 | `dev`       | ✅  | ✅  |
@@ -55,15 +54,15 @@ Prefer a video format? The following video describes some of the major changes i
 
 ## Configuration
 
-| Property              | 1   | 2   | Notes                                                                                                                                   |
-| --------------------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate. |
-| `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead.                                                          |
-| `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                                                                                     |
+| Property              | v1  | v2  | Notes                                                                                                                                                |
+| --------------------- | --- | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/cli-wrangler/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate. |
+| `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead.                                                                       |
+| `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                                                                                                  |
 
 ## Features
 
-| Feature    | 1   | 2   | Notes                                                                                                                                                                 |
+| Feature    | v1  | v2  | Notes                                                                                                                                                                 |
 | ---------- | --- | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | TypeScript | ❌  | ✅  | You can give wrangler a TypeScript file, and it will automatically transpile it to JavaScript using [`esbuild`](https://github.com/evanw/esbuild) under-the-hood.     |
 | Local mode | ❌  | ✅  | `wrangler dev --local` will run your Worker on your local machine instead of on our network. This is powered by [Miniflare](https://github.com/cloudflare/miniflare). |
