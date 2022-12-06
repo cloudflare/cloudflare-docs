@@ -824,6 +824,7 @@ $ wrangler r2 bucket list
 ```
 
 ---
+
 ## r2 object
 
 Interact with R2 objects.
