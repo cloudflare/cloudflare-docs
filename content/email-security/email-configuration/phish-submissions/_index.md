@@ -47,5 +47,5 @@ To enable PSR:
 3. Enable **Phish Submission Response (Beta)**.
 
 {{<Aside type="note">}}
-PSR works only for the phish samples submitted to [user submission addresses]((https://horizon.area1security.com/support/service-addresses/)). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
+PSR works only for the phish samples submitted to [user submission addresses](https://horizon.area1security.com/support/service-addresses/). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
 {{</Aside>}}
