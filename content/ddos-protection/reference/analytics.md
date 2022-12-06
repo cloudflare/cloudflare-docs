@@ -20,10 +20,8 @@ You can view DDoS analytics in different dashboards, depending on your service a
 
 | Service       | Free              | Pro                | Business           | Enterprise         |
 | ------------- | ----------------- | ------------------ | ------------------ | ------------------ |
-| WAF/CDN       | Activity log only | Security Events    | Security Events    | Security Events, Security Analytics<sup>1</sup> |
+| WAF/CDN       | Activity log only | Security Events    | Security Events    | Security Events |
 | Spectrum      | –                 | –                  | –                  | Network Analytics  |
 | Magic Transit | –                 | –                  | –                  | Network Analytics  |
-
-<sup>1</sup> Available to Enterprise customers on Core and Advanced bundles.
 
 {{</table-wrap>}}
