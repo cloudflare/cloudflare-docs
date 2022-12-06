@@ -16,7 +16,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 - See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
 - A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
 
-**⏲️ Time to complete:** 10 minutes
+**Time to complete:** 10 minutes
 
 ## Create the Access for SaaS application
 

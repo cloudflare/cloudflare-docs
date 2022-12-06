@@ -16,7 +16,7 @@ For this tutorial, you will need:
 - An integrated identity provider (IdP)
 - Admin access to your Zendesk account
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 

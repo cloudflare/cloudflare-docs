@@ -10,11 +10,11 @@ title: Block sites by TLD
 
 You can use Cloudflare Gateway to block DNS queries a entire top level domain (TLD). These policies will block any hostname in a specific TLD.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Build a policy in Gateway to block entire TLDs
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 5 minutes
 

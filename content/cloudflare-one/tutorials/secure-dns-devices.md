@@ -9,13 +9,13 @@ title: Filter DNS on devices
 
 You can use Cloudflare Gateway and the Cloudflare WARP client application to filter and log DNS queries from devices on any network. Cloudflare Gateway will continue to secure devices in any DNS location by filtering all DNS queries using the WARP client on the roaming devices.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a DNS filtering policy that secures devices by blocking malicious hostnames
 - Apply that policy to devices on any network
 - Enroll devices into a Cloudflare Gateway deployment
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 30 minutes
 

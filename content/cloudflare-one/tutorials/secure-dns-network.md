@@ -10,12 +10,12 @@ title: Filter DNS on home or office network
 
 You can use Cloudflare Gateway to filter and log DNS queries from any device in your network without installing client software.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a DNS filtering policy that secures a home or office network by blocking malicious hostnames
 - Review logs and events that occur on that network
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 15 minutes
 
