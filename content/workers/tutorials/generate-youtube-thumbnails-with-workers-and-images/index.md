@@ -19,7 +19,7 @@ In this tutorial, you will learn how to programmatically generate a custom youtu
 
 ## Prerequisites
 
-To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers/wrangler/get-started/#install) installed on your machine.
+To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers/wrangler/install-and-update/) installed on your machine.
 
 ## Learning Goals
 

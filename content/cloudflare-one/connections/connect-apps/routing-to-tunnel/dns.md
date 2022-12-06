@@ -26,7 +26,7 @@ To create a DNS record for your tunnel:
 1.  Create a new CNAME record and input the subdomain of your tunnel into the Target field.
 1.  Click **Save**.
 
-![DNS tab](/cloudflare-one/static/documentation/connections/connect-apps/dns/dns-record.png)
+![Example of fields completed to create a new CNAME record.](/cloudflare-one/static/documentation/connections/connect-apps/dns/dns-record.png)
 
 The DNS record is distinct from the state of the tunnel. You can create DNS records that point to a tunnel that is not currently running. If the tunnel stops running, the DNS record will not be deleted. If you point the DNS record to a tunnel not currently running visitors will see a 1016 error message.
 

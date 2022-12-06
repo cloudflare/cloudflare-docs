@@ -6,6 +6,14 @@ weight: 3
 
 # Changelog
 
+## 2022-11-30
+
+- Requests with the header `x-amz-acl: public-read` are no longer rejected.
+- Fixed issues with wildcard CORS rules and presigned URLs.
+- Fixed an issue where `ListObjects` would time out during delimited listing of unicode-normalized keys.
+- S3 API's `PutBucketCors` now rejects requests with unknown keys in the XML body.
+- Signing additional headers no longer breaks CORS preflight requests for presigned URLs.
+
 ## 2022-11-21
 
 - Fixed a bug in `ListObjects` where `startAfter` would skip over objects with keys that have numbers right after the `startAfter` prefix.
