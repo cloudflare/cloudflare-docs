@@ -17,6 +17,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
@@ -821,6 +822,60 @@ List R2 bucket in the current account.
 ```sh
 $ wrangler r2 bucket list
 ```
+
+---
+## r2 object
+
+Interact with R2 objects.
+
+{{<Aside type="note">}}
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+{{</Aside>}}
+
+### `get`
+
+Fetch an object from an R2 bucket.
+
+```sh
+$ wrangler r2 object get <objectPath>
+```
+
+{{<definitions>}}
+
+- `objectPath` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The source object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+### `put`
+
+Create an object in an R2 bucket.
+
+```sh
+$ wrangler r2 object put <objectPath>
+```
+
+{{<definitions>}}
+
+- `objectPath` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+### `delete`
+
+Delete an object in an R2 bucket
+
+```sh
+$ wrangler r2 object <objectPath>
+```
+
+{{<definitions>}}
+
+- `objectPath` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
 
 ---
 
