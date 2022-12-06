@@ -21,29 +21,31 @@ Cloudflare Access requires that the credentials: `same-origin parameter` be adde
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
 To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
 
-## I see a Cloudflare Gateway error page when browsing to a website.
+## I see error 526 when browsing to a website.
 
 <div class="medium-img">
-  <img alt="Example of a Cloudflare Gateway error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
+  <img alt="Example of a Gateway 526 error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
 </div>
 
-We present an HTTP error page in the following cases:
+Gateway presents an HTTP error page in the following cases:
 
-1.  **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
+- **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
 
-    - The server certificate issuer is unknown or is not trusted by the service.
-    - The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
-    - There is at least one expired certificate in the certificate chain for the server certificate
+  - The server certificate issuer is unknown or is not trusted by the service.
+  - The server certificate is revoked and fails a CRL check.
+  - There is at least one expired certificate in the certificate chain for the server certificate.
+  - The common name on the certificate does not match the URL you are trying to reach.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic]((https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429)) is more lenient, which is why the website may load when you turn off WARP.
 
-2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch. The SSL certificate on the edge needs to cover the requested hostname or else a 526 Insecure upstream error will be presented.
-3.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins that only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
 
-If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
+  If you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance), Gateway will only connect if the origin supports [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
 
-- Operating System (Windows 10, macOS 10.x, iOS 14.x)
-- Web browser (Chrome, Firefox, Safari, Edge)
-- URL of the request
-- Screenshot or copy/paste of the content from the error page
+If none of the above scenarios apply, contact Cloudflare support with the following information:
+  - Operating System (Windows 10, macOS 10.x, iOS 14.x)
+  - Web browser (Chrome, Firefox, Safari, Edge)
+  - URL of the request
+  - Screenshot or copy/paste of the content from the error page
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
