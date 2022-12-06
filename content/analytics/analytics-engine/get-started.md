@@ -18,21 +18,21 @@ To access your dataset from the Workers runtime, you need to create a binding us
 
 In this guide, we will show you how to start using a dataset.
 
-To define a binding. For example:
+To define an Analytics Engine binding you must be using at least version 2.6.0 of Wrangler.
+Add the binding to your `wrangler.toml` file, for example:
 
 ```toml
-[[unsafe.bindings]]
-type = "analytics_engine"
-name = "<BINDING_NAME>"
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>" }
+]
 ```
 
 By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
 
 ```toml
-[[unsafe.bindings]]
-type = "analytics_engine"
-name = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
 ```
 
 ## 2. Write data from the Workers Runtime API
