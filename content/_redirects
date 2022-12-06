@@ -107,6 +107,8 @@
 /email-security/static/GSuite-Area1-MX.pdf /email-security/deployment/inline/setup/gsuite-area1-mx/ 301
 /email-security/static/Cisco-Area1-MX.pdf /email-security/deployment/inline/setup/cisco-area1-mx/ 301
 /email-security/static/Cisco-Cisco-MX.pdf /email-security/deployment/inline/setup/cisco-cisco-mx/ 301
+/email-security/static/Phish-Submission-Triage.pdf /email-security/email-configuration/phish-submissions/ 301
+/email-security/static/Report_phishing_from_Outlook_client.pdf /email-security/email-configuration/phish-submissions/phishnet-o365/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
