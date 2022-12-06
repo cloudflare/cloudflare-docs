@@ -27,7 +27,7 @@ Previously, Logpush jobs could be customized by specifying the list of fields, s
 
 We have replaced this with **output_options** as it is used for both Logpull and Logpush.
 
-```JSON
+```json
 {
     "id": 146,
     "dataset": "http_requests",
@@ -303,7 +303,7 @@ In order to migrate your jobs from using **logpull_options** to the new **output
 
 For example, if logpull_options are `fields=ClientIP,EdgeStartTimestamp,RayID&sample=0.1&timestamps=rfc3339&CVE-2021-44228=true`, the output_options would be:
 
-```JSON
+```json
 "output_options": {
     "field_names": ["ClientIP", "EdgeStartTimestamp", "RayID"],
     "sample_rate": 0.1,
