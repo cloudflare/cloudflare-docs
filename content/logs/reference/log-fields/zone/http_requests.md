@@ -106,7 +106,6 @@ The descriptions below detail the fields available for `http_requests`.
 | WorkerSubrequest | Whether or not this request was a worker subrequest | bool |
 | WorkerSubrequestCount | Number of subrequests issued by a worker when handling this request | int |
 | WorkerWallTimeUs | Real-time in microseconds elapsed between start and end of worker invocation | int |
-| ZoneID | Internal zone ID | int |
 | ZoneName | The human-readable name of the zone (e.g. 'cloudflare.com'). Available in Logpush v2 only. | string |
 
 {{</table-wrap>}}
