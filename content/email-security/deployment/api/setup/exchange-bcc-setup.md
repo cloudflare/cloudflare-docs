@@ -1,14 +1,14 @@
 ---
-title: Microsoft Exchange 365 BCC setup
+title: Microsoft Exchange BCC setup
 pcx_content_type: tutorial
 weight: 2
 meta:
     title: Setup phishing risk assessment for Microsoft Exchange with Area 1
 ---
 
-# Microsoft Exchange 365 BCC setup with Area 1
+# Microsoft Exchange BCC setup with Area 1
 
-For customers using Microsoft Exchange 365, setting up a phishing risk assessment with Area 1 via a BCC setup is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential phishing attacks. The following email flow shows how this works:
+For customers using Microsoft Exchange, setting up a phishing risk assessment with Area 1 via a BCC setup is quick and easy. You need to configure an inbound rule to send emails to Area 1 via BCC for processing and detection of potential phishing attacks. The following email flow shows how this works:
 
 ![Email flow when setting up a phishing assessment risk for Microsoft Exchange with Area 1.](/email-security/static/bcc-setup/office365/office365-bcc-flow.png)
 
