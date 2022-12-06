@@ -157,20 +157,18 @@ None of the options for this command are required. Many of these options can be 
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
 
   - Run the preview of the Worker directly on your local machine.
-    {{<Aside type="warning">}}
-    This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
-    {{</Aside>}}
+{{<Aside type="warning">}}
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
+{{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
-    {{<Aside type="warning">}}
-
+{{<Aside type="warning">}}
 When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
 
 On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
 On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
-
-      {{</Aside>}}
+{{</Aside>}}
       
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
