@@ -29,13 +29,21 @@ Only admin users can deploy PhishNet for all users in Office 365. Non-admin user
 
 3. Go to **Settings** > **Integrated Apps**.
 
+    ![Select Integrated apps from the menu](/email-security/static/phish-submissions/phishnet-o365/step3-apps.png)
+
 4. Select **Upload custom apps**.
+
+    ![Select upload custom apps](/email-security/static/phish-submissions/phishnet-o365/step4-custom-apps.png)
 
 5. On a new browser tab, [log in to Area 1](https://horizon.area1security.com) with an admin account.
 
 6. Select the **Settings** (gear icon).
 
+    ![Select settings (the gear icon)](/email-security/static/phish-submissions/phishnet-o365/step6-settings.png)
+
 7. Go to **Email Configuration** > **Phish Submissions** > **PhishNet O365**.
+
+    ![The PhishNet settings will let you copy the appropriate URL to install it on Office 365](/email-security/static/phish-submissions/phishnet-o365/step7-phishnet.png)
 
 8. Select **Copy** to copy the URL. This URL will let you install PhishNet in Office 365.
 
@@ -43,17 +51,27 @@ Only admin users can deploy PhishNet for all users in Office 365. Non-admin user
 
 10. From **Upload Apps to deploy**, select **Provide link to manifest file**, and paste the URL you copied from your Area 1 dashboard.
 
+    ![Paste the URL you have copied from Area 1.](/email-security/static/phish-submissions/phishnet-o365/step10-upload-apps.png)
+
 11. Select **Validate**. Wait for a success message to appear below the input. Then, select **Next**.
 
 12. Under **Assign users**, select **Entire Organization**, and then select **Next**.
 
+    ![Paste the URL you have copied from Area 1.](/email-security/static/phish-submissions/phishnet-o365/step12.png)
+
 13. In **App Permissions and Capabilities**, make sure PhishNet has the correct permissions: `Outlook: ReadWriteMailbox, SendReceiveData`. Then, select **Next**.
+
+    ![Make sure PhishNet has the correct permissions.](/email-security/static/phish-submissions/phishnet-o365/step13.png)
 
 14. In the next screen, make sure that in **Assigned Users** you have **Entire organization**. Then, select **Finish Deployment**.
 
-15. Once deployment is complete, you should see a message confirming it. Note that it can take up to six hours for PhishNet to appear in Outlook (or six hours to update if previously installed.) Select **Done**.
+15. Once deployment is complete, you should see a message confirming it. Note that it can take up to six hours for PhishNet to appear in Office 365 (or six hours to update if previously installed.) Select **Done**.
+
+    ![PhisNet might take up to six hours to appear in Office 365.](/email-security/static/phish-submissions/phishnet-o365/step15.png)
 
 You have now installed PhishNet for Office 365. After the process is complete, PhishNet will show up on the Integrated Apps screen.
+
+![Search for PhishNet in the Integrated Apps screen.](/email-security/static/phish-submissions/phishnet-o365/phishnet-installed-apps.png)
 
 ## Submit phish with PhishNet
 
