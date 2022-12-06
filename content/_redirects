@@ -652,10 +652,10 @@
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
 /waf/about/waf-ml/ /waf/about/waf-attack-score/ 301
 /waf/alerts/ /waf/reference/alerts/ 301
-/waf/analytics/ /waf/security-events/ 301
-/waf/analytics/additional-information/ /waf/security-events/additional-information/ 301
-/waf/analytics/free-plan/ /waf/security-events/free-plan/ 301
-/waf/analytics/paid-plans/ /waf/security-events/paid-plans/ 301
+/waf/analytics/ /waf/security-events/ 302
+/waf/analytics/additional-information/ /waf/security-events/additional-information/ 302
+/waf/analytics/free-plan/ /waf/security-events/free-plan/ 302
+/waf/analytics/paid-plans/ /waf/security-events/paid-plans/ 302
 /waf/custom-rules/custom-firewall/ /waf/custom-rules/ 301
 /waf/custom-rules/custom-firewall/create-api/ /waf/custom-rules/create-api/ 301
 /waf/custom-rules/custom-firewall/create-dashboard/ /waf/custom-rules/create-dashboard/ 301
