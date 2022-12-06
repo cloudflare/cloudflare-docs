@@ -15,7 +15,7 @@ PhishNET is an add-in button that helps users to submit directly to Area 1 phish
 To set up PhishNet with Office 365, you will need:
 
 - An Area 1 account with admin access.
-- Admin access to Microsoft.com
+- Admin access to Microsoft.com.
 
 {{<Aside type="note">}}
 Only admin users can deploy PhishNet for all users in Office 365. Non-admin users can deploy PhishNet for themselves, but no other users will have access to it.
@@ -84,6 +84,8 @@ If you cannot find the PhishNet icon, select the **More actions** menu (the thre
 {{</Aside>}}
 
 3. Under **Select Submission Type**, select the type of your submission - Spam or Phish.
+
+    ![Choose the type of submission you would like to make](/email-security/static/phish-submissions/phishnet-o365/step3-submit-phish.png)
 
 4. Select **Submit Report**.
 
