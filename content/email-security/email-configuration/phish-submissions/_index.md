@@ -1,6 +1,7 @@
 ---
 title: Phish submissions
 pcx_content_type: concept
+layout: single
 weight: 6
 ---
 
