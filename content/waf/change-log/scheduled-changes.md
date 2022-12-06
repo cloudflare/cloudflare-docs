@@ -20,6 +20,8 @@ layout: list
       <th>Description</th>
       <th>Comments</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>2022-12-05</td>
       <td>2022-12-12</td>
@@ -38,8 +40,6 @@ layout: list
       <td>Apache JXPath Library - Code Injection - CVE:CVE-2022-41852</td>
       <td>N/A</td>
     </tr>
-  </thead>
-  <tbody>
-</tbody>
+  </tbody>
 </table>
 {{</table-wrap>}}
