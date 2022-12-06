@@ -25,5 +25,9 @@ Enterprise - Primary
 Enterprise - Secondary 
 WAF 
 
+
 Product works with no caveats | Product works with some caveats| Product cannot be used | Product is not applicable/eligible
 ---|---|---|---
+Core: Advanced Certificates Manager, Advanced DDoS, Custom SSL, CDN, Data Transfer (TB), Enterprise - Primary, Enterprise - Secondary, WAF | | Argo Smart Routing | Magic suite 
+Security: Bot Management, Payload inspection, SSL for SaaS, Rate Limiting, SSL for SaaS Advanced, Zero Trust | 
+Performance: Image Resizing, Workers, Load Balancing, Waiting Room, Workers Unbound | 

@@ -27,3 +27,15 @@ Support by product and region is summarized here:
 | Australia | &#x2705; | &#x2705; | &#10060; |
 | Japan | &#10060; | &#x2705; | &#10060; |
 | India | &#x2705; | &#x2705; | &#10060; |
+
+Overview by product is summarized in the following table:
+
+| Product | Key Management | Regional Services | Customer Metadata Boundary |
+| --- | --- | --- | --- |
+| US | &#x2705; | &#x2705; | &#x2705; |
+| EU | &#x2705; | &#x2705; | &#x2705; |
+| UK | EU-only | &#x2705; | Can use EU metadata boundary. |
+| Canada | &#x2705; | &#x2705; | &#10060; |
+| Australia | &#x2705; | &#x2705; | &#10060; |
+| Japan | &#10060; | &#x2705; | &#10060; |
+| India | &#x2705; | &#x2705; | &#10060; |
