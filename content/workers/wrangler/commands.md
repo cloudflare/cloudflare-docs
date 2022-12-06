@@ -868,7 +868,7 @@ $ wrangler r2 object put <objectPath>
 Delete an object in an R2 bucket
 
 ```sh
-$ wrangler r2 object <objectPath>
+$ wrangler r2 object delete <objectPath>
 ```
 
 {{<definitions>}}
