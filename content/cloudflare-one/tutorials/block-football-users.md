@@ -40,7 +40,7 @@ Next, create a rule to block any subdomain that uses a particular host. This exa
 
 Next, click **+ Add condition** to apply this rule to a specific user or group of users. This example uses the user email address. You can also build rules using your identity provider's directory groups.
 
-![Adding an additional condition to the policy via user email addresses.](/cloudflare-one/static/secure-web-gateway/block-football/block-espn-sam.png)
+![Adding another condition to the policy via user email addresses.](/cloudflare-one/static/secure-web-gateway/block-football/block-espn-sam.png)
 
 You can now select **Block** as the action. You can add optional text to present to the user in the block page.
 
