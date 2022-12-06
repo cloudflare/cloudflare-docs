@@ -6,10 +6,6 @@ weight: 2
 
 # WAF attack score
 
-{{<Aside type="note">}}
-This feature is only available on Enterprise plans.
-{{</Aside>}}
-
 WAF attack score is a feature that complements [WAF Managed Rulesets](/waf/managed-rulesets/).
 
 Managed Rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, Managed Rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
@@ -18,9 +14,13 @@ WAF attack score allows you to identify these attack variations and their malici
 
 To maximize protection, Cloudflare recommends that you use both Managed Rulesets and WAF attack score.
 
+{{<Aside type="note">}}
+This feature is only available on Enterprise plans.
+{{</Aside>}}
+
 ## Available scores
 
-Currently, the Cloudflare WAF provides the following attack scores:
+The Cloudflare WAF provides the following attack scores:
 
 {{<table-wrap>}}
 Score                 | Attack vector               | Field
