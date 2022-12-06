@@ -838,12 +838,12 @@ The `r2 object` commands allow you to manage application data in the Cloudflare 
 Fetch an object from an R2 bucket.
 
 ```sh
-$ wrangler r2 object get <objectPath>
+$ wrangler r2 object get <OBJECTPATH>
 ```
 
 {{<definitions>}}
 
-- `objectPath` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The source object path in the form of `{bucket}/{key}`.
 
 {{</definitions>}}
@@ -853,14 +853,29 @@ $ wrangler r2 object get <objectPath>
 Create an object in an R2 bucket.
 
 ```sh
-$ wrangler r2 object put <objectPath>
+$ wrangler r2 object put <OBJECTPATH> [OPTIONS]
 ```
 
 {{<definitions>}}
 
-- `objectPath` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The destination object path in the form of `{bucket}/{key}`.
-
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Enables the file to be piped in, rather than specified with the --file option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies presentational information for the object.
+- `--content-encoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+- `--content-language` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The language the content is in.
+- `--cache-control` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The date and time at which the object is no longer cacheable.
 {{</definitions>}}
 
 ### `delete`
@@ -868,12 +883,12 @@ $ wrangler r2 object put <objectPath>
 Delete an object in an R2 bucket
 
 ```sh
-$ wrangler r2 object delete <objectPath>
+$ wrangler r2 object delete <OBJECTPATH>
 ```
 
 {{<definitions>}}
 
-- `objectPath` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The destination object path in the form of `{bucket}/{key}`.
 
 {{</definitions>}}
