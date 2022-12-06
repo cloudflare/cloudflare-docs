@@ -475,6 +475,72 @@
         }
       }
     },
+    "record_comments": {
+      "title": "DNS record comments",
+      "link": "/dns/manage-dns-records/reference/record-attributes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "character_limit": {
+          "title": "Character limit",
+          "free": "50 characters",
+          "lite": "250 characters",
+          "pro": "250 characters",
+          "biz": "250 characters",
+          "ent": "250 characters"
+        },
+        "number_per_record": {
+          "title": "Comments per record",
+          "free": 1,
+          "pro": 1,
+          "biz": 1,
+          "ent": 1
+        }
+      }
+    },
+    "record_tags": {
+      "title": "DNS record tags",
+      "link": "/dns/manage-dns-records/reference/record-attributes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "lite": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "character_limit": {
+          "title": "Character limit",
+          "free": "N/A",
+          "lite": "20 characters",
+          "pro": "20 characters",
+          "biz": "20 characters",
+          "ent": "20 characters"
+        },
+        "numeric_limit": {
+          "title": "Numeric value limit",
+          "free": "N/A",
+          "lite": 100,
+          "pro": 100,
+          "biz": 100,
+          "ent": 100
+        },
+        "tags_per_record": {
+          "title": "Tags per record",
+          "free": "N/A",
+          "lite": 20,
+          "pro": 20,
+          "biz": 20,
+          "ent": 20
+        }
+      }
+    },
     "zone_transfers": {
       "title": "DNS Zone Transfers",
       "link": "/dns/zone-setups/zone-transfers/",
