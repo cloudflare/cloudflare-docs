@@ -62,6 +62,8 @@ Select the time frame you wish to analyze from the _Previous 24 hours_ drop-down
 
 To create a [WAF custom rule](/waf/custom-rules/) with an expression based on the filters you applied in Security Analytics, select **Create custom rule**.
 
+---
+
 ## Main dashboard areas
 
 ### Top statistics
