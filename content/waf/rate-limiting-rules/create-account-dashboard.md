@@ -45,7 +45,7 @@ To create a new custom rate limiting ruleset:
 
 11. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the rate.
 
-12. Under **With the same**, configure the characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) for more information.
+12. Under **With the same value of**, configure the characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
     The available characteristics depend on your Cloudflare plan and product subscriptions.
 

@@ -40,7 +40,7 @@ The available rate limiting rule parameters are the following:
   - The period of time to consider (in seconds) when evaluating the request rate.
   - Use one of the following values: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (ten minutes), or `3600` (one hour).
 
-- **With the same** {{<type>}}Array&lt;String&gt;{{</type>}}
+- **With the same value of** {{<type>}}Array&lt;String&gt;{{</type>}}
 
   - Field name in the API: `characteristics`.
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
