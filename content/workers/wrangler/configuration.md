@@ -100,7 +100,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
   - The usage model of your Worker. Refer to [usage models](/workers/platform/pricing/#usage-models).
 
-- `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `rules` {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
 
@@ -455,7 +455,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
+  - The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
@@ -535,15 +535,15 @@ You can configure various aspects of local development, such as the local protoc
 
 - `local_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  Protocol that local dev server listens to requests on. Defaults to `http`.
+  - Protocol that local dev server listens to requests on. Defaults to `http`.
 
 - `upstream_protocol` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  Protocol that the local dev server forwards requests on. Defaults to `https`.
+  - Protocol that the local dev server forwards requests on. Defaults to `https`.
 
 - `host` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  Host to forward requests to, defaults to the host of the first `route` of the Worker.
+  - Host to forward requests to, defaults to the host of the first `route` of the Worker.
 
 {{</definitions>}}
 
@@ -596,11 +596,11 @@ Consider using [Cloudflare Pages](/pages/) for hosting static applications inste
 
 - `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An exclusive list of `.gitignore`-style patterns that match file  or directory names from your bucket location. Only matched items will be uploaded.
+  - An exclusive list of `.gitignore`-style patterns that match file or directory names from your bucket location. Only matched items will be uploaded.
 
 - `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
+  - A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 
 {{</definitions>}}
 
@@ -643,6 +643,6 @@ It is a recommended best practice to treat `wrangler.toml` as a source of truth 
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler 1 [deprecation guide](/workers/wrangler/migration/deprecations/#other-deprecated-behaviour).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler v1 [deprecation guide](/workers/wrangler/migration/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

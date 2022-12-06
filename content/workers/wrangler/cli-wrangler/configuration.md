@@ -6,9 +6,13 @@ weight: 4
 
 # Configuration
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
-Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+The version of Wrangler you are using is now deprecated. Refer to the [Migration guide](/workers/wrangler/cli-wrangler/migration/migrating-from-wrangler-1/#update-wrangler-version) to update to the latest version of Wrangler to prevent critical errors.
+
+If you originally installed Wrangler via npm, run `npm uninstall -g @cloudflare/wrangler && npm install -g wrangler` to update to the latest version.
+
+If you originally installed Wrangler via cargo, run `cargo uninstall wrangler && npm install -g wrangler`.
 
 {{</Aside>}}
 
@@ -575,59 +579,59 @@ type = "CommonJS"
 globs = ["**/*.js", "**/*.cjs"]
 ```
 
-  - `type` {{<prop-meta>}}required{{</prop-meta>}}
+- `type` {{<prop-meta>}}required{{</prop-meta>}}
 
-    - The module type, see the table below for acceptable options:
-      <div class="DocsMarkdown--table-wrap">
-        <div class="DocsMarkdown--table-wrap-inner">
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  <code>type</code>
-                </th>
-                <th>JavaScript type</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>ESModule</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td>CommonJS</td>
-                <td>-</td>
-              </tr>
-              <tr>
-                <td>Text</td>
-                <td>
-                  <code>String</code>
-                </td>
-              </tr>
-              <tr>
-                <td>Data</td>
-                <td>
-                  <code>ArrayBuffer</code>
-                </td>
-              </tr>
-              <tr>
-                <td>CompiledWasm</td>
-                <td>
-                  <code>WebAssembly.Module</code>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  - The module type, see the table below for acceptable options:
+    <div class="DocsMarkdown--table-wrap">
+      <div class="DocsMarkdown--table-wrap-inner">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <code>type</code>
+              </th>
+              <th>JavaScript type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ESModule</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>CommonJS</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Text</td>
+              <td>
+                <code>String</code>
+              </td>
+            </tr>
+            <tr>
+              <td>Data</td>
+              <td>
+                <code>ArrayBuffer</code>
+              </td>
+            </tr>
+            <tr>
+              <td>CompiledWasm</td>
+              <td>
+                <code>WebAssembly.Module</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
 
-  - `globs` {{<prop-meta>}}required{{</prop-meta>}}
+- `globs` {{<prop-meta>}}required{{</prop-meta>}}
 
-    - Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
+  - Unix-style [glob rules](https://docs.rs/globset/0.4.6/globset/#syntax) that are used to determine the module type to use for a given file in `dir`. Globs are matched against the module's relative path from `build.upload.dir` without the `./` prefix. Rules are evaluated in order, starting at the top.
 
-  - `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
+- `fallthrough` {{<prop-meta>}}optional{{</prop-meta>}}
 
-    - This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
+  - This option allows further rules for this module type to be considered if set to true. If not specified or set to false, further rules for this module type will be ignored.
 
 {{</definitions>}}
 

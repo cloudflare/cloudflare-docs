@@ -20,7 +20,6 @@ title: Changelog
 - Some Web Cryptography API error messages include more information now.
 - Updated V8 from 10.2 to 10.3.
 
-
 ## 2022-06-18
 
 - Cron trigger events on Worker scripts using the old `addEventListener` syntax are now treated as failing if there is no event listener registered for `scheduled` events.
@@ -217,7 +216,7 @@ title: Changelog
 ## 2021-07-30
 
 - Fixed a hang in Durable Objects when reading more than 16MB of data at once (for example, with a large `list()` operation).
-- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
+- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler-legacy/pull/2009) for details.
 
 ## 2021-07-23
 

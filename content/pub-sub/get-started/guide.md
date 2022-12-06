@@ -21,7 +21,6 @@ This guide will:
 
 Before you begin, you should be familiar with using the command line and running basic terminal commands.
 
-
 ## Prerequisite: Create a Cloudflare account
 
 In order to use Pub/Sub, you need a [Cloudflare account](/fundamentals/account-and-billing/account-setup/). If you already have an account, you can skip this step.
@@ -40,7 +39,7 @@ Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using
 
 Installing `wrangler`, the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
 ```sh
 $ npm install -g wrangler
@@ -74,7 +73,7 @@ This API token requirement will be lifted prior to Pub/Sub becoming Generally Av
 1. From the [Cloudflare dashboard](https://dash.cloudflare.com), click on the profile icon and select **My Profile**.
 2. Under **My Profile**, click **API Tokens**.
 3. On the [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) page, click **Create Token**
-4. Choose **Get Started** next to **Create Custom Token** 
+4. Choose **Get Started** next to **Create Custom Token**
 5. Name the token - e.g. "Pub/Sub Write Access"
 6. Under the **Permissions** heading, choose **Account**, select **Pub/Sub** from the first drop-down, and **Edit** as the permission.
 7. Click **Continue to Summary** at the bottom of the page, where you should see _All accounts - Pub/Sub:Edit_ as the permission
@@ -109,7 +108,7 @@ For example, a namespace of `my-namespace` and a broker of `staging` would creat
 With this in mind, create a new namespace. This example will use `my-namespace` as a placeholder:
 
 ```sh
-$ wrangler pubsub namespace create my-namespace 
+$ wrangler pubsub namespace create my-namespace
 ```
 
 You should receive a success response that resembles the following:
@@ -140,7 +139,6 @@ Broker names must be:
 
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
 
-
 ```sh
 $ wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
@@ -161,9 +159,9 @@ You should receive a success response that resembles the following:
 
 In the example above, a broker is created with an endpoint of `mqtts://example-broker.my-namespace.cloudflarepubsub.com`. This means:
 
-* Our Pub/Sub (MQTT) Broker is reachable over MQTTS (MQTT over TLS) - port 8883
-* The hostname is `example-broker.my-namespace.cloudflarepubsub.com`
-* [Token authentication](/pub-sub/platform/authentication-authorization/) is required to clients to connect.
+- Our Pub/Sub (MQTT) Broker is reachable over MQTTS (MQTT over TLS) - port 8883
+- The hostname is `example-broker.my-namespace.cloudflarepubsub.com`
+- [Token authentication](/pub-sub/platform/authentication-authorization/) is required to clients to connect.
 
 ## 6. Create credentials for your broker
 
@@ -198,7 +196,7 @@ You should receive a success response that resembles the example below, which is
 }
 ```
 
-Each token allows you to publish or subscribe to the associated broker. 
+Each token allows you to publish or subscribe to the associated broker.
 
 ## 7. Subscribe and publish messages to a topic
 
@@ -226,22 +224,25 @@ export BROKER_TOKEN=$(curl -s -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
 Create a file called `index.js ` and make sure to update the `brokerEndpoint` with the address of your Pub/Sub broker.
 
 ```js
-const mqtt = require('mqtt')
+const mqtt = require("mqtt");
 
-const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com"
+const brokerEndpoint = "mqtts://my-broker.my-namespace.cloudflarepubsub.com";
 const options = {
   port: 8883,
   password: process.env.BROKER_TOKEN,
   protocolVersion: 5, // MQTT 5
-}
+};
 
-const client = mqtt.connect(brokerEndpoint, options)
+const client = mqtt.connect(brokerEndpoint, options);
 
-client.subscribe("example-topic")
-client.publish("example-topic", `message from ${client.options.clientId}: hello at ${Date.now()}`)
+client.subscribe("example-topic");
+client.publish(
+  "example-topic",
+  `message from ${client.options.clientId}: hello at ${Date.now()}`
+);
 client.on("message", function (topic, message) {
-  console.log(`received message on ${topic}: ${message}`)
-})
+  console.log(`received message on ${topic}: ${message}`);
+});
 ```
 
 Run the example. You should see the output written to your terminal (stdout).
@@ -255,7 +256,7 @@ Your client ID and timestamp will be different from above, but you should see a 
 
 If you do not see the message you published, or you are receiving error messages, ensure that:
 
-- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN`  in your terminal.
+- The `BROKER_TOKEN` environmental variable is not empty. Try echo `$BROKER_TOKEN` in your terminal.
 - You updated the `brokerEndpoint` to match the broker you created. The **Endpoint** field of your broker will show this address and port.
 - You correctly [installed MQTT.js](https://github.com/mqttjs/MQTT.js#install).
 

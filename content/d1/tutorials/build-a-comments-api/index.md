@@ -12,7 +12,7 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 ## Set up your project
 
-First, use [Wrangler](https://github.com/cloudflare/wrangler2), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
+First, use [Wrangler](https://github.com/cloudflare/wrangler), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
 ```sh
 $ mkdir d1-example && d1-example
@@ -29,26 +29,26 @@ $ npm install hono
 Next, in `src/index.js`, initialize a new Hono app, and define the following endpoints - `GET /API/posts/:slug/comments`, and `POST /get/api/:slug/comments`:
 
 ```js
-import { Hono } from 'hono'
+import { Hono } from "hono";
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/api/posts/:slug/comments', async c => {
+app.get("/api/posts/:slug/comments", async (c) => {
   // Do something and return an HTTP response
   // Optionally, do something with `c.req.param("slug")`
-})
+});
 
-app.post('/api/posts/:slug/comments', async c => {
+app.post("/api/posts/:slug/comments", async (c) => {
   // Do something and return an HTTP response
   // Optionally, do something with `c.req.param("slug")`
-})
+});
 
-export default app
+export default app;
 ```
 
 ## Create a database
 
-You will now create a D1 database. In Wrangler 2, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
+You will now create a D1 database. In version 2 of Wrangler, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
 
 ```sh
 $ wrangler d1 create d1-example
@@ -109,13 +109,17 @@ $ wrangler d1 execute d1-example --file schemas/schema.sql
 In earlier steps, you created an SQL database and populated it with initial data. Now, you will add a route to your Workers function to retrieve data from that database. Based on your `wrangler.toml` configuration in previous steps, your D1 database is now accessible via the `DB` binding. In your code, use the binding to prepare SQL statements and execute them, for example, to retrieve comments:
 
 ```js
-app.get('/api/posts/:slug/comments', async c => {
-  const { slug } = c.req.param()
-  const { results } = await c.env.DB.prepare(`
+app.get("/api/posts/:slug/comments", async (c) => {
+  const { slug } = c.req.param();
+  const { results } = await c.env.DB.prepare(
+    `
     select * from comments where post_slug = ?
-  `).bind(slug).all()
-  return c.json(results)
-})
+  `
+  )
+    .bind(slug)
+    .all();
+  return c.json(results);
+});
 ```
 
 The above code makes use of the `prepare`, `bind`, and `all` functions on a D1 binding to prepare and execute a SQL statement. Refer to [Client API](/d1/platform/client-api) for a list of all methods available in D1's client API.
@@ -127,25 +131,29 @@ In this function, you accept a `slug` URL query parameter and set up a new SQL s
 By completing the previous step, you have built read-only access to your data. Next, you will define another endpoint function in `src/index.js` that allows creating new comments, by inserting data into the database:
 
 ```js
-app.post('/api/posts/:slug/comments', async c => {
-  const { slug } = c.req.param()
-  const { author, body } = await c.req.json()
+app.post("/api/posts/:slug/comments", async (c) => {
+  const { slug } = c.req.param();
+  const { author, body } = await c.req.json();
 
-  if (!author) return c.text("Missing author value for new comment")
-  if (!body) return c.text("Missing body value for new comment")
+  if (!author) return c.text("Missing author value for new comment");
+  if (!body) return c.text("Missing body value for new comment");
 
-  const { success } = await c.env.DB.prepare(`
+  const { success } = await c.env.DB.prepare(
+    `
     insert into comments (author, body, post_slug) values (?, ?, ?)
-  `).bind(author, body, slug).run()
+  `
+  )
+    .bind(author, body, slug)
+    .run();
 
   if (success) {
-    c.status(201)
-    return c.text("Created")
+    c.status(201);
+    return c.text("Created");
   } else {
-    c.status(500)
-    return c.text("Something went wrong")
+    c.status(500);
+    return c.text("Something went wrong");
   }
-})
+});
 ```
 
 ## Deployment
@@ -186,7 +194,7 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 This application is just an API back end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/templates/tree/main/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/templates/blob/main/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
-Note that interacting with this API from a front end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Luckily, Hono has a quick way to enable this for your application. Import the `cors` module and add it as middleware to your API in `src/index.js`:
+Note that interacting with this API from a front end will require enabling specific Cross-Origin Resource Sharing (or _CORS_) headers in your back-end API. Luckily, Hono has a quick way to enable this for your application. Import the `cors` module and add it as middleware to your API in `src/index.js`:
 
 ```typescript
 ---

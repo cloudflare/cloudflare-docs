@@ -10,10 +10,9 @@ Wrangler offers an experimental API to programmatically manage your Cloudflare W
 
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 
-
 ## `unstable_dev`
 
-Start an HTTP server for testing your Worker. 
+Start an HTTP server for testing your Worker.
 
 Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
 
@@ -21,34 +20,33 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 {{<Aside type="note">}}
 
-The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future. 
+The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future.
 
-There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we will review the issue.
-
+There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/wrangler/issues/new/choose) and we will review the issue.
 
 {{</Aside>}}
 
 ### Constructor
 
 ```js
-const worker = await unstable_dev(script, options, apiOptions)
+const worker = await unstable_dev(script, options, apiOptions);
 ```
 
 ### Parameters
 
 {{<definitions>}}
 
-*   `script` {{<type>}}string{{</type>}}
+- `script` {{<type>}}string{{</type>}}
 
-    *   A string containing a path to your Worker script, relative to your Worker project's root directory.
+  - A string containing a path to your Worker script, relative to your Worker project's root directory.
 
-*   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Optional options object containing `wrangler dev` configuration settings.
+  - Optional options object containing `wrangler dev` configuration settings.
 
-*   `apiOptions` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `apiOptions` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Optional API options object containing `disableExperimentalWarning`. Set `disableExperimentalWarning` to true to disable Wrangler's warning about using `unstable_` prefixed APIs.
+  - Optional API options object containing `disableExperimentalWarning`. Set `disableExperimentalWarning` to true to disable Wrangler's warning about using `unstable_` prefixed APIs.
 
 {{</definitions>}}
 
@@ -58,15 +56,14 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 {{<definitions>}}
 
-*   `fetch()` {{<type>}}Promise\<Response>{{</type>}}
+- `fetch()` {{<type>}}Promise\<Response>{{</type>}}
 
-    *   Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.  
-    *   Refer to [`Fetch`](/workers/runtime-apis/fetch/).
+  - Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
+  - Refer to [`Fetch`](/workers/runtime-apis/fetch/).
 
+- `stop()` {{<type>}}Promise\<void>{{</type>}}
 
-*   `stop()` {{<type>}}Promise\<void>{{</type>}}
-
-    *   Shuts down the dev server. 
+  - Shuts down the dev server.
 
 {{</definitions>}}
 
@@ -74,7 +71,7 @@ const worker = await unstable_dev(script, options, apiOptions)
 
 When initiating each test suite, use a `beforeAll()` function to start `unstable_dev()`. The `beforeAll()` function is used to minimize overhead: starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
 
-In each test case, call `await worker.fetch()`, and check that the response is what you expect. 
+In each test case, call `await worker.fetch()`, and check that the response is what you expect.
 
 To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
@@ -82,6 +79,7 @@ To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 ---
 filename: src/index.test.js
@@ -112,8 +110,10 @@ describe("Worker", () => {
 	});
 });
 ```
+
 {{</tab>}}
 {{<tab label="ts" >}}
+
 ```ts
 ---
 filename: src/index.test.ts
@@ -145,9 +145,9 @@ describe("Worker", () => {
 	});
 });
 ```
+
 {{</tab>}}
 {{</tabs>}}
-
 
 #### Multi-Worker example
 
@@ -157,6 +157,7 @@ If you shut down the child Worker prematurely, the parent Worker will not know t
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
+
 ```js
 ---
 filename: src/index.test.js
@@ -202,8 +203,10 @@ describe("multi-worker testing", () => {
 	});
 });
 ```
+
 {{</tab>}}
 {{<tab label="ts" >}}
+
 ```ts
 ---
 filename: src/index.test.ts
@@ -250,6 +253,6 @@ describe("multi-worker testing", () => {
 	});
 });
 ```
+
 {{</tab>}}
 {{</tabs>}}
-

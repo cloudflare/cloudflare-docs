@@ -15,10 +15,10 @@ meta:
 
 Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). Create an entire database in a few quick steps by importing data or defining your tables and writing your queries within a Worker or through our API. With D1 you can:
 
-* Interact with and push changes to your database directly through Wrangler
-* Create and modify your database directly from the Cloudflare dashboard
-* Store backups of your database in R2
-* Export your backups to download to your local machine.
+- Interact with and push changes to your database directly through Wrangler
+- Create and modify your database directly from the Cloudflare dashboard
+- Store backups of your database in R2
+- Export your backups to download to your local machine.
 
 With D1 currently in Alpha, you can truly go full-stack and build rich apps including eCommerce sites, accounting software, SaaS solutions, CRMs and more.
 
@@ -26,12 +26,13 @@ With D1 currently in Alpha, you can truly go full-stack and build rich apps incl
 
 While in the Alpha period, there is a possibility of breaking changes. The Alpha is meant for testing purposes and using it for Production traffic is not recommended.
 
-{{</Aside>}} 
+{{</Aside>}}
 
 ## Features coming soon
-* **Larger databases**: During the alpha period, our databases will be limited to 100MB but we will be looking to support larger databases in the future. If your use case requires a larger database, please reach out!
-* **Read replication**: D1 will create read-only clones of your data and distribute across Cloudflare global network — close to where your users are — and constantly keep them up-to-date with changes.
-* **Transactions**: Define a chunk of your Worker code that runs directly next to the database, giving you total control and maximum performance—each request first hits your Worker near your users, but depending on the operation, can hand off to another Worker deployed alongside a replica or your primary D1 instance to complete its work.
+
+- **Larger databases**: During the alpha period, our databases will be limited to 100MB but we will be looking to support larger databases in the future. If your use case requires a larger database, please reach out!
+- **Read replication**: D1 will create read-only clones of your data and distribute across Cloudflare global network — close to where your users are — and constantly keep them up-to-date with changes.
+- **Transactions**: Define a chunk of your Worker code that runs directly next to the database, giving you total control and maximum performance—each request first hits your Worker near your users, but depending on the operation, can hand off to another Worker deployed alongside a replica or your primary D1 instance to complete its work.
 
 ## Community support
 
@@ -45,6 +46,6 @@ To discuss an issue with the D1 team, open a thread on the [Community Forum](htt
 
 ### Connect with the Wrangler team
 
-If you are having issues with Wrangler, report issues in the [wrangler2 GitHub repository](https://github.com/cloudflare/wrangler2/issues/new/choose).
+If you are having issues with Wrangler, report issues in the [wrangler2 GitHub repository](https://github.com/cloudflare/wrangler/issues/new/choose).
 
 {{</content-column>}}

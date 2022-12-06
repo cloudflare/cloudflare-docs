@@ -140,7 +140,6 @@ While technically any Worker can speak WebSocket in this way, WebSockets are mos
 
 For more information, refer to [Using WebSockets](/workers/learning/using-websockets/). For an example of WebSockets in action within Durable Objects, review the [example chat application](https://github.com/cloudflare/workers-chat-demo).
 
-
 ### Alarms in Durable Objects
 
 Alarms allow Durable Objects to wake themselves up by executing the `alarm()` handler at some point in the future. Alarms are modified using the [Transactional Storage API](/workers/runtime-apis/durable-objects/#transactional-storage-api), and so alarm operations follow the same rules as other storage operations. Each Durable Object instance is able to schedule a single alarm at a time by calling `setAlarm()`. Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws. Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
@@ -423,7 +422,7 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
-[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler 2](/workers/wrangler/compare-v1-v2/) will emit a warning in that case. 
+[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler v2](/workers/wrangler/compare-v1-v2/) will emit a warning in that case.
 
 ### Object location
 

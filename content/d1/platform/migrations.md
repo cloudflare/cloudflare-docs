@@ -11,9 +11,9 @@ Database migrations are a way of versioning your database. Each migration is sto
 
 Currently, the migrations system aims to be simple yet effective. With the current implementation, you can:
 
-* Create an empty migration file.
-* List unapplied migrations.
-* Apply remaining migrations.
+- Create an empty migration file.
+- List unapplied migrations.
+- Apply remaining migrations.
 
 Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
 
@@ -47,7 +47,7 @@ To apply any unapplied migrations, run:
 $ wrangler d1 migrations apply <DATABASE_NAME>
 ```
 
-This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured.
 
 The progress of each migration will be printed in the console.
 
@@ -75,8 +75,8 @@ migrations_dir = "<FOLDER_NAME>" # Customize this value to rename the `migration
 
 These are some of the features we plan to add in the future:
 
-* **Down migration**: The same way that apply builds up the database, there will be a way to go down migrations or rollback changes.
-* **Fake migrations**: Mark a migration as already applied without changing the database.
-* **Apply only a specific migration**: Apply only a specific migration without going through the sequential order.
+- **Down migration**: The same way that apply builds up the database, there will be a way to go down migrations or rollback changes.
+- **Fake migrations**: Mark a migration as already applied without changing the database.
+- **Apply only a specific migration**: Apply only a specific migration without going through the sequential order.
 
-To request more features or to contribute directly to the Wrangler2 project, go to the [wrangler2 repository](https://github.com/cloudflare/wrangler2).
+To request more features or to contribute directly to the Wrangler2 project, go to the [wrangler2 repository](https://github.com/cloudflare/wrangler).

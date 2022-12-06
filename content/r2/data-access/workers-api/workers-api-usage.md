@@ -12,13 +12,13 @@ meta:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+This guide is tailored to version 2 of Wrangler. If you are still using version 1, refer to the [migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
 
 To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler-legacy), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
 $ npm install -g wrangler
@@ -125,32 +125,32 @@ export default {
     const key = url.pathname.slice(1);
 
     switch (request.method) {
-      case 'PUT':
+      case "PUT":
         await env.MY_BUCKET.put(key, request.body);
         return new Response(`Put ${key} successfully!`);
-      case 'GET':
+      case "GET":
         const object = await env.MY_BUCKET.get(key);
 
         if (object === null) {
-          return new Response('Object Not Found', { status: 404 });
+          return new Response("Object Not Found", { status: 404 });
         }
 
         const headers = new Headers();
         object.writeHttpMetadata(headers);
-        headers.set('etag', object.httpEtag);
+        headers.set("etag", object.httpEtag);
 
         return new Response(object.body, {
           headers,
         });
-      case 'DELETE':
+      case "DELETE":
         await env.MY_BUCKET.delete(key);
-        return new Response('Deleted!');
+        return new Response("Deleted!");
 
       default:
-        return new Response('Method Not Allowed', {
+        return new Response("Method Not Allowed", {
           status: 405,
           headers: {
-            Allow: 'PUT, GET, DELETE',
+            Allow: "PUT, GET, DELETE",
           },
         });
     }
@@ -175,19 +175,19 @@ For `PUT` and `DELETE` requests, you will make use of a new `AUTH_KEY_SECRET` en
 For `GET` requests, you will ensure that only a specific file can be requested. All of this custom logic occurs inside of an `authorizeRequest` function, with the `hasValidHeader` function handling the custom header logic. If all validation passes, then the operation is allowed.
 
 ```js
-const ALLOW_LIST = ['cat-pic.jpg'];
+const ALLOW_LIST = ["cat-pic.jpg"];
 
 // Check requests for a pre-shared secret
 const hasValidHeader = (request, env) => {
-  return request.headers.get('X-Custom-Auth-Key') === env.AUTH_KEY_SECRET;
+  return request.headers.get("X-Custom-Auth-Key") === env.AUTH_KEY_SECRET;
 };
 
 function authorizeRequest(request, env, key) {
   switch (request.method) {
-    case 'PUT':
-    case 'DELETE':
+    case "PUT":
+    case "DELETE":
       return hasValidHeader(request, env);
-    case 'GET':
+    case "GET":
       return ALLOW_LIST.includes(key);
     default:
       return false;
@@ -200,11 +200,11 @@ export default {
     const key = url.pathname.slice(1);
 
     if (!authorizeRequest(request, env, key)) {
-      return new Response('Forbidden', { status: 403 });
+      return new Response("Forbidden", { status: 403 });
     }
 
     // ...
-  }
+  },
 };
 ```
 

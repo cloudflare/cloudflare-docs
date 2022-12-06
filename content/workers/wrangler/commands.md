@@ -171,7 +171,7 @@ On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
 On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
 
       {{</Aside>}}
-      
+
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
@@ -291,7 +291,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 {{</definitions>}}
 
@@ -1024,7 +1024,7 @@ Configure Cloudflare Pages.
 
 {{<Aside type="warning">}}
 The `wrangler pages ...` commands are in beta.<br>
-Report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
+Report any issues to https://github.com/cloudflare/wrangler/issues/new/choose.
 {{</Aside>}}
 
 ### `dev`

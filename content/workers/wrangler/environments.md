@@ -12,4 +12,4 @@ We have temporarily disabled the creation of Service Environments while we are i
 
 {{</Aside>}}
 
-Wrangler 2 supports [environments](/workers/platform/environments/) from Wrangler 1. We are currently working on support for [Service Environments](/workers/learning/using-services/).  Refer to the [Wrangler 1 environments](/workers/platform/environments/) for more information.
+Version 2 of Wrangler supports [environments](/workers/platform/environments/) from version 1. We are currently working on support for [Service Environments](/workers/learning/using-services/). Refer to [Wrangler environments](/workers/platform/environments/) for more information.

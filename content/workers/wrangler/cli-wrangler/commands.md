@@ -6,13 +6,17 @@ weight: 3
 
 # Commands
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
-Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+The version of Wrangler you are using is now deprecated. Refer to the [Migration guide](/workers/wrangler/cli-wrangler/migration/migrating-from-wrangler-1/#update-wrangler-version) to update to the latest version of Wrangler to prevent critical errors.
+
+If you originally installed Wrangler via npm, run `npm uninstall -g @cloudflare/wrangler && npm install -g wrangler` to update to the latest version.
+
+If you originally installed Wrangler via cargo, run `cargo uninstall wrangler && npm install -g wrangler`.
 
 {{</Aside>}}
 
-Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI.
+Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler-legacy), the Workers CLI.
 
 ---
 
@@ -278,7 +282,7 @@ $ wrangler dev
 👂  Listening on http://127.0.0.1:8787
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler).
+With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler-legacy).
 
 ---
 
