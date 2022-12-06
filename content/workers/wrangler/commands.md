@@ -166,8 +166,8 @@ This runs an ephemeral local version of your Worker, and will not be able to acc
 {{<Aside type="warning">}}
 When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
 
-On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
 {{</Aside>}}
       
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
