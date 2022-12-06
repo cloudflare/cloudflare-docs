@@ -71,7 +71,7 @@ When exporting or importing a zone file, Cloudflare formats [comments and tags](
 
 ```txt
 ---
-Header: Example DNS file
+header: Example DNS file
 ---
 a.example.com.  60  IN  A   1.1.1.1 ; simple example cf_tags=important,ticket:RM-12308
 b.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,tag2:value2,tag-without-value,another-tag-without-value,tag-with-quoted-value:"because of the comma, quotes are needed"
