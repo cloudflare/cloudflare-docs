@@ -219,7 +219,7 @@ ClientIP,EdgeStartTimestamp,RayID
 <summary>Example output</summary>
 <div>
 
-```json
+```csv
 ClientIP	EdgeStartTimestamp  RayID
 "89.163.242.206"    1506702504433000200 "3a6050bcbe121a87"
 "89.163.242.207"    1506702504433000300 "3a6050bcbe121a88"
