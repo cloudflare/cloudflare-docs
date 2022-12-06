@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Log Output Options
-weight: 43
+weight: 39
 ---
 
 # Log Output Options
@@ -10,7 +10,7 @@ Jobs in Logpush now have a new key **output_options** which replaces **logpull_o
 
 Edge Logstream jobs do not support this yet.
 
-## Why replace logpull_options
+## Replacing logpull_options
 
 Previously, Logpush jobs could be customized by specifying the list of fields, sampling rate, and timestamp format in **logpull_options** as [URL-encoded parameters](/logs/get-started/api-configuration/#options). For example:
 
