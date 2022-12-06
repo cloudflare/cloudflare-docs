@@ -67,7 +67,7 @@ Only admin users can deploy PhishNet for all users in Office 365. Non-admin user
 
 15. Once deployment is complete, you should see a message confirming it. Note that it can take up to six hours for PhishNet to appear in Office 365 (or six hours to update if previously installed.) Select **Done**.
 
-    ![PhisNet might take up to six hours to appear in Office 365.](/email-security/static/phish-submissions/phishnet-o365/step15.png)
+    ![PhishNet might take up to six hours to appear in Office 365.](/email-security/static/phish-submissions/phishnet-o365/step15.png)
 
 You have now installed PhishNet for Office 365. After the process is complete, PhishNet will show up on the Integrated Apps screen.
 
