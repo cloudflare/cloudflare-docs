@@ -472,7 +472,7 @@ services = [
 
 ### Analytics Engine Datasets
 
-[Workers Analyics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Workers. Write data points to your Worker binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
+[Workers Analytics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Workers. Write data points to your Worker binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
 
 To bind Analytics Engine datasets to your Worker, assign an array of the below object to the `analytics_engine_datasets` key.
 
