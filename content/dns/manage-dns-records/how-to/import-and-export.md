@@ -7,8 +7,8 @@ weight: 2
 # Import and export records
 
 {{<render file="_import-scan-info.md">}}
+<br/>
 
-\
 If you want more control over which DNS records are imported and how, use the bulk import functionality.
 
 ## Import records
@@ -37,6 +37,8 @@ To import a zone file using the dashboard:
 
 To import records using the API, send a [POST request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted file](#format-your-zone-file).
 
+---
+
 ## Export records
 
 You can also bulk export records from Cloudflare.
@@ -53,3 +55,26 @@ To export records using the dashboard:
 ### Using the API
 
 To export records using the API, send a [GET request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-export-dns-records).
+
+---
+
+## DNS record attributes
+
+When exporting or importing a zone file, Cloudflare formats [comments and tags](/dns/manage-dns-records/reference/record-attributes/) using the following structure:
+
+| Combination | Description | Example |
+| --- | --- | --- |
+| **Only tags** | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if the contain `"`, `=`, `,`, or `\`.<br/><br/>A tag with an empty value can be represented either as `tag:""`, `tag:`, or `tag`. | `a.example.net.  60  IN  A   1.1.1.1 ;cf_tags=tag1,tag2:value2,tag3:"value,with,commas"` |
+| **Only a comment** | Comments have [fewer limitations](/dns/manage-dns-records/reference/record-attributes/#comments) on characters, meaning that the comment is included verbatim.<br/><br/>If the comment includes the string `cf_tags=`, you need to include an additional ` cf_tags=` at the end of the line. | `a.example.net.  60  IN  A   1.1.1.1 ; this record only has a comment` |
+| **Comment and tags** | The zone file comment would be of the form ; `<comment>` cf_tags=`<tags>`, as described above. Note the added space character before `cf_tags=`. | `a.example.com.  60  IN  A   1.1.1.1 ; simple example comment cf_tags=important,ticket:RM-12308` |
+| **Neither attribute** | The comment in the zone file may be empty or omitted entirely. Comments in the zone file that do not immediately follow a record are also ignored. | `a.example.com.  60  IN  A   1.1.1.1`
+
+```txt
+---
+Header: Example DNS file
+---
+a.example.com.  60  IN  A   1.1.1.1 ; simple example cf_tags=important,ticket:RM-12308
+b.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,tag2:value2,tag-without-value,another-tag-without-value,tag-with-quoted-value:"because of the comma, quotes are needed"
+c.example.com.  60  IN  A   1.1.1.1 ; just a comment without tags
+d.example.com.  60  IN  A   1.1.1.1 ; cf_tags=awesome
+```

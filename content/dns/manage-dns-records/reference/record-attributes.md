@@ -40,6 +40,14 @@ Currently, comments and tags are only supported for [full](/dns/zone-setups/full
 
 ---
 
+## Add or edit record attributes
+
+Create or edit record attributes just like any other aspect of a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+
+You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records.
+
+---
+
 ## Reference
 
 ### Comments
