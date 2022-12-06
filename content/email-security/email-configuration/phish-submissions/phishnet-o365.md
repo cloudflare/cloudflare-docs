@@ -23,7 +23,7 @@ Only admin users can deploy PhishNet for all users in Office 365. Non-admin user
 
 ## Set up PhishNet for Office 365
 
-1. Log in to [admin.microsoft.com](admin.microsoft.com) with your admin account.
+1. Log in to [admin.microsoft.com](https://admin.microsoft.com/) with your admin account.
 
 2. Select the three-line button to open the menu.
 

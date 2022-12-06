@@ -7,7 +7,7 @@ weight: 6
 
 # Phish submissions
 
-As part of your email configuration, administrators and email recipients can submit missed phish samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses) so Cloudflare can process them and take necessary action.
+As part of your email configuration, administrators and email recipients can submit missed phish samples to [Area 1 Service Addresses](https://horizon.area1security.com/support/service-addresses/) so Cloudflare can process them and take necessary action.
 
 Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a detection. These include preemptively crawling the web to identify campaigns, machine learning, custom signatures, among others. In order for Area 1 to identify why phish was missed, we need to run the original samples through our module and identify why some of our modules did not score the sample high enough to elevate it to malicious.
 
@@ -17,7 +17,7 @@ There are two different ways to submit a phish sample:
 
 - **User submission**: Submitted directly by the end users, and used with phish submission buttons. Refer to [PhishNet for Office 365](/email-security/email-configuration/phish-submissions/phishnet-o365/) to learn how to configure this feature on Office 365.
 
-- **Team submissions**: To be used when IT administrators or security teams submits to Area 1. Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. 
+- **Team submissions**: To be used when IT administrators or security teams submits to Area 1. Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses/). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. 
 
 ## What happens after a phish submission
 
@@ -47,5 +47,5 @@ To enable PSR:
 3. Enable **Phish Submission Response (Beta)**.
 
 {{<Aside type="note">}}
-PSR works only for the phish samples submitted to [user submission addresses]((https://horizon.area1security.com/support/service-addresses)). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
+PSR works only for the phish samples submitted to [user submission addresses]((https://horizon.area1security.com/support/service-addresses/)). Refer to [Retract settings](/email-security/email-configuration/retract-settings/) to learn more about manual and automatic retraction.
 {{</Aside>}}
