@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="note">}}
 
-This is an installation guide for the new version of Wrangler. If you previously had version 1 of Wrangler installed or were working on a project with version 1, refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+This is an installation guide for the latest version of Wrangler. If you previously had version 1 of Wrangler installed or were working on a project with version 1, please refer to the [Migration guide](/workers/wrangler/cli-wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
 

@@ -12,7 +12,7 @@ meta:
 
 {{<Aside type="note">}}
 
-This guide is tailored to version 2 of Wrangler. If you are still using version 1, refer to the [migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+This guide is tailored to version 2 of Wrangler. If you are still using version 1, refer to the [migration guide](/workers/wrangler/cli-wrangler/migration/migrating-from-wrangler-1/).
 
 {{</Aside>}}
 
