@@ -21,5 +21,4 @@ curl -X GET 'https://api.cloudflare.com/client/v4/user/tenants' \
 -H 'x-auth-key: <API_KEY>' \
 ```
 
-
 A successful request will return an HTTP status of `200` and a response body containing tenant information, unit information, memberships, and tenant entitlements for all tenants administered by the user.
