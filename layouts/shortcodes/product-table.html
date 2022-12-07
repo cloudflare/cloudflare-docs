@@ -88,11 +88,14 @@
     </td>
     <td>
         {{ .ent | markdownify }}
+        {{ if $additional_plans }}
         {{ if and (.ent_plus) (ne .ent .ent_plus)}}
         <br/>
         <br/>
         <em>With add-on</em>
+        <br/>
         {{ .ent_plus | markdownify }}
+        {{ end }}
         {{ end }}
     </td>
 </tr>
