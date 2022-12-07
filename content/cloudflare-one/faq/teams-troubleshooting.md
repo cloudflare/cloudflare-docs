@@ -45,6 +45,10 @@ If you see this page, providing as much information as possible to the local IT 
 - URL of the request
 - Screenshot or copy/paste of the content from the error page
 
+## I see error 504 when browsing to a website.
+
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/), or contact your account team to revert all devices to preferring IPv4.
+
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
 ![An error displayed in the Gateway Overview page instead of analytics.](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
