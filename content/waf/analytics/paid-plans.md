@@ -12,7 +12,7 @@ Security Events is available at **Security** > **Events**.
 
 ## Adjusting displayed data
 
-You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs, except for the **Denial-of-service attacks mitigated** graph.
+You can apply multiple filters and exclusions to narrow the scope of Security Events and adjust the report duration. Modifying the duration, filters, or exclusions affects the analytics data displayed on the entire page including the **Activity Log** and all graphs.
 
 ![Example of adding a new filter in Security Events for the Allow action](/waf/static/analytics-add-filter.png)
 
@@ -63,17 +63,3 @@ A deleted firewall rule or rate limiting rule will show as `Rule unavailable` un
 To print or download a snapshot report from your security events dashboard, select **Print report** in **Security Events**. Your web browser's printing interface will present you with options for printing or downloading the PDF report.
 
 The generated report will reflect all applied filters.
-
-## Layer 4 denial-of-service attack mitigation
-
-{{<Aside type="note">}}
-
-Only available on Enterprise plans.
-
-{{</Aside>}}
-
-In **Denial-of-service attacks mitigated** you have visibility over mitigated Layer 4 denial-of-service SYN attacks towards your zones in the past seven days.
-
-![Example graph of mitigated denial-of-service attacks in the previous seven days, including the total number of TCP packets involved in the attacks](/waf/static/analytics-dos-attacks-mitigated.png)
-
-You can also use the [`synAvgPps1mGroups` node in GraphQL](/analytics/graphql-api/features/data-sets/) to get the total attack volume for a zone over a period of time.
