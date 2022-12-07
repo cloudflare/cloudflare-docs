@@ -78,7 +78,7 @@ To deploy a custom root certificate:
         }'
     ```
 
-    Response:
+    The response will show the current status of the certificate:
 
     ```json
     ---
