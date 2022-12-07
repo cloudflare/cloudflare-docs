@@ -1,6 +1,6 @@
 ---
 title: Retract settings
-pcx_content_type: navigation
+pcx_content_type: how-to
 weight: 5
 ---
 
