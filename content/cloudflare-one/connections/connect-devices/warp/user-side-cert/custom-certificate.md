@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Use your own certificate
-weight: 4
+title: Deploy a custom certificate
+weight: 2
 ---
 
-# Deploy a custom root certificate
+# Deploy a custom certificate
 
 {{<Aside type="note">}}
 Only available on Enterprise plans.
@@ -16,7 +16,7 @@ To deploy a custom root certificate:
 
 1. Verify that the certificate is installed on your devices.
 
-2. Upload the certificate and private key to your Zero Trust account. The certificate must be a root CA.
+2. Upload the certificate and private key to Cloudflare. The certificate must be a root CA.
 
     ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/mtls_certificates"\

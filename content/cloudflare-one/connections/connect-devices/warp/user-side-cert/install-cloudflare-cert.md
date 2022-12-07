@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Install the Cloudflare certificate
-weight: 3
+weight: 1
 ---
 
 # Install the Cloudflare certificate
@@ -12,7 +12,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+Installing the Cloudflare certificate allows you to apply [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to encrypted websites, display [custom block pages](/cloudflare-one/policies/filtering/configuring-block-page/), and more. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 
