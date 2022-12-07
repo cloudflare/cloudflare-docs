@@ -25,7 +25,7 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 ## Before you start
 
-1.  [Connect devices](/cloudflare-one/connections/connect-devices/warp/) to Cloudflare's edge with the WARP client and [install the root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/)
+1.  [Connect devices](/cloudflare-one/connections/connect-devices/warp/) to Cloudflare's edge with the WARP client and [install the root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)
 1.  [Enable web inspection](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy)
 
 ## Build the policy
