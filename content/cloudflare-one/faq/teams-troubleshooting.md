@@ -24,7 +24,7 @@ To install the Cloudflare root certificate, follow the steps found [here](/cloud
 ## I see a Cloudflare Gateway error page when browsing to a website.
 
 <div class="medium-img">
-  <img alt="Questions" src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
+  <img alt="Example of a Cloudflare Gateway error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
 </div>
 
 We present an HTTP error page in the following cases:
@@ -45,15 +45,19 @@ If you see this page, providing as much information as possible to the local IT 
 - URL of the request
 - Screenshot or copy/paste of the content from the error page
 
+## I see error 504 when browsing to a website.
+
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/), or contact your account team to revert all devices to preferring IPv4.
+
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
-![Overview empty](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
+![An error displayed in the Gateway Overview page instead of analytics.](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
 
 You may not see analytics on the Overview page for the following reasons:
 
-- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
 - **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
-- **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
+- **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
 - **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
 ## I see a "No Browsers Available" alert.

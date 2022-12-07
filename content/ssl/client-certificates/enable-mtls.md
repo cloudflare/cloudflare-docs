@@ -15,3 +15,5 @@ To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare 
 5.  Click **Save**.
 
 Now that you have enabled mTLS for your host, you can enforce mTLS with [API Shield™](/api-shield/security/mtls/configure/).
+
+{{<render file="_cloudflare-managed-client-cert.md">}}

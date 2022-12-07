@@ -28,10 +28,16 @@ You can use disposition values when [creating your quarantine policy](/email-sec
 
 ### Header structure
 
-When Area 1 adds a disposition header to an email message, that header matches the following format.
+When Area 1 adds a disposition header to an email message, that header matches the following format:
 
 ```txt
 X-Area1Security-Disposition: [Value]
+```
+
+Note that emails with a disposition of `SPAM` will be tagged with `UCE` (unsolicited commercial emails) in their headers:
+
+```txt
+X-Area1Security-Disposition: UCE
 ```
 
 ## Attributes

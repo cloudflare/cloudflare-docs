@@ -156,7 +156,7 @@ If you are currently being rate limited, upgrade to a [Paid plan](https://dash.c
 
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
-Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Overview** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
+Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Events** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
 
 ### Daily request
 
@@ -184,7 +184,7 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type. 
+Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
 
 * A Worker may consume up to **10 milliseconds** on the Free plan.
 * A Worker or [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.

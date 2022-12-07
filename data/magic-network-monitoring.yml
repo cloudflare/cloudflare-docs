@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 101"><path fill-r
 product:
   title: Magic Network Monitoring
   url: /magic-network-monitoring/
+  wrap: true
 
 meta:
   title: Cloudflare Magic Network Monitoring docs

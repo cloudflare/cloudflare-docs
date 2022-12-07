@@ -12,9 +12,9 @@ meta:
   image: /core-services-preview.png
 
 resources:
-  community: https://community.cloudflare.com/c/security/spectrum/48
+  community: https://community.cloudflare.com/c/website-application-performance/spectrum/48
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/spectrum
-  
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

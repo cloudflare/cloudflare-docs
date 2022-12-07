@@ -102,7 +102,7 @@ The best approach is to start small and slowly increase your threshold to preven
 
 ### Step 5 — Continue monitoring domain traffic
 
-You can adjust your firewall rules at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Firewall Events](/waf/analytics/) to see if your rules need additional tuning.
+You can adjust your firewall rules at any point. Set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/analytics/) to see if your rules need additional tuning.
 
 ---
 

@@ -8,7 +8,7 @@ meta:
 
 # Configuration
 
-Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/get-started/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
+Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
 
 Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. Use the options below to configure your Queue.
 

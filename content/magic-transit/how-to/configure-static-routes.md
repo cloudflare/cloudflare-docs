@@ -34,7 +34,7 @@ For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steeri
 
 ## Map route prefixes smaller than /24
 
-You must provide your prefixes and the tunnels they should be mapped to in order for Cloudflare to route your traffic from the edge to your data centers via Anycast tunnels. Use the table below as reference.
+You must provide your prefixes and the tunnels that should be mapped to in order for Cloudflare to route your traffic from the edge to your data centers via Anycast tunnels. Use the table below as reference.
 
 | Prefix          | Tunnel        |
 | --------------- | ------------- |

@@ -55,8 +55,8 @@ To generate a Gateway SSH proxy CA and get its public key:
 
 Cloudflare's SSH proxy only works with servers running on the default port 22. Open the `sshd_config` file and verify that no other `Port` values are specified.
 
-```bash
-cat /etc/ssh/sshd_config
+```sh
+$ cat /etc/ssh/sshd_config
 ```
 
 ## 6. Restart your SSH server
@@ -86,7 +86,7 @@ Users can use any SSH client to connect to the target resource, as long as they 
 {{<Aside type="note">}}
 If the target resource is already in a user’s `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
 
-```bash
+```sh
 $ ssh-keygen -R <targetIP or Hostname>
 ```
 
@@ -100,7 +100,7 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
 
 2. Using the `ssh-log-cli` utility, generate a public and private key pair.
 
-    ```bash
+    ```sh
     $ ./ssh-log-cli generate-key-pair -o sshkey
     $ ls
     README.md	ssh-log-cli	sshkey	sshkey.pub
@@ -122,7 +122,7 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
 3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#configure-ssh-command-logging):
 
-    ```bash
+    ```sh
     $ ./ssh-log-cli decrypt -i sshlog -k sshkey
     ```
 

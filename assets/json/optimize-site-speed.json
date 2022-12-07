@@ -70,7 +70,7 @@
           },
           {
             "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/200168056",
+            "url_path": "/fundamentals/speed/rocket-loader/",
             "link_title": "Rocket Loader",
             "additional_description": "Defer JavaScript loading until after page content (applied through client-side JavaScript)."
           },

@@ -46,8 +46,7 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 | ✅ [DeleteBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketCors.html) | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ✅ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html)  | ❌ Bucket Owner: <br> &emsp;  ❌ x-amz-expected-bucket-owner |
-| ✅ [GetBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html) | | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
-| ✅ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html) | | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
+| ✅ [GetBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html) | ❌ Bucket Owner: <br> ❌ x-amz-expected-bucket-owner |
 | ✅ [PutBucketCors](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html) | ❌ Checksums: <br> &emsp; ❌ x-amz-sdk-checksum-algorithm <br> &emsp; ❌ x-amz-checksum-algorithm <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 
 {{</table-wrap>}}
@@ -61,7 +60,6 @@ Below is a list of implemented bucket-level operations. Refer to the Feature col
 
 | API Name       | Feature                           |
 | ---------------| --------------------------------- |
-| ❌ [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketAccelerateConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketAcl](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html) | ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |
 | ❌ [GetBucketAnalyticsConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html) | ❌ id <br> ❌ Bucket Owner: <br> &emsp; ❌ x-amz-expected-bucket-owner |

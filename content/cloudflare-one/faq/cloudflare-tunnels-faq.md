@@ -32,9 +32,9 @@ You can still use Tunnel with Partial Setup. You will need to create a new DNS r
 
 Tunnel can expose web applications to the internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:
 
-```bash
-netcat -zv [your-server’s-ip-address] 80
-netcat -zv [your-server’s-ip-address] 443
+```sh
+$ netcat -zv [your-server’s-ip-address] 80
+$ netcat -zv [your-server’s-ip-address] 443
 ```
 
 If your server is still responding on those ports, you will see:
@@ -93,8 +93,6 @@ The `--loglevel` flag indicates the logging level, which can be one of {`debug`,
 
 1.  On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
 1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
-
-![SSL encryption mode](/cloudflare-one/static/documentation/connections/ssl-encryption-mode.png)
 
 When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
 

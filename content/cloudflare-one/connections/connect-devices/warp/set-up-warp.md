@@ -58,9 +58,9 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
-### 4. (optional) Add a location to Gateway.
+### 4. (optional) Add a DNS location to Gateway.
 
-The WARP client will direct DoH queries to a default DNS endpoint when enrolled to your Zero Trust organization. If you need to direct these queries to a separate DNS endpoint, [add a location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location, which you can add when deploying the WARP client to your devices.
+The WARP client will direct DoH queries to a default DNS endpoint when enrolled to your Zero Trust organization. If you need to direct these queries to a separate DNS endpoint, [add a DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location, which you can add when deploying the WARP client to your devices.
 
 ### 5. Download and deploy the WARP client to your devices.
 

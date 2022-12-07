@@ -128,6 +128,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
   - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
 
+- `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+
 {{</definitions>}}
 
 ## Non-inheritable keys
@@ -466,6 +470,35 @@ services = [
 ]
 ```
 
+### Analytics Engine Datasets
+
+[Workers Analytics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Workers. Write data points to your Worker binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
+
+To bind Analytics Engine datasets to your Worker, assign an array of the below object to the `analytics_engine_datasets` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the dataset.
+
+- `dataset` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The dataset name to write to. This will default to the same name as the binding if it is not supplied.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
+```
+
 ## Bundling
 
 You can bundle assets into your Worker using the `rules` key, making these assets available to be imported when your Worker is invoked. The `rules` key will be an array of the below object.
@@ -625,8 +658,8 @@ To configure this on macOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY
 
 Example:
 
-```bash
-HTTP_PROXY=http://localhost:8080 wrangler dev
+```sh
+$ HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
 
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
@@ -639,6 +672,6 @@ It is a recommended best practice to treat `wrangler.toml` as a source of truth 
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. Currently, there is no way to disable this behaviour.
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler 1 [deprecation guide](/workers/wrangler/migration/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

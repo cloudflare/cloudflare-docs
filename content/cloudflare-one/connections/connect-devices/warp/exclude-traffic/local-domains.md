@@ -35,7 +35,7 @@ You can add or remove domains from the Local Domains list at any time.
 
 3. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`).
 
-4. Enter the DNS server(s) that should resolve that domain name. It is best to always specify at least one DNS server that Local Domain Fallback should use for any domain you add. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list.
+4. Enter the DNS server(s) that should resolve that domain name. All servers are tried and the fastest response is used. It is best to always specify at least one DNS server that Local Domain Fallback should use for any domain you add. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list. 
 
 5. Enter an optional description and click **Save domain**.
 

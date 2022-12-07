@@ -76,7 +76,7 @@ Use the following command:
 
 You should see the following output:
 
-```shell
+```bash
 Creating a virtualenv for this project...
 Pipfile: /home/ubuntu/my-wonderful-new-sphinx-project/Pipfile
 Using /usr/bin/python3.7m (3.7.11) to create virtualenv...
@@ -110,7 +110,7 @@ From your terminal, run the following command to install Sphinx:
 
 You should see output similar to the following:
 
-```shell
+```ba
 Installing sphinx...
 Adding sphinx to Pipfile's [packages]...
 ✔ Installation Succeeded
@@ -129,7 +129,7 @@ Alternatively, run a command inside the virtualenv with pipenv run.
 
 This will install Sphinx into a new virtual environment managed by Pipenv. You should see a directory structure like this:
 
-```shell
+```bash
 my-wonderful-new-sphinx-project
 |--Pipfile
 |--Pipfile.lock
@@ -163,7 +163,7 @@ $ Project language [en]: <You can accept en here or provide a regional language 
 
 This will create four new files in your active directory, `source/conf.py`, `index.rst`, `Makefile` and `make.bat`:
 
-```shell
+```bash
 my-wonderful-new-sphinx-project
 |--Pipfile
 |--Pipfile.lock

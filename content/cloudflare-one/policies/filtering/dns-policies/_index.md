@@ -98,8 +98,6 @@ You can apply DNS policies to a growing list of popular web applications. Refer 
 | -- | -- |
 | Application | `any(app.ids[*] in {505}` |
 
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings).
-
 ### Authoritative Nameserver IP
 
 Use this selector to match against the IP address of the authoritative name server IP address.
@@ -142,7 +140,7 @@ Use this selector to filter DNS responses by their `PTR` records.
 
 ### DNS Resolver IP
 
-Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all locations. However, each location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered locations.
+Use this selector to apply policies to DNS queries that arrived to your Gateway Resolver IP address aligned with a registered DNS location. For most Gateway customers, this is an IPv4 AnyCast address and policies created using this IPv4 address will apply to all DNS locations. However, each DNS location has a dedicated IPv6 address and some Gateway customers have been supplied with a dedicated IPv4 address — these both can be used to apply policies to specific registered DNS locations.
 
 | UI name | API example |
 | -- | -- |
@@ -156,9 +154,17 @@ Use this selector to filter DNS responses by their `TXT` records.
 | -- | -- |
 | DNS TXT Response Value | `any(dns.response.txt[*] in {"your_text"})` |
 
+### DNS Location
+
+Use this selector to apply DNS policies to a specific [Gateway DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or set of locations.
+
+| UI name | API example |
+| -- | -- |
+| DNS Location | `dns.location in {"location_uuid_1" "location_uuid_2"}` |
+
 ### DOH Subdomain
 
-Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each location. For example, a location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`.
+Use this selector to match against DNS queries that arrive via DNS-over-HTTPS (DoH) destined for the DoH endpoint configured for each DNS location. For example, a DNS location with a DoH endpoint of `abcdefg.cloudflare-gateway.com` could be used in a DNS rule by choosing the DoH Subdomain selector and inputting a value of `abcdefg`.
 
 | UI name | API example |
 | -- | -- |
@@ -179,14 +185,6 @@ Use this selector to match against only the hostname specified. — for example
 | UI name | API example |
 | -- | -- |
 | Host | `dns.fqdn == "test.example.com"` |
-
-### Location
-
-Use this selector to apply DNS policies to a specific [Gateway location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or set of locations.
-
-| UI name | API example |
-| -- | -- |
-| Location | `dns.location in {"location_uuid_1" "location_uuid_2"}` |
 
 ### Query Record Type
 

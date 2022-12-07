@@ -7,15 +7,15 @@ title: Filter DNS on devices
 
 # Filter DNS on devices
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to filter and log DNS queries from devices on any network. Cloudflare Gateway will continue to secure devices in any location by filtering all DNS queries using the WARP client on the roaming devices.
+You can use Cloudflare Gateway and the Cloudflare WARP client application to filter and log DNS queries from devices on any network. Cloudflare Gateway will continue to secure devices in any DNS location by filtering all DNS queries using the WARP client on the roaming devices.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a DNS filtering policy that secures devices by blocking malicious hostnames
 - Apply that policy to devices on any network
 - Enroll devices into a Cloudflare Gateway deployment
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 30 minutes
 
@@ -38,7 +38,7 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 ![Block Threats](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/block-threats.png)
 
-The policy will block security threats for any location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/cloudflare-one/tutorials/identity-dns/).
+The policy will block security threats for any DNS location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/cloudflare-one/tutorials/identity-dns/).
 
 4. Choose `Block` as the action. You can optionally [enable a block page](/cloudflare-one/policies/filtering/configuring-block-page/) that will be presented to users if they have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their devices. Click **Save policy** to conclude.
 
@@ -46,7 +46,7 @@ The policy will block security threats for any location or device in your Zero T
 
 ## Integrate your identity provider
 
-The DNS filtering policy created will apply to any DNS queries sent from configured locations or enrolled devices. You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
+The DNS filtering policy created will apply to any DNS queries sent from configured DNS locations or enrolled devices. You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
 
 Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
 

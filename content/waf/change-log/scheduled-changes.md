@@ -20,17 +20,26 @@ layout: list
       <th>Description</th>
       <th>Comments</th>
     </tr>
-    <tr>
-      <th>2022-11-16</th>
-      <th>2022-11-28</th>
-      <th>Block</th>
-      <th>N/A</th>
-      <th>...b8ef67d7</th>
-      <th>SQLi - Equation</th>
-      <th>N/A</th>
-    </tr>
   </thead>
   <tbody>
-</tbody>
+    <tr>
+      <td>2022-12-05</td>
+      <td>2022-12-12</td>
+      <td>Disabled</td>
+      <td>100554</td>
+      <td>...2aede3db</td>
+      <td>Openam - Remote Code Execution - CVE:CVE-2021-35464</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2022-12-05</td>
+      <td>2022-12-12</td>
+      <td>Block</td>
+      <td>100556</td>
+      <td>...2ab75038</td>
+      <td>Apache JXPath Library - Code Injection - CVE:CVE-2022-41852</td>
+      <td>N/A</td>
+    </tr>
+  </tbody>
 </table>
 {{</table-wrap>}}

@@ -106,9 +106,8 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 2. Verify that nothing is returned by a `curl` command:
 
-    ```bash
+    ```sh
     $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
-    $
     ```
 
 {{<Aside type="note">}}

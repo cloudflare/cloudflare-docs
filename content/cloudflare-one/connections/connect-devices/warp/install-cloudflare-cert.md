@@ -97,14 +97,14 @@ You can install the Cloudflare certificate on your terminal, too.
 2. Open Terminal.
 3. Launch the following command:
 
-```bash
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
+```sh
+$ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain <Cloudflare_CA.crt>
 ```
 
 4. Update the OpenSSL CA Store to include the Cloudflare certificate:
 
-```bash
-echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
+```sh
+$ echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 ```
 
 ### iOS
@@ -198,14 +198,14 @@ The location where the root certificate should be installed is different dependi
 1. Download the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
 2. Copy the certificate to the system, changing the file extension to `.crt`.
 
-  ```bash
-  sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
+  ```sh
+  $ sudo cp Cloudflare_CA.pem /usr/local/share/ca-certificates/Cloudflare_CA.crt
   ```
   
 3. Import the certificate.
 
-```bash
-sudo dpkg-reconfigure ca-certificates
+```sh
+$ sudo dpkg-reconfigure ca-certificates
 ```
 
 #### CentOS / RedHat
@@ -213,14 +213,14 @@ sudo dpkg-reconfigure ca-certificates
 1. Download both the [.crt certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt) and the [.pem certificate](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem).
 2. Copy both certificates to the trust store.
 
-  ```bash
-  sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
+  ```sh
+  $ sudo cp Cloudflare_CA.crt Cloudflare_CA.pem /etc/pki/ca-trust/source/anchors
   ```
 
 3. Import the certificate.
 
-```bash
-sudo update-ca-trust
+```sh
+$ sudo update-ca-trust
 ```
 
 ### Android
@@ -318,45 +318,52 @@ If your organization is using Firefox, the browser may need additional configura
 
 The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation).
 
-To update the bundle to include the Cloudflare certificate, run the following command:
+1. Download the Cloudflare root certificate:
 
-```bash
-gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
-```
+    ```bash
+    curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+    ```
+
+2. To update the bundle to include the Cloudflare certificate, run the following command:
+
+    ```bash
+    gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
+    ```
 
 #### Python on Mac and Linux
 
-1. Install the `certifi` package.
+1. Install the `certifi` package:
 
-```bash
-pip install certifi
-```
+    ```sh
+    $ pip install certifi
+    ```
 
-2. Identify the CA store.
+2. Identify the CA store:
 
-```bash
-python -m certifi
-```
-
-This command will output:
-
-<!---->
-
+    ```sh
+    $ python -m certifi
     ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
+    ```
 
-3. Append the Cloudflare certificate to this CA Store by running:
+3. Download the Cloudflare root certificate:
 
-```bash
-echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
-```
+    ```sh
+    $ wget https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+    ```
 
-4. If needed, configure system variables to point to this CA Store.
+4. Append the Cloudflare certificate to this CA Store by running:
 
-<!---->
+    ```sh
+    $ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
+    ```
 
-    export CERT_PATH=$(python -m certifi)
-    export SSL_CERT_FILE=${CERT_PATH}
-    export REQUESTS_CA_BUNDLE=${CERT_PATH}
+5. If needed, configure system variables to point to this CA Store:
+
+    ```sh
+    $ export CERT_PATH=$(python -m certifi)
+    $ export SSL_CERT_FILE=${CERT_PATH}
+    $ export REQUESTS_CA_BUNDLE=${CERT_PATH}
+    ```
 
 ### Git
 
@@ -366,8 +373,8 @@ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
 
 2. Run the following command:
 
-```git
-git config -l
+```sh
+$ git config -l
 ```
 
 This command will output:
@@ -410,14 +417,14 @@ $ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 
 The command below will set the `cafile` configuration to use the Cloudflare certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
 
-```bash
-npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
+```sh
+$ npm config set cafile [PATH_TO_CLOUDFLARE_CERT.pem]
 ```
 
 On some systems you may need to set the following in your path/export list:
 
-```bash
-export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
+```sh
+$ export NODE_EXTRA_CA_CERTS='[PATH_TO_CLOUDFLARE_CERT.pem]'
 ```
 
 ### Google Cloud SDK
@@ -426,26 +433,26 @@ The commands below will set the Google Cloud SDK to use the Cloudflare certifica
 
 1. Get curl's `cacert` bundle.
 
-    ```bash
-    curl -O https://curl.se/ca/cacert.pem
+    ```sh
+    $ curl -O https://curl.se/ca/cacert.pem
     ```
 
 2. Get the Cloudflare CA.
 
-    ```bash
-    curl -O https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+    ```sh
+    $ curl -O https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
     ```
 
 2. Combine the certs into a single `.pem` file.
 
-    ```bash
-    cat cacert.pem Cloudflare_CA.pem > ~/ca.pem
+    ```sh
+    $ cat cacert.pem Cloudflare_CA.pem > ~/ca.pem
     ```
 
 3. Configure Google Cloud to use the combined `.pem`.
 
-    ```bash
-    gcloud config set core/custom_ca_certs_file ~/ca.pem
+    ```sh
+    $ gcloud config set core/custom_ca_certs_file ~/ca.pem
     ```
 
 {{<Aside type="note">}}
@@ -454,7 +461,11 @@ The file at `~/ca.pem` needs to remain in place in order for the `gcloud` utilit
 
 #### Google Cloud SDK and Kaniko
 
-Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate). 
+Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/builds/submit), if Kaniko is being used the Cloudflare certificate will need to be installed in the Kaniko CA store. Instructions can be found [here](https://docs.gitlab.com/ee/ci/docker/using_kaniko.html#using-a-registry-with-a-custom-certificate).
+
+### Google Drive for desktop
+
+To trust the Cloudflare root certificate in the Google Drive desktop application, refer to the [Google documentation](https://support.google.com/a/answer/7644837) for the `TrustedRootCertsFile` setting.
 
 ### AWS CLI
 
@@ -465,8 +476,8 @@ If you're using the AWS CLI, you need to set the `AWS_CA_BUNDLE` environment var
 The command below will set the [`cafile`](https://getcomposer.org/doc/06-config.md#cafile) configuration inside of `composer.json` to use the Cloudflare root certificate. Make sure to use the certificate in the [`.pem`](/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem) file type.
 
 
-```bash
-composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
+```sh
+$ composer config cafile [PATH_TO_CLOUDFLARE_CERT.pem]
 ```
 
 Alternatively, you can add this manually to your `composer.json` file under the `config` key.

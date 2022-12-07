@@ -4,7 +4,6 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M50.2
 product:
   title: Web3
   url: /web3/
-  wrap: true
 
 meta:
   title: Cloudflare Web3 docs

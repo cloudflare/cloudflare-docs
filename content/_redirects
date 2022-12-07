@@ -107,6 +107,9 @@
 /email-security/static/GSuite-Area1-MX.pdf /email-security/deployment/inline/setup/gsuite-area1-mx/ 301
 /email-security/static/Cisco-Area1-MX.pdf /email-security/deployment/inline/setup/cisco-area1-mx/ 301
 /email-security/static/Cisco-Cisco-MX.pdf /email-security/deployment/inline/setup/cisco-cisco-mx/ 301
+/email-security/static/Phish-Submission-Triage.pdf /email-security/email-configuration/phish-submissions/ 301
+/email-security/static/Report_phishing_from_Outlook_client.pdf /email-security/email-configuration/phish-submissions/phishnet-o365/ 301
+/email-security/deployment/api/setup/office365-bcc-setup/ /email-security/deployment/api/setup/exchange-bcc-setup/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -178,6 +181,12 @@
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
 /cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
+
+# d1
+/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
+/d1/client-api/ /d1/platform/client-api/ 301
+/d1/migrations/ /d1/platform/migrations/ 301
+/d1/community-projects/ /d1/platform/community-projects/ 301
 
 # ddos-protection
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
@@ -513,6 +522,7 @@
 /ssl/edge-certificates/http-strict-transport-security/ /ssl/edge-certificates/additional-options/http-strict-transport-security/ 301
 /ssl/edge-certificates/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/edge-certificates/uploading/ /ssl/edge-certificates/custom-certificates/uploading/ 301
+/ssl/faq/ /ssl/troubleshooting/ 301
 /ssl/getting-started/ /ssl/get-started/ 301
 /ssl/keyless-ssl/hardware-security-modules/ncipher-thales-nshield-connect/ /ssl/keyless-ssl/hardware-security-modules/entrust-nshield-connect/ 301
 /ssl/keyless-ssl/high-availability/ /ssl/keyless-ssl/reference/high-availability/ 301
@@ -899,6 +909,7 @@
 /workers/platform/routing/routes/ /workers/platform/triggers/routes/ 301
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
+/workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 
 # zaraz
 
@@ -957,8 +968,8 @@
 /cloudflare-one/connections/connect-browsers/third-party-cookies/ /cloudflare-one/policies/browser-isolation/third-party-cookies/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/ 301
-/cloudflare-one/connections/connect-devices/agentless/native-os/ /cloudflare-one/connections/connect-devices/agentless/dns/native-os/ 301
-/cloudflare-one/connections/connect-devices/agentless/router/ /cloudflare-one/connections/connect-devices/agentless/dns/router/ 301
+/cloudflare-one/connections/connect-devices/agentless/native-os/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
+/cloudflare-one/connections/connect-devices/agentless/router/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/connections/connect-devices/warp/warp-settings#enable-proxy/ 301
 /cloudflare-one/connections/connect-devices/warp/deployment/android-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301
 /cloudflare-one/connections/connect-devices/warp/deployment/iOS-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301

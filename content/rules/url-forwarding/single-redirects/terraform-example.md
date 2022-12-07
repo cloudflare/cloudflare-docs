@@ -1,12 +1,12 @@
 ---
-title: Terraform example
+title: Create rule using Terraform
 pcx_content_type: configuration
 weight: 4
 meta:
-  title: Single Redirects — Terraform example
+  title: Create a redirect rule using Terraform
 ---
 
-# Terraform example
+# Create a redirect rule using Terraform
 
 The following example defines a single redirect rule for a zone using Terraform. The rule creates a static URL redirect for visitors requesting the contacts page using an old URL.
 

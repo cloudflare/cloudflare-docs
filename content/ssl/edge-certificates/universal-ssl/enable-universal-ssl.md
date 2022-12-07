@@ -7,15 +7,13 @@ weight: 2
 # Enable Universal SSL certificates
 
 {{<render file="_universal-ssl-definition.md">}}
+<br />
 
-\
 The process for activating a Universal SSL certificate depends on your domain's DNS setup.
 
 ## Full DNS setup
 
-For an authoritative or full domain — domains that changed their [domain nameservers](/dns/zone-setups/full-setup/) – your domain should **automatically** receive its Universal SSL certificate between **15 minutes to 24 hours** of domain activation. Provisioning time depends on certain security checks and other requirements mandated by Certificate Authorities (CA).
-
-This certificate covers your root domain (`example.com`) and all first-level subdomains (`subdomain.example.com`).
+{{<render file="_universal-ssl-enable-full.md">}}
 
 ### Minimize downtime
 

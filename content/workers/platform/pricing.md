@@ -31,7 +31,7 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 
 1.  Requests inbound to your Worker from the Internet are charged on a unit basis for paid plans. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but network time incurred may slightly increase any duration-based billing.
 
-2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
 3.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
 
@@ -71,6 +71,20 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 - (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
+## Workers Trace Events Logpush
+
+Workers Logpush is only available on the Workers Paid plan. 
+
+{{<table-wrap>}}
+
+|                             | Paid plan                          |
+| --------------------------- | ---------------------------------- |
+| Requests <sup>1</sup>       | 10 million / month, +$0.05/million |
+
+{{</table-wrap>}}
+
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
+
 ## Workers KV
 
 {{<table-wrap>}}
@@ -86,6 +100,10 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 {{</table-wrap>}}
 
 1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
+
+## Queues
+
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/pricing/).
 
 ## Durable Objects
 

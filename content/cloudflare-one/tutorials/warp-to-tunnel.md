@@ -14,14 +14,14 @@ You can create and configure Cloudflare Tunnel connections to [support multiple 
 
 Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a machine to Cloudflare
 - Assign the machine an IP that can consist of an RFC 1918 IP address or range
 - Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
 - Connect using any TCP-based protocol
 
-**⏲️ Time to complete:** 45 minutes
+**Time to complete:** 45 minutes
 
 ---
 
