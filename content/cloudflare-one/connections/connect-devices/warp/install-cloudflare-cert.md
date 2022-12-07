@@ -501,3 +501,50 @@ To install the Cloudflare root certificate on JetBrains products, refer to the l
 ### Minikube
 
 Instructions on how to install the Cloudflare root certificate are available [here](https://minikube.sigs.k8s.io/docs/handbook/vpn_and_proxy/#x509-certificate-signed-by-unknown-authority)
+
+## Use your own root certificate
+
+{{<Aside type="note">}}
+Only available on Enterprise plans.
+{{</Aside>}}
+
+Enterprise customers who do not wish to install the Cloudflare certificate have the option to upload their own root certificate to Cloudflare. Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required the Cloudflare certificate.
+
+To deploy a custom root certificate:
+
+1. Verify that the certificate is installed on your devices.
+
+2. Upload the certificate and private key to your Zero Trust account:
+
+    ```bash
+    curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/mtls_certificates"\
+        -H "X-Auth-Email: <EMAIL>" \
+        -H "X-Auth-Key: <API_KEY>" \
+        -H "Content-Type: application/json" \
+        --data '{"name":"example_ca","certificates":"<ROOT_CERTIFICATE>","private_key":"<PRIVATE_KEY>","ca":true}'
+    ```
+
+    Response:
+
+    ```json
+    ---
+    highlight: [6]
+    ---
+    {
+    "success": true,
+    "errors": [],
+    "messages": [],
+    "result": {
+        "id": "2458ce5a-0c35-4c7f-82c7-8e9487d3ff60",
+        "name": "example_ca_cert_5",
+        "issuer": "O=Example Inc.,L=California,ST=San Francisco,C=US",
+        "signature": "SHA256WithRSA"
+        ...    
+    }
+    ```
+    You can upload multiple certificates to your account, but only one can be active at any given time.
+
+3. Activate the custom certificate.
+
+
+After about a minute, Gateway will start using your root certificate and private key to generate just-in-time (JIT) certificates when the end user navigates to a secure website.  If you deactivate or delete the custom certificate, Gateway will revert to using the default Cloudflare certificate.
