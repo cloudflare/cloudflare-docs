@@ -2285,7 +2285,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": 1,
+          "ent": "Custom",
           "ent_plus": "Custom"
         },
         "customized_templates": {
