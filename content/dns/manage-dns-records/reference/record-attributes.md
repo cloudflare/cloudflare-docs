@@ -52,7 +52,7 @@ You can also add or edit attributes by [exporting and re-importing](/dns/manage-
 
 ### Comments
 
-Comments are treated as `strings`, meaning that they are case sensitive and do not have any character limitations. However, comments do not support HTML formatting such as `\n` or `\r`.
+Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wiki/Graphic_character), meaning that they are case sensitive and do not have any character limitations. However, comments do not support newline (`\n`) or control (`\r`) characters.
 
 ### Tags
 
