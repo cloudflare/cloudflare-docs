@@ -191,3 +191,8 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
     ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step3-hops-count.png)
 
 {{<Aside type="note">}}If you have an existing secure email gateway (SEG) deployed as the MX record, you will need to adjust the hop count accordingly.{{</Aside>}}
+
+## 5. Configure BCC or Journaling in Google Workspaces
+
+You must send copies of inbound email messages to Area 1 for inspection, in order for Area 1 to be able to automatically retract messages. Automatic retraction is not available when Area 1 is deployed as MX. Messages can be sent to Area 1 using a BCC compliance rule or message journaling method.
+
