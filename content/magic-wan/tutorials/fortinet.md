@@ -196,3 +196,82 @@ header: IPsec policy
        set vpntunnel "<Phase 1 name>"
    next
 ```
+
+## GRE configuration
+
+To ensure health checks work as expected, enable asymmetric routing for ICMP. Note that enabling asymmetric routing will affect FortiGate behavior. To learn more, refer to [How FortiGate behaves when asymmetric routing is enabled](https://community.fortinet.com/t5/FortiGate/Technical-Note-How-the-FortiGate-behaves-when-asymmetric-routing/ta-p/198575).
+
+### Enable asymmetric routing
+
+```bash
+---
+header: FortiOS ICMP asymmetric
+---
+config system settings
+    set asymroute-icmp enable
+end
+```
+
+### Configure GRE and WAN interface
+
+Next, configure the GRE and the WAN (Internet) interface. The example below uses the following attributes:
+
+- WAN/Internet Interface (Customer GRE Endpoint IP): WAN1
+- GRE Interface name: toCF
+- Tunnel Inside IP Subnet: 10.10.10.0/31
+
+```bash
+---
+header: GRE tunnel config
+---
+config system gre-tunnel
+    edit "toCF"
+        set interface "wan1"
+        set remote-gw x.x.x.x  # CF ANYCAST IP
+        set local-gw y.y.y.y      # Customer WAN IP aka Customer GRE Endpoint IP
+    next
+end
+ 
+config system interface
+    edit "toCF"
+        set ip b.b.b.b 255.255.255.255 # Yes, the mask here is /32
+        set allowaccess ping
+        set type tunnel
+        set remote-ip a.a.a.a 255.255.255.254 # And Yes, it is /31 here
+        set interface "wan1"
+    next
+end
+```
+
+### Adjust TCP MSS
+
+Generally, configuring the TCP MSS on the WAN interface is recommended, which is true for Magic Transit as a primarily ingress service. However, in the case of Magic WAN, you need to adjust MSS for egress traffic, and as a result, it needs to be adjusted at the interface which receives the user/site traffic.
+
+```bash
+---
+header: Adjust TCP MSS
+---
+edit "lan" # Change to LAN interface name
+        set tcp-mss 1436
+    next
+end
+```
+
+### Create a policy based route
+
+Next, create a Policy Based Route to route desired traffic down the tunnel. The example below tunnels all RFC1918 address spaces.
+
+```bash
+---
+header: Policy Based Route
+---
+    edit 1 # The policy ID will vary, check with "sh router policy" to see where to insert the PBR
+        set input-device "lan"
+        set srcaddr x.x.x.x # Specify what network/hosts will this PBR apply to
+        set dstaddr "all"
+        set gateway a.a.a.a
+        set output-device "toCF1"
+    next
+end
+```
+Fortigate is firewall first, and you will need to create Firewall Policies to ensure traffic is allowed between LAN and GRE.
