@@ -1,6 +1,5 @@
 ---
 title: Migration
-aliases: [/workers/wrangler/migration/]
 pcx_content_type: navigation
 weight: 30
 meta:
@@ -11,8 +10,7 @@ meta:
 
 {{<Aside type="note">}}
 
-Version 2 is a major update to Wrangler.
-Find out more about how to migrate from version 1.
+Major updates have been made since version 1 of Wrangler. Find out more about how to migrate to the latest version.
 
 {{</Aside>}}
 
