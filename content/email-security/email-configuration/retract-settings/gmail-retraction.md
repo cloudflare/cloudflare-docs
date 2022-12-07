@@ -137,4 +137,57 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
 {{<Aside type="note">}}Save this key in a secure location as it allows access to your cloud resources. You will need to share it with Area 1 as part of the configuration process in the next step.{{</Aside>}}
 
-## 2. Share the Service Account JSON Key with Area 1
+## 2. Share the service account JSON key with Area 1
+
+You need to upload the private key generated in the previous step to Area 1. This is needed to execute retractions on your Gmail inboxes.
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+
+2. Go to **Email Configuration** > **RETRACTION SETTINGS** > **Authorize Gmail**.
+
+    ![Go to Authorize Gmail in your Area 1 dashboard](/email-security/static/email-retraction/gmail/step2-authorize-gmail.png)
+
+3. Select **New Authorization** and configure the following settings:
+    - Select **AUTHORIZATION DATA (JWT)**. Find and upload your JSON private key.
+    - Under **Domains**, specify which domain this private key belongs to.
+    - Select **Save** to save the configuration
+
+    ![Select New authorization and configure its settings](/email-security/static/email-retraction/gmail/step3-private-key.png)
+
+## 3. Configure auto-retraction actions in Area 1
+
+In the Area 1 Portal, you will need to configure the auto-retraction behavior for [each disposition](/email-security/reference/dispositions-and-attributes/). Automatic retraction is not available when Area 1 is deployed as MX record.
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+
+2. Go to **Email Configuration** > **RETRACTION SETTINGS**.
+
+3. Select **Auto-Retract**. By default, no actions are taken against any of the dispositions. To modify the behaviors, select **Edit**.
+
+    ![Edit the auto-retract settings to change dispositions behaviors](/email-security/static/email-retraction/gmail/step3-auto-retract.png)
+
+{{<Aside type="note">}}You must be a Cloudflare Enterprise customer to access the **RETRACTION SETTINGS** configuration panel.{{</Aside>}}
+
+4. Select the appropriate remediation behavior for each disposition. Save your selection by selecting **Update Auto-retraction Settings**.
+
+    ![Update the behaviors for each disposition](/email-security/static/email-retraction/gmail/step4-update-auto-retraction.png)
+
+5. Once saved, the configuration table will be updated with your selected behaviors.
+
+    ![The table will show the updated behaviors for dispositions](/email-security/static/email-retraction/gmail/step5-updated-behaviors.png)
+
+## 4. Adjust the hop count in Area 1
+
+Since Area 1 is not configured as the MX record for your domains, you will need to adjust Area 1’s position (hop count) relative to Area 1’s position in the email processing order. 
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+
+2. Go to **Email Configuration** > **DOMAIN & ROUTING** > **Domain** to verify the position.
+
+    ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step2-hop-position.png)
+
+3. For standalone Gmail only deployments, the value should be set to `2`. To update the hop count, select the three dots menu on the domain you want to update. Then, adjust the **Hops** count to `2`, and select **Update Domain**.
+
+    ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step3-hops-count.png)
+
+{{<Aside type="note">}}If you have an existing secure email gateway (SEG) deployed as the MX record, you will need to adjust the hop count accordingly.{{</Aside>}}
