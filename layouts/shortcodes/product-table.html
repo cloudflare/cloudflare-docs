@@ -88,7 +88,6 @@
     </td>
     <td>
         {{ .ent | markdownify }}
-        {{ if $additional_plans }}
         {{ if and (.ent_plus) (ne .ent .ent_plus)}}
         <br/>
         <br/>
@@ -96,10 +95,9 @@
         <br/>
         {{ .ent_plus | markdownify }}
         {{ end }}
-        {{ end }}
     </td>
 </tr>
-{{- end -}}
+{{ end }}
 {{ end }}
 {{ end }}
 </table>
