@@ -1028,8 +1028,8 @@
       }
     },
     "firewall_analytics": {
-      "title": "Firewall analytics",
-      "link": "/waf/analytics/",
+      "title": "Security Events",
+      "link": "/waf/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
