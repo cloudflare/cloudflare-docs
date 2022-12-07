@@ -468,10 +468,6 @@
           "title": "IP Access Rules"
         },
         {
-          "url_path": "/waf/security-analytics/",
-          "title": "Security Analytics"
-        },
-        {
           "url_path": "/waf/security-events/",
           "title": "Security Events"
         },
