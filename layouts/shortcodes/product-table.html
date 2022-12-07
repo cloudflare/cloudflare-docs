@@ -88,6 +88,12 @@
     </td>
     <td>
         {{ .ent | markdownify }}
+        {{ if and (.ent_plus) (ne .ent .ent_plus)}}
+        <br/>
+        <br/>
+        <em>With add-on</em>
+        {{ .ent_plus | markdownify }}
+        {{ end }}
     </td>
 </tr>
 {{- end -}}
