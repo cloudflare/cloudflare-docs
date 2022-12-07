@@ -10,9 +10,9 @@ meta:
 
 Audit logs for Email Routing are available in the [Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log). The following changes to Email Routing will be displayed:
 
-- Add/edit Rule.
-- Add address.
-- Address change status.
-- Enable/disable/unlock zone.
+- Add/edit Rule
+- Add address
+- Address change status
+- Enable/disable/unlock zone
 
 Refer to [Review audit logs](/fundamentals/account-and-billing/account-security/review-audit-logs/) for more information.
