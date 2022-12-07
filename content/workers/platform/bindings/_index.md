@@ -20,7 +20,7 @@ Bindings can be configured one of two ways:
 
 Service bindings allow for communication with another Worker.
 
-* Configure [Service bindings](/workers/platform/bindings/about-service-bindings/).
+* Configure and learn more about [Service bindings](/workers/platform/bindings/about-service-bindings/).
 
 ### KV namespace bindings
 
