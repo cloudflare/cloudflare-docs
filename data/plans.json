@@ -1067,13 +1067,6 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "z_l4_ddos": {
-          "title": "L4 DoS attacks mitigated",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Last 7 days"
         }
       }
     },

@@ -24,6 +24,7 @@ The descriptions below detail the fields available for `gateway_network`.
 | OverrideIP | Overriden IP of the network session, if any | string |
 | OverridePort | Overriden port of the network session, if any | int |
 | PolicyID | Identifier of the policy/rule that was applied, if any | string |
+| PolicyName | The name of the gateway policy applied to the request, if any | string |
 | SNI | Content of the SNI for the TLS network session, if any | string |
 | SessionID | The session identifier of this network session | string |
 | SourceIP | Source IP of the network session | string |

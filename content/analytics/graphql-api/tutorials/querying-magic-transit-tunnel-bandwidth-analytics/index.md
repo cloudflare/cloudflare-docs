@@ -23,7 +23,8 @@ PAYLOAD='{ "query":
             filter: {
               datetime_geq: $datetimeStart,
               datetime_lt:  $datetimeEnd,
-              direction: $direction             }
+              direction: $direction
+            }
           ) {
             avg {
               bitRateFiveMinutes
@@ -45,8 +46,8 @@ PAYLOAD='{ "query":
   }
 }' 
 
-// curl with Legacy API Key
-  curl \
+# curl with Legacy API Key
+curl \
   -X POST \
   -H "Content-Type: application/json" \
   -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
@@ -54,13 +55,13 @@ PAYLOAD='{ "query":
   --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/
  
- // curl with API Token
+# curl with API Token
 curl \
--X POST \
--H "Content-Type: application/json" \
--H "Authorization: Bearer <CLOUDFLARE_API_KEY>" \
---data "$(echo $PAYLOAD)" \
-https://api.cloudflare.com/client/v4/graphql/
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <CLOUDFLARE_API_KEY>" \
+  --data "$(echo $PAYLOAD)" \
+  https://api.cloudflare.com/client/v4/graphql/
 ```
 
 The returned values represent the total bandwidth in bits/second during the five minute interval for a particular tunnel. To use aggregations other than five minutes, make sure that you use the same window for both your metric and date time. For example, to see hourly groups, use `bitRateHour` and `datetimeHour`.
@@ -69,7 +70,7 @@ The result will be in JSON (as requested), so piping the output to `jq` will mak
 
 ```bash
 ... | curl \
--X POST \
+  -X POST \
   -H "Content-Type: application/json" \
   -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
   -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \

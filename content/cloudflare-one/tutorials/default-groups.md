@@ -11,13 +11,13 @@ You can use Cloudflare Access to require team members to connect to self-hosted 
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Build a Zero Trust rule once and set it as the default for your account
 - Use that rule when adding an application to Cloudflare Access
 - Combine that default rule with other rules for additional customization
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

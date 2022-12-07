@@ -12,14 +12,14 @@ You can use Cloudflare Gateway and the Cloudflare WARP client to inspect HTTP tr
 
 In this mode, the Cloudflare WARP client runs on user devices and proxies all Internet-bound traffic to Cloudflare's network. Cloudflare's network will then inspect the HTTP traffic to apply policies based on user identity and destination. You can also decide to [exclude some traffic from inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) while filtering all other traffic.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a Gateway policy to block URLs that contain a hostname
 - Create a Gateway policy to block URLs that contain a URL path
 - Enroll devices into Gateway
 - Review the block events in the Gateway logs
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 35 minutes
 
@@ -93,9 +93,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
-
-    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
+1. Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
     ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
@@ -118,8 +116,6 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
-![Policy settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
-
 ## Enroll a device
 
 1.  Follow the [instructions](/cloudflare-one/connections/connect-devices/warp/deployment/) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
@@ -129,8 +125,6 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
     ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
-
-    ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
 
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 

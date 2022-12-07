@@ -9,13 +9,13 @@ weight: 10
 
 ## 2022-10-28
 
-- Renamed the `[data-]expired-callback` callback to [`[data-]timeout-callback`](/turnstile/get-started/client-side-rendering/#configurations) (called when the challenge times out)
-- Added the [`[data-]expired-callback`](/turnstile/get-started/client-side-rendering/#configurations) callback (called when the token expires)
+- Renamed the `[data-]expired-callback` callback to [`[data-]timeout-callback`](/turnstile/get-started/client-side-rendering/#configurations) (called when the challenge times out).
+- Added the [`[data-]expired-callback`](/turnstile/get-started/client-side-rendering/#configurations) callback (called when the token expires).
 
 ## 2022-10-24
 
-- Added [`response-field` and `response-field-name`](/turnstile/get-started/client-side-rendering/#configurations) for controlling the input element created by Turnstile
-- Added option for changing the [size of the Turnstile widget](/turnstile/get-started/client-side-rendering/#widget-size)
+- Added [`response-field` and `response-field-name`](/turnstile/get-started/client-side-rendering/#configurations) for controlling the input element created by Turnstile.
+- Added option for changing the [size of the Turnstile widget](/turnstile/get-started/client-side-rendering/#widget-size).
 
 ## 2022-10-13
 
@@ -28,4 +28,4 @@ weight: 10
 
 ## 2022-11-11
 
-- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior
+- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior.
