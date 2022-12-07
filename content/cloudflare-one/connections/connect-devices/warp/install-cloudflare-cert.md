@@ -402,9 +402,9 @@ gc .\Cloudflare_CA.pem | ac $(git config --get http.sslcainfo)
 
 Configure Git to trust the Cloudflare certificate.
 
-<!---->
-
-    git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
+```sh
+$ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
+```
 
 ### npm
 
