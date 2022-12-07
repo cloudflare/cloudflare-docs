@@ -356,6 +356,9 @@ new_classes = ["DurableObjectExample"] # Array of new classes
 tag = "v2"
 renamed_classes = [{from = "DurableObjectExample", to = "UpdatedName" }] # Array of rename directives
 deleted_classes = ["DeprecatedClass"] # Array of deleted class names
+transferred_classes = [
+  {from = "OtherScriptClass", from_script = "other-script", to = "ThisScriptClass" }
+] # For a new script to take ownership of another's Durable Object (including storage)
 ```
 
 {{<Aside type="note">}}
