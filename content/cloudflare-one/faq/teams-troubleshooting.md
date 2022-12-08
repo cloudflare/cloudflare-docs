@@ -19,7 +19,7 @@ Cloudflare Access requires that the credentials: `same-origin parameter` be adde
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
 ## I see error 526 when browsing to a website.
 
