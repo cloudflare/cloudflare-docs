@@ -18,7 +18,7 @@ This guide is tailored to version 2 of Wrangler. If you are still using version 
 
 To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler-legacy), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
 $ npm install -g wrangler
