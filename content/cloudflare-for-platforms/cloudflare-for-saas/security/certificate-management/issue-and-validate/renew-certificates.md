@@ -10,6 +10,10 @@ meta:
 
 The exact method for certificate renewal depends on whether that hostname is proxying traffic through Cloudflare and whether it is a wildcard certificate.
 
+Custom hostnames with DigiCert certificates currently have a validity period of 1 year, though DigiCert is [going to be deprecated](/ssl/reference/migration-guides/digicert-update/) soon. Custom hostnames using Let's Encrypt or Google Trust Services have a ninety day validity period.
+
+Certificates are available for renewal thirty days before their expiration.
+
 ## Non-wildcard hostnames
 
 If you are using a non-wildcard hostname and proxying traffic through Cloudflare, Cloudflare will try to perform DCV automatically on the hostname’s behalf by serving the [HTTP token](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/).
