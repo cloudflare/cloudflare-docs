@@ -35,7 +35,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway
     }'
 ```
 
-Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of valid time zones.
+Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of all time zones.
 
 ## Example: User's time zone
 
