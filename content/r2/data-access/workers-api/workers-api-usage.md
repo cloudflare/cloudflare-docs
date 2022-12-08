@@ -110,7 +110,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/cli-wrangler/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -228,7 +228,7 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 $ wrangler publish
