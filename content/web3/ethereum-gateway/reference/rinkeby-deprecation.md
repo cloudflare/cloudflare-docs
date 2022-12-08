@@ -2,6 +2,7 @@
 pcx_content_type: reference
 title: Rinkeby deprecation
 weight: 5
+layout: list
 ---
 
 # Rinkeby deprecation
@@ -23,7 +24,7 @@ For example, you might have been using the previous endpoints to interact with y
 header: Previous curl
 highlight: [1]
 ---
-$ $ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
+$ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
 -H 'Content-Type: application/json' \
 --data '{
     "jsonrpc":"2.0",
