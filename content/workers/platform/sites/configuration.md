@@ -6,7 +6,7 @@ weight: 4
 
 # Workers Sites configuration
 
-Workers Sites require the latest version of [Wrangler](https://github.com/cloudflare/wrangler-legacy).
+Workers Sites require the latest version of [Wrangler](https://github.com/cloudflare/wrangler).
 
 ## Commands
 
