@@ -19,7 +19,7 @@ Refer to [deploy.workers.cloudflare.com](https://deploy.workers.cloudflare.com/)
 
 1.  Add a GitHub Actions workflow to your project.
 
-Add a new file to `.github/workflows`, such as `.github/workflows/deploy.yml`, and create a GitHub workflow for deploying your project. It should include a set of `on` events, including at least `repository_dispatch`, but probably `push` and maybe `schedule` as well. Add a step for publishing your project using [wrangler-action](https://github.com/cloudflare/wrangler-legacy-action):
+Add a new file to `.github/workflows`, such as `.github/workflows/deploy.yml`, and create a GitHub workflow for deploying your project. It should include a set of `on` events, including at least `repository_dispatch`, but probably `push` and maybe `schedule` as well. Add a step for publishing your project using [wrangler-action](https://github.com/cloudflare/wrangler-action):
 
 ```yaml
 name: Build

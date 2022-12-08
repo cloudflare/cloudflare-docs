@@ -10,7 +10,7 @@ Integrate Workers to your existing services and platforms to optimize your conti
 
 ## GitHub
 
-- [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-legacy-action) offer a reliable and convenient way to deploy Workers projects automatically when you push.
+- [Wrangler GitHub Action](https://github.com/cloudflare/wrangler-action) offer a reliable and convenient way to deploy Workers projects automatically when you push.
 
 ## Lerna
 
