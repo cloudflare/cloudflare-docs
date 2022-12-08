@@ -14,7 +14,7 @@ This chat application uses a Durable Object to control each chat room. Users con
 
 To continue with this tutorial, you must:
 
-1. Install [Wrangler v2](/workers/wrangler/install-and-update/).
+1. Install [Wrangler](/workers/wrangler/install-and-update/).
 2. Purchase the Workers Paid plan and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > **Resources** > **Durable Objects**.
 
 ## Clone the chat application repository
