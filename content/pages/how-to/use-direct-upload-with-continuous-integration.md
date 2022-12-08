@@ -126,21 +126,21 @@ filename: .circleci/config.yml
 ---
 version: 2.1
 jobs:
- Publish-to-Pages:
-   docker:
-     - image: cimg/node:18.7.0
+  Publish-to-Pages:
+    docker:
+      - image: cimg/node:18.7.0
 
-   steps:
-     - checkout
-     # Run your project's build step
-     - run: npm install && npm run build
-     # Publish with wrangler
-     - run: npx wrangler pages publish dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
+    steps:
+      - checkout
+      # Run your project's build step
+      - run: npm install && npm run build
+      # Publish with wrangler
+      - run: npx wrangler pages publish dist --project-name=<PROJECT NAME> # Replace dist with the name of your build folder and input your project name
 
 workflows:
- Publish-to-Pages-workflow:
-   jobs:
-     - Publish-to-Pages
+  Publish-to-Pages-workflow:
+    jobs:
+      - Publish-to-Pages
 ```
 
 Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:18.7.0`. It first checks out the repository with the Node version specified in the image.
@@ -189,4 +189,4 @@ env:
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler v2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
