@@ -910,5 +910,4 @@ If you would like to speak directly with a Fauna expert about building your appl
 [http-status-codes]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 [worktop]: https://github.com/lukeed/worktop
 [wrangler-dev]: /workers/wrangler/cli-wrangler/commands/#dev
-[wrangler-init]: /workers/wrangler/commands/#init
 [wrangler-publish]: /workers/wrangler/cli-wrangler/commands/#publish
