@@ -12,5 +12,5 @@ To enable [Load Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traff
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Traffic** > **Load Balancing**.
-3. Click **Enable Load Balancing**.
+3. Select **Enable Load Balancing**.
 4. Choose your plan options and confirm payment.
