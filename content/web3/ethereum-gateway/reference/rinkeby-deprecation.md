@@ -7,9 +7,9 @@ layout: list
 
 # Rinkeby deprecation
 
-Though Cloudflare's Ethereum Gateway launched with support for the Rinkeby testnet, Rinkeby will not run through [The Merge](https://ethereum.org/en/upgrades/merge/) and - as a result - will no longer be a reliable staging environment for mainnet.
+Though Cloudflare's Ethereum Gateway launched with support for the Rinkeby testnet, Rinkeby did not run through [The Merge](https://ethereum.org/en/upgrades/merge/) and - as a result - will no longer be a reliable staging environment for mainnet.
 
-Cloudflare will be deprecating support for Rinkeby after January 30, 2023.
+Cloudflare will be deprecating support for Rinkeby on January 30, 2023.
 
 ## Migration
 
