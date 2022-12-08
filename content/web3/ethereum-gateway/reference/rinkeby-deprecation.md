@@ -21,13 +21,22 @@ For example, you might have been using the previous endpoints to interact with y
 ```sh
 ---
 header: Previous curl
+highlight: [1]
 ---
-$ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
+$ $ curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
+-H 'Content-Type: application/json' \
+--data '{
+    "jsonrpc":"2.0",
+    "method":"eth_getBlockByNumber",
+    "params":["0x2244", true],
+    "id":1
+    }'
 ```
 
 ```js
 ---
 header: Previous JS Fetch API
+highlight: [2]
 ---
 await fetch(
   new Request('https://web3-trial.cloudflare-eth.com/v1/rinkeby', {
@@ -52,13 +61,22 @@ To migrate away from Rinkeby, change the end of your endpoint to use another tes
 ```sh
 ---
 header: New curl
+highlight: [1]
 ---
-$ curl https://web3-trial.cloudflare-eth.com/v1/goerli -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
+$ curl https://web3-trial.cloudflare-eth.com/v1/goerli \
+-H 'Content-Type: application/json' \
+--data '{
+    "jsonrpc":"2.0",
+    "method":"eth_getBlockByNumber",
+    "params":["0x2244", true],
+    "id":1
+    }'
 ```
 
 ```js
 ---
 header: New JS Fetch API
+highlight: [2]
 ---
 await fetch(
   new Request('https://web3-trial.cloudflare-eth.com/v1/sepolia', {
