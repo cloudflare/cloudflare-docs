@@ -1133,13 +1133,6 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "z_l4_ddos": {
-          "title": "L4 DoS attacks mitigated",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Last 7 days"
         }
       }
     },
@@ -2341,7 +2334,6 @@
     "waiting_room": {
       "title": "Waiting Room",
       "link": "/waiting-room/",
-      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2349,8 +2341,7 @@
           "free": "No",
           "pro": "No",
           "biz": "Yes",
-          "ent": "Yes",
-          "ent_plus": "Yes"
+          "ent": "Yes"
         },
         "b_rooms": {
           "title": "Number of rooms",
@@ -2358,8 +2349,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": 1,
-          "ent_plus": "Custom"
+          "ent": "Custom"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2367,8 +2357,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "queueing_methods": {
           "title": "Queueing methods",
@@ -2376,8 +2365,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)",
-          "ent_plus": "All options"
+          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",
@@ -2385,8 +2373,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "json_response": {
           "title": "JSON-friendly response",
@@ -2394,8 +2381,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "scheduled_events": {
           "title": "Scheduled events",
@@ -2403,8 +2389,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "rules": {
           "title": "Waiting Room rules",
@@ -2412,8 +2397,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         }
       }
     }

@@ -36,7 +36,7 @@ If a live stream contains content with low visual complexity, like a slideshow p
 
 This change is particularly helpful if you're building a platform or application that allows your end users to create their own live streams, where these end users have their own streaming software and hardware that you can't control. Because this new functionality adapts based on the live video we receive, rather than just the configuration advertised by the broadcaster, even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements, causing playback quality to decrease unnecessarily. Your end users don't have to be OBS Studio experts in order to get high quality video playback.
 
-No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream.
+No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream. For more, refer to the [docs](/stream/stream-live/#bitrate-estimates-at-each-quality-level-bitrate-ladder).
 
 ## 2022-10-05
 

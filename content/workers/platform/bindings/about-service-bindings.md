@@ -29,7 +29,7 @@ To manage a Workers Service binding:
 
 1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
 2. Select your **Worker**.
-3. Go to **Settings**> **Variables** > **Service bindings** > **Edit variables**. 
+3. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
 
 ### Wrangler
 
