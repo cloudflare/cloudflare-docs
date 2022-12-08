@@ -516,20 +516,20 @@
           "ent": "Yes"
         },
         "character_limit": {
-          "title": "Character limit",
+          "title": "Name limit<br/>(everything before the colon)",
           "free": "N/A",
-          "lite": "20 characters",
-          "pro": "20 characters",
-          "biz": "20 characters",
-          "ent": "20 characters"
+          "lite": "32 characters",
+          "pro": "32 characters",
+          "biz": "32 characters",
+          "ent": "32 characters"
         },
         "numeric_limit": {
-          "title": "Numeric value limit",
+          "title": "Value limit<br/>(everything after the colon)",
           "free": "N/A",
-          "lite": 100,
-          "pro": 100,
-          "biz": 100,
-          "ent": 100
+          "lite": "100 characters",
+          "pro": "100 characters",
+          "biz": "100 characters",
+          "ent": "100 characters"
         },
         "tags_per_record": {
           "title": "Tags per record",

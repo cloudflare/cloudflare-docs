@@ -16,7 +16,7 @@ These attributes are particularly useful when:
 
 - Multiple teams are managing DNS records within the same zone.
 - Your zone contains a large number of DNS records.
-- You need to search through your DNS records.
+- You want to filter your DNS records based on matching attributes (for example, when they are managed by the same team or used for the same application).
 
 {{<Aside type="note">}}
 
@@ -28,7 +28,7 @@ The information in record attributes will not impact DNS record resolution or pr
 
 ## Availability
 
-Currently, comments and tags are only supported for [full](/dns/zone-setups/full-setup/) and [partial zones](/dns/zone-setups/partial-setup/).
+Comments and tags are only supported for [full](/dns/zone-setups/full-setup/) and [partial zones](/dns/zone-setups/partial-setup/).
 
 ### Record comments
 
@@ -42,7 +42,7 @@ Currently, comments and tags are only supported for [full](/dns/zone-setups/full
 
 ## Add or edit record attributes
 
-Create or edit record attributes just like any other aspect of a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+Create or edit record attributes just like any other aspect of [DNS records](/dns/manage-dns-records/how-to/create-dns-records/), whether through the dashboard or API.
 
 You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records.
 
@@ -52,8 +52,8 @@ You can also add or edit attributes by [exporting and re-importing](/dns/manage-
 
 ### Comments
 
-Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wiki/Graphic_character), meaning that they are case sensitive and do not have any character limitations. However, comments do not support newline (`\n`) or control (`\r`) characters.
+Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wiki/Graphic_character), meaning that they are case sensitive and do not have any character limitations. However, comments do not support newline (`\n`) or carriage return (`\r`) characters.
 
 ### Tags
 
-Tags are treated as an array of `name:value` pairs, meaning that tags are not case sensitive and tag names can only contain letters, numbers, `-`, and `_`.
+Tags are treated as an array of `name:value` pairs, meaning that tags are not case sensitive and tag names can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.
