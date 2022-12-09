@@ -82,4 +82,4 @@ Neither the key nor the decrypted payload will be stored by Cloudflare.
 
 - Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 
-- All alphanumeric characters in the log will be redacted. For example, `123-45-6789` will become `XXX-XX-XXXX`.
+- All sensitive, DLP-matched alphanumeric characters in the log will be redacted. For example, `123-45-6789` will become `XXX-XX-XXXX`.
