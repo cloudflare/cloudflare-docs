@@ -6,6 +6,12 @@ weight: 11
 
 # Changelog
 
+## 2022-12-08
+
+### Faster mp4 downloads of live recordings
+
+Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
+
 ## 2022-11-07
 
 ### Deprecating the "per-video" Analytics API
