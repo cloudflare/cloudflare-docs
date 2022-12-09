@@ -115,11 +115,11 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
+    ![Team name used to configure the WARP app on a desktop device.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+![Gateway with WARP enabled in the Teams workflow.](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Test policy
 
