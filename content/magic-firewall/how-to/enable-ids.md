@@ -8,7 +8,7 @@ weight: 5
 
 Cloudflare's IDS takes advantage of the threat intelligence powered by our global network and extends the capabilities of the Cloudflare Firewall to monitor and protect your network from malicious actors.
 
-To start using the IDS setup a new ruleset in the `magic-transit-ids-managed` phase with a rule which is enabled.
+To start using IDS, first create a new ruleset in the `magic-transit-ids-managed` phase with a rule which is enabled.
 
 ## Create a new ruleset
 
