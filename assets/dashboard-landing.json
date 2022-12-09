@@ -471,7 +471,7 @@
           "title": "IP Access Rules"
         },
         {
-          "url_path": "/waf/analytics/",
+          "url_path": "/waf/security-events/",
           "title": "Security Events"
         },
         {
