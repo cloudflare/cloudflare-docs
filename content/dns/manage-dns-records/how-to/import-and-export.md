@@ -74,17 +74,17 @@ When exporting or importing a zone file, Cloudflare formats [comments and tags](
 header: Example zone file
 ---
 ; Only tags
-d.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=awesome
-a.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=tag1,tag2:value2,tag3:"value,with,commas"
+a.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=awesome
+b.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=tag1,tag2:value2,tag3:"value,with,commas"
 
 ; Only a comment
 c.example.com.  60  IN  A   1.1.1.1 ; just a comment without tags
-e.example.com.  60  IN  A   1.1.1.1 ; this comment contains cf_tags= as text cf_tags=
+d.example.com.  60  IN  A   1.1.1.1 ; this comment contains cf_tags= as text cf_tags=
 
 ; Comments and tags
-f.example.com.  60  IN  A   1.1.1.1 ; simple example cf_tags=important,ticket:RM-12308
-g.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,tag2:value2,tag-without-value,another-tag-without-value,tag-with-quoted-value:"because of the comma, quotes are needed"
+e.example.com.  60  IN  A   1.1.1.1 ; simple example cf_tags=important,ticket:RM-12308
+f.example.com.  60  IN  A   1.1.1.1 ; this is the comment cf_tags=tag1:value1,tag2:value2,tag-without-value,another-tag-without-value,tag-with-quoted-value:"because of the comma, quotes are needed"
 
 ; Neither attribute
-h.example.com.  60  IN  A   1.1.1.1
+g.example.com.  60  IN  A   1.1.1.1
 ```

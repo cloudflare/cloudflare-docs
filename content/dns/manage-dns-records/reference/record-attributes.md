@@ -42,7 +42,7 @@ Comments and tags are only supported for [full](/dns/zone-setups/full-setup/) an
 
 ## Add or edit record attributes
 
-Create or edit record attributes just like any other aspect of [DNS records](/dns/manage-dns-records/how-to/create-dns-records/), whether through the dashboard or API.
+Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record).
 
 You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records.
 
@@ -56,4 +56,4 @@ Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wi
 
 ### Tags
 
-Tags are treated as an array of `name:value` pairs, meaning that tag names are not case sensitive and tag names can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.
+Tags are treated as an array of `name:value` pairs, meaning that tag names are not case sensitive and can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.
