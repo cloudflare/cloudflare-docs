@@ -58,7 +58,7 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
 
-|  Finding                                             | Severity |
+|  Finding                                            | Severity |
 |-----------------------------------------------------|----------|
 | Microsoft File Publicly Accessible Read and Write   | Critical |
 | Microsoft File Publicly Accessible Read Only        | High     |
