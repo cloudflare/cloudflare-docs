@@ -4310,11 +4310,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     border-left: none;
     border-top: none;
   }
-}
 
-.DocsSearch--input-wrapper:focus-within {
-  --highlight-opacity: 0.2;
-  background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+  .DocsSearch--input-wrapper:focus-within {
+    --highlight-opacity: 0.2;
+    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+  }
 }
 
 @media (min-width: 1025px) {

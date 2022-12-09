@@ -4839,6 +4839,13 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     height: 100%
 }
 
+@media (min-width: 769px) {
+.DocsSearch--input-wrapper:focus-within {
+    --highlight-opacity: 0.2;
+    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+  }
+}
+
 .DocsSearch--input {
     color: inherit;
     width: 100%;
