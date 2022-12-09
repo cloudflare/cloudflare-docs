@@ -87,7 +87,7 @@ spec:
         - cloudflared
         - tunnel
         # In a k8s environment, the metrics server needs to listen outside the pod it runs on. 
-        # The address `0.0.0.0:2000` allows any pod in the namespace.
+        # The address 0.0.0.0:2000 allows any pod in the namespace.
         - --metrics
         - 0.0.0.0:2000
         - run
