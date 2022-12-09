@@ -11,7 +11,7 @@ For example, if you want to integrate with a weather API, you can make a fetch r
 
 To make the fetch request, you can use the following code snippet:
 
-```
+```js
 async function handleRequest(request) {
   // Make the fetch request to the third party API endpoint
   const response = await fetch('https://weather-api.com/endpoint', {
@@ -29,8 +29,22 @@ async function handleRequest(request) {
 }
 ```
 
-Many APIs require authentication. You can store the necessary auth keys and secrets using encrypted environment variables in dashboard and API, or use [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) from the wrangler CLI. Then, you can reference these secrets from your Worker.
+## Authentication
+Many APIs require authentication. If your API requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
 
+```
+wrangler secret put SECRET_NAME
+```
+
+Then, you can retrieve the secret value in your code using the following code snippet:
+
+```js
+const secretValue = env.SECRET_NAME;
+```
+
+You can then use the secret value to authenticate with the external service. For example, if the external service requires an API key for authentication, you can include it in your request headers.
+
+## Tips
 You can also use the Cache API to cache data from the third party API, allowing you to optimize cacheable requests made to the API. Integrating with third party APIs from Cloudflare Workers is a simple and efficient way to add additional functionality and features to your application.
 
 We recommend using [Custom Domains](/workers/platform/triggers/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.
