@@ -8,6 +8,7 @@ weight: 2
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
+- [`docs](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
@@ -49,6 +50,21 @@ Flags:
 
 ---
 
+## docs 
+
+Open the docs in your default browser.
+
+```sh
+$ wrangler docs [COMMAND] 
+```
+
+{{<definitions>}}
+
+- `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
+
+{{</definitions>}}
+
 ## init
 
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
@@ -66,7 +82,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-    {{</definitions>}}
+{{</definitions>}}
 
 ---
 
