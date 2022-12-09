@@ -56,4 +56,4 @@ Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wi
 
 ### Tags
 
-Tags are treated as an array of `name:value` pairs, meaning that tags are not case sensitive and tag names can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.
+Tags are treated as an array of `name:value` pairs, meaning that tag names are not case sensitive and tag names can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.

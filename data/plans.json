@@ -488,11 +488,11 @@
         },
         "character_limit": {
           "title": "Character limit",
-          "free": "50 characters",
-          "lite": "250 characters",
-          "pro": "250 characters",
-          "biz": "250 characters",
-          "ent": "250 characters"
+          "free": 50,
+          "lite": 250,
+          "pro": 250,
+          "biz": 250,
+          "ent": 250
         },
         "number_per_record": {
           "title": "Comments per record",
@@ -516,20 +516,20 @@
           "ent": "Yes"
         },
         "character_limit": {
-          "title": "Name limit<br/>(everything before the colon)",
+          "title": "Name character limit<br/>(everything before the colon)",
           "free": "N/A",
-          "lite": "32 characters",
-          "pro": "32 characters",
-          "biz": "32 characters",
-          "ent": "32 characters"
+          "lite": 32,
+          "pro": 32,
+          "biz": 32,
+          "ent": 32
         },
         "numeric_limit": {
-          "title": "Value limit<br/>(everything after the colon)",
+          "title": "Value character limit<br/>(everything after the colon)",
           "free": "N/A",
-          "lite": "100 characters",
-          "pro": "100 characters",
-          "biz": "100 characters",
-          "ent": "100 characters"
+          "lite": 100,
+          "pro": 100,
+          "biz": 100,
+          "ent": 100
         },
         "tags_per_record": {
           "title": "Tags per record",
