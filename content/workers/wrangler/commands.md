@@ -8,7 +8,7 @@ weight: 2
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
-- [`docs](#docs) - Open this page in your default browser.
+- [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
