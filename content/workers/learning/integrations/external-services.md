@@ -6,7 +6,14 @@ title: External Services
 # External Services
 Many external services provide libraries and SDKs to interact with their APIs. Many Node-compatible libraries work on Workers right out of the box. Some, which implement `fs`, `http/net`, or access the browser `window` don't directly translate to the Workers runtime, which is v8-based. For a list of working packages, see [Works on Workers](https://workers.cloudflare.com/works).
 
-{{<iframe class="airtable-embed" src="https://airtable.com/embed/shrTR0QCusxZoCgiJ?backgroundColor=yellow&amp;viewControls=on" frameborder="0" width="100%" height="800" style="background:transparent;border:1px solid #ccc"></iframe>}}
+<iframe 
+    class="airtable-embed" 
+    src="https://airtable.com/embed/shrTR0QCusxZoCgiJ?backgroundColor=yellow&viewControls=on" 
+    frameborder="0" 
+    width="100%" 
+    height="800" 
+    style="background:transparent;border:1px solid #ccc"
+    allowFullScreen></iframe>
 
 ## Authentication
 Many services require authentication. If your service requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
