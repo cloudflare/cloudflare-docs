@@ -11,19 +11,19 @@ title: Build a globally distributed full-stack app using Pages Functions, Next.j
 
 ## Introduction
 
-In this tutorial, you will build a globally distributed full stack application using Cloudflare Pages (for the front end), Pages Functions (the backend), and Fauna as the database. You will use the Next.js  framework to tie all these services together in a cohesive and scalable codebase.
+In this tutorial, you will build a globally distributed full-stack application using Cloudflare Pages (for the front end), Pages Functions (the backend), and Fauna as the database. You will use the Next.js framework to tie all these services together in a cohesive and scalable codebase.  
 
 ## Prerequisites
 
 - A recent version of [Node and NPM](https://docs.npmjs.com/getting-started) on your computer
-- A [Fauna](https://fauna.com/) account
 - A [Cloudflare](https://www.cloudflare.com/) account
+- A [Fauna](https://fauna.com/?utm_source=[graphql/aws/cloudflare]&utm_medium=fauna_workshop&utm_campaign=fauna_workshop) account
 
 ## What is a globally distributed app?
 
 Before you continue, let’s explore what a globally distributed app is and why you might want to build one. A globally distributed app always runs closest to the end user, thus making the application response time extremely fast.
 
-Cloudflare [Pages](https://developers.cloudflare.com/pages/) and Pages Functions run your code closest to the end user’s geographical location without you maintaining a server. While Fauna being a globally distributed database system, ensures that data reads and writes always happen on the closest replicas of your database. Thus this combination of Cloudflare Workers, Pages, and Fauna allows you to build highly performant apps with very low latency. 
+Cloudflare [Pages](https://developers.cloudflare.com/pages/) and Pages Functions will run closest to the end user without you maintaining a server. Fauna is a globally distributed database system, that ensures data reads and writes always happen on the closest replicas of your database. This combination of Pages Functions and Fauna allows you to build highly performant apps with very low latency.
 
 ## Create a new Project
 
@@ -33,11 +33,13 @@ Create a new Next.js project by running the following command.
 $ npx create-next-app <your-app-name>
 ```
 
-> 💡 Info: When you create API routes in your Next.js application (i.e. under `/pages/api` folder) and deploy them to Cloudflare each of these functions become individual Cloudflare Workers function on the Edge.* 
+{{<Aside>}}
+When you create API routes in your Next.js application (i.e. under `/pages/api` folder) these will be turned into a Pages Function which will run globally on Cloudflare's network.
+{{</Aside>}}
 
 ### Configure the project to use the Edge Runtime
 
-Next, enable edge-runtime for your API routes. Open the `pages/api/hello.js` file. This is an API route. When deployed this API route will become an edge function, however for this to work you have the add the following code. 
+Next, enable edge-runtime for your API routes. Open the `pages/api/hello.js` file. This is an API route. When deployed this API route will become a Pages Function, however for this to work you have the add the following code.
 
 ```jsx
 // pages/api/hello.js
@@ -69,7 +71,7 @@ $ npx @cloudflare/next-on-pages --experimental-minify
 
 You will notice the following output for a successful build.
 
-![Build output](/pages/tutorials/build-a-fullstack-app-with-pages-function/build-output.png)
+![Build output](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/build-output.png)
 
 Notice that a folder named `.vercel/output` is generated. Inside you can find the generated Clourflare Workers and Pages functions.
 
@@ -95,17 +97,17 @@ If you haven’t already signed up for a free Cloudflare Pages account, [create 
 1. In the build settings select `Next.js` you can leave everything else as default.
 
 
-![Configure deployment](/pages/tutorials/build-a-fullstack-app-with-pages-function/configure-build.png)
+![Configure deployment](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/configure-build.png)
 
 4. In the environment variable section add a new variable called `NODE_VERSION` and add the node version of your project. **You require a node version 14 or greater.**
 
-![Define Node Version in cloud flare configuration](/pages/tutorials/build-a-fullstack-app-with-pages-function/node_version.png)
+![Define Node Version in cloud flare configuration](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/node_version.png)
 
 5. Next, go to **Settings > Functions** and under compatibility flags add the following flags.
 
 `streams_enable_constructors`, `transformstream_enable_standard_constructor`. 
 
-![adding compatibility flags](/pages/tutorials/build-a-fullstack-app-with-pages-function/compatibility.png)
+![adding compatibility flags](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/compatibility.png)
 
 *These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.*
 
@@ -124,23 +126,23 @@ Info:  *By default, Fauna allows you to save your data globally closer to your u
 
 *You also have the option to save data into privately distributed nodes with [Virtual Private Fauna.](https://www.globenewswire.com/news-release/2022/11/17/2558259/0/en/Fauna-Launches-Virtual-Private-Offering-of-its-Serverless-Database-for-the-Most-Demanding-Enterprise-Applications.html)*
 
-![Create a database](/pages/tutorials/build-a-fullstack-app-with-pages-function/create_database.png)
+![Create a database](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/create_database.png)
 
 3. Next, select *create new collection*. 
 
-![Create a new collection](/pages/tutorials/build-a-fullstack-app-with-pages-function/new_collection.png)
+![Create a new collection](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_collection.png)
 
 4. Create a new Collection called `Products`.
 
-![Create a new Collection called Products](/pages/tutorials/build-a-fullstack-app-with-pages-function/new_prod_collection.png)
+![Create a new Collection called Products](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_prod_collection.png)
 
 5. You would require a secret to query your database from your application. Navigate to *Security > Keys* and select *New Key*.
 
-![New Key](/pages/tutorials/build-a-fullstack-app-with-pages-function/new_key.png)
+![New Key](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_key.png)
 
 6. Select `Server` Role from the dropdown. Give your key a name and select *Save*. When the key is generated save it into a secure file.
 
-![New Key Role](/pages/tutorials/build-a-fullstack-app-with-pages-function/new_key_conf.png)
+![New Key Role](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_key_conf.png)
 
 7. For local development create a new file called `.env` in the root of your project and add the following code. Make sure you add `.env` to your git ignore file so it doesn’t get committed.
 
@@ -150,7 +152,7 @@ FAUNA_SECRET=fnAExxxx
 
 8. Finally, head back to Cloudflare Pages settings and add a new environment variable called FAUNA_SECRET. 
 
-![Fauna Secret](/pages/tutorials/build-a-fullstack-app-with-pages-function/fauna_secret.png)
+![Fauna Secret](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/fauna_secret.png)
 
 ## Build the Next.js application
 
@@ -405,17 +407,17 @@ export const config = {
 }
 
 export async function getServerSideProps() {
-  const fauna_secret = process.env.FAUNA_SECRET;
+  const faunaSecret = process.env.FAUNA_SECRET;
   const products = await getProducts();
   return {
     props: {
       products,
-      fauna_secret
+      faunaSecret
     },
   }
 }
 
-export default function Home({ products, fauna_secret }) {
+export default function Home({ products, faunaSecret }) {
   return (
     <div className={styles.container}>
       <h1>Products</h1>
@@ -445,4 +447,4 @@ The compute and database operations are almost the same across the globe. The po
 
 ## Where to go from here
 
-If you are looking to build something more practical and hands on we have created a self paced workshop on “How to build a global application with Cloudflare and Fauna”. You can check this out [here](https://github.com/fauna-labs/fauna-workers). 
+If you are looking to build something more practical and hands on we have created a self paced workshop on "How to build a global application with Cloudflare and Fauna". You can check this out [here](https://github.com/fauna-labs/fauna-workers).
