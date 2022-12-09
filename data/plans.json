@@ -2362,6 +2362,22 @@
           "ent": "1,000,000 HTTP requests"
         }
       }
+    },
+    "polygon": {
+      "title": "Polygon Gateways",
+      "link": "/web3/polygon-gateway/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
     }
   },
   "zaraz": {
