@@ -5,7 +5,7 @@ title: Fortinet
 
 # Fortinet
 
-This tutorial provides a configuration example for using FortiOS (ver 6.x) along with Magic WAN.
+This tutorial provides a configuration example for using FortiOS (ver 6.x) along with Magic WAN. You can choose to configure Magic WAN with Fortigate using Policy Based IPSec, Route Based IPSec, or GRE, and all three options are listed below.
 
 ## IPsec – Route based configuration
 
