@@ -7,7 +7,7 @@ title: Databases
 
 You can use Cloudflare Workers integrations to connect your code to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, Planetscale, Prisma, and more.
 
-To use Cloudflare Workers integrations, you will need to install the relevant packages for the databases you want to use, and store secrets using encrypted environment variables.
+To use Cloudflare Workers integrations, you will need to install the relevant packages for the databases you want to use, and store secrets using encrypted environment variables (or use [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) from the wrangler CLI).
 
 {{<table-wrap>}}
 
