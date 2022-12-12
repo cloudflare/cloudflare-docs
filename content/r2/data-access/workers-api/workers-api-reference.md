@@ -199,16 +199,16 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 - {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
 
-  - The key for the multipart upload.
+  - The `key` for the multipart upload.
 
 - {{<code>}}uploadId{{<param-type>}}string{{</param-type>}}{{</code>}}
 
-  - The uploadId for the multipart upload.
+  - The `uploadId` for the multipart upload.
 
 - {{<code>}}uploadPart(partNumber{{<param-type>}}number{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2UploadedPart{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Uploads a single part with the specified part number to this multipart upload.
-  - Returns an `R2UploadedPart` object containing the etag and partNumber. These `R2UploadedPart` objects are required when completing the multipart upload.
+  - Returns an `R2UploadedPart` object containing the `etag` and `partNumber`. These `R2UploadedPart` objects are required when completing the multipart upload.
 
 
 - {{<code>}}abort() {{<type>}}Promise\<{{<param-type>}}void{{</param-type>}}>{{</type>}}{{</code>}}
@@ -498,6 +498,6 @@ An `R2UploadedPart` object represents a part that has been uploaded. `R2Uploaded
 
 - {{<code>}}etag{{</code>}} {{<param-type>}}string{{</param-type>}}
 
-  - The etag of the part.
+  - The `etag` of the part.
 
 {{</definitions>}}
