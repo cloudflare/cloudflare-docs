@@ -76,4 +76,6 @@ If your email architecture requires outbound messages to traverse your email gat
 
 If your email architecture does not include an outbound gateway, you can skip this step and proceed to [Configure journal rule](/email-security/deployment/api/setup/office365-journaling#2-configure-journal-rule).
 
+## 4. Manual message retraction
 
+{{<render file="_manual-retraction.md">}}
