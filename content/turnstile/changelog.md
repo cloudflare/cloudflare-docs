@@ -8,7 +8,7 @@ weight: 10
 
 ## 2022-12-12
 
-- [`POST /siteverify`](/tunrstile/get-started/server-side-validation) supports JSON requests now
+- [`POST /siteverify`](/turnstile/get-started/server-side-validation/) supports JSON requests now
 
 ## 2022-11-11
 
