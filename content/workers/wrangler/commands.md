@@ -52,7 +52,7 @@ Flags:
 
 ## docs 
 
-Open the docs in your default browser.
+Open the Cloudflare developer documentation in your default browser.
 
 ```sh
 $ wrangler docs [COMMAND] 
@@ -61,7 +61,7 @@ $ wrangler docs [COMMAND]
 {{<definitions>}}
 
 - `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
+  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
 
 {{</definitions>}}
 
