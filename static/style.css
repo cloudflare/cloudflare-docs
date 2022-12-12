@@ -4314,7 +4314,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   .DocsSearch--input-wrapper:focus-within {
     --highlight-opacity: 0.2;
     background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
-    color: black;
   }
 
   .DocsSearch--input:focus::-webkit-input-placeholder {
