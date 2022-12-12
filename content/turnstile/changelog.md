@@ -6,6 +6,9 @@ weight: 10
 
 # Changelog
 
+## 2022-11-11
+
+- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior
 
 ## 2022-10-28
 
