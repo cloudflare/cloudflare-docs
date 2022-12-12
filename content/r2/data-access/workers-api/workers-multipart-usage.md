@@ -18,10 +18,11 @@ This guide assumes you have set up the [R2 binding](/workers/platform/bindings/)
 
 The following example Worker exposes an HTTP API which enables applications to use the multipart API through the Worker.
 
-In this example, each request is routed based on the HTTP method and the action request parameter.
-As your Worker becomes more complicated, consider utilizing a serverless web framework such as [Hono](https://honojs.dev/) to handle the routing for you.
+In this example, each request is routed based on the HTTP method and the action request parameter. As your Worker becomes more complicated, consider utilizing a serverless web framework such as [Hono](https://honojs.dev/) to handle the routing for you.
 
-The following example Worker includes any new information about the state of the multipart upload in the response to each request. For the request which creates the multipart upload, the `uploadId` is returned. For requests uploading a part, the part number and etag are returned. In turn, the client keeps track of this state, and includes the uploadId in subsequent requests, and the etag and part number of each part when completing a multipart upload.
+The following example Worker includes any new information about the state of the multipart upload in the response to each request. For the request which creates the multipart upload, the `uploadId` is returned. For requests uploading a part, the part number and `etag` are returned. In turn, the client keeps track of this state, and includes the uploadId in subsequent requests, and the `etag` and part number of each part when completing a multipart upload.
+
+Add the following code to your project's `index.js` file and replace `MY_BUCKET` with your bucket's name:
 
 ```js
 interface Env {
@@ -179,24 +180,25 @@ export default {
 };
 ```
 
-After publishing this worker with `wrangler publish`, you can use this worker to perform multipart uploads in a variety of ways.
-You can send requests from your existing application to this worker to perform uploads, or you can use a script to upload files through this worker.
-The next section shows an example of a Python script which uploads a chosen file on your machine to this worker.
+After you have updated your Worker with the above code, run `wrangler publish` . 
 
-## Perform a multipart upload using the Worker
+You can now use this Worker to perform multipart uploads. You can either send requests from your existing application to this Worker to perform uploads or use a script to upload files through this Worker.
 
-This example application uploads a local file to the Worker in multiple parts.
-It uses Python's built-in `ThreadPoolExecutor` to parallelize the uploading of parts to the Worker, which increases upload speeds.
-HTTP requests to the Worker are made with the [requests](https://pypi.org/project/requests/) library.
+The next section is optional and shows an example of a Python script which uploads a chosen file on your machine to your Worker.
 
-Utilizing the multipart API in this way also allows you to use the Worker to upload files larger than the [Workers request body size limit](/workers/platform/limits#request-limits).
-The uploading of individual parts is still subject to this limit.
+## Perform a multipart upload with your Worker (optional)
 
-Pass the file you want to upload as an argument when running this script: `python3 mpuscript.py myfile`.
-That will upload the file `myfile` from your machine to your bucket through the Worker.
+This example application uploads a local file to the Worker in multiple parts. It uses Python's built-in `ThreadPoolExecutor` to parallelize the uploading of parts to the Worker, which increases upload speeds. HTTP requests to the Worker are made with the [requests](https://pypi.org/project/requests/) library.
+
+Utilizing the multipart API in this way also allows you to use your Worker to upload files larger than the [Workers request body size limit](/workers/platform/limits#request-limits). The uploading of individual parts is still subject to this limit.
+
+Save the following code on a file named `myfile` on your local machine. Pass the file as an argument when running this script: `python3 mpuscript.py myfile`. This will upload the file `myfile` from your machine to your bucket through the Worker.
 
 
 ```python
+---
+filename: myfile
+---
 import math
 import os
 import requests
@@ -269,15 +271,10 @@ upload_file(worker_endpoint, filename, partsize)
 
 ## State management
 
-The stateful nature of multipart uploads does not easily map to the usage model of Workers, which are inherently stateless.
-In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application.
-This is different from multipart uploads in a Worker, which will often be completed over multiple invocations of that Worker.
-This makes state management more challenging. 
+The stateful nature of multipart uploads does not easily map to the usage model of Workers, which are inherently stateless. In a normal multipart upload, the multipart upload is usually performed in one continuous execution of the client application. This is different from multipart uploads in a Worker, which will often be completed over multiple invocations of that Worker. This makes state management more challenging. 
 
 To overcome this, the state associated with a multipart upload, namely the `uploadId` and which parts have been uploaded, needs to be kept track of somewhere outside of the Worker.
 
-In the example worker and python application described in this guide, the state of the multipart upload is tracked in the client application which sends requests to the Worker, with the necessary state contained in each request.
-Keeping track of the multipart state in the client application enables maximal flexibility and allows for parallel and unordered uploads of each part.
+In the example Worker and Python application described in this guide, the state of the multipart upload is tracked in the client application which sends requests to the Worker, with the necessary state contained in each request. Keeping track of the multipart state in the client application enables maximal flexibility and allows for parallel and unordered uploads of each part.
 
-When keeping track of this state in the client is impossible, alternative designs can be considered.
-For example, you could track the uploadId and which parts have been uploaded in a Durable Object or other database.
+When keeping track of this state in the client is impossible, alternative designs can be considered. For example, you could track the `uploadId` and which parts have been uploaded in a Durable Object or other database.
