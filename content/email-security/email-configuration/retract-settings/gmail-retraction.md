@@ -36,7 +36,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Enable APIs and services](/email-security/static/email-retraction/gmail/step5-enable-apis.png)
 
-6. You will need to enable the Admin SDK API and the Gmail API. On the API Library, locate the Google Workspace section. Then, select **View All** to access all the available APIs for Google Workspace.
+6. You will need to enable the Admin SDK API and the Gmail API. On the API Library, locate the **Google Workspace** section. Then, select **View All** to access all the available APIs for Google Workspace.
 
     ![Find the View all link to access the Admin SDK API and Gmail API](/email-security/static/email-retraction/gmail/step6-api-library.png)
 
@@ -64,7 +64,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Select Create credentials followed by Service account](/email-security/static/email-retraction/gmail/step12-credentials.png)
 
-13. In **Service account details** provide following details:
+13. In **Service account details** provide the following information:
     - **Service account name**: `Message Retraction Service Account`
     - **Service account ID**: This value is automatically generated.
     - **Service account description**: A description for this service. For example, `Area 1 Message Retraction`
@@ -73,7 +73,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
  
     ![Provide the details to create the service account](/email-security/static/email-retraction/gmail/step13-service-account-details.png)
 
-14. In **Grant this service account access to project**, select the **Select a role** drop-down. Then, select **Project** on the left column, and **Owner** on the right column.
+14. In **Grant this service account access to project**, select the **Select a role** drop-down menu. Then, select **Project** on the left column, and **Owner** on the right column.
 
     ![Find the project owner options, in the Grant this service account access to project section](/email-security/static/email-retraction/gmail/step14-project-owner.png)
 
@@ -85,11 +85,11 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Select your newly-created service account to continue](/email-security/static/email-retraction/gmail/step16-service-accounts.png)
 
-17. In **Detail**, take note of the **Unique ID**. Then, select **SHOW ADVANCED SETTINGS**.
+17. In **Details**, take note of the **Unique ID**. Then, select **SHOW ADVANCED SETTINGS**.
 
     ![Take note of the Unique ID code, and then select Show advanced settings](/email-security/static/email-retraction/gmail/step17-detail.png)
 
-{{<Aside type="note">}}Write down the Unique ID value. This information will be required for the configuration of domain-wide delegation, in the Google Workspace configuration in the next step.{{</Aside>}}
+{{<Aside type="note" header="Note">}}Write down the **Unique ID** value. This information will be required in the next step, for the configuration of domain-wide delegation in the Google Workspace configuration.{{</Aside>}}
 
 18. Select **VIEW GOOGLE WORKSPACE ADMIN CONSOLE** to configure the domain-wide delegation. This will open a new window to the Google admin console.
 
@@ -135,22 +135,22 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Select JSON as the key type](/email-security/static/email-retraction/gmail/step26-json-key.png)
 
-{{<Aside type="note">}}Save this key in a secure location as it allows access to your cloud resources. You will need to share it with Area 1 as part of the configuration process in the next step.{{</Aside>}}
+{{<Aside type="warning" header="Important">}}Save this key in a secure location as it allows access to your cloud resources. You will need to share it with Area 1 as part of the configuration process in the next step.{{</Aside>}}
 
 ## 2. Share the service account JSON key with Area 1
 
-You need to upload the private key generated in the previous step to Area 1. This is needed to execute retractions on your Gmail inboxes.
+You have to upload the private key generated in the previous step to Area 1. This is needed to execute retractions on your Gmail inboxes.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
-2. Go to **Email Configuration** > **RETRACTION SETTINGS** > **Authorize Gmail**.
+2. Go to **Email Configuration** > **RETRACT SETTINGS** > **Authorize Gmail**.
 
     ![Go to Authorize Gmail in your Area 1 dashboard](/email-security/static/email-retraction/gmail/step2-authorize-gmail.png)
 
 3. Select **New Authorization** and configure the following settings:
-    - Select **AUTHORIZATION DATA (JWT)**. Find and upload your JSON private key.
+    - Select **AUTHORIZATION DATA (JWT)**, and find and upload your JSON private key.
     - Under **Domains**, specify which domain this private key belongs to.
-    - Select **Save** to save the configuration
+    - Select **Save** to save the configuration.
 
     ![Select New authorization and configure its settings](/email-security/static/email-retraction/gmail/step3-private-key.png)
 
@@ -164,13 +164,15 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
-2. Go to **Email Configuration** > **DOMAIN & ROUTING** > **Domain** to verify the position.
+2. Go to **Email Configuration** > **DOMAINS & ROUTING**.
 
-    ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step2-hop-position.png)
+3. Select the three-dots menu on the domain you want to verify the position, and then > **Edit**.
 
-3. For standalone Gmail only deployments, the value should be set to `2`. To update the hop count, select the three dots menu on the domain you want to update. Then, adjust the **Hops** count to `2`, and select **Update Domain**.
+    ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step3-hop-position.png)
 
-    ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step3-hops-count.png)
+4. For standalone Gmail only deployments, the value should be set to `2`. If it is not, adjust the **Hops** count to `2`, and select **Update Domain**.
+
+    ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step4-hops-count.png)
 
 {{<Aside type="note">}}If you have an existing secure email gateway (SEG) deployed as the MX record, you will need to adjust the hop count accordingly.{{</Aside>}}
 
