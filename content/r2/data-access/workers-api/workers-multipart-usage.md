@@ -192,12 +192,12 @@ This example application uploads a local file to the Worker in multiple parts. I
 
 Utilizing the multipart API in this way also allows you to use your Worker to upload files larger than the [Workers request body size limit](/workers/platform/limits#request-limits). The uploading of individual parts is still subject to this limit.
 
-Save the following code on a file named `myfile` on your local machine. Pass the file as an argument when running this script: `python3 mpuscript.py myfile`. This will upload the file `myfile` from your machine to your bucket through the Worker.
+Save the following code in a file named `mpuscript.py` on your local machine. Change the `worker_endpoint variable` to where your worker is deployed. Pass the file you want to upload as an argument when running this script: `python3 mpuscript.py myfile`. This will upload the file `myfile` from your machine to your bucket through the Worker.
 
 
 ```python
 ---
-filename: myfile
+filename: mpuscript.py
 ---
 import math
 import os
