@@ -9,7 +9,7 @@ To create a routing rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account.
-3. Go to **HTTP Applications**.
+3. Go to **Version Management**.
 4. Select an existing application.
 5. Click **Routing Rules**.
 6. Click **Create Routing Rule**.

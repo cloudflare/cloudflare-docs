@@ -9,7 +9,7 @@ When you create a new HTTP application, Cloudflare copies all the configuration 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account.
-3. Go to **HTTP Applications**.
+3. Go to **Version Management**.
 4. Click **Create an Application**.
 5. Enter an **Application name**.
 6. Select a website to copy its configuration for the first version of your application.
