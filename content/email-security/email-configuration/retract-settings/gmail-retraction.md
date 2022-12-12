@@ -156,25 +156,7 @@ You need to upload the private key generated in the previous step to Area 1. Thi
 
 ## 3. Configure auto-retraction actions in Area 1
 
-In the Area 1 Portal, you will need to configure the auto-retraction behavior for [each disposition](/email-security/reference/dispositions-and-attributes/). Automatic retraction is not available when Area 1 is deployed as MX record.
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
-
-2. Go to **Email Configuration** > **RETRACTION SETTINGS**.
-
-3. Select **Auto-Retract**. By default, no actions are taken against any of the dispositions. To modify the behaviors, select **Edit**.
-
-    ![Edit the auto-retract settings to change dispositions behaviors](/email-security/static/email-retraction/gmail/step3-auto-retract.png)
-
-{{<Aside type="note">}}You must be a Cloudflare Enterprise customer to access the **RETRACTION SETTINGS** configuration panel.{{</Aside>}}
-
-4. Select the appropriate remediation behavior for each disposition. Save your selection by selecting **Update Auto-retraction Settings**.
-
-    ![Update the behaviors for each disposition](/email-security/static/email-retraction/gmail/step4-update-auto-retraction.png)
-
-5. Once saved, the configuration table will be updated with your selected behaviors.
-
-    ![The table will show the updated behaviors for dispositions](/email-security/static/email-retraction/gmail/step5-updated-behaviors.png)
+{{<render file="_auto-retraction.md">}}
 
 ## 4. Adjust the hop count in Area 1
 

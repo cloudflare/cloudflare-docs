@@ -50,25 +50,7 @@ The authorization process grants Area 1 access to the Azure environment with the
 
 ## 2. Configure auto-retraction actions
 
-Now that Area 1 has been authorized to retract messages from Office 365 inboxes, you need to configure the retraction behavior for each disposition.
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon). 
-
-2. Go to **Email Configuration** > **Retraction Settings** > **Auto-Retract**.
-
-    ![Select Auto-retract to configure actions for each disposition](/email-security/static/email-retraction/o365/step2-auto-retract.png)
-
-3. By default, there are no actions configured for each disposition. Select **Edit** to modify this behavior.
-
-    ![Select Edit to configure actions](/email-security/static/email-retraction/o365/step3-nodisposition.png)
-
-4. Select the appropriate remediation behavior for each dispositions, and select **Update Auto-retraction Settings** to save your selection.
-
-    ![Choose the appropriate behavior for each disposition](/email-security/static/email-retraction/o365/step4-autoretract-settings.png)
-
-5. Once saved, the configuration table will update with the selected behaviors.
-
-    ![After saving the table will show the updated behaviors for each disposition](/email-security/static/email-retraction/o365/step5-updated-table.png)
+{{<render file="_auto-retraction.md">}}
 
 ## 3. Configure connector for delivery to Area 1 (if required)
 
