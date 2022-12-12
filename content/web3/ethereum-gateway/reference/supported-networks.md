@@ -8,7 +8,7 @@ meta:
 
 # Supported networks for Ethereum Gateway
 
-Currently, Cloudflare gateways support [interacting with](/web3/how-to/use-ethereum-gateway/) the following networks.
+Currently, Cloudflare Ethereum gateways support [interacting with](/web3/how-to/use-ethereum-gateway/) the following networks.
 
 | Network | Usage |
 | --- | --- |

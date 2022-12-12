@@ -1,11 +1,11 @@
 ---
 pcx_content_type: navigation
-title: How to
-weight: 3
+title: Reference
+weight: 2
 meta:
-  title: Web3 - How to
+  title: Reference - Polygon
 ---
 
-# How to
+# Reference
 
 {{<directory-listing>}}

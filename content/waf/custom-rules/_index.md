@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Custom rules
 weight: 3
+layout: single
 ---
 
 # Custom rules
