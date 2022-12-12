@@ -119,11 +119,13 @@ Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/ma
 
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
+- [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 #### WHEP
 
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
 - [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
+- [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
 

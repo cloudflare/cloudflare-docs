@@ -25,6 +25,7 @@ The Cloudflare Web Application Firewall (WAF) provides both automatic protection
 *   **WAF Managed Rulesets**: Enable the pre-configured Managed Rulesets to get immediate protection. These rulesets are regularly updated, offering advanced zero-day vulnerability protections. Adjust the behavior of managed rules, choosing from several possible actions.
 *   **Exposed Credential Checks**: Monitor and block use of stolen/exposed credentials for account takeover.
 *   **Security Events**: Identify and investigate security threats using an intuitive interface. Tailor your security configurations based on the activity log.
+*   **Security Analytics**: Displays information about all incoming HTTP requests, including those not affected by security measures.
 
 ## Availability
 

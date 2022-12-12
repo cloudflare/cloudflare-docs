@@ -146,7 +146,7 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ## (Optional) Enable HTTPS inspection
 
-1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.
+1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.
 
     Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
 

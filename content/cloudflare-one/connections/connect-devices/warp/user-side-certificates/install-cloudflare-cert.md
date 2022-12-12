@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Install the Cloudflare certificate
-weight: 3
+weight: 1
 ---
 
 # Install the Cloudflare certificate
@@ -12,7 +12,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+Installing the Cloudflare certificate allows you to apply [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to encrypted websites, display [custom block pages](/cloudflare-one/policies/filtering/configuring-block-page/), and more. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 
@@ -318,45 +318,52 @@ If your organization is using Firefox, the browser may need additional configura
 
 The command to install the certificate with Python on Windows automatically includes PIP and Certifi (the default certificate bundle for certificate validation).
 
-To update the bundle to include the Cloudflare certificate, run the following command:
+1. Download the Cloudflare root certificate:
 
-```sh
-$ gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
-```
+    ```bash
+    curl -o Cloudflare_CA.crt https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+    ```
+
+2. To update the bundle to include the Cloudflare certificate, run the following command:
+
+    ```bash
+    gc .\Cloudflare_CA.crt | ac C:\Python37\Lib\site-packages\pip\_vendor\certifi\cacert.pem
+    ```
 
 #### Python on Mac and Linux
 
-1. Install the `certifi` package.
+1. Install the `certifi` package:
 
-```sh
-$ pip install certifi
-```
+    ```sh
+    $ pip install certifi
+    ```
 
-2. Identify the CA store.
+2. Identify the CA store:
 
-```sh
-$ python -m certifi
-```
-
-This command will output:
-
-<!---->
-
+    ```sh
+    $ python -m certifi
     ~/Library/Python/3.7/lib/python/site-packages/certifi/cert.pem
+    ```
 
-3. Append the Cloudflare certificate to this CA Store by running:
+3. Download the Cloudflare root certificate:
 
-```sh
-$ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
-```
+    ```sh
+    $ wget https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.pem
+    ```
 
-4. If needed, configure system variables to point to this CA Store.
+4. Append the Cloudflare certificate to this CA Store by running:
 
-<!---->
+    ```sh
+    $ echo | cat - Cloudflare_CA.pem >> $(python -m certifi)
+    ```
 
-    export CERT_PATH=$(python -m certifi)
-    export SSL_CERT_FILE=${CERT_PATH}
-    export REQUESTS_CA_BUNDLE=${CERT_PATH}
+5. If needed, configure system variables to point to this CA Store:
+
+    ```sh
+    $ export CERT_PATH=$(python -m certifi)
+    $ export SSL_CERT_FILE=${CERT_PATH}
+    $ export REQUESTS_CA_BUNDLE=${CERT_PATH}
+    ```
 
 ### Git
 
@@ -394,15 +401,14 @@ This command will output:
 
 3. The `http.sslcainfo` defines the CA Certificate store. To append the Cloudflare certificate to the CA bundle, update `http.sslcainfo`.
 
-```sh
-$ gc .\Cloudflare_CA.crt | ac $(git config --get http.sslcainfo)
+```git
+gc .\Cloudflare_CA.pem | ac $(git config --get http.sslcainfo)
 ```
 
 #### Git on Mac and Linux
 
 Configure Git to trust the Cloudflare certificate.
 
-<!---->
 ```sh
 $ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 ```

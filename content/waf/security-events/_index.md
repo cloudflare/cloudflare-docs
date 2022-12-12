@@ -1,8 +1,7 @@
 ---
 title: Security Events
 pcx_content_type: concept
-type: overview
-weight: 10
+weight: 11
 layout: single
 ---
 
@@ -10,7 +9,7 @@ layout: single
 
 Security Events allows you to manage and visualize threats and helps you tailor your security configurations.
 
-Users on a Free plan can view summarized security events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features and any recent threats against your zone.
+Users on a Free plan can view summarized security events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your zone.
 
 ## Main features
 
@@ -18,7 +17,6 @@ Users on a Free plan can view summarized security events by date in the **Activi
 *   **Events by service**: Lists the security-related activity per security feature (for example, WAF, Firewall Rules, API Shield).
 *   **Top events by source**: Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
 *   **Activity log**: Summarizes security events by date to show the action taken and the applied Cloudflare security product.
-*   **Denial-of-service attacks mitigated**: Counts automatically mitigated Layer 4 attacks blocked by Cloudflare over the last seven days.
 
 Security Events captures all traffic actioned or flagged by a Cloudflare security product, including features such as [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086).
 

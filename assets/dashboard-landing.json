@@ -403,9 +403,12 @@
           "title": "Get started with SSL/TLS"
         },
         {
-          "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/err-ssl-version-or-cipher-mismatch/24462",
+          "url_path": "/ssl/troubleshooting/version-cipher-mismatch/",
           "title": "ERR_SSL_VERSION_OR_CIPHER_MISMATCH"
+        },
+        {
+          "url_path": "/ssl/troubleshooting/too-many-redirects/",
+          "title": "Redirect loop errors"
         },
         {
           "external_link": true,
@@ -468,7 +471,7 @@
           "title": "IP Access Rules"
         },
         {
-          "url_path": "/waf/analytics/",
+          "url_path": "/waf/security-events/",
           "title": "Security Events"
         },
         {
