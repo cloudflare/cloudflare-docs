@@ -4844,6 +4844,36 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     --highlight-opacity: 0.2;
     background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
   }
+
+  .DocsSearch--input:focus::-webkit-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  .DocsSearch--input:focus:-ms-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  .DocsSearch--input:focus::placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+
+  [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  [theme="dark"] .DocsSearch--input:focus::placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
 }
 
 .DocsSearch--input {
