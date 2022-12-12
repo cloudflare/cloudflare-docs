@@ -1,8 +1,7 @@
 ---
 title: Security Events
 pcx_content_type: concept
-type: overview
-weight: 10
+weight: 11
 layout: single
 ---
 

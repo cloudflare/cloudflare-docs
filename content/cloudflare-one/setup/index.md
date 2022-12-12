@@ -33,7 +33,7 @@ If you want to enable security features such as Browser Isolation, HTTP filterin
 
 2. **Next, define [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions)**. Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
-3. **Install the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.** Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+3. **Install the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.** Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 4. **Download and deploy the WARP client to your devices**. Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 

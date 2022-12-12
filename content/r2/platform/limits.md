@@ -14,6 +14,10 @@ To increase any of our limits, [please fill out our form!](https://forms.gle/ukp
 
 {{</Aside>}}
 
+## Rate limiting on managed public buckets through `r2.dev`
+
+Managed public bucket access through an `r2.dev` subdomain is not intended for production usage, and has a rate limit applied to it. When exceeding this rate limit, requests through your `r2.dev` subdomain will be temporarily throttled, and receive a `429 Too Many Requests` response. For production use cases, consider linking a [custom domain](/r2/data-access/public-buckets/#custom-domains) to your bucket.
+
 ## Account plan limits
 
 {{<table-wrap>}}

@@ -44,9 +44,7 @@ Next, click **+ Add condition** to apply this rule to a specific user or group o
 
 You can now select **Block** as the action. You can add optional text to present to the user in the block page.
 
-Next, click **Create policy** to save the rule.
-
-![List of policies that have been created.](/cloudflare-one/static/secure-web-gateway/block-football/after-block-espn.png)
+Next, click **Create a policy** to save the rule.
 
 ## Integrate your identity provider
 
@@ -74,14 +72,14 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 ## Configure the Cloudflare certificate
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
 
-- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/), or
+- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/), or
 - Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
-Next, follow [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) to install the certificate on your system.
+Next, follow [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) to install the certificate on your system.
 
 ## Enable the Cloudflare proxy
 
@@ -95,7 +93,7 @@ Next, toggle **TLS decryption** to _Enabled_. This will tell Cloudflare to begin
 
 1.  Once the client is installed, click the gear icon.
 
-    ![WARP desktop popup menu.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+    ![Accessing the WARP gear icon from the desktop.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
 1.  Under the **Account** tab, click **Login with Cloudflare Zero Trust**.
 
@@ -112,5 +110,3 @@ The user will be prompted to log in with the identity provider configured in Clo
 When users visit that section of Reddit (and any page within it), they will see a block page. Any attempt to reach ESPN will also be blocked.
 
 You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Zero Trust dashboard. Filter for `Block` as the decision type.
-
-![Gateway activity log filtered to show only Block decisions.](/cloudflare-one/static/secure-web-gateway/block-football/block-log.png)

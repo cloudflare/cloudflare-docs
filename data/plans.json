@@ -1028,8 +1028,8 @@
       }
     },
     "firewall_analytics": {
-      "title": "Firewall analytics",
-      "link": "/waf/analytics/",
+      "title": "Security Events",
+      "link": "/waf/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2410,6 +2410,22 @@
           "pro": "500,000 HTTP requests",
           "biz": "500,000 HTTP requests",
           "ent": "1,000,000 HTTP requests"
+        }
+      }
+    },
+    "polygon": {
+      "title": "Polygon Gateways",
+      "link": "/web3/polygon-gateway/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
         }
       }
     }

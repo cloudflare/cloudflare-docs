@@ -21,6 +21,8 @@ If the requested content is not cached, it will first be requested via API call 
 
 ## Write operations
 
-If the API call to the Worker is a write operation — only available for the [Ethereum gateway](/web3/how-to/use-ethereum-gateway) — the Ethereum Gateway will make an API call to the Cloudflare Ethereum nodes, and the transaction is placed in the local mempool and propagated to peers. 
+*Only available for gateways to EVM-based chains, such as [Ethereum](/web3/how-to/use-ethereum-gateway) and [Polygon](/web3/how-to/use-polygon-gateway).*
 
-A transaction ID is returned to the Ethereum Gateway, which is then returned to the client via HTTP response. Miner nodes take transactions from the mempool and place them into a block to execute. The new block to add to the blockchain is validated, consensus is reached, and the block is added to the blockchain and propagated to the rest of the network.
+If the API call to the gateway is a write operation, the gateway will make an API call to one of the Cloudflare nodes, and the transaction is placed in the local mempool and propagated to peers. 
+
+A transaction ID is returned to the gateway, which is then returned to the client via HTTP response. Validators take transactions from the mempool and place them into a block to execute. The new block to add to the blockchain is validated, consensus is reached, and the block is added to the blockchain and propagated to the rest of the network.

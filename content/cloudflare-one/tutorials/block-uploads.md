@@ -90,11 +90,11 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 ## Configure the Cloudflare certificate
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
 
-- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 - Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
@@ -115,11 +115,11 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
+    ![Team name used to configure the WARP app on a desktop device.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+![Gateway with WARP enabled in the Teams workflow.](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Test policy
 
