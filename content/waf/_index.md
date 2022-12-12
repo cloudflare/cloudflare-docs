@@ -53,11 +53,11 @@ Displays information about all incoming HTTP requests, including those not affec
 {{<resource-group>}}
 
 {{<resource header="WAF managed rules (previous version)" href="https://support.cloudflare.com/hc/articles/200172016" icon="documentation-clipboard">}}
-Documentation on the previous implementation of WAF Managed Rulesets, also known as WAF managed rules.
+Documentation on the previous implementation of WAF Managed Rulesets.
 {{</resource>}}
 
 {{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}
-Create firewall rules that inspect incoming traffic and block, challenge, log, or allow specific requests. Use firewall rules if you do not have access to WAF custom rules.
+Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests. Use firewall rules if you do not have access to WAF custom rules.
 {{</resource>}}
 
 {{</resource-group>}}
