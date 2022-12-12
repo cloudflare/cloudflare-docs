@@ -8,7 +8,7 @@ meta:
 
 # Deploy a Managed Ruleset in the dashboard for an account
 
-You can enable and configure Managed Rulesets for an account in **Account Home** > **Application Security** > **WAF** > **Managed rulesets**.
+You can enable and configure Managed Rulesets for an account in Account Home > **Application Security** > **WAF** > **Managed rulesets**.
 
 {{<Aside type="note">}}
 Account-level WAF configuration requires an Enterprise plan with a paid add-on.
