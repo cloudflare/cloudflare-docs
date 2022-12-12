@@ -9,6 +9,8 @@ layout: single
 
 # Configure your CDN
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview

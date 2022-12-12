@@ -9,6 +9,8 @@ layout: single
 
 # Create a serverless, globally distributed REST API with Fauna
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview

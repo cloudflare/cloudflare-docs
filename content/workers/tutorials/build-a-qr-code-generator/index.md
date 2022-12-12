@@ -9,6 +9,8 @@ layout: single
 
 # Build a QR code generator
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
