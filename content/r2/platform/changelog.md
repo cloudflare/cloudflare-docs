@@ -8,8 +8,8 @@ weight: 3
 
 ## 2022-12-07
 
-- Fix CORS preflight requests for the S3 api, which allows using the S3 sdk in the browser.
-- Passing a range header to the get operation in the R2 bindings API should now work as expected.
+- Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.
+- Passing a range header to the `get` operation in the R2 bindings API should now work as expected.
 
 ## 2022-11-30
 
