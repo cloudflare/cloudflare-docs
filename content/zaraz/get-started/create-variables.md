@@ -15,7 +15,7 @@ For example, instead of typing a specific user ID in multiple fields, you can cr
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2. Go to **Zaraz** > **Tools Configuration** > **Variables**.
 3. Select **Create variable**, and give it a name.
-4. In **Variable type** select between `String` and `Secret` from the drop-down menu. `Secrets` are intended to be used when you have values that are private and you do not want to share, such as API tokens.
+4. In **Variable type** select between `String` and `Secret` from the drop-down menu. Use `Secret` when you have a private value that you do not want to share, such as an API token.
 5. In **Variable value** enter the value of your variable.
 6. Select **Save**.
 
