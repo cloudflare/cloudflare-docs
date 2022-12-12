@@ -115,7 +115,7 @@ This creates a public key from the private key (`openssl rsa -in priv_key.pem -p
 Next, look in your generated `dkim_record.txt` file for your DKIM credentials, and add them to your website in the Cloudflare dashboard. Follow the steps below:
 
 1. In Account Home, select the website you would like to add a DKIM record. 
-2. In the menu on the left select **DNS** > **Add Record**.
+2. In the menu on the left select **DNS** > **Records** > **Add Record**.
 3. In the dropdown menu, select **TXT** as the type of record.  
 4. Enter the DKIM record into your DNS server as a text (`TXT`) entry. The name of your DNS record must follow this convention `<selector key>._domainkey`. For example, `mailchannels._domainkey`.
 

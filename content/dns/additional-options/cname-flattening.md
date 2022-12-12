@@ -37,5 +37,5 @@ If we have CNAME target on same zone, we do CNAME flattening all the time and ig
 Accounts on paid plans can also choose to flatten all `CNAME` records on their domain. This option is useful for DNS-only (unproxied) `CNAME` records since proxied records are flattened by default (as they return Cloudflare edge IPv4 and IPv6 addresses).
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2.  Navigate to **DNS**.
+2.  Navigate to **DNS** > **Settings**.
 3.  For **CNAME Flattening**, select **Flatten all CNAMEs**.

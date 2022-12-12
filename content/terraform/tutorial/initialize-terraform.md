@@ -172,7 +172,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ## 5. Verify the results
 
-Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to **DNS**. The record created by Terraform appears in the records list.
+Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to **DNS** > **Records**. The record created by Terraform appears in the records list.
 
 To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, run `terraform show`.
 

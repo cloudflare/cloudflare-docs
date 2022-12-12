@@ -28,4 +28,4 @@ This process can take one to two days after you first enable DNSSEC.
 
 ## Confirming DNSSEC
 
-When DNSSEC has been successfully applied to your domain, Cloudflare shows you a confirmed status. Navigate to [**DNS**](https://dash.cloudflare.com/login?to=/:account/:zone/dns) in the Cloudflare dashboard, and scroll down to DNSSEC. You can also confirm this by reviewing the WHOIS information for your domain. Domains with DNSSEC will read `signedDelegation` in the DNSSEC field.
+When DNSSEC has been successfully applied to your domain, Cloudflare shows you a confirmed status. Navigate to [**DNS** > **Settings**](https://dash.cloudflare.com/login?to=/:account/:zone/dns) in the Cloudflare dashboard, and scroll down to DNSSEC. You can also confirm this by reviewing the WHOIS information for your domain. Domains with DNSSEC will read `signedDelegation` in the DNSSEC field.
