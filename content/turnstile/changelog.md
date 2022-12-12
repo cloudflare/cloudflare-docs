@@ -12,7 +12,7 @@ weight: 10
 
 ## 2022-11-11
 
-- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior
+- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior.
 
 ## 2022-10-28
 
@@ -32,7 +32,3 @@ weight: 10
 ## 2022-10-11
 
 - Added [`turnstile.remove`](/turnstile/get-started/client-side-rendering/#remove-a-widget)
-
-## 2022-11-11
-
-- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior.
