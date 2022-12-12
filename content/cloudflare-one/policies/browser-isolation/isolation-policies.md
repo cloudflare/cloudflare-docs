@@ -82,9 +82,7 @@ Prevents copying isolated content from the remote browser to their local clipboa
 
 {{<Aside type="note">}}
 This option does not prevent clipboard interactions between isolated websites. Use [Disable copy / paste](/cloudflare-one/policies/browser-isolation/isolation-policies/#disable-copy--paste) to prohibit clipboard use on sensitive isolated applications.
-{{</Aside>}}
 
-{{<Aside type="note">}}
 Disable copy / paste and Disable clipboard redirection are mutually exclusive and cannot be used in conjunction with each other.
 {{</Aside>}}
 
