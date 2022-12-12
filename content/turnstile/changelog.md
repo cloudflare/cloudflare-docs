@@ -6,6 +6,10 @@ weight: 10
 
 # Changelog
 
+## 2022-12-12
+
+- [`POST /siteverify`](/tunrstile/get-started/server-side-validation) supports JSON requests now
+
 ## 2022-11-11
 
 - Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior

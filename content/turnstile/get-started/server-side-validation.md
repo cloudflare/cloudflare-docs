@@ -79,10 +79,11 @@ Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo
 | POST Parameter | Required/Optional | Description |
 | --- | --- | --- |
 | `secret` | Required | The site's secret key. |
-|`response` | Required | The response provided by the Turnstile client-side render on your site. |
+| `response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The user's IP address. |
 
-The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is `application/json`.
+The siteverify endpoint behaves similar to reCAPTCHA’s or hCaptcha's siteverify endpoint.
+The API accepts `application/x-www-form-urlencoded` and `application/json` requests, but the response type will always be `application/json`.
 
 It always contains a `success` property, either true or false, indicating whether the operation was successful or not.
 
