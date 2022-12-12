@@ -38,6 +38,10 @@ You can use the fields for these scores in expressions of [custom rules](/waf/cu
 
 The available scores are independent of each other. Namely, the WAF Attack Score is not a sum of the other scores.
 
+{{<Aside type="note">}}
+Requests that the Cloudflare WAF did not score will have a score of `100`.
+{{</Aside>}}
+
 ---
 
 ## Start using the WAF attack score
