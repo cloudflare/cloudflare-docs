@@ -9,7 +9,7 @@ This tutorial provides an overview of how you can use a cloud-based virtual mach
 
 ## Cloudflare setup
 
-Before you begin, [create an IPsec tunnel](/magic-wan/configure-tunnels/) and [configure your static routes](/magic-wann/configure-static-routes/).
+Before you begin, [create an IPsec tunnel](/magic-wan/how-to/configure-tunnels/) and [configure your static routes](/magic-wan/how-to/configure-static-routes/).
 
 ## Set up the Virtual Machine (VM)
 
