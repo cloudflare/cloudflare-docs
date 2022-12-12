@@ -76,6 +76,18 @@ Prohibits users from exporting files from the remote browser to their local mach
 This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser, use HTTP Policies to block by [Download Mime Type](/cloudflare-one/policies/filtering/http-policies/#download-and-upload-mime-type).
 {{</Aside>}}
 
+### Disable clipboard redirection
+
+Prevents copying isolated content from the remote browser to their local clipboard and pasting content from their local clipboard into isolated pages.
+
+{{<Aside type="note">}}
+This option does not prevent clipboard interactions between isolated websites. Use [Disable copy / paste](/cloudflare-one/policies/browser-isolation/isolation-policies/#disable-copy--paste) to prohibit clipboard use on sensitive isolated applications.
+{{</Aside>}}
+
+{{<Aside type="note">}}
+Disable copy / paste and Disable clipboard redirection are mutually exclusive and cannot be used in conjunction with each other.
+{{</Aside>}}
+
 ## Common policies
 
 ### Isolate all security threats
