@@ -194,8 +194,8 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 
 ## 5. Configure BCC rule in Google Workspaces
 
-You must send copies of inbound email messages to Area 1 for inspection, in order for Area 1 to be able to automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to [Gmail BCC setup with Area 1](/email-security/deployment/api/setup/gsuite-bcc-setup/) to learn more. 
+You must send copies of inbound email messages to Area 1 for inspection, in order for Area 1 to be able to automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Area 1 is deployed as MX.
 
-Automatic retraction is not available when Area 1 is deployed as MX.
+{{<render file="_gmail-bcc-setup.md">}}
 
 ## 6. Manual message retraction
