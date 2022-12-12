@@ -52,11 +52,9 @@ The authorization process grants Area 1 access to the Azure environment with the
 
 {{<render file="_auto-retraction.md">}}
 
-## 3. Configure connector for delivery to Area 1 (if required)
+## 3. Configure journaling
 
-If your email architecture requires outbound messages to traverse your email gateway, you may want to consider configuring a connector to send the journal messages directly to Area 1. Refer to [Configure connector for delivery to Area 1](/email-security/deployment/api/setup/office365-journaling#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
-
-If your email architecture does not include an outbound gateway, you can skip this step and proceed to [Configure journal rule](/email-security/deployment/api/setup/office365-journaling#2-configure-journal-rule).
+{{<render file="_journaling-connector.md">}}
 
 ## 4. Manual message retraction
 
