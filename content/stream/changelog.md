@@ -12,6 +12,14 @@ weight: 11
 
 Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
 
+## 2022-11-08
+
+### Reduced time to start WebRTC streaming and playback with Trickle ICE
+
+Cloudflare Stream's [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-05.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
+
+For more, refer to [the docs](/stream/webrtc-beta/).
+
 ## 2022-11-07
 
 ### Deprecating the "per-video" Analytics API
