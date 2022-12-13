@@ -44,10 +44,10 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 9. Configure the **Routing** setting as follows:
     * Select **Route email through these smart hosts**.
-    * In the text field, enter the following smarthosts. Select the **+** button after each host to add it to the configuration:
+    * In the text field, enter the following[ smart hosts](https://en.wikipedia.org/wiki/Smart_host). Select the **+** button after each host to add it to the configuration:
         * `mailstream-east.mxrecord.io`
         * `mailstream-west.mxrecord.io`
-    * If there is a requirement to enforce traffic through the EU region, use the following smarthost instead:
+    * If there is a requirement to enforce traffic through the EU region, use the following smart host instead:
         * `mailstream-eu1.mxrecord.io`
 
     ![Configure the routing setting](/email-security/static/bcc-setup/journaling/step9-routing.png)
@@ -101,7 +101,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smarthost set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smart host set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     * **Journal messages sent or received from**: Everyone
         * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens. Refer to [Create a distribution group](https://learn.microsoft.com/en-us/microsoft-365/admin/setup/create-distribution-lists?view=o365-worldwide#create-a-distribution-group-list) to learn how to create groups.
