@@ -6,7 +6,7 @@ weight: 3
 
 # Get started
 
-Follow this tutorial to start testing and deploying edge configuration changes with Version Management.
+Follow this tutorial to start testing and deploying zone configuration changes with Version Management.
 
 ## Step 1 - Enable versioning
 

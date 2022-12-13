@@ -49,7 +49,7 @@ When you first [enable](/version-management/how-to/enable/) version management, 
 
 {{<render file="_environment-defaults.md">}}
 
-When you [create](/version-management/how-to/versions/#create-version) a new version, that version will be available to apply to your **Development** environment (or whatever environment has the lowest rank). Once you test a version in your **Development** environment, you would promote that version to the **Staging** environment and - with no issues - then promote to **Production**.
+When you [create](/version-management/how-to/versions/#create-version) a new version, that version will be available to apply to your **Development** environment (or whatever environment has the lowest rank). Once you test a version in your **Development** environment, you would promote that version to the **Staging** environment and - with no issues - then promote it to **Production**.
 
 To send traffic to specific environments, send requests to that environment that match the pattern specified in its [Traffic filters](/version-management/reference/traffic-filters/).
 

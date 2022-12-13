@@ -59,7 +59,7 @@ To edit an environment:
 
 To prevent accidental changes, you can only update an environment's version through the process of **Promotion** or **Rollback**.
 
-For more details on the flow of versions of environments, refer to [How it works](/version-management/about/).
+For more details on the flow of versions and environments, refer to [How it works](/version-management/about/).
 
 ### Promote a version
 
@@ -70,7 +70,7 @@ Promotion moves a version from a lower-ranked environment to the next highest on
 
 ### Roll back a version
 
-When you roll back a version, you revert the environment to the previous version.
+When you roll back a version, you revert the environment to the previous version assigned to it.
 
 To roll back a version:
 

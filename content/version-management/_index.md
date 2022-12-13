@@ -7,7 +7,7 @@ weight: 1
 
 # Overview
 
-Cloudflare **Version Management** allows you to safely test, deploy, and roll back changes to your edge configuration settings.
+Cloudflare **Version Management** allows you to safely test, deploy, and roll back changes to your zone configuration settings.
 
 ## Benefits
 
@@ -21,11 +21,11 @@ By using Version Management, you can:
 
 Version Management is in an open Beta for Enterprise customers. For access, contact your account team.
 
-## Limitations
+## Requirements
 
-To use Version Management, the following must be true:
+To use Version Management, the following must all be true:
 
 - Your zone is on an Enterprise plan
 - Your zone uses [WAF Managed Rulesets](https://support.cloudflare.com/hc/articles/5995821690637).
 - Your account uses the [new WAF](https://blog.cloudflare.com/new-cloudflare-waf/) (if not, contact your account team)
-- Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/)).
+- Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/#view-your-api-key)).

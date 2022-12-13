@@ -16,6 +16,6 @@ To enable [Version Management](https://dash.cloudflare.com/?to=/:account/:zone/v
 
 {{<Aside type="note">}}
 
-If you cannot enable Version Management, make sure your zone, account, and user meet the requirements defined in [Limitations](/version-management/#limitations).
+If you cannot enable Version Management, make sure your zone, account, and user meet the [requirements](/version-management/#requirements).
 
 {{</Aside>}}
