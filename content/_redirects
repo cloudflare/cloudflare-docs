@@ -110,6 +110,8 @@
 /email-security/static/Phish-Submission-Triage.pdf /email-security/email-configuration/phish-submissions/ 301
 /email-security/static/Report_phishing_from_Outlook_client.pdf /email-security/email-configuration/phish-submissions/phishnet-o365/ 301
 /email-security/deployment/api/setup/office365-bcc-setup/ /email-security/deployment/api/setup/exchange-bcc-setup/ 301
+/email-security/static/Gmail-Message-Retraction.pdf /email-security/email-configuration/retract-settings/gmail-retraction/ 301
+/email-security/static/O365-Message-Retraction.pdf /email-security/email-configuration/retract-settings/office365-retraction/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
