@@ -98,14 +98,13 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
     ![Select journal rules](/email-security/static/bcc-setup/journaling/step6-journal-rules.png)
 
-
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
     * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). If you are located in the EU or GDPR applies to your organization, ensure you are using a connector with the smart host set to `mailstream-eu1.mxrecord.io`. Refer to step 9 of [Configure connector for delivery to Area 1](#1-configure-connector-for-delivery-to-area-1-if-required) for more information.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     * **Journal messages sent or received from**: Everyone
         * If you wish to restrict this rule to specific users or groups select **A specific user or group**, and select the list of users/groups from the window that opens. Refer to [Create a distribution group](https://learn.microsoft.com/en-us/microsoft-365/admin/setup/create-distribution-lists?view=o365-worldwide#create-a-distribution-group-list) to learn how to create groups.
-    * **Type of message to journal**: External messages only
+    * **Type of message to journal**: _External messages only_
 
     ![Configure the journal rule](/email-security/static/bcc-setup/journaling/step7-define-journal-rules.png)
 

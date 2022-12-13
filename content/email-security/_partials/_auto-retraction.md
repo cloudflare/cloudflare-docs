@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-You can set up auto-retraction to automatically move messages matching certain dispositions to specific folders you within a user's mailbox.
+You can set up auto-retraction to automatically move messages matching certain dispositions to specific folders within a user's mailbox.
 
 To set up automatic retraction:
 

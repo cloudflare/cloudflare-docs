@@ -11,7 +11,7 @@ When retraction is enabled, you can manually retract messages that were not auto
 
 2. Select the search bar. From the drop-down menu, select [**Mail Trace**](/email-security/reporting/mailtrace/).
 
-    ![Select the search bar and select Mail trace from the drowp-down menu](/email-security/static/email-retraction/gmail/step2-mail-trace.png)
+    ![Select the search bar and select Mail trace from the drop-down menu](/email-security/static/email-retraction/gmail/step2-mail-trace.png)
 
 3. This will update the search dialog and allow you to search for the messages to retract. Enter the search parameters to find the emails you are looking for.
 
