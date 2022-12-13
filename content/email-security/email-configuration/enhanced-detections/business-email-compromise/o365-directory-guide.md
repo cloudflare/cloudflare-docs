@@ -19,3 +19,43 @@ The authorization process grants Area 1 access to the Azure environment with the
 When assigning user roles in the Office 365 console, you will find these roles in **User permissions** > **Roles configuration** > **Identity admin roles**.
 
 ![A list of permissions for Area 1](/email-security/static/bec/permissions.png)
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+
+2. Go to **Directories**, and select **Add Directory** to start the authorization process.
+
+    ![Go to Directories in the dashboard of Area 1, and then select Add Directory to start the authorization process](/email-security/static/bec/step2-directories.png)
+
+3. In the Add Directory configuration panel, enter fhe following details:
+    - **Directory Type**: Use the drop-down menu and select **Office 365**.
+    - **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Office 365`.
+    - **Sync Frequency**: Update the value to your preference.
+
+    Select **Authorize** when you are done.
+
+    ![Add the appropriate details to the configuration panel](/email-security/static/bec/step3-directory-config-panel.png)
+
+
+4. The Area 1 dashboard will redirect you to a Microsoft login page. Select or enter the appropriate account to initiate the authentication process.
+
+    <div class="large-img">
+
+    ![Select the appropriate Microsoft account to continue](/email-security/static/bec/step4-login.png)
+
+    </div>
+
+5. Once authenticated, the system will show a dialog box with a list of the requested permissions. Select **Accept** to authorize the change.
+
+    <div class="medium-img">
+
+    ![Accept the permissions to continue](/email-security/static/bec/step5-permissions.png)
+
+    </div>
+
+6. Upon authorization, you will be automatically redirected back to the Add Directory configuration panel. Select **Save** to complete the authorization process.
+
+    ![Select Save to complete the authorization process](/email-security/static/bec/step6-save.png)
+
+7. Once saved, your newly configured directory will appear in the configured directories table.
+
+    ![Your directory will appear in the configured directories table](/email-security/static/bec/step7-directories.png)

@@ -24,7 +24,7 @@ The authorization process grants Area 1 access to the Azure environment with the
 
 ![Permissions required for Area 1 to access Office 365](/email-security/static/email-retraction/o365/area1-synchronator.png)
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon). 
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
 
 2. Go to **Email Configuration** > **RETRACT SETTINGS**.
 
