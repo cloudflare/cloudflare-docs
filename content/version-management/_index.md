@@ -13,8 +13,8 @@ Cloudflare **Version Management** allows you to safely test, deploy, and roll ba
 
 By using Version Management, you can:
 
-- Create independent configurations to make changes with no risk of impacting live traffic.
-- Safely deploy changes to test and pre production environments ahead of deploying to production.
+- Create independent versions to make changes with no risk of impacting live traffic.
+- Safely deploy changes to staging environments ahead of deploy to production.
 - Quickly roll back deployed changes when issues occur.
 
 ## Availability
