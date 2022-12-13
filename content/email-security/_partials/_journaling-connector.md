@@ -68,7 +68,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 14. Add the address and select **Validate**.
 
-15. Once the validation completes, you should receive a **Succeeded** status for all the tasks. Select **Next**.
+15. Once the validation completes, you should receive a **Succeed** status for all the tasks. Select **Next**.
 
     ![Validation success if all goes well](/email-security/static/bcc-setup/journaling/step15-validation-success.png)
 
