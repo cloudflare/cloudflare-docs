@@ -43,9 +43,13 @@ If you're building a creator platform or any application where your end users cr
 
 Stream adapts based on the live video that we actually receive, rather than blindly trusting the advertised bitrate. This means that even in cases where your end users' settings are less than ideal, client video players will still receive the most accurate bitrate estimates possible, ensuring the highest quality video playback for your viewers, while avoiding pushing configuration complexity back onto your users.
 
-## Live stream transition to recording
+## Transition from live playback to a recording
 
-{{<render file="_live-stream-transition-vod.md">}}
+Recordings are available for live streams within 60 seconds after a live stream ends. 
+
+You can check a video's status to determine if it's ready to view by making a [`GET` request to the `stream` endpoint](/stream/stream-live/watch-live-stream/#use-the-api) and viewing the `state` or by [using the Cloudflare dashboard](/stream/stream-live/watch-live-stream/#use-the-dashboard).
+
+After the live stream ends, you can [replay live stream recordings](/stream/stream-live/replay-recordings/) in the `ready` state by using one of the playback URLs.
 
 ## Billing
 
