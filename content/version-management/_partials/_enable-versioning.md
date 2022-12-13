@@ -13,3 +13,9 @@ To enable [Version Management](https://dash.cloudflare.com/?to=/:account/:zone/v
 2. Select your account and zone.
 3. Go to **Version Management**.
 4. Select **Enable versioning**.
+
+{{<Aside type="note">}}
+
+If you cannot enable Version Management, make sure your zone, account, and user meet the requirements defined in [Limitations](/version-management/#limitations).
+
+{{</Aside>}}

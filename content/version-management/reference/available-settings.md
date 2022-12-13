@@ -6,14 +6,15 @@ weight: 2
 
 # Available settings
 
-When you useVersion Management, you can edit various configuration settings, including Page Rules, Firewall Rules, Cache settings, and more.
+When you use Version Management, you can edit various configuration settings, including Page Rules, [Firewall Rules](/waf/), [Cache settings](/cache/), and more.
 
-Generally, you are allowed to edit all of the zone-level configurations except for the following:
+Generally, you are allowed to edit all zone-level configurations except for the following:
 
-- DNS
-- Traffic (Load Balancing, Waiting Room, Health Checks, and more)
-- Zero Trust and Access policies
-- SSL certifications (though you can test these with a separate [staging certificates](/ssl/edge-certificates/staging-environment/) feature)
+- [DNS](/dns/)
+- [Spectrum](/spectrum/)
+- Traffic ([Load Balancing](/load-balancing/), [Waiting Rooms](/waiting-room/), Health Checks, and more)
+- [Zero Trust](/cloudflare-one/) and Access policies
+- [SSL certificates](/ssl/edge-certificates/) (though you can test these with a separate [staging certificates](/ssl/edge-certificates/staging-environment/) feature)
 
 {{<Aside type="note">}}
 

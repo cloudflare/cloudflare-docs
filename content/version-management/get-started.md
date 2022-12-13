@@ -17,6 +17,9 @@ Follow this tutorial to start testing and deploying edge configuration changes w
 {{<render file="_enable-default-creation.md">}}
 <br/>
 
+These environments each serve a specific purpose and are accessed differently:
+{{<render file="_environment-defaults.md">}}
+
 {{<render file="_create-environment-situation.md">}}
 <br/>
 
@@ -47,7 +50,7 @@ Next, [promote](/version-management/how-to/environments/#change-environment-vers
 
 {{<render file="_promote-version.md">}}
 
-After promoting to each environment, repeat the testing that happened in the previous step.
+After promoting to each environment, test the new version in your new environment.
 
 ## Step 6 - Repeat
 

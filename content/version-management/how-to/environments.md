@@ -36,6 +36,7 @@ To create a new environment:
   - **Environment Name**: A unique, descriptive name for the environment.
   - [**Traffic filter**](/version-management/reference/traffic-filters/): Which limits which requests are sent to this environment.
   - **Initial position**: Which controls where in your testing process this environment should be. 
+  
 7. Click **Create**. The environment may take a few minutes to be created.
 
 ---
@@ -91,3 +92,9 @@ To delete an environment:
 4. Select **Environments**.
 5. On a specific environment, select **Edit**.
 6. Select **Delete Environment**.
+
+{{<Aside type="note">}}
+
+You cannot delete your **Production** environment.
+
+{{</Aside>}}

@@ -11,4 +11,4 @@ To promote a version:
 2. Select your account and zone.
 3. Go to **Version Management**.
 4. Select **Environments**.
-5. On the environment that has successfully tested your version, select **Promote**. This option will only be available if the lower-ranked environment has a different version than the higher-ranked environment.
+5. On the environment in which you tested the version, select **Promote**. This option will only be available if the lower-ranked environment has a different version than the higher-ranked environment.
