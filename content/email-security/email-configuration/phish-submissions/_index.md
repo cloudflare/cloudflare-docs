@@ -35,9 +35,9 @@ On the **Reasons** column you will see the feedback regarding the messages found
 
 If there is a phishing email that is repeatedly sent to users despite being submitted to Area 1 for processing, [contact support](https://support.cloudflare.com/hc/articles/200172476) with the details of the problematic phish submission sample (alert ID or message ID of the sample).
 
-### Phish Submission Response
+### Phish Submission Response (beta)
 
-Phish Submission Response (PSR) is an additional layer of protection. When you enable PSR, Area 1 will automatically retract messages reported by users which are also deemed as malicious by Area 1 after analysis. This feature uses machine learning margin scores by adding the user as an additional neuron into Area 1's neural network. 
+Phish Submission Response (PSR) is an additional layer of protection. When you enable PSR, Area 1 will automatically retract messages reported by users which are also deemed malicious by Area 1 after analysis. This feature uses machine learning margin scores by adding the user as an additional neuron into Area 1's neural network. 
 
 To enable PSR:
 
