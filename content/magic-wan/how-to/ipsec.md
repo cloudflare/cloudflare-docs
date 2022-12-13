@@ -83,7 +83,6 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 ### Optional configuration parameters
 
-- 4h rekey time
 - Null encryption – This option should not be used unless necessary as it reduces security because IPsec traffic is not ecrypted. You must explicitly opt in to use this option.
 - NAT-T support
 
