@@ -64,7 +64,7 @@ When exporting or importing a zone file, Cloudflare formats [comments and tags](
 
 | Combination | Description |
 | --- | --- |
-| **Only tags** | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if they contain `"`, `=`, `,`, or `\`.<br/><br/>A tag with an empty value can be represented either as `my-tag-name:""`, `my-tag-name:`, or `my-tag-name`. | 
+| **Only tags** | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if they contain `"`, `=`, `,`, or `\`. When enclosed within double quotes (`"`), tag values are represented as JSON strings, so other quotes within the value can be escaped as `\"`.<br/><br/>A tag with an empty value can be represented either as `my-tag-name:""`, `my-tag-name:`, or `my-tag-name`. | 
 | **Only a comment** | Comments have [fewer limitations](/dns/manage-dns-records/reference/record-attributes/#comments) on characters, meaning that the comment is included verbatim.<br/><br/>If the comment includes the string `cf_tags=`, you need to include an additional ` cf_tags=` at the end of the line. |
 | **Comment and tags** | The zone file comment would be of the form ; `<comment>` cf_tags=`<tags>`, as described above. Note the added space character before `cf_tags=`. |
 | **Neither attribute** | The comment in the zone file may be empty or omitted entirely. Comments in the zone file that do not immediately follow a record are also ignored. | 
@@ -75,7 +75,7 @@ header: Example zone file
 ---
 ; Only tags
 a.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=awesome
-b.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=tag1,tag2:value2,tag3:"value,with,commas"
+b.example.com.  60  IN  A   1.1.1.1 ;   cf_tags=tag1,tag2:value2,tag3:"value,with,commas",tag4:"value with \"escaped\" quotation marks"
 
 ; Only a comment
 c.example.com.  60  IN  A   1.1.1.1 ; just a comment without tags
