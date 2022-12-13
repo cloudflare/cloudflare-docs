@@ -54,7 +54,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 10. Select **Next**.
 
-11. In **Security restrictions**, you need to preserve the default TLS configuration. Review the following settings:
+11. In **Security restrictions**, you need to keep the default TLS configuration. Review the following settings:
     * Make sure the **Always use Transport Layer Security (TLS) to secure the connection (recommended)** checkbox is selected.
     * In **Connect only if the recipients email server certificate matches this criteria** select **Issued by a trusted certificate authority (CA)**.
 
