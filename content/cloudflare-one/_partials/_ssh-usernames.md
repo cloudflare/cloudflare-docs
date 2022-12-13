@@ -26,7 +26,7 @@ By default, SSH servers authenticate the Unix username against the principals li
 To allow `jdoe@example.com` to log in as the user `johndoe`, add the following to the server's `/etc/ssh/sshd_config`:
 
 ```txt
-Match user 'johndoe'
+Match user johndoe
   AuthorizedPrincipalsCommand echo 'jdoe'
   AuthorizedPrincipalsCommandUser nobody
 ```
@@ -38,7 +38,7 @@ This tells the SSH server that, when someone tries to authenticate as the user `
 To allow multiple email addresses to log in as `vmuser`, add the following to the server's `/etc/ssh/sshd_config`:
 
 ```txt
-Match user 'vmuser'
+Match user vmuser
   AuthorizedPrincipalsFile /etc/ssh/vmusers-list.txt
 ```
 
@@ -55,7 +55,7 @@ robin
 To allow any Access user to log in as `vmuser`, add the following command to the server's `/etc/ssh/sshd_config`:
 
 ```txt
-Match user 'vmuser'
+Match user vmuser
   AuthorizedPrincipalsCommand bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
   AuthorizedPrincipalsCommandUser nobody
 ```
