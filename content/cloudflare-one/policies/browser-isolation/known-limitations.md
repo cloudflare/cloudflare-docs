@@ -41,7 +41,7 @@ Configure your SAML implementation to use HTTP Redirect Bindings. This avoids th
 
 Direct your users to use access the application via [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/). Clientless Web Isolation implicitly isolates all traffic (both IdP and SP) and supports HTTP-POST SAML bindings.
 
-For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks) in Cloudflare Access for your application (for example, `https://<authdomain>.cloudflareaccess.com/browser/https://example.com`).
+For user convenience, [create a bookmark](/cloudflare-one/applications/bookmarks/) in Cloudflare Access for your application (for example, `https://<authdomain>.cloudflareaccess.com/browser/https://example.com`).
 
 {{<Aside type="note">}}
 IdP sessions are not shared between the non-isolated IdP and the Clientless Web Isolation IdP. Users will be prompted to establish an additional session with their IdP.
