@@ -63,7 +63,7 @@ To export records using the API, send a [GET request](https://developers.cloudfl
 When exporting or importing a zone file, Cloudflare formats [comments and tags](/dns/manage-dns-records/reference/record-attributes/) using the following structure, appending the attributes as inline comment using the `;` character after each record in accordance with [RFC 1035 section 5](https://datatracker.ietf.org/doc/html/rfc1035#section-5-1):
 
 | Combination | Description |
-| --- | --- | --- |
+| --- | --- |
 | **Only tags** | Tag names contain a [small set](/dns/manage-dns-records/reference/record-attributes/#tags) of characters.<br/><br/>Additionally, tag values must be contained by a double quote (`"`) if they contain `"`, `=`, `,`, or `\`.<br/><br/>A tag with an empty value can be represented either as `my-tag-name:""`, `my-tag-name:`, or `my-tag-name`. | 
 | **Only a comment** | Comments have [fewer limitations](/dns/manage-dns-records/reference/record-attributes/#comments) on characters, meaning that the comment is included verbatim.<br/><br/>If the comment includes the string `cf_tags=`, you need to include an additional ` cf_tags=` at the end of the line. |
 | **Comment and tags** | The zone file comment would be of the form ; `<comment>` cf_tags=`<tags>`, as described above. Note the added space character before `cf_tags=`. |
