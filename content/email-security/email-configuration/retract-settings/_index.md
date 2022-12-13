@@ -20,4 +20,4 @@ To retract individual messages, locate the message in [Mail trace](/email-securi
 
 ### Automatic retraction
 
-You can set up auto-retraction to automatically move messages matching certain dispositions to specific folders you within a user's mailbox. Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information on how to set up automatic retraction.
+You can set up auto-retraction to automatically move messages matching certain dispositions to specific folders within a user's mailbox. Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information on how to set up automatic retraction.

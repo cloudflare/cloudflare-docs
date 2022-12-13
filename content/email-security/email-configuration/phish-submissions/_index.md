@@ -37,7 +37,7 @@ If there is a phishing email that is repeatedly sent to users despite being subm
 
 ### Phish Submission Response (beta)
 
-Phish Submission Response (PSR) is an additional layer of protection. When you enable PSR, Area 1 will automatically retract messages reported by users which are also deemed as malicious by Area 1 after analysis. This feature uses machine learning margin scores by adding the user as an additional neuron into Area 1's neural network. 
+Phish Submission Response (PSR) is an additional layer of protection. When you enable PSR, Area 1 will automatically retract messages reported by users which are also deemed malicious by Area 1 after analysis. This feature uses machine learning margin scores by adding the user as an additional neuron into Area 1's neural network. 
 
 To enable PSR:
 

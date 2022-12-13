@@ -56,7 +56,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Select Enable to enable the Gmail API](/email-security/static/email-retraction/gmail/step10-enable-gmail.png)
 
-11. You will now need to create a service account to use the API. From the **Gmail API console**, select **Credentials**.
+11. You will now create a service account to use the API. From the **Gmail API console**, select **Credentials**.
 
     ![Select Credentials to create a service account](/email-security/static/email-retraction/gmail/step11-gmail-credentials.png)
 
@@ -79,9 +79,9 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
 15. Once the role is assigned, select **DONE** to complete the setup.
 
-    ![Select the Done button to complete the set up](/email-security/static/email-retraction/gmail/step15-complete-setup.png)
+    ![Select the Done button to complete the setup](/email-security/static/email-retraction/gmail/step15-complete-setup.png)
 
-16. Once the role assignment has been saved, you will be returned to the API credential configuration console. In **Service Accounts**, select the newly-created service account to configure the domain-wide delegation.
+16. Once the role assignment has been saved, you will return to the API credential configuration console. In **Service Accounts**, select the newly-created service account to configure the domain-wide delegation.
 
     ![Select your newly-created service account to continue](/email-security/static/email-retraction/gmail/step16-service-accounts.png)
 
@@ -166,7 +166,7 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 
 2. Go to **Email Configuration** > **DOMAINS & ROUTING**.
 
-3. Select the three-dots menu on the domain you want to verify the position, and then > **Edit**.
+3. Select the three-dots menu on the domain you want to verify the position, and then select **Edit**.
 
     ![Go to Domain to verify Area 1's hop position](/email-security/static/email-retraction/gmail/step3-hop-position.png)
 
@@ -178,7 +178,7 @@ Since Area 1 is not configured as the MX record for your domains, you will need 
 
 ## 5. Configure BCC rule in Google Workspaces
 
-You must send copies of inbound email messages to Area 1 for inspection, in order for Area 1 to be able to automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Area 1 is deployed as MX.
+You must send copies of inbound email messages to Area 1 for inspection, so that Area 1 can automatically retract messages. Messages can be sent to Area 1 using a BCC compliance rule. Refer to the steps below to learn how to set this up. Automatic retraction is not available when Area 1 is deployed as MX.
 
 {{<render file="_gmail-bcc-setup.md">}}
 
