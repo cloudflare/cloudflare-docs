@@ -43,6 +43,9 @@ If you're building a creator platform or any application where your end users cr
 
 Stream adapts based on the live video that we actually receive, rather than blindly trusting the advertised bitrate. This means that even in cases where your end users' settings are less than ideal, client video players will still receive the most accurate bitrate estimates possible, ensuring the highest quality video playback for your viewers, while avoiding pushing configuration complexity back onto your users.
 
+## Live stream transition to recording
+
+{{<render file="_live-stream-transition-vod.md">}}
 
 ## Billing
 

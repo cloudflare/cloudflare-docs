@@ -141,3 +141,7 @@ header: Response for an inactive live stream
 ```
 
 When viewing a live stream via the live input ID, the `requireSignedURLs` and `allowedOrigins` options in the live input recording settings are used. These settings are independent of the video-level settings.
+
+## Troubleshooting
+
+{{<render file="_live-stream-transition-vod.md">}}
