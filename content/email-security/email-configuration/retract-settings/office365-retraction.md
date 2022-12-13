@@ -16,7 +16,7 @@ In this tutorial you will learn how to set up email retraction for Microsoft Off
 
 For message retraction to successfully execute, Area 1 needs to be authorized to make API calls into the Office 365 Graph API architecture. The account used to authorize Area 1 requires the **Privileged role admin** role.
 
-When assigning user roles in the Office 365 console, you will find these roles in **User permissions** > **Roles configuration** > **Identidy admin roles**.
+When assigning user roles in the Office 365 console, you will find these roles in **User permissions** > **Roles configuration** > **Identity admin roles**.
 
 ### How does the authorization work?
 
