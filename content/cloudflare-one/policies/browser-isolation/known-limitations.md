@@ -35,7 +35,7 @@ The following workarounds enable isolating SAML applications with Browser Isolat
 
 #### Use SAML HTTP-Redirect bindings 
 
-Configure your SAML implementation to use HTTP Redirect Bindings. This avoids the HTTP 405 error by using URL parameters to route SAMLResponse data into the isolated SP.
+Configure your SAML implementation to use HTTP Redirect Bindings. This avoids the HTTP `405` error by using URL parameters to route SAMLResponse data into the isolated SP.
 
 #### Clientless Web Isolation 
 
