@@ -37,15 +37,15 @@ _build:
 
     </div>
 
-6. In **If the above expressions match, do the following**, make the following
-changes:
+6. In **If the above expressions match, do the following**, make the following changes:
     1. In **Also deliver to** select **Add more recipients**.
         1. Under **Recipients** select **Add**.
         2. Change the setting to **Advanced**.
         3. In **Envelope recipient** select **Change envelope recipient**.
-        4. In **Replace recipient** add the recipient BCC address. For example,`bcc_recipient@mxrecord.io`. This address is specific to each customer tenant and can be found in your [Portal](https://horizon.area1security.com/support/service-addresses).
+        4. In **Replace recipient** add the recipient BCC address. For example, `bcc_recipient@mxrecord.io`. This address is specific to each customer tenant and can be found in your [Portal](https://horizon.area1security.com/support/service-addresses).
+
 {{<Aside type="note">}}
-If you are located in the EU or GDPR applies to your organization, replace `@mxrecord.io` domain in the BCC recipient with `@mailstream-eu1.mxrecord.io`. For example, input `bcc_recipient@mailstream-eu1.mxrecord.io`. This will force emails to be processed in Germany under compliance with GDPR. 
+If you are located in the EU or GDPR applies to your organization, replace the `@mxrecord.io` domain in the BCC recipient with `@mailstream-eu1.mxrecord.io`. For example, input `bcc_recipient@mailstream-eu1.mxrecord.io`. This will force emails to be processed in Germany under compliance with GDPR. 
 {{</Aside>}}
             <div class="medium-img">
 
