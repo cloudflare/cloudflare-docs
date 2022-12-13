@@ -17,6 +17,6 @@ Generally, you are allowed to edit all of the zone-level configurations except f
 
 {{<Aside type="note">}}
 
-For the most up to date list of these settings, start [editing a version](/version-management/how-to/manage-applications-and-versions/#edit-a-version) in the Cloudflare dashboard.
+For the most up to date list of these settings, start [editing settings within a version](/version-management/how-to/versions/#change-settings-in-a-version) in the Cloudflare dashboard.
 
 {{</Aside>}}
