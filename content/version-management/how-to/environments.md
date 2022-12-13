@@ -6,6 +6,8 @@ weight: 2
 
 # Manage environments
 
+{{<render file="_environment-definition.md">}}
+<br/>
 
 {{<Aside type="note">}}
 
@@ -17,7 +19,24 @@ During the open Beta, you can only interact with applications and versions using
 
 ## Create environment
 
-{{<render file="_create-application.md">}}
+{{<render file="_enable-default-creation.md">}}
+<br/>
+
+{{<render file="_create-environment-situation.md">}}
+<br/>
+
+To create a new environment:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Select your account and zone.
+3. Go to **Version Management**.
+4. Go to **Environments**.
+5. Select **Create Environment**.
+6. Provide the following information:
+  - **Environment Name**: A unique, descriptive name for the environment.
+  - [**Traffic filter**](/version-management/reference/traffic-filters/): Which limits which requests are sent to this environment.
+  - **Initial position**: Which controls where in your testing process this environment should be. 
+7. Click **Create**. The environment may take a few minutes to be created.
 
 ---
 
@@ -26,41 +45,39 @@ During the open Beta, you can only interact with applications and versions using
 To edit an environment:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account.
+2. Select your account and zone.
 3. Go to **Version Management**.
 4. Select **Environments**.
-5. On a specific environment, select **Edit**.
-6. Make any required changes.
-7. Select **Save**.
-
-## Change environment version
-
-To prevent accidental changes, updating the version associated with an environment works through a process of **Promotion** or **Rollback**.
-
-### Promote a version
-
-If the version has passed testing in a lower-ranked environment, you can promote it to the next level of environment:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account.
-3. Go to **Version Management**.
-4. Select **Environments**.
-5. 
-
-However, you can roll back any environment to the previous version associated with it.
-
-To change the version of your zone associated with a particular environment:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account.
-3. Go to **Version Management**.
-4. Select **Environments**.
-5. To 
 5. On a specific environment, select **Edit**.
 6. Make any required changes.
 7. Select **Save**.
 
 ---
+
+## Change environment version
+
+To prevent accidental changes, you can only update an environment's version through the process of **Promotion** or **Rollback**.
+
+For more details on the flow of versions of environments, refer to [How it works](/version-management/about/).
+
+### Promote a version
+
+Promotion moves a version from a lower-ranked environment to the next highest one.
+
+{{<render file="_promote-version.md">}}
+<br/>
+
+### Roll back a version
+
+When you roll back a version, you revert the environment to the previous version.
+
+To roll back a version:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Select your account and zone.
+3. Go to **Version Management**.
+4. Select **Environments**.
+5. On a specific environment, select **Rollback**.
 
 ---
 
@@ -69,7 +86,7 @@ To change the version of your zone associated with a particular environment:
 To delete an environment:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account.
+2. Select your account and zone.
 3. Go to **Version Management**.
 4. Select **Environments**.
 5. On a specific environment, select **Edit**.

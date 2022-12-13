@@ -9,3 +9,7 @@ meta:
 # Enable Version Management
 
 {{<render file="_enable-versioning.md">}}
+<br/>
+
+{{<render file="_enable-default-creation.md">}}
+<br/>

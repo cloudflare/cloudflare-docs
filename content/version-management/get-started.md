@@ -12,24 +12,43 @@ Follow this tutorial to start testing and deploying edge configuration changes w
 
 {{<render file="_enable-versioning.md">}}
 
-## Step 2 (optional) - Create additional environments and versions
+## Step 2 (optional) - Create additional environments
 
-Depending on your organization's policies, you may need more than the default environments to test and roll out changes.
+{{<render file="_enable-default-creation.md">}}
+<br/>
 
-To create additional environments:
-TBD
+{{<render file="_create-environment-situation.md">}}
+<br/>
 
-Ibid with additional versions
+For more details, refer to [Create environment](/version-management/how-to/environments/#create-environment).
 
-## Step 3 - Update zone settings in a version
+## Step 3 - Update settings
 
-Within **Version 1** of your application, [update zone settings](/linktbd/).
+{{<render file="_edit-version.md">}}
+<br/>
 
-These changes will be saved automatically.
+## Step 4 - Test version
 
-## Step 4 - Test version in Development
+Once you have made changes to a version, apply that version to your lowest-ranked environment.
 
-## Step 5 - Promote and test version in Staging
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+2. Select your account and zone.
+3. Go to **Version Management**.
+4. Go to **Environments**.
+5. On your lowest-ranked environment, use the **Version** dropdown to select your desired version.
 
-## Step 6 - Promote and test version in Production
+To test your version, send requests to that environment that match the pattern specified in its [Traffic filters](/version-management/reference/traffic-filters/).
 
+For more details about what happens to these requests, refer to the version's [metrics](/version-management/how-to/versions/#view-metrics).
+
+## Step 5 - Promote version
+
+Next, [promote](/version-management/how-to/environments/#change-environment-version) your version through your different environments.
+
+{{<render file="_promote-version.md">}}
+
+After promoting to each environment, repeat the testing that happened in the previous step.
+
+## Step 6 - Repeat
+
+For new changes to your zone, [create a new version](/version-management/how-to/versions/#create-version) and repeat this process.

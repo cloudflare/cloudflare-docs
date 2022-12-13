@@ -287,6 +287,7 @@
 /http-applications/how-to/roll-back-changes/ /version-management/how-to/control-versions/ 301
 /http-applications/how-to/test-version-staging/ /version-management/reference/traffic-filters/
 /http-applications/how-to/manage-applications-and-versions/ /version-management/how-to/ 301
+/http-applications/reference/version-status/ /version-management/reference/reference/ 301
 
 # images
 /images/cloudflare-images/upload-images/supported-formats/ /images/cloudflare-images/upload-images/formats-limitations/ 301

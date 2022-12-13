@@ -5,16 +5,15 @@ _build:
   list: never
 ---
 
-When you edit an application version, Cloudflare updates the edge configuration settings associated with that version. You can only update the configuration settings associated with your most recent version.
+Within each version, you can update settings just as you would with your normal zone settings. Any changes are saved automatically.
 
-To edit the edge configuration settings for a version:
+To change between different versions of your zone:
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select your account.
+2. Select your account and zone.
 3. Go to **Version Management**.
-4. Select an existing application.
-5. On a specific version, click **Edit**
-6. Adjust your edge configuration settings (any changes you make are saved automatically).
-7. To go directly to editing routing rules, click **Go to Routing Rules**.
+4. On a specific version, select **Select**.
 
-  ![Update routing rules from your editing view by clicking Go to Routing Rules](/version-management/static/edit-routing-rules-button.png)
+You can also change which version you are in from any page by using the sidebar dropdown.
+
+![Select a version from the Versions page or the sidebar dropdown](/version-management/static/change-version.png)

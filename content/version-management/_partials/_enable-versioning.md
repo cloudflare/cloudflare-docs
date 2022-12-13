@@ -13,5 +13,3 @@ To enable [Version Management](https://dash.cloudflare.com/?to=/:account/:zone/v
 2. Select your account and zone.
 3. Go to **Version Management**.
 4. Select **Enable versioning**.
-
-Once you enable this setting, Cloudflare will automatically create **Version 1** of your zone, as well as environments for **Production**, **Staging**, and **Development**.
