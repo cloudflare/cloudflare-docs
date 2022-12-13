@@ -49,7 +49,7 @@ IdP sessions are not shared between the non-isolated IdP and the Clientless Web 
 
 #### Isolate both Identity Provider and Service Provider 
 
-The HTTP 405 error does not occur when both the IdP and SP are isolated.
+The HTTP `405` error does not occur when both the IdP and SP are isolated.
 
 {{<table-wrap>}}
 
