@@ -25,7 +25,7 @@ Our Network Vector Rendering (NVR) technology allows us to deliver a secure remo
 
 When Browser Isolation is [deployed in-line](/cloudflare-one/policies/browser-isolation/setup/) (for example, via WARP, Gateway proxy endpoint or Magic WAN) it is possible to configure a subset of traffic to be isolated. Browser Isolation segregates local and remote browsing contexts. Due to this, cross-domain interactions (such as single sign-on) may not function as expected.
 
-### POST request returns 405 error 
+### `POST` request returns `405` error 
 
 This error typically occurs due to SAML HTTP-POST bindings. These are not yet supported between non-isolated Identity Providers (IdP) and isolated Service providers (SP).
 
