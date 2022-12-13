@@ -27,7 +27,7 @@ When Browser Isolation is [deployed in-line](/cloudflare-one/policies/browser-is
 
 ### `POST` request returns `405` error 
 
-This error typically occurs due to SAML HTTP-POST bindings. These are not yet supported between non-isolated Identity Providers (IdP) and isolated Service providers (SP).
+This error typically occurs due to SAML HTTP-POST bindings. These are not yet supported between non-isolated Identity Providers (IdP) and isolated Service Providers (SP).
 
 ### Workarounds
 
