@@ -12,6 +12,12 @@ weight: 11
 
 Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
 
+## 2022-11-22
+
+### VP9 support for WebRTC live streams (beta)
+
+Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9) when streaming using [WebRTC (WHIP)](/stream/webrtc-beta/), currently in beta.
+
 ## 2022-11-07
 
 ### Deprecating the "per-video" Analytics API
