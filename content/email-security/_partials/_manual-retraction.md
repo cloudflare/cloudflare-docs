@@ -15,7 +15,7 @@ When retraction is enabled, you can manually retract messages that were not auto
 
 3. This will update the search dialog and allow you to search for the messages to retract. Enter the search parameters to find the emails you are looking for.
 
-4. To retract a single message, select the three dots in front of the message, and select **Retract**. To retract multiple messages, first select the checkboxes on the messages you want to retract. Then, select the three dots > **Retract**.
+4. To retract a single message, select the three dots next to the message, and select **Retract**. To retract multiple messages, first select the checkboxes on the messages you want to retract. Then, select the three dots > **Retract**.
 
     ![Retract the messages from the search results](/email-security/static/email-retraction/gmail/step4-retract.png)
 
