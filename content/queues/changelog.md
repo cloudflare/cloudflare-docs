@@ -11,3 +11,9 @@ weight: 11
 ### Increased per-account limits
 
 Queues now allows developers to create up to 100 queues per account, up from the initial beta limit of 10 per account. This limit will continue to increase over time.
+
+## 2022-12-13
+
+### Queue sendBatch support
+
+Queues Javascript API now includes `sendBatch`, which supports sending up to 100 messages at a time.

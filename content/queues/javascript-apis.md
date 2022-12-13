@@ -42,6 +42,7 @@ A binding that allows a producer to send messages to a Queue.
 ```ts
 interface Queue<Body = any> {
   send(body: Body): Promise<void>;
+  sendBatch(messages: Iterable<MessageSendRequest<Body>>[]): Promise<void>;
 }
 ```
 
@@ -51,6 +52,11 @@ interface Queue<Body = any> {
 
   - Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   - When the promise resolves, the message is confirmed to be written to disk.
+
+- {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<any\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+
+  - Sends a batch of messages to the Queue. Each item in the array must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
+  - When the promise resolves, the messages are confirmed to be written to disk.
 
 {{</definitions>}}
 
@@ -139,6 +145,25 @@ interface Message<Body = any> {
 - {{<code>}}timestamp{{<param-type>}}Date{{</param-type>}}{{</code>}}
 
   - A timestamp when the message was sent.
+
+- {{<code>}}body{{<param-type>}}any{{</param-type>}}{{</code>}}
+
+  - The body of the message.
+  - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
+
+{{</definitions>}}
+
+### `MessageSendRequest`
+
+A wrapper type used for sending message batches.
+
+```ts
+type MessageSendRequest<Body = any> = {
+  body: Body
+}
+```
+
+{{<definitions>}}
 
 - {{<code>}}body{{<param-type>}}any{{</param-type>}}{{</code>}}
 
