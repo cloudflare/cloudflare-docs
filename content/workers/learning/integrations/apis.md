@@ -9,7 +9,7 @@ To integrate with third party APIs from Cloudflare Workers, use the [fetch API](
 
 For example, if you want to integrate with a weather API, make a fetch request to the API endpoint and retrieve the current weather data. Then use this data to display the current weather conditions on your website.
 
-To make the `fetch()` request,  add the following code to your project's `srs/index.js` file:
+To make the `fetch()` request,  add the following code to your project's `src/index.js` file:
 
 ```js
 async function handleRequest(request) {
