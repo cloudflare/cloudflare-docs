@@ -44,7 +44,7 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 {{</Aside>}}
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2.  Click **Caching** > **Configuration**.
+2.  Select **Caching** > **Configuration**.
 3.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
 4.  Under **Purge by**, select **URL**.
 5.  Enter the appropriate value(s) in the text field using the format shown in the example.
