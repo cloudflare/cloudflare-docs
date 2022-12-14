@@ -6,7 +6,7 @@ weight: 1
 
 # Configure rules and addresses
 
-An email rule is a pair of a custom email address and a destination address, or a custom email with an Email Worker. This allows you to route emails to your preferred inbox, or apply logic through Email Workers before deciding what should happen to your emails. You can have multiple custom addresses, to route email from specific providers to specific mail inboxes.
+An email rule is a pair of a custom email address and a destination address, or a custom email address with an Email Worker. This allows you to route emails to your preferred inbox, or apply logic through Email Workers before deciding what should happen to your emails. You can have multiple custom addresses, to route email from specific providers to specific mail inboxes.
 
 ## Custom addresses
 
@@ -41,7 +41,7 @@ To prevent spamming unintended recipients, all email rules are automatically dis
 2. Go to **Email** > **Email Routing** > **Routes**.
 3. In **Custom addresses**, identify the email rule you want to pause, and toggle the status button to **Disabled**.
 
-Your email rule is now disabled and will not forward emails to a destination address. To forward emails again, toggle the email rule status button to **Active**.
+Your email rule is now disabled. It will not forward emails to a destination address or Email Worker. To forward emails again, toggle the email rule status button to **Active**.
 
 ### Edit custom addresses
 
@@ -64,7 +64,7 @@ To enable Catch-all addresses:
 
 ## Destination addresses
 
-This section lets you manage your destination addresses, and lists all email addresses already verified, as well as email addresses pending verification. You can resend verification emails or delete destination addresses.
+This section lets you manage your destination addresses. It lists all email addresses already verified, as well as email addresses pending verification. You can resend verification emails or delete destination addresses.
 
 Destination addresses are shared at the account level, and can be reused with any other domain in your account. This means the same destination address will be available to different domains in your account.
 
