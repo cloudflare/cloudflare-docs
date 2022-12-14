@@ -11,9 +11,9 @@ With Email Workers you can leverage the power of Cloudflare Workers to implement
 
 Creating your own rules with Email Workers is as easy or complex as you want. You can begin using one of the starter templates that are pre-populated with code for popular use-cases. These templates allow you to create a blocklist, allowlist or send notifications to Slack. Advanced users can also write their own code, and skip the starter templates.
 
-Using custom code you can create logic that, for example, only accepts messages from a specific address, and then forwards them to one or more of your verified email addresses, while also alerting you on Slack. 
+If you prefer, you can skip the templates and use custom code. You can, for example, create logic that only accepts messages from a specific address, and then forwards them to one or more of your verified email addresses, while also alerting you on Slack. 
 
-The following is an example of an allowlist Worker: 
+The following is an example of an allowlist Email Worker: 
 
 ```js
 export default {
