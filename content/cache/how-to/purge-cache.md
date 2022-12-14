@@ -120,7 +120,7 @@ You can purge using cache-tags via the Cloudflare API. For more information, ref
 
 Purging by hostname means that all assets at URLs with a host that matches one of the provided values will be purged from the cache.
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2.  Select the appropriate domain.
 3.  Click **Caching** > **Configuration**.
 4.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
