@@ -6,7 +6,7 @@ weight: 1
 
 # Office 365 directory integration
 
-Cloudflare Area 1 integrates with Office 365 to retrieve user and group information. This can be used to enforce the Business Email Compromise configuration to prevent user impersonation.
+Cloudflare Area 1 can integrate with Office 365 to retrieve user and group information. This can be used to enforce the Business Email Compromise configuration to prevent user impersonation.
 
 ## 1. Authorize Area 1 with Office 365 for Directory Access
 
