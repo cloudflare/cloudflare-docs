@@ -16,4 +16,4 @@ Queues now allows developers to create up to 100 queues per account, up from the
 
 ### Queue sendBatch support
 
-Queues Javascript API now includes `sendBatch`, which supports sending up to 100 messages at a time.
+Queues Javascript API now includes `sendBatch` which supports sending up to 100 messages at a time.
