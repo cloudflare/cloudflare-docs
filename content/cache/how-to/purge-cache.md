@@ -116,7 +116,7 @@ You can purge using cache-tags via the Cloudflare API. For more information, ref
 
 {{</Aside>}}
 
-## ​Purge cache by Hostname (Enterprise Only)
+## ​Purge cache by Hostname (Enterprise only)
 
 Purging by hostname means that all assets at URLs with a host that matches one of the provided values will be purged from the cache.
 
