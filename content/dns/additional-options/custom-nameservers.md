@@ -93,7 +93,7 @@ When you choose the names for your zone-level nameservers, each hostname must be
 To add custom nameservers to a specific zone:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2.  Go to **DNS**.
+2.  Go to **DNS** > **Records**.
 3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the nameserver hostnames (like ns1, ns2, ns3).
 4.  Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records (visible after you refresh the page).
 5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
@@ -115,7 +115,7 @@ To add zone-level custom nameservers via the API, use a [PATCH request](https://
 To remove zone-level nameservers (and their associated, read-only DNS records) using the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2.  Go to **DNS**.
+2.  Go to **DNS** > **Records**.
 3.  On **Custom Nameservers**, click **Remove Custom Nameservers**.
 4.  Cloudflare will remove your nameservers and their associated read-only `A` or `AAAA` records.
 
@@ -126,5 +126,3 @@ To remove zone-level custom nameservers (and their associated, read-only DNS rec
 ```txt
 "vanity_name_servers": []
 ```
-
-

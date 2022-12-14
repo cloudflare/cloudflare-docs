@@ -34,7 +34,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 6.  Click **Convert**.
 
-7.  Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Verification TXT Record**.
+7.  Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
 
 ## Step 2 — Verify ownership for your domain
 
