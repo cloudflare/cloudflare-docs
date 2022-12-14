@@ -5,7 +5,7 @@ title: Databases
 
 # Databases
 
-You can use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, Planetscale, Prisma, and more. To use these Cloudflare Workers integrations, you will need to install the relevant packages for the databases you want to use.
+Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, Planetscale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use.
 
 {{<table-wrap>}}
 
@@ -23,19 +23,20 @@ You can use Cloudflare Workers to connect your application to external databases
 
 {{</table-wrap>}}
 
-Once you have installed the necessary packages, you can use the APIs provided by these packages to connect to your database and perform operations on it. See detailed links for service-specific instructions.
+Once you have installed the necessary packages, use the APIs provided by these packages to connect to your database and perform operations on it. Refer to detailed links for service-specific instructions.
 
 ## Authentication
-If your database requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
 
-```
+If your database requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
+
+```sh
 wrangler secret put SECRET_NAME
 ```
 
-Then, you can retrieve the secret value in your code using the following code snippet:
+Then, retrieve the secret value in your code using the following code snippet:
 
 ```js
 const secretValue = env.SECRET_NAME;
 ```
 
-You can then use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, you can include these in using the relevant service's library or API.
+You can then use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
