@@ -37,7 +37,7 @@ Monitor and block use of stolen/exposed credentials for account takeover.
 {{</feature>}}
 
 {{<feature header="Security Events" href="/waf/security-events/" cta="Explore Security Events">}}
-Identify and investigate security threats using an intuitive interface. Tailor your security configurations based on the activity log.
+Review mitigated requests (rule matches) using an intuitive interface. Tailor your security configurations based on the activity log.
 {{</feature>}}
 
 {{<feature header="Security Analytics" href="/waf/security-analytics/" cta="Explore Security Analytics">}}
