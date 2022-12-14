@@ -156,7 +156,7 @@ Purging by prefix is useful in different scenarios, such as:
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2.  Select the appropriate domain.
-3.  Click **Caching** > **Configuration**.
+3.  Select **Caching** > **Configuration**.
 4.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
 5.  Under **Purge by**, select **Prefix**.
 6.  Follow the syntax instructions.
