@@ -40,8 +40,8 @@ export default {
 The Queues API also supports writing multiple messages at once:
 
 ```ts
-async sendResultsToQueue(results: Array<any>, env: Environment) {
-  const batch: Iterable<MessageSendRequest> = results.map((value) => ({
+const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
+  const batch: MessageSendRequest[] = results.map((value) => ({
     body: JSON.stringify(value)
   }));
   await env.queue.sendBatch(batch);
@@ -68,7 +68,7 @@ interface Queue<Body = any> {
 
 - {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<any\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
 
-  - Sends a batch of messages to the Queue. Each item in the array must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
+  - Sends a batch of messages to the Queue. Each item in the provided [Iterable](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html) must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
   - When the promise resolves, the messages are confirmed to be written to disk.
 
 {{</definitions>}}
