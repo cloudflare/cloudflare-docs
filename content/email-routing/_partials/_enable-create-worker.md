@@ -13,7 +13,7 @@ _build:
 	1. In `const allow = ["friend@example.com", "coworker@example.com"];` replace the email examples with the addresses you want to allow emails from.
 	2. In `await message.forward("inbox@corp");` replace the email address example with the address where emails should be forwarded to.
 
-7. (Optional) You can test your logic on the right side of the screen. In the **From** field enter either an email address from your approved senders list or one that is not on the approved list. When you select **Trigger email event** you should see a message telling you if the email address is allowed or rejected.
+7. (Optional) You can test your logic on the right side of the screen. In the **From** field, enter either an email address from your approved senders list or one that is not on the approved list. When you select **Trigger email event** you should see a message telling you if the email address is allowed or rejected.
 
 9. Select **Save and deploy** to save your Email Worker when you are finished.
 
