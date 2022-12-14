@@ -81,3 +81,31 @@ Now that Area 1 has been authorized to access and retrieve directory information
 5. Select the arrow next to a group to expand it and show its members.
 
     ![Select the arrow to expand it and show a list of its members](/email-security/static/bec/step5-show-members.png)
+
+6. To protect an entire group, select the three-dots button next to it, and then **Protect**. When you protect a group, all of its members will be automatically protected. The protection markers will turn green to indicate that protection is active.
+
+    ![You can protect an entire group of users. The protection markers will turn green to show that protection is active](/email-security/static/bec/step6-protect-group.png)
+
+7. You can also protect individual users. Select the three-dots button next to each user you want to protect, and then **Protect**.
+
+    ![You can also protect just one user](/email-security/static/bec/step7-protect-user.png)
+
+## 3. Configure secondary email address (if required)
+
+When the Business Email Compromise list is configured, Cloudflare Area 1 will enforce the proper match of the sender’s display name and email address. Any variation from this strict requirement will raise a detection event. The reason of detection will be `Protected Name <NAME> should not appear as <non-configured email address>`. 
+
+In some instances, you may want to allow your protected users to send emails from an alternate email address (like their personal email address). To configure this alternate address, you will have to add it to their directory entry.
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon).
+
+2. Go to **Email Configuration** > **Enhanced Detections** > **Business Email Compromise**.
+
+3. Search for the user you want to allow an alternate email address.
+
+4. Select the three-dots button > **Edit**.
+
+    ![Select edit to add alternate email addresses to your user](/email-security/static/bec/step4-edit-user.png)
+
+5. In **Secondary Emails** add the additional email addresses. Place each entry on a new line. Select **Save** to finish.
+
+    ![Add each new email address to the Secondary Emails field. Place each address on a separate line](/email-security/static/bec/step5-new-email.png)
