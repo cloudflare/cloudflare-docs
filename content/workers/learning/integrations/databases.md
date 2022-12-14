@@ -26,7 +26,7 @@ You can use Cloudflare Workers to connect your application to external databases
 Once you have installed the necessary packages, you can use the APIs provided by these packages to connect to your database and perform operations on it. See detailed links for service-specific instructions.
 
 ## Authentication
-Many services require authentication. If your database requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
+If your database requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
 
 ```
 wrangler secret put SECRET_NAME

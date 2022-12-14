@@ -30,7 +30,7 @@ async function handleRequest(request) {
 ```
 
 ## Authentication
-Many APIs require authentication. If your API requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
+If your API requires authentication, you can use Wrangler secrets to securely store your credentials. To do this, you can create a secret in your Cloudflare Workers project using the following [wrangler secret](/workers/wrangler/commands/#secret) command:
 
 ```
 wrangler secret put SECRET_NAME

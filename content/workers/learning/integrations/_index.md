@@ -14,7 +14,7 @@ One of the key features of Cloudflare Workers is the ability to easily integrate
 ## Types of Integrations
 Cloudflare Workers offers several types of integrations, including:
 
-* [Databases](/workers/platform/integrations/databases/): Cloudflare Workers can be easily integrated with a variety of databases, including SQL and NoSQL databases. This allows you to store and retrieve data from your databases directly from your Cloudflare Workers code.
+* [Databases](/workers/platform/integrations/databases/): Cloudflare Workers can be integrated with a variety of databases, including SQL and NoSQL databases. This allows you to store and retrieve data from your databases directly from your Cloudflare Workers code.
 * [APIs](/workers/platform/integrations/apis/): Cloudflare Workers can be used to integrate with external APIs, allowing you to access and use the data and functionality exposed by those APIs in your own code.
 * [Third-party services](/workers/platform/integrations/external-services/): Cloudflare Workers can be used to integrate with a wide range of third-party services, such as payment gateways, authentication providers, and more. This makes it possible to use these services in your Cloudflare Workers code.
 
@@ -29,7 +29,7 @@ Using integrations with Cloudflare Workers is easy. Here is a general step-by-st
 
 
 ## Tips and Best Practices
-Here are a few tips and best practices to help you get the most out of your integrations with Cloudflare Workers:
+Here are a few tips and best practices to help you get the most out of using integrations with Cloudflare Workers:
 
 * Be sure to properly secure your integrations and protect sensitive data. Ensure you use secure authentication and authorization where possible, and ensure the validity of libraries you import.
 * Use caching to improve performance and reduce the load on an external service.
