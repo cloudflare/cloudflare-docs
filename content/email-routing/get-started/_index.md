@@ -1,6 +1,7 @@
 ---
 title: Get started
 pcx_content_type: get-started
+layout: single
 weight: 2
 ---
 
