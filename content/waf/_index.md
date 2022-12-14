@@ -33,7 +33,6 @@ Enable the pre-configured WAF Managed Rulesets to get immediate protection. Thes
 {{</feature>}}
 
 {{<feature header="Exposed credential checks" href="/waf/exposed-credentials-check/">}}
-{{<plan type="paid">}}
 Monitor and block use of stolen/exposed credentials for account takeover.
 {{</feature>}}
 
