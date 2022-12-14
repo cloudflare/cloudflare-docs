@@ -108,7 +108,7 @@ When your content reaches our edge network, Cloudflare:
 3.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
 4.  Under **Purge by**, select **Tag**.
 5.  In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
-6.  Click **Purge**.
+6.  Select **Purge**.
 
 {{<Aside type="note" header="API">}}
 
