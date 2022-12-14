@@ -23,6 +23,10 @@ Email Routing is free and private by design. Cloudflare will not store or access
 
 ## Features
 
+{{<feature header="Email Workers" href="/email-routing/email-workers/">}}
+Leverage the power of Cloudflare Workers to implement any logic you need to process your emails and create rules as complex or simple as you need.
+{{</feature>}}
+
 {{<feature header="Custom addresses" href="/email-routing/get-started/enable-email-routing/">}}
 With Email Routing you can have many custom email addresses to use for specific situations.
 {{</feature>}}
