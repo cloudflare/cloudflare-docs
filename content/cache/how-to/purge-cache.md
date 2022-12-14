@@ -43,9 +43,9 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 
 {{</Aside>}}
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2.  Select **Caching** > **Configuration**.
-3.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
+3.  Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 4.  Under **Purge by**, select **URL**.
 5.  Enter the appropriate value(s) in the text field using the format shown in the example.
 6.  Perform any additional instructions to complete the form.
@@ -58,12 +58,12 @@ To maintain optimal site performance, Cloudflare strongly recommends using singl
 
 Purging everything immediately clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource returns to your origin server to validate the resource. If Cloudflare cannot validate the resource, Cloudflare fetches the latest version from the origin server and replaces the cached version. When a site with heavy traffic contains a lot of assets, requests to your origin server can increase substantially and result in slow site performance.
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2.  Select **Caching** > **Configuration**.
-3.  Under **Purge Cache**, click **Purge Everything**. A warning window appears.
-4.  If you agree, click **Purge Everything**.
+3.  Under **Purge Cache**, select **Purge Everything**. A warning window appears.
+4.  If you agree, select **Purge Everything**.
 
-## Cache-Tags (Enterprise Only)
+## Cache-Tags (Enterprise only)
 
 Cache-tag purging makes multi-file purging easier because you can bulk purge by adding cache-tags to your assets, such as web pages, image files, and more. Note that Tag, Hostname and Prefix purges are only available for Cloudflare Enterprise.
 
@@ -103,9 +103,9 @@ When your content reaches our edge network, Cloudflare:
 
 ## Purge using cache-tags
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2.  Select **Caching** > **Configuration**.
-3.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
+3.  Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 4.  Under **Purge by**, select **Tag**.
 5.  In the text box, enter your tags to use to purge the cached resources. To purge multiple cache-tagged resources, separate each tag with a comma or have one tag per line.
 6.  Select **Purge**.
@@ -137,7 +137,7 @@ You can purge hostnames via the Cloudflare API. For more information, refer to t
 
 {{</Aside>}}
 
-## Purge cache by prefix (Enterprise Only)
+## Purge cache by prefix (Enterprise only)
 
 Enterprise customers can purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
@@ -153,10 +153,10 @@ Purging by prefix is useful in different scenarios, such as:
 - Increasing control over cached objects in a path
 - Simplifying the number of purge calls sent
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 2.  Select the appropriate domain.
 3.  Select **Caching** > **Configuration**.
-4.  Under **Purge Cache**, click **Custom Purge**. The **Custom Purge** window appears.
+4.  Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 5.  Under **Purge by**, select **Prefix**.
 6.  Follow the syntax instructions.
     - One prefix per line.
