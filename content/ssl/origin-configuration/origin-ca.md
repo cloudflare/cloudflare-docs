@@ -12,6 +12,10 @@ Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cl
 For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 {{</Aside>}}
 
+## Availability
+
+{{<feature-table id="ssl.origin_certificates">}}
+
 ---
 
 ## Deploy an Origin CA certificate

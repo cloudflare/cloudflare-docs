@@ -34,6 +34,10 @@ Using Custom Cache Keys may result in cache sharding and reduction of your cache
 
 To create a Cache Key, see [Create a Custom Cache Key](/cache/how-to/create-cache-keys/).
 
+## Availability
+
+{{<feature-table id="cache.cache_key">}}
+
 ## Cache Key Template
 
 There are a couple of common reasons to change the Cache Key Template. You might change the Cache Key Template to:

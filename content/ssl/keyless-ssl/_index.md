@@ -19,6 +19,8 @@ TLS 1.3 is not supported for Keyless SSL
 
 ## Availability
 
+{{<feature-table id="ssl.keyless_ssl">}}
+
 Keyless SSL is only available to Enterprise customers that maintain their own SSL certificate purchased from a valid Certificate Authority. Cloudflare does not supply any certificates for use with Keyless SSL.
   
 
