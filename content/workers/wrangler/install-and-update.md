@@ -20,7 +20,7 @@ To install [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have 
 
 {{<Aside type="warning" header="Install Wrangler locally">}}
 
-Cloudflare recommends installing Wrangler locally into each of your projects. This allows you to control Wrangler versions for each project and rollback to an earlier version of Wrangler, if needed.
+Cloudflare recommends installing Wrangler locally into each of your projects. This allows you and your team to use the same Wrangler version, control Wrangler versions for each project, and rollback to an earlier version of Wrangler, if needed.
 
 {{</Aside>}}
 
@@ -50,6 +50,12 @@ or install with Yarn:
 
 ```sh
 $ yarn global add wrangler
+```
+
+If you are using Volta to control your version of Node, you need to run:
+
+```sh
+$ volta install wrangler
 ```
 
 ## Update Wrangler
