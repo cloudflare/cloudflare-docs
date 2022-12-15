@@ -21,7 +21,8 @@ Cloudflare Workers offers several types of integrations, including:
 
 
 ## How to use integrations
-Using integrations with Cloudflare Workers is easy. To use any of the available integrations:
+
+To use any of the available integrations:
 
 * Determine which integration you want to use and make sure you have the necessary accounts and credentials for it.
 * In your Cloudflare Workers code, import the necessary libraries or modules for the integration.
