@@ -10,7 +10,7 @@ Cloudflare Area 1 can integrate with Office 365 to retrieve user and group infor
 
 ## 1. Authorize Area 1 with Office 365 for Directory Access
 
-You need to authorize Cloudflare Area 1 to make connections into your [Office 365 tenant](https://learn.microsoft.com/en-us/microsoft-365/solutions/tenant-management-overview), to retrieve your directory details. The account used to authorize will require the **Privileged authentication admin** and **Privileged role admin** roles.
+You need to authorize Cloudflare Area 1 to make connections into your [Office 365 tenant](https://learn.microsoft.com/en-us/microsoft-365/solutions/tenant-management-overview) to retrieve your directory details. The account used to authorize will require the **Privileged authentication admin** and **Privileged role admin** roles.
 
 ### How does the authorization work?
 
