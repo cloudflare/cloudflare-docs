@@ -52,12 +52,6 @@ or install with Yarn:
 $ yarn global add wrangler
 ```
 
-If you are using Volta to control your version of Node, you need to run:
-
-```sh
-$ volta install wrangler
-```
-
 ## Update Wrangler
 
 To check your Wrangler version, run:
@@ -86,6 +80,12 @@ To update Wrangler globally, you must be outside of a project folder (and there 
 
 ```sh
 $ npm update -g wrangler
+```
+
+If you are using Volta to control your version of Node and need to update Wrangler globally, run:
+
+```sh
+$ volta install wrangler
 ```
 
 {{<Aside type="warning" header="`npx wrangler init`">}}
