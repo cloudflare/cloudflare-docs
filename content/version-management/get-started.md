@@ -40,7 +40,7 @@ Once you have made changes to a version, apply that version to your lowest-ranke
 4. Go to **Environments**.
 5. On your lowest-ranked environment, use the **Version** dropdown to select your desired version.
 
-To test your version, send requests to that environment that match the pattern specified in its [Traffic filters](/version-management/reference/traffic-filters/).
+To test your version, send requests to that environment that match the pattern specified in its [traffic filters](/version-management/reference/traffic-filters/).
 
 For more details about what happens to these requests, refer to the version's [metrics](/version-management/how-to/versions/#view-metrics).
 

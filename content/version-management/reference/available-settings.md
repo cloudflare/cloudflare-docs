@@ -6,7 +6,7 @@ weight: 2
 
 # Available settings
 
-When you use Version Management, you can edit various configuration settings, including Page Rules, [Firewall Rules](/waf/), [Cache settings](/cache/), and more.
+When you use Version Management, you can edit various configuration settings, such as Page Rules, [Firewall Rules](/waf/), and [Cache settings](/cache/).
 
 Generally, you are allowed to edit all zone-level configurations except for the following:
 
@@ -18,6 +18,6 @@ Generally, you are allowed to edit all zone-level configurations except for the 
 
 {{<Aside type="note">}}
 
-For the most up to date list of these settings, start [editing settings within a version](/version-management/how-to/versions/#change-settings-in-a-version) in the Cloudflare dashboard.
+For the most up-to-date list of these settings, start [editing settings within a version](/version-management/how-to/versions/#change-settings-in-a-version) in the Cloudflare dashboard.
 
 {{</Aside>}}

@@ -9,7 +9,7 @@ Before making changes, make sure you are inside the correct version of your zone
 
 To change between different versions of your zone:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
 3. Go to **Version Management**.
 4. On a specific version, select **Select**.

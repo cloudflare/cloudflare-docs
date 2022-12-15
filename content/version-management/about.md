@@ -12,7 +12,7 @@ Version Management works through a combination of **environments** and **version
 stateDiagram-v2
     V2: Version 2
     V22: Version 2 <br/>(applied manually)
-    V23: Version 2 <br/>(promoted from Dev)
+    V23: Version 2 <br/>(promoted from Development)
     V24: Version 2 <br/>(promoted from Staging)
     Revert: Production (rollback)
     V1: Version 1 <br/>(rolled back due to issues)
@@ -51,7 +51,7 @@ When you first [enable](/version-management/how-to/enable/) version management, 
 
 When you [create](/version-management/how-to/versions/#create-version) a new version, that version will be available to apply to your **Development** environment (or whatever environment has the lowest rank). Once you test a version in your **Development** environment, you would promote that version to the **Staging** environment and - with no issues - then promote it to **Production**.
 
-To send traffic to specific environments, send requests to that environment that match the pattern specified in its [Traffic filters](/version-management/reference/traffic-filters/).
+To send traffic to specific environments, send requests to that environment that match the pattern specified in its [traffic filters](/version-management/reference/traffic-filters/).
 
 ## Versions
 
@@ -64,4 +64,4 @@ When your version is ready, you would then test and promote it through various e
 
 You can create a new version at any time by choosing to [**Clone**](/version-management/how-to/versions/#create-version) an existing version, which automatically copies over configuration settings from an existing version.
 
-Version settings are applied to zone traffic when you when you [promote a version](/version-management/how-to/environments/#promote-a-version) to a new environment and then send traffic to that environment that matches the pattern specified in its [Traffic filters](/version-management/reference/traffic-filters/).
+Version settings are applied to zone traffic when you when you [promote a version](/version-management/how-to/environments/#promote-a-version) to a new environment and then send traffic to that environment that matches the pattern specified in its [traffic filters](/version-management/reference/traffic-filters/).

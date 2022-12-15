@@ -11,7 +11,7 @@ weight: 2
 
 {{<Aside type="note">}}
 
-During the open Beta, you can only interact with applications and versions using the Cloudflare dashboard.
+During the open beta, you can only interact with applications and versions using the Cloudflare dashboard.
 
 {{</Aside>}}
 
@@ -34,10 +34,10 @@ To create a new environment:
 5. Select **Create Environment**.
 6. Provide the following information:
   - **Environment Name**: A unique, descriptive name for the environment.
-  - [**Traffic filter**](/version-management/reference/traffic-filters/): Which limits which requests are sent to this environment.
-  - **Initial position**: Which controls where in your testing process this environment should be. 
+  - [**Traffic filter**](/version-management/reference/traffic-filters/): Limits which requests are sent to this environment.
+  - **Initial position**: Controls where this environment should be in your testing process. 
   
-7. Click **Create**. The environment may take a few minutes to be created.
+7. Select **Create**. The environment may take a few minutes to be created.
 
 ---
 

@@ -11,7 +11,7 @@ weight: 3
 
 {{<Aside type="note">}}
 
-During the open Beta, you can only interact with environments and versions using the Cloudflare dashboard.
+During the open beta, you can only interact with environments and versions using the Cloudflare dashboard.
 
 {{</Aside>}}
 
