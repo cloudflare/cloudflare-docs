@@ -100,6 +100,14 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        },
+        "crawl_interval": {
+          "title": "Crawl interval",
+          "summary": "All plans",
+          "free": "Every 30 days",
+          "pro": "Every 15 days",
+          "biz": "Every 5 days",
+          "ent": "Every 5 days"
         }
       }
     },
@@ -213,6 +221,20 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "crawler_hints": {
+      "title": "Crawler Hints",
+      "link": "/cache/about/crawler-hints/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -969,8 +991,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_purchase": "Yes"
+          "ent": "Paid add-on"
         },
         "r_bot_fight_mode": {
           "title": "Bot Fight Mode",
@@ -1646,6 +1667,20 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "railgun": {
+      "title": "Railgun",
+      "link": "/railgun/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }

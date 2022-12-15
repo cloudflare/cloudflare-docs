@@ -11,6 +11,10 @@ This feature particularly benefits end users who visit your application regularl
 
 For more details on what 0-RTT is, how it works, and potential limitations, refer to [our blog](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/).
 
+## Availability
+
+{{<feature-table id="network.0_rtt">}}
+
 ## Enable 0-RTT Connection Resumption
 
 By default, 0-RTT Connection Resumption is not enabled on your Cloudflare application.

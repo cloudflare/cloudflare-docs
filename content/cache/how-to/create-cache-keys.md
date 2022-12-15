@@ -5,11 +5,7 @@ pcx_content_type: how-to
 
 # Create custom cache keys
 
-{{<Aside type="note" header="Note">}}
-
-Creating custom cache keys is limited to Enterprise users only.
-
-{{</Aside>}}
+A [Cache Key](/cache/about/cache-keys/) is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
 
 1.  Log in to your Cloudflare account.
 2.  Select the domain that requires changes to the Cache Key Template.
@@ -26,3 +22,7 @@ Creating custom cache keys is limited to Enterprise users only.
 9.  Choose a save option:
     - **Save as Draft** to save the rule and leave it disabled. Note that disabled rules count towards the number of rules allowed for your domain.
     - **Save and Deploy** to save the rule and enable it immediately.
+
+## Availability
+
+{{<feature-table id="cache.cache_key">}}
