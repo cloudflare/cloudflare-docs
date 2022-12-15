@@ -39,6 +39,12 @@ To create a new environment:
   
 7. Select **Create**. The environment may take a few minutes to be created.
 
+{{<Aside type="note">}}
+
+You can only adjust the [**Read-only Environment** setting](/version-management/reference/read-only-environments/) after an environment has been created.
+
+{{</Aside>}}
+
 ---
 
 ## Edit environment
