@@ -39,13 +39,11 @@ We are currently hosting a closed beta for Machine Learning-based Discovery. Exi
 
 If you are in the beta, your API endpoints are discovered with both the Session Identifier-based Discovery as well as the Machine Learning-based Discovery.
 
-To determine if you are in the beta, log in to the Cloudflare dashboard and select your account and domain. Navigate to **API Shield** > **Discovery**. You may filter the source results by ‘Session Identifier’ or ‘Machine Learning’ to view results from each Discovery method. 
+To determine if you are in the beta, log in to the Cloudflare dashboard and select your account and domain. Navigate to **API Shield** > **Discovery**. You may filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method. 
 
-{{<Aside type= "note">}}
+If all of your zone’s API traffic contains the session identifier that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. We expect Machine Learning-based Discovery to excel in discovering API traffic regardless of whether your API uses a session identifier. 
 
-Both sources may deliver the same results due to similarities between their underlying methodology. If you feel there is an error, please direct the beta feedback to your account team.
-
-{{</Aside>}}
+If you feel there is an error, please direct the beta feedback to your account team.
 
 ## API requests
 
