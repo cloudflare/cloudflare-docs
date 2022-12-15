@@ -67,6 +67,7 @@
 /1.1.1.1/setup/setup-instructions/ /1.1.1.1/setup/ 301
 /1.1.1.1/setup/setup-instructions/dns-over-https/ /1.1.1.1/encryption/dns-over-https/ 301
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
+/1.1.1.1/what-is-1.1.1.1/ /1.1.1.1/
 
 
 # access
@@ -485,7 +486,7 @@
 /registrar/transfer-instructions/namecheap/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/network-solutions/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
 /registrar/transfer-instructions/oneandone/ /registrar/get-started/transfer-domain-to-cloudflare/ 301
-
+/registrar/why-choose-cloudflare/whois-redaction/ /registrar/get-started/whois-redaction/ 301
 
 # rules
 /rules/transform/api/ /rules/transform/url-rewrite/create-api/ 301
@@ -555,6 +556,7 @@
 /cloudflare-for-saas/ssl/common-tasks/certificate-validation-methods/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
 /cloudflare-for-saas/ssl/common-tasks/issuing-certificates/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/ 301
 /cloudflare-for-saas/getting-started/ /cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/getting-started/ /cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/ 301
 /cloudflare-for-saas/ssl/reference/common-api-calls/ /cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/ 301
 /cloudflare-for-saas/ssl/hostname-specific-behavior/custom-origin/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/ 301
 /cloudflare-for-saas/related-products/regional-services-for-saas/ /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ 301
@@ -972,6 +974,7 @@
 /cloudflare-one/connections/connect-browsers/extensions/ /cloudflare-one/policies/browser-isolation/extensions/ 301
 /cloudflare-one/connections/connect-browsers/known-limitations/ /cloudflare-one/policies/browser-isolation/known-limitations/ 301
 /cloudflare-one/connections/connect-browsers/third-party-cookies/ /cloudflare-one/policies/browser-isolation/third-party-cookies/ 301
+/cloudflare-one/policies/browser-isolation/clientless-browser-isolation/ /cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/ 301
 /cloudflare-one/connections/connect-devices/agentless/native-os/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
