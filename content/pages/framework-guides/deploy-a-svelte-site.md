@@ -161,7 +161,7 @@ When deploying with [`@sveltejs/adapter-cloudflare`](https://www.npmjs.com/packa
 | Production branch     | `main`                  |
 | Build command         | `npm run build`         |
 | Build directory       | `.svelte-kit/cloudflare`|
-| Environment Variables | `NODE_VERSION: 17 `|
+| Environment Variables | `NODE_VERSION: 16` |
 
 </div>
 
