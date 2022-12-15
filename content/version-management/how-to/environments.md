@@ -57,7 +57,7 @@ To edit an environment:
 
 ## Change environment version
 
-To prevent accidental changes, you can only update an environment's version through the process of **Promotion** or **Rollback**.
+To prevent accidental changes, you can only update an environment's version through the process of **Promotion** or **Roll back**.
 
 For more details on the flow of versions and environments, refer to [How it works](/version-management/about/).
 
@@ -78,7 +78,7 @@ To roll back a version:
 2. Select your account and zone.
 3. Go to **Version Management**.
 4. Select **Environments**.
-5. On a specific environment, select **Rollback**.
+5. On a specific environment, select **Roll back**.
 
 ---
 
