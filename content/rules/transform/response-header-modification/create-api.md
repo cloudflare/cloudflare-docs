@@ -15,7 +15,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create HTTP Response He
 When creating an HTTP Response Header Modification Rule via API, make sure you:
 
 *   Set the rule action to `rewrite`.
-*   Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set or remove header).
+*   Define the [header modification parameters](/rules/transform/request-header-modification/reference/parameters/) in the `action_parameters` field according to the operation to perform (set, add, or remove header).
 *   Deploy the rule to the `http_response_headers_transform` phase at the zone level.
 
 ***
