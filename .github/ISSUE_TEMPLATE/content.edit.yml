@@ -27,7 +27,6 @@ body:
         - Email Security
         - Firewall
         - Fundamentals
-        - Version Management
         - Image Optimization
         - Load Balancing
         - Logs
@@ -56,6 +55,7 @@ body:
         - Terraform
         - Time Services
         - Turnstile
+        - Version Management
         - WAF
         - Waiting Room
         - WARP Client
