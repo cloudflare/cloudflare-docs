@@ -41,10 +41,10 @@ The API token used in API requests to manage HTTP Response Header Modification R
 ## Examples
 
 <details>
-<summary>Example: Add an HTTP response header with a static value</summary>
+<summary>Example: Set an HTTP response header to a static value</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — adding an HTTP response header with a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example configures the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — setting an HTTP response header to a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
 
 ```json
 ---
@@ -118,10 +118,10 @@ header: Response
 </details>
 
 <details>
-<summary>Example: Add an HTTP response header with a dynamic value</summary>
+<summary>Example: Set an HTTP response header to a dynamic value</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — adding an HTTP response header with a dynamic value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example configures the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — setting an HTTP response header to a dynamic value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
 
 ```json
 ---
@@ -193,6 +193,84 @@ header: Response
 
 </div>
 </details>
+
+<details>
+<summary>Example: Add a <code>set-cookie</code> HTTP response header with a static value</summary>
+<div>
+
+The following example configures the rules of an existing phase ruleset (`<RULESET_ID>`) to a single HTTP Response Header Modification Rule — adding a `set-cookie` HTTP response header with a static value — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method. By configuring the rule with the `add` operation you will keep any existing `set-cookie` headers that may already exist in the response.
+
+```json
+---
+header: Request
+---
+curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "rules": [
+    {
+      "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
+      "description": "My first HTTP Response Header Modification Rule",
+      "action": "rewrite",
+      "action_parameters": {
+        "headers": {
+          "set-cookie": {
+            "operation": "add",
+            "value": "mycookie=custom_value"
+          }
+        }
+      }
+    }
+  ]
+}'
+```
+
+The response contains the complete definition of the ruleset you updated.
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "<RULESET_ID>",
+    "name": "Zone-level Response Headers Transform Ruleset",
+    "description": "Zone-level ruleset that will execute Response Header Modification Rules.",
+    "kind": "zone",
+    "version": "2",
+    "rules": [
+      {
+        "id": "<RULE_ID>",
+        "version": "1",
+        "action": "rewrite",
+        "action_parameters": {
+          "headers": {
+            "set-cookie": {
+              "operation": "add",
+              "value": "mycookie=custom_value"
+            }
+          }
+        },
+        "expression": "(starts_with(http.request.uri.path, \"/en/\"))",
+        "description": "My first HTTP Response Header Modification Rule",
+        "last_updated": "2021-04-14T14:42:04.219025Z",
+        "ref": "<RULE_REF>"
+      }
+    ],
+    "last_updated": "2021-04-14T14:42:04.219025Z",
+    "phase": "http_response_headers_transform"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
 
 <details>
 <summary>Example: Remove an HTTP response header</summary>
