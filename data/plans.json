@@ -1830,6 +1830,13 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        },
+        "email_recipients": {
+          "title": "Email Recipients",
+          "free": "All account members",
+          "pro": "All account members",
+          "biz": "Specified email addresses",
+          "ent": "Specified email addresses"
         }
       }
     },
@@ -2091,7 +2098,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Yes<br/>(open beta)"
         }
       }
     },

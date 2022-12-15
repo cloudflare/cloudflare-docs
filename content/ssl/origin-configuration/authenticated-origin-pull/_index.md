@@ -12,6 +12,10 @@ This authentication becomes particularly important with the Cloudflare Web Appli
 
 If you want your domain to be FIPS compliant, you must [upload your own certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
 
+## Availability
+
+{{<feature-table id="ssl.authenticated_origin_pulls">}}
+
 ## More information
 
 {{<directory-listing>}}
