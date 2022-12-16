@@ -15,6 +15,7 @@ List all prefixes and the ASNs where they should originate. When specifying pref
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
+- Prefixes using BGP-controlled advertisements cannot be used in conjunction with on-demand auto-advertisement. You must use dynamic advertisement.
 
 <details>
 <summary>

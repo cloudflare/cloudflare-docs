@@ -14,14 +14,14 @@ You can create and configure Cloudflare Tunnel connections to [support multiple 
 
 Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a machine to Cloudflare
 - Assign the machine an IP that can consist of an RFC 1918 IP address or range
 - Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
 - Connect using any TCP-based protocol
 
-**⏲️ Time to complete:** 45 minutes
+**Time to complete:** 45 minutes
 
 ---
 
@@ -146,7 +146,7 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ## (Optional) Enable HTTPS inspection
 
-1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.
+1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.
 
     Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
 

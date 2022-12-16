@@ -11,12 +11,12 @@ Cloudflare's DNS filtering solution can apply filters based on who is making the
 
 To apply these types of rules, you will need to deploy Cloudflare's agent on the devices in your organization. Cloudflare's agent will prompt users to login and will use the identity from that authentication to send DNS-over-HTTPS (DoH) queries that include the user identity. These types of policies can also run in-line with Cloudflare Gateway's HTTP filtering rules.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Build a DNS filtering rule that applies to a group of users
 - Use DNS filtering rule precedence to allow some users to reach a destination
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

@@ -75,15 +75,22 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
-### Additional configuration parameters
+### Required configuration parameters
 
+- IKEv2
 - Auth is PSK
-- Remote Port of 500
-- 0s reauth time or no reauth
-- 4h rekey time
 - Disable [anti-replay protection](/magic-wan/reference/anti-replay-protection/)
-- Null encryption
-- NAT-T supported
+
+### Optional configuration parameters
+
+- **Null encryption:** This option should not be used unless necessary as it reduces security because IPsec traffic is not ecrypted. You must explicitly opt in to use this option.
+- **NAT-T:** IPsec NAT-T support requires the IKE session begin on port 4500. Most IPsec implementations allow this to be configured, but some devices require beginning the IKE session on port 500 even when NAT-T is used. 
+
+  {{<Aside type="note">}}
+  
+  Cloudflare does not support Cisco ASA NAT-T configurations.
+
+  {{</Aside>}}
 
 ## Supported key ID formats
 

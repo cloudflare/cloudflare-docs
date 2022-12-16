@@ -419,6 +419,16 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-bot_management-js_detection-passed">
+        <td><p><code>cf.bot_management.js_detection.passed</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+          <p>Indicates whether the visitor has previous passed a JS Detection.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/javascript-detections/">JavaScript detections</a>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-client-bot">
         <td><code>cf.client.bot</code><br />{{<type>}}Boolean{{</type>}}</td>
         <td>
@@ -483,6 +493,35 @@ The Cloudflare Rules language supports these dynamic fields:
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
       </p></td>
     </tr>
+    <tr id="field-cf-waf-score">
+        <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>A global score from 1 to 99 that combines the score of each WAF attack vector into a single score.<br/>
+      This is the standard <a href="/waf/about/waf-attack-score/">WAF attack score</a> to detect variants of attack patterns.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-sqli">
+        <td><code>cf.waf.score.sqli</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-xss">
+        <td><code>cf.waf.score.xss</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-rce">
+        <td><code>cf.waf.score.rce</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -490,12 +529,6 @@ The Cloudflare Rules language supports these dynamic fields:
         <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
       </td>
     </tr>
-    <tr id="cf.bot_management.js_score">
-    <td><code>js_score</code>
-    <td>
-      <p>Customers should not use <code>js_score</code> when creating Bot Management firewall rules because it will always be blank.</p>
-   </td>
-   </tr>
   </tbody>
 </table>
 

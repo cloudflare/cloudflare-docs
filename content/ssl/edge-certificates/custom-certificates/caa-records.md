@@ -52,7 +52,7 @@ Create a CAA record for each Certificate Authority (CA) that you plan to use for
 To add a CAA record in the dashboard, 
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2.  Navigate to **DNS**.
+2.  Navigate to **DNS** > **Records**.
 3.  Click **Add record**.
 4.  For **Type**, select **CAA**.
 5.  For **Name**, type your domain.

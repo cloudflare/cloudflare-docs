@@ -20,17 +20,17 @@ layout: list
       <th>Description</th>
       <th>Comments</th>
     </tr>
-    <tr>
-      <th>N/A</th>
-      <th>N/A</th>
-      <th>N/A</th>
-      <th>N/A</th>
-      <th>N/A</th>
-      <th>N/A</th>
-      <th>N/A</th>
-    </tr>
   </thead>
   <tbody>
-</tbody>
+    <tr>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+    </tr>
+  </tbody>
 </table>
 {{</table-wrap>}}

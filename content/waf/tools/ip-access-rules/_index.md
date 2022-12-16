@@ -24,7 +24,7 @@ Block by country is only available on the Enterprise plan. Other customers may p
 
 * Allowing a country code does not bypass [WAF Managed Rulesets](/waf/managed-rulesets/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
 
-* By design, IP Access rules configured to _Allow_ traffic do not show up in [Security Events](/waf/analytics/).
+* By design, IP Access rules configured to _Allow_ traffic do not show up in [Security Events](/waf/security-events/).
 
 * Requests containing certain attack patterns in the `User-Agent` field are checked before being processed by the general firewall pipeline. Therefore, such requests are blocked before any allowlist logic takes place. When this  occurs, security events downloaded from the API show `rule_id` as `security_level` and action as `drop`.
 

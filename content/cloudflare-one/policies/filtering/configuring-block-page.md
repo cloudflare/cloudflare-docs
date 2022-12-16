@@ -12,7 +12,7 @@ Configuring a custom block page on the Zero Trust dashboard helps avoid this con
 
 ## Prerequisites
 
-In order to display the block page, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) installed.
+In order to display the block page, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) installed.
 
 ## Enable the block page for HTTP policies
 

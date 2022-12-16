@@ -12,14 +12,14 @@ Cloudflare can render a Virtual Network Computer (VNC) terminal in your browser 
 
 Administrators can use Cloudflare Tunnel to connect a VNC host to Cloudflare’s network. Using Cloudflare Access, you can apply Zero Trust policies to determine who can access your VNC server. Cloudflare’s network will then enforce the Zero Trust policies and, when a user is allowed, render the client in the browser.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Install and run a Cloudflare Tunnel on a Linux virtual machine
 - Install and configure VNC on a Linux virtual machine
 - Build a Zero Trust policy to determine who can reach the host
 - Render the VNC server in your browser
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

@@ -100,6 +100,14 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        },
+        "crawl_interval": {
+          "title": "Crawl interval",
+          "summary": "All plans",
+          "free": "Every 30 days",
+          "pro": "Every 15 days",
+          "biz": "Every 5 days",
+          "ent": "Every 5 days"
         }
       }
     },
@@ -213,6 +221,20 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "crawler_hints": {
+      "title": "Crawler Hints",
+      "link": "/cache/about/crawler-hints/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -969,8 +991,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_purchase": "Yes"
+          "ent": "Paid add-on"
         },
         "r_bot_fight_mode": {
           "title": "Bot Fight Mode",
@@ -1028,8 +1049,8 @@
       }
     },
     "firewall_analytics": {
-      "title": "Firewall analytics",
-      "link": "/waf/analytics/",
+      "title": "Security Events",
+      "link": "/waf/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1067,13 +1088,6 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "z_l4_ddos": {
-          "title": "L4 DoS attacks mitigated",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Last 7 days"
         }
       }
     },
@@ -1657,6 +1671,20 @@
         }
       }
     },
+    "railgun": {
+      "title": "Railgun",
+      "link": "/railgun/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "rocket_loader": {
       "title": "Rocket Loader",
       "link": "/fundamentals/speed/rocket-loader/",
@@ -1802,6 +1830,13 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        },
+        "email_recipients": {
+          "title": "Email Recipients",
+          "free": "All account members",
+          "pro": "All account members",
+          "biz": "Specified email addresses",
+          "ent": "Specified email addresses"
         }
       }
     },
@@ -2063,7 +2098,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Yes<br/>(open beta)"
         }
       }
     },
@@ -2275,7 +2310,6 @@
     "waiting_room": {
       "title": "Waiting Room",
       "link": "/waiting-room/",
-      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2283,8 +2317,7 @@
           "free": "No",
           "pro": "No",
           "biz": "Yes",
-          "ent": "Yes",
-          "ent_plus": "Yes"
+          "ent": "Yes"
         },
         "b_rooms": {
           "title": "Number of rooms",
@@ -2292,8 +2325,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": 1,
-          "ent_plus": "Custom"
+          "ent": "Custom"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2301,8 +2333,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "queueing_methods": {
           "title": "Queueing methods",
@@ -2310,8 +2341,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)",
-          "ent_plus": "All options"
+          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",
@@ -2319,8 +2349,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "json_response": {
           "title": "JSON-friendly response",
@@ -2328,8 +2357,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "scheduled_events": {
           "title": "Scheduled events",
@@ -2337,8 +2365,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "rules": {
           "title": "Waiting Room rules",
@@ -2346,8 +2373,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         }
       }
     }
@@ -2426,6 +2452,22 @@
           "pro": "500,000 HTTP requests",
           "biz": "500,000 HTTP requests",
           "ent": "1,000,000 HTTP requests"
+        }
+      }
+    },
+    "polygon": {
+      "title": "Polygon Gateways",
+      "link": "/web3/polygon-gateway/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
         }
       }
     }

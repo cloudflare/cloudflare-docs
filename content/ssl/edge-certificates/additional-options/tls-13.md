@@ -15,6 +15,10 @@ SSL/TLS is the protocol that encrypts communication between users and your websi
 
 By turning on the TLS 1.3 feature, traffic to and from your website will be served over the TLS 1.3 protocol when supported by clients. TLS 1.3 protocol has improved latency over older versions, has several new features, and is currently supported in both Chrome (starting with release 66), Firefox (starting with release 60), and in development for Safari and Edge browsers.
 
+## Availability
+
+{{<feature-table id="ssl.tls_13">}}
+
 ## Enable TLS 1.3
 
 TLS 1.3 requires a two-step activation: in the Cloudflare dashboard and in the browser.

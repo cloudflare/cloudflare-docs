@@ -10,13 +10,13 @@ title: Configure Zero Trust Network Access in Cloudflare Zero Trust
 
 In this tutorial we will cover how to configure a Zero Trust Private Network in Cloudflare Zero Trust by combining device enrollment rules, Cloudflare Tunnels, and identity-based network policies.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create device enrollment rules and connect a device to Zero Trust
 - Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
 - Create identity-aware network policies
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 45 minutes
 

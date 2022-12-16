@@ -14,18 +14,18 @@ By default, Cloudflare Gateway creates a rule that includes the hostnames used b
 
 This tutorial skips inspection for additional applications beyond those in the list curated by Cloudflare.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
 - Configure that policies precedence in your Gateway configuration
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 5 minutes
 
 ## Before you start
 
-1.  [Connect devices](/cloudflare-one/connections/connect-devices/warp/) to Cloudflare's edge with the WARP client and [install the root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/)
+1.  [Connect devices](/cloudflare-one/connections/connect-devices/warp/) to Cloudflare's edge with the WARP client and [install the root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)
 1.  [Enable web inspection](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy)
 
 ## Build the policy

@@ -7,8 +7,13 @@ weight: 15
 # Always Use HTTPS
 
 {{<render file="_always-use-https-definition.md">}}
+<br/>
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
+
+## Availability
+
+{{<feature-table id="ssl.always_use_https">}}
 
 ## Encrypt all visitor traffic
 

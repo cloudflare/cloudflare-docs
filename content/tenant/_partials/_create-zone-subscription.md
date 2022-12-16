@@ -10,7 +10,7 @@ _build:
 To create a zone subscription, send a [POST](https://developers.cloudflare.com/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
-    
+
     - Contains the zone plan corresponding to what customers would order in the dashboard. For a list of available values, refer to [Zone subscriptions](/tenant/reference/subscriptions/#zone-plans/).
 
 - `component_values` {{<type>}}array{{</type>}}
@@ -48,8 +48,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/subscription'
     },
     "component_values":[
         {
-        "name":"dedicated_certificates_custom",
-        "value":1
+        "name": "page_rules",
+        "value": 50
         }
     ]
 }
