@@ -4,6 +4,9 @@ title: New? Start here.
 weight: 2
 meta:
   title: New to Cloudflare? Start here.
+outputs:
+  - html
+  - rss
 ---
 
 # New to Cloudflare? Start here.
