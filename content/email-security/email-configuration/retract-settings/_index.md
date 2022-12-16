@@ -8,7 +8,7 @@ weight: 5
 
 When you are using an [API setup](/email-security/deployment/api/) for Area 1, you cannot prevent mail from reaching a recipient's mailbox.
 
-However — so long as you also have [journaling](/email-security/deployment/api/setup/) or [BCC](/email-security/deployment/api/setup/) configured — you can set up message retraction to take post-delivery actions against suspicious messages. These retractions happen through API integrations with Microsoft 365 and Google Workspaces (Gmail).
+However — so long as you also have [journaling](/email-security/deployment/api/setup/#journaling-setup) or [BCC](/email-security/deployment/api/setup/#bcc-setup) configured — you can set up message retraction to take post-delivery actions against suspicious messages. These retractions happen through API integrations with Microsoft 365 and Google Workspaces (Gmail).
 
 ## Retraction options
 
