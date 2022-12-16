@@ -350,7 +350,21 @@
           "ent": "Yes"
         }
       }
-    }
+    },
+    "vary_for_images": {
+      "title": "Vary for images",
+      "link": "/cache/about/vary-for-images/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "No",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
   },
   "custom_pages": {
     "title": "Configure Custom Pages",
