@@ -71,7 +71,7 @@ $ npm upgrade wrangler --save
 or
 
 ```sh
-$ npm update wranger --save
+$ npm update wrangler --save
 ```
 
 ### Update Wrangler globally
