@@ -1,0 +1,9 @@
+
+<ul style="list-style-type:none;">
+{{ range .Site.Pages }} 
+{{- $title := default .Title .Params.meta.title  -}}
+{{ with .OutputFormats.Get "rss" }}
+<li><a href="{{.RelPermalink}}" target="_blank">{{ $title }}</a></li>
+{{ end }}
+{{ end }}
+</ul>

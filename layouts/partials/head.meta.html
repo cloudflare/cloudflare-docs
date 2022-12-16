@@ -35,7 +35,9 @@
 {{- with .Context.Params.pcx_content_type -}}
 <meta name="pcx_content_type" content= "{{ . }}" />
 {{- end -}}
-
+{{ with $.Context.OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s - RSS Feed" />` .Rel .MediaType.Type .Permalink $pt | safeHTML }}
+{{ end -}}
 <link rel="icon" href="/favicon-32x32.png"/>
 <link rel="canonical" href="{{ .Context.Permalink }}"/>
 <link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
@@ -49,7 +51,6 @@
 <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
 <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
 <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
-
 {{- $coveo := index $.Context.Site.Params "coveo" -}}
 {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
   <link rel="stylesheet preconnect" href="/search-coveo.css"/>

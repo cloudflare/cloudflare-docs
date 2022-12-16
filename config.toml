@@ -13,7 +13,11 @@ enableEmoji = true
 enableGitInfo = true
 
 # TODO
-rssLimit = 10
+rssLimit = 20
+
+[outputs]
+  home = ['HTML', 'AMP']
+  section = ['HTML']
 
 paginate = 12 # default 10
 paginatePath = "page" # default
