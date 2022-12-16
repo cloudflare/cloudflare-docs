@@ -14,13 +14,13 @@ The descriptions below detail the fields available for `workers_trace_events`.
 
 | Field | Value | Type |
 | -- | -- | -- |
-| DispatchNamespace | The Cloudflare Worker dispatch namespace | string |
-| Event | Details about the source event | object |
-| EventTimestampMs | The timestamp of when the event was received, in milliseconds | int |
-| EventType | The event type that triggered the invocation. <br />Possible values are <em>fetch</em> | string |
-| Exceptions | List of uncaught exceptions during the invocation | array[object] |
-| Logs | List of console messages emitted during the invocation | array[object] |
-| Outcome | The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em> | string |
-| ScriptName | The Cloudflare Worker script name | string |
+| DispatchNamespace | The Cloudflare Worker dispatch namespace. | string |
+| Event | Details about the source event. | object |
+| EventTimestampMs | The timestamp of when the event was received, in milliseconds. | int |
+| EventType | The event type that triggered the invocation. <br />Possible values are <em>fetch</em>. | string |
+| Exceptions | List of uncaught exceptions during the invocation. | array[object] |
+| Logs | List of console messages emitted during the invocation. | array[object] |
+| Outcome | The outcome of the worker script invocation. <br />Possible values are <em>ok</em> \| <em>exception</em>. | string |
+| ScriptName | The Cloudflare Worker script name. | string |
 
 {{</table-wrap>}}
