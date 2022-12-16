@@ -5,8 +5,8 @@ weight: 20
 meta:
   title: Changelog for Managed Rulesets
 outputs:
-  - rss
   - html
+  - rss
 ---
 
 # Changelog for Managed Rulesets

@@ -1,9 +1,10 @@
 
 <ul style="list-style-type:none;">
 {{ range .Site.Pages }} 
+{{- $data := (index $.Site.Data .Section) -}}
 {{- $title := default .Title .Params.meta.title  -}}
 {{ with .OutputFormats.Get "rss" }}
-<li><a href="{{.RelPermalink}}" target="_blank">{{ $title }}</a></li>
+<li><a href="{{.RelPermalink}}" target="_blank">{{ $title }} - {{ $data.product.title }}</a></li>
 {{ end }}
 {{ end }}
 </ul>
