@@ -32,7 +32,7 @@ The phases execute in the order they appear in the table.
 | Phase name | Used in product/feature |
 |---|---|
 | `http_request_sanitize` | [URL normalization](/rules/normalization/) |
-| `http_request_transform` | [URL Rewrite Rules](/rules/transform/url-rewrite/create-api/) |
+| `http_request_transform` | [Rewrite URL Rules](/rules/transform/url-rewrite/create-api/) |
 | `http_request_origin` | [Origin Rules](/rules/origin-rules/) |
 | `http_request_cache_settings` | [Cache Rules](/cache/about/cache-rules/) |
 | `http_config_settings` | [Configuration Rules](/rules/configuration-rules/) |
