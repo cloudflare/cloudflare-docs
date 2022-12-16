@@ -19,7 +19,9 @@ API Discovery only looks at requests that satisfy all of the following criteria:
 
 ## How does Cloudflare calculate the recommended rate limit for my endpoint?
 
-We use both the volume and frequency of traffic to guide your recommended rate. You can view the `P50`/`95`/`99` of your request count for more details under an endpoint’s expanded view.
+Cloudflare uses both the volume and frequency of traffic to guide your recommended rate. We calculate the recommended rate value throughout the day, and the new calculation may equal the existing recommendation due to similar traffic profiles existing on your API. When we recalculate, we look at requests that happened in the last 24 hours.
+
+You can view the `P50`/`95`/`99` of your request count for more details under an endpoint’s expanded view.
 
 ## Will I be able to access an endpoint’s data after I delete it?
 
