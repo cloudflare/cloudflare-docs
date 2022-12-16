@@ -8,35 +8,37 @@ meta:
 
 # Create an HTTP Request Header Modification Rule in the dashboard
 
-Create HTTP Request Header Modification Rules in the **Transform Rules** tab under Rules. Refer to [Request header modification examples](/rules/transform/request-header-modification/examples/) for examples of rule definitions.
+Create HTTP Request Header Modification Rules in the **Modify Request Header** tab of the **Transform Rules** page. Refer to [Request header modification examples](/rules/transform/request-header-modification/examples/) for examples of rule definitions.
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![The Transform Rules tab in the Cloudflare dashboard displaying the several types of Transform Rules you can configure.](/rules/static/transform/overview.png)
+    ![The Transform Rules page in the Cloudflare dashboard with a tab for each type of Transform Rule you can create.](/rules/static/transform/transform-rules-tab.png)
 
-3.  Click **Create transform rule** > **Modify Request Header**.
+3.  Go to the **Modify Request Header** tab.
+
+4.  Select **Create request header rule**.
 
     ![The HTTP Request Header Modification Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-request-header-modification-rule.png)
 
-4.  Enter a descriptive name for the HTTP Request Header Modification Rule in **Rule name**.
+5.  In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
-5.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/).
+6.  Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/).
 
     {{<Aside type="note">}}
 Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
     {{</Aside>}}
 
-6.  For **Modify request header**, select one of the following options:
+7.  For **Modify request header**, select one of the following options:
 
     - _Set static_ — Sets the value of an HTTP request header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
     - _Set dynamic_ — Sets the value of an HTTP request header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
     - _Remove_ — Removes the HTTP request header with the provided name, if it exists.
 
-7.  Enter the name of the HTTP request header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
+8.  Enter the name of the HTTP request header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
 
-8.  To modify another HTTP request header in the same rule, click **+ Set new header**.
+9.  To modify another HTTP request header in the same rule, select **Set new header**.
 
     The following example includes the modification of three headers using the available actions:
 
@@ -46,8 +48,6 @@ Check the [available fields and functions](/rules/transform/request-header-modif
 You can modify up to 30 HTTP request headers in a single rule.
     {{</Aside>}}
 
-9.  To save and deploy your rule, click **Deploy**. If you are not ready to deploy your rule, click **Save as Draft**.
-
-After creating a rule, you return to the **Transform Rules** dashboard interface.
+10.  To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 If you choose to deploy your HTTP Request Header Modification Rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
