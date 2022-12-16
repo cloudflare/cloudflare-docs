@@ -30,7 +30,7 @@ If you need to re-add the domain in a different account, make sure the current s
 
     * [Disable domain auto-renewal](/registrar/account-options/renew-domains/) or [transfer your domain out of Cloudflare](/registrar/account-options/transfer-out-from-cloudflare/).
 
-    * If enabled, disable DNSSEC. In your domain dashboard, go to **DNS**. Within **DNSSEC**, select **Disable DNSSEC**. Select **Confirm**.
+    * If enabled, disable DNSSEC. In your domain dashboard, go to **DNS** > **Settings**. Within **DNSSEC**, select **Disable DNSSEC**. Select **Confirm**.
 
 ## Remove a domain activated in Cloudflare
 

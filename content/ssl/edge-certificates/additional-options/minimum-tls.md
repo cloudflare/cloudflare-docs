@@ -9,10 +9,15 @@ weight: 13
 Transport Layer Security (TLS) guarantees encrypted communications between a client and a web server via HTTPS. It replaces the now deprecated Secured Sockets Layer (SSL) protocol. When web traffic is encrypted with TLS, users see a green padlock in their browser window, near the URL box.
 
 {{<render file="_minimum-tls-definition.md">}}
+<br/>
 
 For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
 
 You can use the API to [configure cipher suites](/ssl/reference/cipher-suites/).
+
+## Availability
+
+{{<feature-table id="ssl.minimum_tls">}}
 
 ## Using Minimum TLS Version in Cloudflare SSL/TLS
 

@@ -4,7 +4,7 @@ title: Commands
 weight: 2
 ---
 
-## Wrangler commands
+# Wrangler commands
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 

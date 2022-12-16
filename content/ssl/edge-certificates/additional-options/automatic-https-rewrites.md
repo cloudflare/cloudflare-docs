@@ -7,6 +7,11 @@ weight: 14
 # Automatic HTTPS Rewrites
 
 {{<render file="_automatic-https-rewrites-definition.md">}}
+<br/>
+
+## Availability
+
+{{<feature-table id="ssl.automatic_https_rewrites">}}
 
 ## Additional details
 

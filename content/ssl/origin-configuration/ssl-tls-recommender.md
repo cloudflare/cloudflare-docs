@@ -14,6 +14,10 @@ For more background, refer to the [introductory blog post](https://blog.cloudfla
 
 {{</Aside>}}
 
+## Availability
+
+{{<feature-table id="ssl.ssl_tls_recommender">}}
+
 ## Common tasks
 
 ### Enable SSL/TLS recommendations

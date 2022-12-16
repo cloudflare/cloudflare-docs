@@ -7,7 +7,7 @@ layout: single
 
 # Security Events
 
-Security Events allows you to manage and visualize threats and helps you tailor your security configurations.
+Security Events allows you to review mitigated requests (rule matches) and helps you tailor your security configurations.
 
 Users on a Free plan can view summarized security events by date in the **Activity log**. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your zone.
 

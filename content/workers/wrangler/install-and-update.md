@@ -16,21 +16,13 @@ Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler
 
-To install [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later. 
+To install [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
 
-### Install Wrangler globally
+{{<Aside type="warning" header="Install Wrangler locally">}}
 
-After you have installed npm and Node.js, run:
+Cloudflare recommends installing Wrangler locally into each of your projects. This allows you and your team to use the same Wrangler version, control Wrangler versions for each project, and rollback to an earlier version of Wrangler, if needed.
 
-```sh
-$ npm install -g wrangler
-```
-
-or install with Yarn:
-
-```sh
-$ yarn global add wrangler
-```
+{{</Aside>}}
 
 ### Install Wrangler locally
 
@@ -46,20 +38,26 @@ or install with `yarn`:
 $ yarn add wrangler
 ```
 
+### Install Wrangler globally
+
+After you have installed npm and Node.js, run:
+
+```sh
+$ npm install -g wrangler
+```
+
+or install with Yarn:
+
+```sh
+$ yarn global add wrangler
+```
+
 ## Update Wrangler
 
 To check your Wrangler version, run:
 
 ```sh
 $ wrangler version
-```
-
-### Update Wrangler globally
-
-To update Wrangler globally, you must be outside of a project folder (and there is no parent directory containing a `package.json`) and run:
-
-```sh
-$ npm update -g wrangler
 ```
 
 ### Update Wrangler locally
@@ -74,6 +72,20 @@ or
 
 ```sh
 $ npm update wranger --save
+```
+
+### Update Wrangler globally
+
+To update Wrangler globally, you must be outside of a project folder (and there is no parent directory containing a `package.json`) and run:
+
+```sh
+$ npm update -g wrangler
+```
+
+If you are using Volta to control your version of Node and need to update Wrangler globally, run:
+
+```sh
+$ volta install wrangler
 ```
 
 {{<Aside type="warning" header="`npx wrangler init`">}}

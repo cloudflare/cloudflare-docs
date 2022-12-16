@@ -8,9 +8,9 @@ meta:
 
 # Magic Transit on-demand
 
-Customers with access to the Magic Transit on-demand option can [configure prefix advertisement](/byoip/how-to/configure-dynamic-advertisement/) from the **IP Prefixes** page in their Cloudflare account home or via the [Cloudflare API](https://developers.cloudflare.com/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status).
+Customers with access to the Magic Transit on-demand option can [configure prefix advertisement](/byoip/how-to/configure-dynamic-advertisement/) from the **IP Prefixes** page in their Cloudflare account home or via the [Cloudflare API](https://developers.cloudflare.com/api/operations/ip-address-management-dynamic-advertisement-get-advertisement-status). 
 
-A common workflow is to enable prefix advertisement during an attack so that you can take advantage of Cloudflare protection and then disable advertisement once the incident is resolved.
+A common workflow is to enable prefix advertisement during an attack so that you can take advantage of Cloudflare protection and then disable advertisement once the incident is resolved. Prefixes using BGP-controlled advertisements cannot be used in conjunction with on-demand auto-advertisement. You must use dynamic advertisement.
 
 To ensure smooth operation in general and simplify the advertisement process during an attack scenario, refer to [Dynamic advertisement: Best practices](/byoip/best-practices/dynamic-advertisement/).
 

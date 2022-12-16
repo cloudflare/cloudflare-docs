@@ -40,27 +40,27 @@ The available rate limiting rule parameters are the following:
   - The period of time to consider (in seconds) when evaluating the request rate.
   - Use one of the following values: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (ten minutes), or `3600` (one hour).
 
-- **With the same** {{<type>}}Array&lt;String&gt;{{</type>}}
+- **With the same value of** {{<type>}}Array&lt;String&gt;{{</type>}}
 
   - Field name in the API: `characteristics`.
   - Set of parameters defining how Cloudflare tracks the request rate for the rule.
   - Use one or more of the following characteristics:
 
-    | Dashboard value           | API value                                            |
-    | ------------------------- | ---------------------------------------------------- |
-    | N/A (implicitly included) | `cf.colo.id` (mandatory)                             |
-    | _IP_                      | `ip.src`                                             |
-    | _IP with NAT support_     | `cf.unique_visitor_id`                               |
-    | _Country_                 | `ip.geoip.country`                                   |
-    | _AS Num_                  | `ip.geoip.asnum`                                     |
-    | _Host_                    | `http.host`                                          |
-    | _Path_                    | `http.request.uri.path`                              |
-    | _Headers_                 | `http.request.headers["<header_name>"]`              |
-    | _Cookie_                  | `http.request.cookies["<cookie_name>"]`              |
-    | _Query_                   | `http.request.uri.args["<query_param_name>"]`        |
-    | _JA3 Fingerprint_         | `cf.bot_management.ja3_hash`                         |
-    | _JSON String_             | `lookup_json_string(http.request.body.raw, "<key>")` |
-    | _Body_                    | `http.request.body.raw`                              |
+    | Dashboard value                | API value                                            |
+    |--------------------------------|------------------------------------------------------|
+    | N/A (implicitly included)      | `cf.colo.id` (mandatory)                             |
+    | _IP_                           | `ip.src`                                             |
+    | _IP with NAT support_          | `cf.unique_visitor_id`                               |
+    | _Country_                      | `ip.geoip.country`                                   |
+    | _AS Num_                       | `ip.geoip.asnum`                                     |
+    | _Host_                         | `http.host`                                          |
+    | _Path_                         | `http.request.uri.path`                              |
+    | _Headers_ (enter header name)  | `http.request.headers["<header_name>"]`              |
+    | _Cookie_ (enter cookie name)   | `http.request.cookies["<cookie_name>"]`              |
+    | _Query_ (enter parameter name) | `http.request.uri.args["<query_param_name>"]`        |
+    | _JA3 Fingerprint_              | `cf.bot_management.ja3_hash`                         |
+    | _JSON String_ (enter key)      | `lookup_json_string(http.request.body.raw, "<key>")` |
+    | _Body_                         | `http.request.body.raw`                              |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.
