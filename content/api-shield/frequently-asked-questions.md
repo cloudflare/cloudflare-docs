@@ -12,7 +12,7 @@ In most cases, this is due to the system not observing enough valid requests ove
 
 API Discovery only looks at requests that satisfy all of the following criteria:
 
-1. Requests must send the session identifier or identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
+1. For customers outside of the Machine Learning-based API Discovery closed beta, requests must send the session identifier or identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
 2. Requests must return `2XX` response codes from the edge.
 3. Requests must not come directly from Cloudflare Workers.
 4. At least 500 requests are made to the discovered endpoint within a 10 day period.
@@ -30,7 +30,6 @@ No. Cloudflare will stop tracking performance data when you delete an endpoint a
 ## Why do I still see my endpoint in Discovery after I’ve added it to Endpoint Management?
 
 Your endpoints will continue to appear in Discovery after being added to Endpoint Management for the immediate future. In a future release, we plan to differentiate between endpoints that are in Discovery that have not yet been added to Endpoint Management.
-
 
 ## Why do I not receive threshold recommendations for my discovered API endpoints?
 
@@ -50,4 +49,5 @@ If you do not receive threshold recommendations for a discovered endpoint, you w
 Not currently.
 
 ## What version of OpenAPI specification do you support?
+
 The importing [(Schema Validation)](/api-shield/security/schema-validation/) and exporting [(API Discovery)](/api-shield/security/api-discovery/) of OpenAPI schemas from our product to customers is done using **OpenAPI v3.0**. Any specifications using patched versions (3.0.x) are compatible as well. 
