@@ -64,3 +64,11 @@ Start by creating a service account. If you already have one, you can skip this 
 7. Once saved, your newly configured directory will appear in the configured directories table.
 
     ![Your directory will appear in the configured directories table](/email-security/static/bec/gmail/step7-directories.png)
+
+## 3. Configure the Business Email Compromise list
+
+{{<render file="_bec-directory-guide-compromise-list.md">}}
+
+## 4. Configure secondary email address (if required)
+
+{{<render file="_bec-directory-guide-secondary-email.md">}}
