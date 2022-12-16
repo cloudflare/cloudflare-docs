@@ -12,7 +12,7 @@ In most cases, this is due to the system not observing enough valid requests ove
 
 API Discovery only looks at requests that satisfy all of the following criteria:
 
-1. For customers outside of the Machine Learning-based API Discovery closed beta, requests must send the session identifier or identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
+1. For customers outside of the [Machine Learning-based](/api-shield/security/api-discovery/#machine-learning-based-discovery) API Discovery closed beta, requests must send the session identifier or identifiers (**HTTP header** or **Cookie**) that have been configured for the zone.
 2. Requests must return `2XX` response codes from the edge.
 3. Requests must not come directly from Cloudflare Workers.
 4. At least 500 requests are made to the discovered endpoint within a 10 day period.
@@ -46,6 +46,7 @@ If you do not receive threshold recommendations for a discovered endpoint, you w
 * `551 response`: Cloudflare has successfully generated recommendations at some point in the past, but we have not seen sufficient recent valid traffic to provide up-to-date recommendations.
 
 ## Does this work for JDCloud customers?
+
 Not currently.
 
 ## What version of OpenAPI specification do you support?
