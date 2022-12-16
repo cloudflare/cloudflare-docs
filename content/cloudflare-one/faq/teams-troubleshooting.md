@@ -8,13 +8,11 @@ weight: 4
 
 # Troubleshooting
 
-## I tried to register the WARP client with my Zero Trust domain but receive an `Authentication Expired` and a `Registration error. Please try again later` error messages.
+## I tried to register the WARP client with my Zero Trust domain but received an `Authentication Expired` and a `Registration error. Please try again later` error messages.
 
 When a user logs into an organization, WARP will open a web page so the user can sign in via Cloudflare Access. Access then generates a JSON Web Token (JWS) that is passed from the web page to the WARP Client to authenticate the device. This JSW has a timestamp indicating the exact time it was created, as well as a timestamp indicating it will expire 50 seconds into the future.
 
-This error message means that when the JWT is finally passed to the WARP Client, it has already expired.
-
-This error message can mean one of two things:
+This error message means that when the JWT is finally passed to the WARP Client, it has already expired. One of two things can be happening:
 
 1. (Most likely): Your computer system clock is not properly synced using Network Time Protocol (NTP). Visit [https://time.is](https://time.is) on the affected machine to validate your clock is properly synchronized within 20 seconds of the actual time.
 
