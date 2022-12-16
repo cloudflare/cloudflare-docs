@@ -12,20 +12,18 @@ weight: 1
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/managed-transforms-card.png)
+    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/transform-rules-tab.png)
 
-3. Click **Managed Transforms**.
+3. Go to the **Managed Transforms** tab.
 
-4. In the pop-up dialog that appears, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
-
-5. Click **Close**.
+4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
 ## Via API
 
 To enable a Managed Transform via API:
 
-1. Check the Managed Transform's current status and availability using the [Get all managed headers](https://developers.cloudflare.com/api/operations/managed-transforms-list-managed-transforms) operation.
-2. Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Change state of managed headers](https://developers.cloudflare.com/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
+1. Check the Managed Transform's current status and availability using the [List Managed Transforms](https://developers.cloudflare.com/api/operations/managed-transforms-list-managed-transforms) operation.
+2. Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Update status of Managed Transforms](https://developers.cloudflare.com/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
 
 ### 1. Get list of available Managed Transforms
 
