@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Preview mode
-weight: 6
+weight: 1
 meta:
   title: Preview changes before publishing
 ---

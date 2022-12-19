@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Zaraz History
-weight: 7
+weight: 2
 ---
 
 # Zaraz History
@@ -10,7 +10,7 @@ Zaraz history enables you to keep track of all the changes made in your account.
 
 {{<Aside type="note">}}This feature is available to customers on a [Workers Paid plan](/workers/platform/pricing/).{{</Aside>}}
 
-To access Zaraz History you need to enable [Preview & Publish mode](/zaraz/advanced/preview-mode/) first. Then, you can access Zaraz History under **Zaraz** > **History**.
+To access Zaraz History you need to enable [Preview & Publish mode](/zaraz/history/preview-mode/) first. Then, you can access Zaraz History under **Zaraz** > **History**.
 
 ## Access Zaraz History
 
