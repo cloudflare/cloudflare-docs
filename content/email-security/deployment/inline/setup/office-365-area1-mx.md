@@ -15,7 +15,7 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 
 ## 1. Add Area 1 IP addresses to Allow List
 
-1. Go to the [Microsoft Security admin center](https://security.microsoft.com/ homepage).
+1. Go to the [Microsoft Security admin center](https://security.microsoft.com/homepage).
 
 2. In the **Threat management** section, select [**Policy settings**](https://security.microsoft.com/threatpolicy).
 
@@ -160,11 +160,11 @@ This option will allow Office 365 to properly identify the original connecting I
 
 ### Enable enhanced filtering
 
-Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector. Exit the Exchange Admin console, return to the main [Office 365 Administration Console](https://admin.microsoft.com) and select the [Security admin console](https://security.microsoft.com/ homepage).
+Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector. Exit the Exchange Admin console, return to the main [Office 365 Administration Console](https://admin.microsoft.com) and select the [Security admin console](https://security.microsoft.com/homepage).
 
 ![The security admin console](/email-security/static/inline-setup/o365-area1-mx/security-admin.png)
 
-1. Go to [Security Admin console](https://security.microsoft.com/ homepage) > **Threat Management** > **Policy**, and select **Enhanced filtering**.
+1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Threat Management** > **Policy**, and select **Enhanced filtering**.
 
     ![Go to Enhanced filtering](/email-security/static/inline-setup/o365-area1-mx/step1-enhanced-filtering.png)
 
