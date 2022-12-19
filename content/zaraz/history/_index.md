@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: History and preview
-weight: 6
+weight: 5
 ---
 
 # History and preview
