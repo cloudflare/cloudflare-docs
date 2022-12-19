@@ -50,7 +50,7 @@ return await fetch(request);
 Setup with missing DNS records in Cloudflare DNS
 
     // Zone in partial setup: example.com
-    // DNS records at Authoritive DNS: sub1.example.com, sub2.example.com, ...
+    // DNS records at Authoritative DNS: sub1.example.com, sub2.example.com, ...
     // DNS records at Cloudflare DNS: sub1.example.com
 
     "sub1.example.com/"
@@ -62,7 +62,7 @@ Setup with missing DNS records in Cloudflare DNS
 After adding `sub2.example.com` to Cloudflare DNS
 
     // Zone in partial setup: example.com
-    // DNS records at Authoritive DNS: sub1.example.com, sub2.example.com, ...
+    // DNS records at Authoritative DNS: sub1.example.com, sub2.example.com, ...
     // DNS records at Cloudflare DNS: sub1.example.com, sub2.example.com
 
     "sub1.example.com/"
