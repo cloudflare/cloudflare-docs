@@ -79,7 +79,7 @@ The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
 
 #### Learned schemas can optionally include:
 
-- Detected query parameters and their format
+- Detected query parameters and its format
 - API Shield’s rate limit threshold recommendations
 
 ## Endpoint Performance Analysis
