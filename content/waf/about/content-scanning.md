@@ -47,7 +47,8 @@ Enable the feature using a `POST` request similar to the following:
 ```bash
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 ### 2. (Optional) Configure a custom scan expression
@@ -57,7 +58,8 @@ If you wish to check uploaded content in a way that is not covered by the [defau
 ```json
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "Authorization: Bearer <API_TOKEN>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
 -d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
 ```
 
@@ -178,7 +180,8 @@ header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -196,7 +199,8 @@ header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/disable" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -213,7 +217,8 @@ To obtain the current status of the content scanning feature, use a `GET` reques
 header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/settings" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -232,7 +237,8 @@ To get a list of existing custom scan expressions, use a `GET` request similar t
 header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -267,7 +273,8 @@ header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "Authorization: Bearer <API_TOKEN>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
 -d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
 ```
 
@@ -286,7 +293,8 @@ header: Example cURL request
 ---
 $ curl -X DELETE \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads/<EXPRESSION_ID>" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
