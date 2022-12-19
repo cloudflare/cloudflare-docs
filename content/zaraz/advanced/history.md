@@ -1,0 +1,32 @@
+---
+pcx_content_type: how-to
+title: Zaraz History
+weight: 7
+---
+
+# Zaraz History
+
+Zaraz history enables you to keep track of all the changes made in your account. With Zaraz History you can also revert changes to previous settings should there be a problem.
+
+{{<Aside type="note">}}This feature is available to customers on a [Workers Paid plan](/workers/platform/pricing/).{{</Aside>}}
+
+To access Zaraz History you need to enable [Preview & Publish mode](/zaraz/advanced/preview-mode/) first. Then, you can access Zaraz History under **Zaraz** > **History**.
+
+## Access Zaraz History
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Zaraz** > **History**.
+3. If this is your first time using this feature, this page will be empty. Otherwise, you will have a list of changes made to your account with:
+    * Date of change
+    * User that made the change
+    * Description of the change
+
+## Revert changes
+
+Zaraz History enables you to revert any changes made to your Zaraz settings.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Zaraz** > **History**.
+3. Find the changes you want to revert, and select **Restore**.
+4. Confirm you want to revert your changes.
+5. Select **Publish**, to publish your changes.
