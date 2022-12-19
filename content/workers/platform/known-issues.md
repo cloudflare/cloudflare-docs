@@ -42,3 +42,30 @@ const request = new Request(url, incomingRequest);
 request.headers.delete('cf-workers-preview-token');
 return await fetch(request);
 ```
+## Fetch API in CNAME setup
+
+- When using Cloudflare Workers' Fetch API the Cloudflare DNS resolver is being used. In [Partial (CNAME) setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup/) for a zone this has special implications. All hostnames that the Worker should be able to resolve require a dedicated DNS entry in Cloudflare's DNS setup. Otherwise the Fetch API call will fail with status code 530.
+
+
+Setup with missing DNS records in Cloudflare DNS
+
+    // Zone in partial setup: example.com
+    // DNS records at Authoritive DNS: sub1.example.com, sub2.example.com, ...
+    // DNS records at Cloudflare DNS: sub1.example.com
+
+    "sub1.example.com/"
+    // -> Can be resolved by Fetch API
+    "sub2.example.com/"
+    // -> Cannot be resolved by Fetch API, will lead to 530 status code
+    
+    
+After adding `sub2.example.com` to Cloudflare DNS
+
+    // Zone in partial setup: example.com
+    // DNS records at Authoritive DNS: sub1.example.com, sub2.example.com, ...
+    // DNS records at Cloudflare DNS: sub1.example.com, sub2.example.com
+
+    "sub1.example.com/"
+    // -> Can be resolved by Fetch API
+    "sub2.example.com/"
+    // -> Can be resolved by Fetch API
