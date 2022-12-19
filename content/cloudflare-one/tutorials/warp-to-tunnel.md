@@ -124,7 +124,7 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 1. Go to **Settings** > **WARP Client**.
 
-2. Within **WARP Client**; **Device enrollment permissions**, select **Manage**.
+2. Within **Device enrollment permissions**, select **Manage**.
 
 3. Select **Add a rule**.
 
