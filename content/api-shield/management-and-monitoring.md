@@ -73,14 +73,14 @@ The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
 
 #### Learned schemas will always include:
 
-- The listed hostname in the servers section.
-- All endpoints by host, method, and path.
-- Detected path variables.
+- The listed hostname in the servers section
+- All endpoints by host, method, and path
+- Detected path variables
 
 #### Learned schemas can optionally include:
 
-- Detected query parameters and their format.
-- API Shield’s rate limit threshold recommendations.
+- Detected query parameters and their format
+- API Shield’s rate limit threshold recommendations
 
 ## Endpoint Performance Analysis
 
