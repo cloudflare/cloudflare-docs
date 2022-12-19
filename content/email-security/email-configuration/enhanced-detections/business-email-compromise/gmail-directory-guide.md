@@ -63,7 +63,9 @@ Start by creating a service account. If you already have one, you can skip this 
 
 4. The Area 1 dashboard will redirect you to a Google login page. Select or enter the appropriate account to initiate the authentication process.
 
-5. Once authenticated, the system will show a dialog box with a list of the required permissions. Check all the check-boxes, and select **Accept** to authorize the change.
+5. Once authenticated, the system will show a dialog box with a list of the required permissions. Check all the check-boxes, and select **Continue** to authorize the change.
+
+    ![Select all the settings to authorize Google](/email-security/static/bec/gmail/step5-authorize-google.png)
 
 6. Upon authorization, you will be automatically redirected back to the Add Directory configuration panel. Select **Save** to complete the authorization process.
 
