@@ -2508,6 +2508,15 @@
           "pro": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
           "biz": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
           "ent": "Included with a [Workers Paid Plan](/workers/platform/pricing/)"
+        },
+        "history": {
+          "title": "History",
+          "link": "/zaraz/history/history/",
+          "summary": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "free": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "pro": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "biz": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "ent": "Included with a [Workers Paid Plan](/workers/platform/pricing/)"
         }
       }
     }
