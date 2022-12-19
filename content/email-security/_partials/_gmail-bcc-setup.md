@@ -50,17 +50,17 @@ _build:
         6. Under **Headers** select **Add X-Gm-Spam and X-Gm-Phishy headers**.
         7. Select **SAVE**.
  
- <div class="medium-img">
+    <div class="medium-img">
 
-![Configure recipients](/email-security/static/bcc-setup/gmail/step6-expressions.png)
+    ![Configure recipients](/email-security/static/bcc-setup/gmail/step6-expressions.png)
 
-</div>
+    </div>
 
-<div class="medium-img">
+    <div class="medium-img">
 
-![Configure headers](/email-security/static/bcc-setup/gmail/step6-headers.png)
+    ![Configure headers](/email-security/static/bcc-setup/gmail/step6-headers.png)
 
-</div>
+    </div>
 
 7. Scroll down and select **Show options**.
     1. Under **Account types to affect** select **Groups**.
