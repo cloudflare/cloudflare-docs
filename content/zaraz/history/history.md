@@ -29,4 +29,4 @@ Zaraz History enables you to revert any changes made to your Zaraz settings.
 2. Go to **Zaraz** > **History**.
 3. Find the changes you want to revert, and select **Restore**.
 4. Confirm you want to revert your changes.
-5. Select **Publish**, to publish your changes.
+5. Select **Publish** to publish your changes.
