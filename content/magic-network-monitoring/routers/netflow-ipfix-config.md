@@ -27,4 +27,4 @@ Magic Network Monitoring supports the NetFlow v5, NetFlow v9, and IPFIX network 
       - match transport destination-port
       - match interface input
 
-5. Confirm your router's Netflow template, it should not contain duplicated fields.
+5. Confirm your router's Netflow template. It should not contain duplicated fields.
