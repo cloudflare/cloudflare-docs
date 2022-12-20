@@ -52,7 +52,7 @@ When adding a path manually, you can specify variable fields by enclosing them i
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
-## Endpoint Schema Learning
+## Endpoint schema learning
 
 Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters.
 
