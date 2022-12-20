@@ -53,7 +53,7 @@ Start by creating a service account. If you already have one, you can skip this 
     ![Go to Directories in the dashboard of Area 1, and then select Add Directory to start the authorization process](/email-security/static/bec/gmail/step2-directories.png)
 
 3. In the Add Directory configuration panel, enter the following details:
-    - **Directory Type**: Use the drop-down menu and select **Google**.
+    - **Directory Type**: Open the drop-down menu and select **Google**.
     - **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Gmail`.
     - **Sync Frequency**: Update the value to your preference.
 
@@ -63,7 +63,7 @@ Start by creating a service account. If you already have one, you can skip this 
 
 4. The Area 1 dashboard will redirect you to a Google login page. Select or enter the appropriate account to initiate the authentication process.
 
-5. Once authenticated, the system will show a dialog box with a list of the required permissions. Check all the check-boxes, and select **Continue** to authorize the change.
+5. Once authenticated, the system will show a dialog box with a list of the required permissions. Check all the checkboxes, and select **Continue** to authorize the change.
 
     ![Select all the settings to authorize Google](/email-security/static/bec/gmail/step5-authorize-google.png)
 
