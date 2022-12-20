@@ -28,7 +28,6 @@ export const OWNERS: Record<string, string[]> = {
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
-  "http-applications": [], // TODO
   images: ["marciocloudflare"],
   "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],
@@ -59,6 +58,7 @@ export const OWNERS: Record<string, string[]> = {
   terraform: ["ranbel"],
   "time-services": ["kodster28"],
   turnstile: ["patriciasantaana"],
+  "version-management": ["kodster28"],
   waf: ["pedrosousa"],
   "waiting-room": ["angelampcosta"],
   "warp-client": ["marciocloudflare"],
