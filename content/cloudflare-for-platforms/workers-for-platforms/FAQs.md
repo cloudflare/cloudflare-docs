@@ -13,6 +13,3 @@ Cloudflare provides an unlimited number of scripts for our Workers for Platforms
 
 ## What bindings can I use?
 You can use Workers bindings (KV, R2, D1, etc.) with the dispatch Worker or any namespaced Workers.
-
-## What analytics are available for Workers for Platforms? 
-Use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api) to get metrics by dispatch namespace. Use the  `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.

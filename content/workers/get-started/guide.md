@@ -32,6 +32,8 @@ or install with `yarn`:
 $ yarn global add wrangler
 ```
 
+Refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/) for more information.
+
 ## 2. Authenticate Wrangler
 
 To authenticate Wrangler, run `wrangler login`: 
