@@ -11,7 +11,7 @@ Now that Area 1 has been authorized to access and retrieve directory information
 
 2. Go to **Email Configuration** > **Enhanced Detections** > **Business Email Compromise**.
 
-    ![Access Business Email Compromise in Area 1 dashboard to star setting up this feature](/email-security/static/bec/o365/step2-business-email-compromise.png)
+    ![Access Business Email Compromise in Area 1 dashboard to start setting up this feature](/email-security/static/bec/o365/step2-business-email-compromise.png)
 
 3. Use the drop-down menu and select the directory you have created in the previous step 3.
 
@@ -25,10 +25,10 @@ Now that Area 1 has been authorized to access and retrieve directory information
 
     ![Select the arrow to expand it and show a list of its members](/email-security/static/bec/o365/step5-show-members.png)
 
-6. To protect an entire group, select the three-dots button next to it, and then **Protect**. When you protect a group, all of its members will be automatically protected. The protection markers will turn green to indicate that protection is active.
+6. To protect an entire group, select the three-dots button next to it, and then select **Protect**. When you protect a group, all of its members will be automatically protected. The protection markers will turn green to indicate that protection is active.
 
     ![You can protect an entire group of users. The protection markers will turn green to show that protection is active](/email-security/static/bec/o365/step6-protect-group.png)
 
-7. You can also protect individual users. Select the three-dots button next to each user you want to protect, and then **Protect**.
+7. You can also protect individual users. Select the three-dots button next to each user you want to protect, and then select **Protect**.
 
     ![You can also protect just one user](/email-security/static/bec/o365/step7-protect-user.png)

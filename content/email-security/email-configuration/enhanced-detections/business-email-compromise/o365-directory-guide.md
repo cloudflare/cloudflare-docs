@@ -26,7 +26,7 @@ When assigning user roles in the Office 365 console, you will find these roles i
 
     ![Go to Directories in the dashboard of Area 1, and then select Add Directory to start the authorization process](/email-security/static/bec/o365/step2-directories.png)
 
-3. In the Add Directory configuration panel, enter fhe following details:
+3. In the Add Directory configuration panel, enter the following details:
     - **Directory Type**: Use the drop-down menu and select **Office 365**.
     - **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Office 365`.
     - **Sync Frequency**: Update the value to your preference.
@@ -34,8 +34,6 @@ When assigning user roles in the Office 365 console, you will find these roles i
     Select **Authorize** when you are done.
 
     ![Add the appropriate details to the configuration panel](/email-security/static/bec/o365/step3-directory-config-panel.png)
-
-
 4. The Area 1 dashboard will redirect you to a Microsoft login page. Select or enter the appropriate account to initiate the authentication process.
 
     <div class="large-img">

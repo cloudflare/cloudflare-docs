@@ -12,14 +12,14 @@ Cloudflare Area 1 can integrate with Google to retrieve user and group informati
 
 You need to authorize Cloudflare Area 1 to make connections into your Google tenant to retrieve your directory details. Cloudflare recommends that you create a service account for this purpose. This account will require the following following permissions:
 
-- View group subscriptions on your domain
-- View organization units on your domain
-- View groups on your domain
-- See info about users on your domain
+- View group subscriptions on your domain.
+- View organization units on your domain.
+- View groups on your domain.
+- See info about users on your domain.
 
 Start by creating a service account. If you already have one, you can skip this step.
 
-1. Access your [Google admin console](https://admin.google.com/), and go to **@ Account** > **Admin roles**.
+1. Access your [Google admin console](https://admin.google.com/), and go to **Account** > **Admin roles**.
 
     ![Access the admin console in your Google account](/email-security/static/bec/gmail/step1-access-gadmin.png)
 
@@ -33,7 +33,7 @@ Start by creating a service account. If you already have one, you can skip this 
 
     ![Select only the privileges mentioned here](/email-security/static/bec/gmail/step3-console-privileges.png)
 
-4. When you specify Admin console privileges, you also grand the corresponding Admin API privileges. In any case, make sure the following privileges are selected for **Admin API privileges**:
+4. When you specify Admin console privileges, you also grant the corresponding Admin API privileges. In any case, make sure the following privileges are selected for **Admin API privileges**:
     - _Organizational Units > Read_
     - _Users > Read_
     - _Groups > Read_
@@ -52,7 +52,7 @@ Start by creating a service account. If you already have one, you can skip this 
 
     ![Go to Directories in the dashboard of Area 1, and then select Add Directory to start the authorization process](/email-security/static/bec/gmail/step2-directories.png)
 
-3. In the Add Directory configuration panel, enter fhe following details:
+3. In the Add Directory configuration panel, enter the following details:
     - **Directory Type**: Use the drop-down menu and select **Google**.
     - **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Gmail`.
     - **Sync Frequency**: Update the value to your preference.
