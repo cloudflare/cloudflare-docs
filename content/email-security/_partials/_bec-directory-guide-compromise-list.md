@@ -13,7 +13,7 @@ Now that Area 1 has been authorized to access and retrieve directory information
 
     ![Access Business Email Compromise in Area 1 dashboard to start setting up this feature](/email-security/static/bec/o365/step2-business-email-compromise.png)
 
-3. Use the drop-down menu and select the directory you have created in the previous step 3.
+3. Open the drop-down menu and select the directory you have created in the previous step 3.
 
     ![Select the directory you have created in the previous step 3](/email-security/static/bec/o365/step3-office365.png)
 
