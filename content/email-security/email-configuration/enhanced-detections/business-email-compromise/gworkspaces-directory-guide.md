@@ -10,7 +10,7 @@ Cloudflare Area 1 can integrate with Google to retrieve user and group informati
 
 ## 1. Create a service account in Google for Area 1 Directory Integration
 
-You need to authorize Cloudflare Area 1 to make connections into your Google tenant to retrieve your directory details. Cloudflare recommends that you create a service account for this purpose. This account will require the following following permissions:
+You need to authorize Cloudflare Area 1 to make connections into your Google tenant to retrieve your directory details. Cloudflare recommends that you create a service account for this purpose. This account will require the following following privileges:
 
 - View group subscriptions on your domain.
 - View organization units on your domain.
