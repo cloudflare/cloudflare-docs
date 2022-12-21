@@ -18,6 +18,10 @@ For a list of working packages, refer to [Works on Workers](https://workers.clou
     style="background:transparent;border:1px solid #ccc"
     allowFullScreen></iframe>
 
+{{<Aside type="note">}}
+Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6).
+{{</Aside>}}
+
 ## Authentication
 
 If your service requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
