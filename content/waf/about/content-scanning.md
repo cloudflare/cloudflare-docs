@@ -180,7 +180,7 @@ The following example blocks requests addressed at `/upload` with uploaded conte
 * Action: _Block_
 
 The following example blocks requests addressed at `/upload` with uploaded content objects over 500 KB in size:
-* Expression: `any(cf.waf.content_scan.obj_sizes[*] > 500000)  and http.request.uri.path eq "/upload"`
+* Expression: `any(cf.waf.content_scan.obj_sizes[*] > 500000) and http.request.uri.path eq "/upload"`
 * Action: _Block_
 
 ---
