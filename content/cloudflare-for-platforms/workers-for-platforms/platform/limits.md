@@ -7,11 +7,11 @@ title: Limits
 
 ## Script limits
 
-Cloudflare provides an unlimited number of scripts for our Workers for Platforms customers. 
+Cloudflare provides an unlimited number of scripts for our Workers for Platforms customers.
 ​​
 ## Bindings
 
-You can use Workers bindings (KV, R2, DO, D1, etc.) with the Dispatch Worker or any namespaced Workers. Your User Workers cannot be defined as Durable Objects. User Workers can however have a Durable Objects binding.  
+You can use Workers [bindings](/workers/platform/bindings) with the dynamic dispatch Worker or any namespaced Workers. Your User Workers cannot be defined as Durable Objects. User Workers can have a Durable Objects binding.  
 
 Bindings for your Dispatch Worker or any User Workers can be defined on multipart script uploads in the metadata blob.
 

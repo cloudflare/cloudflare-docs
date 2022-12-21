@@ -13,4 +13,4 @@ There are two ways for you to review your Workers for Platforms analytics.
 
 ## GraphQL Analytics API
 
-Use Cloudflare’s GraphQL Analytics API to get metrics relating to your Dispatch Namespaces. Use the dispatchNamespaceName dimension in the workersInvocationsAdaptive node to query usage by namespace.
+Use Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api) to get metrics relating to your Dispatch Namespaces. Use the `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.

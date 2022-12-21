@@ -24,7 +24,7 @@ Best practice: Having a production and staging namespace is useful to test chang
 
 A dynamic dispatch Worker is written by Cloudflare’s platform customers to run their own logic before dispatching (routing) the request to User Workers. In addition to routing, it can be used to run authentication, create boilerplate functions and sanitize responses.
 
-The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. dynamic dispatch Worker is configured with a dispatch namespace binding. This is the entrypoint for all requests to User Workers.
+The dynamic dispatch Worker calls user Workers from the dispatch namespace and executes them. The dynamic dispatch Worker is configured with a dispatch namespace binding. This is the entrypoint for all requests to User Workers.
 
 ### User Workers
 
@@ -32,7 +32,7 @@ User Workers are written by end developers. End developers can deploy User Worke
 
 ## Request lifecycle
 
-!
+![]()
 
 Request for customer-a.example.com/api will first hit the Dispatch Worker. The dispatcher will handle routing logic to user workers based on properties of the request. In this case, the subdomain of the incoming request is used to route to the user worker with the same name. 
 
