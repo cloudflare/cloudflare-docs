@@ -16,7 +16,7 @@ At this stage, WAF content scanning API endpoints may change on short notice.
 
 {{</Aside>}}
 
-When enabled, content scanning attempts to detect content objects such as uploaded files and scan them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
+When enabled, content scanning attempts to detect content objects such as uploaded files and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
 
 ## Default configuration
 
