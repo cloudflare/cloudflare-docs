@@ -8,7 +8,7 @@ title: Configure Workers for Platforms
 
 # Configure Workers for Platforms
 
-This guide will instruct you on setting up Workers for Platforms. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
+This guide will instruct you on setting up Workers for Platforms. You will configure a dispatch namespace, a dynamic dispatch Worker and a user Worker to test a request end to end. This guide assumes that you already have a Cloudflare account. If you do not have a Cloudflare account, sign up before continuing.
 
 ## Prerequisite: Enable Workers for Platforms
 
@@ -158,4 +158,4 @@ In the Cloudflare dashboard, dynamic dispatch Workers are found in **Workers**. 
 
 Use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api) to get metrics by dispatch namespace. Use the  `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.
 
-By completing this guide, you have successfully set up a dispatch namespace, dynamic dispatch Worker and user Worker. 
+By completing this guide, you have successfully set up a dispatch namespace, dynamic dispatch Worker and user Worker to test a request end to end.
