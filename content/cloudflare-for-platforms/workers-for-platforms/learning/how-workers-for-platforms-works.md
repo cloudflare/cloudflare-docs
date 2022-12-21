@@ -16,7 +16,7 @@ Workers for Platforms introduces a new architecture model as outlined on this pa
 
 ### Dispatch namespace
 
-A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any User Worker in a namespace. Namespaces can be used to ____.
+A dispatch namespace is composed of a collection of user Workers. With dispatch namespaces, a dynamic dispatch Worker can be used to call any User Worker in a namespace.
 
 {{<Aside type="note" header="Best practice">}}
 
@@ -34,7 +34,7 @@ The dynamic dispatch Worker calls user Workers from the dispatch namespace and e
 
 ### User Workers
 
-User Workers are written by your end users (end developers). End developers deploy user Workers to script automated actions, create integrations or modify response payload to return custom content.
+User Workers are written by your end users (end developers). End developers deploy user Workers to script automated actions, create integrations or modify response payloads to return custom content.
 
 ### Request lifecycle
 
@@ -45,7 +45,7 @@ Below you will find an example request lifecycle in the Workers for Platforms ar
 In the above diagram:
 
 1. Request for `customer-a.example.com/api` will first hit the dynamic dispatch Worker (`api-prod`).
-2. The dispatcher (`env.dispatcher.get(customer-a)`) will handle routing logic to user Workers based on properties of the request.
+2. The dispatcher (`env.dispatcher.get(customer-a)`) configured in your dynamic dispatch Worker code will handle routing logic to user Workers.
 3. The subdomain (`customer-a.example.com`) of the incoming request is used to route to the user Worker with the same name (`customer-a`).
 
 ## ​Workers for Platforms versus Service bindings
@@ -57,7 +57,4 @@ Service bindings explicitly link two Workers together. They are meant for use ca
 In the Workers for Platforms model, a dynamic dispatch Worker can be used to call any user Worker (similar to how Service bindings work) in a dispatch namespace but without needing to explicitly pre-define the relationship.
 
 Service bindings and Workers for Platforms can be used simultaneously when building applications. 
-
-
-
 
