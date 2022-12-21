@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Configuration tips
-weight: 2
+weight: 3
 layout: single
 ---
 
