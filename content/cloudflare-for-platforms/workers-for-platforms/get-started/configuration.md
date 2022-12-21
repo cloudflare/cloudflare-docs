@@ -88,6 +88,7 @@ export default {
     return await worker.fetch(req);
   }
 }
+```
 
 ## 4. Upload user Workers to a namespace
 
@@ -95,7 +96,7 @@ User Workers are written by end developers. End developers can deploy User Worke
 
 You will now upload `customer-worker-1` into your dispatch namespace that you created in step 2. This user Worker has a simple `fetch()` handler that sends a `Hello world` response.
 
-You will use the Cloudflare API to upload the user Worker. This will upload the user Worker to a dispatch namespace. User Workers must be uploaded via the Cloudflare API, Wrangler does not support this operation. Workers uploaded this way will appear in Account Home > your account > **Workers for Platforms** > your namespace.
+You will use the Cloudflare API to upload the user Worker. This will upload the user Worker to a dispatch namespace. User Workers must be uploaded via the Cloudflare API as Wrangler does not support this operation. Workers uploaded this way will appear in Account Home > your account > **Workers for Platforms** > your namespace.
 
 Update the necessary fields and run the following command:
 
