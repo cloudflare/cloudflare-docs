@@ -7,17 +7,19 @@ title: Limits
 
 ## Script limits
 
-Cloudflare provides an unlimited number of scripts for our Workers for Platforms customers.
+Cloudflare provides an unlimited number of scripts for Workers for Platforms customers.
 ​​
 ## Bindings
 
-You can use Workers [bindings](/workers/platform/bindings) with the dynamic dispatch Worker or any namespaced Workers. Your User Workers cannot be defined as Durable Objects. User Workers can have a Durable Objects binding.  
+You can use Workers [bindings](/workers/platform/bindings) with the dynamic dispatch Worker or any namespaced Workers. Your user Workers cannot be defined as Durable Objects. User Workers can have a Durable Objects binding.  
 
-Bindings for your Dispatch Worker or any User Workers can be defined on multipart script uploads in the metadata blob.
+Bindings for your dynamic dispatch Worker or any user Workers can be defined on multipart script uploads in the metadata blob.
 
+{{<Aside type="warning">}}
 
-Note: Any product specific limits still apply to your account (eg. the 100 KV namespace limit) 
-Please fill out the Limit Increase Request form if you would like them increased. 
+Any product specific limits still apply to your account (for example, the [100 KV namespace limit](/workers/platform/limits/#kv-limits)). You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+{{</Aside>}}
 
 ## ​Tags
 
