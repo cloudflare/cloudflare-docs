@@ -48,7 +48,7 @@ In the above diagram:
 2. The dispatcher (`env.dispatcher.get(customer-a)`) will handle routing logic to user Workers based on properties of the request.
 3. The subdomain (`customer-a.example.com`) of the incoming request is used to route to the user Worker with the same name (`customer-a`).
 
-## ​Workers for Platforms versus Service Bindings
+## ​Workers for Platforms versus Service bindings
 
 Both Workers for Platforms and Service bindings enable Worker-to-Worker communication. 
 
