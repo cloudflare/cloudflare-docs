@@ -78,19 +78,16 @@ Next, give your dynamic dispatch Worker the logic it needs to manage user Worker
 * `dispatcher` is the binding you created earlier in this step.
 * `customer-worker-1` is a script you will upload to the dispatch namespace in the next step.
 
-```sh
+```js
 ---
-filename: index.ts
+filename: index.js
 ---
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request, env) {
-  const worker = env.dispatcher.get("customer-worker-1");
-  return await worker.fetch(request);
+export default {
+  async fetch(req, env) {
+    const worker = env.dispatcher.get("customer-worker-1");
+    return await worker.fetch(req);
+  }
 }
-```
 
 ## 4. Upload user Workers to a namespace
 
