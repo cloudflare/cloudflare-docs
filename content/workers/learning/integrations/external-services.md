@@ -19,7 +19,7 @@ For a list of working packages, refer to [Works on Workers](https://workers.clou
     allowFullScreen></iframe>
 
 {{<Aside type="note">}}
-Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6).
+Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6) or [submit a package directly](https://airtable.com/shrtvoM4QfEr48ZoQ).
 {{</Aside>}}
 
 ## Authentication
