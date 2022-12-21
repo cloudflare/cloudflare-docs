@@ -90,6 +90,8 @@ export default {
 }
 ```
 
+Refer to [Create a dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/) for more configuration information.
+
 ## 4. Upload user Workers to a namespace
 
 User Workers are written by end developers. End developers can deploy User Workers to script automated actions, create integrations or modify response payload to return custom content.
