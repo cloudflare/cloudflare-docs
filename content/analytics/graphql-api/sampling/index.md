@@ -28,7 +28,7 @@ Analytics is designed to provide requested data, at the appropriate level of det
 
 ### Adaptive sampling
 
-Cloudflare almost always uses **adaptive sampling**, which means the sample rate fluctuates depending on the volume of data ingested or queried. If the number of records is relatively small, sampling is not used. However, as the volume of records grows larger, progressively lower sample rates are applied. Firewall Analytics and the Firewall Event Log follow this model. Data nodes that use adaptive sampling are easy to identify by the `Adaptive` suffix in the node name, as in `firewallEventsAdaptive`.
+Cloudflare almost always uses **adaptive sampling**, which means the sample rate fluctuates depending on the volume of data ingested or queried. If the number of records is relatively small, sampling is not used. However, as the volume of records grows larger, progressively lower sample rates are applied. Security Events (also known as Firewall Events) and the Security Event Log follow this model. Data nodes that use adaptive sampling are easy to identify by the `Adaptive` suffix in the node name, as in `firewallEventsAdaptive`.
 
 ### Fixed sampling
 

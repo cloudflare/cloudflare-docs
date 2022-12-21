@@ -12,12 +12,12 @@ You can use Cloudflare Access to require team members to connect to self-hosted 
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Create a list of approved countries where a team operates
 - Require that users connecting to self-hosted or SaaS applications connect from those countries
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 5 minutes
 

@@ -8,7 +8,7 @@ meta:
 
 # Wrangler 1 (legacy)
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
 The version of Wrangler you are using is now deprecated. Refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/#update-wrangler-version) to update to the latest version of Wrangler to prevent critical errors.
 

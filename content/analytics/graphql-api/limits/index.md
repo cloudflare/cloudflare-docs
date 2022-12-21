@@ -28,8 +28,9 @@ These limits are applied to every query for every plan:
 ## User limits
 
 Cloudflare GraphQL API limits the number of GraphQL requests each user can send.
-By default, we allow **no more than 1 GraphQL query per second** with bursts of
-up to 300 queries over 5-minute window.
+The default quota is **300 GraphQL queries over 5-minute window**. It allows a
+user to run at least **1 query every second** or do a burst of 300 queries and
+then wait 5 minutes before issuing another query.
 
 That rate limit is applied in addition to the general rate limits enforced by
 the Cloudflare API.

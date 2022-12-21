@@ -35,3 +35,11 @@ Update the server-side integration by replacing the siteverify URL. Replace:
 With:
 
 `https://challenges.cloudflare.com/turnstile/v0/siteverify`
+
+{{<Aside type= "Note">}}
+
+Turnstile supports:
+* the `render()` call 
+* reCAPTCHA v2 invisible mode with the `execute()` call
+
+{{</Aside>}}

@@ -27,6 +27,14 @@ The ML engine produces scores 2 through 99.
 
 JSD is enabled by default but completely optional. To adjust your settings, open the Bot Management Configuration page from **Security** > **Bots**.
 
+### Cloudflare service
+
+{{<render file="_bots-cs.md">}}
+
+### Not computed
+
+{{<render file="_bots-nc.md">}}
+
 ### Notes on detection
 
 {{<render file="_bots-cookie.md">}}

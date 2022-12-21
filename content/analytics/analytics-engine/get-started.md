@@ -25,21 +25,21 @@ To access your dataset from the Workers runtime, you need to create a binding us
 
 In this guide, we will show you how to start using a dataset.
 
-To define a binding. For example:
+To define an Analytics Engine binding you must be using at least version 2.6.0 of Wrangler.
+Add the binding to your `wrangler.toml` file, for example:
 
 ```toml
-[[unsafe.bindings]]
-type = "analytics_engine"
-name = "<BINDING_NAME>"
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>" }
+]
 ```
 
 By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
 
 ```toml
-[[unsafe.bindings]]
-type = "analytics_engine"
-name = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
 ```
 
 ## 3. Write data from the Workers Runtime API
@@ -49,8 +49,6 @@ Once a binding is declared in Wrangler and your worker is deployed, you get a ne
 A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](../sql-api/#sampling) key.
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
-
-Up to twenty blobs, twenty doubles, and one index can be supplied per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes.
 
 This is how it translates into code:
 
@@ -124,3 +122,7 @@ ORDER BY t, avg_humidity DESC
 This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
 
 Refer to [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
+
+## Limits
+
+Cloudflare will accept up to twenty blobs, twenty doubles, and one index per request. The total size of all blobs in a request must not exceed 5120 bytes and the index must not be more than 32 bytes. Finally, there is also a limit of 25 writes per request.

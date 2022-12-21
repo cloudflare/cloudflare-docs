@@ -88,7 +88,7 @@ To create a secondary zone using the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
-3. Go to **DNS**.
+3. Go to **DNS** > **Settings**.
 4. For **DNS Zone Transfers**, click **Manage linked peers**.
 5. Select a peer.
 6. Click **Save**.
@@ -140,7 +140,7 @@ When you enable outgoing zone transfers, this will send a DNS NOTIFY message to 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 2. Select your account and zone.
-3. Go to **DNS**.
+3. Go to **DNS** > **Settings**.
 4. For **Outgoing Zone Transfers**, switch the toggle to **On**.
 
 ### Using the API

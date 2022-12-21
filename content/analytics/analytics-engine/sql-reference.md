@@ -8,9 +8,9 @@ meta:
 
 # Workers Analytics Engine SQL Reference
 
-## SHOW statement
+## SHOW TABLES statement
 
-`SHOW` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker. 
+`SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](../get-started/#1-configure-your-dataset-and-binding-in-wrangler), for more information). The table is automatically created when you write event data in your worker.
 
 ```SQL
 SHOW TABLES
@@ -18,6 +18,24 @@ SHOW TABLES
 ```
 
 Refer to [FORMAT clause](#format-clause) for the available `FORMAT` options.
+
+## SHOW TIMEZONES statement
+
+`SHOW TIMEZONES` can be used to list all of the timezones supported by the SQL API. Most common timezones are supported.
+
+```SQL
+SHOW TIMEZONES
+[FORMAT <format>]
+```
+
+## SHOW TIMEZONE statement
+
+`SHOW TIMEZONE` responds with the current default timezone in use by SQL API. This should always be `Etc/UTC`.
+
+```SQL
+SHOW TIMEZONE
+[FORMAT <format>]
+```
 
 ## SELECT statement
 
@@ -29,7 +47,7 @@ SELECT <expression_list>
 [FROM <table>|(<subquery>)]
 [WHERE <expression>]
 [GROUP BY <expression>, ...]
-[ORDER BY <expression_list>] 
+[ORDER BY <expression_list>]
 [LIMIT <n>|ALL]
 [FORMAT <format>]
 ```
@@ -56,13 +74,13 @@ SELECT *
 
 -- alias columns to more descriptive names
 SELECT
-    blob2 AS probe_name, 
-    double3 AS temperature 
+    blob2 AS probe_name,
+    double3 AS temperature
 ```
 
 Additionally, expressions using supported [functions](#supported-functions) and [operators](#supported-operators) can be used in place of column names:
 ```SQL
-SELECT 
+SELECT
     blob2 AS probe_name,
     double3 AS temp_c,
     double3*1.8+32 AS temp_f -- compute a value
@@ -88,11 +106,11 @@ FROM <table_name>|(subquery)
 Examples:
 ```SQL
 -- query data written to a workers dataset called "temperatures"
-FROM temperatures  
+FROM temperatures
 
 -- use a subquery to manipulate the table
 FROM (
-    SELECT 
+    SELECT
         blob1 AS probe_name,
         count() as num_readings
     FROM
@@ -148,8 +166,8 @@ GROUP BY <expression>, ...
 For example. If you had a table of temperature readings:
 ```SQL
 -- return the average temperature for each probe
-SELECT 
-    blob1 AS probe_name, 
+SELECT
+    blob1 AS probe_name,
     avg(double1) AS average_temp
 FROM temperature_readings
 GROUP BY probe_name
@@ -167,7 +185,7 @@ Usage:
 ORDER BY <expression> [ASC|DESC], ...
 ```
 
-`<expression>` can just be a column name. 
+`<expression>` can just be a column name.
 
 `ASC` or `DESC` determines if the ordering is ascending or descending. `ASC` is the default, and can be omitted.
 
@@ -361,7 +379,7 @@ max(item_cost)
 
 Usage:
 ```SQL
-quantileWeighted(q, column_name, weight_column_name) 
+quantileWeighted(q, column_name, weight_column_name)
 ```
 
 `quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
@@ -369,7 +387,7 @@ quantileWeighted(q, column_name, weight_column_name)
 Example:
 ```SQL
 -- estimate the median value of <double1>
-quantileWeighted(0.5, double1, _sample_interval) 
+quantileWeighted(0.5, double1, _sample_interval)
 
 -- in a table of query times, estimate the 95th centile query time
 quantileWeighted(0.95, query_time, _sample_interval)
@@ -409,38 +427,6 @@ toUInt32(<expression>)
 Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 32 bit integer.
 
 Behaviour for negative numbers is undefined.
-
-### toDateTime
-
-Usage:
-```SQL
-toDateTime(<expression>)
-```
-
-`toDateTime` converts an expression to a datetime.
-
-Examples:
-```SQL
--- double1 contains a unix timestamp in seconds
-toDateTime(double1)
-
--- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
-toDateTime(blob1)
-
--- literal values:
-toDateTime(355924804) -- unix timestamp
-toDateTime('355924804') -- string containing unix timestamp
-toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
-```
-
-### now
-
-Usage:
-```SQL
-now()
-```
-
-Returns the current time as a DateTime.
 
 ### length
 
@@ -551,7 +537,7 @@ SELECT position(':' IN blob1) AS p FROM your_dataset;
 
 Usage:
 ```SQL
-substring({string}, {offset:integer}[. {length:integer}]) 
+substring({string}, {offset:integer}[. {length:integer}])
 ```
 
 Extracts part of a string, starting at the Unicode code point indicated by the offset and returning the number of code points requested by the length. As previously mentioned, in SQL, indexes are usually 1-based. That means that the offset provided to substring should be at least `1`.
@@ -574,6 +560,126 @@ This function supports formatting strings, integers, floats, datetimes, interval
 Examples:
 ```SQL
 SELECT format('blob1: {}', blob1) AS s FROM dataset;
+```
+
+See also: [formatDateTime](#formatdatetime)
+
+### toDateTime
+
+Usage:
+```SQL
+toDateTime(<expression>[, 'timezone string'])
+```
+
+`toDateTime` converts an expression to a datetime. This function does not support ISO 8601-style timezones; if your time is not in UTC then you must provide the timezone using the second optional argument.
+
+Examples:
+```SQL
+-- double1 contains a unix timestamp in seconds
+toDateTime(double1)
+
+-- blob1 contains an datetime in the format 'YYYY-MM-DD hh:mm:ss'
+toDateTime(blob1)
+
+-- literal values:
+toDateTime(355924804) -- unix timestamp
+toDateTime('355924804') -- string containing unix timestamp
+toDateTime('1981-04-12 12:00:04') -- string with datetime in 'YYYY-MM-DD hh:mm:ss' format
+
+-- interpret a date relative to New York time
+toDateTime('2022-12-01 16:17:00', 'America/New_York')
+```
+
+### now
+
+Usage:
+```SQL
+now()
+```
+
+Returns the current time as a DateTime.
+
+### toUnixTimestamp
+
+Usage:
+```SQL
+toUnixTimestamp(<datetime>)
+```
+
+`toUnixTimestamp` converts a datetime into an integer unix timestamp.
+
+Examples:
+```SQL
+-- get the current unix timestamp
+toUnixTimestamp(now())
+```
+
+### formatDateTime
+
+Usage:
+```SQL
+formatDateTime(<datetime expression>, <format string>[, <timezone string>])
+```
+
+`formatDateTime` prints a datetime as a string according to a provided format string. See
+[ClickHouse's docs](https://clickhouse.com/docs/en/sql-reference/functions/date-time-functions/#formatdatetime)
+for a list of supported formatting options.
+
+Examples:
+```SQL
+-- prints the current YYYY-MM-DD in UTC
+formatDateTime(now(), '%Y-%m-%d')
+
+-- prints YYYY-MM-DD in the datetime's timezone
+formatDateTime(<a datetime with a timezone>, '%Y-%m-%d')
+formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d')
+
+-- prints YYYY-MM-DD in UTC
+formatDateTime(<a datetime with a timezone>, '%Y-%m-%d', 'Etc/UTC')
+formatDateTime(toDateTime('2022-12-01 16:17:00', 'America/New_York'), '%Y-%m-%d', 'Etc/UTC')
+```
+
+### toStartOfInterval
+
+Usage:
+```SQL
+toStartOfInterval(<datetime>, INTERVAL '<n>' <unit>[, <timezone string>])
+```
+
+`toStartOfInterval` rounds down a datetime to the nearest offset of a provided interval. This can
+be useful for grouping data into equal-sized time ranges.
+
+Examples:
+```SQL
+-- round the current time down to the nearest 15 minutes
+toStartOfInterval(now(), INTERVAL '15' MINUTE)
+
+-- round a timestamp down to the day
+toStartOfInterval(timestamp, INTERVAL '1' DAY)
+
+-- count the number of datapoints filed in each hourly window
+SELECT
+  toStartOfInterval(timestamp, INTERVAL '1' HOUR) AS hour,
+  sum(_sample_interval) AS count
+FROM your_dataset
+GROUP BY hour
+ORDER BY hour ASC
+```
+
+## extract
+
+Usage:
+```SQL
+extract(<time unit> from <datetime>)
+```
+
+`extract` returns an integer number of time units from a datetime. It supports
+`YEAR`, `MONTH`, `DAY`, `HOUR`, `MINUTE` and `SECOND`.
+
+Examples:
+```SQL
+-- extract the number of seconds from a timestamp (returns 15 in this example)
+extract(SECOND from toDateTime('2022-06-06 11:30:15'))
 ```
 
 ## Supported operators
@@ -611,6 +717,8 @@ The following operators are supported:
 | `NOT IN` | true if the preceding expression's value is not in the list<br>`column NOT IN ('a', 'list', 'of', 'values')` |
 
 {{</table-wrap>}}
+
+We also support the `BETWEEN` operator for checking a value is in an inclusive range: `a [NOT] BETWEEN b AND c`.
 
 ### Boolean operators
 

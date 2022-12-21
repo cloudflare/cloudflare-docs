@@ -13,12 +13,12 @@ Unlike Legacy mode, Named Tunnels give users the ability to manage routing in th
 
 If you are using Legacy Tunnel today you can migrate to Named Tunnel deployment in less than 10 minutes.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Migrate a Legacy Tunnel deployment to Named Tunnel model
 - Use Cloudflare Load Balancer to perform a zero downtime migration
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

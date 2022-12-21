@@ -6,6 +6,55 @@ weight: 3
 
 # Changelog
 
+## 2022-12-07
+
+- Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.
+- Passing a range header to the `get` operation in the R2 bindings API should now work as expected.
+
+## 2022-11-30
+
+- Requests with the header `x-amz-acl: public-read` are no longer rejected.
+- Fixed issues with wildcard CORS rules and presigned URLs.
+- Fixed an issue where `ListObjects` would time out during delimited listing of unicode-normalized keys.
+- S3 API's `PutBucketCors` now rejects requests with unknown keys in the XML body.
+- Signing additional headers no longer breaks CORS preflight requests for presigned URLs.
+
+## 2022-11-21
+
+- Fixed a bug in `ListObjects` where `startAfter` would skip over objects with keys that have numbers right after the `startAfter` prefix.
+- Add worker bindings for multipart uploads.
+
+## 2022-11-17
+
+- Unconditionally return HTTP 206 on ranged requests to match behavior of other S3 compatible implementations.
+- Fixed a CORS bug where `AllowedHeaders` in the CORS config were being treated case-sensitively.
+
+## 2022-11-08
+
+- Copying multipart objects via `CopyObject` is re-enabled.
+- `UploadPartCopy` is re-enabled.
+
+## 2022-10-28
+
+- Multipart upload part sizes are always expected to be of the same size, but this enforcement is now done when you complete an upload instead of being done very time you upload a part.
+- Fixed a performance issue where concurrent multipart part uploads would get rejected.
+
+## 2022-10-26
+
+- Fixed ranged reads for multipart objects with part sizes unaligned to 64KiB.
+
+## 2022-10-19
+
+- `HeadBucket` now sets `x-amz-bucket-region` to `auto` in the response.
+
+## 2022-10-06
+
+- Temporarily disabled `UploadPartCopy` while we investigate an issue.
+
+## 2022-09-29
+
+- Fixed a CORS issue where `Access-Control-Allow-Headers` was not being set for preflight requests.
+
 ## 2022-09-28
 
 - Fixed a bug where CORS configuration was not being applied to S3 endpoint.
@@ -14,6 +63,7 @@ weight: 3
 - Fixed CORS rendering for the S3 `HeadObject` operation.
 - Fixed a bug where no matching CORS configuration could result in a `403` response.
 - Temporarily disable copying objects that were created with multipart uploads.
+- Fixed a bug in the Workers bindings where an internal error was being returned for malformed ranged `.get` requests.
 
 ## 2022-09-27
 

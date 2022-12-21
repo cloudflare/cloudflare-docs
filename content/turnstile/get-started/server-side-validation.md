@@ -84,7 +84,7 @@ Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo
 
 The siteverify endpoint behaves similar to reCAPTCHA’s siteverify endpoint. The response type of the siteverify is `application/json`.
 
-It always contains a 'success' property, either true or false, indicating whether the operation was successful or not.
+It always contains a `success` property, either true or false, indicating whether the operation was successful or not.
 
 In case of a successful validation, the response should be similar to the following:
 

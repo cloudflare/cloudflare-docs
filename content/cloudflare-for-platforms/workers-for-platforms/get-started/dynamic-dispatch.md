@@ -20,11 +20,11 @@ export default {
   async fetch(request, env) {
     try {
         // parse the URL, read the subdomain
-        let worker_name = new URL(request.url).host.split('.')[0]
-        let user_worker = env.dispatcher.get(worker_name)
-        return await user_worker.fetch(request) 
+        let workerName = new URL(request.url).host.split('.')[0]
+        let userWorker = env.dispatcher.get(workerName)
+        return await userWorker.fetch(request) 
     } catch (e) {
-        if (e.message.startsWith('Worker not found') {
+        if (e.message.startsWith('Worker not found')) {
             // we tried to get a worker that doesn't exist in our dispatch namespace
             return new Response('', {status: 404})
         }

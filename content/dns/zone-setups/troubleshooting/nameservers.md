@@ -23,7 +23,3 @@ If the nameservers in your registrar do not exactly match those provided by Clou
 ## Are additional nameservers listed at your registrar?
 
 You should have only Cloudflare nameservers listed at your registrar.
-
-## Are you using a European registrar?
-
-Certain European registrars have a different nameserver registration process. Contact [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) if you experience issues.

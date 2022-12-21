@@ -13,5 +13,3 @@ Click **Customize** to give the login page the look and feel of your organizatio
 Any changes you make will be reflected in real time in the **Preview** card. Once you’re satisfied with your customization, click **Save**.
 
 Your login page will now reflect your changes.
-
-![Customized Login](/cloudflare-one/static/documentation/identity/devices/customized-login.png)

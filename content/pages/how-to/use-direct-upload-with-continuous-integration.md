@@ -5,11 +5,11 @@ title: Use Direct Upload with continuous integration
 
 # Use Direct Upload with continuous integration
 
-Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/get-started/). This guide will teach you how to deploy your application to Pages, using continuous integration.
+Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
 ## Deploy with Wrangler
 
-In your project directory, install [Wrangler](/workers/wrangler/get-started/) so you can deploy a folder of prebuilt assets by running the following command:
+In your project directory, install [Wrangler](/workers/wrangler/install-and-update/) so you can deploy a folder of prebuilt assets by running the following command:
 
 ```sh
 # Publish created project

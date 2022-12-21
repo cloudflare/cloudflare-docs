@@ -6,6 +6,26 @@ weight: 11
 
 # Changelog
 
+## 2022-12-08
+
+### Faster mp4 downloads of live recordings
+
+Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
+
+## 2022-11-22
+
+### VP9 support for WebRTC live streams (beta)
+
+Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9) when streaming using [WebRTC (WHIP)](/stream/webrtc-beta/), currently in beta.
+
+## 2022-11-08
+
+### Reduced time to start WebRTC streaming and playback with Trickle ICE
+
+Cloudflare Stream's [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-05.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
+
+For more, refer to [the docs](/stream/webrtc-beta/).
+
 ## 2022-11-07
 
 ### Deprecating the "per-video" Analytics API
@@ -36,7 +56,7 @@ If a live stream contains content with low visual complexity, like a slideshow p
 
 This change is particularly helpful if you're building a platform or application that allows your end users to create their own live streams, where these end users have their own streaming software and hardware that you can't control. Because this new functionality adapts based on the live video we receive, rather than just the configuration advertised by the broadcaster, even in cases where your end users' settings are less than ideal, client video players will not receive excessively high estimates of bandwidth requirements, causing playback quality to decrease unnecessarily. Your end users don't have to be OBS Studio experts in order to get high quality video playback.
 
-No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream.
+No work is required on your end — this change applies to all live inputs, for all customers of Cloudflare Stream. For more, refer to the [docs](/stream/stream-live/#bitrate-estimates-at-each-quality-level-bitrate-ladder).
 
 ## 2022-10-05
 

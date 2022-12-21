@@ -16,7 +16,15 @@ In order to use Queues, you need a [Cloudflare account](/fundamentals/account-an
 
 ## 1. Enable Queues
 
-Queues is in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/). You need a Paid Workers plan to enable Queues. To enable Queues:
+Queues is currently in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/).
+
+{{<Aside type="note">}}
+
+Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Paid Workers plan to enable Queues.
+
+{{</Aside>}}
+
+To enable Queues:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
@@ -26,7 +34,7 @@ Queues is included in the monthly subscription cost of your Paid Workers plan, a
 
 ## 2. Install Wrangler
 
-You will use [Wrangler](/workers/wrangler/get-started/), a command-line tool for building Cloudflare Workers, to access Queues.
+You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access Queues.
 
 To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 

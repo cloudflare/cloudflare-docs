@@ -10,14 +10,14 @@ title: Require Gateway connections
 
 You can build rules in Cloudflare Access that require users to connect through your organization's Cloudflare Gateway configuration before they reach on-premise applications or login to [SaaS applications](https://blog.cloudflare.com/cloudflare-access-for-saas/).
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Add Cloudflare Gateway to your Zero Trust account
 - Enroll devices in Cloudflare Gateway
 - View enrolled devices
 - Build a rule in Access to require Cloudflare Gateway
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 40 minutes
 
@@ -56,11 +56,11 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 ## Configure the Cloudflare certificate
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
 
-- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 - Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
@@ -68,8 +68,6 @@ To download the Cloudflare certificate:
 Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to _Enabled_. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
-
-![Policy settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
 
 ## Enroll a device
 

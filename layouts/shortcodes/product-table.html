@@ -1,8 +1,9 @@
 {{- $plan_json := $.Site.Data.plans -}}
 {{- $id := split (.Get "id")  "." -}}
+{{- $additional_plans := default (.Get "additional_plans") (.Get 0) -}}
 {{- $info :=  index $plan_json $id -}}
-{{- $map := dict "ent" "Enterprise" "pro" "Pro" "biz"
-"Business" "free" "Free" -}}
+{{- $map := dict "ent" "Enterprise" "pro" "Pro" "pro_plus" "Pro Plus" "biz"
+"Business" "free" "Free" "lite" "Lite" -}}
 
 <div class="DocsMarkdown--table-wrap">
     <div class="DocsMarkdown--table-wrap-inner">
@@ -13,9 +14,19 @@
             <td>
                 <strong>{{ index $map "free" }}</strong>
             </td>
+            {{ if $additional_plans }}
+            <td>
+                <strong>{{ index $map "lite" }}</strong>
+            </td>
+            {{ end }}
             <td>
                 <strong>{{ index $map "pro" }}</strong>
             </td>
+            {{ if $additional_plans }}
+            <td>
+                <strong>{{ index $map "pro_plus" }}</strong>
+            </td>
+            {{ end }}
             <td>
                 <strong>{{ index $map "biz" }}</strong>
             </td>
@@ -51,17 +62,42 @@
     <td>
         {{ .free | markdownify }}
     </td>
+    {{ if $additional_plans }}
+    <td>
+        {{ if .lite }}
+        {{ .lite | markdownify }}
+        {{ else }}
+        {{ .free | markdownify }}
+        {{ end }}
+    </td>
+    {{ end }}
     <td>
         {{ .pro | markdownify }}
     </td>
+    {{ if $additional_plans }}
+    <td>
+        {{ if .pro_plus }}
+        {{ .pro_plus | markdownify }}
+        {{ else }}
+        {{ .pro | markdownify }}
+        {{ end }}
+    </td>
+    {{ end }}
     <td>
         {{ .biz | markdownify }}
     </td>
     <td>
         {{ .ent | markdownify }}
+        {{ if and (.ent_plus) (ne .ent .ent_plus)}}
+        <br/>
+        <br/>
+        <em>With add-on</em>
+        <br/>
+        {{ .ent_plus | markdownify }}
+        {{ end }}
     </td>
 </tr>
-{{- end -}}
+{{ end }}
 {{ end }}
 {{ end }}
 </table>
