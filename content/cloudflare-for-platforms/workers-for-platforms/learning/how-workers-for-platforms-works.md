@@ -40,7 +40,7 @@ User Workers are written by your end users (end developers). End developers depl
 
 Below you will find an example request lifecycle in the Workers for Platforms architecture.
 
-![The request lifecycle is described below.](../media/WFP-diagram.png)
+![The request lifecycle is described below.](../media/wfp.png)
 
 In the above diagram:
 
