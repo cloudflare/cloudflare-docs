@@ -56,7 +56,7 @@ Create a dynamic dispatch Worker. The dynamic dispatch Worker calls user Workers
 
 To create a dynamic dispatch Worker, you must create a Worker and bind it to the dispatch namespace you created in the previous step.
 
-To create a Worker, run `wrangler init` followed by your Worker project name. Make sure to indicate `y` on the question `Would you like to use TypeScript? (y/n)` for the purpose of this guide:
+To create a Worker, run `wrangler init` followed by your Worker project name:
 
 ```sh
 $ wrangler init <YOUR_WORKER>
