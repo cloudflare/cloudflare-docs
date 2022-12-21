@@ -126,7 +126,7 @@ If you prefer to use an API token, remove the `X-Auth-Key` and `X-Auth-Email` he
 
 ```bash
 curl -X PUT 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/workers/dispatch/namespaces/<NAMESPACE_NAME>/scripts/<SCRIPT_NAME>' \
--H 'Authorization: Bearer <API_TOKEN>'
+-H 'Authorization: Bearer <API_TOKEN>' \
 -H 'Content-Type: application/javascript' \
 --data "addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
