@@ -8,21 +8,15 @@ weight: 4
 
 When you [add a new member](/fundamentals/account-and-billing/account-setup/manage-account-members/) to your account, you need to choose a role for that member.
 
-The exact roles available depend on your Cloudflare plan type.
-
 {{<Aside type="note">}}
 
 All roles and permissions have access to your account **Overview**.
 
 {{</Aside>}}
 
-## Non-Enterprise roles
+## Available Roles
 
-{{<render file="_account-roles-non-ent.md">}}
-
-## Enterprise roles
-
-If you have an account on an Enterprise plan, you can assign multiple roles to additional members, scoping permissions broadly or narrowly as needed.
+You can assign multiple roles to additional members, scoping permissions broadly or narrowly as needed.
 
 | Role | Description |
 | --- | --- |
