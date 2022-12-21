@@ -18,7 +18,11 @@ You will need to manually create an app for Area 1 in Okta.
 
 2. In the Admin console, go to **Applications** > **Applications**.
 
+    ![Go to Applications in your Okta Admin console](/email-security/static/sso/okta/step2-applications.png)
+
 3. Select **Create App Integration** > **SAML 2.0**, and select **Next**.
+
+    ![Choose SAML 2.0 as the new app integration type](/email-security/static/sso/okta/step3-saml.png)
 
 4. Enter a descriptive name for your app, such as `Area 1`, and select **Next**.
 
@@ -32,6 +36,8 @@ You will need to manually create an app for Area 1 in Okta.
         - **Name**: Enter email addresses for your users. Should match users already added to Area 1 dashboard.
         - **Name format**: Select _Unspecified_ from the drop-down menu.
         - **Value**: Select `user.email` from the drop-down menu.
+
+    ![Input the correct settings in SAML settings](/email-security/static/sso/okta/step5-saml-settings.png)
 
 6. Select **Next**.
 
