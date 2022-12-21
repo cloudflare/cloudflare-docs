@@ -16,6 +16,12 @@ When you [enable](#enable-total-tls) Total TLS, Cloudflare will also show a warn
 ## Availability
 
 Total TLS is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).
+  
+{{<Aside type="warning">}}
+
+Total TLS does not issue certificates for any subdomain used by [Cloudflare Load Balancing](/load-balancing/), we recommend using other types of certificates to avoid any potential downtime.
+
+{{</Aside>}}
 
 ## Enable Total TLS
 
