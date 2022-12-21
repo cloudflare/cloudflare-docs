@@ -154,8 +154,4 @@ In the Cloudflare dashboard, dynamic dispatch Workers are found in **Workers**. 
 
 {{</Aside>}}
 
-## View analytics
-
-Use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api) to get metrics by dispatch namespace. Use the  `dispatchNamespaceName` dimension in the `workersInvocationsAdaptive` node to query usage by namespace.
-
 By completing this guide, you have successfully set up a dispatch namespace, dynamic dispatch Worker and user Worker to test a request end to end.
