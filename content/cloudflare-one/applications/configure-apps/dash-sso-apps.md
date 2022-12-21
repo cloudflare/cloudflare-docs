@@ -8,7 +8,7 @@ weight: 4
 
 By adding a **Dashboard SSO application** to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice.
 
-Once you have configured SSO, every user that wants to login with Dashboard SSO will need to exist as a member in the Cloudflare account and the IdP. If there is no Cloudflare member account for this user, the request will not forward the authentication phase to the Identity Provider. Refer to [Managing Cloudflare account access](/fundamentals/account-and-billing/account-setup/manage-account-members/) for information on adding users to your Cloudflare account.
+Once you have configured SSO, every user that wants to login with Dashboard SSO will need to exist as a member in your Cloudflare account and IdP. If there is no Cloudflare member account for this user, the request will not forward the authentication phase to the IdP. Refer to [Managing Cloudflare account access](/fundamentals/account-and-billing/account-setup/manage-account-members/) for information on adding users to your Cloudflare account.
 
 {{<Aside type="note">}}
 
@@ -35,7 +35,7 @@ Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/
 
 ### Step 3 — Contact your account team
 
-Ask your account team to approve and create your SSO domain. The SSO domain can be configured for multiple email domains associated with the members in your Cloudflare Account. SSO will not be enforced on members in which the email address was not specificied. For instance, SSO is configured for email domains ending in @example.com for Account A. Therefore member with @test.com belonging to the same account, Account A, would not be prompted with the "Log in with SSO" otion and would enter their username and password. 
+Ask your account team to approve and create your SSO domain. The SSO domain can be configured for multiple email domains associated with the members in your Cloudflare account. For example, if your SSO domain is configured for emails ending in `@example.com`, a member with email `@test.com` would not see the **Log in with SSO** option and would have to enter their username and password.
 
 ### Step 4 — Test and enable your application
 
