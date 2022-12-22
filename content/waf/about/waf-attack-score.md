@@ -6,7 +6,7 @@ weight: 2
 
 # WAF attack score
 
-WAF attack score is a feature that complements [WAF Managed Rules](/waf/managed-rulesets/).
+WAF attack score is a feature that complements [WAF Managed Rules](/waf/managed-rules/).
 
 The WAF's managed rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, managed rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
 

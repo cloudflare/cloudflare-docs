@@ -23,9 +23,9 @@ You can configure the following settings of the Cloudflare OWASP Core Ruleset in
 *   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Legacy CAPTCHA*.
 *   **Disable specific rules or rules with specific tags.**
 *   **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
-*   **Configure [payload logging](/waf/managed-rulesets/payload-logging/configure/)**.
+*   **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
 
-For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-a-managed-ruleset).
+For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
 ## Configure via API
 

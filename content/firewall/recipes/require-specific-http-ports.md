@@ -30,7 +30,7 @@ This example blocks requests to `www.example.com` that are not on ports 80 or 44
   </tbody>
 </table>
 
-Alternatively, if you are using [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) (previous version) and you do not need to specify a custom expression, enable rule ID 100015: "Anomaly:Port - Non Standard Port (not 80 or 443)" to block all requests to your zone on non-standard HTTP ports. This rule is not available in [WAF Managed Rules](/waf/managed-rulesets/) (new version) because it was deprecated.
+Alternatively, if you are using [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) (previous version) and you do not need to specify a custom expression, enable rule ID 100015: "Anomaly:Port - Non Standard Port (not 80 or 443)" to block all requests to your zone on non-standard HTTP ports. This rule is not available in [WAF Managed Rules](/waf/managed-rules/) (new version) because it was deprecated.
 
 {{<Aside type="note" header="Open server ports and blocked traffic">}}
 

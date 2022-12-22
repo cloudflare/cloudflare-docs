@@ -14,7 +14,7 @@ You can enable and configure managed rulesets for an account in Account Home > *
 Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 {{</Aside>}}
 
-To deploy a managed ruleset for a single zone, refer to [Deploy a managed ruleset in the dashboard for a zone](/waf/managed-rulesets/deploy-zone-dashboard/).
+To deploy a managed ruleset for a single zone, refer to [Deploy a managed ruleset in the dashboard for a zone](/waf/managed-rules/deploy-zone-dashboard/).
 
 ![Example WAF Managed Rules configuration in the Managed rulesets tab under Application Security > WAF.](/waf/static/account/managed-rulesets-dashboard.png)
 
@@ -53,7 +53,7 @@ Configure a managed ruleset to:
 - Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare).
 - Disable one or more rules.
 
-To skip one or more rules, or entire WAF's managed rulesets, [add a WAF exception](/waf/managed-rulesets/waf-exceptions/). WAF exceptions are shown as _Skip_ rules in the **Deployed managed rulesets** list.
+To skip one or more rules, or entire WAF's managed rulesets, [add a WAF exception](/waf/managed-rules/waf-exceptions/). WAF exceptions are shown as _Skip_ rules in the **Deployed managed rulesets** list.
 
 {{<Aside type="note">}}
 

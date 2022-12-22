@@ -34,7 +34,7 @@ To configure:
 
     Replace `<PUBLIC_KEY_VALUE>` with the public key you want to use for payload logging.
 
-You can generate a public key [in the command line](/waf/managed-rulesets/payload-logging/command-line/generate-key-pair/) or [in the Cloudflare dashboard](/waf/managed-rulesets/payload-logging/configure/).
+You can generate a public key [in the command line](/waf/managed-rules/payload-logging/command-line/generate-key-pair/) or [in the Cloudflare dashboard](/waf/managed-rules/payload-logging/configure/).
 
 ### Example
 

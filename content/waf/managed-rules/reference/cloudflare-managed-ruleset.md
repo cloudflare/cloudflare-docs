@@ -20,9 +20,9 @@ You can configure the following settings of the Cloudflare Managed Ruleset in th
 - **Override the action performed by individual rules or rules with specific tags.** The available actions are: _Managed Challenge_, _Block_, _JS Challenge_, _Log_, and _Legacy CAPTCHA_.
 - **Disable specific rules or rules with specific tags.**
 - **Customize the filter expression.** With a custom expression, the Cloudflare Managed Ruleset applies only to a subset of the incoming requests.
-- **Configure [payload logging](/waf/managed-rulesets/payload-logging/configure/)**.
+- **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
 
-For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-a-managed-ruleset).
+For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
 ## Configure via API
 

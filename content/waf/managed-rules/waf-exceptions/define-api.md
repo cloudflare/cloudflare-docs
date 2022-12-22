@@ -8,7 +8,7 @@ weight: 3
 
 To define a WAF exception via API, create a rule with `skip` action in a [phase entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_firewall_managed` phase. You can define WAF exceptions at the account level and at the zone level.
 
-To configure the WAF exception, define the `action_parameters` object according to the [exception type](/waf/managed-rulesets/waf-exceptions/#types-of-waf-exceptions).
+To configure the WAF exception, define the `action_parameters` object according to the [exception type](/waf/managed-rules/waf-exceptions/#types-of-waf-exceptions).
 
 Refer to [Add rules to phase entry point rulesets](/ruleset-engine/basic-operations/add-rule-phase-rulesets/) for more information on adding rules using the [Rulesets API](/ruleset-engine/rulesets-api/).
 

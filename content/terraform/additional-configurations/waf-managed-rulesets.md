@@ -17,7 +17,7 @@ This page provides examples of deploying and configuring WAF Managed Rules in yo
 * [Configure overrides](#configure-overrides)
 * [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
-For more information on WAF Managed Rules, refer to [Managed Rules](/waf/managed-rulesets/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on WAF Managed Rules, refer to [Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
@@ -75,7 +75,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 
 ## Configure skip rules
 
-The following example adds two [skip rules](/waf/managed-rulesets/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
+The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
 
 * The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`) for specific URLs, according to the rule expression.
 * The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
@@ -182,7 +182,7 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
 
 ## Configure payload logging
 
-This example enables [payload logging](/waf/managed-rulesets/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
+This example enables [payload logging](/waf/managed-rules/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
 
 Building upon the rule that deploys the Cloudflare Managed Ruleset, the following configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
@@ -217,7 +217,7 @@ The OWASP Managed Ruleset supports the following configurations:
 
 * Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property.
 
-For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/reference/owasp-core-ruleset/) page in the WAF documentation.
+For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) page in the WAF documentation.
 
 The following example rule of a `cloudflare_ruleset` Terraform resource performs the following configuration:
 

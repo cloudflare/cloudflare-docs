@@ -28,7 +28,7 @@ Refer to the [Ruleset Engine](/ruleset-engine/about/rules/) documentation for mo
 
 ## WAF Managed Rules
 
-WAF Managed Rules allows you to deploy [managed rulesets](/waf/managed-rulesets/) preconfigured by Cloudflare, and adjust their rules' behavior if necessary.
+WAF Managed Rules allows you to deploy [managed rulesets](/waf/managed-rules/) preconfigured by Cloudflare, and adjust their rules' behavior if necessary.
 
 When you enable these managed rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
 
@@ -44,7 +44,7 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 2. [Custom rulesets](/waf/custom-rulesets/)
 3. [Custom rules](/waf/custom-rules/)
 4. [Rate limiting rules](/waf/rate-limiting-rules/)
-5. [WAF Managed Rules](/waf/managed-rulesets/)
+5. [WAF Managed Rules](/waf/managed-rules/)
 6. [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version)
 
 For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).
