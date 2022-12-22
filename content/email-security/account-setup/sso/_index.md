@@ -19,3 +19,4 @@ Area 1 only supports IDP-initiated SAML setup at this point.
 For more details on setup, refer to the following resources:
 
 {{<directory-listing>}}
+- [Cloudflare Access for SaaS](/cloudflare-one/tutorials/area-1/)
