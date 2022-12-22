@@ -75,6 +75,6 @@ You will need to manually create an app for Area 1 in Okta.
 
 6. In **SAML SSO Domain** enter the domain that points to your SSO provider. For example, `area1security-examplecorp.okta.com`.
 
-7. In Metadata XML paste the XML metadata you copied in the previous step 11.
+7. In **Metadata XML** paste the XML metadata you copied in the previous step 11.
 
 Log out of any customer portal sessions. Your Okta account should now show a tile for Area 1.
