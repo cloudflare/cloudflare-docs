@@ -59,7 +59,11 @@ You will need to manually create an app for Area 1 in Okta.
 
 12. Select **View SAML setup instructions**.
 
-13. Copy the XML metadata settings you will need to finish configuration in the Area 1 dashboard.
+13. In **IDP metadata**, copy the XML metadata you will need to finish configuration in the Area 1 dashboard. The start of this metadata should be similar to the following:
+
+    ```txt
+    <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
+    ```
 
 ## 2. Configure Area 1 to connect to Okta
 
