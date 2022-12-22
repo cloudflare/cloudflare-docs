@@ -77,4 +77,6 @@ You will need to manually create an app for Area 1 in Okta.
 
 7. In **Metadata XML** paste the XML metadata you copied in the previous step 11.
 
+8. Select **Update Settings** to save your configuration.
+
 Log out of any customer portal sessions. Your Okta account should now show a tile for Area 1.
