@@ -15,6 +15,8 @@ For added security and convenience, Cloudflare Area 1 offers support for Securit
 
 Area 1 only supports IDP-initiated SAML setup at this point.
 
+## Setup
+
 For more details on setup, refer to the following resources:
 
 {{<directory-listing>}}
