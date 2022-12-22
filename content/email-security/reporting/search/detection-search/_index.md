@@ -1,7 +1,7 @@
 ---
 title: Detection search
 pcx_content_type: concept
-weight: 1
+weight: 2
 ---
 
 # Detection search
