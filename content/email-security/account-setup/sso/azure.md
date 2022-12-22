@@ -33,7 +33,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 6. Select **SAML** as your single sign-on method.
 
 7. Select the pencil icon to edit the **Basic SAML Configuration** as follows:
-    - **Identifier (Entity ID)**: `https://horizon.area1security.com/api/users/saml`
+    - **Identifier (Entity ID)**: `https://horizon.area1security.com`
     - **Reply URL (Assertion Consumer Service URL)**: `https://horizon.area1security.com/api/users/saml`
     - **Sign-On URL**: Leave blank
     - **Relay State**: Leave blank
