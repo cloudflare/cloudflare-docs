@@ -6,17 +6,6 @@ weight: 6
 
 # Configure Split Tunnels
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP with Gateway                                                                         | All plans                                                     |
-
-</div>
-</details>
-
 Split Tunnels mode can be configured to exclude or include IP addresses or domains from going through WARP. This feature is commonly used to run WARP alongside a VPN (in Exclude mode) or to provide access to a specific Tunnel (in Include mode).
 
 {{<Aside type="warning">}}
