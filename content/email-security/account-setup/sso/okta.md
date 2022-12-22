@@ -14,7 +14,7 @@ In this tutorial you will learn how to connect your Area 1 account to Okta. When
 
 You will need to manually create an app for Area 1 in Okta.
 
-1. Log in to Okta as an administrator
+1. Log in to Okta as an administrator.
 
 2. In the Admin console, go to **Applications** > **Applications**.
 
@@ -32,6 +32,10 @@ You will need to manually create an app for Area 1 in Okta.
     - **Default RelayState**: `https://portal.area1security.com`
     - **Name ID format**: Select _EmailAddress_ from the drop-down menu.
     - **Application username**: Select _Email_ from the drop-down menu.
+    - **Response**: _Signed_
+    - **Assertion signature**: _Unsigned_
+    - **Signature Algorithm**: _RSA-SHA1_
+    - **Digest Algorithm**: _SHA1_
     - **Attribute statements (optional)**
         - **Name**: Enter email addresses for your users. Should match users already added to Area 1 dashboard.
         - **Name format**: Select _Unspecified_ from the drop-down menu.
@@ -51,20 +55,26 @@ You will need to manually create an app for Area 1 in Okta.
 
 11. Go to **Sign On** > **Settings**.
 
-10. Select **Identity Provider metadata** and copy the URL from your browser's address bar. You will need this address to paste into your Area 1 dashboard.
+10. Select **View SAML setup instructions**.
+
+11. Copy the XML metadata settings you will need to finish configuration in the Area 1 dashboard.
 
 ## 2. Configure Area 1 to connect to Okta
 
-1. Go to your [Area 1 Customer Portal](http://portal.area1security.com).
+1. Log in to the Area 1 dashboard.
 
-2. In **Settings** > **User Management**, add the email addresses of all your authorised administrators.
+2. Go to **Settings** (the gear icon).
 
-3. Go to **Settings** > **SSO Settings**.
+3. In **Users and Actions** add the email addresses of all your authorized administrators.
 
-4. Enable **Single Sign On** switch, and set enforcement as needed.
+3. Go to **SSO Settings**.
 
-5. In **SAML SSO Domain** enter your SSO domain value. For example, `area1security-examplecorp.okta.com`.
+4. Enable **Single Sign On** switch. 
 
-6. In **Identity Provider Issuer** paste the URL you copied in step 10.
+5. In **SSO Enforcement**, choose one of the settings according to your specific needs. Refer to [**SSO Enforcements**](/email-security/account-setup/sso/generic-sso/#2-area-1-saml-setup) for more information.
+
+6. In **SAML SSO Domain** enter the domain that points to your SSO provider. For example, `area1security-examplecorp.okta.com`.
+
+7. In Metadata XML paste the XML metadata you copied in the previous step 11.
 
 Log out of any customer portal sessions. Your Okta account should now show a tile for Area 1.
