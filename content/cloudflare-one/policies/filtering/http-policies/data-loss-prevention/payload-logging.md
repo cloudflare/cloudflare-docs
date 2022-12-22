@@ -12,14 +12,14 @@ Data Loss Prevention allows you to log the data that triggered a specific DLP po
 
 To generate a public/private key pair:
 
-1. [Download](https://github.com/cloudflare/matched-data-cli/releases) the Cloudflare `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
+1. [Download](https://github.com/cloudflare/matched-data-cli) the Cloudflare `matched-data-cli` tool on GitHub using the **<> Code** button and **Download Zip**.
 
-2. Extract the content of the downloaded `.tar.gz` file to a local folder.
+2. Extract the content of the downloaded `.zip` file to a local folder.
 
 3. Open a terminal and navigate to the local folder containing the `matched-data-cli` tool.
 
     ```sh
-    $ cd matched-data-cli
+    $ cd matched-data-cli-master/target/debug
     ```
 
 4. Run the following command:
@@ -70,7 +70,7 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 
 3. Select **Decrypt Payload Log**.
 
-4. Enter your private key and select **Decrypt**.
+4. Enter your private key and select **Decrypt**. You will see the DLP Profile ID and the decrypted payload.
 
 {{<Aside type="note">}}
 Neither the key nor the decrypted payload will be stored by Cloudflare.
