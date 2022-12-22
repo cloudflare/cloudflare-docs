@@ -8,7 +8,7 @@ meta:
 
 # Generic single sign-on integration guide
 
-Below is a generic guide to successfully set up an identity provider based SAML. These options might change depending on your identity provider (IDP). However, make sure you set up the following or equivalent options.
+Below is a generic guide to successfully set up an identity provider based SAML. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
 
 ## 1. Identity Provider SAML setup
 
@@ -28,11 +28,11 @@ Below is a generic guide to successfully set up an identity provider based SAML.
 
 3. In the **Attribute Statements**, add your users to the application. Emails you add here should match emails users already have in the Area 1 dashboard.
 
-4. When you are finished configuring your IDP setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the [SSO section](https://horizon.area1security.com/settings/single-sign-on) of Area 1’s dashboard.
+4. After finishing the setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the [SSO section](https://horizon.area1security.com/settings/single-sign-on) of Area 1’s dashboard.
 
 ## 2. Area 1 SAML setup
 
-If you do not have one already, start by selecting and setting up an SSO provider in your Area 1 dashboard, such as Onelogin or Okta. This SSO provider will manage the user interface and settings for your organization.
+After configuring settings in your SSO provider, log in to the Area 1 dashboard to finish setting up.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
