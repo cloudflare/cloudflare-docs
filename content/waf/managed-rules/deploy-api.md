@@ -8,7 +8,7 @@ weight: 6
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy managed rulesets at the account level or at the zone level.
 
-Deploy WAF's managed rulesets to the `http_request_firewall_managed` phase. Other managed rulesets, like DDoS Attack Protection managed rulesets, must be deployed to a different phase. Check the specific managed ruleset documentation for details.
+Deploy WAF managed rulesets to the `http_request_firewall_managed` phase. Other managed rulesets, like DDoS Attack Protection managed rulesets, must be deployed to a different phase. Check the specific managed ruleset documentation for details.
 
 You can define overrides to customize the behavior of the rules included in a managed ruleset.
 

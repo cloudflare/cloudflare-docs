@@ -26,7 +26,7 @@ To deploy a managed ruleset for a single zone, refer to [Deploy a managed rulese
 
 3. Next to **Deployed managed rulesets**, select **Deploy** > **Deploy managed ruleset**.
 
-4. Select the WAF's managed ruleset you wish to deploy.
+4. Select the managed ruleset you wish to deploy.
 
 5. In the **Deploy managed ruleset** page, give a name to the rule deploying the ruleset in **Execution name**.
 
@@ -53,7 +53,7 @@ Configure a managed ruleset to:
 - Define specific field values for one or more rules (for example, configure a rule with an action different from the action configured by Cloudflare).
 - Disable one or more rules.
 
-To skip one or more rules, or entire WAF's managed rulesets, [add a WAF exception](/waf/managed-rules/waf-exceptions/). WAF exceptions are shown as _Skip_ rules in the **Deployed managed rulesets** list.
+To skip one or more rules, or entire WAF managed rulesets, [add a WAF exception](/waf/managed-rules/waf-exceptions/). WAF exceptions are shown as _Skip_ rules in the **Deployed managed rulesets** list.
 
 {{<Aside type="note">}}
 

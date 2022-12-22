@@ -8,7 +8,7 @@ meta:
 
 # Changelog for managed rulesets
 
-Cloudflare has a regular cadence of releasing updates and new rules to the WAF's managed rulesets. The updates either improve a rule's accuracy, lower false positives rates, or increase the protection due to a change in the threat landscape.
+Cloudflare has a regular cadence of releasing updates and new rules to WAF managed rulesets. The updates either improve a rule's accuracy, lower false positives rates, or increase the protection due to a change in the threat landscape.
 
 The release cycle for new rules happens on a 7-day cycle, typically every Monday or Tuesday depending on public holidays. For rule updates, Cloudflare will initially deploy the updated rule as a BETA rule (denoted in rule description), before updating the original rule on the next release cycle. Cloudflare will deploy the updated or new rules into logging only ("Log") mode. Logging only mode allows you to identify any increases in firewall event volumes which look like potential false positives. On the following Monday (or Tuesday) the rules will change from logging only mode to the intended default action ("New Action").
 
