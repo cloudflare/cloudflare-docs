@@ -73,7 +73,7 @@ You will need to manually create an app for Area 1 in Okta.
 
 4. Enable **Single Sign On** switch. 
 
-5. In **SSO Enforcement**, choose one of the settings according to your specific needs. Refer to [**SSO Enforcements**](/email-security/account-setup/sso/generic-sso/#2-area-1-saml-setup) for more information.
+5. In **SSO Enforcement**, choose one of the settings according to your specific needs. Refer to [**SSO Enforcements**](/email-security/account-setup/sso/#sso-enforcement) for more information.
 
 6. In **SAML SSO Domain** enter the domain that points to your SSO provider. For example, `area1security-examplecorp.okta.com`.
 
