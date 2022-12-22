@@ -55,9 +55,9 @@ You will need to manually create an app for Area 1 in Okta.
 
 11. Go to **Sign On** > **Settings**.
 
-10. Select **View SAML setup instructions**.
+12. Select **View SAML setup instructions**.
 
-11. Copy the XML metadata settings you will need to finish configuration in the Area 1 dashboard.
+13. Copy the XML metadata settings you will need to finish configuration in the Area 1 dashboard.
 
 ## 2. Configure Area 1 to connect to Okta
 
