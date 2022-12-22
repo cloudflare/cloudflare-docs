@@ -8,9 +8,10 @@ meta:
 
 # Azure integration guide
 
+Follow this guide to learn how to setup Security Assertion Markup Language based (SAML-based) single sign-on (SSO) with Azure.
 
-OS PRIMEIROS PASSOS SÃO IGUAIS AOS DO GENERIC SSO GUIDE. CRIAR PARTIAL COM ELES?
 
-## 2. Azure Active Directory
+
+## 3. Azure Active Directory
 
 Follow these steps to configure a non-gallery enterprise application within Azure Active Directory, to establish a SAML single sign-on with Area 1.
