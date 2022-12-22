@@ -6,11 +6,17 @@ weight: 3
 
 # Scheduled DNS policies
 
-Cloudflare Gateway allows you to configure any DNS policy to activate or deactivate on a regular time interval. 
+Cloudflare Gateway allows you to configure any DNS policy to activate or deactivate on a regular time interval.
 
-By default, Gateway policies are unscheduled and apply at all times. You can use the [Gateway Rules API](https://developers.cloudflare.com/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) to create a scheduled DNS policy or add a schedule to an existing policy. To schedule a policy, send a [`POST`](https://developers.cloudflare.com/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [`PUT`](https://developers.cloudflare.com/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) request with the `schedule` parameter set to your desired days of the week, times of day, and time zone. The schedule will appear in the Zero Trust dashboard under **Gateway** > **Policies** > **DNS** when you expand the row for the policy.
+By default, Gateway policies are unscheduled and apply at all times. You can use the [Gateway Rules API](https://developers.cloudflare.com/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) to create a new DNS policy with a schedule or add a schedule to an existing policy. To schedule a policy, send a [`POST`](https://developers.cloudflare.com/api/operations/zero-trust-gateway-rules-create-zero-trust-gateway-rule) or [`PUT`](https://developers.cloudflare.com/api/operations/zero-trust-gateway-rules-update-zero-trust-gateway-rule) request with the `schedule` parameter set to your desired days of the week, times of day, and an optional time zone. The schedule will appear in the Zero Trust dashboard under **Gateway** > **Policies** > **DNS** when you expand the row for the policy.
 
-## Example: Fixed time zone
+## How Gateway determines time zone
+
+If you [assign a time zone](#example-fixed-time-zone) to your schedule, Gateway will always use the current time at that time zone regardless of the user's location. This allows you to enable a policy during a certain fixed time period.
+
+If you [do not specify a time zone](#example-users-time-zone), Gateway will enable the DNS policy based on the user's local time zone. The user's time zone is inferred from the IP geolocation of their source IP address. If Gateway is unable to determine the time zone from the source IP, we will fall back to the time zone of the data center where the query was received.
+
+### Example: Fixed time zone
 
 The following command creates a DNS policy to block `facebook.com` only on weekdays from 8:00 AM - 12:30 PM and 1:30 PM - 5:00 PM in the Chicago, USA time zone.
 
@@ -37,7 +43,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway
 
 Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of all time zones.
 
-## Example: User's time zone
+### Example: User's time zone
 
 The following command creates a DNS policy to block `clockin.com` only on weekends, in the time zone where the user is currently located.
 
@@ -57,8 +63,6 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway
         }
     }'
 ```
-
-The user's time zone is inferred from their source IP address. If Gateway is unable to determine the time zone from the IP, we will fall back to the time zone of the data center where the query was received.
 
 {{<Aside type="note">}}
 Gateway will not change the policy's `enabled` status when inside or outside of the time period specified. When enabled, Gateway activates or deactivates the policy according to its schedule. When disabled, the policy is always deactivated.
