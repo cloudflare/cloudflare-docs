@@ -57,9 +57,11 @@ You will need to manually create an app for Area 1 in Okta.
 
 11. Go to **Sign On** > **Settings**.
 
-12. Select **View SAML setup instructions**.
+12. To retrieve the SAML provider information, navigate to **View SAML setup instructions**.
 
-13. In **IDP metadata**, copy the XML metadata you will need to finish configuration in the Area 1 dashboard. The start of this metadata should be similar to the following:
+13. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Area 1 dashboard.  
+
+14. In **Optional**, copy and save the XML metadata. You will need this finish configuration in the Area 1 dashboard. The start of the metadata should be similar to the following:
 
     ```txt
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
@@ -73,16 +75,14 @@ You will need to manually create an app for Area 1 in Okta.
 
 3. In **Users and Actions** add the email addresses of all your authorized administrators.
 
-3. Go to **SSO Settings**.
-
-4. Enable **Single Sign On** switch. 
+4. Go to **SSO Settings** and enable **Single Sign On** switch. 
 
 5. In **SSO Enforcement**, choose one of the settings according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
 
-6. In **SAML SSO Domain** enter the domain that points to your SSO provider. For example, `area1security-examplecorp.okta.com`.
+6. In **SAML SSO Domain** enter the domain you saved from step 13. For example, `area1security-examplecorp.okta.com`.
 
-7. In **Metadata XML** paste the XML metadata you copied in the previous step 11.
+7. In **Metadata XML** paste the XML metadata you saved from step 14.
 
 8. Select **Update Settings** to save your configuration.
 
