@@ -15,15 +15,6 @@ For added security and convenience, Cloudflare Area 1 offers support for Securit
 
 Area 1 only supports IDP-initiated SAML setup at this point.
 
-## SSO enforcement
-
-In the Area 1 dashboard, you can configure different types of SSO enforcement according to your needs. 
-
-- **None**: Each user can choose SSO, or username and password plus 2FA (this is the recommended setting while testing SSO).
-- **Admin**: This setting will force only the administrator account to use SSO. The user that enables this setting will still be able to log in using username and password plus 2FA. This is a backup, so that your organization does not get locked out of the portal in emergencies.
-- **Non-Admin Only**: This option will require that all `Read only` and `Read & Write` users use SSO to access the portal. Admins will still have the option to use either SSO or username and password plus 2FA.
-
-
 For more details on setup, refer to the following resources:
 
 {{<directory-listing>}}

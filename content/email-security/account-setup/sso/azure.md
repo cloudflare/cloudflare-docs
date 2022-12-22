@@ -69,7 +69,8 @@ Now that the application configuration is complete, update **User Assignments** 
 
 4. Enable **Single Sign On** switch. 
 
-5. In **SSO Enforcement**, choose one of the settings according to your specific needs. Refer to [**SSO Enforcements**](/email-security/account-setup/sso/#sso-enforcement) for more information.
+5. In **SSO Enforcement**, choose one of the settings according to your specific needs:
+{{<render file="_sso-enforcement.md">}}
 
 6. For **SAML SSO Domain**, enter `login.microsoftonline.com`.
 

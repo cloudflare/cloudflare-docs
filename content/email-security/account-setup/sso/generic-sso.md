@@ -40,7 +40,8 @@ If you do not have one already, start by selecting and setting up an SSO provide
 
 3. In **SSO**, enable **Single Sign on**.
 
-4. In **SSO Enforcement**, choose one of the settings, according to your specific needs. Refer to [**SSO Enforcements**](/email-security/account-setup/sso/#sso-enforcement) for more information.
+4. In **SSO Enforcement**, choose one of the settings, according to your specific needs:
+{{<render file="_sso-enforcement.md">}}
 
 5. In **SAML SSO Domain** enter the domain that points to your SSO provider.
 
