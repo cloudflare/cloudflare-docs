@@ -12,9 +12,9 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
 ## 1. Azure Active Directory configuration
 
-1. 	[Log in to Azure portal](https://portal.azure.com/) and open **Enterprise Applications**.
+1. [Log in to Azure portal](https://portal.azure.com/) and open **Enterprise Applications**.
 
-2. 	Select **New Application** to create a new application.
+2. Select **New Application** to create a new application.
 
     ![Create a new application](/email-security/static/sso/azure/step2-new-app.png)
 
@@ -55,7 +55,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 Now that the application configuration is complete, update **User Assignments** and **Application Properties** as needed to ensure that authorized personnel are able to access the new application from their Apps Catalog. Additionally, you may choose to update the application logo image file or the privacy policy URL.
 {{</Aside>}} 
 
-## 2. Configure Area 1 to connect to Okta
+## 2. Configure Area 1 to connect to Azure
 
 1. Log in to the Area 1 dashboard.
 
@@ -77,3 +77,32 @@ Now that the application configuration is complete, update **User Assignments** 
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">…
     ```
 8. Select **Update Settings** to save your configuration.
+
+## 3. Test SSO configuration
+
+After completing both the Azure and Area 1 set ups, you can test your SSO access. 
+For this example, the logo for Area 1 has been updated.
+
+{{<Aside type="note">}}Verify that the User Assignments and Application Properties of your new Azure AD application have been updated accordingly to ensure that authorized personnel are able to access the new application from their Office 365/Azure Apps Catalog page. Application logos and privacy policy URL can also be updated as needed.{{</Aside>}}
+
+1. Log in to your [Office 365 portal](portal.office.com).
+
+2. Select **All Apps**. 
+
+3. Navigate to **Settings** > **SSO**.
+
+4. Locate the Area 1 Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Area 1. 
+
+5. If you configured everything correctly, you should be signed in to the Area 1 Portal and redirected to the dashboard.
+
+## Troubleshooting
+
+If you have trouble connecting your Azure account to Area 1, make sure that:
+
+- The user exists in the Area 1 dashboard.
+- The **Identifier** and **Reply URLs** in Azure AD are correct (refer to [step 7 - **Basic SAML Configuration**](#1-azure-active-directory-configuration)).
+- **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to [step 9 - **SAML Signing Certificate**](#1-azure-active-directory-configuration).
+- That the SAML SSO Domain is set correctly in the Area dashboard (refer to [step 7](#2-configure-area-1-to-connect-to-azure)).
+- That name ID identifier is set to **Email Address**.
+
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
