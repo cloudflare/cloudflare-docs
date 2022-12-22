@@ -39,7 +39,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
     | **Reply URL (Assertion Consumer Service URL)** | `https://horizon.area1security.com/api/users/saml` |
     | **Sign-On URL** | Leave blank |
     | **Relay State** | Leave blank |
-    | **Logout Url** | Leave blank |
+    | **Logout URL** | Leave blank |
 
 8. Select **Save** to exit the Basic SAML Configuration.
 
