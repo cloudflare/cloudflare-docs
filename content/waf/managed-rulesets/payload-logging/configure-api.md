@@ -3,20 +3,20 @@ title: Configure payload logging via API
 pcx_content_type: how-to
 weight: 4
 meta:
-  title: Configure payload logging for a Managed Ruleset via API
+  title: Configure payload logging for a managed ruleset via API
 ---
 
-# Configure payload logging for a Managed Ruleset via API
+# Configure payload logging for a managed ruleset via API
 
-You can use the [Rulesets API](https://api.cloudflare.com/) to configure payload logging for a Managed Ruleset.
+You can use the [Rulesets API](https://api.cloudflare.com/) to configure payload logging for a managed ruleset.
 
 ## Configure and enable payload logging
 
 To configure:
 
-1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule/) API method to update the rule that executes the Managed Ruleset.
+1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule/) API method to update the rule that executes the managed ruleset.
 
-2.  In the configuration of the rule that executes the Managed Ruleset, include a `matched_data` object in `action_parameters` to configure payload logging.
+2.  In the configuration of the rule that executes the managed ruleset, include a `matched_data` object in `action_parameters` to configure payload logging.
 
     The `matched_data` object has the following structure:
 
@@ -103,19 +103,19 @@ header: Response
 }
 ```
 
-For more information on deploying Managed Rulesets via API, refer to [Deploy a Managed Ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) in the Ruleset Engine documentation.
+For more information on deploying managed rulesets via API, refer to [Deploy a managed ruleset](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/) in the Ruleset Engine documentation.
 
 ***
 
 ## Disable payload logging
 
-To disable payload logging for a Managed Ruleset:
+To disable payload logging for a managed ruleset:
 
-1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule/) API method to update the rule that executes the Managed Ruleset.
+1.  Use the [Update rule in ruleset](/ruleset-engine/rulesets-api/update-rule/) API method to update the rule that executes the managed ruleset.
 
 2.  Modify the rule definition so that there is no `matched_data` object in `action_parameters`.
 
-The following example rule executes a Managed Ruleset with payload logging disabled:
+The following example rule executes a managed ruleset with payload logging disabled:
 
 ```json
 {

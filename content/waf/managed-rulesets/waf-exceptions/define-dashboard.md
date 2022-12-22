@@ -30,8 +30,8 @@ To define a WAF exception at the account level (Enterprise plans only):
 
 3. In **Then**, select the [exception type](/waf/managed-rulesets/waf-exceptions/#types-of-waf-exceptions) that determines which rules to skip:
 
-    - _Skip all remaining rules_ — Skips all remaining rules of WAF Managed Rulesets.
-    - _Skip specific rules from a Managed Ruleset_ — Select **Select rules** to select the specific rules to skip. Learn more about [searching and selecting Managed Ruleset rules](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    - _Skip all remaining rules_ — Skips all remaining rules of WAF's managed rulesets.
+    - _Skip specific rules from a Managed Ruleset_ — Select **Select rules** to select the specific rules to skip. Learn more about [searching and selecting managed ruleset rules](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
 4. (Optional) To disable logging for requests matching the WAF exception, disable **Log matching requests**.
 

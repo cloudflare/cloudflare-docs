@@ -1,21 +1,21 @@
 ---
 pcx_content_type: concept
-title: Managed Rulesets
+title: Managed Rules
 weight: 6
 ---
 
-# Managed Rulesets
+# Managed Rules
 
-The WAF Managed Rulesets are pre-configured rulesets that provide immediate protection against:
+WAF Managed Rules allow you to deploy pre-configured managed rulesets that provide immediate protection against:
 
 * Zero-day vulnerabilities
 * Top-10 attack techniques
 * Use of stolen/exposed credentials
 * Extraction of sensitive data
 
-These rulesets are regularly updated. You can adjust the behavior of managed rules, choosing from several possible actions.
+These managed rulesets are regularly updated. You can adjust the behavior of specific rules in these rulesets, choosing from several possible actions.
 
-Cloudflare provides the following WAF Managed Rulesets:
+Cloudflare provides the following managed rulesets in the WAF:
 
 {{<table-wrap>}}
 <table style="table-layout:fixed; width:100%;">
@@ -40,13 +40,13 @@ Cloudflare provides the following WAF Managed Rulesets:
     </tr>
     <tr>
       <td style='width:30%; word-wrap:break-word; white-space:normal'>Cloudflare Free Managed Ruleset</td>
-      <td>Available on all Cloudflare plans. Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this Managed Ruleset.</td>
+      <td>Available on all Cloudflare plans. Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this managed ruleset.</td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
 
-The following rulesets run in a response phase:
+The following managed rulesets run in a response phase:
 
 {{<table-wrap>}}
 <table style="table-layout:fixed; width:100%;">
