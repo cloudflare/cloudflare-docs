@@ -63,7 +63,7 @@ Now that the application configuration is complete, update **User Assignments** 
 
 2. Go to **Settings** (the gear icon).
 
-3. In **Users and Actions** add the email addresses of all your authorized administrators.
+3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
 3. Go to **SSO Settings**.
 
