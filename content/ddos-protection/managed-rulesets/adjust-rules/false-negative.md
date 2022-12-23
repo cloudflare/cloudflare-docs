@@ -53,7 +53,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 4. Copy the rule name.
 
-5. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
+5. Navigate to **Security** > **DDoS** and select **Configure** next to the managed ruleset containing the rule you will adjust.
 
 6. Select **Browse rules** and paste the rule name in the search field.
 

@@ -28,8 +28,8 @@ Create your own custom rules to protect your website and your APIs from maliciou
 Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.
 {{</feature>}}
 
-{{<feature header="Managed Rulesets" href="/waf/managed-rulesets/">}}
-Enable the pre-configured WAF Managed Rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
+{{<feature header="Managed rules" href="/waf/managed-rules/">}}
+Enable the pre-configured managed rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
 {{</feature>}}
 
 {{<feature header="Exposed credential checks" href="/waf/exposed-credentials-check/">}}
@@ -52,7 +52,7 @@ Displays information about all incoming HTTP requests, including those not affec
 {{<resource-group>}}
 
 {{<resource header="WAF managed rules (previous version)" href="https://support.cloudflare.com/hc/articles/200172016" icon="documentation-clipboard">}}
-Documentation on the previous implementation of WAF Managed Rulesets.
+Documentation on the previous implementation of WAF managed rules.
 {{</resource>}}
 
 {{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}

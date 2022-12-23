@@ -1,10 +1,10 @@
 ---
-title: Ruleset reference
+title: Rulesets reference
 pcx_content_type: navigation
 weight: 6
 layout: single
 ---
 
-# Ruleset reference
+# Managed rulesets reference
 
 {{<directory-listing>}}

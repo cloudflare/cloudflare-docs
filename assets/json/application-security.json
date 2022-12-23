@@ -101,7 +101,7 @@
           {
             "url_path": "/waf/",
             "link_title": "Set up your Web Application Firewall (WAF)",
-            "additional_description": "For customers on a <strong>Pro</strong> plan or above, Cloudflare offers several <a href='/waf/managed-rulesets/'>Managed Rulesets</a> as part of the Web Application Firewall (WAF)."
+            "additional_description": "For customers on a <strong>Pro</strong> plan or above, Cloudflare offers several <a href='/waf/managed-rules/'>managed rulesets</a> as part of the Web Application Firewall (WAF)."
           },
           {
             "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
@@ -126,9 +126,9 @@
         "estimated_time": 120,
         "pages": [
           {
-            "url_path": "/waf/managed-rulesets/waf-exceptions/",
+            "url_path": "/waf/managed-rules/waf-exceptions/",
             "link_title": "WAF Exceptions",
-            "additional_description": "Skip the execution of WAF Managed Rulesets or some of their rules."
+            "additional_description": "Skip the execution of WAF managed rulesets or some of their rules."
           },
           {
             "url_path": "/firewall/cf-firewall-rules/",

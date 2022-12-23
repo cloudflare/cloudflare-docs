@@ -6,9 +6,9 @@ weight: 7
 
 # Defining WAF exceptions
 
-Define WAF exceptions to skip the execution of WAF Managed Rulesets or some of their rules. The WAF exception configuration includes an expression that defines the skip conditions, and the rules or rulesets to skip under those conditions.
+Define WAF exceptions to skip the execution of WAF managed rulesets or some of their rules. The WAF exception configuration includes an expression that defines the skip conditions, and the rules or rulesets to skip under those conditions.
 
-You can [define WAF exceptions in the Cloudflare dashboard](/waf/managed-rulesets/waf-exceptions/define-dashboard/) or [using the Rulesets API](/waf/managed-rulesets/waf-exceptions/define-api/).
+You can [define WAF exceptions in the Cloudflare dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/) or [using the Rulesets API](/waf/managed-rules/waf-exceptions/define-api/).
 
 ***
 
@@ -16,9 +16,9 @@ You can [define WAF exceptions in the Cloudflare dashboard](/waf/managed-ruleset
 
 WAF exceptions can have one of the following behaviors (from highest to lowest priority):
 
-*   Skip all remaining rules (belonging to WAF Managed Rulesets).
-*   Skip one or more specific WAF Managed Rulesets.
-*   Skip one or more specific rules of WAF Managed Rulesets.
+*   Skip all remaining rules (belonging to WAF managed rulesets).
+*   Skip one or more WAF managed rulesets.
+*   Skip one or more rules of WAF managed rulesets.
 
 You define WAF exceptions in a given context — zone level or account level — and they apply only to that context. For example, if you define a WAF exception that skips all remaining rules at the account level, the WAF rules at the zone level will still be evaluated.
 
@@ -26,12 +26,12 @@ Define the exception expression using the [Rules language](/ruleset-engine/rules
 
 ## Additional notes
 
-WAF exceptions only apply to rules executing a Managed Ruleset listed after them. If you add a WAF exception at the end of the WAF rules list, nothing will be skipped.
+WAF exceptions only apply to rules executing a managed ruleset listed after them. If you add a WAF exception at the end of the WAF rules list, nothing will be skipped.
 
 WAF exceptions have priority over [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/).
 
 If you define a WAF exception that skips all remaining rules, the expressions of those rules are not evaluated.
 
-If you define a WAF exception that skips a rule of a Managed Ruleset, the expression of the rule that executes the Managed Ruleset is evaluated and the Managed Ruleset rules are executed except for that specific rule, which is bypassed.
+If you define a WAF exception that skips a rule of a managed ruleset, the expression of the rule that executes the managed ruleset is evaluated and the managed ruleset rules are executed except for that specific rule, which is bypassed.
 
 Currently, WAF exceptions are not logged in Security Events.
