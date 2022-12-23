@@ -40,6 +40,10 @@ Use the `matched-data-cli` tool to decrypt a payload in the command line.
     ~/matched-data-cli $ ./matched-data-cli decrypt -k private_key.txt encrypted_payload.txt
     ```
 
+{{<Aside type="note">}}
+If you are using macOS and you get an error when running the `matched-data-cli` tool, refer to [Troubleshooting macOS errors](/waf/managed-rules/payload-logging/command-line/generate-key-pair/#troubleshooting-macos-errors).
+{{</Aside>}}
+
 ## Example
 
 The following example creates two files — one with the private key and another one with the encrypted payload — and runs the `matched-data-cli` tool to decrypt the payload in the `encrypted_payload.txt` file:
