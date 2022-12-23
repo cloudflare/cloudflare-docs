@@ -49,6 +49,8 @@ After configuring settings in your SSO provider, log in to the Area 1 dashboard 
 
 7. In **METADATA XML** paste the SAML XML metadata settings from your provider. These settings (and even their exact text descriptions) are in different locations depending on your SSO provider.
 
+8. Select **Update Settings** to save your configuration.
+
 ## Troubleshooting
 
 If you have trouble connecting your SAML provider to Area 1, make sure that:
