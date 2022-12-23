@@ -28,7 +28,7 @@ Create your own custom rules to protect your website and your APIs from maliciou
 Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.
 {{</feature>}}
 
-{{<feature header="Managed Rules" href="/waf/managed-rules/">}}
+{{<feature header="Managed rules" href="/waf/managed-rules/">}}
 Enable the pre-configured managed rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
 {{</feature>}}
 
