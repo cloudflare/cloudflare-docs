@@ -59,7 +59,7 @@ Now that the application configuration is complete, update **User Assignments** 
 
 ## 2. Configure Area 1 to connect to Azure
 
-1. Log in to the Area 1 dashboard.
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
 2. Go to **Settings** (the gear icon).
 
