@@ -38,14 +38,16 @@ After configuring settings in your SSO provider, log in to the Area 1 dashboard 
 
 2. Go to **Settings** (the gear icon).
 
-3. In **SSO**, enable **Single Sign on**.
+3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
-4. In **SSO Enforcement**, choose one of the settings, according to your specific needs:
+4. In **SSO**, enable **Single Sign on**.
+
+5. In **SSO Enforcement**, choose one of the settings, according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
 
-5. In **SAML SSO Domain** enter the domain that points to your SSO provider.
+6. In **SAML SSO Domain** enter the domain that points to your SSO provider.
 
-6. In **METADATA XML** paste the SAML XML metadata settings from your provider. These settings (and even their exact text descriptions) are in different locations depending on your SSO provider.
+7. In **METADATA XML** paste the SAML XML metadata settings from your provider. These settings (and even their exact text descriptions) are in different locations depending on your SSO provider.
 
 ## Troubleshooting
 
