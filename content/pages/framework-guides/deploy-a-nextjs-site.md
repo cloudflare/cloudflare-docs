@@ -43,19 +43,11 @@ filename: pages/api/hello.js
 // Next.js Edge API Routes: https://nextjs.org/docs/api-routes/edge-api-routes
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function (req) {
-  return new Response(
-    JSON.stringify({ name: 'John Doe' }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+  return Response.json({ name: 'John Doe' })
 }
 ```
 
@@ -71,48 +63,22 @@ filename: pages/api/hello.ts
 import type { NextRequest } from 'next/server'
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function (req: NextRequest) {
-  return new Response(
-    JSON.stringify({ name: 'John Doe' }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+  return Response.json({ name: 'John Doe' })
 }
 ```
 
 {{</tab>}}
 {{</tabs>}}
 
-Next, you must configure the rest of the project to use the Edge Runtime. This can be done globally by adding the following to your `next.config.js` file:
-
-```diff
----
-filename: next.config.js
----
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-+  experimental: {
-+    runtime: 'experimental-edge',
-+  },
-  reactStrictMode: true,
-  swcMinify: true,
-}
-
-module.exports = nextConfig
-```
-
-Or you can opt in on individual pages by exporting the following from each page:
+Next, you must configure the rest of the project to use the Edge Runtime. You can opt in on individual pages by exporting the following from each page:
 
 ```js
 export const config = {
-  runtime: "experimental-edge",
+  runtime: "edge",
 };
 ```
 
