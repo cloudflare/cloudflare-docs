@@ -11,7 +11,7 @@ weight: 2
 You would commonly use detection search to get visibility into *why* and *when* Area 1 marked a message with a specific disposition. 
 
 {{<Aside type="note">}}
-To review all emails — not just those marked with a disposition — use [Mail Trace](/email-security/reporting/mailtrace/).
+To review all emails — not just those marked with a disposition — use [Mail Trace](/email-security/reporting/search/mailtrace/).
 {{</Aside>}}
 
 ## Use detection search
@@ -28,7 +28,7 @@ To access Detection search in the dashboard:
 
 ### Parameter filtering
 
-To search for specific values in one of the [available parameters](/email-security/reporting/detection-search/available-parameters/), format your search to be:
+To search for specific values in one of the [available parameters](/email-security/reporting/search/detection-search/available-parameters/), format your search to be:
 
 ```txt
 <<FIELD_NAME>>:<<VALUE>>
