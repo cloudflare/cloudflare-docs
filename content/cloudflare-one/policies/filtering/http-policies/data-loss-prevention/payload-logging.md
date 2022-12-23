@@ -10,31 +10,7 @@ Data Loss Prevention allows you to log the data that triggered a specific DLP po
 
 ## 1. Generate a key pair
 
-To generate a public/private key pair:
-
-1. [Download](https://github.com/cloudflare/matched-data-cli) the Cloudflare `matched-data-cli` tool on GitHub by selecting **Code** > **Download ZIP**.
-
-2. Extract the content of the downloaded `.zip` file to a local folder.
-
-3. Open a terminal and navigate to the local folder containing the `matched-data-cli` tool.
-
-    ```sh
-    $ cd matched-data-cli-master/target/debug
-    ```
-
-4. Run the following command:
-
-    ```sh
-    $ ./matched-data-cli generate-key-pair
-    {
-      "private_key": "uBS5eBttHrqkdY41kbZPdvYnNz8Vj0TvKIUpjB1y/GA=",
-      "public_key": "Ycig/Zr/pZmklmFUN99nr+taURlYItL91g+NcHGYpB8="
-    }
-    ```
-
-5. Store the private key in a safe place.
-
-6. Copy the public key.
+Follow [these instructions](/waf/managed-rules/payload-logging/command-line/generate-key-pair/) to generate a public/private key pair in the command line.
 
 ## 2. Upload the public key to Cloudflare
 
