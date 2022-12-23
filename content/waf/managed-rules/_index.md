@@ -1,10 +1,12 @@
 ---
 pcx_content_type: concept
-title: Managed Rules
+title: Managed rules
 weight: 6
+meta:
+  title: WAF Managed Rules
 ---
 
-# Managed Rules
+# WAF Managed Rules
 
 WAF Managed Rules allow you to deploy pre-configured managed rulesets that provide immediate protection against:
 
