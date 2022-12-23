@@ -24,6 +24,19 @@ To retrieve those values:
 
 2. Navigate to **All services** > **Azure Active Directory**.
 
+In the Azure Active Directory menu, go to **Enterprise applications**  and select **New application**.
+
+Select **Create your own application**.
+
+Name your application.
+
+Select **Register an application to integration with Azure AD (App you're developing)**. Select **Create**.
+
+Input the Redirect URI.
+
+Next, go to App registrations to configure permissions and the secret.
+
+
 3. In the Azure Active Directory menu, go to **App registrations** and select **New registration**.
     ![Adding a new app in Azure](/cloudflare-one/static/documentation/identity/azure/click-new-reg.png)
 
@@ -43,59 +56,58 @@ To retrieve those values:
 
 7. Copy the **Application (client) ID** and **Directory (tenant) ID**.
 
-8. To create an Application Secret, navigate to **Certificates & Secrets** and click **+ New client secret**.
+8. Next, navigate to **Certificates & secrets** and select **New client secret**.
 
-9. Name the client secret and choose an expiration. Click **Add**.
+9. Name the client secret and choose an expiration period.
 
-![Adding a client secret in Azure](/cloudflare-one/static/documentation/identity/azure/name-client-cert.png)
+10. Select **Add**.
 
-10. Copy the `Value` field of the client secret. Treat this value like a password. This example leaves the value visible so the values in Azure can be seen in the Access configuration.
+11. Copy the **Value** of the client secret. Store the client secret in a safe place, as it can only be viewed immediately after creation.
 
-![Viewing client secret in Azure](/cloudflare-one/static/documentation/identity/azure/client-cert-value.png)
+    ![Location of client secret in Azure](/cloudflare-one/static/documentation/identity/azure/client-cert-value.png)
 
 ### 2. Configure API permissions in Azure
 
-11. Navigate to **API permissions** and click **Add a permission**.
+1. In Azure Active Directory, navigate to **API permissions** and select **Add a permission**.
 
-![Adding an API permission in Azure](/cloudflare-one/static/documentation/identity/azure/api-perms.png)
+2. Select **Microsoft Graph**.
 
-12. Click **Microsoft Graph**.
+3. Select **Delegated permissions** and enable the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
 
-![Selecting Microsoft Graph API in Azure](/cloudflare-one/static/documentation/identity/azure/microsoft-graph.png)
+    - `email`
+    - `offline_access`
+    - `openid`
+    - `profile`
+    - `User.Read`
+    - `Directory.Read.All`
+    - `GroupMember.Read.All`
 
-13. Select **Delegated permissions**. You will need to toggle 7 specific permissions in the next page. Once toggled, click **Add permissions**.
+4. Once all seven permissions are enabled, select **Add permissions**.
 
-    - email
-    - openid
-    - profile
-    - offline_access
-    - User.Read
-    - Directory.Read.All
-    - Group.Read.All
+5. Select **Grant admin consent** for your account.
 
-![Configuring Microsoft Graph API permissions in Azure](/cloudflare-one/static/documentation/identity/azure/request-perms.png)
-
-14. Click **Grant Admin Consent for <your-account>**.
-
-![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
+    ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
 
 ### 3. Add Azure AD as an identity provider
 
-15. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
 
-16. Under **Login methods**, click **Add new**.
+2. Under **Login methods**, select **Add new**.
 
-17. Click **Azure AD**.
+3. Select **Azure AD**.
 
-18. Input the `Application ID`, `Application secret`, and `Directory ID` values from Azure.
+4. Enter the **Application (client) ID**, **Client secret**, and **Directory (tenant) ID** obtained from the Azure dashboard.
 
-19. (Optional) If you are using Azure AD groups, toggle **Support Groups** slider **On** in the **Edit your Azure AD identity provider** window.
+5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-20. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+6. (Optional) If you are using Azure AD groups, enable **Support Groups**.
 
-21. Click **Save**.
+7. Select **Save**.
 
-To test that your connection is working, navigate to **Authentication** > **Login methods** and click **Test** next to Azure AD.
+8. Create an Enterprise app and assign users to the application.
+https://azuretrendz.wordpress.com/2020/06/06/how-to-do-app-registration-for-enterprise-application/
+
+To test that your connection is working, select **Test** next to Azure AD.
 
 ## Use Azure AD groups
 
