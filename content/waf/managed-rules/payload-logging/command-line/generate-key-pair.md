@@ -34,4 +34,4 @@ Do the following:
     }
     ```
 
-After generating the key pair, copy the public key value and enter it in the [payload logging configuration](/waf/managed-rules/payload-logging/configure/).
+After generating the key pair, copy the public key value and enter it in the payload logging configuration.
