@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom rulesets
-weight: 7
+weight: 4
 layout: single
 ---
 

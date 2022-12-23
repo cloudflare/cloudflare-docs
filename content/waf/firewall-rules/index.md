@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Firewall rules
-weight: 4
+weight: 5
 meta:
   title: Firewall rules (previous version of custom rules)
 ---
