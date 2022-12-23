@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Managed rules
-weight: 6
+weight: 7
 meta:
   title: WAF Managed Rules
 ---
