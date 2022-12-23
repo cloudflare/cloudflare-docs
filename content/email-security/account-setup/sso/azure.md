@@ -65,21 +65,21 @@ Now that the application configuration is complete, update **User Assignments** 
 
 3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
-3. Go to **SSO Settings**.
+4. Go to **SSO Settings**.
 
-4. Enable **Single Sign On** switch. 
+5. Enable **Single Sign On** switch. 
 
-5. In **SSO Enforcement**, choose one of the settings according to your specific needs:
+6. In **SSO Enforcement**, choose one of the settings according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
 
-6. For **SAML SSO Domain**, enter `login.microsoftonline.com`.
+7. For **SAML SSO Domain**, enter `login.microsoftonline.com`.
 
-7. In **Metadata XML** paste the XML metadata you downloaded in the previous step 11. You can open the downloaded file with a text editor to copy all the text. Make sure there are no leading carriage returns or spaces when you copy the text. Your copied text should begin with:
+8. In **Metadata XML** paste the XML metadata you downloaded in the previous step 11. You can open the downloaded file with a text editor to copy all the text. Make sure there are no leading carriage returns or spaces when you copy the text. Your copied text should begin with:
 
     ```txt
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
     ```
-8. Select **Update Settings** to save your configuration.
+9. Select **Update Settings** to save your configuration.
 
 ## 3. Test SSO configuration
 
