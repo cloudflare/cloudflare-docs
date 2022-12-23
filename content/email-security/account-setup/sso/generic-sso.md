@@ -40,7 +40,11 @@ After configuring settings in your SSO provider, log in to the Area 1 dashboard 
 
 3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
-4. In **SSO**, enable **Single Sign on**.
+    ![Fill out your authorized administrators](/email-security/static/sso/generic/step3-users-actions.png)
+
+4. Go to **SSO**, and enable **Single Sign on**.
+
+    ![Enable SSO](/email-security/static/sso/generic/step4-sso.png)
 
 5. In **SSO Enforcement**, choose one of the settings, according to your specific needs:
 {{<render file="_sso-enforcement.md">}}
