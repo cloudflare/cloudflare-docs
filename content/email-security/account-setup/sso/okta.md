@@ -74,7 +74,7 @@ You will need to manually create an app for Area 1 in Okta.
 
 2. Go to **Settings** (the gear icon).
 
-3. In **Users and Actions** add the email addresses of all your authorized administrators.
+3. In **Users and Actions** > **Users and Permissions** add the email addresses of all your authorized administrators.
 
 4. Go to **SSO Settings** and enable **Single Sign On** switch. 
 
