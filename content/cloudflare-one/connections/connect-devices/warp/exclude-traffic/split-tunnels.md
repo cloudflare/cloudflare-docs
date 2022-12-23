@@ -20,35 +20,39 @@ Also, changing between Include and Exclude modes will immediately delete your ex
 
 To set up Split Tunnels:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client** > **Device settings*.
 
-2. Under **Split Tunnels**, choose a Split Tunnel mode:
+2. Choose the profile you could like to modify and click **Configure**.
+
+3. Under **Split Tunnels**, choose a Split Tunnel mode:
 
     - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
     - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies.
 
-3. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
+4. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
     On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
 
 ## Add an IP address
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
-2. Scroll down to **Split Tunnels** and select **Manage**.
-3. In the **Selector** dropdown, select _IP Address_.
-4. Enter the IP address or CIDR you want to exclude or include.
-5. Enter an optional description and then select **Save destination**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client** > **Device settings*.
+2. Choose the profile you could like to modify and click **Configure**.
+3. Scroll down to **Split Tunnels** and select **Manage**.
+4. In the **Selector** dropdown, select _IP Address_.
+5. Enter the IP address or CIDR you want to exclude or include.
+6. Enter an optional description and then select **Save destination**.
 
 The IP address will appear in the list of Split Tunnel entries. Traffic to these IP addresses will be excluded or included from WARP.
 
 ## Add a domain
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Network**.
-2. Scroll down to **Split Tunnels** and select **Manage**.
-3. In the **Selector** dropdown, select _Domain_.
-4. Enter a [valid domain](#valid-domains) to exclude or include.
-5. Enter an optional description and then select **Save destination**.
-6. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client** > **Device settings*.
+2. Choose the profile you could like to modify and click **Configure**.
+3. Scroll down to **Split Tunnels** and select **Manage**.
+4. In the **Selector** dropdown, select _Domain_.
+5. Enter a [valid domain](#valid-domains) to exclude or include.
+6. Enter an optional description and then select **Save destination**.
+7. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
 When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
