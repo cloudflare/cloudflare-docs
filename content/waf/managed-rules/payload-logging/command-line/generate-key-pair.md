@@ -3,7 +3,6 @@ title: Generate a key pair
 pcx_content_type: how-to
 type: overview
 weight: 2
-layout: list
 meta:
   title: Generate a key pair in the command line
 ---
@@ -35,3 +34,10 @@ Do the following:
     ```
 
 After generating the key pair, copy the public key value and enter it in the payload logging configuration.
+
+## Troubleshooting macOS errors
+
+If you are using macOS, the operating system may block the `matched-data-cli` tool, depending on your security settings.
+
+For instructions on how to execute unsigned binaries like the `matched-data-cli` tool in macOS, refer to the [Safely open apps on your Mac](https://support.apple.com/en-us/HT202491#:~:text=If%20you%20want%20to%20open%20an%20app%20that%20hasn%E2%80%99t%20been%20notarized%20or%20is%20from%20an%20unidentified%20developer) page in Apple Support.
+
