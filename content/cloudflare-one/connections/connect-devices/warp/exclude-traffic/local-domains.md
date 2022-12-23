@@ -6,7 +6,7 @@ weight: 6
 
 # Configure Local Domain Fallback
 
-By default, Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processings. Excluded domains are listed on the Zero Trust dashboard under **Settings** > **Network** > **Local Domain Fallback** . All domains in that list rely on the local DNS resolver configured for the device on its primary interface or the DNS server specified when you add a new local domain. Domains added to this list are not subject to Gateway DNS policies or DNS logging. The WARP Client proxies these requests directly to the configured fallback servers.
+By default, Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processings. Excluded domains are listed on the Zero Trust dashboard under **Settings** > **WARP Client** > **Device settings** > **Configure** for a profile > **Local Domain Fallback** . All domains in that list rely on the local DNS resolver configured for the device on its primary interface or the DNS server specified when you add a new local domain. Domains added to this list are not subject to Gateway DNS policies or DNS logging. The WARP Client proxies these requests directly to the configured fallback servers.
 
 {{<Aside type="warning">}}
 
@@ -18,24 +18,28 @@ You can add or remove domains from the Local Domains list at any time.
 
 ## Add a domain
 
-1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
+1. On the Zero Trust dashboard, navigate to **Settings** > **WARP Client** > **Device settings**.
 
-2. Under **Local Domain Fallback**, click **Manage**.
+2. Choose the profile you could like to modify and click **Configure**.
 
-3. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`).
+3. Under **Local Domain Fallback**, click **Manage**.
 
-4. Enter the DNS server(s) that should resolve that domain name. All servers are tried and the fastest response is used. It is best to always specify at least one DNS server that Local Domain Fallback should use for any domain you add. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list. 
+4. Enter the **Domain** you want to exclude from Gateway. All prefixes under the domain are subject to the local domain fallback rule (for example, all entries are interpreted as `\*.example.com`).
 
-5. Enter an optional description and click **Save domain**.
+5. Enter the DNS server(s) that should resolve that domain name. All servers are tried and the fastest response is used. It is best to always specify at least one DNS server that Local Domain Fallback should use for any domain you add. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list. 
+
+6. Enter an optional description and click **Save domain**.
 
 The domain will appear in the list of Local Domain entries.
 
 ## Delete a domain
 
-1. On the Zero Trust dashboard, navigate to **Settings** > **Network**.
+1. On the Zero Trust dashboard, navigate to **Settings** > **WARP Client** > **Device settings**.
 
-2. Under **Local Domain Fallback**, click **Manage**. On this page, you will find a list of domains Cloudflare Zero Trust excludes.
+2. Choose the profile you could like to modify and click **Configure**.
 
-3. To remove a domain from the list, locate the domain and then click **Delete**.
+3. Under **Local Domain Fallback**, click **Manage**. On this page, you will find a list of domains Cloudflare Zero Trust excludes.
+
+4. To remove a domain from the list, locate the domain and then click **Delete**.
 
 The domain will no longer be excluded from Gateway DNS policies, effective immediately.
