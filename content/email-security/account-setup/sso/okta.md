@@ -54,17 +54,19 @@ You will need to manually create an app for Area 1 in Okta.
 
 10. Okta should display the app you have just created. If not, go to **Applications** > **Applications**, and select it.
 
-11. Go to **Sign On** > **Settings**.
+11. In the **Sign On** tab, navigate to **View SAML setup instructions** and select it to retrieve the SAML provider information.
 
-12. To retrieve the SAML provider information, navigate to **View SAML setup instructions**.
+12. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Area 1 dashboard.
 
-13. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Area 1 dashboard.  
+    ![Copy and save the SSO URL to use later in the Area 1 dashboard](/email-security/static/sso/okta/step12-sso-url.png)
 
-14. In **Optional**, copy and save the XML metadata. You will need this finish configuration in the Area 1 dashboard. The start of the metadata should be similar to the following:
+13. Scroll down to **Optional**. You might need to enlarge the text box to copy and save all the XML data. You will need this information to  finish configuration in the Area 1 dashboard. The start of the metadata should be similar to the following:
 
     ```txt
     <?xml version="1.0" encoding="utf-8"?><EntityDescriptor ID="_<YOUR_DESCRIPTIOR_ID>" entityID="https://<YOUR_ENTITY_ID> " xmlns="urn:oasis:names:tc:SAML:2.0:metadata">...
     ```
+
+    ![Copy and save the XML metadata to use later in the Area 1 dashboard](/email-security/static/sso/okta/step13-optional.png)
 
 ## 2. Configure Area 1 to connect to Okta
 
