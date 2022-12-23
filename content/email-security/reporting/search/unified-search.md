@@ -11,7 +11,7 @@ Unified Search merges [Detection Search](/email-security/reporting/search/detect
 Unified Search has two ways of searching emails:
 
 - **Fielded Search**: Presents you with fields where you can enter search terms.
-- **Freeform Search**: Has one search field where you can construct your own search query, like `My new products`.
+- **Freeform Search**: Has one search field where you can construct your own search query, like `My products`.
 
 To start using Unified Search:
 
@@ -19,6 +19,18 @@ To start using Unified Search:
 2. Select the **Search** bar.
 3. The dashboard will display a message about the new search experience. Select **Try new search** to enable Unified Search. The system will default to **Fielded Search**, but you can also enable **Freeform Search**.
 4. (Optional) Under **Freeform Search**, select **Switch back to classic search** to revert to the classical search experience.
+
+## Search terms
+
+You can search for any value or combination of values separated by a space. Using spaces with multiple search terms is the equivalent of using the operator `AND`.
+
+Terms less than three characters long and common English words that do not offer significance for search value are ignored. The following words are ignored:
+- `the`
+- `then`
+- `there`
+- `where`
+
+For more exact matches, use the named fields on the Fielded Search to denote which field should contain the value. For example, to find only messages sent by `demo@example.com` enter `demo@example.com` in **FROM (EXACT)**. `EXACT` means Area 1 searches for the term as it appears in the message.
 
 ## Fielded Search
 
