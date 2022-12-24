@@ -24,25 +24,15 @@ To retrieve those values:
 
 2. Navigate to **All services** > **Azure Active Directory**.
 
-In the Azure Active Directory menu, go to **Enterprise applications**  and select **New application**.
+3. In the Azure Active Directory menu, go to **Enterprise applications**  and select **New application**.
 
-Select **Create your own application**.
+4. Select **Create your own application**.
 
-Name your application.
+5. Name your application (for example, `Cloudflare Access`).
 
-Select **Register an application to integration with Azure AD (App you're developing)**. Select **Create**.
+6. Select **Register an application to integration with Azure AD (App you're developing)** and then select **Create**.
 
-Input the Redirect URI.
-
-Next, go to App registrations to configure permissions and the secret.
-
-
-3. In the Azure Active Directory menu, go to **App registrations** and select **New registration**.
-    ![Adding a new app in Azure](/cloudflare-one/static/documentation/identity/azure/click-new-reg.png)
-
-4. Name your application.
-
-5. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
+7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -52,17 +42,17 @@ Next, go to App registrations to configure permissions and the secret.
 
     ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
 
-6. Select **Register**.
+8. Select **Register**.
 
-7. Copy the **Application (client) ID** and **Directory (tenant) ID**.
+9. Next, return to the Azure Active Directory menu and go to **App registrations**.
 
-8. Next, navigate to **Certificates & secrets** and select **New client secret**.
+10. Select the app you just created and copy the **Application (client) ID** and **Directory (tenant) ID**.
 
-9. Name the client secret and choose an expiration period.
+11. Navigate to **Certificates & secrets** and select **New client secret**.
 
-10. Select **Add**.
+12. Name the client secret and choose an expiration period. 
 
-11. Copy the **Value** of the client secret. Store the client secret in a safe place, as it can only be viewed immediately after creation.
+13. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation.
 
     ![Location of client secret in Azure](/cloudflare-one/static/documentation/identity/azure/client-cert-value.png)
 
@@ -84,7 +74,7 @@ Next, go to App registrations to configure permissions and the secret.
 
 4. Once all seven permissions are enabled, select **Add permissions**.
 
-5. Select **Grant admin consent** for your account.
+5. Select **Grant admin consent**.
 
     ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
 
@@ -109,9 +99,68 @@ https://azuretrendz.wordpress.com/2020/06/06/how-to-do-app-registration-for-ente
 
 To test that your connection is working, select **Test** next to Azure AD.
 
-## Use Azure AD groups
+## Synchronize users and groups
 
-Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`. To use Azure groups in Cloudflare Access:
+Blurb about what this feature does.
+
+### 1. Enable SCIM in the Zero Trust dashboard
+
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+
+2. Locate the **Azure AD** integration and select **Edit**.
+
+3. Enable **Support groups**.
+
+4. Select **Enable SCIM**. Optional settings include:
+  - **Enable user deprovisioning**: [Revoke a user's session](/cloudflare-one/identity/users/session-management/#per-user) when they are removed from the Azure application.
+  - **Remove user seat on deprovision**: [Remove a user's seat](/cloudflare-one/identity/users/seat-management/) when they are removed from the Azure application.
+  - **Enable group membership change reauthentication**: Require users to reauthenticate with Access when their group membership is updated in Azure AD. Reauthentication allows Access to update the user's nested group memberships.
+
+5. Select **Save**.
+
+6. Copy the resulting **SCIM Endpoint** and **SCIM Secret**. You will need to [enter these values](#set-up-scim-in-azure) into Azure AD.
+
+### 2. Set up SCIM in Azure
+
+{{<Aside type="note">}}
+Until Microsoft supports out-of-the-box provisioning for Access, SCIM requires a separate enterprise application from the one created during [initial setup](#set-up-azure-ad-as-an-identity-provider).
+{{</Aside>}}
+
+1. In the Azure Active Directory menu, go to **Enterprise applications**  and select **New application**.
+
+2. Select **Create your own application**.
+
+3. Name your application (for example, `Cloudflare Access SCIM`).
+
+4. Select **Integrate any other application you don't find in the gallery (Non-gallery)**.
+
+5. Once the application is created, [assign users and groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal). Azure does not currently synchronize nested groups. However, Access can still read nested group memberships when users log in to the application.
+
+6. Navigate to **Provisioning** and select **Get started**.
+
+7. For **Provisioning Mode**, choose _Automatic_.
+
+8. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from the Zero Trust dashboard.
+
+9. In the **Secret Token** field, enter the **SCIM Secret** obtained from the Zero Trust dashboard.
+
+![Azure dashboard screen for configuring provisioning]()
+
+10. Select **Test Connection**.
+
+11. Once the test succeeds, select **Save**. Exit the dialog to return to the **Provisioning** page.
+
+12. Select **Start provisioning**. The synchronized objects and logs will appear in the Azure dashboard.
+
+Cloudflare Access will now synchronize the configured users and groups with the Azure AD database. When you build an Access policy, the synchronized groups will appear in the **Values** dropdown when you choose the _Azure groups_ selector.
+
+{{<Aside type="note">}}
+Gateway does not currently support SCIM synchronization. To use Azure groups in a Gateway policy, you must manually enter their Object IDs.
+{{</Aside>}}
+
+## Read nested Azure groups
+
+Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`. Need to use this method to create Cloudflare Gateway policies. Also needed to read transitive groups in Access policies.
 
 1. Make sure you toggle on the **Support groups** switch as you set up Azure AD on your Zero Trust dashboard.
 
