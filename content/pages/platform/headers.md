@@ -158,5 +158,5 @@ filename: _headers
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: document-domain=()
-  Content-Security-Policy: script-src 'self'; frame-ancestors 'none';
+  Content-Security-Policy: default-src 'none'; script-src 'self'; frame-ancestors 'none';
 ```
