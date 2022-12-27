@@ -12,7 +12,7 @@ layout: list
 - [View a specific ruleset](#view-a-specific-ruleset)
 - [List all versions of a ruleset](#list-all-versions-of-a-ruleset)
 - [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset)
-- [List rules in a Managed Ruleset with a specific tag](#list-rules-in-a-managed-ruleset-with-a-specific-tag)
+- [List rules in a managed ruleset with a specific tag](#list-rules-in-a-managed-ruleset-with-a-specific-tag)
 
 ## List existing rulesets
 
@@ -107,7 +107,7 @@ Note: You can only use the _Get a zone ruleset_ operation for zone-level phase e
 The API returns a `404 Not Found` HTTP status code under these conditions:
 
 - When a ruleset cannot be found.
-- When the specified ruleset is not a Managed Ruleset the calling account is entitled to execute.
+- When the specified ruleset is not a managed ruleset the calling account is entitled to execute.
 
 ### Example
 
@@ -132,7 +132,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
-    "description": "Executes a Managed Ruleset.",
+    "description": "Executes a managed ruleset.",
     "kind": "zone",
     "version": "3",
     "rules": [
@@ -179,7 +179,7 @@ Use one of the following API endpoints:
 
 The result contains the ruleset properties of each version, but it does not include the list of rules. Check [View a specific version of a ruleset](#view-a-specific-version-of-a-ruleset) to get this information.
 
-For Managed Rulesets, this method returns a list with one item with the information about the most recent version of the ruleset.
+For managed rulesets, this method returns a list with one item with the information about the most recent version of the ruleset.
 
 When the specified phase entry point ruleset does not exist, this API method returns an empty array in the `result` field.
 
@@ -250,7 +250,7 @@ Use one of the following API endpoints:
 [gerv-account]: https://developers.cloudflare.com/api/operations/account-rulesets-get-an-account-entry-point-ruleset-version
 [gerv-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset-version
 
-You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a Managed Ruleset.
+You can view the rules in all the versions of a custom ruleset. However, you can only view the rules of the latest version of a managed ruleset.
 
 When the specified phase entry point ruleset does not exist, this API method returns a `404 Not Found` HTTP status code.
 
@@ -277,7 +277,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
-    "description": "Executes a Managed Ruleset.",
+    "description": "Executes a managed ruleset.",
     "kind": "zone",
     "version": "3",
     "rules": [
@@ -306,13 +306,13 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>
 
 {{<Aside type="note" header="Note">}}
 
-When you view a specific version of a Managed Ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
+When you view a specific version of a managed ruleset, each rule listed in the result can have one or more associated categories/tags, and it will not contain an expression.
 
 {{</Aside>}}
 
-## List rules in a Managed Ruleset with a specific tag
+## List rules in a managed ruleset with a specific tag
 
-Returns a list of all the rules in a Managed Ruleset with a specific tag.
+Returns a list of all the rules in a managed ruleset with a specific tag.
 
 | Operation                                            | Method + Endpoint                                                                                      |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -343,7 +343,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets/<RULES
   "result": {
     "id": "<MANAGED_RULESET_ID>",
     "name": "Cloudflare Managed Ruleset",
-    "description": "Managed Ruleset created by Cloudflare",
+    "description": "Managed ruleset created by Cloudflare",
     "kind": "managed",
     "version": "4",
     "rules": [

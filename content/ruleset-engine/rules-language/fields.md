@@ -1161,7 +1161,7 @@ You can only use HTTP response fields in:
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
-* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
+* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
 
 Specific fields may have additional limitations.
 

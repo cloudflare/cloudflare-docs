@@ -37,11 +37,11 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 4.  Create an application for a subdomain where users will connect to your deployment. Click **Next**.
 
-    ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
+    ![MongoDB screen that shows how to add an application](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-app.png)
 
 5.  Build a rule to determine who can reach the deployment. You can build a rule that allows anyone in your organization to connect or you can build more granular rules based on signals like identity provider groups, [multifactor method](/cloudflare-one/tutorials/okta-u2f/), or [country](/cloudflare-one/tutorials/country-rules/).
 
-    ![Apps](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
+    ![MongoDB screen that shows how to configure a rule](/cloudflare-one/static/secure-origin-connections/mongodb-tunnel/add-rules.png)
 
 6.  Click **Next** again and add the application.
 
@@ -210,7 +210,7 @@ $ cloudflared login
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
+![Cloudflare screen that shows a list of sites to pick from](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
 
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 

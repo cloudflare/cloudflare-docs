@@ -511,6 +511,72 @@
         }
       }
     },
+    "record_comments": {
+      "title": "DNS record comments",
+      "link": "/dns/manage-dns-records/reference/record-attributes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "character_limit": {
+          "title": "Character limit",
+          "free": 50,
+          "lite": 250,
+          "pro": 250,
+          "biz": 250,
+          "ent": 250
+        },
+        "number_per_record": {
+          "title": "Comments per record",
+          "free": 1,
+          "pro": 1,
+          "biz": 1,
+          "ent": 1
+        }
+      }
+    },
+    "record_tags": {
+      "title": "DNS record tags",
+      "link": "/dns/manage-dns-records/reference/record-attributes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "lite": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "character_limit": {
+          "title": "Name character limit<br/>(everything before the colon)",
+          "free": "N/A",
+          "lite": 32,
+          "pro": 32,
+          "biz": 32,
+          "ent": 32
+        },
+        "numeric_limit": {
+          "title": "Value character limit<br/>(everything after the colon)",
+          "free": "N/A",
+          "lite": 100,
+          "pro": 100,
+          "biz": 100,
+          "ent": 100
+        },
+        "tags_per_record": {
+          "title": "Tags per record",
+          "free": "N/A",
+          "lite": 20,
+          "pro": 20,
+          "biz": 20,
+          "ent": 20
+        }
+      }
+    },
     "zone_transfers": {
       "title": "DNS Zone Transfers",
       "link": "/dns/zone-setups/zone-transfers/",
@@ -1077,9 +1143,9 @@
         "dashboard_features": {
           "title": "Dashboard features",
           "free": "Activity log only",
-          "lite": "All except DoS",
-          "pro": "All except DoS",
-          "biz": "All except DoS",
+          "lite": "All",
+          "pro": "All",
+          "biz": "All",
           "ent": "All"
         },
         "historical_data": {
@@ -1200,9 +1266,9 @@
           "ent": "Yes"
         },
         "managed_rulesets": {
-          "title": "WAF Managed Rulesets",
+          "title": "WAF Managed Rules",
           "summary": "All paid plans",
-          "link": "/waf/managed-rulesets/",
+          "link": "/waf/managed-rules/",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",

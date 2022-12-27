@@ -8,19 +8,19 @@ meta:
 
 # Configure Network-layer DDoS Attack Protection in the dashboard
 
-You can customize the **action** and **sensitivity** of the rules in the Network-layer DDoS Attack Protection Managed Ruleset in the following ways:
+You can customize the **action** and **sensitivity** of the rules in the Network-layer DDoS Attack Protection managed ruleset in the following ways:
 
 - [Override all the rules in the ruleset](#override-all-the-rules-in-the-ruleset)
 - [Override one or more rules](#override-one-or-more-rules)
 
-You define overrides for the Network-layer DDoS Attack Protection Managed Ruleset at the account level. Tag and rule overrides have greater priority than ruleset overrides.
+You define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level. Tag and rule overrides have greater priority than ruleset overrides.
 
-For more information on the available parameters and allowed values, refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/).
+For more information on the available parameters and allowed values, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/).
 
 ## Override all the rules in the ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-1. In the account home page, open **Application Security** and go to **DDoS** > **Network-layer DDoS Protection**.
+1. In the account home page, open **Network Security** and go to **DDoS** > **Network-layer DDoS Protection**.
 1. Select **Deploy a DDoS override**.
 1. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
 1. If you are creating an override for a subset of the incoming packets, define the expression that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
@@ -34,7 +34,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-1. In the account home page, open **Application Security** and go to **DDoS** > **Network-layer DDoS Protection**.
+1. In the account home page, open **Network Security** and go to **DDoS** > **Network-layer DDoS Protection**.
 
 1. Select **Deploy a DDoS override**.
 
@@ -48,7 +48,7 @@ For more information on the available parameters and allowed values, refer to [M
 
 1. To override a single rule, select the desired value for a field in the displayed dropdowns next to the rule.
 
-    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a Managed Ruleset](/waf/managed-rulesets/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+    To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
 1. Select **Next**.
 
