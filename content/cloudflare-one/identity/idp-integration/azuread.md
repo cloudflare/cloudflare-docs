@@ -24,11 +24,11 @@ To retrieve those values:
 
 2. Navigate to **All services** > **Azure Active Directory**.
 
-3. In the Azure Active Directory menu, go to **Enterprise applications**  and select **New application**.
+3. In the Azure Active Directory menu, go to **Enterprise applications**.
 
-4. Select **Create your own application**.
+4. Select **New application** > **Create your own application**.
 
-5. Name your application (for example, `Cloudflare Access`).
+5. Name your application.
 
 6. Select **Register an application to integration with Azure AD (App you're developing)** and then select **Create**.
 
@@ -38,7 +38,7 @@ To retrieve those values:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    You can find your team name in the Zero Trust dashboard under **Settings** > **General**.
+    You can find your [team name](/cloudflare-one/glossary/#team-name) in the Zero Trust dashboard under **Settings** > **General**.
 
     ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
 
@@ -46,11 +46,13 @@ To retrieve those values:
 
 9. Next, return to the Azure Active Directory menu and go to **App registrations**.
 
-10. Select the app you just created and copy the **Application (client) ID** and **Directory (tenant) ID**.
+10. Select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**.
+
+    ![Viewing the Application ID and Directory ID in Azure](/cloudflare-one/static/documentation/identity/azure/azure-values.png)
 
 11. Navigate to **Certificates & secrets** and select **New client secret**.
 
-12. Name the client secret and choose an expiration period. 
+12. Name the client secret and choose an expiration period.
 
 13. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation.
 
@@ -94,47 +96,48 @@ To retrieve those values:
 
 7. Select **Save**.
 
-8. Create an Enterprise app and assign users to the application.
-https://azuretrendz.wordpress.com/2020/06/06/how-to-do-app-registration-for-enterprise-application/
-
-To test that your connection is working, select **Test** next to Azure AD.
+To [test](/cloudflare-one/identity/idp-integration/#test-idps-on-the-zero-trust-dashboard) that your connection is working, select **Test**.
 
 ## Synchronize users and groups
 
-Blurb about what this feature does.
+The Azure AD integration supports the [System for Cross-domain Identity Management (SCIM)](https://www.rfc-editor.org/rfc/rfc7642.txt) protocol. With SCIM, Cloudflare Access can automatically deprovision users after they are deactivated in the identity provider and display synchronized group names in the Access policy builder.
+
+To synchronize users and groups between Access and Azure:
 
 ### 1. Enable SCIM in the Zero Trust dashboard
 
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
 
-2. Locate the **Azure AD** integration and select **Edit**.
+2. Locate the [**Azure AD** integration](#set-up-azure-ad-as-an-identity-provider) and select **Edit**.
 
 3. Enable **Support groups**.
 
-4. Select **Enable SCIM**. Optional settings include:
-  - **Enable user deprovisioning**: [Revoke a user's session](/cloudflare-one/identity/users/session-management/#per-user) when they are removed from the Azure application.
-  - **Remove user seat on deprovision**: [Remove a user's seat](/cloudflare-one/identity/users/seat-management/) when they are removed from the Azure application.
-  - **Enable group membership change reauthentication**: Require users to reauthenticate with Access when their group membership is updated in Azure AD. Reauthentication allows Access to update the user's nested group memberships.
+4. Select **Enable SCIM**.
 
-5. Select **Save**.
+5. (Optional) Enable the following settings:
+  - **Enable user deprovisioning**: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when they are removed from the [SCIM application in Azure](#2-configure-scim-in-azure).
+  - **Remove user seat on deprovision**: [Remove a user's seat](/cloudflare-one/identity/users/seat-management/)  from your Zero Trust account when they are removed from the [SCIM application in Azure](#2-configure-scim-in-azure).
+  - **Enable group membership change reauthentication**: [Revoke a user's active session](/cloudflare-one/identity/users/session-management/#per-user) when their group membership changes in Azure AD. Access will read the user's updated group membership when they reauthenticate.
 
-6. Copy the resulting **SCIM Endpoint** and **SCIM Secret**. You will need to [enter these values](#set-up-scim-in-azure) into Azure AD.
+6. Select **Save**.
 
-### 2. Set up SCIM in Azure
+7. Copy the **SCIM Endpoint** and **SCIM Secret**. You will need to [enter these values](#2-create-scim-application-in-azure) into Azure AD.
+
+### 2. Configure SCIM in Azure
 
 {{<Aside type="note">}}
 Until Microsoft supports out-of-the-box provisioning for Access, SCIM requires a separate enterprise application from the one created during [initial setup](#set-up-azure-ad-as-an-identity-provider).
 {{</Aside>}}
 
-1. In the Azure Active Directory menu, go to **Enterprise applications**  and select **New application**.
+1. In the Azure Active Directory menu, go to **Enterprise applications**.
 
-2. Select **Create your own application**.
+2. Select **New application** > **Create your own application**.
 
 3. Name your application (for example, `Cloudflare Access SCIM`).
 
 4. Select **Integrate any other application you don't find in the gallery (Non-gallery)**.
 
-5. Once the application is created, [assign users and groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal). Azure does not currently synchronize nested groups. However, Access can still read nested group memberships when users log in to the application.
+5. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/assign-user-or-group-access-portal?pivots=portal).
 
 6. Navigate to **Provisioning** and select **Get started**.
 
@@ -144,33 +147,43 @@ Until Microsoft supports out-of-the-box provisioning for Access, SCIM requires a
 
 9. In the **Secret Token** field, enter the **SCIM Secret** obtained from the Zero Trust dashboard.
 
-![Azure dashboard screen for configuring provisioning]()
+10. Select **Test Connection** to ensure that the credentials were entered correctly.
 
-10. Select **Test Connection**.
+11. Select **Save**.
 
-11. Once the test succeeds, select **Save**. Exit the dialog to return to the **Provisioning** page.
+12. On the **Provisioning** page, select **Start provisioning**. You will see the synchronization status in Azure.
 
-12. Select **Start provisioning**. The synchronized objects and logs will appear in the Azure dashboard.
+To check which users and groups were synchronized, select **View provisioning logs**.
 
-Cloudflare Access will now synchronize the configured users and groups with the Azure AD database. When you build an Access policy, the synchronized groups will appear in the **Values** dropdown when you choose the _Azure groups_ selector.
+## Azure groups in Zero Trust policies
+
+### Automatic entry
+
+When [SCIM synchronization is enabled](#synchronize-users-and-groups), the Azure group names will appear in the **Values** dropdown when you choose the _Azure Groups_ selector.
+
+![Azure group names displayed in the Access policy builder](/cloudflare-one/static/documentation/identity/azure/azure-scim-groups.png)
 
 {{<Aside type="note">}}
-Gateway does not currently support SCIM synchronization. To use Azure groups in a Gateway policy, you must manually enter their Object IDs.
+The Gateway policy builder does not currently show group names from the SCIM integration. To use an Azure group in a Gateway policy, you still need to [manually enter](#manual-entry) the group's `Object Id`.
 {{</Aside>}}
 
-## Read nested Azure groups
+### Manual entry
 
-Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`. Need to use this method to create Cloudflare Gateway policies. Also needed to read transitive groups in Access policies.
+You can create Access and Gateway policies for groups that are not synchronized with SCIM. Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
 
-1. Make sure you toggle on the **Support groups** switch as you set up Azure AD on your Zero Trust dashboard.
+1. Make sure you enable **Support groups** as you set up Azure AD on your Zero Trust dashboard.
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
-![Viewing the Azure group IDs on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
+    ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
 
-3. When you create a Zero Trust policy for an Azure group, you will be prompted to enter the **Azure group ID**. Enter the `Object Id` for the Azure group.
+3. When you create an Access or Gateway policy for an Azure group, you will be prompted to enter the **Azure group ID**. Enter the `Object Id` for the Azure group.
 
-![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+    ![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+
+### Nested groups
+
+Access and Gateway policies for an Azure group will also apply to all [nested groups](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/how-to-manage-groups#add-or-remove-a-group-from-another-group). For example, if a user belongs to the group `US devs`, and `US devs` is part of the broader group `Devs`, the user would be allowed or blocked by all policies created for `Devs`.
 
 ## Example API Configuration
 
