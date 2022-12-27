@@ -39,6 +39,9 @@ Cloudflare DLP provides [predefined profiles](/cloudflare-one/policies/filtering
 5. In **Value**, enter a regular expression that defines the text pattern you want to detect. Regexes are written in Rust, and we recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
 
     For example, `test\d\d` will detect the word `test` followed by 2 digits.
+
+    Detected text patterns are limited to 1024 bytes in length. `+` is not supported as it is prone to exceeding this limit. For example `a+` can detect an infinite number of `a's`. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
+    
 6. Select **Done** to save and enable the detection entry.
 7. Select **Save profile**.
 
