@@ -162,7 +162,9 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
     ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
 
-3. When you create an Access or Gateway policy for an Azure group, you will be prompted to enter the **Azure group ID**. Enter the `Object Id` for the Azure group.
+3. If building an Access policy, choose the _Azure Groups_ selector. If building a Gateway policy, choose the _User Group IDs_ selector.
+
+ 4. In the **Value** field, enter the `Object Id` for the Azure group.
 
     ![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
 
