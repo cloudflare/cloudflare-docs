@@ -65,6 +65,48 @@ If you encounter the error `Failed to fetch user/group information from the iden
 
 {{</Aside>}}
 
+## SCIM
+
+Sign in to your Okta with your administrator account.
+
+Click Admin in the upper-right right corner of the page.
+
+Select Applications > Applications.
+
+Click Browse App Catalog.
+
+
+Search for SCIM Header Auth and select SCIM 2.0 Test App (Header Auth).
+
+Click Add Integration 
+
+On the General Settings tab, Set the name of your application, Click Next.
+
+On the Sign-on Options tab, use the default SAML option. Click Done to create the integration.
+
+Click the Provisioning tab, then in the main panel click Configure API Integration. Select Enable API integration.
+
+In the Base URL field, enter the SCIM Endpoint obtained from the Zero Trust dashboard.
+
+In the API Token field, enter the SCIM Secret obtained from the Zero Trust dashboard.
+
+Select **Test API Credentials** to ensure that the credentials were entered correctly.
+
+Select Save.
+
+In the Provisioning tab, select Edit. Enable the following options:
+- Create Users
+- Update User Attributes
+- Deactivate Users
+
+Select Save to complete the integration.
+
+In the Assignments tab, assign the users and groups you want to synchronize with Cloudflare Access.
+
+To verify the SCIM integration, select View Logs.
+
+>> Unlike with the Azure integration, Okta groups do not appear in the Access policy builder when you select _Okta groups_. You still have to enter the group names manually.
+
 ## Example API Configuration
 
 ```json
