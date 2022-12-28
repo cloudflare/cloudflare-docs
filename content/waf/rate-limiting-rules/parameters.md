@@ -81,6 +81,8 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - Field name in the API: `counting_expression` (optional).
   - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
   - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
+  - The counting expression does not extend the matching expression, therefore, you might want to include the matching expression in the counting expression.
+    For example, you want to trigger RL if someone has sent 5+ requests to `/api/` and got `403` back from your origin. It looks like the matching expression should be `(starts_with(http.request.uri.path, "/api/"))`, and the counting expression `(http.response.code eq 403)`. However, it's not true, and the counting expression should include the matching expression: `(http.response.code eq 403 and starts_with(http.request.uri.path, "/api/"))`. Otherwise, any response with `403` on any URL will increase the counter.
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
   - In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
