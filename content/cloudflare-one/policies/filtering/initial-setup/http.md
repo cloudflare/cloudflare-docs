@@ -16,7 +16,7 @@ To filter HTTP requests from a device:
 
 1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device .
 2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
-3. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
+3. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#6-log-in-to-your-organizations-cloudflare-zero-trust-instance-from-your-devices) in your organization's Zero Trust instance.
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.

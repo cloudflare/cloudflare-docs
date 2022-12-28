@@ -36,7 +36,10 @@ Advanced security features including HTTP traffic inspection require users to in
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
 ### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices. 
-On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
+
+  1. Select the WARP app icon.
+  2. Select the gear icon and navigate to **Preferences** > **Account**.
+  3. Insert your organization's [team name](/cloudflare-one/glossary/#team-name).
 
 Next, build [Secure Web Gateway policies](/cloudflare-one/policies/filtering/) to filter DNS, HTTP, and Network traffic on your devices.
 
