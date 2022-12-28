@@ -59,7 +59,6 @@ layout: list
         <p>Removes HTTP request headers that may contain the visitor's IP address. Handles the following HTTP request headers:</p>
         <ul>
           <li><code>cf-connecting-ip</code></li>
-          <li><code>x-forwarded-for</code></li>
           <li><code>true-client-ip</code></li>
         </ul>
         <p>Unavailable when <strong>Add "True-Client-IP" header</strong> is enabled.</p>
