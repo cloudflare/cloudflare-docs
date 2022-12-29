@@ -24,8 +24,8 @@ To configure a subdomain for a Custom Domain in your `wrangler.toml`, add the `c
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true, zone_name = "example.com" },
-	{ pattern = "subdomain-two.example.com", custom_domain = true}
+	{ pattern = "subdomain.example.com", custom_domain = true },
+	{ pattern = "subdomain-two.example.com", custom_domain = true }
 ]
 ```
 
