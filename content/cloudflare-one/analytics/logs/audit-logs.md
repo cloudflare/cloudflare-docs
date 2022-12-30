@@ -88,7 +88,7 @@ Identity-based authentication logs contain the following fields:
 | **user\_email** |  The email address of the authenticating user. |
 | **ip\_address** |  The IP address of the authenticating user. |
 | **app\_uid** | The unique identifier for the protected application. |
-| **add\_domain** |  The URL of the protected application. |
+| **app\_domain** |  The URL of the protected application. |
 | **action** | The event that occurred, such as a login attempt. |
 | **allowed** | The result of the authentication event. |
 | **created\_at** | The event timestamp. |
