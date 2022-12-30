@@ -31,13 +31,9 @@ For example, `Include` rules work like `OR` operators - anything in the list wil
 
 You can set a group to be the default for your Zero Trust account. Any new policy that you create will, by default, include that group as its basic rule. To make an existing group the default, click **Edit**. To create a new group as the default, click **Add a Group**.
 
-![Add Group](/cloudflare-one/static/zero-trust-security/default-groups/add-group.png)
-
-This example creates a new default group which will allow anyone with an `@cloudflare.com` address or the two contractor emails to reach an assigned application. Click **Save**.
+For example, you could create a new default group which will allow anyone with a `@cloudflare.com` address or other individual email addresses, such as email addresses of contractors, to reach an assigned application. Click **Save**.
 
 The page will tag the default group as `Default`. You can quickly see the rule contents by clicking on the arrow to the left to expand the rules inside of a group.
-
-![Rest of Groups](/cloudflare-one/static/zero-trust-security/default-groups/group-list-after.png)
 
 ## Use a default group
 
@@ -45,31 +41,23 @@ You can now use this group in any new or existing application. To add to a new a
 
 1.  Click **Add an application**.
 
-    ![Add App](/cloudflare-one/static/zero-trust-security/default-groups/add-app.png)
-
-    Groups can be used in both self-hosted and external SaaS applications. This example uses a self-hosted application.
+    Groups can be used in both self-hosted and external SaaS applications. This example will use a self-hosted application.
 
 1.  In the next page, give the application a name and set the subdomain or URL where the Access policy will apply.
 
-    ![Define App](/cloudflare-one/static/zero-trust-security/default-groups/define-app.png)
-
-1.  Lower on the page, you can also choose which identity providers can be used to authenticate for this specific application. In this example, the employees will use Okta while contractors will login with GitHub.
-
-    ![ID Options](/cloudflare-one/static/zero-trust-security/default-groups/id-options.png)
+1.  Lower on the page, you can also choose which identity providers can be used to authenticate for this specific application. For example, you could enable employees to use Okta while other specified users would login with GitHub.
 
 1.  On the next page, Access will already have toggled the default rule to apply to the application.
 
-If saved at this point, any user attempting to reach `team-jira.widgetcorp.tech` must authenticate with an `@cloudflare.com` address or must be one of the two contractor users set in the default group. If you don't want to use it, you can uncheck the box and add manual rules.
+If saved at this point, any user attempting to reach the subdomain or URL where the Access policy applies must authenticate with an `@cloudflare.com` address or must be added to the default group. If you don't want to use it, you can uncheck the box and add manual rules.
 
-![Default Set](/cloudflare-one/static/zero-trust-security/default-groups/default-set.png)
+![Default rule check box selected automatically.](/cloudflare-one/static/zero-trust-security/default-groups/default-set.png)
 
-You can also combine multiple groups. Another group listed here, `Approved Countries`, contains countries where this particular team operates. You can add this type of group to the policy. Instead of setting this as an `Include`, setting it as a `Require` will require that users connect from one of the countries in the list - in addition to having either an `@cloudflare.com` or specified contactor username.
+You can also combine multiple groups. Another group listed here, `Approved Countries`, contains countries where this particular team operates. You can add this type of group to the policy. Instead of setting this as an `Include`, setting it as a `Require` will require that users connect from one of the countries in the list - in addition to having either an `@cloudflare.com` or a specified username.
 
-![Add Countries](/cloudflare-one/static/zero-trust-security/default-groups/add-countries.png)
+![Combining rules using the Require function.](/cloudflare-one/static/zero-trust-security/default-groups/add-countries.png)
 
 Finally, you can add manual one-off rules at the bottom of the page.
-
-![Manual Rules](/cloudflare-one/static/zero-trust-security/default-groups/manual-rules.png)
 
 Click **Next** to finish creating the application.
 
