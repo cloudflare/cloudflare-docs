@@ -1372,9 +1372,9 @@ Source: Wrangler
 
 ## upgrade
 
-The upgrade command is used to automate the process of updating the version of Wrangler in the project's package.json file to the latest available version. This can be helpful if you want to ensure that your project is using the latest version of Wrangler and its dependencies.
+The upgrade command is used to automate the process of updating the version of Wrangler in the project's `package.json` file to the latest available version. This can be helpful if you want to ensure that your project is using the latest version of Wrangler and its dependencies.
 
-To use this command, navigate to your project's root directory and run wrangler upgrade from the command line. This will update the package.json file with the latest version of Wrangler, update the node_modules directory with the latest dependencies, and save the changes to the file.
+To use this command, navigate to your project's root directory and run wrangler upgrade from the command line. This will update the `package.json` file with the latest version of Wrangler, update the `node_modules` directory with the latest dependencies.
 
 ```sh
 $ wrangler upgrade
