@@ -28,6 +28,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
+- [`upgrade`](#upgrade) - Upgrade Wrangler installation to latest version
 
 {{<Aside type="note">}}
 
@@ -50,12 +51,12 @@ Flags:
 
 ---
 
-## docs 
+## docs
 
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-$ wrangler docs [COMMAND] 
+$ wrangler docs [COMMAND]
 ```
 
 {{<definitions>}}
@@ -82,7 +83,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-{{</definitions>}}
+    {{</definitions>}}
 
 ---
 
@@ -174,19 +175,19 @@ None of the options for this command are required. Many of these options can be 
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
 
   - Run the preview of the Worker directly on your local machine.
-{{<Aside type="warning">}}
-This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
-{{</Aside>}}
+    {{<Aside type="warning">}}
+    This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
+    {{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
-{{<Aside type="warning">}}
-When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
+    {{<Aside type="warning">}}
+    When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
 
 - On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
 - On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
-{{</Aside>}}
-      
+  {{</Aside>}}
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
@@ -306,7 +307,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 {{</definitions>}}
 
@@ -890,7 +891,7 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
   - Specifies caching behavior along the request/reply chain.
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
-{{</definitions>}}
+    {{</definitions>}}
 
 ### `delete`
 
@@ -1368,6 +1369,17 @@ Source: Wrangler
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
+
+## upgrade
+
+The upgrade command is used to automate the process of updating the version of Wrangler in the project's package.json file to the latest available version. This can be helpful if you want to ensure that your project is using the latest version of Wrangler and its dependencies.
+
+To use this command, navigate to your project's root directory and run wrangler upgrade from the command line. This will update the package.json file with the latest version of Wrangler, update the node_modules directory with the latest dependencies, and save the changes to the file.
+
+```sh
+$ wrangler upgrade
+✨ Wrangler upgrade complete! 🎉
+```
 
 ---
 
