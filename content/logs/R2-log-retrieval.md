@@ -53,7 +53,7 @@ List relevant R2 objects containing logs matching the provided query parameters,
 
 - `limit` number (Limit) - Maximum number of results to return, for example `limit=100`.
 
-## Retrieve Logs by Time Range
+## Retrieve Logs by time range
 
 Stream logs stored in R2 that match the provided query parameters, using the endpoint `GET /accounts/{accountId}/logs/retrieve`.
 
