@@ -56,6 +56,8 @@ You will need to manually create an app for Area 1 in Okta.
 
 11. In the **Sign On** tab, navigate to **View SAML setup instructions** and select it to retrieve the SAML provider information.
 
+    ![Find the View SAML setup instructions button](/email-security/static/sso/okta/step11-saml-instructions.png)
+
 12. Copy and save the link in **Identity Provider Single Sign-On URL**. You will need it later to use in the Area 1 dashboard.
 
     ![Copy and save the SSO URL to use later in the Area 1 dashboard](/email-security/static/sso/okta/step12-sso-url.png)
