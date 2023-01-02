@@ -89,7 +89,7 @@ The ability to look up a RayID is a two-step process. First, a time range needs 
 
 Indexes will automatically expire after seven days of no usage.
 
-### Specify a Time Range
+### Specify a time range
 
 Before executing your query, you can specify the time range you would like to index in order to narrow down the scope of the query.
 
