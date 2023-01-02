@@ -8,7 +8,7 @@ weight: 1
 
 Unified Search merges [Detection Search](/email-security/reporting/search/detection-search/) and [Mail Trace](/email-security/reporting/search/mailtrace/) into a single, unified experience. Unified Search makes it easier to search for emails that have been processed by Area 1, whether they are marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/) or not.
 
-Unified Search has two ways of searching emails:
+Unified Search has two ways for searching emails:
 
 - **Fielded Search**: Presents you with fields where you can enter search terms.
 - **Freeform Search**: Has one search field where you can construct your own search query, like `My great products`.
@@ -17,7 +17,7 @@ To start using Unified Search:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
-3. The dashboard will display a message about the new search experience. Select **Try new search** to enable Unified Search. The system will default to **Fielded Search**, but you can also enable **Freeform Search**.
+3. Select **Try new search** to enable Unified Search. The system will default to **Fielded Search**, but you can also enable **Freeform Search**.
 4. (Optional) Under **Freeform Search**, select **Switch back to classic search** to revert to the classical search experience.
 
 ## Search terms
@@ -26,7 +26,7 @@ You can search for any value or combination of values separated by a space. Usin
 
 Terms less than three characters long and common English words that do not offer significance for search value are ignored.
 
-For more exact matches, use the named fields on the Fielded Search to denote which field should contain the value. For example, to find only messages sent by `demo@example.com` enter `demo@example.com` in **FROM (EXACT)**. `EXACT` in a field descriptor means the term will match how the value appears in the message.
+For more exact matches, use the named fields in **Fielded Search** to denote which field should contain the value. For example, to find only messages sent by `demo@example.com` enter `demo@example.com` in **FROM (EXACT)**. `EXACT` in a field descriptor means the term will match how the value appears in the message.
 
 ## Fielded Search
 
