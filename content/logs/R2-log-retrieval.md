@@ -8,7 +8,7 @@ weight: 117
 
 Logs Engine gives you the ability to store your logs in R2 and query them directly.
 
-## Store Logs in R2
+## Store logs in R2
 
 - Set up a [Logpush to R2](/logs/get-started/enable-destinations/r2/) job.
 - Create an [R2 access key](/r2/data-access/s3-api/tokens/) with at least R2 read permissions.
@@ -17,7 +17,7 @@ Logs Engine gives you the ability to store your logs in R2 and query them direct
     - Account scope
     - Logs read permissions
 
-## Query Logs
+## Query logs
 
 You can use the API to query and download your logs by time range or RayID.
 
@@ -53,7 +53,7 @@ List relevant R2 objects containing logs matching the provided query parameters,
 
 - `limit` number (Limit) - Maximum number of results to return, for example `limit=100`.
 
-## Retrieve Logs by time range
+## Retrieve logs by time range
 
 Stream logs stored in R2 that match the provided query parameters, using the endpoint `GET /accounts/{accountId}/logs/retrieve`.
 
@@ -81,7 +81,7 @@ Results can be piped to a file using `> logs.json`.
 
 Additionally, if you want to receive the raw GZIP bytes without them being transparently decompressed by your client, include the header `-H 'Accept-Encoding: gzip'`.
 
-## ​Retrieve Logs by RayID
+## ​Retrieve logs by RayID
 
 Using your logs stored in R2 - the Logpull RayID Lookup feature allows you to query an indexed time range for the presence of an RayID and return the matching result. This feature is available to users with the Logpull RayID Lookup beta subscription.
 
@@ -91,9 +91,7 @@ Indexes will automatically expire after seven days of no usage.
 
 ### Specify a time range
 
-Before executing your query, you can specify the time range you would like to index in order to narrow down the scope of the query.
-
-To index one minute of logs stored in the R2 bucket `"cloudflare-logs"` under the prefix `"http_requests/{DATE}"`.
+Before executing your query, you can specify the time range you would like to index in order to narrow down the scope of the query. In the following example, we index one minute of logs stored in the R2 bucket `"cloudflare-logs"` under the prefix `"http_requests/{DATE}"`.
 
 ### Example API request
 
@@ -113,7 +111,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/ra
 
 ## Lookup a RayID
 
-After indexing a time range, perform a `GET` request with the RayID. If a matching result is found in the indexed time range, the record will be returned. Note that the parameters have moved from the request body and into the URL. The `-g` flag is required to avoid the `{DATE}` parameter from being misinterpreted by cURL. 
+After indexing a time range, perform a `GET` request with the RayID. If a matching result is found in the indexed time range, the record will be returned. Note that the parameters have moved from the request body and into the URL. The `-g` flag is required to avoid the `{DATE}` parameter from being misinterpreted by cURL.
 
 ### Example API request
 
