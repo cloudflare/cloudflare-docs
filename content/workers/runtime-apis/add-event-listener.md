@@ -8,7 +8,7 @@ weight: 3
 
 ## Background
 
-The `addEventListener` function defines triggers for a Worker script to execute. There are currently two types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/workers/runtime-apis/fetch-event/) and `"scheduled"` listeners which are sent a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
+The `addEventListener` function defines triggers for a Worker script to execute. There are currently three types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/workers/runtime-apis/fetch-event/), `"scheduled"` listeners which are sent a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) and `"queue"` listeners which are sent [`QueueEvent`](/queues/javascript-apis/).
 
 ## Syntax
 
@@ -17,7 +17,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 - {{<code>}}addEventListener(type, listener){{</code>}} {{<type>}}void{{</type>}}
 
   - If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/workers/runtime-apis/fetch-event/#methods), the runtime delivers the event to the next registered listener.
-  - A `"fetch"` listener and a `"scheduled"` listener can be registered in the same script.
+  - A `"fetch"` listener, `"scheduled"` listener, and `"queue"` listener can be registered in the same script.
   - A script can have only one `"scheduled"` listener.
 
 {{</definitions>}}
@@ -28,13 +28,13 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 - `type` {{<type>}}string{{</type>}}
 
-  - The only types supported are `"fetch"` and `"scheduled"`.
+  - The only types supported are `"fetch"`, `"scheduled"` and `"queue"`.
 
 - `listener` {{<type>}}function{{</type>}}
 
   - The function to handle incoming events to the Worker script. The listener is passed a single argument:
 
-  - `event` {{<type>}}FetchEvent{{</type>}} or {{<type>}}ScheduledEvent{{</type>}}
+  - `event` {{<type>}}FetchEvent{{</type>}} or {{<type>}}ScheduledEvent{{</type>}} or {{<type>}}QueueEvent{{</type>}}
 
     - The events dispatched to a Worker. Refer to [`FetchEvent`](/workers/runtime-apis/fetch-event/) or [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
 
@@ -57,3 +57,13 @@ addEventListener('scheduled', event => {
   event.waitUntil(handleScheduled(event));
 });
 ```
+
+### Queue Listener
+```js
+addEventListener("queue", (event) => {
+  event.waitUntil(handleMessages(event));
+});
+```
+
+
+
