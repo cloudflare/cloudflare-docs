@@ -113,7 +113,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/ra
 
 ## Lookup a RayID
 
-After indexing a time range, perform a `GET` request with the RayID. If a matching result is found in the indexed time range, the record will be returned. Note that the parameters have moved from the request body and into the URL. The `-g` flag is required to avoid the `{DATE}` parameter from being misinterpreted by curl. 
+After indexing a time range, perform a `GET` request with the RayID. If a matching result is found in the indexed time range, the record will be returned. Note that the parameters have moved from the request body and into the URL. The `-g` flag is required to avoid the `{DATE}` parameter from being misinterpreted by cURL. 
 
 ### Example API request
 
