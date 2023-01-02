@@ -150,7 +150,7 @@ High volume zones can produce many log files in R2. Try reducing your start and 
 <summary>How do I know what time range to index?</summary>
 <div>
 
-Currently, there is no process to index the logs as they arrive. If you have the RayID and know the time the request was made, try indexing the next 5-10 minutes of logs after the request was completed. 
+Currently, there is no process to index logs as they arrive. If you have the RayID and know the time the request was made, try indexing the next 5-10 minutes of logs after the request was completed. 
 
 </div>
 </details>
