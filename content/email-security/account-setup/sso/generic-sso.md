@@ -16,19 +16,19 @@ Below is a generic guide to successfully set up an identity provider based SAML.
 
 2. Enter the following values to configure your IDP provider:
     | | |
-    |---|---|
-    | **Single sign on URL** | `https://horizon.area1security.com/api/users/saml` |
+    |---------------------------------|----------------------------------------------------|
+    | **Single sign on URL**          | `https://horizon.area1security.com/api/users/saml` |
     | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com/api/users/saml` |
-    | **Name ID format** | Email Address |
-    | **Application username** | Email |
-    | **Response** | Signed |
-    | **Assertion signature** | Unsigned |
-    | **Signature Algorithm** | RSA-SHA1 |
-    | **Digest Algorithm** | SHA1 |
+    | **Name ID format**              | Email Address                                      |
+    | **Application username**        | Email                                              |
+    | **Response**                    | Signed                                             |
+    | **Assertion signature**         | Unsigned                                           |
+    | **Signature Algorithm**         | RSA-SHA1                                           |
+    | **Digest Algorithm**            | SHA1                                               |
 
 3. In the **Attribute Statements**, add your users to the application. Emails you add here should match emails users already have in the Area 1 dashboard.
 
-4. After finishing the setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the [SSO section](https://horizon.area1security.com/settings/single-sign-on) of Area 1’s dashboard.
+4. After finishing the setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the SSO section of Area 1’s dashboard. Refer to **step 4** in the guide below for more details.
 
 ## 2. Area 1 SAML setup
 
