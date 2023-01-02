@@ -28,19 +28,19 @@ You will need to manually create an app for Area 1 in Okta.
 
 5. Enter the following settings for **SAML Settings**:
     | | |
-    |---|---|
-    | **Single sing on URL** | `https://horizon.area1security.com/api/users/saml` |
-    | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com/api/users/saml` |    
-    | **Name ID format** | Select _EmailAddress_ from the drop-down menu. |
-    | **Application username** | Select _Email_ from the drop-down menu. |
-    | **Response** | _Signed_ |
-    | **Assertion signature** | _Unsigned_ |
-    | **Signature Algorithm** | _RSA-SHA1_ |
-    | **Digest Algorithm** | _SHA1_ |
+    |-------------------------------------|---------------------------------------------------------------------------------------------|
+    | **Single sing on URL**              | `https://horizon.area1security.com/api/users/saml`                                          |
+    | **Audience URI (SP Entity ID)**     | `https://horizon.area1security.com/api/users/saml`                                          |
+    | **Name ID format**                  | Select _EmailAddress_ from the drop-down menu.                                              |
+    | **Application username**            | Select _Email_ from the drop-down menu.                                                     |
+    | **Response**                        | _Signed_                                                                                    |
+    | **Assertion signature**             | _Unsigned_                                                                                  |
+    | **Signature Algorithm**             | _RSA-SHA1_                                                                                  |
+    | **Digest Algorithm**                | _SHA1_                                                                                      |
     | **Attribute statements (optional)** |
-    | **Name** | Enter email addresses for your users. Should match users already added to Area 1 dashboard. |
-    | **Name format** | Select _Unspecified_ from the drop-down menu. |
-    | **Value** | Select `user.email` from the drop-down menu. |
+    | **Name**                            | Enter email addresses for your users. Should match users already added to Area 1 dashboard. |
+    | **Name format**                     | Select _Unspecified_ from the drop-down menu.                                               |
+    | **Value**                           | Select `user.email` from the drop-down menu.                                                |
 
     ![Input the correct settings in SAML settings](/email-security/static/sso/okta/step5-saml-settings.png)
 
