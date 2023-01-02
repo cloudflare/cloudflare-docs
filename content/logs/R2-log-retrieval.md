@@ -30,7 +30,7 @@ The following headers are required for all API calls:
 Alternatively, API tokens with Logs edit permissions can also be used for authentication:
 - `Authorization: Bearer <API_TOKEN>`
 
-### Required Headers
+### Required headers
 
 In addition to the required authentication headers mentioned, the following headers are required for the API to access the logs stored in your R2 bucket. 
 
