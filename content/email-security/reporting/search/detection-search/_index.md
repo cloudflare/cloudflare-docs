@@ -1,22 +1,22 @@
 ---
 title: Detection search
 pcx_content_type: concept
-weight: 1
+weight: 2
 ---
 
-# Detection search
+# Detection Search
 
 **Detection search** allows you to search through and view all emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). All messages include the raw message with its headers, as well as any associated Area 1 dispositions and processing information.
 
-You would commonly use detection search to get visibility into *why* and *when* Area 1 marked a message with a specific disposition. 
+You would commonly use Detection Search to get visibility into *why* and *when* Area 1 marked a message with a specific disposition. 
 
 {{<Aside type="note">}}
-To review all emails — not just those marked with a disposition — use [Mail Trace](/email-security/reporting/mailtrace/).
+To review all emails — not just those marked with a disposition — use [Mail Trace](/email-security/reporting/search/mailtrace/).
 {{</Aside>}}
 
-## Use detection search
+## Use Detection Search
 
-To access Detection search in the dashboard:
+To access Detection Search in the dashboard:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
@@ -28,7 +28,7 @@ To access Detection search in the dashboard:
 
 ### Parameter filtering
 
-To search for specific values in one of the [available parameters](/email-security/reporting/detection-search/available-parameters/), format your search to be:
+To search for specific values in one of the [available parameters](/email-security/reporting/search/detection-search/available-parameters/), format your search to be:
 
 ```txt
 <<FIELD_NAME>>:<<VALUE>>
