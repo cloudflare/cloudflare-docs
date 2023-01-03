@@ -115,13 +115,13 @@ If you are building a native app, the example code above can run within a [WkWeb
 
 Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHIPClient.ts) and [example WHEP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHEPClient.ts) used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
-#### WHIP
+### WHIP
 
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
-#### WHEP
+### WHEP
 
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
 - [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)

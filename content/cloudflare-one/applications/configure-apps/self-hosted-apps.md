@@ -21,7 +21,7 @@ Cloudflare Access allows you to securely publish internal tools and applications
 
 Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/authorization-cookie/validating-json/) issued by Cloudflare on your origin.
 
-### 1. Add your application
+## 1. Add your application
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
@@ -60,7 +60,7 @@ If you are having issues specifying a custom logo, check that the image is serve
 
 1.  Click **Next**.
 
-### 2. Add a policy
+## 2. Add a policy
 
 You can now configure a policy to control who can access your app.
 
@@ -74,7 +74,7 @@ To learn more about how policies work, read our [Policies section](/cloudflare-o
 
 1.  Click **Next** to add your application to Access.
 
-### 3. Advanced settings
+## 3. Advanced settings
 
 The **Setup section** allows you to configure a few advanced settings for your application.
 
