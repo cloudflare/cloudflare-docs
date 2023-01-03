@@ -113,7 +113,7 @@ To synchronize users and groups between Access and Azure:
 ### 2. Configure SCIM in Azure
 
 {{<Aside type="note">}}
-Until Microsoft supports out-of-the-box provisioning for Access, SCIM requires a separate enterprise application from the one created during [initial setup](#set-up-azure-ad-as-an-identity-provider).
+SCIM requires a separate enterprise application from the one created during [initial setup](#set-up-azure-ad-as-an-identity-provider).
 {{</Aside>}}
 
 1. In the Azure Active Directory menu, go to **Enterprise applications**.
