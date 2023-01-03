@@ -29,7 +29,7 @@ To start using Unified Search:
 
 ## Search terms
 
-You can search for any value or combination of values separated by a space. Using spaces with multiple search terms is the equivalent of using the operator `AND`.
+In Freeform Search, you can search for any value or combination of values separated by a space. Using spaces with multiple search terms is the equivalent of using the operator `AND`.
 
 Terms less than three characters long and common English words that do not offer significance for search value are ignored.
 
@@ -40,14 +40,14 @@ For more exact matches, use the named fields in **Fielded Search** to denote whi
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search** bar.
 3. Fill out one or more of the following fields. Filling multiple fields is the equivalent of adding the `AND` operator between terms:
-	- **Terms**: Searches for the terms in any of the all available fields. If you want to search for a message that matches multiple recipients, use this field. Only one value can be specified in the **From** and **To** fields.
+	- **Terms**: Searches for terms in any of the available fields. If you want to search for a message that matches multiple recipients, use this field. Only one value can be specified in the **From** and **To** fields.
 	- **From (Exact)**: Searches for the sender’s exact email address.
 	- **To (Exact)**: Searches for the recipient’s exact email address.
 	- **Subject**: Searches for the terms in the subject field.
 	- **Domain**: Searches for messages from a specific domain.
 	- **Message ID**: Searches for messages with the stated message ID.
 	- **Alert ID**: Searches for messages with the stated alert ID.
-4. **Detections only** is enabled by default. This means the system will only search through, and display, emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). It works similarly to [Detection Search](/email-security/reporting/search/detection-search/). If you prefer to search through and view all emails that have been processed by Area 1, whether they are marked with a detection disposition or not, disable this option.
+4. **Detections only** is enabled by default. This means that the system will only search through, and display, emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). It works similarly to [Detection Search](/email-security/reporting/search/detection-search/). If you prefer to search through and view all emails that have been processed by Area 1, whether they are marked with a detection disposition or not, disable this option.
 5. The **All detections** drop-down menu allows you to refine your search by detection disposition. This menu will be disabled if **Detections only** is not selected.
 6. By default, the search results are limited to the previous 30 days. Select **Last 30 days** to change this setting.
 7. (Optional) You can download the results from your search in CSV format. The CSV file is capped at 1,000 rows.
@@ -57,7 +57,7 @@ For more exact matches, use the named fields in **Fielded Search** to denote whi
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Select the **Search bar** > **Freeform Search**.
 3. Build your search query. For example, `My great products`.
-4. **Detections only** is enabled by default. This means the system will only search through, and display, emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). It works similarly to [Detection Search](/email-security/reporting/search/detection-search/). If you prefer to search through and view all emails that have been processed by Area 1, whether they are marked with a detection disposition or not, disable this option.
+4. **Detections only** is enabled by default. This means that the system will only search through, and display, emails that Area 1 has marked with a [detection disposition](/email-security/reference/dispositions-and-attributes/). It works similarly to [Detection Search](/email-security/reporting/search/detection-search/). If you prefer to search through and view all emails that have been processed by Area 1, whether they are marked with a detection disposition or not, disable this option.
 5. The **All detections** drop-down menu allows you to refine your search by detection disposition. This menu will be disabled if **Detections only** is not selected.
 6. By default, the search results are limited to the previous 30 days. Select **Last 30 days** to change this setting.
 7. (Optional) You can download the results from your search in CSV format. The CSV file is capped at 1,000 rows.
