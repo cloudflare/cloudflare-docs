@@ -73,6 +73,8 @@ To retrieve those values:
     - `User.Read`
     - `Directory.Read.All`
     - `GroupMember.Read.All`
+    
+Note: More narrow permissions may be used, however this is the set of permissions that are tested against regularly.
 
 4. Once all seven permissions are enabled, select **Add permissions**.
 
