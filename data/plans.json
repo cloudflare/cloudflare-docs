@@ -2050,7 +2050,7 @@
           "ent": "Yes"
         },
         "selectable_ca": {
-          "title": "[Custom analytics](/ssl/reference/certificate-authorities/)",
+          "title": "[Selectable CA](/ssl/reference/certificate-authorities/)",
           "free": "No",
           "pro": "No",
           "biz": "No",
