@@ -116,6 +116,9 @@
 /email-security/static/O365-Message-Retraction.pdf /email-security/email-configuration/retract-settings/office365-retraction/ 301
 /email-security/static/O365-Directory-Integration-Guide.pdf /email-security/email-configuration/enhanced-detections/business-email-compromise/o365-directory-guide/ 301
 /email-security/static/Deployment_and_Configuration_Guide_Directory_Integration_for_Gmail.pdf /email-security/email-configuration/enhanced-detections/business-email-compromise/gworkspaces-directory-guide/ 301
+/email-security/reporting/detection-search/ /email-security/reporting/search/detection-search/ 301
+/email-security/reporting/detection-search/available-parameters/ /email-security/reporting/search/detection-search/available-parameters/ 301
+/email-security/reporting/mailtrace/ /email-security/reporting/search/mailtrace/ 301
 /email-security/static/Configure_SAML_SSO.pdf /email-security/account-setup/sso/generic-sso/ 301
 /email-security/static/Deployment_and_Configuration_Guide_Okta_Integration.pdf /email-security/account-setup/sso/okta/ 301
 /email-security/static/Configure_SAML_SSO_with_Azure_AD.pdf /email-security/account-setup/sso/azure/ 301
