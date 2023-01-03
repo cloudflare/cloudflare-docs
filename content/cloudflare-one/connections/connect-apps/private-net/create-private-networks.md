@@ -32,7 +32,7 @@ This guide covers how to:
   - If using **Exclude** mode, remove `100.64/10` from your list. 
   - If using **Include** mode, add `100.64/10` to your list.
 
-This will instruct Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the split tunnel settings.
+This will instruct WARP to begin proxying any traffic destined for a `100.64/10` IP address to Cloudflare for routing and policy enforcement. 
 
 ## Connect via WARP
 
