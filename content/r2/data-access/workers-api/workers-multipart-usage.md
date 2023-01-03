@@ -221,7 +221,7 @@ def upload_file(worker_endpoint, filename, partsize):
     uploadId = requests.post(url, params={"action": "mpu-create"}).json()["uploadId"]
 
     part_count = math.ceil(os.stat(filename).st_size / partsize)
-    # Create an executor for up to 20 concurrent uploads.
+    # Create an executor for up to 25 concurrent uploads.
     executor = concurrent.futures.ThreadPoolExecutor(25)
     # Submit a task to the executor to upload each part
     futures = [
