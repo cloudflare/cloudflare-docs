@@ -36,5 +36,5 @@ The allowlist only applies to source IPs — it does not apply to your own IPs o
 
 ## Step 5 – Enable Advanced TCP Protection
 
-1. In the Cloudflare dashboard, go to **Account Home** > **Application Security** > **DDoS** > **Advanced TCP Protection**.
+1. In the Cloudflare dashboard, go to Account Home > **Network Security** > **DDoS** > **Advanced TCP Protection**.
 2. Under **General settings**, toggle the feature status to **Enabled**.

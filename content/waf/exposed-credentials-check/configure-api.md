@@ -8,7 +8,7 @@ weight: 4
 
 Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/rulesets-api/). You can do the following:
 
-*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rulesets/reference/exposed-credentials-check/#configure-via-api).
+*   [Deploy the Cloudflare Exposed Credentials Check Managed Ruleset](/waf/managed-rules/reference/exposed-credentials-check/#configure-via-api).
 *   Create custom rules that check for exposed credentials.
 
 ## Create a custom rule checking for exposed credentials

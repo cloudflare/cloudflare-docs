@@ -1266,9 +1266,9 @@
           "ent": "Yes"
         },
         "managed_rulesets": {
-          "title": "WAF Managed Rulesets",
+          "title": "WAF Managed Rules",
           "summary": "All paid plans",
-          "link": "/waf/managed-rulesets/",
+          "link": "/waf/managed-rules/",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",

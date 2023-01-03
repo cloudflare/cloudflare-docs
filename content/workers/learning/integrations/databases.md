@@ -23,6 +23,10 @@ Use Cloudflare Workers to connect your application to external databases, such a
 
 {{</table-wrap>}}
 
+{{<Aside type="note">}}
+Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6).
+{{</Aside>}}
+
 Once you have installed the necessary packages, use the APIs provided by these packages to connect to your database and perform operations on it. Refer to detailed links for service-specific instructions.
 
 ## Authentication
