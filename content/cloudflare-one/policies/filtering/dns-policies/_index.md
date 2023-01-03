@@ -32,7 +32,7 @@ These are the action types you can choose from:
 *   [Block](#block)
 *   [Override](#override)
 *   [SafeSearch](#safesearch)
-*   [Youtube Restricted Mode](#youtube-restricted-mode)
+*   [YouTube Restricted Mode](#youtube-restricted-mode)
 
 ### Allow
 
@@ -78,7 +78,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 ### YouTube Restricted Mode
 
-Similarly, you can enforce YouTube Restricted mode by choosing the *Youtube Restricted* action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable Youtube Restricted Mode, you could set up a policy like the following:
+Similarly, you can enforce YouTube Restricted mode by choosing the *YouTube Restricted* action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable YouTube Restricted Mode, you could set up a policy like the following:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
