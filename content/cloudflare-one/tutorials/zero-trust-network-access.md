@@ -10,13 +10,13 @@ title: Configure Zero Trust Network Access in Cloudflare Zero Trust
 
 In this tutorial we will cover how to configure a Zero Trust Private Network in Cloudflare Zero Trust by combining device enrollment rules, Cloudflare Tunnels, and identity-based network policies.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create device enrollment rules and connect a device to Zero Trust
 - Connect your private network server to Cloudflare's edge using Cloudflare Tunnels
 - Create identity-aware network policies
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 45 minutes
 
@@ -32,7 +32,7 @@ In this tutorial we will cover how to configure a Zero Trust Private Network in 
 
 To start, enroll your devices into the WARP client. The WARP client is responsible for forwarding your traffic to Cloudflare and eventually to your private network.
 
-1. Define [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) under **Settings** > **Devices** > **Device enrollment permissions** > **Manage**.
+1. Define [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) under **Settings** > **Devices** > **Device enrollment permissions** > **Manage**.
 
     In this example, we require that users have a hard key inserted and are connecting from the United States.
 
@@ -109,6 +109,6 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
     |----------------|---------------|-----------------|--------|
     | Destination IP | in            | `10.0.0.0/8`    | Block  |
 
-5. To verify you do not have the desired target private IP range in the Split Tunnel configuration menu, go to **Settings** > **Network** > **Split Tunnels**.
+5. [Verify](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#set-up-split-tunnels) that you do not have the desired target private IP range in your Split Tunnel configuration.
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/cloudflare-one/policies/filtering/network-policies/).

@@ -10,11 +10,11 @@ title: Block sites by TLD
 
 You can use Cloudflare Gateway to block DNS queries a entire top level domain (TLD). These policies will block any hostname in a specific TLD.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Build a policy in Gateway to block entire TLDs
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 5 minutes
 
@@ -26,8 +26,6 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 Visit the Zero Trust dashboard. Open the `Policies` page in the Gateway section and select the `DNS` tab.
 
-![Dashboard](/cloudflare-one/static/secure-web-gateway/block-tld/policies.png)
-
 Click **Create a policy**. In the policy builder, name the policy and optionally provide a description.
 
 Choose `Domain` in the Selector, `matches regex` in the Operator, and input the following value:
@@ -36,7 +34,7 @@ Choose `Domain` in the Selector, `matches regex` in the Operator, and input the 
 
 Replacing `fail` with the TLD you intend to block.
 
-![Fail Policy](/cloudflare-one/static/secure-web-gateway/block-tld/block-fail.png)
+![DNS policy fields configured to block the .fail tld.](/cloudflare-one/static/secure-web-gateway/block-tld/block-fail.png)
 
 Choose `Block` as the action. Optionally, enable the block page to present a block page to users. Users must have the Cloudflare certificate installed to see the block page.
 

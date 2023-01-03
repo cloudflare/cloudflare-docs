@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Google Workspace
-weight: 2
 ---
 
 # Google Workspace

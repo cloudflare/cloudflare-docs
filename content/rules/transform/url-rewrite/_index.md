@@ -13,7 +13,7 @@ You can manipulate the URL of a request through different operations, namely rew
 
 * **URL redirect**: A client-side operation that occurs after the web server has loaded the initial URL. In this case, a website visitor can notice the URL changing when the redirect occurs. Refer to [URL forwarding](/rules/url-forwarding/) to learn more about configuring redirects.
 
-Use a URL rewrite to return the content of a URL while diplaying a different URL in the browser. You can rewrite the URI path, the query string, or both. You cannot rewrite the hostname using a URL Rewrite Rule — to rewrite the hostname, use an [Origin Rule](/rules/origin-rules/) or a [Page Rule](https://support.cloudflare.com/hc/articles/206190798).
+Use a URL rewrite to return the content of a URL while displaying a different URL in the browser. You can rewrite the URI path, the query string, or both. You cannot rewrite the hostname using a URL Rewrite Rule — to rewrite the hostname, use an [Origin Rule](/rules/origin-rules/) or a [Page Rule](https://support.cloudflare.com/hc/articles/206190798).
 
 ## Static and dynamic rewrites
 

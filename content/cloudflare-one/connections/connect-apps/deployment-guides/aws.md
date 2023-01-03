@@ -13,7 +13,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
 # Prerequisites
 
 - Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) into your Cloudflare Zero Trust account.
 
 # Create your environment
 
@@ -37,7 +37,7 @@ We will walk through how to initialize a service on a Linux VM in AWS, and route
     * Ensure SSH is only accessible from your IP to prevent it being publicly accessible.
     * Allow traffic from `172.31.0.0/16`, which is the default internal IP range that AWS will give your device.
 
-1. Deploy two `t2.micro` devices, and then build a key pair. You will need to [download the `.pem` file](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) in order to use SSH in the next steps.
+1. Deploy two `t2.micro` devices, and then build a key pair. You will need to [download the `.pem` file](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) in order to use SSH in the next steps.
 
 1. Finally, make sure you locate the Public IPv4 DNS address inside the instance summary on the AWS console. You will need that parameter as well in order to use SSH.
 

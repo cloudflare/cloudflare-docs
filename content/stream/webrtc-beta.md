@@ -119,13 +119,30 @@ Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/ma
 
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
+- [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 #### WHEP
 
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
 - [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
+- [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
 
 As more WHIP and WHEP clients are published, we are committed to supporting them and being fully compliant with the both protocols.
+
+## Supported codecs
+
+- [VP9](https://developers.google.com/media/vp9) (recommended for highest quality)
+- [VP8](https://en.wikipedia.org/wiki/VP8)
+- [h264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) (coming soon) (Constrained Baseline Profile Level 3.1, referred to as `42e01f` in the SDP offer's `profile-level-id` parameter.)
+
+## Conformance with WHIP and WHEP specifications
+
+Cloudflare Stream fully supports all aspects of the [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-05.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) specifications, including:
+
+- [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/)
+- [Server and client offer modes](https://www.ietf.org/archive/id/draft-murillo-whep-01.html#section-3) for WHEP
+
+You can find the specific version of WHIP and WHEP being used in the `protocol-version` header in WHIP and WHEP API responses. The value of this header references the IETF draft slug for each protocol. Currently, Stream uses `draft-ietf-wish-whip-05` (expected to be the final WHIP draft revision) and `draft-murillo-whep-01` (the most current WHEP draft).
 
 ## Limitations while in beta
 
@@ -134,5 +151,4 @@ As more WHIP and WHEP clients are published, we are committed to supporting them
 - [Live viewer counts](/stream/getting-analytics/live-viewer-count/) are not yet supported (coming soon)
 - [Analytics](/stream/getting-analytics/fetching-bulk-analytics/) are not yet supported (coming soon)
 - WHIP and WHEP must be used together — we do not yet support streaming using RTMP/SRT and playing using WHEP, or streaming using WHIP and playing using HLS or DASH. (coming soon)
-- Though we don't anticipate major API changes, while in beta, the WHIP and WHEP protocol versions used by our APIs is subject to change without notice. You can find the version in the `protocol-version` header in WHIP and WHEP API responses. The value of this header references the IETF draft slug for each protocol, for example, `draft-ietf-wish-whip-05` and `draft-murillo-whep-00`.
 - Once generally available, WebRTC streaming will be priced just like the rest of Cloudflare Stream, based on minutes stored and minutes of video delivered.

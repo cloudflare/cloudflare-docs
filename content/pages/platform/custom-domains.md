@@ -59,7 +59,7 @@ To detach a custom domain from your Pages project, you must modify your zone's D
 
 First, log in to the Cloudflare dashboard > select your account in **Account Home** > select your website > **DNS**.
 
-Then, in **DNS**:
+Then, in **DNS** > **Records**:
 
 1.  Locate your Pages project's CNAME record.
 2.  Select **Edit**.

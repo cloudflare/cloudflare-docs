@@ -62,7 +62,7 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 
 4. If you are creating a new custom hostname, select **Add Custom Hostname** and follow the instructions to [verify custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/). Otherwise, select **Save**.
 
-6. Navigate to **DNS**.
+6. Navigate to **DNS** > **Records**.
 
 7. Select **Add Record** and select *CNAME* from the **Type** dropdown.
 
@@ -72,7 +72,7 @@ You cannot enable **Edge TLS Termination** or **IP Access Rules** while using HT
 
 ### For less than 10 unique origins:
 
-1. Navigate to **DNS**.
+1. Navigate to **DNS** > **Records**.
 
 2. Select **Add Record** and select *CNAME* from the **Type** dropdown.
 

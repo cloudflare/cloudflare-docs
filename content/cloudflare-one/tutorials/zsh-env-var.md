@@ -16,12 +16,12 @@ When users authenticate to the applications secured by Cloudflare Access, Cloudf
 
 You can also use `cloudflared` to quickly gather the JWT from an application and use it from the command line or for programmatic use cases like scripts.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Login to an application secured by Cloudflare Access from the command line using `cloudflared`
 - Use Z Shell or Bash to create a time-saving command to store the JWT as an environment variable
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 5 minutes
 

@@ -419,6 +419,16 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-bot_management-js_detection-passed">
+        <td><p><code>cf.bot_management.js_detection.passed</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+          <p>Indicates whether the visitor has previous passed a JS Detection.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/javascript-detections/">JavaScript detections</a>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-client-bot">
         <td><code>cf.client.bot</code><br />{{<type>}}Boolean{{</type>}}</td>
         <td>
@@ -483,6 +493,35 @@ The Cloudflare Rules language supports these dynamic fields:
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
       </p></td>
     </tr>
+    <tr id="field-cf-waf-score">
+        <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>A global score from 1 to 99 that combines the score of each WAF attack vector into a single score.<br/>
+      This is the standard <a href="/waf/about/waf-attack-score/">WAF attack score</a> to detect variants of attack patterns.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-sqli">
+        <td><code>cf.waf.score.sqli</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-xss">
+        <td><code>cf.waf.score.xss</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-rce">
+        <td><code>cf.waf.score.rce</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -490,12 +529,6 @@ The Cloudflare Rules language supports these dynamic fields:
         <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
       </td>
     </tr>
-    <tr id="cf.bot_management.js_score">
-    <td><code>js_score</code>
-    <td>
-      <p>Customers should not use <code>js_score</code> when creating Bot Management firewall rules because it will always be blank.</p>
-   </td>
-   </tr>
   </tbody>
 </table>
 
@@ -985,9 +1018,9 @@ The Rules language includes fields that represent properties of an HTTP request 
 
 {{<Aside type="warning">}}
 
-The value of `http.request.body.*` fields has a maximum size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will contain the full size of the request without any truncation.
 
-The maximum body size applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
+The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
 
 {{</Aside>}}
 
@@ -1020,6 +1053,15 @@ The Cloudflare Rules language supports these HTTP body fields:
          <p>Indicates whether the HTTP request body is truncated.
          </p>
          <p>When true, <code class="InlineCode">http.request.body</code> fields may not contain all of the HTTP request body.
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-size">
+      <td valign="top"><code>http.request.body.size</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>The total size of the HTTP request body (in bytes).
+         </p>
+         <p>Note: This field may have a value larger than the one returned by <code>len(http.request.body.raw)</code>, since the <code>http.request.body.raw</code> field only considers the first 128 KB of the request.
          </p>
       </td>
     </tr>
@@ -1119,7 +1161,7 @@ You can only use HTTP response fields in:
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
-* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
+* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
 
 Specific fields may have additional limitations.
 

@@ -9,7 +9,7 @@ In the Workers platform, environment variables, secrets, and KV namespaces are k
 
 ## Environmental variables with module workers
 
-When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
+When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
 
 ## Environment variables via wrangler
 
@@ -83,7 +83,7 @@ filename: wrangler.toml
 
 ### Adding KV namespaces via wrangler
 
-KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv_namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
+KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv-namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
 
 ```toml
 ---

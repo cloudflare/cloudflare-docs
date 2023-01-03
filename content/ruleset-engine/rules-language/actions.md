@@ -157,7 +157,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       <td>
         <p>
           Executes the rules in the ruleset specified in the rule configuration. You can specify a
-          Managed Ruleset or a custom ruleset to execute.
+          managed ruleset or a custom ruleset to execute.
         </p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns.</p>
       </td>

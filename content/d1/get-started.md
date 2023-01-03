@@ -10,7 +10,7 @@ This guide will instruct you through setting up and deploying your first databas
 
 ## 1. Install and authenticate Wrangler
 
-You will use [Wrangler](/workers/wrangler/get-started/), a command-line tool for building Cloudflare Workers, to access D1. 
+You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access D1. 
 
 To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 

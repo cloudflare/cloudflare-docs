@@ -9,6 +9,7 @@ layout: list
 # HTTP Strict Transport Security (HSTS)
 
 {{<render file="_hsts-definition.md">}}
+<br/>
 
 HSTS adds an HTTP header that directs [compliant web browsers](/ssl/reference/browser-compatibility/) to:
 
@@ -23,7 +24,9 @@ For more background information on HSTS, see the [introductory blog post](https:
 
 {{</Aside>}}
 
----
+## Availability
+
+{{<feature-table id="ssl.hsts">}}
 
 ## Requirements
 

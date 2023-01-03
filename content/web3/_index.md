@@ -31,6 +31,12 @@ Gives you read and write access to the [Ethereum network](/web3/ethereum-gateway
 
 {{</feature>}}
 
+{{<feature header="Polygon Gateway" href="/web3/polygon-gateway/">}}
+
+Gives you read and write access to the [Polygon network](/web3/polygon-gateway/) without installing any software on your computer.
+
+{{</feature>}}
+
 ---
 
 ## Benefits

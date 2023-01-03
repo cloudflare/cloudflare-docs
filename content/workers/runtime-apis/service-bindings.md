@@ -44,7 +44,7 @@ Service bindings live on the environment context. This means Service bindings ca
 Service bindings have a few important limits:
 
 * Each request to a Worker via Service bindings count toward your [subrequest limit](/workers/platform/limits/#subrequests).
-* Nested calls to child Workers increase the depth of your Worker Pipeline. Maximum Pipeline depth is 32, including the first Worker. Subsequent calls will trigger an error.
+* Nested calls to child Workers increase the depth of your Worker Pipeline. Maximum Pipeline depth is 32, including the first Worker. Subsequent calls will throw an exception.
 * [Simultaneous open connection limits](/workers/platform/limits/#simultaneous-open-connections) are Pipeline-wide, meaning subrequests from multiple different Workers incur a global concurrent subrequest limit. However, a `fetch` call on a Service binding does not count as an open connection.
 
 ## Related resources

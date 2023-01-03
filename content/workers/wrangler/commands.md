@@ -4,10 +4,11 @@ title: Commands
 weight: 2
 ---
 
-## Wrangler commands
+# Wrangler commands
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
+- [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
 - [`dev`](#dev) - Start a local server for developing your Worker.
@@ -17,6 +18,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
@@ -48,6 +50,21 @@ Flags:
 
 ---
 
+## docs 
+
+Open the Cloudflare developer documentation in your default browser.
+
+```sh
+$ wrangler docs [COMMAND] 
+```
+
+{{<definitions>}}
+
+- `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
+
+{{</definitions>}}
+
 ## init
 
 Create a skeleton Wrangler project, including the `wrangler.toml` file.
@@ -65,7 +82,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-    {{</definitions>}}
+{{</definitions>}}
 
 ---
 
@@ -157,20 +174,18 @@ None of the options for this command are required. Many of these options can be 
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
 
   - Run the preview of the Worker directly on your local machine.
-    {{<Aside type="warning">}}
-    This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
-    {{</Aside>}}
+{{<Aside type="warning">}}
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
+{{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
-    {{<Aside type="warning">}}
-
+{{<Aside type="warning">}}
 When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
 
-On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
-
-      {{</Aside>}}
+- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+{{</Aside>}}
       
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
@@ -821,6 +836,76 @@ List R2 bucket in the current account.
 ```sh
 $ wrangler r2 bucket list
 ```
+
+---
+
+## `r2 object`
+
+Interact with R2 objects.
+
+{{<Aside type="note">}}
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+{{</Aside>}}
+
+### `get`
+
+Fetch an object from an R2 bucket.
+
+```sh
+$ wrangler r2 object get <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The source object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+### `put`
+
+Create an object in an R2 bucket.
+
+```sh
+$ wrangler r2 object put <OBJECTPATH> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Enables the file to be piped in, rather than specified with the --file option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies presentational information for the object.
+- `--content-encoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+- `--content-language` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The language the content is in.
+- `--cache-control` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The date and time at which the object is no longer cacheable.
+{{</definitions>}}
+
+### `delete`
+
+Delete an object in an R2 bucket
+
+```sh
+$ wrangler r2 object delete <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
 
 ---
 

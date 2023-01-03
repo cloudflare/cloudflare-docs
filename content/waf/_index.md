@@ -1,6 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
+layout: overview
 weight: 1
 meta:
   title: Cloudflare Web Application Firewall
@@ -8,30 +9,54 @@ meta:
 
 # Cloudflare Web Application Firewall
 
-The Cloudflare Web Application Firewall (WAF) provides both automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{<description>}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</description>}}
 
-{{<button-group>}}
-  {{<button type="primary" href="/waf/about/">}}Learn more{{</button>}}
-  {{<button type="secondary" href="/waf/managed-rulesets/">}}WAF Managed Rulesets{{</button>}}
-  {{<button type="secondary" href="/waf/change-log/">}}Managed Rulesets changelog{{</button>}}
-{{</button-group>}}
+{{<plan type="all">}}
 
-***
+---
 
-## Main features
+## Features
 
-*   **Custom rules**: Create your own custom rules to protect your website and your APIs from malicious incoming traffic.
-*   **Rate limiting rules**: Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.
-*   **WAF Managed Rulesets**: Enable the pre-configured Managed Rulesets to get immediate protection. These rulesets are regularly updated, offering advanced zero-day vulnerability protections. Adjust the behavior of managed rules, choosing from several possible actions.
-*   **Exposed Credential Checks**: Monitor and block use of stolen/exposed credentials for account takeover.
-*   **Firewall Analytics**: Identify and investigate security threats using an intuitive interface. Tailor your security configurations based on the activity log.
+{{<feature header="Custom rules" href="/waf/custom-rules/">}}
+{{<plan type="enterprise">}}
+Create your own custom rules to protect your website and your APIs from malicious incoming traffic. Use advanced features like [WAF attack score](/waf/about/waf-attack-score/) and [uploaded content scanning](/waf/about/content-scanning/) in your custom rules.
+{{</feature>}}
 
-## Availability
+{{<feature header="Rate limiting rules" href="/waf/rate-limiting-rules/">}}
+Define rate limits for incoming requests matching an expression, and the action to take when those rate limits are reached.
+{{</feature>}}
 
-The new Cloudflare WAF announced in March 2021 is available on all plans. The exact features and limits depend on your current plan.
+{{<feature header="Managed rules" href="/waf/managed-rules/">}}
+Enable the pre-configured managed rulesets to get immediate protection. These rulesets are [regularly updated](/waf/change-log/), offering advanced zero-day vulnerability protections, and you can adjust their behavior.
+{{</feature>}}
 
-## Related resources
+{{<feature header="Exposed credential checks" href="/waf/exposed-credentials-check/">}}
+Monitor and block use of stolen/exposed credentials for account takeover.
+{{</feature>}}
 
-For more information on the previous WAF implementation, also known as WAF managed rules, refer to [Understanding WAF managed rules](https://support.cloudflare.com/hc/articles/200172016) in the Support KB.
+{{<feature header="Security Events" href="/waf/security-events/" cta="Explore Security Events">}}
+Review mitigated requests (rule matches) using an intuitive interface. Tailor your security configurations based on the activity log.
+{{</feature>}}
 
-For more information on firewall rules, refer to [Cloudflare Firewall Rules](/firewall/).
+{{<feature header="Security Analytics" href="/waf/security-analytics/" cta="Explore Security Analytics">}}
+{{<plan type="enterprise">}}
+Displays information about all incoming HTTP requests, including those not affected by security measures.
+{{</feature>}}
+
+---
+
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="WAF managed rules (previous version)" href="https://support.cloudflare.com/hc/articles/200172016" icon="documentation-clipboard">}}
+Documentation on the previous implementation of WAF managed rules.
+{{</resource>}}
+
+{{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}
+Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests. Use firewall rules if you do not have access to WAF custom rules.
+{{</resource>}}
+
+{{</resource-group>}}

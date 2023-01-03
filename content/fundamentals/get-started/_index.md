@@ -4,11 +4,14 @@ title: New? Start here.
 weight: 2
 meta:
   title: New to Cloudflare? Start here.
+outputs:
+  - html
+  - rss
 ---
 
 # New to Cloudflare? Start here.
 
-As you get started with Cloudflare, explore the following resources to get the most out of our products:
+As you get started with Cloudflare, explore the following resources:
 
 - [Concepts](/fundamentals/get-started/concepts/) explain the basic ideas behind how Cloudflare works and how you can work with Cloudflare.
 - [Setup](/fundamentals/get-started/setup/) gives step-by-step instructions on how to add your domain to Cloudflare.

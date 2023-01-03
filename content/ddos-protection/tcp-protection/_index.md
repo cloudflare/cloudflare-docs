@@ -13,7 +13,7 @@ Cloudflare Advanced TCP Protection, powered by [`flowtrackd`](https://blog.cloud
 
 ## Availability
 
-Advanced TCP Protection is available to all [Magic Transit](/magic-transit/) customers, and is disabled by default. Protection for simpler TCP-based DDoS attacks is also included as part of the [Network-layer DDoS Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/).
+Advanced TCP Protection is available to all [Magic Transit](/magic-transit/) customers, and is disabled by default. Protection for simpler TCP-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
 ## Get started
 

@@ -10,13 +10,13 @@ title: Troubleshoot user login details
 
 Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog.cloudflare.com/announcing-the-cloudflare-access-app-launch/), which displays all applications that a user can reach in a single view. The same portal also can be used by a member of your team to gather diagnostic information about their account for troubleshooting.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Configure the App Launcher
 - Visit the App Launcher as an end user
 - Review login diagnostics as an end user
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 10 minutes
 

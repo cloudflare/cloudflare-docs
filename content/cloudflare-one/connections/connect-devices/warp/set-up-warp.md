@@ -25,11 +25,11 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. Install the Cloudflare root certificate on your devices.
 
-Advanced security features including HTTP traffic inspection require users to install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+Advanced security features including HTTP traffic inspection require users to install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ### 5. Download and deploy the WARP client to your devices.
 
@@ -56,7 +56,7 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. (optional) Add a DNS location to Gateway.
 
