@@ -23,14 +23,14 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2023-01-03</td>
+      <td>2023-01-09</td>
+      <td>Block</td>
+      <td>100551BETA</td>
+      <td>...b604fb62</td>
+      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082, BETA</td>
+      <td>This detection will replace 100551 in legacy WAF and ...e09c1a1e in new WAF</td>
     </tr>
-  </tbody>
+</tbody>
 </table>
 {{</table-wrap>}}
