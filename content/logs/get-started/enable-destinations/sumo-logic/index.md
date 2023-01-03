@@ -60,7 +60,7 @@ Logpush will stop working if you regenerate the HTTP Source Address (URL). Refer
 {{</Aside>}}
 
 {{<Aside type="info" header="Info">}}
-Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/Manage/Ingestion-and-Volume/01Manage-Ingestion).
+Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/docs/manage/ingestion-volume/log-ingestion/).
 {{</Aside>}}
 
 {{<Aside type="note" header="Note">}}

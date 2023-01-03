@@ -33,7 +33,7 @@ Once you enable the product or feature, it will not be an officially contracted 
 
 To get started, check out our product docs and visit the various Cloudflare communities highlighted above.
 
-# Recommendations
+## Recommendations
 
 Since these services are not yet part of your contract, we recommend that you use them on staging or other, non-production environments.
 
