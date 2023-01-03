@@ -5,8 +5,8 @@
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
 {{ $raw_summary := index (split (index (split .Context.Content "</p>") 0) "<p>") 1 | plainify | htmlUnescape | chomp }}
-{{ $summary_no_external_links := replace $raw_summary "External link icon Open external link " "" }}
-{{- $description:= default $summary_no_external_links .Context.Params.meta.description -}}
+{{ $summary := truncate 160 (replace $raw_summary "External link icon Open external link " "") }}
+{{- $description:= default $summary .Context.Params.meta.description -}}
 
 <meta charset="utf-8">
 <title>{{ $title }}</title>
@@ -22,16 +22,16 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#f38020"/>
 
-<meta name="description" content="{{ $description }}" />
+<meta name="description" content="{{ default $META.description $description }}" />
 
 <meta property="og:image" content="{{ $META.image | absURL }}"/>
 <meta property="og:title" content="{{ $title }}"/>
-<meta property="og:description" content="{{ $description }}"/>
+<meta property="og:description" content="{{ default $META.description $description }}"/>
 <meta property="og:type" content="website"/>
 
 <meta name="twitter:title" content="{{ $title }}"/>
 <meta name="twitter:image" content="{{ $META.image | absURL }}"/>
-<meta name="twitter:description" content="{{ $description }}"/>
+<meta name="twitter:description" content="{{ default $META.description $description }}"/>
 <meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 
