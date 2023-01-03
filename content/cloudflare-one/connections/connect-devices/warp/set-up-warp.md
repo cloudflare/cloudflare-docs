@@ -35,8 +35,13 @@ Advanced security features including HTTP traffic inspection require users to in
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices. 
-On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
+### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices.
+
+1. On your device, open the WARP client and select the gear icon.
+2. Go to **Preferences** > **Account** > **Login with Cloudflare Zero Trust**.
+3. Input your [team name](/cloudflare-one/glossary/#team-name). You can locate it on the [Zero Trust dashboard](https://dash.teams.cloudflare.com), under **Settings** > **General**.
+
+If you have already set up an identity provider in Cloudflare Access, the user will be prompted to login using this method. If you have not set up an identity provider, users can login with a [one-time pin](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/) which is enabled by default.
 
 Next, build [Secure Web Gateway policies](/cloudflare-one/policies/filtering/) to filter DNS, HTTP, and Network traffic on your devices.
 
