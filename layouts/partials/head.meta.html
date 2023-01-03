@@ -4,6 +4,7 @@
 
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
+{{- $description:= default .Context.Summary .Context.Params.meta.description | safeHTML -}}
 
 <meta charset="utf-8">
 <title>{{ $title }}</title>
@@ -19,16 +20,16 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#f38020"/>
 
-<meta name="description" content="{{ $META.description }}" />
+<meta name="description" content="{{ $description | safeHTML }}" />
 
 <meta property="og:image" content="{{ $META.image | absURL }}"/>
 <meta property="og:title" content="{{ $title }}"/>
-<meta property="og:description" content="{{ $META.description }}"/>
+<meta property="og:description" content="{{ $description | safeHTML }}"/>
 <meta property="og:type" content="website"/>
 
 <meta name="twitter:title" content="{{ $title }}"/>
 <meta name="twitter:image" content="{{ $META.image | absURL }}"/>
-<meta name="twitter:description" content="{{ $META.description }}"/>
+<meta name="twitter:description" content="{{ $description | safeHTML }}"/>
 <meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 
