@@ -61,6 +61,8 @@ In this section, you will create an Access Idenetify Provider per Application or
 
 ![List of identity providers highlighting the Azure AD option](/cloudflare-one/static/zero-trust-security/azuread-access-policies/access-app-idp.png)
 
+5. Create an Access Policy Require rule with the corresponding IdP as the Login Method
+
 Repeat the two sections above for each individual application or group of applications. 
 
 ## Azure AD and Conditional Access configuration
