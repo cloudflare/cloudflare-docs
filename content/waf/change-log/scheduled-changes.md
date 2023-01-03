@@ -28,8 +28,8 @@ layout: list
       <td>Block</td>
       <td>100551BETA</td>
       <td>...b604fb62</td>
-      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082 , BETA</td>
-      <td>This detection will replace 100551 in legacy WAF and e09c1a1e in new WAF</td>
+      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082, BETA</td>
+      <td>This detection will replace 100551 in legacy WAF and ...e09c1a1e in new WAF</td>
     </tr>
 </tbody>
 </table>
