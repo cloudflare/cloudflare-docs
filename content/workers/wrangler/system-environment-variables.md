@@ -42,7 +42,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_API_BASE_URL` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The default value is https://api.cloudflare.com/client/v4.
+  - The default value is `"https://api.cloudflare.com/client/v4"`.
 
 - `WRANGLER_LOG` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
