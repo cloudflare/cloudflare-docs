@@ -1,5 +1,5 @@
 ---
-title: Unified search
+title: Unified Search
 pcx_content_type: concept
 weight: 1
 ---
