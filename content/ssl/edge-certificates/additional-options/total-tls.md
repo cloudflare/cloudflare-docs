@@ -19,7 +19,7 @@ Total TLS is available for domains that have purchased [Advanced Certificate Man
   
 {{<Aside type="warning">}}
 
-Total TLS does not issue certificates for any subdomain used by [Cloudflare Load Balancing](/load-balancing/), we recommend using other types of certificates to avoid any potential downtime.
+Because Total TLS does not issue certificates for any subdomain used by [Cloudflare Load Balancing](/load-balancing/), we recommend using other types of certificates to avoid any potential downtime.
 
 {{</Aside>}}
 
