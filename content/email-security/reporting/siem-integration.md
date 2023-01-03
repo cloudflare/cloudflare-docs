@@ -1,7 +1,7 @@
 ---
 title: SIEM integration
 pcx_content_type: tutorial
-weight: 4
+weight: 3
 ---
 
 # SIEM integration

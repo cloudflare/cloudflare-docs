@@ -104,14 +104,14 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
     <tr>
       <td>
         <a href="/ruleset-engine/rulesets-api/view/#list-rules-in-a-managed-ruleset-with-a-specific-tag">
-          List rules in a Managed Ruleset with a specific tag
+          List rules in a managed ruleset with a specific tag
         </a>
       </td>
       <td>
         <code>GET</code>
       </td>
       <td>
-        <p>Returns a list of all the rules in a Managed Ruleset with a specific tag.</p>
+        <p>Returns a list of all the rules in a managed ruleset with a specific tag.</p>
       </td>
     </tr>
   </tbody>
@@ -164,7 +164,7 @@ The Cloudflare Rulesets API supports the operations outlined below. Visit the as
         <p>
           Updates the basic properties of a ruleset and the list of rules in the ruleset.
           <br />
-          Allows you to configure the execution of Managed Rulesets.
+          Allows you to configure the execution of managed rulesets.
         </p>
       </td>
     </tr>

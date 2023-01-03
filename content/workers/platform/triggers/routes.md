@@ -7,15 +7,16 @@ title: Routes
 
 ## Background
 
-Routes allow users to map a URL pattern to a Worker script to enable Workers to run in front of [Custom Domains](/workers/platform/triggers/custom-domains/) or their own application servers.
+Routes allow users to map a URL pattern to a Worker script to enable Workers to run in front of [Custom Domains](/workers/platform/triggers/custom-domains/) or their own external application servers. Customers must manually create DNS records and certificates for Routes to invoke over HTTP(S).
 
 ## Customize your routes
 
-For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script. To add a Route, you need:
+For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script. To add a Route, you must have:
 
 1. An active Cloudflare zone.
-2. A proxied (orange-clouded) DNS record.
+2. A valid proxied (orange-clouded) DNS record.
 3. A Worker to invoke.
+4. A certificate covering the relevant DNS record.
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 

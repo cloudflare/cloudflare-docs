@@ -136,6 +136,7 @@ export const loader = async ({
   const data = await response.json() as { name: string };
   return json(data);
 };
+```
 
 You have to do this because there is no way to export the Durable Object class from a Pages Function. 
 

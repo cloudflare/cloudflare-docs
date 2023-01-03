@@ -40,7 +40,7 @@ The phases execute in the order they appear in the table.
 | `ddos_l7`* | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/configure-api/) |
 | `http_request_firewall_custom` | [Web Application Firewall (WAF)](/waf/custom-rules/create-api/) |
 | `http_ratelimit` | [Rate limiting rules](/waf/rate-limiting-rules/create-api/) |
-| `http_request_firewall_managed` | [Web Application Firewall (WAF)](/waf/managed-rulesets/deploy-api/) |
+| `http_request_firewall_managed` | [Web Application Firewall (WAF)](/waf/managed-rules/deploy-api/) |
 | `http_request_sbfm` | [Super Bot Fight Mode](/bots/get-started/pro/) |
 | `http_request_redirect` | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/create-api/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
@@ -61,7 +61,7 @@ The phases execute in the order they appear in the table.
 | http_custom_errors | [Custom error responses](/rules/custom-error-responses/) |
 | _N/A_ (internal phase) | [Managed Transforms](/rules/transform/managed-transforms/) |
 | `http_response_headers_transform` | [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-api/) |
-| `http_response_firewall_managed` | [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) (Data Loss Prevention) |
+| `http_response_firewall_managed` | [Cloudflare Sensitive Data Detection](/waf/managed-rules/) (Data Loss Prevention) |
 | `http_log_custom_fields` | [Logpush custom fields](/logs/reference/custom-fields/) |
 
 {{</table-wrap>}}

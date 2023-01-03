@@ -6,13 +6,13 @@ weight: 2
 
 # WAF attack score
 
-WAF attack score is a feature that complements [WAF Managed Rulesets](/waf/managed-rulesets/).
+WAF attack score is a feature that complements [WAF Managed Rules](/waf/managed-rules/).
 
-Managed Rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, Managed Rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
+WAF's managed rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, managed rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
 
-WAF attack score allows you to identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/get-started/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in the WAF Managed Rulesets.
+WAF attack score allows you to identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/get-started/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in WAF Managed Rules.
 
-To maximize protection, Cloudflare recommends that you use both Managed Rulesets and WAF attack score.
+To maximize protection, Cloudflare recommends that you use both Managed Rules and WAF attack score.
 
 {{<Aside type="note">}}
 This feature is only available on Enterprise plans.
@@ -64,4 +64,4 @@ After making sure that your rule is logging the correct requests, change the rul
 
 ## Additional remarks
 
-The WAF Attack Score is different from Threat Score and Bot Score. WAF Attack Score identifies variation of attacks that WAF Managed Rulesets do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.
+The WAF Attack Score is different from Threat Score and Bot Score. WAF Attack Score identifies variation of attacks that WAF Managed Rules do not catch. Bot Score identifies bots, while Threat Score measures IP reputation across Cloudflare services.

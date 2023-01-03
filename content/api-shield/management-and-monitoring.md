@@ -52,6 +52,36 @@ When adding a path manually, you can specify variable fields by enclosing them i
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
 
+## Endpoint schema learning
+
+Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters.
+
+### Export a schema
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Navigate to **Endpoint Management**.
+4. Select **Export schema** and choose a hostname to export.
+5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
+6. Select **Export schema** and choose a location to save the file.
+
+{{<Aside type="Note">}} 
+
+The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
+
+{{</Aside>}}
+
+#### Learned schemas will always include:
+
+- The listed hostname in the servers section
+- All endpoints by host, method, and path
+- Detected path variables
+
+#### Learned schemas can optionally include:
+
+- Detected query parameters and its format
+- API Shield’s rate limit threshold recommendations
+
 ## Endpoint Performance Analysis
 
 For each saved endpoint, customers can view:

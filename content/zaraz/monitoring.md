@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Zaraz Monitoring
-weight: 5
+weight: 7
 ---
 
 # Zaraz Monitoring

@@ -16,7 +16,7 @@ Once you set up retraction, you can retract messages manually or set up automati
 
 ### Manual retraction
 
-To retract individual messages, locate the message in [Mail trace](/email-security/reporting/mailtrace/) and retract the message. Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information on how to manually retract email messages.
+To retract individual messages, locate the message in [Mail trace](/email-security/reporting/search/mailtrace/) and retract the message. Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information on how to manually retract email messages.
 
 ### Automatic retraction
 

@@ -112,7 +112,7 @@ When your content reaches our edge network, Cloudflare:
 
 {{<Aside type="note" header="API">}}
 
-You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host,-or-prefix). You can use up to 30 cache-tags in one API call and make up to 30,000 purge API calls in a 24-hour period.
+You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix). You can use up to 30 cache-tags in one API call and make up to 30,000 purge API calls in a 24-hour period.
 
 {{</Aside>}}
 
@@ -133,7 +133,7 @@ Purging by hostname means that all assets at URLs with a host that matches one o
 
 {{<Aside type="note" header="API">}}
 
-You can purge hostnames via the Cloudflare API. For more information, refer to the [API documentation](https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host,-or-prefix). You can use up to 30 hostnames per API call and make up to 30,000 purge API calls in a 24-hour period.
+You can purge hostnames via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix). You can use up to 30 hostnames per API call and make up to 30,000 purge API calls in a 24-hour period.
 
 {{</Aside>}}
 
@@ -166,7 +166,7 @@ Purging by prefix is useful in different scenarios, such as:
 
 {{<Aside type="note" header="API">}}
 
-You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](https://api.cloudflare.com/#zone-purge-files-by-cache-tags,-host,-or-prefix). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
+You can purge prefixes via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge-files-by-cache-tags,-host,-or-prefix). You can use up to 30 prefixes per API call and make up to 30,000 purge API calls in a 24-hour period.
 
 {{</Aside>}}
 

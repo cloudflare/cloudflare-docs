@@ -10,8 +10,9 @@ meta:
 
 You can manipulate the headers included in the HTTP response through HTTP Response Header Modification Rules. Through these rules you can:
 
-* Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response.
-* Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response.
+* Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response if it does not exist.
+* Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response if it does not exist.
+* Add a new HTTP response header with a literal string value without removing any existing headers with the same name.
 * Remove an HTTP header from the response.
 
 You can create an HTTP Response Header Modification Rule [in the dashboard](/rules/transform/response-header-modification/create-dashboard/) or [via API](/rules/transform/response-header-modification/create-api/).

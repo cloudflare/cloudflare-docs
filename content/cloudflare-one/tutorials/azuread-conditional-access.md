@@ -5,7 +5,7 @@ pcx_content_type: tutorial
 title: Use multiple Azure AD Conditional Access Policies with Access
 ---
 
-# Use multiple AzureA D Conditional Access Policies with Access
+# Use multiple Azure AD Conditional Access Policies with Access
 
 With Azure Active Directory (AD)'s Conditional Access, administrators can enforce policies on applications and users directly in Azure AD. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
 
