@@ -90,7 +90,7 @@ For this example, the logo for Area 1 has been updated.
 
 {{<Aside type="note">}}Verify that the User Assignments and Application Properties of your new Azure AD application have been updated accordingly to ensure that authorized personnel are able to access the new application from their Office 365/Azure Apps Catalog page. Application logos and privacy policy URL can also be updated as needed.{{</Aside>}}
 
-1. Log in to your [Office 365 portal](portal.office.com).
+1. Log in to your [Office 365 portal](https://portal.office.com).
 
 2. Select **All Apps**. 
 
