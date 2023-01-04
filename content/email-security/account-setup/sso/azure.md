@@ -43,17 +43,22 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
 8. Select **Save** to exit the Basic SAML Configuration.
 
-9. Select the pencil icon to edit **SAML Signing Certificate**.
+9. Select the pencil icon to edit **SAML Signing Certificate** and make the following changes:
+
     - **Signing Option**: Select _Sign SAML response_ from the drop-down menu.
     - **Signing Algorithm**: Select _SHA-1_ from the drop-down menu.
 
-    ![Select Sign SAML response and SHA-1 from the menu](/email-security/static/sso/azure/step9-saml-signing-certificate.png)
+    ![Select the pencil to make changes](/email-security/static/sso/azure/step9-saml-certificate.png)
 
 10. Select **Save** to exit **SAML Signing Certificate**.
 
+    ![Select Sign SAML response and SHA-1 from the menu](/email-security/static/sso/azure/step9-saml-signing-certificate.png)
+
 11. Still in the **SAML Signing Certificate** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Area 1 dashboard.
 
-Your Azure configuration is finished. It should look similar to this:
+    ![Download the Metadata XML information](/email-security/static/sso/azure/step11-download.png)
+
+Your Azure configuration is now complete. It should look similar to this:
 
 ![Your Azure configuration should be similar to this one](/email-security/static/sso/azure/config-finished.png)
 
