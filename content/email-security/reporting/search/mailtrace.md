@@ -1,7 +1,7 @@
 ---
 title: Mail Trace
 pcx_content_type: concept
-weight: 2
+weight: 3
 ---
 
 # Mail Trace
@@ -11,7 +11,7 @@ weight: 2
 You would commonly use Mail Trace to review *whether* and *when* an email passed through Area 1, as well as *what* Area 1 communicated to the following mail provider.
 
 {{<Aside type="note">}}
-To only review emails marked with a disposition, use [Detection search](/email-security/reporting/detection-search/).
+To only review emails marked with a disposition, use [Detection Search](/email-security/reporting/search/detection-search/).
 {{</Aside>}}
 
 ## Use Mail Trace

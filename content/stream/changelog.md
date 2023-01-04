@@ -22,7 +22,7 @@ Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9) wh
 
 ### Reduced time to start WebRTC streaming and playback with Trickle ICE
 
-Cloudflare Stream's [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-05.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
+Cloudflare Stream's [WHIP](https://datatracker.ietf.org/doc/draft-ietf-wish-whip/) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
 
 For more, refer to [the docs](/stream/webrtc-beta/).
 

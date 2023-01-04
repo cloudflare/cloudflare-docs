@@ -1,7 +1,7 @@
 ---
 title: Language support
 pcx_content_type: reference
-weight: 2
+weight: 3
 ---
 
 # Language support
