@@ -18,17 +18,19 @@ Many of these limits will increase during the Public Beta of Queues. If you have
 
 | Feature                                 | Limit                             |
 | --------------------------------------- | --------------------------------- |
-| Queues                                  | 10 per account                    |
+| Queues                                  | 100 per account <sup>1</sup>      |
 | Maximum message size                    | 128 KB                            |
 | Maximum message retries                 | 100                               |
 | Maximum batch size                      | 100 messages                      |
 | Maximum batch wait time                 | 30 seconds                        |
-| Maximum message throughput <sup>1</sup> | 100 messages per second           |
+| Maximum message throughput <sup>2</sup> | 100 messages per second           |
 | Maximum retention period                | 4 days (96 hours)                 |
 
 {{</table-wrap>}}
 
-<sup>1</sup> This is a limit that we will increase, and aspire to effectively eliminate in the future.
+<sup>1</sup> This can be raised on request for Enterprise & Workers for Platforms customers.
+<sup>2</sup> This is a limit that we will increase, and aspire to effectively eliminate in the future.
+
 
 Notes:
 
