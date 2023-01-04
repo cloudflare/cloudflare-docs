@@ -46,4 +46,4 @@ To delete a rule, select **Delete** next to the rule you want to delete and conf
 
 ### Order a rule
 
-Select the handle next to the rule and drag the rule into position. Alternatively, use the up/down arrow buttons to shift the rule up or down in the rules list.
+Select the handle next to the rule and drag the rule into position. Alternatively, select the up/down arrow buttons to shift the rule up/down in the rules list.
