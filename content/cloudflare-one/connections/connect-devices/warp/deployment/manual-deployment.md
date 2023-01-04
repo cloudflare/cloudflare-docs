@@ -18,7 +18,7 @@ If you plan to direct your users to manually download and configure the WARP cli
 1. Click on the Cloudflare logo in the menu bar.
 2. Click the gear icon.
 3. Navigate to **Preferences** > **Account**.
-4. Click **Login with Cloudflare for Teams**.
+4. Click **Login with Cloudflare Zero Trust**.
 5. Enter your [team name](/cloudflare-one/glossary/#team-name).
 6. Complete the authentication steps required by your organization.
 
@@ -38,7 +38,7 @@ The device is now protected by your organization's Zero Trust policies. For more
 1. Find the 1.1.1.1 application and tap to launch it.
 2. Tap the menu bar icon.
 3. Tap **Account**.
-4. Tap **Login with Cloudflare for Teams**.
+4. Tap **Login with Cloudflare Zero Trust**.
 5. Enter your [team name](/cloudflare-one/glossary/#team-name).
 6. Complete the authentication steps required by your organization.
 
