@@ -1302,11 +1302,11 @@
         "custom_rules": {
           "title": "Custom rules",
           "link": "/waf/custom-rules/",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Certain Enterprise plans"
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
         },
         "custom_rulesets": {
           "title": "Custom rulesets",
