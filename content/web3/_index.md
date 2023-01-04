@@ -3,6 +3,8 @@ title: Overview
 layout: overview
 pcx_content_type: overview
 weight: 1
+meta:
+    description: Cloudflare offers gateways to various networks to help Web3 developers do what they do best, develop applications without having to worry about running infrastructure.
 ---
 
 # Cloudflare Web3 docs
@@ -12,8 +14,6 @@ Develop Web3 applications without having to worry about running infrastructure
 {{</description>}}
 
 {{<plan type="add-on">}}
-
-Cloudflare offers gateways to various networks to help Web3 developers do what they do best, develop applications without having to worry about running infrastructure.
 
 Web3, or the distributed web, is a set of technologies that enables hosting of content and web applications in a serverless manner by leveraging distributed systems and consensus protocols.
 
