@@ -11,6 +11,8 @@ Admin Quarantine allows you to automatically prevent incoming messages from reac
 The messages sent to Admin Quarantine are determined by your [domain settings](/email-security/email-configuration/domains-and-routing/domains/).
 
 Enabling quarantine by disposition is hierarchical and you cannot enable only one disposition if there are other dispositions above it. For example, if you try to enable just `Spam`, Area 1 will also enable `Malicious`, the disposition that sits above `Spam`. Similarly, if you enable `Spoof` everything above this disposition will be enabled. `Malicious` is the only disposition that can be enabled without additional dispositions.
+    
+![Choosing a disposition is hierarchical](/email-security/static/admin-quarantine/quarantine-by-disposition.png)
 
 ## Quarantine emails by disposition
 
@@ -23,6 +25,7 @@ Enabling quarantine by disposition is hierarchical and you cannot enable only on
 4. Select the three dots on the domain that you want to configure admin quarantine for, and choose **Edit**.
 
 5. In **Quarantine Policy** choose the dispositions you want to enable quarantine for that domain.
+
 
 6. Select **Update Domain**.
 
