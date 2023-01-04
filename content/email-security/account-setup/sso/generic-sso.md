@@ -12,7 +12,7 @@ Below is a generic guide to successfully set up an identity provider based SAML.
 
 ## 1. Identity Provider SAML setup
 
-1. **Log in** to your SAML provider and access its setup section.
+1. Log in to your SAML provider and access its setup section.
 
 2. Enter the following values to configure your IDP provider:
     | | |
@@ -26,7 +26,7 @@ Below is a generic guide to successfully set up an identity provider based SAML.
     | **Signature Algorithm**         | _RSA_-SHA1                                           |
     | **Digest Algorithm**            | _SHA1_                                               |
 
-3. In the **Attribute Statements**, add your users to the application. Emails you add here should match emails users already have in the Area 1 dashboard.
+3. In the **Attribute Statements**, add your application users. Emails you add here should match emails users already have in the Area 1 dashboard.
 
 4. After finishing the setup, download the IDP metadata file. Copy and paste it into the **METADATA XML** field in the SSO section of Area 1’s dashboard. Refer to **step 4** in the guide below for more details.
 

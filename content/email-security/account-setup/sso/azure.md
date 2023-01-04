@@ -14,7 +14,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
 1. [Log in to Azure portal](https://portal.azure.com/) and open **Enterprise Applications**.
 
-2. Select **New Application** to create a new application.
+2. Select **New Application**.
 
     ![Create a new application](/email-security/static/sso/azure/step2-new-app.png)
 
@@ -86,7 +86,7 @@ Now that the application configuration is complete, update **User Assignments** 
 ## 3. Test SSO configuration
 
 After completing both the Azure and Area 1 set ups, you can test your SSO access. 
-For this example, the logo for Area 1 has been updated.
+In this example, the logo for Area 1 has been updated.
 
 {{<Aside type="note">}}Verify that the User Assignments and Application Properties of your new Azure AD application have been updated accordingly to ensure that authorized personnel are able to access the new application from their Office 365/Azure Apps Catalog page. Application logos and privacy policy URL can also be updated as needed.{{</Aside>}}
 
