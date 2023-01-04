@@ -1270,8 +1270,8 @@
       }
     },
     "managed_rules": {
-      "title": "Managed rules",
-      "link": "/firewall/",
+      "title": "Web Application Firewall (WAF)",
+      "link": "/waf/",
       "properties": {
         "availability": {
           "title": "Availability",
