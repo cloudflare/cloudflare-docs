@@ -74,7 +74,9 @@ To retrieve those values:
     - `Directory.Read.All`
     - `GroupMember.Read.All`
     
-Note: More narrow permissions may be used, however this is the set of permissions that are tested against regularly.
+{{<Aside type="note">}}
+More narrow permissions may be used, however this is the set of permissions that are tested and supported by Cloudflare.
+{{</Aside>}}
 
 4. Once all seven permissions are enabled, select **Add permissions**.
 
