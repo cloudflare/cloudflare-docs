@@ -53,6 +53,10 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
 11. Still in the **SAML Signing Certificate** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Area 1 dashboard.
 
+Your Azure configuration is finished. It should look similar to this:
+
+![Your Azure configuration should be similar to this one](/email-security/static/sso/azure/config-finished.png)
+
 {{<Aside type="note">}}
 Now that the application configuration is complete, update **User Assignments** and **Application Properties** as needed to ensure that authorized personnel are able to access the new application from their Apps Catalog. Additionally, you may choose to update the application logo image file or the privacy policy URL.
 {{</Aside>}} 
@@ -105,9 +109,9 @@ In this example, the logo for Area 1 has been updated.
 If you have trouble connecting your Azure account to Area 1, make sure that:
 
 - The user exists in the Area 1 dashboard.
-- The **Identifier** and **Reply URLs** in Azure AD are correct (refer to [step 7 - **Basic SAML Configuration**](#1-azure-active-directory-configuration)).
-- **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to [step 9 - **SAML Signing Certificate**](#1-azure-active-directory-configuration).
-- That the SAML SSO Domain is set correctly in the Area dashboard (refer to [step 7](#2-configure-area-1-to-connect-to-azure)).
-- That name ID identifier is set to **Email Address**.
+- The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
+- **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Signing Certificate** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration).
+- The SAML SSO Domain is set correctly in the Area 1 dashboard (refer to step 6 in [Configure Area 1 to connect to Azure](#2-configure-area-1-to-connect-to-azure)).
+- The name ID identifier is set to **Email Address**.
 
 If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
