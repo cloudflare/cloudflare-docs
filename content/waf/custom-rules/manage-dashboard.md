@@ -44,6 +44,6 @@ To edit a rule:
 
 To delete a rule, select **Delete** next to the rule you want to delete and confirm the operation.
 
-### Order a rule
+### Reorder a rule
 
 Select the handle next to the rule and drag the rule into position. Alternatively, select the up/down arrow buttons to shift the rule up/down in the rules list.
