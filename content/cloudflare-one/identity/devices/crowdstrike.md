@@ -12,7 +12,7 @@ Device posture with CrowdStrike requires the CrowdStrike agent and the Cloudflar
 
 ## Set up CrowdStrike as a service provider
 
-### 1. Get CrowdStrike settings
+### 1. Obtain CrowdStrike settings
 
 The following CrowdStrike values are needed to set up the CrowdStrike posture check:
 
