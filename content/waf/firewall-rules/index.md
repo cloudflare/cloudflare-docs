@@ -10,10 +10,8 @@ meta:
 
 Firewall rules allow users to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
 
-{{<Aside type="note">}}
-Use Cloudflare Firewall Rules if you do not have access to [WAF custom rules](/waf/custom-rules/).
+{{<Aside type="warning" header="Deprecation notice">}}
+Firewall rules have been deprecated. Cloudflare moved your firewall rules to [WAF custom rules](/waf/custom-rules/). For more information on this change, refer to the [Support KB](#).
 {{</Aside>}}
-
-Even though firewall rules are not based on the [Ruleset Engine](/ruleset-engine/), you can use the same [Rules language](/ruleset-engine/rules-language/) to define firewall rule expressions.
 
 For more information on firewall rules, refer to [Cloudflare Firewall Rules](/firewall/).

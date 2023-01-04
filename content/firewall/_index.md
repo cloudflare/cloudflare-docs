@@ -2,6 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
+layout: single
 meta:
   title: Cloudflare Firewall Rules
 ---
@@ -9,6 +10,8 @@ meta:
 # Cloudflare Firewall Rules
 
 Cloudflare Firewall Rules allows you to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
+
+{{<render file="_deprecation-notice.md">}}
 
 ## Main features
 
@@ -34,7 +37,7 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 * You can also manage firewall rules through Terraform. For more information, refer to [Getting Started with Terraform](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
 
-## Related resources 
+## Related resources
 
 For additional information, refer to the following pages:
 
