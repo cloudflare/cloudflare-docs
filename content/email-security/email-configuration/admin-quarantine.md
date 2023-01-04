@@ -60,4 +60,4 @@ From **Admin Quarantine**, you can also release quarantined emails by selecting 
 
 6. (Optional) You can also release multiple messages, by selecting the box next to each message you want to release.
 
-These email messages will then be sent to the original recipients from the `quarantine@area1reports.com` email address with the original message attached in a zip file.
+These email messages will then be sent to the original recipients from the `quarantine@area1reports.com` email address with the original message attached in a ZIP file.
