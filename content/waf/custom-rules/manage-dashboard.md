@@ -20,12 +20,13 @@ The custom rules interface allows you to:
 - Browse and filter rules
 - Edit and delete rules
 - Enable or disable rules
+- Reorder rules
 
 ![The Custom rules tab in the dashboard, listing three example rules](/waf/static/custom-rules/custom-rules-tab.png)
 
 ## Manage custom rules
 
-Edit, delete, or enable/disable rules in the **Custom rules** card.
+Edit, delete, or enable/disable rules in the **Custom rules** tab.
 
 ### Enable or disable a rule
 
@@ -42,3 +43,9 @@ To edit a rule:
 ### Delete a rule
 
 To delete a rule, select **Delete** next to the rule you want to delete and confirm the operation.
+
+### Order a rule
+
+Select the handle next to the rule and drag the rule into position. Alternatively, use the up/down arrow buttons to shift the rule up or down in the rules list.
+
+
