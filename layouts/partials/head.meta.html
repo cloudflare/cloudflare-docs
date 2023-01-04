@@ -8,10 +8,6 @@
 {{ $summary := replaceRE `External link icon\s+Open external link\s?` "" $raw_summary }}
 {{- $description:= truncate 160 (default $META.description (default $summary .Context.Params.meta.description)) -}}
 
-<script>
-  console.log({{$summary}})
-</script>
-
 <meta charset="utf-8">
 <title>{{ $title }}</title>
 <meta http-equiv="cleartype" content="on"/>
