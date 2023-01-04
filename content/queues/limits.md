@@ -28,7 +28,7 @@ Many of these limits will increase during the Public Beta of Queues. If you have
 
 {{</table-wrap>}}
 
-<sup>1</sup> This can be raised on request for Enterprise & Workers for Platforms customers. Please [submit a linit increase request](https://docs.google.com/forms/u/1/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform).
+<sup>1</sup> This can be raised on request for Enterprise & Workers for Platforms customers. Please [submit a limit increase request](https://docs.google.com/forms/u/1/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform).
 <sup>2</sup> This is a limit that we will increase, and aspire to effectively eliminate in the future.
 
 
