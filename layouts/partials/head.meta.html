@@ -5,7 +5,7 @@
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
 {{ $raw_summary := index (split (index (split .Context.Content "</p>") 0) "<p>") 1 | plainify | htmlUnescape | chomp }}
-{{ $summary := replace $raw_summary "External link icon Open external link " "" }}
+{{ $summary := replaceRE `External link icon\s+Open external link\s?` "" $raw_summary }}
 {{- $description:= truncate 160 (default $META.description (default $summary .Context.Params.meta.description)) -}}
 
 <meta charset="utf-8">
