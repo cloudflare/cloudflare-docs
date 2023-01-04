@@ -26,7 +26,7 @@ The custom rules interface allows you to:
 
 ## Manage custom rules
 
-Edit, delete, or enable/disable rules in the **Custom rules** tab.
+Edit, delete, enable/disable, or reorder rules in the **Custom rules** tab.
 
 ### Enable or disable a rule
 
