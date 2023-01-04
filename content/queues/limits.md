@@ -18,7 +18,7 @@ Many of these limits will increase during the Public Beta of Queues. If you have
 
 | Feature                                 | Limit                             |
 | --------------------------------------- | --------------------------------- |
-| Queues                                  | 10 per account                    |
+| Queues                                  | 100 per account                    |
 | Maximum message size                    | 128 KB                            |
 | Maximum message retries                 | 100                               |
 | Maximum batch size                      | 100 messages                      |
