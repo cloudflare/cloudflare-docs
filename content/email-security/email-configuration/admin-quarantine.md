@@ -12,7 +12,6 @@ The messages sent to Admin Quarantine are determined by your [domain settings](/
 
 Enabling quarantine by disposition is hierarchical and you cannot enable only one disposition if there are other dispositions above it. For example, if you try to enable just `Spam`, Area 1 will also enable `Malicious`, the disposition that sits above `Spam`. Similarly, if you enable `Spoof` everything above this disposition will be enabled. `Malicious` is the only disposition that can be enabled without additional dispositions.
 
-
 ## Quarantine emails by disposition
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
