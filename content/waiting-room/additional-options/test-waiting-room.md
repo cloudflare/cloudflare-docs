@@ -29,11 +29,27 @@ First, download the [sample](https://github.com/yj7o5/cf-waiting-room-testing/bl
 
 This sample plan simulates 200 active users visiting the site, slowly ramping up traffic within the first minute and then maintaining 200 active users for the next three minutes. The test plan for this tutorial follows the setup outlined in the next steps.
 
-## 2. Run sample plan
+## 2. Edit and run the sample plan
 
-To run our test plan select the **play** button to get the test started. This should take roughly around 3-4 minutes.
+Before running the sample plan, edit the waiting room in the test plan to point to your own waiting room.
 
-![Navigation bar](/waiting-room/static/navigation.png)
+1. Select **Waiting Room Simulation** to expand the test plan and then select **Request origin with waiting room** to update the test configuration.
+
+![Select Request origin with waiting room in the Waiting Room Simulation panel](/waiting-room/static/simulation-panel.png)
+
+2. In the **HTTP Request** section update the **Protocol**, **Server Name or IP**, and **Path** fields to point to your test URL with waiting room enabled. For example, if your full URL looks like `https://www.example-shop.com/deals/summer`, then the fields should match as the following:
+
+Field | Value
+------| -----
+Protocol | https 
+Server Name or IP | www.example-shop.com
+Path | deals/summer
+
+![Update the HTTP Request section](/waiting-room/static/http-request-section.png)
+
+Then, select the **play** button to get the test started. This should take roughly around 3-4 minutes.
+
+![Select the play button](/waiting-room/static/navigation.png)
 
 - Each simulated user has the following attributes:
 
