@@ -73,6 +73,10 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#extract-the-sha-256-fingerprint) of the TLS certificate.
 
-You can now create a [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) for devices on this network. The network name will appear when you choose the _Managed network_ selector.
+You can now create a [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) for devices on this network. In the rule builder, the network name will appear when you choose the _Managed network_ selector.
 
-Each time the WARP client detects a network change event from the operating system (for example, when waking up the device or changing wifi networks), we will check the network location and apply the corresponding settings profile.
+Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will check its network location and apply the corresponding settings profile.
+
+{{<Aside type="note">}}
+All managed networks on the list are checked each time the WARP client detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+ {{</Aside>}}

@@ -10,7 +10,7 @@ When the WARP client is deployed on a device, Cloudflare processes all DNS reque
 
 There are three settings you can configure:
 
-*   **Use [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/local-domains/)** to instruct the WARP client to send DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
+*   **Use [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/local-domains/)** to instruct the WARP client to proxy DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
 
 {{<Aside type="warning">}}
 
