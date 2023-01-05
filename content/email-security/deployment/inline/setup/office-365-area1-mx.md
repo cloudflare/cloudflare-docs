@@ -222,6 +222,50 @@ MX Priority | Host
 
 Once the MX records have been updated with the new MX records, delete your old MX records and leave only the ones above. DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour or follow the TTL as described in Step 1.
 
+### Secure Office 365 from MX records bypass (recommended)
+
+One method of attack is to lookup old MX records and send phishing emails directly to the mail server. To secure the email flow, you will want to enforce that inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encription. This step is optional but recommended.
+
+{{<Aside type="warning" header="Important">}}
+This step should not be performed until 24 hours after all domains (excluding your `<on_microsoft.com>` domain) in your Office 365 organization have been onboarded to Area 1, and Area 1 is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
+{{</Aside>}}
+
+#### Configure domains
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/). 
+
+2. Go to **Settings** (the gear icon).
+
+3. In **Email Configuration** > **Domains**, make sure each domain you are onboarding has been added.
+
+4. Set the following options for each domain:
+    - **Domain**: `<YOUR_DOMAIN>`
+    - **Configured as**: `MX Records`
+    - **Forwarding to**: This should match the expected MX for each domain in Office 365 at [https://admin.microsoft.com/#/Domains/](https://admin.microsoft.com/#/Domains/)
+    - **IP Restrictions**: Leave empty
+    - **Outbound TLS**: `Forward all messages over TLS`
+    - **Quarantine Policy**: Varies by deployment.
+
+#### Create Connector
+
+1. Go to the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
+2. Go to **Mail flow** > **Connectors**.
+3. Select **Add a connector**.
+4. Select **Connection from** > **Partner organization**.
+5. Select **Next**.
+6. Set the following options:
+    - **Name** - `Secure O365 Inbound`
+    - **Description** - `Only accept inbound email from Area 1`
+7. Select **Next**.
+8. Leave the first option selected - **Verify that the sender domain matches one of the following domains**.
+9. Enter `*` in the text field, and select `+`.
+10. Select **Next**.
+11. Select **Reject email messages if they aren’t sent from within this IP address range**.
+12. Enter all of the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+13. Select **Next**.
+14. Review your setings and select **Create connector**.
+
+
 
 ==========================================
 ==========================================
