@@ -31,7 +31,7 @@ This sample plan simulates 200 active users visiting the site, slowly ramping up
 
 ## 2. Edit and run the sample plan
 
-Before running the sample plan, edit the waiting room pointed to in the test plan to point to your own waiting room.
+Before running the sample plan, edit the waiting room in the test plan to point to your own waiting room.
 
 1. Select **Waiting Room Simulation** to expand the test plan and then select **Request origin with waiting room** to update the test configuration.
 
