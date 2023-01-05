@@ -73,61 +73,37 @@ This option will allow Office 365 to properly identify the original connecting I
 
 ### Create an inbound connector
 
-1. From the **Microsoft Exchange admin center**, select **mail flow** > **connectors**.
+1. Go to the new [**Exchange admin center**](https://admin.exchange.microsoft.com/#/homepage).
 
-    ![Select connectors from mail flow](/email-security/static/inline-setup/o365-area1-mx/step1-connectors.png)
+2. Select **Mail flow** > **Connectors**.
 
-2. Select the `+` icon to configure a new connector. In the **Select your mail flow scenario panel** dialog box that opens:
+    ![Select Connectors from Mail flow](/email-security/static/inline-setup/o365-area1-mx/step2-mailflow-conectors.png)
 
-    1. In the *From* dropdown: select **Partner organization**.
-    2. In the *To* dropdown: select **Office 365**.
-    3. Select **Next** to continue the configuration.
+3. Select **Add a connector**.
 
-    <div class="large-img">
+4. In **Connection from**, select **Partner organization**.
 
-    ![Configure your mail flow](/email-security/static/inline-setup/o365-area1-mx/step2-mail-flow.png)
+5. Select **Next**.
 
-    </div>
+6. Set the following options:
+    - **Name** - `Area 1 Inbound Connector`
+    - **Description** - `Inbound connector for Enhanced Filtering`
 
-3. Provide a **Name** and a **Description** for the new connector. Leave the **Turn it on** checkbox enabled. Select **Next**.
+    ![Enter a name and descriptions for your connector](/email-security/static/inline-setup/o365-area1-mx/step6-connector-options.png)
 
-    <div class="large-img">
+7. Select **Next**.
 
-    ![Provide name and description for the new connector](/email-security/static/inline-setup/o365-area1-mx/step3-description.png)
+8. In **Authenticating sent email**, select **By verifying that the IP address of the sending server matches one of the following IP addresses, which belongs to your partner organization.**
 
-    </div>
+9. Enter all of the egress IPs in the [Egress IPs](/email-security/deployment/inline/reference/egress-ips/) page.
 
-4. Select **Use the sender’s IP address** in the **How do you want to identify the partner organization?** configuration panel. Select **Next**.
+    ![Enter all of Area 1's Egress IPs](/email-security/static/inline-setup/o365-area1-mx/step9-egress-ips.png)
 
-    <div class="large-img">
+10. Select **Next**.
 
-    ![Select the sender's IP address](/email-security/static/inline-setup/o365-area1-mx/step4-senders-ip.png)
+11. In **Security restrictions**, accept the default **Reject email messages if they aren't sent over TLS** setting, and select **Next**.
 
-    </div>
-
-5. In **What sender IP addresses do you want to use to identify your partner?** add the IP addresses and CIDR blocks found in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). Select **Next**.
-
-    <div class="large-img">
-
-    ![Enter Area 1's egress IP addresses](/email-security/static/inline-setup/o365-area1-mx/step5-office-egress-ips.png)
-
-    </div>
-
-6. Keep the **Reject email messages if they aren't sent over TLS** checkbox enabled. Select **Next**.
-
-    <div class="large-img">
-
-    ![Keep the Reject email messages if they aren't sent over TLS checkbox enabled](/email-security/static/inline-setup/o365-area1-mx/step6-tls.png)
-
-    </div>
-
-7. Review the connector configuration and select **Save**.
-
-    <div class="large-img">
-
-    ![Review settings](/email-security/static/inline-setup/o365-area1-mx/step7-review.png)
-
-    </div>
+12. Review your settings and select **Create connector**.
 
 ### Enable enhanced filtering
 
