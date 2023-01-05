@@ -43,6 +43,8 @@ Flags:
   - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
   - Show version number.
+- `--json-config` {{<type>}}boolean{{</type>}}
+  - ⚠️ Experimental: Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
 
