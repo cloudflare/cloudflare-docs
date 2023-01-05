@@ -99,20 +99,6 @@ A matching blocked log line is visible from the Cloudflare logs.
 
 ![A blocked log from Gateway Activity Log in the Cloudflare dashboard](/magic-wan/static/viptela-gre-swg-traffic.png)
 
-**Validate east-west traffic**
-
-The example shows a client in AWS (10.1.2.23), which can ping the private IP of the router in GCP (192.168.30.3).
-
-The traceroute shows the path going from the client (10.1.2.23)<br>
-→ to the AWS lan0 IP on the EdgeConnect (10.1.2.47)<br>
-→ to the Cloudflare private IPSec endpoint IP (10.0.0.10)<br>
-→ to the GCP private tunnel endpoint IP (10.49.0.10)<br>
-→ to the GCP workload (192.168.30.3).
-
-This validates the east-west traffic flow through Cloudflare Magic WAN.
-
-![East-west traffic ping](/magic-wan/static/viptela-east-west-ping.png)
-
 ## Add new tunnels using IPsec
 
 IPSec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/tutorials/cisco-ios-xe/) for more information. 
