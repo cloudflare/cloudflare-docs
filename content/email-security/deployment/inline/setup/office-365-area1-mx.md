@@ -36,8 +36,29 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 6. Select **Save**.
 
 {{<Aside type="note">}}
-Depending on your Office 365 configuration, you may receive a warning indicating that you need to run the `Enable-OrganizationCustomization` cmdlet before you create or modify objects in your Exchange Online organization.  Follow the next step to enable this cmdlet.
+Depending on your Office 365 configuration, you may receive a warning indicating that you need to run the `Enable-OrganizationCustomization` cmdlet before you create or modify objects in your Exchange Online organization. Follow the next step to enable this cmdlet.
 {{</Aside>}}
+
+### Update Microsoft anti-spam policies
+
+Microsoft recommends disabling SPF Hard fail when an email solution is placed in front of it.
+
+1. Go to the [Anti-spam option](https://security.microsoft.com/antispam).
+
+2. Select **Anti-spam inbound policy (Default)**.
+
+3. At the end of the **Bulk email threshold & spam properties** section, select **Edit spam threshold and properties**.
+
+    ![Select the spam threshold and properties button](/email-security/static/inline-setup/o365-area1-mx/step3-spam-threshold.png)
+
+4. Scroll to **Mark as spam** > **SPF record: hard fail**, and ensure it is set to **Off**.
+
+    ![Make sure SPF record: hard fail is set to off](/email-security/static/inline-setup/o365-area1-mx/step4-spf-record-hard-fail.png)
+
+5. Select **Save**.
+
+
+================================================================================
 
 ## 2: Execute `Enable-OrganizationCustomization` (if required)
 
