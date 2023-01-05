@@ -6,7 +6,7 @@ weight: 6
 
 # Use dynamic IP addresses
 
-Most of the Internet Service providers and some hosting providers dynamically update their customer's IP addresses. These customers must then update the new origin server IPs in their Cloudflare DNS.
+Most Internet service providers and some hosting providers dynamically update their customer's IP addresses. These customers must then update the new origin server IPs in their Cloudflare DNS.
 
 ## Cloudflare API
 
