@@ -1,10 +1,26 @@
-
 <ul style="list-style-type:none;">
 {{ range .Site.Pages }} 
 {{- $data := (index $.Site.Data .Section) -}}
 {{- $title := default .Title .Params.meta.title  -}}
-{{ with .OutputFormats.Get "rss" }}
-<li><a href="{{.RelPermalink}}" target="_blank">{{ $title }} - {{ $data.product.title }}</a></li>
+{{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
+{{- $contentPath :=  replaceRE `\/$` "" .RelPermalink -}}
+{{- $folderPlaceholder := "" -}}
+{{ $rssFeed := "" }}
+{{ with .Params.rss }}
+
+  {{ if eq . "folder" }}
+
+  {{ $folderPlaceholder = ".atom" }}
+
+  {{ else if eq . "file" }}
+
+  {{ $folderPlaceholder = ".md.atom" }}
+
+  {{ end }}
+
+ {{ $rssFeed = printf "%s" $folderPlaceholder | printf "%s%s" $contentPath | printf "%s%s" $rssPath | printf "%s" }}
+
+<li><a href="{{ $rssFeed }}" target="_blank">{{ $title }} - {{ $data.product.title }}</a></li>
 {{ end }}
 {{ end }}
 </ul>

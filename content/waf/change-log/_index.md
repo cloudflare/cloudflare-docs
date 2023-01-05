@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 20
 meta:
   title: Changelog for managed rulesets
+rss: folder
 ---
 
 # Changelog for managed rulesets
