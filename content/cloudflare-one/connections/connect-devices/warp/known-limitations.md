@@ -30,7 +30,7 @@ Comcast DNS traffic to `75.75.75.75` and `75.75.75.76` cannot be proxied through
 
 To work around the issue, you can either:
 
-- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.75.76/32` from WARP.
+- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/split-tunnels/) that excludes `75.75.75.75/32` and `75.75.75.76/32` from WARP.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
 ## HP Velocity
