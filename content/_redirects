@@ -103,7 +103,8 @@
 /analytics/web-analytics/change-log/ /analytics/web-analytics/changelog/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
 
-#area1
+# area1
+
 /email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
 /email-security/static/GSuite-Area1-MX.pdf /email-security/deployment/inline/setup/gsuite-area1-mx/ 301
 /email-security/static/Cisco-Area1-MX.pdf /email-security/deployment/inline/setup/cisco-area1-mx/ 301
@@ -113,6 +114,15 @@
 /email-security/deployment/api/setup/office365-bcc-setup/ /email-security/deployment/api/setup/exchange-bcc-setup/ 301
 /email-security/static/Gmail-Message-Retraction.pdf /email-security/email-configuration/retract-settings/gmail-retraction/ 301
 /email-security/static/O365-Message-Retraction.pdf /email-security/email-configuration/retract-settings/office365-retraction/ 301
+/email-security/static/O365-Directory-Integration-Guide.pdf /email-security/email-configuration/enhanced-detections/business-email-compromise/o365-directory-guide/ 301
+/email-security/static/Deployment_and_Configuration_Guide_Directory_Integration_for_Gmail.pdf /email-security/email-configuration/enhanced-detections/business-email-compromise/gworkspaces-directory-guide/ 301
+/email-security/reporting/detection-search/ /email-security/reporting/search/detection-search/ 301
+/email-security/reporting/detection-search/available-parameters/ /email-security/reporting/search/detection-search/available-parameters/ 301
+/email-security/reporting/mailtrace/ /email-security/reporting/search/mailtrace/ 301
+/email-security/static/Configure_SAML_SSO.pdf /email-security/account-setup/sso/generic-sso/ 301
+/email-security/static/Deployment_and_Configuration_Guide_Okta_Integration.pdf /email-security/account-setup/sso/okta/ 301
+/email-security/static/Configure_SAML_SSO_with_Azure_AD.pdf /email-security/account-setup/sso/azure/ 301
+/email-security/static/Admin_Quarantine.pdf /email-security/email-configuration/admin-quarantine/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -282,6 +292,14 @@
 /gateway/locations/ /cloudflare-one/connections/connect-networks/locations/ 301
 /gateway/locations/setup-instructions/android/ /cloudflare-one/connections/connect-networks/locations/ 301
 /gateway/locations/setup-instructions/router/ /cloudflare-one/policies/filtering/dns-policies/locations/ 301
+
+# http applications
+
+/http-applications/how-to/manage-routing-rules/ /version-management/how-to/versions/ 301
+/http-applications/how-to/roll-back-changes/ /version-management/how-to/versions/ 301
+/http-applications/how-to/test-version-staging/ /version-management/reference/traffic-filters/
+/http-applications/how-to/manage-applications-and-versions/ /version-management/how-to/ 301
+/http-applications/reference/version-status/ /version-management/reference/ 301
 
 # images
 /images/cloudflare-images/upload-images/supported-formats/ /images/cloudflare-images/upload-images/formats-limitations/ 301
@@ -679,9 +697,9 @@
 /waf/ddos-l34-mitigation/configure-api/ /ddos-protection/managed-rulesets/network/configure-api/ 301
 /waf/ddos-l7-mitigation/ /ddos-protection/managed-rulesets/http/ 301
 /waf/ddos-l7-mitigation/configure-dashboard/ /ddos-protection/managed-rulesets/http/configure-dashboard/ 301
-/waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rulesets/reference/cloudflare-managed-ruleset/ 301
-/waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rulesets/reference/owasp-core-ruleset/ 301
-/waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rulesets/reference/exposed-credentials-check/ 301
+/waf/managed-rulesets/cloudflare-managed-ruleset/ /waf/managed-rules/reference/cloudflare-managed-ruleset/ 301
+/waf/managed-rulesets/owasp-core-ruleset/ /waf/managed-rules/reference/owasp-core-ruleset/ 301
+/waf/managed-rulesets/exposed-credentials-check/ /waf/managed-rules/reference/exposed-credentials-check/ 301
 /waf/rate-limiting-rules/create-dashboard/ /waf/rate-limiting-rules/create-zone-dashboard/ 301
 
 # waiting-room
@@ -927,6 +945,7 @@
 /zaraz/user-properties/ /zaraz/reference/properties-reference/ 301
 /zaraz/properties-reference/ /zaraz/reference/properties-reference/ 301
 /zaraz/web-api/zaraz-track/ /zaraz/web-api/track/ 301
+/zaraz/advanced/preview-mode/ /zaraz/history/preview-mode/ 301
 
 # cloudflare-one / zero-trust
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
@@ -1072,12 +1091,14 @@
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
 /fundamentals/get-started/origin-health/* /fundamentals/get-started/task-guides/origin-health/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301
+/http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /load-balancing/understand-basics/load-balancing-rules/* /load-balancing/additional-options/load-balancing-rules/:splat 301
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /tenant/tutorial/* /tenant/get-started/ 301
+/waf/managed-rulesets/* /waf/managed-rules/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ssl/common-tasks/:splat 301

@@ -6,7 +6,7 @@ weight: 6
 
 # Identity-based policies
 
-With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in your organization via the WARP client.
+With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes).
 
 ## Identity-based selectors
 
@@ -20,7 +20,7 @@ Specify a value from the SAML Attribute Assertion.
 
 ### User Email
 
-Use this selector to create identity-based DNS rules based on a user’s email.
+Use this selector to create identity-based Gateway rules based on a user’s email.
 
 | UI name    | API example value                           |
 | ---------- | ------------------------------------------- |
@@ -28,7 +28,7 @@ Use this selector to create identity-based DNS rules based on a user’s email.
 
 ### User Group IDs
 
-Use this selector to create identity-based DNS rules based on an IdP group ID of which the user is configured as a member in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP group ID of which the user is configured as a member in the IdP.
 
 | UI name        | API example                                    |
 | -------------- | ---------------------------------------------- |
@@ -36,7 +36,7 @@ Use this selector to create identity-based DNS rules based on an IdP group ID of
 
 ### User Group Email
 
-Use this selector to create identity-based DNS rules based on an IdP group email address of which the user is configured as a member in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP group email address of which the user is configured as a member in the IdP.
 
 | UI name          | API example                                       |
 | ---------------- | ------------------------------------------------- |
@@ -44,7 +44,7 @@ Use this selector to create identity-based DNS rules based on an IdP group email
 
 ### User Group Names
 
-Use this selector to create identity-based DNS rules based on an IdP group name of which the user is configured as a member in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP group name of which the user is configured as a member in the IdP.
 
 | UI name          | API example                             |
 | ---------------- | --------------------------------------- |
@@ -52,7 +52,7 @@ Use this selector to create identity-based DNS rules based on an IdP group name 
 
 ### User Name
 
-Use this selector to create identity-based DNS rules based on an IdP username for a particular user in the IdP.
+Use this selector to create identity-based Gateway rules based on an IdP username for a particular user in the IdP.
 
 | UI name   | API example                    |
 | --------- | ------------------------------ |

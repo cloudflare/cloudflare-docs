@@ -4,7 +4,7 @@ title: Environments
 weight: 7
 ---
 
-## Environments
+# Environments
 
 {{<Aside type="note">}}
 

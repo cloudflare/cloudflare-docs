@@ -9,7 +9,7 @@ When retraction is enabled, you can manually retract messages that were not auto
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon). 
 
-2. Select the search bar. From the drop-down menu, select [**Mail Trace**](/email-security/reporting/mailtrace/).
+2. Select the search bar. From the drop-down menu, select [**Mail Trace**](/email-security/reporting/search/mailtrace/).
 
     ![Select the search bar and select Mail trace from the drop-down menu](/email-security/static/email-retraction/gmail/step2-mail-trace.png)
 

@@ -77,6 +77,8 @@ If you need ultra low latency, and your users view live video in native apps, yo
 
 SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will need to integrate ffmpeg with your own video player —  neither [AVPlayer (iOS)](/stream/viewing-videos/using-own-player/ios/) nor [ExoPlayer (Android)](/stream/viewing-videos/using-own-player/android/) natively support SRT or RTMPS playback.
 
+{{<render file="_srt-supported-modes.md">}}
+
 We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
 
 ### Examples

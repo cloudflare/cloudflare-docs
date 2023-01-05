@@ -44,7 +44,7 @@ analytics_engine_datasets = [
 
 ## 3. Write data from the Workers Runtime API
 
-Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles.
+Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
 
 A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](../sql-api/#sampling) key.
 

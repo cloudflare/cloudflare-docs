@@ -1,7 +1,7 @@
 ---
 title: Allow and block lists
 pcx_content_type: navigation
-weight: 4
+weight: 3
 ---
 
 # Allow and block lists

@@ -10,12 +10,12 @@ The purpose of this guide is to walk through some best practices for accessing p
 
 We will walk through how to initialize a service on a Linux VM in AWS, and route to it from another VM running cloudflared. This deployment guide does not take into account routing beyond basic security groups and default VPCs.
 
-# Prerequisites
+## Prerequisites
 
 - Navigate to the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/) and create a Cloudflare Zero Trust account.
-- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) into your Cloudflare Zero Trust account.
+- [Enroll an end-user device](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) into your Cloudflare Zero Trust account.
 
-# Create your environment
+## Create your environment
 
 1. From the AWS console, navigate to **Build a Solution** and select **Launch a Virtual Machine with EC2**.
 

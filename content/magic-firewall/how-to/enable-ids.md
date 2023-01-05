@@ -12,9 +12,10 @@ To start using IDS, first create a new ruleset in the `magic-transit-ids-managed
 
 ## Create a new ruleset
 
-Follow instructions in the [Rulesets Engine Page](/ruleset-engine/basic-operations/view-rulesets/) to view all rulesets for your account. You must see a ruleset with phase `magic-transit-ids-managed` and kind `managed`. If not, please contact your account team. The managed ruleset id will be used in the next step.
+Follow instructions in the [Rulesets Engine Page](/ruleset-engine/basic-operations/view-rulesets/) to view all rulesets for your account. You must see a ruleset with phase `magic-transit-ids-managed` and kind `managed`. If not, please contact your account team. The managed ruleset ID will be used in the next step.
 
-Now, create a root ruleset with a single rule in the `magic_transit_ids_managed` phase by running:
+Next, create a root ruleset with a single rule in the `magic_transit_ids_managed` phase by running:
+
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets" \
 -H 'Content-Type: application/json' \
@@ -39,13 +40,14 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/${account_id}/rulese
 }'
 ```
 
-With this ruleset added, IDS will start inspecting packets and report any anomalous traffic. Next you can [configure Logpush](/magic-firewall/how-to/use-logpush-with-ids/) to start receiving details about the anomalous traffic.
+With this ruleset added, IDS will start inspecting packets and report any anomalous traffic. Next, you can [configure Logpush](/magic-firewall/how-to/use-logpush-with-ids/) to start receiving details about the anomalous traffic.
 
 ## Enable or Disable IDS
 
-To enable or disable IDS, the rule created in the previous step can be enabled or disabled respectively. Rulesets API documentaion describes [how to patch a rule.](/ruleset-engine/rulesets-api/update-rule/).
+Use the rule created in the previous step to enable or disable IDS. The Rulesets API documentation describes [how to patch a rule](/ruleset-engine/rulesets-api/update-rule/).
 
-For example the following patch request to set the enabled field to false will **disable** IDS. The ruleset and rule id from the ruleset created in the previous step will be used below.
+For example, the following patch request to set the `enabled` field to `false` will disable IDS. The ruleset and rule ID from the ruleset created in the previous step are used below.
+
 ```bash
 curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/${account_id}/rulesets/${root_ruleset_id}/rules/${rule_id}" \
 -H 'Content-Type: application/json' \
@@ -61,4 +63,4 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/${account_id}/rules
 }'
 ```
 
-Similarly, sending a patch request with enabled field set to true will enable IDS.
+Similarly, sending a patch request with the `enabled` field set to `true` will enable IDS.

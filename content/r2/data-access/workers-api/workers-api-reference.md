@@ -66,16 +66,17 @@ export default {
 
 - {{<code>}}head(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and null if the key does not exist.
+  - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and `null` if the key does not exist.
 
 - {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Retrieves the `R2ObjectBody` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
 
-- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
+  - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}put(){{</code>}} returns `null`, and the object will not be stored.
   - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
 - {{<code>}}delete(keys{{<param-type>}}string | string[]{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
@@ -412,7 +413,9 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 ### Conditional operations
 
-You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
+You can pass an `R2Conditional` object to `R2GetOptions` and `R2PutOptions`.  If the condition check for `get()` fails, the body will not be returned. This will make `get()` have lower latency.
+
+If the condition check for `put()` fails, `null` will be returned instead of the `R2Object`.
 
 {{<definitions>}}
 
@@ -434,7 +437,7 @@ You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition chec
 
  {{</definitions>}}
 
-Alternatively, you can pass a `Headers` object containing conditional headers to `R2GetOptions`. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from `If-Range` are supported.
+Alternatively, you can pass a `Headers` object containing conditional headers to `R2GetOptions` and `R2PutOptions`. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from `If-Range` are supported.
 
 For more specific information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 

@@ -88,7 +88,7 @@ Identity-based authentication logs contain the following fields:
 | **user\_email** |  The email address of the authenticating user. |
 | **ip\_address** |  The IP address of the authenticating user. |
 | **app\_uid** | The unique identifier for the protected application. |
-| **add\_domain** |  The URL of the protected application. |
+| **app\_domain** |  The URL of the protected application. |
 | **action** | The event that occurred, such as a login attempt. |
 | **allowed** | The result of the authentication event. |
 | **created\_at** | The event timestamp. |
@@ -99,7 +99,7 @@ Identity-based authentication logs contain the following fields:
 
 ### Non-identity authentication
 
-Requests blocked by a non-identity policy not appear in the Zero Trust dashboard. To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available on the Zero Trust dashboard. 
 
 ### Log retention
 Block policy decisions are retained for a week. Authentication logs are retained for six months.
