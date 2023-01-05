@@ -263,7 +263,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 11. Select **Reject email messages if they aren’t sent from within this IP address range**.
 12. Enter all of the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
 13. Select **Next**.
-14. Review your setings and select **Create connector**.
+14. Review your settings and select **Create connector**.
 
 
 
