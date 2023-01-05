@@ -4,33 +4,32 @@ pcx_content_type: tutorial
 weight: 2
 ---
 
-# Cisco Viptela SD-WAN
+# Cisco SD-WAN
 
-Cloudflare partners with Cisco's 8000v router SD-WAN solution to provide users with an integrated solution. The Viptela appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels are set up between these appliances and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco 8000v router in the SD-WAN mode for north-south (Internet-bound) use cases.
+Cloudflare partners with Cisco's SD-WAN solution to provide users with an integrated SASE solution. The Cisco SD-WAN appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels are set up between these SD-WAN edge devices and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco Catalyst 8000 Edge Platforms (physical or virtual) in the SD-WAN mode for north-south (Internet-bound) use cases.
 
 ## Prerequisites
 
-Before setting up a connection between Cisco Viptela and Cloudflare, you must have:
+Before setting up a connection between Cisco SD-WAN and Cloudflare, you must have:
 
 - Purchased Magic WAN and Secure Web Gateway.
 - Cloudflare provision Magic WAN and Secure Web Gateway.
 - Received two Cloudflare tunnel endpoints (Anycast IP address) assigned to Magic WAN.
-- Cisco 8000 SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
-- A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. The software version used on Cisco was `20.6.2/17.6.2`.
+- Cisco SD-WAN appliances (physical or virtual). This ensures specific Internet-bound traffic from the sites' private networks is routed over the Anycast GRE tunnels to Secure Web Gateway to enforce a user's specific web access policies.
+- A static IP pair to use with the tunnel endpoints. The static IPs should be /31 addresses separate from the IPs used in the subnet deployment. 
+- The software version for the Cisco SD-WAN edge device should be Cisco SD-WAN Release 20.6.2 or above. 
 
-## Example scenario
+{{<Aside type="note" header="Note">}}
 
-For the purpose of this tutorial, the integration will refer to a scenario with one branch office with subnets.
+The SASE integration between Cisco SD-WAN and Cloudflare SSE was validated with Cisco SD-WAN 20.6.2 version with Catalyst 8kv router.  For connectivity, GRE tunnels were used. 
 
-The central branch office has a 192.168.30.0/24 network with the SD-WAN appliance terminating the Anycast GRE tunnel.
-
-![Table of routing information for central  branch](/magic-wan/static/viptela-gre-routing-table.png)
+{{</Aside>}}
 
 ## 1. Create a SIG template on Cisco vManage
 
 Cisco vManage is Cisco's SD-WAN management tool that is used to manage all the SD-WAN appliances in branch offices.
 
-For this example scenario, a non-default template for `SIG-Branch` was created.
+For this example scenario, a generic template for `SIG-Branch` was created.
 
 ![Traffic flow diagram for GRE](/magic-wan/static/viptela-flow-diagram-gre.png)
 
