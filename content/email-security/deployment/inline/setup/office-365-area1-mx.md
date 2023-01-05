@@ -198,42 +198,16 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
     </div>
 
-### Optional - Quarantine messages using Microsoft Hosted Quarantine
+## 5. Message Handling
 
-As previously noted, malicious and spam detections are automatically quarantined in Area 1’s quarantine (this behavior cannot be modified). However, for the suspicious and spoof dispositions, you may prefer to apply a different behavior, where these messages can be quarantined into the Microsoft Hosted Quarantine or sent to the user’s junk folder.
 
-For this alternate behavior, you will need to configure a transport rule in Office 365:
 
-1. Go to the **Exchange administrator** console > **mail flow** > **rules**.
 
-    ![Select rules from the Exchange admin console](/email-security/static/inline-setup/o365-area1-mx/step1-rules.png)
-
-2. Select the **+** button > **Create a new rule**.
-
-    ![Create rule](/email-security/static/inline-setup/o365-area1-mx/step2-create-rule.png)
-
-3. In the new dialog box, select **More options** to open the advanced version of the rule creator. Set the following conditions and actions:
-
-* **Name**: `Quarantine Area 1 Suspicious Messages`
-* Configure the first condition, select **A message header** > **Includes any of these words:**
-    * Enter text: `X-Area1Security-Disposition`
-    * Enter words: `SUSPICIOUS`
-
-{{<Aside type="note">}}If you also want to quarantine the spoof detections, add the string `SPOOF` to the list of words.{{</Aside>}}
-
-4. Select the **add** condition button to add a second condition.
-
-5. In the new condition, select **The sender** > **IP address is in any of these ranges or exactly matches** and enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-
-6. In the **Do the following** section, select **Redirect the message to**  > **hosted quarantine.**.
-
-    ![Redirect messages to hosted quarantine](/email-security/static/inline-setup/o365-area1-mx/step6-hosted.png)
-
-{{<Aside type="note">}}
-If you prefer to send the message to the Junk folder, in the **Do the following** section, select **Modify the message properties**  > **set the spam confidence level (SCL)**. Then, select the SCL value that will send the message to the junk folder. This behavior is dependent on the configured spam filter policies (spam and bulk actions).
-{{</Aside>}}
-
-7. Select **Save** to save the new rule.
+========================================================================
+========================================================================
+========================================================================
+========================================================================
+========================================================================
 
 ## 5. Update your domain MX records
 
