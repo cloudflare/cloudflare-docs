@@ -13,6 +13,41 @@ meta:
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps.
 
+## Prerequisites
+
+To ensure changes made in this tutorial take effect quickly, update the Time to Live (TTL) value of the existing MX records on your domains to five minutes. Do this on all the domains you will be deploying. 
+
+Changing the TTL value instructs DNS servers on how long to cache this value before requesting an update from the responsible name server. You need to change the TTL value before changing your MX records to Cloudlfare Area 1. This will ensure that changes take effect quickly and can also be reverted quickly if needed. If your DNS Manager does not allow for a TTL of five minutes, set it to the lowest possible setting.
+
+To check your existing TTL, open a terminal window and run the following command against your domain:
+
+```sh
+$ dig mx domain
+
+; <<>> DiG 9.10.6 <<>> mx domain
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39938
+;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;domain.		IN	MX
+
+;; ANSWER SECTION:
+domain.	300	IN	MX	10 mailstream-east.mxrecord.io.
+domain.	300	IN	MX	10 mailstream-west.mxrecord.io.
+domain.	300	IN	MX	20 mailstream-central.mxrecord.mx.
+```
+
+In the above example, TTL is shown in seconds, as `300` (or five minutes). 
+
+If you are using Cloudflare for DNS, you can leave the TTL setting as **Auto**
+
+
+
+
 ## 1. Add Area 1 IP addresses to Allow List
 
 1. Go to the [Microsoft Security admin center](https://security.microsoft.com/homepage).
@@ -39,23 +74,19 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 Depending on your Office 365 configuration, you may receive a warning indicating that you need to run the `Enable-OrganizationCustomization` cmdlet before you create or modify objects in your Exchange Online organization. Follow the next step to enable this cmdlet.
 {{</Aside>}}
 
-### Update Microsoft anti-spam policies
+7. Microsoft recommends disabling SPF Hard fail when an email solution is placed in front of it. Return to the [Anti-spam option](https://security.microsoft.com/antispam).
 
-Microsoft recommends disabling SPF Hard fail when an email solution is placed in front of it.
+8. Select **Anti-spam inbound policy (Default)**.
 
-1. Go to the [Anti-spam option](https://security.microsoft.com/antispam).
+9. At the end of the **Bulk email threshold & spam properties** section, select **Edit spam threshold and properties**.
 
-2. Select **Anti-spam inbound policy (Default)**.
+    ![Select the spam threshold and properties button](/email-security/static/inline-setup/o365-area1-mx/step9-spam-threshold.png)
 
-3. At the end of the **Bulk email threshold & spam properties** section, select **Edit spam threshold and properties**.
+10. Scroll to **Mark as spam** > **SPF record: hard fail**, and ensure it is set to **Off**.
 
-    ![Select the spam threshold and properties button](/email-security/static/inline-setup/o365-area1-mx/step3-spam-threshold.png)
+    ![Make sure SPF record: hard fail is set to off](/email-security/static/inline-setup/o365-area1-mx/step10-spf-record-hard-fail.png)
 
-4. Scroll to **Mark as spam** > **SPF record: hard fail**, and ensure it is set to **Off**.
-
-    ![Make sure SPF record: hard fail is set to off](/email-security/static/inline-setup/o365-area1-mx/step4-spf-record-hard-fail.png)
-
-5. Select **Save**.
+11. Select **Save**.
 
 ==========================================================
 ==========================================================
@@ -220,7 +251,7 @@ MX Priority | Host
 `20` | `mailstream-central.mxrecord.mx`
 
 
-Once the MX records have been updated with the new MX records, delete your old MX records and leave only the ones above. DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour or follow the TTL as described in Step 1.
+Once the MX records have been updated with the new MX records, delete your old MX records and leave only the ones above. DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour or follow the TTL as described in the [Prerequisites section](#prerequisites).
 
 ### Secure Office 365 from MX records bypass (recommended)
 
