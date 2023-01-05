@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Bypass WARP
+title: Exclude traffic from WARP
 weight: 6
 ---
 
