@@ -1,5 +1,5 @@
 ---
-title: Cisco Viptela SD-WAN
+title: Cisco SD-WAN
 pcx_content_type: tutorial
 weight: 2
 ---
