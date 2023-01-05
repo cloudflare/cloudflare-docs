@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Pages Plugins
 layout: single
+weight: 9
 ---
 
 # Pages Plugins
@@ -300,7 +301,7 @@ import adminDashboardPlugin from "@cloudflare/a-fictional-admin-plugin";
 
 export const onRequest = [
   // Initialize a Sentry Plugin to capture any errors
-  sentryPlugin({ dsn: "https://sentry.io/xyz" }),
+  sentryPlugin({ dsn: "https://sentry.io/welcome/xyz" }),
 
   // Initialize a Cloudflare Access Plugin to ensure only administrators can access this protected route
   cloudflareAccessPlugin({

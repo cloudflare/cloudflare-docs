@@ -20,13 +20,13 @@ Replacing long-lived API keys with short-lived certificates offers the following
 - The keys used to authenticate are automatically rotating
 - Users do not have to add SSH keys to their onboarding; instead, only the identity provider is required
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Connect a host to Cloudflare's network that users can reach over SSH
 - Build Zero Trust rules to protect that resource
 - Replace long-lived SSH keys with short-lived certificates to authenticate users to the host
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 45 minutes
 
@@ -140,20 +140,17 @@ $ cloudflared access ssh-config --hostname ssh-bastion.widgetcorp.tech --short-l
 `cloudflared` will generate the required lines to append to the SSH configuration file, similar to the example output below.
 
 ```txt
-Host ssh-bastion.widgetcorp.tech
-  ProxyCommand bash -c '/usr/local/bin/cloudflared access ssh-gen --hostname %h; ssh -tt %r@cfpipe-ssh-bastion.widgetcorp.tech >&2 <&1'
-
-Host cfpipe-ssh-bastion.widgetcorp.tech
-  HostName ssh-bastion.widgetcorp.tech
-  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
-  IdentityFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key
-  CertificateFile ~/.cloudflared/ssh-bastion.widgetcorp.tech-cf_key-cert.pub
+Match host ssh-bastion.widgetcorp.tech exec "/usr/local/bin/cloudflared access ssh-gen --hostname %h"
+    HostName ssh-bastion.widgetcorp.tech
+    ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+    IdentityFile ~/.cloudflared/vm.example.com-cf_key
+    CertificateFile ~/.cloudflared/vm.example.com-cf_key-cert.pub
 ```
 
 When users authenticate through Cloudflare Access, Cloudflare will generate a certificate for the individual using the username from the identity provider (stripped of the email domain). That certificate will then be presented to the SSH server.
 
 {{<Aside type="note">}}
 
-The username in the identity provider must match the username on the SSH server.
+The setup described in this tutorial requires the username in the identity provider to match the username on the SSH server. To use with a server where the usernames do not match, refer to the [advanced setup instructions](/cloudflare-one/identity/users/short-lived-certificates/#2-ensure-unix-usernames-match-user-sso-identities).
 
 {{</Aside>}}

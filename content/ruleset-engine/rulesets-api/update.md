@@ -14,15 +14,15 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Update account ruleset][ur-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
-| [Update zone ruleset][ur-zone] | `PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
-| [Update account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
-| [Update zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Update an account ruleset][ur-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>` |
+| [Update a zone ruleset][ur-zone] | `PUT /zones/<ZONE_ID>/rulesets/<RULESET_ID>` |
+| [Update an account entry point ruleset][uep-account] | `PUT /accounts/<ACCOUNT_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
+| [Update a zone entry point ruleset][uep-zone] | `PUT /zones/<ZONE_ID>/rulesets/phases/<PHASE_NAME>/entrypoint` |
 
-[ur-account]: https://api.cloudflare.com/#account-rulesets-update-account-ruleset
-[ur-zone]: https://api.cloudflare.com/#zone-rulesets-update-a-zone-ruleset
-[uep-account]: https://api.cloudflare.com/#account-rulesets-update-entrypoint-ruleset
-[uep-zone]: https://api.cloudflare.com/#zone-rulesets-update-entrypoint-ruleset
+[ur-account]: https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset
+[ur-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-ruleset
+[uep-account]: https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-entry-point-ruleset
+[uep-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-entry-point-ruleset
 
 {{<Aside type="warning" header="Important">}}
 
@@ -67,7 +67,7 @@ curl -X PUT \
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
-    "description": "This ruleset executes a Managed Ruleset.",
+    "description": "This ruleset executes a managed ruleset.",
     "kind": "zone",
     "version": "4",
     "rules": [
@@ -98,7 +98,7 @@ curl -X PUT \
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`<ZONE_ID>`).
+The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`<ZONE_ID>`).
 
 <details open>
 <summary>Request</summary>
@@ -173,7 +173,7 @@ You can use this API method to update the description of an existing ruleset or 
 
 {{<Aside type="warning" header="Important">}}
 
-You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
+You cannot update the description or the rules in a managed ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
 
 {{</Aside>}}
 

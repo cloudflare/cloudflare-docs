@@ -220,7 +220,6 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">37.78044</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-lon">
@@ -231,7 +230,6 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">-122.39055</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
       </td>
    </tr>
    <tr id="field-ip-src-city">
@@ -242,7 +240,26 @@ The Cloudflare Rules language supports these standard fields:
          <p>Example value:
          <br /><code class="InlineCode">San Francisco</code>
          </p>
-         <p><strong>Note:</strong> This field is only available in <a href="/rules/transform/">Transform Rules</a>.</p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-postal_code">
+      <td valign="top"><code>ip.src.postal_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the postal code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">78701</code>
+         </p>
+      </td>
+   </tr>
+   <tr id="field-ip-src-metro_code">
+      <td valign="top"><code>ip.src.metro_code</code><br />{{<type>}}String{{</type>}}</td>
+      <td>
+         <p>Represents the metro code or Designated Market Area (DMA) code associated with the incoming request.
+         </p>
+         <p>Example value:
+         <br /><code class="InlineCode">635</code>
+         </p>
       </td>
    </tr>
    <tr id="field-ip-geoip-asnum">
@@ -304,7 +321,7 @@ The Cloudflare Rules language supports these standard fields:
    <tr id="field-ip-geoip-is-in-european-union">
       <td valign="top"><code>ip.geoip.is_in_european_union</code><br />{{<type>}}Boolean{{</type>}}</td>
       <td>
-         <p>Returns <code class="InlineCode">true</code> when the request originates from an EU country.
+         <p>Returns <code class="InlineCode">true</code> when the request originates from a country in the European Union.
          </p>
       </td>
   </tr>
@@ -402,6 +419,16 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-bot_management-js_detection-passed">
+        <td><p><code>cf.bot_management.js_detection.passed</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+          <p>Indicates whether the visitor has previous passed a JS Detection.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/javascript-detections/">JavaScript detections</a>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-client-bot">
         <td><code>cf.client.bot</code><br />{{<type>}}Boolean{{</type>}}</td>
         <td>
@@ -428,7 +455,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-hostname-metadata">
         <td><code>cf.hostname.metadata</code><br />{{<type>}}String{{</type>}}</td>
         <td>
-          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-saas/workers-for-platforms/custom-metadata/">custom metadata</a> JSON object set by SSL for SaaS customers.
+          <p>Returns the string representation of the per-hostname <a href="/cloudflare-for-platforms/workers-for-platforms/">custom metadata</a> JSON object set by SSL for SaaS customers.
           </p>
         </td>
     </tr>
@@ -466,6 +493,35 @@ The Cloudflare Rules language supports these dynamic fields:
       <p> Also returns <code class="InlineCode">true</code> when a request includes a valid certificate that was revoked (see <code>cf.tls_client_auth.cert_revoked</code>).
       </p></td>
     </tr>
+    <tr id="field-cf-waf-score">
+        <td><code>cf.waf.score</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>A global score from 1 to 99 that combines the score of each WAF attack vector into a single score.<br/>
+      This is the standard <a href="/waf/about/waf-attack-score/">WAF attack score</a> to detect variants of attack patterns.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-sqli">
+        <td><code>cf.waf.score.sqli</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the SQL injection (SQLi) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-xss">
+        <td><code>cf.waf.score.xss</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the cross-site scripting (XSS) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-rce">
+        <td><code>cf.waf.score.rce</code><br />{{<type>}}Number{{</type>}}</td>
+        <td>
+          <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
@@ -473,12 +529,6 @@ The Cloudflare Rules language supports these dynamic fields:
         <p>When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise <code class="InlineCode">cf.worker.upstream_zone</code> is empty.</p>
       </td>
     </tr>
-    <tr id="cf.bot_management.js_score">
-    <td><code>js_score</code>
-    <td>
-      <p>Customers should not use <code>js_score</code> when creating Bot Management firewall rules because it will always be blank.</p>
-   </td>
-   </tr>
   </tbody>
 </table>
 
@@ -627,6 +677,15 @@ The Cloudflare Rules language supports these dynamic fields:
         <td>
         The time-to-live of the IP Packet.<br />
         Example values: <code class="InlineCode">54</code>
+        </td>
+    </tr>
+    <tr id="field-sip">
+        <td><p><code>sip</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+       Determines if packets are valid L7 protocol <a href="https://datatracker.ietf.org/doc/html/rfc2543">SIP</a>. Requires UDP packets to operate. <br />
+       Use a guard clause as shown below to ensure the packet is UDP (wirefilter):<br />
+       <code class="InlineCode">ip.proto == "udp"</code>
         </td>
     </tr>
     <tr id="field-tcp">
@@ -951,7 +1010,7 @@ The Cloudflare Rules language supports these HTTP header fields:
 
 {{<Aside type="note">}}
 
-Access to HTTP request body fields requires a Cloudflare Enterprise plan, except for the `http.request.body.mime` field.
+Access to HTTP request body fields requires a Cloudflare Enterprise plan with a paid add-on, except for the `http.request.body.mime` field.
 
 {{</Aside>}}
 
@@ -959,9 +1018,9 @@ The Rules language includes fields that represent properties of an HTTP request 
 
 {{<Aside type="warning">}}
 
-The value of `http.request.body.*` fields has a maximum size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`.
+All `http.request.body.*` fields (except `http.request.body.size`) handle a maximum body size of 128 KB, which means that you cannot define expressions that rely on request body data beyond the first 128 KB. If the request body is larger, the body fields will contain a truncated value and the `http.request.body.truncated` field will be set to `true`. The `http.request.body.size` field will contain the full size of the request without any truncation.
 
-The maximum body size applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
+The maximum body size of 128 KB applies only to the values of HTTP body fields — the origin server will still receive the complete request body.
 
 {{</Aside>}}
 
@@ -994,6 +1053,15 @@ The Cloudflare Rules language supports these HTTP body fields:
          <p>Indicates whether the HTTP request body is truncated.
          </p>
          <p>When true, <code class="InlineCode">http.request.body</code> fields may not contain all of the HTTP request body.
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-body-size">
+      <td valign="top"><code>http.request.body.size</code><br />{{<type>}}Number{{</type>}}</td>
+      <td>
+         <p>The total size of the HTTP request body (in bytes).
+         </p>
+         <p>Note: This field may have a value larger than the one returned by <code>len(http.request.body.raw)</code>, since the <code>http.request.body.raw</code> field only considers the first 128 KB of the request.
          </p>
       </td>
     </tr>
@@ -1093,7 +1161,7 @@ You can only use HTTP response fields in:
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/)
 * [Custom error responses](/rules/custom-error-responses/)
 * [Rate limiting rules](/waf/rate-limiting-rules/)
-* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rulesets/) ruleset
+* Filter expressions of the [Cloudflare Sensitive Data Detection](/waf/managed-rules/) ruleset
 
 Specific fields may have additional limitations.
 
@@ -1112,7 +1180,7 @@ The Cloudflare Rules language supports these HTTP response fields:
    <tr id="field-http-response-code">
       <td valign="top"><code>http.response.code</code><br />{{<type>}}Integer{{</type>}}</td>
       <td>
-         <p>Represents the HTTP status code returned by the origin.
+         <p>Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
          </p>
          <p>Example value:
          <br /><code class="InlineCode">403</code>
@@ -1210,10 +1278,10 @@ The Cloudflare Rules language supports these HTTP response fields:
         <p>The available values are the following:</p>
         <ul>
           <li><code>managed_challenge</code></li>
-          <li><code>iuam_basic</code></li>
+          <li><code>iuam</code></li>
           <li><code>legacy_challenge</code></li>
-          <li><code>ip_block</code></li>
-          <li><code>waf_block</code></li>
+          <li><code>ip_ban</code></li>
+          <li><code>waf</code></li>
           <li><code>5xx</code></li>
           <li><code>1xxx</code></li>
           <li><code>always_online</code></li>

@@ -13,26 +13,12 @@ In a small number of cases, the analytics provided on the Cloudflare dashboard a
 
 ## Sampled datasets
 
-Cloudflare Analytics builds the following datasets from sampled data:
+Cloudflare GraphQL API exposes datasets that powered by adaptive sampling. These
+nodes have **Adaptive** in the name and can be discovered through
+[introspection][1].
 
-{{<table-wrap>}}
-
-| Data set                                                                      | Nodes                                                                                                                                                                                                                      |
-| :---------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Firewall Activity Log                                                         | `firewallEventsAdaptive` `firewallEventsAdaptiveByTimeGroups`                                                                                                                                                              |
-| Firewall Analytics                                                            | `firewallEventsAdaptiveGroups`                                                                                                                                                                                             |
-| Firewall Rule Preview                                                         | `firewallRulePreviewGroups`                                                                                                                                                                                                |
-| Network Analytics                                                             | `ipFlows1mGroups`\*<br/> `ipFlows1hGroups`\*<br/> `ipFlows1dGroups`\*<br/> `ipFlows1mAttacksGroups`\*                                                                                                                      |
-| Network Analytics v2<br/> for Magic Transit customers                         | `magicTransitNetworkAnalyticsAdaptiveGroups`<br/> `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups`<br/> `flowtrackdNetworkAnalyticsAdaptiveGroups`<br/> `magicFirewallNetworkAnalyticsAdaptiveGroups` |
-| Network Analytics v2<br/> for Spectrum customers<br/> (Enterprise plans only) | `spectrumNetworkAnalyticsAdaptiveGroups`<br/> `dosdNetworkAnalyticsAdaptiveGroups`<br/> `dosdAttackAnalyticsGroups`                                                                                                        |
-| Workers Metrics                                                               | `workersInvocationsAdaptive`                                                                                                                                                                                               |
-| Magic Firewall Analytics                                                      | `magicFirewallSamplesAdaptiveGroups`                                                                                                                                                                                       |
-
-{{</table-wrap>}}
-
-\* These nodes are deprecated. Refer to [Deprecated data nodes](/analytics/graphql-api/features/data-sets/#deprecated-data-nodes) for more information.
-
-The presence of sampled data is called out in the Cloudflare dashboard and in the description of the dataset in the API.
+The presence of sampled data is also called out in the Cloudflare dashboard and
+in the description of the dataset in the API.
 
 ## Why sampling is applied
 
@@ -42,7 +28,7 @@ Analytics is designed to provide requested data, at the appropriate level of det
 
 ### Adaptive sampling
 
-Cloudflare almost always uses **adaptive sampling**, which means the sample rate fluctuates depending on the volume of data ingested or queried. If the number of records is relatively small, sampling is not used. However, as the volume of records grows larger, progressively lower sample rates are applied. Firewall Analytics and the Firewall Event Log follow this model. Data nodes that use adaptive sampling are easy to identify by the `Adaptive` suffix in the node name, as in `firewallEventsAdaptive`.
+Cloudflare almost always uses **adaptive sampling**, which means the sample rate fluctuates depending on the volume of data ingested or queried. If the number of records is relatively small, sampling is not used. However, as the volume of records grows larger, progressively lower sample rates are applied. Security Events (also known as Firewall Events) and the Security Event Log follow this model. Data nodes that use adaptive sampling are easy to identify by the `Adaptive` suffix in the node name, as in `firewallEventsAdaptive`.
 
 ### Fixed sampling
 
@@ -54,10 +40,11 @@ The following data nodes are based on fixed sampling, where the sample rate does
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Firewall Rules Preview<br /><p><b>Nodes:</b><br />`firewallRulePreviewGroups`</p>                                                                                                                                                                                                                                                    |                   1% | Use with caution. A 1% sample rate does not provide accurate estimates for datasets smaller than a certain threshold, a scenario the Cloudflare dashboard calls out explicitly but the API does not.                    |
 | Network Analytics<br /><p><b>Nodes:</b><br />`ipFlows1mGroups`<br />`ipFlows1hGroups`<br />`ipFlows1dGroups`<br />`ipFlows1mAttacksGroups`</p>                                                                                                                                                                                       |               0.012% | Sampling rate is in terms of packet count (1 of every 8,192 packets).                                                                                                                                                   |
-| Network Analytics v2<br /><p><b>Nodes:</b><br />`dosdNetworkAnalyticsAdaptiveGroups`<br />`dosdAttackAnalyticsGroups`<br />`flowtrackdNetworkAnalyticsAdaptiveGroups`<br />`magicFirewallNetworkAnalyticsAdaptiveGroups`<br />`magicTransitNetworkAnalyticsAdaptiveGroups`<br />`spectrumNetworkAnalyticsAdaptiveGroups`</p> | Depends on the node. | Sample rate is 1/100 for Magic Firewall, 1/10,000 for `dosd`, and dynamic for `flowtrackd`. Refer to the [NAv2 migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/#node-comparison) for details. |
 
 {{</table-wrap>}}
 
 ## Access to raw data
 
 Because sampling is primarily adaptive and automatically adjusts to provide an accurate estimate, the sampling rate cannot be directly controlled. Enterprise customers have access to raw data via Cloudflare Logs.
+
+[1]: </analytics/graphql-api/features/discovery/introspection/>

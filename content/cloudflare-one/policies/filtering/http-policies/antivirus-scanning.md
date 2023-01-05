@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: AV scanning
-weight: 7
+weight: 8
 ---
 
 # AV scanning
@@ -22,7 +22,7 @@ To enable AV scanning:
 
 When a file is blocked due to the presence of malware, it is logged as a Block decision:
 
-![Blocked action in logs](/cloudflare-one/static/documentation/policies/blocked-decision.png)
+![Example of a blocked action in the Gateway Activity Logs tab.](/cloudflare-one/static/documentation/policies/blocked-decision.png)
 
 ## How Gateway determines if a file should be scanned
 

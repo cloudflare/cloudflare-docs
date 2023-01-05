@@ -11,7 +11,11 @@ meta:
     network, providing global connectivity, cloud-based security, performance,
     and control through one simple user interface.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /zt-preview.png
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-wan
+  learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/
 
 externals:
   - title: Magic WAN home

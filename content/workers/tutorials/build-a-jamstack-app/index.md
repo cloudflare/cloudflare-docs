@@ -22,7 +22,7 @@ Before starting this project, you should have some experience with HTML, CSS, an
 1.  How building with Workers makes it easy to focus on writing code and ship finished products.
 2.  How the addition of Workers KV makes this tutorial a great introduction to building full, data-driven applications.
 
-If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/signalnerve/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
+If you would like to see the finished code for this project, find the [project on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos) and refer to the [live demo](https://todos.signalnerve.workers.dev/) to review what you will be building.
 
 ## Init
 
@@ -748,4 +748,4 @@ addEventListener('fetch', event => {
 });
 ```
 
-You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/signalnerve/cloudflare-workers-todos).
+You can find the source code for this project, as well as a README with deployment instructions, [on GitHub](https://github.com/codewithkristian/cloudflare-workers-todos).

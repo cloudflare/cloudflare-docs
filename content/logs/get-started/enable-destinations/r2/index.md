@@ -56,7 +56,7 @@ Enable Logpush to R2 via the dashboard.
 7.  Select R2.
 
 8.  Enter the following destination information:
-    - Bucket path
+    - Bucket path, for example, `cloudflare-logs/http_requests/example.com`
     - R2 access key id
     - R2 secret access key
 

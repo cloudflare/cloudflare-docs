@@ -36,10 +36,7 @@ For even more details, refer to the [introductory blog post](https://blog.cloudf
 
 Alerts are turned off by default. If you want to receive alerts, go to [SSL/TLS](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) in the Cloudflare dashboard.
 
-Features vary by plan:
-
-- **Free** and **Pro** customers will see a toggle to turn **On** or **Off**. Emails will go to all Cloudflare account members.
-- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias.
+{{<feature-table id="ssl.cert_transparency">}}
 
 To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
 
@@ -52,6 +49,8 @@ CT monitoring does not detect phishing attempts. For example, for <code>cloudfla
 ## Emails to be concerned about
 
 Most certificate alerts are routine. We send alerts whenever a certificate for your domain appears in a log. Certificates expire (and must be reissued), so it is completely normal to receive issuance emails. If your domain is listed in the email, along with reasonable ownership and certificate information, then **no action is required**.
+
+Additionally, you should check whether the certificate was issued through Cloudflare. To view all Cloudflare-issued certificates and backup certificates - which require no additional actions - visit the [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) in the dashboard.
 
 You _should_ take action when something is clearly wrong, such as if you:
 

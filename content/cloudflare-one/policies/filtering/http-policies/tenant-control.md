@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Tenant control
-weight: 6
+weight: 7
 ---
 
 # Tenant control
@@ -101,7 +101,7 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 | -------- | -------- | ----------- |
 | Domain   | in       | httpbin.org |
 
-![Isolate policy](/cloudflare-one/static/documentation/policies/httpbin-policy-1.png)
+![Results that will appear when configuring the example isolation policy.](/cloudflare-one/static/documentation/policies/httpbin-policy-1.png)
 
 #### 2. Create an Allow policy with a Custom Header
 
@@ -113,10 +113,10 @@ You can achieve this by implementing two HTTP policies targeting the same domain
 | -------- | -------- | ----------- |
 | Domain   | in       | httpbin.org |
 
-![Allow policy](/cloudflare-one/static/documentation/policies/httpbin-policy.png)
+![Results that will appear when configuring the example allow policy.](/cloudflare-one/static/documentation/policies/httpbin-policy.png)
 
 #### 3. Navigate to `https://httpbin.org/anything`
 
 HTTPBIN is a helpful service to test request headers. Navigating to `https://httpbin.org/anything` loads the website in a remote browser and the response body indicates that HTTPBIN received a custom request header from Cloudflare Browser Isolation.
 
-![httpbin](/cloudflare-one/static/documentation/policies/httpbin.png)
+![Custom Cloudflare header displayed in output from HTTPBIN.](/cloudflare-one/static/documentation/policies/httpbin.png)

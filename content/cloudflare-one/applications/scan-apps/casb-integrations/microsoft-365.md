@@ -1,12 +1,13 @@
 ---
 pcx_content_type: reference
 title: Microsoft 365
-weight: 3
 ---
 
 # Microsoft 365
 
 The Microsoft 365 (M365) integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
+
+This integration covers Microsoft 365 products, including OneDrive and SharePoint.
 
 ## Integration prerequisites
 
@@ -15,7 +16,7 @@ The Microsoft 365 (M365) integration detects a variety of user security, data lo
 
 ## Integration permissions
 
-For the Microsoft 365 integration to function, CASB requires the following delegated Microsoft Graph API scopes for access:
+For the Microsoft 365 integration to function, Cloudflare CASB requires the following delegated Microsoft Graph API permissions:
 
 * `Application.Read.All`
 * `Calendars.Read`
@@ -26,12 +27,14 @@ For the Microsoft 365 integration to function, CASB requires the following deleg
 * `RoleManagement.Read.All`
 * `User.Read.All`
 * `UserAuthenticationMethod.Read.All`
+* `Files.Read.All`
+* `AuditLog.Read.All`
 
 These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
 
 ## Security findings
 
-The Microsoft 365 integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
+The Microsoft 365 integration currently scans for the following findings or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
 
 ### User account settings
 
@@ -55,9 +58,17 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
 
-| Finding                                       | Severity |
-|-----------------------------------------------|----------|
-| Calendar Shared Externally                    | Low      |
+|  Finding                                            | Severity |
+|-----------------------------------------------------|----------|
+| Microsoft File Publicly Accessible Read and Write   | Critical |
+| Microsoft File Publicly Accessible Read Only        | High     |
+| Microsoft File Shared Company Wide Read and Write   | Medium   |
+| Microsoft File Shared Company Wide Read Only        | Medium   |
+| Microsoft Folder Publicly Accessible Read and Write | Critical |
+| Microsoft Folder Publicly Accessible Read Only      | High     |
+| Microsoft Folder Shared Company Wide Read and Write | Medium   |
+| Microsoft Folder Shared Company Wide Read Only      | Medium   |
+| Calendar shared externally                          | Low      |
 
 ### Third-party apps
 

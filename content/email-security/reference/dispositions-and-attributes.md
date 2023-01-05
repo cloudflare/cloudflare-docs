@@ -8,7 +8,7 @@ weight: 2
 
 Area 1 uses a variety of factors to determine whether a given email message, domain, URL, or packet is part of a phishing campaign. These small pattern assessments are dynamic in nature and — in many cases — no single pattern will determine the final verdict.
 
-Based on these patterns, Area 1 may add X-Headers to each email message that passes through our system.
+Based on these patterns, Area 1 may add `X-Headers` to each email message that passes through our system.
 
 ## Dispositions
 
@@ -28,10 +28,16 @@ You can use disposition values when [creating your quarantine policy](/email-sec
 
 ### Header structure
 
-When Area 1 adds a disposition header to an email message, that header matches the following format.
+When Area 1 adds a disposition header to an email message, that header matches the following format:
 
 ```txt
 X-Area1Security-Disposition: [Value]
+```
+
+Note that emails with a disposition of `SPAM` will be tagged with `UCE` (unsolicited commercial emails) in their headers:
+
+```txt
+X-Area1Security-Disposition: UCE
 ```
 
 ## Attributes

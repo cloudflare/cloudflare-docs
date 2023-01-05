@@ -147,7 +147,7 @@ Each method is implicitly wrapped inside a transaction, such that its results ar
 
 - {{<code>}}get(keys{{<param-type>}}Array\<string>{{</param-type>}}, options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-  - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Any keys that do not exist will be omitted from the result Map. Supports up to 128 keys at a time.<br><br>
+  - Retrieves the values associated with each of the provided keys. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the Map will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
 
     **Supported options:**
 
@@ -195,11 +195,11 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}list(){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-  - Returns all keys and values associated with the current Durable Object in ascending lexicographic sorted order. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/workers/platform/limits/). If that is a concern, pass options to `list` as documented below.
+  - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings. The type of each returned value in the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/workers/platform/limits/). If that is a concern, pass options to `list` as documented below.
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-  - Returns keys associated with the current Durable Object according to the parameters in the provided options object.
+  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
 
     **Supported options:**
 
@@ -221,7 +221,8 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     - {{<code>}}reverse{{<param-type>}}boolean{{</param-type>}}{{</code>}}
 
-      - If true, return results in descending lexicographic order instead of the default ascending order.
+      - If true, return results in descending order instead of the default ascending order.
+      - Note that enabling this does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
 
     - {{<code>}}limit{{<param-type>}}number{{</param-type>}}{{</code>}}
 
@@ -272,6 +273,14 @@ The `put()` method returns a `Promise`, but most applications can discard this p
   - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
     **Supported options:** Like `put()` above, but without `noCache`.
+
+- {{<code>}}sync(){{</code>}} {{<type>}}Promise{{</type>}}
+
+  - Synchronizes any pending writes to disk.
+
+    This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+
+    **Supported options:** None.
 
 {{</definitions>}}
 
@@ -402,6 +411,30 @@ If the remote Object does not already exist, it will be created. Thus, there wil
 
 This method always returns the stub immediately, before it has connected to the remote object. This allows you to begin making requests to the object right away, without waiting for a network round trip.
 
+#### Providing a location hint
+
+Durable Objects don't currently move between geographical regions after they are created<sup>1</sup>. By default they are created close to the first client that accesses them via `get`. If you'd like to manually create them in another location, you can provide an optional `locationHint` parameter to `get`. Only the first call to `get` for a particular object will respect the hint.
+
+```js
+let stub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
+```
+
+The following `locationHint`s are supported. Note that hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below, and so the closest nearby region will be used until those locations are fully supported.
+
+| Location Hint Parameter  | Location              |
+| ------------------------ | --------------------- |
+| wnam                     | Western North America |
+| enam                     | Eastern North America |
+| sam                      | South America         |
+| weur                     | Western Europe        |
+| eeur                     | Eastern Europe        |
+| apac                     | Asia-Pacific          |
+| oc                       | Oceania               |
+| afr                      | Africa                |
+| me                       | Middle East           |
+
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
+
 ## Object stubs
 
 A Durable Object stub is a client object used to send requests to a remote Durable Object.
@@ -429,7 +462,7 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be
 
 ## Listing Durable Objects
 
-The Cloudflare REST API supports retrieving a [list of Durable Objects](https://api.cloudflare.com/#durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://api.cloudflare.com/#durable-objects-namespace-list-namespaces) associated with an account.
+The Cloudflare REST API supports retrieving a [list of Durable Objects](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 
 ## Related resources
 

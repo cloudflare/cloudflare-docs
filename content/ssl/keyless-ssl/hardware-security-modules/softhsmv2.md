@@ -46,7 +46,7 @@ $ source ~/.profile
 
 Next, we create a token in slot 0 called `test-token` and secure it with a PIN of `1234`. In this slot we’ll store the RSA keys for our SSL certificates for `keyless-softhsm.example.com`.
 
-```bash
+```sh
 $ sudo -u keyless softhsm2-util --init-token --slot 0 --label test-token --pin 1234 --so-pin 4321
 The token has been initialized.
 ```
@@ -87,7 +87,7 @@ $ cfssl genkey csr.json | cfssljson -bare certificate
 
 Now that the key has been generated, it’s time to load it into the slot we created. Before doing so, we need to convert from PKCS#1 to PKCS#8 format. During import, we specify the token and PIN from token initialization and provide a unique hexadecimal ID and label to the key.
 
-```bash
+```sh
 $ openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in certificate-key.pem -out certificate-key.p8
 $ sudo chown keyless certificate-key.p8
 
@@ -131,7 +131,7 @@ add
 
 Save the config file, restart `gokeyless`, and verify it started successfully.
 
-```bash
+```sh
 $ sudo systemctl restart gokeyless.service
 $ sudo systemctl status gokeyless.service -l
 ```

@@ -13,9 +13,9 @@ Note that Cloudflare does not save a copy of every page of your website, and it 
 
 When the Internet Archive integration is enabled, Cloudflare tells the Internet Archive what pages to crawl and how often. The pages to crawl, as previously mentioned, are the most popular URLs that were successfully visited in the last five hours. The crawling intervals, to ensure stability of service, are limited by Cloudflare. Limits vary according to your Cloudflare plan.
 
-- Free customers once every 30 days.
-- Pro customers once every 15 days.
-- Business and Enterprise customers once every 5 days.
+## Availability
+
+{{<feature-table id="cache.always_online">}}
 
 ## Visitor Experience
 

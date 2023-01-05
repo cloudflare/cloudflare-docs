@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-```bash
+```sh
 $ cat app_example_com.pem
 -----BEGIN CERTIFICATE-----
 MIIFJDCCBAygAwIBAgIQD0ifmj/Yi5NP/2gdUySbfzANBgkqhkiG9w0BAQsFADBN

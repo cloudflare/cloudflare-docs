@@ -16,7 +16,7 @@ For help configuring Schema Validation for one or more hosts using the dashboard
 
 For more control with Schema Validation, include unique Operations IDs for each endpoint and method pair defined in the schema. Cloudflare supports Operation IDs with a maximum size of 32 characters.
 
-These IDs are used to keep track of changes to the same endpoints when updating schemas and also to label logs in Firewall Events with the right endpoint and method
+These IDs are used to keep track of changes to the same endpoints when updating schemas and also to label logs in Security Events with the right endpoint and method.
 
 If an Operation ID is missing, Cloudflare will generate one from the method and path.
 
@@ -32,6 +32,15 @@ Currently, API Shield cannot validate some features of API schemas, including th
 
 Regular expression support is a paid add-on in the Enterprise plan.
 
+## Body Inspection
+API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.
+
+{{<Aside type="note" header="Note:">}}
+
+Customers who already use Schema Validation but uploaded their schemas prior to the implementation of this feature must re-upload their schemas to receive Body Inspection benefits.
+
+{{</Aside>}}
+
 ## Availability
 
-Schema Validation is only available for Enterprise customers. If you are interested in using this product, contact your account team.
+Schema Validation is only available for Enterprise customers. If you are interested in using this feature, contact your account team.

@@ -10,14 +10,14 @@ title: Zero Trust GitLab SSH & HTTP
 
 You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance of GitLab. Combined with Cloudflare Tunnel, users can connect through HTTP and SSH and authenticate with your team's identity provider.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Deploy an instance of GitLab
 - Lock down all inbound connections to that instance and use Cloudflare Tunnel to set outbound connections to Cloudflare
 - Build policies with Cloudflare Access to control who can reach GitLab
 - Connect over HTTP and SSH through Cloudflare
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 1 hour
 
@@ -25,19 +25,19 @@ You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance 
 
 ## Deploying GitLab
 
-This section walks through deploying GitLab in Digital Ocean. If you have already deployed GitLab, you can skip this section.
+This section walks through deploying GitLab in DigitalOcean. If you have already deployed GitLab, you can skip this section.
 
 Create a Droplet that has 16 GB of RAM and 6 CPUs. This should make it possible to support 500 users, based on [GitLab's resource recommendations](https://docs.gitlab.com/ee/install/requirements.html).
 
 ![Create Droplet](/cloudflare-one/static/zero-trust-security/gitlab/create-droplet.png)
 
-GitLab will provide an external IP that is exposed to the Internet (for now). You will need to connect to the deployed server using this external IP for the initial configuration. You can secure connections to the IP by [adding SSH keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2) to your Digital Ocean account.
+GitLab will provide an external IP that is exposed to the Internet (for now). You will need to connect to the deployed server using this external IP for the initial configuration. You can secure connections to the IP by [adding SSH keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2) to your DigitalOcean account.
 
-This example uses a macOS machine to configure the Droplet. Copy the IP address assigned to the machine from Digital Ocean.
+This example uses a macOS machine to configure the Droplet. Copy the IP address assigned to the machine from DigitalOcean.
 
 ![Machine IP](/cloudflare-one/static/zero-trust-security/gitlab/show-ip.png)
 
-Open Terminal and run the following command, replacing the IP address with the IP assigned by Digital Ocean.
+Open Terminal and run the following command, replacing the IP address with the IP assigned by DigitalOcean.
 
 ```sh
 $ ssh root@134.209.124.123
@@ -155,7 +155,7 @@ Select **Next** and **Next** again on the **Setup** page - this example does not
 
 Cloudflare Tunnel creates a secure, outbound-only, connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the Digital Ocean machine with the two commands below.
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and then install that on the DigitalOcean machine with the two commands below.
 
 ```sh
 $ sudo wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
@@ -301,7 +301,7 @@ $ git clone git@gitlab-ssh.widgetcorp.tech:samrhea/demo
 
 ### Lock down exposed ports
 
-You can now configure your Digital Ocean firewall with a single rule, block any inbound traffic, to prevent direct access.
+You can now configure your DigitalOcean firewall with a single rule, block any inbound traffic, to prevent direct access.
 
 ![Set Rules](/cloudflare-one/static/zero-trust-security/gitlab/disable-ingress.png)
 

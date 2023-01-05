@@ -60,7 +60,6 @@ This example routes certain content requests from our webserver to a different o
 
 <strong>When incoming requests match</strong>:
 
-{' '}
 <table style="width:100%">
   <thead>
     <tr>

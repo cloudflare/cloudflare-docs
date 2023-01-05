@@ -36,7 +36,7 @@ If all associated records were proxied, any request to Cloudflare's nameservers 
 
 Each client (oftentimes a browser) would decide which Cloudflare IP address to send the request to. Cloudflare would then receive that request and — if Cloudflare needed to contact your origin server — we would pick one of the three IP addresses specified in your DNS records (`192.0.1.X`).
 
-Beyond reducing requests to your origin server, this setup allows your application to take advantage of Cloudflare's **Zero downtime failover**. When a request to one IP address fails, Cloudflare automatically retries the request to other IP addresses associated with the same hostname. This behavior prevents end users from experiencing downtime.
+Beyond reducing requests to your origin server, this setup allows your application to take advantage of Cloudflare's [Zero downtime failover](/fundamentals/get-started/task-guides/origin-health/enterprise/#zero-downtime-failover). When a request to one IP address fails, Cloudflare automatically retries the request to other IP addresses associated with the same hostname. This behavior prevents end users from experiencing downtime.
 
 ### Unproxied and proxied records
 

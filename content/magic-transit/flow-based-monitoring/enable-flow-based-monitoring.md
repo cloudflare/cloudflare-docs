@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Enable Flow-based monitoring alerts
 ---
 
-## Enable Flow-based monitoring alerts
+# Enable Flow-based monitoring alerts
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Notifications**.
 2.  From **Notifications**, click **Add**.

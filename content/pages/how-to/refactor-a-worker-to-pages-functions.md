@@ -12,7 +12,7 @@ In this guide, you will learn how to refactor a Worker made to intake form submi
 
 {{<Aside type= "note">}}
 
-You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your Worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
+You can import your Worker to a Pages project without using Functions by creating a `_worker.js` file in the output directory of your Pages project. This [Advanced mode](/pages/platform/functions/#advanced-mode) requires writing your Worker with [Module syntax](/workers/learning/migrating-to-module-workers/). 
 
 However, when using the `_worker.js` file in Pages, the entire `/functions` directory is ignored – including its routing and middleware characteristics.
 
@@ -40,7 +40,7 @@ Building your application using Pages Functions can help you manage your client 
 
 An [Airtable](https://airtable.com/) is a low-code platform for building collaborative applications. It helps customize your workflow, collaborate, and handle form submissions. For this example, you will utilize Airtable's form submission feature.
 
-[Airtables](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [Wrangler](/workers/wrangler/get-started/) to initialize a new Worker within a specific folder or at the root of your application. 
+[Airtable](https://airtable.com/) can be used to store entries of information in different tables for the same account. When creating a Worker for handling the submission logic, the first step is to use [Wrangler](/workers/wrangler/install-and-update/) to initialize a new Worker within a specific folder or at the root of your application. 
 
 This step creates the boilerplate to write your Airtable submission Worker. After writing your Worker, you can deploy it to Cloudflare's edge network after you [configure your project for deployment](/workers/get-started/guide/#7-configure-your-project-for-deployment). Refer to the Workers documentation for a full tutorial on how to [handle form submission with Workers](/workers/tutorials/handle-form-submissions-with-airtable/).
 

@@ -26,7 +26,7 @@ After selecting your deployment option, change the directory to your project and
 
 ```sh
 # choose Cloudflare Pages
-$ cd [whatever you named the project]
+$ cd <YOUR_PROJECT>
 $ npm run dev
 ```
 
@@ -59,7 +59,7 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 {{<Aside type="warning">}}
 
-Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version go to _Settings_ > _Environment Variables_ > _Production_ and add `NODE_VERSION = v16.7.0` in your production option.
+Currently Cloudflare uses Node `12.18.0` in the Pages build environment, but Remix requires a newer node version greater than `14.0.0` to build on Cloudflare Pages. To set the Node version, go to your Pages project > **Settings** > **Environment Variables** > **Production** and add `NODE_VERSION` environment variable with a value of `14` or greater in your Production option.
 
 {{</Aside>}}
 
@@ -73,6 +73,74 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Remix site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
+
+## Create and add a binding to your Remix application
+
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/). 
+
+To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
+
+### Use a binding in your Remix application
+
+If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv). 
+
+The following code block shows an example of accessing a KV namespace in Remix. 
+
+```typescript
+---
+filename: app/routes/products/$productId.tsx
+highlight: [9,10,11,12,13,17,24]
+---
+import type { LoaderArgs } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare"; 
+import { useLoaderData } from "@remix-run/react";
+
+export const loader = async ({
+  context,
+  params,
+}: LoaderArgs) => {
+  return json(
+    await context.PRODUCTS_KV.get<{ name: string }>(`product-${params.productId}`, {
+      type: "json",
+    })
+  );
+};
+
+export default function Product() {
+  const product = useLoaderData<typeof loader>();
+  
+  if (!product) throw new Response(null, { status: 404 })
+  
+  return (
+    <div>
+      <p>Product</p>
+      {product.name}
+      <p>Products</p>
+      {/* ... */}
+    </div>
+  );
+}
+
+```
+
+Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. For example:
+
+```ts
+export const loader = async ({
+  context,
+  params,
+}: LoaderArgs) => {
+  const id = context.PRODUCTS_DO.idFromName(params.productId);
+  const stub = context.PRODUCTS_DO.get(id);
+  const response = await stub.fetch(request);
+  const data = await response.json() as { name: string };
+  return json(data);
+};
+```
+
+You have to do this because there is no way to export the Durable Object class from a Pages Function. 
+
+Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
 
 ## Learn more
 

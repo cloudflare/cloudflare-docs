@@ -17,7 +17,7 @@ In this tutorial, you will build and publish a Cloudflare Workers function that 
 
 This tutorial will teach you how to build and publish a Cloudflare Workers function to configure your CDN. No prior experience with serverless functions or Cloudflare Workers is assumed.
 
-If you want to review the code used in this tutorial, the final version of the codebase is [available on GitHub](https://github.com/signalnerve/assets-on-workers). You can take that code, customize it, and deploy it for use in your own projects.
+If you want to review the code used in this tutorial, the final version of the codebase is [available on GitHub](https://github.com/codewithkristian/assets-on-workers). You can take that code, customize it, and deploy it for use in your own projects.
 
 ## Prerequisites
 
@@ -267,6 +267,6 @@ After deploying your project, open your browser to test retrieving your assets. 
 
 ## Related resources
 
-In this tutorial, you built and published a serverless function to Cloudflare Workers for serving assets from cloud storage. If you would like to review the full source code for this application, refer to the [repository on GitHub](https://github.com/signalnerve/assets-on-workers).
+In this tutorial, you built and published a serverless function to Cloudflare Workers for serving assets from cloud storage. If you would like to review the full source code for this application, refer to the [repository on GitHub](https://github.com/codewithkristian/assets-on-workers).
 
 If you want to get started building your own projects, review the existing list of [Quickstart templates](/workers/get-started/quickstarts/).

@@ -9,11 +9,14 @@ meta:
 
 Cloudflare respects the origin web server’s cache headers in the following order unless an Edge Cache TTL page rule overrides the headers.
 
-- Cloudflare does not cache the resource if the `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0` or if there is a cookie in the response.
-- Cloudflare caches the resource in the following scenarios:
-  - The `Cache-Control` header is set to `public` and the `max-age` is greater than 0.
+- Cloudflare **does not** cache the resource when:
+  - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
+  - The `Set-Cookie` header exists.
+- Cloudflare **does** cache the resource when:
+  - The `Cache-Control` header is set to `public` and `max-age` is greater than 0. Note that Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl). 
   - The `Expires` header is set to a future date.
-- If both the `max-age` and an `Expires` header are set, `max-age` is used.
+
+Note: If both `max-age` and an `Expires` header are set, `max-age` will be used by Cloudflare.
 
 For a list of directives and behaviors when Origin Cache-Control is enabled or disabled, see [Cache-Control directives](/cache/about/cache-control/#cache-control-directives).
 
@@ -60,6 +63,7 @@ Cloudflare cacheable file limits:
 
 The output of the `CF-Cache-Status header` shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
+{{<table-wrap>}}
 <table>
   <tbody>
     <th colspan="4" rowspan="1">
@@ -86,10 +90,14 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        NONE
+        NONE/UNKNOWN
       </td>
       <td colspan="5" rowspan="1">
-        Cloudflare generated response. The resource is not eligible for caching.
+        Cloudflare generated a response that denotes the asset is not eligible for caching. This may have happened because:
+          <li>A Worker generated a response without sending any subrequests. In this case, the response did not come from cache, so the cache status will be <code>none/unknown</code>.
+          <li>A Worker request made a subrequest (<code>fetch</code>). In this case, the subrequest will be logged with a cache status, while the main request will be logged with <code>none/unknown</code> status (the main request did not hit cache, since Workers sits in front of cache).</li>
+          <li>A Firewall rule was triggered to block a request. The response will come from the edge network before it hits cache. Since there is no cache status, Cloudflare will log as <code>none/unknown</code>.</li>
+          <li>A redirect page rule caused the edge network to respond with a redirect to another asset/URL. This redirect response happens before the request reaches cache, so the cache status is <code>none/unknown</code>.</li>
       </td>
     </tr>
     <tr>
@@ -151,3 +159,4 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
     </tr>
   </tbody>
 </table>
+{{</table-wrap>}}

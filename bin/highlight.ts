@@ -56,7 +56,7 @@ async function markdown(file: string): Promise<void> {
   let output = '';
   let match: RegExpExecArray | null;
   let input = await fs.readFile(file, 'utf8');
-  let BACKTICKS = /^(\s+)?([`]{3})([A-Za-z]+?)\r?\n([^]+?)(\2)/gm;
+  let BACKTICKS = /^(\s+)?([`]{3})([A-Za-z]+)?\r?\n([^]+?)(\2)/gm;
 
   while ((match = BACKTICKS.exec(input))) {
     let current = match.index;
@@ -75,10 +75,10 @@ async function markdown(file: string): Promise<void> {
       inner = inner.replace(rgx, '');
     }
 
-    let html = highlight(inner, lang);
+    let html = highlight(inner, lang, file.substring(ROOTLEN));
 
     // prevent hugo from looking at "{{<" pattern
-    output += '{{<raw>}}' + html.replace(/\{\{\</g, '{\\{<') + '{{</raw>}}';
+    output += "\n\n" + ' '.repeat(spaces?.length ?? 0) + '{{<raw>}}' + html.replace(/\{\{\</g, '{\\{<') + '{{</raw>}}';
 
     last = current + full.length;
   }

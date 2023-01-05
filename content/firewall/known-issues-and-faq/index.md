@@ -23,7 +23,7 @@ No. The number of active rules is fixed based on customer plan. Refer to [Availa
 
 This happens when a request goes through a Cloudflare Worker.
 
-In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.
+In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in Security Events will be a Cloudflare IP address.
 
 ## Rule configuration
 
@@ -164,7 +164,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     </tr>
     <tr>
       <td>Expression</td>
-      <td><code class="InlineCode">(ip.geoip.asnum in {7224 15169})</code></td>
+      <td><code class="InlineCode">(ip.geoip.asnum in {16509 15169})</code></td>
     </tr>
     <tr>
       <td colspan="2">
@@ -178,7 +178,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
     <tr>
       <td>Expression</td>
       <td>
-        <code class="InlineCode">(ip.geoip.asnum in {7224 15169}) and not cf.client.bot)</code>
+        <code class="InlineCode">(ip.geoip.asnum in {16509 15169} and not cf.client.bot)</code>
       </td>
     </tr>
     <tr>
@@ -201,7 +201,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
       <td>Rule 2</td>
       <td>
         Action: <em>Block</em> (or a challenge action)<br />
-        Expression: <code class="InlineCode">(ip.geoip.asnum in {7224 15169})</code>
+        Expression: <code class="InlineCode">(ip.geoip.asnum in {16509 15169})</code>
       </td>
     </tr>
   </tbody>

@@ -11,12 +11,12 @@ Cloudflare's DNS filtering solution can apply filters based on who is making the
 
 To apply these types of rules, you will need to deploy Cloudflare's agent on the devices in your organization. Cloudflare's agent will prompt users to login and will use the identity from that authentication to send DNS-over-HTTPS (DoH) queries that include the user identity. These types of policies can also run in-line with Cloudflare Gateway's HTTP filtering rules.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Build a DNS filtering rule that applies to a group of users
 - Use DNS filtering rule precedence to allow some users to reach a destination
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 
@@ -34,7 +34,7 @@ Navigate to the Gateway section of the Zero Trust Dashboard and open the `Polici
 
 This first rule will allow users of your marketing team to reach social media. Select **DNS Content Categories** and choose **Social Media** from the options.
 
-Next, click **+Add condition** to add a second rule. In this rule, select **User Group Names**. You can also select individual user emails or group IDs, as well as locations. Input the name of the group in your identity provider that should be allowed to reach social media.
+Next, click **+Add condition** to add a second rule. In this rule, select **User Group Names**. You can also select individual user emails or group IDs, as well as DNS locations. Input the name of the group in your identity provider that should be allowed to reach social media.
 
 ![Add Rule](/cloudflare-one/static/secure-web-gateway/id-dns/add-second-rule.png)
 
@@ -46,7 +46,7 @@ You can now build a rule that will block social media for the rest of your organ
 
 ![Block Criteria](/cloudflare-one/static/secure-web-gateway/id-dns/add-first-rule.png)
 
-The rule does not need any additional criteria. This policy will apply to all locations and users in your organization, regardless of how DNS queries are sent.
+The rule does not need any additional criteria. This policy will apply to all DNS locations and users in your organization, regardless of how DNS queries are sent.
 
 In the **Action** section, select **Block** and save the rule at the top of the page.
 

@@ -1,9 +1,10 @@
 {{- $root := relURL (printf "/%s/" .Section) -}}
-{{- $title := (title .Section) -}}
 {{- $DATA := (index $.Site.Data .Section) -}}
 
+{{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
+
 <div class="DocsMobileHeader">
-  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/">
+  <a class="DocsMobileHeader--cloudflare-logo-link Link Link-without-underline" href="/products/">
     <div class="DocsNavLogoLockup DocsNavLogoLockup-with-small-gap">
       {{ partial "logo" "Docs" }}
     </div>

@@ -35,7 +35,7 @@ Deploying new software can come with unexpected issues. This section covers the 
 
 ### Is the Cloudflare root certificate installed in all the places?
 
-Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
+Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
 
 In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
@@ -74,6 +74,16 @@ The most common places we see interference with WARP from these products are:
 ### As a last resort, does WARP or your configuration work on a clean machine?
 
 To eliminate issues related to a particular Cloudflare Zero Trust configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
+
+## Why is my device not connecting to my private network?
+
+If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/):
+
+- Verify that the WARP client is [properly configured](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#device-configuration) on the device.
+- Verify that the user is allowed through by your Access and Gateway policies.
+- Verify that the [local LAN settings](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#router-configuration) for the device do not overlap with the CIDR range of your private network.
+
+When contacting Cloudflare support, ensure that you include [WARP Client logs](#how-do-i-retrieve-warp-client-logs) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
 
 ## How do I retrieve WARP client logs?
 

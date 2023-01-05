@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Domains not proxied by Cloudflare
-weight: 0
+weight: 4
 meta:
   title: Use Zaraz on domains not proxied by Cloudflare
 ---

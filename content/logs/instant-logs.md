@@ -6,13 +6,17 @@ weight: 116
 
 # Instant Logs
 
-Instant Logs allows Cloudflare Enterprise customers to access a live stream of the traffic for their domain from the Cloudflare dashboard or from a command-line interface (CLI). Seeing data in real time allows you to investigate an attack, troubleshoot, debug or test out changes made to your network. Instant Logs is lightweight, simple to use and does not require any additional setup.
+Instant Logs allows Cloudflare customers to access a live stream of the traffic for their domain from the Cloudflare dashboard or from a command-line interface (CLI). Seeing data in real time allows you to investigate an attack, troubleshoot, debug or test out changes made to your network. Instant Logs is lightweight, simple to use and does not require any additional setup.
+
+## Availability
+
+{{<feature-table id="analytics.instant_logs">}}
 
 ## Instant Logs on the Cloudflare dashboard
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2.  Select the Enterprise domain you want to use with Instant Logs.
+2.  Select the domain you want to use with Instant Logs.
 
 3.  Go to **Analytics** > **Instant Logs**.
 
@@ -110,8 +114,8 @@ The response will include a new field called **destination_conf**. The value of 
 
 Using a CLI utility like [Websocat](https://github.com/vi/websocat), you can connect to the WebSocket and start immediately receiving logs.
 
-```bash
-websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987
+```sh
+$ websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987
 ```
 
 Response:
@@ -122,8 +126,8 @@ Once connected to the websocket, you will receive messages of line-delimited JSO
 
 Now that you have a connection to Cloudflare's websocket and are receiving logs from the edge, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
 
-```bash
-websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987 | agrind '* | json | sum(sampleInterval) by ClientCountry'
+```sh
+$ websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987 | agrind '* | json | sum(sampleInterval) by ClientCountry'
 ```
 
 Response:

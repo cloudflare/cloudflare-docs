@@ -24,8 +24,8 @@ Rule Preview is only available to customers on an Enterprise plan.
 
 ## Test a firewall rule with Rule Preview
 
-1. Locate the desired rule in the rules list and click **Edit** (wrench icon).
-2. Click **Test rule** to trigger the test.
+1. Locate the desired rule in the rules list and select **Edit** (wrench icon).
+2. Select **Test rule** to trigger the test.
 
 ![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/firewall/static/firewall-rules-preview-1.png)
 
@@ -39,7 +39,7 @@ In this screenshot, a rule that matches all User-Agents that contain the string 
 
 **Consider the results of Firewall Preview an _indication_ of traffic levels**, not an exact calculation. The sample rate can be as little as 1% of your total traffic.
 
-**Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Firewall Events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
+**Rule Preview does not take into account other firewall rules** that you have already configured. In effect, Rule Preview tests a single firewall rule in isolation. Security events or any other rules with a higher priority that may have blocked or challenged a request are ignored.
 
 **You cannot test firewall rules that reference [IP Lists](/firewall/cf-dashboard/rules-lists/)**.
 

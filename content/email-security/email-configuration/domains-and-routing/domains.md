@@ -15,7 +15,7 @@ To create a new domain in Area 1:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Domains**.
-4. Click **New Domain**.
+4. Select **New Domain**.
 5. Enter the following information:
 
     - **Domain**: The domain name receiving email traffic.
@@ -26,7 +26,7 @@ To create a new domain in Area 1:
     - **Outbound TLS**: Choose between **Forward all messages over TLS** (recommended) or **Forward all messages using opportunistic TLS**.
     - **Quarantine Policy**: Choose the [dispositions](/email-security/reference/dispositions-and-attributes/) you want to send to [Admin quarantine](/email-security/email-configuration/admin-quarantine/).
 
-6. Click **Publish Domain**.
+6. Select **Publish Domain**.
 
 ---
 
@@ -37,9 +37,9 @@ To edit an existing domain:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Domains**.
-4. On a specific domain, click **...** > **Edit**.
+4. On a specific domain, select **...** > **Edit**.
 5. Make changes as needed.
-6. Click **Update Domain**.
+6. Select **Update Domain**.
 
 ---
 
@@ -50,4 +50,4 @@ To delete a domain:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email Configuration** > **Domains & Routing** > **Domains**.
-4. On a specific domain, click **...** > **Delete**.
+4. On a specific domain, select **...** > **Delete**.

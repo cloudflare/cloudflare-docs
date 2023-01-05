@@ -12,14 +12,14 @@ You can use Cloudflare Gateway and the Cloudflare WARP client to inspect HTTP tr
 
 In this mode, the Cloudflare WARP client runs on user devices and proxies all Internet-bound traffic to Cloudflare's network. Cloudflare's network will then inspect the HTTP traffic to apply policies based on user identity and destination. You can also decide to [exclude some traffic from inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) while filtering all other traffic.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a Gateway policy to block URLs that contain a hostname
 - Create a Gateway policy to block URLs that contain a URL path
 - Enroll devices into Gateway
 - Review the block events in the Gateway logs
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 35 minutes
 
@@ -39,13 +39,11 @@ Next, create a rule to block any subdomain that uses a particular host. This exa
 
     .*espn\.com
 
-![Block ESPN](/cloudflare-one/static/secure-web-gateway/block-football/block-espn.png)
+![HTTP policy settings reflecting the above example using the `matches regex` operator to block espn.com](/cloudflare-one/static/secure-web-gateway/block-football/block-espn.png)
 
 You can now select **Block** as the action. You can add optional text to present to the user in the block page.
 
-Next, click **Create policy** to save the rule.
-
-![ESPN List](/cloudflare-one/static/secure-web-gateway/block-football/after-block-espn.png)
+Next, click **Create a policy** to save the rule.
 
 ## Build a URL policy
 
@@ -57,11 +55,9 @@ Matching for this URL requires a regular expression rule. Create a new policy an
 
     /r/CFB
 
-![Block CFB](/cloudflare-one/static/secure-web-gateway/block-football/block-cfb.png)
+![An example of settings that allow users to block a specific URL string.](/cloudflare-one/static/secure-web-gateway/block-football/block-cfb.png)
 
 You can now select **Block** as the action. You can add optional text to present to the user in the block page.
-
-![Block CFB](/cloudflare-one/static/secure-web-gateway/block-football/block-action.png)
 
 Click **Create policy** to save the rule.
 
@@ -71,11 +67,7 @@ The policy created will apply to any traffic sent to Gateway where HTTP filterin
 
 {{</Aside>}}
 
-Once saved, the policy should now appear in your policy list.
-
-![Policy Start](/cloudflare-one/static/secure-web-gateway/block-football/saved-list.png)
-
-You can click the arrow in the policy list to expand a policy and quickly view its contents.
+Once saved, the policy should now appear in your policy list. You can click the arrow in the policy list to expand a policy and quickly view its contents.
 
 ## Integrate your identity provider
 
@@ -93,11 +85,9 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-    ![Device Enrollment](/cloudflare-one/static/secure-web-gateway/block-football/device-enrollment-add-rule.png)
+1. Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
-    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
-
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    ![Example of enrollment settings enabling all Cloudflare users to have access.](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
 1.  Click **Save**.
 
@@ -105,11 +95,11 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 ## Configure the Cloudflare certificate
 
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
+To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
 
 To download the Cloudflare certificate:
 
-- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+- Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 - Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
@@ -118,32 +108,26 @@ Once the certificate has been installed, you can configure Gateway to inspect HT
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
-![Policy settings](/cloudflare-one/static/secure-web-gateway/block-football/enable-proxy-decrypt.png)
-
 ## Enroll a device
 
 1.  Follow the [instructions](/cloudflare-one/connections/connect-devices/warp/deployment/) to install the WARP client depending on your device type. Cloudflare Gateway does not need a special version of the client.
 
 1.  Once the client is installed, click the gear icon.
 
-    ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+    ![Accessing the WARP gear icon from the desktop.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
-    ![Account View](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/account-view.png)
-
 1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
 
-    ![Team Name](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
+    ![Team name used to configure the WARP app on a desktop device.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 
-![Confirm WARP](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
+![Gateway with WARP enabled in the Teams workflow.](/cloudflare-one/static/secure-web-gateway/block-football/warp-mode.png)
 
 ## Confirm blocks
 
 When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
 
 You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Zero Trust dashboard. Filter for `Block` as the decision type.
-
-![Block Log](/cloudflare-one/static/secure-web-gateway/block-football/block-log.png)

@@ -15,7 +15,7 @@ To create a new blocked pattern:
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. On **Email Configuration**, go to **Block List** > **Blocked Senders**.
-4. Click **+ New Sender**.
+4. Select **+ New Sender**.
 5. Enter the pattern information:
 
     - **Sender**: Enter one of the following types of pattern:
@@ -26,7 +26,7 @@ To create a new blocked pattern:
     
     - **Notes**: Provide additional notes about the blocked sender pattern.
 
-6. Click **Save**.
+6. Select **Save**.
 
 ### CSV uploads
 

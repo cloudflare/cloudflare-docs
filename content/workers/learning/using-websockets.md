@@ -1,16 +1,10 @@
 ---
 pcx_content_type: concept
 title: Using WebSockets
-weight: 12
+weight: 13
 ---
 
 # Using WebSockets
-
-{{<Aside type="warning">}}
-
-WebSocket pricing and limits details are currently not available. Developers are encouraged to experiment with WebSocket support in Cloudflare Workers, but WebSocket support generally remains in early access.
-
-{{</Aside>}}
 
 WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. In this guide, you will learn the basics of WebSockets on Cloudflare Workers, both from the perspective of writing WebSocket servers in your Workers functions, as well as connecting to and working with those WebSocket servers as a client.
 
@@ -145,9 +139,9 @@ For an example of this in practice, refer to the [`websocket-template`](https://
 
 ## Writing a WebSocket client
 
-A Worker can also establish a WebSocket connection to a remote server.
+Cloudflare Workers supports the `new WebSocket(url)` constructor. A Worker can establish a WebSocket connection to a remote server in the same manner as the client implementation described above.
 
-Cloudflare does not currently support the client implementation described above within a Worker. Instead, WebSockets are established by making a fetch request to a URL with the `Upgrade` header set.
+Additionally, Cloudflare supports establishing WebSocket connections by making a fetch request to a URL with the `Upgrade` header set.
 
 ```js
 async function websocket(url) {
@@ -178,6 +172,10 @@ async function websocket(url) {
   });
 }
 ```
+
+## WebSocket compression
+
+Cloudflare Workers does not currently support WebSocket compression. This means that, unlike browsers, using `new WebSocket(url)` in a Worker will not set the `Sec-WebSocket-Extensions: permessage-deflate` header.
 
 ## Durable Objects and WebSocket state
 

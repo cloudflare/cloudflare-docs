@@ -29,7 +29,7 @@ In the **Build & Deploy** tab, find the **Build settings** panel, which will hav
 
 ## Migrating redirects and headers
 
-If your site includes a `_redirects` file in your publish directory, you can use the same file in Cloudflare Pages and your redirects will execute successfully. If your redirects are in your `netlify.toml` file, you will need to add them to the `_redirects` folder. Cloudflare Pages currently offers limited [supports for advanced redirects](/pages/platform/redirects/). In the case where you have over 2000 static and/or 100 dynamic redirects rules, it is recommended to use [Bulk Redirects](/rules/bulk-redirects/create-dashboard/).
+If your site includes a `_redirects` file in your publish directory, you can use the same file in Cloudflare Pages and your redirects will execute successfully. If your redirects are in your `netlify.toml` file, you will need to add them to the `_redirects` folder. Cloudflare Pages currently offers limited [supports for advanced redirects](/pages/platform/redirects/). In the case where you have over 2000 static and/or 100 dynamic redirects rules, it is recommended to use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/create-dashboard/).
 
 Your header files can also be moved into a `_headers` folder in your publish directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from functions, even if the function route matches the URL pattern. To learn more about how to [handle headers, refer to Headers](/pages/platform/headers/).
 
@@ -92,7 +92,7 @@ If you choose to use a custom domain for your Pages, you can set it to the same 
 
 ## Cleaning up your old application and assigning the domain
 
-In the Cloudflare dashboard, go to **DNS** and review that you have updated the CNAME record for your domain from Netlify to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
+In the Cloudflare dashboard, go to **DNS** > **Records** and review that you have updated the CNAME record for your domain from Netlify to Cloudflare Pages. With your DNS record updated, requests will go to your Pages application.
 
 In **DNS**, your record's **Content** should be your `<SUBDOMAIN>.pages.dev` subdomain.
 

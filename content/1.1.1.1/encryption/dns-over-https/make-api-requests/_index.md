@@ -19,7 +19,7 @@ https://cloudflare-dns.com/dns-query
 
 Cloudflare's DNS-over-HTTPS (DOH) endpoint supports `POST` and `GET` for UDP wireformat, and `GET` for JSON format.
 
-When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (`application/dns-udpwireformat`) is sent in the `Content-Type` request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
+When making requests using `POST`, the DNS query is included as the message body of the HTTP request, and the MIME type (`application/dns-message`) is sent in the `Content-Type` request header. Cloudflare will use the message body of the HTTP request as sent by the client, so the message body should not be encoded.
 
 When making requests using `GET`, the DNS query is encoded into the URL. An additional URL parameter of `ct` should indicate the MIME type (see below).
 
@@ -38,7 +38,7 @@ You can learn more about how DoH works in RFC8484, more specifically [the HTTP l
 Example request:
 
 ```sh
-$ curl --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=cloudflare.com --next --http2 -H 'accept: application/dns-json' https://1.1.1.1/dns-query?name=example.com
+$ curl --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=cloudflare.com" --next --http2 -H "accept: application/dns-json" "https://1.1.1.1/dns-query?name=example.com"
 ```
 
 ## Authentication

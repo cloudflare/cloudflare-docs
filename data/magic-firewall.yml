@@ -10,7 +10,11 @@ meta:
   description: Magic Firewall a network-level firewall delivered through
     Cloudflare to secure your enterprise.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /zt-preview.png
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets/magic_firewall
+  learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/
 
 externals:
   - title: Magic Transit home

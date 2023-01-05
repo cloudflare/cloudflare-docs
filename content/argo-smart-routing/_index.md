@@ -17,8 +17,6 @@ Speed up your global traffic with a single click
 
 Argo Smart Routing detects real-time network issues and routes traffic across the most efficient network path. These benefits are most apparent for users farthest from your origin server.
 
-Free, Pro, and Business users can enable Argo in their [Cloudflare dashboard](https://dash.cloudflare.com/). Enterprise users can enroll in a free three day trial by contacting their Customer Success Manager.
-
 ---
 
 ## Features
@@ -35,6 +33,10 @@ Argo Smart Routing includes comprehensive analytics to compare performance impro
 
 {{<related header="Argo Tiered Cache" href="/cache/about/tiered-cache/" product="cache">}}
 Increase cache hit ratios to reduce requests to your origin server.
+{{</related>}}
+
+{{<related header="China Network" href="/china-network/" product="china-network">}}
+Improve security and performance within mainland China.
 {{</related>}}
 
 {{<related header="Magic Transit" href="/magic-transit/" product="magic-transit">}}

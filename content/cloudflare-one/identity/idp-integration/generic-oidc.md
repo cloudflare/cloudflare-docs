@@ -38,7 +38,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
-9. (Optional) Under **Optional configurations**, enter custom OIDC claims that you wish to add to your Access [application token](/cloudflare-one/identity/users/access-jwt/application-token/).
+9. (Optional) Under **Optional configurations**, enter custom OIDC claims that you wish to add to your Access [application token](/cloudflare-one/identity/authorization-cookie/application-token/).
 
 10. Click **Save**.
 

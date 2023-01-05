@@ -15,7 +15,7 @@ Follow the steps below to enable SSL/TLS protection for your application.
 
 ## Prerequisites
 
-- [Create an account and register an application](https://support.cloudflare.com/hc/articles/360059655691)
+- [Create an account and register an application](/fundamentals/get-started/setup/)
 
 ---
 
@@ -30,9 +30,9 @@ Cloudflare offers a variety of options for your application's edge certificates:
 
 {{<Aside type="note" header="Note:">}}
 
-{{<render file="../../cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}}
+{{<render file="../../cloudflare-for-platforms/cloudflare-for-saas/_partials/_ssl-for-saas-definition.md">}}
 
-For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare-for-saas/security/certificate-management/).
+For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/).
 
 {{</Aside>}}
 

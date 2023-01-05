@@ -8,7 +8,7 @@ weight: 1
 
 The goal of Search Engine Optimization (SEO) is to get your website to rank higher on various search engine providers (Google, Bing, etc.).
 
-In practice, SEO is primarily about quality content, user experience, and not making things more difficult for search engine crawlers. While Cloudflare cannot write quality content for you, our service can help with user experience — especially related to site speed — and search crawlers.
+In practice, SEO is primarily about quality content, user experience, and not making things more difficult for search engine crawlers. While Cloudflare cannot write quality content for you, our service can help with user experience — especially related to [site speed](https://www.cloudflare.com/learning/performance/how-website-speed-boosts-seo/) — and search crawlers.
 
 {{<Aside type="note" header="Tip:">}}
 
@@ -24,7 +24,7 @@ Several Cloudflare features improve Search Engine site rankings. However, meanin
 
 Since at least 2010, Google has publicly stated that [site speed affects your Google ranking](https://webmasters.googleblog.com/2010/04/using-site-speed-in-web-search-ranking.html).
 
-Cloudflare offers multiple features to [optimize site performance](/fundamentals/get-started/task-guides/optimize-site-speed/).
+Cloudflare offers multiple features to [optimize site performance](/learning-paths/optimize-site-speed/).
 
 ### Enable HTTPS
 
@@ -33,7 +33,7 @@ Since search engines use HTTPS as [a ranking signal](https://webmasters.googlebl
 To make sure your domain is accessible over HTTPS:
 
 1.  Get an [SSL/TLS certificate](/ssl/get-started/) for your domain.
-2.  [Redirect visitors](/ssl/edge-certificates/additional-options/always-use-https/) to the HTTPS version of your domain.
+2.  [Redirect visitors](/ssl/edge-certificates/encrypt-visitor-traffic/) to the HTTPS version of your domain.
 
 ### Enable Crawler Hints
 

@@ -11,7 +11,7 @@ Deploy buttons let you deploy projects to the Workers platform in under five min
 
 Try the deploy button below to deploy a GraphQL server:
 
-[![Select Deploy with Workers to deploy a GraphQL server](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/signalnerve/workers-graphql-server)
+[![Select Deploy with Workers to deploy a GraphQL server](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/workers-graphql-server)
 
 Refer to [deploy.workers.cloudflare.com](https://deploy.workers.cloudflare.com/) for additional projects to deploy.
 

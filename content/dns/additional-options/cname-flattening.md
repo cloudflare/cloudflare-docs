@@ -6,7 +6,13 @@ weight: 4
 
 # CNAME flattening
 
-`CNAME` flattening speeds up `CNAME` resolution and allows you to use a `CNAME` record at your root/apex domain (`example.com`).
+`CNAME` flattening speeds up `CNAME` resolution and allows you to use a `CNAME` record at your root/apex domain (`example.com`). 
+
+{{<Aside type="note">}}
+
+This functionality is also what allows you to use a [root custom domain](/pages/platform/custom-domains/) with a Cloudflare Pages site.
+
+{{</Aside>}}
 
 ## How it works
 
@@ -15,6 +21,12 @@ With `CNAME` flattening, Cloudflare finds the IP address that a `CNAME` points t
 For more details on the mechanics of CNAME flattening, refer to the [blog post](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/).
 
 ## Set up CNAME flattening
+
+{{<Aside type="note">}}
+
+If we have CNAME target on same zone, we do CNAME flattening all the time and ignore CNAME flattening configuration.
+
+{{</Aside>}}
 
 ### For your root domain
 
@@ -25,5 +37,5 @@ For more details on the mechanics of CNAME flattening, refer to the [blog post](
 Accounts on paid plans can also choose to flatten all `CNAME` records on their domain. This option is useful for DNS-only (unproxied) `CNAME` records since proxied records are flattened by default (as they return Cloudflare edge IPv4 and IPv6 addresses).
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2.  Navigate to **DNS**.
+2.  Navigate to **DNS** > **Settings**.
 3.  For **CNAME Flattening**, select **Flatten all CNAMEs**.

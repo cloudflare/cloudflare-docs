@@ -1,9 +1,96 @@
 ---
 pcx_content_type: changelog
 title: Changelog
+weight: 3
 ---
 
 # Changelog
+
+## 2022-12-07
+
+- Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.
+- Passing a range header to the `get` operation in the R2 bindings API should now work as expected.
+
+## 2022-11-30
+
+- Requests with the header `x-amz-acl: public-read` are no longer rejected.
+- Fixed issues with wildcard CORS rules and presigned URLs.
+- Fixed an issue where `ListObjects` would time out during delimited listing of unicode-normalized keys.
+- S3 API's `PutBucketCors` now rejects requests with unknown keys in the XML body.
+- Signing additional headers no longer breaks CORS preflight requests for presigned URLs.
+
+## 2022-11-21
+
+- Fixed a bug in `ListObjects` where `startAfter` would skip over objects with keys that have numbers right after the `startAfter` prefix.
+- Add worker bindings for multipart uploads.
+
+## 2022-11-17
+
+- Unconditionally return HTTP 206 on ranged requests to match behavior of other S3 compatible implementations.
+- Fixed a CORS bug where `AllowedHeaders` in the CORS config were being treated case-sensitively.
+
+## 2022-11-08
+
+- Copying multipart objects via `CopyObject` is re-enabled.
+- `UploadPartCopy` is re-enabled.
+
+## 2022-10-28
+
+- Multipart upload part sizes are always expected to be of the same size, but this enforcement is now done when you complete an upload instead of being done very time you upload a part.
+- Fixed a performance issue where concurrent multipart part uploads would get rejected.
+
+## 2022-10-26
+
+- Fixed ranged reads for multipart objects with part sizes unaligned to 64KiB.
+
+## 2022-10-19
+
+- `HeadBucket` now sets `x-amz-bucket-region` to `auto` in the response.
+
+## 2022-10-06
+
+- Temporarily disabled `UploadPartCopy` while we investigate an issue.
+
+## 2022-09-29
+
+- Fixed a CORS issue where `Access-Control-Allow-Headers` was not being set for preflight requests.
+
+## 2022-09-28
+
+- Fixed a bug where CORS configuration was not being applied to S3 endpoint.
+- No-longer render the `Access-Control-Expose-Headers` response header if `ExposeHeader` is not defined.
+- Public buckets will no-longer return the `Content-Range` response header unless the response is partial.
+- Fixed CORS rendering for the S3 `HeadObject` operation.
+- Fixed a bug where no matching CORS configuration could result in a `403` response.
+- Temporarily disable copying objects that were created with multipart uploads.
+- Fixed a bug in the Workers bindings where an internal error was being returned for malformed ranged `.get` requests.
+
+## 2022-09-27
+
+- CORS preflight responses and adding CORS headers for other responses is now implemented for S3 and public buckets. Currently, the only way to configure CORS is via the S3 API.
+- Fixup for bindings list truncation to work more correctly when listing keys with custom metadata that have `"` or when some keys/values contain certain multi-byte UTF-8 values.
+- The S3 `GetObject` operation now only returns `Content-Range` in response to a ranged request.
+
+## 2022-09-19
+
+- The R2 `put()` binding options can now be given an `onlyIf` field, similar to `get()`, that performs a conditional upload.
+- The R2 `delete()` binding now supports deleting multiple keys at once.
+- The R2 `put()` binding now supports user-specified SHA-1, SHA-256, SHA-384, SHA-512 checksums in options.
+- User-specified object checksums will now be available in the R2 `get()` and `head()` bindings response. MD5 is included by default for non-multipart uploaded objects.
+
+## 2022-09-06
+
+- The S3 `CopyObject` operation now includes `x-amz-version-id` and `x-amz-copy-source-version-id` in the response headers for consistency with other methods.
+- The `ETag` for multipart files uploaded until shortly after Open Beta uploaded now include the number of parts as a suffix.
+
+## 2022-08-17
+
+- The S3 `DeleteObjects` operation no longer trims the space from around the keys before deleting. This would result in files with leading / trailing spaces not being able to be deleted. Additionally, if there was an object with the trimmed key that existed it would be deleted instead. The S3 `DeleteObject` operation was not affected by this.
+- Fixed presigned URL support for the S3 `ListBuckets` and `ListObjects` operations. 
+
+## 2022-08-06
+
+- Uploads will automatically infer the `Content-Type` based on file body if one is not explicitly set in the `PutObject` request. This functionality will come to multipart operations in the future.
 
 ## 2022-07-30
 
@@ -93,7 +180,7 @@ title: Changelog
 
 ## 2022-05-16
 
-- Add support for virtual-hosted style paths, such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com`.
+- Add support for S3 [virtual-hosted style paths](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html), such as `<BUCKET>.<ACCOUNT_ID>.r2.cloudflarestorage.com` instead of path-based routing (`<ACCOUNT_ID>.r2.cloudflarestorage.com/<BUCKET>`).
 - Implemented `GetBucketLocation` for compatibility with external tools, this will always return a `LocationConstraint` of `auto`.
 
 ## 2022-05-06

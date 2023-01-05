@@ -1,12 +1,12 @@
 ---
 pcx_content_type: concept
-title: DNSLink
+title: DNSLink gateways
 weight: 4
 ---
 
-# DNSLink
+# DNSLink gateways
 
-When you set up a gateway with a DNSLink, that gateway is restricted to a particular piece of content (either a specific Content Identifier (CID) or an Interplanetary Name Service (IPNS) hostname).
+When you set up a gateway with a DNSLink record, that gateway is restricted to a particular piece of content (either a specific Content Identifier (CID) or an Interplanetary Name Service (IPNS) hostname).
 
 A gateway with a DNSLink - otherwise known as a *restricted gateway* - differs from a [universal gateway](/web3/ipfs-gateway/concepts/universal-gateway/), which allows users to access any content hosted on the IPFS network.
 

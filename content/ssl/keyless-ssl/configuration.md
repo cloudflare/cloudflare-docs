@@ -98,7 +98,7 @@ Add your Cloudflare account details to the configuration file located at `/etc/k
 
 Install your private keys in `/etc/keyless/keys/` and set the user and group to keyless with 400 permissions. Keys must be in PEM or DER format and have an extension of `.key`:
 
-```bash
+```sh
 $ ls -l /etc/keyless/keys
 -r-------- 1 keyless keyless 1675 Nov 18 16:44 example.com.key
 ```

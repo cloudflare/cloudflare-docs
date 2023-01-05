@@ -18,7 +18,7 @@ Alternatively, download the client from one of the following links after checkin
       <td>
         <strong>OS Ver</strong>
       </td>
-      <td>Windows 8.1, Windows 10, Windows 11</td>
+      <td>Windows 10, Windows 11</td>
     </tr>
     <tr>
       <td>
@@ -65,7 +65,7 @@ Alternatively, download the client from one of the following links after checkin
       <td>
         <strong>OS Ver</strong>
       </td>
-      <td>Mojave, Catalina, Big Sur, Monterey</td>
+      <td>Catalina, Big Sur, Monterey, Ventura</td>
     </tr>
     <tr>
       <td>

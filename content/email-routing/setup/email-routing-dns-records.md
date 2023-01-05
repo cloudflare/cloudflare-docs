@@ -3,15 +3,32 @@ title: DNS records
 pcx_content_type: reference
 weight: 2
 meta:
-    title: Email Routing DNS records
+    title: Email DNS records
 ---
 
-# Email Routing DNS records
+# DNS records
 
-Email Routing's Settings section allows you to lock or unlock your DNS records, and also view a list of the DNS records needed for Email Routing to work. If the DNS records in your account are correctly configured, Email Routing will show you a green `Email DNS records configured` message. 
+You can check the status of your DNS records in the **Settings** section of Email Routing. This section also allows you to troubleshoot any potential problems you might have with DNS records.
 
-Select **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
+## Email DNS records
 
-## Start disabling
+Check the status of your account's DNS records in the **Email DNS records** card:
 
-The **Start disabling** button allows you to delete Email Routing from your account or keep your records and migrate to another provider. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
+* **Email DNS records configured** - DNS records are properly configured.
+* **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting problems](/email-routing/troubleshooting/).
+
+### Start disabling
+
+When you successfully configure Email Routing, your DNS records will be locked and the dashboard will show a **Start disabling** button in the Email DNS records card. This locked status is the recommended setting by Cloudflare. It means that the DNS records required for Email Routing to work are locked and can only be changed if you disable Email Routing on your domain.
+
+If you need to delete Email Routing or migrate to another provider, select **Start disabling**. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
+
+### Lock DNS records
+
+Depending on your zone configuration, you might have your DNS records unlocked. This will also be true if, for some reason, you have unlocked your DNS records. Select **Lock DNS records** to lock your DNS records and protect them from being accidentally changed or deleted. 
+
+## View DNS records
+
+Select **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using. 
+
+If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.

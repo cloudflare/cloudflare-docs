@@ -14,14 +14,14 @@ You can create and configure Cloudflare Tunnel connections to [support multiple 
 
 Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a machine to Cloudflare
 - Assign the machine an IP that can consist of an RFC 1918 IP address or range
 - Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
 - Connect using any TCP-based protocol
 
-**⏲️ Time to complete:** 45 minutes
+**Time to complete:** 45 minutes
 
 ---
 
@@ -63,7 +63,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
 
 2. Create a route. Routes map a Tunnel ID to a CIDR range that you specify. You can use private IP space specified by [RFC 1918](https://tools.ietf.org/html/rfc1918) or other routes. The private IP space specified should match the private IP space of your subnet or environment where Cloudflare Tunnel will send connections.
 
-    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a Digital Ocean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
+    This example tells Cloudflare Tunnel that, for users in this organization, connections to `100.64.0.0/10` should be served by this Tunnel. For the purposes of this tutorial, Grafana is running in a DigitalOcean environment where a virtual interface has been applied that will send traffic bound for localhost to `100.64.0.1`.
 
     ```sh
     $ cloudflared tunnel route ip add 100.64.0.0/10 8e343b13-a087-48ea-825f-9783931ff2a5
@@ -108,9 +108,9 @@ Users can reach this private service by logging in to their Zero Trust account a
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/tutorials/split-tunnel/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account and go to **Settings** > **Network**.
+1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
 
-2. Within **Split Tunnels**, select **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
+2. In the list of Split Tunnels entries, choose the range being used for this private connection and delete it.
 
 ## Integrate your identity provider
 
@@ -122,7 +122,7 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 ## Determine which devices can enroll
 
-1. Go to **Settings** > **Devices** > **Device enrollment**.
+1. Go to **Settings** > **WARP Client**.
 
 2. Within **Device enrollment permissions**, select **Manage**.
 
@@ -136,21 +136,23 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 Your rule will now be visible under the **Device enrollment rules** list.
 
-## Configure the Cloudflare certificate
-
-To inspect traffic, Cloudflare Gateway requires that a [certificate be installed](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on enrolled devices. You can also distribute this certificate through an MDM provider. The example below describes the manual distribution flow.
-
-To download the Cloudflare certificate, refer to [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). To find the certificate in the Zero Trust Dashboard, go to **Settings** > **Devices** > **Certificates**.
-
 ## Enable the Cloudflare proxy
-
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. 
 
 1. Go to **Settings** > **Network**.
 
-2. Toggle **Proxy** to Enabled. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+2. Enable **Proxy**.
 
-3. Toggle **TLS decryption** to Enabled. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
+This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+
+## (Optional) Enable HTTPS inspection
+
+1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.
+
+    Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
+
+2. Go to **Settings** > **Network** and enable **TLS decryption**.
+
+    This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
 ## Enroll a device
 

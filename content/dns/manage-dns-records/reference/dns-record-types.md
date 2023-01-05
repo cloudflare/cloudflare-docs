@@ -16,7 +16,7 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 ### A and AAAA
 
-[A and AAAA records](https://www.cloudflare.com/learning/dns/dns-records/dns-a-record/) direct browser requests to an origin web server (`A` for IPv4 addresses and `AAAA` for IPv6 addresses).
+{{<render file="_a-aaaa-definition.md">}}
 
 These records include the following fields:
 
@@ -32,7 +32,7 @@ These records include the following fields:
 
 ### CNAME
 
-[CNAME records](https://www.cloudflare.com/learning/dns/dns-records/dns-cname-record/) direct browser requests to an origin web server, but — unlike an `A` or `AAAA` record — do so via a hostname like `example.com` instead of an IP address.
+{{<render file="_cname-definition.md">}}
 
 These records include the following fields:
 
@@ -92,7 +92,7 @@ A Domain-based Message Authentication Reporting and Conformance (DMARC) record h
 
 A [text (TXT) record](https://www.cloudflare.com/learning/dns/dns-records/dns-txt-record/) lets you enter text into the DNS system.
 
-At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
+At Cloudflare, these are most commonly used to demonstrate domain ownership prior to issuing SSL/TLS certificates for [your domain](/ssl/edge-certificates/changing-dcv-method/) or an [SSL for SaaS domain](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
 You could also use these to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 

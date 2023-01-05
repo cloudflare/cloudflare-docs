@@ -1,15 +1,22 @@
 ---
 pcx_content_type: concept
 title: Pricing
+weight: 12
 ---
 
 # Pricing
 
-By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+By default, users have access to the Workers Free plan. The Workers free plan includes limited usage of Workers, Pages Functions and Workers KV. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
-The Workers Paid plan includes Workers, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
+The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan.
 
 All included usage is on a monthly basis.
+
+{{<Aside type="note">}} 
+  
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
+
+{{</Aside>}}
 
 ## Workers
 
@@ -17,14 +24,16 @@ All included usage is on a monthly basis.
 
 |          | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
 | -------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
-| Requests | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
-| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>1,2</sup> |
+| Requests<sup>1</sup> | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
+| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
 
 {{</table-wrap>}}
 
-1.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+1.  Requests inbound to your Worker from the Internet are charged on a unit basis for paid plans. [Subrequests](/workers/platform/limits/#subrequests) to external services are not billed on a unit basis, but network time incurred may slightly increase any duration-based billing.
 
-2.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they are allocated a full 128 MB of memory.
+2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
+
+3.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
 
 ### Usage models
 
@@ -38,7 +47,7 @@ You may change the Usage Model for individual Workers without affecting your acc
 
 ### Same features
 
-Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/). 
+Worker size, number of Workers, and available memory are not affected by plan type. The Unbound usage model includes a higher number of subrequests. Refer to [Limits](/workers/platform/limits/).
 
 ### Workers Unbound billing examples
 
@@ -62,6 +71,20 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 - (6,400,000 seconds) \* 128 MB / 1 GB = 800,000 GB-seconds
 - (800,000 GB-s - included 400,000 GB-s) x $12.50 / 1,000,000 GB-s = $5.00
 
+## Workers Trace Events Logpush
+
+Workers Logpush is only available on the Workers Paid plan. 
+
+{{<table-wrap>}}
+
+|                             | Paid plan                          |
+| --------------------------- | ---------------------------------- |
+| Requests <sup>1</sup>       | 10 million / month, +$0.05/million |
+
+{{</table-wrap>}}
+
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
+
 ## Workers KV
 
 {{<table-wrap>}}
@@ -78,6 +101,10 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 
 1.  The Workers Free plan includes limited Workers KV usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
 
+## Queues
+
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/pricing/).
+
 ## Durable Objects
 
 Durable Objects are only available on the Workers Paid plan.
@@ -91,7 +118,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 {{</table-wrap>}}
 
-1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object stops receiving requests, it will be removed from memory and stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
+1.  Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Once your Object finishes responding to all requests, it will stop incurring duration charges. A WebSocket being connected to the Durable Object counts as the Object being active.
 2.  Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 3.  Requests including all incoming HTTP requests, WebSocket messages, and alarm invocations. There is no charge for outgoing WebSocket messages.
 
@@ -151,7 +178,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 {{</table-wrap>}}
 
 1.  A request unit is defined as 4 KB of data read or written. A request that writes or reads more than 4 KB will consume multiple units, for example, a 9 KB write will consume 3 write request units.
-2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns 80 KB of keys will be billed 20 request units.
+2.  List operations are billed by read request units, based on the amount of data examined, for example, a list request that returns a combined 80 KB of keys and values will be billed 20 read request units. A list request that does not return anything is billed for 1 read request unit.
 3.  Delete requests are unmetered, for example, deleting a 100 KB value will be charged one delete request.
 4.  Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 5.  Each alarm write is billed as a single write request unit.

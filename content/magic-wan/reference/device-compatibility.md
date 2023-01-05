@@ -15,7 +15,7 @@ The matrix below includes example devices and links to the integration guides.
 | [Cisco Viptela](/magic-wan/tutorials/viptela)                 |   ✅           |    ✅           |
 | Cisco Meraki                                                  |   Compatibility on roadmap | Compatibility on roadmap   |
 | Cisco ASA                                                     |   Compatibility on roadmap | Specifications compatible*   |
-| Fortinet                                   |   Specifications compatible* | Specifications compatible*   |
+| [Fortinet](/magic-wan/tutorials/fortinet/)                    |   Specifications compatible* | Specifications compatible*   |
 | [pfSense](/magic-wan/tutorials/pfsense)                       |   ✅           |    ✅           |
 | Prisma SD-WAN (Palo Alto)                  |   Specifications compatible* | Specifications compatible*   |
 | Riverbed                 |   Specifications compatible* | Specifications compatible*   |

@@ -10,11 +10,17 @@ meta:
 
 This tutorial shows you how to get started with Terraform. The tutorial uses an example scenario where you have a web server for your domain, accessible on `203.0.113.10`, and you just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform.
 
-Before you begin, ensure you [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/api/tokens/create/) with permissions to edit resources for this tutorial.
+Before you begin, ensure you have [installed Terraform](/terraform/installing/). You will also need to [create an API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial.
 
 ## 1. Define your first Terraform config file
 
-Create an initial Terraform config file. Terraform will process any files with a `.tf` extension. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
+Create an initial Terraform config file, filling in your own values for the [API token](/fundamentals/api/get-started/create-token/), [zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/), and [domain](/fundamentals/get-started/setup/add-site/).
+
+Terraform will process any files with a `.tf` extension. As the configuration becomes more complex, you will want to split the config into separate files and modules. For now, proceed with a single file.
+
+{{<Aside type="warning">}}
+To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. The [next tutorial](/terraform/tutorial/track-history/) will cover best practices for passing in your API token.
+{{</Aside>}}
 
 ```bash
 $ cat > cloudflare.tf <<'EOF'
@@ -28,16 +34,15 @@ terraform {
 }
 
 provider "cloudflare" {
-  email = "you@example.com"
-  api_token = "your-api-token"
+  api_token = "<YOUR_API_TOKEN>"
 }
 
 variable "zone_id" {
-  default = "e097e1136dc79bc1149e32a8a6bde5ef"
+  default = "<YOUR_ZONE_ID>"
 }
 
 variable "domain" {
-  default = "example.com"
+  default = "<YOUR_DOMAIN>"
 }
 
 resource "cloudflare_record" "www" {
@@ -167,7 +172,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ## 5. Verify the results
 
-Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to **DNS**. The record created by Terraform appears in the records list.
+Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to **DNS** > **Records**. The record created by Terraform appears in the records list.
 
 To see the full results returned from the API call, including the default values that you did not specify but let Terraform compute, run `terraform show`.
 

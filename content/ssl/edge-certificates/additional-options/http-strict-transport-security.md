@@ -9,8 +9,9 @@ layout: list
 # HTTP Strict Transport Security (HSTS)
 
 {{<render file="_hsts-definition.md">}}
+<br/>
 
-HSTS adds an HTTP header that directs [compliant web browsers](/ssl/ssl-tls/browser-compatibility/) to:
+HSTS adds an HTTP header that directs [compliant web browsers](/ssl/reference/browser-compatibility/) to:
 
 - Transform HTTP links to HTTPS links
 - Prevent users from bypassing SSL browser warnings
@@ -23,7 +24,9 @@ For more background information on HSTS, see the [introductory blog post](https:
 
 {{</Aside>}}
 
----
+## Availability
+
+{{<feature-table id="ssl.hsts">}}
 
 ## Requirements
 
@@ -48,23 +51,27 @@ If you remove HTTPS before disabling HSTS or before waiting for the duration of 
 
 ## Enable HSTS
 
-To enable HSTS for your website:
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+To enable HSTS using the dashboard:
 
-1.  Log in to the Cloudflare dashboard and select your account.
-
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2.  Select your website.
-
 3.  Go to **SSL/TLS** > **Edge Certificates**.
-
 4.  For **HTTP Strict Transport Security (HSTS)**, click **Enable HSTS**.
-
 5.  Read the dialog and click **I understand**.
-
 6.  Click **Next**.
-
 7.  Configure the [HSTS settings](#configuration-settings).
-
 8.  Click **Save**.
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To enable HSTS with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-security-header-(-hsts)-setting) request with the `value` object that includes your HSTS settings.
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Disable HSTS
 
@@ -93,7 +100,7 @@ To disable HSTS on your website:
     <tr>
       <td>Enable HSTS (Strict-Transport-Security)</td>
       <td>Yes</td>
-      <td>Serves HSTS headers to browsers for all HTTPS requests.</td>
+      <td>Serves HSTS headers to browsers for all HTTPS requests. HTTP (non-secure) requests will not contain the header.</td>
       <td>Off / On</td>
     </tr>
     <tr>

@@ -30,13 +30,8 @@ async function gatherResponse(response) {
   const contentType = headers.get('content-type') || '';
   if (contentType.includes('application/json')) {
     return JSON.stringify(await response.json());
-  } else if (contentType.includes('application/text')) {
-    return response.text();
-  } else if (contentType.includes('text/html')) {
-    return response.text();
-  } else {
-    return response.text();
   }
+  return response.text();
 }
 
 async function handleRequest() {

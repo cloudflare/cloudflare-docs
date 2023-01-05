@@ -19,73 +19,32 @@ A Web Application Firewall or WAF creates a shield between a web app and the Int
 
 ---
 
-## Managed Rulesets
+## Rules and rulesets
 
-The Cloudflare WAF includes [several Managed Rulesets](/waf/managed-rulesets/), provided by Cloudflare, that you can enable and configure.
+Refer to the [Ruleset Engine](/ruleset-engine/about/rules/) documentation for more information on the following concepts:
 
-When you enable these Managed Rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
+* [Rule](/ruleset-engine/about/rules/): Defines a filter and an action to perform on the incoming requests that match the filter.
+* [Ruleset](/ruleset-engine/about/rulesets/): An ordered set of rules that you can apply to traffic at the edge.
 
-You can override the default action or disable one or more rules included in Managed Rulesets. To customize the rules behavior you define specific **configurations** or **overrides**.
+## WAF Managed Rules
 
-You can define a configuration that affects an entire Managed Ruleset, or configure the action and status of one or more rules in the ruleset. Rules have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
+WAF Managed Rules allows you to deploy [managed rulesets](/waf/managed-rules/) preconfigured by Cloudflare, and adjust their rules' behavior if necessary.
 
-## Custom rulesets
+When you enable these managed rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
 
-{{<Aside type="warning">}}
+You can override the default action or disable one or more rules included in managed rulesets. To customize the rules behavior you define specific **configurations** or **overrides**.
 
-Currently, you can only create and deploy custom rulesets via API.
-
-{{</Aside>}}
-
-You can [create custom rulesets](/ruleset-engine/custom-rulesets/create-custom-ruleset/) with your own WAF rules that you can later [deploy to a phase entry point](/waf/managed-rulesets/deploy-api/#deploying-custom-rulesets).
-
-## Available phases
-
-The Web Application Firewall provides the following [phases](/ruleset-engine/about/phases/) where you can deploy WAF rules:
-
-- `http_request_firewall_custom`
-- `http_request_firewall_managed`
-
-These phases exist both at the account level and at the zone level. Considering the available phases and the two different levels, the WAF rules are evaluated in the following order:
-
-1.  Rules in the `http_request_firewall_custom` phase at the **account** level
-2.  Rules in the `http_request_firewall_custom` phase at the **zone** level
-3.  Rules in the `http_request_firewall_managed` phase at **account** level
-4.  Rules in the `http_request_firewall_managed` phase at the **zone** level
-
-## Deploying rulesets to phases
-
-You can **deploy** the Managed Rulesets provided by WAF to the following phases:
-
-- `http_request_firewall_managed` phase at the **account** level (the phase `kind` is `root`)
-- `http_request_firewall_managed` phase at the **zone** level (the phase `kind` is `zone`)
-
-{{<Aside type="note" header="Note">}}
-
-When you deploy a Managed Ruleset in the dashboard in **Security** > **WAF** > **Managed rules**, you are deploying that ruleset to the `http_request_firewall_managed` phase of the selected zone.
-
-When you deploy a Managed Ruleset using **Firewall Rulesets** in the dashboard at the account level, you are deploying that ruleset to the `http_request_firewall_managed` phase of the account.
-
-{{</Aside>}}
-
-To deploy your own WAF rules, create a custom ruleset and add any custom rules to this ruleset. Next, deploy the custom ruleset to a supported phase.
-
-You can **create** and **deploy** custom rulesets to the `http_request_firewall_custom` phase at the **account** level (the phase `kind` is `root`).
-
-{{<Aside type="warning">}}
-
-Currently, creating and deploying custom rulesets is only available via API.
-
-{{</Aside>}}
-
-To learn more about phases, refer to [Phases](/ruleset-engine/about/phases/) in the Ruleset Engine documentation.
+You can define a configuration that affects an entire managed ruleset, or configure the action and status of one or more rules in the ruleset. Rules have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
 
 ## Rule execution order
 
 Cloudflare evaluates different types of rules when processing incoming requests. The rule execution order is the following:
 
-* [Firewall rules](/firewall/cf-firewall-rules/), available in **Security** > **WAF** > **Firewall rules**
-* [Custom rules](/waf/custom-rules/), available in **Security** > **WAF** > **Custom rules**
-* [Rate limiting rules](/waf/rate-limiting-rules/), available in **Security** > **WAF** > **Rate limiting rules**
-* [Managed Rulesets](/waf/managed-rulesets/), available in **Security** > **WAF** > **Managed rules**
-* [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version), available in **Security** > **WAF** > **Rate limiting rules**
+1. [Firewall rules](/firewall/cf-firewall-rules/)
+2. [Custom rulesets](/waf/custom-rulesets/)
+3. [Custom rules](/waf/custom-rules/)
+4. [Rate limiting rules](/waf/rate-limiting-rules/)
+5. [WAF Managed Rules](/waf/managed-rules/)
+6. [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version)
+
+For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).

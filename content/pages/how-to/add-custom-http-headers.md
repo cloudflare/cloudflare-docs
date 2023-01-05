@@ -54,13 +54,13 @@ async function handleRequest(request) {
 
 The easiest way to start deploying your Workers function is by typing [workers.new](https://workers.new/) in the browser. Log in to your account to be automatically directed to the Workers dashboard. From the Workers dashboard, write your function or use one of the [examples from the Workers documentation](/workers/examples/).
 
-Click **Save and Deploy** when your script is ready and set a [route](/workers/platform/routing/routes/) in your domain's zone settings.
+Click **Save and Deploy** when your script is ready and set a [route](/workers/platform/triggers/routes/) in your domain's zone settings.
 
 For example, [here is a Workers script](/workers/examples/security-headers/) you can copy and paste into the Workers dashboard that sets common security headers whenever a request hits your Pages URL, such as X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, Content-Security-Policy (CSP), and more.
 
 ## Deploying a Workers function using the CLI
 
-If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/signalnerve/custom-headers-example) to generate a new Workers function with [wrangler](/workers/wrangler/get-started/), the Workers CLI tool.
+If you would like to skip writing this file yourself, you can use our `custom-headers-example` [template](https://github.com/codewithkristian/custom-headers-example) to generate a new Workers function with [wrangler](/workers/wrangler/install-and-update/), the Workers CLI tool.
 
 ```sh
 ---

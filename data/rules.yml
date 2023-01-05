@@ -7,9 +7,13 @@ product:
 
 meta:
   title: Cloudflare Rules docs
-  description: Create rules that adjust incoming HTTP requests at the edge.
+  description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /core-services-preview.png
+
+resources:
+  community: https://community.cloudflare.com/c/general/rules/66
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/rules
 
 externals:
   - title: Cloudflare homepage

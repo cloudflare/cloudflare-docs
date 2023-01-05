@@ -19,4 +19,4 @@ _build:
 * Unlock your domain at your current registrar.
 * Do not make any changes to the Registrant contact information. Updating the Registrant contact may result in your current registrar locking the domain for 60 days.
 * Make sure your account has a valid credit card on file.
-* If you are transferring a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/faq/#additional-requirements-for-us-domains) before proceeding.
+* If you are transferring a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains-supported/#additional-requirements-for-us-domains) before proceeding.

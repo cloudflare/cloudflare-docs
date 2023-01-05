@@ -9,9 +9,7 @@ Below are limits observed by the Cloudflare Free plan. For more details on remov
 
 {{<Aside type="note">}}
 
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
-
-To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 {{</Aside>}}
 
@@ -21,9 +19,18 @@ Each time you push new code to your Git repository, Pages will build and deploy 
 
 Builds will timeout after 20 minutes.
 
+## Deployments
+
+Pages projects can have up to 10,000 active deployments. These are the most recent 10,000 deployments, excluding aliased deployments and production. Inactive deployments will return a `522` error and will need to be redeployed. All deployments are visible in the Cloudflare dashboard, but only the most recent 10,000 will be able to serve traffic.
+
+
 ## Custom domains
 
-A Cloudflare Pages project can be attached to a maximum of ten (10) custom domains at a time.
+A Cloudflare Pages project can be attached to a certain number of domains per plan.
+
+| Free | Pro | Business | Enterprise |
+| ---- | --- | -------- | ---------- |
+| 100  | 250 | 500      | 500        |
 
 ## Files
 

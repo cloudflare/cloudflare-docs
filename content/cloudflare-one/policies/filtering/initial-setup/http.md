@@ -14,15 +14,14 @@ Secure Web Gateway allows you to inspect HTTP traffic and control which websites
 
 To filter HTTP requests from a device:
 
-1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device .
+1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device .
 2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 3. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.
-    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway except when using QUIC. QUIC traffic will only be proxied.
+    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway.
     4. Enable **TLS decryption**.
-
 
 ## 2. Verify device connectivity
 
@@ -33,12 +32,12 @@ To filter HTTP requests from a device:
 
 ## 3. Add recommended policies
 
-To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard. 
+To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard.
 We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications
 
-Bypass HTTP inspection for applications which use embedded certificates.
+Bypass HTTP inspection for applications which use [embedded certificates](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#limitations).
 This will help avoid any certificate pinning errors that may arise from an initial rollout.
 
 | Selector      | Operator | Value           | Action         |

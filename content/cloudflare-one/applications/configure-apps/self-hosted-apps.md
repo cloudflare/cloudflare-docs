@@ -17,19 +17,17 @@ weight: 2
 
 Cloudflare Access allows you to securely publish internal tools and applications to the Internet, by providing an authentication layer using your existing identity providers to control who has access to your applications.
 
-![Self-hosted applications diagram](/cloudflare-one/static/documentation/applications/network-diagram.png)
+![This diagram shows the relationship between Cloudflare Access and a variety of applications.](/cloudflare-one/static/documentation/applications/network-diagram.png)
 
-Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/users/access-jwt/validating-json/) issued by Cloudflare on your origin.
+Make sure you create [Access policies](/cloudflare-one/policies/access/) before connecting your application to Cloudflare. To [connect your origin](/cloudflare-one/connections/connect-apps/) to Cloudflare, you can use [Cloudflare Tunnel](/cloudflare-one/glossary/#cloudflare-tunnel). If you do not wish to use Cloudflare Tunnel, you must [validate the token](/cloudflare-one/identity/authorization-cookie/validating-json/) issued by Cloudflare on your origin.
 
-### 1. Add your application
+## 1. Add your application
 
 1.  On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Access > Applications**.
 
 1.  Click **Add an application**.
 
 1.  Select **Self-hosted**.
-
-    ![Access Saas and Self-Hosted](/cloudflare-one/static/documentation/applications/add-saas-application.png)
 
     You are now ready to start configuring your app.
 
@@ -39,7 +37,7 @@ Make sure you create [Access policies](/cloudflare-one/policies/access/) before 
 The session duration for an application will determine the minimum frequency a user will be prompted to authenticate with the configured provider. If you want users to be prompted to authenticate every time they reach your application, select _No duration, expires immediately_.
     {{</Aside>}}
 
-    ![Set application name](/cloudflare-one/static/documentation/applications/applications-name-session.png)
+    ![Application overview panel showing options in the Session Duration dropdown menu.](/cloudflare-one/static/documentation/applications/applications-name-session.png)
 
 1.  From the drop-down menu under **Application domain**, select a hostname that will represent the application. The hostname must be an active zone in your Cloudflare account.
 
@@ -58,13 +56,11 @@ If you are having issues specifying a custom logo, check that the image is serve
 
 1.  Next, scroll down to the **Identity Providers** card to select the identity providers you want to enable for your app.
 
-    ![Select identity providers](/cloudflare-one/static/documentation/applications/saas-idp.png)
-
 1.  Turn on **Instant Auth** if you are selecting only one login method for your application, and would like your end users to skip the identity provider selection step.
 
 1.  Click **Next**.
 
-### 2. Add a policy
+## 2. Add a policy
 
 You can now configure a policy to control who can access your app.
 
@@ -78,17 +74,13 @@ To learn more about how policies work, read our [Policies section](/cloudflare-o
 
 1.  Click **Next** to add your application to Access.
 
-### 3. Advanced settings
+## 3. Advanced settings
 
 The **Setup section** allows you to configure a few advanced settings for your application.
 
-1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/policies/access/cors/).
-
-    ![Advanced settings](/cloudflare-one/static/documentation/applications/advanced-settings.png)
+1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/identity/authorization-cookie/cors/).
 
 1.  Configure **cookie settings**. For more information, you can read about [session management here](/cloudflare-one/identity/users/session-management/#browser-cookies-configuration-options).
-
-    ![Cookies and cloudflared settings](/cloudflare-one/static/documentation/applications/cookie-cloudflared.png)
 
 1.  Configure **`cloudflared` settings**. For more information, read more about [automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/#automatic-cloudflared-authentication).
 

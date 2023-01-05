@@ -25,18 +25,23 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 ### 4. Install the Cloudflare root certificate on your devices.
 
-Advanced security features including HTTP traffic inspection require users to install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+Advanced security features including HTTP traffic inspection require users to install and trust the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ### 5. Download and deploy the WARP client to your devices.
 
 Choose one of the [different ways](/cloudflare-one/connections/connect-devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices. 
-On your device, navigate to the Settings section in the WARP client and insert your organization's team name.
+### 6. Log in to your organization's Cloudflare Zero Trust instance from your devices.
+
+1. On your device, open the WARP client and select the gear icon.
+2. Go to **Preferences** > **Account** > **Login with Cloudflare Zero Trust**.
+3. Input your [team name](/cloudflare-one/glossary/#team-name). You can locate it on the [Zero Trust dashboard](https://dash.teams.cloudflare.com), under **Settings** > **General**.
+
+If you have already set up an identity provider in Cloudflare Access, the user will be prompted to login using this method. If you have not set up an identity provider, users can login with a [one-time pin](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/) which is enabled by default.
 
 Next, build [Secure Web Gateway policies](/cloudflare-one/policies/filtering/) to filter DNS, HTTP, and Network traffic on your devices.
 
@@ -56,11 +61,11 @@ Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [t
 
 ### 3. Next, define device enrollment permissions.
 
-Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+Create [device enrollment rules](/cloudflare-one/connections/connect-devices/warp/warp-settings/#manage-device-enrollment) to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
-### 4. (optional) Add a location to Gateway.
+### 4. (optional) Add a DNS location to Gateway.
 
-The WARP client will direct DoH queries to a default DNS endpoint when enrolled to your Zero Trust organization. If you need to direct these queries to a separate DNS endpoint, [add a location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location, which you can add when deploying the WARP client to your devices.
+The WARP client will direct DoH queries to a default DNS endpoint when enrolled to your Zero Trust organization. If you need to direct these queries to a separate DNS endpoint, [add a DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) to Gateway. Gateway will assign a [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain) to that location, which you can add when deploying the WARP client to your devices.
 
 ### 5. Download and deploy the WARP client to your devices.
 

@@ -21,7 +21,7 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 You can only use mTLS with a certificate authority (CA) that is fully managed by Cloudflare. Cloudflare generates a unique CA for each zone.
 
-If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/mutual-tls-authentication/) to upload your own CA.
+If you need to use certificates issued by another CA, use [Cloudflare Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) to upload your own CA.
 
 {{</Aside>}}
 
@@ -49,6 +49,12 @@ To create an mTLS rule in the Cloudflare dashboard, follow these steps:
     To make this rule active, click **Deploy**. To add additional firewall logic — such as checking for [revoked certificates](#check-for-revoked-certificates) — click **Use firewall rule builder**.
 
 6.  Once you have deployed your mTLS rule, any requests without a [Cloudflare-issued client certificate](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) will be blocked.
+
+{{<Aside type="warning" header="Important">}}
+
+Client certificates are signed by a Managed Certificate Authority (CA) that is on the account level. Two zones that have client certificates provisioned can be shared as long as they are under the same account.
+
+{{</Aside>}}
 
 ### Expression Builder
 

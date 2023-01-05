@@ -18,15 +18,18 @@ If the visitor passes the challenge, their request is allowed. If they fail, the
 
 ## Available challenges
 
-### Managed challenge
+### Managed challenge (recommended)
 
 Managed challenges are where Cloudflare dynamically chooses the appropriate type of challenge based on the characteristics of a request. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
+
+Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various firewall rules.
 
 Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge, which may include but is not limited to:
 
 - A non-interactive challenge page (similar to the current [JS Challenge](#js-challenge)).
 - An invisible proof of work challenge to the browser.
 - A custom interactive challenge (such as click a button).
+- Private Access Tokens (using recent Apple operating systems).
 - A CAPTCHA challenge.
 
 #### Available products
@@ -37,8 +40,9 @@ Currently, **Managed Challenge** actions are available in the following security
 - [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951)
 - [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128)
 - [Custom rules](/waf/custom-rules/)
+- [WAF Managed Rules](/waf/managed-rules/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)
-- [Bot Fight Mode](/bots/get-started/free/): You may also see Firewall Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](https://support.cloudflare.com/hc/articles/360035387431#managed-challenge).
+- [Bot Fight Mode](/bots/get-started/free/): You may also see Security Events with an **Action taken** of **Managed Challenge** due to [Cloudflare bot products](https://support.cloudflare.com/hc/articles/360035387431#managed-challenge).
 - [Firewall rules](/firewall/)
 - [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
 
@@ -86,11 +90,11 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 ## Resolve a CAPTCHA
 
-If a visitor encounters a CAPTCHA, Cloudflare employees cannot remove that Captcha. Only the website owner can configure their Cloudflare settings to stop the CAPTCHA. 
+If a visitor encounters a CAPTCHA, Cloudflare employees cannot remove that Captcha. Only the website owner can configure their Cloudflare settings to stop the CAPTCHA.
 
 When observing a Cloudflare Captcha page, a visitor could:
 
-- Successfully pass the Captcha to visit the website. Cookies and JavaScript support are required in browser settings to pass the captcha.  
-- Request the website owner to allow their IP address. 
+- Successfully pass the Captcha to visit the website. Cookies and JavaScript support are required in browser settings to pass the captcha.
+- Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the CAPTCHA image.

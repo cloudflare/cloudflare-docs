@@ -10,11 +10,11 @@ Some hosting providers dynamically update their customer's IP addresses. These c
 
 ## Cloudflare API
 
-Create a script to monitor IP address changes and then have that script push changes to the [Cloudflare API](https://api.cloudflare.com/#dns-records-for-a-zone-update-dns-record).
+Create a script to monitor IP address changes and then have that script push changes to the [Cloudflare API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-update-dns-record).
 
 ## ddclient
 
-[ddclient](https://sourceforge.net/p/ddclient/wiki/Home/) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
+[ddclient](https://github.com/ddclient/ddclient) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
 
 ## DNS-O-Matic
 
@@ -23,6 +23,6 @@ Create a script to monitor IP address changes and then have that script push cha
 Configuration of DNS-O-Matic requires the following information:
 
 - **Email**: `<CLOUDFLARE ACCOUNT EMAIL ADDRESS>` (associated account must have sufficient privileges to manage DNS)
-- **API Token**: `<CLOUDFLARE GLOBAL API KEY>` (for details refer to [API Keys](/api/keys/))
+- **API Token**: `<CLOUDFLARE GLOBAL API KEY>` (for details refer to [API Keys](/fundamentals/api/get-started/keys/))
 - **Domain**: `<example.com>`
 - **Hostname**: _dynamic_
