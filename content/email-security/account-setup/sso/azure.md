@@ -34,7 +34,12 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
     ![Select SAML as the sign-on method](/email-security/static/sso/azure/step6-saml.png)
 
-7. Select the pencil icon to edit the **Basic SAML Configuration** as follows:
+7. Select the pencil icon to edit the **Basic SAML Configuration**.
+
+    ![Select the pencil icon to edit Basic SAML Configuration](/email-security/static/sso/azure/step7-basic-saml.png)
+
+8. Enter the following configuration settings:
+
     | | |
     |------------------------------------------------|----------------------------------------------------|
     | **Identifier (Entity ID)**                     | `https://horizon.area1security.com`                |
@@ -43,21 +48,18 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
     | **Relay State**                                | Leave blank                                        |
     | **Logout URL**                                 | Leave blank                                        |
 
-    ![Select the pencil icon to edit Basic SAML Configuration](/email-security/static/sso/azure/step7-basic-saml.png)
+9. Select **Save** and the cross button to exit **Basic SAML Configuration**.
 
-8. Select **Save** and the cross button to exit the Basic SAML Configuration.
-
-9. Select the pencil icon to edit **SAML Certificates** and make the following changes:
+10. Select the pencil icon to edit **SAML Certificates** and make the following changes:
 
     - **Signing Option**: Select _Sign SAML response_ from the drop-down menu.
     - **Signing Algorithm**: Select _SHA-1_ from the drop-down menu.
 
-    ![Select the pencil to make changes](/email-security/static/sso/azure/step9-saml-certificate.png)
     ![Select Sign SAML response and SHA-1 from the menu](/email-security/static/sso/azure/step9-saml-signing-certificate.png)
 
-10. Select **Save** and the cross button to exit **SAML Certificates**.
+11. Select **Save** and the cross button to exit **SAML Certificates**.
 
-11. Still in the **SAML Certificates** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Area 1 dashboard.
+12. Still in the **SAML Certificates** section, find **Federation Metadata XML** and select **Download**. You will need this information for the SSO Configuration in the Area 1 dashboard.
 
     ![Download the Metadata XML information](/email-security/static/sso/azure/step11-download.png)
 
@@ -118,7 +120,7 @@ If you have trouble connecting your Azure account to Area 1, make sure that:
 
 - The user exists in the Area 1 dashboard.
 - The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
-- **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Signing Certificate** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration).
+- **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Certificates** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration).
 - The SAML SSO Domain is set correctly in the Area 1 dashboard (refer to step 6 in [Configure Area 1 to connect to Azure](#2-configure-area-1-to-connect-to-azure)).
 - The name ID identifier is set to **Email Address**.
 
