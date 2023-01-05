@@ -10,7 +10,7 @@ meta:
 
 Terraform ships as a single binary file. The examples below include installation information for popular operating systems.
 
-For official instructions on installing Terraform, refer to [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/docker-get-started/install-cli).
+For official instructions on installing Terraform, refer to [Install Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
 
 ## Mac
 
