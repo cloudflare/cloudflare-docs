@@ -26,7 +26,7 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 
     ![Give your application a descriptive name](/email-security/static/sso/azure/step4-name.png)
 
-5. On the application **Overview** page that opens, select **2. Set up Single Sign On**.
+5. On the application **Overview** page that opens, select **2. Set up single sign on**.
 
     ![Select single sign-on as the type of app](/email-security/static/sso/azure/step5-sso.png)
 
