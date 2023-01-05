@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Logs
 ---
 
-{{<beta>}}Cloudflare Logs{{</beta>}}
+# Cloudflare Logs
 
 {{<description>}}
 Detailed logs of your website's HTTP requests
@@ -29,11 +29,15 @@ Push your request or event logs to your cloud service provider using Logpush, wh
 
 {{<feature header="Logpull" href="/logs/logpull/">}}
 
-See logs of HTTP requests with Logpull.
+View logs of HTTP requests with Logpull. The data from Logpull and Logpush is exactly the same.
 
 {{</feature>}}
 
-Note, the data from Logpull and Logpush is exactly the same.
+{{<feature header="Instant Logs" href="/logs/instant-logs/">}}
+
+View HTTP request logs instantly in the Cloudflare dashboard or the CLI.
+
+{{</feature>}}
 
 ---
 
