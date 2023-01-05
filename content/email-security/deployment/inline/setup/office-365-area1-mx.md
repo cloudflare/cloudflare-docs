@@ -57,62 +57,10 @@ Microsoft recommends disabling SPF Hard fail when an email solution is placed in
 
 5. Select **Save**.
 
-
-================================================================================
-
-## 2: Execute `Enable-OrganizationCustomization` (if required)
-
-The following steps are only required if you have not previously customized your Office 365 instance. If you received the message to run this cmdlet in the previous step, you will need to execute it in order to proceed with the configuration.
-
-1. Run PowerShell as administrator, and execute the following command. Reply `Yes` when prompted:
-
-```txt
-PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
-```
-
-![Run the install-module command in PowerShell](/email-security/static/inline-setup/o365-area1-mx/step1-install-module.png)
-
-{{<Aside type="note">}}This module is a Microsoft module.{{</Aside>}}
-
-2. Run the following commands to execute the policy change and connect to the Office 365 instance:
-
-    ```txt
-    PS C:\Windows\system32> set-executionpolicy remotesigned
-    ```
-
-    Confirm that you want to execute the policy change, and then run the following command:
-
-    ```txt
-    PS C:\Windows\system32> Import-Module ExchangeOnlineManagement
-    ```
-
-    Finally, run the following to authenticate against your Office 365 instance:
-
-    ```txt
-    PS C:\Windows\system32> Connect-ExchangeOnline
-    ```
-
-    ![Run the commands to execute the policy change](/email-security/static/inline-setup/o365-area1-mx/step2-set-executionpolicy.png)
-
-3. The `Connect-ExchangeOnline` cmdlet will prompt you to login. Log in using an Office 365 administrator account. Once authenticated, you will be returned to the PowerShell prompt.
-
-    ![Log in with an Office 365 admin account](/email-security/static/inline-setup/o365-area1-mx/step3-connect-exchange.png)
-
-4. You can verify that the `OrganizationCustomization` is enabled by running the command:
-
-```txt
-PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
-```
-
-![Run the get-organizationconfig command](/email-security/static/inline-setup/o365-area1-mx/step4-get-organizationconfig.png)
-
-If the result is `false`, `OrganizationCustomization` is already enabled and no further actions are required. If it is true, you need to enable it:
-
-```txt
-PS C:\> Enable-OrganizationCustomization
-```
-
-![If the previous result is true, enable the organization customization mode](/email-security/static/inline-setup/o365-area1-mx/step4-enable-organizationcustomization.png)
+==========================================================
+==========================================================
+==========================================================
+==========================================================
 
 ## 3. Enhanced Filtering configuration
 
@@ -285,3 +233,64 @@ MX Priority | Host
 When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority. This will allow mail flows to load balance between the hosts.
 
 Once the MX records have been updated, the DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour.
+
+==========================================
+==========================================
+==========================================
+==========================================
+==========================================
+==========================================
+
+## 6???????: Execute `Enable-OrganizationCustomization` (if required)
+
+The following steps are only required if you have not previously customized your Office 365 instance. If you received the message to run this cmdlet in any of the previous steps, you will need to execute it in order to proceed with the configuration. This change may take as long as 24 hours to take effect.
+
+1. Run PowerShell as administrator, and execute the following command. Reply `Yes` when prompted:
+
+```txt
+PS C:\Windows\system32> Install-Module ExchangeOnlineManagement
+```
+
+![Run the install-module command in PowerShell](/email-security/static/inline-setup/o365-area1-mx/step1-install-module.png)
+
+{{<Aside type="note">}}This module is a Microsoft module.{{</Aside>}}
+
+2. Run the following commands to execute the policy change and connect to the Office 365 instance:
+
+    ```txt
+    PS C:\Windows\system32> set-executionpolicy remotesigned
+    ```
+
+    Confirm that you want to execute the policy change, and then run the following command:
+
+    ```txt
+    PS C:\Windows\system32> Import-Module ExchangeOnlineManagement
+    ```
+
+    Finally, run the following to authenticate against your Office 365 instance:
+
+    ```txt
+    PS C:\Windows\system32> Connect-ExchangeOnline
+    ```
+
+    ![Run the commands to execute the policy change](/email-security/static/inline-setup/o365-area1-mx/step2-set-executionpolicy.png)
+
+3. The `Connect-ExchangeOnline` cmdlet will prompt you to login. Log in using an Office 365 administrator account. Once authenticated, you will be returned to the PowerShell prompt.
+
+    ![Log in with an Office 365 admin account](/email-security/static/inline-setup/o365-area1-mx/step3-connect-exchange.png)
+
+4. You can verify that the `OrganizationCustomization` is enabled by running the command:
+
+```txt
+PS C:\Windows\system32> Get-OrganizationConfig | FL isDehydrated
+```
+
+![Run the get-organizationconfig command](/email-security/static/inline-setup/o365-area1-mx/step4-get-organizationconfig.png)
+
+If the result is `false`, `OrganizationCustomization` is already enabled and no further actions are required. If it is true, you need to enable it:
+
+```txt
+PS C:\> Enable-OrganizationCustomization
+```
+
+![If the previous result is true, enable the organization customization mode](/email-security/static/inline-setup/o365-area1-mx/step4-enable-organizationcustomization.png)
