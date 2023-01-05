@@ -54,8 +54,6 @@ The policy will block security threats for any DNS location in your Cloudflare Z
 
 Finally, choose `Block` as the action and create the policy.
 
-![Block Action](/cloudflare-one/static/secure-web-gateway/secure-dns-network/block-action.png)
-
 The rule will appear in your DNS policies list.
 
 ![Rule Listed](/cloudflare-one/static/secure-web-gateway/secure-dns-network/rule-listed.png)

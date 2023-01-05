@@ -40,8 +40,6 @@ Choose `Block` as the action. Optionally, enable the block page to present a blo
 
 Finish the policy by clicking **Create policy**.
 
-![Block Action](/cloudflare-one/static/secure-web-gateway/block-tld/block-action.png)
-
 Input the TLD you need to block. If you need to block `.fail` remove the leading `.` and only input `fail`. Click **Add to policy** and save the policy.
 
 {{<Aside type="note">}}
@@ -54,8 +52,4 @@ For more information on how policies work with regular expressions, refer to [Ca
 
 You can test your policy by attempting to visit a domain with the blocked TLD. To review logs of the block, navigate to the `Logs` section of the Zero Trust dashboard, select `Gateway`, and choose the `DNS` tab.
 
-![Logs](/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-start.png)
-
 You can filter for events by policy. Select the name of the policy in the `Policy` drop down menu.
-
-![Logs](/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-filter.png)
