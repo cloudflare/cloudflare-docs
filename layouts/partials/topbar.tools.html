@@ -26,7 +26,7 @@
 
   {{ end }}
 
- {{ $rssFeed = printf "%s" $folderPlaceholder | printf "%s%s" $contentPath | printf "%s%s" $rssPath | printf "%s" }}
+  {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
 
   <div class="DocsToolbar--tools-spacer"></div>
 
