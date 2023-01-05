@@ -43,8 +43,14 @@ domain.	300	IN	MX	20 mailstream-central.mxrecord.mx.
 
 In the above example, TTL is shown in seconds, as `300` (or five minutes). 
 
-If you are using Cloudflare for DNS, you can leave the TTL setting as **Auto**
+If you are using Cloudflare for DNS, you can leave the [TTL setting as **Auto**](/dns/manage-dns-records/reference/ttl/)
 
+Bellow is a list with instrunctions on how to edit MX records for some popular services:
+
+- **Cloudflare**: [Set up email records](/dns/manage-dns-records/how-to/email-records/)
+- **GoDaddy**: [Edit an MX Record](https://www.godaddy.com/help/edit-an-mx-record-19235)
+- **AWS**: [Creating records by using the Amazon Route 53 console](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html)
+- **Azure**: [Create DNS records in a custom domain for a web app](https://learn.microsoft.com/en-us/azure/dns/dns-web-sites-custom-domain)
 
 
 
