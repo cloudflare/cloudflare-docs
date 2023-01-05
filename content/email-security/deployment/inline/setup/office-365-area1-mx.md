@@ -62,6 +62,8 @@ Microsoft recommends disabling SPF Hard fail when an email solution is placed in
 ==========================================================
 ==========================================================
 
+<!-- Section ##3 should be section #2 -->
+
 ## 3. Enhanced Filtering configuration
 
 This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: 
