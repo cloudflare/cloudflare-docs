@@ -212,15 +212,17 @@ Within O365 there are various options as well as limitations as to how quarantin
 
 ### Best practices
 
-Before looking into our use case tutorials, read throught this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and defanging emails, as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta)
-
-**Advantage customers**
+Before looking into our use case tutorials, read throught this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and defanging emails, as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta), before setting up Office 365.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to Settings (the gear icon).
+
+2. Go to **Settings** (the gear icon).
+
 3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
-4. In **Disposition Actions**, select **Edit**.
-5. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL DEFANG`.
+
+4. If you are an **Advantage customer**:
+    1. In **Disposition Actions**, select **Edit**.
+    2. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL DEFANG`.
 
     <div class="medium-img">
 
@@ -228,10 +230,16 @@ Before looking into our use case tutorials, read throught this how-to guide rela
 
     </div>
 
-6. Select **Save Disposition Actions**.
-7. Still under **Email Policies**, select **Text add-Ons**.
-8. Select **Edit**.
-9. Enable the following options under **Add Prefix To Subject**:
+    3. Select **Save Disposition Actions**.
+
+5. If you are an **Enterprise customer**:
+    1. Enable **Email Link Isolation**.
+
+6. Still under **Email Policies**, select **Text add-Ons**.
+
+7. Select **Edit**.
+
+8. Enable the following options under **Add Prefix To Subject**:
     - **Malicious** - Enabled
     - **Suspicious** - Enabled
     - **Spam** - Enabled
@@ -247,17 +255,7 @@ Before looking into our use case tutorials, read throught this how-to guide rela
 
     </div>
 
-10. Select **Update Text Add-Ons**.
-
-**Enterprise customers**
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to Settings (the gear icon).
-3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
-4. Enable **Email Link Isolation**.
-5. Still under **Email Policies**, select **Text add-Ons**.
-6. Select **Edit**.
-7. Enable the following options under **Add Prefix To Subject**:
+9. Still in the same window, scroll down and enable the following options under **Add Prefix To Body**:
     - **Malicious** - Enabled
     - **Suspicious** - Enabled
     - **Spam** - Disabled
@@ -272,11 +270,11 @@ Before looking into our use case tutorials, read throught this how-to guide rela
 
     </div>
 
-8. Select **Update Text Add-Ons**.
+10. Select **Update Text Add-Ons**.
 
 ### Use cases
 
-Refer to [Use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) to learn how to set up ofr different scenarios.
+Refer to [Use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) to learn how to set up your environment for different scenarios.
 
 ## 5. Update your domain MX records
 
