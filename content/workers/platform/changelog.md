@@ -2,7 +2,7 @@
 pcx_content_type: changelog
 title: Changelog
 meta:
-    description: Review recent changes to Cloudflare Workers
+    description: Review recent changes to Cloudflare Workers.
 rss: file
 ---
 
