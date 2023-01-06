@@ -1,7 +1,7 @@
 ---
 title: PhishNet - Office 365
 meta:
-    title: PhishNet - Office 365 (Beta)
+    title: PhishNet - Office 365
 pcx_content_type: how-to
 weight: 1
 ---
