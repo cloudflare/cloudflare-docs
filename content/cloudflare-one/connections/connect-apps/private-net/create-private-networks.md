@@ -28,7 +28,7 @@ This guide covers how to:
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy**.
 3. Enable **Warp-to-Warp**.
-4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#set-up-split-tunnels), ensure that traffic to `100.64/10` is going through WARP:
+4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to `100.64/10` is going through WARP:
   - If using **Exclude** mode, remove `100.64/10` from your list. 
   - If using **Include** mode, add `100.64/10` to your list.
 
