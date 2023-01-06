@@ -166,15 +166,19 @@ This option will allow Office 365 to properly identify the original connecting I
 
 ### Enable enhanced filtering
 
-Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector. Exit the Exchange Admin console, return to the main [Office 365 Administration Console](https://admin.microsoft.com) and select the [Security admin console](https://security.microsoft.com/homepage).
+Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector in the [Security admin console](https://security.microsoft.com/homepage).
 
-![The security admin console](/email-security/static/inline-setup/o365-area1-mx/security-admin.png)
+1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Policy & Rules** > **Threat policies**.
 
-1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Threat Management** > **Policy**, and select **Enhanced filtering**.
+2. Under **Rules**, select **Enhanced filtering**.
 
-    ![Go to Enhanced filtering](/email-security/static/inline-setup/o365-area1-mx/step1-enhanced-filtering.png)
+    <div class="large-img">
 
-2. In **Enhanced Filtering for Connectors**, you will find the connector that was previously configured. Double click the connector to edit its configuration parameters. 
+    ![Go to Enhanced filtering](/email-security/static/inline-setup/o365-area1-mx/step2-enhanced-filtering.png)
+
+    </div>
+
+2. Select the `Area 1 Inbound Connector`, the connector you configured previously to edit its configuration parameters. 
 
 3. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
 
