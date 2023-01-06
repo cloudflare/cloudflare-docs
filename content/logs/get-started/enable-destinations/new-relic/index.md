@@ -21,7 +21,7 @@ To enable a Logpush service to New Relic via the dashboard:
 
 3.  Go to **Analytics** > **Logs**.
 
-4.  Click **Connect a service** and a modal window will open.
+4.  Select **Connect a service** and a modal window will open.
 
 5.  Select the dataset you want to push to a storage service.
 
