@@ -66,7 +66,7 @@ The Federation ID is found under Manage Users > Users in Setup. The Federation I
 - **Issuer:** `https://<your-team-name>.cloudflareaccess.com`, where your-team-name is your [team name](/cloudflare-one/glossary/#team-name).
 - **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step.
 - **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
-- **SAML Identity type:** Assertion contains the Federation ID from the User object
+- **SAML Identity type:** Assertion contains the User's Salesforce username. (Note: if this doesn't work upon testing, attempt to set it to "Assertion contains the Federation ID from the User object")
 - **Identity Provider Login URL**: This is the SSO endpoint provided in the Zero Trust dashboard for that application.
 
 1.  Click **Save**.
