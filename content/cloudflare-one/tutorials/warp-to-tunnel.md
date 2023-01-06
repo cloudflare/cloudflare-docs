@@ -108,7 +108,7 @@ Users can reach this private service by logging in to their Zero Trust account a
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/tutorials/split-tunnel/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
-1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
+1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
 
 2. In the list of Split Tunnels entries, choose the range being used for this private connection and delete it.
 
@@ -142,7 +142,7 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 2. Enable **Proxy**.
 
-This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/) settings.
+This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/) settings.
 
 ## (Optional) Enable HTTPS inspection
 

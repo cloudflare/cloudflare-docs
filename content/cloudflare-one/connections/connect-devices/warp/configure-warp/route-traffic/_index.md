@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Exclude traffic from WARP
+title: Route traffic
 weight: 6
 ---
 
-# Traffic excluded from WARP
+# Traffic routing with WARP
 
 When the WARP client is deployed on a device, Cloudflare processes all DNS requests and network traffic by default. However, under certain circumstances, you may need to exclude specific DNS requests or network traffic from WARP.
 

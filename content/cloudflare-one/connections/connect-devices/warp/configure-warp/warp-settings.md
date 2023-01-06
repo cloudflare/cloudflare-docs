@@ -217,7 +217,7 @@ Allows you to choose the operational mode of the client. Refer to [WARP Modes](/
 </div>
 </details>
 
-Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/split-tunnels/) documentation.
+Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
 
 ### Local Domain Fallback
 
@@ -232,4 +232,4 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 </div>
 </details>
 
-Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/local-domains/) documentation.
+Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) documentation.

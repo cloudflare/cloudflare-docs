@@ -158,12 +158,12 @@
             "additional_description": "For initial testing, users should manually authenticate the client to their organization’s Cloudflare Zero Trust instance."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/split-tunnels/",
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/",
             "link_title": "Define split tunnels settings",
             "additional_description": "This will determine what traffic WARP does and does not proxy.<br/><br/>If you added private network routes in the <code>10.0.0.0</code> range, ensure that these IP addresses are included in WARP."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/local-domains/",
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/",
             "link_title": "Define local domain fallback policies",
             "additional_description": "These policies allow Cloudflare to proxy requests to internal or private infrastructure without a public DNS record."
           },
@@ -180,7 +180,7 @@
         "description": "You should be finished setting up your VPN replacement.<br/><br/>If you encounter any issues after your initial onboarding, refer to the following resources.",
         "pages": [
           {
-            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/#how-the-warp-client-handles-dns-requests",
+            "url_path": "/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests",
             "link_title": "How the WARP client handles DNS requests"
           },
           {

@@ -22,9 +22,8 @@ If your network already has a host serving a TLS certificate, skip ahead to [add
     The command will output a PEM certificate and key. Store these files in a secure place.
 
 {{<Aside type="note">}}
-You can input any domain in place of `example.com`. Some services such as Google check for the existence of the `CN` and `subjectAltName` metadata fields.
+The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
 {{</Aside>}}
-
 
 2. Run a simple HTTPS server to host the certificate:
 
@@ -75,8 +74,8 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 You can now create a [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) for devices on this network. In the rule builder, the network name will appear when you choose the _Managed network_ selector.
 
-Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will check its network location and apply the corresponding settings profile.
+Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will determine its network location and apply the corresponding settings profile.
 
 {{<Aside type="note">}}
-All managed networks on the list are checked each time the WARP client detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
  {{</Aside>}}

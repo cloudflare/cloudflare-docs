@@ -109,6 +109,6 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
     |----------------|---------------|-----------------|--------|
     | Destination IP | in            | `10.0.0.0/8`    | Block  |
 
-5. [Verify](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/split-tunnels/#set-up-split-tunnels) that you do not have the desired target private IP range in your Split Tunnel configuration.
+5. [Verify](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) that you do not have the desired target private IP range in your Split Tunnel configuration.
 
 Your setup is now complete. For more in-depth information on how identity-aware network policies work, read our [dedicated documentation page](/cloudflare-one/policies/filtering/network-policies/).
