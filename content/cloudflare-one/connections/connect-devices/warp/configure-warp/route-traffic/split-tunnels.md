@@ -10,7 +10,7 @@ Split Tunnels mode can be configured to exclude or include IP addresses or domai
 
 {{<Aside type="warning">}}
 
-Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) configuration.
+Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration.
 
 {{</Aside>}}
 
@@ -22,7 +22,7 @@ Also, changing between Include and Exclude modes will immediately delete your ex
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client**.
 
-2. Under **Device settings**, locate the [WARP profile](/cloudflare-one/connections/connect-devices/warp/warp-settings/#warp-profiles) you would like to view or modify and select **Configure**.
+2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
 
 3. Under **Split Tunnels**, choose a Split Tunnel mode:
 
@@ -48,7 +48,7 @@ The IP address will appear in the list of Split Tunnel entries. Traffic to these
 2. In the **Selector** dropdown, select _Domain_.
 3. Enter a [valid domain](#valid-domains) to exclude or include.
 4. Enter an optional description and then select **Save destination**.
-5. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
+5. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
 When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
@@ -68,7 +68,7 @@ Domain-based split tunneling has a few ramifications you should be aware of befo
 | ------------------- | -------------- | --------------- |
 | `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
 | `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
-| `*.example.com`    | subdomains such as `www.example.com` | `example.com` |
+| `*.example.com`    | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
 {{</table-wrap>}}
 
 ### Cloudflare Zero Trust domains

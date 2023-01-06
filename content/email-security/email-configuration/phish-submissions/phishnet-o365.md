@@ -1,12 +1,12 @@
 ---
 title: PhishNet - Office 365
 meta:
-    title: PhishNet - Office 365 (Beta)
+    title: PhishNet - Office 365
 pcx_content_type: how-to
 weight: 1
 ---
 
-{{<beta>}}PhishNet - Office 365{{</beta>}}
+# PhishNet - Office 365
 
 PhishNET is an add-in button that helps users to submit directly to Area 1 phish samples missed by Area 1's detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
 
@@ -37,7 +37,7 @@ Only admin users can deploy PhishNet for all users in Office 365. Non-admin user
 
 5. On a new browser tab, [log in to Area 1](https://horizon.area1security.com) with an admin account.
 
-6. Select the **Settings** (gear icon).
+6. Select **Settings** (gear icon).
 
     ![Select settings (the gear icon)](/email-security/static/phish-submissions/phishnet-o365/step6-settings.png)
 

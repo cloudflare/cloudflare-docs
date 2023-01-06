@@ -16,7 +16,7 @@ To view the domains subject to Local Domain Fallback:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client**.
 
-2. Under **Device settings**, locate the [WARP profile](/cloudflare-one/connections/connect-devices/warp/warp-settings/#warp-profiles) you would like to view or modify and select **Configure**.
+2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
 
 3. Scroll down to **Local Domain Fallback** and select **Manage**.
 
@@ -24,7 +24,7 @@ On this page, you will see a list of domains excluded from Gateway. You can [add
 
 {{<Aside type="warning">}}
 
-Local Domain Fallback configuration only impacts where DNS requests get resolved, not the flow of traffic destined to those domains. If you want to prevent traffic from being sent to a specific domain or IP address, you must add those domains or IPs to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) configuration.
+Local Domain Fallback configuration only impacts where DNS requests get resolved, not the flow of traffic destined to those domains. If you want to prevent traffic from being sent to a specific domain or IP address, you must add those domains or IPs to your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration.
 
 {{</Aside>}}
 

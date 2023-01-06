@@ -24,45 +24,27 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to pre
 
 You can [build a policy](/cloudflare-one/policies/filtering/http-policies/) that will block file uploads to Google Drive. Navigate to the `Policies` page. On the HTTP tab, click `Create a policy`.
 
-![Add Policy](/cloudflare-one/static/secure-web-gateway/block-uploads/add-http-policy.png)
-
 Name the policy and provide an optional description.
-
-![Add Policy](/cloudflare-one/static/secure-web-gateway/block-uploads/name-policy.png)
 
 Cloudflare curates a constantly-updating list of the hostnames, URLs, and endpoints used by common applications. In this example, "Google Drive" list contains the destinations used by Google Drive.
 
 In the rule builder, select "Application" in the **Selector** field, "in" in the **Operator** field, and under "File Sharing" select "Google Drive" in the **Value** field.
 
-![Select Drive](/cloudflare-one/static/secure-web-gateway/block-uploads/select-google-drive.png)
+![Selecting Google Drive in the Value field dropdown menu.](/cloudflare-one/static/secure-web-gateway/block-uploads/select-google-drive.png)
 
 Next, click **+ Add Condition** and choose "Upload Mime Type" and "matches regex". Under value, input `.*` - this will match against files of any type being uploaded.
 
-![Block Drive](/cloudflare-one/static/secure-web-gateway/block-uploads/upload-mime-type.png)
+![Example of field settings that will match against files of any type being uploaded.](/cloudflare-one/static/secure-web-gateway/block-uploads/upload-mime-type.png)
 
 Scroll to **Action** and choose "Block". Click **Create rule** to save the rule.
-
-![Block Drive](/cloudflare-one/static/secure-web-gateway/block-uploads/block-action.png)
 
 ## Exempt some users
 
 You can allow certain users to upload to Google Drive, while blocking all others, by adding a second policy and modifying the order of rule operations in Gateway.
 
-Create a new policy and include the first two values from the previous policy. Add a third condition and input the value of user identity that should be allowed to upload. This example uses the name of a group from an integrated identity provider.
+Create a new policy and include the first two values from the previous policy. Add a third condition and input the value of user identity that should be allowed to upload. Select `Allow` for the action and save the rule.
 
-![Allow Drive](/cloudflare-one/static/secure-web-gateway/block-uploads/allow-users.png)
-
-Select `Allow` for the action and save the rule.
-
-![Allow Drive](/cloudflare-one/static/secure-web-gateway/block-uploads/allow-action.png)
-
-Next, modify the existing rule order.
-
-![Rule List](/cloudflare-one/static/secure-web-gateway/block-uploads/allow-last.png)
-
-Drag the `Allow` rule higher than the `Block` rule.
-
-![Rule List](/cloudflare-one/static/secure-web-gateway/block-uploads/allow-first.png)
+Next, modify the existing rule order by dragging each rule into the desired order.
 
 ## Integrate your identity provider
 
@@ -80,9 +62,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
-
-    ![Allow Cloudflare users](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
+    Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. For example, you can include emails ending in `@cloudflare.com` so that any user with a `@cloudflare.com` account may enroll.
 
 1.  Click **Save**.
 
@@ -99,7 +79,7 @@ To download the Cloudflare certificate:
 
 ## Enable the Cloudflare proxy
 
-Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to _Enabled_. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+Once the certificate has been installed, you can configure Gateway to inspect HTTP traffic. To do so, navigate to **Settings > Network**. Toggle **Proxy** to _Enabled_. This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/) settings.
 
 Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traffic for inspection from enrolled devices, except the traffic excluded from inspection.
 
@@ -109,7 +89,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Once the client is installed, click the gear icon.
 
-    ![WARP](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
+    ![Accessing the WARP configuration menu from a desktop.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/warp.png)
 
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
@@ -124,5 +104,3 @@ The user will be prompted to login with the identity provider configured in Clou
 ## Test policy
 
 You can test the policy by attempting to upload a file to Google Drive. Google Drive should return an error message when blocked.
-
-![Block Action](/cloudflare-one/static/secure-web-gateway/block-uploads/block-result.png)

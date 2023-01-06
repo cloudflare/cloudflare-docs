@@ -2,11 +2,14 @@
 pcx_content_type: how-to
 title: Manage load balancers
 weight: 4
+meta:
+    description: Learn how to set up and maintain load balancers.
 ---
 
 # Manage load balancers
 
 {{<render file="_load-balancer-definition.md">}}
+<br/>
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/understand-basics/load-balancers/).
 

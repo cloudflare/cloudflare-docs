@@ -25,8 +25,7 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 ## Before you start
 
-1.  [Connect devices](/cloudflare-one/connections/connect-devices/warp/) to Cloudflare's edge with the WARP client and [install the root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)
-1.  [Enable web inspection](/cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy)
+[Enable HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
 
 ## Build the policy
 
@@ -34,22 +33,14 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 1.  Name the policy and, optionally, provide a description.
 
-    ![Name Policy](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/name-policy.png)
+1.  Under **Selector** choose **Application**. Select **in** in the **Operator field**. In the **Value** field, select the applications you wish to include.
 
-1.  Under **Selector** choose **Application**. Select **in** in the **Operator field**. This example uses Microsoft 365, categorized as Productivity.
-
-    ![Selctor](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-microsoft.png)
-
-1.  Scroll to the bottom of the page and select **Do Not Inspect** and click **Create rule**.
-
-    ![Action](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/select-action.png)
+1.  Scroll to the bottom of the page and select **Do Not Inspect** in the `Select an action` section, then click **Create rule**.
 
 ## Change rule precedence
 
 New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for do-not-inspect rules. Those are always evaluated first.
 
-![Rule Order](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-first.png)
-
 We do recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
 
-![Rule Order](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)
+![Gateway rules displayed in recommended order.](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)

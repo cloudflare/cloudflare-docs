@@ -12,9 +12,6 @@ disableKinds = ["taxonomy", "taxonomyTerm"]
 enableEmoji = true
 enableGitInfo = true
 
-# TODO
-rssLimit = 10
-
 paginate = 12 # default 10
 paginatePath = "page" # default
 

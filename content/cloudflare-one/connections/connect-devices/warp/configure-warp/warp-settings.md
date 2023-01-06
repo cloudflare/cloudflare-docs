@@ -1,68 +1,18 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: reference
 title: WARP settings
-weight: 7
+weight: 2
+layout: single
 ---
 
 # WARP settings
 
-WARP settings define the WARP client modes and permissions available to end users. Admins can configure these settings on the Zero Trust dashboard under **Settings** > **WARP Client**.
+WARP settings define the WARP client modes and permissions available to end users.
 
-{{<Aside type="note" header="Managed deployments">}}
-If you are deploying [WARP with device management software](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), we recommend only supplying `organization` in your [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) and managing all other settings via the dashboard. Any settings you configure on the dashboard will be overridden by the local policy deployed by your management software. To ensure dashboard settings are applied as intended, remove the corresponding parameters from your managed deployment configuration.
-{{</Aside>}}
+- [Global settings](#global-settings) apply to all devices enrolled in your Zero Trust organization.
+- [Device settings](#device-settings) may vary across devices depending on which [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) is applied.
 
-## Manage device enrollment
-
-To specify which users in your organization can enroll new devices or revoke connected devices:
-
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
-2. In the **Device enrollment** card, select **Manage**.
-3. In the **Rules** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can enroll or revoke devices.
-4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with.
-5. Choose a global **Session duration** for enrolled devices. Users will need to re-authenticate their device after their session expires. To customize session durations for different users or applications, refer to [session duration policies](/cloudflare-one/policies/filtering/enforce-sessions/).
-6. Select **Save**.
-
-Your device enrollment rules are now active. To see which devices have been enrolled or revoked, go to **My Team** > **Devices**.
-
-## WARP profiles
-
-With Cloudflare Zero Trust, you can build device settings profiles and apply them to different users or groups in your organization.
-
-### Create a new profile
-
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**
-2. In the **Profile settings** card, select **Create profile**.
-3. Enter any name for the profile.
-4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/filtering/network-policies/#operators), and [Values](/cloudflare-one/policies/filtering/network-policies/#value).
-5. Configure [WARP client settings](#settings) for these devices.
-
-{{<Aside type="note">}}
-At this time, **Split Tunnels** and **Local Domain Fallback** can only be modified after you save the profile.
-{{</Aside>}}
-
-6. Select **Save**.
-
-Your profile will appear in the **Profile settings** list. You can rearrange the profiles in the list according to your desired [order of precedence](#order-of-precedence).
-
-### Selectors
-
-| Selector | Description| WARP mode required |
-| -------  | ---------- | -----------------  |
-| User Email | Email address of a user <br /> `user-name@company.com` | Gateway with WARP |
-| User Group Emails | Email address of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br />  `contractors@company.com` | Gateway with WARP |
-| User Group IDs | ID of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br /> `12jf495bhjd7893ml09o` | Gateway with WARP |
-| User Group Names | Name of an [IdP group](/cloudflare-one/policies/filtering/identity-selectors/#idp-groups-in-gateway) <br />  `developers` | Gateway with WARP |
-| Operating System | `MacOS` | Any mode |
-| Operating System Version | [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/#determine-the-os-version) specified in Semver format <br /> `1.2.0` | Any mode |
-
-### Order of precedence
-
-Profiles are evaluated from top to bottom as shown in the UI and follows the first match principle — once a device matches a profile, evaluation stops and no subsequent profiles can override the decision.
-
-The **Default setting** profile is always at the bottom of the list, meaning that it will only apply if the device does not match any of the previous profiles. If you make another custom profile the default, all settings will be copied over into the **Default setting** profile.
-
-## Settings
+## Global settings
 
 ### Admin override
 
@@ -106,6 +56,8 @@ To turn off the WARP client on a user device:
 3. Enter the override code in the pop-up window.
 
 The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
+
+## Device settings
 
 ### Captive portal detection
 
@@ -206,7 +158,7 @@ When `Enabled`, users will receive update notifications when a new version of th
 </div>
 </details>
 
-When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch) above.
+When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](#lock-warp-switch) above.
 
 We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport WiFi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
 
@@ -265,7 +217,7 @@ Allows you to choose the operational mode of the client. Refer to [WARP Modes](/
 </div>
 </details>
 
-Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) documentation.
+Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
 
 ### Local Domain Fallback
 
@@ -280,12 +232,4 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 </div>
 </details>
 
-Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) documentation.
-
-## Verify settings
-
-To check the WARP client settings on a specific device, open a terminal on the device and run:
-
-```sh
-$ warp-cli settings
-```
+Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) documentation.

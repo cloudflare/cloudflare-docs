@@ -37,12 +37,12 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ### Route private network IPs through Gateway
 
-By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
+By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
 
 To configure Split Tunnels settings:
 
-1. Check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude** or **Include** mode.
-2. [Edit the split tunnel entries](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/#add-an-ip-address):
+1. Check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude** or **Include** mode.
+2. [Edit the split tunnel entries](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-an-ip-address):
     - If you are using **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption. If your network's IP/CIDR range is listed on this page, delete it.
     - If you are using **Include** mode, the IP ranges you see listed are the only ones Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
 
