@@ -29,7 +29,7 @@ Push your request or event logs to your cloud service provider using Logpush, wh
 
 {{<feature header="Logpull" href="/logs/logpull/">}}
 
-View logs of HTTP requests with Logpull. The data from Logpull and Logpush is exactly the same.
+Use Logpull, if you only want to have access to HTTP request logs. The data from Logpull and Logpush is exactly the same.
 
 {{</feature>}}
 
