@@ -61,12 +61,20 @@ Bellow is a list with instrunctions on how to edit MX records for some popular s
 2. Go to **Policies & Rules** > **Threat policies**.
 
 3. Select the [Anti-spam option](https://security.microsoft.com/antispam).
-
+    
+    <div class="large-img">
+    
     ![Select the anti-spam option](/email-security/static/inline-setup/o365-area1-mx/step3-anti-spam.png)
+
+    </div>
 
 4. Select **Connection filter policy (Default)** > **Edit connection filter policy**.
 
+    <div class="large-img">
+
     ![Select edit connection filter policy](/email-security/static/inline-setup/o365-area1-mx/step4-edit-filter-policy.png)
+
+    </div>
 
 5. In **Always allow messages from the following IP addresses or address range** add the IP addresses and CIDR blocks mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
@@ -87,11 +95,19 @@ Depending on your Office 365 configuration, you may receive a warning indicating
 
 9. At the end of the **Bulk email threshold & spam properties** section, select **Edit spam threshold and properties**.
 
+    <div class="large-img">
+
     ![Select the spam threshold and properties button](/email-security/static/inline-setup/o365-area1-mx/step9-spam-threshold.png)
+
+    </div>
 
 10. Scroll to **Mark as spam** > **SPF record: hard fail**, and ensure it is set to **Off**.
 
+    <div class="large-img">
+
     ![Make sure SPF record: hard fail is set to off](/email-security/static/inline-setup/o365-area1-mx/step10-spf-record-hard-fail.png)
+
+    </div>
 
 11. Select **Save**.
 
@@ -108,7 +124,11 @@ This option will allow Office 365 to properly identify the original connecting I
 
 2. Select **Mail flow** > **Connectors**.
 
+    <div class="large-img">
+
     ![Select Connectors from Mail flow](/email-security/static/inline-setup/o365-area1-mx/step2-mailflow-conectors.png)
+
+    </div>
 
 3. Select **Add a connector**.
 
@@ -120,7 +140,11 @@ This option will allow Office 365 to properly identify the original connecting I
     - **Name** - `Area 1 Inbound Connector`
     - **Description** - `Inbound connector for Enhanced Filtering`
 
+    <div class="large-img">
+
     ![Enter a name and descriptions for your connector](/email-security/static/inline-setup/o365-area1-mx/step6-connector-options.png)
+
+    </div>
 
 7. Select **Next**.
 
@@ -128,8 +152,12 @@ This option will allow Office 365 to properly identify the original connecting I
 
 9. Enter all of the egress IPs in the [Egress IPs](/email-security/deployment/inline/reference/egress-ips/) page.
 
+    <div class="large-img">
+    
     ![Enter all of Area 1's Egress IPs](/email-security/static/inline-setup/o365-area1-mx/step9-egress-ips.png)
 
+    </div>
+    
 10. Select **Next**.
 
 11. In **Security restrictions**, accept the default **Reject email messages if they aren't sent over TLS** setting, and select **Next**.
