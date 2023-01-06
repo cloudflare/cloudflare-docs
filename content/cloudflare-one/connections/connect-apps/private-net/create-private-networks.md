@@ -39,3 +39,7 @@ This will instruct WARP to begin proxying any traffic destined for a `100.64/10`
 Once enrolled, your users and services will be able to connect to the virtual IPs configured for TCP, UDP, or ICMP-based traffic.
 
 Optionally, you can create [Gateway network policies](/cloudflare-one/policies/filtering/network-policies/) by blocking the `100.64/10` IP space and creating [identity-based rules](/cloudflare-one/policies/filtering/identity-selectors/) around the virtual IPs you wish to allow users to access. 
+
+## Availability
+
+WARP-to-WARP is currently in closed beta. To get started, sign-up on our [waitlist](https://www.cloudflare.com/lp/warp-peering/) to receive early access. If you are interested in learning more about how it works and what else we will be launching in the future, check out the [Cloudflare Blog](https://blog.cloudflare.com/warp-to-warp/).
