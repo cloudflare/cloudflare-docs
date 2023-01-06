@@ -228,13 +228,13 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 There may be scenarios where use of the Office 365 (O365) email quarantine or a combination with Area 1 is preferred. The following are the best practices for using the O365 quarantine [by disposition](/email-security/reference/dispositions-and-attributes/):
 
-Disposition <div style="width: 100px"> | Action
---- | ---
-`MALICIOUS` | Should always be quarantined. If the user requires notification, they should require administrator approval to release. Users should never have the ability to self remediate `MALICIOUS` emails without approval from an administrator. Emails should be body and subject tagged.
-`SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged. Emails should be delivered to the user’s inbox or junk mail folder. Advantage customers should `DEFANG` this disposition while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta).
-`SPAM` | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release. Emails should be subject tagged.
-`BULK` | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder.
-`SPOOF` | If `SPOOF` detections are clean and well managed in the Allow List, emails should always be quarantined. If the `SPOOF` detections are not clean, they should be treated the same as `SPAM` if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. In our example we will treat SPOOF the same as SPAM.
+| Disposition <div style="width: 100px"> | Action |
+-------------- | -----------------------
+| `MALICIOUS`  | Should always be quarantined. If the user requires notification, they should require administrator approval to release. Users should never have the ability to self remediate `MALICIOUS` emails without approval from an administrator. Emails should be body and subject tagged. |
+| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged. Emails should be delivered to the user’s inbox or junk mail folder. Advantage customers should `DEFANG` this disposition while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta). |
+| `SPAM`       | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release. Emails should be subject tagged. |
+| `BULK`       | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder. |
+| `SPOOF`      | If `SPOOF` detections are clean and well managed in the Allow List, emails should always be quarantined. If the `SPOOF` detections are not clean, they should be treated the same as `SPAM` if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. In our example we will treat SPOOF the same as SPAM. |
 
 Within O365 there are various options as well as limitations as to how quarantine email messages. The primary options will be broken down into use cases you may use for yourself as examples. The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/). Use of the O365 quarantine is an option for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases this guide will cover.
 
