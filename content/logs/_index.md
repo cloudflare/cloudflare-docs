@@ -27,15 +27,15 @@ Push your request or event logs to your cloud service provider using Logpush, wh
 
 {{</feature>}}
 
-{{<feature header="Logpull" href="/logs/logpull/">}}
-
-Use Logpull, if you only want to have access to HTTP request logs. The data from Logpull and Logpush is exactly the same.
-
-{{</feature>}}
-
 {{<feature header="Instant Logs" href="/logs/instant-logs/">}}
 
 View HTTP request logs instantly in the Cloudflare dashboard or the CLI.
+
+{{</feature>}}
+
+{{<feature header="Logpull" href="/logs/logpull/">}}
+
+Use Logpull if you only want to have access to HTTP request logs. The data from Logpull and Logpush is exactly the same.
 
 {{</feature>}}
 
