@@ -18,7 +18,9 @@
         <article class="DocsMarkdown">
           <h1>{{ .Title }}</h1>
 
-          <p>{{- .Params.Summary | markdownify -}}</p>
+          <div class="DocsMarkdown--content-column">
+            {{- .Params.Summary -}}
+          </div>
 
           {{- .Content -}}
         </article>
