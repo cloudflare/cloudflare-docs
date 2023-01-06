@@ -10,7 +10,7 @@ Split Tunnels mode can be configured to exclude or include IP addresses or domai
 
 {{<Aside type="warning">}}
 
-Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/local-domains/) configuration.
+Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are still resolved by Gateway and subject to DNS policies unless you add the domains to your [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) configuration.
 
 {{</Aside>}}
 
@@ -48,7 +48,7 @@ The IP address will appear in the list of Split Tunnel entries. Traffic to these
 2. In the **Selector** dropdown, select _Domain_.
 3. Enter a [valid domain](#valid-domains) to exclude or include.
 4. Enter an optional description and then select **Save destination**.
-5. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/exclude-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
+5. (Optional) If your domain does not have a public DNS record, create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) entry to allow a private DNS server to handle domain resolution.
 
 When a user navigates to the domain, the domain gets resolved according to your Local Domain Fallback configuration (either by Gateway or by your private DNS server). WARP Split Tunnels will then dynamically include or exclude the IP address returned in the DNS lookup.
 
