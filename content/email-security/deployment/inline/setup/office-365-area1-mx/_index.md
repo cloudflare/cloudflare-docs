@@ -186,11 +186,11 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 4. Select **Save**.
 
-## 3. Configure Area 1 Quarantine Policies
+## 3. Configure Area 1 quarantine policies
 
 ### Select the disposition that you want to quarantine
 
-Quarantining messages is a per domain configuration. To modify which domains will have their message quarantines, access the domain configuration: 
+Quarantining messages is a per domain configuration. To modify which domains will have their message quarantined, access the domain configuration: 
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
@@ -208,7 +208,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
     </div>
 
-{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, Malicious and Spam detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
+{{<Aside type="note">}}When Area 1 is deployed as the MX record and protecting Office 365, `Malicious` and `Spam` detections will automatically be quarantined. This behavior cannot be modified.{{</Aside>}}
 
 ### Manage the Admin Quarantine
 
@@ -224,7 +224,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
     </div>
 
-## 4. Message Handling
+## 4. Message handling
 
 There may be scenarios where use of the O365 email quarantines or a combination with Area 1 is preferred. The following are the best practices for using the O365 quarantine. The recommendations [by disposition](/email-security/reference/dispositions-and-attributes/) are as follows:
 
