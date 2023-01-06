@@ -26,6 +26,8 @@
 
   {{ end }}
 
+  {{ if or (eq . "folder") (eq . "file") }}
+
   {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
 
   <div class="DocsToolbar--tools-spacer"></div>
@@ -42,10 +44,12 @@
       </div>
 
       <span class="Tooltip" role="tooltip" position="bottom-end">
-        View RSS Feed
+        View GitHub RSS Feed
       </span>
     </div>
   </div>
+
+  {{ end }}
 
   {{ end }}
 

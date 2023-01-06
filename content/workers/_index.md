@@ -6,6 +6,7 @@ weight: 1
 layout: list
 meta:
   title: Cloudflare Workers documentation
+rss: test
 ---
 
 {{<content-column>}}
