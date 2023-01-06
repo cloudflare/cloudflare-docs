@@ -125,7 +125,7 @@ If using the Drag and Drop method, a red warning symbol will appear next to an a
 
 ### Using Functions
 
-Drag-and-drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of Pages Functions. In order to deploy a `functions` folder, you must use Wrangler.
+Drag-and-drop deployments made from the Cloudflare dashboard do not currently support compiling a `functions` folder of Pages Functions. In order to deploy a `functions` folder, you must use Wrangler, which will automatically upload a `functions` folder from the directory where it is run.
 
 However, note that a `_worker.js` file is supported by both Wrangler and drag-and-drop deployments made from the dashboard.
 

@@ -1257,6 +1257,12 @@ Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `
 
 {{<Aside type="note">}}
 
+Functions in a `functions` folder at the CWD will also be uploaded.
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
 This command has an alias of `wrangler pages deploy create`.
 
 {{</Aside>}}
