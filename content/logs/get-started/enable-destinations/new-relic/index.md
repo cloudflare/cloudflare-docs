@@ -39,7 +39,7 @@ To enable a Logpush service to New Relic via the dashboard:
 
 9.  Select **Validate access**.
 
-10.  Click **Save and Start Pushing** to finish enabling Logpush.
+10.  Select **Save and Start Pushing** to finish enabling Logpush.
 
 Once connected, Cloudflare lists New Relic as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
