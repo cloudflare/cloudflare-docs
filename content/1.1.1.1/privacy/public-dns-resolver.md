@@ -1,6 +1,8 @@
 ---
 pcx_content_type: reference
 title: 1.1.1.1 Public DNS Resolver
+meta:
+  description: Learn more about Cloudflare's commitment to privacy with the 1.1.1.1 Public DNS Resolver.
 ---
 
 # 1.1.1.1 Public DNS Resolver

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: JumpCloud
 weight: 2
+meta:
+    description: Learn how to deploy Cloudflare WARP using JumpCloud.
 ---
 
 # Deploy WARP using JumpCloud

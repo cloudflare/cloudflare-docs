@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Use lists in expressions
 weight: 3
+meta:
+    description: Learn how to use IP Lists in Firewall rule expressions.
 ---
 
 # Use lists in expressions

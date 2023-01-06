@@ -4,6 +4,7 @@ title: Create via API
 weight: 7
 meta:
   title: Create Bulk Redirects via API
+  description: Learn how to create Bulk Redirects using the Cloudflare API.
 ---
 
 # Create Bulk Redirects via API

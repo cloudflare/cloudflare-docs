@@ -4,6 +4,7 @@ pcx_content_type: how-to
 weight: 2
 meta:
   title: Get started with Network Analytics v2
+  description: Learn how to view and use data from Network Analytics v2.
 ---
 
 # Get started with Network Analytics
