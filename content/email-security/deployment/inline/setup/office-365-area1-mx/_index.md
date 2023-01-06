@@ -276,7 +276,7 @@ Before looking into our use case tutorials, read throught this how-to guide rela
 
 ### Use cases
 
-Refer to Use cases to learn how to set up ofr different scenarios.
+Refer to [Use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) to learn how to set up ofr different scenarios.
 
 ## 5. Update your domain MX records
 
