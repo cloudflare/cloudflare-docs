@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
 title: Filters
+meta:
+  description: Learn how to use filters in Cloudflare Web Analytics.
 ---
 
 # Filters
