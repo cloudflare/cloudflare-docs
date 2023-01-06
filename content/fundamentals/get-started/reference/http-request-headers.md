@@ -16,6 +16,16 @@ For guidance on logging your visitor’s original IP address, refer to [Restorin
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
+## CF-Connecting-IPv6
+
+Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](https://support.cloudflare.com/hc/en-us/articles/229666767) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+
+If Pseudo IPv4 is set to `Overwrite Headers` - Cloudflare overwrites the existing `Cf-Connecting-IP` and `X-Forwarded-For` headers with a pseudo IPv4 address while preserving the real IPv6 address in `CF-Connecting-IPv6` header.
+
+## CF-Pseudo-IPv4
+
+If Pseudo IPv4 is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
+
 ## True-Client-IP (Enterprise plan only)
 
 `True-Client-IP` provides the original client IP address to the origin web server. `True-Client-IP` is only available on an Enterprise plan. In the example below, `203.0.113.1` is the original visitor IP address. For example: `True-Client-IP: 203.0.113.1`
