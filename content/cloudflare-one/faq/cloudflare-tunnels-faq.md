@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Tunnels
 weight: 4
+meta:
+    description: Review frequently asked questions about tunnels in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

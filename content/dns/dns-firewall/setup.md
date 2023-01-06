@@ -4,6 +4,7 @@ pcx_content_type: how-to
 weight: 1
 meta:
   title: Set up DNS Firewall
+  description: Set up DNS Firewall to protects upstream nameservers from DDoS attacks and reduce load by caching DNS responses.
 ---
 
 # Set up DNS Firewall

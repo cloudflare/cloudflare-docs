@@ -7,7 +7,7 @@ weight: 3
 # Certificate Transparency Monitoring
 
 {{<render file="_cert-transparency-monitoring-definition.md">}}
-
+<br/>
 {{<Aside type="note">}}
 
 If you use a shared certificate, you may receive notifications for domains or subdomains that do not belong to you.

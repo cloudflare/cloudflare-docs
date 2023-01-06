@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Getting started with Cloudflare Zero Trust
 weight: 2
+meta:
+    description: Review frequently asked questions about getting started with Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Troubleshooting
 weight: 4
+meta:
+    description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

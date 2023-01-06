@@ -7,13 +7,11 @@ layout: single
 
 # Lists API
 
-The Lists API supports different types of lists:
+The [Lists API](https://developers.cloudflare.com/api/operations/lists-get-lists) provides an interface for programmatically managing the following types of lists:
 
 *   Use [IP Lists](/firewall/cf-firewall-rules/rules-lists/) to create a group of IP addresses and refer to them collectively, by name, in your firewall rule expressions.
 
 *   Use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/) to define lists of redirects that you enable by creating a Bulk Redirect Rule.
-
-The [Lists API](https://developers.cloudflare.com/api/operations/lists-get-lists) provides an interface for programmatically managing these types of lists.
 
 To use an IP List in a rule expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language documentation.
 

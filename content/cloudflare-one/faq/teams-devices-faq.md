@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Devices
 weight: 6
+meta:
+    description: Review frequently asked questions about devices in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

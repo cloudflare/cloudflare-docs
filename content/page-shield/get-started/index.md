@@ -5,6 +5,7 @@ weight: 2
 layout: single
 meta:
   title: Get started with Cloudflare Page Shield
+  description: Learn how to set up Page Shield with a few clicks.
 ---
 
 # Get started with Cloudflare Page Shield

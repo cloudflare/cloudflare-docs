@@ -8,6 +8,6 @@ meta:
 
 # Reference — Keyless SSL
 
-For more on Keyless SSL, refer to these articles:
+For more reference material on Keyless SSL, refer to the following resources:
 
 {{<directory-listing>}}

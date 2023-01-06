@@ -6,16 +6,14 @@ weight: 1
 
 # Log into Cloudflare
 
-To log into the Cloudflare dashboard:
-
-1. Go to the [Login page](https://dash.cloudflare.com/login).
-2. Choose your [sign-in option](#sign-in-options).
+To log into the Cloudflare dashboard, go to the [Login page](https://dash.cloudflare.com/login) and choose your [sign-in option](#sign-in-options).
 
 ---
 
 ## Sign-in options
 
 Cloudflare offers the following sign-in options:
+
 - **Email and password**: Enter your email address and password.
 - **Single sign on (SS0)**: Enter your email address (available if your admin has [enabled SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
 - **Sign in with Apple**: 
