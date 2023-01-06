@@ -37,7 +37,7 @@ To enable a Logpush service to New Relic via the dashboard:
 
     Use the region that matches the one that has been set on your New Relic account. The `<NR_LICENSE_KEY>` field can be found on the New Relic dashboard. It can be retrieved by following [these steps](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/#manage-license-key).
 
-9.  Click **Validate access**.
+9.  Select **Validate access**.
 
 10.  Click **Save and Start Pushing** to finish enabling Logpush.
 
