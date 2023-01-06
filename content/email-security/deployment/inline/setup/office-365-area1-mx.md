@@ -94,14 +94,7 @@ Depending on your Office 365 configuration, you may receive a warning indicating
 
 11. Select **Save**.
 
-==========================================================
-==========================================================
-==========================================================
-==========================================================
-
-<!-- Section ##3 should be section #2 -->
-
-## 3. Enhanced Filtering configuration
+## 2. Enhanced Filtering configuration
 
 This option will allow Office 365 to properly identify the original connecting IP before the message was received by Area 1. This helps with SPF analysis. This has two steps: 
 
@@ -160,7 +153,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 4. Select **Save**.
 
-## 4. Configure Area 1 Quarantine Policies
+## 3. Configure Area 1 Quarantine Policies
 
 ### Select the disposition that you want to quarantine
 
@@ -198,7 +191,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
     </div>
 
-## 5. Message Handling
+## 4. Message Handling
 
 There may be scenarios where use of the O365 email quarantines or a combination with Area 1 is preferred. The following are the best practices for using the O365 quarantine. The recommendations [by disposition](/email-security/reference/dispositions-and-attributes/) are as follows:
 
@@ -217,12 +210,71 @@ Within O365 there are various options as well as limitations as to how quarantin
 - Use Case 4: User Managed Quarantine and User Quarantine requiring Admin Release
 - Use Case 5: Deliver to Junk Email dolder and Admin Managed Host Quarantine
 
+### Best practices
 
-========================================================================
-========================================================================
-========================================================================
-========================================================================
-========================================================================
+Before looking into our use case tutorials, read throught this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and defanging emails, as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta)
+
+**Advantage customers**
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+2. Go to Settings (the gear icon).
+3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
+4. In **Disposition Actions**, select **Edit**.
+5. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL DEFANG`.
+
+    <div class="medium-img">
+
+    ![Defang suspicious emails](/email-security/static/inline-setup/o365-area1-mx/defang-suspicious.png)
+
+    </div>
+
+6. Select **Save Disposition Actions**.
+7. Still under **Email Policies**, select **Text add-Ons**.
+8. Select **Edit**.
+9. Enable the following options under **Add Prefix To Subject**:
+    - **Malicious** - Enabled
+    - **Suspicious** - Enabled
+    - **Spam** - Enabled
+    - **Bulk** - Enabled
+    - **Spoof** - Enabled
+    - **Originated Outside of Company** - Optional
+    - **Contains Encrypted Content** - Optional
+    - **Subject Prefix** - Format as desired. For example `[%LABELS]`
+
+    <div class="medium-img">
+
+    ![Enable all the options mentioned in step 9](/email-security/static/inline-setup/o365-area1-mx/prefix-subject.png)
+
+    </div>
+
+10. Select **Update Text Add-Ons**.
+
+**Enterprise customers**
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+2. Go to Settings (the gear icon).
+3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
+4. Enable **Email Link Isolation**.
+5. Still under **Email Policies**, select **Text add-Ons**.
+6. Select **Edit**.
+7. Enable the following options under **Add Prefix To Subject**:
+    - **Malicious** - Enabled
+    - **Suspicious** - Enabled
+    - **Spam** - Disabled
+    - **Bulk** - Disabled
+    - **Spoof** - Enabled
+    - **Originated Outside of Company** - Optional
+    - **Body Prefix** - Format as desired. You can use the default settings. The body prefix supports HTML tags for formatting.
+
+    <div class="medium-img">
+
+    ![Enable all the options mentioned in step 7](/email-security/static/inline-setup/o365-area1-mx/prefix-subject-enterprise.png)
+
+    </div>
+
+8. Select **Update Text Add-Ons**.
+
+Refer to Use cases to learn how to set up ofr different scenarios.
 
 ## 5. Update your domain MX records
 
@@ -291,16 +343,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 13. Select **Next**.
 14. Review your settings and select **Create connector**.
 
-
-
-==========================================
-==========================================
-==========================================
-==========================================
-==========================================
-==========================================
-
-## 6???????: Execute `Enable-OrganizationCustomization` (if required)
+## 6: Execute `Enable-OrganizationCustomization` (if required)
 
 The following steps are only required if you have not previously customized your Office 365 instance. If you received the message to run this cmdlet in any of the previous steps, you will need to execute it in order to proceed with the configuration. This change may take as long as 24 hours to take effect.
 
