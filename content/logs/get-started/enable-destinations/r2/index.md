@@ -43,7 +43,7 @@ Enable Logpush to R2 via the dashboard.
 
 1.  Log in to the Cloudflare dashboard.
 
-2.  Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise account or domain you want to use with Logpush.
 
 3.  Go to **Analytics** > **Logs**.
 
