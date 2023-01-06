@@ -274,6 +274,8 @@ Before looking into our use case tutorials, read throught this how-to guide rela
 
 8. Select **Update Text Add-Ons**.
 
+### Use cases
+
 Refer to Use cases to learn how to set up ofr different scenarios.
 
 ## 5. Update your domain MX records
