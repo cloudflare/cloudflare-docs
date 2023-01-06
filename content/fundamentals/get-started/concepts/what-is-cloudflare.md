@@ -6,7 +6,7 @@ weight: 1
 
 # What is Cloudflare?
 
-Cloudflare is a global network of [edge servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/). When you add your application to Cloudflare, we use this edge network to sit in between requests and your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
+Cloudflare is a global network of [servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/). When you add your application to Cloudflare, we use this network to sit in between requests and your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
 
 ![Cloudflare sits in between requests and your origin server.](/fundamentals/static/images/get-started/website-with-cloudflare.svg)
 
@@ -17,7 +17,3 @@ This [position](/fundamentals/get-started/concepts/how-cloudflare-works/) allows
 For more details about what Cloudflare is and does, refer to the [Learning Center](https://www.cloudflare.com/learning/what-is-cloudflare/).
 
 {{</Aside>}}
-
-## What Cloudflare is not
-
-Cloudflare is not generally a hosting provider. Cloudflare generally cannot remove content from the Internet that it does not host.
