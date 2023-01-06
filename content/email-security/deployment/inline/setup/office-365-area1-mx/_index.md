@@ -22,9 +22,9 @@ Changing the TTL value instructs DNS servers on how long to cache this value bef
 To check your existing TTL, open a terminal window and run the following command against your domain:
 
 ```sh
-$ dig mx domain
+$ dig mx <YOUR_DOMAIN>
 
-; <<>> DiG 9.10.6 <<>> mx domain
+; <<>> DiG 9.10.6 <<>> mx <YOUR_DOMAIN>
 ;; global options: +cmd
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39938
@@ -36,14 +36,14 @@ $ dig mx domain
 ;domain.		IN	MX
 
 ;; ANSWER SECTION:
-domain.	300	IN	MX	10 mailstream-east.mxrecord.io.
-domain.	300	IN	MX	10 mailstream-west.mxrecord.io.
-domain.	300	IN	MX	20 mailstream-central.mxrecord.mx.
+<YOUR_DOMAIN>.	300	IN	MX	10 mailstream-east.mxrecord.io.
+<YOUR_DOMAIN>.	300	IN	MX	10 mailstream-west.mxrecord.io.
+<YOUR_DOMAIN>.	300	IN	MX	20 mailstream-central.mxrecord.mx.
 ```
 
-In the above example, TTL is shown in seconds, as `300` (or five minutes). 
+In the above example, TTL is shown in seconds as `300` (or five minutes). 
 
-If you are using Cloudflare for DNS, you can leave the [TTL setting as **Auto**](/dns/manage-dns-records/reference/ttl/)
+If you are using Cloudflare for DNS, you can leave the [TTL setting as **Auto**](/dns/manage-dns-records/reference/ttl/).
 
 Bellow is a list with instrunctions on how to edit MX records for some popular services:
 
@@ -58,22 +58,23 @@ Bellow is a list with instrunctions on how to edit MX records for some popular s
 
 1. Go to the [Microsoft Security admin center](https://security.microsoft.com/homepage).
 
-2. In the **Threat management** section, select [**Policy settings**](https://security.microsoft.com/threatpolicy).
-
-    ![Select threat management](/email-security/static/inline-setup/o365-area1-mx/step2-threat-management.png)
+2. Go to **Policies & Rules** > **Threat policies**.
 
 3. Select the [Anti-spam option](https://security.microsoft.com/antispam).
 
     ![Select the anti-spam option](/email-security/static/inline-setup/o365-area1-mx/step3-anti-spam.png)
 
-4. Select **Connection filter policy (Default)** to edit the policy, and then select **Edit connection filter policy**.
+4. Select **Connection filter policy (Default)** > **Edit connection filter policy**.
 
     ![Select edit connection filter policy](/email-security/static/inline-setup/o365-area1-mx/step4-edit-filter-policy.png)
 
 5. In **Always allow messages from the following IP addresses or address range** add the IP addresses and CIDR blocks mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
+    <div class="large-img">
+
     ![Enter the egress IP addresses](/email-security/static/inline-setup/o365-area1-mx/step5-egress-ips.png)
 
+    </div>
 6. Select **Save**.
 
 {{<Aside type="note">}}
