@@ -7,6 +7,7 @@ weight: 12
 # TLS 1.3
 
 {{<render file="_tls-13-definition.md">}}
+<br/>
 
 ## What is TLS 1.3?
 

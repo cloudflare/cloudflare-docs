@@ -4,11 +4,13 @@ pcx_content_type: how-to
 weight: 2
 meta:
   title: Manage origin server pools
+  description: Learn how to set up and maintain origin server pools.
 ---
 
 # Manage origin server pools
 
 {{<render file="_pool-definition.md">}}
+<br/>
 
 For more background information on pools, refer to [Origin pools](/load-balancing/understand-basics/pools/).
 

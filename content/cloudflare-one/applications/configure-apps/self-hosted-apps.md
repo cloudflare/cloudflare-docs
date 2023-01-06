@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Self-hosted applications
 weight: 2
+meta:
+    description: Use Cloudflare Access to securely publish internal tools and applications to the Internet while using your existing identity providers.
 ---
 
 # Self-hosted applications

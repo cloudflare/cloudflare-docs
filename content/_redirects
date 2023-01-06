@@ -549,6 +549,7 @@
 /ssl/keyless-ssl/high-availability/ /ssl/keyless-ssl/reference/high-availability/ 301
 /ssl/keyless-ssl/keyless-delegation/ /ssl/keyless-ssl/reference/keyless-delegation/ 301
 /ssl/keyless-ssl/scaling-and-benchmarking/ /ssl/keyless-ssl/reference/scaling-and-benchmarking/ 301
+/ssl/mutual-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
 /ssl/universal-ssl/validating/ /ssl/edge-certificates/changing-dcv-method/ 301

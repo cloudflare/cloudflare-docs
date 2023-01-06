@@ -7,7 +7,7 @@ weight: 2
 # Monitors
 
 {{<render file="_monitor-definition.md">}}
-
+<br/>
 {{<render file="_health-check-diagram.md">}}
 
 Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.

@@ -5,6 +5,7 @@ layout: overview
 weight: 1
 meta:
   title: Cloudflare Web Application Firewall
+  description: The Cloudflare Web Application Firewall (WAF) provides automatic protection from vulnerabilities and the flexibility to create custom rules.
 ---
 
 # Cloudflare Web Application Firewall
