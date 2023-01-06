@@ -234,82 +234,15 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 | `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged. Emails should be delivered to the user’s inbox or junk mail folder. Advantage customers should `DEFANG` this disposition while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta). |
 | `SPAM`       | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release. Emails should be subject tagged. |
 | `BULK`       | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder. |
-| `SPOOF`      | If `SPOOF` detections are clean and well managed in the Allow List, emails should always be quarantined. If the `SPOOF` detections are not clean, they should be treated the same as `SPAM` if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. In our example we will treat SPOOF the same as SPAM. |
+| `SPOOF`      | If `SPOOF` detections are clean and well managed in the Allow List, emails should always be quarantined. If the `SPOOF` detections are not clean, they should be treated the same as `SPAM` if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. |
 
-Within O365 there are various options as well as limitations as to how quarantine email messages. The primary options will be broken down into use cases you may use for yourself as examples. The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/). Use of the O365 quarantine is an option for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases this guide will cover.
+Within Office 365 (O365) there are various options, as well as limitations, as to how quarantine email messages. The primary options will be broken down into use cases you may use for yourself as examples. The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/). Use of the O365 quarantine is an option for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases this guide will cover.
 
 - Use Case 1: Deliver to Junk Email folder and Admin Quarantine in Area 1 (Recommended)
-- Use Case 2: Deliver to Junk Email folder and User Managed Quarantine
-    - This use case requires that `MALICIOUS` emails be quarantined within the Area 1 product.
+- Use Case 2: Deliver to Junk Email folder and User Managed Quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 product)
 - Use Case 3: Deliver to Junk Email folder and User Quarantine requiring Admin Release
 - Use Case 4: User Managed Quarantine and User Quarantine requiring Admin Release
 - Use Case 5: Deliver to Junk Email dolder and Admin Managed Host Quarantine
-
-### Best practices
-
-Before looking into our use case tutorials, read throught this how-to guide related to best practices. This will show you how to prepare your Area 1 dashboard and enable options such as tagging and defanging emails, as well as [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta), before setting up Office 365.
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-
-2. Go to **Settings** (the gear icon).
-
-3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
-
-4. If you are an **Advantage customer**:
-    1. In **Disposition Actions**, select **Edit**.
-    2. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL DEFANG`.
-
-    <div class="medium-img">
-
-    ![Defang suspicious emails](/email-security/static/inline-setup/o365-area1-mx/defang-suspicious.png)
-
-    </div>
-
-    3. Select **Save Disposition Actions**.
-
-5. If you are an **Enterprise customer**:
-    1. Enable **Email Link Isolation**.
-
-6. Still under **Email Policies**, select **Text add-Ons**.
-
-7. Select **Edit**.
-
-8. Enable the following options under **Add Prefix To Subject**:
-    - **Malicious** - Enabled
-    - **Suspicious** - Enabled
-    - **Spam** - Enabled
-    - **Bulk** - Enabled
-    - **Spoof** - Enabled
-    - **Originated Outside of Company** - Optional
-    - **Contains Encrypted Content** - Optional
-    - **Subject Prefix** - Format as desired. For example `[%LABELS]`
-
-    <div class="medium-img">
-
-    ![Enable all the options mentioned in step 9](/email-security/static/inline-setup/o365-area1-mx/prefix-subject.png)
-
-    </div>
-
-9. Still in the same window, scroll down and enable the following options under **Add Prefix To Body**:
-    - **Malicious** - Enabled
-    - **Suspicious** - Enabled
-    - **Spam** - Disabled
-    - **Bulk** - Disabled
-    - **Spoof** - Enabled
-    - **Originated Outside of Company** - Optional
-    - **Body Prefix** - Format as desired. You can use the default settings. The body prefix supports HTML tags for formatting.
-
-    <div class="medium-img">
-
-    ![Enable all the options mentioned in step 7](/email-security/static/inline-setup/o365-area1-mx/prefix-subject-enterprise.png)
-
-    </div>
-
-10. Select **Update Text Add-Ons**.
-
-### Use cases
-
-Refer to [Use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) to learn how to set up your environment for different scenarios.
 
 ## 5. Update your domain MX records
 
