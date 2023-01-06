@@ -8,7 +8,7 @@ meta:
 
 # Deliver to Junk Email folder and Admin Quarantine in Area 1
 
-In this tutorial you will learn how to deliver emails to the Junk Email folder and Amin Quarantine in Area 1.
+In this tutorial you will learn how to deliver emails to the Office 365 Junk Email folder, as well as the Amin Quarantine in Area 1.
 
 ## Configure domains
 
