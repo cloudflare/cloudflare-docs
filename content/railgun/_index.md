@@ -13,7 +13,7 @@ meta:
 Cache dynamically generated web pages and accelerate them with Railgun.
 {{</description>}}
 
-{{<plan type="business">}}
+{{<plan id="speed.railgun.properties.availability.summary">}}
 
 Railgun is a WAN optimization technology developed by Cloudflare and is available to Cloudflare Business and Enterprise customers, as well as [Partners](http://www.cloudflare.com/partner-programs). Railgun requires a piece of software called the Railgun Listener to be installed on your web server’s network. Railgun takes about an hour to install, setup, and test.
 

@@ -22,18 +22,20 @@ Web3, or the distributed web, is a set of technologies that enables hosting of c
 ## Features
 
 {{<feature header="IPFS Gateway" href="/web3/ipfs-gateway/">}}
-
+{{<plan id="web3.ipfs.properties.availability.summary">}}
 Provides a read-only, HTTP-accessible interface to the [Interplanetary File System (IPFS)](/web3/ipfs-gateway/concepts/ipfs/).
 
 {{</feature>}}
 
 {{<feature header="Ethereum Gateway" href="/web3/ethereum-gateway/">}}
+{{<plan id="web3.ethereum.properties.availability.summary">}}
 
 Gives you read and write access to the [Ethereum network](/web3/ethereum-gateway/concepts/ethereum/) without installing any software on your computer.
 
 {{</feature>}}
 
 {{<feature header="Polygon Gateway" href="/web3/polygon-gateway/">}}
+{{<plan id="web3.polygon.properties.availability.summary">}}
 
 Gives you read and write access to the [Polygon network](/web3/polygon-gateway/) without installing any software on your computer.
 
