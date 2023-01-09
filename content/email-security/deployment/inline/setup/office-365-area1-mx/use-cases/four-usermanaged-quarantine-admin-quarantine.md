@@ -1,5 +1,5 @@
 ---
-title: O365 User Managed quarantine and Administrative quarantine
+title: 4 - User managed quarantine and administrative quarantine
 pcx_content_type: tutorial
 weight: 4
 meta:

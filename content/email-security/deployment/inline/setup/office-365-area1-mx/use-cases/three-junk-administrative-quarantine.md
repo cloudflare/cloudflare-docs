@@ -1,5 +1,5 @@
 ---
-title: O365 Junk Email and Administrative quarantine
+title: 3 - Junk email and administrative quarantine
 pcx_content_type: tutorial
 weight: 3
 meta:

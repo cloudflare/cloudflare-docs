@@ -1,5 +1,5 @@
 ---
-title: O365 Junk Email and User Managed quarantine
+title: 2 - Junk email and user managed quarantine
 pcx_content_type: tutorial
 weight: 2
 meta:
