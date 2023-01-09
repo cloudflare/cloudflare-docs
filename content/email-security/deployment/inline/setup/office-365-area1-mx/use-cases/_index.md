@@ -17,20 +17,27 @@ Before looking into our use case tutorials, read throught this how-to guide rela
 
 3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
 
-4. If you are an **Advantage customer**:
-    1. In **Disposition Actions**, select **Edit**.
-    2. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL DEFANG`.
+4. What you do next depens on if you are an Advantage or Enterprise customer:
+    1. If you are an **Advantage customer**:
+        1. In **Disposition Actions**, select **Edit**.
+        2. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL Defang`.
 
-    <div class="medium-img">
+        <div class="large-img">
 
-    ![Defang suspicious emails](/email-security/static/inline-setup/o365-area1-mx/defang-suspicious.png)
+        ![Defang suspicious emails](/email-security/static/inline-setup/o365-area1-mx/use-cases/defang-suspicious.png)
 
-    </div>
+        </div>
 
-    3. Select **Save Disposition Actions**.
+        3. Select **Save Disposition Actions**.
 
-5. If you are an **Enterprise customer**:
-    1. Enable **Email Link Isolation**.
+    1. If you are an **Enterprise customer**:
+        1. Enable **Email Link Isolation**.
+
+        <div class="large-img">
+
+        ![Enable Email Link Isolation](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-enterprise-advantage-customer.png)
+
+        </div>
 
 6. Still under **Email Policies**, select **Text add-Ons**.
 
@@ -44,9 +51,9 @@ Before looking into our use case tutorials, read throught this how-to guide rela
     - **Spoof** - Enabled
     - **Originated Outside of Company** - Optional
     - **Contains Encrypted Content** - Optional
-    - **Subject Prefix** - Format as desired. For example `[%LABELS]`
+    - **Subject Prefix** - Format as desired.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Enable all the options mentioned in step 9](/email-security/static/inline-setup/o365-area1-mx/prefix-subject.png)
 
@@ -61,7 +68,7 @@ Before looking into our use case tutorials, read throught this how-to guide rela
     - **Originated Outside of Company** - Optional
     - **Body Prefix** - Format as desired. You can use the default settings. The body prefix supports HTML tags for formatting.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Enable all the options mentioned in step 7](/email-security/static/inline-setup/o365-area1-mx/prefix-subject-enterprise.png)
 

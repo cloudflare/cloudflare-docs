@@ -13,6 +13,8 @@ meta:
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to step 6](#6-execute-enable-organizationcustomization-if-required).
 
+For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
+
 ## Prerequisites
 
 To ensure changes made in this tutorial take effect quickly, update the Time to Live (TTL) value of the existing MX records on your domains to five minutes. Do this on all the domains you will be deploying. 
