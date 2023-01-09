@@ -1,19 +1,19 @@
 ---
-title: Deliver to Junk Email folder and Admin Quarantine in Area 1
+title: O365 Junk Email and Area 1 Admin Quarantine
 pcx_content_type: tutorial
 weight: 1
 meta:
-    title: Use case one - Deliver to Junk Email folder and Admin Quarantine in Area 1
+    title: Use case one - Deliver emails to Office 365 Junk Email folder and Admin Quarantine in Area 1
 ---
 
-# Deliver to Junk Email folder and Admin Quarantine in Area 1
+# Deliver emails to Office 365 Junk Email folder and Admin Quarantine in Area 1
 
 In this tutorial you will learn how to deliver emails to the Office 365 Junk Email folder, as well as the Amin Quarantine in Area 1.
 
 ## Configure domains
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to Settings (the gear icon).
+2. Go to **Settings** (the gear icon).
 3. Navigate to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.
 5. For each domain you are configuring select **...** > **Edit**, and set the following options:
@@ -34,15 +34,16 @@ In this tutorial you will learn how to deliver emails to the Office 365 Junk Ema
 6. Set the **Policy name** to `UserNotifyAdminRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: From the drop-down menu, choose **Allow recipients to request a message to be released from quarantine**.
+    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients to request a message to be released from quarantine_.
     - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes
 
     ![Configure the Recipient message access as stated in step 8 above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-recipient-message-access.png)
 
 9. Select **Next**.
-10. Select the **Enable** checkbox > **Next**.
-11. Review your settings and select **Submit**.
-12. Select **Done**.
+10. In **Quarantine notification**, select **Enable**.
+11. Select **Next**.
+12. Review your settings and select **Submit**.
+13. Select **Done**.
 
 ## Configure quarantine notifications
 
@@ -104,15 +105,19 @@ In this tutorial you will learn how to deliver emails to the Office 365 Junk Ema
     - **Apply this rule if**: _The message headers_ > _includes any of these words_
         - **Enter text**: `X-Area1Security-Disposition` > **Save**
         - **Enter words**: `SUSPICIOUS, BULK` > **Add** > **Save**
-    - Under **Apply this rule if** select **+** to add a second condition.  
-    - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_, and enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+    - Under **Apply this rule if**, select **+** to add a second condition.  
+    - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
+    <div class="large-img">
+
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
+
+    </div>
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created > **Enable**.
+8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
 
 
