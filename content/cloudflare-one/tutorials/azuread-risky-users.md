@@ -8,7 +8,7 @@ title: Isolate Azure AD risky users
 
 # Isolate Azure AD risky users
 
-Azure Active Directory (AD) calculates a user's [risk level](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the risky users list with Azure AD and apply more stringent policies to users at higher risk.
+Azure Active Directory (AD) calculates a user's [risk level](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Azure AD risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 
 This tutorial demonstrates how to automatically redirect users to a remote browser when they are deemed risky by Azure.
 
@@ -22,93 +22,148 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
 - [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) enabled on your devices
 
-## 1. Create risky users group in Azure AD
+## 1. Set up Azure AD as an identity provider
 
-1. Log in to the [Azure dashboard](https://portal.azure.com/).
-
-2. Navigate to **All services** > **Azure Active Directory**.
-
-3. In the Azure Active Directory menu, go to **Groups** and select **New group**.
-
-4. For **Group type**, choose _Security_.
-
-5. Name the group and select **Create**.
-
-    ![Creating a new security group in Azure AD](/cloudflare-one/static/documentation/identity/azure/create-risky-users-group.png)
-
-6. Copy the **Object Id** for the group, also known as the Group ID. You will need this value when calling the Microsoft Graph API.
-
-## 2. Add risky users to group
-
-Next, configure a [Cloudflare Workers](https://developers.cloudflare.com/workers/) script or [Azure Function](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview) that automatically populates the security group with risky users.
-
-### Example algorithm
-
-The basic algorithm is described below. You can test out the API using [Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
-
-1. Get the current members of the security group.
-    ```js
-    GET https://graph.microsoft.com/v1.0/groups/<GROUP ID>/members?$count=true
-    ```
-
-2. Delete all members of the security group. This saves you from having to manually remove users that are no longer risky.
-    ```js
-    DELETE https://graph.microsoft.com/v1.0/groups/<GROUP ID>/members/<MEMBER ID>/$ref
-    ```
-
-3. Get the list of Azure AD risky users. You can optionally filter the results by risk level (`low`, `medium`, or `high`).
-    ```js
-    GET https://graph.microsoft.com/v1.0/identityProtection/riskyUsers?$filter=riskLevel eq 'high'
-    ```
-
-4. Add risky users to the security group.
-    ```js
-    POST https://graph.microsoft.com/v1.0/groups/<GROUP ID>/members/$ref
-    ```
-    Request body:
-    ```js
-    {
-        "@odata.id": "https://graph.microsoft.com/v1.0/directoryObjects/<MEMBER ID>"
-    }
-    ```
-
-### Example Cloudflare Workers script
-
-```js
----------FILL IN------------------
-```
-
-## 3. Add Azure AD as an identity provider
-
-[Set up Azure AD as an identity provider](/cloudflare-one/identity/idp-integration/azuread/#set-up-azure-ad-as-an-identity-provider) in Cloudflare Access.
-
-## 4. Enable group synchronization
-
-To synchronize Azure AD users and groups with Cloudflare Access, refer to our [SCIM integration instructions](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups).
+Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/azuread/#set-up-azure-ad-as-an-identity-provider) for Azure AD.
 
 {{<Aside type="note">}}
-- When you configure the IdP in the Zero Trust dashboard, be sure to select **Enable group membership change reauthentication**. 
-- In Azure AD, be sure to add your risky users security group to the SCIM enterprise application.
-
+- When you configure the IdP in the Zero Trust dashboard, be sure to select **Enable group membership change reauthentication**.
+- Save the **Application (client) ID**, **Directory (tenant) ID**, and **Client secret** as you will need them again in a later step.
 {{</Aside>}}
+
+## 2. Add Azure AD API permissions
+
+Once the base IdP integration is tested and working, enable additional permissions that will allow a script to create and update risky user groups in Azure AD:
+
+1. In Azure Active Directory, go to **App registrations**.
+
+2. Select the application you created for the IdP integration.
+
+3. Navigate to **API permissions** and select **Add a permission**.
+
+4. Select **Microsoft Graph**.
+
+5. Select **Application permissions** and add the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
+
+    - `IdentityRiskyUser.ReadAll`
+    - `Directory.ReadWriteAll`
+    - `Group.Create`
+    - `Group.ReadAll`
+    - `GroupMember.ReadAll`
+    - `GroupMember.ReadWriteAll`
+
+6. Select **Grant admin consent**.
+
+You will see the list of enabled permissions.
+
+![API permissions in Azure AD](/cloudflare-one/static/documentation/identity/azure/risky-users-permissions.png)
+
+## 3. Add risky users to Azure AD group
+
+Next, configure an automated script that will populate an Azure AD security group with risky users.
+
+To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can adapt our example for another tool such as [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview).
+
+1. Open a terminal and clone our example project.
+
+    ```sh
+    $ wrangler generate risky-users https://github.com/cloudflare/<repo-name>
+    ```
+
+2. Navigate to the project directory.
+
+    ```sh
+    cd risky-users
+    ```
+
+3. Modify `wrangler.toml` to include the following values:
+    - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
+    - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+    - `<CLIENT_ID>`: your **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+
+    ```txt
+    ---
+    filename: wrangler.toml
+    ---
+    name = "risky-users"
+    type = "javascript"
+
+    account_id = "<ACCOUNT_ID>"
+    workers_dev = false
+    route = ""
+    zone_id = ""
+    compatibility_date = "2022-05-16"
+
+    [vars]
+    AZURE_AD_TENANT_ID="<TENANT-ID>"
+    AZURE_AD_CLIENT_ID="<CLIENT-ID>"
+
+    [triggers]
+    crons = ["* * * * *"]
+    ```
+
+{{<Aside type="note">}}
+The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/triggers/cron-triggers/#supported-cron-expressions) about supported cron expressions.
+{{</Aside>}}
+
+4. Publish the Worker to your Workers account.
+
+    ```sh
+    $ wrangler publish
+    ```
+
+5. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
+
+    ```sh
+    $ wrangler secret put AZURE_AD_CLIENT_SECRET
+    ```
+
+    You will be prompted to input the secret’s value. Enter the **Client secret** obtained when [setting up AzureAD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+
+The Worker script will begin executing once per minute. To view realtime logs, run the following command and wait for the script to execute:
+```sh
+$ wrangler tail -f pretty
+```
+
+After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
+
+![Risky user groups in the Azure AD dashboard](/cloudflare-one/static/documentation/identity/azure/risky-users-groups.png)
+
+
+## 4. Synchronize risky user groups
+
+Next, synchronize Azure AD risky user groups with Cloudflare Access:
+
+1. [Enable SCIM synchronization](/cloudflare-one/identity/idp-integration/azuread/#synchronize-users-and-groups).
+
+2. In Azure AD, assign the following groups to your SCIM enterprise application:
+    - `IdentityProtection-RiskyUser-RiskLevel-high`
+    - `IdentityProtection-RiskyUser-RiskLevel-medium`
+    - `IdentityProtection-RiskyUser-RiskLevel-low`
+
+Cloudflare Access will now synchronize changes in group membership with Azure AD. You can verify the synchronization status on the SCIM application's **Provisioning** page.
 
 ## 5. Create a browser isolation policy
 
-Once the SCIM integration is complete, the risky users group will appear in the Gateway [HTTP policy builder](/cloudflare-one/policies/filtering/http-policies/) when you choose the _User Group Names_ selector.
+Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/filtering/http-policies/) to isolate traffic for risky user groups.
 
-For example, you can create the following [isolation policy](/cloudflare-one/policies/browser-isolation/isolation-policies/):
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Policies** > **HTTP**.
 
-| Selector | Operator | Value |
-| - | - | - |
-| Domain | In | `app1.example.com`, `app2.example.com` |
-| User Group Names | in | `Example risky users group` |
+2. Select **Create a policy**.
 
-|Action|
-|------ |
-| Isolate |
+3. Build an [Isolate policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
 
-![HTTP policy shown in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/risky-users-policy.png)
+    |Policy name|
+    |----|
+    | Isolate risky users|
 
-All members of `Example risky users group` in Azure AD will be isolated when they visit `app1.example.com` and `app2.example.com`. Cloudflare Access will automatically synchronize changes in group membership with Azure AD.
+    | Selector | Operator | Value |
+    | - | - | - |
+    | Domain | In | `app1.example.com`, `app2.example.com` |
+    | User Group Names | in | `IdentityProtection-RiskyUser-RiskLevel-high` |
+
+    |Action|
+    |------ |
+    | Isolate |
 
 To test the policy, refer to the Microsoft documentation for [simulating risky detections](https://learn.microsoft.com/en-us/azure/active-directory/identity-protection/howto-identity-protection-simulate-risk).
