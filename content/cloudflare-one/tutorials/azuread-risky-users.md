@@ -62,24 +62,32 @@ You will see the list of enabled permissions.
 
 Next, configure an automated script that will populate an Azure AD security group with risky users.
 
-To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can adapt our example for another tool such as [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview).
+To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can implement the script using [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview) or any other tool.
 
-1. Open a terminal and clone our example project.
+1. [Install](/workers/get-started/guide/#1-install-wrangler-workers-cli) `wrangler`.
+
+2. Authenticate `wrangler`.
+
+    ```sh
+    $ wrangler login
+    ```
+
+3. Open a terminal and clone our example project.
 
     ```sh
     $ wrangler generate risky-users https://github.com/cloudflare/<repo-name>
     ```
 
-2. Navigate to the project directory.
+4. Navigate to the project directory.
 
     ```sh
     cd risky-users
     ```
 
-3. Modify `wrangler.toml` to include the following values:
+5. Modify `wrangler.toml` to include the following values:
     - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
     - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
-    - `<CLIENT_ID>`: your **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
+    - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
     ```txt
     ---
@@ -106,13 +114,13 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/triggers/cron-triggers/#supported-cron-expressions) about supported cron expressions.
 {{</Aside>}}
 
-4. Publish the Worker to your Workers account.
+6. Publish the Worker to your Workers account.
 
     ```sh
     $ wrangler publish
     ```
 
-5. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
+7. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
 
     ```sh
     $ wrangler secret put AZURE_AD_CLIENT_SECRET
@@ -128,7 +136,6 @@ $ wrangler tail -f pretty
 After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
 
 ![Risky user groups in the Azure AD dashboard](/cloudflare-one/static/documentation/identity/azure/risky-users-groups.png)
-
 
 ## 4. Synchronize risky user groups
 
