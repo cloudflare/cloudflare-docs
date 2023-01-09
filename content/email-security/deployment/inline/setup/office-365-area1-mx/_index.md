@@ -11,7 +11,7 @@ meta:
 
 ![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/inline-setup/o365-area1-mx/office365-mx.png)
 
-In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps.
+In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to step 6](#6-execute-enable-organizationcustomization-if-required).
 
 ## Prerequisites
 
@@ -267,12 +267,11 @@ MX Priority | Host
 `10` | `mailstream-west.mxrecord.io`
 `20` | `mailstream-central.mxrecord.mx`
 
-
-Once the MX records have been updated with the new MX records, delete your old MX records and leave only the ones above. DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour or follow the TTL as described in the [Prerequisites section](#prerequisites).
+Once the MX records have been updated with the new MX records, delete your old MX records and leave only the ones above. DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
 ### Secure Office 365 from MX records bypass (recommended)
 
-One method of attack is to lookup old MX records and send phishing emails directly to the mail server. To secure the email flow, you will want to enforce that inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encription. This step is optional but recommended.
+One method of DNS attacks is to search for old MX records and send phishing emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encryption. This step is optional but recommended.
 
 {{<Aside type="warning" header="Important">}}
 This step should not be performed until 24 hours after all domains (excluding your `<on_microsoft.com>` domain) in your Office 365 organization have been onboarded to Area 1, and Area 1 is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
@@ -289,7 +288,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 4. Set the following options for each domain:
     - **Domain**: `<YOUR_DOMAIN>`
     - **Configured as**: `MX Records`
-    - **Forwarding to**: This should match the expected MX for each domain in Office 365 at [https://admin.microsoft.com/#/Domains/](https://admin.microsoft.com/#/Domains/)
+    - **Forwarding to**: This should match the expected MX record for each domain in the [Domains section](https://admin.microsoft.com/#/Domains/) of Office 365
     - **IP Restrictions**: Leave empty
     - **Outbound TLS**: `Forward all messages over TLS`
     - **Quarantine Policy**: Varies by deployment.
@@ -305,11 +304,25 @@ This step should not be performed until 24 hours after all domains (excluding yo
     - **Name** - `Secure O365 Inbound`
     - **Description** - `Only accept inbound email from Area 1`
 7. Select **Next**.
-8. Leave the first option selected - **Verify that the sender domain matches one of the following domains**.
-9. Enter `*` in the text field, and select `+`.
+8. Make sure **By Verifying that the sender domain matches one of the following domains** is selected.
+9. Enter `*` in the text field, and select **+**.
+
+    <div class="large-img">
+
+    ![Enter an asterisk in the text box, and select the plus button](/email-security/static/inline-setup/o365-area1-mx/step9-create-conector.png)
+
+    </div>
+
 10. Select **Next**.
-11. Select **Reject email messages if they aren’t sent from within this IP address range**.
-12. Enter all of the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+11. Make sure **Reject email messages if they aren't sent over TLS** is selected.
+12. Still in the same screen, select **Reject email messages if they aren’t sent from within this IP address range**, and enter all the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+
+    <div class="large-img">
+
+    ![Enter all the egress IPs for Office 365](/email-security/static/inline-setup/o365-area1-mx/step12-egress-ips.png)
+
+    </div>
+
 13. Select **Next**.
 14. Review your settings and select **Create connector**.
 
