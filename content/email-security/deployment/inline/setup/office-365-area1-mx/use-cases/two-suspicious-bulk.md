@@ -152,4 +152,4 @@ In this tutorial, you will learn XXX XXXX CXXCXCXCVXXX XXXX CXXCXCXCVXXX XXXX CX
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
+14. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
