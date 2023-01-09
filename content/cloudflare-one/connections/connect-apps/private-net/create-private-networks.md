@@ -42,4 +42,4 @@ Optionally, you can create [Gateway network policies](/cloudflare-one/policies/f
 
 ## Availability
 
-WARP-to-WARP is currently in closed beta. To get started, sign-up on our [waitlist](https://www.cloudflare.com/lp/warp-peering/) to receive early access. If you are interested in learning more about how it works and what else we will be launching in the future, check out the [Cloudflare Blog](https://blog.cloudflare.com/warp-to-warp/).
+WARP-to-WARP is currently in closed beta. To get started, sign-up on our [waitlist](https://www.cloudflare.com/lp/warp-peering/) to receive early access. For more information about the feature, refer to the [Cloudflare blog](https://blog.cloudflare.com/warp-to-warp/).
