@@ -236,13 +236,15 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 | `BULK`       | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder. |
 | `SPOOF`      | If `SPOOF` detections are clean and well managed in the Allow List, emails should always be quarantined. If the `SPOOF` detections are not clean, they should be treated the same as `SPAM` if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. |
 
-Within Office 365 (O365) there are various options, as well as limitations, as to how quarantine email messages. The primary options will be broken down into use cases you may use for yourself as examples. The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/). Use of the O365 quarantine is an option for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases this guide will cover.
+Within Office 365 (O365) there are various options, as well as limitations, as to how quarantine email messages. Refer to [Office 365 use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for a break down of the primary options as use cases you may use for yourself as examples. 
 
-- Use Case 1: Deliver to Junk Email folder and Admin Quarantine in Area 1 (Recommended)
-- Use Case 2: Deliver to Junk Email folder and User Managed Quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 product)
-- Use Case 3: Deliver to Junk Email folder and User Quarantine requiring Admin Release
-- Use Case 4: User Managed Quarantine and User Quarantine requiring Admin Release
-- Use Case 5: Deliver to Junk Email dolder and Admin Managed Host Quarantine
+The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 use cases will cover:
+
+- **Use case 1**: Deliver emails to the Junk Email folder in O365 and Admin Quarantine in Area 1 (Recommended)
+- **Use case 2**: Deliver emails to Junk Email folder and User Managed Quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 dashboard)
+- **Use case 3**: Deliver emails to Junk Email folder and User Quarantine requiring Admin Release
+- **Use case 4**: User Managed Quarantine and User Quarantine requiring Admin Release
+- **Use case 5**: Deliver to Junk Email dolder and Admin Managed Host Quarantine
 
 ## 5. Update your domain MX records
 
