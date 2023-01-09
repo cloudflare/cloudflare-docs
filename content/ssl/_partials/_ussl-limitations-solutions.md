@@ -11,4 +11,4 @@ To prevent insecure connections on a multi-level subdomain, do one of the follow
 - Order an [Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) covering the subdomain.
 - Upload a [Custom Certificate](/ssl/edge-certificates/custom-certificates/) covering the subdomain.
 
-If none of these solutions works, you could also remove the multi-level subdomain.
+If none of these solutions work, you could also remove the multi-level subdomain.
