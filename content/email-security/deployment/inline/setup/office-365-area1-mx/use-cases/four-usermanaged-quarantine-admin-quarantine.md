@@ -3,7 +3,7 @@ title: O365 User Managed quarantine and Administrative quarantine
 pcx_content_type: tutorial
 weight: 4
 meta:
-    title: Use Case 4 - Deliver Spam and Spoof messages to the User Managed quarantine, and Malicious messages to the Administrative quarantine (requires administrator release)
+    title: Use case 4 - Deliver Spam and Spoof messages to the User Managed quarantine, and Malicious messages to the Administrative quarantine (requires administrator release)
 ---
 
 # Use case 4: Deliver emails to the User Managed quarantine and Administrative quarantine

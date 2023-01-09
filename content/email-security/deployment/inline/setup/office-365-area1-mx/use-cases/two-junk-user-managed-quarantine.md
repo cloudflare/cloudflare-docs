@@ -3,7 +3,7 @@ title: O365 Junk Email and User Managed quarantine
 pcx_content_type: tutorial
 weight: 2
 meta:
-    title: Use Case 2 - Deliver Suspicious and Bulk messages to the user’s Junk Folder, and Spam and Spoof messages to User Managed quarantine
+    title: Use case 2 - Deliver Suspicious and Bulk messages to the user’s Junk Folder, and Spam and Spoof messages to User Managed quarantine
 ---
 
 # Use case 2: Deliver emails to Junk Email folder and User Managed Quarantine
