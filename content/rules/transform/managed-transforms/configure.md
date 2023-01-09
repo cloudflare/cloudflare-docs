@@ -3,6 +3,8 @@ title: Configure Managed Transforms
 pcx_content_type: how-to
 weight: 1
 layout: single
+meta:
+    description: Learn how to configure Managed Transforms.
 ---
 
 # Configure Managed Transforms
@@ -96,8 +98,6 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/managed_headers" \
 </div>
 </details>
 
-
-
 **2. Change the status of Managed Transforms**
 
 Change the status of the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) using the [Update status of Managed Transforms](https://developers.cloudflare.com/api/operations/managed-transforms-update-status-of-managed-transforms) operation.
@@ -189,7 +189,5 @@ The response will include all the available Managed Transforms and their new sta
 </div>
 </details>
 
-
 {{</tab>}}
 {{</tabs>}}
-
