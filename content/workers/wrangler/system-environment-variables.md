@@ -4,7 +4,7 @@ title: System Environment Variables
 weight: 5
 ---
 
-## System Environment Variables
+# System Environment Variables
 
 System Environment Variables are local environment variables that can change Wrangler's behavior. There are three ways to set System Environment Variables:
 
@@ -14,7 +14,7 @@ System Environment Variables are local environment variables that can change Wra
 
 3. Set the values in your shell environment. For example, if you are using Z shell, adding `export CLOUDFLARE_API_TOKEN=...` to your `~/.zshrc` file will set this token as part of your shell configuration.
 
-### Supported environment variables
+## Supported environment variables
 
 Wrangler supports the following environment variables:
 
@@ -42,7 +42,7 @@ Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_API_BASE_URL` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The default value is https://api.cloudflare.com/client/v4.
+  - The default value is `"https://api.cloudflare.com/client/v4"`.
 
 - `WRANGLER_LOG` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -50,7 +50,7 @@ Wrangler supports the following environment variables:
 
 {{</definitions>}}
 
-### Example `.env` file
+## Example `.env` file
 
 The following is an example `.env` file:
 
@@ -63,7 +63,7 @@ CLOUDFLARE_API_BASE_URL=https://api.cloudflare.com/client/v4
 WRANGLER_LOG=debug
 ```
 
-### Deprecated global variables
+## Deprecated global variables
 
 The following variables are deprecated. Use the new variables listed above to prevent any issues or unwanted messaging.
 

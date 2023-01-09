@@ -18,7 +18,7 @@ Follow the steps below to configure the execution of a managed ruleset with two 
 
 Tag overrides take precedence over ruleset overrides. Only the rules with the specified tag are enabled, and all other rules are disabled.
 
-# Example 1
+## Example 1
 
 This example uses the [Update ruleset](/ruleset-engine/rulesets-api/update/) operation to deploy the Cloudflare Managed Ruleset to a phase with only Joomla rules enabled. The `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 
@@ -100,7 +100,7 @@ curl -X PUT \
 
 You can add more than one category override to a rule.
 
-# Example 2
+## Example 2
 
 This example uses a `PUT` request to add two overrides to the rule that executes a managed ruleset (`<MANAGED_RULESET_ID>`) in the `http_request_firewall_managed` phase. Note that the `name`, `kind`, and `phase` fields are omitted from the request because they are immutable.
 

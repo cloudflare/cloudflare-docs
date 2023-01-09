@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Devices
 weight: 6
+meta:
+    description: Review frequently asked questions about devices in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -59,9 +61,9 @@ Some countries explicitly block the use of VPN or VPN-like software that intenti
 
 Running VPNs or firewalls alongside the WARP client may interfere with some of its functionalities. Please refer to the following documentation on how to use WARP alongside a VPN, or on how to exclude traffic from the WARP client:
 
-[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/#use-warp-alongside-a-vpn)
+[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#use-warp-alongside-a-vpn)
 
-[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/)
+[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/)
 
 The most common places we see interference with WARP from these products are:
 
@@ -69,7 +71,7 @@ The most common places we see interference with WARP from these products are:
 
 - **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
 
-- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
 
 ### As a last resort, does WARP or your configuration work on a clean machine?
 

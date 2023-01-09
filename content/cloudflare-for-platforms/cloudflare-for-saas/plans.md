@@ -5,6 +5,7 @@ weight: 1
 layout: list
 meta:
   title: Plans — Cloudflare for SaaS
+  description: Learn what features and limits are part of various Cloudflare plans.
 ---
 
 # Plans — Cloudflare for SaaS

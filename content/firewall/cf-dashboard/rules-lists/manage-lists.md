@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Work with lists
 weight: 1
+meta:
+    description: Learn how to create and manage IP Lists in the Cloudflare dashboard.
 ---
 
 # Work with lists

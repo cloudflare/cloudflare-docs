@@ -41,3 +41,7 @@ To use Email Routing with Email Workers there are three steps involved:
 The route, or email address, bound to the Worker forwards emails to your Email Worker. The logic in the Worker will then decide if the email is forwarded to its final destination or dropped, and what further actions (if any) will be applied. 
 
 For example, say that you create an allowlist Email Worker and bind it to a `hello@my-company.com` route. This route will be the email address you share with the world, to make sure that only email addresses on your allowlist are forwarded to your destination address. All other emails will be dropped.
+
+## Limits
+
+If you encounter any allocation errors while using Email Workers, refer to [Known limitations](/email-routing/known-limitations/#email-workers-size-limits) for more information.

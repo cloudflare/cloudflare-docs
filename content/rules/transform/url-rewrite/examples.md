@@ -15,6 +15,10 @@ The following examples illustrate how to rewrite URLs with Transform Rules:
 - [Rewrite path with several URL segments to a different URL segment](#rewrite-path-with-several-url-segments-to-a-different-url-segment)
 - [Rewrite blog archive URLs to support a new URL format](#rewrite-blog-archive-urls-to-support-a-new-url-format)
 
+---
+
+## Examples
+
 ### Rewrite path of welcome page for visitors in specific countries
 
 To have a welcome page in two languages, create two Rewrite URL Rules with a static rewrite of the path component:

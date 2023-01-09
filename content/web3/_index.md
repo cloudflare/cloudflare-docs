@@ -3,6 +3,8 @@ title: Overview
 layout: overview
 pcx_content_type: overview
 weight: 1
+meta:
+    description: Cloudflare offers gateways to various networks to help Web3 developers do what they do best, develop applications without having to worry about running infrastructure.
 ---
 
 # Cloudflare Web3 docs

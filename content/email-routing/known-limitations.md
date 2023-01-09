@@ -8,6 +8,14 @@ weight: 6
 
 Below, you will find information regarding the current limitations for Email Routing.
 
+## Email Workers size limits
+
+When you process emails with Email Workers and you are on [Workers’ free pricing tier](/workers/platform/pricing/) you might encounter an allocation error. This may happen due to the size of the emails you are processing and / or the complexity of your Email Worker. Refer to [Workers limits](/workers/platform/limits/#worker-limits) for more information.
+
+You can use the [log functionality for Workers](/workers/learning/logging-workers/) to look for messages related to CPU limits (such as `EXCEEDED_CPU`) and troubleshoot any issues regarding allocation errors.
+
+If you encounter these error messages frequently, consider upgrading your Workers plan to [Workers Unbound](/workers/platform/limits/#unbound-usage-model) for higher usage limits.
+
 ## Email address internationalization (EAI)
 
 Email Routing [does not support internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports[Internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name). 

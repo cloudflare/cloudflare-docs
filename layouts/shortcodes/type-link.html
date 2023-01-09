@@ -8,7 +8,7 @@
 {{- else if strings.HasPrefix $href "#" -}}
 <a href="{{ $href }}" class="DocsMarkdown--link">
 {{- else -}}
-{{ $url := printf "%s%s" $section $href }}
+{{ $url := path.Join $section $href }}
 <a href="{{ $url }}" class="DocsMarkdown--link">
 {{- end -}}
   <span class="DocsMarkdown--link-content">

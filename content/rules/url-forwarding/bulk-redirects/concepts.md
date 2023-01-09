@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 3
 meta:
   title: Bulk Redirect concepts
+  description: Bulk Redirects work through a combination of URL redirects, a Bulk Redirect list, and a Bulk Redirect rule.
 ---
 
 # Bulk Redirect concepts

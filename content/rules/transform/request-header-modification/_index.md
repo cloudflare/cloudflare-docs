@@ -2,6 +2,7 @@
 title: Modify request header
 pcx_content_type: concept
 weight: 2
+layout: single
 meta:
   title: HTTP Request Header Modification Rules
 ---

@@ -21,7 +21,7 @@ To complete the following procedure, you will need:
 
 ## 1. Install Terraform
 
-Refer to the [Terraform installation guide](https://learn.hashicorp.com/tutorials/terraform/install-cli) for your operating system.
+Refer to the [Terraform installation guide](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) for your operating system.
 
 ## 2. Install the gcloud CLI
 
@@ -91,14 +91,14 @@ The following configuration will modify settings in your Cloudflare account.
     resource "random_id" "tunnel_secret" {
       byte_length = 35
     }
-    
+
     # Creates a new locally-managed tunnel for the GCP VM.
     resource "cloudflare_argo_tunnel" "auto_tunnel" {
       account_id = var.cloudflare_account_id
       name       = "Terraform GCP tunnel"
       secret     = random_id.tunnel_secret.b64_std
     }
-    
+
     # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
     resource "cloudflare_record" "http_app" {
       zone_id = var.cloudflare_zone_id
@@ -107,7 +107,7 @@ The following configuration will modify settings in your Cloudflare account.
       type    = "CNAME"
       proxied = true
     }
-    
+
     # Creates an Access application to control who can connect.
     resource "cloudflare_access_application" "http_app" {
       zone_id          = var.cloudflare_zone_id
@@ -115,7 +115,7 @@ The following configuration will modify settings in your Cloudflare account.
       domain           = "http_app.${var.cloudflare_zone}"
       session_duration = "1h"
     }
-    
+
     # Creates an Access policy for the application.
     resource "cloudflare_access_policy" "http_policy" {
       application_id = cloudflare_access_application.http_app.id
@@ -152,7 +152,7 @@ The following configuration defines the specifications for the GCP virtual machi
       family  = "ubuntu-minimal-2004-lts"
       project = "ubuntu-os-cloud"
     }
-    
+
     # Sets up a GCP VM instance.
     resource "google_compute_instance" "origin" {
       name         = "test"
@@ -164,7 +164,7 @@ The following configuration defines the specifications for the GCP virtual machi
           image = data.google_compute_image.image.self_link
         }
       }
-    
+
       network_interface {
         network = "default"
         access_config {
@@ -251,7 +251,7 @@ The following script will install `cloudflared`, create a permissions and config
     credentials-file: /etc/cloudflared/cert.json
     logfile: /var/log/cloudflared.log
     loglevel: info
-    
+
     ingress:
 
       - hostname: http_app.${web_zone}

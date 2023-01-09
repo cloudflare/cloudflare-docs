@@ -5383,3 +5383,11 @@ pre {
  .mermaid {
   background: #f5f5f5 !important;
 }
+
+.RSS svg {
+  opacity: .7;
+}
+
+[theme=dark] .RSS svg {
+  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+}

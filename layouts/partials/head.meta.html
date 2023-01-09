@@ -4,6 +4,14 @@
 
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
+{{ $raw_summary := index (split (index (split .Context.Content "</p>") 0) "<p>") 1 | plainify | htmlUnescape | chomp }}
+{{ $summary := replaceRE `External link icon\s+Open external link\s?` "" $raw_summary }}
+{{- $description:= truncate 160 (default $META.description (default $summary .Context.Params.meta.description)) -}}
+
+{{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
+{{- $contentPath :=  replaceRE `\/$` "" .Context.RelPermalink -}}
+{{- $folderPlaceholder := "" -}}
+{{ $rssFeed := "" }}
 
 <meta charset="utf-8">
 <title>{{ $title }}</title>
@@ -19,23 +27,40 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#f38020"/>
 
-<meta name="description" content="{{ $META.description }}" />
+<meta name="description" content="{{ $description }}" />
 
 <meta property="og:image" content="{{ $META.image | absURL }}"/>
 <meta property="og:title" content="{{ $title }}"/>
-<meta property="og:description" content="{{ $META.description }}"/>
+<meta property="og:description" content="{{ $description }}"/>
 <meta property="og:type" content="website"/>
 
 <meta name="twitter:title" content="{{ $title }}"/>
 <meta name="twitter:image" content="{{ $META.image | absURL }}"/>
-<meta name="twitter:description" content="{{ $META.description }}"/>
+<meta name="twitter:description" content="{{ $description }}"/>
 <meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 
 {{- with .Context.Params.pcx_content_type -}}
 <meta name="pcx_content_type" content= "{{ . }}" />
 {{- end -}}
+{{ with $.Context.Params.rss -}}
 
+  {{ if eq . "folder" }}
+
+  {{ $folderPlaceholder = ".atom" }}
+
+  {{ else if eq . "file" }}
+
+  {{ $folderPlaceholder = ".md.atom" }}
+
+  {{ end }}
+
+  {{ if or (eq . "folder") (eq . "file") }}
+
+ {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
+ {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
+{{ end }}
+{{ end }}
 <link rel="icon" href="/favicon-32x32.png"/>
 <link rel="canonical" href="{{ .Context.Permalink }}"/>
 <link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
@@ -49,7 +74,6 @@
 <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
 <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
 <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
-
 {{- $coveo := index $.Context.Site.Params "coveo" -}}
 {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
   <link rel="stylesheet preconnect" href="/search-coveo.css"/>

@@ -5,6 +5,8 @@ title: Response
 
 # Response
 
+The `Response` interface represents an HTTP response and is part of the Fetch API.
+
 ## Constructor
 
 ```js
