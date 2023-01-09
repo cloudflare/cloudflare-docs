@@ -12,6 +12,7 @@ meta:
 2. Go to **Rules** > **Configuration Rules**.
 3. Select **Create configuration rule**.
 4. Enter a descriptive name for the rule in **Rule name**.
-5. Under **When incoming requests match**, define the [rule expression](/firewall/cf-dashboard/edit-expressions/).
-6. Under **Then the settings are**, define the [configuration settings](/rules/configuration-rules/settings/) you wish to change for requests matching the rule expression.
-7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+5. Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
+6. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit rule expressions](/firewall/cf-dashboard/edit-expressions/).
+7. Under **Then the settings are**, define the [configuration settings](/rules/configuration-rules/settings/) you wish to change for requests matching the rule expression.
+8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
