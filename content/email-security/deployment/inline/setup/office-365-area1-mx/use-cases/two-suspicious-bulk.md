@@ -148,3 +148,8 @@ In this tutorial, you will learn XXX XXXX CXXCXCXCVXXX XXXX CXXCXCXCVXXX XXXX CX
     ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-user-quarantine.png)
 
     </div>
+
+11. Select **Next**.
+12. You can use the default values on this screen. Select **Next**.
+13. Review your settings and select **Finish** > **Done**.
+14. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
