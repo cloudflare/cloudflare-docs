@@ -21,6 +21,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 - Azure AD Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
 - [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) enabled on your devices
+- (Recommended) [`wrangler`](/workers/get-started/guide/#1-install-wrangler-workers-cli) installation
 
 ## 1. Set up Azure AD as an identity provider
 
@@ -64,27 +65,25 @@ Next, configure an automated script that will populate an Azure AD security grou
 
 To get started quickly, deploy our example Cloudflare Workers script by following the step-by-step instructions below. Alternatively, you can implement the script using [Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview) or any other tool.
 
-1. [Install](/workers/get-started/guide/#1-install-wrangler-workers-cli) `wrangler`.
-
-2. Authenticate `wrangler`.
+1. Authenticate `wrangler`.
 
     ```sh
     $ wrangler login
     ```
 
-3. Open a terminal and clone our example project.
+2. Open a terminal and clone our example project.
 
     ```sh
     $ wrangler generate risky-users https://github.com/cloudflare/<repo-name>
     ```
 
-4. Navigate to the project directory.
+3. Navigate to the project directory.
 
     ```sh
     cd risky-users
     ```
 
-5. Modify `wrangler.toml` to include the following values:
+4. Modify `wrangler.toml` to include the following values:
     - `<ACCOUNT_ID>`: your Cloudflare account ID, shown in the [Cloudflare dashboard](https://dash.cloudflare.com/) in the **Workers** tab.
     - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
     - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
@@ -114,13 +113,13 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example schedules the script to run every minute. [Learn more](/workers/platform/triggers/cron-triggers/#supported-cron-expressions) about supported cron expressions.
 {{</Aside>}}
 
-6. Publish the Worker to your Workers account.
+5. Publish the Worker to your Workers account.
 
     ```sh
     $ wrangler publish
     ```
 
-7. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
+6. Create a secret variable named `AZURE_AD_CLIENT_SECRET`.
 
     ```sh
     $ wrangler secret put AZURE_AD_CLIENT_SECRET
