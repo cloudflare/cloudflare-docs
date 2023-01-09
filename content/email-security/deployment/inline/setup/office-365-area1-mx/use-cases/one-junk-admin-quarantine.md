@@ -1,5 +1,5 @@
 ---
-title: O365 Junk Email and Area 1 Admin Quarantine
+title: O365 Junk Email and Area 1 Admin quarantine
 pcx_content_type: tutorial
 weight: 1
 meta:
