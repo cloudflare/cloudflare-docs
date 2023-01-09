@@ -36,7 +36,8 @@ If you need to connect to your origin using a non-HTTP protocol (SSH, FTP, SMTP)
 
 #### Pending domains
 
-When you onboard your domain onto Cloudflare, Cloudflare protection will be in a [pending state](/dns/zone-setups/reference/domain-status/) until we can verify ownership. This could take up to 24 hours to complete.
+{{<render file="_onboard-warning.md">}}
+<br/>
 
 This means that DNS records - even those set to [proxy traffic through Cloudflare](#proxied-records) -- will be [DNS-only](#dns-only-records) until your zone has been activated and any requests to your DNS records will return your origin server's IP address.
 

@@ -1,31 +1,14 @@
 ---
-pcx_content_type: concept
-title: Total TLS
-weight: 14
+pcx_content_type: how-to
+title: Enable
+weight: 1
+meta:
+    title: Enable Total TLS
 ---
 
-# Total TLS
+# Enable Total TLS
 
-{{<render file="_total-tls.md">}}
-<br>
-
-When issued, these certificates will have a type of **Advanced - Total TLS**.
-
-When you [enable](#enable-total-tls) Total TLS, Cloudflare will also show a warning on proxied DNS records that are not covered by a TLS certificate.
-
-## Availability
-
-Total TLS is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).
-  
-{{<Aside type="warning">}}
-
-Because Total TLS does not issue certificates for any subdomain used by [Cloudflare Load Balancing](/load-balancing/), we recommend using other types of certificates to avoid any potential downtime.
-
-{{</Aside>}}
-
-## Enable Total TLS
-
-To enable Total TLS:
+To enable Total TLS - which issue individual certificates for every proxied hostname - follow these instructions:
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
