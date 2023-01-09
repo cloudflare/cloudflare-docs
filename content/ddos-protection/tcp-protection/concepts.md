@@ -15,13 +15,13 @@ Prefixes added to Advanced TCP Protection must be one of the following:
 * A prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
 * A subset of a prefix [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/).
 
-You cannot add a prefix (or a subset of a prefix) that you have not onboarded to Magic Transit or whose status is still _Unapproved_. Contact your account team to get help with prefix approvals.
+You can add up to 8,192 prefixes. You cannot add a prefix (or a subset of a prefix) that you have not onboarded to Magic Transit or whose status is still _Unapproved_. Contact your account team to get help with prefix approvals.
 
 ## Allowlist
 
 The Advanced TCP Protection allowlist is a list of prefixes that will bypass all configured Advanced TCP Protection rules.
 
-For example, you could add prefixes used only by partners of your company to the allowlist so that they are exempt from packet inspection and mitigation actions performed by Advanced TCP Protection.
+For example, you could add prefixes used only by partners of your company to the allowlist so that they are exempt from packet inspection and mitigation actions performed by Advanced TCP Protection. You can add up to 8,192 prefixes to the allowlists.
 
 {{<render file="_allowlist-ip-spoofing.md">}}
 
