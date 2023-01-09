@@ -33,7 +33,7 @@ export const OWNERS: Record<string, string[]> = {
   "load-balancing": ["patriciasantaana"],
   logs: ["angelampcosta"],
   "magic-firewall": ["marciocloudflare"],
-  "magic-network-monitoring": [marciocloudflare],
+  "magic-network-monitoring": ["marciocloudflare"],
   "magic-transit": ["marciocloudflare"],
   "magic-wan": ["marciocloudflare"],
   "network-error-logging": ["dcpena"],
