@@ -13,7 +13,7 @@ meta:
 Maximize application performance and availability
 {{</description>}}
 
-{{<plan type="add-on">}}
+{{<plan id="traffic.load_balancing.properties.availability.summary">}}
 
 Cloudflare Load Balancing distributes traffic across your servers, which reduces server strain and latency and improves the experience for end users.
 
