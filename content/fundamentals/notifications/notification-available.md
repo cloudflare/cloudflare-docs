@@ -892,7 +892,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>
@@ -917,7 +917,7 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Security Events](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>

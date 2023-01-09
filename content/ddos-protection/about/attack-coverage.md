@@ -9,7 +9,7 @@ meta:
 
 # DDoS attack coverage
 
-The [DDoS Attack Protection Managed Rulesets](/ddos-protection/managed-rulesets/) provide protection against a variety of DDoS attacks across L3/4 (layers 3/4) and L7 of the OSI model. Cloudflare constantly updates these Managed Rulesets to improve the attack coverage, increase the mitigation consistency, cover new and emerging threats, and ensure cost-efficient mitigations.
+The [DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/) provide protection against a variety of DDoS attacks across L3/4 (layers 3/4) and L7 of the OSI model. Cloudflare constantly updates these managed rulesets to improve the attack coverage, increase the mitigation consistency, cover new and emerging threats, and ensure cost-efficient mitigations.
 
 [Advanced TCP Protection](/ddos-protection/tcp-protection/), available to [Magic Transit](/magic-transit/) customers, provides additional protection against sophisticated TCP-based DDoS attacks.
 
@@ -31,7 +31,7 @@ The following table includes a sample of covered attack vectors:
 
 ## Getting additional DNS protection
 
-The Network-layer DDoS Attack Protection Managed Ruleset provides protection against some types of DNS attacks. For advanced DNS protection, consider the following options:
+The Network-layer DDoS Attack Protection managed ruleset provides protection against some types of DNS attacks. For advanced DNS protection, consider the following options:
 
 * Use Cloudflare as your authoritative DNS provider ([primary DNS](/dns/zone-setups/full-setup/) or [secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/)).
 * If you are running your own nameservers, use [DNS Firewall](/dns/dns-firewall/) to get additional protection against DNS attacks like random prefix attacks.

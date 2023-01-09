@@ -10,12 +10,12 @@ title: Filter DNS on home or office network
 
 You can use Cloudflare Gateway to filter and log DNS queries from any device in your network without installing client software.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a DNS filtering policy that secures a home or office network by blocking malicious hostnames
 - Review logs and events that occur on that network
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 15 minutes
 
@@ -53,8 +53,6 @@ The policy will block security threats for any DNS location in your Cloudflare Z
 ![Include Location](/cloudflare-one/static/secure-web-gateway/secure-dns-network/include-location.png)
 
 Finally, choose `Block` as the action and create the policy.
-
-![Block Action](/cloudflare-one/static/secure-web-gateway/secure-dns-network/block-action.png)
 
 The rule will appear in your DNS policies list.
 

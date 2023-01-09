@@ -9,7 +9,7 @@ title: Connect to Google Workspace through Access
 
 This tutorial covers how to configure Cloudflare Access as a single sign-on provider for your Google Workspace account.
 
-**⏲️ Time to complete:** 15 minutes
+**Time to complete:** 15 minutes
 
 ## 1. Create an application on the Zero Trust Dashboard
 

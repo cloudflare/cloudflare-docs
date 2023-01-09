@@ -24,7 +24,7 @@ The available skip options in custom rules are the following:
 
   - API action parameter: `phases`.
 
-  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [rate limiting rules](/waf/rate-limiting-rules/) and/or [WAF Managed Rulesets](/waf/managed-rulesets/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
+  - Skips the execution of one or more phases. Based on the phases you can skip, this option effectively allows you to skip [rate limiting rules](/waf/rate-limiting-rules/) and/or [WAF Managed Rules](/waf/managed-rules/). When skipping a phase, both the account and zone-level entry point rulesets of the phase will be skipped.
 
   - The phases you can skip are the following:
 
@@ -67,7 +67,7 @@ Currently, you cannot skip Bot Fight Mode or Super Bot Fight Mode. For more info
 
   - Dashboard option: **Log matching requests**.
   - API action parameter: `logging` > `enabled` (boolean, optional).
-  - When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Security Events](/waf/analytics/).
+  - When disabled, Cloudflare will not log any requests matching the current skip rule, and these requests will not appear in [Security Events](/waf/security-events/).
   - If you do not specify this option in the API, the default value is `true` for custom rules with the skip action (logs requests matching the skip rule).
 
 {{</definitions>}}

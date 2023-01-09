@@ -43,7 +43,7 @@ Enable Logpush to R2 via the dashboard.
 
 1.  Log in to the Cloudflare dashboard.
 
-2.  Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise account or domain you want to use with Logpush.
 
 3.  Go to **Analytics** > **Logs**.
 
@@ -57,7 +57,7 @@ Enable Logpush to R2 via the dashboard.
 
 8.  Enter the following destination information:
     - Bucket path, for example, `cloudflare-logs/http_requests/example.com`
-    - R2 access key id
+    - R2 access key ID
     - R2 secret access key
 
 9.  Click **Validate access**.
@@ -69,7 +69,7 @@ Enable Logpush to R2 via the dashboard.
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
 - **name** (optional) - Use your domain name as the job name.
-- **destination_conf** - A log destination consisting of an endpoint name, bucket name, access key id and secret key.
+- **destination_conf** - A log destination consisting of bucket path, account ID, R2 access key ID and R2 secret access key.
 
 {{<Aside type="note" header="Note">}}
 We recommend adding the `{DATE}` parameter in the `destination_conf` to separate your logs into daily subfolders.

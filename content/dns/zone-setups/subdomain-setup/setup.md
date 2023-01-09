@@ -48,7 +48,7 @@ If you have not yet created a DNS record covering your child domain in the paren
 
 1. [Add the child domain](/fundamentals/get-started/setup/add-site/) to the parent domain's Cloudflare account or another account.
 2. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
-3. Within the **DNS** settings of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records in the parent zone for the subdomain you want to delegate.
+3. Within the **DNS** > **Records** of the parent zone, [add](/dns/manage-dns-records/how-to/create-dns-records/) two `NS` records in the parent zone for the subdomain you want to delegate.
 
     For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
 
@@ -74,10 +74,10 @@ If you have already created a DNS record covering your child domain in the paren
 3. In the parent domain, make sure that you migrate over any settings ([Firewall rules](/firewall/), [Rules](/rules/), [Workers](/workers/), and more) that might be needed for the child domain.
 4. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains (if present).
 5. [Get the nameserver names](/dns/zone-setups/full-setup/setup/#get-nameserver-names) for the child domain. These will not be the same nameservers as the parent domain.
-6. Within the **DNS** settings of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records).
-7. Within the **DNS** settings of the parent zone, leave one address record and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
+6. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) all non-address records (meaning everything except for `A`, `AAAA`, and `CNAME` records).
+7. Within the **DNS** > **Records** of the parent zone, leave one address record and [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) the rest.
 8. Using the Cloudflare API, [send a `PATCH` request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-patch-dns-record) to change the type of the last address record to `NS` and its content to one of the child domain's nameserver names.
-7. Within the **DNS** settings of the parent zone, [create](/dns/manage-dns-records/how-to/create-dns-records/) the second `NS` record in the parent zone for the subdomain you want to delegate.
+7. Within the **DNS** > **Records** of the parent zone, [create](/dns/manage-dns-records/how-to/create-dns-records/) the second `NS` record in the parent zone for the subdomain you want to delegate.
 
     For example, if you delegated `www.example.com`, you might add the following records to `example.com`:
 
@@ -121,7 +121,7 @@ If you have already created a DNS record covering your child domain in the paren
 5. In the child domain, [order an advanced SSL certificate](/ssl/edge-certificates/advanced-certificate-manager/) that covers the child subdomain and any deeper subdomains.
 6. [Add the TXT verification record](/dns/zone-setups/partial-setup/setup/#step-2--verify-ownership-for-your-domain) at your authoritative DNS provider.
 7. Within a short period of time, the child domain should be active.
-8. Within the **DNS** settings of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the child domain or any of its deeper subdomains.
+8. Within the **DNS** > **Records** of the parent zone, [delete](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) any `A`, `AAAA`, or `CNAME` records referencing the child domain or any of its deeper subdomains.
 
 [^1]: Meaning that Cloudflare is your Authoritative DNS provider.
 [^2]: Meaning that another DNS provider - not Cloudflare - maintains your Authoritative DNS.

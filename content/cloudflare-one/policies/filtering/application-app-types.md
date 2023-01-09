@@ -49,7 +49,7 @@ Gateway automatically groups applications incompatible with TLS decryption into 
 Gateway periodically updates the _Do Not Inspect_ app type to include new applications. By creating this _Do Not Inspect_ HTTP policy and selecting all applications within the _Do Not Inspect_ app type, you will ensure that your _Do Not Inspect_ policy will apply to any new applications added to the app type.
 
 {{<Aside type="note">}}
-Instead of setting up a _Do Not Inspect_ policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/#add-the-certificate-to-applications).  Doing so will allow the application to function without losing visibility into your traffic.
+Instead of setting up a _Do Not Inspect_ policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications).  Doing so will allow the application to function without losing visibility into your traffic.
 {{</Aside>}}
 
 ## Office 365 integration
@@ -57,4 +57,4 @@ Instead of setting up a _Do Not Inspect_ policy for an application, you may be a
 Cloudflare Zero Trust allows you to perform one-click actions to accelerate Office 365 traffic. The following actions are available in the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) under **Settings** > **Network** > **Integrated Experiences**:
 
 - **Bypass decryption of Office 365 traffic** creates a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for all [Office 365 domains and IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). This policy also uses our own Cloudflare intelligence to determine which traffic belongs to Office 365.
-- **Directly route Office 365 traffic** creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). Office 365 network traffic will bypass WARP and Gateway.
+- **Directly route Office 365 traffic** creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). Office 365 network traffic will bypass WARP and Gateway.

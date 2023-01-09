@@ -100,6 +100,14 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        },
+        "crawl_interval": {
+          "title": "Crawl interval",
+          "summary": "All plans",
+          "free": "Every 30 days",
+          "pro": "Every 15 days",
+          "biz": "Every 5 days",
+          "ent": "Every 5 days"
         }
       }
     },
@@ -217,6 +225,20 @@
         }
       }
     },
+    "crawler_hints": {
+      "title": "Crawler Hints",
+      "link": "/cache/about/crawler-hints/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "csam": {
       "title": "CSAM Scanning Tool",
       "link": "https://support.cloudflare.com/hc/articles/360046106112",
@@ -323,6 +345,20 @@
           "title": "Availability",
           "summary": "All plans",
           "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "vary_for_images": {
+      "title": "Vary for images",
+      "link": "/cache/about/vary-for-images/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Pro or higher",
+          "free": "No",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -472,6 +508,72 @@
           "pro": "No",
           "biz": "Yes",
           "ent": "Yes"
+        }
+      }
+    },
+    "record_comments": {
+      "title": "DNS record comments",
+      "link": "/dns/manage-dns-records/reference/record-attributes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "character_limit": {
+          "title": "Character limit",
+          "free": 50,
+          "lite": 250,
+          "pro": 250,
+          "biz": 250,
+          "ent": 250
+        },
+        "number_per_record": {
+          "title": "Comments per record",
+          "free": 1,
+          "pro": 1,
+          "biz": 1,
+          "ent": 1
+        }
+      }
+    },
+    "record_tags": {
+      "title": "DNS record tags",
+      "link": "/dns/manage-dns-records/reference/record-attributes/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "free": "No",
+          "lite": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "character_limit": {
+          "title": "Name character limit<br/>(everything before the colon)",
+          "free": "N/A",
+          "lite": 32,
+          "pro": 32,
+          "biz": 32,
+          "ent": 32
+        },
+        "numeric_limit": {
+          "title": "Value character limit<br/>(everything after the colon)",
+          "free": "N/A",
+          "lite": 100,
+          "pro": 100,
+          "biz": 100,
+          "ent": 100
+        },
+        "tags_per_record": {
+          "title": "Tags per record",
+          "free": "N/A",
+          "lite": 20,
+          "pro": 20,
+          "biz": 20,
+          "ent": 20
         }
       }
     },
@@ -969,8 +1071,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_purchase": "Yes"
+          "ent": "Paid add-on"
         },
         "r_bot_fight_mode": {
           "title": "Bot Fight Mode",
@@ -1028,8 +1129,8 @@
       }
     },
     "firewall_analytics": {
-      "title": "Firewall analytics",
-      "link": "/waf/analytics/",
+      "title": "Security Events",
+      "link": "/waf/security-events/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1042,9 +1143,9 @@
         "dashboard_features": {
           "title": "Dashboard features",
           "free": "Activity log only",
-          "lite": "All except DoS",
-          "pro": "All except DoS",
-          "biz": "All except DoS",
+          "lite": "All",
+          "pro": "All",
+          "biz": "All",
           "ent": "All"
         },
         "historical_data": {
@@ -1067,13 +1168,6 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "z_l4_ddos": {
-          "title": "L4 DoS attacks mitigated",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Last 7 days"
         }
       }
     },
@@ -1172,9 +1266,9 @@
           "ent": "Yes"
         },
         "managed_rulesets": {
-          "title": "WAF Managed Rulesets",
+          "title": "WAF Managed Rules",
           "summary": "All paid plans",
-          "link": "/waf/managed-rulesets/",
+          "link": "/waf/managed-rules/",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",
@@ -1657,6 +1751,20 @@
         }
       }
     },
+    "railgun": {
+      "title": "Railgun",
+      "link": "/railgun/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "rocket_loader": {
       "title": "Rocket Loader",
       "link": "/fundamentals/speed/rocket-loader/",
@@ -1802,6 +1910,13 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
+        },
+        "email_recipients": {
+          "title": "Email Recipients",
+          "free": "All account members",
+          "pro": "All account members",
+          "biz": "Specified email addresses",
+          "ent": "Specified email addresses"
         }
       }
     },
@@ -1935,7 +2050,7 @@
           "ent": "Yes"
         },
         "selectable_ca": {
-          "title": "[Custom analytics](/ssl/reference/certificate-authorities/)",
+          "title": "[Selectable CA](/ssl/reference/certificate-authorities/)",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2063,7 +2178,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Yes"
+          "ent": "Yes<br/>(open beta)"
         }
       }
     },
@@ -2275,7 +2390,6 @@
     "waiting_room": {
       "title": "Waiting Room",
       "link": "/waiting-room/",
-      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2283,8 +2397,7 @@
           "free": "No",
           "pro": "No",
           "biz": "Yes",
-          "ent": "Yes",
-          "ent_plus": "Yes"
+          "ent": "Yes"
         },
         "b_rooms": {
           "title": "Number of rooms",
@@ -2292,8 +2405,7 @@
           "free": 0,
           "pro": 0,
           "biz": 1,
-          "ent": 1,
-          "ent_plus": "Custom"
+          "ent": "Custom"
         },
         "customized_templates": {
           "title": "Customized templates",
@@ -2301,8 +2413,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "queueing_methods": {
           "title": "Queueing methods",
@@ -2310,8 +2421,7 @@
           "free": "No",
           "pro": "No",
           "biz": "First In First Out (FIFO)",
-          "ent": "First In First Out (FIFO)",
-          "ent_plus": "All options"
+          "ent": "First In First Out (FIFO)<br/><br/><em>With add-on</em><br/>All options"
         },
         "disable_session_renewal": {
           "title": "Disable session renewal",
@@ -2319,8 +2429,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "json_response": {
           "title": "JSON-friendly response",
@@ -2328,8 +2437,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "scheduled_events": {
           "title": "Scheduled events",
@@ -2337,8 +2445,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         },
         "rules": {
           "title": "Waiting Room rules",
@@ -2346,8 +2453,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "No",
-          "ent_plus": "Yes"
+          "ent": "Paid add-on"
         }
       }
     }
@@ -2428,6 +2534,22 @@
           "ent": "1,000,000 HTTP requests"
         }
       }
+    },
+    "polygon": {
+      "title": "Polygon Gateways",
+      "link": "/web3/polygon-gateway/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
     }
   },
   "zaraz": {
@@ -2446,7 +2568,16 @@
         },
         "preview_mode": {
           "title": "Preview mode",
-          "link": "/zaraz/advanced/preview-mode/",
+          "link": "/zaraz/history/preview-mode/",
+          "summary": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "free": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "pro": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "biz": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
+          "ent": "Included with a [Workers Paid Plan](/workers/platform/pricing/)"
+        },
+        "history": {
+          "title": "History",
+          "link": "/zaraz/history/history/",
           "summary": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
           "free": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",
           "pro": "Included with a [Workers Paid Plan](/workers/platform/pricing/)",

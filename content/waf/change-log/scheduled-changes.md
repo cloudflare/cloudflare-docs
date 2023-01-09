@@ -23,23 +23,14 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2022-12-05</td>
-      <td>2022-12-12</td>
-      <td>Disabled</td>
-      <td>100554</td>
-      <td>...2aede3db</td>
-      <td>Openam - Remote Code Execution - CVE:CVE-2021-35464</td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2022-12-05</td>
-      <td>2022-12-12</td>
+      <td>2023-01-03</td>
+      <td>2023-01-09</td>
       <td>Block</td>
-      <td>100556</td>
-      <td>...2ab75038</td>
-      <td>Apache JXPath Library - Code Injection - CVE:CVE-2022-41852</td>
-      <td>N/A</td>
+      <td>100551BETA</td>
+      <td>...b604fb62</td>
+      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082, BETA</td>
+      <td>This detection will replace 100551 in legacy WAF and ...e09c1a1e in new WAF</td>
     </tr>
-  </tbody>
+</tbody>
 </table>
 {{</table-wrap>}}

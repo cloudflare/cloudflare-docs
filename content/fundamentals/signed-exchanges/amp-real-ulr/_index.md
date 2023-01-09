@@ -18,3 +18,7 @@ Showing the actual URL to your website's visitors offers several advantages:
 * **More accurate analytics**: Keeping AMP and non-AMP content in the same domain facilitates more accurate analytics attribution.
 * **Reduced bounce rates**: Showing your actual URL may encourage users to remain on your site, instead of returning to the search results page.
 * **Security**: AMP Real URL uses signed exchanges to sign your AMP pages with a publicly verifiable certificate, ensuring no one can add, remove, or modify your content.
+
+## Availability
+
+{{<feature-table id="speed.amp">}}

@@ -130,7 +130,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
 
 ## Example - Create a zone-level phase entry point ruleset
 
-The following example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a Managed Ruleset.
+The following example request creates a zone-level phase entry point ruleset at the `http_request_firewall_managed` phase with a single rule that executes a managed ruleset.
 
 {{<Aside type="note">}}
 
@@ -148,7 +148,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 -d '{
   "name": "Zone-level phase entry point",
   "kind": "zone",
-  "description": "This ruleset executes a Managed Ruleset.",
+  "description": "This ruleset executes a managed ruleset.",
   "rules": [
     {
       "action": "execute",
@@ -174,7 +174,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
-    "description": "This ruleset executes a Managed Ruleset.",
+    "description": "This ruleset executes a managed ruleset.",
     "kind": "zone",
     "version": "1",
     "rules": [

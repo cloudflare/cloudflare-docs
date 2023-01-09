@@ -685,6 +685,14 @@ html[is-site-page] .DocsContent {
     filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
 }
 
+.rssList a {
+    color: #0055DC;
+}
+
+[theme=dark] .rssList a {
+    color: #ff9e40;
+}
+
 .FeaturedContentSectionTitle {
     padding-left:.75em;
     margin-bottom: 2em;
@@ -4837,6 +4845,43 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsSearch--input-wrapper {
     position: relative;
     height: 100%
+}
+
+@media (min-width: 769px) {
+.DocsSearch--input-wrapper:focus-within {
+    --highlight-opacity: 0.2;
+    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+  }
+
+  .DocsSearch--input:focus::-webkit-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  .DocsSearch--input:focus:-ms-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  .DocsSearch--input:focus::placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+
+  [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  [theme="dark"] .DocsSearch--input:focus::placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
 }
 
 .DocsSearch--input {

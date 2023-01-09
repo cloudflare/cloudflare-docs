@@ -3,6 +3,8 @@ title: Overview
 layout: overview
 pcx_content_type: overview
 weight: 1
+meta:
+    description: Cloudflare offers gateways to various networks to help Web3 developers do what they do best, develop applications without having to worry about running infrastructure.
 ---
 
 # Cloudflare Web3 docs
@@ -28,6 +30,12 @@ Provides a read-only, HTTP-accessible interface to the [Interplanetary File Syst
 {{<feature header="Ethereum Gateway" href="/web3/ethereum-gateway/">}}
 
 Gives you read and write access to the [Ethereum network](/web3/ethereum-gateway/concepts/ethereum/) without installing any software on your computer.
+
+{{</feature>}}
+
+{{<feature header="Polygon Gateway" href="/web3/polygon-gateway/">}}
+
+Gives you read and write access to the [Polygon network](/web3/polygon-gateway/) without installing any software on your computer.
 
 {{</feature>}}
 

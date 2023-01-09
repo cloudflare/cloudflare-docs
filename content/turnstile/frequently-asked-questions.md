@@ -65,6 +65,12 @@ To ensure that a token is not forged by an attacker or has not been consumed yet
 
 The siteverify API must not be called by the front end as this may reveal the secretkey used to authenticate. An attacker may simply modify the front end to not perform the siteverify check at all, rendering Turnstile ineffective.
 
+## Can I use Turnstile when developing locally?
+
+The dummy sitekeys provided below can be used from any domain, including on `localhost`. 
+
+Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
+
 ## What is the length of a Turnstile token?
 
 Currently, a Turnstile token can have up to 2048 characters.

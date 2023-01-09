@@ -16,6 +16,16 @@ For guidance on logging your visitor’s original IP address, refer to [Restorin
 
 Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
+## CF-Connecting-IPv6
+
+Cloudflare provides free IPv6 support to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](https://support.cloudflare.com/hc/en-us/articles/229666767) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
+
+If Pseudo IPv4 is set to `Overwrite Headers` - Cloudflare overwrites the existing `Cf-Connecting-IP` and `X-Forwarded-For` headers with a pseudo IPv4 address while preserving the real IPv6 address in `CF-Connecting-IPv6` header.
+
+## CF-Pseudo-IPv4
+
+If Pseudo IPv4 is set to `Add Header` - Cloudflare automatically adds the `CF-Pseudo-IPv4` header with a Class E IPv4 address hashed from the original IPv6 address.
+
 ## True-Client-IP (Enterprise plan only)
 
 `True-Client-IP` provides the original client IP address to the origin web server. `True-Client-IP` is only available on an Enterprise plan. In the example below, `203.0.113.1` is the original visitor IP address. For example: `True-Client-IP: 203.0.113.1`
@@ -81,10 +91,9 @@ The `CF-Worker` request header is added to an edge Worker subrequest that identi
 
 You can add `CF-Worker` header on server logs similar to the way you add the [`CF-RAY`](https://support.cloudflare.com/hc//articles/203118044#h_f7a7396f-ec41-4c52-abf5-a110cadaca7c) header. To do that, add `$http_cf_worker` in the log format file: `log_format cf_custom "CF-Worker:$http_cf_worker"'`
 
-# Considerations for Spectrum
+## Considerations for Spectrum
 
 When using Spectrum with a TCP application, these headers are not visible at the origin as they are HTTP headers. If you wish to utilize these in your application, there are two options:
 
 - Use an HTTP or HTTPS Spectrum app instead of TCP
 - Use the [Proxy Protocol feature](/spectrum/how-to/enable-proxy-protocol/)
-

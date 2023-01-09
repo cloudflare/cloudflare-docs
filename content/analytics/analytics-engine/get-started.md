@@ -25,26 +25,26 @@ To access your dataset from the Workers runtime, you need to create a binding us
 
 In this guide, we will show you how to start using a dataset.
 
-To define a binding. For example:
+To define an Analytics Engine binding you must be using at least version 2.6.0 of Wrangler.
+Add the binding to your `wrangler.toml` file, for example:
 
 ```toml
-[[unsafe.bindings]]
-type = "analytics_engine"
-name = "<BINDING_NAME>"
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>" }
+]
 ```
 
 By default, the dataset name is the same as the binding name. If you want, you can also specify the dataset name:
 
 ```toml
-[[unsafe.bindings]]
-type = "analytics_engine"
-name = "<BINDING_NAME>"
-dataset = "<DATASET_NAME>"
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
 ```
 
 ## 3. Write data from the Workers Runtime API
 
-Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles.
+Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
 
 A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](../sql-api/#sampling) key.
 

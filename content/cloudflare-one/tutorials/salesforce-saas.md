@@ -4,16 +4,18 @@ category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Salesforce with Access for SaaS configuration
+meta:
+    description: Configure Salesforce as a SaaS application and then force logins to Salesforce through Cloudflare's Zero Trust rules.
 ---
 
 # Salesforce with Access for SaaS configuration
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Configure Salesforce as a SaaS application in Cloudflare Zero Trust
 - Force logins to Salesforce through Cloudflare's Zero Trust rules
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 15 minutes
 
