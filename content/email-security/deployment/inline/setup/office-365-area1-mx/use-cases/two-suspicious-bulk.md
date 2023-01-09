@@ -122,3 +122,14 @@ In this tutorial, you will learn XXX XXXX CXXCXCXCVXXX XXXX CXXCXCXCVXXX XXXX CX
     - Under **Apply this rule if**, select **+** to add a second condition.
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
+
+    <div class="large-img">
+
+    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/case1-step4-rules.png)
+
+    </div>
+
+5. Select **Next**.
+6. You can use the default values on this screen. Select **Next**.
+7. Review your settings and select **Finish** > **Done**.
+8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
