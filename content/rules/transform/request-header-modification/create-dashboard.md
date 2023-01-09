@@ -14,8 +14,6 @@ Create HTTP Request Header Modification Rules in the **Modify Request Header** t
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![The Transform Rules page in the Cloudflare dashboard with a tab for each type of Transform Rule you can create.](/rules/static/transform/transform-rules-tab.png)
-
 3.  Go to the **Modify Request Header** tab.
 
 4.  Select **Create request header rule**.

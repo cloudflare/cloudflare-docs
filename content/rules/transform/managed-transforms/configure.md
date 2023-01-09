@@ -12,8 +12,6 @@ weight: 1
 
 2. Go to **Rules** > **Transform Rules**.
 
-    ![Access the Managed Transform settings from Rules > Transform Rules in the Cloudflare dashboard.](/rules/static/transform/transform-rules-tab.png)
-
 3. Go to the **Managed Transforms** tab.
 
 4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
