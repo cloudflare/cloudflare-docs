@@ -17,6 +17,8 @@ An Access policy consists of an **Action** as well as rules which determine the 
 - [Rule types](#rules)
 - [Selectors](#selectors)
 
+All Access rule types *must* contain an Include selector. This is what defines the initial pool of elligible users who can access an application. Require rule selectors can then be used to enforce specific policies for those users.
+
 ## Actions
 
 Actions let you grant or deny permission to a certain user or user group. You can set only one action per policy.
@@ -52,11 +54,7 @@ For example, this configuration blocks every request to the application, except 
 | Block  | Include   | Everyone | `Everyone` |
 |        | Exclude   | Email    | `user-1@team.com`|
 
-{{<Aside type="warning">}}
-
-An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
-
-{{</Aside>}}
+If a user meets the criteria of a Block policy, the evaluation of all subsequent policies will be terminated.
 
 ### Bypass
 
