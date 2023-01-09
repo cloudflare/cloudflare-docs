@@ -1255,7 +1255,6 @@ Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `
 
 {{</Aside>}}
 
-
 {{<Aside type="note">}}
 
 This command has an alias of `wrangler pages deploy create`.
