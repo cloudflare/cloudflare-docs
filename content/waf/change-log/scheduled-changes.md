@@ -23,13 +23,22 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>2023-01-03</td>
       <td>2023-01-09</td>
+      <td>2023-01-16</td>
       <td>Block</td>
-      <td>100551BETA</td>
-      <td>...b604fb62</td>
-      <td>Microsoft Exchange SSRF and RCE vulnerability - CVE:CVE-2022-41040, CVE:CVE-2022-41082, BETA</td>
-      <td>This detection will replace 100551 in legacy WAF and ...e09c1a1e in new WAF</td>
+      <td>100135C_BETA</td>
+      <td>...bbc447fa</td>
+      <td>XSS - JavaScript Events</td>
+      <td>This detection will replace 100135C in legacy WAF and ...de5e2367 in new WAF</td>
+    </tr>
+    <tr>
+      <td>2023-01-09</td>
+      <td>2023-01-16</td>
+      <td>Log</td>
+      <td>100558</td>
+      <td>...8b036974</td>
+      <td>Malware, Web Shell</td>
+      <td>N/A</td>
     </tr>
 </tbody>
 </table>
