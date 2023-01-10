@@ -1075,6 +1075,7 @@
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
+/cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 
 # retired_tile_redir
 /events/ / 301
