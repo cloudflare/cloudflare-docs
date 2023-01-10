@@ -248,6 +248,8 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 - **Use case 4**: Deliver emails to the user managed quarantine and administrative quarantine
 - **Use case 5**: Deliver emails to the user junk email folder and administrative quarantine
 
+It is recommended that you refer to [Use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for more details regarding best practices, before following each tutorial.
+
 ## 5. Update your domain MX records
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts:
