@@ -11,7 +11,7 @@ meta:
 
 ![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/inline-setup/o365-area1-mx/office365-mx.png)
 
-In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to step 6](#6-execute-enable-organizationcustomization-if-required).
+In this tutorial, you will learn how to configure Microsoft Office 365 with Area 1 as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
@@ -19,7 +19,7 @@ For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
 To ensure changes made in this tutorial take effect quickly, update the Time to Live (TTL) value of the existing MX records on your domains to five minutes. Do this on all the domains you will be deploying. 
 
-Changing the TTL value instructs DNS servers on how long to cache this value before requesting an update from the responsible name server. You need to change the TTL value before changing your MX records to Cloudlfare Area 1. This will ensure that changes take effect quickly and can also be reverted quickly if needed. If your DNS Manager does not allow for a TTL of five minutes, set it to the lowest possible setting.
+Changing the TTL value instructs DNS servers on how long to cache this value before requesting an update from the responsible name server. You need to change the TTL value before changing your MX records to Cloudflare Area 1. This will ensure that changes take effect quickly and can also be reverted quickly if needed. If your DNS manager does not allow for a TTL of five minutes, set it to the lowest possible setting.
 
 To check your existing TTL, open a terminal window and run the following command against your domain:
 
@@ -60,7 +60,7 @@ Bellow is a list with instrunctions on how to edit MX records for some popular s
 
 1. Go to the [Microsoft Security admin center](https://security.microsoft.com/homepage).
 
-2. Go to **Policies & Rules** > **Threat policies**.
+2. Go to **Email & collaboration** > **Policies & Rules** > **Threat policies**.
 
 3. Select the [Anti-spam option](https://security.microsoft.com/antispam).
     
@@ -88,7 +88,7 @@ Bellow is a list with instrunctions on how to edit MX records for some popular s
 6. Select **Save**.
 
 {{<Aside type="note">}}
-Depending on your Office 365 configuration, you may receive a warning indicating that you need to run the `Enable-OrganizationCustomization` cmdlet before you create or modify objects in your Exchange Online organization. Follow the next step to enable this cmdlet.
+Depending on your Office 365 configuration, you may receive a warning indicating that you need to run the `Enable-OrganizationCustomization` cmdlet before you create or modify objects in your Exchange Online organization. Follow the instructions in [section 6](#6-execute-enable-organizationcustomization-if-required) to enable this cmdlet.
 {{</Aside>}}
 
 7. Microsoft recommends disabling SPF Hard fail when an email solution is placed in front of it. Return to the [Anti-spam option](https://security.microsoft.com/antispam).
@@ -155,24 +155,26 @@ This option will allow Office 365 to properly identify the original connecting I
 9. Enter all of the egress IPs in the [Egress IPs](/email-security/deployment/inline/reference/egress-ips/) page.
 
     <div class="large-img">
-    
+
     ![Enter all of Area 1's Egress IPs](/email-security/static/inline-setup/o365-area1-mx/step9-egress-ips.png)
 
     </div>
-    
+
 10. Select **Next**.
 
-11. In **Security restrictions**, accept the default **Reject email messages if they aren't sent over TLS** setting, and select **Next**.
+11. In **Security restrictions**, accept the default **Reject email messages if they aren't sent over TLS** setting.
 
-12. Review your settings and select **Create connector**.
+12. Select **Next**.
+
+13. Review your settings and select **Create connector**.
 
 ### Enable enhanced filtering
 
 Now that the inbound connector has been configured, you will need to enable the enhanced filtering configuration of the connector in the [Security admin console](https://security.microsoft.com/homepage).
 
-1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Policy & Rules** > **Threat policies**.
+1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Email & collaboration** > **Policy & Rules**.
 
-2. Under **Rules**, select **Enhanced filtering**.
+2. Navigate to **Threat policies** > **Rules**, and select **Enhanced filtering**.
 
     <div class="large-img">
 
@@ -180,7 +182,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
     </div>
 
-2. Select the `Area 1 Inbound Connector`, the connector you configured previously to edit its configuration parameters. 
+2. Select the `Area 1 Inbound Connector` that you configured previously to edit its configuration parameters. 
 
 3. Select **Automatically detect and skip the last IP address** and **Apply to entire organization**.
 
@@ -190,9 +192,9 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 ## 3. Configure Area 1 quarantine policies
 
-### Select the disposition that you want to quarantine
+### Select the disposition you want to quarantine
 
-Quarantining messages is a per domain configuration. To modify which domains will have their message quarantined, access the domain configuration: 
+Quarantining messages is a per domain configuration. To modify which domains will have their messages quarantined, access the domain configuration: 
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 
@@ -200,7 +202,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 3. Locate the domain you want to edit.
 
-4. Select the `...` icon > **Edit**.
+4. Select the **...** > **Edit**.
 
 5. Select the additional dispositions you want to quarantine.
 
@@ -232,23 +234,21 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 
 | Disposition <div style="width: 100px"> | Action |
 -------------- | -----------------------
-| `MALICIOUS`  | Should always be quarantined. If the user requires notification, they should require administrator approval to release. Users should never have the ability to self remediate `MALICIOUS` emails without approval from an administrator. Emails should be body and subject tagged. |
-| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged. Emails should be delivered to the user’s inbox or junk mail folder. Advantage customers should `DEFANG` this disposition while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta). |
-| `SPAM`       | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release. Emails should be subject tagged. |
+| `MALICIOUS`  | Should always be quarantined. If the user requires notification, they should require administrator approval to release messages. Users should never have the ability to self remediate `MALICIOUS` emails without approval from an administrator. Emails should be body and subject tagged. |
+| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged, and delivered to the user’s inbox or junk mail folder. Advantage customers should use [`URL defang`](/email-security/email-configuration/email-policies/link-actions/) with this disposition, while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta). |
+| `SPAM`       | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release emails. Emails should be subject tagged. |
 | `BULK`       | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder. |
-| `SPOOF`      | If `SPOOF` detections are clean and well managed in the Allow List, emails should always be quarantined. If the `SPOOF` detections are not clean, they should be treated the same as `SPAM` if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. |
+| `SPOOF`      | If `SPOOF` detections are clean and well managed [in the Allow List](/email-security/email-configuration/lists/), emails should always be quarantined. If the `SPOOF` detections are not clean, they should have the same treatment as `SPAM` dispositions if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. |
 
-Within Office 365 (O365) there are various options, as well as limitations, as to how quarantine email messages. Refer to [Office 365 use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for a break down of the primary options as use cases you may use for yourself as examples. 
+Office 365 (O365) has various options, as well as limitations, as to how quarantine email messages. Refer to [Office 365 use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for more information.
 
-The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 use cases will cover:
+The Area 1 dashboard has an [Admin quarantine](/email-security/email-configuration/admin-quarantine/), and you can also use the Office 365 quarantine for when a user quarantine is needed. While there are many quarantine options, the following are the primary use cases the Office 365 example tutorials will cover:
 
 - **Use case 1**: Deliver emails to Office 365 junk email folder and Admin Quarantine in Area 1 (Recommended)
 - **Use case 2**: Deliver emails to junk email folder and user managed quarantine (this use case requires that `MALICIOUS` emails be quarantined within the Area 1 dashboard)
 - **Use case 3**: Deliver emails to junk email and administrative quarantine
 - **Use case 4**: Deliver emails to the user managed quarantine and administrative quarantine
 - **Use case 5**: Deliver emails to the user junk email folder and administrative quarantine
-
-It is recommended that you refer to [Use cases](/email-security/deployment/inline/setup/office-365-area1-mx/use-cases/) for more details regarding best practices, before following each tutorial.
 
 ## 5. Update your domain MX records
 
