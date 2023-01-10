@@ -111,7 +111,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 
     <div class="large-img">
 
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/case1-step4-rules.png)
+    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
 
     </div>
 
