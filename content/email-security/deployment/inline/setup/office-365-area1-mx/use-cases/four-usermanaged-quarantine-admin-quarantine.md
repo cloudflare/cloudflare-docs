@@ -34,10 +34,10 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the Us
 6. Set the **Policy name** to `UserNotifyUserRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients release a message from quarantine_.
+    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients to release a message from quarantine_.
     - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
 
-    ![Configure the Recipient message access as stated in step 8 above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-allow-message-release.png)
+    ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-allow-message-release.png)
 
 9. Select **Next**.
 10. In **Quarantine notification**, select **Enable**.
@@ -51,7 +51,7 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the Us
     - In **Select release action preference**: From the drop-down menu, choose _Allow recipients to request a message to be released from quarantine_.
     - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
 
-    ![Configure the Recipient message access as stated in step 8 above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
+    ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
 18. Select **Next**.
 19. In **Quarantine notification**, select **Enable**.
@@ -85,7 +85,7 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the Us
 5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
 6. In the **Actions** section, scroll down and select **Edit actions**.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Go to Actions and find Edit actions](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
 
@@ -102,7 +102,7 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the Us
         - **Select quarantine policy**: _UserNotifyAdminRelease_
     - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step7-quarantine-message-case4.png)
 
@@ -124,18 +124,15 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the Us
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
-    <div class="large-img">
-
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules-case4.png)
 
-    </div>
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
 8. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-    - **Name**: `Area 1 User Quarantine Message`
+    - **Name**: `Area 1 User Quarantine Message Admin Release`
     - **Apply this rule if**: _The message headers_ > _includes any of these words_
         - **Enter text**: `X-Area1Security-Disposition` > **Save**
         - **Enter words**: `MALICIOUS` > **Add** > **Save**
@@ -143,13 +140,9 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the Us
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_
 
-    <div class="large-img">
-
     ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-admin-release-case4.png)
-
-    </div>
 
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
+14. Select the rule **Area 1 User Quarantine Message Admin Release** you have just created, and **Enable**.
