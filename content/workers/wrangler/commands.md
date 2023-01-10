@@ -11,6 +11,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+- [`d1`](#d1) - Interact with D1.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete) - Delete your Worker from Cloudflare.
@@ -50,12 +51,12 @@ Flags:
 
 ---
 
-## docs 
+## docs
 
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-$ wrangler docs [COMMAND] 
+$ wrangler docs [COMMAND]
 ```
 
 {{<definitions>}}
@@ -82,7 +83,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-{{</definitions>}}
+    {{</definitions>}}
 
 ---
 
@@ -100,6 +101,56 @@ $ wrangler generate [name] [template]
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
+
+{{</definitions>}}
+
+---
+
+## d1
+
+Interact with Cloudflare's D1 service.
+
+{{<Aside type="note">}}
+D1 is currently in open alpha and is not recommended for production data and traffic.
+
+Please report any bugs to https://github.com/cloudflare/wrangler2/issues/new/choose.
+{{</Aside>}}
+
+### `create`
+
+Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler d1 create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new D1 database.
+
+{{</definitions>}}
+
+### `list`
+
+List all D1 databases in your account.
+
+```sh
+$ wrangler d1 list
+```
+
+### `delete`
+
+Delete a D1 database.
+
+```sh
+$ wrangler d1 delete <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to delete.
 
 {{</definitions>}}
 
@@ -186,7 +237,7 @@ When working on Wrangler, you need to satisfy [`workerd`](https://github.com/clo
 - On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
 - On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
 {{</Aside>}}
-      
+
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
@@ -306,7 +357,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 {{</definitions>}}
 
@@ -890,7 +941,7 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
   - Specifies caching behavior along the request/reply chain.
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
-{{</definitions>}}
+    {{</definitions>}}
 
 ### `delete`
 
