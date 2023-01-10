@@ -4,9 +4,18 @@
 {{- $values := default "" (.Get "values") }}
 
 {{- with .Site.GetPage $url -}}
-  {{ if eq $values "" }}
+  {{- if eq $values "" -}}
   {{ .Content | markdownify }}
-  {{ else }}
-  {{ replaceRE `\$1` $values .Content | markdownify }}
+  {{- else -}}
+  {{- $values = split $values "," -}}
+  {{- $contentPlaceholder := .Content | markdownify -}}
+  {{- $regexPlaceholder := "" -}}
+
+  {{- range $elem_index, $elem_val := $values -}}
+  {{ $elem_index := add $elem_index 1 | string}}
+  {{ $regexPlaceholder = print "\\$" $elem_index }}
+  {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
+  {{- end -}}
+  {{ $contentPlaceholder | markdownify }}
   {{- end -}}
 {{- end -}}

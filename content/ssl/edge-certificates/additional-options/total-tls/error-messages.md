@@ -26,6 +26,6 @@ Since there are a few nuances to certificate coverage and issuance timing, revie
 
 If your zone is already active on Cloudflare, this warning identifies subdomains that are not covered by your current SSL/TLS certificate.
 
-{{<render file="_ussl-limitations-table.md" values="test2">}}
+{{<render file="_ussl-limitations-table.md" values="test2,test3">}}
 
 {{<render file="_ussl-limitations-solutions.md">}}
