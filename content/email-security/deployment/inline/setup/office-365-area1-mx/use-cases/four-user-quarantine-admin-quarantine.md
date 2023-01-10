@@ -10,7 +10,7 @@ meta:
 
 In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (requires administrator release).
 
-## Configure Domains
+## Configure domains
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
@@ -24,7 +24,7 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the us
     - **Outbound TLS** - `Forward all messages over TLS`
     - **Quarantine Policy** - Do not check any dispositions
 
-## Create Quarantine Policies
+## Create quarantine policies
 
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
 2. Go to **Email & collaboration** > **Policies & rules**.

@@ -10,7 +10,7 @@ meta:
 
 In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the users’s junk email folder, and `Malicious`, `Spam` and `Spoof` messages to the administrative quarantine (requires administrator release).
 
-## Configure Domains
+## Configure domains
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).

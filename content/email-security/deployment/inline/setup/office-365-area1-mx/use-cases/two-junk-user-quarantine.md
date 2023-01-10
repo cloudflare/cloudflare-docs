@@ -10,7 +10,7 @@ meta:
 
 In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the user’s junk folder, and `Spam` and `Spoof` messages to the user managed quarantine.
 
-## Configure Domains
+## Configure domains
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
@@ -24,7 +24,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
     - **Outbound TLS** - `Forward all messages over TLS`
     - **Quarantine Policy** - Only `Malicious` should be checked
 
-## Create Quarantine Policies
+## Create quarantine policies
 
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
 2. Go to **Email & collaboration** > **Policies & rules**.
