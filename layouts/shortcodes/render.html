@@ -1,7 +1,12 @@
 {{- $filename := default (.Get "file") (.Get 0) -}}
 {{- $dir := (path.Join .Page.Section "_partials") -}}
 {{- $url := (path.Join $dir $filename) -}}
+{{- $values := default "" (.Get "values") }}
 
 {{- with .Site.GetPage $url -}}
+  {{ if eq $values "" }}
   {{ .Content | markdownify }}
+  {{ else }}
+  {{ replaceRE `\$1` $values .Content | markdownify }}
+  {{- end -}}
 {{- end -}}

@@ -52,7 +52,7 @@ If it is expired, [upload a replacement certificate](/ssl/edge-certificates/cust
 
 ## Multi-level subdomains
 
-{{<render file="_ussl-limitations-table.md">}}
+{{<render file="_ussl-limitations-table.md" values="test">}}
 
 This means that you might experience `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) on multi-level subdomains.
 

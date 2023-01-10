@@ -14,3 +14,5 @@ By default, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/unive
 | `docs.example.com` | Yes |
 | `dev.docs.example.com` | No |
 | `test.dev.api.example.com` | No |
+
+$1
