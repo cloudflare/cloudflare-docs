@@ -37,7 +37,7 @@ In this tutorial you will learn how to deliver emails to the Office 365 Junk Ema
     - In **Select release action preference**: Choose _Allow recipients to request a message to be released from quarantine_
     - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes
 
-    ![Configure the Recipient message access as stated in step 8 above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
+    ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
 9. Select **Next**.
 10. In **Quarantine notification**, select **Enable**.
@@ -109,7 +109,7 @@ In this tutorial you will learn how to deliver emails to the Office 365 Junk Ema
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
+    ![Set the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
