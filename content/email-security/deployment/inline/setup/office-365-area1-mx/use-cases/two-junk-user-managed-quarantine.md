@@ -22,7 +22,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
     - **Forwarding to** - This should match the expected MX for each domain in your [O365 account](https://admin.microsoft.com/#/Domains/)
     - **IP Restrictions** - Leave this field empty
     - **Outbound TLS** - `Forward all messages over TLS`
-    - **Quarantine Policy** - Only `Malicious` should be checked.
+    - **Quarantine Policy** - Only `Malicious` should be checked
 
 ## Create Quarantine Policies
 
@@ -34,8 +34,8 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 6. Set the **Policy name** to `UserNotifyUserRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients release a message from quarantine_.
-    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
+    - In **Select release action preference**: Choose _Allow recipients to release a message from quarantine_
+    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes
 
     ![Configure the Recipient message access as stated in step 8 above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-allow-message-release.png)
 
@@ -68,7 +68,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 5. Select **Global settings**.
 6. Scroll to the bottom and set the desired frequency in **Send end-user spam notifications every (days)**. This value can only be incremented in days.
 
-     <div class="medium-img">
+     <div class="large-img">
 
     ![Configure the desired spam notification frequency](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-spam-notifications.png)
 
@@ -85,7 +85,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
 6. In the **Actions** section, scroll down and select **Edit actions**.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Go to Actions and find Edit actions](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
 
@@ -101,7 +101,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
         - **Select quarantine policy**: _UserNotifyAdminRelease_
     - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Set spam conditions](/email-security/static/inline-setup/o365-area1-mx/use-cases/case2-step7-spam.png)
 
@@ -123,11 +123,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
-    <div class="large-img">
-
     ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
-
-    </div>
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
@@ -143,11 +139,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_
 
-    <div class="large-img">
-
     ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-user-quarantine.png)
-
-    </div>
 
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
