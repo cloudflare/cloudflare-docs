@@ -46,5 +46,5 @@ After deploying your API Shield rule, Cloudflare displays a summary of all API e
 
 1. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 2. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
-3. Optionally, you can save the endpoints to Endpoint Management at the same time the Schema is saved by checking the box to save new endpoints to endpoint management. Endpoints will be saved regardless of whether the Schema is saved as a draft or published live.
+3. Optionally, you can save the endpoints to Endpoint Management at the same time the Schema is saved by selecting **Save new endpoints to endpoint management**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published live.
 4. Select **Done**.

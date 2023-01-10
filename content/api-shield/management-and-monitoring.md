@@ -47,7 +47,7 @@ API Shield will look for duplicate endpoints that have the same host, method, an
 
 {{<Aside type="Note">}}
 
-If you deselect the save new endpoints to endpoint management box, the endpoints will not be added.
+If you deselect **Save new endpoints to endpoint management**, the endpoints will not be added.
 
 {{</Aside>}}
 
