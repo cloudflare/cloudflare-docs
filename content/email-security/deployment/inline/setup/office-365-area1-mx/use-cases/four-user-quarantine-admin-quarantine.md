@@ -105,8 +105,8 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the us
     - **Apply this rule if**: _The message headers_ > _includes any of these words_
         - **Enter text**: `X-Area1Security-Disposition` > **Save**
         - **Enter words**: `SPAM`, `SPOOF` > **Add** > **Save**
-    - Under **Apply this rule if**, select **+** to add a second condition.
-    - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+    - **Apply this rule if**: Select **+** to add a second condition.
+    - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules-case4.png)
@@ -121,8 +121,8 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the us
     - **Apply this rule if**: _The message headers_ > _includes any of these words_
         - **Enter text**: `X-Area1Security-Disposition` > **Save**
         - **Enter words**: `MALICIOUS` > **Add** > **Save**
-    - Under **Apply this rule if**, select **+** to add a second condition.
-    - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+    - **Apply this rule if**: Select **+** to add a second condition.
+    - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_
 
     ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-admin-release-case4.png)
