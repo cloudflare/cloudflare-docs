@@ -7,7 +7,7 @@ meta:
 ---
 
 
-# Use case 5: Deliver emails to the user’s junk email folder, and the administrative quarantine (requires administrator release)
+# Use case 5: Deliver emails to the user junk email folder and administrative quarantine
 
 In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to the user’s junk email folder, and `Malicious`, `Spam`, and `Spoof` messages to the Administrative Quarantine (requires administrator release).
 
