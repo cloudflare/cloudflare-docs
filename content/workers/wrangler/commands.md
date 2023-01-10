@@ -154,6 +154,86 @@ $ wrangler d1 delete <DATABASE_NAME>
 
 {{</definitions>}}
 
+### `execute`
+
+Execute a query on a D1 database.
+
+```sh
+$ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to execute a query on.
+- `--command` {{<type>}}string{{</type>}} 
+  - The SQL query you wish to execute.
+- `--file` {{<type>}}string{{</type>}} 
+  - Path to the SQL file you wish to execute.
+- Note that you must provide either `--command` or `--file` for this command to run successfully.
+{{</definitions>}}
+
+
+### `backup create`
+
+Initiate a D1 backup
+
+```sh
+$ wrangler d1 backup create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to backup.
+{{</definitions>}}
+
+### `backup list`
+
+List all available backups.
+
+```sh
+$ wrangler d1 backup list <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to list the backups of.
+{{</definitions>}}
+
+### `backup restore`
+
+Restore a backup into a D1 database.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to restore the backup into.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to restore.
+{{</definitions>}}
+
+### `backup download`
+
+Download existing data to your local machine.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to download the backup of.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to download.
+{{</definitions>}}
+
 ---
 
 ## dev
