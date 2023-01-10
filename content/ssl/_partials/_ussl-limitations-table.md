@@ -9,7 +9,7 @@ By default, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/unive
 
 | Hostname | Covered by Universal certificate? |
 | --- | --- |
-| `example.com` | Yes |
+| `example.com` | $3 |
 | `www.example.com` | Yes |
 | `docs.example.com` | Yes |
 | `dev.docs.example.com` | No |
@@ -17,4 +17,4 @@ By default, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/unive
 
 $1
 
-testing this $2
+testing this $2 and more

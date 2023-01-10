@@ -1,21 +1,25 @@
 {{- $filename := default (.Get "file") (.Get 0) -}}
 {{- $dir := (path.Join .Page.Section "_partials") -}}
 {{- $url := (path.Join $dir $filename) -}}
-{{- $values := default "" (.Get "values") }}
+{{- $dynamicValues := default "" (.Get "dynamicValues") }}
+{{- $conditionalValues := default "" (.Get "conditionalValues") | lower }}
 
 {{- with .Site.GetPage $url -}}
-  {{- if eq $values "" -}}
-  {{ .Content | markdownify }}
-  {{- else -}}
-  {{- $values = split $values "," -}}
-  {{- $contentPlaceholder := .Content | markdownify -}}
-  {{- $regexPlaceholder := "" -}}
 
-  {{- range $elem_index, $elem_val := $values -}}
-  {{ $elem_index := add $elem_index 1 | string}}
-  {{ $regexPlaceholder = print "\\$" $elem_index }}
-  {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
+  {{- $contentPlaceholder := .Content }}
+
+  <!-- If dynamic values are specified in input params, replace throughout partial content -->
+  {{- if ne $dynamicValues "" -}}
+    {{- $dynamicValues = split $dynamicValues "," -}}
+    {{- $regexPlaceholder := "" -}}
+
+    {{- range $elem_index, $elem_val := $dynamicValues -}}
+      {{ $elem_index := add $elem_index 1 | string}}
+      {{ $regexPlaceholder = print "\\$" $elem_index }}
+      {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
+    {{- end -}}
   {{- end -}}
+
   {{ $contentPlaceholder | markdownify }}
-  {{- end -}}
+
 {{- end -}}
