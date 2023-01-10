@@ -34,7 +34,7 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
 6. In the **Actions** section, scroll down and select **Edit actions**.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Go to Actions and find Edit actions](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
 
@@ -50,7 +50,7 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
         - **Select quarantine policy**: _AdminOnlyAccessPolicy_
     - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
 
-    <div class="medium-img">
+    <div class="large-img">
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step7-adminonly-case5.png)
 
@@ -72,11 +72,7 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
-    <div class="large-img">
-
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
-
-    </div>
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
@@ -84,7 +80,7 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-    - **Name**: `Area 1 User Quarantine Message`
+    - **Name**: `Area 1 Admin Managed Host Quarantine`
     - **Apply this rule if**: _The message headers_ > _includes any of these words_
         - **Enter text**: `X-Area1Security-Disposition` > **Save**
         - **Enter words**: `MALICIOUS`, `SPAM`, `SPOOF` > **Add** > **Save**
@@ -92,13 +88,9 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following**: _Redirect the message to_ > _hosted quarantine_
 
-    <div class="medium-img">
-
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-hosted-quarantine-case5.png)
-
-    </div>
 
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
+14. Select the rule **Area 1 Admin Managed Host Quarantine** you have just created, and **Enable**.
