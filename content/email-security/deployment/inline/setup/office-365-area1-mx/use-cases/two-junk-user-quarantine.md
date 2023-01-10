@@ -19,7 +19,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 5. For each domain you are configuring select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`
     - **Configured as** - `MX Records`
-    - **Forwarding to** - This should match the expected MX for each domain in your [O365 account](https://admin.microsoft.com/#/Domains/)
+    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/)
     - **IP Restrictions** - Leave this field empty
     - **Outbound TLS** - `Forward all messages over TLS`
     - **Quarantine Policy** - Only `Malicious` should be checked
