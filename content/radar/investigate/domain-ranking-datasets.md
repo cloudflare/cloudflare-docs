@@ -48,7 +48,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&lim
 For more information refer to [Get Domains Rank top](https://developers.cloudflare.com/api/operations/radar_get_RankingTop).
 
 
-#### Example: Download a ranking bucket file
+#### Example: Download top `x` ranking bucket file
 
 As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank
 for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million,
@@ -106,9 +106,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/radar/datasets/download" \
 ```
 
 
-#### Example: Get a direct ranking bucket stream
+#### Example: Get the last top `x` ranking bucket
 
-In this endpoint allows you to directly request the latest bucket available (optionally at a given date)
+This endpoint allows you to directly request the latest top x bucket available (optionally at a given date)
 [datasets stream endpoint](https://developers.cloudflare.com/api/operations/radar_get_DatasetStream).
 
 The dataset alias can be retrieved from the [datasets list endpoint](https://developers.cloudflare.com/api/operations/radar_get_DatasetList)
