@@ -34,8 +34,8 @@ In this tutorial you will learn how to deliver emails to the Office 365 Junk Ema
 6. Set the **Policy name** to `UserNotifyAdminRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: Choose _Allow recipients to request a message to be released from quarantine_.
-    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
+    - In **Select release action preference**: Choose _Allow recipients to request a message to be released from quarantine_
+    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes
 
     ![Configure the Recipient message access as stated in step 8 above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
