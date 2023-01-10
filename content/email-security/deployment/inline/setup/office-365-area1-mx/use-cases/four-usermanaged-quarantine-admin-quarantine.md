@@ -3,12 +3,12 @@ title: 4 - User managed quarantine and administrative quarantine
 pcx_content_type: tutorial
 weight: 4
 meta:
-    title: Use case 4 - Deliver Spam and Spoof messages to the User Managed quarantine, and Malicious messages to the Administrative quarantine (requires administrator release)
+    title: Use case 4 - Deliver Spam and Spoof messages to the user managed quarantine, and Malicious messages to the administrative quarantine (requires administrator release)
 ---
 
-# Use case 4: Deliver emails to the User Managed quarantine and Administrative quarantine
+# Use case 4: Deliver emails to the user managed quarantine and administrative quarantine
 
-In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the User Managed quarantine, and `Malicious` messages to the Administrative Quarantine (requires administrator release).
+In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (requires administrator release).
 
 ## Configure Domains
 

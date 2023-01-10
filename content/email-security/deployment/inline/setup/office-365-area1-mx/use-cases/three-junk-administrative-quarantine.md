@@ -3,12 +3,12 @@ title: 3 - Junk email and administrative quarantine
 pcx_content_type: tutorial
 weight: 3
 meta:
-    title: Use case 3 - Deliver Suspicious and Bulk messages to the Users’s Junk Email folder, and Malicious, Spam and Spoof to the Administrative Quarantine (requires administrator release)
+    title: Use case 3 - Deliver Suspicious and Bulk messages to the users’s junk email folder, and Malicious, Spam and Spoof to the administrative quarantine (requires administrator release)
 ---
 
-# Use case 3: Deliver emails to Junk Email and Administrative quarantine
+# Use case 3: Deliver emails to junk email and administrative quarantine
 
-In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the users’s Junk Email folder, and `Malicious`, `Spam` and `Spoof` messages to the Administrative Quarantine (requires administrator release).
+In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the users’s junk email folder, and `Malicious`, `Spam` and `Spoof` messages to the administrative quarantine (requires administrator release).
 
 ## Configure Domains
 
