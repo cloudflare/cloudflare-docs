@@ -74,7 +74,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 2. Open a terminal and clone our example project.
 
     ```sh
-    $ wrangler generate risky-users https://github.com/cloudflare/<repo-name>
+    $ wrangler generate risky-users https://github.com/cloudflare/msft-risky-user-ad-sync
     ```
 
 3. Navigate to the project directory.
