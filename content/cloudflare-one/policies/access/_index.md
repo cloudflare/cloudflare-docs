@@ -52,8 +52,6 @@ For example, this configuration blocks every request to the application, except 
 | Block  | Include   | Everyone | `Everyone` |
 |        | Exclude   | Email    | `user-1@team.com`|
 
-If a user meets the criteria of a Block policy, the evaluation of all subsequent policies will be terminated.
-
 ### Bypass
 
 The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
