@@ -17,7 +17,7 @@ An Access policy consists of an **Action** as well as rules which determine the 
 - [Rule types](#rules)
 - [Selectors](#selectors)
 
-All Access rule types *must* contain an Include selector. This is what defines the initial pool of elligible users who can access an application. Require rule selectors can then be used to enforce specific policies for those users.
+All Access rule types *must* contain an Include selector. This is what defines the initial pool of eligible users who can access an application. Require rule selectors can then be used to enforce specific policies for those users.
 
 ## Actions
 
