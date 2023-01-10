@@ -37,7 +37,7 @@ You can also update the [configuration settings](/waiting-room/reference/configu
 
 ### Which features are included in my Waiting Room plan?
 
-To see which features are available to different plan types, refer to [Plans](/waiting-room/plans/).
+To check which features are available to different plan types, refer to [Plans](/waiting-room/plans/).
 
 ### How does Waiting Room interact with other Cloudflare products?
 
