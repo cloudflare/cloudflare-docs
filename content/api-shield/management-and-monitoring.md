@@ -19,7 +19,7 @@ Cloudflare will start collecting [performance data](/api-shield/management-and-m
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Add your endpoints [manually](#add-endpoints-manually) or from [API Discovery](#add-endpoints-from-api-discovery).
+3. Add your endpoints [manually](#add-endpoints-manually), from [Schema Validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
 
 ## Add endpoints from API Discovery
 
@@ -32,9 +32,24 @@ There are two ways to add API endpoints from Discovery.
 3. Select **Add endpoints**.
 
 ### Add from the Discovery Tab
+
 1. From Endpoint Management, select the **Discovery** tab.
 2. Select the discovered endpoints you would like to add.
 3. Select **Save selected endpoints**.
+
+## Add endpoints from Schema Validation
+
+1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/configure/).
+2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
+3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published.
+
+API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
+
+{{<Aside type="Note">}}
+
+If you deselect the save new endpoints to endpoint management box, the endpoints will not be added.
+
+{{</Aside>}}
 
 ## Add endpoints manually
 

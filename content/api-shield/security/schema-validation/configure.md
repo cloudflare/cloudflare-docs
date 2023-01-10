@@ -23,13 +23,10 @@ This feature is only available for customers on an Enterprise plan. Contact your
 
 To configure Schema Validation in the Cloudflare dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-
-2.  Click **Security** > **API Shield**.
-
-3.  In the **API Shield** card, click **Deploy API Shield**.
-
-4.  For the **Shield properties**, enter a descriptive name and set up an expression to trigger your shield.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Navigate to **Schema Validation** and select **Add schema**.
+4. Enter a descriptive name for your policy and optionally edit the expression to trigger Schema Validation.
 
     For example, if your API is available at `http://api.example.com/v1`, include a check for the _Hostname_ field — equal to `api.example.com` — and a check for the _URI Path_ field using a regular expression — matching the regex `^/v1`.
 
@@ -39,20 +36,15 @@ To validate the hostname, you must include the _Hostname_ field explicitly in th
 
      {{</Aside>}}
 
-5.  Click **Next**.
+5.  Select **Next**.
+6.  Upload your schema file.
+7.  Select **Save** to validate the content of the schema file and deploy the Schema Validation rule.
 
-6.  In the **Schema Validation** card, switch the toggle to **On**.
+    If you get a validation error, ensure that you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a [unique Operation ID](/api-shield/security/schema-validation/#operation-ids).
 
-7.  For **Upload API Schema**, upload your schema file.
+After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
 
-8.  Click **Save** to validate the content of the schema file and deploy the Schema Validation rule.
-
-    If you get a validation error, make sure you are using one of the [supported file formats](/api-shield/security/schema-validation/#specifications) and that each endpoint and method pair has a [unique Operation ID](/api-shield/security/schema-validation/#operation-ids).
-
-9.  After deploying your API Shield rule, Cloudflare displays a summary of all API endpoints organized by their protection level and actions that will occur for non-compliant and unprotected requests.
-
-10. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
-
-11. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
-
-12. Click **Done**.
+1. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
+2. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
+3. Optionally, you can save the endpoints to Endpoint Management at the same time the Schema is saved by checking the box to save new endpoints to endpoint management. Endpoints will be saved regardless of whether the Schema is saved as a draft or published live.
+4. Select **Done**.
