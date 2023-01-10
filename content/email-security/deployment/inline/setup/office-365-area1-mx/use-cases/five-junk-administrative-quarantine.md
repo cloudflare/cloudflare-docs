@@ -97,3 +97,8 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-hosted-quarantine-case5.png)
 
     </div>
+
+11. Select **Next**.
+12. You can use the default values on this screen. Select **Next**.
+13. Review your settings and select **Finish** > **Done**.
+14. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
