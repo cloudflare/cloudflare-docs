@@ -109,7 +109,7 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
     - Under **And** select _The sender_ > _IP address is in any of these ranges or exactly matches_. Then, enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
 
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
+    ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
