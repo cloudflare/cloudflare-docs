@@ -19,7 +19,7 @@ Yes. For more details, refer to [Customize a waiting room](/waiting-room/how-to/
 If you have [customized your waiting room template](/waiting-room/how-to/customize-waiting-room):
 
 1. Preview your template before deploying it to production.
-2. If you see any issues, check for proper syntax and a closing backslash (/).
+2. If you encounter any issues, check for proper syntax and a closing backslash (/).
 
 {{<Aside type="note" header="Note">}}
 
