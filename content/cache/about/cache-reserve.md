@@ -63,7 +63,7 @@ Cache Reserve charges based on the total volume of data stored, along with two c
 - [Class A operations](/r2/platform/pricing/#class-a-operations) which are more expensive and tend to mutate state.
 - [Class B operations](/r2/platform/pricing/#class-b-operations) which tend to read existing state.
 
-In most cases, a cache miss will result in both one class A and one class B operation, and a cache hit will result in one class B operation. Assets larger than 1 GB will incur more operations proportional to their size.
+In most cases, a Cache Reserve miss will result in both one class A and one class B operation, and a Cache Reserve hit will result in one class B operation. Assets larger than 1 GB will incur more operations proportional to their size.
 
 ### Cache Reserve pricing
 
