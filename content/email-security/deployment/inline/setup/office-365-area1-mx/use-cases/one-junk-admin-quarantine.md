@@ -19,7 +19,7 @@ In this tutorial you will learn how to deliver emails to the Office 365 junk ema
 5. For each domain you are configuring select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`
     - **Configured as** - `MX Records`
-    - **Forwarding to** - This should match the expected MX for each domain in your [O365 account](https://admin.microsoft.com/#/Domains/)
+    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/)
     - **IP Restrictions** - Leave this field empty
     - **Outbound TLS** - `Forward all messages over TLS`
     - **Quarantine Policy** - Check the `MALICIOUS`, `SPAM` and `SPOOF` dispositions
@@ -62,7 +62,7 @@ In this tutorial you will learn how to deliver emails to the Office 365 junk ema
 
     </div>
 
-7. Set the following conditions and actions (you might need to scroll up or down to see them):
+7. Set the following conditions and actions (you might need to scroll up or down to find them):
     - **Spam**: _Move messages to Junk Email folder_
     - **High confidence spam**: _Quarantine message_
         - **Select quarantine policy**: _UserNotifyAdminRelease_

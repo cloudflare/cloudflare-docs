@@ -40,7 +40,7 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 
     </div>
 
-7. Set the following conditions and actions (you might need to scroll up or down to see them):
+7. Set the following conditions and actions (you might need to scroll up or down to find them):
     - **Spam**: _Move messages to Junk Email folder_
     - **High confidence spam**: _Quarantine message_
         - **Select quarantine policy**: _AdminOnlyAccessPolicy_

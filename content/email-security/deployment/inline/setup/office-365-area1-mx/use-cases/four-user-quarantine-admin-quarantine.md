@@ -76,7 +76,7 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the us
 
     </div>
 
-7. Set the following conditions and actions (you might need to scroll up or down to see them):
+7. Set the following conditions and actions (you might need to scroll up or down to find them):
     - **Spam**: _Quarantine message_
         - **Select quarantine policy**: _UserNotifyUserRelease_
      - **High confidence spam**: _Quarantine message_
