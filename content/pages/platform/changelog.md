@@ -6,7 +6,7 @@ rss: file
 
 # Changelog
 
-## 5th January 2022
+## 5th January 2023
 * Added support for [Queues](/queues/) producer to Functions
 
 ## 15th December 2022
