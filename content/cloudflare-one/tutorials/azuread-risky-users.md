@@ -80,7 +80,7 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
 3. Navigate to the project directory.
 
     ```sh
-    cd risky-users
+    $ cd risky-users
     ```
 
 4. Modify `wrangler.toml` to include the following values:
@@ -88,22 +88,20 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
     - `<TENANT_ID>`: your Azure AD **Directory (tenant) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
     - `<CLIENT_ID>`: your Azure AD **Application (client) ID**, obtained when [setting up Azure AD as an identity provider](#1-set-up-azure-ad-as-an-identity-provider).
 
-    ```txt
+    ```toml
     ---
     filename: wrangler.toml
     ---
     name = "risky-users"
-    type = "javascript"
-
-    account_id = "<ACCOUNT_ID>"
+    compatibility_date = "2023-01-04"
+    main = "src/index.js"
     workers_dev = false
-    route = ""
-    zone_id = ""
-    compatibility_date = "2022-05-16"
+
+    account_id = "<ACCOUNT-ID>"
 
     [vars]
-    AZURE_AD_TENANT_ID="<TENANT-ID>"
-    AZURE_AD_CLIENT_ID="<CLIENT-ID>"
+    AZURE_AD_TENANT_ID = "<TENANT-ID>"
+    AZURE_AD_CLIENT_ID = "<CLIENT-ID>"
 
     [triggers]
     crons = ["* * * * *"]
@@ -129,7 +127,7 @@ The [Cron Trigger](/workers/platform/triggers/cron-triggers/) in this example sc
 
 The Worker script will begin executing once per minute. To view realtime logs, run the following command and wait for the script to execute:
 ```sh
-$ wrangler tail -f pretty
+$ wrangler tail --format pretty
 ```
 
 After the initial run, the auto-generated groups will appear in the Azure AD dashboard.
