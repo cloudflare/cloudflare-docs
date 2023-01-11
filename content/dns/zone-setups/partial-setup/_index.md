@@ -28,3 +28,10 @@ With a partial zone, Cloudflare resolves [DNS records differently](/dns/zone-set
 A partial (`CNAME`) setup requires the proxied hostname to be pointed to Cloudflare via a `CNAME` record. Since [`CNAME` records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`), you can only proxy your zone apex to Cloudflare if your authoritative DNS provider supports [`CNAME` Flattening](/dns/additional-options/cname-flattening/).
 
 If your authoritative DNS provider does not support CNAME Flattening, redirect its traffic — for example, with an `.htaccess` file — to a subdomain proxied to Cloudflare.
+  
+### Limitations
+
+The CNAME setup has two limitations:
+
+* DDOS protection for attacks against DNS infrastructure is only available for the delegated subdomain records.
+* Only subdomains, not the root domain, can use Cloudflare's services. This limitation is imposed by Internet DNS specifications.
