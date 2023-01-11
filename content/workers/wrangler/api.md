@@ -45,7 +45,7 @@ const worker = await unstable_dev(script, options)
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object containing `wrangler dev` configuration settings.
-    *   Include an `experimental` object inside `options` for access to experimental features such as `disableExperimentalWarning`. 
+    *   Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`. 
         *   Set `disableExperimentalWarning` to `true` to disable Wrangler's warning about using `unstable_` prefixed APIs.
 
 {{</definitions>}}
