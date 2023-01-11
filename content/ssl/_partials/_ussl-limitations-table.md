@@ -3,6 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: param1;;param2;;param3
 ---
 
 By default, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) only cover your root domain and one level of subdomain.

@@ -1,23 +1,44 @@
 {{- $filename := default (.Get "file") (.Get 0) -}}
 {{- $dir := (path.Join .Page.Section "_partials") -}}
 {{- $url := (path.Join $dir $filename) -}}
-{{- $dynamicValues := default "" (.Get "dynamicValues") }}
-{{- $conditionalValues := default "" (.Get "conditionalValues") | lower }}
+{{- $parentPagePath := .Page.File.Path -}}
+{{- $sep := ";;" -}}
+
+{{- $parameterValues := default "" (.Get "withParameters") }}
 
 {{- with .Site.GetPage $url -}}
 
   {{- $contentPlaceholder := .Content }}
+  {{- $expectedParams := split .Params.inputParameters $sep -}}
 
-  <!-- If dynamic values are specified in input params, replace throughout partial content -->
-  {{- if ne $dynamicValues "" -}}
-    {{- $dynamicValues = split $dynamicValues "," -}}
+  <!-- If parameter values are specified in input params, replace throughout partial content -->
+  {{- if ne $parameterValues "" -}}
+
+    {{- $parameterValues = split $parameterValues $sep -}}
+
+    {{- if ne (len $expectedParams) (len $parameterValues) -}}
+      {{ errorf "ERROR in page %s:" $parentPagePath }}
+      {{ errorf "- Incorrect number of parameter values when including partial file: %s" .File.Path }}
+      {{ errorf "- Partial has %d parameters: %s" (len $expectedParams) $expectedParams }}
+      {{ errorf "- Got %d parameter values: %s" (len $parameterValues) $parameterValues }}
+    {{- end -}}
     {{- $regexPlaceholder := "" -}}
 
-    {{- range $elem_index, $elem_val := $dynamicValues -}}
+    {{- range $elem_index, $elem_val := $parameterValues -}}
+      {{ $elem_val := ((default "" $elem_val) | markdownify) }}
       {{ $elem_index := add $elem_index 1 | string}}
       {{ $regexPlaceholder = print "\\$" $elem_index }}
       {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
     {{- end -}}
+
+  {{- else -}}
+
+    {{- if ne .Page.Params.inputParameters nil -}}
+      {{ errorf "ERROR in page %s:" $parentPagePath }}
+      {{ errorf "- You must specify input parameter values when including partial file: %s" .File.Path }}
+      {{ errorf "- Partial has %d parameters: %s" (len $expectedParams) $expectedParams }}
+    {{- end -}}
+
   {{- end -}}
 
   {{ $contentPlaceholder | markdownify }}
