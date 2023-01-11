@@ -38,8 +38,8 @@ Use CNI with other products in Cloudflare's suite for additional benefits.
     </tr>
      <tr>
       <td><span style="white-space: nowrap"><a href="https://developers.cloudflare.com/magic-wan/tutorials/secure-web-gateway/">Magic WAN & Gateway</a></span></td>
-      <td><p>Secure Web Gateway inspecting and protecting traffic from your datacenter</p></td>
-      <td><p>Provides a secure connection for outbound datacenter traffic that does not traverse the public Internet</p></td>
+      <td><p>Secure Web Gateway inspecting and protecting traffic from your datacenter.</p></td>
+      <td><p>Provides a secure connection for outbound datacenter traffic that does not traverse the public Internet.</p></td>
     </tr>
     <tr>
       <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/cdn/">CDN</a></span></td>
