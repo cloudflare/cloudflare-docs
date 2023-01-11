@@ -174,7 +174,7 @@ $ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 
 ### `backup create`
 
-Initiate a D1 backup
+Initiate a D1 backup.
 
 ```sh
 $ wrangler d1 backup create <DATABASE_NAME>
