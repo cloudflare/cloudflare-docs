@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Compatibility dates
 layout: compatibility-dates
+rss: file
 outputs:
   - html
   - json
