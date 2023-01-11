@@ -1,7 +1,7 @@
 name: Issue Opened
 
 on:
-  issues:
+  issues:cloudflare-docs/.github/workflows/issue.yml
     types: [opened]
 
 jobs:
