@@ -19,8 +19,8 @@
     {{- if ne (len $expectedParams) (len $parameterValues) -}}
       {{ errorf "ERROR in page %s:" $parentPagePath }}
       {{ errorf "- Incorrect number of parameter values when including partial file: %s" .File.Path }}
-      {{ errorf "- Partial has %d parameters: %s" (len $expectedParams) $expectedParams }}
-      {{ errorf "- Got %d parameter values: %s" (len $parameterValues) $parameterValues }}
+      {{ errorf "- Partial has %d parameters: %q" (len $expectedParams) $expectedParams }}
+      {{ errorf "- Got %d parameter values: %q" (len $parameterValues) $parameterValues }}
     {{- end -}}
     {{- $regexPlaceholder := "" -}}
 
@@ -36,7 +36,7 @@
     {{- if ne .Page.Params.inputParameters nil -}}
       {{ errorf "ERROR in page %s:" $parentPagePath }}
       {{ errorf "- You must specify input parameter values when including partial file: %s" .File.Path }}
-      {{ errorf "- Partial has %d parameters: %s" (len $expectedParams) $expectedParams }}
+      {{ errorf "- Partial has %d parameters: %q" (len $expectedParams) $expectedParams }}
     {{- end -}}
 
   {{- end -}}
