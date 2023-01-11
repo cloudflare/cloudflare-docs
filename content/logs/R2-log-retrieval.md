@@ -89,7 +89,7 @@ The ability to look up a RayID is a two-step process. First, a time range needs 
 
 Indexes will automatically expire after seven days of no usage.
 
-### Specify a time range
+### Index a time range
 
 Before executing your query, you can specify the time range you would like to index in order to narrow down the scope of the query. In the following example, we index one minute of logs stored in the R2 bucket `"cloudflare-logs"` under the prefix `"http_requests/{DATE}"`.
 
