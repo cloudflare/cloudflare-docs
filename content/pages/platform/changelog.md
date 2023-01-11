@@ -1,3 +1,9 @@
+---
+pcx_content_type: changelog
+title: Changelog
+rss: file
+---
+
 # Changelog
 
 ## 12th September 2022
@@ -10,7 +16,7 @@
 
 ## 8th September 2022
 * Support _routes.json
-  * Documentation WIP
+  * Documentation [available here](/pages/platform/functions/routing/#function-invocation-routes)
 
 ## 25th August 2022
 * Logs expiration time increased from 2 weeks to 1 year
@@ -21,7 +27,7 @@
 ## 5th July 2022
 * Added support for .dev.vars in `wrangler pages`
   * This allows to use env vars during your local dev without chaining `--env`s
-  * Wrangler v2.0.16
+  * Requires Wrangler v2.0.16 or higher
 
 ## 13th June 2022
 * Added deltas to `wrangler pages publish`
