@@ -59,6 +59,7 @@ layout: list
         <p>Removes HTTP request headers that may contain the visitor's IP address. Handles the following HTTP request headers:</p>
         <ul>
           <li><code>cf-connecting-ip</code></li>
+          <li><code>x-forwarded-for</code> (refer to the <a href="#visitor-ip-address-in-the-x-forwarded-for-http-header">notes</a> below)</li>
           <li><code>true-client-ip</code></li>
         </ul>
         <p>Unavailable when <strong>Add "True-Client-IP" header</strong> is enabled.</p>
@@ -68,6 +69,16 @@ layout: list
 </table>
 
 {{</table-wrap>}}
+
+### Visitor IP address in the `x-forwarded-for` HTTP header
+
+For the `x-forwarded-for` HTTP request header, enabling **Remove visitor IP headers** will only remove the visitor IP from the header value when Cloudflare receives a request proxied by at least another CDN (content delivery network). In this case, Cloudflare will only keep the IP address of the last proxy.
+
+For example, consider an incoming request proxied by two CDNs (`CDN_1` and `CDN_2`) before reaching the Cloudflare network. The `x-forwarded-for` header would be similar to the following:<br>
+`x-forwarded-for: <VISITOR_IP>, <THIRD_PARTY_CDN_1_IP>, <THIRD_PARTY_CDN_2_IP>`
+
+With **Remove visitor IP headers** enabled, the `x-forwarded-for` header sent to the origin server will be:<br>
+`x-forwarded-for: <THIRD_PARTY_CDN_2_IP>`
 
 ## HTTP response headers
 
