@@ -57,9 +57,16 @@
 
   {{ if or (eq . "folder") (eq . "file") }}
 
- {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
- {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
-{{ end }}
+  {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
+  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
+  
+  {{ else }}
+
+  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
+
+  {{ end }}
+
+
 {{ end }}
 <link rel="icon" href="/favicon-32x32.png"/>
 <link rel="canonical" href="{{ .Context.Permalink }}"/>
