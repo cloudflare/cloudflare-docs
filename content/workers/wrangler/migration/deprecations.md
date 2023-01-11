@@ -34,7 +34,7 @@ Please note a breaking change has been introduced to routes: all Cloudflare dash
 - Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. 
 - Cloudflare dashboard-defined routes are any routes you add manually in the dashboard.
 - If both are defined, only routes defined in `wrangler.toml` will be valid. 
-- To manage routes via the Cloudflare dashboard only, update your `wrangler.toml` file as follows: remove any `route` and `routes` keys and add `workers_dev = false`.
+- To manage routes via the Cloudflare dashboard only, update your `wrangler.toml` file by removing any `route` and `routes` keys and add `workers_dev = false`.
 
 ### New fields
 
