@@ -6,7 +6,7 @@ rss: file
 
 # Changelog
 
-## 2022-01-5
+## 2022-01-05
 
 * Added support for [Queues](/queues/) producer to Functions.
 
