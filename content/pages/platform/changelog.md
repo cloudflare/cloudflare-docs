@@ -7,7 +7,7 @@ rss: file
 # Changelog
 
 ## 5th January 2022
-* Added support for [Queues](https://developers.cloudflare.com/queues/) producer to Functions
+* Added support for [Queues](/queues/) producer to Functions
 
 ## 15th December 2022
 * Updated all API messaging to be more helpful
