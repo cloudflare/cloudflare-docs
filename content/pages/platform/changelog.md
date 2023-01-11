@@ -6,25 +6,25 @@ rss: file
 
 # Changelog
 
-## 5th January 2023
+## 2022-01-5
 
 * Added support for [Queues](/queues/) producer to Functions.
 
-## 15th December 2022
+## 2022-12-15
 
 * Updated all API messaging to be more helpful.
 
-## 1st December 2022
+## 2022-12-01
 
 * Aliased deployments can now be deleted.
   * If using the API, you will need to add the query parameter `force=true`.
 
-## 19th November 2022
+## 2022-11-19
 
 * You can now deep-link to a Pages deployment in the dashboard with `:pages-deployment`.
   * Example: `https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment`.
 
-## 17th November 2022
+## 2022-11-17
 
 * Functions GA
   * Blog post: https://blog.cloudflare.com/pages-function-goes-ga/
@@ -38,16 +38,21 @@ rss: file
   * You can tail within the dash here: https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/functions.
   * Or with Wrangler - `wrangler pages deployment tail`.
 
-## 15th November 2022
+## 2022-11-15
 
 * Service bindings are now available in Functions.
   * [Documentation available here](/pages/platform/functions/bindings/#service-bindings).
 
-## 3rd November 2022
+## 2022-11-03
 
 * Build log now supports ansi color codes.
 
-## 12th September 2022
+## 2022-10-05
+
+* You can now deep-link to a Pages project in the dashboard with `:pages-project`.
+  * Example: `https://dash.cloudflare.com?to=/:account/pages/view/:pages-project`.
+
+## 2022-09-12
 
 * Increased domain limits.
   * Before increase, all plans had a maximum of 10 custom domains per project.
@@ -56,37 +61,32 @@ rss: file
     * Pro - 250 custom domains
     * Business/Enterprise - 500 custom domains
 
-## 8th September 2022
+## 2022-09-08
 
 * Support `_routes.json`.
   * Documentation [available here](/pages/platform/functions/routing/#function-invocation-routes).
 
-## 5th October 2022
-
-* You can now deep-link to a Pages project in the dashboard with `:pages-project`.
-  * Example: `https://dash.cloudflare.com?to=/:account/pages/view/:pages-project`.
-
-## 25th August 2022
+## 2022-08-25
 
 * Build log expiration time increased from 2 weeks to 1 year.
 
-## 8th August 2022
+## 2022-08-08
 
 * R2 and D1 bindings are now supported.
 
-## 5th July 2022
+## 2022-07-05
 
 * Added support for `.dev.vars` in `wrangler pages`.
   * This allows you to use environmental variables during your local development without chaining `--env`s.
   * Requires Wrangler v2.0.16 or higher.
 
-## 13th June 2022
+## 2022-06-13
 
 * Added deltas to `wrangler pages publish`.
   * We now keep track of the files that make up each deployment and intelligently only upload the files that we have not seen. This means that similar subsequent deployments should only need to upload a minority of files and this will hopefully make uploads even faster.
   * Requires Wrangler v2.0.11 or higher.
 
-## 8th June 2022
+## 2022-06-08
 
 * Added branch alias in PR comments.
 ![Branch alias in PR comment](/pages/platform/media/branch_alias_pr_comment.png)
