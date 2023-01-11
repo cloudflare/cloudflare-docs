@@ -29,7 +29,11 @@ Here are common fields that are no longer required.
 
 ## Changes to routes
 
-Please note a breaking change has been introduced to routes: all Cloudflare dashboard-defined routes for your worker will be **deleted upon deployment** if you have any Wrangler-defined routes for that worker.
+{{<Aside type="warning" header="Breaking change for routes">}}
+
+All Cloudflare dashboard-defined routes for your Worker will be deleted upon deployment if you have any Wrangler-defined (`wrangler.toml`) routes for that Worker.
+
+{{</Aside>}}
 
 - Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. 
 - Cloudflare dashboard-defined routes are any routes you add manually in the dashboard.
