@@ -47,7 +47,7 @@ In the above example, TTL is shown in seconds as `300` (or five minutes).
 
 If you are using Cloudflare for DNS, you can leave the [TTL setting as **Auto**](/dns/manage-dns-records/reference/ttl/).
 
-Bellow is a list with instrunctions on how to edit MX records for some popular services:
+Below is a list with instructions on how to edit MX records for some popular services:
 
 - **Cloudflare**: [Set up email records](/dns/manage-dns-records/how-to/email-records/)
 - **GoDaddy**: [Edit an MX Record](https://www.godaddy.com/help/edit-an-mx-record-19235)
@@ -86,10 +86,6 @@ Bellow is a list with instrunctions on how to edit MX records for some popular s
 
     </div>
 6. Select **Save**.
-
-{{<Aside type="note">}}
-Depending on your Office 365 configuration, you may receive a warning indicating that you need to run the `Enable-OrganizationCustomization` cmdlet before you create or modify objects in your Exchange Online organization. Follow the instructions in [section 6](#6-execute-enable-organizationcustomization-if-required) to enable this cmdlet.
-{{</Aside>}}
 
 7. Microsoft recommends disabling SPF Hard fail when an email solution is placed in front of it. Return to the [Anti-spam option](https://security.microsoft.com/antispam).
 
