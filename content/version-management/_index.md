@@ -21,6 +21,12 @@ By using Version Management, you can:
 
 Version Management is available to all Enterprise customers. For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
 
+{{<Aside type="warning" header="Warning">}}
+
+{{<render file="_product-limitations.md">}}
+
+{{</Aside>}}
+
 ## Requirements
 
 To use Version Management, the following must all be true:
