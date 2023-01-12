@@ -8,21 +8,21 @@ meta:
 
 # Use case 1: Deliver emails to Office 365 junk email folder and Admin Quarantine in Area 1
 
-In this tutorial you will learn how to deliver emails to the Office 365 junk email folder, as well as the Amin Quarantine in Area 1.
+In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Area 1.
 
 ## Configure domains
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. Navigate to **Email configuration** > **Domains & Routing** > **Domains**.
+3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring select **...** > **Edit**, and set the following options:
+5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`
     - **Configured as** - `MX Records`
-    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/)
-    - **IP Restrictions** - Leave this field empty
-    - **Outbound TLS** - `Forward all messages over TLS`
-    - **Quarantine Policy** - Check the `MALICIOUS`, `SPAM` and `SPOOF` dispositions
+    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
+    - **IP Restrictions** - Leave this field empty.
+    - **Outbound TLS** - `Forward all messages over TLS`.
+    - **Quarantine Policy** - Check the `MALICIOUS`, `SPAM` and `SPOOF` dispositions.
 
 ## Create quarantine policies
 
@@ -34,8 +34,8 @@ In this tutorial you will learn how to deliver emails to the Office 365 junk ema
 6. Set the **Policy name** to `UserNotifyAdminRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: Choose _Allow recipients to request a message to be released from quarantine_
-    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes
+    - In **Select release action preference**, choose _Allow recipients to request a message to be released from quarantine_.
+    - In **Select additional actions recipients can take on quarantined messages**, select the **Delete** and **Preview** checkboxes.
 
     ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
@@ -99,6 +99,6 @@ In this tutorial you will learn how to deliver emails to the Office 365 junk ema
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
+8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and select **Enable**.
 
 

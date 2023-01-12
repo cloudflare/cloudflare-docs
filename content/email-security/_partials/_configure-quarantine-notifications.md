@@ -7,7 +7,8 @@ _build:
 
 ## Configure quarantine notifications
 
-1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
+To configure quarantine notifications:
+1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/).
 2. Go to **Email & collaboration** > **Policies & rules**.
 3. Select **Threat policies**.
 4. Under **Rules**, select **Quarantine policies**.

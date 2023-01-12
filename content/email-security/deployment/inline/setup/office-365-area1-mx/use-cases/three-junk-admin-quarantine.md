@@ -14,15 +14,15 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. Navigate to **Email configuration** > **Domains & Routing** > **Domains**.
+3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring select **...** > **Edit**, and set the following options:
+5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`
     - **Configured as** - `MX Records`
-    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/)
-    - **IP Restrictions** - Leave this field empty
-    - **Outbound TLS** - `Forward all messages over TLS`
-    - **Quarantine Policy** - Do not check any dispositions
+    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
+    - **IP Restrictions** - Leave this field empty.
+    - **Outbound TLS** - `Forward all messages over TLS`.
+    - **Quarantine Policy** - Do not check any dispositions.
 
 ## Create quarantine policies
 
@@ -34,8 +34,8 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 6. Set the **Policy name** to `UserNotifyAdminRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients to request a message to be released from quarantine_.
-    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
+    - In **Select release action preference**, from the drop-down menu, choose _Allow recipients to request a message to be released from quarantine_.
+    - In **Select additional actions recipients can take on quarantined messages**, select the **Delete** and **Preview** checkboxes.
 
     ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
@@ -115,4 +115,4 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
+14. Select the rule **Area 1 User Quarantine Message** you have just created, and select **Enable**.

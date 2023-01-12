@@ -8,25 +8,25 @@ meta:
 
 # Use case 4: Deliver emails to the user managed quarantine and administrative quarantine
 
-In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (requires administrator release).
+In this tutorial, you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (requires administrator release).
 
 ## Configure domains
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. Navigate to **Email configuration** > **Domains & Routing** > **Domains**.
+3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring select **...** > **Edit**, and set the following options:
+5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`
     - **Configured as** - `MX Records`
-    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/)
-    - **IP Restrictions** - Leave this field empty
+    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
+    - **IP Restrictions** - Leave this field empty.
     - **Outbound TLS** - `Forward all messages over TLS`
-    - **Quarantine Policy** - Do not check any dispositions
+    - **Quarantine Policy** - Do not check any dispositions.
 
 ## Create quarantine policies
 
-1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
+1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/).
 2. Go to **Email & collaboration** > **Policies & rules**.
 3. Select **Threat policies**.
 4. Under **Rules**, select **Quarantine policies**.
@@ -114,7 +114,7 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the us
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **Area 1 User Quarantine Message** you have just created, and **Enable**.
+8. Select the rule **Area 1 User Quarantine Message** you have just created, and select **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
     - **Name**: `Area 1 User Quarantine Message Admin Release`
@@ -130,4 +130,4 @@ In this tutorial you will learn to deliver `Spam` and `Spoof` messages to the us
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **Area 1 User Quarantine Message Admin Release** you have just created, and **Enable**.
+14. Select the rule **Area 1 User Quarantine Message Admin Release** you have just created, and select **Enable**.

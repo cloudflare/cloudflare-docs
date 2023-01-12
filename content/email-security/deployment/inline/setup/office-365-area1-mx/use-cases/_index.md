@@ -15,7 +15,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
 2. Go to **Settings** (the gear icon).
 
-3. Navigate to **Email Configuration** > **Email Policies** > **Link Actions**.
+3. Go to **Email Configuration** > **Email Policies** > **Link Actions**.
 
 4. What you do next depends on if you are an Advantage or Enterprise customer:
     1. If you are an **Advantage customer**:
@@ -39,7 +39,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         </div>
 
-6. Still under **Email Policies**, select **Text add-Ons**.
+6. Under **Email Policies**, select **Text add-Ons**.
 
 7. Select **Edit**.
 
@@ -59,7 +59,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
     </div>
 
-9. Still in the same window, scroll down and enable the following options under **Add Prefix To Body**:
+9. In the same window, scroll down and enable the following options under **Add Prefix To Body**:
     - **Malicious** - Enabled
     - **Suspicious** - Enabled
     - **Spam** - Disabled

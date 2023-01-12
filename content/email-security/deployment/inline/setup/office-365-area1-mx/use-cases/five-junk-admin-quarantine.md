@@ -7,7 +7,7 @@ meta:
 ---
 
 
-# Use case 5: Deliver emails to the user junk email folder and administrative quarantine
+# Use case 5: Deliver emails to the user's junk email folder and administrative quarantine
 
 In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to the user’s junk email folder, and `Malicious`, `Spam`, and `Spoof` messages to the Administrative Quarantine (requires administrator release).
 
@@ -15,9 +15,9 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. Navigate to **Email configuration** > **Domains & Routing** > **Domains**.
+3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring select **...** > **Edit**, and set the following options:
+5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`
     - **Configured as** - `MX Records`
     - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/)
@@ -27,12 +27,13 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 
 ## Configure anti-spam policies
 
+To configure anti-spam policies:
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
 2. Go to **Email & collaboration** > **Policies & rules**.
 3. Select **Threat policies**.
 4. Under **Policies**, select **Anti-spam**.
 5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
-6. In the **Actions** section, scroll down and select **Edit actions**.
+6. In **Actions**, scroll down and select **Edit actions**.
 
     <div class="large-img">
 
@@ -60,6 +61,7 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 
 ## Create transport rules
 
+To create transport rules:
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
@@ -93,4 +95,4 @@ In this tutorial you will learn to deliver `Suspicious` and `Bulk` messages to t
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **Area 1 Admin Managed Host Quarantine** you have just created, and **Enable**.
+14. Select the rule **Area 1 Admin Managed Host Quarantine** you have just created, and select **Enable**.
