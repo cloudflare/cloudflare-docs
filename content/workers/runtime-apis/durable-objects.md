@@ -413,7 +413,7 @@ This method always returns the stub immediately, before it has connected to the 
 
 #### Providing a location hint
 
-Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `get`. To manually create Durable Obkects in another location, provide an optional `locationHint` parameter to `get`. Only the first call to `get` for a particular object will respect the hint.
+Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. To manually create Durable Obkects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
 
 ```js
 let stub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });

@@ -33,4 +33,4 @@ Many of these limits will increase during Queues' public beta period. If you hav
 Notes:
 
 * 1 KB is measured as 1000 bytes. Messages can include up to ~100 bytes of internal metadata that counts towards total message limits.
-* Messages in a queue that have not been consumed after four (4) days are deleted from the queue. Queues does not delete messages in the same queue that have not reached this limit.
+* Messages in a queue that have not been consumed after four days are deleted from the queue. Queues does not delete messages in the same queue that have not reached this limit.
