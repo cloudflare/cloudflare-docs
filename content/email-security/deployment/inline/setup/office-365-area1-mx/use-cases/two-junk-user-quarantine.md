@@ -3,28 +3,16 @@ title: 2 - Junk email and user managed quarantine
 pcx_content_type: tutorial
 weight: 2
 meta:
-    title: Use case 2 - Deliver Suspicious and Bulk messages to the user’s junk folder, and Spam and Spoof messages to user managed quarantine
+    title: Junk email and user managed quarantine - Office 365
 ---
 
-# Use case 2: Deliver emails to the junk email folder and user managed quarantine
+# Deliver emails to the junk email folder and user managed quarantine
 
 In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the user’s junk folder, and `Spam` and `Spoof` messages to the user managed quarantine.
 
 ## Configure domains
 
-You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to **Settings** (the gear icon).
-3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
-4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
-    - **Domain** - `<YOUR_DOMAIN>`.
-    - **Configured as** - `MX Records`.
-    - **Forwarding to** - This should match the expected MX record for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
-    - **IP Restrictions** - Leave this field empty.
-    - **Outbound TLS** - `Forward all messages over TLS`.
-    - **Quarantine Policy** - Only `Malicious` should be checked.
+{{<render file="_office365-use-case-configure-domain.md" withParameters="Only `Malicious` should be checked.">}}
 
 ## Create quarantine policies
 

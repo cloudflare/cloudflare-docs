@@ -3,28 +3,16 @@ title: 4 - User managed quarantine and administrative quarantine
 pcx_content_type: tutorial
 weight: 4
 meta:
-    title: Use case 4 - Deliver Spam and Spoof messages to the user managed quarantine, and Malicious messages to the administrative quarantine (this requires an administrator to release the emails)
+    title: User managed quarantine and administrative quarantine - Office 365
 ---
 
-# Use case 4: Deliver emails to the user managed quarantine and administrative quarantine
+# Deliver emails to the user managed quarantine and administrative quarantine
 
 In this tutorial, you will learn to deliver `Spam` and `Spoof` messages to the user managed quarantine, and `Malicious` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ## Configure domains
 
-You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to **Settings** (the gear icon).
-3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
-4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
-    - **Domain** - `<YOUR_DOMAIN>`.
-    - **Configured as** - `MX Records`.
-    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
-    - **IP Restrictions** - Leave this field empty.
-    - **Outbound TLS** - `Forward all messages over TLS`.
-    - **Quarantine Policy** - Do not check any dispositions.
+{{<render file="_office365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
 
 ## Create quarantine policies
 

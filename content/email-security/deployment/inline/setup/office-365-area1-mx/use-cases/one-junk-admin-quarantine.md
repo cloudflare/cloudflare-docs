@@ -3,28 +3,16 @@ title: 1 - Junk email and Area 1 Admin Quarantine
 pcx_content_type: tutorial
 weight: 1
 meta:
-    title: Use case 1 - Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
+    title: Junk email and Area 1 Admin Quarantine - Office 365
 ---
 
-# Use case 1: Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
+# Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
 
 In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Area 1.
 
 ## Configure domains
 
-You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Go to **Settings** (the gear icon).
-3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
-4. Make sure each domain you are onboarding has been added.
-5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
-    - **Domain** - `<YOUR_DOMAIN>`.
-    - **Configured as** - `MX Records`.
-    - **Forwarding to** - This should match the expected MX record for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
-    - **IP Restrictions** - Leave this field empty.
-    - **Outbound TLS** - `Forward all messages over TLS`.
-    - **Quarantine Policy** - Check the `MALICIOUS`, `SPAM` and `SPOOF` dispositions.
+{{<render file="_office365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
 
 ## Create quarantine policies
 
