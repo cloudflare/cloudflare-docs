@@ -13,6 +13,8 @@ In this tutorial, you will learn to deliver `Suspicious` and `Bulk` messages to 
 
 ## Configure domains
 
+You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
+
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
@@ -28,6 +30,7 @@ In this tutorial, you will learn to deliver `Suspicious` and `Bulk` messages to 
 ## Configure anti-spam policies
 
 To configure anti-spam policies:
+
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
 2. Go to **Email & collaboration** > **Policies & rules**.
 3. Select **Threat policies**.
@@ -42,13 +45,13 @@ To configure anti-spam policies:
     </div>
 
 7. Set the following conditions and actions (you might need to scroll up or down to find them):
-    - **Spam**: _Move messages to Junk Email folder_
-    - **High confidence spam**: _Quarantine message_
-        - **Select quarantine policy**: _AdminOnlyAccessPolicy_
-    - **Phishing**: _Quarantine message_
-        - **Select quarantine policy**: _AdminOnlyAccessPolicy_
-     - **High confidence phishing**: _Quarantine message_
-        - **Select quarantine policy**: _AdminOnlyAccessPolicy_
+    - **Spam**: _Move messages to Junk Email folder_.
+    - **High confidence spam**: _Quarantine message_.
+        - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
+    - **Phishing**: _Quarantine message_.
+        - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
+     - **High confidence phishing**: _Quarantine message_.
+        - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
     - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
 
     <div class="large-img">
@@ -61,7 +64,8 @@ To configure anti-spam policies:
 
 ## Create transport rules
 
-To create transport rules:
+To create the transport rules that will send emails with certain dispositions to Area 1:
+
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
@@ -82,13 +86,13 @@ To create transport rules:
 8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-    - **Name**: `Area 1 Admin Managed Host Quarantine`
-    - **Apply this rule if**: _The message headers_ > _includes any of these words_
-        - **Enter text**: `X-Area1Security-Disposition` > **Save**
-        - **Enter words**: `MALICIOUS`, `SPAM`, `SPOOF` > **Add** > **Save**
+    - **Name**: `Area 1 Admin Managed Host Quarantine`.
+    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
+        - **Enter text**: `X-Area1Security-Disposition` > **Save**.
+        - **Enter words**: `MALICIOUS`, `SPAM`, `SPOOF` > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-    - **Do the following**: _Redirect the message to_ > _hosted quarantine_
+    - **Do the following**: _Redirect the message to_ > _hosted quarantine_.
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-hosted-quarantine-case5.png)
 
