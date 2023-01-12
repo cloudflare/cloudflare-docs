@@ -45,7 +45,9 @@ Expiration refers to how long a resource should remain in the cache, and the dir
 
 Cloudflare respects whichever value is higher: the [Browser Cache TTL](/cache/about/edge-browser-cache-ttl/) in Cloudflare or the `max-age` header. You can also simultaneously specify a Cloudflare Edge Cache TTL different than a Browser’s Cache TTL respectively via the `s-maxage` and `max-age` Cache-Control headers.
 
-When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache-Control off and `max-age=0`, Cloudflare settings bypass cache. Setting `no-cache` also bypasses cache.
+When using Origin Cache-Control and setting `max-age=0`, Cloudflare prefers to cache and revalidate. With Origin Cache-Control off and `max-age=0`, Cloudflare will bypass cache. Setting `no-cache` bypasses cache regardless of the Origin Cache-Control setting.
+
+When setting `no-cache` with Origin Cache-Control off, Cloudflare does not cache. When setting `no-cache` with Origin Cache-Control on, Cloudflare caches and revalidates. 
 
 {{</Aside>}}
 
