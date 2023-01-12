@@ -22,7 +22,7 @@ You first need to configure the domains you are onboarding on the Area 1 dashboa
 5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
     - **Domain** - `<YOUR_DOMAIN>`.
     - **Configured as** - `MX Records`.
-    - **Forwarding to** - This should match the expected MX for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
+    - **Forwarding to** - This should match the expected MX record for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
     - **IP Restrictions** - Leave this field empty.
     - **Outbound TLS** - `Forward all messages over TLS`.
     - **Quarantine Policy** - Do not check any dispositions.
