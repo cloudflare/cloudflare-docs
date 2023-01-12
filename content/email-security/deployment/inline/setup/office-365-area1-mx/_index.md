@@ -4,10 +4,10 @@ pcx_content_type: tutorial
 weight: 1
 layout: single
 meta:
-   title: Deploy and configure Microsoft Office 365 with Area 1 as MX Record
+   title: Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
 ---
 
-# Deploy and configure Microsoft Office 365 with Area 1 as MX Record
+# Deploy and configure Microsoft Office 365 with Area 1 as the MX Record
 
 ![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/inline-setup/o365-area1-mx/office365-mx.png)
 
