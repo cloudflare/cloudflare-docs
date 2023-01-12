@@ -6,7 +6,7 @@ meta:
     title: Use case 2 - Deliver Suspicious and Bulk messages to the user’s junk folder, and Spam and Spoof messages to user managed quarantine
 ---
 
-# Use case 2: Deliver emails to junk email folder and user managed quarantine
+# Use case 2: Deliver emails to the junk email folder and user managed quarantine
 
 In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the user’s junk folder, and `Spam` and `Spoof` messages to the user managed quarantine.
 

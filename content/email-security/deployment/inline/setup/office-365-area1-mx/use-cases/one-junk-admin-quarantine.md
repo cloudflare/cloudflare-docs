@@ -3,10 +3,10 @@ title: 1 - Junk email and Area 1 Admin Quarantine
 pcx_content_type: tutorial
 weight: 1
 meta:
-    title: Use case one - Deliver emails to junk email folder and Admin Quarantine in Area 1
+    title: Use case 1 - Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
 ---
 
-# Use case 1: Deliver emails to Office 365 junk email folder and Admin Quarantine in Area 1
+# Use case 1: Deliver emails to the junk email folder in Office 365 and Admin Quarantine in Area 1
 
 In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Area 1.
 
