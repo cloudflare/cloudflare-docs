@@ -10,8 +10,8 @@ Before enabling Cache Deception Armor, please refer to [Cache Deception Armor](/
 To enable Cache Deception Armor, you need to start by creating a Page Rule. Follow the steps bellow for guidance:
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2.  Click **Rules**.
-3.  From the **Page Rules** tab, click **Create Page Rule**.
+2.  Select **Rules**.
+3.  From the **Page Rules** tab, select **Create Page Rule**.
 4.  Enter the URL information and choose the **Cache Deception Armor** setting.
 5.  Toggle the button to **enabled**.
-6.  Click **Save and Deploy** when you are done.
+6.  Select **Save and Deploy** when you are done.

@@ -27,7 +27,7 @@ To choose the default, unbranded waiting room:
 
 1.  Select a waiting room.
 2.  Go to the **Customization** step.
-3.  Click **Default Waiting Room**.
+3.  Select **Default Waiting Room**.
 4.  Select the language for your waiting room default page.
 
 ### Custom waiting room
@@ -38,20 +38,20 @@ To customize a waiting room:
 
 1.  Select a waiting room.
 2.  Go to the **Customization** step.
-3.  Click **Custom Waiting Room**.
+3.  Select **Custom Waiting Room**.
 
 You can edit the HTML code directly in the text box:
 
-- Click **Download Template** to download a HTML file containing the default template content to your computer.
-- Click **Download** to download a HTML file containing the text box content to your computer.
-- Click **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
+- Select **Download Template** to download a HTML file containing the default template content to your computer.
+- Select **Download** to download a HTML file containing the text box content to your computer.
+- Select **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
 
 The template text contains [code to display the wait time](#display-wait-time). If you want to display the estimated wait time to visitors, do not delete this content.
 
 #### Upload an HTML file
 
-1.  Click **Import** to upload a HTML file from your computer.
-2.  Select the file in the dialog and click **Open**.
+1.  Select **Import** to upload a HTML file from your computer.
+2.  Select the file in the dialog and select **Open**.
 
 Make further edits in the text box. Include the [code to display the wait time](#display-wait-time) to display the estimated queue time on the waiting room page or create your own custom page using [available variables](#available-variables).
 
@@ -113,7 +113,7 @@ To preview the appearance of a waiting room:
 1.  In your application, go to **Traffic** > **Waiting Rooms**.
 2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
-4.  Click **Preview Waiting Room**:
+4.  Select **Preview Waiting Room**:
 
 - Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
 - Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
