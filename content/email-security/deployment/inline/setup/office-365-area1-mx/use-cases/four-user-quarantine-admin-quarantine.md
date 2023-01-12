@@ -38,8 +38,8 @@ To create quarantine policies:
 6. Set the **Policy name** to `UserNotifyUserRelease`.
 7. Select **Next**.
 8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients to release a message from quarantine_.
-    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
+    - In **Select release action preference**, from the drop-down menu, choose _Allow recipients to release a message from quarantine_.
+    - In **Select additional actions recipients can take on quarantined messages**, select the **Delete** and **Preview** checkboxes.
 
     ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-allow-message-release.png)
 
@@ -52,8 +52,8 @@ To create quarantine policies:
 15. Set the **Policy name** to `UserNotifyAdminRelease`.
 16. Select **Next**.
 17. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**: From the drop-down menu, choose _Allow recipients to request a message to be released from quarantine_.
-    - In **Select additional actions recipients can take on quarantined messages**: Select the **Delete** and **Preview** checkboxes.
+    - In **Select release action preference**, from the drop-down menu, choose _Allow recipients to request a message to be released from quarantine_.
+    - In **Select additional actions recipients can take on quarantined messages**, select the **Delete** and **Preview** checkboxes.
 
     ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
@@ -66,6 +66,8 @@ To create quarantine policies:
 {{<render file="_configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
+
+To configure anti-spam policies:
 
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
 2. Go to **Email & collaboration** > **Policies & rules**.
@@ -81,14 +83,14 @@ To create quarantine policies:
     </div>
 
 7. Set the following conditions and actions (you might need to scroll up or down to find them):
-    - **Spam**: _Quarantine message_
-        - **Select quarantine policy**: _UserNotifyUserRelease_
-     - **High confidence spam**: _Quarantine message_
-        - **Select quarantine policy**: _UserNotifyAdminRelease_
-    - **Phishing**: _Quarantine message_
-        - **Select quarantine policy**: _UserNotifyAdminRelease_
-    - **High confidence phishing**: _Quarantine message_
-        - **Select quarantine policy**: _UserNotifyAdminRelease_
+    - **Spam**: _Quarantine message_.
+        - **Select quarantine policy**: _UserNotifyUserRelease_.
+     - **High confidence spam**: _Quarantine message_.
+        - **Select quarantine policy**: _UserNotifyAdminRelease_.
+    - **Phishing**: _Quarantine message_.
+        - **Select quarantine policy**: _UserNotifyAdminRelease_.
+    - **High confidence phishing**: _Quarantine message_.
+        - **Select quarantine policy**: _UserNotifyAdminRelease_.
     - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
 
     <div class="large-img">
@@ -101,17 +103,19 @@ To create quarantine policies:
 
 ## Create transport rules
 
+To create the transport rules that will send emails with certain dispositions to Area 1:
+
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
 4. Set the following rule conditions:
-    - **Name**: `Area 1 User Quarantine Message`
-    - **Apply this rule if**: _The message headers_ > _includes any of these words_
-        - **Enter text**: `X-Area1Security-Disposition` > **Save**
-        - **Enter words**: `SPAM`, `SPOOF` > **Add** > **Save**
+    - **Name**: `Area 1 User Quarantine Message`.
+    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
+        - **Enter text**: `X-Area1Security-Disposition` > **Save**.
+        - **Enter words**: `SPAM`, `SPOOF` > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-    - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_
+    - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_.
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules-case4.png)
 
@@ -121,13 +125,13 @@ To create quarantine policies:
 8. Select the rule **Area 1 User Quarantine Message** you have just created, and select **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-    - **Name**: `Area 1 User Quarantine Message Admin Release`
-    - **Apply this rule if**: _The message headers_ > _includes any of these words_
-        - **Enter text**: `X-Area1Security-Disposition` > **Save**
-        - **Enter words**: `MALICIOUS` > **Add** > **Save**
+    - **Name**: `Area 1 User Quarantine Message Admin Release`.
+    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
+        - **Enter text**: `X-Area1Security-Disposition` > **Save**.
+        - **Enter words**: `MALICIOUS` > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-    - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_
+    - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_.
 
     ![Select the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step10-admin-release-case4.png)
 
