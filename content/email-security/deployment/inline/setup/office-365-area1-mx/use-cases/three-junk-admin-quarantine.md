@@ -28,6 +28,8 @@ You first need to configure the domains you are onboarding on the Area 1 dashboa
 
 ## Create quarantine policies
 
+To create quarantine policies:
+
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
 2. Go to **Email & collaboration** > **Policies & rules**.
 3. Select **Threat policies**.
