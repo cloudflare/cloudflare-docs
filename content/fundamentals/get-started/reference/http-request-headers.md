@@ -14,7 +14,7 @@ This header will only be sent on the traffic from Cloudflare's edge to your orig
 
 For guidance on logging your visitor’s original IP address, refer to [Restoring original visitor IPs](https://support.cloudflare.com/hc/articles/200170786).
 
-Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
+Alternatively, if you do not wish to receive the `CF-Connecting-IP` header, enable the [**Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/reference/).
 
 ## CF-Connecting-IPv6
 
