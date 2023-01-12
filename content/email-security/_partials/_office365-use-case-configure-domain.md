@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1
+inputParameters: quarantinePolicy
 ---
 
 You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
