@@ -50,7 +50,7 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 5.  Enter the appropriate value(s) in the text field using the format shown in the example.
 6.  Perform any additional instructions to complete the form.
 7.  Review your entries.
-8.  Click **Purge**.
+8.  Select **Purge**.
 
 ## Purge everything
 
@@ -162,7 +162,7 @@ Purging by prefix is useful in different scenarios, such as:
     - One prefix per line.
     - Maximum 30 prefixes per API call.
 7.  Enter the appropriate value(s) in the text field using the format shown in the example.
-8.  Click **Purge**.
+8.  Select **Purge**.
 
 {{<Aside type="note" header="API">}}
 

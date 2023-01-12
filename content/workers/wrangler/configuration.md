@@ -590,7 +590,7 @@ local_protocol = "http"
 
 ### Environmental variables
 
-When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`.
+When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
@@ -598,7 +598,7 @@ This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 ---
 header: .dev.vars
 ---
-SECRET_KEY = "value"
+SECRET_KEY=value
 ```
 
 ## Node compatibility

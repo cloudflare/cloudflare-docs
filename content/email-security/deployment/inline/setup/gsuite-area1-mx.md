@@ -171,10 +171,10 @@ European customers should update  MX records with Area 1 European hosts:
 
 MX Priority | Host
 --- | --
-`10` | `mailstream-eu1.mxrecord.io`
-`20` | `mailstream-east.mxrecord.io`
-`20` | `mailstream-west.mxrecord.io`
-`50` | `mailstream-central.mxrecord.mx`
+`5` | `mailstream-eu1.mxrecord.io`
+`10` | `mailstream-east.mxrecord.io`
+`10` | `mailstream-west.mxrecord.io`
+`20` | `mailstream-central.mxrecord.mx`
 
 The European region will be the primary MX, with a fail-over to the US regions. If you wish to exclusively use the European region, update with only the European host.
 

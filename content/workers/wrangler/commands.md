@@ -11,6 +11,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+- [`d1`](#d1) - Interact with D1.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete) - Delete your Worker from Cloudflare.
@@ -50,12 +51,12 @@ Flags:
 
 ---
 
-## docs 
+## docs
 
 Open the Cloudflare developer documentation in your default browser.
 
 ```sh
-$ wrangler docs [COMMAND] 
+$ wrangler docs [COMMAND]
 ```
 
 {{<definitions>}}
@@ -82,7 +83,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 - `--from-dash` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`
   - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-{{</definitions>}}
+    {{</definitions>}}
 
 ---
 
@@ -101,6 +102,134 @@ $ wrangler generate [name] [template]
 - `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
 
+{{</definitions>}}
+
+---
+
+## d1
+
+Interact with Cloudflare's D1 service.
+
+{{<Aside type="note">}}
+D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+{{</Aside>}}
+
+### `create`
+
+Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler d1 create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new D1 database.
+
+{{</definitions>}}
+
+### `list`
+
+List all D1 databases in your account.
+
+```sh
+$ wrangler d1 list
+```
+
+### `delete`
+
+Delete a D1 database.
+
+```sh
+$ wrangler d1 delete <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to delete.
+
+{{</definitions>}}
+
+### `execute`
+
+Execute a query on a D1 database.
+
+```sh
+$ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to execute a query on.
+- `--command` {{<type>}}string{{</type>}} 
+  - The SQL query you wish to execute.
+- `--file` {{<type>}}string{{</type>}} 
+  - Path to the SQL file you wish to execute.
+- Note that you must provide either `--command` or `--file` for this command to run successfully.
+{{</definitions>}}
+
+
+### `backup create`
+
+Initiate a D1 backup.
+
+```sh
+$ wrangler d1 backup create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to backup.
+{{</definitions>}}
+
+### `backup list`
+
+List all available backups.
+
+```sh
+$ wrangler d1 backup list <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to list the backups of.
+{{</definitions>}}
+
+### `backup restore`
+
+Restore a backup into a D1 database.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to restore the backup into.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to restore.
+{{</definitions>}}
+
+### `backup download`
+
+Download existing data to your local machine.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to download the backup of.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to download.
 {{</definitions>}}
 
 ---
@@ -186,7 +315,7 @@ When working on Wrangler, you need to satisfy [`workerd`](https://github.com/clo
 - On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
 - On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
 {{</Aside>}}
-      
+
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
@@ -306,7 +435,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 {{</definitions>}}
 
@@ -890,7 +1019,7 @@ $ wrangler r2 object put <OBJECTPATH> [OPTIONS]
   - Specifies caching behavior along the request/reply chain.
 - `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The date and time at which the object is no longer cacheable.
-{{</definitions>}}
+    {{</definitions>}}
 
 ### `delete`
 
