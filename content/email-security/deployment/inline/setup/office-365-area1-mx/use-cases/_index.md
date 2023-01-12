@@ -18,7 +18,7 @@ Before following our use case tutorials, read through this how-to guide related 
 3. Go to **Email Configuration** > **Email Policies** > **Link Actions**.
 
 4. What you do next depends on if you are an Advantage or Enterprise customer:
-    1. If you are an **Advantage customer**:
+    1. If you are an **Advantage** customer:
         1. In **Disposition Actions**, select **Edit**.
         2. In the `SUSPICIOUS` disposition drop-down menu, change the action to `URL Defang`.
 
@@ -30,7 +30,7 @@ Before following our use case tutorials, read through this how-to guide related 
 
         3. Select **Save Disposition Actions**.
 
-    1. If you are an **Enterprise customer**:
+    1. If you are an **Enterprise** customer:
         1. Enable **Email Link Isolation**.
 
         <div class="large-img">
@@ -44,13 +44,13 @@ Before following our use case tutorials, read through this how-to guide related 
 7. Select **Edit**.
 
 8. Enable the following options under **Add Prefix To Subject**:
-    - **Malicious** - Enabled
-    - **Suspicious** - Enabled
-    - **Spam** - Enabled
-    - **Bulk** - Enabled
-    - **Spoof** - Enabled
-    - **Originated Outside of Company** - Optional
-    - **Contains Encrypted Content** - Optional
+    - **Malicious** - Enabled.
+    - **Suspicious** - Enabled.
+    - **Spam** - Enabled.
+    - **Bulk** - Enabled.
+    - **Spoof** - Enabled.
+    - **Originated Outside of Company** - Optional.
+    - **Contains Encrypted Content** - Optional.
     - **Subject Prefix** - Format as desired.
 
     <div class="large-img">
@@ -60,12 +60,12 @@ Before following our use case tutorials, read through this how-to guide related 
     </div>
 
 9. In the same window, scroll down and enable the following options under **Add Prefix To Body**:
-    - **Malicious** - Enabled
-    - **Suspicious** - Enabled
-    - **Spam** - Disabled
-    - **Bulk** - Disabled
-    - **Spoof** - Enabled
-    - **Originated Outside of Company** - Optional
+    - **Malicious** - Enabled.
+    - **Suspicious** - Enabled.
+    - **Spam** - Disabled.
+    - **Bulk** - Disabled.
+    - **Spoof** - Enabled.
+    - **Originated Outside of Company** - Optional.
     - **Body Prefix** - Format as desired. You can use the default settings. The body prefix supports HTML tags for formatting.
 
     <div class="large-img">
