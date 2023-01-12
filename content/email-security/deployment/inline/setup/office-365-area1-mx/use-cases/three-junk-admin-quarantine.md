@@ -12,6 +12,8 @@ In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages
 
 ## Configure domains
 
+You first need to configure the domains you are onboarding on the Area 1 dashboard. To configure your domains:
+
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
