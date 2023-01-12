@@ -193,7 +193,7 @@ zaraz.ecommerce('Order Completed', {
   order_id: '817286897056801',
   affiliation: 'affiliate.com',
   total: 30.0,
-  revenue: 25.0,
+  revenue: 20.0,
   shipping: 3,
   tax: 2,
   discount: 5,
