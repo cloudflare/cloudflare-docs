@@ -7,6 +7,10 @@ weight: 5
 
 # Egress policies
 
+{{<Aside type="note">}}
+Only available on Enterprise plans.
+{{</Aside>}}
+
 When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise customers can purchase [dedicated egress IPs](/cloudflare-one/policies/filtering/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
