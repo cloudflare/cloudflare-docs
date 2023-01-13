@@ -4,9 +4,7 @@
 
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
-{{ $raw_summary := index (split (index (split .Context.Content "</p>") 0) "<p>") 1 | plainify | htmlUnescape | chomp }}
-{{ $summary := replaceRE `External link icon\s+Open external link\s?` "" $raw_summary }}
-{{- $description:= truncate 160 (default $META.description (default $summary .Context.Params.meta.description)) -}}
+{{- $description := (partial "seo-meta-description.html" (dict "meta" $META "content" .Context.Content "params" .Context.Params "truncate" 160 )) -}}
 
 {{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
 {{- $contentPath :=  replaceRE `\/$` "" .Context.RelPermalink -}}

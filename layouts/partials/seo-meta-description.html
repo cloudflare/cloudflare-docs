@@ -1,0 +1,5 @@
+{{ $raw_summary := index (split (index (split .content "</p>") 0) "<p>") 1 | plainify }}
+{{ $summary := replaceRE `External link icon\s+Open external link\s?` "" $raw_summary | htmlUnescape | safeHTML }}
+{{- $description:= truncate .truncate (default .meta.description (default $summary .params.meta.description)) -}}
+
+{{ return $description }}
