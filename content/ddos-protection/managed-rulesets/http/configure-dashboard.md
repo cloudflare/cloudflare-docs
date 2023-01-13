@@ -29,7 +29,7 @@ For more information on the available parameters and allowed values, refer to [M
 5. If you are an Enterprise customer with the Advanced DDoS Protection subscription:
 
     1. Under **Override scope**, review the scope of the override — by default, all incoming requests for the current zone.
-    2. If necessary, select **Edit scope** and configure the custom filter expression that will determine the override scope.
+    2. If necessary, select **Edit scope** and configure the [custom filter expression](/ddos-protection/managed-rulesets/http/override-expressions/) that will determine the override scope.
 
 6. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
