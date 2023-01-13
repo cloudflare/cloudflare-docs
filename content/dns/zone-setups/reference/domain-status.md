@@ -31,8 +31,8 @@ If your domain's status changes, you will receive an email at the address associ
 
 ## Domain removal
 
-If domains remain in the **Pending Nameserver Update** or **Moved** status for too long, Cloudflare automatically removes them from your account and the Cloudflare network.
+If domains remain in the **Pending Nameserver Update** or **Moved** status for too long, Cloudflare automatically [removes them](https://support.cloudflare.com/hc/articles/221327488) from your account and the Cloudflare network.
 
-If you want to manually remove a domain from Cloudflare, follow the instructions in our [Knowledgebase](https://support.cloudflare.com/hc/articles/360033554252).
+You can also [manually remove a domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
 
 If you need to re-add a domain to your account, follow the [regular onboarding flow](/fundamentals/get-started/setup/add-site/).
