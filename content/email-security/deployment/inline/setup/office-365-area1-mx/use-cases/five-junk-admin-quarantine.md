@@ -12,7 +12,7 @@ In this tutorial, you will learn to deliver `Suspicious` and `Bulk` messages to 
 
 ## Configure domains
 
-{{<render file="_office365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
+{{<render file="_o365-use-case-configure-domain.md" withParameters="Do not check any dispositions.">}}
 
 ## Configure anti-spam policies
 
