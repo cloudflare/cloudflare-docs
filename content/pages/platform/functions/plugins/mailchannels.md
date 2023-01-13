@@ -70,6 +70,19 @@ The `method` and `action` attributes of the HTML form do not need to be set. The
 
 For more information about MailChannels and the options they support, refer to [the documentation](https://mailchannels.zendesk.com/hc/en-us/articles/4565898358413-Sending-Email-from-Cloudflare-Workers-using-MailChannels-Send-API).
 
+## SPF support for MailChannels
+
+For example, if you want to use both MailChannels and Cloudflare Email Routing, you should follow the steps below in the Cloudflare dashboard:
+
+1. In Account Home, select the website you would like to add a SPF record. 
+2. In the menu on the left select **DNS** > **Records** > **Add Record**.
+3. In the dropdown menu, select **TXT** as the type of record.  
+4. Enter the SPF record below into your DNS server as a text (`TXT`) entry. This must be on the root (`@`) of the domain. (You currently cannot send mail from a subdomain.)
+
+```
+v=spf1 include:_spf.mx.cloudflare.net include:relay.mailchannels.net -all
+```
+
 ## DKIM support for Mailchannels API
 
 The MailChannels API also allows you add a DomainKeys Identified Mail (DKIM) credential to your DNS records. DKIM is an email authentication standard that helps you to sign email messages from your domain with a digital signature using public-key cryptography. Refer to [Cloudflare DNS DKIM guide](https://www.cloudflare.com/en-ca/learning/dns/dns-records/dns-dkim-record/) to learn more.
