@@ -39,7 +39,7 @@ To create quarantine policies:
 
 ## Configure quarantine notifications
 
-{{<render file="_configure-quarantine-notifications.md">}}
+{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 
