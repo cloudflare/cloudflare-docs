@@ -2,14 +2,14 @@
 pcx_content_type: configuration
 title: Egress policies
 layout: single
-weight: 2
+weight: 5
 ---
 
 # Egress policies
 
-Egress policies allow you to control which [dedicated egress IP](/cloudflare-one/policies/filtering/dedicated-egress-ips/) is used and when, based on attributes such as identity, application, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
+When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise customers can purchase [dedicated egress IPs](/cloudflare-one/policies/filtering/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
-To configure an egress policy, login to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **Gateway** > **Egress policies**.
+Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
 
 ## Example
 
@@ -39,10 +39,6 @@ Choose one of the following options for your egress policy:
 
 Gateway matches egress traffic against the following selectors, or criteria:
 
-### Application
-
-{{<render file="gateway/_application.md" withParameters="egress">}}
-
 ### Destination Continent
 
 {{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
@@ -70,14 +66,6 @@ Gateway matches egress traffic against the following selectors, or criteria:
 ### Proxy Endpoint
 
 {{<render file="gateway/_proxy-endpoint.md">}}
-
-### SNI
-
-{{<render file="gateway/_sni.md">}}
-
-### SNI Domain
-
-{{<render file="gateway/_sni-domain.md">}}
 
 ### Source Continent
 
