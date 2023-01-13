@@ -16,38 +16,7 @@ In this tutorial, you will learn to deliver `Suspicious` and `Bulk` messages to 
 
 ## Configure anti-spam policies
 
-To configure anti-spam policies:
-
-1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/).
-2. Go to **Email & collaboration** > **Policies & rules**.
-3. Select **Threat policies**.
-4. Under **Policies**, select **Anti-spam**.
-5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
-6. In **Actions**, scroll down and select **Edit actions**.
-
-    <div class="large-img">
-
-    ![Go to Actions and find Edit actions](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
-
-    </div>
-
-7. Set the following conditions and actions (you might need to scroll up or down to find them):
-    - **Spam**: _Move messages to Junk Email folder_.
-    - **High confidence spam**: _Quarantine message_.
-        - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
-    - **Phishing**: _Quarantine message_.
-        - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
-     - **High confidence phishing**: _Quarantine message_.
-        - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
-    - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
-
-    <div class="large-img">
-
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step7-adminonly-case5.png)
-
-    </div>
-
-8. Select **Save**.
+{{<render file="_o365-use-cases-antispam.md" withParameters="_AdminOnlyAccessPolicy_;;_AdminOnlyAccessPolicy_;;_AdminOnlyAccessPolicy_;;step7-adminonly-case5.png">}}
 
 ## Create transport rules
 
