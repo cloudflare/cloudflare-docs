@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ruleName;;ruleWords;;doFollowing;;img;;ruleName2;;ruleWords2;;doFollowing2;img2
+inputParameters: ruleName;;ruleWords;;doFollowing;;img;;ruleName2;;ruleWords2;;doFollowing2;;img2
 ---
 
 To create the transport rules that will send emails with certain dispositions to Area 1:
@@ -20,12 +20,12 @@ To create the transport rules that will send emails with certain dispositions to
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - $3
 
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$4.png)
+    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$4)
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **$1** you have just created, and **Enable**.
+8. Select the rule $1 you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
     - **Name**: $5.
@@ -34,11 +34,11 @@ To create the transport rules that will send emails with certain dispositions to
         - **Enter words**: $6 > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-    - **Do the following**: $7.
+    - **Do the following**: $7
 
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$8.png)
+    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$8)
 
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
-14. Select the rule **$5** you have just created, and select **Enable**.
+14. Select the rule $5 you have just created, and select **Enable**.
