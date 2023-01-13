@@ -23,11 +23,11 @@ For more information on the available parameters and allowed values, refer to [R
 1. In the account home page, open **Network Security** and go to **DDoS** > **Network-layer DDoS Protection**.
 1. Select **Deploy a DDoS override**.
 1. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
-1. If you are creating an override for a subset of the incoming packets, define the expression that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
+1. If you are creating an override for a subset of the incoming packets, define the [custom expression](/ddos-protection/managed-rulesets/network/override-expressions/) that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
 1. Select **Next**, and then select **Next** again.
 1. Enter a name for your override in **Rule description**.
 1. To always apply a given action for all the rules in the ruleset, select an action in **Ruleset action**.
-1. To set the sensitivity for all the rules in the ruleset, select a sensitivity level in **Ruleset sensitivity**.
+1. To set the sensitivity level for all the rules in the ruleset, select a value in **Ruleset sensitivity**.
 1. To save and deploy the override, select **Deploy**. If you are not ready to deploy your override, select **Save as Draft**.
 
 ## Override one or more rules
@@ -40,7 +40,7 @@ For more information on the available parameters and allowed values, refer to [R
 
 1. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
 
-1. If you are creating an override for a subset of the incoming packets, define the expression that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
+1. If you are creating an override for a subset of the incoming packets, define the [custom expression](/ddos-protection/managed-rulesets/network/override-expressions/) that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.
 
 1. Select **Next**.
 
