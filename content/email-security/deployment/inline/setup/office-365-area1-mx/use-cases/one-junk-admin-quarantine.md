@@ -48,6 +48,6 @@ To create the transport rules that will send emails with certain dispositions to
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and select **Enable**.
+8. Select the rule `Area 1 Deliver to Junk Email folder` you have just created, and select **Enable**.
 
 
