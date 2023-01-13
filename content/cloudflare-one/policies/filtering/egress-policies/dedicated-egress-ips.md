@@ -22,7 +22,7 @@ To start routing traffic through dedicated egress IPs:
 3. Enable **Proxy** for TCP.
 4. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
 
-Dedicated egress IPs are now enabled for all network and HTTP traffic proxied by Gateway. To selectively enable dedicated egress IPs for a subset of your traffic, refer to [egress policies](/cloudflare-one/policies/filtering/dedicated-egress-ips/egress-policies/).
+Dedicated egress IPs are now enabled for all network and HTTP traffic proxied by Gateway. To selectively enable dedicated egress IPs for a subset of your traffic, refer to [egress policies](/cloudflare-one/policies/filtering/egress-policies/).
 
 ## Verify egress IPs
 
@@ -52,7 +52,7 @@ These origins will see the default shared IPs instead of the dedicated egress IP
 
 ### IP geolocation
 
-Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/filtering/dedicated-egress-ips/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
+Your egress traffic will geolocate to the city selected in your [egress policies](/cloudflare-one/policies/filtering/egress-policies/). If the traffic does not match an egress policy, IP geolocation defaults to the closest dedicated egress location to the user.
 
 When you enable dedicated egress IPs, Gateway updates the [MaxMind GeoIP2 database](https://www.maxmind.com/en/geoip2-services-and-databases). Other websites such as Google will check the MaxMind database to geolocate a user's source IP. This process can take anywhere from one week to up to four weeks. For example, if your users are in India, they would get a U.S. Google landing page instead of the Indian Google landing page until Google picks up the updated IP geolocation.
 
@@ -64,7 +64,7 @@ To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](
 
 #### IPv4
 
-To physically egress from a specific location, traffic must be proxied to Cloudflare via IPv4. The end user connects to the nearest Cloudflare data center, but Cloudflare will internally route their traffic to egress from the dedicated location configured in your [egress policies](/cloudflare-one/policies/filtering/dedicated-egress-ips/egress-policies/). Therefore, the connected data center shown in the user's WARP client preferences may not match their actual egress location.
+To physically egress from a specific location, traffic must be proxied to Cloudflare via IPv4. The end user connects to the nearest Cloudflare data center, but Cloudflare will internally route their traffic to egress from the dedicated location configured in your [egress policies](/cloudflare-one/policies/filtering/egress-policies/). Therefore, the connected data center shown in the user's WARP client preferences may not match their actual egress location.
 
 We are able to offer better IPv4 performance when users visit domains proxied by Cloudflare (also known as an [orange-clouded](/dns/manage-dns-records/reference/proxied-dns-records/) domain). In this scenario, IPv4 traffic will physically egress from the most performant data center in our network while still appearing to egress from your dedicated location.
 
