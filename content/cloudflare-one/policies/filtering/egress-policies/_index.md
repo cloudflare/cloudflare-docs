@@ -17,11 +17,11 @@ Egress policies allow you to control which dedicated egress IP is used and when,
 
 ## Example
 
-The following egress policy configures all traffic to `example.com` to use a static source IP:
+The following egress policy configures all traffic destined for a third-party network to use a static source IP:
 
 | Policy name | Selector | Operator | Value   | Egress method |
 | ------------| -------- |--------- |---------|  --------------------------- |
-| Access third-party provider | SNI Domain | is     |   `example.com` | Dedicated Cloudflare egress IPs |
+| Access third-party provider | Destination IP | is  |  `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
 
 For the best performance, we recommend creating a catch-all policy to route all other users through the default Zero Trust IP range:
 
