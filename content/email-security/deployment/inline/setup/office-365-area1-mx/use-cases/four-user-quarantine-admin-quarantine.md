@@ -51,6 +51,8 @@ To create quarantine policies:
 21. Review your settings and select **Submit**.
 22. Select **Done**.
 
+## Configure quarantine notifications
+
 {{<render file="_configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
