@@ -60,11 +60,13 @@ To retrieve those values:
 
 ### 2. Configure API permissions in Azure
 
-1. In Azure Active Directory, navigate to **API permissions** and select **Add a permission**.
+1. From the **App registrations** page for your application, navigate to **API permissions**.
 
-2. Select **Microsoft Graph**.
+2. Select **Add a permission**.
 
-3. Select **Delegated permissions** and enable the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
+3. Select **Microsoft Graph**.
+
+4. Select **Delegated permissions** and enable the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
 
     - `email`
     - `offline_access`
@@ -78,9 +80,9 @@ To retrieve those values:
 More narrow permissions may be used, however this is the set of permissions that are tested and supported by Cloudflare.
 {{</Aside>}}
 
-4. Once all seven permissions are enabled, select **Add permissions**.
+5. Once all seven permissions are enabled, select **Add permissions**.
 
-5. Select **Grant admin consent**.
+6. Select **Grant admin consent**.
 
     ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
 
