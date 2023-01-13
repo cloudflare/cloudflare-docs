@@ -12,13 +12,13 @@ To create the transport rules that will send emails with certain dispositions to
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
 4. Set the following rule conditions:
-    - **Name**: $1
-    - **Apply this rule if**: _The message headers_ > _includes any of these words_
-        - **Enter text**: `X-Area1Security-Disposition` > **Save**
-        - **Enter words**: $2 > **Add** > **Save**
+    - **Name**: $1.
+    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
+        - **Enter text**: `X-Area1Security-Disposition` > **Save**.
+        - **Enter words**: $2 > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-    - **Do the following** - $3
+    - **Do the following** - $3.
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$4)
 
@@ -34,7 +34,7 @@ To create the transport rules that will send emails with certain dispositions to
         - **Enter words**: $6 > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-    - **Do the following**: $7
+    - **Do the following**: $7.
 
     ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$8)
 
