@@ -18,23 +18,26 @@ Only available to Enterprise customers with the Advanced DDoS Protection subscri
 
 You can use the following fields in override expressions:
 
+- `cf.client.bot`
+- `cf.threat_score`
+- `http.cookie`
 - `http.host`
 - `http.referer`
-- `http.user_agent`
-- `http.cookie`
-- `http.x_forwarded_for`
-- `http.request.method`
-- `http.request.full_uri`
 - `http.request.uri`
 - `http.request.uri.path`
 - `http.request.uri.query`
+- `http.request.full_uri`
+- `http.request.method`
 - `http.request.version`
-- `http.request.body.raw`
-- `http.request.body.size`
-- `ip.src`
+- `http.request.cookies`
+- `http.user_agent`
+- `http.x_forwarded_for`
 - `ip.geoip.asnum`
 - `ip.geoip.continent`
 - `ip.geoip.country`
-- `cf.threat_score`
+- `ip.geoip.is_in_european_union`
+- `ip.src`
+- `ssl`
+- `cf.tls_client_auth.cert_verified`
 
 Refer to [Fields](/ruleset-engine/rules-language/fields/) in the Rules language documentation for more information.
