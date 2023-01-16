@@ -8,7 +8,7 @@ meta:
 
 # Deliver emails to the junk email folder and administrative quarantine
 
-In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the users’s junk email folder, and `Malicious`, `Spam` and `Spoof` messages to the administrative quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn how to deliver `Suspicious` and `Bulk` messages to the users’s junk email folder, and `Malicious`, `Spam`, and `Spoof` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ## Configure domains
 
