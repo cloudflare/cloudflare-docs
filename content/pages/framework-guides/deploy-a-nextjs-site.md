@@ -52,7 +52,7 @@ export default async function (req) {
 ```
 
 {{</tab>}}
-{{<tab label="ts" default="true">}}
+{{<tab label="ts">}}
 
 ```ts
 ---
