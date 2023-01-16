@@ -12,7 +12,7 @@ Configure the HTTP DDoS Attack Protection managed ruleset by defining [overrides
 
 If you are an Enterprise customer with the Advanced DDoS Protection subscription, you can define a custom expression for each override so that the override only applies to a subset of incoming requests. If you do not have the Advanced DDoS Protection subscription, you can only create one override which will always apply to all incoming requests.
 
-For more information on the available parameters and allowed values, refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
+For more information on the available parameters and allowed values, refer to [Ruleset parameters](/ddos-protection/managed-rulesets/http/override-parameters/).
 
 ## Create a DDoS override
 
@@ -29,7 +29,7 @@ For more information on the available parameters and allowed values, refer to [M
 5. If you are an Enterprise customer with the Advanced DDoS Protection subscription:
 
     1. Under **Override scope**, review the scope of the override — by default, all incoming requests for the current zone.
-    2. If necessary, select **Edit scope** and configure the custom filter expression that will determine the override scope.
+    2. If necessary, select **Edit scope** and configure the [custom filter expression](/ddos-protection/managed-rulesets/http/override-expressions/) that will determine the override scope.
 
 6. Depending on what you wish to override, refer to the following sections (you can perform both configurations on the same override):
 
