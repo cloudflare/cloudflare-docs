@@ -15,7 +15,7 @@ To configure quarantine notifications:
 
      <div class="large-img">
 
-    ![Configure the desired spam notification frequency](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-spam-notifications.png)
+    ![Configure the desired spam notification frequency](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step6-spam-notifications.png)
 
     </div>
 
