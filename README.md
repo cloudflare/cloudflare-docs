@@ -10,7 +10,7 @@ You must have [Hugo](https://gohugo.io) installed on your system and available i
 
 > **Important:** This project is built with version `0.92.2+extended` but `0.92.x` is the minimum required version. You may (probably) use a newer version of Hugo, but will be subject to any Hugo changes.
 
-You must also have a recent version of Node.js (14+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager that is included with `node`'s installation.
+You must also have a recent version of Node.js (14+) installed. You may use [Volta](https://github.com/volta-cli/volta), a Node version manager, to install the latest version of Node and `npm`, which is a package manager included with `node`'s installation.
 
 ```sh
 $ curl https://get.volta.sh | bash
