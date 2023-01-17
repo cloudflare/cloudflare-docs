@@ -8,7 +8,7 @@ meta:
 
 # Set up authenticated origin pulls
 
-To set up authenticated origin pulls - which help ensure requests to your origin server come from the Cloudflare network - choose whether to enable them on [all hostnames in your zone](/ssl/origin-configuration/authenticated-origin-pulls/set-up/zone-level/) or on a [per-hostname basis](/ssl/origin-configuration/authenticated-origin-pulls/set-up/per-hostname/).
+To set up authenticated origin pulls - which help ensure requests to your origin server come from the Cloudflare network - choose whether to enable them on [all hostnames in your zone](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or on a [per-hostname basis](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 ---
 
@@ -18,7 +18,7 @@ To set up authenticated origin pulls - which help ensure requests to your origin
 
 To apply a different client certificates simultaneously at both the zone and hostname level, you can combine zone-level and per-hostname custom certificates.
 
-First set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-pulls/set-up/zone-level/) using a certificate. Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pulls/set-up/per-hostname/).
+First set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) using a certificate. Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 {{<Aside type="note" header="Note">}}
 
