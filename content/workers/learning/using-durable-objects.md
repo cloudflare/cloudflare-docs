@@ -22,7 +22,12 @@ For details on the specific Durable Object APIs, refer to the [Runtime API docum
 
 Durable Objects are named instances of a class you define. Like a class in object-oriented programming, the class defines the methods and data a Durable Object can access.
 
-To start, make sure the [Workers Paid plan](/workers/platform/pricing/#durable-objects) is purchased.
+To start, enable Durable Objects for your account by purchasing Workers Paid:
+
+ 1. Log in to [the Cloudflare dashboard](https://dash.cloudflare.com/).
+ 2. Go to **Workers** and select your Worker. 
+ 3. In your Worker, scroll down to **Durable Objects** **Learn more** > **View Paid Plan**.
+ 4. Select **Purchase Workers Paid** and complete the payment process to enable Durable Objects.
 
 There are three steps to creating and using a Durable Object:
 
