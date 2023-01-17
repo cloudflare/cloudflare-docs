@@ -232,6 +232,68 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
   - The ID of the backup you wish to download.
 {{</definitions>}}
 
+### `migrations create`
+
+Create a new migration. 
+
+This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
+
+`0000_create_user_table.sql`
+
+The filename will include a version number and the migration name you specify below.
+
+```sh
+$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>" 
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to create a migration for.
+- `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A descriptive name for the migration you wish to create.
+{{</definitions>}}
+
+### `migrations list`
+
+View a list of unapplied migration files.
+
+```sh
+$ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to list unapplied migrations for.
+- `--local` {{<type>}}boolean{{</type>}} 
+  - Show the list of unapplied migration files on your locally persisted D1 database.
+{{</definitions>}}
+
+### `migrations apply`
+
+Apply any unapplied migrations.
+
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
+
+The progress of each migration will be printed in the console.
+
+When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
+
+If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
+
+```sh
+$ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to apply your migrations on.
+- `--local` {{<type>}}boolean{{</type>}} 
+  - Execute any unapplied migrations on your locally persisted D1 database.
+{{</definitions>}}
+
 ---
 
 ## dev
