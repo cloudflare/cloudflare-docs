@@ -126,9 +126,9 @@ To experiment with more premade Workers, refer to [Workers Examples](/workers/ex
 
 ## 6. Write test
 
-We recommend writing tests against your worker, one way to do this is with the [unstable_dev](/workers/wrangler/api/#unstable_dev) API in wrangler which is used for writing unit and end-to-end tests.
+We recommend writing tests against your Worker. One way to do this is with the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API in Wrangler. `unstable_dev` is used for writing integration and end-to-end tests.
 
-One of the prompts from running the `wrangler init` command is a question asking `will you like to write your first test`, and `which test runner you will like to use?`. If you indicate yes and select either vitest or jest as your test runner,  an `index.test.js` file will be created with the following block of code included in the file: 
+After running the `wrangler init` command, you will be prompted with questions asking `would you like us to write your first test?`, and `which test runner you will like to use?`. If you indicate yes and select either `vitest` or `jest` as your test runner, an `index.test.js` file will be created with the following block of code included in the file: 
 
 ```js
 const { unstable_dev } = require("wrangler");
@@ -137,11 +137,9 @@ describe("Worker", () => {
 	let worker;
 
 	beforeAll(async () => {
-		worker = await unstable_dev(
-			"src/index.js",
-			{},
-			{ disableExperimentalWarning: true }
-		);
+		worker = await unstable_dev("src/index.js", {
+			experimental: { disableExperimentalWarning: true },
+		});
 	});
 
 	afterAll(async () => {
@@ -160,7 +158,7 @@ describe("Worker", () => {
 
 The code block consists of 4 parts:
 
-1. The import statement `const { unstable_dev } = require("wrangler");`, this initializes the `unstable_dev` API so it can be used in the test suite. The `unstable_dev` function accepts three parameters - `await unstable_dev(script, options, apiOptions)`.
+1. The import statement `const { unstable_dev } = require("wrangler");`, this initializes the `unstable_dev` API so it can be used in the test suite. The `unstable_dev` function accepts two parameters - `await unstable_dev(script, options)`.
 
 2. The `beforeAll()` function for initializing `unstable_dev()`, this helps minimize the overhead required to start the dev server for each individual test, running the dev server for each test will take a longer time to resolve which can end up slowing down the tests.
 
