@@ -12,6 +12,15 @@ meta:
 # Cloudflare R2 documentation
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+Use R2 for: 
+
+- Static hosting
+- R2 as storage for podcast episodes
+- Storage for cloud-native applications
+- Cloud storage for web content
+- Data lakes (analytics and big data)
+- Cloud storage output for large batch processes, such as machine learning model artifacts or data sets
   
 {{<button-group>}}
 {{<button type="primary" href="/r2/get-started/">}}Get started{{</button>}}
