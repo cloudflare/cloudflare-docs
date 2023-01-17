@@ -126,9 +126,9 @@ To experiment with more premade Workers, refer to [Workers Examples](/workers/ex
 
 ## 6. Write test
 
-We recommend writing tests against your worker, one way to do this is with the [unstable_dev](/workers/wrangler/api/#unstable_dev) API in wrangler which is used for writing integration and end-to-end tests.
+We recommend writing tests against your Worker. One way to do this is with the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API in Wrangler. `unstable_dev` is used for writing integration and end-to-end tests.
 
-One of the prompts from running the `wrangler init` command is a question asking `would you like us to write your first test?`, and `which test runner you will like to use?`. If you indicate yes and select either vitest or jest as your test runner, an `index.test.js` file will be created with the following block of code included in the file: 
+After running the `wrangler init` command, you will be prompted with questions asking `would you like us to write your first test?`, and `which test runner you will like to use?`. If you indicate yes and select either `vitest` or `jest` as your test runner, an `index.test.js` file will be created with the following block of code included in the file: 
 
 ```js
 const { unstable_dev } = require("wrangler");
