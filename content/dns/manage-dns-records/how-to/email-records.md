@@ -33,18 +33,17 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       ```bash
       ---
       header: Request
-      highlight: [8, 10]
       ---
       curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
       -H 'x-auth-email: <EMAIL>' \
       -H 'x-auth-key: <API_KEY>' \
       -H "Content-Type: application/json" \
       --data '{
-      "type":"A",
-      "name":"www.example.com",
-      "content":"192.0.2.1",
-      "ttl":3600,
-      "proxied":false
+            "type":"A",
+            "name":"www.example.com",
+            "content":"192.0.2.1",
+            "ttl":3600,
+            "proxied":false
       }'
       ```
 
@@ -54,30 +53,30 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       ---
       {
       "result": {
-      "id": "<ID>",
-      "zone_id": "<ZONE_ID>",
-      "zone_name": "example.com",
-      "name": "www.example.com",
-      "type": "A",
-      "content": "192.0.2.1",
-      "proxiable": true,
-      "proxied": false,
-      "ttl": 1,
-      "locked": false,
-      "meta": {
-            "auto_added": false,
-            "managed_by_apps": false,
-            "managed_by_argo_tunnel": false,
-            "source": "primary"
-      },
-      "comment": null,
-      "tags": [],
-      "created_on": "2023-01-17T20:37:05.368097Z",
-      "modified_on": "2023-01-17T20:37:05.368097Z"
-      },
-      "success": true,
-      "errors": [],
-      "messages": []
+            "id": "<ID>",
+            "zone_id": "<ZONE_ID>",
+            "zone_name": "example.com",
+            "name": "www.example.com",
+            "type": "A",
+            "content": "192.0.2.1",
+            "proxiable": true,
+            "proxied": false,
+            "ttl": 1,
+            "locked": false,
+            "meta": {
+                  "auto_added": false,
+                  "managed_by_apps": false,
+                  "managed_by_argo_tunnel": false,
+                  "source": "primary"
+            },
+            "comment": null,
+            "tags": [],
+            "created_on": "2023-01-17T20:37:05.368097Z",
+            "modified_on": "2023-01-17T20:37:05.368097Z"
+            },
+            "success": true,
+            "errors": [],
+            "messages": []
       }
       ```
 
@@ -103,11 +102,11 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       -H 'x-auth-key: <API_KEY>' \
       -H "Content-Type: application/json" \
       --data '{
-      "type":"MX",
-      "name":"example.com",
-      "content":"mail.example.com",
-      "ttl":3600,
-      "proxied":false
+            "type":"MX",
+            "name":"example.com",
+            "content":"mail.example.com",
+            "ttl":3600,
+            "proxied":false
       }'
       ```
 
