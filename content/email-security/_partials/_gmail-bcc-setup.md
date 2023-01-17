@@ -7,11 +7,11 @@ _build:
 
 1. In the Admin console, go to **Menu** > **Apps** > **Google Workspace** > **Gmail** > **Compliance**.
 
-    ![Select the compliance option](/email-security/static/bcc-setup/gmail/step1-compliance.png)
+    ![Select the compliance option](/email-security/static/api-setup/gmail/step1-compliance.png)
 
 2. Scroll to **Content Compliance** and select **CONFIGURE**.
 
-    ![Select the configure option](/email-security/static/bcc-setup/gmail/step2-configure.png)
+    ![Select the configure option](/email-security/static/api-setup/gmail/step2-configure.png)
 
 3. Add a **Content Compliance** filter and name it `Area 1 - BCC`.
 
@@ -19,7 +19,7 @@ _build:
 
     <div class="large-img">
 
-    ![Choose inbound as the messages to affect](/email-security/static/bcc-setup/gmail/step4-inbound.png)
+    ![Choose inbound as the messages to affect](/email-security/static/api-setup/gmail/step4-inbound.png)
 
     </div>
 
@@ -33,7 +33,7 @@ _build:
 
     <div class="medium-img">
 
-    ![Configure expressions](/email-security/static/bcc-setup/gmail/step5-expressions.png)
+    ![Configure expressions](/email-security/static/api-setup/gmail/step5-expressions.png)
 
     </div>
 
@@ -52,13 +52,13 @@ _build:
  
     <div class="medium-img">
 
-    ![Configure recipients](/email-security/static/bcc-setup/gmail/step6-expressions.png)
+    ![Configure recipients](/email-security/static/api-setup/gmail/step6-expressions.png)
 
     </div>
 
     <div class="medium-img">
 
-    ![Configure headers](/email-security/static/bcc-setup/gmail/step6-headers.png)
+    ![Configure headers](/email-security/static/api-setup/gmail/step6-headers.png)
 
     </div>
 
@@ -68,6 +68,6 @@ _build:
 
     <div class="medium-img">
 
-    ![Configure groups](/email-security/static/bcc-setup/gmail/step7-groups.png)
+    ![Configure groups](/email-security/static/api-setup/gmail/step7-groups.png)
 
     </div>
