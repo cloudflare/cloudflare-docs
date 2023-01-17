@@ -23,15 +23,15 @@ The Application Check device posture attribute checks that a specific applicatio
 
 1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
 
-1. Scroll down to **WARP client checks** and select **Add new**.
+2. Scroll down to **WARP client checks** and select **Add new**.
 
-1. Select **Application Check**.
+3. Select **Application Check**.
 
-1. You will be prompted for the following information:
+4. You will be prompted for the following information:
 
     1. **Name**: Enter a unique name for this device posture check.
     2. **Operating system**: Select your operating system.
-    3. **Application Path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
+    3. **Application path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
 {{<Aside type="note">}}
 
 Be sure to enter the binary file path, not the application launch path. When checking for an application on macOS, a common mistake is to enter `/Applications/ApplicationName.app`. This will not work as `ApplicationName.app` is a folder. The executable file that will be running is located within the folder, for example `ApplicationName.app/Contents/MacOS/ApplicationName`.
@@ -41,11 +41,9 @@ Be sure to enter the binary file path, not the application launch path. When che
 
     5. **SHA-256 (optional)**: Enter the [SHA-256 value](#determine-the-sha-256-value) of the binary. This is used to ensure the integrity of the binary file on the device.
 
-1. Select **Save**.
+5. Select **Save**.
 
 Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the application check is returning the expected results.
-
-
 
 ## Determine the signing thumbprint
 
@@ -62,31 +60,31 @@ When setting up new device posture checks, we recommend first testing them witho
 1. Create a directory.
 
     ```bash
-    ~/Desktop % mkdir tmp
+    ~/Desktop $ mkdir tmp
 
-    ~/Desktop % cd tmp
+    ~/Desktop $ cd tmp
     ```
 
-1. Run the following command to extract certificates for the WARP application:
+2. Run the following command to extract certificates for the WARP application:
 
-    ```bash
-    ~/Desktop/tmp % codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
+    ```sh
+    ~/Desktop/tmp $ codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
     ```
 
-1. Next, run the following command to extract the SHA1 thumbprint:
+3. Next, run the following command to extract the SHA1 thumbprint:
 
-    ```bash
-    ~/Desktop/tmp % openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :
+    ```sh
+    ~/Desktop/tmp $ openssl x509 -inform DER -in codesign0 -fingerprint -sha1 -noout | tr -d :
     SHA1 Fingerprint=FE2C359D79D4CEAE6BDF7EFB507326C6B4E2436E
     ```
 
 ### On Windows
 
 1. Open a PowerShell window.
-1. Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
+2. Use the `Get-AuthenticodeSignature` command to find the thumbprint. For example:
 
-    ```txt
-    Get-AuthenticodeSignature -FilePath c:\myfile.exe
+    ```bash
+    PS C:\>Users\JohnDoe> Get-AuthenticodeSignature -FilePath c:\myfile.exe
     ```
 
 ## Determine the SHA-256 value
@@ -96,7 +94,7 @@ The SHA-256 value almost always changes between versions of a file/application.
 ### On macOS
 
 1. Open a Terminal window.
-1. Use the `shasum` command to find the SHA256 value of the file. For example:
+2. Use the `shasum` command to find the SHA256 value of the file. For example:
 
     ```sh
     $ shasum -a 256 myfile
@@ -105,8 +103,32 @@ The SHA-256 value almost always changes between versions of a file/application.
 ### On Windows
 
 1. Open a PowerShell window.
-1. Use the `get-filehash` command to find the SHA256 value of the file. For example:
+2. Use the `get-filehash` command to find the SHA256 value of the file. For example:
 
-    ```txt
-    get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
+    ```bash
+    PS C:\>Users\JohnDoe> get-filehash -path "C:\myfile.exe" -Algorithm SHA256 | format-list
     ```
+
+## How WARP checks for an application
+
+Learn how the WARP client determines if an application is running on various systems.
+
+### On macOS
+
+To get the list of active processes, run the following command:
+
+```sh
+$ ps -eo comm | xargs which | sort | uniq -u
+```
+
+The application path must appear in the output for the check to pass.
+
+### On Linux
+
+The WARP client gets the list of running binaries by following the soft links in `/proc/<pid>/exe`. To view all active processes and their soft links:
+
+```sh
+$ ps -eo pid | awk '{print "/proc/"$1"/exe"}' | xargs readlink -f | awk '{print $1}' | sort | uniq -u
+```
+
+The application path must appear in the `/proc/<pid>/exe` output for the check to pass.
