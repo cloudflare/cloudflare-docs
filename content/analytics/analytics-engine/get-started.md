@@ -84,7 +84,7 @@ Here is how we represent that as SQL. We are using a custom averaging function t
 ```sql
 SELECT 
   blob1 AS city,
-  SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity
+  SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity
 FROM WEATHER 
 WHERE double1 > 0 
 GROUP BY city 
@@ -95,7 +95,7 @@ LIMIT 10
 You can then perform the query using any HTTP client. Here is an example of doing it using cURL:
 
 ```curl
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
 ```
 
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when developers will be able to name blobs and doubles in their binding, these names will also be available via the SQL API.
@@ -110,7 +110,7 @@ Workers Analytics Engine is optimized for powering time series analytics that ca
 SELECT
   intDiv(toUInt32(timestamp), 300) * 300 AS t, 
   blob1 AS city, 
-  SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity
+  SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity
 FROM WEATHER
 WHERE
   timestamp >= NOW() - INTERVAL '1' DAY
