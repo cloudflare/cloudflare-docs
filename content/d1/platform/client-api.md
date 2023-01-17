@@ -251,7 +251,8 @@ console.log(old);
 
 ## Searching with LIKE
 
-You can perform a search using SQL's `LIKE` operator:
+Perform a search using SQL's `LIKE` operator:
+
 ```js
 const { results } = await env.DB.prepare(
   "SELECT * FROM Customers WHERE CompanyName LIKE ?"
