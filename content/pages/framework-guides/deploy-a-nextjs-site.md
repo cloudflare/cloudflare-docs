@@ -74,12 +74,31 @@ export default async function (req: NextRequest) {
 {{</tab>}}
 {{</tabs>}}
 
-Next, you must configure the rest of the project to use the Edge Runtime. You can opt in on individual pages by exporting the following from each page:
+Next, you must configure the rest of the project to use the Edge Runtime.
+
+You can opt in on individual pages by exporting the following from each page:
 
 ```js
 export const config = {
   runtime: "edge",
 };
+```
+
+Or configure the whole application to use the Edge Runtime by setting the runtime globally:
+
+```js
+---
+filename: next.config.js
+---
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    runtime: 'edge',
+  }
+}
+
+module.exports = nextConfig
 ```
 
 Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.
