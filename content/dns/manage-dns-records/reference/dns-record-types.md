@@ -116,6 +116,7 @@ When creating `CNAME` records [using the API](/dns/manage-dns-records/how-to/cre
 ```bash
 ---
 header: Request
+highlight: [8, 10]
 ---
 curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
 -H 'x-auth-email: <EMAIL>' \
