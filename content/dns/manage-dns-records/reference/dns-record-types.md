@@ -24,11 +24,69 @@ These records include the following fields:
   - Be 63 characters or less
   - Start with a letter and end with a letter or digit
   - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
-- **IPv4/IPv6 address**: Your origin web server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
+- **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+#### Example API call
+
+When creating `A` or `AAAA` records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
+
+- The `content` of the records is an IP address (IPv4 for `A` or IPv6 for `AAAA`)
+- The `proxied` field affects the record's [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
+
+```bash
+---
+header: Request
+highlight: [8, 10]
+---
+curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+-H 'x-auth-email: <EMAIL>' \
+-H 'x-auth-key: <API_KEY>' \
+-H "Content-Type: application/json" \
+--data '{
+  "type":"A",
+  "name":"www.example.com",
+  "content":"192.0.2.1",
+  "ttl":3600,
+  "proxied":false
+  }'
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "<ID>",
+    "zone_id": "<ZONE_ID>",
+    "zone_name": "example.com",
+    "name": "www.example.com",
+    "type": "A",
+    "content": "192.0.2.1",
+    "proxiable": true,
+    "proxied": false,
+    "ttl": 1,
+    "locked": false,
+    "meta": {
+        "auto_added": false,
+        "managed_by_apps": false,
+        "managed_by_argo_tunnel": false,
+        "source": "primary"
+    },
+    "comment": null,
+    "tags": [],
+    "created_on": "2023-01-17T20:37:05.368097Z",
+    "modified_on": "2023-01-17T20:37:05.368097Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
 ### CNAME
 
@@ -47,6 +105,63 @@ These records include the following fields:
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 You can use `CNAME` records to point to other `CNAME` records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
+
+#### Example API call
+
+When creating `CNAME` records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
+
+- The `content` of the records is a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name).
+- The `proxied` field affects the record's [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
+
+```bash
+---
+header: Request
+---
+curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+-H 'x-auth-email: <EMAIL>' \
+-H 'x-auth-key: <API_KEY>' \
+-H "Content-Type: application/json" \
+--data '{
+  "type":"CNAME",
+  "name":"www.example.com",
+  "content":"www.another-example.com",
+  "ttl":3600,
+  "proxied":false
+  }'
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "<ID>",
+    "zone_id": "<ZONE_ID>",
+    "zone_name": "example.com",
+    "name": "www.example.com",
+    "type": "A",
+    "content": "www.another-example.com",
+    "proxiable": true,
+    "proxied": false,
+    "ttl": 1,
+    "locked": false,
+    "meta": {
+        "auto_added": false,
+        "managed_by_apps": false,
+        "managed_by_argo_tunnel": false,
+        "source": "primary"
+    },
+    "comment": null,
+    "tags": [],
+    "created_on": "2023-01-17T20:37:05.368097Z",
+    "modified_on": "2023-01-17T20:37:05.368097Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
 ---
 
@@ -109,6 +224,73 @@ A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/cust
 ### SRV
 
 A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns-srv-record/) specifies a host and port for specific services like voice over IP (VOIP), instant messaging, and more.
+
+#### Example API call
+
+```bash
+---
+header: Request
+---
+curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
+-H 'x-auth-email: <EMAIL>' \
+-H 'x-auth-key: <API_KEY>' \
+-H "Content-Type: application/json" \
+--data '{
+  "type":"SRV", 
+  "data": {
+    "service":"_xmpp",
+    "proto":"_tcp",
+    "name":"example.com",
+    "priority":10,
+    "weight":5,
+    "port":5223,
+    "target":"server.example.com"
+    }
+  }'
+```
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "<ID>",
+    "zone_id": "<ZONE_ID>",
+    "zone_name": "example.com",
+    "name": "xmpp.tcp.example.com",
+    "type": "SRV",
+    "content": "5\t5223[tserver.example.com|http://tserver.example.com/]",
+    "priority": 10,
+    "proxiable": false,
+    "proxied": false,
+    "ttl": 1,
+    "locked": false,
+    "data": {
+      "name": "[example.com|http://example.com/]",
+      "port": 5223,       
+      "priority": 10,       
+      "proto": "_tcp",       
+      "service": "_xmpp",       
+      "target": "[server.example.com|http://server.example.com/]",       
+      "weight": 5     
+      },
+    "meta": {       
+      "auto_added": false,       
+      "managed_by_apps": false,       
+      "managed_by_argo_tunnel": false,       
+      "source": "primary"     
+      },
+    "comment": null,
+    "tags": [],
+    "created_on": "2022-11-08T15:57:39.585977Z",
+    "modified_on": "2022-11-08T15:57:39.585977Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
 
 ### PTR
 
