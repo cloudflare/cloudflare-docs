@@ -18,7 +18,7 @@ To create quarantine policies:
     - In **Select release action preference**, choose _Allow recipients to request a message to be released from quarantine_.
     - In **Select additional actions recipients can take on quarantined messages**, select the **Delete** and **Preview** checkboxes.
 
-    ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
+    ![Configure the Recipient message access as stated in the step above](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
 
 9. Select **Next**.
 10. In **Quarantine notification**, select **Enable**.

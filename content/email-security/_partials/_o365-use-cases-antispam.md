@@ -18,7 +18,7 @@ To configure anti-spam policies:
 
     <div class="large-img">
 
-    ![Go to Actions and find Edit actions](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
+    ![Go to Actions and find Edit actions](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
 
     </div>
 
@@ -34,7 +34,7 @@ To configure anti-spam policies:
 
     <div class="large-img">
 
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/$4)
+    ![Select the spam actions in the above step](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/$4)
 
     </div>
 

@@ -14,7 +14,7 @@ When you choose an **API deployment** for your [Area 1 setup](/email-security/de
 
 Then, through on integrations with your email provider, Area 1 can [retract messages](/email-security/email-configuration/retract-settings/) based on your organization's policies.
 
-![With API deployment, messages travel through Area 1's email filter after reaching your users.](/email-security/static/api-setup/api-deployment-diagram.png)
+![With API deployment, messages travel through Area 1's email filter after reaching your users.](/email-security/static/deployment/api-setup/api-deployment-diagram.png)
 
 ## Benefits
 
