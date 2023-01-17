@@ -10,7 +10,7 @@ Authenticated origin pulls help ensure requests to your origin server come from 
 
 This authentication becomes particularly important with the [Cloudflare Web Application Firewall (WAF)](/waf/). Together with the WAF, you can make sure that **all traffic** is evaluated before receiving a response from your origin server.
 
-If you want your domain to be FIPS compliant, you must [upload your own certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
+If you want your domain to be FIPS compliant, you must upload your own certificate (which is an option for both [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) authenticated origin pulls).
 
 ## Availability
 
