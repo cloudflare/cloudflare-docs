@@ -249,6 +249,22 @@ console.log(old);
 */
 ```
 
+## Searching with LIKE
+
+Perform a search using SQL's `LIKE` operator:
+
+```js
+const { results } = await env.DB.prepare(
+  "SELECT * FROM Customers WHERE CompanyName LIKE ?"
+)
+  .bind("%eve%")
+  .all();
+console.log("results: ", results);
+/*
+results:  [...]
+*/
+```
+
 ## Batch statements
 Batching sends multiple SQL statements inside a single call to the database. This can have a huge performance impact as it reduces latency from network round trips to D1. D1 operates in auto-commit. Our implementation guarantees that each statement in the list will execute and commit, sequentially, non-concurrently.
 
