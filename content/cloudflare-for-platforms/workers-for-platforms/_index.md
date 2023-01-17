@@ -6,10 +6,7 @@ weight: 9
  
 # Workers for Platforms
 
-Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms extends the capabilities of Cloudflare Workers to SaaS businesses that want to:
-
-* Deploy Worker scripts on behalf of their customers.
-* Let their users write Worker scripts directly.
+Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms extends the capabilities of Cloudflare Workers to SaaS businesses that want to deploy Worker scripts on behalf of their customers or let their users write Worker scripts directly.
 
 Workers for Platforms allows you to:
 
@@ -25,8 +22,6 @@ Workers for Platforms allows you to:
 
 * [How Workers for Platforms Works](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/) - Learn about Workers for Platforms architecture.
 * [How Workers works](/workers/learning/how-workers-works/) - Learn about Cloudflare Workers technology.
-
-{{<directory-listing>}}
 
 ## Connect
 
