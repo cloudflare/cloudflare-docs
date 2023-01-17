@@ -6,7 +6,7 @@ weight: 2
 
 # Functions routing
 
-Functions utilize file-based routing, where the directory structure indicates the designated routes that your functions will run on. A directory can also have as many levels as you’d like. For example, say you had the following directory: 
+Functions utilize file-based routing, where the directory structure indicates the designated routes that your functions will run on. A directory can also have as many levels as you’d like. For example, say you had the following directory:
 
 ```
 |---- …
@@ -20,7 +20,7 @@ Functions utilize file-based routing, where the directory structure indicates th
             |___ banana.js
 ```
 
-Then the following routes will be generated based on the file structure, mapping the URL pattern to the /functions file that will be invoked: 
+Then the following routes will be generated based on the file structure, mapping the URL pattern to the /functions file that will be invoked:
 
 | File path                   | Route                     |
 |-----------------------------|---------------------------|
@@ -39,9 +39,9 @@ Note that if no Function is matched, it will fall back to a static asset if ther
 
 ## Dynamic routes
 
-Dynamic routes allow you to match URLs with parameterized segments. This can be especially useful if you are building dynamic applications. You can accept dynamic values which map to a single path by simply changing your filename. 
+Dynamic routes allow you to match URLs with parameterized segments. This can be especially useful if you are building dynamic applications. You can accept dynamic values which map to a single path by simply changing your filename.
 
-By placing one set of brackets around your filename – e.g. `/users/[user].js` – you are creating a placeholder for a single path segment 
+By placing one set of brackets around your filename – e.g. `/users/[user].js` – you are creating a placeholder for a single path segment
 | Path               | Matches? |
 |--------------------|----------|
 | /users/nevi        | Yes      |
@@ -67,7 +67,7 @@ More specific routes (that is, those with fewer wildcards) take precedence over 
 
 ```
 |---- …
-|---- functions 
+|---- functions
       |___ date.js
       |___ users/
             |___ special.js
@@ -87,7 +87,7 @@ The following requests will match the following files:
 | /users/daniel/xyz/123 | /users/[[catchall]].js                           |
 
 
-The URL segment(s) that match the placeholder will be available in the aforementioned "request context" object. The `context.params` object can be used to find the matched value for a given filename placeholder. 
+The URL segment(s) that match the placeholder will be available in the aforementioned "request context" object. The `context.params` object can be used to find the matched value for a given filename placeholder.
 
 For files which match a single URL segment (use a single set of brackets), the values are returned as a string:
 
@@ -109,21 +109,21 @@ For files which match against multiple URL segments (use a double set of bracket
 filename: functions/user/[[catchall]].js
 ---
 export function onRequest(context) {
-  return new Response(context.params.catchall) 
+  return new Response(context.params.catchall)
 }
 ```
 will return ["daniel", "xyz", "123"] for requests to `/users/daniel/xyz/123`.
 
 ## Function invocation routes
 
-On a purely static project, Pages offers unlimited free requests. However, once you add Functions on a Pages project, all requests by default will invoke your function. In the spirit of continuing to offer unlimited free static requests, you can exclude these static routes by creating a `_routes.json` file. This file will be automatically generated if a `functions` directory is detected in your project when you publish your project with Pages CI or Wrangler. 
+On a purely static project, Pages offers unlimited free requests. However, once you add Functions on a Pages project, all requests by default will invoke your function. In the spirit of continuing to offer unlimited free static requests, you can exclude these static routes by creating a `_routes.json` file. This file will be automatically generated if a `functions` directory is detected in your project when you publish your project with Pages CI or Wrangler.
 
 {{<Aside type="note">}}
 Some frameworks (e.g. Remix, SvelteKit) will also automatically generate a `_routes.json` file. However, if your preferred framework does not, create an issue on their framework repository with a link to this page or let us know on [Discord](https://discord.gg/cloudflaredev). See the framework section for more info on full-stack frameworks.
 {{</Aside>}}
 
 ### Creating a _routes.json file
-You will need to create a `_routes.json` file to control when your Function is invoked. It should be placed in the output directory of your project. 
+You will need to create a `_routes.json` file to control when your Function is invoked. It should be placed in the output directory of your project.
 
 This file will include three different properties:
 * **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
