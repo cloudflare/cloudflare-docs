@@ -8,7 +8,7 @@ weight: 5
 
 Authenticated origin pulls help ensure requests to your origin server come from the Cloudflare network, which provides an additional layer of security on top of [Full](/ssl/origin-configuration/ssl-modes/full/) or [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) encryption modes.
 
-This authentication becomes particularly important with the Cloudflare Web Application Firewall (WAF). Together with the WAF, you can make sure that **all traffic** is evaluated before receiving a response from your origin server.
+This authentication becomes particularly important with the [Cloudflare Web Application Firewall (WAF)](/waf/). Together with the WAF, you can make sure that **all traffic** is evaluated before receiving a response from your origin server.
 
 If you want your domain to be FIPS compliant, you must [upload your own certificate](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
 
@@ -28,3 +28,5 @@ If you want your domain to be FIPS compliant, you must [upload your own certific
 ## Limitations
 
 Authenticated Origin Pull is incompatible with Railgun.
+
+Authenticated Origin Pull also does not work when your [**SSL/TLS encryption mode**](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
