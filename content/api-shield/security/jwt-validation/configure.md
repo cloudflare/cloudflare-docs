@@ -113,7 +113,7 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 
 ### Update the keys
 
-It is best practice to rotate keys after some time. To support updating the key, Cloudflare allows up to 4 keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
+It is best practice to rotate keys after some time. To support updating the keys, Cloudflare allows up to 4 keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
 
 The input to updating the keys is the same as when creating a configuration where you supplied the initial keys using the credentials key and needs to be a JWK. 
 
