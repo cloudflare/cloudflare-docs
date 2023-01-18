@@ -37,6 +37,13 @@ Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/
 
 Ask your account team to approve and create your SSO domain. The SSO domain can be configured for multiple email domains associated with the members in your Cloudflare account. For example, if your SSO domain is configured for emails ending in `@example.com`, a member with email `@test.com` would not see the **Log in with SSO** option and would have to enter their username and password.
 
+{{<Aside type="note">}}
+
+  Mail providers (e.g. `gmail.com`) will not qualify.
+  SSO is enforced for all users whose emails end in n owned given domain.
+  
+{{</Aside>}}
+
 ### Step 4 — Test and enable your application
 
 To test and enable your SSO application:
