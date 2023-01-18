@@ -5404,3 +5404,37 @@ pre {
 [theme=dark] .RSS svg {
   filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
 }
+
+.breadcrumb {
+  margin-top: .75em;
+  margin-left: var(--docs-content-gap);
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.breadcrumb.collapsed {
+    padding-left: 0em;
+    padding-right: 0em;
+    margin-left: -10em;
+}
+
+.breadcrumb li {
+  display: inline;
+  white-space: nowrap;
+}
+
+.breadcrumb li + li:before {
+  content: ">";
+  padding: 0.3rem;
+}
+
+.breadcrumb li a {
+  color: #0055DC;
+}
+
+[theme=dark] .breadcrumb li a {
+  color: #ff9e40;
+}
