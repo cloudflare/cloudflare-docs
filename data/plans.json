@@ -2014,11 +2014,11 @@
         },
         "b_initial_quota": {
           "title": "Hostnames included",
-          "summary": "100",
+          "summary": "Varies",
           "free": 100,
           "pro": 100,
           "biz": 100,
-          "ent": 100
+          "ent": 0
         },
         "c_max_hostnames": {
           "title": "Max hostnames",
