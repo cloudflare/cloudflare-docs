@@ -40,7 +40,7 @@ Ask your account team to approve and create your SSO domain. The SSO domain can 
 {{<Aside type="note">}}
 
   Mail providers (e.g. `gmail.com`) will not qualify.
-  SSO is enforced for all users whose emails end in n owned given domain.
+  SSO is enforced for all users whose emails end in **any owned** given domain.
   
 {{</Aside>}}
 
