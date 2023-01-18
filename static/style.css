@@ -5415,6 +5415,13 @@ pre {
   align-items: baseline;
 }
 
+@media (max-width: 768px) {
+  .breadcrumb {
+    margin-left: 0;
+    padding: .5rem 1rem;
+  }
+}
+
 .breadcrumb.collapsed {
     padding-left: 0em;
     padding-right: 0em;
