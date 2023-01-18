@@ -10,6 +10,8 @@ meta:
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
+<div style="position: relative; padding-top: 56.25%;"><iframe src="https://customer-6qw1mjlclhl2mqdy.cloudflarestream.com/c247ba8eb4b61355184867bec9e5c532/iframe?poster=https%3A%2F%2Fcustomer-6qw1mjlclhl2mqdy.cloudflarestream.com%2Fc247ba8eb4b61355184867bec9e5c532%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
+
 ## Purchase R2
 
 Before you create your first bucket, you must purchase R2 in the Cloudflare dashboard.

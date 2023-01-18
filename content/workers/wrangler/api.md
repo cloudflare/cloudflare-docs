@@ -31,7 +31,7 @@ There are no known bugs at the moment and it is safe to use. If you discover any
 ### Constructor
 
 ```js
-const worker = await unstable_dev(script, options, apiOptions)
+const worker = await unstable_dev(script, options)
 ```
 
 ### Parameters
@@ -45,10 +45,8 @@ const worker = await unstable_dev(script, options, apiOptions)
 *   `options` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
     *   Optional options object containing `wrangler dev` configuration settings.
-
-*   `apiOptions` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-    *   Optional API options object containing `disableExperimentalWarning`. Set `disableExperimentalWarning` to true to disable Wrangler's warning about using `unstable_` prefixed APIs.
+    *   Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`. 
+        *   Set `disableExperimentalWarning` to `true` to disable Wrangler's warning about using `unstable_` prefixed APIs.
 
 {{</definitions>}}
 
@@ -89,27 +87,25 @@ filename: src/index.test.js
 const { unstable_dev } = require("wrangler");
 
 describe("Worker", () => {
-	let worker;
+  let worker;
 
-	beforeAll(async () => {
-		worker = await unstable_dev(
-			"src/index.js",
-			{},
-			{ disableExperimentalWarning: true }
-		);
-	});
+  beforeAll(async () => {
+    worker = await unstable_dev("src/index.js", {
+      experimental: { disableExperimentalWarning: true },
+    });
+  });
 
-	afterAll(async () => {
-		await worker.stop();
-	});
+  afterAll(async () => {
+    await worker.stop();
+  });
 
-	it("should return Hello World", async () => {
-		const resp = await worker.fetch();
-		if (resp) {
-			const text = await resp.text();
-			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-		}
-	});
+  it("should return Hello World", async () => {
+    const resp = await worker.fetch();
+    if (resp) {
+      const text = await resp.text();
+      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+    }
+  });
 });
 ```
 {{</tab>}}
@@ -122,27 +118,25 @@ import { unstable_dev } from "wrangler";
 import type { UnstableDevWorker } from "wrangler";
 
 describe("Worker", () => {
-	let worker: UnstableDevWorker;
+  let worker: UnstableDevWorker;
 
-	beforeAll(async () => {
-		worker = await unstable_dev(
-			"src/index.ts",
-			{},
-			{ disableExperimentalWarning: true }
-		);
-	});
+  beforeAll(async () => {
+    worker = await unstable_dev("src/index.ts", {
+      experimental: { disableExperimentalWarning: true },
+    });
+  });
 
-	afterAll(async () => {
-		await worker.stop();
-	});
+  afterAll(async () => {
+    await worker.stop();
+  });
 
-	it("should return Hello World", async () => {
-		const resp = await worker.fetch();
-		if (resp) {
-			const text = await resp.text();
-			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-		}
-	});
+  it("should return Hello World", async () => {
+    const resp = await worker.fetch();
+    if (resp) {
+      const text = await resp.text();
+      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+    }
+  });
 });
 ```
 {{</tab>}}
@@ -164,42 +158,40 @@ filename: src/index.test.js
 import { unstable_dev } from "wrangler";
 
 describe("multi-worker testing", () => {
-	let childWorker;
-	let parentWorker;
+  let childWorker;
+  let parentWorker;
 
-	beforeAll(async () => {
-		childWorker = await unstable_dev(
-			"src/child-worker.js",
-			{ config: "src/child-wrangler.toml" },
-			{ disableExperimentalWarning: true }
-		);
-		parentWorker = await unstable_dev(
-			"src/parent-worker.js",
-			{ config: "src/parent-wrangler.toml" },
-			{ disableExperimentalWarning: true }
-		);
-	});
+  beforeAll(async () => {
+    childWorker = await unstable_dev("src/child-worker.js", {
+      config: "src/child-wrangler.toml",
+      experimental: { disableExperimentalWarning: true },
+    });
+    parentWorker = await unstable_dev("src/parent-worker.js", {
+      config: "src/parent-wrangler.toml",
+      experimental: { disableExperimentalWarning: true },
+    });
+  });
 
-	afterAll(async () => {
-		await childWorker.stop();
-		await parentWorker.stop();
-	});
+  afterAll(async () => {
+    await childWorker.stop();
+    await parentWorker.stop();
+  });
 
-	it("childWorker should return Hello World itself", async () => {
-		const resp = await childWorker.fetch();
-		if (resp) {
-			const text = await resp.text();
-			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-		}
-	});
+  it("childWorker should return Hello World itself", async () => {
+    const resp = await childWorker.fetch();
+    if (resp) {
+      const text = await resp.text();
+      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+    }
+  });
 
-	it("parentWorker should return Hello World by invoking the child worker", async () => {
-		const resp = await parentWorker.fetch();
-		if (resp) {
-			const parsedResp = await resp.text();
-			expect(parsedResp).toEqual("Parent worker sees: Hello World!");
-		}
-	});
+  it("parentWorker should return Hello World by invoking the child worker", async () => {
+    const resp = await parentWorker.fetch();
+    if (resp) {
+      const parsedResp = await resp.text();
+      expect(parsedResp).toEqual("Parent worker sees: Hello World!");
+    }
+  });
 });
 ```
 {{</tab>}}
@@ -212,42 +204,40 @@ import { unstable_dev } from "wrangler";
 import type { UnstableDevWorker } from "wrangler";
 
 describe("multi-worker testing", () => {
-	let childWorker: UnstableDevWorker;
-	let parentWorker: UnstableDevWorker;
+  let childWorker: UnstableDevWorker;
+  let parentWorker: UnstableDevWorker;
 
-	beforeAll(async () => {
-		childWorker = await unstable_dev(
-			"src/child-worker.js",
-			{ config: "src/child-wrangler.toml" },
-			{ disableExperimentalWarning: true }
-		);
-		parentWorker = await unstable_dev(
-			"src/parent-worker.js",
-			{ config: "src/parent-wrangler.toml" },
-			{ disableExperimentalWarning: true }
-		);
-	});
+  beforeAll(async () => {
+    childWorker = await unstable_dev("src/child-worker.js", {
+      config: "src/child-wrangler.toml",
+      experimental: { disableExperimentalWarning: true },
+    });
+    parentWorker = await unstable_dev("src/parent-worker.js", {
+      config: "src/parent-wrangler.toml",
+      experimental: { disableExperimentalWarning: true },
+    });
+  });
 
-	afterAll(async () => {
-		await childWorker.stop();
-		await parentWorker.stop();
-	});
+  afterAll(async () => {
+    await childWorker.stop();
+    await parentWorker.stop();
+  });
 
-	it("childWorker should return Hello World itself", async () => {
-		const resp = await childWorker.fetch();
-		if (resp) {
-			const text = await resp.text();
-			expect(text).toMatchInlineSnapshot(`"Hello World!"`);
-		}
-	});
+  it("childWorker should return Hello World itself", async () => {
+    const resp = await childWorker.fetch();
+    if (resp) {
+      const text = await resp.text();
+      expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+    }
+  });
 
-	it("parentWorker should return Hello World by invoking the child worker", async () => {
-		const resp = await parentWorker.fetch();
-		if (resp) {
-			const parsedResp = await resp.text();
-			expect(parsedResp).toEqual("Parent worker sees: Hello World!");
-		}
-	});
+  it("parentWorker should return Hello World by invoking the child worker", async () => {
+    const resp = await parentWorker.fetch();
+    if (resp) {
+      const parsedResp = await resp.text();
+      expect(parsedResp).toEqual("Parent worker sees: Hello World!");
+    }
+  });
 });
 ```
 {{</tab>}}

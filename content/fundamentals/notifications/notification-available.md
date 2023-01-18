@@ -922,6 +922,54 @@ Review the information in [Security Events](/waf/security-events/paid-plans/) to
 </div>
 </details>
 
+## Tunnel
+
+<details>
+<summary>Tunnel Creation or Deletion Event</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to receive a notification when Cloudflare Tunnels are created or deleted in their account.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+No direct call to action.
+
+</div>
+</details>
+
+<details>
+<summary>Tunnel Health Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/tunnel-monitoring/notifications/) for their Cloudflare Tunnels.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
+
+</div>
+</details>
+
 ## Web Analytics
 
 <details>

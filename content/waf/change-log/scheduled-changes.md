@@ -23,22 +23,40 @@ rss: file
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>2023-01-09</td>
+        <tr>
       <td>2023-01-16</td>
+      <td>N/A</td>
       <td>Block</td>
-      <td>100135C_BETA</td>
+      <td>N/A</td>
+      <td>OWASP rules</td>
+      <td>Bumping OWASP ruleset version</td>
+      <td>Upgrading OWASP ruleset version to 3.3.4, only on new WAF</td>
+    </tr>
+    <tr>
+      <td>2023-01-16</td>
+      <td>2023-01-23</td>
+      <td>Block</td>
+      <td>N/A</td>
       <td>...bbc447fa</td>
       <td>XSS - JavaScript Events</td>
       <td>This detection will replace 100135C in legacy WAF and ...de5e2367 in new WAF</td>
     </tr>
     <tr>
-      <td>2023-01-09</td>
       <td>2023-01-16</td>
+      <td>2023-01-23</td>
       <td>Log</td>
-      <td>100558</td>
-      <td>...8b036974</td>
-      <td>Malware, Web Shell</td>
+      <td>100557</td>
+      <td>...4c2e80c3</td>
+      <td>Code Injection - JavaScript</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2023-01-16</td>
+      <td>2023-01-23</td>
+      <td>Log</td>
+      <td>100559</td>
+      <td>...65414846</td>
+      <td>Prototype pollution Attack, Headers</td>
       <td>N/A</td>
     </tr>
 </tbody>

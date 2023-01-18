@@ -18,7 +18,7 @@ With Azure Active Directory (AD)'s [Conditional Access](https://learn.microsoft.
 
 Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/azuread/#set-up-azure-ad-as-an-identity-provider) for Azure AD.
 
-We recommend naming the IdP integration after the target application, for example `Azure AD - Customer management portal`. Each application protected by Conditional Access policies will need its own IdP instance.
+We suggest naming the IdP integration after the target application, for example `Azure AD - Customer management portal`.
 
 ## 2. Configure Conditional Access in Azure AD
 
@@ -63,3 +63,5 @@ To enforce your Conditional Access policies on a Cloudflare Access application:
     |        | Require   | Login methods    | `Azure AD • Azure AD - Customer management portal` |
 
 Users will only be allowed access if they meet the criteria in your Azure AD Conditional Access policies.
+
+You can reuse the same IdP integration for multiple applications as long as they require the same set of Conditional Access policies. For example, you could design a baseline IdP integration with a Conditional Access policy requiring MFA and a modern auth client. If an application requires special Conditional Access policies, you would need to set up a dedicated IdP instance for that application.

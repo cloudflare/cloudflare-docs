@@ -44,7 +44,7 @@ This will help avoid any certificate pinning errors that may arise from an initi
 | --------------| ---------| ----------------| -------------- |
 | Application   | in       | Do Not Inspect | Do Not Inspect |
 
-  {{<render file="_policies-recommended.md">}}
+  {{<render file="gateway/_policies-recommended.md">}}
 
 ## 4. Add optional policies
 

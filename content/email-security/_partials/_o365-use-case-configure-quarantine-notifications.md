@@ -5,8 +5,6 @@ _build:
   list: never
 ---
 
-## Configure quarantine notifications
-
 To configure quarantine notifications:
 1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/).
 2. Go to **Email & collaboration** > **Policies & rules**.
@@ -17,7 +15,7 @@ To configure quarantine notifications:
 
      <div class="large-img">
 
-    ![Configure the desired spam notification frequency](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-spam-notifications.png)
+    ![Configure the desired spam notification frequency](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step6-spam-notifications.png)
 
     </div>
 

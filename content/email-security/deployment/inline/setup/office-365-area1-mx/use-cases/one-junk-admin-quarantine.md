@@ -12,67 +12,20 @@ In this tutorial, you will learn how to deliver emails to the Office 365 junk em
 
 ## Configure domains
 
-{{<render file="_office365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
+{{<render file="_o365-use-case-configure-domain.md" withParameters="Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions.">}}
 
 ## Create quarantine policies
 
-To create quarantine policies:
+{{<render file="_o365-use-case-1-3-create-quarantine-policy.md">}}
 
-1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
-2. Go to **Email & collaboration** > **Policies & rules**.
-3. Select **Threat policies**.
-4. Under **Rules**, select **Quarantine policies**.
-5. Select **Add custom policy**.
-6. Set the **Policy name** to `UserNotifyAdminRelease`.
-7. Select **Next**.
-8. In **Recipient message access**, select **Set specific access (Advanced)**, and then:
-    - In **Select release action preference**, choose _Allow recipients to request a message to be released from quarantine_.
-    - In **Select additional actions recipients can take on quarantined messages**, select the **Delete** and **Preview** checkboxes.
+## Configure quarantine notifications
 
-    ![Configure the Recipient message access as stated in the step above](/email-security/static/inline-setup/o365-area1-mx/use-cases/step8-request-message-release.png)
-
-9. Select **Next**.
-10. In **Quarantine notification**, select **Enable**.
-11. Select **Next**.
-12. Review your settings and select **Submit**.
-13. Select **Done**.
-
-{{<render file="_configure-quarantine-notifications.md">}}
+{{<render file="_o365-use-case-configure-quarantine-notifications.md">}}
 
 ## Configure anti-spam policies
 
-To configure anti-spam policies:
+{{<render file="_o365-use-cases-antispam.md" withParameters="_UserNotifyAdminRelease_;;_UserNotifyAdminRelease_;;_UserNotifyAdminRelease_;;step7-spam.png">}}
 
-1. Open the [Microsoft 365 Defender console](https://security.microsoft.com/)
-2. Go to **Email & collaboration** > **Policies & rules**.
-3. Select **Threat policies**.
-4. Under **Policies**, select **Anti-spam**.
-5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
-6. In the **Actions** section, scroll down and select **Edit actions**.
-
-    <div class="large-img">
-
-    ![Go to Actions and find Edit actions](/email-security/static/inline-setup/o365-area1-mx/use-cases/step6-edit-actions.png)
-
-    </div>
-
-7. Set the following conditions and actions (you might need to scroll up or down to find them):
-    - **Spam**: _Move messages to Junk Email folder_.
-    - **High confidence spam**: _Quarantine message_.
-        - **Select quarantine policy**: _UserNotifyAdminRelease_.
-    - **Phishing**: _Quarantine message_.
-        - **Select quarantine policy**: _UserNotifyAdminRelease_.
-    - **High confidence phishing**: _Quarantine message_.
-        - **Select quarantine policy**: _UserNotifyAdminRelease_.
-    - **Retain spam in quarantine for this many days**: Default is 15 days. Cloudflare Area 1 recommends 15-30 days.
-
-    <div class="large-img">
-
-    ![Select the spam actions in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step7-spam.png)
-
-    </div>
-
-8. Select **Save**.
 
 ## Create transport rules
 
@@ -90,11 +43,9 @@ To create the transport rules that will send emails with certain dispositions to
     - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
     - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_.
 
-    ![Set the rules in the above step](/email-security/static/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
+    ![Set the rules in the above step](/email-security/static/deployment/inline-setup/o365-area1-mx/use-cases/step4-rules.png)
 
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **Area 1 Deliver to Junk Email folder** you have just created, and select **Enable**.
-
-
+8. Select the rule `Area 1 Deliver to Junk Email folder` you have just created, and select **Enable**.
