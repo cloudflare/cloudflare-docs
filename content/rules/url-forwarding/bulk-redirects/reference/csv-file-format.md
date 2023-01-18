@@ -3,12 +3,12 @@ title: CSV file format
 pcx_content_type: reference
 weight: 6
 meta:
-  title: CSV file format to create Bulk Redirects
+  title: CSV file format to import URL redirects
 ---
 
-# CSV file format to create Bulk Redirects
+# CSV file format to import URL redirects
 
-You can use a CSV file to create Bulk Redirects [using the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/). Each line in the CSV file must follow this format:
+You can use a CSV file to import URL redirects [in the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/#import-a-csv-file-with-url-redirects). Each line in the CSV file must follow this format:
 
 ```txt
 <SOURCE_URL>,<TARGET_URL>[,<STATUS_CODE>,<PRESERVE_QUERY_STRING>,<INCLUDE_SUBDOMAINS>,<SUBPATH_MATCHING>,<PRESERVE_PATH_SUFFIX>]
