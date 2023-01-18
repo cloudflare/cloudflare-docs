@@ -26,14 +26,20 @@ To use a list in the [Expression Editor](/firewall/cf-dashboard/edit-expressions
 
 Examples:
 
-* Expression filtering requests from IP addresses that are in an IP List named `office_network`:
+* Expression matching requests from IP addresses that are in an IP List named `office_network`:
 
     ```txt
-    (ip.src in $office_network)
+    ip.src in $office_network
     ```
 
-* Expression filtering requests from IP addresses in the Cloudflare Open Proxies [Managed IP List](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists):
+* Expression matching requests with a source IP address different from IP addresses in the `office_network` IP List:
 
     ```txt
-    (ip.src in $cf.open_proxies)
+    not ip.src in $office_network
+    ```
+
+* Expression matching requests from IP addresses in the Cloudflare Open Proxies [Managed IP List](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists):
+
+    ```txt
+    ip.src in $cf.open_proxies
     ```
