@@ -41,7 +41,7 @@ To create a list, follow these steps:
 
 ### Add items to a list manually
 
-1. In the **Add items to list** page, enter values for the different fields (the exact fields depend on the list type). If you are creating a Bulk Redirect List, there are optional fields you can set in an expandable section at the end of each row.
+1. In the **Add items to list** page, enter values for the different fields (the exact fields depend on the list type).
 
     As you enter information into a text input, a new row of inputs displays below the current one. To delete any of the items that you have entered, select **X**.
 
@@ -66,7 +66,7 @@ To add items to a list by uploading a CSV file:
 
 {{<Aside type="note" header="Notes">}}
 
-- Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
+- Importing a CSV file to a list only updates existing items or adds new items to the list. It does not delete items from a list.
 - If you need to replace the entire contents of a list, format the data as an array and use the [Update all list items](https://developers.cloudflare.com/api/operations/lists-update-all-list-items) operation in the [Lists API](/fundamentals/global-configurations/lists/lists-api/endpoints/).
 - When uploading CSV data, keep in mind that duplicate data is treated as follows:
   - Items already in the list are updated from the CSV file.
