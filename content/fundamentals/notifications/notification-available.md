@@ -953,7 +953,7 @@ No direct call to action.
 
 **Who is it for?**
 
-Customers who want to be warned about [changes in health status](/load-balancing/understand-basics/health-details/) for their Cloudflare Tunnels.
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/tunnel-monitoring/notifications/) for their Cloudflare Tunnels.
 
 **Other options / filters**
 
