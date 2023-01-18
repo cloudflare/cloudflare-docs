@@ -155,6 +155,10 @@ The last step is to create a Zero Trust application to run your VNC server in th
 
 4. Add a Zero Trust policy. In this example, we are only allowing users with emails ending in `@example.com`.
 
+{{<Aside type="note">}}
+Allow is the only support Rule Action for browser-based VNC applications. Service Auth is not supported at this time
+{{</Aside>}}
+
     ![Example Zero Trust policy input for VNC application](/cloudflare-one/static/zero-trust-security/vnc-client-in-browser/vnc-policy.png)
 
 5. In **`cloudflared` settings**, set **Application Type** to _VNC_.
