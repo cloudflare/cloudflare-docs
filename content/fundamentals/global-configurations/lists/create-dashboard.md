@@ -66,10 +66,9 @@ To add items to a list by uploading a CSV file:
 
 {{<Aside type="note" header="Notes">}}
 
-- Importing a CSV file to a list only updates existing items or adds new items to the list. It does not delete items from a list.
 - If you need to replace the entire contents of a list, format the data as an array and use the [Update all list items](https://developers.cloudflare.com/api/operations/lists-update-all-list-items) operation in the [Lists API](/fundamentals/global-configurations/lists/lists-api/endpoints/).
-- When uploading CSV data, keep in mind that duplicate data is treated as follows:
+- When uploading a CSV file, keep in mind that duplicate data is treated as follows:
   - Items already in the list are updated from the CSV file.
   - Items in the CSV file that were not already in the list are added to the list.
-
+- Uploading a CSV file will not remove existing items from a list.
 {{</Aside>}}
