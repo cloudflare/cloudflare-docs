@@ -15,7 +15,7 @@
     {{- if $showDescriptions -}}
       {{- $link = printf "[%s](%s): %s" .Title .RelPermalink (partial "seo-meta-description.html" (dict "content" .Content "params" .Params "truncate" $truncate )) -}}
     {{- else -}}
-      {{ $link = printf "[%s](%s)" .Title .RelPermalink -}}
+      {{- $link = printf "[%s](%s)" .Title .RelPermalink -}}
     {{- end -}}
     {{- .Page.RenderString $link -}}
   </li>
