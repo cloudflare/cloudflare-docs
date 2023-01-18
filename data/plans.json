@@ -396,7 +396,7 @@
           "ent": "Yes"
         },
         "ip_lists": {
-          "title": "Number of IP Lists",
+          "title": "IP Lists",
           "link": "/fundamentals/global-configurations/lists/ip-lists/",
           "free": 1,
           "pro": 10,
