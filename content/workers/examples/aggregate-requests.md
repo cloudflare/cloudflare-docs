@@ -25,6 +25,7 @@ export default {
     const url1 = someHost + '/requests/json';
     const url2 = someHost + '/requests/json';
     const type = 'application/json;charset=UTF-8';
+
     /**
      * gatherResponse awaits and returns a response body as a string.
      * Use await gatherResponse(..) in an async function to get the response body
@@ -43,11 +44,13 @@ export default {
         return response.text();
       }
     }
+
     const init = {
       headers: {
         'content-type': type,
       },
     };
+    
     const responses = await Promise.all([fetch(url1, init), fetch(url2, init)]);
     const results = await Promise.all([
       gatherResponse(responses[0]),

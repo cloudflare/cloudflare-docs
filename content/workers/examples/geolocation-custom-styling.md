@@ -9,6 +9,7 @@ title: 'Geolocation: Custom Styling'
 weight: 1001
 layout: example
 ---
+
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
 

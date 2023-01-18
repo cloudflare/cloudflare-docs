@@ -16,15 +16,19 @@ layout: example
 ```js
 export default {
   async fetch(request, env, ctx) {
+
     // Service configured to receive logs
     const LOG_URL = 'https://log-service.example.com/';
+
     async function postLog(data) {
       return await fetch(LOG_URL, {
         method: 'POST',
         body: data,
       });
     }
+
     let response;
+    
     try {
       response = await fetch(request);
       if (!response.ok && !response.redirected) {

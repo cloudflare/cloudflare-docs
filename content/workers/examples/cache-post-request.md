@@ -16,6 +16,7 @@ layout: example
 ```js
 export default {
   async fetch(request, env, ctx) {
+
     async function sha256(message) {
       // encode as UTF-8
       const msgBuffer = await new TextEncoder().encode(message);
@@ -28,6 +29,7 @@ export default {
     }
     try {
       if (request.method.toUpperCase() === 'POST') {
+
         const body = await request.clone().text();
         // Hash the request body to use it as a part of the cache key
         const hash = await sha256(body);
@@ -39,6 +41,7 @@ export default {
           headers: request.headers,
           method: 'GET',
         });
+        
         const cache = caches.default;
         // Find the cache key in the cache
         let response = await cache.match(cacheKey);

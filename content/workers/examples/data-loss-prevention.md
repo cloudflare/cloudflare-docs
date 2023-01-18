@@ -18,6 +18,7 @@ export default {
   async fetch(request) {
     const DEBUG = true;
     const SOME_HOOK_SERVER = 'https://webhook.flow-wolf.io/hook';
+
     /**
      * Alert a data breach by posting to a webhook server
      */
@@ -35,6 +36,7 @@ export default {
         }),
       });
     }
+
     /**
      * Define personal data with regular expressions.
      * Respond with block if credit card data, and strip
@@ -42,12 +44,15 @@ export default {
      * Execution will be limited to MIME type "text/*".
      */
     const response = await fetch(request);
+
     // Return origin response, if response wasn’t text
     const contentType = response.headers.get('content-type') || '';
     if (!contentType.toLowerCase().includes('text/')) {
       return response;
     }
+
     let text = await response.text();
+
     // When debugging replace the response
     // from the origin with an email
     text = DEBUG
@@ -58,6 +63,7 @@ export default {
       email: String.raw`\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b`,
       phone: String.raw`\b07\d{9}\b`,
     };
+    
     for (const kind in sensitiveRegexsMap) {
       const sensitiveRegex = new RegExp(sensitiveRegexsMap[kind], 'ig');
       const match = await sensitiveRegex.test(text);

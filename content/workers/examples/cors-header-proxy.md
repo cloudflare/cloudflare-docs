@@ -10,6 +10,12 @@ weight: 1001
 layout: example
 ---
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 // Cloudflare supports the GET, POST, HEAD, and OPTIONS methods from any origin,
 // and allow any header on requests. These headers must be present
@@ -171,3 +177,4 @@ addEventListener('fetch', event => {
   }
 });
 ```
+{{</tabs>}}
