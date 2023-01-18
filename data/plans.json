@@ -366,11 +366,12 @@
       }
     }
   },
-  "custom_pages": {
-    "title": "Configure Custom Pages",
-    "link": "https://support.cloudflare.com/hc/articles/200172706",
+  "global_configurations": {
+    "title": "Global configurations",
+    "link": "/fundamentals/global-configurations/",
     "custom_pages": {
-      "title": "Customize error and challenge pages",
+      "title": "Custom error/challenge pages",
+      "link": "https://support.cloudflare.com/hc/articles/200172706",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -382,16 +383,41 @@
         }
       }
     },
-    "origin_error_pages": {
-      "title": "Enable Origin Error Pages",
+    "lists": {
+      "title": "Lists",
+      "link": "/fundamentals/global-configurations/lists/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "ip_lists": {
+          "title": "Number of IP Lists",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/",
+          "free": 1,
+          "pro": 10,
+          "biz": 10,
+          "ent": 10
+        },
+        "open_proxies_list": {
+          "title": "Cloudflare Open Proxies Managed IP List",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
+        },
+        "z_all_managed_ip_lists": {
+          "title": "All Managed IP Lists",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "With separate bundle"
         }
       }
     }
@@ -918,44 +944,6 @@
           "pro": 25,
           "biz": 50,
           "ent": 125
-        }
-      }
-    },
-    "lists": {
-      "title": "Lists",
-      "link": "/fundamentals/global-configurations/lists/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "ip_lists": {
-          "title": "Number of IP Lists",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/",
-          "free": 1,
-          "pro": 10,
-          "biz": 10,
-          "ent": 10
-        },
-        "open_proxies_list": {
-          "title": "Cloudflare Open Proxies Managed IP List",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Yes"
-        },
-        "z_all_managed_ip_lists": {
-          "title": "All Managed IP Lists",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "With separate bundle"
         }
       }
     },
