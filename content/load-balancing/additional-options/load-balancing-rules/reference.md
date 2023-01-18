@@ -134,6 +134,64 @@ Many of these fields are referenced from the [Rules language documentation](/rul
         </p>
       </td>
     </tr>
+    <tr id="field-http-request-headers-names">
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers-names"><code>http.request.headers.names</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
+      <td>(API-only)</td>
+      <td>
+         <p>Represents the names of the headers in the HTTP request.</p>
+         <p>The names are not pre-processed and retain the original case used in the request.</p>
+         <p><strong>Note:</strong> In HTTP/2 the names of HTTP headers are always in lowercase. Recent versions of the <code class="InlineCode">curl</code> tool <a href="https://curl.se/docs/http2.html#curl-tool">enable HTTP/2 by default</a> for HTTPS connections.
+         </p>
+         <p>The order of header names is not guaranteed but will match <code class="InlineCode">http.request.headers.values</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example:
+         <br /><code class="InlineCode">any(http.request.headers.names[*] == "content-type")</code>
+         </p>
+         <p>Example value:
+         <code class="InlineCode">["content-type"]</code>
+         </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-headers-values">
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-headers-values"><code>http.request.headers.values</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
+      <td>(API-only)</td>
+      <td>
+         <p>Represents the values of the headers in the HTTP request.</p>
+         <p>The values are not pre-processed and retain the original case used in the request.</p>
+         <p>The order of header values is not guaranteed but will match <code class="InlineCode">http.request.headers.names</code>.
+         </p>
+         <p>Duplicate headers are listed multiple times.
+         </p>
+         <p><em>Decoding:</em> no decoding performed
+         <br /><em>Whitespace:</em> preserved
+         <br /><em>Non-ASCII:</em> preserved
+         </p>
+         <p>Example 1:
+         <br />
+         <code class="InlineCode">any(http.request.headers.values[*] == "application/json")</code>
+         </p>
+         <p>Example value 1:
+         <br />
+         <code class="InlineCode">["application/json"]</code>
+         </p>
+         <p>Additionally used to match requests according to the specified operator and the length/size entered for the header value.
+         </p>
+         <p>Example 2:
+         <br />
+         <code class="InlineCode">any(len(http.request.headers.values[*])[*] gt 10)</code>
+         </p>
+         <p>Example value 2:
+         <br />
+         <code class="InlineCode">["This header value is longer than 10 bytes"]</code>
+         </p>
+      </td>
+    </tr>
     <tr id="field-http-request-method">
       <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-method"><code>http.request.method</code></a><br />{{<type>}}String{{</type>}}</td>
       <td><code>Request Method</code></td>
@@ -184,6 +242,44 @@ Many of these fields are referenced from the [Rules language documentation](/rul
         </p>
         <p>Example value:
         <br /><code class="InlineCode">{"search": ["red+apples"]}</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri-args-names">
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-names"><code>http.request.uri.args.names</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
+      <td>(API-only)</td>
+      <td>
+        <p>Represents the names of the arguments in the HTTP URI query string. The names are not pre-processed and retain the original case used in the request.
+        </p>
+        <p>When a name repeats, the array contains multiple items in the order that they appear in the request.
+        </p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args.names[*] == "search")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">["search"]</code>
+        </p>
+      </td>
+    </tr>
+    <tr id="field-http-request-uri-args-values">
+      <td valign="top"><a href="/ruleset-engine/rules-language/fields/#field-http-request-uri-args-values"><code>http.request.uri.args.values</code></a><br />{{<type>}}Array&lt;String>{{</type>}}</td>
+      <td>(API-only)</td>
+      <td>
+        <p>Represents the values of arguments in the HTTP URI query string. The values are not pre-processed and retain the original case used in the request. They are in the same order as in the request.
+        </p>
+        <p>Duplicated values are listed multiple times.
+        </p>
+        <p><em>Decoding:</em> no decoding performed
+        <br /><em>Non-ASCII:</em> preserved
+        </p>
+        <p>Example:
+        <br /><code class="InlineCode">any(http.request.uri.args.values[*] == "red+apples")</code>
+        </p>
+        <p>Example value:
+        <br /><code class="InlineCode">["red+apples"]</code>
         </p>
       </td>
     </tr>
