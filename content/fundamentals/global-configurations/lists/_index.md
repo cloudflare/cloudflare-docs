@@ -57,19 +57,13 @@ Currently, not all Cloudflare products support lists in their expressions. Refer
 
 List availability varies according to the list type and your Cloudflare plan and subscriptions.
 
-### IP Lists
+{{<feature-table id="global_configurations.lists">}}
 
 The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
 
 The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
 
-{{<feature-table id="rules.lists">}}
-
-### Bulk Redirect Lists
-
-For details on Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists) documentation.
-
-{{<feature-table id="rules.bulk_redirects">}}
+For details on the availability of Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/#availability) documentation.
 
 ---
 
