@@ -20,6 +20,8 @@ You can connect applications to Cloudflare Zero Trust over a number of different
 {{<Aside type="note">}}
 
 SSH and browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
+  
+Allow is the only support Rule Action for browser-based VNC applications. Service Auth is not supported at this time.
 
 {{</Aside>}}
 
