@@ -12,6 +12,29 @@ weight: 2
 layout: example
 ---
 
+
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		const data = {
+			hello: 'world',
+		};
+		const json = JSON.stringify(data, null, 2);
+		return new Response(json, {
+			headers: {
+				'content-type': 'application/json;charset=UTF-8',
+			},
+		});
+	},
+};
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener('fetch', event => {
   const data = {
@@ -29,3 +52,4 @@ addEventListener('fetch', event => {
   );
 });
 ```
+{{</tabs>}}

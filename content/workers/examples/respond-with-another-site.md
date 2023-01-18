@@ -11,6 +11,29 @@ weight: 12
 layout: example
 ---
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+	async fetch(request) {
+		async function MethodNotAllowed(request) {
+			return new Response(`Method ${request.method} not allowed.`, {
+				status: 405,
+				headers: {
+					Allow: 'GET',
+				},
+			});
+		}
+		// Only GET requests work with this proxy.
+		if (request.method !== 'GET') return MethodNotAllowed(request);
+		return fetch(`https://example.com`);
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener('fetch', function (event) {
   event.respondWith(handleRequest(event.request));
@@ -29,3 +52,4 @@ function MethodNotAllowed(request) {
   });
 }
 ```
+{{</tabs>}}
