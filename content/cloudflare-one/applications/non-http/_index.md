@@ -19,7 +19,7 @@ You can connect applications to Cloudflare Zero Trust over a number of different
 
 {{<Aside type="note">}}
 
-Browser-rendered SSH and VNC applications can be set for domains and subdomains, but cannot be set for paths.
+Browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
 
 {{</Aside>}}
 
