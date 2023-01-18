@@ -83,10 +83,10 @@ The following user roles have access to the list management functionality:
 
 ## Final remarks
 
-* You can only delete a list when there are no rules (enabled or disabled) that reference that list.
+You can only delete a list when there are no rules (enabled or disabled) that reference that list.<br>
 
-* Importing a CSV file to a list only updates descriptions or adds items to the list. It does not delete items from a list.
+{{<render file="_lists-csv-notes.md">}}
 
-* If you need to replace the entire contents of a list, format the data as an array and use the [Update all list items](https://developers.cloudflare.com/api/operations/lists-update-all-list-items) operation in the Lists API.
+To replace the entire contents of a list, format the data as an array and use the [Update all list items](https://developers.cloudflare.com/api/operations/lists-update-all-list-items) operation in the [Lists API](/fundamentals/global-configurations/lists/lists-api/endpoints/).
 
-* You cannot download a list in CSV format from the Cloudflare dashboard. If you need to download the contents of a list, use the [Get list items](https://developers.cloudflare.com/api/operations/lists-get-list-items) operation to fetch the list items.
+You cannot download a list in CSV format from the Cloudflare dashboard. If you need to download the contents of a list, use the [Get list items](https://developers.cloudflare.com/api/operations/lists-get-list-items) operation to fetch the list items.
