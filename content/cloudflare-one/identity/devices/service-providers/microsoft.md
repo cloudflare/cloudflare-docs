@@ -34,8 +34,10 @@ To retrieve those values:
 1. Fill in a description and how long the secret should be valid.
 1. After completing the form, immediately copy the resulting secret. This will be your Client Secret.
 1. Go to **API Permissions** and select **Add permission**.
+1. Select **Microsoft Graph**.
 1. Select **Application permissions**.
-1. Search for `DeviceManagementManagedDevices` and select the `Read` permission.
+1. Add `DeviceManagementManagedDevices.Read.All`.
+1. To enable the permission, select **Grant admin consent**.
 
 ## 2. Add Intune as a service provider
 
