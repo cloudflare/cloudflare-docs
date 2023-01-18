@@ -12,23 +12,21 @@ To create a list, follow these steps:
 
 2. Go to Account Home > **Manage Account** > **Configurations**, and then select **Lists**.
 
-1. Select **Create new list**.
+3. Select **Create new list**.
 
-    ![Entering a name and description for a new IP List in the Create new list page of the Cloudflare dashboard](/fundamentals/static/images/lists/lists-create-new.png)
+4. Enter a name for your list, observing the [list name guidelines](/fundamentals/global-configurations/lists/#list-names).
 
-2. Enter a name for your list, observing the [list name guidelines](/fundamentals/global-configurations/lists/#list-names).
+5. (Optional) Enter a description for the list, with a maximum length of 500 characters.
 
-3. (Optional) Enter a description for the list, with a maximum length of 500 characters.
+6. For **Content type**, select the [type of list](/fundamentals/global-configurations/lists/#list-types) you are creating.
 
-4. For **Content type**, select the [type of list](/fundamentals/global-configurations/lists/#list-types) you are creating.
+7.  Select **Create**.
 
-5.  Select **Create**.
-
-6. Follow the instructions in the next section to add items to the list.
+8. Follow the instructions in the next section to add items to the list.
 
 ## Add items to a list
 
-1. (Optional) If you are adding items to an existing list:
+1. (Optional) If you wish to add items to an existing list:
 
     1. Go to Account Home > **Manage Account** > **Configurations** > **Lists**.
     2. Select **Edit** next to the list you want to edit.
