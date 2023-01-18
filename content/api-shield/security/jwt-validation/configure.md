@@ -22,7 +22,7 @@ Use the Cloudflare API to configure [JWT Validation](/api-shield/security/jwt-va
 | --- | --- | --- | --- |
 |  `token type` | This specifies the type of token to validate. | `jwt` | Only `jwt` is currently supported. | 
 | `title` | A human-readable name for the configuration that allows to quickly identify the purpose of the configuration. | Production JWT configuration |
-| `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all endpoints in endpoint management and checks the JWT in the authorization header|
+| `description ` | A human-readable description that gives more details than title which serves as a means to allow customers to better document the use of the configuration. | This configuration is used for all endpoints in endpoint management and checks the JWT in the authorization header.|
 | `action` | How we should configure the firewall to act on the validation result. | `block` | possible: `log` or `block` |
 | `enabled` | This enables or disables acting on the validation result. | `true` | possible: `true` or `false` |
 | `allow_absent_token` | How API Shield should handle requests that do not have a JWT present. Setting this to `true` allows hybrid endpoints where JWTs, if present, must be valid, but JWTs are still allowed to be absent. | `true` | possible: `true` or `false` |
@@ -101,7 +101,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/{zoneID}/api_gateway/to
 }'
 ```
 
-The response will be in a Cloudflare `v4` response envelope and the result contains the created configuration. Please note the rule ID in the response in order to view any requests failing the policy.
+The response will be in a Cloudflare `v4` response envelope and the result contains the created configuration. Note the rule ID in the response in order to view any requests failing the policy.
 
 ## Observe requests matching the policy
 
@@ -111,21 +111,21 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 
 ## Maintenance
 
-### Update the keyring material
+### Update the keys
 
-It is best practice to rotate keys after some time. To support updating the keying material, Cloudflare allows up to 4 keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
+It is best practice to rotate keys after some time. To support updating the key, Cloudflare allows up to 4 keys per configuration. This allows you to add a second, new key to an already existing key. You can start issuing JWTs with the new key only and remove the old key after some time. Additionally, this feature allows the deployment of testing or development keys next to production keys.
 
-The input to updating the keying material is the same as when creating a configuration where you supplied the initial keyring material using the credentials key and needs to be a JWK. 
+The input to updating the keys is the same as when creating a configuration where you supplied the initial keys using the credentials key and needs to be a JWK. 
 
 {{<Aside type="note">}} 
 
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support. 
 
-It is highly recommended to validate the output of the API call to check that the resulting keying material appears as intended.
+It is highly recommended to validate the output of the API call to check that the resulting keys appear as intended.
 
 {{</Aside>}}
 
-Use the `PUT` command to update keyring material. 
+Use the `PUT` command to update keys. 
 
 Example with cURL:
 
@@ -200,23 +200,23 @@ Here is an overview of how JWT Validation processes incoming requests:
 
 1. We extract the JWT in accordance with the configuration from the incoming request.
 2. We decode the JWT and look for the JWTs header KID claim.
-3. We use the KID and ALG claim to find the correct keying material in the list of supplied keys. 
+3. We use the KID and ALG claim to find the correct keys in the list of supplied keys. 
 
   {{<Aside type="Note">}}
-  The absence of matching keying material directly marks the JWT as invalid.
+  The absence of matching keys directly marks the JWT as invalid.
   {{</Aside>}}
 
 4. We validate the authenticity of the JWT by checking the signature using the selected key.
 5. Should the JWT contain an EXP claim (expiration time), we validate that the JWT is not expired. 
 
   {{<Aside type="Note">}} 
-  We allow a mismatch of up to 60 seconds to account for clock drifts between the Cloudflare network and the JWT issuer. A token may still be regarded as valid 1 minute after it was supposed to expire when both clocks are perfectly in sync.
+  We allow a mismatch of up to 60 seconds to account for clock drifts between the Cloudflare network and the JWT issuer. A token may still be regarded as valid one minute after it was supposed to expire when both clocks are perfectly in sync.
   {{</Aside>}}
 
 6. Should the JWT contain a NBF claim (not before time), we validate that the JWT is already valid. 
 
   {{<Aside type="Note">}} 
-  The same accuracy applies as for EXP claims.  As such, a token may be already regarded as valid 1 minute before its NBF claim in case of perfect synchronization between issuer and validator.
+  The same accuracy applies as for EXP claims.  As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator.
   {{</Aside>}}
 
 7. The final validation result and whether a token was present at all is made available to the firewall which applies the policy’s configured action (`log`/`block`).
