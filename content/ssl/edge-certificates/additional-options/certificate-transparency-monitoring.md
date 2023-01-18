@@ -6,8 +6,7 @@ weight: 3
 
 # Certificate Transparency Monitoring
 
-{{<render file="_cert-transparency-monitoring-definition.md">}}
-<br/>
+Certificate Transparency Monitoring sends you emails when certificates — including [backup certificates](/ssl/edge-certificates/universal-ssl/#backup-certificates) — are issued for your domain. This feature is in **public beta** and is opt-in.
 
 {{<Aside type="note">}}
 

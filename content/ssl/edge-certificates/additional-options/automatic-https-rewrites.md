@@ -6,8 +6,7 @@ weight: 14
 
 # Automatic HTTPS Rewrites
 
-{{<render file="_automatic-https-rewrites-definition.md">}}
-<br/>
+Automatic HTTPS Rewrites prevents end users from seeing "mixed content" errors by rewriting URLs from `http` to `https` for resources or links on your web site that can be served with HTTPS.
 
 ## Availability
 

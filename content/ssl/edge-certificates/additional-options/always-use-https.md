@@ -6,8 +6,7 @@ weight: 15
 
 # Always Use HTTPS
 
-{{<render file="_always-use-https-definition.md">}}
-<br/>
+Always Use HTTPS redirects all `http` requests to `https` for all subdomains and hosts in your application.
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 

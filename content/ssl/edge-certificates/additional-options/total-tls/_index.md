@@ -6,8 +6,7 @@ weight: 14
 
 # Total TLS
 
-{{<render file="_total-tls.md">}}
-<br>
+Total TLS allows Cloudflare to issue individual certificates for every proxied hostname. These certificates will protect proxied hostnames not covered by [Universal certificates](/ssl/edge-certificates/universal-ssl/).
 
 When issued, these certificates will have a type of **Advanced - Total TLS**.
 

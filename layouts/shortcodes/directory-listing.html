@@ -2,7 +2,7 @@
 {{- $len := len (split $current "/") -}}
 
 {{- $showDescriptions := default false (.Get "showDescriptions") -}}
-{{- $truncate := default 200 (.Get "char_limit") -}}
+{{- $truncate := default 250 (.Get "char_limit") -}}
 {{- $link := "" }}
 
 <ul>
