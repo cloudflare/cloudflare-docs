@@ -50,7 +50,7 @@ Both the Cloudflare dashboard and the Cloudflare API support lists:
 * To reference a list in an API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language reference.
 
 {{<Aside type="warning">}}
-Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each individual product for details on list support.
+Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each [individual product](/products/) for details on list support.
 {{</Aside>}}
 
 ## Availability
