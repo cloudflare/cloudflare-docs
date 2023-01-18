@@ -19,15 +19,19 @@ You can connect applications to Cloudflare Zero Trust over a number of different
 
 {{<Aside type="note">}}
 
-SSH and browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
-  
-Allow is the only support Rule Action for browser-based VNC applications. Service Auth is not supported at this time.
+Browser-rendered SSH and VNC applications can be set for domains and subdomains, but cannot be set for paths.
 
 {{</Aside>}}
 
 Cloudflare can render certain non-web applications in your browser without the need for client software or end-user configuration changes. Cloudflare currently supports rendering a terminal for SSH and VNC connections in a user's browser.
 
-To enable this setting, follow the instructions [here](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
+To enable browser rendering:
+
+1. In the [Zero Trust dashboard](jttps://dash.teams.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the SSH or VNC application you created when [connecting the server to Cloudflare](/cloudflare-one/connections/connect-apps/use_cases/ssh/). Select **Configure**.
+3. In the **Policies** tab, ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
+4. In the **Settings** tab, scroll down to **Browser rendering**.
+5. Choose _SSH_ or _VNC_.
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 
