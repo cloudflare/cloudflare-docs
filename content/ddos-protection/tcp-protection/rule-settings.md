@@ -24,13 +24,13 @@ Besides defining rules with one of the above scopes, you must also select the [p
 
 ## Mode
 
-Advanced TCP Protection rules can have one of the following execution modes: monitoring, mitigation (enabled), or disabled.
+The Advanced TCP Protection system constantly learns your TCP connections to mitigate DDoS attacks. Advanced TCP Protection rules can have one of the following execution modes: monitoring, mitigation (enabled), or disabled.
 
 {{<definitions>}}
 
 * **Monitoring**
 
-    * In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn about existing TCP connections and will maintain their states. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
+    * In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
 
 * **​​Mitigation (Enabled)**
 
