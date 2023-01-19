@@ -30,7 +30,7 @@ To route emails to your mail server, you need to [create two DNS records](/dns/m
       <summary>API example</summary>
       <div>
       
-      ```bash
+      ```json
       ---
       header: Request
       ---

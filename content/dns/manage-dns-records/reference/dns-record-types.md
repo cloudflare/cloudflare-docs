@@ -39,7 +39,7 @@ When creating `A` or `AAAA` records [using the API](/dns/manage-dns-records/how-
 
 {{<render file="_api-field-definitions.md">}}
 
-```bash
+```json
 ---
 header: Request
 highlight: [8, 10]
@@ -117,7 +117,7 @@ When creating `CNAME` records [using the API](/dns/manage-dns-records/how-to/cre
 
 {{<render file="_api-field-definitions.md">}}
 
-```bash
+```json
 ---
 header: Request
 highlight: [8, 10]
@@ -246,7 +246,7 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 {{<render file="_api-field-definitions.md">}}
 
-```bash
+```json
 ---
 header: Request
 ---
