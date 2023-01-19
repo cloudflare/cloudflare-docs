@@ -39,9 +39,6 @@ To help you further debug your code, `wrangler dev` also supports `console.log` 
 {{<tab label="js/esm" default="true">}}
 
 ```js
----
-filename: index.js
----
 export default {
   async fetch(request) {
     console.log(`Received new request: ${request.url}`);
@@ -53,9 +50,6 @@ export default {
 {{<tab label="js/sw">}}
 
 ```js
----
-filename: index.js
----
 addEventListener('fetch', event => {
   console.log(`Received new request: ${event.request.url}`);
   event.respondWith(handleEvent(event));
