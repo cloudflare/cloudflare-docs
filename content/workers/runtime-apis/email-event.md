@@ -11,6 +11,27 @@ An `EmailEvent` is the event type to programmatically process your emails with a
 
 ---
 
+## Syntax: Service Worker
+
+`EmailEvent` can be handled in Workers functions written using the Service Worker syntax by attaching to the `email` event with `addEventListener`:
+
+```js
+addEventListener("email", (event) => {
+  event.message.forward("<YOUR_EMAIL>");
+});
+```
+### Properties
+
+{{<definitions>}}
+
+- `event.message` {{<type>}}EmailMessage{{</type>}}
+
+  - An [`EmailMessage` object](/workers/runtime-apis/email-event/#emailmessage-definition).
+
+{{</definitions>}}
+
+---
+
 ## Syntax: Module Worker
 
 `EmailEvent` can be handled in Workers functions written using the Module Worker syntax by adding an `email` function to your module's exported handlers:
@@ -37,27 +58,6 @@ export default {
 
 - `ctx` {{<type>}}object{{</type>}}
   - An object containing the context associated with your Module Worker. Currently, this object just contains the `waitUntil` function.
-
-{{</definitions>}}
-
----
-
-## Syntax: Service Worker
-
-`EmailEvent` can be handled in Workers functions written using the Service Worker syntax by attaching to the `email` event with `addEventListener`:
-
-```js
-addEventListener("email", (event) => {
-  event.message.forward("<YOUR_EMAIL>");
-});
-```
-### Properties
-
-{{<definitions>}}
-
-- `event.message` {{<type>}}EmailMessage{{</type>}}
-
-  - An [`EmailMessage` object](/workers/runtime-apis/email-event/#emailmessage-definition).
 
 {{</definitions>}}
 
