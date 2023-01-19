@@ -17,7 +17,7 @@ For example, a filter matching:
 
 Associate a filter with a firewall rule to define the scope of that rule.
 
-Use IP Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Rules List API](/firewall/api/cf-lists/) for more information.
+Use IP Lists within a filter to refer collectively to a group of IP addresses. Refer to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) for more information.
 
 Before getting started with the Cloudflare Filters API, familiarize yourself with rule [expressions](/ruleset-engine/rules-language/expressions/). For a complete reference, refer to [Rules language](/ruleset-engine/rules-language/).
 

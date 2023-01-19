@@ -218,15 +218,22 @@
 /email-routing/get-started/settings/ /email-routing/setup/ 301
 
 # firewall
-/firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
-/firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
+/firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
+/firewall/api/cf-lists/endpoints/ /fundamentals/global-configurations/lists/lists-api/endpoints/ 301
+/firewall/api/cf-lists/json-object/ /fundamentals/global-configurations/lists/lists-api/json-object/ 301
 /firewall/cf-dashboard/expression-preview-editor/ /firewall/cf-dashboard/edit-expressions/ 301
+/firewall/cf-dashboard/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
+/firewall/cf-dashboard/rules-lists/manage-items/ /fundamentals/global-configurations/lists/create-dashboard/#add-items-to-a-list 301
+/firewall/cf-dashboard/rules-lists/manage-lists/ /fundamentals/global-configurations/lists/create-dashboard/ 301
+/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/ /fundamentals/global-configurations/lists/use-in-expressions/ 301
 /firewall/cf-firewall-language/ /ruleset-engine/rules-language/ 301
 /firewall/cf-firewall-language/fields/ /ruleset-engine/rules-language/fields/ 301
 /firewall/cf-firewall-language/functions/ /ruleset-engine/rules-language/functions/ 301
 /firewall/cf-firewall-language/operators/ /ruleset-engine/rules-language/operators/ 301
 /firewall/cf-firewall-language/values/ /ruleset-engine/rules-language/values/ 301
+/firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
 /firewall/cf-firewall-rules/fields-and-expressions/ /ruleset-engine/rules-language/expressions/ 301
+/firewall/cf-firewall-rules/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
 /firewall/cf-rulesets/ /ruleset-engine/about/ 301
 /firewall/cf-rulesets/add-rule-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
 /firewall/cf-rulesets/common-use-cases/ /ruleset-engine/common-use-cases/ 301
@@ -260,6 +267,7 @@
 /firewall/cf-rulesets/rulesets-api/update-rule/ /ruleset-engine/rulesets-api/update-rule/ 301
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /firewall/cf-rulesets/view-rulesets/ /ruleset-engine/basic-operations/view-rulesets/ 301
+/firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
 
 # fundamentals
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
