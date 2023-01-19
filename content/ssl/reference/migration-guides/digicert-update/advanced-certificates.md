@@ -52,7 +52,7 @@ Certificates with 14 and 30 day validity periods will be renewed with Google Tru
 
 ### Validity period
 
-If the current DigiCert certificate has a 365 day validity period, that value will change to 90 in the `“validity_days”` field.
+If the current DigiCert certificate has a 365 day validity period, that value will change to 90 in the `“validity_days”` field when the certificate is renewed.
 
 ### DCV method
 

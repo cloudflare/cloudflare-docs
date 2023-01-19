@@ -108,7 +108,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
+    *    Treats all content as static and caches all [file types](/cache/about/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/articles/200172266). Defaults to `false`.
         This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheKey` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -153,7 +153,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `webp` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](https://blog.cloudflare.com/introducing-polish-automatic-image-optimizati/). 
+    *   Enables or disables [WebP](https://blog.cloudflare.com/a-very-webp-new-year-from-cloudflare/) image format in [Polish](/images/polish/).
 
 {{</definitions>}}
 
@@ -226,7 +226,7 @@ All plans have access to:
 *   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
 
     *   If Cloudflare replaces the value of the `Accept-Encoding` header, the original value is stored in the `clientAcceptEncoding` property, for example, `"gzip, deflate, br"`.
-  
+
 *   `colo` {{<type>}}string{{</type>}}
 
     *   The three-letter [`IATA`](https://en.wikipedia.org/wiki/IATA_airport_code) airport code of the data center that the request hit, for example, `"DFW"`.
@@ -379,6 +379,25 @@ async function eventHandler(event){..}
 This code snippet will throw during script startup, and the `"fetch"` event listener will never be registered.
 
 ***
+
+### Set the `Content-Length` header
+
+The `Content-Length` header will be automatically set by the runtime based on whatever the data source for the `Request` is. Any value manually set by user code in the `Headers` will be ignored. To have a `Content-Length` header with a specific value specified, the `body` of the `Request` must be either a `FixedLengthStream` or a fixed-length value just as a string or `TypedArray`.
+
+A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed number of bytes to be written to it.
+
+```js
+  const { writable, readable } = new FixedLengthStream(11);
+
+  const enc = new TextEncoder();
+  const writer = writable.getWriter();
+  writer.write(enc.encode("hello world"));
+  writer.end();
+
+  const req = new Request('https://example.org', { method: 'POST', body: readable });
+```
+
+Using any other type of `ReadableStream` as the body of a request will result in Chunked-Encoding being used.
 
 ## Related resources
 

@@ -6,7 +6,7 @@ weight: 6
 
 # Use dynamic IP addresses
 
-Some hosting providers dynamically update their customer's IP addresses. These customers must then update the new origin server IPs in their Cloudflare DNS.
+Most Internet service providers and some hosting providers dynamically update their customer's IP addresses. These customers must then update the new origin server IPs in their Cloudflare DNS.
 
 ## Cloudflare API
 
@@ -14,7 +14,7 @@ Create a script to monitor IP address changes and then have that script push cha
 
 ## ddclient
 
-[ddclient](https://sourceforge.net/p/ddclient/wiki/Home/) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
+[ddclient](https://github.com/ddclient/ddclient) is a third-party Perl client used to update dynamic DNS entries for accounts on various DNS providers.
 
 ## DNS-O-Matic
 

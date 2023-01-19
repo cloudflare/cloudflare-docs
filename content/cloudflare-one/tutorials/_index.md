@@ -8,6 +8,8 @@ weight: 3
 layout: table
 column_text: Category
 column_param: category
+meta:
+    description: View tutorials for Cloudflare Zero Trust.
 ---
 
 # Tutorials

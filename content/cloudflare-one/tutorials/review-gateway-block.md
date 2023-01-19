@@ -10,13 +10,13 @@ title: Review Gateway blocks
 
 You can use Cloudflare Gateway to filter and log DNS queries from devices on any network. You can also use Cloudflare Radar to review why a site has been blocked.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Review DNS filtering logs in Cloudflare Gateway
 - Review the reason a domain was blocked in Cloudflare Radar
 - Submit categorization feedback
 
-**⏲️Time to complete:**
+**Time to complete:**
 
 5 minutes
 

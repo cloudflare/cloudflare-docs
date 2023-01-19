@@ -4,6 +4,7 @@ pcx_content_type: changelog
 weight: 6
 meta:
   title: Changelog for beacon.min.js
+rss: file
 ---
 
 # Changelog for `beacon.min.js`

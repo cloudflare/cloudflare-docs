@@ -2,6 +2,7 @@
 title: Response Header Modification Rules
 pcx_content_type: concept
 weight: 4
+layout: single
 meta:
   title: HTTP Response Header Modification Rules
 ---
@@ -10,8 +11,9 @@ meta:
 
 You can manipulate the headers included in the HTTP response through HTTP Response Header Modification Rules. Through these rules you can:
 
-* Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response.
-* Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response.
+* Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response if it does not exist.
+* Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response if it does not exist.
+* Add a new HTTP response header with a literal string value without removing any existing headers with the same name.
 * Remove an HTTP header from the response.
 
 You can create an HTTP Response Header Modification Rule [in the dashboard](/rules/transform/response-header-modification/create-dashboard/) or [via API](/rules/transform/response-header-modification/create-api/).
@@ -26,7 +28,7 @@ To modify HTTP headers in the **request**, refer to [HTTP Request Header Modific
 
 * You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 
-* Currently you cannot reference [IP Lists](/firewall/cf-firewall-rules/rules-lists/) in expressions of HTTP Response Header Modification Rules.
+* Currently you cannot reference [IP Lists](/fundamentals/global-configurations/lists/ip-lists/) in expressions of HTTP Response Header Modification Rules.
 
 * The HTTP response header removal operation will remove all response headers with the provided name.
 

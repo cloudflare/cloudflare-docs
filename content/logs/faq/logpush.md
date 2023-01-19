@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Logpush
 weight: 2
+meta:
+    description: Review frequently asked questions about Logpush.
 ---
 
 [❮ Back to FAQ](/logs/faq/)

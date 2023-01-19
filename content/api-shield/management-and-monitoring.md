@@ -19,7 +19,7 @@ Cloudflare will start collecting [performance data](/api-shield/management-and-m
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Add your endpoints [manually](#add-endpoints-manually) or from [API Discovery](#add-endpoints-from-api-discovery).
+3. Add your endpoints [manually](#add-endpoints-manually), from [Schema Validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
 
 ## Add endpoints from API Discovery
 
@@ -32,9 +32,24 @@ There are two ways to add API endpoints from Discovery.
 3. Select **Add endpoints**.
 
 ### Add from the Discovery Tab
+
 1. From Endpoint Management, select the **Discovery** tab.
 2. Select the discovered endpoints you would like to add.
 3. Select **Save selected endpoints**.
+
+## Add endpoints from Schema Validation
+
+1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/configure/).
+2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
+3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published.
+
+API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
+
+{{<Aside type="Note">}}
+
+If you deselect **Save new endpoints to endpoint management**, the endpoints will not be added.
+
+{{</Aside>}}
 
 ## Add endpoints manually
 
@@ -51,6 +66,36 @@ By selecting multiple checkboxes, you can add several endpoints from Discovery a
 When adding a path manually, you can specify variable fields by enclosing them in braces, `/api/user/{var1}/details`. 
 
 For more information on how Cloudflare uses variables in API Shield, refer to the examples from [API Discovery](/api-shield/security/api-discovery/).
+
+## Endpoint schema learning
+
+Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export OpenAPI schemas in `v3.0.0` format by hostname. You can also include learned schema parameters.
+
+### Export a schema
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Select **Security** > **API Shield**.
+3. Navigate to **Endpoint Management**.
+4. Select **Export schema** and choose a hostname to export.
+5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
+6. Select **Export schema** and choose a location to save the file.
+
+{{<Aside type="Note">}} 
+
+The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
+
+{{</Aside>}}
+
+#### Learned schemas will always include:
+
+- The listed hostname in the servers section
+- All endpoints by host, method, and path
+- Detected path variables
+
+#### Learned schemas can optionally include:
+
+- Detected query parameters and its format
+- API Shield’s rate limit threshold recommendations
 
 ## Endpoint Performance Analysis
 

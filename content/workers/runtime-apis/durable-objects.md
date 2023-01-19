@@ -411,6 +411,30 @@ If the remote Object does not already exist, it will be created. Thus, there wil
 
 This method always returns the stub immediately, before it has connected to the remote object. This allows you to begin making requests to the object right away, without waiting for a network round trip.
 
+#### Providing a location hint
+
+Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. To manually create Durable Obkects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
+
+```js
+let stub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
+```
+
+The following `locationHint`s are supported. Note that hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below. The closest nearby region will be used until those locations are fully supported.
+
+| Location Hint Parameter  | Location              |
+| ------------------------ | --------------------- |
+| wnam                     | Western North America |
+| enam                     | Eastern North America |
+| sam                      | South America         |
+| weur                     | Western Europe        |
+| eeur                     | Eastern Europe        |
+| apac                     | Asia-Pacific          |
+| oc                       | Oceania               |
+| afr                      | Africa                |
+| me                       | Middle East           |
+
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
+
 ## Object stubs
 
 A Durable Object stub is a client object used to send requests to a remote Durable Object.

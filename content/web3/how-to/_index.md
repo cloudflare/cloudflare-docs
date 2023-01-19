@@ -3,7 +3,7 @@ pcx_content_type: navigation
 title: How to
 weight: 3
 meta:
-  title: How to - IPFS
+  title: Web3 - How to
 ---
 
 # How to

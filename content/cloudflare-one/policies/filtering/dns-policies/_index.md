@@ -32,7 +32,7 @@ These are the action types you can choose from:
 *   [Block](#block)
 *   [Override](#override)
 *   [SafeSearch](#safesearch)
-*   [Youtube Restricted Mode](#youtube-restricted-mode)
+*   [YouTube Restricted Mode](#youtube-restricted-mode)
 
 ### Allow
 
@@ -78,7 +78,7 @@ You can use Cloudflare Gateway to enable SafeSearch on search engines like Googl
 
 ### YouTube Restricted Mode
 
-Similarly, you can enforce YouTube Restricted mode by choosing the *Youtube Restricted* action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable Youtube Restricted Mode, you could set up a policy like the following:
+Similarly, you can enforce YouTube Restricted mode by choosing the *YouTube Restricted* action. YouTube Restricted Mode is an automated filter for adult and offensive content built into YouTube. To enable YouTube Restricted Mode, you could set up a policy like the following:
 
 | Selector | Operator | Value | Action |
 | --- | --- | --- | --- |
@@ -92,11 +92,7 @@ Gateway matches DNS traffic against the following selectors, or criteria:
 
 ### Application
 
-You can apply DNS policies to a growing list of popular web applications. Refer to the [Application and app types](/cloudflare-one/policies/filtering/application-app-types) page for more information.
-
-| UI name | API example |
-| -- | -- |
-| Application | `any(app.ids[*] in {505}` |
+{{<render file="gateway/_application.md" withParameters="DNS">}}
 
 ### Authoritative Nameserver IP
 
@@ -237,28 +233,13 @@ Use this selector to block domains (and optionally, [IP addresses](/cloudflare-o
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. Geolocation is determined from the source IP address. To specify a continent, enter its two-letter code into the **Value** field:
-
-- AF – Africa
-- AN – Antarctica
-- AS – Asia
-- EU – Europe
-- NA – North America
-- OC – Oceania
-- SA – South America
-- T1 – Tor network
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Continent IP Geolocation | `dns.src.geo.continent == "EU"` |
+Use this selector to filter based on the continent where the query arrived to Gateway from.
+{{<render file="gateway/_source-continent.md" withParameters="dns.src">}}
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. Geolocation is determined from the source IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Country IP Geolocation | `dns.src.geo.country == "RU"` |
+Use this selector to filter based on the country where the query arrived to Gateway from.
+{{<render file="gateway/_source-country.md" withParameters="dns.src">}}
 
 ### Source IP
 
@@ -270,12 +251,12 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 ### Users
 
-The **User**, **User Group**, and **SAML Attributes** selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in the organization via the WARP client. For more information on identity-based selectors, refer to the [Identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) page.
+{{<render file="gateway/_users.md">}}
 
 ## Operators
 
-{{<render file="_policies-operators.md">}}
+{{<render file="gateway/_operators.md">}}
 
 ## Value
 
-{{<render file="_policies-value.md">}}
+{{<render file="gateway/_value.md">}}

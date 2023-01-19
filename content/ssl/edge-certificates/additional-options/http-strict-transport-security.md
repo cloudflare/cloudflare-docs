@@ -8,7 +8,7 @@ layout: list
 
 # HTTP Strict Transport Security (HSTS)
 
-{{<render file="_hsts-definition.md">}}
+HSTS protects HTTPS web servers from downgrade attacks. These attacks redirect web browsers from an HTTPS web server to an attacker-controlled server, allowing bad actors to compromise user data and cookies.
 
 HSTS adds an HTTP header that directs [compliant web browsers](/ssl/reference/browser-compatibility/) to:
 
@@ -23,7 +23,9 @@ For more background information on HSTS, see the [introductory blog post](https:
 
 {{</Aside>}}
 
----
+## Availability
+
+{{<feature-table id="ssl.hsts">}}
 
 ## Requirements
 

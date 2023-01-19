@@ -105,7 +105,7 @@ For reference information on rule actions available for Cloudflare products powe
               The scope of the <em>Allow</em> action is limited to firewall
               rules; matching requests are <strong>not</strong> exempt from
               action by other Cloudflare security products such as Bot Fight Mode, IP Access
-              Rules, and Managed Rulesets.
+              Rules, and WAF Managed Rules.
             </li>
             <li>
               Matched requests will be mitigated if they are part of a DDoS
@@ -154,9 +154,6 @@ For reference information on rule actions available for Cloudflare products powe
               <ul>
                 <li>
                   Show a non-interactive challenge page (similar to the current JS Challenge).
-                </li>
-                <li>
-                  Present an invisible proof of work challenge to the browser.
                 </li>
                 <li>
                   Show a custom interactive challenge (such as click a button).

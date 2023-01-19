@@ -13,6 +13,10 @@ Cloudflare sits in between the browser and the origin. When Cloudflare receives 
 
 Vary for images is available for Pro, Business, and Enterprise customers.
 
+## Availability
+
+{{<feature-table id="cache.vary_for_images">}}
+
 ## File extensions
 
 You can use vary for images on the file extensions below if the origin server sends the `Vary: Accept` response header. If the origin server sends `Vary: Accept` but does not serve the set variant, the response is not cached and displays `BYPASS` in the cache status in the response header. Additionally, the list of variant types the origin serves for each extension must be configured so that Cloudflare decides which variant to serve without contacting the origin server.
@@ -39,3 +43,8 @@ You can use vary for images on the file extensions below if the origin server se
 </details>
 
 To begin using Vary for Images, refer to [Enable Vary for Images](/cache/how-to/enable-vary-for-images/). To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/#purge-varied-images).
+
+## Limitations
+
+* For Vary for images to work, your image URLs must include the file extension in the path and not the query string. For example the URL `https://example.com/image.jpg` is compatible but `https://example.com?index.php?file=image.jpg` is not compatible.
+* Your origin must return an image type matching the file extension in the URL when a HTTP client sends no `Accept` header, or an `Accept: */*` header. Otherwise, you will see `CF-Cache-Status: BYPASS` in the HTTP response headers.

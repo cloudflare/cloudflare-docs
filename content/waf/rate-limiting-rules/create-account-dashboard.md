@@ -25,7 +25,7 @@ To create a new custom rate limiting ruleset:
 
 2. Navigate to Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
 
-3. Under **Your custom rulesets**, select **Create new ruleset**.
+3. Under **Your custom rate limiting rulesets**, select **Create new ruleset**.
 
 4. Enter a name for the ruleset and (optionally) a description.
 
@@ -45,7 +45,7 @@ To create a new custom rate limiting ruleset:
 
 11. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the rate.
 
-12. Under **With the same**, configure the characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) for more information.
+12. Under **With the same value of**, configure the characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
     The available characteristics depend on your Cloudflare plan and product subscriptions.
 
@@ -65,7 +65,7 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 
 2. Navigate to Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
 
-3. Under **Your custom rulesets** and next to the rate limiting ruleset you wish to deploy, select **Deploy**.
+3. Under **Your custom rate limiting rulesets** and next to the rate limiting ruleset you wish to deploy, select **Deploy**.
 
 4. In the ruleset deployment page, enter a descriptive name for the rule deploying the ruleset in **Execution name**.
 
@@ -77,7 +77,7 @@ Deployed custom rate limiting rulesets will only apply to incoming traffic of zo
 
 6. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
 
-The **Rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
+The **Deployed custom rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
 
 ## Configuring a custom response for blocked requests
 

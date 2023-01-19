@@ -3,6 +3,7 @@ pcx_content_type: reference
 title: Formats and limitations
 meta:
     title: Supported formats and limitations
+    description: Review the supported formats and limitations for Cloudflare Image Resizing.
 weight: 3
 ---
 

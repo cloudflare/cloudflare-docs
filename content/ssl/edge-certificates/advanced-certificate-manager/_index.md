@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Advanced certificates
 weight: 2
+layout: single
 ---
 
 # Advanced certificates
@@ -28,6 +29,10 @@ Advanced certificates allow you multiple customization options:
 Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 edge certificates per zone.
 
 {{</Aside>}}
+
+## Availability
+
+{{<feature-table id="ssl.advanced_certificates">}}
 
 ## Related resources
 

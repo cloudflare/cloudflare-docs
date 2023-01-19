@@ -163,7 +163,7 @@ The string must be a valid IPv4 or IPv6 socket address (containing the IP addres
 Devices that connect to Cloudflare Zero Trust with Service Token authentication are not subject to identity-based rules.
 {{</Aside>}}
 
-Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a [service token](/cloudflare-one/identity/service-tokens/). Before you can authenticate clients using the service token, you must add a new rule to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-permissions) that includes the token, with the **Rule action** set to `Service Auth`.
+Instead of requiring users to authenticate with their credentials, you can deploy the WARP client with a [service token](/cloudflare-one/identity/service-tokens/). Before you can authenticate clients using the service token, you must add a new rule to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions) that includes the token, with the **Rule action** set to `Service Auth`.
 
 Both `auth_client_id` and `auth_client_secret` are required when using this authentication method.
 

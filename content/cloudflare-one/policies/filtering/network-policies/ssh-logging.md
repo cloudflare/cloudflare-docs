@@ -13,7 +13,7 @@ You can create network policies to manage and monitor SSH access to your applica
 ## Prerequisites
 
 * [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on end-user devices.
-* [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on end-user devices.
+* [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on end-user devices.
 
 ## 1. Ensure Unix usernames match user SSO identities
 

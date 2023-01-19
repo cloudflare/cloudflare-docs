@@ -1,23 +1,23 @@
 ---
-title: WAF Managed Rulesets
+title: WAF Managed Rules
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Configure WAF Managed Rulesets with Terraform
+  title: Configure WAF Managed Rules with Terraform
 layout: list
 ---
 
-# Configure WAF Managed Rulesets
+# Configure WAF Managed Rules
 
-This page provides examples of deploying and configuring WAF Managed Rulesets in your zone or account using Terraform. It covers the following configurations:
+This page provides examples of deploying and configuring WAF Managed Rules in your zone or account using Terraform. It covers the following configurations:
 
-* [Deploy WAF Managed Rulesets](#deploy-waf-managed-rulesets)
+* [Deploy managed rulesets](#deploy-managed-rulesets)
 * [Configure skip rules](#configure-skip-rules)
 * [Configure payload logging](#configure-payload-logging)
 * [Configure overrides](#configure-overrides)
 * [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
-For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/managed-rulesets/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with Managed Rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on WAF Managed Rules, refer to [Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
@@ -25,18 +25,18 @@ For more information on WAF Managed Rulesets, refer to [Managed Rulesets](/waf/m
 
 {{<render file="_delete-existing-rulesets.md">}}
 
-### Obtain the necessary account, zone, and Managed Ruleset IDs
+### Obtain the necessary account, zone, and managed ruleset IDs
 
-The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy WAF Managed Rulesets.
+The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy managed rulesets.
 
 * To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) API operation.
 * To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://developers.cloudflare.com/api/operations/zone-list-zones) API operation.
 
-The deployment of WAF Managed Rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF Managed Rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing WAF Managed Rulesets.
+The deployment of managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF's managed rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing managed rulesets.
 
-## Deploy WAF Managed Rulesets
+## Deploy managed rulesets
 
-The following example deploys two WAF Managed Rulesets to a zone using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the Managed Rulesets.
+The following example deploys two managed rulesets to a zone using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
@@ -75,7 +75,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 
 ## Configure skip rules
 
-The following example adds two [skip rules](/waf/managed-rulesets/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
+The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:
 
 * The first rule will skip the execution of the entire Cloudflare Managed Ruleset (with ID `efb7b8c949ac4650a09736fc376e9aee`) for specific URLs, according to the rule expression.
 * The second rule will skip the execution of two rules belonging to the Cloudflare Managed Ruleset for specific URLs, according to the rule expression.
@@ -127,7 +127,7 @@ highlight: [1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24]
 ```
 
 {{<Aside type="warning" header="Important">}}
-Ensure that you place the skip rules **before** the rule that executes the Managed Ruleset (or some of its rules) that you wish to skip, as in the previous example.
+Ensure that you place the skip rules **before** the rule that executes the managed ruleset (or some of its rules) that you wish to skip, as in the previous example.
 {{</Aside>}}
 
 ## Configure overrides
@@ -139,7 +139,7 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 * A tag override for the `wordpress` tag, setting the action of all the rules with this tag to `js_challenge`.
 
 {{<Aside type="warning" header="Important">}}
-Ruleset overrides and tag overrides apply to both existing and **future** rules in the Managed Ruleset. If you wish to override existing rules only, you must use rule overrides.
+Ruleset overrides and tag overrides apply to both existing and **future** rules in the managed ruleset. If you wish to override existing rules only, you must use rule overrides.
 
 In the rules-level or category-level override, use the `status` field to indicate whether the override enables or disables the ruleset rules or category.
 {{</Aside>}}
@@ -182,7 +182,7 @@ highlight: [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]
 
 ## Configure payload logging
 
-This example enables [payload logging](/waf/managed-rulesets/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
+This example enables [payload logging](/waf/managed-rules/payload-logging/) for matched rules of the Cloudflare Managed Ruleset, setting the public key used to encrypt the logged payload.
 
 Building upon the rule that deploys the Cloudflare Managed Ruleset, the following configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
@@ -217,7 +217,7 @@ The OWASP Managed Ruleset supports the following configurations:
 
 * Set the score threshold by creating a rule override for the last rule in the Cloudflare OWASP Core Ruleset (rule with ID `6179ae15870a4bb7b2d480d4843b323c`), and including the `score_threshold` property.
 
-For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/reference/owasp-core-ruleset/) page in the WAF documentation.
+For more information on the available configuration values, refer to the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) page in the WAF documentation.
 
 The following example rule of a `cloudflare_ruleset` Terraform resource performs the following configuration:
 

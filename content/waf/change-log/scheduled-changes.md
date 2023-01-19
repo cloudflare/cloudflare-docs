@@ -4,6 +4,7 @@ pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
+rss: file
 ---
 
 # Scheduled changes
@@ -20,17 +21,44 @@ layout: list
       <th>Description</th>
       <th>Comments</th>
     </tr>
-    <tr>
-      <th>2022-11-16</th>
-      <th>2022-11-28</th>
-      <th>Block</th>
-      <th>N/A</th>
-      <th>...b8ef67d7</th>
-      <th>SQLi - Equation</th>
-      <th>N/A</th>
-    </tr>
   </thead>
   <tbody>
+        <tr>
+      <td>2023-01-16</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>N/A</td>
+      <td>OWASP rules</td>
+      <td>Bumping OWASP ruleset version</td>
+      <td>Upgrading OWASP ruleset version to 3.3.4, only on new WAF</td>
+    </tr>
+    <tr>
+      <td>2023-01-16</td>
+      <td>2023-01-23</td>
+      <td>Block</td>
+      <td>N/A</td>
+      <td>...bbc447fa</td>
+      <td>XSS - JavaScript Events</td>
+      <td>This detection will replace 100135C in legacy WAF and ...de5e2367 in new WAF</td>
+    </tr>
+    <tr>
+      <td>2023-01-16</td>
+      <td>2023-01-23</td>
+      <td>Log</td>
+      <td>100557</td>
+      <td>...4c2e80c3</td>
+      <td>Code Injection - JavaScript</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>2023-01-16</td>
+      <td>2023-01-23</td>
+      <td>Log</td>
+      <td>100559</td>
+      <td>...65414846</td>
+      <td>Prototype pollution Attack, Headers</td>
+      <td>N/A</td>
+    </tr>
 </tbody>
 </table>
 {{</table-wrap>}}

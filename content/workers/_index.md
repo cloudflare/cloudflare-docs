@@ -41,7 +41,7 @@ or install with `yarn`:
 $ yarn global add wrangler
 ```
 
-Read more about [installing Wrangler](/workers/wrangler/get-started/).
+Read more about [installing Wrangler](/workers/wrangler/install-and-update/).
 
 ---
 

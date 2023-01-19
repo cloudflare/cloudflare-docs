@@ -13,6 +13,7 @@ This feature is only available if you are using the following identity providers
 - Okta
 - Azure AD
 - OpenID Connect (OIDC)
+- SAML
 
 To enforce an MFA requirement to an application:
 
@@ -24,15 +25,11 @@ To enforce an MFA requirement to an application:
 
 1.  If your application already has a rule containing an identity requirement, find it and click **Edit**.
 
-![Identity rule](/cloudflare-one/static/documentation/applications/identity-rule.png)
-
 The rule must contain an Include rule which defines an identity. For example, the Include rule should allow for users who are part of a user [group](/cloudflare-one/identity/users/groups/), email domain, or identity provider group.
 
 1.  Add a _Require_ action to the rule.
 
 1.  Select _Authentication Method_ and choose `mfa - multiple-factor authentication`.
-
-![MFA](/cloudflare-one/static/documentation/applications/mfa.png)
 
 1.  Save the rule.
 

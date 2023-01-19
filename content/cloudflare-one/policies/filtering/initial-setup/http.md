@@ -14,7 +14,7 @@ Secure Web Gateway allows you to inspect HTTP traffic and control which websites
 
 To filter HTTP requests from a device:
 
-1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device .
+1. [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device .
 2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 3. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
 4. Enable the Gateway proxy:
@@ -44,7 +44,7 @@ This will help avoid any certificate pinning errors that may arise from an initi
 | --------------| ---------| ----------------| -------------- |
 | Application   | in       | Do Not Inspect | Do Not Inspect |
 
-  {{<render file="_policies-recommended.md">}}
+  {{<render file="gateway/_policies-recommended.md">}}
 
 ## 4. Add optional policies
 

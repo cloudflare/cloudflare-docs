@@ -56,22 +56,6 @@ To revoke a member's access to your account:
 4. Click **Revoke**.
 5. Click **Yes, revoke access**.
 
-## Change Super Administrator
-
-If you or someone in your organization leaves or loses access to email, you must change who is assigned the Super Administrator role. However, the process differs based on your plan type. 
-
-### Enterprise customers
-
-Enterprise users can have multiple Super Administrators associated with their accounts. To edit your Super Administrator, [add a member](#add-account-members) to your account and assign the **Super Administrator** role.
-
-If you want to remove a previous Super Administrator, only do so after adding the new Super Administrator.
-
-### Non-enterprise customers
-
-Free, Pro, or Business customers are only allowed one Super Administrator. To change your Super Administrator, you must [change the email address](https://support.cloudflare.com/hc/articles/203471284#12345679) associated with your Cloudflare account to a new email address that is not associated with an existing Cloudflare account.
-
-If your desired email address is currently used by another Cloudflare account, you may need to use a temporary email address as a placeholder while you update both accounts.
-
 ## Provide edit access to Cloudflare Support
 
 Occasionally, you may want to allow edit access to your account for Cloudflare Support. A typical use case might be migrating a complex or sensitive domain over to Cloudflare.

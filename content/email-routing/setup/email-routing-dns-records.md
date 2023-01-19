@@ -19,7 +19,7 @@ Check the status of your account's DNS records in the **Email DNS records** card
 
 ### Start disabling
 
-When you successfully configure Email Routing, your DNS records will be locked and the dashboard will show a **Start disabling** button in the Email DNS records card. This is the recommended setting by Cloudflare. It means that the DNS records required for Email Routing to work are locked and can only be changed if you disable Email Routing on your domain.
+When you successfully configure Email Routing, your DNS records will be locked and the dashboard will show a **Start disabling** button in the Email DNS records card. This locked status is the recommended setting by Cloudflare. It means that the DNS records required for Email Routing to work are locked and can only be changed if you disable Email Routing on your domain.
 
 If you need to delete Email Routing or migrate to another provider, select **Start disabling**. Refer to [Disable Email Routing](/email-routing/setup/disable-email-routing/) for more information.
 

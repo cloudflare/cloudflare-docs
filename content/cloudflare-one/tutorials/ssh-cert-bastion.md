@@ -20,13 +20,13 @@ Replacing long-lived API keys with short-lived certificates offers the following
 - The keys used to authenticate are automatically rotating
 - Users do not have to add SSH keys to their onboarding; instead, only the identity provider is required
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Connect a host to Cloudflare's network that users can reach over SSH
 - Build Zero Trust rules to protect that resource
 - Replace long-lived SSH keys with short-lived certificates to authenticate users to the host
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 45 minutes
 

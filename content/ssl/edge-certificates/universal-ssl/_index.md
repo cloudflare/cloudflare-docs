@@ -9,8 +9,8 @@ meta:
 # Universal SSL
 
 {{<render file="_universal-ssl-definition.md">}}
+<br/>
 
-\
 For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
 {{<Aside type="note">}}

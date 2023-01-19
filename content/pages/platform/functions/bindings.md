@@ -208,7 +208,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 While developing locally, you can interact with a Service by adding `--service <Binding name>=<Worker>` to your run command. For example, if your service is bound to `SERVICE`, you can access this service in local dev by running `npx wrangler pages dev <output-dir> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`.
 You can interact with this binding by using context.env (e.g. `context.env.SERVICE`).
 
-### Environment variables
+## Environment variables
 
 An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. You can set your environment variables directly within the Pages dashboard for both your production and preview environments at runtime and build-time.
 
