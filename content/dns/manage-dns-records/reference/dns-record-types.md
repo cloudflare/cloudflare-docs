@@ -261,19 +261,19 @@ header: Response
     "zone_name": "example.com",
     "name": "xmpp.tcp.example.com",
     "type": "SRV",
-    "content": "5\t5223[tserver.example.com|http://tserver.example.com/]",
+    "content": "5\t5223\tserver.example.com",
     "priority": 10,
     "proxiable": false,
     "proxied": false,
     "ttl": 1,
     "locked": false,
     "data": {
-      "name": "[example.com|http://example.com/]",
+      "name": "example.com",
       "port": 5223,       
       "priority": 10,       
       "proto": "_tcp",       
       "service": "_xmpp",       
-      "target": "[server.example.com|http://server.example.com/]",       
+      "target": "server.example.com",       
       "weight": 5     
       },
     "meta": {       
