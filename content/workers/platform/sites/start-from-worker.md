@@ -55,7 +55,6 @@ export default {
 ```
 {{</tab>}}
 {{<tab label="js/sw">}}
-
 ```js
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
