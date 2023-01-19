@@ -41,16 +41,27 @@ addEventListener('fetch', async event => {
 {{</tab>}}
 {{</tabs>}}
 
----
 ## Redirect requests from one domain to another
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
+export default {
+  async fetch(request) {
+    const base = 'https://example.com';
+    const statusCode = 301;
 
+    const url = new URL(request.url);
+    const { pathname, search } = url;
+
+    const destinationURL = `${base}${pathname}${search}`;
+    console.log(destinationURL)
+
+    return Response.redirect(destinationURL, statusCode);
+  },
+};
 ```
-
 {{</tab>}}
 {{<tab label="js/sw">}}
 
