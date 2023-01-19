@@ -56,7 +56,7 @@ Every time you commit new code to your React application, Cloudflare Pages will 
 
 {{<Aside type="note" header="SPA rendering">}}
 
-By default, Cloudflare Pages assumes you are developing a single-page application. Refer to [Serving Pages](/pages/platform/serving-pages/#single-page-app-spa-rende) for more information.
+By default, Cloudflare Pages assumes you are developing a single-page application. Refer to [Serving Pages](/pages/platform/serving-pages/#single-page-application-spa-rendering) for more information.
 
 {{</Aside>}}
 
