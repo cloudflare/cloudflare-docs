@@ -34,8 +34,8 @@ These records include the following fields:
 
 When creating `A` or `AAAA` records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
 
-- The `content` of the records is an IP address (IPv4 for `A` or IPv6 for `AAAA`)
-- The `proxied` field affects the record's [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
+- The `content` of the records is an IP address (IPv4 for `A` or IPv6 for `AAAA`).
+- The `proxied` field affects the record's [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/).
 
 {{<render file="_api-field-definitions.md">}}
 
@@ -74,10 +74,10 @@ header: Response
     "ttl": 1,
     "locked": false,
     "meta": {
-        "auto_added": false,
-        "managed_by_apps": false,
-        "managed_by_argo_tunnel": false,
-        "source": "primary"
+      "auto_added": false,
+      "managed_by_apps": false,
+      "managed_by_argo_tunnel": false,
+      "source": "primary"
     },
     "comment": null,
     "tags": [],
@@ -132,7 +132,7 @@ curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records"
   "content":"www.another-example.com",
   "ttl":3600,
   "proxied":false
-  }'
+}'
 ```
 
 ```json
@@ -152,10 +152,10 @@ header: Response
     "ttl": 1,
     "locked": false,
     "meta": {
-        "auto_added": false,
-        "managed_by_apps": false,
-        "managed_by_argo_tunnel": false,
-        "source": "primary"
+      "auto_added": false,
+      "managed_by_apps": false,
+      "managed_by_argo_tunnel": false,
+      "source": "primary"
     },
     "comment": null,
     "tags": [],
@@ -264,8 +264,8 @@ curl -sX POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records"
     "weight":5,
     "port":5223,
     "target":"server.example.com"
-    }
-  }'
+  }
+}'
 ```
 
 ```json
@@ -293,13 +293,13 @@ header: Response
       "service": "_xmpp",       
       "target": "server.example.com",       
       "weight": 5     
-      },
+    },
     "meta": {       
       "auto_added": false,       
       "managed_by_apps": false,       
       "managed_by_argo_tunnel": false,       
       "source": "primary"     
-      },
+    },
     "comment": null,
     "tags": [],
     "created_on": "2022-11-08T15:57:39.585977Z",
