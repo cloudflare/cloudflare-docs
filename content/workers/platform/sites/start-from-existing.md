@@ -57,52 +57,52 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 4.  Replace the contents of `src/index.ts` with the following code snippet:
 
-    {{<tabs labels="js/esm | js/sw">}}
-    {{<tab label="js/esm" default="true">}}
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
 
-    ```js
-    import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+```js
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 
-    export default {
-      async fetch(request) {
-        try {
-          // Add logic to decide whether to serve an asset or run your original Worker code
-          return await getAssetFromKV(event);
-        } catch (e) {
-          let pathname = new URL(event.request.url).pathname;
-          return new Response(`"${pathname}" not found`, {
-            status: 404,
-            statusText: 'not found',
-          });
-        }
-      },
-    };
-    ```
-    {{</tab>}}
-    {{<tab label="js/sw">}}
-
-    ```js
-    import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
-
-    addEventListener("fetch", (event) => {
-      event.respondWith(handleEvent(event));
-    });
-
-    async function handleEvent(event) {
-      try {
-        // Add logic to decide whether to serve an asset or run your original Worker code
-        return await getAssetFromKV(event);
-      } catch (e) {
-        let pathname = new URL(event.request.url).pathname;
-        return new Response(`"${pathname}" not found`, {
-          status: 404,
-          statusText: "not found",
-        });
-      }
+export default {
+  async fetch(request) {
+    try {
+      // Add logic to decide whether to serve an asset or run your original Worker code
+      return await getAssetFromKV(event);
+    } catch (e) {
+      let pathname = new URL(event.request.url).pathname;
+      return new Response(`"${pathname}" not found`, {
+        status: 404,
+        statusText: 'not found',
+      });
     }
-    ```
-    {{</tab>}}
-    {{</tabs>}}
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
+```js
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+
+addEventListener("fetch", (event) => {
+  event.respondWith(handleEvent(event));
+});
+
+async function handleEvent(event) {
+  try {
+    // Add logic to decide whether to serve an asset or run your original Worker code
+    return await getAssetFromKV(event);
+  } catch (e) {
+    let pathname = new URL(event.request.url).pathname;
+    return new Response(`"${pathname}" not found`, {
+      status: 404,
+      statusText: "not found",
+    });
+  }
+}
+```
+{{</tab>}}
+{{</tabs>}}
 
 5.  Run `wrangler dev` or `wrangler publish` to preview or publish your site on Cloudflare.
     Wrangler will automatically upload the assets found in the configured directory.

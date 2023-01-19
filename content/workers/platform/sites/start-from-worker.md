@@ -32,52 +32,52 @@ If you have a pre-existing Worker project, you can use Workers Sites to serve st
 
 4.  Import the `getAssetFromKV()` function into your Worker script and use it to respond with static assets.
 
-    {{<tabs labels="js/esm | js/sw">}}
-    {{<tab label="js/esm" default="true">}}
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
 
-    ```js
-    import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+```js
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
 
-    export default {
-      async fetch(request) {
-        try {
-          // Add logic to decide whether to serve an asset or run your original Worker code
-          return await getAssetFromKV(event);
-        } catch (e) {
-          let pathname = new URL(event.request.url).pathname;
-          return new Response(`"${pathname}" not found`, {
-            status: 404,
-            statusText: 'not found',
-          });
-        }
-      },
-    };
-    ```
-    {{</tab>}}
-    {{<tab label="js/sw">}}
-
-    ```js
-    import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
-
-    addEventListener("fetch", (event) => {
-      event.respondWith(handleEvent(event));
-    });
-
-    async function handleEvent(event) {
-      try {
-        // Add logic to decide whether to serve an asset or run your original Worker code
-        return await getAssetFromKV(event);
-      } catch (e) {
-        let pathname = new URL(event.request.url).pathname;
-        return new Response(`"${pathname}" not found`, {
-          status: 404,
-          statusText: "not found",
-        });
-      }
+export default {
+  async fetch(request) {
+    try {
+      // Add logic to decide whether to serve an asset or run your original Worker code
+      return await getAssetFromKV(event);
+    } catch (e) {
+      let pathname = new URL(event.request.url).pathname;
+      return new Response(`"${pathname}" not found`, {
+        status: 404,
+        statusText: 'not found',
+      });
     }
-    ```
-    {{</tab>}}
-    {{</tabs>}}
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
+```js
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+
+addEventListener("fetch", (event) => {
+  event.respondWith(handleEvent(event));
+});
+
+async function handleEvent(event) {
+  try {
+    // Add logic to decide whether to serve an asset or run your original Worker code
+    return await getAssetFromKV(event);
+  } catch (e) {
+    let pathname = new URL(event.request.url).pathname;
+    return new Response(`"${pathname}" not found`, {
+      status: 404,
+      statusText: "not found",
+    });
+  }
+}
+```
+{{</tab>}}
+{{</tabs>}}
   
     For more information on the configurable options of `getAssetFromKV()` refer to [kv-asset-handler docs](https://github.com/cloudflare/kv-asset-handler).
 
