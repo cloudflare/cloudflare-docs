@@ -113,4 +113,5 @@ addEventListener('fetch', event => {
   return event.respondWith(handleRequest());
 });
 ```
+{{</tab>}}
 {{</tabs>}}

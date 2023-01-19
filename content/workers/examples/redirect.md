@@ -11,6 +11,7 @@ layout: example
 ---
 
 ## Redirect all requests to one URL
+
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
 
@@ -37,8 +38,21 @@ addEventListener('fetch', async event => {
   event.respondWith(handleRequest(event.request));
 });
 ```
+{{</tab>}}
 {{</tabs>}}
+
+---
 ## Redirect requests from one domain to another
+
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
 
 ```js
 const base = 'https://example.com';
@@ -57,3 +71,6 @@ addEventListener('fetch', async event => {
   event.respondWith(handleRequest(event.request));
 });
 ```
+{{</tab>}}
+{{</tabs>}}
+

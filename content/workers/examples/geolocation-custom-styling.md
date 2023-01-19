@@ -357,4 +357,5 @@ async function handleRequest(request) {
   });
 }
 ```
+{{</tab>}}
 {{</tabs>}}

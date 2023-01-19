@@ -60,6 +60,7 @@ async function handleRequest(request) {
   return newResponse;
 }
 ```
+{{</tab>}}
 {{</tabs>}}
 
 You can also use the [`custom-headers-example` template](https://github.com/codewithkristian/custom-headers-example) to deploy this code to your custom domain.

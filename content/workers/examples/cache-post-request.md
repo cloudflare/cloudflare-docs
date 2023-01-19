@@ -114,4 +114,5 @@ addEventListener('fetch', event => {
   }
 });
 ```
+{{</tab>}}
 {{</tabs>}}

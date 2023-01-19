@@ -32,6 +32,7 @@ async function triggerEvent(scheduledTime) {
   console.log("cron processed");
 }
 ```
+{{</tab>}}
 {{</tabs>}}
 
 ## Test Cron Triggers using Wrangler

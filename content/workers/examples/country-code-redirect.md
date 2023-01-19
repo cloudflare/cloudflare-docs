@@ -71,4 +71,5 @@ addEventListener('fetch', event => {
   event.respondWith(redirect(event.request));
 });
 ```
+{{</tab>}}
 {{</tabs>}}

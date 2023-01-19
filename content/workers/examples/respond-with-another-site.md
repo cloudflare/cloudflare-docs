@@ -52,4 +52,5 @@ function MethodNotAllowed(request) {
   });
 }
 ```
+{{</tab>}}
 {{</tabs>}}

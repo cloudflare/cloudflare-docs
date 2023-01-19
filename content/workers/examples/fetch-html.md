@@ -47,7 +47,7 @@ export default {
         'content-type': 'text/html;charset=UTF-8',
       },
     };
-    
+
     const response = await fetch(url, init);
     const results = await gatherResponse(response);
     return new Response(results, init);
@@ -100,4 +100,5 @@ addEventListener("fetch", (event) => {
   return event.respondWith(handleRequest());
 });
 ```
+{{</tab>}}
 {{</tabs>}}

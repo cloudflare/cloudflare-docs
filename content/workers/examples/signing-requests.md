@@ -93,7 +93,6 @@ export default {
   },
 };
 ```
-
 {{</tab>}}
 {{<tab label="js/sw">}}
 ```js
@@ -177,6 +176,7 @@ addEventListener('fetch', event => {
   event.respondWith(verifyAndFetch(event.request));
 });
 ```
+{{</tab>}}
 {{</tabs>}}
 
 ---
