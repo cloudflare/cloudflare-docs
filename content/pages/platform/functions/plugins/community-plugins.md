@@ -13,6 +13,16 @@ The following are some of the community-maintained Pages Plugins. If you have cr
 
   Given a folder of assets in multiple formats, this Plugin will automatically negotiate with a client to serve an optimized version of a requested asset.
 
+- [proxyflare-for-pages](https://github.com/flaregun-net/proxyflare-for-pages)
+
+  Move traffic around your Cloudflare Pages domain _with ease_. Proxyflare is a reverse-proxy featuring: 
+
+    - Port forward, redirect, and reroute HTTP and websocket traffic anywhere on the internet
+    - Mount an entire website on a subpath (e.g. mysite.com/docs) of your apex domain
+    - Serve static text (e.g. robots.txt and other structured metadata) from any endpoint
+    - and much more
+
+  Learn more at [https://proxyflare.works](https://proxyflare.works)
 
 - [cloudflare-pages-plugin-trpc](https://github.com/toyamarinyon/cloudflare-pages-plugin-trpc)
 
