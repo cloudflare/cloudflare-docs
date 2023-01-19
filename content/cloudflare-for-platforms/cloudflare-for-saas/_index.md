@@ -53,7 +53,7 @@ This allows you to support apex domains even if your customers are using a DNS p
 
 ## Availability
 
-Cloudflare for SaaS is bundled with Enterprise plans and available as an add-on purchase for customers on any plan. For more details, refer to [Plans](/cloudflare-for-platforms/cloudflare-for-saas/plans/).
+Cloudflare for SaaS is bundled with non-Enterprise plans and available as an add-on for Enterprise plans. For more details, refer to [Plans](/cloudflare-for-platforms/cloudflare-for-saas/plans/).
 
 ## Next steps
 
