@@ -7,30 +7,29 @@ layout: single
 title: Build a globally distributed full-stack app using Pages Functions, Next.js and Fauna
 ---
 
-# Build a globally distributed full-stack app using Cloudflare Pages, Next.js and Fauna
+# Build a globally distributed full-stack application using Cloudflare Pages, Next.js and Fauna
 
-## Introduction
-
-In this tutorial, you will build a globally distributed full-stack application using Cloudflare Pages (for the front end), Pages Functions (the backend), and Fauna as the database. You will use the Next.js framework to tie all these services together in a cohesive and scalable codebase.  
+In this tutorial, you will build a globally distributed full-stack application using Cloudflare Pages (the front end), Pages Functions (the back-end logic), and Fauna as the database. You will use the Next.js framework to tie all these services together in a cohesive and scalable codebase. 
 
 ## Prerequisites
+You must have the following to continue:
 
-- A recent version of [Node and NPM](https://docs.npmjs.com/getting-started) on your computer
-- A [Cloudflare](https://www.cloudflare.com/) account
-- A [Fauna](https://fauna.com/?utm_source=[graphql/aws/cloudflare]&utm_medium=fauna_workshop&utm_campaign=fauna_workshop) account
+- A recent version of [Node and NPM](https://docs.npmjs.com/getting-started) on your computer.
+- A [Cloudflare](https://www.cloudflare.com/) account.
+- A [Fauna](https://fauna.com/?utm_source=[graphql/aws/cloudflare]&utm_medium=fauna_workshop&utm_campaign=fauna_workshop) account.
 
-## What is a globally distributed app?
+## An introduction to globally distributed applications
 
-Before you continue, let’s explore what a globally distributed app is and why you might want to build one. A globally distributed app always runs closest to the end user, thus making the application response time extremely fast.
+A globally distributed application always runs closest to the end user, making the application response time fast.
 
-Cloudflare [Pages](https://developers.cloudflare.com/pages/) and Pages Functions will run closest to the end user without you maintaining a server. Fauna is a globally distributed database system, that ensures data reads and writes always happen on the closest replicas of your database. This combination of Pages Functions and Fauna allows you to build highly performant apps with very low latency.
+Cloudflare [Pages](https://developers.cloudflare.com/pages/) and Pages Functions run closest to the end user without the need for you to maintain a server. Fauna is a globally distributed database system. It ensures data reads and writes always happen on the closest replicas of your database. The combination of Pages Functions and Fauna allows you to build highly performant applications with low latency.
 
-## Create a new Project
+## Create a new project
 
 Create a new Next.js project by running the following command. 
 
 ```sh
-$ npx create-next-app <your-app-name>
+$ npx create-next-app <YOUR_APP_NAME>
 ```
 
 {{<Aside>}}
@@ -42,7 +41,9 @@ When you create API routes in your Next.js application (i.e. under `/pages/api` 
 Next, enable edge-runtime for your API routes. Open the `pages/api/hello.js` file. This is an API route. When deployed this API route will become a Pages Function, however for this to work you have the add the following code.
 
 ```jsx
-// pages/api/hello.js
+---
+filename: pages/api/hello.js
+---
 
 export const config = {
   runtime: 'experimental-edge',
@@ -105,9 +106,7 @@ If you haven’t already signed up for a free Cloudflare Pages account, [create 
 
 5. Next, go to **Settings > Functions** and under compatibility flags add the following flags.
 
-`streams_enable_constructors`, `transformstream_enable_standard_constructor`. 
-
-![adding compatibility flags](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/compatibility.png)
+![Add compatibility flags by following the instructions above](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/compatibility.png)
 
 *These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.*
 
@@ -318,7 +317,9 @@ $ npm i faunadb --save
 Next, create a new file called `db.js` and add the following code.
 
 ```jsx
-// db.js
+---
+filename: db.js
+---
 
 import fauna from 'faunadb';
 
@@ -437,14 +438,14 @@ export default function Home({ products, faunaSecret }) {
 } 
 ```
 
-## Global Application Benchmark
+## Test your application's speed
 
 Go to [https://www.webpagetest.org/](https://www.webpagetest.org/) and paste in your website url to check the performance of your global application. You can pick up various global location and network speed. 
 
-For this simple application, the page resolves in less 15ms on average from different servers across the globe. 
+For this simple application, the page should resolve in less 15 ms on average from different servers across the globe. 
 
-The compute and database operations are almost the same across the globe. The powerful combination of Cloudflare CDN, workers and Fauna database allow your code and data to run closer to your end user reducing application latency globally. 
+The compute and database operations are almost the same across the globe. The combination of Cloudflare CDN, Workers and Fauna database allows your code and data to run closer to your end user reducing application latency globally.
 
-## Where to go from here
+## Related resources
 
-If you are looking to build something more practical and hands on we have created a self paced workshop on "How to build a global application with Cloudflare and Fauna". You can check this out [here](https://github.com/fauna-labs/fauna-workers).
+* Build a [global application with Cloudflare and Fauna](https://github.com/fauna-labs/fauna-workers)
