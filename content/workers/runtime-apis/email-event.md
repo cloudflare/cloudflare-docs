@@ -7,7 +7,7 @@ title: EmailEvent
 
 ## Background
 
-An `EmailEvent` is the event type to programmatically process your emails with a Worker. You can reject, forward or drop emails according to the logic you construct in your Worker.
+An `EmailEvent` is the event type to programmatically process your emails with a Worker. You can reject, forward, or drop emails according to the logic you construct in your Worker.
 
 ---
 
@@ -48,7 +48,7 @@ export default {
 
 ```js
 addEventListener("email", (event) => {
-  event.message.forward("your-name@gmail.com");
+  event.message.forward("your-name@example.com");
 });
 ```
 ### Properties
@@ -90,7 +90,7 @@ addEventListener("email", (event) => {
 
 - `headers` {{<type>}}Headers{{</type>}}
 
-  - An [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
+  - A [`Headers` object](https://developer.mozilla.org/en-US/docs/Web/API/Headers).
 
 - `raw` {{<type>}}ReadableStream{{</type>}}
 
@@ -107,6 +107,6 @@ addEventListener("email", (event) => {
 - {{<code>}}forward(rcptTo{{<param-type>}}string{{</param-type>}}, headers{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
   - Forward this email message to a verified destination address of the account. If you want, you can add extra headers to the email message. Only `X-*` headers are allowed.
-  - When the promise resolves, the message is confirmed to be forward to a verified destination address.
+  - When the promise resolves, the message is confirmed to be forwarded to a verified destination address.
 
 {{</definitions>}}
