@@ -48,7 +48,7 @@ export default {
 
 ```js
 addEventListener("email", (event) => {
-  event.message.forward("your-name@example.com");
+  event.message.forward("<YOUR_EMAIL>");
 });
 ```
 ### Properties
