@@ -37,7 +37,7 @@ To retrieve those values:
 1. Select **Microsoft Graph**.
 1. Select **Application permissions**.
 1. Add `DeviceManagementManagedDevices.Read.All`.
-1. To enable the permission, select **Grant admin consent**.
+1. If the permission status shows **Not granted**, select **Grant admin consent**.
 
 ## 2. Add Intune as a service provider
 
