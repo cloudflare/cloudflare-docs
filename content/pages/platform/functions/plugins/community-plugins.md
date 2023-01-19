@@ -18,7 +18,7 @@ The following are some of the community-maintained Pages Plugins. If you have cr
   Move traffic around your Cloudflare Pages domain _with ease_. Proxyflare is a reverse-proxy featuring: 
 
     - Port forward, redirect, and reroute HTTP and websocket traffic anywhere on the internet
-    - Mount an entire website on a subpath (e.g. mysite.com/docs) of your apex domain
+    - Mount an entire website on a subpath (e.g. mysite.com/docs) on your apex domain
     - Serve static text (e.g. robots.txt and other structured metadata) from any endpoint
     - and much more
 
