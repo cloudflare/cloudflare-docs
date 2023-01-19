@@ -35,6 +35,23 @@ In the output above, you can begin to see log lines for the URLs being requested
 
 To help you further debug your code, `wrangler dev` also supports `console.log` statements, so you can see output from your application in your local terminal:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+---
+filename: index.js
+---
+export default {
+  async fetch(request) {
+    console.log(`Received new request: ${request.url}`);
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 ---
 filename: index.js
@@ -44,6 +61,9 @@ addEventListener('fetch', event => {
   event.respondWith(handleEvent(event));
 });
 ```
+{{</tab>}}
+{{</tabs>}}
+
 
 ```sh
 $ wrangler dev

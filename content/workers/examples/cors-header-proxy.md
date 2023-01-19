@@ -13,6 +13,9 @@ layout: example
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}
 
+```js
+
+```
 
 {{</tab>}}
 {{<tab label="js/sw">}}
