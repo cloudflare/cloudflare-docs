@@ -28,7 +28,9 @@ Cloudflare DLP provides [predefined profiles](/cloudflare-one/policies/filtering
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DLP Profiles**.
 2. Choose a predefined profile and select **Configure**.
 3. Enable one or more **Detection entries** according to your preferences. The DLP Profile matches using the OR logical operator — if multiple entries are enabled, your data needs to match only one of the entries.
-4. Select **Save profile**.
+4. Set the Match Count
+    - The Match Count is the number of times that any entry in the profile can be detected **before** an action is triggered, such as blocking or logging. For example, a match count of 10 on the Financial Information profile means that when a scan occurs, on the **11th** match of an entry from that profile, a block or log will occur.
+5. Select **Save profile**.
 
 ### Build a custom profile
 
@@ -42,7 +44,9 @@ Cloudflare DLP provides [predefined profiles](/cloudflare-one/policies/filtering
     - Detected text patterns are limited to 1024 bytes in length.
     - Regexes with `+` are not supported as they are prone to exceeding the length limit. For example `a+` can detect an infinite number of a's. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
 6. Select **Done** to save and enable the detection entry.
-7. Select **Save profile**.
+7. Set the Match Count
+    - The Match Count is the number of times that any entry in the profile can be detected **before** an action is triggered, such as blocking or logging. For example, a match count of 10 on the Financial Information profile means that when a scan occurs, on the **11th** match of an entry from that profile, a block or log will occur.
+8. Select **Save profile**.
 
 {{<Aside type="warning" header="Important">}}
 DLP scans will not start until you [create an HTTP policy](#2-create-a-dlp-policy).
