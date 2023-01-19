@@ -10,7 +10,11 @@ meta:
 
 Workers for Platforms is built on top of [Cloudflare Workers](/workers/). The same [security and performance models used by Workers](/workers/learning/security-model/) apply to applications that use Workers for Platforms. 
 
-The Workers configuration API was initially built around managing a relatively small number of Workers on each account. This leads to some difficulties when using Workers as a platform for your own users, including: frequently needing to increase script limits; adding an ever-increasing number of routes; and managing logic in a central place if your own logic is supposed to come before your customers' logic.
+The Workers configuration API was initially built around managing a relatively small number of Workers on each account. This leads to some difficulties when using Workers as a platform for your own users, including: 
+
+* Frequently needing to increase script limits.
+* Ading an ever-increasing number of routes. 
+* Managing logic in a central place if your own logic is supposed to come before your customers' logic.
 
 Workers for Platforms extends the capabilities of Workers for SaaS businesses that want to deploy Worker scripts on behalf of their customers or that want to let their users write Worker scripts directly.
 
