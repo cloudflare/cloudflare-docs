@@ -9,6 +9,8 @@ title: EmailEvent
 
 An `EmailEvent` is the event type to programmatically process your emails with a Worker. You can reject, forward or drop emails according to the logic you construct in your Worker.
 
+---
+
 ## Syntax: Module Worker
 
 `EmailEvent` can be handled in Workers functions written using the Module Worker syntax by adding an `email` function to your module's exported handlers:
@@ -38,6 +40,8 @@ export default {
 
 {{</definitions>}}
 
+---
+
 ## Syntax: Service Worker
 
 `EmailEvent` can be handled in Workers functions written using the Service Worker syntax by attaching to the `email` event with `addEventListener`:
@@ -53,9 +57,11 @@ addEventListener("email", (event) => {
 
 - `event.message` {{<type>}}EmailMessage{{</type>}}
 
-  - An [`EmailMessage` object](/runtime-apis/email-event/#emailmessage-definition).
+  - An [`EmailMessage` object](/workers/runtime-apis/email-event/#emailmessage-definition).
 
 {{</definitions>}}
+
+---
 
 ## `EmailMessage` definition
 
@@ -96,7 +102,7 @@ addEventListener("email", (event) => {
 
 - {{<code>}}setReject(reason{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
 
-  - Reject this email message by returning a permanent SMTP error back to the connecting client including the given reason.
+  - Reject this email message by returning a permanent SMTP error back to the connecting client, including the given reason.
 
 - {{<code>}}forward(rcptTo{{<param-type>}}string{{</param-type>}}, headers{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Promise{{</type>}}
 
