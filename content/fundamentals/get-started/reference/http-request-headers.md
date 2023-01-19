@@ -130,7 +130,6 @@ When configuring firewall rules, do not match on this header. Firewall rules are
 
 For incoming requests, the value of this header will always be set to `Keep-Alive`. If the client set a different value, such as `close`, it will be overwritten. Note that is also the case when the client uses HTTP/2 or HTTP/3 to connect.
 
-## 
 
 ## Considerations for Spectrum
 
