@@ -18,7 +18,7 @@ meta:
 
 3. Go to the **Managed Transforms** tab.
 
-4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by clicking the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
+4. Enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by selecting the toggle next to each entry. The Cloudflare dashboard will only list available Managed Transforms according to your Cloudflare plan and product subscriptions.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
