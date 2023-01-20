@@ -445,6 +445,7 @@
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
 /platform/functions/billing/ /platform/functions/pricing/ 301
+/pages/platform/serving-pages/#single-page-app-spa-rendering /pages/platform/serving-pages/#single-page-application-spa-rendering 301
 
 # partners
 /partners/ /learning-paths/technology-partner-integrations/ 301
@@ -944,7 +945,7 @@
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
-/pages/platform/serving-pages/#single-page-app-spa-rendering /pages/platform/serving-pages/#single-page-application-spa-rendering 301
+/workers/runtime-apis/headers/ /workers/platform/headers/ 301
 
 # zaraz
 
