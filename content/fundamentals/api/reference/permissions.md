@@ -64,7 +64,7 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Billing Edit                                                 | Grants write access to billing profile, subscriptions, and access to fetch invoices and entitlements. |
 | Cloudflare Pages Read                                        | Grants access to view Cloudflare Pages projects.                                                      |
 | Cloudflare Pages Edit                                        | Grants access to create, edit and delete Cloudflare Pages projects.                                   |
-| Cloudflare Runnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
+| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
 | Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | DDoS Protection Read                                         | Grants read access to DDoS protection.                                                                |
 | DDoS Protection Edit                                         | Grants write access to DDoS protection.                                                               |
