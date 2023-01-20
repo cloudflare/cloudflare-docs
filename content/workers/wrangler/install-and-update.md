@@ -57,7 +57,7 @@ $ yarn global add wrangler
 To check your Wrangler version, run:
 
 ```sh
-$ wrangler version
+$ wrangler -V
 ```
 
 ### Update Wrangler locally
