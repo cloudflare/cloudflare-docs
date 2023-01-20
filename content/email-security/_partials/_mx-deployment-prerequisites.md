@@ -28,9 +28,9 @@ $ dig mx <YOUR_DOMAIN>
 ;domain.		IN	MX
 
 ;; ANSWER SECTION:
+<YOUR_DOMAIN>.	300	IN	MX	5 mailstream-central.mxrecord.mx.
 <YOUR_DOMAIN>.	300	IN	MX	10 mailstream-east.mxrecord.io.
 <YOUR_DOMAIN>.	300	IN	MX	10 mailstream-west.mxrecord.io.
-<YOUR_DOMAIN>.	300	IN	MX	20 mailstream-central.mxrecord.mx.
 ```
 
 In the above example, TTL is shown in seconds as `300` (or five minutes). 
