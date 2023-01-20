@@ -163,6 +163,8 @@ To update your MX records with Area 1, use the following:
 
 {{<render file="_mx-deployment-values.md">}}
 
+DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
+
 ## 4. Secure your email flow
 
 After 36 hours, the MX record DNS update will have sufficiently propagated across the Internet. It is now safe to secure your email flow. This will ensure that Gmail only accepts messages that are first received by Area 1. This step is highly recommended to prevent threat actors from using cached MX entries to bypass Area 1 by injecting messages directly into Gmail.

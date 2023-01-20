@@ -213,6 +213,8 @@ Instructions to update your MX records will depend on the DNS provider you are u
 
 {{<render file="_mx-deployment-values.md">}}
 
+DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
+
 ### Secure Office 365 from MX records bypass (recommended)
 
 One method of DNS attacks is to search for old MX records and send phishing emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Office 365 only when they originate from Area 1. This can be done by adding a connector to only allow email from Area 1 with TLS encryption. This step is optional but recommended.

@@ -47,8 +47,8 @@ To add a new SMTP Route:
     * In **Destination Hosts**, select **Add Row**, and add the following values to the respective rows:
     Priority | Destination                   | Port
     ------- | ----------------------------- | ---
-    `0`      | `mailstream-west.mxrecord.io` | `25`
-    `0`      | `mailstream-east.mxrecord.io` | `25`
+    `5`      | `mailstream-west.mxrecord.io` | `25`
+    `10`      | `mailstream-east.mxrecord.io` | `25`
     `10`     | `mailstream-east.mxrecord.io` | `25`
 
 ![Edit SMTP route](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step2.png)
