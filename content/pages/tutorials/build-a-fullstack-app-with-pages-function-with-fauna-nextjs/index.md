@@ -32,13 +32,13 @@ Create a new Next.js project by running the following command.
 $ npx create-next-app <YOUR_APP_NAME>
 ```
 
-{{<Aside>}}
-When you create API routes in your Next.js application (i.e. under `/pages/api` folder) these will be turned into a Pages Function which will run globally on Cloudflare's network.
+{{<Aside type="note">}}
+When you create API routes in your Next.js application (under the `/pages/api` folder) these will be turned into a Pages Function which will run globally on Cloudflare's network.
 {{</Aside>}}
 
 ### Configure the project to use the Edge Runtime
 
-Next, enable edge-runtime for your API routes. Open the `pages/api/hello.js` file. This is an API route. When deployed this API route will become a Pages Function, however for this to work you have the add the following code.
+Next, enable edge-runtime for your API routes. Open the `pages/api/hello.js` file. This is an API route. When deployed this API route will become a Pages Function. For this to work, add the following code.
 
 ```jsx
 ---
@@ -74,12 +74,11 @@ You will notice the following output for a successful build.
 
 ![Build output](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/build-output.png)
 
-Notice that a folder named `.vercel/output` is generated. Inside you can find the generated Clourflare Workers and Pages functions.
-
+A folder named `.vercel/output` will be created. Find the generated Clourflare Workers and Pages Functions inside this folder.
 
 ### Create a GitHub repository
 
-Next, create a new GitHub repository by visiting [repo.new](https://repo.new/). When you are done creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+Create a new GitHub repository by visiting [repo.new](https://repo.new/). When you are done creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
 
 ```
 $ git remote add origin <YOUR_GITHUB_REPO_URL>
@@ -88,62 +87,57 @@ $ git push -u origin main
 
 ```
 
-
 ### Deploy with Cloudflare Pages
 
-If you haven’t already signed up for a free Cloudflare Pages account, [create an account now](https://dash.cloudflare.com/pages).
-
+To deploy your project:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-1. In **Account Home**, select **Pages** > **Create a project**.
-1. In the build settings select `Next.js` you can leave everything else as default.
-
+2. In Account Home, select **Pages** > **Create a project**.
+3. In **Build settings**, select **Next.js** as your **Framework preset**.
 
 ![Configure deployment](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/configure-build.png)
 
-4. In the environment variable section add a new variable called `NODE_VERSION` and add the node version of your project. **You require a node version 14 or greater.**
+4. In **Environment variables (advanced), add a new variable called `NODE_VERSION` and add the Node version of your project. You need a Node version `14` or higher.
 
-![Define Node Version in cloud flare configuration](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/node_version.png)
+![Define Node Version in Cloudflare configuration](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/node_version.png)
 
-5. Next, go to **Settings > Functions** and under compatibility flags add the following flags.
+5. Select **Save and Deploy**.
 
-![Add compatibility flags by following the instructions above](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/compatibility.png)
 
-*These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.*
 
-1. Select Save and Deploy
-
-Visit the deployed site url to make sure everything is working as expected.
-
-Next, visit [`https://<your-domain-name>/api/hello`](https://with-cloudflare-nextjs.pages.dev/api/hello) to make sure that the Pages function is working as expected. 
-
+Next, go to [`https://<YOUR_DOMAIN_NAME>/api/hello`](https://with-cloudflare-nextjs.pages.dev/api/hello) to make sure that the Pages Function is working as expected.
 ## Configure Fauna database
 
-1. Head over to [Fauna](https://dashboard.fauna.com/) and create an account if you haven’t done so already. 
-2. Next, create a new database. Give your database a name. Select the *classic region group* and select *create*.
-
-Info:  *By default, Fauna allows you to save your data globally closer to your user. However, you can also limit your data's distribution to a specific geographic region group to comply with GDPR and data residency. Learn more about region groups [here](https://docs.fauna.com/fauna/current/learn/understanding/region_groups).*
-
-*You also have the option to save data into privately distributed nodes with [Virtual Private Fauna.](https://www.globenewswire.com/news-release/2022/11/17/2558259/0/en/Fauna-Launches-Virtual-Private-Offering-of-its-Serverless-Database-for-the-Most-Demanding-Enterprise-Applications.html)*
+To configure your Fauna database:
+1. Log in to your [Fauna dashboard](https://dashboard.fauna.com/) or create an account and log in.
+2. Create a new database give your database a name. 
 
 ![Create a database](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/create_database.png)
 
-3. Next, select *create new collection*. 
+3. Select **Classic** as your **Region Group** and select **Create**.
+{{<Aside type="note">}}
+By default, Fauna allows you to save your data globally closer to your user. You can limit your data's distribution to a specific geographic region group to comply with GDPR and data residency. Learn more about [region groups](https://docs.fauna.com/fauna/current/learn/understanding/region_groups).
+You also have the option to save data into privately distributed nodes with [Virtual Private Fauna](https://www.globenewswire.com/news-release/2022/11/17/2558259/0/en/Fauna-Launches-Virtual-Private-Offering-of-its-Serverless-Database-for-the-Most-Demanding-Enterprise-Applications.html).
+{{</Aside>}}
 
-![Create a new collection](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_collection.png)
 
-4. Create a new Collection called `Products`.
+
+4. Next, select **NEW COLLECTION*. 
 
 ![Create a new Collection called Products](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_prod_collection.png)
 
-5. You would require a secret to query your database from your application. Navigate to *Security > Keys* and select *New Key*.
+5. Create a new Collection called `Products`.
 
 ![New Key](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_key.png)
 
-6. Select `Server` Role from the dropdown. Give your key a name and select *Save*. When the key is generated save it into a secure file.
+6. You need a secret to query your database from your application. Go to **Security** > **Keys** and select **New Key**.
+
+7. Select *Server* as your **Role**. 
+
+8. Give your key a name and select **Save**. When the key is generated, save it into a secure file.
 
 ![New Key Role](/pages/tutorials/build-a-fullstack-app-with-pages-function-with-fauna-nextjs/new_key_conf.png)
 
-7. For local development create a new file called `.env` in the root of your project and add the following code. Make sure you add `.env` to your git ignore file so it doesn’t get committed.
+9. For local development, create a new file called `.env` in the root of your project and add the following code. Make sure you add `.env` to your `.gitignore` file so it does not get committed.
 
 ```bash
 FAUNA_SECRET=fnAExxxx
