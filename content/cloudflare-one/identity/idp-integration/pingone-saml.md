@@ -8,7 +8,7 @@ weight: 7
 
 The PingOne® cloud platform from PingIdentity provides SSO identity management. Cloudflare Access supports PingOne as a SAML identity provider.
 
-## Set up PingOne as an identity provider
+## Set up PingOne as a SAML provider
 
 1. In your PingIdentity environment, navigate to **Connections** > **Applications**.
 2. Select **Add Application**.
@@ -32,23 +32,19 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 7. In the **Configuration** tab, select **Download metadata** and save the XML metadata file. This file will be used in a later step to add PingOne to the Zero Trust Dashboard.
 8. In the **Attribute Mappings** tab, add the following required attributes (case sensitive) and select **Save**.
 
-{{<table-wrap>}}
+   | Application attribute | Outgoing value |
+   | --------------------- | -------------- |
+   | `email`               | Email Address  |
+   | `givenName`           | Given Name     |
+   | `surName`             | Family Name    |
 
-| Application attribute | Outgoing value |
-| --------------------- | -------------- |
-| `email`               | Email Address  |
-| `givenName`           | Given Name     |
-| `surName`             | Family Name    |
+   These [SAML attributes](/cloudflare-one/identity/idp-integration/generic-saml/#saml-attributes) tell Cloudflare Access who the user is.
 
-{{</table-wrap>}}
-
-These [SAML attributes](/cloudflare-one/identity/idp-integration/generic-saml/#saml-attributes) tell Cloudflare Access who the user is.
-
-9. Enable the application.
+9. Set the application to **Active**.
 10. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **Settings** > **Authentication**.
-11. Under **Login methods**, click **Add new**.
+11. Under **Login methods**, select **Add new**.
 12. Select **SAML**.
-13. Upload your PingOne XML metadata file from Step #7.
+13. Upload your PingOne XML metadata file from Step 7.
 14. (Recommended) Enable [**Sign SAML authentication request**](/cloudflare-one/identity/idp-integration/generic-saml/#sign-saml-authentication-request).
 15. Select **Save**.
 
