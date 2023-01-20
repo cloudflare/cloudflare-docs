@@ -15,7 +15,7 @@ For example, if you have Bulk Redirects set up to direct `abc.com` to `xyz.com` 
 
 {{</Aside>}}
 
-To use Bulk Redirects, log in to the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/rules) > **Rules** > **Bulk Redirects**.
+To use Bulk Redirects, log in to the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/rules) > **Account Home** > **Bulk Redirects**.
 
 ![Bulk redirects option](/pages/how-to/media/bulk_redirects_option.png)
 
