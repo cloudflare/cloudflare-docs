@@ -13,7 +13,7 @@ meta:
 Speed up your global traffic with a single click
 {{</description>}}
 
-{{<plan type="add-on">}}
+{{<plan id="traffic.argo.properties.availability.summary">}}
 
 Argo Smart Routing detects real-time network issues and routes traffic across the most efficient network path. These benefits are most apparent for users farthest from your origin server.
 

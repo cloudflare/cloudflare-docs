@@ -32,7 +32,7 @@ You must log out and log back in with at least one WARP device to ensure the con
 
 ## 3. Configure Split Tunnels
 
-[Configure Split Tunnels](/cloudflare-one/tutorials/split-tunnel/) from your Zero Trust dashboard to only include traffic from the private IP addresses you want to acceess.
+[Configure Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) from your Zero Trust dashboard to only include traffic from the private IP addresses you want to acceess.
 
 Optionally, you can configure Split Tunnels to include IP ranges or domains you want to use for connecting to public IP addresses. If you choose to use this option, destination ports `1023` and lower are supported.
 

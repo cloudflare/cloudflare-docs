@@ -1,12 +1,11 @@
 {{/* @see :: data/<Product>.yml */}}
 {{- $DATA := (index .Context.Site.Data .Product) -}}
 {{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
+{{- $metaTruncateLength := 150 -}}
 
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
-{{ $raw_summary := index (split (index (split .Context.Content "</p>") 0) "<p>") 1 | plainify | htmlUnescape | chomp }}
-{{ $summary := replaceRE `External link icon\s+Open external link\s?` "" $raw_summary }}
-{{- $description:= truncate 160 (default $META.description (default $summary .Context.Params.meta.description)) -}}
+{{- $description := (partial "seo-meta-description.html" (dict "meta" $META "content" .Context.Content "params" .Context.Params "truncate" $metaTruncateLength "plainify" true )) -}}
 
 {{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
 {{- $contentPath :=  replaceRE `\/$` "" .Context.RelPermalink -}}
@@ -57,9 +56,16 @@
 
   {{ if or (eq . "folder") (eq . "file") }}
 
- {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
- {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
-{{ end }}
+  {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
+  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
+  
+  {{ else }}
+
+  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
+
+  {{ end }}
+
+
 {{ end }}
 <link rel="icon" href="/favicon-32x32.png"/>
 <link rel="canonical" href="{{ .Context.Permalink }}"/>

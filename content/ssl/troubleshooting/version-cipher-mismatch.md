@@ -52,18 +52,8 @@ If it is expired, [upload a replacement certificate](/ssl/edge-certificates/cust
 
 ## Multi-level subdomains
 
-Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) only cover your root domain and one level of subdomain.
-
-| Hostname | Covered by Universal certificate? |
-| --- | --- |
-| `example.com` | Yes |
-| `www.example.com` | Yes |
-| `docs.example.com` | Yes |
-| `dev.docs.example.com` | No |
-| `test.dev.api.example.com` | No |
+{{<render file="_ussl-limitations-table.md">}}
 
 This means that you might experience `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` (Chrome) or `SSL_ERROR_NO_CYPHER_OVERLAP` (Firefox) on multi-level subdomains.
 
-In order to cover these subdomains, either [order an Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) or [upload a Custom Certificate](/ssl/edge-certificates/custom-certificates/).
-
-If you purchase an advanced certificate, also enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/), which automatically issues new certificates to covered any proxied hostnames not covered by a Universal certificate.
+{{<render file="_ussl-limitations-solutions.md">}}

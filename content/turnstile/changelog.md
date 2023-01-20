@@ -2,13 +2,14 @@
 pcx_content_type: changelog
 title: Changelog
 weight: 10
+rss: file
 ---
 
 # Changelog
 
 ## 2022-12-12
 
-- [`POST /siteverify`](/turnstile/get-started/server-side-validation/) supports JSON requests now
+- [`POST /siteverify`](/turnstile/get-started/server-side-validation/) supports JSON requests now.
 
 ## 2022-11-11
 

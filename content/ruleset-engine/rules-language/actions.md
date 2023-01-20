@@ -79,7 +79,6 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         </p>
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
-          <li>Present an invisible proof of work challenge to the browser.</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
           <li>Show a CAPTCHA challenge.</li>
         </ul>

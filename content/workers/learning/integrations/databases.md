@@ -24,7 +24,7 @@ Use Cloudflare Workers to connect your application to external databases, such a
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6).
+If you do not see an integration listed or have an integration to add, complete and submit the [Cloudflare Developer Platform Integration form](https://forms.gle/iaUqLWE8aezSEhgd6).
 {{</Aside>}}
 
 Once you have installed the necessary packages, use the APIs provided by these packages to connect to your database and perform operations on it. Refer to detailed links for service-specific instructions.
@@ -43,4 +43,4 @@ Then, retrieve the secret value in your code using the following code snippet:
 const secretValue = env.SECRET_NAME;
 ```
 
-You can then use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
+Use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.

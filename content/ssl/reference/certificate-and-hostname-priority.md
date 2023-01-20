@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Certificate and hostname priority
 weight: 4
+meta:
+    description: Learn about how Cloudflare decides which certificate (and the associated SSL/TLS settings) apply to individual hostnames.
 ---
 
 # Certificate and hostname priority

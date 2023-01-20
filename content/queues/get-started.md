@@ -71,7 +71,7 @@ wrangler queues create <MY_FIRST_QUEUE>
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
 
-Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`) and underscores (`_`).
+Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number.
 
 You cannot change your queue name after you have set it. After you create your queue, you will create a Worker to access it.
 

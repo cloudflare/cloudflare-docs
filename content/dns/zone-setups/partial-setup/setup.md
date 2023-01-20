@@ -75,7 +75,7 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
     2.  Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
 
         <details>
-        <summary>Example CNAME record in Cloudflare</summary>
+        <summary>Example CNAME record at authoritative DNS provider</summary>
         <div>
 
         The `CNAME` record for `www.example.com` would be:

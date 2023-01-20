@@ -68,7 +68,7 @@ Per the plan above, each [Thread Group](https://jmeter.apache.org/usermanual/tes
 
 ## 3. Analyze results
 
-To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test. 
+To analyze the results of your test, you can query Waiting Room Analytics (Beta) via Cloudflare’s GraphQL API to check Total Active Users and Queued Users for each minute of your load test.
 
 
 

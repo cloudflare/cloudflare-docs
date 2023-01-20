@@ -65,3 +65,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
     ```txt
     sudo dmidecode -s system-serial-number
     ```
+
+### On iOS, Android and ChromeOS
+
+Serial number checks are not supported on mobile devices.

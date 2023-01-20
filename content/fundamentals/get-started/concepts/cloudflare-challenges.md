@@ -27,7 +27,6 @@ Unless there are specific compatibility issues or other reasons to use other typ
 Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge, which may include but is not limited to:
 
 - A non-interactive challenge page (similar to the current [JS Challenge](#js-challenge)).
-- An invisible proof of work challenge to the browser.
 - A custom interactive challenge (such as click a button).
 - Private Access Tokens (using recent Apple operating systems).
 - A CAPTCHA challenge.

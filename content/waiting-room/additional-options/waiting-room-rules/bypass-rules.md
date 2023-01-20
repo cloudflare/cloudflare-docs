@@ -16,7 +16,7 @@ To indicate where you want your bypass rules to apply, write [custom logic](/rul
 - [HTTP request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields)
 - [HTTP request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)
 
-Please be advised that the waiting room will not apply to all the traffic that matches the expressions written for bypass rules and will not be counted as active users. No Waiting Room features, including but not limited to, Event pre-queuing, Reject queueing method, or Queue-all will apply to this traffic. Be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
+Please be advised that the waiting room will not apply to all the traffic that matches the expressions written for bypass rules and will not be counted as active users. No Waiting Room features, including but not limited to, Event pre-queueing, Reject queueing method, or Queue-all will apply to this traffic. Be mindful of this when creating and enabling Bypass Waiting Room rules. Only use bypass rules for traffic you are confident will not overwhelm your origin or cause significant traffic surges.
 
 {{<Aside type="note">}}Only some customers can create Waiting Room rules. For more details, refer to our [Plans](/waiting-room/plans/) page.{{</Aside>}}
 

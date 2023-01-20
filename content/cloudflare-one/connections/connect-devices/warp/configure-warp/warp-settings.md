@@ -35,7 +35,7 @@ In order to enable **Admin override**, [**Lock WARP switch**](#lock-warp-switch)
 
 When `Enabled`, end users can turn off the WARP client using a one-time code provided by an admin. This feature allows users to work around a temporary network issue (for example, an incompatible public WiFi, or a firewall at a customer site blocking the connection).
 
-You can also set a **Timeout** to define how long the WARP client is allowed to be paused once the end user disables it. Once the timeout expires, the WARP client will automatically reconnect.
+You can also set a **Timeout** to define how long the user is allowed to toggle on or off the WARP switch.
 
 #### Retrieve the override code
 
@@ -54,8 +54,9 @@ To turn off the WARP client on a user device:
 1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
 2. Select **Enter code**.
 3. Enter the override code in the pop-up window.
+4. Turn off the WARP switch.
 
-The WARP client will now show as `Disconnected` and will mention the time when it will automatically reconnect.
+The WARP client will now show **Disabled by Admin Override** and the time when the override code expires. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until Admin override times out.
 
 ## Device settings
 
