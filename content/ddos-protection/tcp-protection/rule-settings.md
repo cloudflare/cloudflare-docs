@@ -30,11 +30,11 @@ The Advanced TCP Protection system constantly learns your TCP connections to mit
 
 * **Monitoring**
 
-    * In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
+    * In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn your legitimate TCP connections and show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
 
 * **​​Mitigation (Enabled)**
 
-    * In this mode, Advanced TCP Protection will perform mitigation actions on incoming packets if they exceed the thresholds.
+    * In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist)).
 
 * **Disabled**
 
