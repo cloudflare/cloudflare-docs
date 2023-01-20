@@ -16,7 +16,7 @@ Create Rewrite URL Rules in the **Rewrite URL** tab of the **Transform Rules** p
 
     ![The Transform Rules page in the Cloudflare dashboard with a tab for each type of Transform Rule you can create.](/rules/static/transform/transform-rules-tab.png)
 
-3.  In the **Rewrite URL** tab, select **Create rewrite URL rule**.
+3.  In the **Rewrite URL** tab, select **Create rule**.
 
     ![The Rewrite URL Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-url-rewrite-rule.png)
 
@@ -30,7 +30,7 @@ Create Rewrite URL Rules in the **Rewrite URL** tab of the **Transform Rules** p
 Check the [available fields and functions](/rules/transform/url-rewrite/reference/fields-functions/).
     {{</Aside>}}
 
-7.  Define the action for your URL Rewrite Rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
+7.  Define the action for your Rewrite URL Rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
 
     * If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
 

@@ -16,7 +16,7 @@ Create HTTP Request Header Modification Rules in the **Modify Request Header** t
 
 3. Go to the **Modify Request Header** tab.
 
-4. Select **Create request header rule**.
+4. Select **Create rule**.
 
     ![The HTTP Request Header Modification Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-request-header-modification-rule.png)
 

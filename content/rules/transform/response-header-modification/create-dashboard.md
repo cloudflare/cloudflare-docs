@@ -14,9 +14,9 @@ Create HTTP Response Header Modification Rules in the **Modify Response Header**
 
 2. Go to **Rules** > **Transform Rules**.
 
-3. Go to the **Modify Request Header** tab.
+3. Go to the **Modify Response Header** tab.
 
-4. Select **Create response header rule**.
+4. Select **Create rule**.
 
     ![The HTTP Response Header Modification Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-response-header-modification-rule.png)
 
