@@ -15,14 +15,13 @@ The following are some of the community-maintained Pages Plugins. If you have cr
 
 - [proxyflare-for-pages](https://github.com/flaregun-net/proxyflare-for-pages)
 
-  Move traffic around your Cloudflare Pages domain _with ease_. Proxyflare is a reverse-proxy featuring: 
+  Move traffic around your Cloudflare Pages domain with ease. Proxyflare is a reverse-proxy that enables you to:
 
-    - Port forward, redirect, and reroute HTTP and websocket traffic anywhere on the internet
-    - Mount an entire website on a subpath (e.g. mysite.com/docs) on your apex domain
-    - Serve static text (e.g. robots.txt and other structured metadata) from any endpoint
-    - and much more
+    - Port forward, redirect, and reroute HTTP and websocket traffic anywhere on the Internet.
+    - Mount an entire website on a subpath (for example, `mysite.com/docs`) on your apex domain.
+    - Serve static text (like `robots.txt` and other structured metadata) from any endpoint.
 
-  Learn more at [https://proxyflare.works](https://proxyflare.works)
+ Refer to [Proxyflare](https://proxyflare.works) for more information.
 
 - [cloudflare-pages-plugin-trpc](https://github.com/toyamarinyon/cloudflare-pages-plugin-trpc)
 
