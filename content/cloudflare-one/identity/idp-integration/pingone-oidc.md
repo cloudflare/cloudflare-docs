@@ -23,7 +23,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 10. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), navigate to **Settings** > **Authentication**.
 11. Under **Login methods**, select **Add new**.
 11. Select PingOne.
-12. Input the Client ID, Client Secret, and Environment ID fields generated previously.
+13. Input the **Client ID**, **Client Secret**, and **Environment ID** generated previously.
 14. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 15. Select **Save**.
 
