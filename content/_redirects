@@ -218,15 +218,22 @@
 /email-routing/get-started/settings/ /email-routing/setup/ 301
 
 # firewall
-/firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
-/firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
+/firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
+/firewall/api/cf-lists/endpoints/ /fundamentals/global-configurations/lists/lists-api/endpoints/ 301
+/firewall/api/cf-lists/json-object/ /fundamentals/global-configurations/lists/lists-api/json-object/ 301
 /firewall/cf-dashboard/expression-preview-editor/ /firewall/cf-dashboard/edit-expressions/ 301
+/firewall/cf-dashboard/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
+/firewall/cf-dashboard/rules-lists/manage-items/ /fundamentals/global-configurations/lists/create-dashboard/#add-items-to-a-list 301
+/firewall/cf-dashboard/rules-lists/manage-lists/ /fundamentals/global-configurations/lists/create-dashboard/ 301
+/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/ /fundamentals/global-configurations/lists/use-in-expressions/ 301
 /firewall/cf-firewall-language/ /ruleset-engine/rules-language/ 301
 /firewall/cf-firewall-language/fields/ /ruleset-engine/rules-language/fields/ 301
 /firewall/cf-firewall-language/functions/ /ruleset-engine/rules-language/functions/ 301
 /firewall/cf-firewall-language/operators/ /ruleset-engine/rules-language/operators/ 301
 /firewall/cf-firewall-language/values/ /ruleset-engine/rules-language/values/ 301
+/firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
 /firewall/cf-firewall-rules/fields-and-expressions/ /ruleset-engine/rules-language/expressions/ 301
+/firewall/cf-firewall-rules/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
 /firewall/cf-rulesets/ /ruleset-engine/about/ 301
 /firewall/cf-rulesets/add-rule-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
 /firewall/cf-rulesets/common-use-cases/ /ruleset-engine/common-use-cases/ 301
@@ -260,6 +267,7 @@
 /firewall/cf-rulesets/rulesets-api/update-rule/ /ruleset-engine/rulesets-api/update-rule/ 301
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /firewall/cf-rulesets/view-rulesets/ /ruleset-engine/basic-operations/view-rulesets/ 301
+/firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
 
 # fundamentals
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
@@ -437,6 +445,7 @@
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
 /platform/functions/billing/ /platform/functions/pricing/ 301
+/pages/platform/serving-pages/#single-page-app-spa-rendering /pages/platform/serving-pages/#single-page-application-spa-rendering 301
 
 # partners
 /partners/ /learning-paths/technology-partner-integrations/ 301
@@ -717,7 +726,6 @@
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
 /waiting-room/how-to/test-waiting-room/ /waiting-room/additional-options/test-waiting-room/ 301
 /waiting-room/how-to/use-waiting-room-api/ /waiting-room/reference/waiting-room-api/ 301
-/waiting-room/troubleshooting/ /waiting-room/ 301
 
 # warp-client
 /warp-client/get-started/macOS/ /warp-client/get-started/macos/ 301
@@ -937,6 +945,7 @@
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
+/workers/runtime-apis/headers/ /workers/platform/headers/ 301
 
 # zaraz
 
@@ -1076,6 +1085,7 @@
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
+/cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 
 # retired_tile_redir
 /events/ / 301

@@ -40,6 +40,10 @@ To create a DNS record in the dashboard:
 
 To create records with the API, use a [POST request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record).
 
+For specific API examples, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+{{<render file="_api-field-definitions.md">}}
+
 {{</tab>}}
 {{</tabs>}}
 

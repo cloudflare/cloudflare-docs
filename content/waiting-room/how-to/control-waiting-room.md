@@ -17,7 +17,7 @@ To enable a waiting room:
 
 ## Queue options
 
-By default, an active waiting room puts visitors in a queue when traffic approaches the target thresholds defined in **Total active users** and **New users per minute**. Refer to [Queuing activation](/waiting-room/how-to/monitor-waiting-room/#queueing-activation) for more information.
+By default, an active waiting room puts visitors in a queue when traffic approaches the target thresholds defined in **Total active users** and **New users per minute**. Refer to [Queueing activation](/waiting-room/how-to/monitor-waiting-room/#queueing-activation) for more information.
 
 However, if you want all visitors to be queued for a predefined amount of time — in preparation for a product release or other time-based event — use the [Create scheduled events](/waiting-room/additional-options/create-events/) option.
 

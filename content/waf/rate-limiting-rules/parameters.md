@@ -81,6 +81,7 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
   - Field name in the API: `counting_expression` (optional).
   - Only available in the Cloudflare dashboard when you enable **Use custom counting expression**.
   - Defines the criteria used for determining the request rate. By default, the counting expression is the same as the rule expression. This default is also applied when you set this field to an empty string (`""`).
+  - The counting expression does not extend the rule matching expression defined in **If incoming requests match**. Therefore, you may wish to include the matching expression in the counting expression. For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter.
   - The counting expression can include [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields). When there are response fields in the counting expression, the counting will happen after the response is sent.
   - In some cases, you cannot include HTTP response fields in the counting expression due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
@@ -115,9 +116,9 @@ Use _IP with NAT support_ to handle situations such as requests under NAT sharin
 
 ## Configuration restrictions
 
-* If the rule expression includes [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
+* If the rule expression includes [IP Lists](/fundamentals/global-configurations/lists/use-in-expressions/), you must enable the **Also apply rate limiting to cached assets** parameter.
 
-* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists](/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
+* The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/#http-response-fields) and [IP Lists](/fundamentals/global-configurations/lists/use-in-expressions/). If you use IP Lists, you must enable the **Also apply rate limiting to cached assets** parameter.
 
 ## Recommendations
 

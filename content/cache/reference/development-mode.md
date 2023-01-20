@@ -17,5 +17,5 @@ Development Mode temporarily bypasses Cloudflare’s cache and does not purge ca
 
 1.  Log in to your Cloudflare account.
 2.  Select your domain.
-3.  Click **Caching**.
+3.  Select **Caching**.
 4.  Toggle **Development Mode** to **On**.

@@ -6,8 +6,7 @@ weight: 12
 
 # TLS 1.3
 
-{{<render file="_tls-13-definition.md">}}
-<br/>
+TLS 1.3 enables the latest version of the TLS protocol (when supported) for improved security and performance.
 
 ## What is TLS 1.3?
 

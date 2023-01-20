@@ -38,7 +38,7 @@ Action                   | Managed Challenge
 
 Another use case when controlling access to resources is to exclude or include IP addresses or Autonomous System Numbers (ASNs) from a rate limiting rule.
 
-The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP List](/firewall/cf-firewall-rules/rules-lists/).
+The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP List](/fundamentals/global-configurations/lists/ip-lists/).
 
 {{<table-wrap>}}
 Setting                  | Value

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Applications and app types
-weight: 5
+weight: 6
 ---
 
 # Applications and app types
@@ -10,7 +10,7 @@ Gateway allows you to build DNS, Network, and HTTP policies based on application
 
 ## Applications
 
-When you choose the _Application_ selector in the [DNS](/cloudflare-one/policies/filtering/dns-policies/#application), [Network](/cloudflare-one/policies/filtering/network-policies/#application), or [HTTP](/cloudflare-one/policies/filtering/http-policies/#application) policy builder, the **Value** drop-down menu will show all supported applications and their respective app types. Alternatively, you can use the [Gateway API](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
+When you choose the _Application_ selector in a Gateway policy builder, the **Value** drop-down menu will show all supported applications and their respective app types. Alternatively, you can use the [Gateway API](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
 
 ## App types
 

@@ -18,7 +18,7 @@ To update or create a new disposition action:
 4. In **Disposition Actions** select **Edit**.
 5. For each disposition, such as `MALICIOUS`, `SPAM`, and `BULK`, choose the action you want to perform.
 
-## Email Link Isolation (beta)
+## Email Link Isolation
 
 Email Link Isolation rewrites links in emails and opens them in a browser tab where all page contents are fetched and rendered on a remote server. When this feature is enabled, any malware that might be present in a web page or email link, for example, is isolated at the server level and will not infect and compromise the client network at the endpoint.
 
@@ -46,7 +46,7 @@ To enable Email Link Isolation:
 Email Link Isolation is now enabled. 
 
 {{<Aside type="note">}}
-Email Link Isolation (beta) does not have advanced configuration options. If you need more fine-grained control over what users can do in an isolated browser session, you must have a Cloudflare Zero Trust account and make your changes on [Browser Isolation](/cloudflare-one/policies/browser-isolation/).
+Email Link Isolation does not have advanced configuration options. If you need more fine-grained control over what users can do in an isolated browser session, you must have a Cloudflare Zero Trust account and make your changes on [Browser Isolation](/cloudflare-one/policies/browser-isolation/).
 {{</Aside>}}
 
 ## URL rewrite ignore patterns

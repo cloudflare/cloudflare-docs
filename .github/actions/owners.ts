@@ -8,7 +8,7 @@
  *   - the "pull_request.opened" event to request review(s) instead of CODEOWNERS usage
  */
 export const OWNERS: Record<string, string[]> = {
-  "1.1.1.1": ["marciocloudflare"],
+  "1.1.1.1": ["haleycode"],
   analytics: ["angelampcosta"],
   api: ["ranbel"],
   "api-shield": ["patriciasantaana"],
@@ -28,14 +28,14 @@ export const OWNERS: Record<string, string[]> = {
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
-  images: ["marciocloudflare"],
+  images: ["dcpena"],
   "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],
   logs: ["angelampcosta"],
-  "magic-firewall": ["dcpena"],
-  "magic-network-monitoring": [], // TODO
-  "magic-transit": ["dcpena"],
-  "magic-wan": ["dcpena"],
+  "magic-firewall": ["marciocloudflare"],
+  "magic-network-monitoring": ["marciocloudflare"],
+  "magic-transit": ["marciocloudflare"],
+  "magic-wan": ["marciocloudflare"],
   "network-error-logging": ["dcpena"],
   "network-interconnect": ["dcpena"],
   "page-shield": ["pedrosousa"],
@@ -43,11 +43,11 @@ export const OWNERS: Record<string, string[]> = {
   "pub-sub": ["dcpena"],
   queues: ["deadlypants1973"],
   r2: ["deadlypants1973"],
-  radar: ["marciocloudflare"],
-  railgun: ["marciocloudflare"],
+  radar: ["haleycode"],
+  railgun: ["haleycode"],
   "randomness-beacon": ["kodster28"],
   "reference-architecture": ["haleycode"],
-  registrar: ["marciocloudflare"],
+  registrar: ["haleycode"],
   rules: ["pedrosousa"],
   "ruleset-engine": ["pedrosousa"],
   "security-center": ["ranbel"],
@@ -61,10 +61,10 @@ export const OWNERS: Record<string, string[]> = {
   "version-management": ["kodster28"],
   waf: ["pedrosousa"],
   "waiting-room": ["angelampcosta"],
-  "warp-client": ["marciocloudflare"],
+  "warp-client": ["haleycode"],
   web3: ["kodster28"],
   workers: ["deadlypants1973"],
-  zaraz: ["marciocloudflare"],
+  zaraz: ["haleycode"],
 };
 
 export const REVIEWERS: Record<string, string[]> = {

@@ -8,7 +8,7 @@ weight: 6
 
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
-You can block security risks and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
+You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
 ## Security categories
 
@@ -54,7 +54,7 @@ You can block security risks and content categories by creating DNS or HTTP poli
 | Real Estate            | Sites related to real estate.                                                                                                                 |
 | Religion               | Sites hosting content about religion, alternative religion, religious teachings, religious groups and spirituality.                           |
 | Safe for Kids          | Sites that are safe for kids to visit.                                                                                                        |
-| Security Risk          | Sites that contain high risk content. Refer to the table of [security risk subcategories](#security-risk-subcategories).                                |
+| Security Risk          | Sites that are [new or misconfigured](#security-risk-subcategories).  We recommend that you allow or isolate this content category to avoid accidentally blocking trusted domains.             |
 | Shopping & Auctions    | Sites that are hosting content related to ecommerce, coupons, shopping, auctions and marketplaces.                                            |
 | Social & Family        | Sites related to society and lifestyle.                                                                                                       |
 | Society & Lifestyle    | Sites hosting information about lifestyle that are not included in other categories like fashion, food & drink etc.                           |

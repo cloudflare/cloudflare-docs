@@ -7,6 +7,16 @@ rss: file
 
 # Changelog
 
+## 2023-01-04
+
+### Earlier detection (and rejection) of non-video uploads
+
+Cloudflare Stream now detects non-video content on upload using [the POST API](/stream/uploading-videos/upload-video-file/) and returns a 400 Bad Request HTTP error with code `10059`.
+
+Previously, if you or one of your users attempted to upload a file that is not a video (ex: an image), the request to upload would appear successful, but then fail to be encoded later on.
+
+With this change, Stream responds to the upload request with an error, allowing you to give users immediate feedback if they attempt to upload non-video content.
+
 ## 2022-12-08
 
 ### Faster mp4 downloads of live recordings

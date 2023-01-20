@@ -13,7 +13,7 @@ The Cloudflare HTTP DDoS Attack Protection managed ruleset is a set of pre-confi
 
 The HTTP DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
-The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS Managed Rules.
+The HTTP DDoS Attack Protection managed ruleset provides users with increased observability into L7 DDoS attacks mitigated by Cloudflare, informing users of ongoing or past attacks. The [Security Events dashboard](/waf/security-events/), available at **Security** > **Events**, will display information about the top HTTP DDoS managed rules.
 
 ## Ruleset configuration
 
@@ -39,9 +39,9 @@ For more information on the available configuration parameters, refer to [Manage
 
 The HTTP DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans. All customers can customize the ruleset both at the zone level and at the account level.
 
-Customers on Enterprise plans with the Advanced DDoS Protection subscription can create more than one rule with different expressions, to customize the DDoS protection for different incoming requests.
+Customers on Enterprise plans with the Advanced DDoS Protection subscription can create more than one override (or more than one rule, for API users) with different [expressions](/ddos-protection/managed-rulesets/http/override-expressions/), to customize the DDoS protection for different incoming requests.
 
-Customers on other plans can create only one rule and they cannot customize the rule expression. In this case, the single rule, containing one or more configurations or overrides, will always apply to all incoming traffic.
+Other customers can only create one override (or rule) and they cannot customize the rule expression. In this case, the single override, containing one or more configurations, will always apply to all incoming traffic.
 
 ## Related Cloudflare products
 

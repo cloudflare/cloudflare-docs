@@ -5,6 +5,7 @@ weight: 20
 layout: single
 meta:
   title: Changelog for managed rulesets
+rss: folder
 ---
 
 # Changelog for managed rulesets

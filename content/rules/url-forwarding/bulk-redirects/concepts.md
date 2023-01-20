@@ -59,6 +59,8 @@ Bulk Redirect Lists allow you to create distinct groups of URL Redirects for dif
 
 A Bulk Redirect List does not perform any redirects on its own — you must reference the list in a Bulk Redirect Rule to enable the redirects in the list.
 
+For details on the CSV format for importing items to a Bulk Redirect List, refer to [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
+
 {{<Aside type="note">}}
 
 You can only reference Bulk Redirect Lists in Bulk Redirect Rules. Other types of rules powered by the Ruleset Engine do not support Bulk Redirect Lists.

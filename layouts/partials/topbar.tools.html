@@ -30,6 +30,12 @@
 
   {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
 
+  {{ else }}
+
+  {{ $rssFeed = . }}
+
+  {{ end }}
+
   <div class="DocsToolbar--tools-spacer"></div>
 
   <div class="DocsToolbar--tools-icon-item">
@@ -48,8 +54,6 @@
       </span>
     </div>
   </div>
-
-  {{ end }}
 
   {{ end }}
 

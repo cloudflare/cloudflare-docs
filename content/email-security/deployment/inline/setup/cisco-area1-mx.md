@@ -9,7 +9,7 @@ meta:
 
 # Deploy and configure Cisco IronPort with Area 1 as MX Record
 
-![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/deployment/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
 
 In this tutorial, you will learn how to configure Cisco IronPort with Area 1 as MX record. This tutorial is broken down into several steps.
 
@@ -32,7 +32,7 @@ To add a new Sender Group:
 
 4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
-![Sender group](/email-security/static/inline-setup/cisco-area1-mx/step1.png)
+![Sender group](/email-security/static/deployment/inline-setup/cisco-area1-mx/step1.png)
 
 ## 2. Configure Incoming Relays
 

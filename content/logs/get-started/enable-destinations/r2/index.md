@@ -9,9 +9,7 @@ layout: single
 
 Cloudflare Logpush supports pushing logs directly to R2 via the Cloudflare dashboard or via API. 
 
-We are offering Enterprise customers interested in storing their logs on Cloudflare access to R2 for evaluation and testing. Note that at this time we are not offering an SLA for R2. It should not be used for production use cases where logs are mission-critical. 
-
-During this phase, we will not be charging for R2 usage. We will be providing 30 days notice ahead of any charges. At that time, your account team will reach out to discuss interest in signing a contract for R2 usage. We expect to start charging for R2 in Q4 2022.
+For more information about R2, refer to the [Cloudflare R2](/r2/) documentation.
 
 Before getting started:
 
@@ -57,7 +55,7 @@ Enable Logpush to R2 via the dashboard.
 
 8.  Enter the following destination information:
     - Bucket path, for example, `cloudflare-logs/http_requests/example.com`
-    - R2 access key id
+    - R2 access key ID
     - R2 secret access key
 
 9.  Click **Validate access**.
@@ -69,7 +67,7 @@ Enable Logpush to R2 via the dashboard.
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
 - **name** (optional) - Use your domain name as the job name.
-- **destination_conf** - A log destination consisting of an endpoint name, bucket name, access key id and secret key.
+- **destination_conf** - A log destination consisting of bucket path, account ID, R2 access key ID and R2 secret access key.
 
 {{<Aside type="note" header="Note">}}
 We recommend adding the `{DATE}` parameter in the `destination_conf` to separate your logs into daily subfolders.
