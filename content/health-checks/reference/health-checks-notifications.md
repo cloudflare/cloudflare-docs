@@ -9,7 +9,7 @@ meta:
 
 # Evaluate your Health Check or server
 
-You can [configure notification emails](/health-checks/additional-configurations/configure-notifications/) to be alerted when the Health Check detects that there is a change in the status of your origin server. Cloudflare will send you an email within seconds so you can take the necessary action before customers are impacted.
+You can [configure notification emails](/health-checks/reference/health-checks-notifications/#configure-notifications) to be alerted when the Health Check detects that there is a change in the status of your origin server. Cloudflare will send you an email within seconds so you can take the necessary action before customers are impacted.
 
 The email provides information to determine what caused the health status change. You can evaluate when the change happened, the status of the origin server, if and why it is unhealthy, the expected response code, and the received response code.
 	
