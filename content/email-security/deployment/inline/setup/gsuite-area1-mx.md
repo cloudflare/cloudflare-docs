@@ -19,6 +19,8 @@ In this tutorial, you will learn how to configure Gmail with Area 1 as MX record
 * Access to the Gmail administrator console ([**Gmail administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
 * Access to the domain nameserver hosting the MX records for the domains that will be processed by Area 1.
 
+{{<render file="_mx-deployment-prerequisites.md">}}
+
 ## 1. Add Area 1 IP addresses to the Inbound gateway configuration
 
 When Area 1 is deployed as MX records upstream of Gmail, the Inbound gateways need to be configured such that Gmail is aware that they are no longer the MX record for the domain. This is a critical step as it will allow Gmail to accept messages from Area 1.
