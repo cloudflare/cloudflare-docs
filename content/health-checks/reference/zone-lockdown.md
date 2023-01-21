@@ -12,7 +12,7 @@ Currently, any Cloudflare customer on a paid plan can configure Health Checks ag
 
 When a customer enables zone lockdown, any Health Checks targeting that zone regardless of ownership will still get through because Cloudflare's ASN is on an allow-list.
 
-Customers may encounter that Cloudflare’s ASN is whitelisted for zone lockdown, resulting in Health Checks targeting that zone to fail. To mitigate that vulnerability, customers can create a firewall rule to bypass the zone lockdown.
+Cloudflare's ASN is on an allow-list. This allows health checks to bypass zone lockdown. However, this creates a vulnerability and that behavior will change, resulting in Health Checks no longer being allowed through zone lockdown by default. Customers who use zone lockdown and want their health checks to continue passing can follow the guide below to bypass zone lockdown.
 
 ## Bypass zone lockdown
 
