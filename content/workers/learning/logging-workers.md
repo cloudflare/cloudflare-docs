@@ -10,6 +10,11 @@ You can access logs and exceptions for your Workers using the dashboard or [`wra
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
+{{<Aside type="warning" header="Warning">}}
+This feature is not available for zones on [China Network](/china-network/).
+
+{{</Aside>}}
+
 {{<Aside type="note">}}
 
 To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush/).
