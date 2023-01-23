@@ -1,10 +1,17 @@
 <ol class="breadcrumb">
     <li><a href="/products/">Products</a></li>
     {{ $rellink := "" }}
+    {{ $title := "" }}
     {{ range (split .RelPermalink "/") }}
       {{ if gt (len . ) 0 -}}
         {{ $rellink = printf "%s/%s" $rellink . }}
-        <li><a href="{{ $rellink }}">{{ humanize . | title }}</a></li>
+        {{ $page := $.Site.GetPage $rellink }}
+      {{ if eq ($page.RelPermalink | strings.Count "/" ) 2 -}}
+        {{ $title =  humanize . | title }}
+      {{ else }}
+        {{ $title = $page.Title }}
+      {{ end }}
+        <li><a href="{{ $rellink }}">{{ $title }}</a></li>
       {{ end }}
     {{ end }}
   </ol>
