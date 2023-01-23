@@ -18,6 +18,13 @@ The following Tanium values are needed to set up the Tanium posture check:
 
 - Client Secret
 - Rest API URL
+  - >  https://docs.tanium.com/api_gateway/api_gateway/overview.html
+    >
+    > Root endpoint
+    > 
+    > To send queries and mutations outside the Tanium Console, use the following address:
+    >
+    > https://<customerName>-api.cloud.tanium.com/plugin/products/gateway/graphql
 
 To retrieve those values:
 
