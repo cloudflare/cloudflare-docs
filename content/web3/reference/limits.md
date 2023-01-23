@@ -20,3 +20,9 @@ The following limits apply to Cloudflare's [IPFS Gateway](/web3/ipfs-gateway/).
 The following limits apply to Cloudflare's [Ethereum Gateway](/web3/ethereum-gateway/).
 
 {{<feature-table id="web3.ethereum">}}
+
+## Polygon Gateway
+
+The following limits apply to Cloudflare's [Polygon Gateway](/web3/polygon-gateway/).
+
+{{<feature-table id="web3.polygon">}}

@@ -7,7 +7,7 @@ weight: 3
 # Load balancers
 
 {{<render file="_load-balancer-definition.md">}}
-
+<br/>
 {{<Aside type="note">}}
 
 For more background information on what load balancers are and how they work, check out our [Learning Center](https://www.cloudflare.com/learning/performance/what-is-load-balancing/).

@@ -67,7 +67,7 @@ curl -X PUT \
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point",
-    "description": "This ruleset executes a Managed Ruleset.",
+    "description": "This ruleset executes a managed ruleset.",
     "kind": "zone",
     "version": "4",
     "rules": [
@@ -98,7 +98,7 @@ curl -X PUT \
 
 To deploy a ruleset, create a rule with `"action": "execute"` that executes the ruleset, and add the ruleset ID to the `action_parameters` field in the `id` parameter.
 
-The following example deploys a Managed Ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`<ZONE_ID>`).
+The following example deploys a managed ruleset to the zone-level `http_request_firewall_managed` phase of a zone (`<ZONE_ID>`).
 
 <details open>
 <summary>Request</summary>
@@ -173,7 +173,7 @@ You can use this API method to update the description of an existing ruleset or 
 
 {{<Aside type="warning" header="Important">}}
 
-You cannot update the description or the rules in a Managed Ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
+You cannot update the description or the rules in a managed ruleset. You can only [define overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) to customize the ruleset behavior.
 
 {{</Aside>}}
 

@@ -4,12 +4,14 @@ title: Commands
 weight: 2
 ---
 
-## Wrangler commands
+# Wrangler commands
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
+- [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+- [`d1`](#d1) - Interact with D1.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
 - [`delete`](#delete) - Delete your Worker from Cloudflare.
@@ -17,6 +19,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
@@ -47,6 +50,21 @@ Flags:
 {{</Aside>}}
 
 ---
+
+## docs
+
+Open the Cloudflare developer documentation in your default browser.
+
+```sh
+$ wrangler docs [COMMAND]
+```
+
+{{<definitions>}}
+
+- `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
+
+{{</definitions>}}
 
 ## init
 
@@ -84,6 +102,196 @@ $ wrangler generate [name] [template]
 - `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
 
+{{</definitions>}}
+
+---
+
+## d1
+
+Interact with Cloudflare's D1 service.
+
+{{<Aside type="note">}}
+D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+{{</Aside>}}
+
+### `create`
+
+Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler d1 create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new D1 database.
+
+{{</definitions>}}
+
+### `list`
+
+List all D1 databases in your account.
+
+```sh
+$ wrangler d1 list
+```
+
+### `delete`
+
+Delete a D1 database.
+
+```sh
+$ wrangler d1 delete <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to delete.
+
+{{</definitions>}}
+
+### `execute`
+
+Execute a query on a D1 database.
+
+```sh
+$ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to execute a query on.
+- `--command` {{<type>}}string{{</type>}} 
+  - The SQL query you wish to execute.
+- `--file` {{<type>}}string{{</type>}} 
+  - Path to the SQL file you wish to execute.
+- Note that you must provide either `--command` or `--file` for this command to run successfully.
+{{</definitions>}}
+
+
+### `backup create`
+
+Initiate a D1 backup.
+
+```sh
+$ wrangler d1 backup create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to backup.
+{{</definitions>}}
+
+### `backup list`
+
+List all available backups.
+
+```sh
+$ wrangler d1 backup list <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to list the backups of.
+{{</definitions>}}
+
+### `backup restore`
+
+Restore a backup into a D1 database.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to restore the backup into.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to restore.
+{{</definitions>}}
+
+### `backup download`
+
+Download existing data to your local machine.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to download the backup of.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to download.
+{{</definitions>}}
+
+### `migrations create`
+
+Create a new migration. 
+
+This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
+
+`0000_create_user_table.sql`
+
+The filename will include a version number and the migration name you specify below.
+
+```sh
+$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>" 
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to create a migration for.
+- `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A descriptive name for the migration you wish to create.
+{{</definitions>}}
+
+### `migrations list`
+
+View a list of unapplied migration files.
+
+```sh
+$ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to list unapplied migrations for.
+- `--local` {{<type>}}boolean{{</type>}} 
+  - Show the list of unapplied migration files on your locally persisted D1 database.
+{{</definitions>}}
+
+### `migrations apply`
+
+Apply any unapplied migrations.
+
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
+
+The progress of each migration will be printed in the console.
+
+When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
+
+If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
+
+```sh
+$ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to apply your migrations on.
+- `--local` {{<type>}}boolean{{</type>}} 
+  - Execute any unapplied migrations on your locally persisted D1 database.
 {{</definitions>}}
 
 ---
@@ -157,21 +365,19 @@ None of the options for this command are required. Many of these options can be 
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
 
   - Run the preview of the Worker directly on your local machine.
-    {{<Aside type="warning">}}
-    This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
-    {{</Aside>}}
+{{<Aside type="warning">}}
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
+{{</Aside>}}
 
 - `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
-    {{<Aside type="warning">}}
-
+{{<Aside type="warning">}}
 When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
 
-On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
-On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+{{</Aside>}}
 
-      {{</Aside>}}
-      
 - `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
@@ -291,7 +497,7 @@ $ wrangler delete [SCRIPT] [OPTIONS]
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`. 
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
 
 {{</definitions>}}
 
@@ -821,6 +1027,76 @@ List R2 bucket in the current account.
 ```sh
 $ wrangler r2 bucket list
 ```
+
+---
+
+## `r2 object`
+
+Interact with R2 objects.
+
+{{<Aside type="note">}}
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+{{</Aside>}}
+
+### `get`
+
+Fetch an object from an R2 bucket.
+
+```sh
+$ wrangler r2 object get <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The source object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+### `put`
+
+Create an object in an R2 bucket.
+
+```sh
+$ wrangler r2 object put <OBJECTPATH> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Enables the file to be piped in, rather than specified with the --file option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies presentational information for the object.
+- `--content-encoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+- `--content-language` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The language the content is in.
+- `--cache-control` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The date and time at which the object is no longer cacheable.
+    {{</definitions>}}
+
+### `delete`
+
+Delete an object in an R2 bucket
+
+```sh
+$ wrangler r2 object delete <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
 
 ---
 

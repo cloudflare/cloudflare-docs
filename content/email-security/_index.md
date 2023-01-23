@@ -11,7 +11,7 @@ weight: 1
 Stop phishing attacks with Area 1 cloud-native email security service.
 {{</description>}}
 
-{{<plan type="paid">}}
+{{<plan id="email.email_security.properties.availability.summary">}}
 
 Phishing is the root cause of upwards of 90% of breaches that lead to financial loss and brand damage. Cloudflare Area 1 email security is a cloud-native service that stops phishing attacks, the biggest cybersecurity threat, across all threat vectors - email, web, and network - either at the [edge](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) or in the cloud.
 

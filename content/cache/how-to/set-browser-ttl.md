@@ -29,7 +29,7 @@ If you modify cached assets, the new asset is not displayed to repeat visitors b
 {{</Aside>}}
 
 1.  Log in to your Cloudflare dashboard.
-2.  Click **Caching**.
-3.  Under **Browser Cache TTL**, click the drop-down menu to select the desired cache expiration time.
+2.  Select **Caching**.
+3.  Under **Browser Cache TTL**, select the drop-down menu to select the desired cache expiration time.
 
 The **Respect Existing Headers** option tells Cloudflare to honor the settings in the `Cache-Control` headers from your origin web server.

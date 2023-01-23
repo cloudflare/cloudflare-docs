@@ -9,13 +9,13 @@ title: Filter DNS on devices
 
 You can use Cloudflare Gateway and the Cloudflare WARP client application to filter and log DNS queries from devices on any network. Cloudflare Gateway will continue to secure devices in any DNS location by filtering all DNS queries using the WARP client on the roaming devices.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Create a DNS filtering policy that secures devices by blocking malicious hostnames
 - Apply that policy to devices on any network
 - Enroll devices into a Cloudflare Gateway deployment
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 30 minutes
 
@@ -40,7 +40,7 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 The policy will block security threats for any DNS location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/cloudflare-one/tutorials/identity-dns/).
 
-4. Choose `Block` as the action. You can optionally [enable a block page](/cloudflare-one/policies/filtering/configuring-block-page/) that will be presented to users if they have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on their devices. Click **Save policy** to conclude.
+4. Choose `Block` as the action. You can optionally [enable a block page](/cloudflare-one/policies/filtering/configuring-block-page/) that will be presented to users if they have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on their devices. Click **Save policy** to conclude.
 
 5. The policy will now appear in your DNS policies list.
 

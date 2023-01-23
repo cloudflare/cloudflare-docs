@@ -11,7 +11,7 @@ Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Micro
 
 Microsoft provides an MCAS API endpoint to allow queries to see which applications have been marked as blocked or allowed. With an MCAS API call, you can manage a URL category that contains the blocked URLs returned by the API query, and use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 

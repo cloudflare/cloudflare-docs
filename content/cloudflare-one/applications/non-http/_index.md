@@ -19,15 +19,19 @@ You can connect applications to Cloudflare Zero Trust over a number of different
 
 {{<Aside type="note">}}
 
-SSH and browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
+Browser-rendered applications can be set for domains and subdomains, but cannot be set for paths.
 
 {{</Aside>}}
 
 Cloudflare can render certain non-web applications in your browser without the need for client software or end-user configuration changes. Cloudflare currently supports rendering a terminal for SSH and VNC connections in a user's browser.
 
-To enable this setting, follow the instructions [here](/cloudflare-one/connections/connect-apps/use_cases/ssh/) to connect a machine available over SSH to Cloudflare. Next, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the **`cloudflared` settings** card, select *SSH* from the **Browser Rendering** drop-down menu.
+To enable browser rendering:
 
-![Auto Auth](/cloudflare-one/static/documentation/applications/ssh-browser-rendering.png)
+1. In the [Zero Trust dashboard](jttps://dash.teams.cloudflare.com), go to **Access** > **Applications**.
+2. Locate the SSH or VNC application you created when [connecting the server to Cloudflare](/cloudflare-one/connections/connect-apps/use_cases/ssh/). Select **Configure**.
+3. In the **Policies** tab, ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
+4. In the **Settings** tab, scroll down to **Browser rendering**.
+5. Choose _SSH_ or _VNC_.
 
 Once enabled, when users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 
@@ -51,10 +55,10 @@ This should only be enabled if a [service token](/cloudflare-one/identity/servic
 When you log in to Access through `cloudflared`, your browser prompts you to allow access by
 displaying this page:
 
-![Access browser page](/cloudflare-one/static/documentation/applications/non-http/access-screen.png)
+![Access request prompt page displayed after logging in with cloudflared.](/cloudflare-one/static/documentation/applications/non-http/access-screen.png)
 
 To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
 
-![Auto Auth](/cloudflare-one/static/documentation/applications/non-http/cloudflared-app-settings.png)
+![The toggle to enable automatic connection is set to on.](/cloudflare-one/static/documentation/applications/non-http/cloudflared-app-settings.png)
 
 This option will still prompt a browser window in the background, but the authentication will be automatic.

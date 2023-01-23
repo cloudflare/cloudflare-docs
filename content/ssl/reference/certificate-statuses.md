@@ -6,7 +6,7 @@ weight: 8
 
 # Certificate statuses
 
-Certificates statuses tell you the state of each certificate.
+Certificates statuses show which stage of the issuance process each certificate is in.
 
 ## New certificates
 

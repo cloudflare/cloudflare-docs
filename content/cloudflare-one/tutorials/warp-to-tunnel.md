@@ -14,14 +14,14 @@ You can create and configure Cloudflare Tunnel connections to [support multiple 
 
 Once enrolled, user endpoints will be able to connect to private [RFC 1918](https://tools.ietf.org/html/rfc1918) IP space and other ranges that you control. Applications running on those endpoints will be able to reach those private IPs as well in a private network model. Coming soon, administrators will be able to build Zero Trust rules to determine who within your organization can reach those IPs.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a machine to Cloudflare
 - Assign the machine an IP that can consist of an RFC 1918 IP address or range
 - Connect to that private IP space from an enrolled WARP agent without client-side configuration changes
 - Connect using any TCP-based protocol
 
-**⏲️ Time to complete:** 45 minutes
+**Time to complete:** 45 minutes
 
 ---
 
@@ -106,11 +106,11 @@ Make sure **HTTP traffic filtering** is enabled. This lets Cloudflare proxy your
 
 Users can reach this private service by logging in to their Zero Trust account and the WARP agent.
 
-By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/tutorials/split-tunnel/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
+By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account and go to **Settings** > **Network**.
+1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
 
-2. Within **Split Tunnels**, select **Manage**. The IP ranges listed are those that Cloudflare excludes by default. Choose the range being used for this private connection and delete it.
+2. In the list of Split Tunnels entries, choose the range being used for this private connection and delete it.
 
 ## Integrate your identity provider
 
@@ -122,7 +122,7 @@ On the Zero Trust dashboard, select your account and go to **Settings** > **Auth
 
 ## Determine which devices can enroll
 
-1. Go to **Settings** > **Devices** > **Device enrollment**.
+1. Go to **Settings** > **WARP Client**.
 
 2. Within **Device enrollment permissions**, select **Manage**.
 
@@ -142,11 +142,11 @@ Your rule will now be visible under the **Device enrollment rules** list.
 
 2. Enable **Proxy**.
 
-This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/) settings.
+This will tell Cloudflare to begin proxying any traffic from enrolled devices, except the traffic excluded using the [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/) settings.
 
 ## (Optional) Enable HTTPS inspection
 
-1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your devices.
+1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.
 
     Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
 

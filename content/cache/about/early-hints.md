@@ -17,10 +17,14 @@ Early Hints is currently only supported over HTTP/2 and HTTP/3.
 
 For more information about Early Hints, refer to the [Cloudflare](https://blog.cloudflare.com/early-hints) and [Google Chrome](https://developer.chrome.com/en/blog/early-hints/) blogs.
 
+## Availability
+
+{{<feature-table id="speed.early_hints">}}
+
 ## Enabling Early Hints
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2.  From the dashboard, click **Speed** > **Optimization**.
+2.  From the dashboard, select **Speed** > **Optimization**.
 3.  Under **Optimized Delivery**, enable **Early Hints**.
 
 ## Generating Early Hints

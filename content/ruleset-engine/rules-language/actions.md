@@ -79,7 +79,6 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         </p>
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
-          <li>Present an invisible proof of work challenge to the browser.</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
           <li>Show a CAPTCHA challenge.</li>
         </ul>
@@ -157,7 +156,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       <td>
         <p>
           Executes the rules in the ruleset specified in the rule configuration. You can specify a
-          Managed Ruleset or a custom ruleset to execute.
+          managed ruleset or a custom ruleset to execute.
         </p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns.</p>
       </td>

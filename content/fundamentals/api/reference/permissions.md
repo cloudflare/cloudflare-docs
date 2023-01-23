@@ -60,10 +60,12 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Account Settings Edit                                        | Grants write access to Account resources, account membership, and account level features.             |
 | Account WAF Read                                             | Grants read access to Account WAF.                                                                    |
 | Account WAF Edit                                             | Grants write access to Account WAF.                                                                   |
-| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
-| Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | Billing Read                                                 | Grants read access to billing profile, subscriptions, and access to fetch invoices and entitlements.  |
 | Billing Edit                                                 | Grants write access to billing profile, subscriptions, and access to fetch invoices and entitlements. |
+| Cloudflare Pages Read                                        | Grants access to view Cloudflare Pages projects.                                                      |
+| Cloudflare Pages Edit                                        | Grants access to create, edit and delete Cloudflare Pages projects.                                   |
+| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
+| Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | DDoS Protection Read                                         | Grants read access to DDoS protection.                                                                |
 | DDoS Protection Edit                                         | Grants write access to DDoS protection.                                                               |
 | DNS Firewall Read                                            | Grants read access to DNS Firewall.                                                                   |
@@ -74,8 +76,8 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | IP Prefixes: Edit                                            | Grants access to read/write IP prefix settings.                                                       |
 | Images Read                                                  | Grants read access to Images.                                                                         |
 | Images Edit                                                  | Grants write access to upload Images.                                                                 |
-| L4 DDoS Managed Ruleset Read                                 | Grants read access to L4 DDoS Managed Ruleset.                                                        |
-| L4 DDoS Managed Ruleset Edit                                 | Grants write access to L4 DDoS Managed Ruleset.                                                       |
+| L4 DDoS Managed Ruleset Read                                 | Grants read access to L4 DDoS managed ruleset.                                                        |
+| L4 DDoS Managed Ruleset Edit                                 | Grants write access to L4 DDoS managed ruleset.                                                       |
 | Load Balancing: Monitors and Pools Read                      | Grants read access to account level load balancer resources.                                          |
 | Load Balancing: Monitors and Pools Edit                      | Grants write access to account level load balancer resources.                                         |
 | Logs Read                                                    | Grants read access to logs using Logpull or Instant Logs.                                             |
@@ -130,8 +132,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Email Routing Rules Edit         | Grants write access to Email Routing Rules.                              |
 | Firewall Services Read           | Grants read access to Firewall resources.                                |
 | Firewall Services Edit           | Grants write access to Firewall resources.                               |
-| HTTP DDoS Managed Ruleset Read   | Grants read access to HTTP DDoS Managed Ruleset.                         |
-| HTTP DDoS Managed Ruleset Edit   | Grants write access to HTTP DDoS Managed Ruleset.                        |
+| HTTP DDoS Managed Ruleset Read   | Grants read access to HTTP DDoS managed ruleset.                         |
+| HTTP DDoS Managed Ruleset Edit   | Grants write access to HTTP DDoS managed ruleset.                        |
 | Health Checks Read               | Grants read access to Health Checks.                                     |
 | Health Checks Edit               | Grants write access to Health Checks.                                    |
 | Load Balancers Read              | Grants read access to load balancers and associated resources.           |

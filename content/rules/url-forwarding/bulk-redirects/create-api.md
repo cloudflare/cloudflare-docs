@@ -4,6 +4,7 @@ title: Create via API
 weight: 7
 meta:
   title: Create Bulk Redirects via API
+  description: Learn how to create Bulk Redirects using the Cloudflare API.
 ---
 
 # Create Bulk Redirects via API
@@ -54,7 +55,7 @@ The response will be similar to the following:
 }
 ```
 
-For more information on list operations, refer to the [Lists API](/firewall/api/cf-lists/) documentation.
+For more information on list operations, refer to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) documentation.
 
 ## 2. Add items to the list
 

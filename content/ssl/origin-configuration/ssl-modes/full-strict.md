@@ -27,6 +27,12 @@ Your origin needs to be able to support an SSL certificate that is:
 - Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/ssl/origin-configuration/origin-ca/).
 - Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname.
 
+{{<Aside type="note">}}
+
+In addition to **Full (strict)** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
+
+{{</Aside>}}
+
 ## Required setup
 
 Before enabling **Full (strict)** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate matching the requirements above. Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).

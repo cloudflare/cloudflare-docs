@@ -45,7 +45,7 @@ _**Rate limiting rule #1**_
 
 **Period**: _10 seconds_
 
-**With the same** (characteristics):
+**With the same value of** (characteristics):
 
 - _Data center ID_ (included by default when creating the rule in the dashboard)
 - _IP_
@@ -85,7 +85,7 @@ _**Rate limiting rule #2**_
 
 **Period**: _10 seconds_
 
-**With the same** (characteristics):
+**With the same value of** (characteristics):
 
 - _Data center ID_ (included by default when creating the rule in the dashboard)
 - _IP_

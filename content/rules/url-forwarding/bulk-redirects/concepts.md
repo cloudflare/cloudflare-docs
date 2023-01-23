@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 3
 meta:
   title: Bulk Redirect concepts
+  description: Bulk Redirects work through a combination of URL redirects, a Bulk Redirect list, and a Bulk Redirect rule.
 ---
 
 # Bulk Redirect concepts
@@ -57,6 +58,8 @@ URL Redirects are the list items of Bulk Redirect Lists.
 Bulk Redirect Lists allow you to create distinct groups of URL Redirects for different purposes. You can use a URL Redirect List in one or more Bulk Redirect Rules.
 
 A Bulk Redirect List does not perform any redirects on its own — you must reference the list in a Bulk Redirect Rule to enable the redirects in the list.
+
+For details on the CSV format for importing items to a Bulk Redirect List, refer to [CSV file format](/rules/url-forwarding/bulk-redirects/reference/csv-file-format/).
 
 {{<Aside type="note">}}
 

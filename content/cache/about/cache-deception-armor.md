@@ -9,7 +9,7 @@ Before learning about Cache Deception Armor, you should first understand how Web
 
 ## Web Cache Deception attacks
 
-Web Cache Deceptions attacks occur when an attacker tricks a user into clicking a link in the format of `http://www.example.com/newsfeed/foo.jpg`, when `http://www.example.com/newsfeed` is the location of a dynamic script that returns different content for different users.
+Web Cache Deceptions attacks occur when an attacker tricks a user into opening a link in the format of `http://www.example.com/newsfeed/foo.jpg`, when `http://www.example.com/newsfeed` is the location of a dynamic script that returns different content for different users.
 
 This scenario becomes problematic when your website is configured to be flexible about what kinds of paths it can handle. To be more specific, when requests to a path that do not exist, such as `/x/y/z` are treated as equivalent to requests to a parent path that does exist `/x`.
 

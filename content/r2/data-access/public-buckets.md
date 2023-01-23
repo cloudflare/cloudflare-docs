@@ -12,16 +12,40 @@ Public Bucket is a feature that allows users to expose the contents of their R2 
 
 Public buckets can be set up in two ways:
 
-1. The first exposes your bucket as a custom domain under your control.
+1. The first exposes your bucket as a custom domain.
 2. The second exposes your bucket as an `*.r2.dev` Cloudflare managed subdomain.
 
 You may choose to do one or both options to test out public buckets.
 
 To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
 
-## Connect your bucket to a custom domain
+## Custom domains
 
-Domain access through a custom domain allows you to use features such as access management, Cache and bot management.
+### Caching
+
+Domain access through a custom domain allows you to use Cloudflare Cache to accelerate access to your R2 bucket.
+
+{{<Aside type="note" header="Enabling cache for all file types">}}
+
+By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule. For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/about/default-cache-behavior/#default-cached-file-extensions)
+
+{{</Aside>}}
+
+### Access control
+
+To restrict access to your custom domain's bucket, use Cloudflare's existing security products:
+
+- [Cloudflare Zero Trust Access](/cloudflare-one/applications/configure-apps): Protect buckets that should only be accessible by your teammates.
+- [Cloudflare WAF Token Authentication](https://support.cloudflare.com/hc/en-us/articles/115001376488-Configuring-Token-Authentication#4NRqqMni2CYkLKlVcs0m6S): Restrict access to documents, files, and media to selected users by providing them with an access token.
+
+{{<Aside type="warning" header="`r2.dev` public access">}}
+
+Disable public access to your [`r2.dev` subdomain](#disable-managed-public-access-for-your-bucket) when using products like WAF or Cloudflare Access. If you do not disable public access, your bucket will remain publicly available through your `r2.dev` subdomain.
+
+{{</Aside>}}
+
+### Custom domains configuration
+#### Connect your bucket to a custom domain
 
 To connect a custom domain to your bucket:
 
@@ -59,7 +83,7 @@ There are a few restrictions when using custom domains to access R2 buckets:
 
 {{</Aside>}}
 
-## Disable domain access
+#### Disable domain access
 
 Disabling a domain will turn off public access to your bucket through that domain. Access through other domains or the managed `r2.dev` subdomain are unaffected.
 The specified domain will also remain connected to R2 until you remove it or delete the bucket.
@@ -77,7 +101,7 @@ To disable a domain:
 
 ![Not Allowed](/r2/static/public-buckets-not-allowed-2.png)
 
-## Remove domain
+#### Remove domain
 
 Removing a domain will remove custom domain configuration that you have set up on the dashboard. Your bucket will still be publicly accessible.
 
@@ -94,7 +118,8 @@ To remove a domain:
 
 The domain is no longer connected to your bucket and will no longer appear in the connected domains list.
 
-## Enable managed public access for your bucket
+## Managed public buckets through `r2.dev`
+### Enable managed public access for your bucket
 
 Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a `r2.dev` Cloudflare subdomain.
 To enable public access for your buckets:
@@ -134,9 +159,9 @@ To enable access management, Cache and bot management features, you must set up 
 
 You can review if your bucket is publicly accessible by going to your bucket and checking that **Public URL Access** states **Allowed**.
 
-## Disable managed public access for your bucket
+### Disable managed public access for your bucket
 
-Your bucket will not be exposed to the Internet as an `r2.dev subdomain` after you disable public access. If you have connected other domains, the bucket will remain accessible on those domains.
+Your bucket will not be exposed to the Internet as an `r2.dev` subdomain after you disable public access. If you have connected other domains, the bucket will remain accessible on those domains.
 
 To disable public access for your bucket:
 

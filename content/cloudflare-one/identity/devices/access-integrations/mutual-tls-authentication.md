@@ -27,7 +27,7 @@ Adding mTLS to your application using your own certificate authority (CA) is onl
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
-Currently, mTLS does not work with HTTP3 traffic.
+Currently, mTLS does not work with HTTP/3 traffic.
 
 ![mTLS handshake diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
 

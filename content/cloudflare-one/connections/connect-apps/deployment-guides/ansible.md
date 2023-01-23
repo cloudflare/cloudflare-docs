@@ -15,7 +15,7 @@ Ansible works alongside Terraform to streamline the Cloudflare Tunnel setup proc
 To complete the steps in this guide, you will need:
 
 - [A Google Cloud Project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project) and [GCP CLI installed and authenticated](https://cloud.google.com/sdk/docs/install).
-- [Basic knowledge of Terraform](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/) and[Terraform installed](https://learn.hashicorp.com/tutorials/terraform/install-cli).
+- [Basic knowledge of Terraform](/cloudflare-one/connections/connect-apps/deployment-guides/terraform/) and[Terraform installed](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli).
 - [A zone on Cloudflare](/fundamentals/get-started/setup/add-site/).
 - [A Cloudflare API token](/fundamentals/api/get-started/create-token/) with `Cloudflare Tunnel` and `DNS` permissions.
 
@@ -41,7 +41,7 @@ Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_
 1. Create a folder for your Terraform and Ansible configuration files:
 
     ```sh
-    $ mkdir ansible-tunnel 
+    $ mkdir ansible-tunnel
     ```
 
 2. Change to the new directory:
@@ -84,7 +84,7 @@ The following configuration will modify settings in your Cloudflare account.
     resource "random_id" "tunnel_secret" {
       byte_length = 35
     }
-    
+
     # Creates a new locally-managed tunnel for the GCP VM.
     resource "cloudflare_argo_tunnel" "auto_tunnel" {
       account_id = var.cloudflare_account_id
@@ -162,7 +162,7 @@ The following configuration defines the specifications for the GCP virtual machi
         // If specifying an SSH key and user, add `--private-key <path to private key> -u var.name`
         command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u <username in GCP> --private-key <path to private key> -i ${self.network_interface.0.access_config.0.nat_ip}, playbook.yml"
     }
-     
+
     metadata = {
         cf-email     = var.cloudflare_email
         cf-zone      = var.cloudflare_zone
@@ -237,7 +237,7 @@ Ansible playbooks are YAML files that declare the configuration Ansible will dep
           tunnel: "{{ tunnel_id }}"
           credentials-file: /etc/cloudflared/cert.json
           logfile: /var/log/cloudflared.log
-          loglevel: info    
+          loglevel: info
           ingress:
             - hostname: "ssh_app.{{ zone }}"
               service: ssh://localhost:22
@@ -261,7 +261,7 @@ Ansible playbooks are YAML files that declare the configuration Ansible will dep
         enabled: true
         masked: no
 ```
-  
+
   [Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) define how Ansible will execute the configuration. In the example above, the `vars_files` keyword specifies where variable definitions are stored, and the `tasks` keyword specifies the actions Ansible will perform.
 
   [Modules](https://docs.ansible.com/ansible/2.9/user_guide/modules.html) specify what tasks to complete. In this example, the `copy` module creates a file and populates it with content.

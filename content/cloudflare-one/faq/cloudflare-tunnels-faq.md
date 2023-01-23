@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Tunnels
 weight: 4
+meta:
+    description: Review frequently asked questions about tunnels in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -93,8 +95,6 @@ The `--loglevel` flag indicates the logging level, which can be one of {`debug`,
 
 1.  On the Cloudflare dashboard for your zone, navigate to **SSL/TLS** > **Overview**.
 1.  If your SSL/TLS encryption mode is **Off (not secure)**, make sure that it is set to **Flexible**, **Full** or **Full (strict)**.
-
-![SSL encryption mode](/cloudflare-one/static/documentation/connections/ssl-encryption-mode.png)
 
 When the encryption mode is set to **Off (not secure)**, you may encounter connection issues when running a Tunnel.
 

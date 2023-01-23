@@ -34,7 +34,7 @@ A partial setup is only available to customers on a Business or Enterprise plan.
 
 6.  Click **Convert**.
 
-7.  Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Verification TXT Record**.
+7.  Save the information from the **Verification TXT Record**. If you lose the information, you can also access it by going to **DNS** > **Records** > **Verification TXT Record**.
 
 ## Step 2 — Verify ownership for your domain
 
@@ -75,7 +75,7 @@ If your domain is already live with a partial DNS setup — with Cloudflare or a
     2.  Add a `CNAME` record for `{your-hostname}.cdn.cloudflare.net`.
 
         <details>
-        <summary>Example CNAME record in Cloudflare</summary>
+        <summary>Example CNAME record at authoritative DNS provider</summary>
         <div>
 
         The `CNAME` record for `www.example.com` would be:

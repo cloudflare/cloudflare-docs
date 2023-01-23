@@ -878,7 +878,7 @@ Stream notifications are entirely customizable by the customer. Action will depe
 
 **Who is it for?**
 
-Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in firewall events.
+Enterprise customers who want to receive alerts about spikes in specific services that generate log entries in security events.
 
 For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
@@ -892,7 +892,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
 
 </div>
 </details>
@@ -903,7 +903,7 @@ Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to id
 
 **Who is it for?**
 
-Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in firewall events.
+Business and Enterprise customers who want to receive alerts about spikes across all services that generate log entries in security events.
 
 For more information, refer to [WAF alerts](/waf/reference/alerts/).
 
@@ -917,7 +917,55 @@ Business and Enterprise plans.
 
 **What should you do if you receive one?**
 
-Review the information in [Firewall Analytics](/waf/analytics/paid-plans/) to identify any possible attack or misconfiguration.
+Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+
+</div>
+</details>
+
+## Tunnel
+
+<details>
+<summary>Tunnel Creation or Deletion Event</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to receive a notification when Cloudflare Tunnels are created or deleted in their account.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+No direct call to action.
+
+</div>
+</details>
+
+<details>
+<summary>Tunnel Health Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/tunnel-monitoring/notifications/) for their Cloudflare Tunnels.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
 
 </div>
 </details>

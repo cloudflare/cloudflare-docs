@@ -16,7 +16,15 @@ In order to use Queues, you need a [Cloudflare account](/fundamentals/account-an
 
 ## 1. Enable Queues
 
-Queues is in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/). You need a Paid Workers plan to enable Queues. To enable Queues:
+Queues is currently in [Public Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/).
+
+{{<Aside type="note">}}
+
+Before you can use Queues, you must enable it via [the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/queues). You need a Paid Workers plan to enable Queues.
+
+{{</Aside>}}
+
+To enable Queues:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
@@ -26,7 +34,7 @@ Queues is included in the monthly subscription cost of your Paid Workers plan, a
 
 ## 2. Install Wrangler
 
-You will use [Wrangler](/workers/wrangler/get-started/), a command-line tool for building Cloudflare Workers, to access Queues.
+You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access Queues.
 
 To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 
@@ -63,7 +71,7 @@ wrangler queues create <MY_FIRST_QUEUE>
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
 
-Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`) and underscores (`_`).
+Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number.
 
 You cannot change your queue name after you have set it. After you create your queue, you will create a Worker to access it.
 
@@ -197,7 +205,7 @@ In your consumer Worker, you are using queues to auto batch messages using the `
 
 `max_batch_size` (defaults to 10) helps to reduce the amount of times your consumer Worker needs to be called. Instead of being called for every message, it will only be called after 10 messages have entered the queue.
 
-`max_batch_timeout` (defaults to 5 seconds) helps to reduce wait time. If the producer Worker is not sending up to 10 messages to the queue for the consumer Worker to be called, the consumer Worker will be called every 10 seconds to receive messages that are waiting in the queue.
+`max_batch_timeout` (defaults to 5 seconds) helps to reduce wait time. If the producer Worker is not sending up to 10 messages to the queue for the consumer Worker to be called, the consumer Worker will be called every 5 seconds to receive messages that are waiting in the queue.
 
 ### Publish your consumer Worker
 

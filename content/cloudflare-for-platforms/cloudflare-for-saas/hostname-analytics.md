@@ -8,7 +8,7 @@ weight: 7
 
 You can use custom hostname analytics for two general purposes: exploring how your customers use your product and sharing the benefits provided by Cloudflare with your customers.
 
-These analytics include **Site Analytics**, **Bot Analytics**, **Cache Analytics**, **Firewall Analytics**, and [any other datasets](/analytics/graphql-api/features/data-sets/) with the `clientRequestHTTPHost` field.
+These analytics include **Site Analytics**, **Bot Analytics**, **Cache Analytics**, **Security Events**, and [any other datasets](/analytics/graphql-api/features/data-sets/) with the `clientRequestHTTPHost` field.
 
 {{<Aside type="note">}}
 

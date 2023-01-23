@@ -32,7 +32,7 @@ Cloudflare is committed to use 100% renewable energy sources, but also to [remov
 
 ## Analytics related to specific properties
 
-Access aggregated traffic, security, and performance metrics for each domain proxied through Cloudflare. To access these analytics, [log in to the Cloudflare dashboard](https://dash.cloudflare.com/login), select your account and domain, and go to the **Analytics** application. 
+Access aggregated traffic, security, and performance metrics for each domain proxied through Cloudflare. To access these analytics, [log in to the Cloudflare dashboard](https://dash.cloudflare.com/login), select your account and domain, and go to the **Analytics** application.
 
 Data available on the **Analytics** application includes:
 
@@ -47,11 +47,12 @@ Data available on the **Analytics** application includes:
 
 ## Product analytics
 
-Beyond the analytics provided for your properties, you can also access analytics related to specific products: 
+Beyond the analytics provided for your properties, you can also access analytics related to specific products:
 
 * [Bot Analytics](/bots/bot-analytics/) - Shows which requests are associated with known bots, likely automated traffic, likely human traffic, and more.
 * [Cache Analytics](/cache/about/cache-analytics/) - Insights to that help determine if resources are missing from cache, expired, or ineligible for caching.
-* [Firewall Analytics](/waf/analytics/) - Highlights attack and mitigation metrics detected by the Cloudflare WAF.
+* [Security Events](/waf/security-events/) - Highlights attack and mitigation metrics detected by the Cloudflare WAF and HTTP DDoS protection systems.
+* [Security Analytics](/waf/security-analytics/) - Displays information about all incoming HTTP requests, including those not affected by security measures (for example, from the WAF and DDoS protection systems).
 * [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) - Features metrics to help gain insights into traffic load balancer steering decisions.
 
 

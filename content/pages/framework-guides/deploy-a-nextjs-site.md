@@ -43,24 +43,16 @@ filename: pages/api/hello.js
 // Next.js Edge API Routes: https://nextjs.org/docs/api-routes/edge-api-routes
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function (req) {
-  return new Response(
-    JSON.stringify({ name: 'John Doe' }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+  return Response.json({ name: 'John Doe' })
 }
 ```
 
 {{</tab>}}
-{{<tab label="ts" default="true">}}
+{{<tab label="ts">}}
 
 ```ts
 ---
@@ -71,49 +63,42 @@ filename: pages/api/hello.ts
 import type { NextRequest } from 'next/server'
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function (req: NextRequest) {
-  return new Response(
-    JSON.stringify({ name: 'John Doe' }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+  return Response.json({ name: 'John Doe' })
 }
 ```
 
 {{</tab>}}
 {{</tabs>}}
 
-Next, you must configure the rest of the project to use the Edge Runtime. This can be done globally by adding the following to your `next.config.js` file:
+Next, you must configure the rest of the project to use the Edge Runtime.
 
-```diff
+You can opt in on individual pages by exporting the following from each page:
+
+```js
+export const config = {
+  runtime: "edge",
+};
+```
+
+Or configure the whole application to use the Edge Runtime by setting the runtime globally:
+
+```js
 ---
 filename: next.config.js
 ---
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-+  experimental: {
-+    runtime: 'experimental-edge',
-+  },
   reactStrictMode: true,
-  swcMinify: true,
+  experimental: {
+    runtime: 'edge',
+  }
 }
 
 module.exports = nextConfig
-```
-
-Or you can opt in on individual pages by exporting the following from each page:
-
-```js
-export const config = {
-  runtime: "experimental-edge",
-};
 ```
 
 Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.

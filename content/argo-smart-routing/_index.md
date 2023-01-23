@@ -13,11 +13,9 @@ meta:
 Speed up your global traffic with a single click
 {{</description>}}
 
-{{<plan type="add-on">}}
+{{<plan id="traffic.argo.properties.availability.summary">}}
 
 Argo Smart Routing detects real-time network issues and routes traffic across the most efficient network path. These benefits are most apparent for users farthest from your origin server.
-
-Free, Pro, and Business users can enable Argo in their [Cloudflare dashboard](https://dash.cloudflare.com/). Enterprise users can enroll in a free three day trial by contacting their Customer Success Manager.
 
 ---
 

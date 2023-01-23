@@ -158,4 +158,4 @@ To exclude static resources, include <code class="InlineCode">not (cf.botManagem
 
 From there, you could customize your firewall rules based on specific request paths (`/login` or `/signup`), common traffic patterns, or many other characteristics.
 
-Just make sure to set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Firewall Events](/waf/analytics/) to check if your rules need additional tuning.
+Just make sure to set aside time to review [Bot Analytics](/bots/bot-analytics/bm-subscription/) and [Security Events](/waf/security-events/) to check if your rules need additional tuning.

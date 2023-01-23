@@ -328,17 +328,17 @@ Durable Objects can be created so that they only run and store data within a spe
 let id = OBJECT_NAMESPACE.newUniqueId({ jurisdiction: 'eu' });
 ```
 
-The `jurisdiction` option for the `newUniqueId()` method creates a new Object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with IDs created by `newUniqueId()` and are not currently compatible with IDs created by `idFromName(name)`.
+The `jurisdiction` option for the `newUniqueId()` method creates a new Object ID that will only run and persist data within the specified jurisdiction, in this case the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). Jurisdiction constraints can only be used with IDs created by `newUniqueId()` and are not currently compatible with IDs created by `idFromName(name)`.
 
 {{<Aside type="note" header="ID logging">}}
 
-Object IDs will be logged outside of the EU even if you specify a jurisdiction.
+Object IDs will be logged outside of the specified jurisdiction.
 
 {{</Aside>}}
 
 Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
 
-The only jurisdiction currently supported is `eu` (the European Union).
+The currently supported jurisdictions are `eu` (the European Union) and `fedramp` (FedRAMP).
 
 {{<Aside type="note" header="Unique IDs perform best">}}
 
@@ -410,6 +410,30 @@ This method constructs an Object stub, which is a local client that provides acc
 If the remote Object does not already exist, it will be created. Thus, there will always be an Object accessible from the stub.
 
 This method always returns the stub immediately, before it has connected to the remote object. This allows you to begin making requests to the object right away, without waiting for a network round trip.
+
+#### Providing a location hint
+
+Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. To manually create Durable Obkects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
+
+```js
+let stub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
+```
+
+The following `locationHint`s are supported. Note that hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below. The closest nearby region will be used until those locations are fully supported.
+
+| Location Hint Parameter  | Location              |
+| ------------------------ | --------------------- |
+| wnam                     | Western North America |
+| enam                     | Eastern North America |
+| sam                      | South America         |
+| weur                     | Western Europe        |
+| eeur                     | Eastern Europe        |
+| apac                     | Asia-Pacific          |
+| oc                       | Oceania               |
+| afr                      | Africa                |
+| me                       | Middle East           |
+
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
 
 ## Object stubs
 

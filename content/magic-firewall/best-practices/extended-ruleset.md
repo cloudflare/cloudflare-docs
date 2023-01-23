@@ -27,7 +27,7 @@ You can also create a list from the dashboard from **Configurations** > **Lists*
 
 Endpoint devices do not operate as servers, which means:
 
-- They receive traffic from standard common ports — for example 80 or 443 — towards their ephemeral ports, above 32768 in modern operating systems (1025 in older XP).
+- They receive traffic from standard common ports — for example 80 or 443 — towards their ephemeral ports, above 32768 in modern operating systems (above 1025 in older Windows Server 2003 and Windows XP).
 - Connections flow outwards, not inwards, and therefore do not receive TCP SYN or ACK packets.
 - They typically only need client TCP and UDP, with no requirement for ingress ICMP.
 
@@ -72,7 +72,7 @@ Rule 10 in the example ruleset below is acting as a catch-all to block all traff
 
 Follow the best practices for internal routers or firewall interface IP addresses on your MT prefixes below.
 
-1.  Create [a list](/firewall/cf-dashboard/rules-lists/), **Internal routers** for example, list your IP addresses.
+1.  Create [an IP List](/fundamentals/global-configurations/lists/ip-lists/), **Internal routers** for example, list your IP addresses.
 2.  Block ICMP if it is not needed.
 3.  Permit GRE/ESP as needed if the devices have GRE/IPSEC tunnels via the Internet.
 
@@ -102,7 +102,7 @@ Where possible, permit the required destination IP addresses and ports for web s
 
 The following is an example of suggested rules, but you should only make changes based on your specific requirements. For example, if you are not proxied by Cloudflare Layer 7 protection and you expect traffic sourced from the web towards your web servers:
 
-1.  Create [a list](/firewall/cf-dashboard/rules-lists/), **web servers** for example, to list IP addresses for your web servers.
+1.  Create [an IP List](/fundamentals/global-configurations/lists/ip-lists/), **web servers** for example, to list IP addresses for your web servers.
 2.  Permit traffic for the web server traffic inbound from the Internet.
 3.  Permit traffic for the infrastructure or client traffic flows from the Internet, for example DNS and NTP.
 4.  Block all other traffic destined for the web server IP addresses.
@@ -110,7 +110,7 @@ The following is an example of suggested rules, but you should only make changes
 ### Suggested rules
 
 **Rule ID**: 1 <br/>
-**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYNACKs) <br/>
+**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
 **Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 

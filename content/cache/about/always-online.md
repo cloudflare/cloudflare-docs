@@ -13,13 +13,13 @@ Note that Cloudflare does not save a copy of every page of your website, and it 
 
 When the Internet Archive integration is enabled, Cloudflare tells the Internet Archive what pages to crawl and how often. The pages to crawl, as previously mentioned, are the most popular URLs that were successfully visited in the last five hours. The crawling intervals, to ensure stability of service, are limited by Cloudflare. Limits vary according to your Cloudflare plan.
 
-- Free customers once every 30 days.
-- Pro customers once every 15 days.
-- Business and Enterprise customers once every 5 days.
+## Availability
+
+{{<feature-table id="cache.always_online">}}
 
 ## Visitor Experience
 
-When Always Online with Internet Archive integration is enabled, visitors see a banner at the top of the web page explaining they are visiting an archived version of the website. Visitors can click the Refresh button to check whether the origin has recovered and fresh content is available.
+When Always Online with Internet Archive integration is enabled, visitors see a banner at the top of the web page explaining they are visiting an archived version of the website. Visitors can select the Refresh button to check whether the origin has recovered and fresh content is available.
 
 When a visitor requests content for an offline website, Cloudflare returns an HTTP response status code in the range [520–527](https://support.cloudflare.com/hc/en-us/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#:~:text=Error%20520%20occurs%20when%20the,or%20unexpected%20response%20to%20Cloudflare.&text=Contact%20your%20hosting%20provider%20or%20site%20administrator%20and%20request%20a,Origin%20web%20server%20application%20crashes), depending on the issue. These status codes indicate that the origin is unreachable.
 

@@ -5,13 +5,13 @@ type: example
 summary: How to manage Pub/Sub with Wrangler, the Cloudflare CLI.
 ---
 
-## What is Wrangler?
+# What is Wrangler?
 
 Wrangler is a command-line tool for building and managing Cloudflare's Developer Platform, including [Cloudflare Workers](https://workers.cloudflare.com/), [R2 Storage](/r2/) and [Cloudflare Pub/Sub](/pub-sub/).
 
 {{<Aside type="note">}}
 
-Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/get-started/#update).
+Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/install-and-update/#update-wrangler).
 
 {{</Aside>}}
 

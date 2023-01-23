@@ -470,6 +470,35 @@ services = [
 ]
 ```
 
+### Analytics Engine Datasets
+
+[Workers Analytics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Workers. Write data points to your Worker binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
+
+To bind Analytics Engine datasets to your Worker, assign an array of the below object to the `analytics_engine_datasets` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the dataset.
+
+- `dataset` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The dataset name to write to. This will default to the same name as the binding if it is not supplied.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
+```
+
 ## Bundling
 
 You can bundle assets into your Worker using the `rules` key, making these assets available to be imported when your Worker is invoked. The `rules` key will be an array of the below object.
@@ -561,7 +590,7 @@ local_protocol = "http"
 
 ### Environmental variables
 
-When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`.
+When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
@@ -569,7 +598,7 @@ This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 ---
 header: .dev.vars
 ---
-SECRET_KEY = "value"
+SECRET_KEY=value
 ```
 
 ## Node compatibility
@@ -639,10 +668,12 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-It is a recommended best practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
+We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler. 
+
+If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. Currently, there is no way to disable this behaviour.
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler 1 [deprecation guide](/workers/wrangler/migration/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.
