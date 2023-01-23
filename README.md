@@ -17,7 +17,7 @@ $ curl https://get.volta.sh | bash
 $ volta install node
 ```
 
-Finally, you will need to install the Node.js dependencies for this project using npm or another package manager:
+Finally, install the Node.js dependencies for this project using npm or another package manager:
 
 ```sh
 $ npm install
