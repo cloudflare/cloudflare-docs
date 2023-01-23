@@ -45,11 +45,11 @@ To add a new SMTP Route:
 3. Configure the new SMTP Route as follows:
     * **Receiving Domain**: `a1s.mailstream`
     * In **Destination Hosts**, select **Add Row**, and add the following values to the respective rows:
-    Priority | Destination                   | Port
-    ------- | ----------------------------- | ---
-    `0`      | `mailstream-west.mxrecord.io` | `25`
-    `0`      | `mailstream-east.mxrecord.io` | `25`
-    `10`     | `mailstream-east.mxrecord.io` | `25`
+    Priority | Destination                      | Port
+    -------- | -------------------------------- | ---
+    `5`      | `mailstream-central.mxrecord.mx` | `25`
+    `10`     | `mailstream-east.mxrecord.io`    | `25`
+    `10`     | `mailstream-west.mxrecord.io`    | `25`
 
 ![Edit SMTP route](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step2.png)
 

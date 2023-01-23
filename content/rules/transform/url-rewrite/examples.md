@@ -6,7 +6,7 @@ weight: 4
 
 # URL rewrite examples
 
-The following examples illustrate how to perform URL rewrites with Transform Rules:
+The following examples illustrate how to rewrite URLs with Transform Rules:
 
 - [Rewrite path of welcome page for visitors in specific countries](#rewrite-path-of-welcome-page-for-visitors-in-specific-countries)
 - [Rewrite URL query string of blog visitors](#rewrite-url-query-string-of-blog-visitors)
@@ -21,9 +21,9 @@ The following examples illustrate how to perform URL rewrites with Transform Rul
 
 ### Rewrite path of welcome page for visitors in specific countries
 
-To have a welcome page in two languages, create two URL Rewrite Rules with a static rewrite of the path component:
+To have a welcome page in two languages, create two Rewrite URL Rules with a static rewrite of the path component:
 
-**URL Rewrite Rule #1**
+**Rewrite URL Rule #1**
 
 {{<example>}}
 
@@ -41,7 +41,7 @@ Text after **Path** > **Rewrite to...** > _Static_:
 
 {{</example>}}
 
-**URL Rewrite Rule #2**
+**Rewrite URL Rule #2**
 
 {{<example>}}
 
@@ -61,7 +61,7 @@ Text after **Path** > **Rewrite to...** > _Static_:
 
 ### Rewrite URL query string of blog visitors
 
-To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a URL Rewrite Rule with the following settings:
+To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a Rewrite URL Rule with the following settings:
 
 {{<example>}}
 
@@ -81,11 +81,11 @@ sort-by=date
 
 Additionally, set the path rewrite action of the same rule to _Preserve_ so that the URL path does not change.
 
-![URL Rewrite Rule configuration to perform a static query rewrite according to the blog example described in the page.](/rules/static/transform/use-case-blog.png)
+![Rewrite URL Rule configuration to perform a static query rewrite according to the blog example described in the page.](/rules/static/transform/use-case-blog.png)
 
 ### Rewrite path of archived blog posts
 
-To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new URL Rewrite Rule and define a dynamic URL path rewrite using an expression:
+To rewrite all requests to `/news/2012/...` to `/archive/news/2012/...` you must add a reference to the content of the original URL. Create a new Rewrite URL Rule and define a dynamic URL path rewrite using an expression:
 
 {{<example>}}
 
@@ -107,7 +107,7 @@ The filter uses the `starts_with()` function all paths starting with `/news/2012
 
 ### Rewrite path of moved section of a website
 
-To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Create a URL Rewrite Rule and use the `regex_replace()` function for this purpose:
+To rewrite everything under `/blog/<x>` to `/marketing/<x>` you must modify the first component of the path (`/blog/`). Create a Rewrite URL Rule and use the `regex_replace()` function for this purpose:
 
 {{<example>}}
 
@@ -129,7 +129,7 @@ The `regex_replace()` function matches the path component on a regular expressio
 
 ### Rewrite path with several URL segments to a different URL segment
 
-To rewrite paths like `/images/<folder1>/<folder2>/<filename>` — where `<folder1>`, `<folder2>`, and `<filename>` can vary — to `/img/<filename>`, create a URL Rewrite Rule with a dynamic rewrite of the path component:
+To rewrite paths like `/images/<folder1>/<folder2>/<filename>` — where `<folder1>`, `<folder2>`, and `<filename>` can vary — to `/img/<filename>`, create a Rewrite URL Rule with a dynamic rewrite of the path component:
 
 {{<example>}}
 
@@ -151,7 +151,7 @@ For example, this rule would rewrite the `/images/nature/animals/tiger.png` path
 
 ### Rewrite blog archive URLs to support a new URL format
 
-To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following URL Rewrite Rule:
+To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<title>` to the new format `/posts/<YYYY>/<MM>/<DD>/<title>`, create the following Rewrite URL Rule:
 
 {{<example>}}
 

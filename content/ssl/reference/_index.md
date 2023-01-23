@@ -6,6 +6,6 @@ weight: 10
 
 # Reference
 
-For more on Cloudflare SSL/TLS, see these articles:
+For more on Cloudflare SSL/TLS, refer to these articles:
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions=true char_limit=300 >}}

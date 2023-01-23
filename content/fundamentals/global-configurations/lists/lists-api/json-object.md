@@ -4,6 +4,7 @@ pcx_content_type: reference
 weight: 1
 meta:
   title: List JSON object
+  description: Reference information on the JSON object used in Lists API calls.
 ---
 
 # List JSON object

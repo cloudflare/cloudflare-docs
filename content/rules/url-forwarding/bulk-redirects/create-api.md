@@ -55,7 +55,7 @@ The response will be similar to the following:
 }
 ```
 
-For more information on list operations, refer to the [Lists API](/firewall/api/cf-lists/) documentation.
+For more information on list operations, refer to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) documentation.
 
 ## 2. Add items to the list
 

@@ -366,11 +366,12 @@
       }
     }
   },
-  "custom_pages": {
-    "title": "Configure Custom Pages",
-    "link": "https://support.cloudflare.com/hc/articles/200172706",
+  "global_configurations": {
+    "title": "Global configurations",
+    "link": "/fundamentals/global-configurations/",
     "custom_pages": {
-      "title": "Customize error and challenge pages",
+      "title": "Custom error/challenge pages",
+      "link": "https://support.cloudflare.com/hc/articles/200172706",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -382,16 +383,41 @@
         }
       }
     },
-    "origin_error_pages": {
-      "title": "Enable Origin Error Pages",
+    "lists": {
+      "title": "Lists",
+      "link": "/fundamentals/global-configurations/lists/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "ip_lists": {
+          "title": "IP Lists",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/",
+          "free": 1,
+          "pro": 10,
+          "biz": 10,
+          "ent": 10
+        },
+        "open_proxies_list": {
+          "title": "Cloudflare Open Proxies Managed IP List",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
+        },
+        "z_all_managed_ip_lists": {
+          "title": "All Managed IP Lists",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "With separate bundle"
         }
       }
     }
@@ -878,14 +904,14 @@
           "ent": "Yes"
         },
         "num_rules": {
-          "title": "Rules",
+          "title": "Bulk Redirect Rules",
           "free": 15,
           "pro": 15,
           "biz": 15,
           "ent": 50
         },
         "total_lists": {
-          "title": "Lists",
+          "title": "Bulk Redirect Lists",
           "free": 5,
           "pro": 5,
           "biz": 5,
@@ -912,40 +938,12 @@
           "biz": "Yes",
           "ent": "Yes"
         },
-        "rules": {
-          "title": "Number of rules",
-          "free": 10,
-          "pro": 25,
-          "biz": 50,
-          "ent": 125
-        }
-      }
-    },
-    "single_redirects": {
-      "title": "Single Redirects",
-      "link": "/rules/url-forwarding/single-redirects/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
         "num_rules": {
           "title": "Number of rules",
           "free": 10,
           "pro": 25,
           "biz": 50,
           "ent": 125
-        },
-        "regex_support": {
-          "title": "Regex support",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes"
         }
       }
     },
@@ -1017,6 +1015,34 @@
           "pro_plus": 30,
           "biz": 50,
           "ent": 125
+        }
+      }
+    },
+    "single_redirects": {
+      "title": "Single Redirects",
+      "link": "/rules/url-forwarding/single-redirects/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "num_rules": {
+          "title": "Number of rules",
+          "free": 10,
+          "pro": 25,
+          "biz": 50,
+          "ent": 125
+        },
+        "regex_support": {
+          "title": "Regex support",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
         }
       }
     },
@@ -1197,14 +1223,6 @@
           "pro_plus": "40",
           "biz": "100",
           "ent": "1,000"
-        },
-        "ip_lists": {
-          "title": "Number of IP lists",
-          "link": "/firewall/cf-firewall-rules/rules-lists/",
-          "free": 1,
-          "pro": 10,
-          "biz": 10,
-          "ent": 10
         },
         "supported_actions": {
           "title": "Supported actions",

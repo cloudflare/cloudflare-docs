@@ -6,8 +6,7 @@ weight: 13
 
 # Minimum TLS Version
 
-{{<render file="_minimum-tls-definition.md">}}
-<br/>
+Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
 For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
 
