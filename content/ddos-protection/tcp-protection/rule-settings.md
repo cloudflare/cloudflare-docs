@@ -34,7 +34,7 @@ The Advanced TCP Protection system constantly learns your TCP connections to mit
 
 * **​​Mitigation (Enabled)**
 
-    * In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist)).
+    * In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist).
 
 * **Disabled**
 
