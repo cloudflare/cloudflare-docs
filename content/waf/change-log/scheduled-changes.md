@@ -23,18 +23,9 @@ rss: file
     </tr>
   </thead>
   <tbody>
-        <tr>
-      <td>2023-01-16</td>
-      <td>N/A</td>
-      <td>Block</td>
-      <td>N/A</td>
-      <td>OWASP rules</td>
-      <td>Bumping OWASP ruleset version</td>
-      <td>Upgrading OWASP ruleset version to 3.3.4, only on new WAF</td>
-    </tr>
     <tr>
       <td>2023-01-16</td>
-      <td>2023-01-23</td>
+      <td>2023-01-30</td>
       <td>Block</td>
       <td>N/A</td>
       <td>...bbc447fa</td>
@@ -43,7 +34,7 @@ rss: file
     </tr>
     <tr>
       <td>2023-01-16</td>
-      <td>2023-01-23</td>
+      <td>2023-01-30</td>
       <td>Log</td>
       <td>100557</td>
       <td>...4c2e80c3</td>
@@ -52,7 +43,7 @@ rss: file
     </tr>
     <tr>
       <td>2023-01-16</td>
-      <td>2023-01-23</td>
+      <td>2023-01-30</td>
       <td>Log</td>
       <td>100559</td>
       <td>...65414846</td>
