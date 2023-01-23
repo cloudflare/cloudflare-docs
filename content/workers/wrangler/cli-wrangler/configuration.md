@@ -124,7 +124,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `account_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CF_ACCOUNT_ID` environment variable.
+  - This is the ID of the account associated with your zone. You might have more than one account, so make sure to use the ID of the account associated with the `zone_id` you provide, if you provide one. It can also be specified through the `CLOUDFLARE_ACCOUNT_ID` environment variable.
 
 - `zone_id` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

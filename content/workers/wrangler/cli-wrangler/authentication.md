@@ -30,16 +30,16 @@ To set up Wrangler to work with your Cloudflare user, use the following commands
 
 You can also configure your global user with environment variables. This is the preferred method for using Wrangler in CI (continuous integration) environments.
 
-To customize the authentication tokens that Wrangler uses, you may provide the `CF_ACCOUNT_ID` and `CF_API_TOKEN` environment variables when running any Wrangler command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
+To customize the authentication tokens that Wrangler uses, you may provide the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` environment variables when running any Wrangler command. The account ID may be obtained from the Cloudflare dashboard in **Overview** and you may [create or reuse an existing API token](#generate-tokens).
 
 ```sh
-$ CF_ACCOUNT_ID=accountID CF_API_TOKEN=veryLongAPIToken wrangler publish
+$ CLOUDFLARE_ACCOUNT_ID=accountID CLOUDFLARE_API_TOKEN=veryLongAPIToken wrangler publish
 ```
 
-Alternatively, you may use the `CF_EMAIL` and `CF_API_KEY` environment variable combination instead:
+Alternatively, you may use the `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY` environment variable combination instead:
 
 ```sh
-$ CF_EMAIL=cloudflareEmail CF_API_KEY=veryLongAPI wrangler publish
+$ CLOUDFLARE_EMAIL=cloudflareEmail CLOUDFLARE_API_KEY=veryLongAPI wrangler publish
 ```
 
 You can also specify or override the target Zone ID by defining the `CF_ZONE_ID` environment variable.
