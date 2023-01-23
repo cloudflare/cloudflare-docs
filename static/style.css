@@ -5437,11 +5437,3 @@ pre {
   content: ">";
   padding: 0.3rem;
 }
-
-.breadcrumb li a {
-  color: #0055DC;
-}
-
-[theme=dark] .breadcrumb li a {
-  color: #ff9e40;
-}
