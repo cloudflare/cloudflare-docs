@@ -22,7 +22,7 @@ To update or create a new disposition action:
 
 Email Link Isolation rewrites links that could be exploited, alerts users when there is uncertainty around the website they are visiting, and protects against malware and vulnerabilities through [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/).
 
-When you enable Email Link Isolation, the service rewrites links in emails and opens them in a browser tab where all page contents are fetched and rendered on a remote server. When this feature is enabled, any malware that might be present in a web page or email link, for example, is isolated at the server level and will not infect and compromise the client network at the endpoint.
+When you enable Email Link Isolation, the service rewrites links in emails and opens them in a browser tab where all page contents are fetched and rendered on a remote server. When this feature is enabled, any malware that might be present in a web page or email link is isolated at the server level, and will not infect and compromise the client network at the endpoint.
 
 Suspicious hyperlinks are system-determined, and triggered by a dynamic isolation list maintained by Cloudflare’s security team.
 
