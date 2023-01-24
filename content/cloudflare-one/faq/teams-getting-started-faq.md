@@ -4,6 +4,7 @@ title: Getting started with Cloudflare Zero Trust
 weight: 2
 meta:
     description: Review FAQs about getting started with Cloudflare Zero Trust.
+structured_data: true
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

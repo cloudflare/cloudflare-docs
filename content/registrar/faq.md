@@ -2,6 +2,7 @@
 pcx_content_type: faq
 title: FAQ
 weight: 7
+structured_data: true
 ---
 
 # FAQ
