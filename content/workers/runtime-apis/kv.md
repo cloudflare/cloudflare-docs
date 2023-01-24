@@ -50,6 +50,8 @@ Due to the eventually consistent nature of Workers KV, concurrent writes can end
 
 Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. Refer to [How KV works](/workers/learning/how-kv-works/) for more information on this topic.
 
+When an `ArrayBuffer` or `ArrayBufferView` is given, it will be copied if the <code>'copy_arraybuffer_on_kv_r2_put'</code> compatibility flag is set, and detached if the <code>'detach_arraybuffer_on_kv_r2_put'</code> is set. The <code>'detach_arraybuffer_on_kv_r2_put'</code> flag will become the default as of 2023-03-01.
+
 #### Writing data in bulk
 
 You can [write more than one key-value pair at a time with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvbulk) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
