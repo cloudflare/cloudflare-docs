@@ -1,0 +1,5 @@
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+    <div itemprop="text" class="faqAnswer">
+    {{- .Inner | printf "%s\n\n<p></p>" | markdownify | replaceRE "\n*<p></p>\n*$" "" | safeHTML }}
+    </div>
+</div>
