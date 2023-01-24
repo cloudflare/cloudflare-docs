@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2023-01-23</td>
+      <td>2023-01-30</td>
+      <td>...291a3fc7</td>
+      <td>HTTP requests with unusual HTTP headers or URI path (signature #19).</td>
+      <td>log</td>
+      <td>block</td>
+      <td>New rule blocking requests with unusual attributes.</td>
     </tr>
   </tbody>
 </table>
