@@ -40,7 +40,7 @@ rss: file
 - `DurableObjectStorage` has a new method `sync()` that provides a way for a Worker to wait for its writes (including those performed with `allowUnconfirmed`) to be synchronized with storage.
 ## 2022-10-10
 
-- Fixed a bug where if an ES-modules-syntax script exported an array-typed value from the top-level module, the upload API would refuse it with a [500](https://community.cloudflare.com/t/community-tip-fixing-error-500-internal-server-error/44453) error.
+- Fixed a bug where if an ES-modules-syntax script exported an array-typed value from the top-level module, the upload API would refuse it with a [`500` error](https://community.cloudflare.com/t/community-tip-fixing-error-500-internal-server-error/44453).
 - `console.log` now prints more information about certain objects, for example Promises.
 - The Workers Runtime is now built from the Open Source code in: [GitHub - cloudflare/workerd: The JavaScript / Wasm runtime that powers Cloudflare Workers](https://github.com/cloudflare/workerd).
 
