@@ -9,7 +9,7 @@ layout: list
 
 You can use Regional Services through the dashboard or via API.
 
-### Use Regional Services in the dash
+### Regional Services in the dash
 
 To use regional services, you need to first create a DNS record in the dashboard:
 
@@ -18,15 +18,15 @@ To use regional services, you need to first create a DNS record in the dashboard
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
 4. From the Region dropdown, select the region you would like to use on your domain. The complete list of available regions is the following:
 
-- au - "Australia"
-- ca - "Canada"
-- eu - "European Union" 
-- in - "India"
-- jp - "Japan"
-- us - "United States"
-- fedramp - "FedRAMP Compliant"
+- Australia
+- Canada
+- European Union
+- India
+- Japan
+- United States
+- FedRAMP Compliant
 
-### Use Regional Services via API
+### Regional Services via API
 
 You can also use Regional Services via API. These are some examples of API requests.
 
