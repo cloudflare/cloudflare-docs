@@ -1,5 +1,5 @@
 <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
     <div itemprop="text" class="faqAnswer">
-    {{- .Inner | printf "%s\n\n<p></p>" | $.Page.RenderString | replaceRE "\n*<p></p>\n*$" "" | safeHTML }}
+    {{- .Inner | $.Page.RenderString }}
     </div>
 </div>
