@@ -35,7 +35,7 @@ ICANN requires that any transfer also extends the expiration date of your domain
 
 Whenever a domain is first registered, the registrant purchases control of that domain for some number of years — up to 10 years. For example, a domain registered on October 8, 2020 will have an expiration date of October 8th in some year between 2021 and 2030, depending on the amount of years originally purchased.
 
-Transferring a domain adds time to the current expiration date, unless your domain already has [10 years on the term](#i-registered-my-domain-for-10-years-at-another-registrar-if-i-transfer-it-to-cloudflare-will-i-gain-another-year)
+Transferring a domain adds time to the current expiration date, unless your domain already has [10 years on the term](#if-i-registered-my-domain-for-10-years-at-another-registrar-will-i-gain-another-year-if-i-transfer-it-to-cloudflare).
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -99,7 +99,7 @@ If you enter an incorrect auth code (also referred to as authentication code or 
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=3 text="I registered my domain for 10 years at another registrar. If I transfer it to Cloudflare will I gain another year?" >}}
+{{<faq-question level=3 text="If I registered my domain for 10 years at another registrar, will I gain another year if I transfer it to Cloudflare?" >}}
 
 {{<faq-answer>}}
 
