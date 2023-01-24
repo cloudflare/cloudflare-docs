@@ -3,7 +3,7 @@ title: FAQ
 pcx_content_type: faq
 weight: 12
 layout: list
-json_ld: true
+structured_data: true
 ---
 
 # Frequently Asked Questions
