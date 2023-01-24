@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 weight: 6
 meta:
   title: Troubleshooting Universal SSL

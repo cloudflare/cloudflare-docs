@@ -1,5 +1,5 @@
 ---
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 4
 meta:
