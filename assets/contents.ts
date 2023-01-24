@@ -29,7 +29,6 @@ export function toc() {
 
       last = document.createElement('li') as ListItem;
       let text = tmp.lastElementChild.textContent.trim();
-      console.log(tmp.lastElementChild)
       last.innerHTML = `<a class="DocsTableOfContents-link" href="#${tmp.id}">${text}</a>`;
       container.appendChild(last);
       last.h = tmp.nodeName;

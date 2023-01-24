@@ -1,4 +1,4 @@
-{{- $level := (default 2 (.Get "headingLevel")) | string -}}
+{{- $level := (default 2 (.Get "level")) | string -}}
 {{- $text := (default "" (.Get "text")) -}}
 {{- $ID := $text | urlize -}}
 
