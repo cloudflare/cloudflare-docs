@@ -17,7 +17,7 @@
       {{- else -}}
         {{- $title = $page.Title -}}
       {{- end -}}
-        <li><a href="{{- $rellink -}}" class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">{{- $title -}}</span></a></li>
+        <li><a href="{{- $rellink -}}" {{- if eq $title "..." -}}aria-label="{{- $page.Title -}}" title="{{- $page.Title -}}"{{- end -}}class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">{{- $title -}}</span></a></li>
       {{- end -}}
     {{- end -}}
   </ol>
