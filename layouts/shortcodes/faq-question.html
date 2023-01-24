@@ -1,5 +1,5 @@
 {{- $level := (default 2 (.Get "headingLevel")) | string -}}
-{{- $text := (default "" (.Get "text")) | markdownify -}}
+{{- $text := (default "" (.Get "text")) -}}
 {{- $ID := $text | urlize -}}
 
 <h{{$level}} id="{{ $ID }}" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
@@ -9,7 +9,7 @@
     >&#8203;​</a
     >
 </span>
-{{ $text }}
+{{ $text | markdownify }}
   </h{{ $level }}>
 
 
