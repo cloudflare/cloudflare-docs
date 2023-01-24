@@ -50,6 +50,15 @@ rss: file
       <td>Prototype pollution Attack, Headers</td>
       <td>N/A</td>
     </tr>
+    <tr>
+      <td>2023-01-24</td>
+      <td>2023-01-24</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>...c25d2f1f</td>
+      <td>OWASP Ruleset</td>
+      <td>Rolling back OWASP version 3.3.3</td>
+    </tr>
 </tbody>
 </table>
 {{</table-wrap>}}
