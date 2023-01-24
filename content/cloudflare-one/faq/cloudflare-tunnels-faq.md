@@ -4,6 +4,7 @@ title: Tunnels
 weight: 4
 meta:
     description: Review frequently asked questions about tunnels in Cloudflare Zero Trust.
+structured_data: true
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
