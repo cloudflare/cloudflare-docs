@@ -28,6 +28,7 @@ rss: file
 ## 2022-11-17
 
 - V8 update: 10.6 → 10.8
+
 ## 2022-11-02
 
 - Implemented `toJSON()` for R2Checksums so that it is usable with `JSON.stringify()`.
