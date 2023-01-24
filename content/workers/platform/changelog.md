@@ -10,7 +10,7 @@ rss: file
 
 ## 2023-01-13
 
-- Durable Objects can now use jurisdictions with `idFromName` via a new “subnamespace” API.
+- Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.
 - V8 updated to 10.9.
 
 ## 2022-12-16
