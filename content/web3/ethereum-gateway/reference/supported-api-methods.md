@@ -20,6 +20,7 @@ For a full list of JSON-RPC API methods, refer to the [JSON-RPC specification](h
 | web3_sha3                               |                     ✅                       |
 | net_version                             |                     ✅                       |
 | net_listening                           |                     ✅                       |
+| trace_filter                            |                     ✅                       |
 | eth_syncing                             |                     ✅                       |
 | eth_mining                              |                     ✅                       |
 | eth_gasPrice                            |                     ✅                       |
