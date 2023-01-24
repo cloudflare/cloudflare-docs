@@ -29,7 +29,77 @@ Support by product and region is summarized in the following table:
 | Japan | &#x2705; | &#x2705; | &#10060; |
 | India | &#x2705; | &#x2705; | &#10060; |
 
-Overview by product-behavior is summarized in the following table:
+Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
 
-| Product | Suite/Category | Regional Services | Customer Metadata Boundary | Key Management |
+✅ Product works with no caveats <br>
+🚧 Product can be used with some caveats <br>
+❌ Product cannot be used <br>
+⚫️ Not applicable
+
+| Suite/Category | Product | Geo Key Manager | Regional Services | Metadata Boundary |
 | --- | --- | --- | --- | --- |
+| Application Performance | Caching/CDN | ✅ | ✅ | ✅ |
+| | DNS | ⚫️ | ⚫️ | 🚧[^1] | 
+| | Image Resizing | ✅ | ✅ | 🚧[^1] |
+| | Load Balancing | ✅ | ✅ | 🚧[^1] |
+| | Stream Delivery | ✅ | ✅ | ✅ |
+| | Tiered Caching | ✅ | 🚧[^2] | 🚧[^2] |
+| | Waiting Room | ⚫️ | ✅ | 🚧[^1] |
+| | Zaraz | ✅ | ✅ | 🚧[^1] |
+| Application Security | Advanced Certificates Manager | ⚫️ | ⚫️ | ⚫️ |
+| | Advanced DDoS Protection | ✅ | ✅ | 🚧[^3] |
+| | API Shield | ✅ | ✅ | ❌[^4] |
+| | Bot Management | ✅ | ✅ | 🚧[^5] |
+| | DNS Firewall | ⚫️ | ⚫️ | 🚧[^1] |
+| | Page Shield | ✅ | ✅ | ❌[^6] |
+| | Rate Limiting | ✅ | ✅ | 🚧[^1] |
+| | SSL | ✅ | ✅ | ✅ |
+| | SSL 4 SaaS | ✅ | ✅ | ✅ |
+| | WAF/L7 Firewall | ✅ | ✅ | ✅ |
+| Developer Platform | Cloudflare Images | ⚫️ | ❌ | ❌ |
+| | Cloudflare Pages | ❌ | ❌ | ❌ |
+| | Durable Objects | ⚫️ | ✅[^7] | 🚧[^1] |
+| | R2 | ⚫️ | 🚧[^8] | 🚧[^1] |
+| | Stream | ⚫️ | ❌ | ❌ |
+| | Workers (deployed on a Zone) | ✅ | ✅ | 🚧[^1] |
+| | Workers KV | ⚫️ | ❌ | ❌ |
+| | Workers.dev | ❌ | ❌ | ❌ |
+| Network Services | Argo Smart Routing | ✅ | ❌[^9] | ❌[^10] |
+| | BYOIP | ⚫️ | ❌[^11] | ⚫️ |
+| | Magic Firewall | ⚫️ | ⚫️ | 🚧[^1] |
+| | Magic Transit | ⚫️ | ⚫️ | 🚧[^1] |
+| | Magic WAN | ⚫️ | ⚫️ | 🚧[^1] |
+| | Spectrum | ✅ | ✅ | 🚧[^1] |
+| Platform | Logpull | ⚫️ | ✅ | 🚧[^12] |
+| | Logpush | ⚫️ | ✅ | 🚧[^13] |
+| Zero Trust | Access | 🚧[^14] | 🚧[^15] | 🚧[^16] |
+| | Browser Isolation | ⚫️ | 🚧[^17] | ✅ |
+| | CASB | ⚫️ | ⚫️ | ❌ |
+| | Cloudflare Tunnel | ⚫️ | 🚧[^18] | ⚫️ |
+| | DLP | ⚫️[^19] | ⚫️[^19] | ❌ |
+| | Gateway | 🚧[^20] | 🚧[^21] | 🚧[^22] |
+| | WARP | ⚫️ | ⚫️ | 🚧[^1] |
+
+[^1]:Logs / Analytics not available outside US region when using CMB.
+[^2]:Regular and Custom Tiered Cache works; Smart Tiered Caching not available with RS.
+[^3]:Network Analytics (including DoS analytics) will not be sent outside the region. However, these are only viewable today in US region.
+[^4]:API shield will not yet work with CMB enabled outside of US region.
+[^5]:Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
+[^6]:Cannot be used with CMB outside of US region.
+[^7]:[Jurisdiction restrictions for Durable Objects](/workers/runtime-apis/durable-objects/#restricting-objects-to-a-jurisdiction).
+[^8]:You can not yet specify region location for object storage; this is expected in 2023.
+[^9]:Argo cannot be used with Regional Services.
+[^10]:Argo cannot be used with CMB.
+[^11]:BYOIP cannot be used with Regional Services.
+[^12]:Logpull not available when using CMB outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.
+[^13]:Logpush available with CMB for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.
+[^14]:Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.
+[^15]:Can be localized to US FedRAMP region only; More regions coming in 2023.
+[^16]:Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.
+[^17]:Currently may only be used with US FedRAMP region.
+[^18]:Only US FedRAMP region.
+[^19]:Uses Gateway and CASB.
+[^20]:You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
+[^21]:Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization.
+[^22]:Logs are currently stored in the US only, but customers have the [option to exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/).
+
