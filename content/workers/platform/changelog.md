@@ -8,6 +8,49 @@ rss: file
 
 # Changelog
 
+## 2023-01-13
+
+- Durable Objects can now use jurisdictions with `idFromName` via a new “subnamespace” API.
+- V8 updated to 10.9.
+
+## 2022-12-16
+
+- Conditional `PUT` requests have been fixed in the R2 bindings API
+
+## 2022-12-02
+
+- Queues no longer support calling `send()` with an undefined JavaScript value as the message.
+
+## 2022-11-30
+- The DOMException constructor has been updated to align better with the standard specification. Specifically, the message and name arguments can now be any JavaScript value that is coercible into a string (previously, passing non-string values would throw).
+- Extended the R2 binding API to include support for multipart uploads.
+
+## 2022-11-17
+
+- V8 update: 10.6 → 10.8
+## 2022-11-02
+
+- Implemented `toJSON()` for R2Checksums so that it is usable with `JSON.stringify()`.
+
+## 2022-10-21
+
+- The alarm retry limit will no longer apply to errors that are our fault.
+- Compatibility dates have been added for multiple flags including the new streams implementation.
+- DurableObjectStorage has a new method `sync()` that provides a way for a worker to wait for its writes (including those performed with allowUnconfirmed) to be synchronized with storage.
+## 2022-10-10
+
+- Fixed a bug where if an ES-modules-syntax script exported an array-typed value from the top-level module, the upload API would refuse it with a [500](https://community.cloudflare.com/t/community-tip-fixing-error-500-internal-server-error/44453) error.
+- `console.log` now prints more information about certain objects, for example Promises.
+- The Workers Runtime is now built from the Open Source code in: [GitHub - cloudflare/workerd: The JavaScript / Wasm runtime that powers Cloudflare Workers](https://github.com/cloudflare/workerd).
+
+## 2022-09-16
+
+- R2 `put` bindings options can now have an `onlyIf` field similar to `get` that does a conditional upload.
+- Allow deleting multiple keys at once in R2 bindings.
+- Added support for SHA-1, SHA-256, SHA-384, SHA-512 checksums in R2 `put` options.
+- User-specified object checksums will now be available in the R2 `get/head` bindings response. MD5 is included by default for non-multipart uploaded objects.
+- Updated V8 to 10.6.
+
 ## 2022-08-12
 
 - A `Headers` object with the `range` header can now be used for range within `R2GetOptions` for the `get` R2 binding.
