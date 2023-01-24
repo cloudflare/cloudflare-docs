@@ -1,15 +1,13 @@
-{{- $level := (default 2 (.Get "level")) -}}
+{{- $level := (default 2 (.Get "headingLevel")) | string -}}
 {{- $text := (default "" (.Get "text")) -}}
-{{- $headingPlaceholder := "" -}}
+{{- $ID := $text | urlize -}}
 
-{{- range $index := (seq $level) -}}
-
-{{ $headingPlaceholder = print $headingPlaceholder "#" }}
-
-{{- end -}}
-
-
-
-{{ $heading := printf "%s %s" $headingPlaceholder $text}}
-
-{{ $heading }}
+<h{{$level}} id="{{ $ID }}" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+    <a
+    class="DocsMarkdown--header-anchor Link Link-without-underline"
+    href="#{{ $ID }}"
+    >&#8203;​</a
+    >
+</span>
+<span>{{ $text | markdownify }}</span>
+  </h{{ $level }}>
