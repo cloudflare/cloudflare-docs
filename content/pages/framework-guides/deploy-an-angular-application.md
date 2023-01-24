@@ -69,7 +69,7 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 {{<Aside type="warning" header="Minimum Node.js version">}}
 
-Angular requires a Node version of `14.15` or `16.10` to deploy successfully to Cloudflare Pages. When setting up your project, select **Environment variables (advanced)** and input an environment variable `NODE_VERSION` with on of these values.
+Angular requires a Node version of `14.15` or `16.10` to deploy successfully to Cloudflare Pages. When setting up your project, select **Environment variables (advanced)** and input an environment variable `NODE_VERSION` with one of these values.
 
 {{</Aside>}}
 
