@@ -15,7 +15,7 @@ rss: file
 
 ## 2022-12-16
 
-- Conditional `PUT` requests have been fixed in the R2 bindings API
+- Conditional `PUT` requests have been fixed in the R2 bindings API.
 
 ## 2022-12-02
 
