@@ -38,20 +38,6 @@ In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `w
     - **Console Logs**: `daemon.log`?
     - **Native Logs**: `boringtun.log`=?
 
-## Log files
-
-The `warp-debugging-info.zip` folder contains the following files:
-
-| File name        | Description |
-| ---------------- | ----------- |
-| `boringtun.log`    |  Communication around keeping the Wireguard tunnel alive |
-| `connectivity.txt` |
-| `ipconfig.txt` </br> `ifconfig.txt` | |
-
-{{<Aside type="note" header= "Multiple versions of the same log">}}
-content
-{{</Aside>}}
-
 ## WARP Diag Explorer
 
 [Warp Diag Explorer](https://warp-diag-log-viewer.pages.dev) makes it easier to investigate WARP client issues by providing a clean interface for searching, filtering, collating, and parsing `warp-diag` logs. To start using the tool, simply upload [`warp-debugging-info.zip`](#retrieve-logs) to [WARP Diag Explorer](https://warp-diag-log-viewer.pages.dev).
