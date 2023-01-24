@@ -13,6 +13,8 @@ meta:
 
 In this tutorial, you will learn how to configure Gmail with Area 1 as MX record. This tutorial is broken down into several steps.
 
+{{<render file="_outbound-email.md">}}
+
 ## Requirements
 
 * Provisioned Area 1 Account.
