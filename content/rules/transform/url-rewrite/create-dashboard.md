@@ -3,24 +3,24 @@ title: Create a rule in the dashboard
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Create a URL Rewrite Rule in the dashboard
+  title: Create a Rewrite URL Rule in the dashboard
 ---
 
-# Create a URL Rewrite Rule in the dashboard
+# Create a Rewrite URL Rule in the dashboard
 
-Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for examples of rule definitions.
+Create Rewrite URL Rules in the **Rewrite URL** tab of the **Transform Rules** page. Refer to [URL rewrite examples](/rules/transform/url-rewrite/examples/) for examples of rule definitions.
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
 2.  Go to **Rules** > **Transform Rules**.
 
-    ![The Transform Rules tab in the Cloudflare dashboard displaying the several types of Transform Rules you can configure.](/rules/static/transform/overview.png)
+    ![The Transform Rules page in the Cloudflare dashboard with a tab for each type of Transform Rule you can create.](/rules/static/transform/transform-rules-tab.png)
 
-3.  Select **Create transform rule** > **Rewrite URL**.
+3.  In the **Rewrite URL** tab, select **Create rule**.
 
-    ![The URL Rewrite Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-url-rewrite-rule.png)
+    ![The Rewrite URL Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-url-rewrite-rule.png)
 
-4.  In the page that displays, enter a descriptive name for the rule in **Rule name**.
+4.  In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
 5.  Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
 
@@ -30,7 +30,7 @@ Create URL Rewrite Rules in the **Transform Rules** tab under Rules. Refer to [U
 Check the [available fields and functions](/rules/transform/url-rewrite/reference/fields-functions/).
     {{</Aside>}}
 
-7.  Define the action for your URL Rewrite Rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
+7.  Define the action for your Rewrite URL Rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
 
     * If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
 
@@ -42,6 +42,4 @@ Check the [available fields and functions](/rules/transform/url-rewrite/referenc
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-After you choose an option, you return to the **Transform Rules** dashboard interface, which displays your new rule.
-
-If you choose to deploy your URL Rewrite Rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.
+If you choose to deploy your Rewrite URL Rule, the new rule will be enabled. If you save the rule as a draft, the new rule will be disabled.

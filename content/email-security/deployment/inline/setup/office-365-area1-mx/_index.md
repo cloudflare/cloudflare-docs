@@ -15,46 +15,7 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
-## Prerequisites
-
-To ensure changes made in this tutorial take effect quickly, update the Time to Live (TTL) value of the existing MX records on your domains to five minutes. Do this on all the domains you will be deploying. 
-
-Changing the TTL value instructs DNS servers on how long to cache this value before requesting an update from the responsible name server. You need to change the TTL value before changing your MX records to Cloudflare Area 1. This will ensure that changes take effect quickly and can also be reverted quickly if needed. If your DNS manager does not allow for a TTL of five minutes, set it to the lowest possible setting.
-
-To check your existing TTL, open a terminal window and run the following command against your domain:
-
-```sh
-$ dig mx <YOUR_DOMAIN>
-
-; <<>> DiG 9.10.6 <<>> mx <YOUR_DOMAIN>
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39938
-;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
-;; QUESTION SECTION:
-;domain.		IN	MX
-
-;; ANSWER SECTION:
-<YOUR_DOMAIN>.	300	IN	MX	10 mailstream-east.mxrecord.io.
-<YOUR_DOMAIN>.	300	IN	MX	10 mailstream-west.mxrecord.io.
-<YOUR_DOMAIN>.	300	IN	MX	20 mailstream-central.mxrecord.mx.
-```
-
-In the above example, TTL is shown in seconds as `300` (or five minutes). 
-
-If you are using Cloudflare for DNS, you can leave the [TTL setting as **Auto**](/dns/manage-dns-records/reference/ttl/).
-
-Below is a list with instructions on how to edit MX records for some popular services:
-
-- **Cloudflare**: [Set up email records](/dns/manage-dns-records/how-to/email-records/)
-- **GoDaddy**: [Edit an MX Record](https://www.godaddy.com/help/edit-an-mx-record-19235)
-- **AWS**: [Creating records by using the Amazon Route 53 console](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html)
-- **Azure**: [Create DNS records in a custom domain for a web app](https://learn.microsoft.com/en-us/azure/dns/dns-web-sites-custom-domain)
-
-
+{{<render file="_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to Allow List
 
@@ -250,24 +211,9 @@ The Area 1 dashboard has an [Admin quarantine](/email-security/email-configurati
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Area 1 hosts:
 
-MX Priority | Host
---- | ---
-`10` | `mailstream-east.mxrecord.io`
-`10` | `mailstream-west.mxrecord.io`
-`20` | `mailstream-central.mxrecord.mx`
+{{<render file="_mx-deployment-values.md">}}
 
-When configuring the Area 1 MX records, it is important to configure hosts with the correct MX priority. This will allow mail flows to the preferred hosts and fail over as needed.
-
-If you are located in Europe or GDPR applies to the domain, use the following MX records. This will prioritize email flow through Germany and fail over to the United States.
-
-MX Priority | Host
---- | --
-`5` | `mailstream-eu1.mxrecord.io`
-`10` | `mailstream-east.mxrecord.io`
-`10` | `mailstream-west.mxrecord.io`
-`20` | `mailstream-central.mxrecord.mx`
-
-Once the MX records have been updated with the new MX records, delete your old MX records and leave only the ones above. DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
+DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
 ### Secure Office 365 from MX records bypass (recommended)
 

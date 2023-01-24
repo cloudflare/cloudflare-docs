@@ -1,7 +1,7 @@
 ---
-title: Response Header Modification Rules
+title: Modify response header
 pcx_content_type: concept
-weight: 4
+weight: 3
 layout: single
 meta:
   title: HTTP Response Header Modification Rules

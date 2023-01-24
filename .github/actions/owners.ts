@@ -74,4 +74,5 @@ export const REVIEWERS: Record<string, string[]> = {
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   pages: ["WalshyDev"],
   turnstile: ["migueldemoura", "punkeel", "worenga"],
+  "waiting-room": ["aolache"],
 };

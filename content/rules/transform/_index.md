@@ -11,12 +11,12 @@ Transform Rules allow you to adjust the URI path, query string, and HTTP headers
 
 There are several types of Transform Rules:
 
-* [**Managed Transforms**](/rules/transform/managed-transforms/): Perform common adjustments to HTTP request and response headers with the click of a button.
-* [**URL Rewrite Rules**](/rules/transform/url-rewrite/): Rewrite the URL path and query string of an HTTP request.
+* [**Rewrite URL Rules**](/rules/transform/url-rewrite/): Rewrite the URL path and query string of an HTTP request.
 * [**HTTP Request Header Modification Rules**](/rules/transform/request-header-modification/): Set the value of an HTTP request header or remove a request header.
 * [**HTTP Response Header Modification Rules**](/rules/transform/response-header-modification/): Set the value of an HTTP response header or remove a response header.
+* [**Managed Transforms**](/rules/transform/managed-transforms/): Perform common adjustments to HTTP request and response headers with the click of a button.
 
-To configure Transform Rules in the dashboard, use the **Transform Rules** tab in Rules.
+To configure Transform Rules in the dashboard, go to the **Transform Rules** page in Rules.
 
 ***
 
@@ -44,9 +44,9 @@ A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/h
 
 You can create different kinds of Transform Rules in the dashboard or via Cloudflare API. Refer to the following sections for detailed instructions:
 
-* [Managed Transforms](/rules/transform/managed-transforms/)
-* [URL Rewrite Rules](/rules/transform/url-rewrite/)
+* [Rewrite URL Rules](/rules/transform/url-rewrite/)
 * [HTTP Request Header Modification Rules](/rules/transform/request-header-modification/)
 * [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/create-dashboard/)
+* [Managed Transforms](/rules/transform/managed-transforms/)
 
 Refer to [Rules language](/ruleset-engine/rules-language/) for more information on building expressions for Transform Rules.
