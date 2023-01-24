@@ -48,8 +48,8 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `version.txt`      | [WARP client version](/cloudflare-one/connections/connect-devices/warp/download-warp/) installed on the device. |
 | `warp-account.txt` | WARP client device enrollment information. |
 | `warp-device-posture.txt` | [Device posture data](/cloudflare-one/identity/devices/warp-client-checks/) obtained by the WARP client. |
-| `warp-dns-stats.txt`| ?????? how is this different from `dns_stats.log`? |
-| `warp-network.txt` | ??????? how is this different from `v4interfaces` and `v6interfaces`? |
+| `warp-dns-stats.txt`| ??????|
+| `warp-network.txt` | ??????? |
 | `warp-settings.txt`| [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) applied to the device. |
 | `warp-stats.txt`   | ????????? |
 | `warp-status.txt`  | Status of WARP switch when `warp-diag` was run. |
