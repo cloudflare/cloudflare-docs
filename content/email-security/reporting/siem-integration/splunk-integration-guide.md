@@ -99,7 +99,7 @@ The next step is to configure Area 1 to push the Email Detection Event to the Sp
     3. For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
 4. Select **Publish Webhook**.
 
-Your Splunk integration will now show up in the All Webhook panel
+Your Splunk integration will now show up in the All Webhooks panel.
 
 ![The All Webhooks section will show your Splunk webhook](/email-security/static/siem-integration/splunk/splunk-webhook-integrations.png)
 
