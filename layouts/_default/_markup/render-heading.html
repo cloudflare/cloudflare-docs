@@ -1,7 +1,11 @@
 {{- $ID := (.Anchor | safeURL) -}}
 {{- $text := (.Text | safeHTML) -}}
 {{- if eq .Level 1 }}
-  <h1 id="{{ $ID }}">{{ $text }}</h1>
+  {{- $howToSchema := "" }}
+  
+  
+  <h1 id="{{ $ID }}" {{- with $.Page.Params.structured_data -}}{{- if or (eq $.Page.Params.pcx_content_type "how-to") (eq $.Page.Params.pcx_content_type "tutorial") -}}itemprop="name"{{- end -}}{{- end -}}
+   >{{ $text }}</h1>
 {{- else -}}
   <h{{ .Level }} id="{{ $ID }}">
     <span class="DocsMarkdown--header-anchor-positioner">
