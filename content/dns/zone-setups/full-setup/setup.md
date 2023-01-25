@@ -89,7 +89,9 @@ If you have [added your domain](/fundamentals/get-started/setup/add-site/) to Cl
 
 ---
 
-{{<how-to-step headingLevel=2 title="Add site to Cloudflare" >}}
+{{<how-to-section headingLevel=2 title="Add site to Cloudflare" >}}
+
+{{<how-to-step>}}
 
 {{<how-to-direction>}}
 
@@ -98,6 +100,8 @@ Then, [add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare
 {{</how-to-direction>}}
 
 {{</how-to-step>}}
+
+{{</how-to-section>}}
 
 ---
 
@@ -230,8 +234,11 @@ If you see unexpected results, refer to our [troubleshooting information](/dns/z
 
 {{</how-to-section>}}
 
+---
 
-{{<how-to-step headingLevel=2 title="Re-enable DNSSEC" >}}
+{{<how-to-section headingLevel=2 title="Re-enable DNSSEC" >}}
+
+{{<how-to-step>}}
 
 {{<how-to-direction>}}
 
@@ -242,3 +249,5 @@ You should now [enable DNSSEC](/dns/additional-options/dnssec/) to protect from 
 {{</how-to-direction>}}
 
 {{</how-to-step>}}
+
+{{</how-to-section>}}

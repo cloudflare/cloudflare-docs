@@ -1,23 +1,22 @@
-{{- $headingLevel := (default 2 (.Get "headingLevel")) | string -}}
 {{- $title := (default "" (.Get "title")) -}}
 {{- $ID := $title | urlize -}}
 
-{{- with .Get "insideSection" -}}
+
 <div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep" class="howToStep">
-{{- else -}}
-<div itemprop="step" itemscope itemtype="https://schema.org/HowToStep" class="howToSection">
+
+{{- with .Get "headingLevel" -}}
+  <h{{ . | string }} id="{{ $ID }}" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
+      <a
+      class="DocsMarkdown--header-anchor Link Link-without-underline"
+      href="#{{ $ID }}"
+      itemprop="url"
+      >&#8203;​</a
+      >
+  </span>
+  <span>{{ $title | markdownify }}</span>
+    </h{{ . | string }}>
+
 {{- end -}}
-<h{{$headingLevel}} id="{{ $ID }}" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
-    <a
-    class="DocsMarkdown--header-anchor Link Link-without-underline"
-    href="#{{ $ID }}"
-    itemprop="url"
-    >&#8203;​</a
-    >
-</span>
-<span>{{ $title | markdownify }}</span>
-  </h{{ $headingLevel }}>
 
 {{- .Inner -}}
-
 </div>
