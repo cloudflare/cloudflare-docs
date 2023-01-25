@@ -10,6 +10,8 @@ With a bit of configuration, you can also bring Area 1 data into your Security I
 
 ## Connect a SIEM tool
 
+The following steps are required to connect your SIEM tool.
+
 ### 1. Set up your SIEM tool
 
 For help setting up the proper configuration in your SIEM tool, refer to the following guides:
