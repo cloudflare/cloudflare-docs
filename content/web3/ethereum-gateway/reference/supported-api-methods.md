@@ -71,14 +71,14 @@ For a full list of JSON-RPC API methods, refer to the [JSON-RPC specification](h
 [^1]: **Limitations**: Max block range of 800 blocks.
 [^2]: **Limitations**: Max block count of 10.
 
-# Trace methods
+## Trace methods
 
 EVM traces are a way to track the execution of smart contracts on the Ethereum blockchain. It records all the steps taken by the Ethereum Virtual Machine (EVM) as it runs the smart contract. This includes information like the specific operation that was executed, how much gas it cost, and any changes made to the blockchain as a result. The trace module is a tool that allows developers to access and analyze these traces, which can be useful for debugging, testing, and monitoring smart contracts. It can be used to identify and fix errors, optimize performance, and gain insight into how the smart contract is interacting with the blockchain.
 
-## trace_filter
+### trace_filter
 The `trace_filter` method retrieves the traces of multiple transactions in a single request. This method is particularly useful for debugging and monitoring specific addresses on the Ethereum blockchain.
 
-### Request Parameters
+#### Request Parameters
 - `fromBlock`: `Quantity` or `Tag` - (optional) The block number to start receiving traces from.
 - `toBlock`: `Quantity` or `Tag` - (optional) The block number to stop receiving traces at.
 - `fromAddress`: `Array` - (optional) An array of addresses to start receiving traces from.
@@ -86,10 +86,10 @@ The `trace_filter` method retrieves the traces of multiple transactions in a sin
 - `after`: `Quantity` - (optional) The offset trace number
 - `count`: `Quantity` - (optional) The amount of traces to return.
 
-### Returns
+#### Returns
 This method returns an `Array` of traces matching the given filter.
 
-### Example
+#### Example
 ```sh
 ---
 header: trace_filter Request
@@ -114,7 +114,7 @@ $ curl https://web3-trial.cloudflare-eth.com/v1/mainnet \
     "id":1
     }'
 ```
-### Response
+#### Response
 ```json
 {
     "jsonrpc": "2.0",
