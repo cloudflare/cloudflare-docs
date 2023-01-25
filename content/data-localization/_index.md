@@ -36,7 +36,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 ❌ Product cannot be used <br>
 ⚫️ Not applicable
 
-| Suite/Category | Product | Geo Key Manager | Regional Services | Metadata Boundary |
+| Suite/Category | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- | --- |
 | Application Performance | Caching/CDN | ✅ | ✅ | ✅ |
 | | DNS | ⚫️ | ⚫️ | 🚧[^1] | 
@@ -80,19 +80,19 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Gateway | 🚧[^20] | 🚧[^21] | 🚧[^22] |
 | | WARP | ⚫️ | ⚫️ | 🚧[^1] |
 
-[^1]:Logs / Analytics not available outside US region when using CMB.
-[^2]:Regular and Custom Tiered Cache works; Smart Tiered Caching not available with RS.
+[^1]:Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+[^2]:Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.
 [^3]:Network Analytics (including DoS analytics) will not be sent outside the region. However, these are only viewable today in US region.
-[^4]:API shield will not yet work with CMB enabled outside of US region.
+[^4]:API shield will not yet work with Customer Metadata Boundary enabled outside of US region.
 [^5]:Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
-[^6]:Cannot be used with CMB outside of US region.
+[^6]:Cannot be used with Customer Metadata Boundary outside of US region.
 [^7]:[Jurisdiction restrictions for Durable Objects](/workers/runtime-apis/durable-objects/#restricting-objects-to-a-jurisdiction).
 [^8]:You can not yet specify region location for object storage; this is expected in 2023.
 [^9]:Argo cannot be used with Regional Services.
-[^10]:Argo cannot be used with CMB.
+[^10]:Argo cannot be used with Customer Metadata Boundary.
 [^11]:BYOIP cannot be used with Regional Services.
-[^12]:Logpull not available when using CMB outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.
-[^13]:Logpush available with CMB for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.
+[^12]:Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.
+[^13]:Logpush available with Customer Metadata Boundary for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.
 [^14]:Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.
 [^15]:Can be localized to US FedRAMP region only; More regions coming in 2023.
 [^16]:Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.
