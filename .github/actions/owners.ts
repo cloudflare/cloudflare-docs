@@ -22,6 +22,7 @@ export const OWNERS: Record<string, string[]> = {
   "cloudflare-for-platforms": ["kodster28"],
   "cloudflare-one": ["ranbel"],
   d1: ["deadlypants1973"],
+  "data-localization": ["angelampcosta"],
   "ddos-protection": ["pedrosousa"],
   dns: ["kodster28"],
   "email-routing": ["marciocloudflare"],
