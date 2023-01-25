@@ -12,7 +12,7 @@ Use lists to refer to a group of items (such as IP addresses) collectively, by n
 Lists have the following advantages:
 
 - When creating a rule, using a list is easier and less error-prone than adding a long list of items such as IP addresses to a rule expression.
-- When updating a set of rules that target the same group of IP addresses, using an IP List is easier and less error prone than editing multiple rules.
+- When updating a set of rules that target the same group of IP addresses (or hostnames), using an IP List (or a hostname list) is easier and less error prone than editing multiple rules.
 - Lists are easier to read and more informative, particularly when you use descriptive names for your lists.
 
 When you update the content of a list, any rules that use the list are automatically updated, so you can make a single change to your list rather than modify rules individually.
@@ -25,6 +25,7 @@ Cloudflare supports the following types of lists:
 
 * [IP Lists](/fundamentals/global-configurations/lists/ip-lists/)
 * [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists)
+* [Custom lists](/fundamentals/global-configurations/lists/custom-lists/) (containing hostnames)
 
 Refer to the page about each list type for details.
 
@@ -59,11 +60,15 @@ List availability varies according to the list type and your Cloudflare plan and
 
 {{<feature-table id="global_configurations.lists">}}
 
-The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your lists, regardless of your plan.
+Notes:
 
-The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
+* The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your IP Lists, regardless of your plan.
 
-For details on the availability of Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/#availability) documentation.
+* The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
+
+* The number of custom lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your custom lists, regardless of your plan.
+
+* For details on the availability of Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/#availability) documentation.
 
 ---
 

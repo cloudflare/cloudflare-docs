@@ -18,7 +18,7 @@ A JSON response for the [Lists API](https://developers.cloudflare.com/api/operat
   "id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
   "name": "my_list_name",
   "description": "List description.",
-  "kind": "(ip|redirect)",
+  "kind": "(ip|redirect|hostname)",
   "num_items": 10,
   "num_referencing_filters": 2,
   "created_on": "2021-01-01T08:00:00Z",
@@ -64,7 +64,7 @@ This table summarizes the object properties:
         <tr>
             <td><code>kind</code><br />{{<type>}}String{{</type>}}</td>
             <td>The type of data in the list.</td>
-            <td>Valid values: <code class="InlineCode">ip</code>, <code class="InlineCode">redirect</code></td>
+            <td>Valid values: <code class="InlineCode">ip</code>, <code class="InlineCode">redirect</code>, <code class="InlineCode">hostname</code></td>
         </tr>
         <tr>
             <td><code>num_items</code><br />{{<type>}}Number{{</type>}}</td>
@@ -123,6 +123,19 @@ A fully populated JSON object for a Bulk Redirect List item has the following st
 }
 ```
 
+A fully populated JSON object for a hostname list item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "hostname": {
+    "url_hostname": "*.example.com"
+  },
+  "created_on": "2021-10-11T12:39:02Z",
+  "modified_on": "2021-10-11T12:39:02Z"
+}
+```
+
 The JSON object properties for a list item are defined as follows:
 
 {{<table-wrap>}}
@@ -169,6 +182,11 @@ The JSON object properties for a list item are defined as follows:
             <td><code>redirect</code><br />{{<type>}}Object{{</type>}}</td>
             <td>An object that contains the definition of a URL Redirect. Refer to <a href="/rules/url-forwarding/bulk-redirects/reference/parameters/">URL Redirect parameters</a> for details.</td>
             <td><p>Applies only to Bulk Redirect Lists.</p></td>
+        </tr>
+        <tr>
+            <td><code>hostname</code><br />{{<type>}}Object{{</type>}}</td>
+            <td>An object containing a <code>url_hostname</code> property with a hostname value. Refer to <a href="/fundamentals/global-configurations/lists/custom-lists/#hostnames">Custom lists</a> for details on the supported hostname values.</td>
+            <td><p>Applies only to custom lists with hostnames.</p></td>
         </tr>
         <tr>
             <td><code>created_on</code><br />{{<type>}}String{{</type>}}</td>
