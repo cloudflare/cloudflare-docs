@@ -25,7 +25,7 @@ Refer to the Logpush documentation for a list of available fields.
 | [Gateway Network](/logs/reference/log-fields/account/gateway_network/) | [Network packets inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#network-logs) |
 | [Audit Logs](/logs/reference/log-fields/account/audit_logs/) | [Authentication events through Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs) |
 | [Access Requests](/logs/reference/log-fields/account/access_requests/) | [HTTP requests to sites protected by Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) |
-| [CASB Findings]() | [Security issues detected by Cloudflare CASB](/cloudflare-one/applications/scan-apps/manage-findings/) |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/) | [Security issues detected by Cloudflare CASB](/cloudflare-one/applications/scan-apps/manage-findings/) |
 
 ## Export Zero Trust logs with Logpush
 
