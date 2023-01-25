@@ -2,7 +2,7 @@
 title: Sumo Logic
 pcx_content_type: tutorial
 meta:
-    title: Sumo Logic integration guide
+    description: Sumo Logic integration guide
 ---
 
 # Sumo Logic integration guide
