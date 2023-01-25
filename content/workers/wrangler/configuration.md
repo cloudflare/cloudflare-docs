@@ -319,7 +319,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The service environment of the `script_name` to bind to.
+  - The environment of the `script_name` to bind to.
 
 {{</definitions>}}
 
@@ -455,7 +455,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
