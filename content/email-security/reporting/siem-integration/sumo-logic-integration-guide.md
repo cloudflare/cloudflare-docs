@@ -55,7 +55,7 @@ The next step is to configure Area 1 to push the Email Detection Events to the S
 3. In the Add Webhooks page, enter the following settings: 
     - **App type**: Select **SIEM** > **Splunk**. In **Auth code**, enter `Sumologic`.
     - **Target**: Enter the HTTP endpoint you saved in the previous section.
-    - For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
+    - For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook. Sending `Spam` and `Bulk` dispositions will generate a high number of events.
 4. Select **Publish Webhook**.
 
 Your Sumo Logic integration will now show up in the All Webhooks panel.
