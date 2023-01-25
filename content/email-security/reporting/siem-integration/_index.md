@@ -14,8 +14,7 @@ With a bit of configuration, you can also bring Area 1 data into your Security I
 
 For help setting up the proper configuration in your SIEM tool, refer to the following guides:
 
-- [Splunk Integration Guide (PDF)](/email-security/static/Deployment_and_Configuration_Guide_for_Splunk_Cloud_HTTP_Event_Collector.pdf)
-- [Sumologic Integration Guide (PDF)](/email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf)
+{{<directory-listing showDescriptions=true char_limit=300 >}}
 
 ### 2. Create a webhook
 
