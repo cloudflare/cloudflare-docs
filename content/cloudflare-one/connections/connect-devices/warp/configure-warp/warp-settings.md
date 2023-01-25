@@ -205,6 +205,21 @@ Allows you to choose the operational mode of the client. Refer to [WARP Modes](/
 - **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.
 - **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
 
+### Local Domain Fallback
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems | Gateway with WARP, Gateway with DoH   | All plans                                                     |
+
+</div>
+</details>
+
+Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) documentation.
+
 ### Split Tunnels
 
 <details>
@@ -220,7 +235,7 @@ Allows you to choose the operational mode of the client. Refer to [WARP Modes](/
 
 Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
 
-### Local Domain Fallback
+### Directly route Office 365 traffic
 
 <details>
 <summary>Feature availability</summary>
@@ -228,9 +243,9 @@ Configures the WARP client to exclude or include traffic to specific IP addresse
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems | Gateway with WARP, Gateway with DoH   | All plans                                                     |
+| All systems | Any mode                                                                                  | All plans                                                     |
 
 </div>
 </details>
 
-Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) documentation.
+Creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Office 365 network traffic will bypass WARP and Gateway.

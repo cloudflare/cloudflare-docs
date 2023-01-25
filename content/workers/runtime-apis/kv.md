@@ -114,6 +114,25 @@ Note that `get` may return stale values -- if a given key has recently been read
 
 An example of reading a key from within a Worker:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    const value = await NAMESPACE.get("first-key");
+
+    if (value === null) {
+      return new Response("Value not found",  { status:  404})
+    }
+    return new Response(value);
+  },
+};
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
@@ -128,6 +147,8 @@ async function handleRequest(request) {
   return new Response(value);
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [from the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-read-key-value-pair).
 
@@ -194,6 +215,22 @@ You can use a list operation to see all of the keys that live in a given namespa
 
 An example:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    const value = await NAMESPACE.list();
+
+    return new Response(value.keys);
+  },
+};
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
@@ -205,6 +242,8 @@ async function handleRequest(request) {
   return new Response(value.keys);
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 You can also [list keys on the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
 
@@ -258,6 +297,19 @@ await NAMESPACE.put(key, "", {
 
 You can also list all of the keys starting with a particular prefix. For example, you may have structured your keys with a user, a user ID, and key names, separated by colons (for example, `user:1:<key>`). You could get the keys for user number one by doing this:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    const value = await NAMESPACE.list({ prefix: "user:1:" });
+    return new Response(value.keys);
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
@@ -269,6 +321,8 @@ async function handleRequest(request) {
   return new Response(value.keys);
 }
 ```
+{{</tab>}}
+{{</tab>}}
 
 This will return all of the keys that start with the `"user:1:"` prefix.
 
@@ -316,6 +370,24 @@ kv_namespaces = [
 
 With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    // Get the value for the "to-do:123" key
+    // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
+    let value = await TODO.get("to-do:123");
+
+    // Return the value, as is, for the Response
+    return new Response(value);
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener("fetch", async (event) => {
   // Get the value for the "to-do:123" key
@@ -326,6 +398,8 @@ addEventListener("fetch", async (event) => {
   event.respondWith(new Response(value));
 });
 ```
+{{</tab>}}
+{{</tabs>}}
 
 {{<Aside type="note">}}
 

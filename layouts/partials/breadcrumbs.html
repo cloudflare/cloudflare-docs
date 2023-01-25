@@ -1,0 +1,23 @@
+{{ $DATA := (index $.Site.Data .Section) }}
+{{ $productName := $DATA.product.title }}
+
+<ol class="breadcrumb">
+    <li><a href="/products/" class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Products</span></a></li>
+    {{- $rellink := "" -}}
+    {{- $title := "" -}}
+    {{- $length :=  sub (len (split .RelPermalink "/")) 1 -}}
+    {{- range $index, $item := (split .RelPermalink "/") -}}
+      {{- if gt (len $item ) 0 -}}
+        {{- $rellink = printf "%s/%s" $rellink $item -}}
+        {{- $page := $.Site.GetPage $rellink -}}
+      {{- if eq ($page.RelPermalink | strings.Count "/" ) 2 -}}
+        {{- $title =  $productName -}}
+      {{- else if and (ge $length 5) (gt (sub $length $index) 2) -}}
+        {{- $title = "..." -}}
+      {{- else -}}
+        {{- $title = $page.Title -}}
+      {{- end -}}
+        <li><a href="{{- $rellink -}}" {{- if eq $title "..." -}}aria-label="{{- $page.Title -}}" title="{{- $page.Title -}}"{{- end -}}class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">{{- $title -}}</span></a></li>
+      {{- end -}}
+    {{- end -}}
+  </ol>

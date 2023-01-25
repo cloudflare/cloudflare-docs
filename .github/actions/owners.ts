@@ -42,7 +42,7 @@ export const OWNERS: Record<string, string[]> = {
   pages: ["deadlypants1973"],
   "pub-sub": ["dcpena"],
   queues: ["deadlypants1973"],
-  r2: ["deadlypants1973"],
+  r2: ["dcpena"],
   radar: ["haleycode"],
   railgun: ["haleycode"],
   "randomness-beacon": ["kodster28"],
@@ -74,4 +74,5 @@ export const REVIEWERS: Record<string, string[]> = {
   logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
   pages: ["WalshyDev"],
   turnstile: ["migueldemoura", "punkeel", "worenga"],
+  "waiting-room": ["aolache"],
 };
