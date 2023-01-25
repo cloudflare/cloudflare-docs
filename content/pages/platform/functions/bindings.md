@@ -6,22 +6,23 @@ weight: 7
 
 # Bindings
 
-You can add a binding to your Pages project which defines how your Function interacts with external resources. A binding is a variable that the Workers runtime provides to your code. 
+A [binding](/workers/platform/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2](https://developers.cloudflare.com/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/). You can set bindings for both production and preview environments. 
 
-Using bindings, you can integrate with Cloudflare resources such as KV, Durable Objects, R2, and D1. By first creating a resource in its respective dashboard and then configuring your binding in Pages by going to:
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions**.
-
-You can set bindings for both Production and Preview environments. 
+This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
 ## KV namespaces
 
-[Workers KV](https://www.cloudflare.com/products/workers-kv/) is Cloudflare's key-value storage solution. To bind to your Pages project, go to:
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **KV namespaces**.
-3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+[Workers KV](https://www.cloudflare.com/products/workers-kv/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
 
-Here is an example of how to use KV in your Function, our KV binding is named "TODO_LIST":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **KV namespace bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **KV namespace**, select your desired namespace. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use KV in your Function. Your KV binding is `TODO_LIST`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -48,16 +49,21 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your KV namespaces locally
 
-While developing locally, you can interact with your KV namespace by adding `-k <binding-name>` or `--kv <binding name>` to your run command. For example, if your namespace is bound to `TODO_LIST`, you can access the KV namespace in your local dev by running `npx wrangler pages dev <output-dir> --kv TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
+While developing locally, interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv <BINDING_NAME>` to your run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
 
 ## Durable Object namespaces
 
-[Durable Objects](https://developers.cloudflare.com/workers/learning/using-durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. First create the Durable Object and then configure it as a binding to your Pages project. To bind to your Pages project, go to:
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **Durable Objects**.
-3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+[Durable Objects](/workers/learning/using-durable-objects/) (DO) are Cloudflare's strongly consistent data store that power capabilities such as connecting WebSockets and handling state. To bind your DO namespace to your Pages Function:
 
-Here is an example of how to use Durable Objects in your Function with a DO binding is named "DURABLE_OBJECT":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **Durable Object bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **Durable Object namespace**, select your desired namespace. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use Durable Objects in your Function. Your DO binding is `DURABLE_OBJECT`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -91,12 +97,17 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 ## R2 buckets
 
-[Cloudflare R2](https://www.cloudflare.com/products/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. 
-After creating an R2 bucket, you can configure your binding in the Pages dash. To bind to your Pages project, go to:
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **R2 buckets**.
+[R2](https://www.cloudflare.com/products/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. To bind your R2 bucket to your Pages Function:
 
-Here is an example of how to use R2 buckets in your Function, our R2 binding is named "BUCKET":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **R2 bucket bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **R2 bucket**, select your desired R2 bucket. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use R2 buckets in your Function. Your R2 binding is `BUCKET`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -129,16 +140,21 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your R2 buckets locally
 
-While developing locally, you can interact with an R2 bucket by adding `--r2 <Binding name>` to your run command. For example, if your bucket is bound to `BUCKET`, you can access this bucket in local dev by running `npx wrangler pages dev <output-dir> --r2=BUCKET`. You can interact with this binding by using context.env (e.g. `context.env.BUCKET`).
+While developing locally, interact with an R2 bucket by adding `--r2 <BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. You can interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
 
 ## D1 databases
 
-Cloudflare D1 is Cloudflare's first SQL database built on SQLite. After creating your D1 database, you can add it as a binding to your Pages project by:
-1. Logging into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Navigating to **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **D1 databases**.
-3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+Cloudflare [D1](/d1/) is Cloudflare's first SQL database built on SQLite. To bind your D1 database to your Pages Function:
 
-Here is an example of how to use D1 databases in your Function, our D1 binding is named "NORTHWIND_DB":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **D1 database bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **D1 database**, select your desired D1 database. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use D1 databases in your Function. Your D1 binding is `NORTHWIND_DB`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -171,16 +187,21 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your D1 databases locally
 
-While developing locally, you can interact with a D1 database by adding `--d1 <Binding name>` to your run command. For example, if your database is bound to `NORTHWIND_DB`, you can access this database in local dev by running `npx wrangler pages dev <output-dir> --d1=NORTHWIND_DB`. You can interact with this binding by `using context.env` (e.g. `context.env.NORTHWIND_DB`).
+While developing locally, interact with a D1 database by adding `--d1 <BINDING_NAME>` to your run command. For example, if your database is bound to `NORTHWIND_DB`, access this database in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`. Interact with this binding by `using context.env` (for example, `context.env.NORTHWIND_DB`).
 
 ## Service bindings
 
-Service bindings allow for you to call a Worker from within your Function with zero latency. To add a service binding to your project: 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Functions** > **Service bindings**. 
-3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+Service bindings enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
 
-Here is an example of how to use service bindings in your Function, our service binding is named "SERVICE":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **Service bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **Service**, select your desired Worker. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use service bindings in your Function. Your service binding is named `SERVICE`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -203,21 +224,22 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your Service binding locally
+### Interact with your service binding locally
 
-While developing locally, you can interact with a Service by adding `--service <Binding name>=<Worker>` to your run command. For example, if your service is bound to `SERVICE`, you can access this service in local dev by running `npx wrangler pages dev <output-dir> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`.
-You can interact with this binding by using context.env (e.g. `context.env.SERVICE`).
+While developing locally, interact with a service by adding `--service <BINDING_NAME>=<Worker>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using context.env (for example, `context.env.SERVICE`).
 
 ## Environment variables
 
-An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. You can set your environment variables directly within the Pages dashboard for both your production and preview environments at runtime and build-time.
+An [environment variable](/workers/platform/environment-variables/) is an injected value that can be accessed by your Functions. It is stored as plain text. Set your environment variables directly within the Cloudflare Pages dashboard for both your production and preview environments at runtime and build-time.
 
-You can add Pages project environment variables by going to:
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Environment variables**.
-3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+To add Pages project environment variables:
 
-Here is an example of how to use environment variables in your Function, we have an environment variable called "ENVIRONMENT":
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, select **Settings** > **Environment variables**.
+4. Add environment variables under **Production** and/or **Preview** by selecting **Add variables**.
+
+Below is an example of how to use environment variables in your Function. The environment variable in this example is `ENVIRONMENT`:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -250,18 +272,24 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your environment variables locally
 
-When developing locally, you can add environment variables by creating a `.dev.vars` file in the root directory of your project. Then simply add to this file like so:
+When developing locally, add environment variables by creating a `.dev.vars` file in the root directory of your project. Then add the following code snippet to `.dev.vars`:
+
 ```
+---
+filename:  `.dev.vars`
+---
 ENVIRONMENT=development
 ```
 
 ## Secrets
 
-Secrets are environment variables that are encrypted and not visible once set. They are great for storing API keys, auth tokens, etc. 
-You can add these to your project by going to:
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+Secrets are environment variables that are encrypted and not visible once set. They are used for storing sensitive information like API keys, and auth tokens.
+
+To add secrets to your Pages project:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Environment variables**.
-3. Select a service from the list of your existing Workers and then select the environment. You must repeat this step for both the **Production** and **Preview** environments.
+3. 
 
 You use secrets the same way as environment variables, [see here](#environment-variables) for how to use them.
 
