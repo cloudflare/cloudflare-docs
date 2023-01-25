@@ -10,7 +10,7 @@ This guide will instruct you through setting up and deploying your first databas
 
 ## 1. Install and authenticate Wrangler
 
-You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access D1. 
+You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access D1.
 
 To install Wrangler, ensure you have [`npm`](https://docs.npmjs.com/getting-started) and [`Node.js`](https://nodejs.org/en/) installed.
 
@@ -73,7 +73,7 @@ database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
 ```
 
-Set your binding name by updating the `<BINDING_NAME>` value. Your binding is available in your Worker at `env.<BINDING_NAME>`. You will find the values for `database_name` and `database_id` in your terminal after you run the `create` command in step 3. 
+Set your binding name by updating the `<BINDING_NAME>` value. Your binding is available in your Worker at `env.<BINDING_NAME>`. You will find the values for `database_name` and `database_id` in your terminal after you run the `create` command in step 3.
 
 {{<Aside type="note">}}
 
@@ -110,7 +110,7 @@ $ wrangler d1 execute <DATABASE_NAME> --local --command='SELECT * FROM Customers
 
 ### Write queries within your Worker
 
-After you have set up your database, you will run an SQL query from within your Worker. 
+After you have set up your database, you will run an SQL query from within your Worker.
 
 First, go to your Worker project and open the `index.ts` file. The `index.ts` file is where you configure your Worker's interactions with D1. Paste the following code snippet into your `index.ts` file and, on the `env` parameter, replace `<BINDING_NAME>` with the binding name you set in step 4:
 
@@ -151,6 +151,7 @@ While in your project directory, test your database locally by running:
 ```sh
 $ wrangler dev --local --persist
 ```
+
 When you run `wrangler dev`, Wrangler will give you a URL (most likely `localhost:8787`) to review your Worker. After you visit the URL Wrangler provides, you will see this message: `Call /api/beverages to see everyone who works at Bs Beverages`.
 
 To test that your database is running successfully, add `/api/beverages` to the provided Wrangler URL (for example, `localhost:8787/api/beverages`). After doing this, you should see your data being displayed in the browser.
@@ -183,5 +184,5 @@ By finishing this guide, you have created a D1 database, a Worker to access that
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
-* [Supported Wrangler commands for D1](/d1/platform/wrangler-commands/)
-* [D1 client API](/d1/platform/client-api/)
+- [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
+- [D1 client API](/d1/platform/client-api/)
