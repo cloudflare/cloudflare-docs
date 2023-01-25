@@ -21,22 +21,11 @@ In the Terminal, type `warp-diag` (full path: `/usr/local/bin/warp-diag`) and pr
 
 In the Terminal, type `sudo warp-diag` and press **Enter**. This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
 
-### iOS
-
-1. Open the 1.1.1.1 app.
-2. Go to **Settings** > **Advanced** > **Diagnostics** > **Console Logs**.
-3. View the following logs:
-    - **Extension Logs**: ?
-    - **Application Logs**: ps.txt?
-
-### Android/ChromeOS
+### iOS/Android/ChromeOS
 
 1. Open the 1.1.1.1 app.
 2. Go to **Settings** > **Advanced** > **Diagnostics**.
-3. View the following logs:
-    - **DNS Logs**: 
-    - **Console Logs**: `daemon.log`?
-    - **Native Logs**: `boringtun.log`=?
+3. Scroll down to **Debug logs** and select the desired log.
 
 ## WARP Diag Explorer
 
