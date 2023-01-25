@@ -16,9 +16,12 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 1. [Log in to Splunk](https://login.splunk.com/) with an administrator account.
 
 2. Go to **Settings** > **Data inputs**.
+
     ![Go to Data inputs to configure your settings.](/email-security/static/siem-integration/splunk/step2-data-inputs.png)
 
-3. In **Type**, select **HTTP Event Collector** to access this configuration and create a new collector.
+3. In **Local inputs** > **Type**, select **HTTP Event Collector** to access this configuration and create a new collector.
+
+    ![Select HTTP Event Collectors as the type of your collector.](/email-security/static/siem-integration/splunk/step3-type.png)
 
 4. Select the **New Token** button to start the configuration.
 
@@ -32,7 +35,7 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 
     ![Configure the Input Settings based on your environment](/email-security/static/siem-integration/splunk/step7-input-settings.png)
 
-8. (Optional) You may also select **Create a new index** to create new settings for Area 1 events, with the **Max Size of Entire Index** and **Retention (days)** that fits your environment. 
+8. You may also select **Create a new index** to create new settings for Area 1 events, with a **Max Size of Entire Index** and **Retention (days)** that fits your environment. 
 
     ![Optionally, create a new index for Area 1 events](/email-security/static/siem-integration/splunk/step8-new-index.png)
 
@@ -42,7 +45,7 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 
 10. Select **Review** > **Submit** to review your settings and create the collector.
 
-11. Take note of the token value in this next screen. This value is required for the Area 1 configuration in the next step. The token can also be retrieved from the HTTP Event Collector configuration panel, in **Settings** > **Data inputs** > **HTTP Event Collector**.
+11. Take note of the token value in this next screen. This value is required for the Area 1 configuration in the next step. You can also retrieve the token from the HTTP Event Collector configuration panel, in **Settings** > **Data inputs** > **HTTP Event Collector**.
 
     ![Example of a new index added to the configuration](/email-security/static/siem-integration/splunk/step11-token-value.png)
 
@@ -67,18 +70,16 @@ Refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk
 
  If your instance is on-premise, specify the appropriate hostname and ensure that your firewall allows the configured port through to your instance. The connections will be coming from the following egress IP addresses, if you need them for your access control lists (ACLs):
 
- ```txt
-52.11.209.211
-52.89.255.11
-52.0.67.109
-54.173.50.115
-```
+- `52.11.209.211`
+- `52.89.255.11`
+- `52.0.67.109`
+- `54.173.50.115`
 
 {{<Aside type="note">}}Ensure that you have a valid SSL certificate configured on your instance. The certificate cannot be expired and cannot be a self-signed certificate.{{</Aside>}}
 
 If all the requirements are met, you will receive the following response back to the cURL command:
 
-```json
+```txt
 {"text":"Success","code":0}
 ```
 
@@ -94,9 +95,9 @@ The next step is to configure Area 1 to push the Email Detection Event to the Sp
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
 3. In the Add Webhooks page, enter the following settings: 
-    1. **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of in [step 1](#1-configure-splunk-http-event-collector).
-    2. **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
-    3. For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
+    - **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of the previous step.
+    - **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
+    - For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
 4. Select **Publish Webhook**.
 
 Your Splunk integration will now show up in the All Webhooks panel.
