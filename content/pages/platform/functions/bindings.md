@@ -226,7 +226,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your service binding locally
 
-While developing locally, interact with a service by adding `--service <BINDING_NAME>=<Worker>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using context.env (for example, `context.env.SERVICE`).
+While developing locally, interact with a service by adding `--service <BINDING_NAME>=<Worker>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
 
 ## Environment variables
 
