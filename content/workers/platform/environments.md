@@ -5,14 +5,6 @@ title: Environments
 
 # Environments
 
-{{<Aside type="note">}}
-
-We recommend using [Deployments](/workers/platform/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
-
-We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
-
-{{</Aside>}}
-
 ## Background
 
 Environments are different contexts that your code runs in. The Workers platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
