@@ -3,9 +3,9 @@
 {{- $ID := $title | urlize -}}
 
 {{- with .Get "insideSection" -}}
-<div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep">
+<div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep" class="howToStep">
 {{- else -}}
-<div itemprop="step" itemscope itemtype="https://schema.org/HowToStep">
+<div itemprop="step" itemscope itemtype="https://schema.org/HowToStep" class="howToSection">
 {{- end -}}
 <h{{$headingLevel}} id="{{ $ID }}" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">
     <a
@@ -19,9 +19,5 @@
   </h{{ $headingLevel }}>
 
 {{- .Inner -}}
-
-{{- with .Get "imageURL" -}}
-    <img itemprop="image" alt="image showing preparation" src="{{.}}"/>
-{{- end -}}
 
 </div>
