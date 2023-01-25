@@ -92,13 +92,12 @@ Additionally, you can search your instance of Splunk for the test event with `in
 The next step is to configure Area 1 to push the Email Detection Event to the Splunk HTTP Event Collector.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
-2. Select the **Search** bar.
-3. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
-4. In the Add Webhooks page, enter the following settings: 
+2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
+3. In the Add Webhooks page, enter the following settings: 
     1. **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of in [step 1](#1-configure-splunk-http-event-collector).
     2. **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
     3. For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
-5. Select **Publish Webhook**.
+4. Select **Publish Webhook**.
 
 Your Splunk integration will now show up in the All Webhook panel
 
