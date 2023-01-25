@@ -140,7 +140,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your R2 buckets locally
 
-While developing locally, interact with an R2 bucket by adding `--r2 <BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. You can interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+While developing locally, interact with an R2 bucket by adding `--r2 <BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
 
 ## D1 databases
 
@@ -237,7 +237,8 @@ To add Pages project environment variables:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages**.
 3. In your Pages project, select **Settings** > **Environment variables**.
-4. Add environment variables under **Production** and/or **Preview** by selecting **Add variables**.
+4. Selecting **Add variables** under **Production** and/or **Preview**.
+6. After setting a variable name and value, select **Save**.
 
 Below is an example of how to use environment variables in your Function. The environment variable in this example is `ENVIRONMENT`:
 
@@ -288,14 +289,21 @@ Secrets are environment variables that are encrypted and not visible once set. T
 To add secrets to your Pages project:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, select **Pages** > **your Pages project** > **Settings** > **Environment variables**.
-3. 
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, select **Settings** > **Environment variables**.
+4. Selecting **Add variables** under **Production** and/or **Preview**.
+5. Select **Encrypt** to create your secret.
+6. Select **Save**.
 
 You use secrets the same way as environment variables, [see here](#environment-variables) for how to use them.
 
 ### Interact with your secrets locally
 
-When developing locally, you can add environment variables by creating a `.dev.vars` file in the root directory of your project. Then simply add to this file like so:
+When developing locally, add environment variables by creating a `.dev.vars` file in the root directory of your project. Then add the following code snippet to `.dev.vars`:
+
 ```
+---
+filename:  `.dev.vars`
+---
 API_KEY=1x0000000000000000000000000000000AA
 ```
