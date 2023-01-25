@@ -19,14 +19,16 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 
 3. Select **Add Collector**.
 
-    ![Go to Collections under Manage Data.](/email-security/static/siem-integration/sumo-logic/step3-collector.png)
+    ![Add collector.](/email-security/static/siem-integration/sumo-logic/step3-collector.png)
 
 4. In **Select Collector Type**, select **Hosted Collector**.
 
-5. In Add Hosted Collector, enter the following settings:
-    1. **Name**: `Area 1 Collector`
-    2. **Description**: `Area 1 Security Collectors`
-    3. **Category**: Anti-Phishing
+    ![Select Hosted Collector.](/email-security/static/siem-integration/sumo-logic/step4-hosted.png)
+
+5. In **Add Hosted Collector**, enter the following settings:
+    - **Name**: `Area 1 Collector`
+    - **Description**: `Area 1 Security Collectors`
+    - **Category**: Anti-Phishing
 
     ![Enter the settings above to configure your collector.](/email-security/static/siem-integration/sumo-logic/step5-hosted-collector.png)
 
@@ -42,16 +44,18 @@ When Area 1 detects a phishing email, the metadata of the detection can be sent 
 
 9. The system will present you a dialog box with the HTTP endpoint. Save it, as this will be required to configure Area 1 later.
 
-## Configure Area 1
+    ![Take note of the endpoint to use it later.](/email-security/static/siem-integration/sumo-logic/step9-endpoint.png)
+
+## 2. Configure Area 1
 
 The next step is to configure Area 1 to push the Email Detection Events to the Sumologic HTTP Collector.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Email Configuration** > **Alert Webhooks**, and select **New Webhook**.
 3. In the Add Webhooks page, enter the following settings: 
-    1. **App type**: Select **SIEM** > **Splunk**. In **Auth code**, enter `Sumologic`.
-    2. **Target**: Enter HTTP endpoint you saved in the previous section.
-    3. For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
+    - **App type**: Select **SIEM** > **Splunk**. In **Auth code**, enter `Sumologic`.
+    - **Target**: Enter the HTTP endpoint you saved in the previous section.
+    - For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
 4. Select **Publish Webhook**.
 
 Your Sumo Logic integration will now show up in the All Webhooks panel.
