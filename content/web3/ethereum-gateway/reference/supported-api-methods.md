@@ -20,7 +20,6 @@ For a full list of JSON-RPC API methods, refer to the [JSON-RPC specification](h
 | [web3_sha3](https://ethereum.org/en/developers/docs/apis/json-rpc/#web3_sha3)                               |                     ✅                       |
 | [net_version](https://ethereum.org/en/developers/docs/apis/json-rpc/#net_version)                             |                     ✅                       |
 | [net_listening](https://ethereum.org/en/developers/docs/apis/json-rpc/#net_listening)                           |                     ✅                       |
-| [trace_filter]()[^3]                            |                     ✅                       |
 | [eth_syncing](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_syncing)                             |                     ✅                       |
 | [eth_mining](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_mining)                              |                     ✅                       |
 | [eth_gasPrice](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_gasprice)                            |                     ✅                       |
@@ -71,4 +70,3 @@ For a full list of JSON-RPC API methods, refer to the [JSON-RPC specification](h
 
 [^1]: **Limitations**: Max block range of 800 blocks.
 [^2]: **Limitations**: Max block count of 10.
-[^3]: **Limitations**: Max trace count of 200 and max block range of 800.
