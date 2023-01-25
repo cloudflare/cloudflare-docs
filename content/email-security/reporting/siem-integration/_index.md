@@ -14,7 +14,7 @@ With a bit of configuration, you can also bring Area 1 data into your Security I
 
 For help setting up the proper configuration in your SIEM tool, refer to the following guides:
 
-{{<directory-listing showDescriptions=true char_limit=300 >}}
+{{<directory-listing showDescriptions=true >}}
 
 ### 2. Create a webhook
 
