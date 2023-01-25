@@ -97,5 +97,11 @@ The next step is to configure Area 1 to push the Email Detection Event to the Sp
 4. In the Add Webhooks page, enter the following settings: 
     1. **App type**: Select **SIEM** > **Splunk**, and enter the auth code you took note of in [step 1](#1-configure-splunk-http-event-collector).
     2. **Target**: Enter the target URI of your Splunk instance. It will typically have the `https://<host>:8088/services/collector` format. Refer to [Request formats](#request-formats) to learn more about how your Splunk subscription affects the URI.
-    3. 
+    3. For the dispositions (`Malicious`, `Suspicious`, `Spoof`, `Spam`, `Bulk`) choose which (if any) you want to send to the webhook.
+5. Select **Publish Webhook**.
 
+Your Splunk integration will now show up in the All Webhook panel
+
+![The All Webhooks section will show your Splunk webhook](/email-security/static/siem-integration/splunk/splunk-webhook-integrations.png)
+
+It will take about ten minutes or so for the configuration to fully propagate through the infrastructure of Cloudflare Area 1, and for events to start to appear in your searches. Once the configuration is propagated, events will start to appear in your instance of Splunk. 
