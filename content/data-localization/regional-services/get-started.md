@@ -11,7 +11,7 @@ You can use Regional Services through the dashboard or via API.
 
 ### Regional Services in the dash
 
-To use regional services, you need to first create a DNS record in the dashboard:
+To use Regional Services, you need to first create a DNS record in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select an account and domain.
 2. Go to the **DNS** tab.
