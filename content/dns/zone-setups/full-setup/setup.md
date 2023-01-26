@@ -22,9 +22,8 @@ Before update your domain nameservers, make sure that you:
 - Already own a domain name (such as `example.com` or `cloudflare.com`).
 - Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
 - Disabled DNSSEC at your registrar (where you bought your domain name).
-  <br/>
   
-  {{<render file="_dnssec-providers.md">}}
+{{<render file="_dnssec-providers.md">}}
 
 {{</how-to-direction>}}
 
