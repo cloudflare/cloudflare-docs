@@ -12,7 +12,7 @@ The following APIs are used within Functions.
 
 ## Methods
 
-The following methods 
+The following methods can be used to configure your Pages Function.
 
 ### `onRequests`
 
@@ -39,7 +39,7 @@ The following methods
 
 ### `env.ASSETS.fetch()`
 
-The `env.ASSETS.fetch()` function allows you to fetch a static asset. Requests to this will be to the pretty path not directly to the asset (i.e. if you had the path: `functions/users/index.html`, you will request  /users/ instead of /users/index.html). This will run the header and redirect rules, so they will modify the response that is returned.
+The `env.ASSETS.fetch()` function allows you to fetch a static asset from your Pages project. Requests passed to the `env.ASSETS.fetch()` function must be to the pretty path, not directly to the asset. For example, if you had the path `/users/index.html`, you will request `/users/` instead of `/users/index.html`. This method call will run the header and redirect rules, modifying the response that is returned.
 
 ## Types
 
@@ -76,8 +76,8 @@ The following are the properties on the `context` object which are passed throug
 
 ### `EnvWithFetch`
 
-Holds the environment variables, secrets, and bindings for this Function. This also holds the `ASSETS` binding which is how you can fallback to the asset server. 
+Holds the environment variables, secrets, and bindings for a Function. This also holds the `ASSETS` binding which is how you can fallback to the asset-serving behavior. 
 
 ### Params
 
-Holds the values from the [dynamic routes](/pages/platform/functions/routing/#dynamic-routes)
+Holds the values from the [dynamic routes](/pages/platform/functions/routing/#dynamic-routes).
