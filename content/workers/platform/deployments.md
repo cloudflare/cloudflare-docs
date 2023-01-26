@@ -58,7 +58,7 @@ The [`wrangler deployments`](/workers/wrangler/commands#deployments) command wil
 
 ### via the Cloudflare Dashboard
 
-The Deployments tab of your Cloudflare dashboard includes information about previous deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
+Access Deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
 
 ## via the API
 
