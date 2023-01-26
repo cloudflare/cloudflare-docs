@@ -23,6 +23,7 @@ System data generated for debugging (for example, application logs from internal
 Networking flow data (for example, sFlow from our routers), including data on DDoS attacks
 
 ## Who can use the Customer Metadata Boundary?
+
 Currently, this is available for Enterprise customers as part of the Data Localization Suite.
 
 The Customer Metadata Boundary is for customers who want to limit personal data transfer outside the EU or the US (depending on the customer’s selected region). These customers should already be using Regional Services, which ensures that traffic content is only ever decrypted within the geographic region specified by the customer.
