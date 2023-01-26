@@ -26,7 +26,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
     - United States
     - FedRAMP Compliant
 
-### Regional Services via API
+## Regional Services via API
 
 You can also use Regional Services via API. These are some examples of API requests.
 

@@ -47,7 +47,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Tiered Caching | ✅ | 🚧[^2] | 🚧[^2] |
 | | Waiting Room | ⚫️ | ✅ | 🚧[^1] |
 | | Zaraz | ✅ | ✅ | 🚧[^1] |
-| Application Security | Advanced Certificates Manager | ⚫️ | ⚫️ | ⚫️ |
+| Application Security | Advanced Certificate Manager | ⚫️ | ⚫️ | ⚫️ |
 | | Advanced DDoS Protection | ✅ | ✅ | 🚧[^3] |
 | | API Shield | ✅ | ✅ | ✘[^4] |
 | | Bot Management | ✅ | ✅ | 🚧[^5] |
