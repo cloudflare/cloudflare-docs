@@ -20,9 +20,11 @@ Use one of the following API endpoints:
 [ar-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset-rule
 [ar-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset-rule
 
-Invoking this method creates a new version of the ruleset.
+Include the rule definition in the request body.
 
-Include the rule definition in the request body. The rule will be added to the end of the existing list of rules in the ruleset.
+By default, the rule will be added to the end of the existing list of rules in the ruleset. To define a specific position for the rule, include a `position` object in the request body according to the guidelines in [Change the order of a rule in a ruleset](/ruleset-engine/rulesets-api/update-rule/#change-the-order-of-a-rule-in-a-ruleset).
+
+Invoking this method creates a new version of the ruleset.
 
 ## Example
 
