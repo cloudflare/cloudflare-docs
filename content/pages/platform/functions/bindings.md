@@ -140,7 +140,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your R2 buckets locally
 
-While developing locally, interact with an R2 bucket by adding `--r2 <BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
+While developing locally, interact with an R2 bucket by adding `--r2=<BINDING_NAME>` to your run command. For example, if your bucket is bound to `BUCKET`, access this bucket in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET`. Interact with this binding by using `context.env` (for example, `context.env.BUCKET`).
 
 ## D1 databases
 
@@ -187,7 +187,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your D1 databases locally
 
-While developing locally, interact with a D1 database by adding `--d1 <BINDING_NAME>` to your run command. For example, if your database is bound to `NORTHWIND_DB`, access this database in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`. Interact with this binding by `using context.env` (for example, `context.env.NORTHWIND_DB`).
+While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command. For example, if your database is bound to `NORTHWIND_DB`, access this database in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`. Interact with this binding by `using context.env` (for example, `context.env.NORTHWIND_DB`).
 
 ## Service bindings
 
@@ -226,7 +226,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your service binding locally
 
-While developing locally, interact with a service by adding `--service <BINDING_NAME>=<Worker>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
+While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
 
 ## Environment variables
 
