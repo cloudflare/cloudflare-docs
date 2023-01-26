@@ -19,21 +19,21 @@ The following methods
 {{<definitions>}}
 
 - {{<code>}}onRequest(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all requests no matter the request method.
+  - This function will be invoked on all requests no matter the request method.
 - {{<code>}}onRequestGet(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all `GET` requests.
+  - This function will be invoked on all `GET` requests.
 - {{<code>}}onRequestPost(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all `POST` requests.
+  - This function will be invoked on all `POST` requests.
 - {{<code>}}onRequestPatch(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all `PATCH` requests.
+  - This function will be invoked on all `PATCH` requests.
 - {{<code>}}onRequestPut(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all `PUT` requests.
+  - This function will be invoked on all `PUT` requests.
 - {{<code>}}onRequestDelete(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This `Function` will be invoked on all `DELETE` requests.
+  - This function will be invoked on all `DELETE` requests.
 - {{<code>}}onRequestHead(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all `HEAD` requests.
+  - This function will be invoked on all `HEAD` requests.
 - {{<code>}}onRequestOptions(context[{{<param-type>}}EventContext{{</param-type>}}](#eventcontext)){{</code>}} {{<type>}}Response | Promise&lt;Response&gt;{{</type>}}
-  - This Function will be invoked on all `OPTIONS` requests.
+  - This function will be invoked on all `OPTIONS` requests.
 
 {{</definitions>}}
 
