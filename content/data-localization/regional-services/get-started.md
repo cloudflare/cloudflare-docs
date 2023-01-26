@@ -9,7 +9,7 @@ layout: list
 
 You can use Regional Services through the dashboard or via API.
 
-### Regional Services in the dash
+### Regional Services in the dashboard
 
 To use Regional Services, you need to first create a DNS record in the dashboard:
 
