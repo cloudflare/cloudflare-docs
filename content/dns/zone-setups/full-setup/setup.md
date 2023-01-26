@@ -13,65 +13,55 @@ structured_data: true
 
 ---
 
-{{<how-to-section headingLevel=2 title="Before you begin" >}}
-
-{{<how-to-step headingLevel=3 title="Do you already own a domain?" insideSection=true >}}
+{{<how-to-step headingLevel=2 title="Before you begin" >}}
 
 {{<how-to-direction>}}
 
-A [domain](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is something like `example.com` or `cloudflare.com`, which you purchased through a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/).
+Before update your domain nameservers, make sure that you:
 
-<details>
-<summary>Yes</summary>
-<div>
+- Already own a domain name (such as `example.com` or `cloudflare.com`).
+- Have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+- Disabled DNSSEC at your registrar (where you bought your domain name).
+  <br/>
+  {{<render file="_dnssec-providers.md">}}
 
-If you already own a domain and want to use Cloudflare for your authoritative DNS, proceed with this tutorial.
+{{</how-to-direction>}}
 
-</div>
-</details>
+{{<how-to-direction>}}
 
-<details>
-<summary>No</summary>
-<div>
+{{<Aside type="note">}}
 
-If you do not already own a domain name and plan to use Cloudflare for your authoritative DNS, we highly recommend purchasing your domain name through [Cloudflare Registrar](/registrar/get-started/register-domain/).
+If you do not already have a [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/), get one at-cost through [Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register).
 
-Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
+All domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, which means you can skip the rest of this tutorial.
 
-</div>
-</details>
+{{</Aside>}}
 
 {{</how-to-direction>}}
 
 {{</how-to-step>}}
 
-{{<how-to-step headingLevel=3 title="Create an account" insideSection=true >}}
+---
+
+{{<how-to-step headingLevel=2 title="Add site to Cloudflare" >}}
 
 {{<how-to-direction>}}
 
-Make sure you have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
+In the Cloudflare dashboard, [add your domain](/fundamentals/get-started/setup/add-site/).
 
 {{</how-to-direction>}}
 
 {{</how-to-step>}}
 
-{{<how-to-step headingLevel=3 title="Disable DNSSEC" insideSection=true >}}
+---
 
-{{<how-to-direction>}}
-
-{{<render file="_disable_dnssec.md">}}
-
-{{</how-to-direction>}}
-
-{{</how-to-step>}}
-
-{{<how-to-step headingLevel=3 title="Review DNS records" insideSection=true >}}
+{{<how-to-step headingLevel=2 title="Review DNS records" >}}
 
 {{<how-to-direction>}}
 
 When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
-If you have [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scans for common records and adds them to your account’s DNS page.
+When you [added your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare, Cloudflare automatically scanned for common records and added them to your account’s DNS page.
 
 {{<render file="_dns-scan-procedure.md">}}
 
@@ -85,33 +75,17 @@ If you have [added your domain](/fundamentals/get-started/setup/add-site/) to Cl
 
 {{</how-to-step>}}
 
-{{</how-to-section>}}
-
 ---
 
-{{<how-to-section headingLevel=2 title="Add site to Cloudflare" >}}
-
-{{<how-to-step>}}
-
-{{<how-to-direction>}}
-
-Then, [add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare.
-
-{{</how-to-direction>}}
-
-{{</how-to-step>}}
-
-{{</how-to-section>}}
-
----
-
-{{<how-to-section headingLevel=2 title="Update your nameservers" >}}
+{{<how-to-step headingLevel=2 title="Update your nameservers" >}}
 
 {{<render file="_nameserver-preamble.md">}}
 
-{{<how-to-step headingLevel=3 title="Get nameserver names" insideSection=true >}}
+{{<render file="_minimize-downtime-tip.md">}}
 
 {{<how-to-direction>}}
+
+### Get nameserver names
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
@@ -131,17 +105,9 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 {{</how-to-tip>}}
 
-{{</how-to-step>}}
-
-{{<how-to-step headingLevel=3 title="Update your registrar" insideSection=true >}}
-
-{{<how-to-tip>}}
-
-{{<render file="_minimize-downtime-tip.md">}}
-
-{{</how-to-tip>}}
-
 {{<how-to-direction>}}
+
+### Update your registrar
 
 1.  Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
 
@@ -208,15 +174,28 @@ To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zon
 
 {{</how-to-tip>}}
 
-{{</how-to-step>}}
-
-{{<how-to-step headingLevel=3 title="Verify changes" insideSection=true >}}
-
 {{<how-to-direction>}}
 
-Wait for up to 24 hours while your registrar updates your nameservers. You will receive an email when your site is active on Cloudflare.
+### Verify changes
 
-If your site takes longer to activate, [check if your nameservers are pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
+Wait up to 24 hours while your registrar updates your nameservers.
+
+When your domain is **Active**:
+
+- You will receive an email from Cloudflare.
+- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
+- Online tools such as https://www.whatsmydns.net/ will show your Cloudflare-assigned nameservers.
+- CLI commands will show your Cloudflare-assigned nameservers
+
+  ```txt
+  *Linux/Unix*
+  dig <DOMAIN_NAME> +trace @1.1.1.1 
+  dig <DOMAIN_NAME> +trace @8.8.8.8
+
+  *Windows*
+  nslookup <DOMAIN_NAME> 1.1.1.1
+  nslookup <DOMAIN_NAME> 8.8.8.8
+  ```
 
 {{</how-to-direction>}}
 
@@ -224,7 +203,7 @@ If your site takes longer to activate, [check if your nameservers are pointing t
 
 {{<Aside type="note">}}
 
-If you see unexpected results, refer to our [troubleshooting information](/dns/zone-setups/troubleshooting/).
+If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/troubleshooting/nameservers/).
 
 {{</Aside>}}
 
@@ -232,13 +211,9 @@ If you see unexpected results, refer to our [troubleshooting information](/dns/z
 
 {{</how-to-step>}}
 
-{{</how-to-section>}}
-
 ---
 
-{{<how-to-section headingLevel=2 title="Re-enable DNSSEC" >}}
-
-{{<how-to-step>}}
+{{<how-to-step headingLevel=2 title="Re-enable DNSSEC" >}}
 
 {{<how-to-direction>}}
 
@@ -249,5 +224,3 @@ You should now [enable DNSSEC](/dns/additional-options/dnssec/) to protect from 
 {{</how-to-direction>}}
 
 {{</how-to-step>}}
-
-{{</how-to-section>}}
