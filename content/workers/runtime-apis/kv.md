@@ -119,8 +119,8 @@ An example of reading a key from within a Worker:
 
 ```js
 export default {
-  async fetch(request) {
-    const value = await NAMESPACE.get("first-key");
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.get("first-key");
 
     if (value === null) {
       return new Response("Value not found",  { status:  404})
@@ -220,8 +220,8 @@ An example:
 
 ```js
 export default {
-  async fetch(request) {
-    const value = await NAMESPACE.list();
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.list();
 
     return new Response(value.keys);
   },
@@ -302,8 +302,8 @@ You can also list all of the keys starting with a particular prefix. For example
 
 ```js
 export default {
-  async fetch(request) {
-    const value = await NAMESPACE.list({ prefix: "user:1:" });
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.list({ prefix: "user:1:" });
     return new Response(value.keys);
   },
 };
@@ -375,10 +375,10 @@ With this, the deployed Worker will have a `TODO` global variable. Any methods o
 
 ```js
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     // Get the value for the "to-do:123" key
     // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-    let value = await TODO.get("to-do:123");
+    let value = await env.TODO.get("to-do:123");
 
     // Return the value, as is, for the Response
     return new Response(value);

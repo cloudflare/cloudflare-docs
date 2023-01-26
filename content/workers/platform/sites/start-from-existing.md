@@ -62,14 +62,25 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 ```js
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+import manifestJSON from '__STATIC_CONTENT_MANIFEST';
+const assetManifest = JSON.parse(manifestJSON);
 
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     try {
       // Add logic to decide whether to serve an asset or run your original Worker code
-      return await getAssetFromKV(event);
+      return await getAssetFromKV(
+        {
+          request,
+          waitUntil: ctx.waitUntil.bind(ctx),
+        },
+        {
+          ASSET_NAMESPACE: env.__STATIC_CONTENT,
+          ASSET_MANIFEST: assetManifest,
+        }
+      );
     } catch (e) {
-      let pathname = new URL(event.request.url).pathname;
+      let pathname = new URL(request.url).pathname;
       return new Response(`"${pathname}" not found`, {
         status: 404,
         statusText: 'not found',
