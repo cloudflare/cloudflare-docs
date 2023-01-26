@@ -16,8 +16,6 @@ If Cloudflare has automatically added CAA records on your behalf, these records 
 0 issuewild "digicert.com; cansignhttpexchanges=yes"
 
 # CAA records added by Sectigo
-0 issue "comodoca.com"
-0 issuewild "comodoca.com"
 0 issue "sectigo.com"
 0 issuewild "sectigo.com"
 
