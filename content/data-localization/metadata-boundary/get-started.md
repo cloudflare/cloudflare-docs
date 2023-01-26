@@ -36,7 +36,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 
 Here is an example request using cURL to set regions:
 
-```json
+```bash
 curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X POST -d '
 {
     "regions": "eu"
