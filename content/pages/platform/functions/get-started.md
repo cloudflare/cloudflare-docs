@@ -4,9 +4,11 @@ title: Get started
 weight: 1
 ---
 
-# Get Started
+# Get started
 
-To deploy your first Function, you’ll need to create a /functions directory at the root of your project. Writing your Functions files in this directory will automatically generate a Worker with custom functionality at predesignated routes. For example, let’s take the Function: 
+To deploy your first Function, create a `/functions` directory at the root of your project. 
+
+Writing your Functions files in the `/functions` directory will automatically generate a Worker with custom functionality at predesignated routes. For example, let’s take the Function: 
 
 ```js
 ---
