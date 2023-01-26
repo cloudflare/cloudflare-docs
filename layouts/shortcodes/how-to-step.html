@@ -1,11 +1,8 @@
 {{- $title := (default "" (.Get "title")) -}}
 {{- $ID := $title | urlize -}}
 
-{{- with .Get "insideSection" -}}
-  <div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep" class="howToStep">
-{{- else -}}
-  <div itemprop="step" itemscope itemtype="https://schema.org/HowToStep" class="howToSection">
-{{- end -}}
+
+<div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep" class="howToStep">
 
 {{- with .Get "headingLevel" -}}
   <h{{ . | string }} id="{{ $ID }}" itemprop="name"><span class="DocsMarkdown--header-anchor-positioner">

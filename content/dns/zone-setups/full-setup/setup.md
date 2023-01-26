@@ -13,11 +13,11 @@ structured_data: true
 
 ---
 
-{{<how-to-step headingLevel=2 title="Before you begin" >}}
+{{<how-to-section headingLevel=2 title="Before you begin" >}}
+
+{{<how-to-step headingLevel=3 title="Do you already own a domain?" insideSection=true >}}
 
 {{<how-to-direction>}}
-
-### Do you already own a domain?
 
 A [domain](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/) is something like `example.com` or `cloudflare.com`, which you purchased through a [registrar](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/).
 
@@ -43,25 +43,31 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 {{</how-to-direction>}}
 
-{{<how-to-direction>}}
+{{</how-to-step>}}
 
-### Create an account
+{{<how-to-step headingLevel=3 title="Create an account" insideSection=true >}}
+
+{{<how-to-direction>}}
 
 Make sure you have previously created a [Cloudflare account](/fundamentals/account-and-billing/account-setup/create-account/).
 
 {{</how-to-direction>}}
 
-{{<how-to-direction>}}
+{{</how-to-step>}}
 
-### Disable DNSSEC
+{{<how-to-step headingLevel=3 title="Disable DNSSEC" insideSection=true >}}
+
+{{<how-to-direction>}}
 
 {{<render file="_disable_dnssec.md">}}
 
 {{</how-to-direction>}}
 
-{{<how-to-direction>}}
+{{</how-to-step>}}
 
-### Review DNS records
+{{<how-to-step headingLevel=3 title="Review DNS records" insideSection=true >}}
+
+{{<how-to-direction>}}
 
 When you start using Cloudflare's nameservers for authoritative DNS, Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
 
@@ -79,9 +85,13 @@ If you have [added your domain](/fundamentals/get-started/setup/add-site/) to Cl
 
 {{</how-to-step>}}
 
+{{</how-to-section>}}
+
 ---
 
-{{<how-to-step headingLevel=2 title="Add site to Cloudflare" >}}
+{{<how-to-section headingLevel=2 title="Add site to Cloudflare" >}}
+
+{{<how-to-step>}}
 
 {{<how-to-direction>}}
 
@@ -91,15 +101,17 @@ Then, [add your domain](/fundamentals/get-started/setup/add-site/) to Cloudflare
 
 {{</how-to-step>}}
 
+{{</how-to-section>}}
+
 ---
 
-{{<how-to-step headingLevel=2 title="Update your nameservers" >}}
+{{<how-to-section headingLevel=2 title="Update your nameservers" >}}
 
 {{<render file="_nameserver-preamble.md">}}
 
-{{<how-to-direction>}}
+{{<how-to-step headingLevel=3 title="Get nameserver names" insideSection=true >}}
 
-### Get nameserver names
+{{<how-to-direction>}}
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
@@ -119,9 +131,17 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 {{</how-to-tip>}}
 
-{{<how-to-direction>}}
+{{</how-to-step>}}
 
-### Update your registrar
+{{<how-to-step headingLevel=3 title="Update your registrar" insideSection=true >}}
+
+{{<how-to-tip>}}
+
+{{<render file="_minimize-downtime-tip.md">}}
+
+{{</how-to-tip>}}
+
+{{<how-to-direction>}}
 
 1.  Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN WHOIS](https://whois.icann.org/).
 
@@ -180,12 +200,6 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 {{<how-to-tip>}}
 
-{{<render file="_minimize-downtime-tip.md">}}
-
-{{</how-to-tip>}}
-
-{{<how-to-tip>}}
-
 {{<Aside type="note">}}
 
 To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/troubleshooting/nameservers/). 
@@ -194,9 +208,11 @@ To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zon
 
 {{</how-to-tip>}}
 
-{{<how-to-direction>}}
+{{</how-to-step>}}
 
-### Verify changes
+{{<how-to-step headingLevel=3 title="Verify changes" insideSection=true >}}
+
+{{<how-to-direction>}}
 
 Wait for up to 24 hours while your registrar updates your nameservers. You will receive an email when your site is active on Cloudflare.
 
@@ -216,9 +232,13 @@ If you see unexpected results, refer to our [troubleshooting information](/dns/z
 
 {{</how-to-step>}}
 
+{{</how-to-section>}}
+
 ---
 
-{{<how-to-step headingLevel=2 title="Re-enable DNSSEC" >}}
+{{<how-to-section headingLevel=2 title="Re-enable DNSSEC" >}}
+
+{{<how-to-step>}}
 
 {{<how-to-direction>}}
 
@@ -229,3 +249,5 @@ You should now [enable DNSSEC](/dns/additional-options/dnssec/) to protect from 
 {{</how-to-direction>}}
 
 {{</how-to-step>}}
+
+{{</how-to-section>}}
