@@ -5,7 +5,7 @@ weight: 1
 layout: list
 ---
 
-## Get Started
+# Get Started
 
 You can use Regional Services through the dashboard or via API.
 
