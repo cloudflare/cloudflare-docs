@@ -11,6 +11,7 @@ meta:
 The Data Localization Suite (DLS) is a set of products that helps customers who want to maintain local control over their traffic while retaining the security benefits of a global network.
 
 DLS is currently available for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information about purchasing DLS.
+
 The Data Localization Suite consists of the following products:
 
 - [Key Management](/data-localization/key-management/)
