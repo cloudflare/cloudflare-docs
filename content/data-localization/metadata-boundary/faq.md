@@ -28,5 +28,6 @@ Currently, this is available for Enterprise customers as part of the Data Locali
 
 The Customer Metadata Boundary is for customers who want to limit personal data transfer outside the EU or the US (depending on the customer’s selected region). These customers should already be using Regional Services, which ensures that traffic content is only ever decrypted within the geographic region specified by the customer.
 
-## What are the analytics products available for Metadata Boundary? 
+## What are the analytics products available for Metadata Boundary?
+
 HTTP and Firewall analytics are available. At the moment, there are no analytics available for Workers, DNS, Network Analytics, Load Balancing and Rate Limiting.
