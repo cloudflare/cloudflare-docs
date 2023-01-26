@@ -108,7 +108,7 @@ export default <ExportedHandler>{
 			);
 
 			// Caller can now use this URL to upload to that object.
-			return new Response(signedUrl, { status: 200 });
+			return new Response(signedUrl.url, { status: 200 });
 		}
 
 		// ... handle other kinds of requests
