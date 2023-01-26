@@ -16,15 +16,15 @@ To use Regional Services, you need to first create a DNS record in the dashboard
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and domain.
 2. Go to the **DNS** tab.
 3. Follow these steps to [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
-4. From the Region dropdown, select the region you would like to use on your domain. The complete list of available regions is the following:
+4. From the **Region** dropdown, select the region you would like to use on your domain. The complete list of available regions is the following:
 
-- Australia
-- Canada
-- European Union
-- India
-- Japan
-- United States
-- FedRAMP Compliant
+    - Australia
+    - Canada
+    - European Union
+    - India
+    - Japan
+    - United States
+    - FedRAMP Compliant
 
 ### Regional Services via API
 
