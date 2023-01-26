@@ -12,7 +12,8 @@ Nearly all end user metadata is covered by the Customer Metadata Boundary. This 
 Specific examples of this data include all of the analytics in our dashboard and APIs on requests, responses, and security products associated and all of the logs received through Logpush.
 
 ## What data is not covered by the Customer Metadata Boundary?
-Some of the data for which Cloudflare is a controller, as defined in the Cloudflare Privacy Policy.
+
+Some of the data for which Cloudflare is a controller, as defined in the [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 
 Some examples:
 Customer account data (for example, name and billing information)
