@@ -95,7 +95,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^12]:Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2023.
 [^13]:Logpush available with Customer Metadata Boundary for HTTP requests and Firewall events. Please contact your Customer Success Manager if you need to push another dataset.
 [^14]:Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) is not yet localized.
-[^15]:Can be localized to US FedRAMP region only; More regions coming in 2023.
+[^15]:Can be localized to US FedRAMP region only. More regions coming in 2023.
 [^16]:Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region.
 [^17]:Currently may only be used with US FedRAMP region.
 [^18]:Only US FedRAMP region.
