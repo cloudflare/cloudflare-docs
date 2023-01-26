@@ -95,6 +95,8 @@ description="Measure download / upload connection speed from the client side, us
 
 {{<worker-starter title="REST API with Fauna" repo="fauna-labs/fauna-workers" description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications.">}}
 
+{{<worker-starter title="Analytics Engine Forwarder" repo="cloudflare/templates/worker-analytics-engine-forwarder" description="Use a Worker to capture analytics data with Analytics Engine.">}}
+
 ---
 
 ## Other languages
