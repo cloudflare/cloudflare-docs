@@ -60,7 +60,7 @@ Change will be in effect after several minutes.
 
 Here is an example request using cURL to delete regions:
 
-```json
+```bash
 curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X DELETE \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <KEY>" \
