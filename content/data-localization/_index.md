@@ -24,16 +24,16 @@ Support by product and region is summarized in the following table:
 | US | &#x2705; | &#x2705; | &#x2705; |
 | EU | &#x2705; | &#x2705; | &#x2705; |
 | UK | &#x2705; | &#x2705; | Can use EU metadata boundary. |
-| Canada | &#x2705; | &#x2705; | &#10060; |
-| Australia | &#x2705; | &#x2705; | &#10060; |
-| Japan | &#x2705; | &#x2705; | &#10060; |
-| India | &#x2705; | &#x2705; | &#10060; |
+| Canada | &#x2705; | &#x2705; | ✘ |
+| Australia | &#x2705; | &#x2705; | ✘ |
+| Japan | &#x2705; | &#x2705; | ✘ |
+| India | &#x2705; | &#x2705; | ✘ |
 
 Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
 
 ✅ Product works with no caveats <br>
 🚧 Product can be used with some caveats <br>
-❌ Product cannot be used <br>
+✘ Product cannot be used <br>
 ⚫️ Not applicable
 
 | Suite/Category | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
@@ -48,24 +48,24 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Zaraz | ✅ | ✅ | 🚧[^1] |
 | Application Security | Advanced Certificates Manager | ⚫️ | ⚫️ | ⚫️ |
 | | Advanced DDoS Protection | ✅ | ✅ | 🚧[^3] |
-| | API Shield | ✅ | ✅ | ❌[^4] |
+| | API Shield | ✅ | ✅ | ✘[^4] |
 | | Bot Management | ✅ | ✅ | 🚧[^5] |
 | | DNS Firewall | ⚫️ | ⚫️ | 🚧[^1] |
-| | Page Shield | ✅ | ✅ | ❌[^6] |
+| | Page Shield | ✅ | ✅ | ✘[^6] |
 | | Rate Limiting | ✅ | ✅ | 🚧[^1] |
 | | SSL | ✅ | ✅ | ✅ |
 | | SSL 4 SaaS | ✅ | ✅ | ✅ |
 | | WAF/L7 Firewall | ✅ | ✅ | ✅ |
-| Developer Platform | Cloudflare Images | ⚫️ | ❌ | ❌ |
-| | Cloudflare Pages | ❌ | ❌ | ❌ |
+| Developer Platform | Cloudflare Images | ⚫️ | ✘ | ✘ |
+| | Cloudflare Pages | ✘ | ✘ | ✘ |
 | | Durable Objects | ⚫️ | ✅[^7] | 🚧[^1] |
 | | R2 | ⚫️ | 🚧[^8] | 🚧[^1] |
-| | Stream | ⚫️ | ❌ | ❌ |
+| | Stream | ⚫️ | ✘ | ✘ |
 | | Workers (deployed on a Zone) | ✅ | ✅ | 🚧[^1] |
-| | Workers KV | ⚫️ | ❌ | ❌ |
-| | Workers.dev | ❌ | ❌ | ❌ |
-| Network Services | Argo Smart Routing | ✅ | ❌[^9] | ❌[^10] |
-| | BYOIP | ⚫️ | ❌[^11] | ⚫️ |
+| | Workers KV | ⚫️ | ✘ | ✘ |
+| | Workers.dev | ✘ | ✘ | ✘ |
+| Network Services | Argo Smart Routing | ✅ | ✘[^9] | ✘[^10] |
+| | BYOIP | ⚫️ | ✘[^11] | ⚫️ |
 | | Magic Firewall | ⚫️ | ⚫️ | 🚧[^1] |
 | | Magic Transit | ⚫️ | ⚫️ | 🚧[^1] |
 | | Magic WAN | ⚫️ | ⚫️ | 🚧[^1] |
@@ -74,9 +74,9 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Logpush | ⚫️ | ✅ | 🚧[^13] |
 | Zero Trust | Access | 🚧[^14] | 🚧[^15] | 🚧[^16] |
 | | Browser Isolation | ⚫️ | 🚧[^17] | ✅ |
-| | CASB | ⚫️ | ⚫️ | ❌ |
+| | CASB | ⚫️ | ⚫️ | ✘ |
 | | Cloudflare Tunnel | ⚫️ | 🚧[^18] | ⚫️ |
-| | DLP | ⚫️[^19] | ⚫️[^19] | ❌ |
+| | DLP | ⚫️[^19] | ⚫️[^19] | ✘ |
 | | Gateway | 🚧[^20] | 🚧[^21] | 🚧[^22] |
 | | WARP | ⚫️ | ⚫️ | 🚧[^1] |
 
