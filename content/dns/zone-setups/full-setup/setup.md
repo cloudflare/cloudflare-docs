@@ -184,7 +184,7 @@ When your domain is **Active**:
 
 - You will receive an email from Cloudflare.
 - Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
-- Online tools such as https://www.whatsmydns.net/ will show your Cloudflare-assigned nameservers.
+- Online tools such as https://www.whatsmydns.net/ will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
 - CLI commands will show your Cloudflare-assigned nameservers
 
 ```txt
