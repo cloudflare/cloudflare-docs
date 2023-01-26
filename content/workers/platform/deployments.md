@@ -66,6 +66,6 @@ Read more about accessing Deployment information via Cloudflare's REST API [here
 
 {{<Aside type="note">}}
 
-Deployments are in active development. If you'd like to give feedback, please [request a chat](https://www.cloudflare.com/lp/developer-week-deployments).
+Deployments are in active development. To give feedback, request a [live chat](https://www.cloudflare.com/lp/developer-week-deployments).
 
 {{</Aside>}}
