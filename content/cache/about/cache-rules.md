@@ -21,7 +21,7 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 2. If you have conflicting settings, then ordering matters and rules will be applied in the order they appear in your Cloudflare dashboard, from bottom to top. For example, if the top rule is set to cache everything on `example.com/images/*` and the bottom rule is set to bypass cache on `example.com/*`, then because we apply rules from bottom to top, cache will be bypassed for all URLS that match `example.com/*`.
   
-3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. For our more patient users, we plan on releasing a one-click migration tool for Page Rules in the near future.
+3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, we plan on releasing a one-click migration tool for Page Rules.
 
 ## Create Cache Rules in the dashboard
 
