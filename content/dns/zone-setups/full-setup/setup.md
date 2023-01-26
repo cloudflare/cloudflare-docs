@@ -203,7 +203,7 @@ nslookup <DOMAIN_NAME> 8.8.8.8
 
 {{<Aside type="note">}}
 
-If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/troubleshooting/nameservers/).
+If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/troubleshooting/nameservers/) and check with your domain registrar.
 
 {{</Aside>}}
 
