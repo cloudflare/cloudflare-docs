@@ -188,15 +188,15 @@ When your domain is **Active**:
 - Online tools such as https://www.whatsmydns.net/ will show your Cloudflare-assigned nameservers.
 - CLI commands will show your Cloudflare-assigned nameservers
 
-  ```txt
-  *Linux/Unix*
-  dig <DOMAIN_NAME> +trace @1.1.1.1 
-  dig <DOMAIN_NAME> +trace @8.8.8.8
+```txt
+*Linux/Unix*
+dig <DOMAIN_NAME> +trace @1.1.1.1 
+dig <DOMAIN_NAME> +trace @8.8.8.8
 
-  *Windows*
-  nslookup <DOMAIN_NAME> 1.1.1.1
-  nslookup <DOMAIN_NAME> 8.8.8.8
-  ```
+*Windows*
+nslookup <DOMAIN_NAME> 1.1.1.1
+nslookup <DOMAIN_NAME> 8.8.8.8
+```
 
 {{</how-to-direction>}}
 
