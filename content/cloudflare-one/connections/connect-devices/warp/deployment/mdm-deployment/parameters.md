@@ -28,11 +28,11 @@ Instructs the client to register the device with your organization. Registration
 
 ## Required for DNS-only policy enforcement
 
-This field is only required to enforce DNS policies when deploying the client in DoH-only mode.
+This field is used to enforce DNS policies when deploying the client in DoH-only mode. 
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific Gateway DNS location. This value is only necessary if deploying without a team name or in an organization with multiple DNS locations.
+Instructs the client to direct all DNS queries to a specific [Gateway DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/). This value is only necessary if deploying without a [team name](#organization) or in an organization with multiple DNS locations.  If you do not supply a DoH subdomain, we will automatically use the default Gateway DNS location for your organization.
 
 **Value Type:** `string`
 
@@ -182,11 +182,3 @@ The automatically generated secret when you created your [service token](/cloudf
 **Value Type:** `string`
 
 **Value:** `Client Secret` from your service token.
-
-## Frequently Asked Questions
-
-- **What happens if I don't supply a Gateway DoH subdomain?**
-  If you specify an `organization`, we will automatically use the default DNS location specified in Gateway.
-
-- **How do I obtain logs in the event of an issue with client?**
-  The macOS and Windows clients installations each contain an application in their installed folders called `warp-diag` that can be used to obtain logs.
