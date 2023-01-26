@@ -20,7 +20,7 @@ These are some examples of API requests.
 
 Here is an example request using cURL to get current regions (if any):
 
-```json
+```bash
 curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logs/control/cmb/config -X GET \
 -H "X-Auth-Email: <EMAIL>" \
 -H "X-Auth-Key: <KEY>" \
