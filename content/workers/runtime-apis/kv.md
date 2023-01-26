@@ -359,6 +359,6 @@ export class DurableObject {
 
 ## Related resources
 
-- [Using Wrangler with KV](/workers/wrangler/workers-kv/)
+- [Use KV with Wrangler](/workers/wrangler/workers-kv/)
 - [Limits](/workers/platform/limits/#kv-limits)
 - [Pricing](/workers/platform/pricing/#kv)
