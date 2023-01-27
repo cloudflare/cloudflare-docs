@@ -82,6 +82,12 @@ export default <ExportedHandler>{
     // that anyone can upload to your bucket.
     //
     // Consider implementing authorization, such as a preshared secret in a request header.
+    const requestPath = new URL(req.url).pathname;
+
+    // Cannot upload to the root of a bucket
+    if (requestPath === "/") {
+      return new Response("Missing a filepath", { status: 400 });
+    }
 
     const bucketName = "";
     const accountId = "";
@@ -91,10 +97,10 @@ export default <ExportedHandler>{
     );
 
     // preserve the original path
-    url.pathname = new URL(req.url).pathname;
+    url.pathname = requestPath;
 
     // Specify a custom expiry for the presigned URL, in seconds
-    url.searchParams.set("x-amz-expires", "3600");
+    url.searchParams.set("X-Amz-Expires", "3600");
 
     const signed = await r2.sign(
       new Request(url, {
