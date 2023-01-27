@@ -123,6 +123,8 @@
 /email-security/static/Deployment_and_Configuration_Guide_Okta_Integration.pdf /email-security/account-setup/sso/okta/ 301
 /email-security/static/Configure_SAML_SSO_with_Azure_AD.pdf /email-security/account-setup/sso/azure/ 301
 /email-security/static/Admin_Quarantine.pdf /email-security/email-configuration/admin-quarantine/ 301
+/email-security/static/Deployment_and_Configuration_Guide_for_Splunk_Cloud_HTTP_Event_Collector.pdf /email-security/reporting/siem-integration/splunk-integration-guide/ 301
+/email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf /email-security/reporting/siem-integration/sumo-logic-integration-guide/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -197,6 +199,7 @@
 
 # d1
 /d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
+/d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/client-api/ /d1/platform/client-api/ 301
 /d1/migrations/ /d1/platform/migrations/ 301
 /d1/community-projects/ /d1/platform/community-projects/ 301
@@ -218,15 +221,22 @@
 /email-routing/get-started/settings/ /email-routing/setup/ 301
 
 # firewall
-/firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
-/firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
+/firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
+/firewall/api/cf-lists/endpoints/ /fundamentals/global-configurations/lists/lists-api/endpoints/ 301
+/firewall/api/cf-lists/json-object/ /fundamentals/global-configurations/lists/lists-api/json-object/ 301
 /firewall/cf-dashboard/expression-preview-editor/ /firewall/cf-dashboard/edit-expressions/ 301
+/firewall/cf-dashboard/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
+/firewall/cf-dashboard/rules-lists/manage-items/ /fundamentals/global-configurations/lists/create-dashboard/#add-items-to-a-list 301
+/firewall/cf-dashboard/rules-lists/manage-lists/ /fundamentals/global-configurations/lists/create-dashboard/ 301
+/firewall/cf-dashboard/rules-lists/use-lists-in-expressions/ /fundamentals/global-configurations/lists/use-in-expressions/ 301
 /firewall/cf-firewall-language/ /ruleset-engine/rules-language/ 301
 /firewall/cf-firewall-language/fields/ /ruleset-engine/rules-language/fields/ 301
 /firewall/cf-firewall-language/functions/ /ruleset-engine/rules-language/functions/ 301
 /firewall/cf-firewall-language/operators/ /ruleset-engine/rules-language/operators/ 301
 /firewall/cf-firewall-language/values/ /ruleset-engine/rules-language/values/ 301
+/firewall/cf-firewall-rules/api-shield/ /api-shield/ 301
 /firewall/cf-firewall-rules/fields-and-expressions/ /ruleset-engine/rules-language/expressions/ 301
+/firewall/cf-firewall-rules/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
 /firewall/cf-rulesets/ /ruleset-engine/about/ 301
 /firewall/cf-rulesets/add-rule-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
 /firewall/cf-rulesets/common-use-cases/ /ruleset-engine/common-use-cases/ 301
@@ -260,6 +270,7 @@
 /firewall/cf-rulesets/rulesets-api/update-rule/ /ruleset-engine/rulesets-api/update-rule/ 301
 /firewall/cf-rulesets/rulesets-api/view/ /ruleset-engine/rulesets-api/view/ 301
 /firewall/cf-rulesets/view-rulesets/ /ruleset-engine/basic-operations/view-rulesets/ 301
+/firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
 
 # fundamentals
 /fundamentals/data-products/accessing-cf-data/ /fundamentals/data-products/types-of-analytics/ 301
@@ -936,6 +947,7 @@
 /workers/platform/cron-triggers/ /workers/platform/triggers/cron-triggers/ 301
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
+/workers/runtime-apis/headers/ /workers/platform/headers/ 301
 
 # zaraz
 

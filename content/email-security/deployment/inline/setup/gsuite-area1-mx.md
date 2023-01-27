@@ -13,11 +13,15 @@ meta:
 
 In this tutorial, you will learn how to configure Gmail with Area 1 as MX record. This tutorial is broken down into several steps.
 
+{{<render file="_outbound-email.md">}}
+
 ## Requirements
 
 * Provisioned Area 1 Account.
 * Access to the Gmail administrator console ([**Gmail administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
 * Access to the domain nameserver hosting the MX records for the domains that will be processed by Area 1.
+
+{{<render file="_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to the Inbound gateway configuration
 
@@ -159,26 +163,9 @@ MX Priority | Host
 
 To update your MX records with Area 1, use the following:
 
-MX Priority | Host
------------ | ---
-`10`          | `mailstream-east.mxrecord.io`
-`10`          | `mailstream-west.mxrecord.io`
-`50`          | `mailstream-central.mxrecord.mx`
+{{<render file="_mx-deployment-values.md">}}
 
-When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority. This will allow mail flows to load balance between the hosts.
-
-European customers should update  MX records with Area 1 European hosts:
-
-MX Priority | Host
---- | --
-`5` | `mailstream-eu1.mxrecord.io`
-`10` | `mailstream-east.mxrecord.io`
-`10` | `mailstream-west.mxrecord.io`
-`20` | `mailstream-central.mxrecord.mx`
-
-The European region will be the primary MX, with a fail-over to the US regions. If you wish to exclusively use the European region, update with only the European host.
-
-Once the MX records updates complete, the DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. The DNS update will typically reach the major DNS servers in about an hour.
+DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
 ## 4. Secure your email flow
 

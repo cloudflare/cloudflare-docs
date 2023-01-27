@@ -7,6 +7,10 @@ title: HTTP request headers
 
 Cloudflare passes all HTTP request headers to your origin web server and adds additional headers as specified below.
 
+## Accept-Encoding
+
+For incoming requests, the value of this header will always be set to `gzip`. If the client set a different value, such as `*` or `br`, it will be overwritten and the original value will be available in `request.cf.clientAcceptEncoding`.
+
 ## CF-Connecting-IP
 
 `CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
@@ -76,6 +80,11 @@ To restore the original visitor IP address at your origin web server, Cloudflare
 
 `X-Forwarded-Proto` is used to identify the protocol (HTTP or HTTPS) that Cloudflare uses to connect to origin web server. By default, it is `http`. Certain [encryption mode](/ssl/origin-configuration/ssl-modes/) may change this header to `https` if the connection is encrypted.
 
+For incoming requests, the value of this header will be set to the protocol the client used (`http` or `https`). If the client set a different value, it will be overwritten.
+
+## X-Real-IP
+
+For incoming requests, the value of this header will be set to the client's IP address. If the client set a different value, it will be overwritten. The value has the same semantics as [`CF-Connecting-IP`](/fundamentals/get-started/reference/http-request-headers/#cf-connecting-ip) and [`True-Client-IP`](/fundamentals/get-started/reference/http-request-headers/#true-client-ip-enterprise-plan-only).
 
 ## CF-RAY
 
@@ -116,6 +125,11 @@ The intended purpose of this header is to provide a means for recipients (for ex
 When configuring firewall rules, do not match on this header. Firewall rules are applied before Cloudflare adds the `CF-Worker` header. Instead, use the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/#standard-fields) dynamic field, which contains the same value and exists for the same purpose.
 
 {{</Aside>}}
+
+## Connection
+
+For incoming requests, the value of this header will always be set to `Keep-Alive`. If the client set a different value, such as `close`, it will be overwritten. Note that is also the case when the client uses HTTP/2 or HTTP/3 to connect.
+
 
 ## Considerations for Spectrum
 

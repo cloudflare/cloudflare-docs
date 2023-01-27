@@ -38,6 +38,8 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
 5. Cloudflare will then automatically scan for your DNS records.
     1. {{<render file="../../dns/_partials/_dns-scan-procedure.md">}}
 
+        {{<render file="../../dns/_partials/_dns-nxdomain-warning.md">}}
+
     2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
     3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
     4. Click **Continue**.
@@ -51,15 +53,12 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
 
 ## Step 2 — Update nameservers
 
-Before your domain can begin using Cloudflare for DNS resolution, you need to update your nameservers at your registrar.
+{{<render file="../../dns/_partials/_nameserver-preamble.md">}}
+<br/>
 
-{{<Aside type="note">}}
+Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar.
 
-If your domain is particularly sensitive to downtime, review our suggestions to [minimize downtime](/fundamentals/get-started/setup/minimize-downtime/).
-
-{{</Aside>}}
-
-{{<render file="../../dns/_partials/_update-nameservers.md">}}
+{{<render file="../../dns/_partials/_minimize-downtime-tip.md">}}
 
 ## Step 3 — Complete SSL/TLS setup
 
