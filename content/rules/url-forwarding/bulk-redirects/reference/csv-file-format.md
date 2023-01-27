@@ -8,7 +8,7 @@ meta:
 
 # CSV file format to import URL redirects
 
-You can use a CSV file to import URL redirects into a Bulk Redirect List [using the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/#import-a-csv-file-with-url-redirects). Each line in the CSV file must follow this format:
+You can use a CSV file to import URL redirects into a Bulk Redirect List [using the Cloudflare dashboard](/rules/url-forwarding/bulk-redirects/create-dashboard/#1-create-a-bulk-redirect-list). Each line in the CSV file must follow this format:
 
 ```txt
 <SOURCE_URL>,<TARGET_URL>[,<STATUS_CODE>,<PRESERVE_QUERY_STRING>,<INCLUDE_SUBDOMAINS>,<SUBPATH_MATCHING>,<PRESERVE_PATH_SUFFIX>]
