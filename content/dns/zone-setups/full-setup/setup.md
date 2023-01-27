@@ -3,11 +3,11 @@ title: Setup
 pcx_content_type: tutorial
 weight: 1
 meta:
-  title: Change your authoritative nameservers (Full setup)
+  title: Change your nameservers (Full setup)
 structured_data: true
 ---
 
-# Change your authoritative nameservers (Full setup)
+# Change your nameservers (Full setup)
 
 {{<render file="_full-setup-definition.md">}}
 
