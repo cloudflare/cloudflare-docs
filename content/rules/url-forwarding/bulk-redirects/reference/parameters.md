@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
-title: URL Redirect parameters
+title: URL redirect parameters
 weight: 3
 ---
 
-# URL Redirect parameters
+# URL redirect parameters
 
-A URL Redirect has a source URL, a target URL, a status code, and some additional parameters that affect its URL matching behavior and runtime behavior.
+A URL redirect has a source URL, a target URL, a status code, and some additional parameters that affect its URL matching behavior and runtime behavior.
 
-The URL Redirect parameters are the following:
+The URL redirect parameters are the following:
 
 {{<definitions>}}
 
@@ -23,15 +23,15 @@ The URL Redirect parameters are the following:
 - **Target URL** {{<type>}}String{{</type>}}
 
     - API field name: `target_url`.
-    - The URL where the client will be redirected to when there is a match for the URL Redirect. This property is mandatory. The maximum length of the target URL is 32 KB.
+    - The URL where the client will be redirected to when there is a match for the URL redirect. This property is mandatory. The maximum length of the target URL is 32 KB.
     - The value must be a valid URL. The final target URL depends on the values of the **Preserve query string** and **Preserve path suffix** parameters.
     - For more information on the supported URL components, refer to [Supported URL components](/rules/url-forwarding/bulk-redirects/reference/url-components/).
 
 - **Subpath matching** {{<type>}}Boolean{{</type>}}
 
     - API field name: `subpath_matching`.
-    - If true, the current redirect will apply the subpath matching algorithm to the request URL when determining if there is a match for the current URL Redirect. The default value is `false`.
-    - For example, a URL Redirect from `/my-folder/` to `/other-folder/` with **Subpath matching** enabled will also redirect a request from `/my-folder/item` to `/other-folder/item`. However, the redirect will only include the `item` part when **Preserve path suffix** is true. Refer to **Preserve path suffix** for details.
+    - If true, the current redirect will apply the subpath matching algorithm to the request URL when determining if there is a match for the current URL redirect. The default value is `false`.
+    - For example, a URL redirect from `/my-folder/` to `/other-folder/` with **Subpath matching** enabled will also redirect a request from `/my-folder/item` to `/other-folder/item`. However, the redirect will only include the `item` part when **Preserve path suffix** is true. Refer to **Preserve path suffix** for details.
     - For more information, refer to [Matching the source URL of redirects](/rules/url-forwarding/bulk-redirects/how-it-works/#matching-the-source-url-of-redirects).
 
 - **Include subdomains** {{<type>}}Boolean{{</type>}}
@@ -45,13 +45,13 @@ The URL Redirect parameters are the following:
 
     - API field name: `preserve_query_string`.
     - If true, the redirect URL will keep the query string of the original request. The default value is `false`.
-    - For example, a URL Redirect from `/my-folder/` to `/other-folder/` with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value` to `/other-folder/?name=value`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value` to `/other-folder/`.
+    - For example, a URL redirect from `/my-folder/` to `/other-folder/` with **Preserve query string** enabled will redirect a request from `/my-folder/?name=value` to `/other-folder/?name=value`. If **Preserve query string** is disabled, the request will be redirected from `/my-folder/?name=value` to `/other-folder/`.
 
 - **Preserve path suffix** {{<type>}}Boolean{{</type>}}
 
     - API field name: `preserve_path_suffix`.
     - Applicable only when **Subpath matching** is enabled. If true, defines that the redirect URL will include the remaining (non-matched) path elements of the source URL, if any. The default value is `true`.
-    - For example, when both **Subpath matching** and **Preserve path suffix** are enabled, a URL Redirect from `/my-folder/` to `/another-folder/` will redirect an incoming request from `/my-folder/foo` to `/another-folder/foo`. If **Preserve path suffix** is disabled, the same request would still match the URL Redirect, but it would redirect from `/my-folder/foo` to `/another-folder/`.
+    - For example, when both **Subpath matching** and **Preserve path suffix** are enabled, a URL redirect from `/my-folder/` to `/another-folder/` will redirect an incoming request from `/my-folder/foo` to `/another-folder/foo`. If **Preserve path suffix** is disabled, the same request would still match the URL redirect, but it would redirect from `/my-folder/foo` to `/another-folder/`.
 
 - **Status code** {{<type>}}Integer{{</type>}}
 
