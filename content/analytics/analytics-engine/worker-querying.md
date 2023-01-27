@@ -65,9 +65,9 @@ The worker script itself executes a query and formats the result:
 export default {
     async fetch(request, env) {
         // This worker only responds to requests at the root.
-		if (new URL(request.url).pathname != '/') {
-			return new Response('Not found', {status: 404});
-		}
+        if (new URL(request.url).pathname != '/') {
+            return new Response('Not found', {status: 404});
+        }
 
         // SQL string to be executed.
         const query = `
@@ -97,14 +97,14 @@ export default {
             return new Response('An error occurred!', {status: 500});
         }
 
-        // Read the JSON data from the query response and render the data as HTML.
-        const queryJSON = await queryResponse.json();
+    // Read the JSON data from the query response and render the data as HTML.
+    const queryJSON = await queryResponse.json();
         return new Response(
-			renderResponse(queryJSON.data), 
-			{
-				headers: {'content-type': 'text/html'}
-			}
-		);
+            renderResponse(queryJSON.data),
+            {
+                headers: {'content-type': 'text/html'},
+            }
+        );
     }
 }
 
