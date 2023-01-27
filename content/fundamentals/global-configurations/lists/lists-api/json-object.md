@@ -167,7 +167,7 @@ The JSON object properties for a list item are defined as follows:
         </tr>
         <tr>
             <td><code>redirect</code><br />{{<type>}}Object{{</type>}}</td>
-            <td>An object that contains the definition of a URL Redirect. Refer to <a href="/rules/url-forwarding/bulk-redirects/reference/parameters/">URL Redirect parameters</a> for details.</td>
+            <td>An object that contains the definition of a URL redirect. Refer to <a href="/rules/url-forwarding/bulk-redirects/reference/parameters/">URL redirect parameters</a> for details.</td>
             <td><p>Applies only to Bulk Redirect Lists.</p></td>
         </tr>
         <tr>
