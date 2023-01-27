@@ -40,6 +40,22 @@ Purging the end user URL, `https://example.com/hello`, will not work because tha
 
 In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied (orange-clouded) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
 
+To better understand the example, take a look at the following diagram:
+
+<div class="mermaid">
+flowchart TD
+accTitle: Using Purge by URL with workers
+accDescr: This diagram is meant to help choose how to purge a file.
+A("You have a Worker script that runs on https://example.com/hello and this Worker makes a `fetch` request to https://notexample.com/hello.") --> B(Is notexample.com an active zone on Cloudflare?)
+    B -- Yes --> C(Is https://notexample.com/ orange clouded?)
+    B -- No  --> D(Purge https://notexample.com/hello from the original workerscript.com zone.)
+    C -- Yes --> E(Is https://notexample.com/ orange clouded?)
+    C -- No --> F(Purge https://notexample.com/hello from the original workerscript.com zone.)
+    E -- Yes --> G(Do you own notexample.com?)
+    G -- Yes --> H(Purge https://notexample.com/hello from the subresources.com zone.)
+    G -- No --> I(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
+</div>
+
 ### Purging assets stored with the Cache API
 
 Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) operations can be purged in a couple of ways:
