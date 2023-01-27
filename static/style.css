@@ -5432,8 +5432,3 @@ pre {
   display: inline;
   white-space: nowrap;
 }
-
-.breadcrumb li + li:before {
-  content: ">";
-  padding: 0.3rem;
-}
