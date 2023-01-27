@@ -12,7 +12,7 @@ If you want to access Analytics Engine data from within a Worker you can use `fe
 
 ## Authentication
 
-In order that your worker can authenticate with the API you will need your account ID and an API token. 
+In order that your Worker can authenticate with the API you will need your account ID and an API token. 
 
 * Your 32 character account ID can be obtained from the Cloudflare dashboard.
 * An API token can also be generated in the dashboard. Refer to the [SQL API docs](../sql-api/#authentication) for more information on this.
@@ -41,7 +41,7 @@ The data will returned in the format described in the [FORMAT section of the API
 
 ## Example Worker
 
-The following is a sample Worker which executes a query against a sample dataset of weather readings and displays minimum and maximum values for each city.
+The following is a sample Worker which executes a query against a dataset of weather readings and displays minimum and maximum values for each city.
 
 ### Environment variable setup
 
@@ -53,7 +53,7 @@ The account ID is set in wrangler.toml:
 ACCOUNT_ID = "<account_id>"
 ```
 
-The API_TOKEN can be set as a secret using the wrangler command line by running the following and entering your token string:
+The API_TOKEN can be set as a secret, using the wrangler command line tool, by running the following and entering your token string:
 ```sh
 $ npx wrangler secret put API_TOKEN
 ```
@@ -97,8 +97,8 @@ export default {
             return new Response('An error occurred!', {status: 500});
         }
 
-    // Read the JSON data from the query response and render the data as HTML.
-    const queryJSON = await queryResponse.json();
+        // Read the JSON data from the query response and render the data as HTML.
+        const queryJSON = await queryResponse.json();
         return new Response(
             renderResponse(queryJSON.data),
             {
