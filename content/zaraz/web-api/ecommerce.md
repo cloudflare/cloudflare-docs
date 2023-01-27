@@ -16,6 +16,8 @@ To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz ac
 
 Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
 
+{{<Aside type="note" header="Note">}}It is crucial to follow the guidelines set by third-party tools, such as Google Analytics 3 and Google Analytics 4, to ensure compliance with their limitations on payload size and length. For instance, if your 'Order Completed' call includes a large number of products, it may exceed the limitations of the selected tool.{{</Aside>}}
+
 ## Enable e-commerce tracking
 
 You do not need to map e-commerce events to triggers. Zaraz will automatically forward data using the right format to the tools with e-commerce support.
