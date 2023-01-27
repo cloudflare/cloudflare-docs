@@ -52,7 +52,7 @@ DLP scans will not start until you [create an HTTP policy](#2-create-a-dlp-polic
 
 You can configure a DLP Profile with the following optional settings:
 
-- **Match count**: the number of times that any entry in the profile can be detected before an action is triggered, such as blocking or logging. For example, if you select a match count of 10, DLP will only log or block a request if the HTTP body contains 11 or more matching strings. Detections do not have to be unique.
+- **Match count**: the number of times that any enabled entry in the profile can be detected before an action is triggered, such as blocking or logging. For example, if you select a match count of 10, DLP will only log or block a request if the HTTP body contains 11 or more matching strings. Detections do not have to be unique.
 
 ## 2. Create a DLP policy
 
