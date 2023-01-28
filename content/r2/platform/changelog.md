@@ -9,7 +9,7 @@ rss: file
 
 ## 2023-01-27
 
-- R2 authentication tokens created via the dashboard are now scoped to a single account by default.
+- R2 authentication tokens created via the R2 token page are now scoped to a single account by default.
 
 ## 2022-12-07
 
