@@ -5,7 +5,9 @@
   "repository": "cloudflare/cloudflare-docs",
   "description": "Cloudflare Developer Docs",
   "scripts": {
-    "dev": "hugo serve -D",
+    "dev": "concurrently npm:dev:*",
+    "dev:hugo": "hugo --watch",
+    "dev:wrangler": "wrangler pages dev public",
     "lint": "tsm bin/format.ts --check",
     "crawl": "tsm bin/crawl.ts",
     "prebuild": "tsm bin/highlight.ts replace",
@@ -21,10 +23,12 @@
     "@types/node": "16.11.12",
     "@types/prettier": "2.4.3",
     "@types/prismjs": "^1.26.0",
+    "concurrently": "^7.6.0",
     "node-html-parser": "5.2.0",
     "prettier": "2.5.1",
     "prismjs": "^1.29.0",
-    "tsm": "2.2.2"
+    "tsm": "2.2.2",
+    "wrangler": "^2.8.1"
   },
   "volta": {
     "node": "18.10.0"
