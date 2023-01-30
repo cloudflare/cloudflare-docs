@@ -1618,7 +1618,18 @@ html {
     background: var(--gray-9)
 }
 
+.Button-is-docs-tertiary {
+    background: #0051C3;
+    color: #fff;
+}
+
 [theme=dark] .Button-is-docs-secondary {
+    --border-color: rgba(var(--color-rgb), .3);
+    color: inherit;
+    background: transparent
+}
+
+[theme=dark] .Button-is-docs-tertiary {
     --border-color: rgba(var(--color-rgb), .3);
     color: inherit;
     background: transparent
