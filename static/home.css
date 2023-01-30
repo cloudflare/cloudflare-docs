@@ -472,11 +472,12 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
 .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
+    background-image: url("/Dev-Docs-Header-Illustration.svg");
     background-repeat: no-repeat;
     margin: 0 auto;
     position: relative;
     box-shadow: 0 0 0px .5px white inset;
+    margin-top: 3em;
 }
 }
 
@@ -573,8 +574,52 @@ html[is-site-page] .DocsContent {
     justify-content: center;
 }
 
-.QuadBlockGrid a {
-    color: inherit;
+/* Docs-wide style overrides for quadblock link */
+.QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    background-color: #fff;
+    border-bottom-color: #000;
+}
+
+.DocsRecommendation {
+    background: #e2f5fa;
+    padding: 1em;
+}
+
+.DocsRecommendation h2 {
+    padding: 1em 0;
+}
+
+.RecommendedContentBlock {
+    padding-bottom: 4em;
+}
+
+.RecommendedContentBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: #0051C3;
+    background: inherit;
+    border-bottom-color: #0051C3;
+}
+
+.RecommendedContentHeader {
+    border-top: 1px solid #222;
+    padding-top: 1em;
+}
+
+.RecommendedContentGrid {
+    display: flex;
+    gap: 6em;
+    align-items: flex-start;
+}
+
+.RecommendedContentTitle {
+    font-size: 1.3em;
+}
+
+.RecommendedContentDescription {
+    font-size: .85em;
+    width: 16em;
+    align-self: flex-start;
 }
 
 .CommunityBlock {
@@ -582,8 +627,7 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: .75em;
-    padding-right: 3.5em;
+    padding-right: 1.5em;
     align-items: center;
     justify-content: center;
 }
@@ -595,11 +639,29 @@ html[is-site-page] .DocsContent {
     }
 }
 
+.CommunityBlock--content {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: #000;
+}
+
 .CommunityBlock img {
-    height: 2.5em;
-    width: 2.5em;
+    height: 1.4em;
     padding-bottom: .5em;
-    align-content: center;
+}
+
+.BlogSection {
+    background-color: #fef1e6 ;
+    margin-top: 3em;
+    padding: 3em;
+}
+
+.BlogBlock--content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
 }
 
 [theme=dark] .CommunityBlock img {
@@ -611,7 +673,7 @@ html[is-site-page] .DocsContent {
     flex-wrap: wrap;
     padding-left: .75em;
     padding-right: .75em;
-    margin-top: 3.5em;
+    margin-top: 8em;
     margin-bottom: 1em;
     justify-content: space-between;
 }
@@ -619,8 +681,9 @@ html[is-site-page] .DocsContent {
 .TriBlock {    
     display: flex;
     width: 20em;
-    height: 18em;
-    background: #f3f3f4;
+    height: 20em;
+    background: #fef1e6;
+    border-left: 5px solid #F6821F;
     padding: .5em 2em;
     margin-bottom: 1em;
 }
@@ -641,11 +704,11 @@ html[is-site-page] .DocsContent {
 }
 
 .TriBlock a {
-    font-size: .90em;
-    color: #0055DC;
+    font-size: 16px;
+    color: #313131;
     --background-color: transparent;
-    --border-bottom-color-rgb: 0, 85, 220;
-    --border-bottom-color-alpha: .3;
+    --border-bottom-color-rgb: 0, 0, 0;
+    --border-bottom-color-alpha: 1;
 }
 
 [theme=dark] .TriBlock a {
@@ -654,9 +717,12 @@ html[is-site-page] .DocsContent {
 
 .TriBlock ul li {
     list-style-type: none;
-    padding: 0; /* Remove padding */
+    text-decoration: none;
+    padding: 6px 0; 
     margin-top: 0px;
     margin-left: 0px;
+    display: flex;
+    gap: 10px;
 }
 
 .TriBlockHeader {
@@ -667,8 +733,8 @@ html[is-site-page] .DocsContent {
 
 .TriBlockHeader p {
     font-size: 1.25em;
-    font-weight: bold;
-    padding: .5em 0 .75em .5em;
+    font-weight: 500;
+    padding: .5em 0 .75em 0;
 }
 
 /* Docs-wide style overrides for tri */
@@ -769,12 +835,16 @@ html[is-site-page] .DocsContent {
 }
 
 .StartHere a {
-    font-size:2em;
-    color: inherit;
+    font-size: .9em;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #0051C3;;
+    padding: 8px 16px;
+    color: #fff;
 }
 
 .HomeTitle {
-    padding-left: .75em;
     padding-top: 3em;
     line-height: 5em;
 }
