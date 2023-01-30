@@ -55,7 +55,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Page Shield | ✅ | ✅ | ✘[^6] |
 | | Rate Limiting | ✅ | ✅ | 🚧[^1] |
 | | SSL | ✅ | ✅ | ✅ |
-| | SSL 4 SaaS | ✅ | ✅ | ✅ |
+| | Cloudflare for SaaS | ✅ | ✅ | ✅ |
 | | WAF/L7 Firewall | ✅ | ✅ | ✅ |
 | Developer Platform | Cloudflare Images | ⚫️ | ✘ | ✘ |
 | | Cloudflare Pages | ✘ | ✘ | ✘ |
