@@ -47,7 +47,7 @@ flowchart TD
 accTitle: Using Purge by URL with workers
 accDescr: This diagram is meant to help choose how to purge a file.
 A("You have a Worker script that runs on https://example.com/hello and this Worker makes a `fetch` request to https://notexample.com/hello.") --> B(Is notexample.com an active zone on Cloudflare?)
-    B -- Yes --> C(Is https://notexample.com/ orange clouded?)
+    B -- Yes --> C(Is https://notexample.com/ proxied through Cloudflare?)
     B -- No  --> D(Purge https://notexample.com/hello from the original example.com zone.)
     C -- Yes --> E(Do you own notexample.com?)
     E -- Yes --> F(Purge https://notexample.com/hello from the notexample.com zone.)
