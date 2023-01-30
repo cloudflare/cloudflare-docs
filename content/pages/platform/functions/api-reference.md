@@ -81,3 +81,7 @@ Holds the environment variables, secrets, and bindings for a Function. This also
 ### Params
 
 Holds the values from the [dynamic routes](/pages/platform/functions/routing/#dynamic-routes).
+
+## Related resources
+
+- [Bindings](/workers/platform/bindings/)
