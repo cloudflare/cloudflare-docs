@@ -59,6 +59,15 @@ rss: file
       <td>OWASP Ruleset</td>
       <td>Rolling back OWASP version 3.3.3</td>
     </tr>
+    <tr>
+      <td>2023-01-27</td>
+      <td>2023-02-06</td>
+      <td>Log</td>
+      <td>100524_BETA</td>
+      <td>...9d787fc2</td>
+      <td>Java - Remote Code Execution</td>
+      <td>This detection will replace 100524 in legacy WAF and ...f2cc4e84 in new WAF</td>
+    </tr>
 </tbody>
 </table>
 {{</table-wrap>}}
