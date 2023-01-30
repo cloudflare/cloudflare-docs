@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available>
+<html lang="{{ .Site.LanguageCode }}" theme="light"  {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}} is-docs-page js-focus-visible-polyfill-available>
   <head>
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
@@ -16,7 +16,9 @@
     <noscript><link rel="stylesheet" href="https://feedback.developers.cloudflare.com/sdk.css"/></noscript>
   </head>
   <body>
+    {{- with $.Page.Params.structured_data -}}{{- if or (eq $.Page.Params.pcx_content_type "how-to") (eq $.Page.Params.pcx_content_type "tutorial") -}}<div itemscope itemtype="https://schema.org/HowTo">{{- end -}}{{- end -}}
     {{- block "main" . -}}{{- end -}}
+    {{- with $.Page.Params.structured_data -}}{{- if or (eq $.Page.Params.pcx_content_type "how-to") (eq $.Page.Params.pcx_content_type "tutorial") -}}</div>{{- end -}}{{- end -}}
     {{- partial "gtag" -}}
     {{- partial "littlefoot" -}}
   </body>

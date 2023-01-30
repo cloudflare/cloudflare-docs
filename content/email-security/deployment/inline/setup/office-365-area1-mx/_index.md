@@ -15,6 +15,8 @@ In this tutorial, you will learn how to configure Microsoft Office 365 with Area
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
+{{<render file="_outbound-email.md">}}
+
 {{<render file="_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to Allow List

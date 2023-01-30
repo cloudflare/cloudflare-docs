@@ -64,6 +64,7 @@
 /1.1.1.1/setup-1.1.1.1/macos/ /1.1.1.1/setup/macos/ 301
 /1.1.1.1/setup-1.1.1.1/router/ /1.1.1.1/setup/router/ 301
 /1.1.1.1/setup-1.1.1.1/windows/ /1.1.1.1/setup/windows/ 301
+/1.1.1.1/setup/check-1.1.1.1/ /1.1.1.1/setup/check/ 301
 /1.1.1.1/setup/setup-instructions/ /1.1.1.1/setup/ 301
 /1.1.1.1/setup/setup-instructions/dns-over-https/ /1.1.1.1/encryption/dns-over-https/ 301
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
@@ -123,6 +124,8 @@
 /email-security/static/Deployment_and_Configuration_Guide_Okta_Integration.pdf /email-security/account-setup/sso/okta/ 301
 /email-security/static/Configure_SAML_SSO_with_Azure_AD.pdf /email-security/account-setup/sso/azure/ 301
 /email-security/static/Admin_Quarantine.pdf /email-security/email-configuration/admin-quarantine/ 301
+/email-security/static/Deployment_and_Configuration_Guide_for_Splunk_Cloud_HTTP_Event_Collector.pdf /email-security/reporting/siem-integration/splunk-integration-guide/ 301
+/email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf /email-security/reporting/siem-integration/sumo-logic-integration-guide/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -197,6 +200,7 @@
 
 # d1
 /d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
+/d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/client-api/ /d1/platform/client-api/ 301
 /d1/migrations/ /d1/platform/migrations/ 301
 /d1/community-projects/ /d1/platform/community-projects/ 301

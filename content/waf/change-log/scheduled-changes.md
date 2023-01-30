@@ -24,31 +24,31 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-01-16</td>
-      <td>2023-01-30</td>
-      <td>Block</td>
-      <td>N/A</td>
-      <td>...bbc447fa</td>
-      <td>XSS - JavaScript Events</td>
-      <td>This detection will replace 100135C in legacy WAF and ...de5e2367 in new WAF</td>
+      <td>2023-01-27</td>
+      <td>2023-02-06</td>
+      <td>Log</td>
+      <td>100524_BETA</td>
+      <td>...9d787fc2</td>
+      <td>Java - Remote Code Execution</td>
+      <td>This detection will replace 100524 in legacy WAF and ...f2cc4e84 in new WAF</td>
     </tr>
     <tr>
-      <td>2023-01-16</td>
       <td>2023-01-30</td>
+      <td>2023-02-06</td>
       <td>Log</td>
-      <td>100557</td>
-      <td>...4c2e80c3</td>
-      <td>Code Injection - JavaScript</td>
+      <td>100560</td>
+      <td>...1b4e622e</td>
+      <td>Microsoft Exchange - Broken Authentication - CVE:CVE-2021-33766</td>
       <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-01-16</td>
       <td>2023-01-30</td>
+      <td>2023-02-06</td>
       <td>Log</td>
-      <td>100559</td>
-      <td>...65414846</td>
-      <td>Prototype pollution Attack, Headers</td>
-      <td>N/A</td>
+      <td>100303_BETA</td>
+      <td>...d5488862</td>
+      <td>Command Injection - Nslookup</td>
+      <td>This detection will replace 100303 on Legacy WAF and ...b090ba9a on new WAF</td>
     </tr>
 </tbody>
 </table>

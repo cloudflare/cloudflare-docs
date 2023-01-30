@@ -19,6 +19,7 @@ The descriptions below detail the fields available for `gateway_dns`.
 | ColoID | The ID of the colo that received the DNS query (for example, 46, 72, 397). | int |
 | Datetime | The date and time the corresponding DNS request was made (for example, '2021-07-27T00:01:07Z'). | int or string |
 | DeviceID | UUID of the device where the HTTP request originated from (for example, 'dad71818-0429-11ec-a0dc-000000000000'). | string |
+| DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
 | DstIP | The destination IP address the DNS query was made to (for example, '104.16.132.2290'). | string |
 | DstPort | The destination port used at the edge. The port changes based on the protocol used by the DNS query (for example, 0). | int |
 | Email | Email used to authenticate the client (for example, 'user@test.com'). | string |
@@ -37,7 +38,8 @@ The descriptions below detail the fields available for `gateway_dns`.
 | QueryType | The type of DNS query (for example, '1', '28', '15', or '16'). | string |
 | QueryTypeName | The type of DNS query (for example, 'A', 'AAAA', 'MX', or 'TXT'). | string |
 | RCode | The return code sent back by the DNS resolver. | int |
-| RData | The rdata objects (for example, {"type":"5","data":"dns-packet-placeholder..."}) | array[object] |
+| RData | The rdata objects (for example, {"type":"5","data":"dns-packet-placeholder..."}). | array[object] |
+| ResolvedIPs | The resolved IPs in the response, if any (for example ['203.0.113.1', '203.0.113.2']). | array[string] |
 | ResolverDecision | Result of the DNS query (for example, 'overrideForSafeSearch'). | string |
 | SrcIP | The source IP address making the DNS query (for example, '104.16.132.229'). | string |
 | SrcPort | The port used by the client when they sent the DNS request (for example, 0). | int |
