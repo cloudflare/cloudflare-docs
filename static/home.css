@@ -712,6 +712,11 @@ html[is-site-page] .DocsContent {
     margin-bottom: 1em;
 }
 
+.TriBlock img {
+    height: 20px;
+    width: 20px;
+}
+
 @media (max-width: 780px) {
     .TriBlock {
         width: unset;
