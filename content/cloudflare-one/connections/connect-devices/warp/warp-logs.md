@@ -14,6 +14,38 @@ The WARP client provides diagnostic logs that you can use to troubleshoot connec
 
 To view debug logs on desktop devices:
 
+{{<tabs labels="macOS | Windows | Linux">}}
+{{<tab label="macOS" no-code="true">}}
+
+1. Open a Terminal window.
+2. Run the `warp-diag` tool:
+    ```sh
+    $ warp-diag
+    ```
+This will place a `warp-debugging-info.zip` on your Desktop.
+
+{{</tab>}}
+{{<tab label="Windows" no-code="true">}}
+ 
+1. Open a Command Prompt or Powershell window.
+2. Run the `warp-diag` tool:
+    ```bash
+    C:\Users\JohnDoe>warp-diag
+    ```
+This will place a `warp-debugging-info.zip` on your Desktop.
+
+{{</tab>}}
+{{<tab label="Linux" no-code="true">}}
+ 
+1. Open a Terminal window.
+2. Run the `warp-diag` tool:
+    ```sh
+    $ warp-diag
+    ```
+This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
+
+{{</tab>}}
+{{</tabs>}}
 
 ### `warp-diag` logs
 
@@ -24,7 +56,7 @@ The `warp-debugging-info.zip` archive contains the following files:
 | ------------------ | ----------- |
 | `boringtun.log`    | Log for the WireGuard tunnel that serves traffic from the device to Cloudflare's edge. |
 | `connectivity.txt` | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check). The trace for `connectivity.cloudflareclient.com` should show `warp=on` and optionally `gateway=on` (if TCP proxy is enabled). The trace for `engage.cloudflareclient.com` should show `warp=off` and `gateway=off`. |
-| `daemon.log`       | Communication between the device and Cloudflare's edge. For more information, refer to the list of [common daemon errors]().|
+| `daemon.log`       | Communication between the device and Cloudflare's edge.|
 | `daemon_dns.log`   | Contains detailed DNS logs if **Log DNS queries** was enabled in the WARP client. |
 | `date.txt`         | Date and time (UTC) when you ran the `warp-diag` command.|
 | `dns-check.txt`    | Verifies that the WARP DNS servers are set as system default. For [operating modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) where DNS filtering is enabled, this file should contain the IPs of the WARP DNS servers (`127.0.2.2` and `127.0.2.3`). |
