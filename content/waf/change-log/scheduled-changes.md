@@ -61,7 +61,7 @@ rss: file
     </tr>
     <tr>
       <td>2023-01-27</td>
-      <td>2023-01-30</td>
+      <td>2023-02-06</td>
       <td>Log</td>
       <td>100524_BETA</td>
       <td>...9d787fc2</td>
