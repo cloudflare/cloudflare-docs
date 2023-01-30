@@ -29,7 +29,7 @@ You will need the email address associated with your Cloudflare account, Cloudfl
 6. After reviewing the information, select **Update Mitigation Platform**.
 7. Select **Menu** > **Library**.
 8. On the **Library** page, in the search field, enter **Cloudflare**.
-9. Under **Uncategorized Views**, Select **Cloudflare Saved View**. The data explorer displays.
+9. Under **Uncategorized Views**, select **Cloudflare Saved View**. The data explorer displays.
 10. From **Options** > **Time**, you can edit the **Lookback** information to review traffic source information for a specific time period.
 
 For additional information about Kentik and Magic Transit, refer to [Kentik's Magic Transit setup](https://kb.kentik.com/v3/Gc10.htm#Gc10-Cloudflare_MT_Setup).
