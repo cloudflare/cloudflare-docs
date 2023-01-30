@@ -30,7 +30,7 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ---
 
-### Using Workers to single-file purge
+### Single file purge  assets cached by a worker
 
 When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
 
@@ -44,14 +44,15 @@ To better understand the example, take a look at the following diagram:
 
 <div class="mermaid">
 flowchart TD
-accTitle: Using Purge by URL with workers
+accTitle: Single file purge  assets cached by a worker
 accDescr: This diagram is meant to help choose how to purge a file.
 A("You have a Worker script that runs on https://example.com/hello and this Worker makes a `fetch` request to https://notexample.com/hello.") --> B(Is notexample.com an active zone on Cloudflare?)
     B -- Yes --> C(Is https://notexample.com/ proxied through Cloudflare?)
     B -- No  --> D(Purge https://notexample.com/hello from the original example.com zone.)
     C -- Yes --> E(Do you own notexample.com?)
-    E -- Yes --> F(Purge https://notexample.com/hello from the notexample.com zone.)
-    E -- No --> G(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
+    C -- No --> F(Purge https://notexample.com/hello from the original example.com zone.)
+    E -- Yes --> G(Purge https://notexample.com/hello from the notexample.com zone.)
+    E -- No --> H(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
 </div>
 
 ### Purging assets stored with the Cache API
