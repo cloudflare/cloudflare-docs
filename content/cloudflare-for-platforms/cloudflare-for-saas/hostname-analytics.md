@@ -42,7 +42,7 @@ Build custom dashboards to share this information by specifying an individual cu
 
 [Logpush](/logs/about/) sends metadata from Cloudflare products to your cloud storage destination or SIEM.
 
-Using [filters](/logs/reference/filters/), you can send set sample rates (or not include logs altogether) based on filter criteria. This flexibility allows you to maintain selective logs for custom hostnames without massively increasing your log volumen.
+Using [filters](/logs/reference/filters/), you can send set sample rates (or not include logs altogether) based on filter criteria. This flexibility allows you to maintain selective logs for custom hostnames without massively increasing your log volume.
 
 Filtering is available for [all Cloudflare datasets](/logs/reference/log-fields/zone/).
 
