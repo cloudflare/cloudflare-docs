@@ -49,7 +49,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your KV namespaces locally
 
-While developing locally, interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv <BINDING_NAME>` to your run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
+While developing locally, interact with your KV namespace by adding `-k <BINDING_NAME>` or `--kv=<BINDING_NAME>` to your run command. For example, if your namespace is bound to `TODO_LIST`, access the KV namespace in your local dev by running `npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST`. The data from this namespace can be accessed using `context.env.TODO_LIST`.
 
 ## Durable Object namespaces
 
@@ -224,7 +224,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 {{</tab>}}
 {{</tabs>}}
 
-### Interact with your service binding locally
+### Interact with your Service binding locally
 
 While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
 
