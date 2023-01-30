@@ -10,6 +10,8 @@ meta:
 
 The Cloudflare Workers platform provides multiple storage options. This guide will inform you on which storage option is appropriate based on your project's use case.
 
+Available storage and persistency products include:
+
 * [KV](#kv) for key-value storage 
 * [R2](#r2) for S3-compatible object storage use-cases
 * [Durable Objects](#durable-objects) for transactional, co-ordinated use-cases
