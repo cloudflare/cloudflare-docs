@@ -17,7 +17,7 @@ In order that your Worker can authenticate with the API you will need your accou
 * Your 32 character account ID can be obtained from the Cloudflare dashboard.
 * An API token can also be generated in the dashboard. Refer to the [SQL API docs](../sql-api/#authentication) for more information on this.
 
-We recommend storing the account ID as an environment variable and the API token as a secret in your worker. This can be done through the dashboard or though Wrangler. Refer to the [Workers documentation](/workers/platform/environment-variables/) for more details on this.
+We recommend storing the account ID as an environment variable and the API token as a secret in your worker. This can be done through the dashboard or through Wrangler. Refer to the [Workers documentation](/workers/platform/environment-variables/) for more details on this.
 
 ## Querying
 
@@ -36,7 +36,7 @@ const response = await fetch(API, {
 const responseJSON = await response.json();
 ```
 
-The data will returned in the format described in the [FORMAT section of the API docs](../sql-reference/#json) allowing you to extract meta information about the names and types of returned columns in addition to the data itself and a row count.
+The data will be returned in the format described in the [FORMAT section of the API docs](../sql-reference/#json) allowing you to extract meta information about the names and types of returned columns in addition to the data itself and a row count.
 
 
 ## Example Worker
@@ -47,7 +47,7 @@ The following is a sample Worker which executes a query against a dataset of wea
 
 First the environment variables are set up with the account ID and API token.
 
-The account ID is set in wrangler.toml:
+The account ID is set in `wrangler.toml`:
 ```TOML
 [vars]
 ACCOUNT_ID = "<account_id>"
