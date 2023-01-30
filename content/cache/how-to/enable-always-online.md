@@ -9,7 +9,7 @@ Here is how to enable Always Online in the dashboard:
 
 1.  Log in to your Cloudflare account.
 2.  Choose the domain that will use Always Online with Internet Archive integration.
-3.  Click the **Caching** > **Configuration**.
+3.  Select **Caching** > **Configuration**.
 4.  Under **Always Online**, set the toggle to **On**.
 
 {{<Aside type="note" header="Note">}}

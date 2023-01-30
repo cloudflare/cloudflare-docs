@@ -1,7 +1,7 @@
 ---
 title: Channel and Alliance Partners
 pcx_content_type: navigation
-weight: 8
+weight: 7
 ---
 
 # Channel and Alliance Partners

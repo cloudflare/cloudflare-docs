@@ -28,12 +28,17 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 2. In the top navigation bar, click **Add site**.
 3. Enter your website’s root domain (`example.com`) and then click **Add Site**.
     
-    {{<Aside type="note">}}If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
+    {{<Aside type="note">}}
+If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
+
+Additionally, Cloudflare requires your `root domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat).
     {{</Aside>}}
     
 4. Select your plan level. For more details on features and pricing, refer to [our Plans page](https://www.cloudflare.com/plans/#compare-features).
 5. Cloudflare will then automatically scan for your DNS records.
     1. {{<render file="../../dns/_partials/_dns-scan-procedure.md">}}
+
+        {{<render file="../../dns/_partials/_dns-nxdomain-warning.md">}}
 
     2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
     3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
@@ -48,15 +53,12 @@ Using Cloudflare Registrar simplifies your setup process by automatically using 
 
 ## Step 2 — Update nameservers
 
-Before your domain can begin using Cloudflare for DNS resolution, you need to update your nameservers at your registrar.
+{{<render file="../../dns/_partials/_nameserver-preamble.md">}}
+<br/>
 
-{{<Aside type="note">}}
+Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar.
 
-If your domain is particularly sensitive to downtime, review our suggestions to [minimize downtime](/fundamentals/get-started/setup/minimize-downtime/).
-
-{{</Aside>}}
-
-{{<render file="../../dns/_partials/_update-nameservers.md">}}
+{{<render file="../../dns/_partials/_minimize-downtime-tip.md">}}
 
 ## Step 3 — Complete SSL/TLS setup
 

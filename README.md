@@ -17,7 +17,7 @@ $ curl https://get.volta.sh | bash
 $ volta install node
 ```
 
-Finally, you will need to install the Node.js dependencies for this project using npm or another package manager:
+Finally, install the Node.js dependencies for this project using npm or another package manager:
 
 ```sh
 $ npm install
@@ -64,8 +64,11 @@ Prefixes | Description
 `directory` | Inserts a `directory-listing` shortcode.
 `headerfullfile` | Inserts a file header for a complete Markdown file.
 `metatitle` | Inserts meta title fields in existing Markdown header. Used to complement a full file header.
+`metadescription` | Inserts meta description fields in existing Markdown header. Used to complement a full file header.
 `headerpartialfile` | Inserts a header for a partial Markdown file.
+`headerpartialfileparams` | Inserts a header for a partial Markdown file with input parameters.
 `partialinclude` or `renderpartial` | Inserts a `render` shortcode to include content from a partial in the current document.
+`partialincludeparams` or `renderpartialparams` | Inserts a `render` shortcode to include content from a partial with input parameters in the current document.
 `twotabs` or `addtabs` | Inserts a new tabs section with two tabs for dashboard and API instructions.
 `detailssection` or `collapsible` | Inserts a collapsible `<details>` HTML element.
 

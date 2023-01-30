@@ -30,7 +30,7 @@ $ cloudflared tunnel route lb <tunnel name/uuid> <hostname> <load balancer pool>
 
 * `<hostname>`: the DNS hostname of the load balancer, for example `lb.example.com`.
 
-* `<load balancer pool>`: the ID of the [pool](/load-balancing/how-to/create-pool/#create-a-pool) that will contain the tunnel subdomain.
+* `<load balancer pool>`: the name of the [pool](/load-balancing/how-to/create-pool/#create-a-pool) that will contain the tunnel subdomain.
 
 This command creates an LB DNS record that points the specified hostname to the subdomain of your tunnel (`UUID.cfargotunnel.com`). Traffic will not be proxied unless the tunnel is running.
 

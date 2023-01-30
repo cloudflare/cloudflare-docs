@@ -15,18 +15,18 @@ Any properties set on the event will override the default property on the waitin
 ## Create an event from the dashboard
 
 1.  Within your application, go to **Traffic** > **Waiting Rooms**.
-2.  Expand a waiting room  and click **Schedule Event**.
+2.  Expand a waiting room  and select **Schedule Event**.
 3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
 4.  You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at Event Start** and all users in the pre-queue will be randomly admitted at event start.
-5.  Click **Next**.
+5.  Select **Next**.
 6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
 
     {{<Aside type="note">}}If you choose to override the values of Total active users, you must also override the number of New users per minute, and vice versa.{{</Aside>}}
 
-7.  Click **Next**.
+7.  Select **Next**.
 8.  In the customization section, you can select Always inherit your waiting room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. M​ake sure to preview the result before continuing.
-9.  Click **Next** and review your Event details and settings.
-10.  Click **Save**.
+9.  Select **Next** and review your Event details and settings.
+10.  Select **Save**.
 
 In your waiting room page, in the **Next Event** column you can visualize the date of the next event scheduled. This columns will read `N/A` in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
 

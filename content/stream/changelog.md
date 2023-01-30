@@ -2,9 +2,20 @@
 pcx_content_type: changelog
 title: Changelog
 weight: 11
+rss: file
 ---
 
 # Changelog
+
+## 2023-01-04
+
+### Earlier detection (and rejection) of non-video uploads
+
+Cloudflare Stream now detects non-video content on upload using [the POST API](/stream/uploading-videos/upload-video-file/) and returns a 400 Bad Request HTTP error with code `10059`.
+
+Previously, if you or one of your users attempted to upload a file that is not a video (ex: an image), the request to upload would appear successful, but then fail to be encoded later on.
+
+With this change, Stream responds to the upload request with an error, allowing you to give users immediate feedback if they attempt to upload non-video content.
 
 ## 2022-12-08
 
@@ -22,7 +33,7 @@ Cloudflare Stream now supports [VP9](https://developers.google.com/media/vp9) wh
 
 ### Reduced time to start WebRTC streaming and playback with Trickle ICE
 
-Cloudflare Stream's [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-05.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
+Cloudflare Stream's [WHIP](https://datatracker.ietf.org/doc/draft-ietf-wish-whip/) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) implementations now support [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/), reducing the time it takes to initialize WebRTC connections, and increasing compatibility with WHIP and WHEP clients.
 
 For more, refer to [the docs](/stream/webrtc-beta/).
 

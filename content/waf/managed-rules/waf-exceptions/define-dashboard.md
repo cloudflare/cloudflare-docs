@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Define WAF exceptions in the dashboard
 weight: 2
+meta:
+    description: Use the Cloudflare dashboard to define exceptions that skip the execution of WAF managed rulesets or specific ruleset rules.
 ---
 
 # Define WAF exceptions in the dashboard

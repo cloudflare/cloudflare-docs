@@ -12,7 +12,7 @@ Use Cloudflare Workers to connect your application to external databases, such a
 | Database                                                                         | Library or Driver      | Connection Method      |
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Postgres](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) |  [deno-postgres](https://github.com/cloudflare/worker-template-postgres) | [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
-| [MySQL](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | [deno-mysql](https://github.com/cloudflare/worker-template-postgres) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
+| [MySQL](/workers/tutorials/query-postgres-from-workers-using-database-connectors/) | [deno-mysql](https://github.com/cloudflare/worker-template-mysql) |  [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) |
 | [FaunaDB](https://fauna.com/blog/getting-started-with-fauna-and-cloudflare-workers) | [faunadb](https://github.com/fauna/faunadb-js)         | API via client library |
 | [Planetscale](https://planetscale.com/blog/introducing-the-planetscale-serverless-driver-for-javascript) | [@planetscale/database](https://github.com/planetscale/database-js)         | API via client library |
 | [Supabase](https://github.com/supabase/examples-archive/tree/main/supabase-js-v1/with-cloudflare-workers) | [@supabase/supabase-js](https://github.com/supabase/supabase-js)         | API via client library |
@@ -24,7 +24,7 @@ Use Cloudflare Workers to connect your application to external databases, such a
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6).
+If you do not see an integration listed or have an integration to add, complete and submit the [Cloudflare Developer Platform Integration form](https://forms.gle/iaUqLWE8aezSEhgd6).
 {{</Aside>}}
 
 Once you have installed the necessary packages, use the APIs provided by these packages to connect to your database and perform operations on it. Refer to detailed links for service-specific instructions.
@@ -43,4 +43,4 @@ Then, retrieve the secret value in your code using the following code snippet:
 const secretValue = env.SECRET_NAME;
 ```
 
-You can then use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
+Use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.

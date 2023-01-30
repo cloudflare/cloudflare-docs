@@ -5,7 +5,7 @@ pcx_content_type: overview
 weight: 1
 ---
 
-{{<beta>}}Cloudflare Version Management{{</beta>}}
+# Cloudflare Version Management
 
 Cloudflare Version Management allows you to safely test, deploy, and roll back changes to your zone configuration settings.
 
@@ -19,7 +19,13 @@ By using Version Management, you can:
 
 ## Availability
 
-Version Management is in an open beta for Enterprise customers. For access, contact your account team.
+Version Management is available to all Enterprise customers. For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
+
+{{<Aside type="warning" header="Warning">}}
+
+{{<render file="_product-limitations.md">}}
+
+{{</Aside>}}
 
 ## Requirements
 

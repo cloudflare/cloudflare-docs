@@ -4320,12 +4320,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   .DocsSearch--input:focus:-ms-input-placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   .DocsSearch--input:focus::placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
@@ -4335,12 +4335,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   [theme="dark"] .DocsSearch--input:focus::placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
@@ -5197,13 +5197,13 @@ pre {
 }
 
 /* Beta pill */
-.DocsMarkdown-beta {
+.DocsMarkdown-beta, .DocsMarkdown-deprecated {
   display: flex;
   flex-direction: row;
   column-gap: 1em;
 }
 
-.DocsMarkdown--beta-pill {
+.DocsMarkdown--pill {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -5211,11 +5211,8 @@ pre {
 
   position: relative;
   top: 16px;
-
-  width: 42px;
   height: 18px;
 
-  background: var(--orange-8);
   border-radius: 20px;
 
   flex: none;
@@ -5227,8 +5224,24 @@ pre {
   font-size: 12px;
   line-height: 150%;
   /* identical to box height, or 18px */
+}
 
+.DocsMarkdown--pill-beta {
+  width: 42px;
+  background: var(--orange-8);
   color: var(--orange-1);
+}
+
+.DocsMarkdown--pill-deprecated {
+  width: 79px;
+  background: var(--red-8);
+  color: var(--red-0);
+}
+
+[theme="dark"] .DocsMarkdown--pill-deprecated {
+  width: 79px;
+  background: var(--red-6);
+  color: var(--red-0);
 }
 
 /* Product tagline */
@@ -5382,4 +5395,40 @@ pre {
 
  .mermaid {
   background: #f5f5f5 !important;
+}
+
+.RSS svg {
+  opacity: .7;
+}
+
+[theme=dark] .RSS svg {
+  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+}
+
+.breadcrumb {
+  margin-top: .75em;
+  margin-left: var(--docs-content-gap);
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    margin-left: 0;
+    padding: .5rem 1rem;
+  }
+}
+
+.breadcrumb.collapsed {
+    padding-left: 0em;
+    padding-right: 0em;
+    margin-left: -10em;
+}
+
+.breadcrumb li {
+  display: inline;
+  white-space: nowrap;
 }

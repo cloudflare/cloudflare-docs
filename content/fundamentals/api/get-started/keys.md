@@ -8,6 +8,12 @@ weight: 12
 
 API keys are the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](/fundamentals/api/get-started/create-token/) instead of API keys.
 
+{{<Aside type="note">}}
+
+API key is only available after the [account email address is verified](/fundamentals/account-and-billing/account-setup/verify-email-address/).
+
+{{</Aside>}}
+
 ## Limitations
 
 API keys have multiple limitations when compared to API tokens:

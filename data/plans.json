@@ -7,7 +7,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -21,7 +21,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Business and higher",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -35,7 +35,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -49,7 +49,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -63,7 +63,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -95,7 +95,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -103,7 +103,7 @@
         },
         "crawl_interval": {
           "title": "Crawl interval",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Every 30 days",
           "pro": "Every 15 days",
           "biz": "Every 5 days",
@@ -117,7 +117,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -138,7 +138,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All paid plans",
+          "summary": "Available on paid plans",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -152,7 +152,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -166,7 +166,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -196,7 +196,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -217,7 +217,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -231,7 +231,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -245,7 +245,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -259,7 +259,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -273,7 +273,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -294,7 +294,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -308,7 +308,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -329,7 +329,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -343,7 +343,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -357,7 +357,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -366,15 +366,16 @@
       }
     }
   },
-  "custom_pages": {
-    "title": "Configure Custom Pages",
-    "link": "https://support.cloudflare.com/hc/articles/200172706",
+  "global_configurations": {
+    "title": "Global configurations",
+    "link": "/fundamentals/global-configurations/",
     "custom_pages": {
-      "title": "Customize error and challenge pages",
+      "title": "Custom error/challenge pages",
+      "link": "https://support.cloudflare.com/hc/articles/200172706",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -382,16 +383,41 @@
         }
       }
     },
-    "origin_error_pages": {
-      "title": "Enable Origin Error Pages",
+    "lists": {
+      "title": "Lists",
+      "link": "/fundamentals/global-configurations/lists/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "ip_lists": {
+          "title": "IP Lists",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/",
+          "free": 1,
+          "pro": 10,
+          "biz": 10,
+          "ent": 10
+        },
+        "open_proxies_list": {
+          "title": "Cloudflare Open Proxies Managed IP List",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
+        },
+        "z_all_managed_ip_lists": {
+          "title": "All Managed IP Lists",
+          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "With separate bundle"
         }
       }
     }
@@ -405,7 +431,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -427,6 +453,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -440,6 +467,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -461,7 +489,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -491,6 +519,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -504,6 +533,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -517,6 +547,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -545,6 +576,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Available on paid plans",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",
@@ -599,7 +631,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -616,7 +648,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -630,7 +662,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All paid plans",
+          "summary": "Available on paid plans",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -647,7 +679,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -661,7 +693,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -675,7 +707,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -697,7 +729,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -711,7 +743,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -725,7 +757,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -739,7 +771,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -761,7 +793,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -783,7 +815,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -797,7 +829,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -811,7 +843,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -825,7 +857,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -839,7 +871,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -865,21 +897,21 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
         "num_rules": {
-          "title": "Rules",
+          "title": "Bulk Redirect Rules",
           "free": 15,
           "pro": 15,
           "biz": 15,
           "ent": 50
         },
         "total_lists": {
-          "title": "Lists",
+          "title": "Bulk Redirect Lists",
           "free": 5,
           "pro": 5,
           "biz": 5,
@@ -900,28 +932,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "rules": {
-          "title": "Number of rules",
-          "free": 10,
-          "pro": 25,
-          "biz": 50,
-          "ent": 125
-        }
-      }
-    },
-    "single_redirects": {
-      "title": "Single Redirects",
-      "link": "/rules/url-forwarding/single-redirects/",
-      "properties": {
-        "availability": {
-          "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -933,13 +944,6 @@
           "pro": 25,
           "biz": 50,
           "ent": 125
-        },
-        "regex_support": {
-          "title": "Regex support",
-          "free": "No",
-          "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes"
         }
       }
     },
@@ -949,7 +953,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -998,7 +1002,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1014,13 +1018,41 @@
         }
       }
     },
+    "single_redirects": {
+      "title": "Single Redirects",
+      "link": "/rules/url-forwarding/single-redirects/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "num_rules": {
+          "title": "Number of rules",
+          "free": 10,
+          "pro": 25,
+          "biz": 50,
+          "ent": 125
+        },
+        "regex_support": {
+          "title": "Regex support",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "transform_rules": {
       "title": "Transform Rules",
       "link": "/rules/transform/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1050,7 +1082,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1096,7 +1128,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1134,7 +1166,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1177,7 +1209,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1191,14 +1223,6 @@
           "pro_plus": "40",
           "biz": "100",
           "ent": "1,000"
-        },
-        "ip_lists": {
-          "title": "Number of IP lists",
-          "link": "/firewall/cf-firewall-rules/rules-lists/",
-          "free": 1,
-          "pro": 10,
-          "biz": 10,
-          "ent": 10
         },
         "supported_actions": {
           "title": "Supported actions",
@@ -1223,7 +1247,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1251,7 +1275,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1267,7 +1291,7 @@
         },
         "managed_rulesets": {
           "title": "WAF Managed Rules",
-          "summary": "All paid plans",
+          "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
           "lite": "Yes",
@@ -1278,7 +1302,7 @@
         "custom_rules": {
           "title": "Custom rules",
           "link": "/waf/custom-rules/",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1311,7 +1335,7 @@
         },
         "b_script_monitor": {
           "title": "Script monitor",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1320,7 +1344,7 @@
         },
         "c_new_script_new_domain_alerts": {
           "title": "New Resources Alerts<br/> and New Domain Alerts",
-          "summary": "Business or higher",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -1329,7 +1353,7 @@
         },
         "d_page_attribution": {
           "title": "Page attribution",
-          "summary": "Business or higher",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -1338,7 +1362,7 @@
         },
         "e_malicious_scripts": {
           "title": "Malicious script detection<br/> and alerting",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1347,7 +1371,7 @@
         },
         "f_code_change_detection": {
           "title": "Code change detection<br /> and alerting",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1356,7 +1380,7 @@
         },
         "h_connection_monitor": {
           "title": "Connection monitor",
-          "summary": "Business or higher",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -1365,7 +1389,7 @@
         },
         "i_malicious_connections": {
           "title": "Malicious connection detection<br/> and alerting",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1380,7 +1404,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1403,7 +1427,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1435,7 +1459,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1458,7 +1482,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",
@@ -1485,7 +1509,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1499,7 +1523,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1513,7 +1537,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1586,7 +1610,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1600,7 +1624,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Included with Pro or higher",
+          "summary": "Included with Pro and above",
           "free": "Paid add-on",
           "pro": "Yes",
           "biz": "Yes",
@@ -1614,7 +1638,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher or [Automatic Platform Optimization](/automatic-platform-optimization/)",
+          "summary": "Included with Pro and above or [Automatic Platform Optimization](/automatic-platform-optimization/)",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1628,7 +1652,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1642,7 +1666,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1656,7 +1680,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1670,7 +1694,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1701,7 +1725,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1715,7 +1739,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1729,7 +1753,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1743,7 +1767,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1771,7 +1795,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1784,7 +1808,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Pro or higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -1818,7 +1842,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1832,7 +1856,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1840,7 +1864,7 @@
         },
         "customization": {
           "title": "Can opt out?",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -1877,7 +1901,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1891,7 +1915,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1905,7 +1929,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1926,7 +1950,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1940,7 +1964,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1954,7 +1978,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -1968,7 +1992,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -2000,7 +2024,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -2008,11 +2032,11 @@
         },
         "b_initial_quota": {
           "title": "Hostnames included",
-          "summary": "100",
+          "summary": "Varies",
           "free": 100,
           "pro": 100,
           "biz": 100,
-          "ent": 100
+          "ent": 0
         },
         "c_max_hostnames": {
           "title": "Max hostnames",
@@ -2050,7 +2074,7 @@
           "ent": "Yes"
         },
         "selectable_ca": {
-          "title": "[Custom analytics](/ssl/reference/certificate-authorities/)",
+          "title": "[Selectable CA](/ssl/reference/certificate-authorities/)",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2122,7 +2146,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -2130,7 +2154,7 @@
         },
         "ssl_only_pull": {
           "title": "Strict (SSL-Only Origin Pull)",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2160,7 +2184,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -2174,7 +2198,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2188,7 +2212,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -2218,7 +2242,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans.",
+          "summary": "Available on all plans.",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
@@ -2234,6 +2258,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -2253,6 +2278,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "pro_plus": "No",
@@ -2266,6 +2292,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2278,6 +2305,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -2363,7 +2391,7 @@
         "analytics": {
           "title": "Analytics",
           "link": "/load-balancing/reference/load-balancing-analytics/",
-          "summary": "Pro and higher",
+          "summary": "Pro and above",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
@@ -2393,7 +2421,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Business plan or higher",
+          "summary": "Business and above",
           "free": "No",
           "pro": "No",
           "biz": "Yes",
@@ -2401,7 +2429,7 @@
         },
         "b_rooms": {
           "title": "Number of rooms",
-          "summary": "Business plan or higher",
+          "summary": "Business and above",
           "free": 0,
           "pro": 0,
           "biz": 1,
@@ -2469,7 +2497,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Usage-based billing",
+          "summary": "Paid add-on",
           "free": "Yes<br/>(Usage-based billing)",
           "pro": "Yes<br/>(Usage-based billing)",
           "biz": "Yes<br/>(Usage-based billing)",
@@ -2513,7 +2541,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Usage-based billing",
+          "summary": "Paid add-on",
           "free": "Yes<br/>(Usage-based billing)",
           "pro": "Yes<br/>(Usage-based billing)",
           "biz": "Yes<br/>(Usage-based billing)",
@@ -2543,7 +2571,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise only",
+          "summary": "Paid add-on for Enterprise",
           "free": "No",
           "pro": "No",
           "biz": "No",
@@ -2560,7 +2588,7 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "All plans",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",

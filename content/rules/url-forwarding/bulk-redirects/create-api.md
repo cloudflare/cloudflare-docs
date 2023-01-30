@@ -4,6 +4,7 @@ title: Create via API
 weight: 7
 meta:
   title: Create Bulk Redirects via API
+  description: Learn how to create Bulk Redirects using the Cloudflare API.
 ---
 
 # Create Bulk Redirects via API
@@ -11,7 +12,7 @@ meta:
 To create Bulk Redirects via API, you must:
 
 1. Create a Bulk Redirect List via API.
-2. Add items (URL Redirects) to the list created in step 1.
+2. Add items (URL redirects) to the list created in step 1.
 3. Create a Bulk Redirect Rule via API, which enables the list created in step 1.
 
 The API token used in API requests to manage Bulk Redirects objects (lists, list items, and rules) must have at least the following permissions:
@@ -54,11 +55,11 @@ The response will be similar to the following:
 }
 ```
 
-For more information on list operations, refer to the [Lists API](/firewall/api/cf-lists/) documentation.
+For more information on list operations, refer to the [Lists API](/fundamentals/global-configurations/lists/lists-api/) documentation.
 
 ## 2. Add items to the list
 
-Use the [Create list items](https://developers.cloudflare.com/api/operations/lists-create-list-items) operation to add URL Redirect items to the list:
+Use the [Create list items](https://developers.cloudflare.com/api/operations/lists-create-list-items) operation to add URL redirect items to the list:
 
 ```json
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rules/lists/f848b6ccb07647749411f504d6f88794/items" \
@@ -118,7 +119,7 @@ If the operation already completed successfully, the response will be similar to
 
 ## 3. Create a Bulk Redirect Rule via API
 
-Since Bulk Redirect Lists are just containers of URL Redirects, you have to enable the URL Redirects in the list by creating a Bulk Redirect Rule.
+Since Bulk Redirect Lists are just containers of URL redirects, you have to enable the URL redirects in the list by creating a Bulk Redirect Rule.
 
 Add Bulk Redirect Rules to the entry point ruleset of the `http_request_redirect` phase at the account level. Refer to the [Rulesets API](/ruleset-engine/rulesets-api/) documentation for more information on [creating a ruleset](/ruleset-engine/rulesets-api/create/) and supplying a list of rules for the ruleset.
 

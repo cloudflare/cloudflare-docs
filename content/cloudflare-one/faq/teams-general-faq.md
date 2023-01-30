@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: General
 weight: 3
+meta:
+    description: Review frequently asked questions about Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

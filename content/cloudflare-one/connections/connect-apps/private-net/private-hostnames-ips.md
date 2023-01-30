@@ -36,19 +36,14 @@ Follow the steps below to define your internal DNS resolver with Cloudflare Zero
 
 ## Create a Local Domain Fallback entry
 
-Next, we need to create a [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/local-domains/) entry.
-
-1.  Remain in **Network Settings** and scroll further down to **Local Domain Fallback**.
-
-1.  Click **Manage**.
-
-1.  Create a new Local Domain Fallback entry pointing to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
+Next, we need to [create a Local Domain Fallback entry](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. The rule in the following example instructs the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
 
 ![Local Domain Fallback panel displaying example data.](/cloudflare-one/static/secure-origin-connections/warp-to-tunnel-internal-dns/create-local-domain-fallback.png)
 
 {{<Aside type="note">}}
 
-While on the Network Settings page, ensure that **Split Tunnels** are configured to include traffic to private IPs and hostnames in the traffic sent by WARP to Cloudflare. For guidance on how to do that, refer to [these instructions](/cloudflare-one/connections/connect-apps/private-net/#optional-ensure-that-traffic-can-reach-your-network).
+Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#route-private-network-ips-through-gateway).
+
 
 {{</Aside>}}
 

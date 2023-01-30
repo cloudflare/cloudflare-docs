@@ -25,6 +25,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | DestinationIP | Destination ip of the request. | string |
 | DestinationPort | Destination port of the request. | string |
 | DeviceID | UUID of the device where the HTTP request originated from. | string |
+| DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
 | DownloadedFileNames | List of files downloaded in the HTTP request. | array[string] |
 | Email | Email used to authenticate the client. | string |
 | HTTPHost | Content of the host header in the HTTP request. | string |

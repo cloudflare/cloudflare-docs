@@ -9,15 +9,19 @@ meta:
 
 # Deploy and configure Gmail with Area 1 as MX Record
 
-![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/inline-setup/gsuite-area1-mx/gsuite-area1-mx.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/deployment/inline-setup/gsuite-area1-mx/gsuite-area1-mx.png)
 
 In this tutorial, you will learn how to configure Gmail with Area 1 as MX record. This tutorial is broken down into several steps.
+
+{{<render file="_outbound-email.md">}}
 
 ## Requirements
 
 * Provisioned Area 1 Account.
 * Access to the Gmail administrator console ([**Gmail administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
 * Access to the domain nameserver hosting the MX records for the domains that will be processed by Area 1.
+
+{{<render file="_mx-deployment-prerequisites.md">}}
 
 ## 1. Add Area 1 IP addresses to the Inbound gateway configuration
 
@@ -27,15 +31,15 @@ When Area 1 is deployed as MX records upstream of Gmail, the Inbound gateways ne
 
 2. Navigate to **Apps** > **Google Workspace** > **Gmail**.
 
-    ![Access Gmail](/email-security/static/inline-setup/gsuite-area1-mx/step2-gmail.png)
+    ![Access Gmail](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step2-gmail.png)
 
 3. Select **Spam, Phishing, and Malware** and scroll to **Inbound Gateway configuration**.
 
-    ![Access the spam, phishing and malware setting](/email-security/static/inline-setup/gsuite-area1-mx/step3-spam.png)
+    ![Access the spam, phishing and malware setting](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step3-spam.png)
 
 4. Enable **Inbound Gateway**, and configure it with the following details:
 
-    ![Enable inbound gateway](/email-security/static/inline-setup/gsuite-area1-mx/step4-inbound-gateway.png)
+    ![Enable inbound gateway](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step4-inbound-gateway.png)
 
     * In **Gateway IPs**, select the **Add** link, and add the IPs mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
     * Select **Automatically detect external IP (recommended)**.
@@ -43,7 +47,7 @@ When Area 1 is deployed as MX records upstream of Gmail, the Inbound gateways ne
 
     <div class="medium-img">
 
-    ![Inbound gateway settings](/email-security/static/inline-setup/gsuite-area1-mx/step4-inbound-gateway-settings.png)
+    ![Inbound gateway settings](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step4-inbound-gateway-settings.png)
 
     </div>
 
@@ -51,7 +55,7 @@ When Area 1 is deployed as MX records upstream of Gmail, the Inbound gateways ne
 
 5. Select the **Save** button at the bottom of the dialog box to save the configuration once the details have been entered. Once saved, the administrator console will show the Inbound Gateway as **enabled**.
     
-    ![Inbound gateway on](/email-security/static/inline-setup/gsuite-area1-mx/step5-inbound-on.png)
+    ![Inbound gateway on](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step5-inbound-on.png)
 
 ## 2. Quarantine malicious detections
 
@@ -67,11 +71,11 @@ If you would like to send Area 1 malicious detection to a separate quarantine ot
 
 1. In the [Gmail administrative console](https://admin.google.com), select the **Manage quarantines** panel.
 
-    ![Select the manage quarantines panel](/email-security/static/inline-setup/gsuite-area1-mx/step1-manage-quarantines.png)
+    ![Select the manage quarantines panel](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step1-manage-quarantines.png)
 
 2. Select **ADD QUARANTINE** to configure the new quarantine. This will bring up a pop-up for the configuration details.
 
-    ![Select the add quarantine button](/email-security/static/inline-setup/gsuite-area1-mx/step2-add-quarantine.png)
+    ![Select the add quarantine button](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step2-add-quarantine.png)
 
 3. In the quarantine configuration pop-up, enter the following:
 
@@ -82,7 +86,7 @@ If you would like to send Area 1 malicious detection to a separate quarantine ot
 
     <div class="medium-img">
 
-    ![Configure the quarantine settings](/email-security/static/inline-setup/gsuite-area1-mx/step3-configure-quarantine.png)
+    ![Configure the quarantine settings](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step3-configure-quarantine.png)
 
     </div>
 
@@ -90,21 +94,21 @@ When you are finished entering these details, select **SAVE**.
 
 4. To access the newly create quarantine, select **GO TO ADMIN QUARANTINE** or access the quarantine directly by pointing your browser to [https://email-quarantine.google.com/adminreview](https://email-quarantine.google.com/adminreview).
 
-    ![Access the quarantine created](/email-security/static/inline-setup/gsuite-area1-mx/step4-access-quarantine.png)
+    ![Access the quarantine created](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step4-access-quarantine.png)
 
     Once in the Admin quarantine console, you can access the **Area 1 Malicious** quarantine by selecting the corresponding quarantine on the left navigation section. Quarantined messages can be released as needed by an administrator.
 
-    ![Access Area 1](/email-security/static/inline-setup/gsuite-area1-mx/step4-area1.png)
+    ![Access Area 1](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step4-area1.png)
 
 ### Create a content compliance filter to send malicious messages to quarantine
 
 1. In the [Gmail administrative console](https://admin.google.com), select **Compliance** to configure the content compliance filter.
 
-    ![Access the compliance configuration](/email-security/static/inline-setup/gsuite-area1-mx/step1-compliance.png)
+    ![Access the compliance configuration](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step1-compliance.png)
 
 2. Navigate to the **Content compliance** area and select **CONFIGURE** to open the configuration dialog pop-up.
 
-    ![Select the configure button](/email-security/static/inline-setup/gsuite-area1-mx/step2-configure.png)
+    ![Select the configure button](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step2-configure.png)
 
 3. In the **Content compliance filter** configuration, enter the following:
 
@@ -121,7 +125,7 @@ When you are finished entering these details, select **SAVE**.
 
     <div class="medium-img">
 
-    ![Configure the compliance filter](/email-security/static/inline-setup/gsuite-area1-mx/step3-compliance-filter.png)
+    ![Configure the compliance filter](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step3-compliance-filter.png)
 
     </div>
 
@@ -129,7 +133,7 @@ When you are finished entering these details, select **SAVE**.
 
 4. Once saved, the console will update with the newly configured **content compliance filter**.
 
-    ![After configuration, the console shows the content compliance filter](/email-security/static/inline-setup/gsuite-area1-mx/step4-compliance-filter.png)
+    ![After configuration, the console shows the content compliance filter](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step4-compliance-filter.png)
 
     If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
     * `X-Area1Security-Disposition: MALICIOUS`
@@ -159,26 +163,9 @@ MX Priority | Host
 
 To update your MX records with Area 1, use the following:
 
-MX Priority | Host
------------ | ---
-`10`          | `mailstream-east.mxrecord.io`
-`10`          | `mailstream-west.mxrecord.io`
-`50`          | `mailstream-central.mxrecord.mx`
+{{<render file="_mx-deployment-values.md">}}
 
-When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority. This will allow mail flows to load balance between the hosts.
-
-European customers should update  MX records with Area 1 European hosts:
-
-MX Priority | Host
---- | --
-`10` | `mailstream-eu1.mxrecord.io`
-`20` | `mailstream-east.mxrecord.io`
-`20` | `mailstream-west.mxrecord.io`
-`50` | `mailstream-central.mxrecord.mx`
-
-The European region will be the primary MX, with a fail-over to the US regions. If you wish to exclusively use the European region, update with only the European host.
-
-Once the MX records updates complete, the DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. The DNS update will typically reach the major DNS servers in about an hour.
+DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
 ## 4. Secure your email flow
 

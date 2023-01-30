@@ -55,7 +55,22 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
-### Adding secrets via wrangler
+### Add secrets to your project
+
+#### Secrets in development
+
+When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
+
+The `.dev.vars` file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
+
+```bash
+---
+header: .dev.vars
+---
+SECRET_KEY=value
+```
+
+#### Secrets on deployed Workers
 
 Secrets are defined by running [`wrangler secret put <KEY>`](/workers/wrangler/commands/#secret) in your terminal, where `<KEY>` is the name of your binding. You may assign environment-specific secrets by rerunning the command `wrangler secret put <KEY> -e` or `wrangler secret put <KEY> --env`. Keep a detailed list of the secrets used in your code in your `wrangler.toml` file, like the example under `[vars]`:
 
@@ -83,7 +98,7 @@ filename: wrangler.toml
 
 ### Adding KV namespaces via wrangler
 
-KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv_namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
+KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv-namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
 
 ```toml
 ---

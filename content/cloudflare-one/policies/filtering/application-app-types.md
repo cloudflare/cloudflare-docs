@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Applications and app types
-weight: 5
+weight: 6
 ---
 
 # Applications and app types
@@ -10,7 +10,7 @@ Gateway allows you to build DNS, Network, and HTTP policies based on application
 
 ## Applications
 
-When you choose the _Application_ selector in the [DNS](/cloudflare-one/policies/filtering/dns-policies/#application), [Network](/cloudflare-one/policies/filtering/network-policies/#application), or [HTTP](/cloudflare-one/policies/filtering/http-policies/#application) policy builder, the **Value** drop-down menu will show all supported applications and their respective app types. Alternatively, you can use the [Gateway API](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
+When you choose the _Application_ selector in a Gateway policy builder, the **Value** drop-down menu will show all supported applications and their respective app types. Alternatively, you can use the [Gateway API](https://developers.cloudflare.com/api/operations/zero-trust-gateway-application-and-application-type-mappings-list-application-and-application-type-mappings) to fetch a list of applications, app types, and ID numbers.
 
 ## App types
 
@@ -52,9 +52,6 @@ Gateway periodically updates the _Do Not Inspect_ app type to include new applic
 Instead of setting up a _Do Not Inspect_ policy for an application, you may be able to configure the application to [trust the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications).  Doing so will allow the application to function without losing visibility into your traffic.
 {{</Aside>}}
 
-## Office 365 integration
+#### Office 365 integration
 
-Cloudflare Zero Trust allows you to perform one-click actions to accelerate Office 365 traffic. The following actions are available in the [Zero Trust dashboard](https://dash.teams.cloudflare.com/) under **Settings** > **Network** > **Integrated Experiences**:
-
-- **Bypass decryption of Office 365 traffic** creates a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for all [Office 365 domains and IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). This policy also uses our own Cloudflare intelligence to determine which traffic belongs to Office 365.
-- **Directly route Office 365 traffic** creates [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) Exclude entries for all [Office 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). Office 365 network traffic will bypass WARP and Gateway.
+You can perform a one-click action to bypass TLS decryption for all Office 365 traffic. To enable, go to **Settings** > **Network** > **Bypass decryption of Office 365 traffic** and select **Create policy**. This will create a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for all [Office 365 domains and IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). This policy also uses our own Cloudflare intelligence to determine which traffic belongs to Office 365.

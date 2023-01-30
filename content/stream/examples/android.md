@@ -7,6 +7,8 @@ pcx_content_type: configuration
 title: Android (ExoPlayer)
 weight: 3
 layout: example
+meta:
+    description: View an example of video playback on Android using ExoPlayer.
 ---
 
 {{<render file="_prereqs.md">}}

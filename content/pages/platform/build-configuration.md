@@ -49,6 +49,7 @@ If you are not using a framework, leave the **Build command** field blank.
 | Hugo                         | `hugo`                               | `public`                    |
 | Jekyll                       | `jekyll build`                       | `_site`                     |
 | Jigsaw                       | `vendor/bin/jigsaw build production` | `build_production`          |
+| mdBook                       | `mdbook build`                       | `book`                      |
 | Mkdocs                       | `mkdocs build`                       | `site`                      |
 | Next.js (Static HTML Export) | `next build && next export`          | `out`                       |
 | Nuxt.js                      | `nuxt generate`                      | `dist`                      |
