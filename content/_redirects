@@ -64,6 +64,7 @@
 /1.1.1.1/setup-1.1.1.1/macos/ /1.1.1.1/setup/macos/ 301
 /1.1.1.1/setup-1.1.1.1/router/ /1.1.1.1/setup/router/ 301
 /1.1.1.1/setup-1.1.1.1/windows/ /1.1.1.1/setup/windows/ 301
+/1.1.1.1/setup/check-1.1.1.1/ /1.1.1.1/setup/check/ 301
 /1.1.1.1/setup/setup-instructions/ /1.1.1.1/setup/ 301
 /1.1.1.1/setup/setup-instructions/dns-over-https/ /1.1.1.1/encryption/dns-over-https/ 301
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
