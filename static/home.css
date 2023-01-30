@@ -581,13 +581,17 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #000;
 }
 
-.DocsRecommendation {
+.Recommendation {
     background: #e2f5fa;
     padding: 1em;
 }
 
-.DocsRecommendation h2 {
-    padding: .2em 0;
+.Recommendation--full-bleed {
+    box-shadow: 0 0 0 100vmax #e2f5fa;
+    clip-path: inset(0 -100vmax);
+}
+.Recommendation h2 {
+    padding-bottom: 1.2em;
 }
 
 .RecommendedContentBlock {
@@ -657,6 +661,11 @@ html[is-site-page] .DocsContent {
     padding: 3em;
 }
 
+.BlogSection--full-bleed {
+    box-shadow: 0 0 0 100vmax #fef1e6;
+    clip-path: inset(0 -100vmax);
+}
+
 .BlogBlock--content {
     display: flex;
     align-items: center;
@@ -680,7 +689,7 @@ html[is-site-page] .DocsContent {
 
 .TriBlock {    
     display: flex;
-    width: 20em;
+    width: 24em;
     height: 20em;
     background: #fef1e6;
     border-left: 5px solid #F6821F;
