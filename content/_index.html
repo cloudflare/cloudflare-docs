@@ -5,25 +5,16 @@ meta:
   description: Browse product docs including how-to guides, tutorials, API reference, and sample code.
   title: Home
 ---
-<div class="HomeTitle">
-<h1>Looking to improve security, <br /> performance, and reliability?</h1>
-  <p class="StartHere"><strong><a href="/learning-paths/get-started/">Start here.</a></strong></p>
-</div>
 
 <div class="QuadBlockGrid">
 <div>
 {{<quad-block>}}
-  [Products](/products/)
+  [Fundamentals](/products/)
 {{</quad-block>}}
 </div>
 <div>
 {{<quad-block>}}
   [Account and billing](/fundamentals/account-and-billing/)
-{{</quad-block>}}
-</div>
-<div>
-{{<quad-block>}}
-  [Tutorials](/tutorials/)
 {{</quad-block>}}
 </div>
 <div>
@@ -38,52 +29,51 @@ meta:
 </div>
 </div>
 
+<div class="HomeTitle">
+<h1 class="title">Looking to improve security, <br /> performance, and reliability?</h1>
+  <p class="StartHere"><strong><a href="/learning-paths/get-started/">Start here</a></strong></p>
+</div>
+
 <div class="TriBlockGrid">
 <div>
 {{<tri-block>}}
 <div class="TriBlockHeader">
-<img src="/popular-icon.svg" aria-hidden="true" />
 <p>Most visited</p>
 </div>
 
-- [Troubleshoot 5XX and 1XXX errors](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
-- [Register a domain](/registrar/)
-- [Review site diagnostics](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
-- [Update DNS records](/dns/manage-dns-records/)
-- [Customize caching](/cache/)
+- ![screw](/icons/screw.svg) [Troubleshoot 5XX and 1XXX errors](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
+- ![domain](/icons/domain.svg) [Register a domain](/registrar/)
+- ![diagnostics](/icons/diagnostics.svg) [Review site diagnostics](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
+- ![dns](/icons/dns.svg) [Update DNS records](/dns/manage-dns-records/)
+- ![caching](/icons/caching.svg) [Customize caching](/cache/)
 {{</tri-block>}}
 </div>
 
 <div>
 {{<tri-block>}}
 <div class="TriBlockHeader">
-<img src="/developer-products-icon.svg" aria-hidden="true" />
 <p>Developer products</p>
 </div>
 
-- [Workers](/workers/)
-- [Pages](/pages/)
-- [R2](/r2/)
-- [Images](/images/)
-- [Stream](/stream/)
-- [Queues](/queues/)
+- ![workers](/icons/workers.svg)[Workers](/workers/)
+- ![pages](/icons/pages.svg)[Pages](/pages/)
+- ![R2](/icons/r2.svg)[R2](/r2/)
+- ![images](/icons/images.svg)[Images](/images/)
+- ![stream](/icons/r2.svg)[Stream](/stream/)
+- ![queues](/icons/r2.svg)[Queues](/queues/)
 {{</tri-block>}}
 </div>
 <div>
 {{<tri-block>}}
 <div class="TriBlockHeader">
-<img src="/zero-trust-icon.svg" aria-hidden="true" />
 <p>Zero Trust</p>
 </div>
 
-- [Access](/cloudflare-one/policies/access/)
-- [Tunnel](/cloudflare-one/connections/connect-apps/)
-- [Gateway](/cloudflare-one/policies/filtering/)
-- [Replace your VPN](/learning-paths/replace-vpn/)
-
-<br>
-
-[View more Zero Trust resources >](/zero-trust/)
+- ![access](/icons/access.svg)[Access](/cloudflare-one/policies/access/)
+- ![tunnel](/icons/tunnel.svg)[Tunnel](/cloudflare-one/connections/connect-apps/)
+- ![gateway](/icons/gateway.svg)[Gateway](/cloudflare-one/policies/filtering/)
+- ![vpn](/icons/dns.svg)[Replace your VPN](/learning-paths/replace-vpn/)
+- ![browser](/icons/browser-isolation.svg)[Browser Isolation](/learning-paths/replace-vpn/)
 
 {{</tri-block>}}
 </div>
@@ -100,92 +90,49 @@ meta:
 </details>
 </div>
 
-<div class="FeaturedContentSectionTitle">
-  <h2>Featured content</h2>
-</div>
-
-<div class="FeaturedContentGrid">
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Set up 1.1.1.1</p>
-<p class="FeaturedContentDescription">Use Cloudflare's public DNS resolver for a fast and private way to browse the Internet.</p>
-
-[Set up 1.1.1.1 >](/1.1.1.1/setup/)
-</div>
-{{</featured-content-block>}}
-</div>
-
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Install an Origin CA certificate</p>
-<p class="FeaturedContentDescription">Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.</p>
-
-[Install Origin CA >](/ssl/origin-configuration/origin-ca/)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Change your nameservers</p>
-<p class="FeaturedContentDescription">Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.</p>
-
-[Update nameservers >](/dns/zone-setups/full-setup/setup/)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">View Workers examples</p>
-<p class="FeaturedContentDescription">Review fully functional sample scripts to get started with Workers.</p>
-
-[View examples >](/workers/examples/)
-</div>
-{{</featured-content-block>}}
-</div>
-
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Create API tokens</p>
-<p class="FeaturedContentDescription">If you are going to be using the Cloudflare API, you first need an API token to authenticate your requests.</p>
-
-[Create tokens >](/fundamentals/api/get-started/create-token/)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Install the WARP client</p>
-<p class="FeaturedContentDescription">The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.</p>
-
-[Get started >](/warp-client/)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">Create IP access rules</p>
-<p class="FeaturedContentDescription">Use IP Access rules to allowlist, block, and challenge traffic based on the visitor’s IP address, country, or Autonomous System Number (ASN).</p>
-
-[Create IP access rules >](/waf/tools/ip-access-rules/)
-</div>
-{{</featured-content-block>}}
-</div>
-<div>
-{{<featured-content-block>}}
-<div class="FeatureContentHeader">
-<p class="FeatureContentTitle">SSL/TLS Encryption mode</p>
-<p class="FeaturedContentDescription">Your domain's SSL/TLS encryption mode controls how Cloudflare connects to your origin web server and how SSL certificates presented by your origin will be validated.</p>
-
-[Set encryption mode >](/ssl/origin-configuration/ssl-modes/)
-</div>
-{{</featured-content-block>}}
+<div class="DocsRecommendation">
+<h2> Other docs you might also like</h2>
+<div class="RecommendedContentGrid">
+  <div class="RecommendedContentHeader">
+  {{<recommended-content-block>}}
+  <div>
+  <p class="RecommendedContentTitle">Install an Origin CA certificate</p>
+  <p class="RecommendedContentDescription"> Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.</p>
+  
+  [Create tokens>](/ssl/origin-configuration/origin-ca/)
+  </div>
+  {{</recommended-content-block>}}
+  </div>
+  <div class="RecommendedContentHeader" >
+  {{<recommended-content-block>}}
+  <div>
+  <p class="RecommendedContentTitle">Change your nameservers</p>
+  <p class="RecommendedContentDescription"> UR2 gives you the freedom to create the multi-cloud architectures you desire with an S3-compatible distributed object storage.</p>
+  
+  [Update nameservers >](/dns/zone-setups/full-setup/setup/)
+  </div>
+  {{</recommended-content-block>}}
+  </div>
+  <div class="RecommendedContentHeader">
+  {{<recommended-content-block>}}
+  <div>
+  <p class="RecommendedContentTitle">SSL/TLS Encryption mode</p>
+  <p class="RecommendedContentDescription">Review fully functional sample scripts to get started with Workers.</p>
+  
+  [Set encryption mode >](/ssl/origin-configuration/ssl-modes/)
+  </div>
+  {{</recommended-content-block>}}
+  </div>
+  <div class="RecommendedContentHeader">
+  {{<recommended-content-block>}}
+  <div>
+  <p class="RecommendedContentTitle">Create IP access rules</p>
+  <p class="RecommendedContentDescription"> Review fully functional sample scripts to get startedMake Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar. with Workers.</p>
+  
+  [Create IP access rules >](/waf/tools/ip-access-rules/)
+  </div>
+  {{</recommended-content-block>}}
+  </div>
 </div>
 </div>
 
@@ -194,53 +141,40 @@ meta:
 {{<hero-block>}}
   ## Community
 
-  Cloudflare communities are places for Cloudflare users to share ideas, answers, code, and more.
+  The Cloudflare community is a place for Cloudflare users to share ideas, answers, code and compare notes.
 
   <div class="QuadBlockGrid">
   <a href="https://discord.com/invite/cloudflaredev/">
   <div>
   {{<community-block>}}
   <div>
-  <img src="/discord-figma.svg" aria-hidden="true" style="padding-left: .5em"/>
+  <img src="/icons/discord.svg" aria-hidden="true" />
   </div>
   <div>
-  Discord
+  <p>Discord</p>
   </div>
-  {{</community-block>}}
-  </div>
-  </a>
-  <a href="https://community.cloudflare.com/">
-  <div>
-  {{<community-block>}}
-  <img src="/community-icon.svg" aria-hidden="true" style="padding-left: 1.15em" />
-  Community
   {{</community-block>}}
   </div>
   </a>
   <a href="https://twitter.com/CloudflareDev">
   <div>
   {{<community-block>}}
-  <img src="/twitter-logo-black.svg" aria-hidden="true" style="padding-left: .25em" />
-  Twitter
+  <img src="/icons/twitter.svg" aria-hidden="true" />
+  <p>Twitter</p>
+  {{</community-block>}}
+  </div>
+  </a>
+  <a href="https://community.cloudflare.com/">
+  <div>
+  {{<community-block>}}
+  <img src="/community-icon.svg" aria-hidden="true" />
+  <p>Community Forum</p>
   {{</community-block>}}
   </div>
   </a>
   </div>
-  
 {{</hero-block>}}
 </div>
-
-  <div>
-{{<hero-block>}}
-  ## Cloudflare Blog
-
-  Get the latest news on Cloudflare products, technologies, and culture.
-
-  {{<button type="secondary" href="https://blog.cloudflare.com/">}}
-    Read the blog
-  {{</button>}}
-{{</hero-block>}}
-  </div>
   
   <div>
 {{<hero-block>}}
@@ -253,5 +187,19 @@ meta:
 
 {{</hero-block>}}
   </div>
+</div>
+
+<div class="BlogSection">
+{{<blog-block>}}
+  <img src="/blog-icon.svg" aria-hidden="true"/>
+  <div>
+    <h1>Blog</h1>
+    <p> Get the latest news on Cloudflare products, technologies, and culture.</p>
+  </div>
+
+  {{<button type="primary" href="https://blog.cloudflare.com/">}}
+    Read the blog
+  {{</button>}}
+{{</blog-block>}}
 </div>
 
