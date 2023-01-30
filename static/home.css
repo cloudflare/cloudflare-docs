@@ -483,7 +483,7 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
 [theme=dark] .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
+    background-image: url("/Dev-Docs-Header-Illustration.svg");
     box-shadow: 0 0 0px .5px #1d1f20 inset;
 }
 }
@@ -579,6 +579,12 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #000;
 }
 
+[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    background-color: inherit;
+    border-bottom-color: inherit;
+}
+
 .Recommendation {
     background: #e2f5fa;
     padding: 1em;
@@ -622,6 +628,17 @@ html[is-site-page] .DocsContent {
     font-size: .85em;
     width: 16em;
     align-self: flex-start;
+}
+
+@media (max-width:768px) {
+    .Recommendation--full-bleed {
+        clip-path: unset(0 100vmax);
+    }
+
+    .RecommendedContentGrid {
+        flex-direction: column;
+        gap: .8em;
+    }
 }
 
 .CommunityBlock {
@@ -720,6 +737,8 @@ html[is-site-page] .DocsContent {
 
 [theme=dark] .TriBlock a {
     text-decoration: none;
+    color: #fff;
+    --border-bottom-color-rgb: 256, 256, 256;
 }
 
 .TriBlock ul li {
@@ -833,6 +852,29 @@ html[is-site-page] .DocsContent {
 .FeatureContentTitle {
     font-size: 1.2em;
     font-weight: 500;
+}
+
+@media (max-width:768px) { 
+
+    .FeaturedContentSection {
+        margin-top: 5em;
+    }
+
+    .FeatureContentGrid {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .FeatureContentWithImage {
+        margin: 30px;
+    }
+
+    .FeatureContentWithCard {
+        height: 15em;
+        width: 25em;
+        padding: 1.5em;
+        margin: .6em;
+    }
 }
 
 .ViewProducts {
