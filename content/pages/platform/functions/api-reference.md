@@ -1,6 +1,6 @@
 ---
 pcx-content-type: how-to
-title: API Reference
+title: API reference
 weight: 3
 meta:
   description: Learn about the APIs used within Pages Functions.
