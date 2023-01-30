@@ -14,8 +14,8 @@ R2 can be described as "strongly consistent", especially in comparison to other 
 
 In the context of R2, _strong_ consistency and _eventual_ consistency have the following meanings: 
 
-* **Strongly consistent** - the effect of an operation will be observed globally, immediately, by all clients. Clients will not observe 'stale' (inconsistent) state.
-* **Eventually consistent** - clients may not see the effect of an operation immediately: state may take a some time (typically seconds to a minute) to propagate globally.
+* **Strongly consistent** - The effect of an operation will be observed globally, immediately, by all clients. Clients will not observe 'stale' (inconsistent) state.
+* **Eventually consistent** - Clients may not see the effect of an operation immediately. The state may take a some time (typically seconds to a minute) to propagate globally.
 
 ## Operations and Consistency
 
@@ -36,7 +36,7 @@ Operations against R2 buckets and objects adhere to the following consistency gu
 Additional notes:
 
 * In the event two clients are writing (`PUT` or `DELETE`) to the same key, the last writer to complete "wins".
-* When performing a multipart upload, read-after-write consistency continues to apply once all parts have been successfully uploaded. In the case the same part is uploaded (in error) from multple writers, the last write will win
+* When performing a multipart upload, read-after-write consistency continues to apply once all parts have been successfully uploaded. In the case the same part is uploaded (in error) from multiple writers, the last write will win.
 * Copying an object within the same bucket also follows the same read-after-write consistency that writing a new object would. The "copied" object is immediately readable by all clients once the copy operation completes.
 
 ## Caching
@@ -51,8 +51,8 @@ When connecting a [custom domain](https://developers.cloudflare.com/r2/data-acce
 
 Specifically, you should expect:
 
-* An object you delete from R2, but that is still cached, will still be available. You should [purge the cache](https://developers.cloudflare.com/cache/how-to/purge-cache/) after deleting an object/objects if you need that delete to be reflected 
-* Cloudflare's cache to [cache HTTP 404 (Not Found) responses](https://developers.cloudflare.com/cache/how-to/configure-cache-status-code/#edge-ttl) automatically. If you upload an object to that same path, the cache may continue to return HTTP 404s until the cache TTL (Time to Live) expires and the new object is fetched from R2, or the [cache is purged](https://developers.cloudflare.com/cache/how-to/purge-cache/).
-* An object for a given key is overwritten with a new object: the old (previous) object will continue to be served to clients until the cache TTL expires (or the object is evicted), or the cache is purged.
+* An object you delete from R2, but that is still cached, will still be available. You should [purge the cache](https://developers.cloudflare.com/cache/how-to/purge-cache/) after deleting objects if you need that delete to be reflected.
+* Cloudflare's cache to [cache HTTP 404 (Not Found) responses](https://developers.cloudflare.com/cache/how-to/configure-cache-status-code/#edge-ttl) automatically. If you upload an object to that same path, the cache may continue to return HTTP 404s until the cache TTL (Time to Live) expires and the new object is fetched from R2 or the [cache is purged](https://developers.cloudflare.com/cache/how-to/purge-cache/).
+* An object for a given key is overwritten with a new object: the old (previous) object will continue to be served to clients until the cache TTL expires (or the object is evicted) or the cache is purged.
 
 The cache does not affect access via [Worker API bindings](https://developers.cloudflare.com/r2/data-access/workers-api/) or the [S3 API](https://developers.cloudflare.com/r2/data-access/s3-api/), as these operations are made directly against the bucket and do not transit through the cache.
