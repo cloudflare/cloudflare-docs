@@ -14,38 +14,6 @@ The WARP client provides diagnostic logs that you can use to troubleshoot connec
 
 To view debug logs on desktop devices:
 
-{{<tabs labels="macOS | Windows | Linux">}}
-{{<tab label="macOS" no-code="true">}}
- 
-1. Open a Terminal window.
-2. Run the `warp-diag` tool:
-    ```sh
-    $ warp-diag
-    ```
-This will place a `warp-debugging-info.zip` on your Desktop.
-
-{{</tab>}}
-{{<tab label="Windows" no-code="true">}}
- 
-1. Open a Command Prompt or Powershell window.
-2. Run the `warp-diag` tool:
-    ```bash
-    C:\Users\JohnDoe>warp-diag
-    ```
-This will place a `warp-debugging-info.zip` on your Desktop.
-
-{{</tab>}}
-{{<tab label="Linux" no-code="true">}}
- 
-1. Open a Terminal window.
-2. Run the `warp-diag` tool:
-    ```sh
-    $ warp-diag
-    ```
-This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
-
-{{</tab>}}
-{{</tabs>}}
 
 ### `warp-diag` logs
 
