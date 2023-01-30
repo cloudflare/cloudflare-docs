@@ -8,7 +8,7 @@ pcx_content_type: concept
 
 This page details R2's consistency model, including where R2 is strongly, globally consistent and which operations this applies to.
 
-R2 can be described as "strongly consistent", especially in comparison to other distriubted object storage systems. This strong consistency ensures that operations against R2 see the latest (accurate) state: clients should be able to observe the effects of any write, update and/or delete operation immediately, globally. 
+R2 can be described as "strongly consistent", especially in comparison to other distributed object storage systems. This strong consistency ensures that operations against R2 see the latest (accurate) state: clients should be able to observe the effects of any write, update and/or delete operation immediately, globally. 
 
 ## Terminology
 
