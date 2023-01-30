@@ -587,7 +587,7 @@ html[is-site-page] .DocsContent {
 }
 
 .DocsRecommendation h2 {
-    padding: 1em 0;
+    padding: .2em 0;
 }
 
 .RecommendedContentBlock {
@@ -774,7 +774,7 @@ html[is-site-page] .DocsContent {
 .FooterBlockGrid {
     margin-top: 3em;
     display: flex;
-    gap: 5em;
+    gap: 6.5em;
 }
 
 .FooterBlockHeader {
@@ -793,6 +793,40 @@ html[is-site-page] .DocsContent {
     background-color: inherit;
     border-bottom: none;
  }
+
+ .FeaturedContentSection {
+    margin-top: 5em;
+ }
+
+ .FeatureContentGrid {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 3em;
+ }
+
+ .FeatureContentWithImage {
+    margin: 30px;
+ }
+
+ .FeatureContentWithCard {
+    margin: 1em;
+    height: 20em;
+    width: 45em;
+    padding: 1.5em;
+    border: 1px solid #c8c6c6;
+    border-radius: 6px;
+ }
+
+  .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+      background-color: inherit;
+        border-bottom-color: #000;
+  }
+
+.FeatureContentTitle {
+    font-size: 1.2em;
+    font-weight: 500;
+}
 
 .ViewProducts {
     padding-left: .75em;
