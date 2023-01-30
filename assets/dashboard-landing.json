@@ -5,10 +5,6 @@
       "dashPath": "none",
       "recommendations": [
         {
-          "url_path": "/learning-paths/get-started/",
-          "title": "Get started with Cloudflare"
-        },
-        {
           "external_link": true,
           "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
           "title": "Troubleshooting Cloudflare 5XX errors"
@@ -19,8 +15,13 @@
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
         {
-          "url_path": "/registrar/",
-          "title": "Cloudflare Registrar"
+          "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
+          "title": "Cannot add a new account member"
+        }, 
+        {
+          "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
+          "title": "Proxied DNS records"
         },
         {
           "url_path": "/dns/zone-setups/full-setup/setup/",
@@ -77,6 +78,11 @@
         },
         {
           "external_link": true,
+          "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
+          "title": "Cannot add a new account member"
+        }, 
+        {
+          "external_link": true,
           "url_path": "https://support.cloudflare.com/hc/articles/360029779472",
           "title": "Troubleshooting Cloudflare 1XXX errors"
         },
@@ -87,10 +93,6 @@
         {
           "url_path": "/dns/zone-setups/full-setup/setup/",
           "title": "Change your nameservers"
-        },
-        {
-          "url_path": "/registrar/",
-          "title": "Cloudflare Registrar"
         },
         {
           "external_link": true,
@@ -104,21 +106,21 @@
       "dashPath": "/:accountId/add-site",
       "recommendations": [
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360000841472",
-          "title": "Adding multiple sites to Cloudflare via automation"
-        },
-        {
-          "url_path": "/registrar/",
-          "title": "Cloudflare Registrar"
-        },
-        {
           "url_path": "/learning-paths/get-started/",
           "title": "Get started with Cloudflare"
         },
         {
           "url_path": "/fundamentals/get-started/setup/add-site/",
           "title": "Add a site to Cloudflare"
+        },
+        {
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/360000841472",
+          "title": "Adding multiple sites to Cloudflare via automation"
+        },
+        {
+          "url_path": "/dns/zone-setups/full-setup/setup/",
+          "title": "Change your nameservers"
         },
         {
           "external_link": true,
@@ -201,7 +203,7 @@
         },
         {
           "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/cannot-add-new-member-error-1005/421516",
+          "url_path": "https://community.cloudflare.com/t/i-cant-add-new-member-error-1005/426552",
           "title": "Cannot add new members"
         },
         {
@@ -228,10 +230,6 @@
           "title": "Get started with Pages"
         },
         {
-          "url_path": "/fundamentals/get-started/",
-          "title": "Get started with Cloudflare"
-        },
-        {
           "url_path": "/pages/platform/build-configuration/",
           "title": "Build configurations"
         },
@@ -241,12 +239,12 @@
         },
         {
           "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/edge-ip-restricted-error-1034/348084",
-          "title": "Edge IP Restricted - Error 1034"
+          "url_path": "https://community.cloudflare.com/t/error-inactive-using-custom-domains-with-pages/331934/10",
+          "title": "Error (inactive)” using custom domains with Pages"
         },
         {
-          "url_path": "/pages/framework-guides/",
-          "title": "Framework guides"
+          "url_path": "/workers/wrangler/commands/",
+          "title": "Wrangler commands"
         }
       ]
     },
@@ -254,10 +252,6 @@
       "id": "Workers",
       "dashPath": "/:accountId/workers",
       "recommendations": [
-        {
-          "url_path": "/workers/platform/limits/",
-          "title": "Limits - Cloudflare Workers"
-        },
         {
           "url_path": "/workers/examples/",
           "title": "Examples - Cloudflare Workers"
@@ -267,12 +261,16 @@
           "title": "Tutorials - Cloudflare Workers"
         },
         {
-          "url_path": "/workers/platform/routing/routes/",
-          "title": "Workers Routes"
+          "url_path": "/workers/platform/limits/",
+          "title": "Limits - Cloudflare Workers"
         },
         {
-          "url_path": "/workers/platform/pricing/",
-          "title": "Pricing - Cloudflare Workers"
+          "url_path": "/workers/get-started/guide/",
+          "title": "Get Started - Cloudflare Workers"
+        },
+        {
+          "url_path": "/workers/get-started/quickstarts/",
+          "title": "Quickstarts - Cloudflare Workers"
         }
       ]
     },
@@ -284,6 +282,10 @@
           "external_link": true,
           "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
           "title": "Troubleshooting Cloudflare 5XX errors"
+        },
+        {
+          "url_path": "/dns/",
+          "title": "Cloudflare DNS"
         },
         {
           "external_link": true,
@@ -311,12 +313,12 @@
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
-          "url_path": "/cache/get-started/",
-          "title": "Get started with caching"
-        },
-        {
           "url_path": "/cache/how-to/purge-cache/",
           "title": "Purge cache"
+        },
+        {
+          "url_path": "/cache/about/cache-control/",
+          "title": "Cache control"
         },
         {
           "url_path": "/cache/about/cache-rules/",
@@ -337,24 +339,16 @@
       "dashPath": "/:accountId/:zoneName/dns",
       "recommendations": [
         {
-          "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
-          "title": "DNS proxy status"
-        },
-        {
           "url_path": "/dns/manage-dns-records/how-to/create-dns-records/",
           "title": "Manage DNS records"
         },
         {
-          "url_path": "/learning-paths/get-started/",
-          "title": "Get started with Cloudflare"
+          "url_path": "/dns/manage-dns-records/reference/proxied-dns-records/",
+          "title": "DNS proxy status"
         },
         {
           "url_path": "/dns/zone-setups/full-setup/setup/",
           "title": "Change your nameservers"
-        },
-        {
-          "url_path": "/fundamentals/account-and-billing/account-setup/",
-          "title": "Account setup"
         },
         {
           "external_link": true,
@@ -362,8 +356,12 @@
           "title": "Troubleshooting Cloudflare 5XX errors"
         },
         {
-          "url_path": "/registrar/",
-          "title": "Cloudflare Registrar"
+          "url_path": "/dns/manage-dns-records/how-to/create-root-domain/",
+          "title": "Create root domain"
+        },
+        {
+          "url_path": "/dns/manage-dns-records/how-to/create-subdomain/",
+          "title": "Create subdomain"
         }
       ]
     },
@@ -380,9 +378,8 @@
           "title": "DNS records - Email"
         },
         {
-          "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/email-troubleshooting/60720",
-          "title": "Email troubleshooting - Video"
+          "url_path": "/email-routing/get-started/enable-email-routing/",
+          "title": "Enable Email Routing"
         },
         {
           "url_path": "/email-routing/known-limitations/",
@@ -403,26 +400,21 @@
           "title": "Get started with SSL/TLS"
         },
         {
-          "url_path": "/ssl/troubleshooting/version-cipher-mismatch/",
-          "title": "ERR_SSL_VERSION_OR_CIPHER_MISMATCH"
-        },
-        {
-          "url_path": "/ssl/troubleshooting/too-many-redirects/",
-          "title": "Redirect loop errors"
-        },
-        {
           "external_link": true,
           "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
           "title": "Troubleshooting Cloudflare 5XX errors"
+        },
+        {
+          "url_path": "/ssl/origin-configuration/ssl-modes/",
+          "title": "SSL Modes"
         },
         {
           "url_path": "/ssl/edge-certificates/universal-ssl/",
           "title": "Universal SSL"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/200170566",
-          "title": "Troubleshooting SSL errors"
+          "url_path": "/ssl/troubleshooting/",
+          "title": "SSL Troubleshooting"
         }
       ]
     },
@@ -475,8 +467,9 @@
           "title": "Security Events"
         },
         {
-          "url_path": "/fundamentals/get-started/concepts/cloudflare-challenges/",
-          "title": "Types of Cloudflare challenges"
+          "external_link": true,
+          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
+          "title": "Troubleshooting Cloudflare 5XX errors"
         }
       ]
     },
@@ -484,6 +477,10 @@
       "id": "Speed",
       "dashPath": "/:accountId/:zoneName/speed",
       "recommendations": [
+        {
+          "url_path": "/automatic-platform-optimization/",
+          "title": "Automatic Platform Optimization for WordPress"
+        },
         {
           "url_path": "/images/image-resizing/",
           "title": "Image resizing"
@@ -493,13 +490,9 @@
           "title": "Cloudflare Images"
         },
         {
-          "url_path": "/automatic-platform-optimization/",
-          "title": "Automatic Platform Optimization for WordPress"
-        },
-        {
           "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/200168336",
-          "title": "Mobile redirects"
+          "url_path": "https://community.cloudflare.com/t/webp-images-with-polish-not-working/290865/5",
+          "title": "WebP Images With Polish Not Working"
         }
       ]
     },
@@ -512,9 +505,8 @@
           "title": "Cloudflare Load Balancing"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/115003011431",
-          "title": "Troubleshooting Cloudflare 5XX errors"
+          "url_path": "/load-balancing/understand-basics/load-balancers/",
+          "title": "What is a Cloudflare Load Balancer?"
         },
         {
           "external_link": true,
@@ -524,6 +516,10 @@
         {
           "url_path": "/load-balancing/get-started/",
           "title": "Get started with Load Balancing"
+        },
+        {
+          "url_path": "/understand-basics/traffic-steering/",
+          "title": "Traffic steering"
         }
       ]
     },
@@ -532,12 +528,8 @@
       "dashPath": "/:accountId/:zoneId/ssl-tls/edge-certificates",
       "recommendations": [
         {
-          "url_path": "/ssl/edge-certificates/universal-ssl/",
-          "title": "Universal SSL"
-        },
-        {
           "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/err-ssl-version-or-cipher-mismatch/24462",
+          "url_path": "/ssl/troubleshooting/version-cipher-mismatch/",
           "title": "ERR_SSL_VERSION_OR_CIPHER_MISMATCH"
         },
         {
@@ -545,13 +537,16 @@
           "title": "Get started with SSL/TLS"
         },
         {
+          "url_path": "/ssl/edge-certificates/universal-ssl/",
+          "title": "Universal certificates"
+        },
+        {
           "url_path": "/ssl/edge-certificates/custom-certificates/",
           "title": "Custom certificates"
         },
         {
-          "external_link": true,
-          "url_path": "https://community.cloudflare.com/t/universal-ssl-certificate-expired/21829",
-          "title": "Universal SSL certificate expired"
+          "url_path": "/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/",
+          "title": "Advanced certificates"
         },
         {
           "external_link": true,
