@@ -6,7 +6,7 @@ meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API set up.
 ---
 
-{{<beta>}}Onboard Microsoft Office 365 domains via Graph API{{</beta>}}
+{{<beta>}}Office 365 Graph API set up with Area 1{{</beta>}}
 
 For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 and Microsoft Graph API setup is quick and easy. The following email flow shows how this works:
 
