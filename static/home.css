@@ -643,7 +643,7 @@ html[is-site-page] .DocsContent {
     display: flex;
     gap: 5px;
     align-items: center;
-    color: #000;
+    color: #111;
 }
 
 .CommunityBlock img {
@@ -759,62 +759,6 @@ html[is-site-page] .DocsContent {
     color: #ff9e40;
 }
 
-.FeaturedContentSectionTitle {
-    padding-left:.75em;
-    margin-bottom: 2em;
-}
-
-.FeaturedContentGrid {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: .75em;
-    padding-right: .75em;
-    margin-top: 2em;
-    margin-bottom: 1em;
-    justify-content: space-between;
-}
-
-.FeaturedContentBlock {
-    display: flex;
-    width: 16em;
-    height: 18em;
-    background: #f3f3f4;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding-bottom: .5em;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-top: 1.25em;
-}
-
-@media (max-width:570px)  {
-    .FeaturedContentBlock {
-        width: unset;
-    }
-}
-
-[theme=dark] .FeaturedContentBlock {
-    background: #242628
-}
-
-.FeatureContentHeader {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items:flex-end;
-    height: 16.5em;
-}
-
-.FeatureContentTitle {
-    font-weight: bold;
-    align-self: flex-start;
-}
-
-.FeaturedContentDescription {
-    font-size: .85em;
-    align-self: flex-start;
-}
-
 .ConnectHeader {
     width: 100%;
     padding-left: .75em;
@@ -826,6 +770,29 @@ html[is-site-page] .DocsContent {
 [theme=dark] .ConnectHeader {
     border-top: 1px solid white;
 }
+
+.FooterBlockGrid {
+    margin-top: 3em;
+    display: flex;
+    gap: 5em;
+}
+
+.FooterBlockHeader {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* Docs-wide style overrides for footer block */
+
+ .DocsMarkdown .FooterBlock ul {
+    list-style: none;
+    padding: 0;
+}
+
+ .FooterBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    background-color: inherit;
+    border-bottom: none;
+ }
 
 .ViewProducts {
     padding-left: .75em;
