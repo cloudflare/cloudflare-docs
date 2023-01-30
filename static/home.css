@@ -559,7 +559,7 @@ html[is-site-page] .DocsContent {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    justify-content: left;
+    justify-content: start;
     margin-top: 1.5em;
 }
 
@@ -570,8 +570,6 @@ html[is-site-page] .DocsContent {
     margin-right: auto;
     padding-left: .4em;
     padding-right: .4em;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Docs-wide style overrides for quadblock link */
@@ -647,7 +645,7 @@ html[is-site-page] .DocsContent {
     display: flex;
     gap: 5px;
     align-items: center;
-    color: #111;
+    color: #0c2231;
 }
 
 .CommunityBlock img {
