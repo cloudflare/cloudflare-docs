@@ -36,7 +36,7 @@ For an example edge routing configuration, refer to the example below.
 ## Create a static route
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic WAN**.
-2. Next to **Manage Magic WAN configuration**, click **Configure**.
+2. Next to **Manage Magic WAN configuration**, select **Configure**.
 
 {{<render file="../../magic-transit/_partials/_static-routes.md">}}
 

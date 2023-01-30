@@ -17,19 +17,19 @@ You will need the email address associated with your Cloudflare account, Cloudfl
 ## Configure the Kentik portal
 
 1. Log in to your Kentik account.
-2. Click **Menu** > **Settings**.
-3. From the **Settings** page under **Customizations**, click **Mitigations**.
+2. Select **Menu** > **Settings**.
+3. From the **Settings** page under **Customizations**, select **Mitigations**.
 4. On the **Configure Mitigations** page, locate the **Cloudflare** section.
-5. Click **Edit** next to the Cloudflare branded mitigation to edit and review the information.
+5. Select **Edit** next to the Cloudflare branded mitigation to edit and review the information.
 
     In the example below under section two, the Cloudflare email address, Account ID, and API token are used to send the API call to Cloudflare to begin advertising routes and turn on Magic Transit for the customer’s network.
 
     ![Kentik mitigation setup](/magic-transit/static/kentik-setup.png)
     
-6. After reviewing the information, click **Update Mitigation Platform**.
-7. Click **Menu** > **Library**.
+6. After reviewing the information, select **Update Mitigation Platform**.
+7. Select **Menu** > **Library**.
 8. On the **Library** page, in the search field, enter **Cloudflare**.
-9. Under **Uncategorized Views**, click **Cloudflare Saved View**. The data explorer displays.
+9. Under **Uncategorized Views**, Select **Cloudflare Saved View**. The data explorer displays.
 10. From **Options** > **Time**, you can edit the **Lookback** information to review traffic source information for a specific time period.
 
 For additional information about Kentik and Magic Transit, refer to [Kentik's Magic Transit setup](https://kb.kentik.com/v3/Gc10.htm#Gc10-Cloudflare_MT_Setup).
