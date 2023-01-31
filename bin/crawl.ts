@@ -18,6 +18,7 @@ let WARNS = 0;
 let ERRORS = 0;
 let JSON_WARNS = 0;
 let JSON_ERRORS = 0;
+let REDIRECT_ERRORS = 0;
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
@@ -191,6 +192,7 @@ async function testREDIRECTS(file: string) {
 
         if (!exists) {
           console.log(`\n  ✘ ${result[0]}`)
+          REDIRECT_ERRORS += 1;
       }
   }
   }
@@ -331,6 +333,11 @@ try {
 
 try {
   await testREDIRECTS(REDIRECT_DIR)
+  if (REDIRECT_ERRORS > 0) {
+    let msg = "\n~> /content/redirects files DONE with:";
+    process.exitCode = 1;
+    msg += "\n    - " + REDIRECT_ERRORS.toLocaleString() + " error(s)";
+  }
 } catch (err) {
   console.error(err.stack || err);
   process.exit(1);
