@@ -6,13 +6,13 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/platform/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2](https://developers.cloudflare.com/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/). You can set bindings for both production and preview environments. 
+A [binding](/workers/platform/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments. 
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
 ## KV namespaces
 
-[Workers KV](https://www.cloudflare.com/products/workers-kv/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
+[Workers KV](/workers/wrangler/workers-kv/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages**.
@@ -97,7 +97,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 ## R2 buckets
 
-[R2](https://www.cloudflare.com/products/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. To bind your R2 bucket to your Pages Function:
+[R2](/r2/) is Cloudflare's blob storage solution that allows developers to store large amounts of unstructured data without the egress fees. To bind your R2 bucket to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages**.
@@ -191,7 +191,7 @@ While developing locally, interact with a D1 database by adding `--d1=<BINDING_N
 
 ## Service bindings
 
-Service bindings enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
+[Service bindings](/workers/runtime-apis/service-bindings/) enable you to call a Worker from within your Pages Function. To add a service binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages**.
