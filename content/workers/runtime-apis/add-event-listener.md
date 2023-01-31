@@ -59,9 +59,13 @@ addEventListener('scheduled', event => {
 ```
 
 ### Queue Listener
+
+A Queue listener acts as [a consumer for one or more queues](https://developers.cloudflare.com/queues/javascript-apis/#consumer).
+
 ```js
 addEventListener("queue", (event) => {
-  event.waitUntil(handleMessages(event));
+  await handleMessages(event);
+});
 });
 ```
 
