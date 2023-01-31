@@ -439,7 +439,7 @@ let id = subnamespace.idFromName(name);
 
 {{<Aside type="note" header="IDs derived from the same name but different jurisdictions will differ">}}
 
-Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different objects! They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
+Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
 
 This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
 
