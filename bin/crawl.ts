@@ -333,7 +333,7 @@ try {
   let msg = "\n~> /content/redirects files DONE with:";
   if (REDIRECT_ERRORS.length > 0) {
     process.exitCode = 1;
-    msg += "\n    - " + REDIRECT_ERRORS.length.toLocaleString() + " error(s)" + "(due to bad destination URLs)" + "\n\n" ;
+    msg += "\n    - " + REDIRECT_ERRORS.length.toLocaleString() + " error(s)" + " (due to bad destination URLs)" + "\n\n" ;
     for (let i = 0; i < REDIRECT_ERRORS.length; i++) {
       msg += REDIRECT_ERRORS[i]
     }
