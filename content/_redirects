@@ -449,6 +449,7 @@
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
 /platform/functions/billing/ /platform/functions/pricing/ 301
+/pages/platform/functions/debugging-and-logging/#adding-custom-logs /pages/platform/functions/debugging-and-logging/#add-custom-logs 301
 
 # partners
 /partners/ /learning-paths/technology-partner-integrations/ 301
