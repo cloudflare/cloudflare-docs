@@ -196,7 +196,7 @@ const config = {
 +     }
 +   ),
 +   prerender: {
-+     // Default option shown. This can be [] if you're using SPA mode.
++     // Default option shown. This can be [] if you are using SPA mode.
 +     entries: ['*']
 +   }
   }
