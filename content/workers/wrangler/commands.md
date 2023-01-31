@@ -1535,7 +1535,13 @@ Retrieve your user information and test your authentication configuration.
 $ wrangler whoami
 ```
 
+---
+
 ## deployments
+
+{{<Aside type="note">}}
+Deployments are currently in Public Beta and subcommands are currently in Beta. Please report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+{{</Aside>}}
 
 Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
 
@@ -1561,6 +1567,56 @@ Source: Wrangler
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
+
+### view <deployment-id>
+Retrieve details for the 10 most recent deployments. Details include Deployment ID, Author, Source, Created on, and indicates which deployment is Active.
+
+```sh
+wrangler deployments view y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+```
+
+Output:
+```javascript
+{
+  Tag: '',
+  Number: 0,
+  'Metadata.author_id': 'Picard-Gamma-6-1-7-2',
+  'Metadata.author_email': 'someone@email.com',
+  'Metadata.source': 'wrangler',
+  'Metadata.created_on': '2021-01-01T00:00:00.000000Z',
+  'Metadata.modified_on': '2021-01-01T00:00:00.000000Z',
+  'resources.script': {
+    etag: 'mock-e-tag',
+    handlers: [ 'fetch' ],
+    last_deployed_from: 'wrangler'
+  },
+  'resources.bindings': []
+}
+export default {
+  async fetch(request) {
+    return new Response('Hello World from Deployment 1701-E');
+  },
+};
+```
+
+### rollback <deployment-id>
+
+Rollback to a specific deployment by ID.
+
+{{<Aside type="warning">}}
+Rollbacks will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
+{{</Aside>}}
+
+```sh
+wrangler deployments rollback e81fe980-7622-6e1d-740b-1457de3e07e2
+```
+
+Output:
+```sh
+🤖 Using default value in non-interactive context: yes
+🚧\`wrangler deployments\` is a beta command. Please report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose
+Successfully rolled back to deployment ID: 3mEgaU1T-Intrepid-someThing
+```
 
 ---
 
