@@ -12,23 +12,23 @@ The Cloudflare Workers platform provides multiple storage options. This guide wi
 
 Available storage and persistency products include:
 
-* [KV](#kv) for key-value storage 
-* [R2](#r2) for S3-compatible object storage use-cases
-* [Durable Objects](#durable-objects) for transactional, co-ordinated use-cases
-* [D1](#d1) for relational, SQL-based database use-cases
-* [Queues](#queues) for job queueing, batching and inter-service communication
+* [KV](#kv) for key-value storage.
+* [R2](#r2) for S3-compatible object storage use cases.
+* [Durable Objects](#durable-objects) for transactional, coordinated use cases
+* [D1](#d1) for relational, SQL-based database use cases.
+* [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
 
 Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
 
 ## KV
 
-Workers KV is an eventually consistent key-value data store that caches on the edge.
+Workers KV is an eventually consistent key-value data store that caches on the Cloudflare global network.
 
 It is ideal for projects that require:
 
 * High volumes of reads and/or repeated reads to the same keys.
 * Per-object time-to-live (TTL).
-* Distributed configuaration
+* Distributed configuration.
 
 To get started with KV:
 
@@ -44,9 +44,9 @@ R2 is S3-compatible blob storage that allows developers to store large amounts o
 It is ideal for projects that require:
 
 * Storage for files which are infrequently accessed.
-* Large object storage (e.g. gigabytes or more per object)
+* Large object storage (for example, gigabytes or more per object).
 * Strong consistency per object.
-* Asset storage for websites (see the [caching guide](https://developers.cloudflare.com/r2/data-access/public-buckets/#caching))
+* Asset storage for websites (refer to [caching guide](https://developers.cloudflare.com/r2/data-access/public-buckets/#caching))
 
 To get started with R2:
 
@@ -84,19 +84,19 @@ D1 is currently in [public (open) alpha](https://developers.cloudflare.com/worke
 
 {{</Aside>}}
 
-Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). Create an entire database in a few quick steps by importing data or defining your tables and writing your queries within a Worker or through our API.
+Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
 
-* Persistent, relational storage for user data, account data, and other structured datasets
-* Use-cases that require querying across your data ad-hoc (using SQL)
-* Workloads with a high ratio of reads to writes (most web applications)
+* Persistent, relational storage for user data, account data, and other structured datasets.
+* Use-cases that require querying across your data ad-hoc (using SQL).
+* Workloads with a high ratio of reads to writes (most web applications).
 
 To get started with D1:
 
 * Read [the documentation](https://developers.cloudflare.com/d1)
-* Follow the [getting started guide](https://developers.cloudflare.com/d1/get-started/) to provision your first D1 database
-* Learn the [D1 client API](https://developers.cloudflare.com/d1/platform/client-api/)
+* Follow the [Get started guide](https://developers.cloudflare.com/d1/get-started/) to provision your first D1 database.
+* Learn the [D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
 
 ## Queues
 
@@ -110,13 +110,12 @@ Cloudflare Queues allows developers to send and receive messages with guaranteed
 
 Queues is ideal for:
 
-* Offloading work from a request to schedule later 
-* Send data from Worker to Worker (inter-service communication)
+* Offloading work from a request to schedule later.
+* Send data from Worker to Worker (inter-Service communication).
 * Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](https://developers.cloudflare.com/queues/examples/send-errors-to-r2/)
 
 To get started with Queues:
 
-* Visit [the documentation](https://developers.cloudflare.com/queues/)
 * [Set up your first queue](https://developers.cloudflare.com/queues/get-started/)
 * Learn more [about how Queues works](https://developers.cloudflare.com/queues/learning/how-queues-works/)
 

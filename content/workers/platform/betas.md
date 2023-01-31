@@ -5,10 +5,10 @@ title: Betas
 
 # Beta Status
 
-These are the current alphas & betas relevant to the Cloudflare Workers platform.
+These are the current alphas and betas relevant to the Cloudflare Workers platform.
 
-* *Public* alphas and betas are openly available, but may have limitations and caveats due to their early stage of development.
-* *Private* alphas and betas require explicit access to be granted. Visit the documentation for that product to join the relevant waitlist.
+* Public alphas and betas are openly available, but may have limitations and caveats due to their early stage of development.
+* Private alphas and betas require explicit access to be granted. Go to the documentation to join the relevant product waitlist.
 
 
 | Product                       | Public Alpha  | Private Beta | Public Beta | More Info                                                                  |
