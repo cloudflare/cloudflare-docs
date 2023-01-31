@@ -147,8 +147,8 @@ header: Request
 ---
 curl -X GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames/ca.regional.ipam.rocks" \
      -H "Content-Type:application/json" \
-     -H "X-Auth-Key:API_KEY" \
-     -H "X-Auth-Email:tarnfeld@cloudflare.com" | jq .
+     -H "X-Auth-Key:<API_KEY>" \
+     -H "X-Auth-Email:<EMAIL>" | jq .
 ```
 
 ```json
