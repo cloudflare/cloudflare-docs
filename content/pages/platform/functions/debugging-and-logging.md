@@ -47,7 +47,7 @@ After you deploy the code above, run `wrangler pages deployment tail` in your te
 
 Your dashboard will display:
 
-![Follow the above steps access custom logs in the dashboard](/pages/platform/functions/media/dash-custom-logs.png)
+![Follow the above steps to access custom logs in the dashboard](/pages/platform/functions/media/dash-custom-logs.png)
 
 ## View logs with Wrangler
 
@@ -83,9 +83,9 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 
 ## View logs in the Cloudflare Dashboard
 
-View logs for your `production` or `preview` environments associated with any deployment:
+To view logs for your `production` or `preview` environments associated with any deployment:
 
-1. Log in to the [Cloudflare dashboard](). 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/). 
 2. In **Account Home**, select **Pages**.
 3. In your your **Pages project**, go to the deployment you want to view logs for and select **View details** > **Functions**. 
 
@@ -96,6 +96,6 @@ Logging is available for all customers (Free, Paid, Enterprise).
 The following limits apply to Functions logs:
 
 * Logs are not stored. You can start and stop the stream at any time to view them, but they do not persist.
-* Logs will not display if the Function’s requests per second are over 100 for the last 5 minutes.
+* Logs will not display if the Function’s requests per second are over 100 for the last five minutes.
 * Logs from any [Durable Objects](/pages/platform/functions/bindings/#durable-object-namespaces) your Functions bind to will show up in the Cloudflare dashboard.
 * A maximum of 10 clients can view a deployment’s logs at one time. This can be a combination of either dashboard sessions or `wrangler pages deployment tail` calls.
