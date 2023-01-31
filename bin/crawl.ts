@@ -175,8 +175,6 @@ async function testREDIRECTS(file: string) {
     file = `file://${file}`;
   }
 
-  console.log("Redirect errors (due to bad destination URLs)")
-
   const textPlaceholder = await fs.readFile(file, 'utf-8');
   const destinationURLRegex = new RegExp('\/.*\/\*? (\/.*\/)')
 
@@ -335,7 +333,7 @@ try {
   let msg = "\n~> /content/redirects files DONE with:";
   if (REDIRECT_ERRORS.length > 0) {
     process.exitCode = 1;
-    msg += "\n    - " + REDIRECT_ERRORS.length.toLocaleString() + " error(s)" + "\n\n";
+    msg += "\n    - " + REDIRECT_ERRORS.length.toLocaleString() + " error(s)" + "(due to bad destination URLs)" + "\n\n" ;
     for (let i = 0; i < REDIRECT_ERRORS.length; i++) {
       msg += REDIRECT_ERRORS[i]
     }
