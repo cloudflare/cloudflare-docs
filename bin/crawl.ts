@@ -18,7 +18,7 @@ let WARNS = 0;
 let ERRORS = 0;
 let JSON_WARNS = 0;
 let JSON_ERRORS = 0;
-let REDIRECT_ERRORS = 0;
+let REDIRECT_ERRORS : string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
@@ -175,7 +175,7 @@ async function testREDIRECTS(file: string) {
     file = `file://${file}`;
   }
 
-  console.log("Redirect errors")
+  console.log("Redirect errors (due to bad destination URLs)")
 
   const textPlaceholder = await fs.readFile(file, 'utf-8');
   const destinationURLRegex = new RegExp('\/.*\/\*? (\/.*\/)')
@@ -191,9 +191,8 @@ async function testREDIRECTS(file: string) {
         exists = existsSync(local);
 
         if (!exists) {
-          console.log(`\n  ✘ ${result[0]}`)
-          REDIRECT_ERRORS += 1;
-      }
+          REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
+        }
   }
   }
   }
@@ -333,11 +332,15 @@ try {
 
 try {
   await testREDIRECTS(REDIRECT_DIR)
-  if (REDIRECT_ERRORS > 0) {
-    let msg = "\n~> /content/redirects files DONE with:";
+  let msg = "\n~> /content/redirects files DONE with:";
+  if (REDIRECT_ERRORS.length > 0) {
     process.exitCode = 1;
-    msg += "\n    - " + REDIRECT_ERRORS.toLocaleString() + " error(s)";
+    msg += "\n    - " + REDIRECT_ERRORS.length.toLocaleString() + " error(s)" + "\n\n";
+    for (let i = 0; i < REDIRECT_ERRORS.length; i++) {
+      msg += REDIRECT_ERRORS[i]
+    }
   }
+  console.log(msg + "\n\n");
 } catch (err) {
   console.error(err.stack || err);
   process.exit(1);
