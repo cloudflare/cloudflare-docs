@@ -22,6 +22,7 @@ let JSON_ERRORS = 0;
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
 const LEARNING_PATH_DIR = join(ROOT, "assets/json");
+const REDIRECT_DIR = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
 const DEV_DOCS_HOSTNAME = "developers.cloudflare.com";
@@ -167,6 +168,35 @@ async function testJSON(file: string) {
   }
 }
 
+async function testREDIRECTS(file: string) {
+  if (process.platform === "win32") {
+    // Local imports must have a `file://` scheme on Windows
+    file = `file://${file}`;
+  }
+
+  console.log("Redirect errors")
+
+  const textPlaceholder = await fs.readFile(file, 'utf-8');
+  const destinationURLRegex = new RegExp('\/.*\/\*? (\/.*\/)')
+
+  for (const line of textPlaceholder.split(/[\r\n]+/)){
+    let exists = false;
+    if (!line.startsWith("#") ) {
+      const result = line.match(destinationURLRegex)
+      
+      if (result !== null) {
+        const match = result[1]
+        let local = join(PUBDIR, match)
+        exists = existsSync(local);
+
+        if (!exists) {
+          console.log(`\n  ✘ ${result[0]}`)
+      }
+  }
+  }
+  }
+}
+
 async function task(file: string) {
   let html = await fs.readFile(file, "utf8");
 
@@ -294,6 +324,13 @@ try {
     }
     console.log(msg + "\n\n");
   }
+} catch (err) {
+  console.error(err.stack || err);
+  process.exit(1);
+}
+
+try {
+  await testREDIRECTS(REDIRECT_DIR)
 } catch (err) {
   console.error(err.stack || err);
   process.exit(1);

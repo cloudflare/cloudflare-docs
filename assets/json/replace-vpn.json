@@ -148,7 +148,7 @@
             "additional_description": "We recommend <a href='/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/'>manually deploying</a> the client during your pilot and revisiting <a href='/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/'>automated deployments</a> during implementation."
           },
           {
-            "url_path": "https://developers.cloudflare.com/cloudflare-one/policies/filtering/initial-setup/network/#connect-devices",
+            "url_path": "/cloudflare-one/policies/filtering/initial-setup/network/#connect-devices",
             "link_title": "Enable the Proxy",
             "additional_description": "This will allow WARP to build a Wireguard-based, encrypted tunnel on your device to route traffic to Cloudflare."
           },
