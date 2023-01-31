@@ -210,9 +210,9 @@
 /firewall/cf-firewall-rules/rules-lists/ /fundamentals/global-configurations/lists/ip-lists/ 301
 /firewall/cf-rulesets/ /ruleset-engine/about/ 301
 /firewall/cf-rulesets/add-rule-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
-/firewall/cf-rulesets/common-use-cases/ /ruleset-engine/common-use-cases/ 301
-/firewall/cf-rulesets/common-use-cases/deploy-cmr-joomla-only/ /ruleset-engine/common-use-cases/deploy-cmr-joomla-only/ 301
-/firewall/cf-rulesets/common-use-cases/deploy-cmr-wordpress-block/ /ruleset-engine/common-use-cases/deploy-cmr-wordpress-block/ 301
+/firewall/cf-rulesets/common-use-cases/ /ruleset-engine/managed-rulesets/override-examples/ 301
+/firewall/cf-rulesets/common-use-cases/deploy-cmr-joomla-only/ /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-joomla-only/ 301
+/firewall/cf-rulesets/common-use-cases/deploy-cmr-wordpress-block/ /ruleset-engine/managed-rulesets/override-examples/deploy-cmr-wordpress-block/ 301
 /firewall/cf-rulesets/common-use-cases/enable-selected-rules/ /ruleset-engine/managed-rulesets/override-examples/enable-selected-rules/ 301
 /firewall/cf-rulesets/common-use-cases/override-ruleset-tag-rule/ /ruleset-engine/managed-rulesets/override-examples/override-ruleset-tag-rule/ 301
 /firewall/cf-rulesets/create-phase-rulesets/ /ruleset-engine/basic-operations/add-rule-phase-rulesets/ 301
