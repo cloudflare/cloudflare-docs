@@ -25,9 +25,9 @@ Send messages to Area 1 via BCC configurations within your email provider:
 
 ## Microsoft Graph API
 
-Send messages to Area 1 via the Microsoft Graph API:
+Send messages to Area 1 via a Microsoft Graph API configuration within your email provider:
  
- - Office 365 Microsoft Graph API setup
+ - [Office 365 Microsoft Graph API setup](/email-security/deployment/api/setup/office365-graph-api/)
 
 ## Next steps
 
