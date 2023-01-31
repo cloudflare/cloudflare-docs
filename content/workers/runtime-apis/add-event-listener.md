@@ -66,7 +66,6 @@ A Queue listener acts as [a consumer for one or more queues](https://developers.
 addEventListener("queue", (event) => {
   await handleMessages(event);
 });
-});
 ```
 
 
