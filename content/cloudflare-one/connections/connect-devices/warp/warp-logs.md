@@ -15,7 +15,7 @@ The WARP client provides diagnostic logs that you can use to troubleshoot connec
 To view debug logs on desktop devices:
 
 {{<tabs labels="macOS | Windows | Linux">}}
-{{<tab label="macOS" no-code="true">}}
+{{<tab label="macos" no-code="true">}}
 
 1. Open a Terminal window.
 2. Run the `warp-diag` tool:
@@ -25,7 +25,7 @@ To view debug logs on desktop devices:
 This will place a `warp-debugging-info.zip` on your Desktop.
 
 {{</tab>}}
-{{<tab label="Windows" no-code="true">}}
+{{<tab label="windows" no-code="true">}}
  
 1. Open a Command Prompt or Powershell window.
 2. Run the `warp-diag` tool:
@@ -35,7 +35,7 @@ This will place a `warp-debugging-info.zip` on your Desktop.
 This will place a `warp-debugging-info.zip` on your Desktop.
 
 {{</tab>}}
-{{<tab label="Linux" no-code="true">}}
+{{<tab label="linux" no-code="true">}}
  
 1. Open a Terminal window.
 2. Run the `warp-diag` tool:
@@ -57,12 +57,12 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `boringtun.log`    | Log for the WireGuard tunnel that serves traffic from the device to Cloudflare's edge. |
 | `connectivity.txt` | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check). The trace for `connectivity.cloudflareclient.com` should show `warp=on` and optionally `gateway=on` (if TCP proxy is enabled). The trace for `engage.cloudflareclient.com` should show `warp=off` and `gateway=off`. |
 | `daemon.log`       | Communication between the device and Cloudflare's edge.|
-| `daemon_dns.log`   | Contains detailed DNS logs if **Log DNS queries** was enabled in the WARP client. |
+| `daemon_dns.log`   | Contains detailed DNS logs if **Log DNS queries** was enabled on WARP. |
 | `date.txt`         | Date and time (UTC) when you ran the `warp-diag` command.|
 | `dns-check.txt`    | Verifies that the WARP DNS servers are set as system default. For [operating modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) where DNS filtering is enabled, this file should contain the IPs of the WARP DNS servers (`127.0.2.2` and `127.0.2.3`). |
-| `dns_stats.log`    | Number of DNS queries received and resolved by WARP every two minutes. |
+| `dns_stats.log`    | Statistics on the DNS queries received and resolved by WARP, generated every two minutes. |
 | `etc-hosts.txt`    | Static DNS config of device. |
-| `gui-launcher.log` | ????? |
+| `gui-launcher.log` | macOS console log showing application launch|
 | `gui-log.log`      | Log file for the GUI app that users interact with. |
 | `hostname.txt`     | Name of the device. |
 | `ifconfig.txt` </br> `ipconfig.txt`    | IP configuration of each network interface. |
@@ -76,22 +76,22 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `route.txt`        | Output from the `route get` command used to verify that network traffic is going over the correct interface. Routes to our [client orchestration API IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) should show an `en` or `wifi` interface. If the API IPs show `utun` or some other adapter, this likely means a third-party firewall or VPN is intercepting the connection. |
 | `scutil-dns.txt`   | DNS configuration on Mac/Linux (available in `ipconfig.txt` on Windows). |
 | `scutil-proxy.txt` | Proxy configuration on Mac/Linux (available in `ipconfig.txt` on Windows). |
-| `stats.log`        | Uptime and throughput stats for the WARP tunnel. ???? WARP tunnel == Wireguard tunnel ???? |
+| `stats.log`        | Uptime and throughput stats for the Wireguard tunnel, generated every two minutes. |
 | `sw-vers.txt`      | Operating system of the device. |
 | `sysinfo.json`     | CPU and memory usage when `warp-diag` was run. This information is useful for determining whether slow speeds are due to heavy system load. |
-| `systeminfo.txt` </br> `system-profile.txt` | System software information.  |
+| `systeminfo.txt` </br> `system-profile.txt` | System software overview.  |
 | `timezone.txt`     | Local timezone of the device specified as a UTC offset. |
 | `traceroute.txt`   | Traceroute to the [WARP ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) showing the path from the device to Cloudflare's edge.|
 | `uname.txt`        |  Linux-only system information including kernel version. |
-| `v4interfaces.txt` </br> `v4subinterfaces.txt` </br> `v6interfaces.txt` </br> `v6subinterfaces.txt` | Stats for IPv4 and IPv6 interfaces. |
+| `v4interfaces.txt` </br> `v4subinterfaces.txt` </br> `v6interfaces.txt` </br> `v6subinterfaces.txt` | IPv4 and IPv6 network configuration on Windows. |
 | `version.txt`      | [WARP client version](/cloudflare-one/connections/connect-devices/warp/download-warp/) installed on the device. |
 | `warp-account.txt` | WARP client device enrollment information. |
 | `warp-device-posture.txt` | [Device posture data](/cloudflare-one/identity/devices/warp-client-checks/) obtained by the WARP client. |
-| `warp-dns-stats.txt`| ??????|
-| `warp-network.txt` | ??????? |
+| `warp-dns-stats.txt`| Summary of recent DNS queries on the device since `dns-stats.log` was generated. |
+| `warp-network.txt` | Network settings on the device detected by WARP. |
 | `warp-settings.txt`| [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) applied to the device. |
-| `warp-stats.txt`   | ????????? |
-| `warp-status.txt`  | Status of WARP switch when `warp-diag` was run. |
+| `warp-stats.txt`   | Uptime and throughput of the Wireguard tunnel since `stats.log` was generated. |
+| `warp-status.txt`  | Status of WARP switch (connected or disconnected). |
 
 {{</table-wrap>}}
 
@@ -124,7 +124,7 @@ Mobile app logs contain a subset of the information available for desktop client
 #### iOS
 
 | Name          | Equivalent warp-diag log |
-| ------------------ | ----------- | 
+| ------------------ | ----------- |
 | **DNS logs**       | `daemon_dns.log`|
 | **Console logs** > **Extension logs** | `daemon.log`|
 | **Console logs** > **Application logs** | `connectivity.txt` and `gui-log.log`|
