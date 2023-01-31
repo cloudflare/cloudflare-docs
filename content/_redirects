@@ -126,6 +126,7 @@
 /email-security/static/Admin_Quarantine.pdf /email-security/email-configuration/admin-quarantine/ 301
 /email-security/static/Deployment_and_Configuration_Guide_for_Splunk_Cloud_HTTP_Event_Collector.pdf /email-security/reporting/siem-integration/splunk-integration-guide/ 301
 /email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf /email-security/reporting/siem-integration/sumo-logic-integration-guide/ 301
+/email-security/static/API_Documentation_1.30.0.pdf /email-security/static/api_documentation_1.34.pdf 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
