@@ -7,7 +7,7 @@ title: Deployments
 
 {{<Aside type="note">}}
 
-Deployments are currently in Public Beta.
+Deployments are currently in Public Beta and subcommands are currently in Beta. Please report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 
 {{</Aside>}}
 
@@ -69,3 +69,13 @@ Read more about accessing Deployment information via Cloudflare's REST API [here
 Deployments are in active development. To give feedback, request a [live chat](https://www.cloudflare.com/lp/developer-week-deployments).
 
 {{</Aside>}}
+
+## Rollbacks
+Rollbacks are a means to change the code running on the edge, this can be used for instance if there is an unintended publish. 
+It is not limited to just the previous deployment, rollbacks can currently be done up to 10 deployments back from the current one.
+There are scenarios where you cannot rollback which include:
+1. 
+2.
+3. 
+Additionally there are caveats with resources bound to the deployment, for instance the structure of your resource may have changed since the deployment
+being rolled back onto, in which the deployed code would handle the resource data erroneously. 
