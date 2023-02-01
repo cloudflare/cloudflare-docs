@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
-title: How authenticated origin pulls work
+title: About
 weight: 1
+meta:
+  title: How authenticated origin pulls work
 ---
 
 # How authenticated origin pulls work
