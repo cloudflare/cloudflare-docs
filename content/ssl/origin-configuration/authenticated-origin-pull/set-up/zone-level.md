@@ -30,7 +30,7 @@ With the certificate installed, set up your origin web server to accept client c
 <summary>Apache example</summary>
 <div>
 
-For this example, you would have saved the [certificate](#certificate-value) `/path/to/origin-pull-ca.pem`.
+For this example, you would have saved the certificate `/path/to/origin-pull-ca.pem`.
 
 ```txt
 SSLVerifyClient require
