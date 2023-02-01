@@ -12,11 +12,10 @@ By default, you can create a maximum of 100 rules. We recommend you create lists
 
 ## Add a rule
 
-1.  From your dashboard, select **Network Security**.
-2.  Select **Magic Firewall**.
-3.  Select **Add a Rule**.
-4.  Fill out the information for your new rule.
-5.  When you are done, select **Add new rule**.
+1.  From your dashboard, select **Magic Firewall**.
+2.  Select **Add a Rule**.
+3.  Fill out the information for your new rule.
+4.  When you are done, select **Add new rule**.
 
 ## Create a disabled rule
 
@@ -28,10 +27,9 @@ To disable an existing rule, from the **Magic Firewall Rules** page, set the **E
 
 ## Update a rule
 
-1.  From your dashboard, select **Network Security**.
-2.  Select **Magic Firewall**. A list of firewall rules displays.
-3.  Locate the rule you want to edit and select **Edit**.
-4.  Update the rule with your changes and select **Edit rule**.
+1.  From your dashboard, select **Magic Firewall**. A list of firewall rules displays.
+2.  Locate the rule you want to edit and select **Edit**.
+3.  Update the rule with your changes and select **Edit rule**.
 
 ## Delete an existing rule
 
