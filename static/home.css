@@ -666,13 +666,13 @@ html[is-site-page] .DocsContent {
 }
 
 @media (max-width:768px) {
-    .Recommendation--full-bleed {
-        clip-path: unset(0 100vmax);
-    }
-
     .RecommendedContentGrid {
         flex-direction: column;
         gap: .8em;
+    }
+
+    .RecommendedContentWithCard {
+        width: unset;
     }
 }
 
@@ -769,7 +769,7 @@ html[is-site-page] .DocsContent {
     width: 20px;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 768px) {
     .TriBlock {
         width: unset;
     }
@@ -777,6 +777,7 @@ html[is-site-page] .DocsContent {
     .TriBlockGrid {
         display: inline-block;
         width: 100%;
+        margin-top: 1em;
     }
 }
 
@@ -886,6 +887,14 @@ html[is-site-page] .DocsContent {
      color: #fff;
  }
 
+@media (max-width:768px) {
+    .FooterBlockGrid {
+        flex-direction: column;
+        gap: 1em;
+    }
+
+}
+
  .FeaturedContentSection {
     margin-top: 5em;
  }
@@ -946,12 +955,12 @@ html[is-site-page] .DocsContent {
     content: url('./data-privacy-dark.svg');
 }
 @media (max-width:768px) { 
-
     .FeaturedContentSection {
         margin-top: 5em;
     }
 
     .FeatureContentGrid {
+        margin-bottom: 0;
         flex-direction: column;
         align-items: flex-start;
     }
