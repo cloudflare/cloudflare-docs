@@ -127,4 +127,4 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/live_inputs/:i
 ### Limitations
 
 - Watermarks cannot yet be used with live videos.
-- If a live video exceeds seven days in length, the recording will be truncated to seven days and not be viewable.
+- If a live video exceeds seven days in length, the recording will be truncated to seven days. Only the first seven days of live video content will be recorded.
