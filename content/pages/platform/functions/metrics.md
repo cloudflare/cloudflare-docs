@@ -4,11 +4,17 @@ title: Metrics
 weight: 11
 ---
 
-# Metrics 
+# Metrics
+
 Functions metrics can help you diagnose issues and understand your workloads by showing performance and usage of your Functions.
 
-## Functions metrics 
-Functions metrics aggregate request data for an individual Pages project. To view your Functions metrics, select Pages > Pages Project > Functions Metrics. 
+## Functions metrics
+
+Functions metrics aggregate request data for an individual Pages project. To view your Functions metrics:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, select 
 
 There are three metrics that can help you understand the health of your Function in a given moment: requests success, error metrics and invocation statuses.
 
