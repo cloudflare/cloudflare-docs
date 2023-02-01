@@ -46,4 +46,4 @@ For global:
 
 2.  [Check whether new certificate is Active](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-get-certificate-details).
 
-3.  Once certificate is active, then [delete the previous certificate](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-delete-certificate).
+3.  Once certificate is active, [delete the previous certificate](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-delete-certificate).

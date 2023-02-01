@@ -10,13 +10,13 @@ meta:
 
 When you enable authenticated origin pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. Customers can use client certificates from their Private PKI to authenticate connections from Cloudflare.
 
-## Step 1 - Upload custom certificate
+## 1. Upload custom certificate
 
 First, upload a custom certificate following [these instructions](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api), but use the [`/origin_tls_client_auth/hostnames/certificates` endpoint](https://developers.cloudflare.com/api/operations/per-hostname-authenticated-origin-pull-upload-a-hostname-client-certificate).
 
-In the API response, save the certificate ID `id` since it is required for the next step.
+In the API response, save the certificate `id` since it is required for the next step.
 
-## Step 2 - Enable authenticated origin pulls (globally)
+## 2. Enable authenticated origin pulls (globally)
 
 Then, enable authenticated origin pulls as an option for your Cloudflare zone.
 
@@ -37,6 +37,6 @@ To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH
 {{</tab>}}
 {{</tabs>}}
 
-## Step 3 - Enable authenticated origin pulls for the hostname
+## 3. Enable authenticated origin pulls for the hostname
 
 Finally, use the Cloudflare API to send a [`PUT`](https://developers.cloudflare.com/api/operations/per-hostname-authenticated-origin-pull-enable-or-disable-a-hostname-for-client-authentication) request to enable authenticated origin pulls for specific hostnames.
