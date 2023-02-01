@@ -73,7 +73,7 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `platform.txt`     | Operating system of the device. |
 | `ps.txt` <br> `processes.txt` | List of all active processes on the device when `warp-diag` was run. |
 | `resolv.conf`      |  The contents of the `/etc/resolv.conf` file on Mac/Linux, where system DNS servers are configured. |
-| `route.txt`        | Output from the `route get` command used to verify that network traffic is going over the correct interface. Routes to our [client orchestration API IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) should show an `en` or `wifi` interface. If the API IPs show `utun` or some other adapter, this likely means a third-party firewall or VPN is intercepting the connection. |
+| `route.txt`        | Output from the `route get` command used to verify that network traffic is going over the correct interface. |
 | `scutil-dns.txt`   | DNS configuration on Mac/Linux (available in `ipconfig.txt` on Windows). |
 | `scutil-proxy.txt` | Proxy configuration on Mac/Linux (available in `ipconfig.txt` on Windows). |
 | `stats.log`        | Uptime and throughput stats for the Wireguard tunnel, generated every two minutes. |
