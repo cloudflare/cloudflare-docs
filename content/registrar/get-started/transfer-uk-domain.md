@@ -10,7 +10,7 @@ weight: 3
 
 - The domain must not be locked or suspended.
 - There must be an active zone [for the domain](/fundamentals/get-started/setup/add-site/) in your Cloudflare account.
-- The domain must have [Cloudflare nameservers](/dns/zone-setups/full-setup/).
+- The domain must use [Cloudflare-assigned nameservers](/dns/zone-setups/full-setup/).
 - The domain must not be expiring (or renewing) within the next 10 days.
 
 ---
