@@ -101,6 +101,5 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^18]:Only US FedRAMP region.
 [^19]:Uses Gateway and CASB.
 [^20]:You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
-[^21]:Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization.
+[^21]:Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
 [^22]:Logs are currently stored in the US only, but customers have the [option to exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/).
-
