@@ -8,7 +8,7 @@ meta:
 
 {{<beta>}}Office 365 Graph API set up with Area 1{{</beta>}}
 
-For customers using Microsoft Office 365, setting up a phishing risk assessment with Area 1 and Microsoft Graph API setup is quick and easy. The following email flow shows how this works:
+For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph API is quick and easy. The following email flow shows how this works:
 
 ![Email flow when setting up Area 1 with the Microsoft Graph API](/email-security/static/deployment/api-setup/ms-graph/ms-graph.png)
 
@@ -23,7 +23,7 @@ Area 1 uses two roles for retraction and directory integration purposes:
 
 Directory Integration requires the use of both roles mentioned above. Email retraction only requires the **Privileged role administrator**. Any Azure administrator with a membership in the required role can perform these authorizations. The authorization process grants the Area 1 dashboard access to the Azure environment. This access is performed with the least applicable privileges required to function, as shown in the table below. 
 
-The Enterprise Applications that Area 1 registers are not tied to any administrator account. Inside of the Azure Active Directory admin center you can review the permissions granted to each application in the Enterprise Application section. Refer to [Application management documentation documentation](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/) for more information.
+The Enterprise Applications that Area 1 registers are not tied to any administrator account. Inside of the Azure Active Directory admin center you can review the permissions granted to each application in the Enterprise Application section. Refer to [Application management documentation](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/) for more information.
 
 ## Set up Microsoft Graph API
 
@@ -65,3 +65,38 @@ The Enterprise Applications that Area 1 registers are not tied to any administra
 Your authorized domain will show up in **Email Configuration** > **Domains & Routing** > **Domains**, with messages about the progress of directory syncing between Office 365 and Area 1.
 
 ![Now that both authorizations are complete, select Publish domain](/email-security/static/deployment/api-setup/ms-graph/domain-sync-state.png)
+
+## Azure applications
+
+### Directory Integration
+
+The following table shows Directory Integration as it appears in Azure Enterprise applications.
+
+{{<table-wrap style="font-size:90%">}}
+
+API Name | Claim value | Permission | Type | Granted through | Granted by
+-------- | ----------- | ---------- | ---- | --------------- | ---
+Microsoft <br /> Graph | `User.Read` | Sign in and read user profile | Delegated | Admin consent | An administrator
+Microsoft <br /> Graph | `Group.Read.All` | Read all groups | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `Directory.Read.All` | Read directory data | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `User.Read.All` | Read all users' full profiles | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `GroupMember.Read.All` | Read all group memberships | Application | Admin consent | An administrator
+
+{{</table-wrap>}}
+
+### Retraction
+
+The following table shows retractions as they appear in Azure Enterprise applications.
+
+{{<table-wrap style="font-size:90%">}}
+
+API Name | Claim value | Permission | Type | Granted through | Granted by
+-------- | ----------- | ---------- | ---- | --------------- | ---
+Microsoft Graph | `Mail.ReadWrite` | Read and write mail in all mailboxes | Application | Admin consent | An administrator
+Microsoft Graph | `Group.Read.All` | Read all groups | Application | Admin consent | An administrator
+Microsoft Graph | `User.Read.All` | Read all users' full profiles | Application | Admin consent | An administrator
+Microsoft Graph | `Domain.Read.All` | Read domains | Application | Admin consent | An administrator
+Microsoft Graph | `GroupMember.Read.All` | Read all group memberships | Application | Admin consent | An administrator
+Microsoft Graph | `Organization.Read.All` | Read organization information | Application | Admin consent |An administrator
+
+{{</table-wrap>}}
