@@ -25,7 +25,7 @@ In your browser's address bar, the URL should show `https://dash.cloudflare.com/
 
 ### Obtain the rule ID for a firewall rule
 
-1. From the Cloudflare dashboard, select **Network Security** > **Magic Firewall**.
+1. From the Cloudflare dashboard, select **Magic Firewall**.
 2. Locate the rule you need the rule ID for from the list and select **Edit**.
 3. From the **Edit Rule** page, locate the **Rule ID** and select the copy button.
 4. Select **Cancel** to return to the **Magic Firewall** page.

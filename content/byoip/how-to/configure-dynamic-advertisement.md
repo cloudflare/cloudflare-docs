@@ -25,10 +25,10 @@ After enabling the prefix advertisement or advertising a new prefix, do the foll
 To configure IP prefix assignment from your Cloudflare account home, use the **Status** drop-down list in the **IP Prefixes** dialog, as outlined below.
 
 1.  Log in to your Cloudflare dashboard.
-2.  On **Account Home**, select **IP Prefixes**.
-3.  To edit a prefix, click the **Edit** at the end of the entry.
+2.  Navigate to Account Home > **IP Addresses** > **IP Prefixes**.
+3.  To edit a prefix, select **Edit** at the end of the entry.
 4.  From **Edit IP Prefixes**, under **Status**, select _Advertised_ or _Withdrawn_.
-5.  Click **Save** to commit your changes.
+5.  Select **Save** to commit your changes.
 
 After saving your changes, it takes between 2 to 7 minutes to enable advertisement and approximately 15 minutes to disable (withdraw) advertisement.
 
@@ -42,7 +42,7 @@ Most dynamic advertisement operations require that you supply the Cloudflare ID 
 
 You can obtain Prefix IDs from the **IP Prefixes** page in your Cloudflare Account Home.
 
-1.  Click the expander for the entry whose Prefix ID you want to obtain.
-2.  To obtain the Prefix ID, refer to the **API Tag** value. To add the value to your clipboard, click **Copy**.
+1.  Select the expander for the entry whose Prefix ID you want to obtain.
+2.  To obtain the Prefix ID, refer to the **API Tag** value. To add the value to your clipboard, select **Copy**.
 
 To obtain Prefix IDs using the API, refer to the [List Prefixes](https://developers.cloudflare.com/api/operations/ip-address-management-prefixes-list-prefixes) operation in the Cloudflare API.

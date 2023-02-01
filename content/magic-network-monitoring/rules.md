@@ -10,7 +10,7 @@ Magic Network Monitoring rules will allow you to monitor the traffic volume dest
 
 If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), you can also configure Magic Network Monitoring rules to automatically activate Magic Transit if the rule’s threshold is exceeded.
 
-You can create and edit Magic Network Monitoring rules in the [Cloudflare dashboard](https://dash.cloudflare.com/login) from **Analytics** > **Magic Monitoring** and selecting **Configure Magic Network Monitoring**.
+You can create and edit Magic Network Monitoring rules in the [Cloudflare dashboard](https://dash.cloudflare.com/login) from **Analytics & Logs** > **Magic Monitoring** and selecting **Configure Magic Network Monitoring**.
 
 ## Rule fields
 
