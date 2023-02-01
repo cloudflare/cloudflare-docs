@@ -7,6 +7,10 @@ rss: file
 
 # Changelog
 
+## 2022-02-01
+
+- Added the [`[data-]language`](/turnstile/get-started/client-side-rendering/#configurations) parameter.
+
 ## 2022-12-12
 
 - [`POST /siteverify`](/turnstile/get-started/server-side-validation/) supports JSON requests now.
