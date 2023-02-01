@@ -155,6 +155,17 @@ curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 }' | jq .
 ```
 
+## Frequency 
+  
+The frequency at which Cloudflare sends batches of logs to your destination. Setting frequency to `high` sends your logs in larger quantities of smaller files. Setting frequency to `low` sends logs in smaller quantities of larger files.
+
+- `high`
+  - every 30 seconds or every 100,000 records, whichever comes first.
+  - More than one file might be pushed per 30-second period or per 100,000 records.
+- `low`
+  - every 5 minutes or every 1,000,000 records, whichever comes first.
+  - More than one file might be pushed per 5-minute period or per 1,000,000 records
+  
 ## Options
 
 Logpull_options has been replaced with Custom Log Formatting output_options. Please refer to the [Log Output Options](/logs/reference/log-output-options/) documentation for instructions on configuring these options and updating your existing jobs to use these options.
