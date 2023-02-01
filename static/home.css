@@ -551,8 +551,11 @@ html[is-site-page] .DocsContent {
     overflow: hidden
 }
 
-[theme=light] .HeroBlock [id^=twitter-widget] {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1) !important
+.HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: #0051C3;
+    background: inherit;
+    border-bottom-color: #0051C3;
 }
 
 .QuadBlockGrid {
@@ -577,6 +580,11 @@ html[is-site-page] .DocsContent {
     text-decoration: none;
     background-color: #fff;
     border-bottom-color: #000;
+}
+
+.QuadBlockGrid a {
+    color: inherit;
+    text-decoration: none;
 }
 
 [theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
@@ -609,15 +617,18 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #0051C3;
 }
 
-.RecommendedContentHeader {
-    border-top: 1px solid #222;
-    padding-top: 1em;
+.RecommendedContentWithCard {
+    padding: 1em;
+    margin: 1em;
+    height: 20em;
+    width: 45em;
+    border: 1px solid #c8c6c6;
+    border-radius: 6px;
 }
 
 .RecommendedContentGrid {
     display: flex;
-    gap: 6em;
-    align-items: flex-start;
+    gap: 2em;
 }
 
 .RecommendedContentTitle {
@@ -661,13 +672,13 @@ html[is-site-page] .DocsContent {
 .CommunityBlock--content {
     display: flex;
     gap: 5px;
-    align-items: center;
-    color: #0c2231;
+    align-items: flex-start;
+    color: initial !important;
+    text-decoration: initial !important;
 }
 
 .CommunityBlock img {
-    height: 1.4em;
-    padding-bottom: .5em;
+    height: 1.6em;
 }
 
 .BlogSection {
@@ -850,8 +861,10 @@ html[is-site-page] .DocsContent {
  }
 
   .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
-      background-color: inherit;
-        border-bottom-color: #000;
+    text-decoration: none;
+    color: #0051C3;
+    background: inherit;
+    border-bottom-color: #0051C3;
   }
 
 .FeatureContentTitle {
