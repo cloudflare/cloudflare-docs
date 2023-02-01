@@ -19,9 +19,9 @@ To view debug logs on desktop devices:
 
 1. Open a Terminal window.
 2. Run the `warp-diag` tool:
-    ```sh
-    $ warp-diag
-    ```
+```sh
+$ warp-diag
+```
 This will place a `warp-debugging-info.zip` on your Desktop.
 
 {{</tab>}}
@@ -29,9 +29,9 @@ This will place a `warp-debugging-info.zip` on your Desktop.
  
 1. Open a Command Prompt or Powershell window.
 2. Run the `warp-diag` tool:
-    ```bash
-    C:\Users\JohnDoe>warp-diag
-    ```
+```bash
+C:\Users\JohnDoe>warp-diag
+```
 This will place a `warp-debugging-info.zip` on your Desktop.
 
 {{</tab>}}
@@ -39,9 +39,9 @@ This will place a `warp-debugging-info.zip` on your Desktop.
  
 1. Open a Terminal window.
 2. Run the `warp-diag` tool:
-    ```sh
-    $ warp-diag
-    ```
+```sh
+$ warp-diag
+```
 This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
 
 {{</tab>}}
