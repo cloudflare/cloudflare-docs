@@ -14,13 +14,13 @@ Learn how to add new account members, edit or revoke their permissions and acces
 
 To add a member to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account[^1].
 2. Go to **Manage Account** > **Members**.
 3. Select **Invite**.
 4. Fill out the following information:
 
     - **Invite members**: Enter one or more email addresses (if multiple, separate addresses with commas).
-    - **Scope**: Use different combinations for the **Operator** (*Include*, *Exclude*), **Type** (*All domains*, *A specific domain*, *Domain Group*), and **Name** fields to select the scope of permissions.
+    - **Scope**: Use a variety of fields to adjust the [scope](/fundamentals/account-and-billing/members/roles/) of your roles.
     - **Roles**: Choose one or more [roles](/fundamentals/account-and-billing/members/roles/) to assign your members.
 
 5. Select **Continue to summary**.
@@ -28,7 +28,7 @@ To add a member to your account:
 
 ## Edit member permissions
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account[^2].
 2. Go to **Manage Account** > **Members**.
 3. Select a member record, then select **Edit**.
 4. Update the scope and roles of their permissions.
@@ -39,17 +39,22 @@ To add a member to your account:
 
 If you invited a member to your account but they cannot find the invitation or the invitation expires, you can resend the invitation through the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account[^3].
 2. Go to **Manage Account** > **Members**.
 3. Select a member record where their **Status** is **Invite Pending**.
-4. Select **Resent invite**.
+4. Select **Resend invite**.
 
 ## Remove account members
 
 To revoke a member's access to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator**).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account[^4].
 2. Go to **Manage Account** > **Members**.
 3. Locate an account member and expand their record.
 4. Click **Revoke**.
 5. Click **Yes, revoke access**.
+
+[^1]: {{<render file="_account-member-manage-limitation.md">}}
+[^2]: {{<render file="_account-member-manage-limitation.md">}}
+[^3]: {{<render file="_account-member-manage-limitation.md">}}
+[^4]: {{<render file="_account-member-manage-limitation.md">}}

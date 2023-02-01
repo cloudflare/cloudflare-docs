@@ -23,7 +23,11 @@ If you want the member to have a role that applies to all domains within your ac
 | Operator | *Include* |
 | Type | *All domains* |
 
+{{<Aside type="note">}}
+
 You can only assign [account-scoped roles](/fundamentals/account-and-billing/members/roles/#account-scoped-roles) to members who have access to all domains.
+
+{{</Aside>}}
 
 ### Excluding specific domains
 
@@ -40,7 +44,11 @@ If you want the member to have roles associated with most domains, but not one o
 | Type | *A specific domain* |
 | Name | `example.com` |
 
+{{<Aside type="note">}}
+
 If you limit permissions to any domain, you can only assign [domain-scoped roles](/fundamentals/account-and-billing/members/roles/#domain-scoped-roles) to these members.
+
+{{</Aside>}}
 
 ### Domain groups
 
@@ -71,4 +79,8 @@ To assign a member permissions to a domain group, use the following combination 
 | Type | *Domain Group* |
 | Name | *Example Group* |
 
+{{<Aside type="note">}}
+
 With Domain Groups, you can only assign [domain-scoped roles](/fundamentals/account-and-billing/members/roles/#domain-scoped-roles) to these members.
+
+{{</Aside>}}
