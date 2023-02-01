@@ -92,11 +92,11 @@ The following table shows retractions as they appear in Azure Enterprise applica
 
 API Name | Claim value | Permission | Type | Granted through | Granted by
 -------- | ----------- | ---------- | ---- | --------------- | ---
-Microsoft Graph | `Mail.ReadWrite` | Read and write mail in all mailboxes | Application | Admin consent | An administrator
-Microsoft Graph | `Group.Read.All` | Read all groups | Application | Admin consent | An administrator
-Microsoft Graph | `User.Read.All` | Read all users' full profiles | Application | Admin consent | An administrator
-Microsoft Graph | `Domain.Read.All` | Read domains | Application | Admin consent | An administrator
-Microsoft Graph | `GroupMember.Read.All` | Read all group memberships | Application | Admin consent | An administrator
-Microsoft Graph | `Organization.Read.All` | Read organization information | Application | Admin consent |An administrator
+Microsoft <br /> Graph | `Mail.ReadWrite` | Read and write mail in all mailboxes | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `Group.Read.All` | Read all groups | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `User.Read.All` | Read all users' full profiles | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `Domain.Read.All` | Read domains | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `GroupMember.Read.All` | Read all group memberships | Application | Admin consent | An administrator
+Microsoft <br /> Graph | `Organization.Read.All` | Read organization information | Application | Admin consent |An administrator
 
 {{</table-wrap>}}
