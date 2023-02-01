@@ -45,7 +45,7 @@ return await fetch(request);
 
 ## Custom ports
 
-For Workers subrequests, custom ports are ignored when using HTTPS and are sent to port `443`. When using HTTP, custom ports are respected.
+For Workers subrequests, custom ports are ignored when using HTTPS and are instead always sent to port `443`. When using HTTP, custom ports are respected.
 
 For example:
 
