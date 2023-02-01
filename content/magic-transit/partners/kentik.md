@@ -36,8 +36,8 @@ For additional information about Kentik and Magic Transit, refer to [Kentik's Ma
 
 ## Access Cloudflare account
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your account from the list.
-2. From the navigation menu, select **IP Addresses** > **IP Prefixes**.
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com), and select your account.
+2. Select **IP Addresses** > **IP Prefixes**.
 3. Referring to the example scenario, the prefix protected by Cloudflare displays a **Withdrawn** status.
 
     After a DDoS attacks occurs, the status changes to **Advertised** which indicates the network is protected.
