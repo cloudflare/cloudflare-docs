@@ -12,7 +12,7 @@ meta:
   image: /core-services-preview.png
 
 resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/dns
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/support
 
 externals:
   - title: Cloudflare home
