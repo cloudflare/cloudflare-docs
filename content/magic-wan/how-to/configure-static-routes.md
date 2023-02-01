@@ -6,7 +6,7 @@ weight: 2
 
 # Configure static routes
 
-Magic WAN uses a static configuration to route your traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s edge to your locations.
+Magic WAN uses a static configuration to route your traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s global network to your locations.
 
 You must assign a route priority to each tunnel–subnet pair in your configuration, as follows:
 

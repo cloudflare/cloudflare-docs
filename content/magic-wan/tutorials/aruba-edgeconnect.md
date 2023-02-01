@@ -394,6 +394,6 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 ## 6. Cloudflare policies
 
-At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's edge, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays. 
+At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's global network, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays. 
 
 To begin filtering traffic and gathering analytics, refer to the [Magic Firewall documentation](/magic-firewall/) to learn how to create filters for east-west inter-branch traffic and the [Secure Web Gateway documentation](/cloudflare-one/policies/filtering/) to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.
