@@ -35,6 +35,6 @@ To disable an existing rule, from the **Magic Firewall Rules** page, set the **E
 
 ## Delete an existing rule
 
-1. Locate the rule you'd like to delete in the list.
+1. Locate the rule you want to delete in the list.
 2. From the end of the row, select **Delete**.
 3. Select **Delete** again to confirm the deletion.
