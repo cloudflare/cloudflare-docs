@@ -472,7 +472,7 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
 .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration.svg");
+    background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
     background-repeat: no-repeat;
     margin: 0 auto;
     position: relative;
@@ -483,7 +483,7 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
 [theme=dark] .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration.svg");
+    background-image: url("/Dev-Docs-Header-Illustration-dark-gray.svg");
     box-shadow: 0 0 0px .5px #1d1f20 inset;
 }
 }
@@ -558,6 +558,17 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #0051C3;
 }
 
+.HeroBlock .DocsMarkdown--link-external-icon {
+    display: none;
+}
+
+[theme=dark] .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
+}
+
 .QuadBlockGrid {
     display: flex;
     width: 100%;
@@ -578,7 +589,7 @@ html[is-site-page] .DocsContent {
 /* Docs-wide style overrides for quadblock link */
 .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
-    background-color: #fff;
+    background-color: inherit;
     border-bottom-color: #000;
 }
 
@@ -587,14 +598,14 @@ html[is-site-page] .DocsContent {
     text-decoration: none;
 }
 
-[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
-    text-decoration: none;
-    background-color: inherit;
-    border-bottom-color: inherit;
-}
 
 .Recommendation {
     background: #e2f5fa;
+    padding: 1em;
+}
+
+[theme=dark] .Recommendation {
+    background: #222629;
     padding: 1em;
 }
 
@@ -602,6 +613,12 @@ html[is-site-page] .DocsContent {
     box-shadow: 0 0 0 100vmax #e2f5fa;
     clip-path: inset(0 -100vmax);
 }
+
+[theme=dark] .Recommendation--full-bleed {
+    box-shadow: 0 0 0 100vmax #222629;
+    clip-path: inset(0 -100vmax);
+}
+
 .Recommendation h2 {
     padding-bottom: 1.2em;
 }
@@ -615,6 +632,13 @@ html[is-site-page] .DocsContent {
     color: #0051C3;
     background: inherit;
     border-bottom-color: #0051C3;
+}
+
+[theme=dark] .RecommendedContentBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
 }
 
 .RecommendedContentWithCard {
@@ -673,8 +697,6 @@ html[is-site-page] .DocsContent {
     display: flex;
     gap: 5px;
     align-items: flex-start;
-    color: initial !important;
-    text-decoration: initial !important;
 }
 
 .CommunityBlock img {
@@ -697,6 +719,25 @@ html[is-site-page] .DocsContent {
     align-items: center;
     justify-content: center;
     gap: 4em;
+}
+
+.BlogImage {
+    content: url("/blog-icon-light.svg");
+}
+
+[theme=dark] .BlogImage {
+    content: url("/blog-icon-dark.svg");
+}
+
+[theme=dark] .BlogSection {
+    background-color: #252423;
+    margin-top: 3em;
+    padding: 3em;
+}
+
+[theme=dark] .BlogSection--full-bleed {
+    box-shadow: 0 0 0 100vmax #252423;
+    clip-path: inset(0 -100vmax);
 }
 
 [theme=dark] .CommunityBlock img {
@@ -740,7 +781,7 @@ html[is-site-page] .DocsContent {
 }
 
 [theme=dark] .TriBlock {
-    background: #242628
+    background: #252423;
 }
 
 .TriBlock a {
@@ -789,9 +830,10 @@ html[is-site-page] .DocsContent {
     margin-bottom: 0;
 }
 
-[theme=dark] .TriBlockHeader img {
-    filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+[theme=dark] .TriBlock img {
+    filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
+
 
 .rssList a {
     color: #0055DC;
@@ -831,9 +873,17 @@ html[is-site-page] .DocsContent {
     padding: 0;
 }
 
+.FooterBlock .DocsMarkdown--link-external-icon {
+    display: none;
+}
+
  .FooterBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     background-color: inherit;
     border-bottom: none;
+ }
+
+ [theme=dark]  .FooterBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+     color: #fff;
  }
 
  .FeaturedContentSection {
@@ -867,11 +917,34 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #0051C3;
   }
 
+  [theme=dark] .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+      text-decoration: none;
+      color: var(--code-orange);
+      background: inherit;
+      border-bottom-color: var(--code-orange);
+  }
+
 .FeatureContentTitle {
     font-size: 1.2em;
     font-weight: 500;
 }
 
+
+.ZeroTrustImage {
+    content: url('./zero-trust-light.svg');
+}
+
+[theme=dark] .ZeroTrustImage {
+    content: url('./zero-trust-light.svg');
+}
+
+.DeveloperAreaImage {
+    content: url('./data-privacy-light.svg');
+}
+
+[theme=dark] .DeveloperAreaImage {
+    content: url('./data-privacy-dark.svg');
+}
 @media (max-width:768px) { 
 
     .FeaturedContentSection {
@@ -902,13 +975,14 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
 }
 
-.StartHere a {
-    font-size: .9em;
+.StartHere {
+    font-size: 1.7em;
     font-weight: 400;
-    text-decoration: none;
-    border-radius: 5px;
-    background-color: #0051C3;;
-    padding: 8px 16px;
+    text-decoration: underline;
+    color: #131313;
+}
+
+[theme=dark] .StartHere {
     color: #fff;
 }
 
@@ -1681,13 +1755,12 @@ html {
     color: #fff;
 }
 
-[theme=dark] .Button-is-docs-secondary {
-    --border-color: rgba(var(--color-rgb), .3);
-    color: inherit;
-    background: transparent
+[theme=dark] .Button-is-docs-tertiary {
+    background: #0051C3;
+    color: #fff;
 }
 
-[theme=dark] .Button-is-docs-tertiary {
+[theme=dark] .Button-is-docs-secondary {
     --border-color: rgba(var(--color-rgb), .3);
     color: inherit;
     background: transparent
