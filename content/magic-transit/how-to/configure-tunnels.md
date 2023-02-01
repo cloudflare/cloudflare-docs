@@ -34,8 +34,8 @@ To configure the tunnel(s) between Cloudflare and your data centers, you must pr
 
 ### Add tunnels
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2.  Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
 
 {{<render file="_tunnel-configuration.md">}}
 
@@ -45,13 +45,13 @@ After adding your tunnels, you can use Network Address Translation (NAT) to tran
 
 ### Configure Network Address Translation
 
-1.  On the router, configure NAT from your private IP address to your server’s current IP address.
+1. On the router, configure NAT from your private IP address to your server’s current IP address.
 
 ```txt
 Router(config)# ip nat inside source static <LOCAL_IP> <GLOBAL_IP>
 ```
 
-2.  On the router, specify which interfaces connect inside and outside of the network.
+2. On the router, specify which interfaces connect inside and outside of the network.
 
 ```txt
 Router(config)# interface Tunnel A
@@ -62,7 +62,7 @@ Router(config)# interface 0/0  /* LAN interface - to the server */
 Router(config)# ip nat inside
 ```
 
-3.  When you are finished, end the configuration.
+3. When you are finished, end the configuration.
 
 ```txt
 Router(config)# end

@@ -69,6 +69,6 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 ### Add tunnels
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-1. Select **Magic WAN** > **Manage Magic WAN configuration** > **Configure**.
+2. Select **Magic WAN** > **Manage Magic WAN configuration** > **Configure**.
 
 {{<render file="../../magic-transit/_partials/_tunnel-configuration.md">}}
