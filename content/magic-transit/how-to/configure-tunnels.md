@@ -34,8 +34,8 @@ To configure the tunnel(s) between Cloudflare and your data centers, you must pr
 
 ### Add tunnels
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2.  From **Manage Magic Transit configuration**, select **Configure**.
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2.  Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
 
 {{<render file="_tunnel-configuration.md">}}
 
