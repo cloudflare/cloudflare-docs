@@ -49,6 +49,6 @@ Note that you cannot edit the Cloudflare endpoint associated with your tunnel.
 
 ### Delete tunnels
 
-1.  From **Tunnels**, locate the tunnel you want to modify and select **Delete**.
-2.  Confirm the action by selecting the checkbox and selecting **Delete**.
+1. From **Tunnels**, locate the tunnel you want to modify and select **Delete**.
+2. Confirm the action by selecting the checkbox and selecting **Delete**.
 

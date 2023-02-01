@@ -10,14 +10,13 @@ weight: 3
 
 Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
 
-Public buckets can be set up in two ways:
+Public buckets can be set up in either one of two ways:
 
-1. The first exposes your bucket as a custom domain.
-2. The second exposes your bucket as an `*.r2.dev` Cloudflare managed subdomain.
+1. The first exposes your bucket as a custom domain under your control.
+2. The second exposes your bucket as a Cloudflare-managed subdomain under `https://r2.dev`.
 
-You may choose to do one or both options to test out public buckets.
-
-To configure firewall rules, caching, access controls, or bot management for your bucket, you must set up a custom domain.
+To configure firewall rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
+Using a custom domain does not require enabling `r2.dev`.
 
 ## Custom domains
 
@@ -121,8 +120,8 @@ The domain is no longer connected to your bucket and will no longer appear in th
 ## Managed public buckets through `r2.dev`
 ### Enable managed public access for your bucket
 
-Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a `r2.dev` Cloudflare subdomain.
-To enable public access for your buckets:
+Enabling managed public access for your bucket will make the content of your bucket available to the Internet through a Cloudflare-managed `r2.dev` subdomain.
+To enable access through `r2.dev` for your buckets:
 
 {{<Aside type="note">}}
 

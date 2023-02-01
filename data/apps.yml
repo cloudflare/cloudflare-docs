@@ -3,14 +3,15 @@ logo: <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><p
 
 product:
   title: Apps
-  url: https://www.cloudflare.com/apps/docs
+  url: https://www.cloudflare.com/apps/developer/docs/getting-started
 
 meta:
   title: Cloudflare Apps docs
-  description: Simplify the way you create and manage email addresses. With Email
+  description:
+    Simplify the way you create and manage email addresses. With Email
     Routing, you can create any number of custom email addresses that you can
     use in situations where you do not want to share your real email address.
-  author: '@cloudflare'
+  author: "@cloudflare"
   image: /cf-twitter-card.png
 
 externals:

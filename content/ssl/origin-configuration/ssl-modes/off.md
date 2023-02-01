@@ -33,8 +33,8 @@ When you set your encryption mode to **Off**, your application:
 - Will be marked as "not secure" by Chrome and other browsers, reducing visitor trust.
 - Will be penalized in [SEO rankings](https://webmasters.googleblog.com/2014/08/https-as-ranking-signal.html).
 
-{{<Aside type="note">}}
+### Incompatible settings
 
 When you set your SSL/TLS encryption mode to **Off**, you will not see the options for [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) or [**Onion Routing**](https://support.cloudflare.com/hc/articles/203306930).
 
-{{</Aside>}}
+{{<render file="_partials/_ssl-mode-no-aop.md">}}

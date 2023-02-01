@@ -25,7 +25,7 @@ You will need the email address associated with your Cloudflare account, Cloudfl
     In the example below under section two, the Cloudflare email address, Account ID, and API token are used to send the API call to Cloudflare to begin advertising routes and turn on Magic Transit for the customer’s network.
 
     ![Kentik mitigation setup](/magic-transit/static/kentik-setup.png)
-    
+
 6. After reviewing the information, select **Update Mitigation Platform**.
 7. Select **Menu** > **Library**.
 8. On the **Library** page, in the search field, enter **Cloudflare**.
@@ -36,14 +36,14 @@ For additional information about Kentik and Magic Transit, refer to [Kentik's Ma
 
 ## Access Cloudflare account
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your account from the list.
-2. From the navigation menu, select **IP Prefixes**.
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com), and select your account.
+2. Select **IP Addresses** > **IP Prefixes**.
 3. Referring to the example scenario, the prefix protected by Cloudflare displays a **Withdrawn** status.
 
     After a DDoS attacks occurs, the status changes to **Advertised** which indicates the network is protected.
 
 ## Analytics
 
-For a detailed view of actions taken and attack types, you can use the **Network Analytics** dashboard. For more information about Network Analytics, refer to [Understanding Cloudflare Network Analytics](https://support.cloudflare.com/hc/articles/360038696631-Understanding-Cloudflare-Network-Analytics).
+For a detailed view of actions taken and attack types, you can use the **Network Analytics** dashboard. For more information about Network Analytics, refer to [Network Analytics](/analytics/network-analytics/).
 
-From your Cloudflare dashboard, select **Analytics** > **Network Analytics**.
+From your Cloudflare dashboard, select **Analytics & Logs** > **Network Analytics**.
