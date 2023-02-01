@@ -29,6 +29,7 @@ Managed public bucket access through an `r2.dev` subdomain is not intended for p
 | Object metadata size            | 2,048 bytes                           |
 | Object size                     | 5 TB per object<sup>1</sup>           |
 | Maximum upload size<sup>3</sup> | 5 GB<sup>2</sup>                      |
+| Maximum upload parts            | 10,000                                |
 
 {{</table-wrap>}}
 

@@ -30,3 +30,5 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 Flexible mode is only supported for HTTPS connections on port 443 (default port). Other ports using HTTPS will fall back to [**Full** mode](/ssl/origin-configuration/ssl-modes/full/).
 
 If your application contains sensitive information (personalized data, user login), use [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (Strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes instead.
+
+{{<render file="_partials/_ssl-mode-no-aop.md">}}

@@ -208,7 +208,7 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 - {{<code>}}uploadPart(partNumber{{<param-type>}}number{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2UploadedPart{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Uploads a single part with the specified part number to this multipart upload.
+  - Uploads a single part with the specified part number to this multipart upload. Each part must be uniform in size with an exception for the final part which can be smaller.
   - Returns an `R2UploadedPart` object containing the `etag` and `partNumber`. These `R2UploadedPart` objects are required when completing the multipart upload.
 
 

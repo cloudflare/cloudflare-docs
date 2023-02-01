@@ -47,8 +47,8 @@ For example, you can send `x.x.x.0/29` to Datacenter 1 and `x.x.x.8/29` to Datac
 
 ## Create a static route
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2.  Next to **Static routes configuration**, click **Configure**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
 
 {{<render file="_static-routes.md">}}
 

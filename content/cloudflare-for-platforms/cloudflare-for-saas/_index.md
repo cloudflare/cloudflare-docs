@@ -41,7 +41,7 @@ Custom hostnames are routed to a default origin server called fallback origin. T
 
 ### Cloudflare for SaaS with Apex Proxying:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is avaiable as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is available as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
 
 ![Advanced case](/cloudflare-for-platforms/static/use-cases/Advanced.png)
 

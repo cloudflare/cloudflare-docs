@@ -13,6 +13,7 @@
 
     <main class="DocsBody">
       <div id="docs-content" data-reach-skip-nav-content></div>
+      {{- partial "breadcrumbs" . -}}
       <div class="DocsContent" id="main" page-type="document">
         <article class="DocsMarkdown">
             {{- .Content -}}

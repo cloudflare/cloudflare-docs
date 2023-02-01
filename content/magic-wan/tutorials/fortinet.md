@@ -259,7 +259,7 @@ end
 
 ### Create a policy based route
 
-Next, create a Policy Based Route to route desired traffic down the tunnel. The example below tunnels all RFC1918 address spaces.
+Next, create a Policy Based Route to route desired traffic down the tunnel. The example below tunnels all RFC 1918 address spaces.
 
 ```bash
 ---
