@@ -35,7 +35,7 @@ Submit the query text in the body of a `POST` request to the API address. The fo
 You can use cURL to test the API as follows, replacing the `<account_id>` with your 32 character account ID (available in the dashboard) and the `<token>` with the token string you generated above.
 
 ```sh
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql" -H "Authorization: Bearer <token>" -d "SELECT 'Hello Workers Analytics Engine'"
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql" -H "Authorization: Bearer <token>" -d "SELECT 'Hello Workers Analytics Engine' AS message"
 ```
 
 If you have already published some data, you might try executing the following to confirm that the dataset has been created in the DB.

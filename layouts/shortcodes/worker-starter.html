@@ -3,11 +3,13 @@
 {{- $descr := .Get "description" -}}
 
 {{- $remote := printf "https://github.com/%s" $repo -}}
-{{- $command := printf "npm init cloudflare my-app %s" $remote -}}
+{{- $template := cond (hasPrefix $repo "cloudflare/templates/") (path.Base $repo) $repo -}}
+{{- $command := printf "npx wrangler generate my-app %s" $template -}}
+{{- $link := cond (hasPrefix $repo "cloudflare/templates/") (printf "https://github.com/cloudflare/templates/tree/main/%s" $template) $remote}}
 
 <div class="WorkerStarter">
   <div class="WorkerStarter--title">
-    {{- $text := printf "[%s](%s)" $title $remote -}}
+    {{- $text := printf "[%s](%s)" $title $link -}}
     {{- .Page.RenderString $text -}}
   </div>
 

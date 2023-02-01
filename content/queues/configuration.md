@@ -8,9 +8,11 @@ meta:
 
 # Configuration
 
-Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/get-started/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
+Cloudflare Queues can be configured using [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Cloudflare's Developer Platform, which includes [Workers](/workers/), [R2](/r2/), and other developer products.
 
-Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. Use the options below to configure your Queue.
+Each Worker has a `wrangler.toml` configuration file that specifies environment variables, triggers, and resources, such as a Queue. To enable Worker-to-resource communication, you must set up a [binding](/workers/platform/bindings/) in your Worker project's `wrangler.toml` file.
+
+Use the options below to configure your Queue.
 
 {{<Aside type="note">}}
 
@@ -20,7 +22,7 @@ Below are options for Queues, refer to the Wrangler documentation for a full ref
 
 ## Producer
 
-These options should be used when a Worker wants to send messages to a Queue.
+To enable Producer Worker to Queue communication, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to send messages to a Queue.
 
 ```toml
 [[queues.producers]]
@@ -42,7 +44,7 @@ These options should be used when a Worker wants to send messages to a Queue.
 
 ## Consumer
 
-These options should be used when a Worker wants to receive messages from a Queue.
+To enable Consumer Worker to Queue communication, set up a binding in your `wrangler.toml` file. These options should be used when a Worker wants to receive messages from a Queue.
 
 ```toml
 [[queues.consumers]]
@@ -52,6 +54,8 @@ These options should be used when a Worker wants to receive messages from a Queu
   max_retries = 10
   dead_letter_queue = "my-queue-dlq"
 ```
+
+Refer to [Limits](/queues/limits) to review the maximum values for each of these options.
 
 {{<definitions>}}
 
@@ -73,7 +77,8 @@ These options should be used when a Worker wants to receive messages from a Queu
 
 - {{<code>}}dead_letter_queue{{<param-type>}}string{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of another Queue to send a message if it fails and cannot be delivered. If one is not defined, messages will be discarded.
+  - The name of another Queue to send a message if it fails processing at least `max_retries` times.
+  - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
   - If there is no Queue with the specified name, it will be created automatically.
 
 {{</definitions>}}

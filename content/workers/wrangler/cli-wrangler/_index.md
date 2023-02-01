@@ -8,9 +8,13 @@ meta:
 
 # Wrangler 1 (legacy)
 
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 
-Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
+The version of Wrangler you are using is now deprecated. Refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/#update-wrangler-version) to update to the latest version of Wrangler to prevent critical errors.
+
+If you originally installed Wrangler via npm, run `npm uninstall -g @cloudflare/wrangler && npm install -g wrangler` to update to the latest version.
+
+If you originally installed Wrangler via cargo, run `cargo uninstall wrangler && npm install -g wrangler`.
 
 {{</Aside>}}
 

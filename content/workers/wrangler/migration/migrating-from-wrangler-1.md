@@ -4,7 +4,7 @@ title: Migrating from Wrangler 1
 weight: 1
 ---
 
-## Migrate from Wrangler 1
+# Migrate from Wrangler 1
 
 This document describes the steps to migrate a project from Wrangler 1 to Wrangler 2.
 
@@ -18,9 +18,9 @@ The CLI itself will guide you through the upgrade process.
 To learn more about the improvements to Wrangler, refer to the [Comparing Wrangler 1 & 2 page](/workers/wrangler/compare-v1-v2/).
 {{</Aside>}}
 
-### Update Wrangler version
+## Update Wrangler version
 
-#### 1. Uninstall Wrangler 1
+### 1. Uninstall Wrangler 1
 
 If you had previously installed Wrangler 1 globally using NPM, you can uninstall it with:
 
@@ -34,7 +34,7 @@ If you used Cargo to install Wrangler 1, you can uninstall it with:
 $ cargo uninstall wrangler
 ```
 
-#### 2. Install Wrangler
+### 2. Install Wrangler
 
 Now, install the latest version of Wrangler.
 
@@ -42,7 +42,7 @@ Now, install the latest version of Wrangler.
 $ npm install -g wrangler
 ```
 
-#### 3. Verify your install
+### 3. Verify your install
 
 To check that you have installed the correct Wrangler version, run:
 
@@ -50,7 +50,7 @@ To check that you have installed the correct Wrangler version, run:
 $ wrangler --version
 ```
 
-### Test Wrangler 2 on your previous projects
+## Test Wrangler 2 on your previous projects
 
 Now you will test that Wrangler 2 can build your Wrangler 1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
 
@@ -69,7 +69,7 @@ $ wrangler dev
 
 Here is an example of some warnings and errors:
 
-```sh
+```bash
  ⛅️ wrangler 2.0.0
 -------------------------------------------------------
 ▲ [WARNING] Processing wrangler.toml configuration:
@@ -86,6 +86,6 @@ Here is an example of some warnings and errors:
   - Expected "route" to be either a string, or an object with shape { pattern, zone_id | zone_name }, but got "".
 ```
 
-### Deprecations
+## Deprecations
 
 Refer to the [deprecations guide](/workers/wrangler/migration/deprecations/) for more details on what is no longer supported.

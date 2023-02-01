@@ -6,35 +6,9 @@ weight: 9
 
 # Rule settings
 
-Each rule type has the following settings: mode, scope, burst sensitivity, and rate sensitivity.
+Each rule type has the following settings: scope, mode, burst sensitivity, and rate sensitivity.
 
 You may need to adjust the burst or rate sensitivity of a rule in case of false positives or due to specific traffic patterns.
-
-## Mode
-
-Advanced TCP Protection rules have three execution modes: monitoring mode, mitigation mode, or disabled.
-
-{{<definitions>}}
-
-* **Monitoring mode**
-
-    * In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn about existing TCP connections and will maintain their states. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
-
-    * Use monitoring mode when onboarding new prefixes to Magic Transit or when performing changes to Advanced TCP Protection.
-
-    * When first setting up or when making changes, the Advanced TCP Protection system will need to re-learn your legitimate TCP connections. Therefore, it is recommended that you use monitoring mode before mitigation mode to avoid impact to your legitimate traffic.
-
-* **​​Mitigation mode**
-
-    * In this mode, Advanced TCP Protection will perform mitigation actions on incoming packets if they exceed the thresholds.
-
-    * If you are using mitigation mode, you should disable Advanced TCP Protection before making changes to Advanced TCP Protection or before advertising prefixes. When you enable rules in mitigation mode without first using monitoring mode, the protection system will have a learning period of 10 minutes to learn the existing flows. After this period, the mitigation mode will start and the protection system will apply any required mitigation actions to incoming packets, according to the current configuration.
-
-* **Disabled**
-
-    * In this mode, a rule will not evaluate any incoming packets.
-
-{{</definitions>}}
 
 ## Scope
 
@@ -47,6 +21,26 @@ Advanced TCP Protection rules can have one of the following scopes:
 The rule scope allows you to adjust the system's tolerance for out-of-state packets in locations where you may have more or less traffic than usual, or due to any other networking reasons.
 
 Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/tcp-protection/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
+
+## Mode
+
+The Advanced TCP Protection system constantly learns your TCP connections to mitigate DDoS attacks. Advanced TCP Protection rules can have one of the following execution modes: monitoring, mitigation (enabled), or disabled.
+
+{{<definitions>}}
+
+* **Monitoring**
+
+    * In this mode, Advanced TCP Protection will not impact any packets. Instead, the protection system will learn your legitimate TCP connections and show you what it would have mitigated. Check Network Analytics to visualize what actions Advanced TCP Protection would have taken on incoming packets, according to the current configuration.
+
+* **​​Mitigation (Enabled)**
+
+    * In this mode, Advanced TCP Protection will learn your legitimate TCP connections and perform mitigation actions on incoming TCP DDoS attacks based on the rule configuration (burst and rate sensitivity) and your [allowlist](/ddos-protection/tcp-protection/concepts/#allowlist).
+
+* **Disabled**
+
+    * In this mode, a rule will not evaluate any incoming packets.
+
+{{</definitions>}}
 
 ## Burst sensitivity
 

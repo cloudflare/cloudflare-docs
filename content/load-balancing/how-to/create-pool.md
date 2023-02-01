@@ -4,11 +4,13 @@ pcx_content_type: how-to
 weight: 2
 meta:
   title: Manage origin server pools
+  description: Learn how to set up and maintain origin server pools.
 ---
 
 # Manage origin server pools
 
 {{<render file="_pool-definition.md">}}
+<br/>
 
 For more background information on pools, refer to [Origin pools](/load-balancing/understand-basics/pools/).
 
@@ -49,7 +51,7 @@ To edit a pool in the dashboard:
  
 When you edit a pool with the API, your request type depends on how much you want to edit.
 
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://api.cloudflare.com/#account-load-balancer-pools-patch-pool) request. For broader changes, use a [PUT](https://api.cloudflare.com/#account-load-balancer-pools-update-pool) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-patch-pool) request. For broader changes, use a [PUT](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-update-pool) request.
  
 {{</tab>}}
 {{</tabs>}}
@@ -70,7 +72,7 @@ To delete a pool in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To delete a pool using the API, send a [DELETE](https://api.cloudflare.com/#account-load-balancer-pools-delete-pool) request.
+To delete a pool using the API, send a [DELETE](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-delete-pool) request.
  
 {{</tab>}}
 {{</tabs>}}

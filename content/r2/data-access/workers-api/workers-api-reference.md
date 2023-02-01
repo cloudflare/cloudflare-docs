@@ -66,16 +66,17 @@ export default {
 
 - {{<code>}}head(key{{<param-type>}}string{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and null if the key does not exist.
+  - Retrieves the `R2Object` for the given key containing only object metadata, if the key exists, and `null` if the key does not exist.
 
 - {{<code>}}get(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2GetOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2ObjectBody{{</param-type>}}|{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
-  - Retrieves the `R2Object` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
+  - Retrieves the `R2ObjectBody` for the given key containing object metadata and the object body as a {{<code>}}{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}, if the key exists, and `null` if the key does not exist.
   - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}get(){{</code>}} returns an {{<code>}}{{<param-type>}}R2Object{{</param-type>}}{{</code>}} with {{<code>}}body{{</code>}} undefined.
 
-- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
+- {{<code>}}put(key{{<param-type>}}string{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}null{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}, options{{<param-type>}}R2PutOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Stores the given {{<code>}}value{{</code>}} and metadata under the associated {{<code>}}key{{</code>}}. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
+  - In the event that a precondition specified in {{<code>}}options{{</code>}} fails, {{<code>}}put(){{</code>}} returns `null`, and the object will not be stored.
   - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
 - {{<code>}}delete(keys{{<param-type>}}string | string[]{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}void {{</param-type>}}>{{</type>}}{{</code>}}
@@ -86,6 +87,16 @@ export default {
 - {{<code>}}list(options{{<param-type>}}R2ListOptions{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}) {{<type>}}Promise\<{{<param-type>}}R2Objects{{</param-type>}}|{{<param-type>}}null{{</param-type>}}>{{</type>}}{{</code>}}
 
   - Returns an {{<code>}}R2Objects{{</code>}} containing a list of {{<code>}}R2Object{{</code>}} contained within the bucket. By default, returns the first 1000 entries.
+
+- {{<code>}}createMultipartUpload(key{{<param-type>}}string{{</param-type>}}, options{{<param-type>}}R2MultipartOptions{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2MultipartUpload{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Creates a multipart upload.
+  - Returns Promise which resolves to an `R2MultipartUpload` object representing the newly created multipart upload. Once the multipart upload has been created, the multipart upload can be immediately interacted with globally, either through the Workers API, or through the S3 API.
+
+- {{<code>}}resumeMultipartUpload(key{{<param-type>}}string{{</param-type>}}, uploadId{{<param-type>}}string{{</param-type>}}) {{<type>}}R2MultipartUpload{{</type>}}{{</code>}}
+
+  - Returns an object representing a multipart upload with the given key and uploadId.
+  - The resumeMultipartUpload operation does not perform any checks to ensure the validity of the uploadId, nor does it verify the existence of a corresponding active multipart upload. This is done to minimize latency before being able to call subsequent operations on the `R2MultipartUpload` object.
 
 {{</definitions>}}
 
@@ -98,30 +109,6 @@ export default {
 - {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
 
   - The object's key.
-
-- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
-
-  - The object's value.
-
-- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
-
-  - Whether the object's value has been consumed or not.
-
-- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
-
-  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
-
-- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to an string containing the object's value.
-
-- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to the given object containing the object's value.
-
-- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
-
-  - Returns a Promise that resolves to a binary Blob containing the object's value.
 
 - {{<code>}}version{{<param-type>}}string{{</param-type>}}{{</code>}}
 
@@ -163,7 +150,79 @@ export default {
 
   -  Retrieves the `httpMetadata` from the `R2Object` and applies their corresponding HTTP headers to the `Headers` input object. Refer to [HTTP Metadata](#http-metadata).
 
+## `R2ObjectBody` definition
+
+`R2ObjectBody` represents an object's metadata combined with its body. It is returned when you `GET` an object from an R2 bucket. The full list of keys for `R2ObjectBody` includes the list below and all keys inherited from [`R2Object`](#r2object-definition).
+
+{{<definitions>}}
+
+- {{<code>}}body{{<param-type>}}ReadableStream{{</param-type>}}{{</code>}}
+
+  - The object's value.
+
+- {{<code>}}bodyUsed{{<param-type>}}boolean{{</param-type>}}{{</code>}}
+
+  - Whether the object's value has been consumed or not.
+
+- {{<code>}}arrayBuffer(){{<type>}}Promise\<{{<param-type>}}ArrayBuffer{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Returns a Promise that resolves to an `ArrayBuffer` containing the object's value.
+
+- {{<code>}}text(){{<type>}}Promise\<{{<param-type>}}string{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to an string containing the object's value.
+
+- {{<code>}}json<T>(){{<type>}}Promise\<{{<param-type>}}T{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to the given object containing the object's value.
+
+- {{<code>}}blob(){{<type>}}Promise\<{{<param-type>}}Blob{{</param-type>}}{{</type>}}>{{</code>}}
+
+  - Returns a Promise that resolves to a binary Blob containing the object's value.
+
 {{</definitions>}}
+
+## `R2MultipartUpload` definition
+
+An `R2MultipartUpload` object is created when you call `createMultipartUpload` or `resumeMultipartUpload`. `R2MultipartUpload` is a representation of an ongoing multipart upload.
+
+Uncompleted multipart uploads will be automatically aborted after 7 days.
+
+{{<Aside type="note">}}
+
+An `R2MultipartUpload` object does not guarantee that there is an active underlying multipart upload corresponding to that object.
+
+A multipart upload can be completed or aborted at any time, either through the S3 API, or by a parallel invocation of your Worker. Therefore it is important to add the necessary error handling code around each operation on a `R2MultipartUpload` object in case the underlying multipart upload no longer exists.
+
+{{</Aside>}}
+
+{{<definitions>}}
+
+- {{<code>}}key{{<param-type>}}string{{</param-type>}}{{</code>}}
+
+  - The `key` for the multipart upload.
+
+- {{<code>}}uploadId{{<param-type>}}string{{</param-type>}}{{</code>}}
+
+  - The `uploadId` for the multipart upload.
+
+- {{<code>}}uploadPart(partNumber{{<param-type>}}number{{</param-type>}}, value{{<param-type>}}ReadableStream{{</param-type>}}|{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}ArrayBufferView{{</param-type>}}|{{<param-type>}}string{{</param-type>}}|{{<param-type>}}Blob{{</param-type>}}) {{<type>}}Promise\<{{<param-type>}}R2UploadedPart{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Uploads a single part with the specified part number to this multipart upload. Each part must be uniform in size with an exception for the final part which can be smaller.
+  - Returns an `R2UploadedPart` object containing the `etag` and `partNumber`. These `R2UploadedPart` objects are required when completing the multipart upload.
+
+
+- {{<code>}}abort() {{<type>}}Promise\<{{<param-type>}}void{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Aborts the multipart upload. Returns a Promise that resolves when the upload has been successfully aborted.
+
+- {{<code>}}complete(uploadedParts{{<param-type>}}R2UploadedPart{{</param-type>}}[]) {{<type>}}Promise\<{{<param-type>}}R2Object{{</param-type>}}>{{</type>}}{{</code>}}
+
+  - Completes the multipart upload with the given parts.
+  - Returns a Promise that resolves when the complete operation has finished. Once this happens, the object is immediately accessible globally by any subsequent read operation.
+
+{{</definitions>}}
+
 
 ## Method-specific types
 
@@ -171,7 +230,7 @@ export default {
 
 {{<definitions>}}
 
-- {{{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
+- {{<code>}}onlyIf{{<param-type>}}R2Conditional{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{</code>}}
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
   
@@ -248,6 +307,20 @@ Only a single hashing algorithm can be specified at once.
 - {{<code>}}sha512{{<param-type>}}ArrayBuffer{{</param-type>}}|{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
 
   - A SHA-512 hash to use to check the received object's integrity.
+
+{{</definitions>}}
+
+### R2MultipartOptions
+
+{{<definitions>}}
+
+- {{<code>}}httpMetadata{{<param-type>}}R2HTTPMetadata{{</param-type>}}|{{<param-type>}}Headers{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - Various HTTP headers associated with the object. Refer to [HTTP Metadata](#http-metadata).
+
+- {{<code>}}customMetadata{{<param-type>}}Record\<string, string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}{{</code>}}
+
+  - A map of custom, user-defined metadata that will be stored with the object.
 
 {{</definitions>}}
 
@@ -340,7 +413,9 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 ### Conditional operations
 
-You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition check fails, the body will not be returned. This will make `get()` have lower latency.
+You can pass an `R2Conditional` object to `R2GetOptions` and `R2PutOptions`.  If the condition check for `get()` fails, the body will not be returned. This will make `get()` have lower latency.
+
+If the condition check for `put()` fails, `null` will be returned instead of the `R2Object`.
 
 {{<definitions>}}
 
@@ -362,7 +437,7 @@ You can pass an `R2Conditional` object to `R2GetOptions`.  If the condition chec
 
  {{</definitions>}}
 
-Alternatively, you can pass a `Headers` object containing conditional headers to `R2GetOptions`. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from `If-Range` are supported.
+Alternatively, you can pass a `Headers` object containing conditional headers to `R2GetOptions` and `R2PutOptions`. For information on these conditional headers, refer to [the MDN docs on conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#conditional_headers). All conditional headers aside from `If-Range` are supported.
 
 For more specific information about conditional requests, refer to [RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232).
 
@@ -386,9 +461,9 @@ Generally, these fields match the HTTP metadata passed when the object was creat
 
  {{</definitions>}}
 
-## Checksums
+### Checksums
 
-If an additional checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property.
+If a checksum was provided when using the `put()` binding, it will be available on the returned object under the `checksums` property. The MD5 checksum will be included by default for non-multipart objects.
 
 {{<definitions>}}
 
@@ -411,5 +486,21 @@ If an additional checksum was provided when using the `put()` binding, it will b
 - {{<code>}}sha512{{</code>}} {{<param-type>}}ArrayBuffer{{</param-type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - The SHA-512 checksum of the object.
+
+{{</definitions>}}
+
+### `R2UploadedPart`
+
+An `R2UploadedPart` object represents a part that has been uploaded. `R2UploadedPart` objects are returned from `uploadPart` operations and must be passed to `completeMultipartUpload` operations.
+
+{{<definitions>}}
+
+- {{<code>}}partNumber{{</code>}} {{<param-type>}}number{{</param-type>}}
+
+  - The number of the part.
+
+- {{<code>}}etag{{</code>}} {{<param-type>}}string{{</param-type>}}
+
+  - The `etag` of the part.
 
 {{</definitions>}}

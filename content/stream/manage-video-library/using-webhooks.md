@@ -10,7 +10,7 @@ Webhooks notify your service when videos successfully finish processing and are 
 
 ## Subscribe to webhook notifications
 
-To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://www.cloudflare.com/a/account/my-account).
+To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens).
 
 
 The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
@@ -21,7 +21,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/webhook \
 --data '{"notificationUrl":"<WEBHOOK_NOTIFICATION_URL>"}'
 ```
 
-```bash
+```json
 ---
 header: Example response
 ---
@@ -98,7 +98,7 @@ Example: POST body for successful video encoding
 </summary>
  <div class="special-class" markdown="1">
 
- ```bash
+ ```json
 {
   "uid": "b236bde30eb07b9d01318940e5fc3eda",
   "creator": null,
@@ -244,9 +244,10 @@ func main() {
     message = 'string from step 2'
 
     OpenSSL::HMAC.hexdigest('sha256', key, message)
+```
 
-In JavaScript (for example, to use in Cloudflare Workers):
-
+**In JavaScript (for example, to use in Cloudflare Workers)**
+```javascript
     const key = 'secret from the Cloudflare API';
     const message = 'string from step 2';
 

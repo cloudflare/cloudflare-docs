@@ -23,7 +23,7 @@ No. The number of active rules is fixed based on customer plan. Refer to [Availa
 
 This happens when a request goes through a Cloudflare Worker.
 
-In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in the Firewall Events will be a Cloudflare IP address.
+In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in Security Events will be a Cloudflare IP address.
 
 ## Rule configuration
 

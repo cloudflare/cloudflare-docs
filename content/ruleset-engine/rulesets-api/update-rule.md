@@ -14,10 +14,11 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Patch an individual rule][ur-account] (account) | `PATCH /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
-| Patch an individual rule (zone) | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
+| [Update an account ruleset rule][ur-account] | `PATCH /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
+| [Update a zone ruleset rule][ur-zone] | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
 
-[ur-account]: https://api.cloudflare.com/#account-rulesets-patch-an-individual-rule
+[ur-account]: https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset-rule
+[ur-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-ruleset-rule
 
 You can update the definition of the rule, changing its fields, or change the order of the rule in the ruleset. Invoking this method creates a new version of the ruleset.
 
@@ -92,7 +93,7 @@ The response includes the complete ruleset after updating the rule.
 
 ## Change the order of a rule in a ruleset
 
-To reorder a rule in a list of ruleset rules, include a `position` field in the request, containing one of the following arguments:
+To reorder a rule in a list of ruleset rules, include a `position` object in the request, containing one of the following:
 
 *   `"before": "<RULE_ID>"` — Places the rule before rule `<RULE_ID>`. Use this argument with an empty rule ID value (`""`) to set the rule as the first rule in the ruleset.
 
@@ -102,11 +103,11 @@ To reorder a rule in a list of ruleset rules, include a `position` field in the 
 
 {{<Aside type="warning" header="Important">}}
 
-You can only use one of the arguments `before`, `after`, and `index` at a time.
+You can only use one of the `before`, `after`, and `index` fields at a time.
 
 {{</Aside>}}
 
-Reorder a rule without changing its definition by including only the `position` field in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` field and the `position` field.
+Reorder a rule without changing its definition by including only the `position` object in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` object and the `position` object.
 
 The following examples build upon the following (abbreviated) ruleset:
 
@@ -123,7 +124,7 @@ The following examples build upon the following (abbreviated) ruleset:
 
 ### Example #1
 
-The following request with the `position` field places rule `<RULE_ID_2>` as the first rule:
+The following request with the `position` object places rule `<RULE_ID_2>` as the first rule:
 
 ```json
 ---
@@ -145,7 +146,7 @@ In this case, the new rule order would be:
 
 ### Example #2
 
-The following request with the `position` field places rule `<RULE_ID_2>` after rule 3:
+The following request with the `position` object places rule `<RULE_ID_2>` after rule 3:
 
 ```json
 ---
@@ -167,7 +168,7 @@ In this case, the new rule order would be:
 
 ### Example #3
 
-The following request with the `position` field places rule `<RULE_ID_1>` in position 3, becoming the third rule in the ruleset:
+The following request with the `position` object places rule `<RULE_ID_1>` in position 3, becoming the third rule in the ruleset:
 
 ```json
 ---

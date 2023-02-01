@@ -1,6 +1,6 @@
 ---
 title: Nameservers
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 weight: 1
 meta:
   title: Troubleshooting zone setups - Nameservers
@@ -22,8 +22,10 @@ If the nameservers in your registrar do not exactly match those provided by Clou
 
 ## Are additional nameservers listed at your registrar?
 
+If so, you should remove these nameservers.
+
 You should have only Cloudflare nameservers listed at your registrar.
 
-## Are you using a European registrar?
+## Have you waited longer than 24 hours?
 
-Certain European registrars have a different nameserver registration process. Contact [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) if you experience issues.
+For some registrars, you will need to wait up to 24 hours for updates to your nameservers.

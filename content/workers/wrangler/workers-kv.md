@@ -1,7 +1,7 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: configuration
 title: Workers KV
-weight: 3
+weight: 4
 ---
 
 # Workers KV

@@ -32,7 +32,7 @@ Protocol-aware   | IP protocol                                | —   | Yes
 
 {{</table-wrap>}}
 
-<sup>1</sup> _WAF/CDN customers on the Enterprise plan with Advanced DDoS service._<br/>
+<sup>1</sup> _WAF/CDN customers on the Enterprise plan with the Advanced DDoS Protection subscription._<br/>
 <sup>2</sup> _Magic Transit and Spectrum BYOIP customers on an Enterprise plan._
 
 ## How it works
@@ -41,7 +41,7 @@ Adaptive DDoS Protection creates a traffic profile by looking at the maximum rat
 
 To eliminate outliers, rate calculations only consider the 95th percentile rates (discarding the top 5% of the highest rates). Additionally, Adaptive DDoS Protection rules also take into account Cloudflare’s [Machine Learning (ML) models](/bots/concepts/bot-score/#machine-learning) to identify traffic that is likely automated.
 
-Cloudflare may change the logic of these protection rules from time to time to improve them. Any rule changes will appear in the [Managed Rulesets changelog](/ddos-protection/change-log/).
+Cloudflare may change the logic of these protection rules from time to time to improve them. Any rule changes will appear in the [Managed rulesets changelog](/ddos-protection/change-log/) page.
 
 ---
 
@@ -50,7 +50,7 @@ Cloudflare may change the logic of these protection rules from time to time to i
 To view traffic flagged by HTTP Adaptive DDoS Protection rules:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-2. Navigate to **Security** > **Overview**.
+2. Navigate to **Security** > **Events**.
 3. Filter by `Service equals HTTP DDoS` and by the rule ID.
 
 For L3/4 Adaptive DDoS Protection rules, currently you must use [Logpush](/logs/about/) or the [GraphQL API](/analytics/graphql-api/) to view the flagged traffic.

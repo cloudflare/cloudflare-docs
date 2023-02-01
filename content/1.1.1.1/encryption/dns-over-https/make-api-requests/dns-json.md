@@ -9,23 +9,25 @@ Cloudflare's DNS over HTTPS endpoint also supports JSON format for querying DNS 
 
 JSON formatted queries are sent using a `GET` request. When making requests using `GET`, the DNS query is encoded into the URL. The client should include an HTTP `Accept` request header field with a MIME type of `application/dns-json` to indicate that the client is able to accept a JSON response from the DNS over HTTPS resolver.
 
-Supported parameters:
+## Supported parameters
 
 {{<table-wrap>}}
 
-| Field | Required? | Description | Example |
+| Field | Required? | Description | Default |
 | --- | --- | --- | --- |
-| `name` | Yes | Query name. | `example.com` |
-| `type` | Yes | Query type (either a numeric value or text). | `AAAA` |
-| `do` | No | `DO` bit - set if client wants DNSSEC data (either boolean or numeric value).| `true` |
-| `cd` | No | `CD` bit - set to disable validation (either boolean or numeric value). | `false` |
+| `name` | Yes | Query name. | - |
+| `type` | No | Query type (either a [numeric value or text](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4)). | `A` |
+| `do` | No | `DO` bit - whether the client wants DNSSEC data (either empty or one of `0`, `false`, `1`, or `true`).| `false` |
+| `cd` | No | `CD` bit - disable validation (either empty or one of `0`, `false`, `1`, or `true`). | `false` |
 
 {{</table-wrap>}}
+
+## Examples
 
 Example request:
 
 ```sh
-$ curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA'
+$ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&type=AAAA"
 ```
 
 Example response:
@@ -55,7 +57,20 @@ Example response:
 }
 ```
 
-The following table has more information on each response field:
+In the case of an invalid request a `400 Bad Request` error is returned:
+
+```sh
+$ curl -H "accept: application/dns-json" "https://cloudflare-dns.com/dns-query?name=example.com&cd=2"
+{
+  "error": "Invalid CD flag `2`. Expected to be empty or one of `0`, `false`, `1`, or `true`."
+}
+```
+
+## Response fields
+
+The following tables have more information on each response field.
+
+### Successful response
 
 {{<table-wrap>}}
 
@@ -73,5 +88,24 @@ The following table has more information on each response field:
 | `Answer: type` | The type of DNS record. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4. |
 | `Answer: TTL` | The number of seconds the answer can be stored in cache before it is considered stale. |
 | `Answer: data` | The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. |
+| `Authority: name` | The record owner. |
+| `Authority: type` | The type of DNS record. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4. |
+| `Authority: TTL` | The number of seconds the answer can be stored in cache before it is considered stale. |
+| `Authority: data` | The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. |
+| `Additional: name` | The record owner. |
+| `Additional: type` | The type of DNS record. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4. |
+| `Additional: TTL` | The number of seconds the answer can be stored in cache before it is considered stale. |
+| `Additional: data` | The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. |
+| `Comment` | List of EDE messages. Refer to [Extended DNS error codes](/1.1.1.1/infrastructure/extended-dns-error-codes/) for more information.
+
+{{</table-wrap>}}
+
+### Error response
+
+{{<table-wrap>}}
+
+| Field | Description |
+| --- | --- |
+| `error` | An explanation of the error that occurred. |
 
 {{</table-wrap>}}

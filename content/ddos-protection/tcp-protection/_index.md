@@ -13,7 +13,7 @@ Cloudflare Advanced TCP Protection, powered by [`flowtrackd`](https://blog.cloud
 
 ## Availability
 
-Advanced TCP Protection is available to all [Magic Transit](/magic-transit/) customers, and is disabled by default. Protection for simpler TCP-based DDoS attacks is also included as part of the [Network-layer DDoS Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/).
+Advanced TCP Protection is available to all [Magic Transit](/magic-transit/) customers, and is disabled by default. Protection for simpler TCP-based DDoS attacks is also included as part of the [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
 
 ## Get started
 
@@ -26,7 +26,7 @@ Advanced TCP Protection offers two types of protection:
 * [SYN Flood Protection](#syn-flood-protection): Protects against attacks such as fully randomized SYN and SYN-ACK floods.
 * [Out-of-state TCP Protection](#out-of-state-tcp-protection): Protects against out-of-state TCP DDoS attacks such as fully randomized ACK floods and RST floods.
 
-Each protection type is configured independently using rules. You should configure at least one rule for each type of protection before enabling Advanced TCP Protection.
+Each protection type is configured independently using rules and (optionally) filters. You should configure at least one rule for each type of protection before enabling Advanced TCP Protection.
 
 ## SYN Flood Protection
 

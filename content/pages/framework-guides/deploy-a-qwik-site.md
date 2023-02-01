@@ -58,7 +58,7 @@ Deploy your site to Pages by logging in to the [Cloudflare dashboard](https://da
 
 {{<Aside type="warning">}}
 
-Currently, Cloudflare uses Node `12.18.0` in the Pages build environment, but Qwik requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version, go to **Settings** in your Pages project > **Environment Variables** > **Production** and add `NODE_VERSION = v16.7.0` in your Production option.
+Currently, Cloudflare uses Node `12.18.0` in the Pages build environment, but Qwik requires a newer node version >14.0.0 to build on Cloudflare Pages. To set the Node version, go to **Settings** in your Pages project > **Environment Variables** > **Production** and add `NODE_VERSION` in your Production option with a value of `14` or greater.
 
 {{</Aside>}}
 

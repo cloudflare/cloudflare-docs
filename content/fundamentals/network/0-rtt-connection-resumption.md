@@ -11,6 +11,10 @@ This feature particularly benefits end users who visit your application regularl
 
 For more details on what 0-RTT is, how it works, and potential limitations, refer to [our blog](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/).
 
+## Availability
+
+{{<feature-table id="network.0_rtt">}}
+
 ## Enable 0-RTT Connection Resumption
 
 By default, 0-RTT Connection Resumption is not enabled on your Cloudflare application.
@@ -27,7 +31,7 @@ To enable 0-RTT Connection Resumption in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To adjust your 0-RTT Connection Resumption settings with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-0-rtt-session-resumption-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To adjust your 0-RTT Connection Resumption settings with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-0-rtt-session-resumption-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
  
 {{</tab>}}
 {{</tabs>}}

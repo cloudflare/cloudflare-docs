@@ -14,6 +14,10 @@ For more background, refer to the [introductory blog post](https://blog.cloudfla
 
 {{</Aside>}}
 
+## Availability
+
+{{<feature-table id="ssl.ssl_tls_recommender">}}
+
 ## Common tasks
 
 ### Enable SSL/TLS recommendations
@@ -30,7 +34,7 @@ To enable SSL/TLS recommendations in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To adjust your SSL/TLS Recommender enrollment with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-ssl/tls-recommender-enrollment) request with the `enabled` parameter set to your desired setting (`true` or `false`).
+To adjust your SSL/TLS Recommender enrollment with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/ssl/-tls-mode-recommendation-ssl/-tls-recommendation) request with the `enabled` parameter set to your desired setting (`true` or `false`).
  
 {{</tab>}}
 {{</tabs>}}
@@ -60,7 +64,5 @@ If you do not receive an email, keep your current **SSL encryption mode**.
 The SSL/TLS Recommender is not intended to resolve issues with website or domain functionality. It will not be able to complete its scan and show the _Recommended by Cloudflare_ tag if:
 
 - Your domain is not functional.
-- You block all bots.
-- You have any active, SSL-specific Page Rules.
-
-If you have any questions or concerns related to **SSL/TLS Recommender**, contact ask-research@cloudflare.com.
+- You block [all bots](/fundamentals/get-started/reference/cloudflare-site-crawling/).
+- You have any active, SSL-specific [Page Rules](https://support.cloudflare.com/hc/articles/218411427) or [Configuration rules](/rules/configuration-rules/).

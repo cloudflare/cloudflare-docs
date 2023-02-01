@@ -1,9 +1,16 @@
 {{/* @see :: data/<Product>.yml */}}
 {{- $DATA := (index .Context.Site.Data .Product) -}}
 {{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
+{{- $metaTruncateLength := 150 -}}
 
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- $title := printf "%s · %s" $pt $DATA.meta.title -}}
+{{- $description := (partial "seo-meta-description.html" (dict "meta" $META "content" .Context.Content "params" .Context.Params "truncate" $metaTruncateLength "plainify" true )) -}}
+
+{{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
+{{- $contentPath :=  replaceRE `\/$` "" .Context.RelPermalink -}}
+{{- $folderPlaceholder := "" -}}
+{{ $rssFeed := "" }}
 
 <meta charset="utf-8">
 <title>{{ $title }}</title>
@@ -19,23 +26,47 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="theme-color" content="#f38020"/>
 
-<meta name="description" content="{{ $META.description }}" />
+<meta name="description" content="{{ $description }}" />
 
 <meta property="og:image" content="{{ $META.image | absURL }}"/>
 <meta property="og:title" content="{{ $title }}"/>
-<meta property="og:description" content="{{ $META.description }}"/>
+<meta property="og:description" content="{{ $description }}"/>
 <meta property="og:type" content="website"/>
 
 <meta name="twitter:title" content="{{ $title }}"/>
 <meta name="twitter:image" content="{{ $META.image | absURL }}"/>
-<meta name="twitter:description" content="{{ $META.description }}"/>
+<meta name="twitter:description" content="{{ $description }}"/>
 <meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 
 {{- with .Context.Params.pcx_content_type -}}
 <meta name="pcx_content_type" content= "{{ . }}" />
 {{- end -}}
+{{ with $.Context.Params.rss -}}
 
+  {{ if eq . "folder" }}
+
+  {{ $folderPlaceholder = ".atom" }}
+
+  {{ else if eq . "file" }}
+
+  {{ $folderPlaceholder = ".md.atom" }}
+
+  {{ end }}
+
+  {{ if or (eq . "folder") (eq . "file") }}
+
+  {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
+  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
+  
+  {{ else }}
+
+  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
+
+  {{ end }}
+
+
+{{ end }}
 <link rel="icon" href="/favicon-32x32.png"/>
 <link rel="canonical" href="{{ .Context.Permalink }}"/>
 <link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
@@ -49,11 +80,10 @@
 <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
 <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
 <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
-
 {{- $coveo := index $.Context.Site.Params "coveo" -}}
 {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
-  <link rel="stylesheet" href="/search-coveo.css"/>
-  <link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
+  <link rel="stylesheet preconnect" href="/search-coveo.css"/>
+  <link rel="stylesheet preconnect" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
   <script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
 
   {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
@@ -70,8 +100,8 @@
   ></script>
 {{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
 {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
-<link rel="stylesheet" href="/tutorial-coveo.css"/>
-<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
+<link rel="stylesheet preconnect" href="/tutorial-coveo.css"/>
+<link rel="stylesheet preconnect" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
 <script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
 
 {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
@@ -91,6 +121,13 @@
 {{- end -}}
 
 {{- if in $.Context.RelPermalink "/learning-paths/" -}}
-<link rel="stylesheet" href="/learning-paths.css"/>
+<link rel="stylesheet preconnect" href="/learning-paths.css"/>
+{{- end -}}
 
+{{ if eq $.Context.RelPermalink "/dashboard-landing/" }}
+<link rel="stylesheet preconnect" href="/dashboard-landing.css"/>
+{{- end -}}
+
+{{ if eq $.Context.RelPermalink "/plans/" }}
+<link rel="stylesheet preconnect" href="/plans.css"/>
 {{- end -}}

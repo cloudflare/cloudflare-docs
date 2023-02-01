@@ -1,21 +1,25 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: reference
 title: Commands
 weight: 2
 ---
 
-## Wrangler commands
+# Wrangler commands
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
+- [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a skeleton Wrangler project, including the `wrangler.toml` file.
 - [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+- [`d1`](#d1) - Interact with D1.
 - [`dev`](#dev) - Start a local server for developing your Worker.
 - [`publish`](#publish) - Publish your Worker to Cloudflare.
+- [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv:namespace`](#kvnamespace) - Manage Workers KV namespaces.
 - [`kv:key`](#kvkey) - Manage key-value pairs within a Workers KV namespace.
 - [`kv:bulk`](#kvbulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
+- [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret:bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
@@ -23,6 +27,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
+- [`types`](#types) - Generate types from bindings and module rules in configuration.
+- [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
 
 {{<Aside type="note">}}
 
@@ -38,12 +44,29 @@ Flags:
   - Show help.
 - `--version` {{<type>}}boolean{{</type>}}
   - Show version number.
+- `--experimental-json-config` {{<type>}}boolean{{</type>}}
+  - ⚠️ This is an experimental command. Read configuration from a `wrangler.json` file, instead of `wrangler.toml`. `wrangler.json` is a [JSONC](https://code.visualstudio.com/docs/languages/json#_json-with-comments) file.
 
 {{</definitions>}}
 
 {{</Aside>}}
 
 ---
+
+## docs
+
+Open the Cloudflare developer documentation in your default browser.
+
+```sh
+$ wrangler docs [COMMAND]
+```
+
+{{<definitions>}}
+
+- `COMMAND` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
+
+{{</definitions>}}
 
 ## init
 
@@ -85,6 +108,196 @@ $ wrangler generate [name] [template]
 
 ---
 
+## d1
+
+Interact with Cloudflare's D1 service.
+
+{{<Aside type="note">}}
+D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+{{</Aside>}}
+
+### `create`
+
+Creates a new D1 database, and provides the binding and UUID that you will put in your `wrangler.toml` file.
+
+```sh
+$ wrangler d1 create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the new D1 database.
+
+{{</definitions>}}
+
+### `list`
+
+List all D1 databases in your account.
+
+```sh
+$ wrangler d1 list
+```
+
+### `delete`
+
+Delete a D1 database.
+
+```sh
+$ wrangler d1 delete <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to delete.
+
+{{</definitions>}}
+
+### `execute`
+
+Execute a query on a D1 database.
+
+```sh
+$ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to execute a query on.
+- `--command` {{<type>}}string{{</type>}} 
+  - The SQL query you wish to execute.
+- `--file` {{<type>}}string{{</type>}} 
+  - Path to the SQL file you wish to execute.
+- Note that you must provide either `--command` or `--file` for this command to run successfully.
+{{</definitions>}}
+
+
+### `backup create`
+
+Initiate a D1 backup.
+
+```sh
+$ wrangler d1 backup create <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to backup.
+{{</definitions>}}
+
+### `backup list`
+
+List all available backups.
+
+```sh
+$ wrangler d1 backup list <DATABASE_NAME>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to list the backups of.
+{{</definitions>}}
+
+### `backup restore`
+
+Restore a backup into a D1 database.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database to restore the backup into.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to restore.
+{{</definitions>}}
+
+### `backup download`
+
+Download existing data to your local machine.
+
+```sh
+$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to download the backup of.
+- `BACKUP_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The ID of the backup you wish to download.
+{{</definitions>}}
+
+### `migrations create`
+
+Create a new migration. 
+
+This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
+
+`0000_create_user_table.sql`
+
+The filename will include a version number and the migration name you specify below.
+
+```sh
+$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>" 
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to create a migration for.
+- `MIGRATION_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A descriptive name for the migration you wish to create.
+{{</definitions>}}
+
+### `migrations list`
+
+View a list of unapplied migration files.
+
+```sh
+$ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to list unapplied migrations for.
+- `--local` {{<type>}}boolean{{</type>}} 
+  - Show the list of unapplied migration files on your locally persisted D1 database.
+{{</definitions>}}
+
+### `migrations apply`
+
+Apply any unapplied migrations.
+
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
+
+The progress of each migration will be printed in the console.
+
+When running the apply command in a CI/CD environment or another non-interactive command line, the confirmation step will be skipped, but the backup will still be captured.
+
+If applying a migration results in an error, this migration will be rolled back, and the previous successful migration will remain applied.
+
+```sh
+$ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The name of the D1 database you wish to apply your migrations on.
+- `--local` {{<type>}}boolean{{</type>}} 
+  - Execute any unapplied migrations on your locally persisted D1 database.
+{{</definitions>}}
+
+---
+
 ## dev
 
 Start a local server for developing your Worker.
@@ -105,10 +318,12 @@ None of the options for this command are required. Many of these options can be 
   - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
   - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and show a preview of the script without modification. Particularly useful when using custom builds.
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Date to use for compatibility checks.
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
 - `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
@@ -121,10 +336,16 @@ None of the options for this command are required. Many of these options can be 
   - Port for devtools to connect to.
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
   - Routes to upload.
+  - For example: `--route example.com/*`.
 - `--host` {{<type>}}string{{</type>}}
   - Host to forward requests to, defaults to the zone of project.
 - `--local-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: http){{</prop-meta>}}
   - Protocol to listen to requests on.
+- `--local-upstream` {{<type>}}string{{</type>}}
+  - Host to act as origin in local mode, defaults to `dev.host` or route.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler dev --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
@@ -133,23 +354,46 @@ None of the options for this command are required. Many of these options can be 
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
 - `--upstream-protocol` {{<type>}}"http"|"https"{{</type>}} {{<prop-meta>}}(default: https){{</prop-meta>}}
   - Protocol to forward requests to host on.
+- `--var` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to replace global identifiers in your code.
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
 
   - Run the preview of the Worker directly on your local machine.
-
-    {{<Aside type="warning">}}
-
-This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's Edge (for instance, this includes your data stored on KV). If you'd like to persist data locally, the experimental option `--experimental-enable-local-persistence` will store data in the `wrangler-local-state` subdirectory.
-
+{{<Aside type="warning">}}
+This runs an ephemeral local version of your Worker, and will not be able to access data stored on Cloudflare's network (for example, this includes your data stored on KV). To persist data locally, using the `--persist` flag will tell Wrangler to store data in the `.wrangler/state` subdirectory.
 {{</Aside>}}
 
+- `--experimental-local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Run the preview of the Worker directly on your local machine using the [open source Cloudflare Workers runtime](https://github.com/cloudflare/workerd).
+{{<Aside type="warning">}}
+When working on Wrangler, you need to satisfy [`workerd`](https://github.com/cloudflare/workerd)'s `libc++1` runtime dependencies:
+
+- On Linux: libc++ (for example, the package `libc++1` on Debian Bullseye).
+- On macOS: The XCode command line tools, which can be installed with `xcode-select --install`.
+{{</Aside>}}
+
+- `--experimental-local-remote-kv` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - This will write/read to/from your remote KV namespaces, as specified in `wrangler.toml`. Note this flag requires `--experimental-local` to be enabled.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the script.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
+- `--persist` {{<type>}}boolean{{</type>}}
+  - Enable persistence for local mode, using default path: `.wrangler/state`.
+- `--persist-to` {{<type>}}string{{</type>}}
+  - Specify directory to use for local persistence. Setting this flag implicitly enables `--persist`.
 - `--test-scheduled` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (cron trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+- `--log-level` {{<type>}}"debug"|"info"|"log"|"warn"|"error"|"none"{{</type>}} {{<prop-meta>}}(default: log){{</prop-meta>}}
+  - Specify Wrangler's logging level.
 
 {{</definitions>}}
 
@@ -188,39 +432,76 @@ None of the options for this command are required. Also, many can be set in your
   - The path to an entry point for your Worker.
 - `--name` {{<type>}}string{{</type>}}
   - Name of the Worker.
+- `--no-bundle` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Skip Wrangler's build steps and directly publish script without modification. Particularly useful when using custom builds.
 - `--env` {{<type>}}string{{</type>}}
   - Perform on a specific environment.
 - `--outdir` {{<type>}}string{{</type>}}
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` {{<type>}}string{{</type>}}
-  - Date to use for compatibility checks.
+  - A date in the form yyyy-mm-dd, which will be used to determine which version of the Workers runtime is used.
 - `--compatibility-flags`, `--compatibility-flag` {{<type>}}boolean[]{{</type>}}
   - Flags to use for compatibility checks.
 - `--latest` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
   - Use the latest version of the Workers runtime.
+- `--assets` {{<type>}}string{{</type>}}
+  - Root folder of static assets to be served. Unlike `--site`, `--assets` does not require a Worker script to serve your assets.
+  - Use in combination with `--name` and `--latest` for basic static file hosting. For example: `wrangler publish --name personal_blog --assets dist/ --latest`.
 - `--site` {{<type>}}string{{</type>}}
   - Root folder of static assets for Workers Sites.
 - `--site-include` {{<type>}}string[]{{</type>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Only matched items will be uploaded.
 - `--site-exclude` {{<type>}}string[]{{</type>}}
   - Array of `.gitignore`-style patterns that match file or directory names from the sites directory. Matched items will not be uploaded.
+- `--var` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
+  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
+- `--define` {{<type>}}key:value[]{{</type>}}
+  - Array of `key:value` pairs to replace global identifiers in your code.
+  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your `wrangler.toml`. If defined in both places, this flag's values will be used.
 - `--triggers`, `--schedule`, `--schedules` {{<type>}}string[]{{</type>}}
-  - Cron schedules to attach to the published Worker.
+  - Cron schedules to attach to the published Worker. Refer to [Cron Trigger Examples](/workers/platform/triggers/cron-triggers/#examples).
 - `--routes`, `--route` {{<type>}}string[]{{</type>}}
   - Routes where this Worker will be published.
+  - For example: `--route example.com/*`.
 - `--tsconfig` {{<type>}}string{{</type>}}
   - Path to a custom `tsconfig.json` file.
 - `--minify` {{<type>}}boolean{{</type>}}
   - Minify the bundled script before publishing.
+- `--node-compat` {{<type>}}boolean{{</type>}}
+  - Enable node.js compatibility.
 - `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Compile a project without actually publishing to live servers. Combined with `--outdir`, this is also useful for testing the output of `wrangler publish`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
-  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. 
+  - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
 
 {{</definitions>}}
 
 ---
+
+## delete
+
+Delete your Worker and all associated Cloudflare developer platform resources.
+
+```sh
+$ wrangler delete [SCRIPT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `SCRIPT` {{<type>}}string{{</type>}}
+  - The path to an entry point for your Worker.
+- `--name` {{<type>}}string{{</type>}}
+  - Name of the Worker.
+- `--env` {{<type>}}string{{</type>}}
+  - Perform on a specific environment.
+- `--dry-run` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
+  - Do not actually delete the Worker. This is useful for testing the output of `wrangler delete`.
+
+{{</definitions>}}
 
 ## `kv:namespace`
 
@@ -751,6 +1032,76 @@ $ wrangler r2 bucket list
 
 ---
 
+## `r2 object`
+
+Interact with R2 objects.
+
+{{<Aside type="note">}}
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+{{</Aside>}}
+
+### `get`
+
+Fetch an object from an R2 bucket.
+
+```sh
+$ wrangler r2 object get <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The source object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+### `put`
+
+Create an object in an R2 bucket.
+
+```sh
+$ wrangler r2 object put <OBJECTPATH> [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+- `--file` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The path of the file to upload. Note you must provide either `--file` or `--pipe`.
+- `--pipe` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Enables the file to be piped in, rather than specified with the --file option. Note you must provide either `--file` or `--pipe`.
+- `--content-type` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - A standard MIME type describing the format of the object data.
+- `--content-disposition` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies presentational information for the object.
+- `--content-encoding` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
+- `--content-language` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The language the content is in.
+- `--cache-control` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Specifies caching behavior along the request/reply chain.
+- `--expires` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The date and time at which the object is no longer cacheable.
+    {{</definitions>}}
+
+### `delete`
+
+Delete an object in an R2 bucket
+
+```sh
+$ wrangler r2 object delete <OBJECTPATH>
+```
+
+{{<definitions>}}
+
+- `OBJECTPATH` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - The destination object path in the form of `{bucket}/{key}`.
+
+{{</definitions>}}
+
+---
+
 ## secret
 
 Manage the secret variables for a Worker.
@@ -969,7 +1320,7 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
 - `COMMAND..` {{<type>}}string{{</type>}}
   - The proxy command(s) to run.
 - `--local` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: true){{</prop-meta>}}
-  - Run on my machine.
+  - Run on your local machine.
 - `--port` {{<type>}}number{{</type>}} {{<prop-meta>}}(default: 8788){{</prop-meta>}}
   - The port to listen on (serve from).
 - `--proxy` {{<type>}}number{{</type>}}
@@ -1027,6 +1378,45 @@ $ wrangler pages deployment list [OPTIONS]
 
 {{</definitions>}}
 
+### `deployment tail`
+
+Start a session to livestream logs from your deployed Pages Functions.
+
+```sh
+$ wrangler pages deployment tail [DEPLOYMENT] [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `DEPLOYMENT` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - ID or URL of the deployment to tail. Specify by environment if deployment ID is unknown.
+- `--project-name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The name of the project you would like to tail.
+- `--environment` {{<type>}}"production"|"preview"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - When not providing a specific deployment ID, specifying environment will grab the latest production or preview deployment.
+- `--format` {{<type>}}"json"|"pretty"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - The format of the log entries.
+- `--status` {{<type>}}"ok"|"error"|"canceled"{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by invocation status.
+- `--header` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by HTTP header.
+- `--method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by HTTP method.
+- `--sampling-rate` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Add a percentage of requests to log sampling rate.
+- `--search` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by a text match in `console.log` messages.
+- `--ip` {{<type>}}(string|"self")[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Filtering with `--ip self` will allow tailing your deployed Functions beyond the normal request per second limits.
+{{</Aside>}}
+
+After starting `wrangler pages deployment tail`, you will receive a live stream of console and exception logs for each request your Functions receive.
+
 ### `publish`
 
 Deploy a directory of static assets as a Pages deployment.
@@ -1068,7 +1458,9 @@ This command has an alias of `wrangler pages deploy create`.
 
 ## login
 
-Authorize Wrangler with your Cloudflare account using OAuth. This will open a login page in your browser and request your account access permissions.
+Authorize Wrangler with your Cloudflare account using OAuth. Wrangler will attempt to automatically open your web browser to login with your Cloudflare account.
+
+If you prefer to use API tokens for authentication, such as in headless or continuous integration environments, refer to [Running Wrangler in CI/CD](/workers/wrangler/ci-cd/).
 
 ```sh
 $ wrangler login [OPTIONS]
@@ -1086,6 +1478,34 @@ $ wrangler login [OPTIONS]
 
 {{<Aside type="note">}}
 `wrangler login` uses all the available scopes by default if no flags are provided.
+{{</Aside>}}
+
+If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
+
+{{<Aside type="note">}}
+
+### Using `wrangler login` on a remote machine
+
+If you are using Wrangler from a remote machine, but run the login flow from your local browser, you will receive the following error message after logging in:`This site can't be reached`.
+
+To finish the login flow, run `wrangler login` and go through the login flow in the browser:
+
+```sh
+$ wrangler login
+ ⛅️ wrangler 2.1.6
+-------------------
+Attempting to login via OAuth...
+Opening a link in your default browser: https://dash.cloudflare.com/oauth2/auth?xyz...
+```
+
+The browser login flow will redirect you to a `localhost` URL on your machine.
+
+Leave the login flow active. Open a second terminal session. In that second terminal session, use `curl` or an equivalent request library on the remote machine to fetch this `localhost` URL. Copy and paste the `localhost` URL that was generated during the `wrangler login` flow and run:
+
+```sh
+$ curl <LOCALHOST_URL>
+```
+
 {{</Aside>}}
 
 ---
@@ -1114,3 +1534,42 @@ Retrieve your user information and test your authentication configuration.
 ```sh
 $ wrangler whoami
 ```
+
+## deployments
+
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
+
+```sh
+$ wrangler deployments
+
+Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Created on: 2022-11-11T15:49:08.117218Z
+Author: example@cloudflare.com
+Source: Dashboard
+
+Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
+Created on: 2022-11-11T15:51:20.79936Z
+Author: example@cloudflare.com
+Source: Wrangler
+🟩 Active
+
+```
+
+{{<definitions>}}
+
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
+
+{{</definitions>}}
+
+---
+
+## types
+
+Generate types from bindings and module rules in configuration.
+
+```sh
+$ wrangler types
+```
+
+<!--TODO Add examples of DTS generated output -->

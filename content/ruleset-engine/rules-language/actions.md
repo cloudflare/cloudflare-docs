@@ -79,7 +79,6 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         </p>
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
-          <li>Present an invisible proof of work challenge to the browser.</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
           <li>Show a CAPTCHA challenge.</li>
         </ul>
@@ -157,7 +156,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       <td>
         <p>
           Executes the rules in the ruleset specified in the rule configuration. You can specify a
-          Managed Ruleset or a custom ruleset to execute.
+          managed ruleset or a custom ruleset to execute.
         </p>
         <p>In the Cloudflare dashboard, this action is not listed in action selection dropdowns.</p>
       </td>
@@ -194,13 +193,33 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
           Navigates the user from a source URL to a target URL, according to the rule configuration, by replying with an HTTP redirect.
         </p>
         <p>
-          Only available for <a href="/rules/url-forwarding/bulk-redirects/">Bulk Redirects</a> and <a href="/rules/url-forwarding/dynamic-redirects/">Dynamic Redirects</a>.
+          Only available for <a href="/rules/url-forwarding/single-redirects/">Single Redirects</a> and <a href="/rules/url-forwarding/bulk-redirects/">Bulk Redirects</a>.
         </p>
         <p>
-          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a Bulk Redirect Rule or a Dynamic Redirect Rule.
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create a redirect rule or a bulk redirect rule.
         </p>
       </td>
       <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Route</strong><br />
+        <br />
+        API value:<br />
+        <code>route</code>
+      </td>
+      <td>
+        <p>
+          Adjusts the <code>Host</code> header, Server Name Indication (SNI), resolved hostname, and/or resolved destination port of incoming requests.
+        </p>
+        <p>
+          Only available for <a href="/rules/origin-rules/">Origin Rules</a>, in the <code>http_request_origin</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, create an origin rule.
+        </p>
+      </td>
+      <td>No</td>
     </tr>
     <tr>
       <td>
@@ -228,5 +247,5 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
 {{</table-wrap>}}
 
 {{<Aside type="note">}}
-Cloudflare Firewall Rules, a security feature which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
+Cloudflare Firewall Rules, a security product which is not based on the Ruleset Engine, supports a different set of actions, including the _Allow_ and _Bypass_ actions. Refer to [Firewall rules actions](/firewall/cf-firewall-rules/actions/) for more information.
 {{</Aside>}}

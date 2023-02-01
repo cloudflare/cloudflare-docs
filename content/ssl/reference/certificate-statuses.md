@@ -6,7 +6,7 @@ weight: 8
 
 # Certificate statuses
 
-Certificates statuses tell you the state of each certificate.
+Certificates statuses show which stage of the issuance process each certificate is in.
 
 ## New certificates
 
@@ -45,12 +45,12 @@ When you create certificates in your [staging environment](/ssl/edge-certificate
 
 ### SSL/TLS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](https://api.cloudflare.com/#certificate-packs-get-certificate-pack).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](https://developers.cloudflare.com/api/operations/certificate-packs-get-certificate-pack).
 
 For more details on certificate validation, refer to [Changing DCV method](/ssl/edge-certificates/changing-dcv-method/).
 
 ### SSL for SaaS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://api.cloudflare.com/#custom-hostname-for-a-zone-custom-hostname-details).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
 
 For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).

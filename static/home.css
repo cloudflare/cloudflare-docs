@@ -412,7 +412,8 @@ html[is-site-page] .DocsContent {
     vertical-align: middle
 }
 
-.ProductGrid--link svg path {
+.ProductGrid--link svg path,
+.ProductGrid--link svg rect {
     fill: #6d767b
 }
 
@@ -420,7 +421,8 @@ html[is-site-page] .DocsContent {
     font-weight: 500
 }
 
-[theme=dark] .ProductGrid--link svg path {
+[theme=dark] .ProductGrid--link svg path,
+[theme=dark] .ProductGrid--link svg rect {
     fill: #888f96
 }
 
@@ -681,6 +683,14 @@ html[is-site-page] .DocsContent {
 
 [theme=dark] .TriBlockHeader img {
     filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+}
+
+.rssList a {
+    color: #0055DC;
+}
+
+[theme=dark] .rssList a {
+    color: #ff9e40;
 }
 
 .FeaturedContentSectionTitle {
@@ -1892,6 +1902,7 @@ html {
 }
 
 .CodeBlock--token-deleted,
+.CodeBlock--token-deleted-sign,
 .CodeBlock--token-namespace {
     color: var(--code-red)
 }
@@ -1901,7 +1912,8 @@ html {
     cursor: help
 }
 
-.CodeBlock--token-inserted {
+.CodeBlock--token-inserted,
+.CodeBlock--token-inserted-sign {
     color: var(--code-green)
 }
 
@@ -4833,6 +4845,43 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .DocsSearch--input-wrapper {
     position: relative;
     height: 100%
+}
+
+@media (min-width: 769px) {
+.DocsSearch--input-wrapper:focus-within {
+    --highlight-opacity: 0.2;
+    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+  }
+
+  .DocsSearch--input:focus::-webkit-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  .DocsSearch--input:focus:-ms-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  .DocsSearch--input:focus::placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+
+  [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
+  
+  [theme="dark"] .DocsSearch--input:focus::placeholder {
+    color: rgba(var(--color-rgb), .85);
+    opacity: 1;
+  }
 }
 
 .DocsSearch--input {

@@ -212,13 +212,7 @@ The following table represents the comparison operators that are supported and e
 
 The filter field has limits of approximately 30 operators and 1000 bytes. Anything exceeding this value will return an error.
 
-{{<Aside type="note" header="Note">}}
-Filtering is not supported on the following data types: `objects`, `array[int]`, `array[object]`.
-
-For the Firewall events dataset, the following fields are not supported: Action, Kind, MatchIndex, Metadata, OriginatorRayID, RuleID and Source.
-
-For the Gateway HTTP dataset, the following fields are not supported: Downloaded File Names, Uploaded File Names.
-{{</Aside>}}
+{{<render file="_filtering-limitations.md">}}
 
 ## Logical Operators
 

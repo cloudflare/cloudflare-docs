@@ -15,28 +15,28 @@ Any properties set on the event will override the default property on the waitin
 ## Create an event from the dashboard
 
 1.  Within your application, go to **Traffic** > **Waiting Rooms**.
-2.  Expand a Waiting Room  and click **Schedule Event**.
+2.  Expand a waiting room  and select **Schedule Event**.
 3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
 4.  You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at Event Start** and all users in the pre-queue will be randomly admitted at event start.
-5.  Click **Next**.
-6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base Waiting Room, the corresponding Event setting will update as well.
+5.  Select **Next**.
+6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
 
     {{<Aside type="note">}}If you choose to override the values of Total active users, you must also override the number of New users per minute, and vice versa.{{</Aside>}}
 
-7.  Click **Next**.
-8.  In the customization section, you can select Always inherit your Waiting Room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. M​ake sure to preview the result before continuing.
-9.  Click **Next** and review your Event details and settings.
-10.  Click **Save**.
+7.  Select **Next**.
+8.  In the customization section, you can select Always inherit your waiting room’s template (default) or you can override it with a Custom Event Template. In this case, you need to import your own template. M​ake sure to preview the result before continuing.
+9.  Select **Next** and review your Event details and settings.
+10.  Select **Save**.
 
-In your Waiting Room page, in the **Next Event** column you can visualize the date of the next event scheduled. This columns will read `N/A` in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
+In your waiting room page, in the **Next Event** column you can visualize the date of the next event scheduled. This columns will read `N/A` in case there is no event scheduled for that waiting room. You can always suspend, edit or delete your event.
 
 {{<Aside type="note">}}You have a limit of five events per waiting room.{{</Aside>}}
 
 ## Create an event via API
 
-To create an event, make a [POST request](https://api.cloudflare.com/#waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+To create an event, make a [POST request](https://developers.cloudflare.com/api/operations/waiting-room-create-event) including [required and optional parameters](#properties). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room/), you may want to add [relevant variables](https://api.cloudflare.com/#waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
+If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room/), you may want to add [relevant variables](https://developers.cloudflare.com/api/operations/waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
 
 {{<Aside type="note">}}
 
@@ -46,7 +46,7 @@ If you need to create overlapping events, use different waiting rooms.
 
 ### Parameters
 
-Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](https://api.cloudflare.com/#waiting-room-create-event).
+Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](https://developers.cloudflare.com/api/operations/waiting-room-create-event).
 
 - `name` (required): Unique name with alphanumeric characters, hyphens, and underscores.
 - `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
@@ -77,13 +77,13 @@ To set up a "lottery", include the [following parameters](#properties) in your A
 
 ## Preview an event configuration
 
-Since some properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](https://api.cloudflare.com/#waiting-room-preview-active-event-details) before it begins.
+Since some properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](https://developers.cloudflare.com/api/operations/waiting-room-preview-active-event-details) before it begins.
 
 This command shows you the event's configuration as if it were active, meaning that inherited fields from the waiting room will display their current values.
 
 ## Edit an event
 
-To edit an event, use a [PATCH request](https://api.cloudflare.com/#waiting-room-patch-event).
+To edit an event, use a [PATCH request](https://developers.cloudflare.com/api/operations/waiting-room-patch-event).
 
 ## Disable events
 
@@ -95,6 +95,6 @@ Additionally, events will not become active if a waiting room itself is **Disabl
 
 | Function                                                                      | Command  |
 | ----------------------------------------------------------------------------- | -------- |
-| [Get event details](https://api.cloudflare.com/#waiting-room-event-details)   | `GET`    |
-| [List scheduled events](https://api.cloudflare.com/#waiting-room-list-events) | `GET`    |
-| [Delete event](https://api.cloudflare.com/#waiting-room-delete-event)         | `DELETE` |
+| [Get event details](https://developers.cloudflare.com/api/operations/waiting-room-event-details)   | `GET`    |
+| [List scheduled events](https://developers.cloudflare.com/api/operations/waiting-room-list-events) | `GET`    |
+| [Delete event](https://developers.cloudflare.com/api/operations/waiting-room-delete-event)         | `DELETE` |

@@ -1,7 +1,7 @@
 ---
 title: Available settings
 pcx_content_type: concept
-weight: 4
+weight: 5
 meta:
   title: Available Origin Rules settings
 ---
@@ -15,11 +15,6 @@ The following sections describe the available settings in Origin Rules.
 Allows you to rewrite the HTTP `Host` header of incoming requests.
 
 A common use case for this functionality is when your content is hosted on a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
-
-You must specify a valid hostname in a Host header override that is either:
-
-* A hostname on the same Cloudflare account (possibly on a different zone).
-* A hostname for which Cloudflare is not proxying traffic (gray-clouded).
 
 {{<Aside type="note" header="Notes">}}
 
@@ -48,10 +43,35 @@ Allows you to override the resolved hostname of incoming requests. This function
 
 A common use case is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A DNS record override allows you to redirect requests to this endpoint to the server for that third-party application.
 
-You must specify a valid hostname in a DNS record override that is either:
+You must specify a valid hostname in a DNS record override that is a hostname on the same Cloudflare account (possibly on a different zone).
 
-* A hostname on the same Cloudflare account (possibly on a different zone).
-* A hostname for which Cloudflare is not proxying traffic (gray-clouded).
+You can [configure a DNS record](/dns/manage-dns-records/how-to/create-dns-records#create-dns-records) (a `CNAME`, `A`, or `AAAA` record) with a hostname pointing to a third-party hostname/IP address, either proxied by Cloudflare or not.
+
+The following example DNS records configure a `resolve.example.com` hostname pointing to an external hostname and IP address using a `CNAME` record and an `A` record, respectively:
+
+{{<example>}}
+
+**Example `CNAME` record**
+
+- **Type:** _CNAME_
+- **Name:** `resolve.example.com`
+- **Target:** `domain.s3.amazonaws.com`
+- **TTL:** `Auto`
+- **Proxy status:** _Proxied_ (orange cloud icon)
+
+{{</example>}}
+
+{{<example>}}
+
+**Example `A` record**
+
+- **Type:** _A_
+- **Name:** `resolve.example.com`
+- **IPv4 address:** `203.0.113.1`
+- **TTL:** `Auto`
+- **Proxy status:** _Proxied_ (orange cloud icon)
+
+{{</example>}}
 
 ## Destination port
 

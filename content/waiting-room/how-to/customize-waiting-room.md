@@ -27,7 +27,7 @@ To choose the default, unbranded waiting room:
 
 1.  Select a waiting room.
 2.  Go to the **Customization** step.
-3.  Click **Default Waiting Room**.
+3.  Select **Default Waiting Room**.
 4.  Select the language for your waiting room default page.
 
 ### Custom waiting room
@@ -38,20 +38,20 @@ To customize a waiting room:
 
 1.  Select a waiting room.
 2.  Go to the **Customization** step.
-3.  Click **Custom Waiting Room**.
+3.  Select **Custom Waiting Room**.
 
 You can edit the HTML code directly in the text box:
 
-- Click **Download Template** to download a HTML file containing the default template content to your computer.
-- Click **Download** to download a HTML file containing the text box content to your computer.
-- Click **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
+- Select **Download Template** to download a HTML file containing the default template content to your computer.
+- Select **Download** to download a HTML file containing the text box content to your computer.
+- Select **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
 
 The template text contains [code to display the wait time](#display-wait-time). If you want to display the estimated wait time to visitors, do not delete this content.
 
 #### Upload an HTML file
 
-1.  Click **Import** to upload a HTML file from your computer.
-2.  Select the file in the dialog and click **Open**.
+1.  Select **Import** to upload a HTML file from your computer.
+2.  Select the file in the dialog and select **Open**.
 
 Make further edits in the text box. Include the [code to display the wait time](#display-wait-time) to display the estimated queue time on the waiting room page or create your own custom page using [available variables](#available-variables).
 
@@ -96,11 +96,11 @@ The following script within the `<body>` section after `<main>` fetches the wait
 
 #### Available variables
 
-When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://api.cloudflare.com/#waiting-room-create-waiting-room).
+When you create a waiting room with custom HTML, you can have access to several variables to customize your response. For a full list of variables, refer to the `json_response_enabled` parameter in the [Cloudflare API docs](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room).
 
 #### Multiple-language support
 
-Customize your waiting room to display in any language supported by the UTF-8 character set. Additionally, all [variables](#available-variables) support internationalization except for **waitTimeFormatted** (English only).
+Customizable waiting rooms can display text in any language supported by the UTF-8 character set. To display estimated wait time, you can use numeric variables like `waitTimeMinutes` and `waitTimeHours` within your waiting room template, regardless of user language. However, at the time, the following variables are only available in English: `waitTimeFormatted`, `timeUntilEventStartFormatted`, and `timeUntilEventEndFormatted`.
 
 #### Resource hosting
 
@@ -113,7 +113,7 @@ To preview the appearance of a waiting room:
 1.  In your application, go to **Traffic** > **Waiting Rooms**.
 2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
-4.  Click **Preview Waiting Room**:
+4.  Select **Preview Waiting Room**:
 
 - Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
 - Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
@@ -136,7 +136,7 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_room
      --data '{"custom_page_html":"<p>Include custom HTML here</p>"}'
 ```
 
-```bash
+```json
 {
   "success": true,
   "errors": [],
@@ -198,7 +198,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone-id}/waiting_rooms
 
 The preview endpoint returns a temporary URL in the response body where you can preview your custom page:
 
-```bash
+```json
 {
   "result": {
     "preview_url": "https://waitingrooms.dev/preview/111111111111"
@@ -213,7 +213,7 @@ You do not have to have a Cloudflare account to access the preview link, so you 
 
 ### Preview the default or current waiting room web page
 
-After [generating a preview URL](https://api.cloudflare.com/#waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
+After [generating a preview URL](https://developers.cloudflare.com/api/operations/waiting-room-create-a-custom-waiting-room-page-preview), use the following endpoint to generate a link to preview the currently configured web page for a waiting room, or the default page if no custom page is configured.
 
 ```txt
 GET https://waitingrooms.dev/preview/{preview-id}

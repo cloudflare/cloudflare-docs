@@ -58,13 +58,11 @@ To use PTR records, you need to create a reverse DNS zone and add a PTR record f
          </div>
          </details>
 
-         {{<Aside type="warning">}}Enterprise customers can only add reverse zones for IPv4 addresses. If you want to add zones for IPv6 addresses, contact your account team.{{</Aside>}}
-
 3.  If you are adding less than 200 PTR records, select the **Free** plan. If you are adding more, select a paid plan.
 
 4.  Skip the rest of the onboarding process.
 
-5.  Once finished with onboarding, go to **DNS**.
+5.  Once finished with onboarding, go to **DNS** > **Records**.
 
 6.  For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 

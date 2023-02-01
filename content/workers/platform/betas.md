@@ -5,13 +5,19 @@ title: Betas
 
 # Beta Status
 
-These are the betas relevant to Cloudflare Workers.
+These are the current alphas and betas relevant to the Cloudflare Workers platform.
 
-| Product                       | Private Beta | Public Beta | More Info                                                                  |
-|:---                           |    :----:    |    :----:   | -----------                                                                |
-| Email Workers                 | ✅           |              | [Blog](https://blog.cloudflare.com/announcing-route-to-workers/) |
-| D1 Database                   | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-d1/)                         |
-| Green Compute                 |              |  ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
-| Pub/Sub                       | ✅           |              |[Docs](/pub-sub)                                                            |
-| TCP Workers                   | ✅           |             |[Blog](https://blog.cloudflare.com/introducing-socket-workers/) |
-| Workers Analytics Engine      |            |  ✅            |[Blog](https://blog.cloudflare.com/workers-analytics-engine/)               |
+* Public alphas and betas are openly available, but may have limitations and caveats due to their early stage of development.
+* Private alphas and betas require explicit access to be granted. Go to the documentation to join the relevant product waitlist.
+
+
+| Product                       | Public Alpha  | Private Beta | Public Beta | More Info                                                                  |
+|:---                           |    :----:     |    :----:    |    :----:   | -----------                                                                |
+| Email Workers                 |               | ✅           |              |[Blog](https://blog.cloudflare.com/announcing-route-to-workers/)            |
+| D1 Database                   | ✅            |             |              |[Blog](https://blog.cloudflare.com/introducing-d1/)                         |
+| Green Compute                 |               |              |  ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
+| Pub/Sub                       |               | ✅           |              |[Docs](/pub-sub)                                                            |
+| Queues                        |               |              |  ✅          |[Docs](/queues)                                                             |
+| TCP Workers                   |               | ✅           |              |[Blog](https://blog.cloudflare.com/introducing-socket-workers/)             |
+| Workers Analytics Engine      |               |             | ✅            |[Docs](/analytics/analytics-engine/)               |
+| Workers Deployments           |               |             | ✅            |[Docs](/workers/platform/deployments)               |

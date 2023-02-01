@@ -11,11 +11,11 @@ Cloudflare's `cloudflared` command-line tool allows you to interact with endpoin
 
 These instructions are not meant for configuring a service to run against an API. The token in this example is tailored to user identity and intended only for an end user interacting with an API via a command-line tool.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Connect to resources secured by Cloudflare Access from a CLI
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 30 minutes
 

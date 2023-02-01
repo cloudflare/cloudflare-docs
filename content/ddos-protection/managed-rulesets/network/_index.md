@@ -3,21 +3,21 @@ title: Network-layer DDoS Attack Protection
 pcx_content_type: concept
 weight: 4
 meta:
-  title: Network-layer DDoS Attack Protection Managed Ruleset
+  title: Network-layer DDoS Attack Protection managed ruleset
 layout: single
 ---
 
-# Network-layer DDoS Attack Protection Managed Ruleset
+# Network-layer DDoS Attack Protection managed ruleset
 
-The Cloudflare Network-layer DDoS Attack Protection Managed Ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model. Cloudflare updates the list of rules in the Managed Ruleset on a regular basis.
+The Cloudflare Network-layer DDoS Attack Protection managed ruleset is a set of pre-configured rules used to match [known DDoS attack vectors](/ddos-protection/about/attack-coverage/) at levels 3 and 4 of the OSI model. Cloudflare updates the list of rules in the managed ruleset on a regular basis.
 
-The Network-layer DDoS Attack Protection Managed Ruleset is always enabled — you can only customize its behavior.
+The Network-layer DDoS Attack Protection managed ruleset is always enabled — you can only customize its behavior.
 
 ## Ruleset configuration
 
 You may need to adjust the behavior of specific rules in case of false positives or due to specific traffic patterns.
 
-Adjust the behavior of the rules in the Managed Ruleset by modifying the following parameters:
+Adjust the behavior of the rules in the managed ruleset by modifying the following parameters:
 
 *   The performed **action** when an attack is detected
 *   The **sensitivity level** of attack detection mechanisms
@@ -25,15 +25,15 @@ Adjust the behavior of the rules in the Managed Ruleset by modifying the followi
 To adjust rule behavior, do one of the following:
 
 *   [Configure Network-layer DDoS Attack Protection in the dashboard](/ddos-protection/managed-rulesets/network/configure-dashboard/).
-*   [Configure Network-layer DDoS Attack Protection Managed Ruleset overrides via API](/ddos-protection/managed-rulesets/network/configure-api/).
+*   [Configure Network-layer DDoS Attack Protection managed ruleset overrides via API](/ddos-protection/managed-rulesets/network/configure-api/).
 
-You can only configure the behavior of the Managed Ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed Ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
+You can only configure the behavior of the managed ruleset to set a stronger mitigation action or a lower sensitivity. Refer to [Managed ruleset parameters](/ddos-protection/managed-rulesets/network/override-parameters/) for more information.
 
-Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Available expression fields](/ddos-protection/managed-rulesets/network/fields/) for more information on the available fields for expressions of Network-layer DDoS Attack Protection Managed Ruleset overrides.
+Overrides can apply to all packets or to a subset of incoming packets, depending on the override expression. Refer to [Override expressions](/ddos-protection/managed-rulesets/network/override-expressions/) for more information.
 
 ## Availability
 
-The Network-layer DDoS Attack Protection Managed Ruleset protects Cloudflare customers on all plans. However, only Magic Transit and Spectrum customers on an Enterprise plan can customize the Managed Ruleset.
+The Network-layer DDoS Attack Protection managed ruleset protects Cloudflare customers on all plans. However, only Magic Transit and Spectrum customers on an Enterprise plan can customize the managed ruleset.
 
 ## Related Cloudflare products
 

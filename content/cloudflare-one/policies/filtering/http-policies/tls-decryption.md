@@ -19,15 +19,26 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 Gateway does not support TLS decryption for applications which use:
 
-- Embedded certificates
-- Self-signed certificates
-- Mutual TLS (mTLS) authentication
+- [Embedded certificates](#incompatible-certificates)
+- [Self-signed certificates](#incompatible-certificates)
+- [Mutual TLS (mTLS) authentication](#incompatible-certificates)
+- [ESNI and ECH handshake encryption](#esni-and-ech)
+
+### Incompatible certificates
 
 Applications that use embedded certificates and mTLS authentication do not trust the Cloudflare certificate. For example, the vast majority of mobile applications use embedded certificates. Conversely, Cloudflare does not trust applications that use self-signed certificates instead of certificates signed by a public CA.
 
-If you try to perform TLS decryption, these applications may not load or may return an error. You can resolve the issue by exempting unsupported applications from TLS decryption. To bypass TLS decryption, you must add a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a [list of trusted applications](/cloudflare-one/policies/filtering/initial-setup/http/#bypass-inspection-for-incompatible-applications) that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you will see a **Your connection is not private** warning which you can proceed through to connect.
+If you try to perform TLS decryption, these applications may not load or may return an error. You can resolve the issue by [adding the Cloudflare certificate to the application](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) (if supported by the application) or by exempting the application from TLS decryption.
+
+To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) HTTP policy for the application or domain. The HTTP policy builder provides a [list of trusted applications](/cloudflare-one/policies/filtering/initial-setup/http/#bypass-inspection-for-incompatible-applications) that are known to use embedded certificates. When accessing a Do Not Inspect site in the browser, you will see a **Your connection is not private** warning, which you can proceed through to connect.
 
 HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gateway or subject to your HTTP policies. You can, however, still apply [network policies](/cloudflare-one/policies/filtering/network-policies/) to these applications.
+
+### ESNI and ECH
+
+Websites that adhere to [ESNI or ECH standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indicator (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. This is because Gateway relies on the SNI to match an HTTP request to a policy.
+
+You can still apply all [network policy filters](/cloudflare-one/policies/filtering/network-policies/#selectors) except for SNI and SNI Domain. To restrict ENSI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
 
 ## FIPS compliance
 

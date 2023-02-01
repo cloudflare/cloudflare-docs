@@ -25,6 +25,7 @@ CAA is a new DNS resource record type defined in [RFC 6844](https://datatracker.
 ```txt
 example.com. IN CAA 0 issue "digicert.com"
 example.com. IN CAA 0 issue "letsencrypt.org"
+example.com. IN CAA 0 issue "pki.goog"
 ```
 
 While it’s possible for CAA records to be set on the subdomain they wish to use with your service, it is unlikely. You would also have to remove this CAA record.
@@ -49,13 +50,13 @@ If a certificate issuance times out, the error message will indicate where the t
 - Timed Out (Deployment)
 - Timed Out (Deletion)
 
-To fix this error, send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) through the API or click the **refresh toggle** for the specific custom hostname in the dashboard.
+To fix this error, send a [PATCH request](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) through the API or click the **refresh toggle** for the specific custom hostname in the dashboard.
 
 ---
 
 ## Immediate validation checks
 
-You can send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) to request an immediate validation check on any certificate. The PATCH data only needs include the same `ssl` object as the original request.
+You can send a [PATCH request](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to request an immediate validation check on any certificate. The PATCH data only needs include the same `ssl` object as the original request.
 
 ---
 
@@ -84,4 +85,4 @@ If you encounter other 1XXX errors, refer to [Troubleshooting Cloudflare 1XXX Er
 
 ## Custom hostname in Moved status
 
-To move a custom hostname back to an Active status, send a [PATCH request](https://api.cloudflare.com/#custom-hostname-for-a-zone-edit-custom-hostname) to restart the hostname verification. A Custom Hostname in a Moved status is deleted after 7 days.
+To move a custom hostname back to an Active status, send a [PATCH request](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-edit-custom-hostname) to restart the hostname verification. A Custom Hostname in a Moved status is deleted after 7 days.

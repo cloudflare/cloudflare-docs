@@ -17,13 +17,14 @@ Learn how to set up a bucket for use with full packet captures.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
-3. From the **Packet captures** page, select the **Buckets** tab.
-4. Select **Add a bucket**.
-5. Under **Bucket configuration**, select a bucket service and select **Next**.
-6. Enter the information related to your bucket for your service provider.
-7. When you are done, select **Next**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **Magic Transit** or **Magic WAN**.
+3. In **Packet captures**, select **Start a capture**.
+4. From the **Packet captures** page, select the **Buckets** tab.
+5. Select **Add a bucket**.
+6. Under **Bucket configuration**, select a bucket service and select **Next**.
+7. Enter the information related to your bucket for your service provider.
+8. When you are done, select **Next**.
 
 The **Prove ownership** step of the **Bucket configuration** displays.
 
@@ -72,7 +73,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/o
 
 The response shows the filename of the ownership-challenge text file placed within the bucket. Find the file in your bucket and copy the contents of the file.
 
-```bash
+```json
 ---
 header: Ownership challenge response example
 ---
@@ -82,7 +83,7 @@ header: Ownership challenge response example
     "status": "pending",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -107,7 +108,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/o
 }'
 ```
 
-```bash
+```json
 ---
 header: Bucket validation response
 ---
@@ -117,7 +118,7 @@ header: Bucket validation response
     "status": "success",
     "submitted": "2022-04-22T18:54:13.397413Z",
     "validated": "2022-04-27T14:54:46.440548Z",
-    "destinaton_conf": "gs://bucket-test",
+    "destination_conf": "gs://bucket-test",
     "filename": "ownership-challenge-1234.txt"
   },
   "success": true,
@@ -144,9 +145,10 @@ View a list of all buckets configured on your account.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. On the **Magic Transit** page next to **Packet captures**, select **Start a capture**.
-3. From the **Packet captures** page, select the **Buckets** tab.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **Magic Transit** or **Magic WAN**.
+3. In **Packet captures**, select **Start a capture**.
+4. Select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
 
@@ -163,7 +165,7 @@ curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/ow
 -H "X-Auth-Key: ${auth_key}"
 ```
 
-```bash
+```json
 ---
 header: Bucket list response example
 ---
@@ -174,7 +176,7 @@ header: Bucket list response example
       "status": "success",
       "submitted": "2022-04-26T16:58:24.550762Z",
       "validated": "2022-04-26T17:01:18.426458Z",
-      "destinaton_conf": "s3://test-bucket?region=us-east-1",
+      "destination_conf": "s3://test-bucket?region=us-east-1",
       "filename": "ownership-challenge-1234.txt"
     },
   ],

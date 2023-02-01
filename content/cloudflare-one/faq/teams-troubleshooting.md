@@ -1,12 +1,24 @@
 ---
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 4
+meta:
+    description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
 
 # Troubleshooting
+
+## I tried to register the WARP client with my Zero Trust domain but received the following error messages: `Authentication Expired` and `Registration error. Please try again later`.
+
+When a user logs into an organization, WARP will open a web page so the user can sign in via Cloudflare Access. Access then generates a JSON Web Token (JWT) that is passed from the web page to the WARP client to authenticate the device. This JWT has a timestamp indicating the exact time it was created, as well as a timestamp indicating it will expire 50 seconds into the future.
+
+This error message means that when the JWT is finally passed to the WARP client, it has already expired. One of two things can be happening:
+
+1. (Most likely): Your computer system clock is not properly synced using Network Time Protocol (NTP). Visit [https://time.is](https://time.is) on the affected machine to validate your clock is properly synchronized within 20 seconds of the actual time.
+
+2. You are waiting more than one minute to open Cloudflare WARP from the time Cloudflare Access prompts you. Open the WARP client as soon as you get the prompt.
 
 ## I see a website is blocked, and it shouldn't be.
 
@@ -19,41 +31,47 @@ Cloudflare Access requires that the credentials: `same-origin parameter` be adde
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/).
+To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
-## I see a Cloudflare Gateway error page when browsing to a website.
+## I see error 526 when browsing to a website.
 
 <div class="medium-img">
-  <img alt="Questions" src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
+  <img alt="Example of a Gateway 526 error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
 </div>
 
-We present an HTTP error page in the following cases:
+Gateway presents an **HTTP Response Code: 526** error page in the following cases:
 
-1.  **An untrusted certificate is presented from the origin to Gateway**. Gateway will consider a certificate is untrusted if any of these three conditions are true:
+- **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
 
-    - The server certificate issuer is unknown or is not trusted by the service.
-    - The server certificate is revoked and fails a CRL check (OSCP checking coming soon)
-    - There is at least one expired certificate in the certificate chain for the server certificate
+  - The server certificate issuer is unknown or is not trusted by the service.
+  - The server certificate is revoked and fails a CRL check.
+  - There is at least one expired certificate in the certificate chain for the server certificate.
+  - The common name on the certificate does not match the URL you are trying to reach.
+  - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
-2.  **Common certificate errors occur**. For example, in the event of a certificate common name mismatch. The SSL certificate on the edge needs to cover the requested hostname or else a 526 Insecure upstream error will be presented.
-3.  **Insecure cipher suite**. When the connection from Cloudflare Gateway to an upstream server is insecure (e.g, uses an insecure cipher such as rc4, rc4-md5, 3des, etc). We do support upstream connections that require a connection over TLS that is prior to TLS 1.3. We will support the ability for an administrator to configure whether to trust insecure connections in the very near future.
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins that only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
 
-If you see this page, providing as much information as possible to the local IT administrator will be helpful as we troubleshoot with them, such as:
+  If you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance), Gateway will only connect if the origin supports [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
 
-- Operating System (Windows 10, macOS 10.x, iOS 14.x)
-- Web browser (Chrome, Firefox, Safari, Edge)
-- URL of the request
-- Screenshot or copy/paste of the content from the error page
+If none of the above scenarios apply, contact Cloudflare support with the following information:
+  - Operating System (Windows 10, macOS 10.x, iOS 14.x)
+  - Web browser (Chrome, Firefox, Safari, Edge)
+  - URL of the request
+  - Screenshot or copy/paste of the content from the error page
+
+## I see error 504 when browsing to a website.
+
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), or contact your account team to revert all devices to preferring IPv4.
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
-![Overview empty](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
+![An error displayed in the Gateway Overview page instead of analytics.](/cloudflare-one/static/documentation/faq/gateway-dash-overview-empty.png)
 
 You may not see analytics on the Overview page for the following reasons:
 
-- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your location by going to your locations page and then expanding the location.
+- **You are not sending DNS queries to Gateway**. Verify that the destination IP addresses you are sending DNS queries to are correct. You can check the destination IP addresses for your DNS location by going to **Gateway** > **DNS Locations** and then expanding the location.
 - **You are using other DNS resolvers**. If you have other DNS resolvers in your DNS settings, your device could be using IP addresses for resolvers that are not part of Gateway. Please make sure to remove all other IP addresses from your DNS settings and only include Gateway's DNS resolver IP addresses.
-- **The source IPv4 address for your location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the location matches with the network's source IPv4 address.
+- **The source IPv4 address for your DNS location is incorrect**. If you are using IPv4, check the source IPv4 address that you entered for the DNS location matches with the network's source IPv4 address.
 - **Analytics is not available yet**. It takes some time to generate the analytics for Cloudflare Gateway. If you are not seeing anything even after 5 minutes, please file a support ticket.
 
 ## I see a "No Browsers Available" alert.
@@ -65,16 +83,9 @@ If you encounter this error please [file feedback](/cloudflare-one/policies/brow
 This can occur if your device is attempting to establish a connection to more than two remote browser instances.
 A browser isolation session is a connection from your local browser to a remote browser. Tabs and windows within the same browser share a single remote browser session. In practice, this generally means that you can open both Chrome and Firefox to use browser isolation concurrently, but attempting to open a third browser such as Opera will cause this alert to appear. To release a browser session, please close all tabs/windows in your local browser. The remote browser session will be automatically terminated within 15 minutes.
 
-## I see `Error 400 admin_policy_enforced` when using GSuite as an identity provider.
+## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-<div class="small-img">
-  <img alt="Google Error 400" src="/cloudflare-one/static/documentation/faq/google-error-400.png" />
-</div>
-
-This is due to a Google policy change requiring you to set your Google Admin console to trust your applications:
-
-1.  In the Google Admin console, navigate to **Security** > **API controls**.
-2.  Check the _Trust internal, domain-owned apps_ option.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 

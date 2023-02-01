@@ -13,6 +13,7 @@ When you specify API hosts in [mTLS authentication](/api-shield/security/mtls/),
 
 Before you can protect your API or web application with mTLS rules, you need to:
 
+- Check that the certificate installed on your origin server matches the hostname of the client certificate, for example `api.example.com`. Origin server wildcard certificates such as `*.example.com` are not supported.
 - [Create a client certificate](/ssl/client-certificates/create-a-client-certificate/).
 - [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) to use your Cloudflare-issued client certificate.
 - [Enable mutual Transport Layer Security (mTLS) for a host](/ssl/client-certificates/enable-mtls/) in your zone.
@@ -49,6 +50,12 @@ To create an mTLS rule in the Cloudflare dashboard, follow these steps:
     To make this rule active, click **Deploy**. To add additional firewall logic — such as checking for [revoked certificates](#check-for-revoked-certificates) — click **Use firewall rule builder**.
 
 6.  Once you have deployed your mTLS rule, any requests without a [Cloudflare-issued client certificate](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) will be blocked.
+
+{{<Aside type="warning" header="Important">}}
+
+Client certificates are signed by a Managed Certificate Authority (CA) that is on the account level. Two zones that have client certificates provisioned can be shared as long as they are under the same account.
+
+{{</Aside>}}
 
 ### Expression Builder
 

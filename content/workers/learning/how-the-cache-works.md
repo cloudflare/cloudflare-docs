@@ -30,6 +30,31 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ---
 
+### Single file purge  assets cached by a worker
+
+When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
+
+As far as cache is concerned, the asset in the `fetch` request (`https://notexample.com/hello`) is the asset that is cached (`https://notexample.com/hello`). To purge it, you need to purge `https://notexample.com/hello`. 
+
+Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
+
+In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied ([orange-clouded](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records)) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
+
+To better understand the example, take a look at the following diagram:
+
+<div class="mermaid">
+flowchart TD
+accTitle: Single file purge  assets cached by a worker
+accDescr: This diagram is meant to help choose how to purge a file.
+A("You have a Worker script that runs on https://example.com/hello and this Worker makes a `fetch` request to https://notexample.com/hello.") --> B(Is notexample.com an active zone on Cloudflare?)
+    B -- Yes --> C(Is https://notexample.com/ proxied through Cloudflare?)
+    B -- No  --> D(Purge https://notexample.com/hello from the original example.com zone.)
+    C -- Yes --> E(Do you own notexample.com?)
+    C -- No --> F(Purge https://notexample.com/hello from the original example.com zone.)
+    E -- Yes --> G(Purge https://notexample.com/hello from the notexample.com zone.)
+    E -- No --> H(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
+</div>
+
 ### Purging assets stored with the Cache API
 
 Assets stored in the cache through [Cache API](/workers/runtime-apis/cache/) operations can be purged in a couple of ways:
@@ -86,3 +111,7 @@ When to use the Cache API:
 - When you want to programmatically access a Response from a cache without relying on a `fetch` request. For example, you can check to see if you have already cached a `Response` for the `https://example.com/slow-response` endpoint. If so, you can avoid the slow request.
 
 This [template](/workers/examples/cache-api/) shows ways to use the cache API. For limits of the cache API, refer to [Limits](/workers/platform/limits/#cache-api-limits).
+
+{{<Aside type="warning" header="Warning">}}
+Cache API within Workers does not support tiered caching. Tiered Cache concentrates connections to origin servers so they come from a small number of data centers rather than the full set of network locations. Cache API is local to a data center, this means that `cache.match` does a lookup, `cache.put` stores a response, and `cache.delete` removes a stored response only in the cache of the data center that the Worker handling the request is in. Because these methods apply only to local cache, they will not work with tiered cache.
+{{</Aside>}}

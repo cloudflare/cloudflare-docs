@@ -6,9 +6,13 @@ weight: 15
 
 # Always Use HTTPS
 
-{{<render file="_always-use-https-definition.md">}}
+Always Use HTTPS redirects all `http` requests to `https` for all subdomains and hosts in your application.
 
-Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
+Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
+
+## Availability
+
+{{<feature-table id="ssl.always_use_https">}}
 
 ## Encrypt all visitor traffic
 
@@ -26,7 +30,7 @@ To enable **Always Use HTTPS** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}

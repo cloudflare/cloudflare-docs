@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Using Streams
-weight: 11
+weight: 12
 ---
 
 # Using Streams
@@ -25,6 +25,31 @@ The two primitives developers use to perform active streaming are [`TransformStr
 
 A basic pass-through usage of streams:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    // Fetch from origin server.
+    let response = await fetch(request);
+
+    // Create an identity TransformStream (a.k.a. a pipe).
+    // The readable side will become our new response body.
+    let { readable, writable } = new TransformStream();
+
+    // Start pumping the body. NOTE: No await!
+    response.body.pipeTo(writable);
+
+    // ... and deliver our Response while that’s running.
+    return new Response(readable, response);
+  }
+}
+```
+
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener('fetch', event => {
   event.respondWith(fetchAndStream(event.request));
@@ -45,6 +70,8 @@ async function fetchAndStream(request) {
   return new Response(readable, response);
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 This example calls `response.body.pipeTo(writable)` but does not `await` it. This is so it does not block the forward progress of the remainder of the `fetchAndStream()` function. It continues to run asynchronously until the response is complete or the client disconnects.
 

@@ -18,6 +18,6 @@ The migration is a simple process.
 
 First, create a [Cloudflare account](/learning-paths/get-started/#account-setup).
 
-Then, if your application can handle a few minutes of downtime, you could create a new [Web3 custom gateway](/web3/how-to/manage-gateways/#create-a-gateway) with your existing hostname.
+Then create a new [Web3 custom gateway](/web3/how-to/manage-gateways/#create-a-gateway) with your existing hostname.
 
 Alternatively, you could also create a [Web3 custom gateway](/web3/how-to/manage-gateways/#create-a-gateway) for a new hostname and then modify your application to use your newly created hostname ([IPFS](/web3/how-to/use-ipfs-gateway/) or [Ethereum](/web3/how-to/use-ethereum-gateway/)).

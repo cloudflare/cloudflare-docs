@@ -19,7 +19,7 @@ To enable the Cloudflare Logpush service:
 
 1.  Log in to the Cloudflare dashboard.
 
-2.  Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise account or domain you want to use with Logpush.
 
 3.  Go to **Analytics** > **Logs**.
 
@@ -95,7 +95,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
   - `<DATADOG_API_KEY>`: The Datadog API token can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
   - `ddsource`: Set to `cloudflare`.
-  - `service`, **host**, **ddtags**: Optional parameters allowed by Datadog.
+  - `service`, `host`, `ddtags`: Optional parameters allowed by Datadog.
 
 ```bash
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"

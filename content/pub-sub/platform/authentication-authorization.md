@@ -36,7 +36,7 @@ To generate a single token for a broker named `example-broker` in `your-namespac
 
 For example, to generate five valid tokens with an automatically generated Client ID for each token:
 
-```bash
+```sh
 $ wrangler pubsub broker issue example-broker --number=5 --expiration=48h
 ```
 
@@ -79,7 +79,7 @@ To revoke a credential, which immediately invalidates it and prevents any client
 
 This will add the token to a revocation list. When using JWTs, you can revoke the JWT based on its unique `jti` claim. To revoke multiple tokens at once, provide a list of token identifiers.
 
-```bash
+```sh
 $ wrangler pubsub broker revoke example-broker --namespace=NAMESPACE_NAME --jti=JTI_ONE --jti=JTI_TWO
 ```
 
@@ -96,7 +96,7 @@ Credentials can be set to expire at a Broker-level that applies to all credentia
 
 To set an expiry for each set of credentials issued by setting the `expiration` value when requesting credentials: in this case, we specify 1 day (`1d`):
 
-```bash
+```sh
 $ wrangler pubsub broker issue example-broker --namespace=NAMESPACE_NAME --expiration=1d
 ```
 
@@ -111,7 +111,7 @@ This will return a token that expires 1 day (24 hours) from issuance:
 
 To set a Broker-level global expiration on an existing Pub/Sub Broker, set the `expiration` field on the Broker to the seconds any credentials issued should inherit:
 
-```bash
+```sh
 $ wrangler pubsub broker update YOUR_BROKER --namespace=NAMESPACE_NAME --expiration=7d
 ```
 
@@ -123,7 +123,7 @@ This will cause any token issued by the Broker to have a default expiration of 7
 
 * We strongly recommend setting a per-broker expiration configuration via the **expiration** (integer seconds) field, which will implicitly set an expiration timestamp for all credentials generated for that broker via the `exp` JWT claim.
 * Using short-lived credentials – for example, 7 to 30 days – with an automatic rotation policy can reduce the risk of credential compromise and the need to actively revoke credentials after-the-fact.
-* You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
+* You can use Pub/Sub itself to issue fresh credentials to clients using [Cron Triggers](/workers/platform/triggers/cron-triggers/) or a separate HTTP endpoint that clients can use to refresh their local token store.
 
 ## Authorization and Access Control
 

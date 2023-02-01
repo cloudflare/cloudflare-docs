@@ -37,13 +37,12 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ### Route private network IPs through Gateway
 
-By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
+By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
 
-To configure your Split Tunnel settings:
+To configure Split Tunnels settings:
 
-1. In the Zero Trust dashboard, go to **Settings** > **Network**.
-2. Scroll down to **Split Tunnels** and note whether you have selected **Exclude** or **Include** mode.
-3. Select **Manage**.
+1. Check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude** or **Include** mode.
+2. [Edit the split tunnel entries](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-an-ip-address):
     - If you are using **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption. If your network's IP/CIDR range is listed on this page, delete it.
     - If you are using **Include** mode, the IP ranges you see listed are the only ones Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
 
@@ -85,8 +84,22 @@ Your application will appear on the **Applications** page.
 
 End users can now reach HTTP or TCP-based services on your network by navigating to any IP address in the range you have specified.
 
+### Troubleshooting
+
+#### Device configuration
+
 To check that their device is properly configured, the user can visit `https://help.teams.cloudflare.com/` to ensure that:
 
 - The page returns **Your network is fully protected**.
 - In **HTTP filtering**, both **WARP** and **Gateway Proxy** are enabled.
 - The **Team name** matches the Zero Trust organization from which you created the tunnel.
+
+#### Router configuration
+
+Check the local IP address of the device and ensure that it does not fall within the IP/CIDR range of your private network. For example, some home routers will make DHCP assignments in the `10.0.0.0/24` range, which overlaps with the `10.0.0.0/8` range used by most corporate private networks. When a user's home network shares the same IP addresses as the routes in your tunnel, their device will be unable to connect to your application.
+
+To resolve the IP conflict, you can either:
+
+- Reconfigure the user's router to use a non-overlapping IP range. Compatible routers typically use `192.168.1.0/24`, `192.168.0.0/24` or `172.16.0.0/24`.
+
+- Tighten the IP range in your tunnel configuration to exclude the `10.0.0.0/24` range. This will only work if your private network does not have any hosts within `10.0.0.0/24`.

@@ -11,7 +11,7 @@ Many security teams rely on Microsoft MCAS (Microsoft Cloud App Security), Micro
 
 Microsoft provides an MCAS API endpoint to allow queries to see which applications have been marked as blocked or allowed. With an MCAS API call, you can manage a URL category that contains the blocked URLs returned by the API query, and use the output to create a Hostname List that can be used by Gateway HTTP policies to block them.
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 
@@ -57,7 +57,7 @@ As you can see, the banned hostnames are preceded by a `.`. To use this output f
 If you would like to get a list of all of the MCAS allowed applications, you can use the same API query, but instead of using `type=banned`, use `type=allowed`. This will return a much larger list.
 
 ```sh
-curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
+$ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
 ```
 
 ## Adding a hostname list in the Zero Trust Dashboard

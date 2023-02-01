@@ -14,42 +14,53 @@ The following example queries for ingress traffic. To query for egress, change t
 ## API Call
 
 ```bash
-echo '{ "query":
+PAYLOAD='{ "query":
   "query GetTunnelHealthCheckResults($accountTag: string, $datetimeStart: string, $datetimeEnd: string) {
-    viewer {
-      accounts(filter: {accountTag: $accountTag}) {
-        magicTransitTunnelTrafficAdaptiveGroups(
-          limit: 100,
-          filter: {
-            datetime_geq: $datetimeStart,
-            datetime_lt:  $datetimeEnd,
-            direction: $direction
-          }
-        ) {
-          avg {
-            bitRateFiveMinutes
-          }
-          dimensions {
-            tunnelName
-            datetimeFiveMinutes
+      viewer {
+        accounts(filter: {accountTag: $accountTag}) {
+          magicTransitTunnelTrafficAdaptiveGroups(
+            limit: 100,
+            filter: {
+              datetime_geq: $datetimeStart,
+              datetime_lt:  $datetimeEnd,
+              direction: $direction
+            }
+          ) {
+            avg {
+              bitRateFiveMinutes
+            }
+            dimensions {
+              tunnelName
+              datetimeFiveMinutes
+            }
           }
         }
       }
-    }
   }",
-  "variables": {
-    "accountTag": "CLOUDFLARE_ACCOUNT_ID",
-    "datetimeStart": "2022-08-04T00:00:00.000Z",
-    "datetimeEnd": "2022-08-04T01:00:00.000Z",
-    "direction": "ingress"
+    "variables": {
+      "accountTag": <CLOUDFLARE_ACCOUNT_TAG>,
+      "direction": "ingress",
+      "datetimeStart": "2022-05-04T11:00:00.000Z",
+      "datetimeEnd": "2022-05-04T12:00:00.000Z"
+    }
   }
-}' | tr -d '\n' | curl \
+}' 
+
+# curl with Legacy API Key
+curl \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
+  -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
+  -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
+  --data "$(echo $PAYLOAD)" \
+  https://api.cloudflare.com/client/v4/graphql/
+ 
+# curl with API Token
+curl \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <CLOUDFLARE_API_KEY>" \
+  --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/
 ```
 
@@ -61,10 +72,9 @@ The result will be in JSON (as requested), so piping the output to `jq` will mak
 ... | curl \
   -X POST \
   -H "Content-Type: application/json" \
-  -H "X-Auth-Email: CLOUDFLARE_EMAIL" \
-  -H "X-Auth-key: CLOUDFLARE_API_KEY" \
-  -s \
-  -d @- \
+  -H "X-Auth-Email: <CLOUDFLARE_EMAIL>" \
+  -H "X-Auth-key: <CLOUDFLARE_API_KEY>" \
+  --data "$(echo $PAYLOAD)" \
   https://api.cloudflare.com/client/v4/graphql/ | jq .
 #=> {
 #=>   "data": {

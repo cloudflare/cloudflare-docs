@@ -10,24 +10,24 @@ weight: 42
 
 The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. All the examples in this page are for zone-scoped datasets. Account-scoped datasets should use `/accounts/<ACCOUNT_ID>` instead of `/zone/<ZONE_ID>`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
 
-The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](https://api.cloudflare.com/#getting-started-resource-ids).
+The `<ZONE_ID>` argument is the zone id (hexadecimal string). The `<ACCOUNT_ID>` argument is the organization id (hexadecimal string). These arguments can be found using [API's zones endpoint](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 The `<JOB_ID>` argument is the numeric job id. The `<DATASET>` argument indicates the log category (such as `http_requests`, `spectrum_events`, `firewall_events`, `nel_reports`, or `dns_logs`).
 
 {{<table-wrap>}}
 
 | Operation | Description | URL |
 |---|---|---|
-| `POST` | Create job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-create-logpush-job) |
-| `GET` | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://api.cloudflare.com/#logpush-jobs-logpush-job-details) |
-| `GET` | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs) |
-| `GET` | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/jobs`](https://api.cloudflare.com/#logpush-jobs-list-logpush-jobs-for-a-dataset) |
-| `GET` | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`](https://api.cloudflare.com/#logpush-jobs-fields) |
-| `PUT` | Update job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://api.cloudflare.com/#logpush-jobs-update-logpush-job) |
-| `DELETE` | Delete job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://api.cloudflare.com/#logpush-jobs-delete-logpush-job) |
-| `POST` | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists`](https://api.cloudflare.com/#logpush-jobs-check-destination-exists) |
-| `POST` | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership`](https://api.cloudflare.com/#logpush-jobs-get-ownership-challenge) |
-| `POST` | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership/validate`](https://api.cloudflare.com/#logpush-jobs-validate-ownership-challenge) |
-| `POST` | Validate log options | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin`](https://api.cloudflare.com/#logpush-jobs-validate-origin) |
+| `POST` | Create job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://developers.cloudflare.com/api/operations/logpush-jobs-create-logpush-job) |
+| `GET` | Retrieve job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://developers.cloudflare.com/api/operations/logpush-jobs-get-logpush-job-details) |
+| `GET` | Retrieve all jobs for all datasets | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs`](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs) |
+| `GET` | Retrieve all jobs for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/jobs`](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs-for-a-dataset) |
+| `GET` | Retrieve all available fields for a dataset  | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`](https://developers.cloudflare.com/api/operations/logpush-jobs-list-fields) |
+| `PUT` | Update job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://developers.cloudflare.com/api/operations/logpush-jobs-update-logpush-job) |
+| `DELETE` | Delete job | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID>`](https://developers.cloudflare.com/api/operations/logpush-jobs-delete-logpush-job) |
+| `POST` | Check whether destination exists | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/destination/exists`](https://developers.cloudflare.com/api/operations/logpush-jobs-check-destination-exists) |
+| `POST` | Get ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership`](https://developers.cloudflare.com/api/operations/logpush-jobs-get-ownership-challenge) |
+| `POST` | Validate ownership challenge | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ownership/validate`](https://developers.cloudflare.com/api/operations/logpush-jobs-validate-ownership-challenge) |
+| `POST` | Validate log options | [`https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/validate/origin`](https://developers.cloudflare.com/api/operations/logpush-jobs-validate-origin) |
 
 {{</table-wrap>}}
 
@@ -58,7 +58,7 @@ $ curl -s -X POST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/o
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path, if appropriate for your destination):
 
-```bash
+```json
 {
   "errors": [],
   "messages": [],
@@ -87,6 +87,7 @@ You can specify your cloud service provider destination via the required **desti
 As of May 2022, defining a unique destination for a Logpush job will no longer be required. As this constraint has been removed, you can now have more than one job writing to the same destination.
 {{</Aside>}}
 
+*  **Cloudflare R2**: bucket path + account ID + R2 access key ID + R2 secret access key; for example: `r2://<BUCKET_PATH>/account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>`
 *   **AWS S3**: bucket + optional directory + region + optional encryption parameter (if required by your policy); for example: `s3://bucket/[dir]?region=<REGION>[&sse=AES256]`
 *   **Datadog**: Datadog endpoint URL + Datadog API key + optional parameters; for example: `datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>`
 *   **Google Cloud Storage**: bucket + optional directory; for example: `gs://bucket/[dir]`
@@ -95,7 +96,7 @@ As of May 2022, defining a unique destination for a Logpush job will no longer b
 *   **Splunk**: Splunk endpoint URL + Splunk channel ID + insecure-skip-verify flag + Splunk sourcetype + Splunk authorization token; for example: `splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>`
 *   **Sumo Logic**: HTTP source address URL with `https` replaced by `sumo`; for example: `sumo://<SumoEndpoint>/receiver/v1/http/<UniqueHTTPCollectorCode>`
 
-For S3, Google Cloud Storage, and Azure, logs can be separated into daily subdirectories by using the special string `{DATE}` in the URL path; for example: `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256` or `azure://myblobcontainer/logs/{DATE}?[QueryString]`. It will be substituted with the date in `YYYYMMDD` format, like `20180523`.
+For R2, S3, Google Cloud Storage, and Azure, logs can be separated into daily subdirectories by using the special string `{DATE}` in the URL path; for example: `s3://mybucket/logs/{DATE}?region=us-east-1&sse=AES256` or `azure://myblobcontainer/logs/{DATE}?[QueryString]`. It will be substituted with the date in `YYYYMMDD` format, like `20180523`.
 
 For more information on the value for your cloud storage provider, consult the following conventions:
 
@@ -112,7 +113,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/va
 
 Response
 
-```bash
+```json
 {
   "errors": [],
   "messages": [],
@@ -127,7 +128,7 @@ Response
 
 {{<Aside type="note" header="Note">}}
 
-For a detailed description, refer to [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties).
+For a detailed description, refer to [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs).
 
 {{</Aside>}}
 
@@ -156,9 +157,9 @@ curl -s -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jo
 
 ## Options
 
-Logpush repeatedly delivers logs on your behalf and uploads them to your destination.
+Logpull_options has been replaced with Custom Log Formatting output_options. Please refer to the [Log Output Options](/logs/reference/log-output-options/) documentation for instructions on configuring these options and updating your existing jobs to use these options.
 
-The options that you can customize are:
+If you are still using logpull_options, here are the options that you can customize:
 
 1.  **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/datasets/<DATASET>/fields/default`.
 2.  **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
@@ -179,7 +180,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/va
 
 Response
 
-```bash
+```json
 {
   "errors": [],
   "messages": [],
@@ -201,10 +202,11 @@ Value can range from `0.001` to `1.0` (inclusive). `sample=0.1` means `return 10
 
 ## Max Upload Parameters
 
-These parameters can be used to gain control of batch size in the case that a destination has specific requirements. Files will be sent based on whichever parameter is hit first.
+These parameters can be used to gain control of batch size in the case that a destination has specific requirements. Files will be sent based on whichever parameter is hit first. If these options are not set, the system uses our internal defaults of 30s, 100k records, or the destinations globally defined limits.
 
-1.  **max_upload_bytes** (optional): The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
-2.  **max_upload_records** (optional): The maximum number of log lines per batch. This must be at least 1000 lines or more. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+1.  **max_upload_bytes** (optional): The maximum uncompressed file size of a batch of logs. This setting value must be between 5MB and 1GB. Note that you cannot set a minimum file size; this means that log files may be much smaller than this batch size.
+2.  **max_upload_records** (optional): The maximum number of log lines per batch. This setting must be between 1000 and 1,000,000 lines. Note that you cannot specify a minimum number of log lines per batch; this means that log files may contain many fewer lines than this.
+3.  **max_upload_interval_seconds** (optional): The maximum interval in seconds for log batches. This setting must be between 30 and 300 seconds. Note that you cannot specify a minimum interval for log batches; this means that log files may be sent in shorter intervals than this.
 
 {{<Aside type="note" header="Note">}}
 Parameters **max_upload_bytes** and **max_upload_records** are not configurable for Edge Log Delivery.

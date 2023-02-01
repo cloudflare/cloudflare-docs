@@ -5,16 +5,26 @@ weight: 9
 ---
  
 # Workers for Platforms
- 
-Using Cloudflare [Workers](/workers/) allows you to improve performance and scalability by hosting your application entirely through our network. Cloudflare’s Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-The Workers configuration API was initially built around managing a relatively small number of scripts on each account. This leads to some difficulties when using Workers as a platform for your own users, including: frequently needing to increase script limits; adding an ever-increasing number of routes; and managing logic in a central place if your own logic is supposed to come before your customers' logic.
+Workers for Platforms is built on top of [Cloudflare Workers](/workers/). Workers for Platforms extends the capabilities of Cloudflare Workers to SaaS businesses that want to deploy Worker scripts on behalf of their customers or let their users write Worker scripts directly.
 
-Dispatch namespaces are Cloudflare's solution to these problems. Instead of adding individual routes to your users’ Workers, you will upload them to a dispatch namespace and then dynamically dispatch to them at runtime using a dispatch namespace binding. This allows you to run your own code as a wrapper around the namespaced Worker while still managing it as a single script; logically groups your code separately from your users’ code; and provides additional APIs like `script tags` for bulk operations on the namespaced workers.
+Workers for Platforms allows you to:
 
-Prior to using Workers for Platforms, [generate an API token](/api/get-started/create-token/) or [obtain your API key](/api/get-started/keys/).
+* Run your own code as a wrapper around your users code.
+* Create custom routing logic.
+* Logically group your code separately from your users’ code.
+* Use additional APIs like script tags for bulk operations.
+* Surpass Workers' 500 script/account limit.
 
-{{<directory-listing>}}
+{{<button type="primary" href="/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/">}}Get started{{</button>}}
 
-## Connect with us
-If you have feature requests or notice any bugs, share your feedback directly with us by joining the [Cloudflare Developers community](https://discord.gg/jbBfwFqDVU) on Discord.
+## Related resources
+
+* [How Workers for Platforms Works](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/) - Learn about Workers for Platforms architecture.
+* [How Workers works](/workers/learning/how-workers-works/) - Learn about Cloudflare Workers technology.
+
+## Connect
+
+[Connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, report bugs, show what you are building, and discuss the platform with other developers.
+
+[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.

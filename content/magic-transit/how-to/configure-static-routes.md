@@ -13,7 +13,7 @@ You must assign a route priority to each Anycast tunnel–subnet pair in your GR
 - Lower values have greater priority.
 - When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. You can refer to an example of this scenario with the **103.21.244.0/24** subnet in the edge routing configuration example below.
 
-You can also create and edit static routes using [Magic Transit Static Routes API](https://api.cloudflare.com/#magic-transit-static-routes-properties).
+You can also create and edit static routes using [Magic Transit Static Routes API](https://developers.cloudflare.com/api/operations/magic-static-routes-list-routes).
 
 <details>
 <summary>Edge routing configuration example</summary>
@@ -34,7 +34,7 @@ For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steeri
 
 ## Map route prefixes smaller than /24
 
-You must provide your prefixes and the tunnels they should be mapped to in order for Cloudflare to route your traffic from the edge to your data centers via Anycast tunnels. Use the table below as reference.
+You must provide your prefixes and the tunnels that should be mapped to in order for Cloudflare to route your traffic from the edge to your data centers via Anycast tunnels. Use the table below as reference.
 
 | Prefix          | Tunnel        |
 | --------------- | ------------- |
@@ -47,8 +47,8 @@ For example, you can send `x.x.x.0/29` to Datacenter 1 and `x.x.x.8/29` to Datac
 
 ## Create a static route
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2.  Next to **Static routes configuration**, click **Configure**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
 
 {{<render file="_static-routes.md">}}
 

@@ -14,18 +14,21 @@ Use one of the following API endpoints:
 
 | Operation | Method + Endpoint |
 |-----------|-------------------|
-| [Add an individual rule][ar-account] (account) | `POST /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules` |
-| Add an individual rule (zone) | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules` |
+| [Create account ruleset rule][ar-account] | `POST /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules` |
+| [Create zone ruleset rule][ar-zone] | `POST /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules` |
 
-[ar-account]: https://api.cloudflare.com/#account-rulesets-add-an-individual-rule
+[ar-account]: https://developers.cloudflare.com/api/operations/account-rulesets-create-an-account-ruleset-rule
+[ar-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-create-a-zone-ruleset-rule
+
+Include the rule definition in the request body.
+
+By default, the rule will be added to the end of the existing list of rules in the ruleset. To define a specific position for the rule, include a `position` object in the request body according to the guidelines in [Change the order of a rule in a ruleset](/ruleset-engine/rulesets-api/update-rule/#change-the-order-of-a-rule-in-a-ruleset).
 
 Invoking this method creates a new version of the ruleset.
 
-Include the rule definition in the request body. The rule will be added to the end of the existing list of rules in the ruleset.
-
 ## Example
 
-The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List zone rulesets](https://developers.cloudflare.com/api/operations/zone-rulesets-list-zone-rulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 <details open>
 <summary>Request</summary>

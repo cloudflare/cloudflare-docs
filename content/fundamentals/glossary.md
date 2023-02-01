@@ -6,7 +6,7 @@ weight: 10
 
 # Glossary
 
-See definitions for Cloudflare terms.
+Review the definitions for terms used across Cloudflare.
 
 ## account
 
@@ -20,7 +20,7 @@ An allowlist list of items (usually websites, IP addresses, email addresses, etc
 
 ## API key
 
-An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](https://api.cloudflare.com/#getting-started-endpoints).
+An API key is unique to each Cloudflare user and used to confirm identity when using the [Cloudflare API](/api/).
 
 **Related terms:** API token
 

@@ -1,11 +1,13 @@
 ---
 pcx_content_type: reference
 title: 1.1.1.1 Public DNS Resolver
+meta:
+  description: Learn more about Cloudflare's commitment to privacy with the 1.1.1.1 Public DNS Resolver.
 ---
 
 # 1.1.1.1 Public DNS Resolver
 
-_Last updated September 30, 2020_
+_Last updated October 21, 2022_
 
 ## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
@@ -45,14 +47,23 @@ Aside from APNIC, Cloudflare will not share the Public Resolver Logs with any th
 
 The Public Resolver Logs we store consist entirely of the following fields:
 
+
+* answerData type
+* answerData 
+* coloID (unique Cloudflare data center ID)
 * date
 * dateTime
-* srcAsNum
-* srcIPVersion
 * dstIPVersion
 * dstIPv6
 * dstIPv4
 * dstPort
+* ede
+* ednsVersion
+* ednsPayload
+* ednsNsid
+* metalId (unique Cloudflare data center ID)
+* ns ip
+* ns name
 * protocol
 * queryName
 * queryType
@@ -61,9 +72,6 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * queryDo
 * querySize
 * queryEdns
-* ednsVersion
-* ednsPayload
-* ednsNsid
 * responseType
 * responseCode
 * responseSize
@@ -71,11 +79,10 @@ The Public Resolver Logs we store consist entirely of the following fields:
 * responseTimeMs
 * responseCached
 * responseMinTTL
-* answerData type
-* answerData
+* reused
+* srcAsNum
+* srcIPVersion
 * validationState
-* coloID (unique Cloudflare data center ID)
-* metalId (unique Cloudflare data center ID)
 
 Additionally, recursive resolvers perform outgoing queries to various authoritative nameservers in the DNS hierarchy that are logged in subrequest fields. These logs are used for the operation and debugging of our public DNS resolver service.
 
@@ -107,7 +114,7 @@ Cloudflare will only store the following aggregated data:
 
 Cloudflare may store the aggregated data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 
-# What about requests for content blocking?
+## What about requests for content blocking?
 
 Cloudflare does not block or filter any content through the 1.1.1.1 Public DNS Resolver, which is designed for direct, fast DNS resolution, not for blocking or filtering content. Cloudflare does block and filter malware and adult content through 1.1.1.1 for Families, which is designed to help individuals protect their home networks.
 

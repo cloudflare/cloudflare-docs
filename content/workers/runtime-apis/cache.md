@@ -111,7 +111,7 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 - the `request` passed is a method other than `GET`.
 - the `response` passed has a `status` of [`206 Partial Content`](https://www.webfx.com/web-development/glossary/http-status-codes/what-is-a-206-status-code/).
-- the `response` passed contains the header `Vary: *` (required by the Cache API specification).
+- the `response` passed contains the header `Vary: *`. The value of the `Vary` header is an asterisk (`*`). Refer to the [Cache API specification](https://w3c.github.io/ServiceWorker/#cache-put) for more information.
 
 #### Errors
 
@@ -125,7 +125,7 @@ cache.match(request, options);
 
 {{<definitions>}}
 
-- {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
+- {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response | undefined>`}{{</type-link>}}
 
   - Returns a promise wrapping the response object keyed to that request.
 
@@ -202,9 +202,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
   - The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
-<!-- What type is this? -->
-
-- `options`
+- `options` {{<type>}}object{{</type>}}
   - Can contain one possible property: `ignoreMethod` (Boolean) Consider the request method a GET regardless of its actual value.
 
 {{</definitions>}}

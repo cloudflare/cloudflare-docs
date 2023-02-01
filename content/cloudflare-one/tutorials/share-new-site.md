@@ -14,13 +14,13 @@ Instead of pointing DNS records to the external IP of a web service, you can con
 
 You can use Cloudflare Tunnel to quickly share projects you are working on with team members without a virtual private network (VPN). In this example, you can use Cloudflare Tunnel to give users a preview of a new website. At the end, as an optional step, you'll be able to add an [Access policy](/cloudflare-one/policies/access/) to only allow certain people to reach the site.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from an application running locally on a Mac laptop
 - Give that application a hostname where users can reach the resource
 - Optionally require a simple login to reach the application with Cloudflare Access
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 15 minutes
 

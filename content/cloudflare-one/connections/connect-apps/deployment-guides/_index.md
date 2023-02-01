@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Tunnel administration
-weight: 5
+weight: 6
 ---
 
 # Deploying `cloudflared`
@@ -10,7 +10,4 @@ Cloudflare Tunnel creates a secure, outbound-only connection between your servic
 
 ## Environments
 
-- [AWS](/cloudflare-one/connections/connect-apps/deployment-guides/aws/)
-- [Azure](/cloudflare-one/connections/connect-apps/deployment-guides/azure/)
-- [GCP](/cloudflare-one/connections/connect-apps/deployment-guides/google-cloud-platform/)
-- [Kubernetes](/cloudflare-one/connections/connect-apps/deployment-guides/kubernetes/)
+{{<directory-listing>}}

@@ -13,7 +13,7 @@ In this tutorial, you will deploy a serverless, real-time chat application that 
 This chat application uses a Durable Object to control each chat room. Users connect to the Object using WebSockets. Messages from one user are broadcast to all the other users. The chat history is also stored in durable storage. Real-time messages are relayed directly from one user to others without going through the storage layer.
 
 To continue with this tutorial, you must:
-1. Install [Wrangler 2](/workers/wrangler/get-started/).
+1. Install [Wrangler 2](/workers/wrangler/install-and-update/).
 2. Purchase the Workers Paid plan and enable Durable Objects by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers** > **Resources** > **Durable Objects**.
 
 ## Clone the chat application repository
@@ -101,5 +101,5 @@ By completing this tutorial, you have deployed a real-time chat application with
 Continue building with other Cloudflare Workers tutorials below.
 
 - [Build a Slackbot](/workers/tutorials/build-a-slackbot/)
-- [GitHub SMS notifications using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
+- [Create SMS notifications for your GitHub repository using Twilio](/workers/tutorials/github-sms-notifications-using-twilio/)
 - [Build a QR code generator](/workers/tutorials/build-a-qr-code-generator/)

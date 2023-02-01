@@ -12,7 +12,7 @@ Many identity providers, like Okta, support multiple multifactor authentication 
 
 Some second factor methods are more resistant to phishing. U2F options require you to have access to a physical device, also known as a hardware key. Without that key, a user cannot impersonate you even if they have your password. You can build rules in Cloudflare Access to require that users authenticate with a hardware key - even if your provider supports multiple options. When users login with a less secure option, like an app-based code, Access will block them.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Integrate Cloudflare Access with Okta
 - Configure Okta for U2F enrollment
@@ -21,7 +21,7 @@ Some second factor methods are more resistant to phishing. U2F options require y
 
 The first two sections of this tutorial link to guides to set up Cloudflare Access and integrate Okta. If you already use Cloudflare Access with Okta, you can skip ahead to the fourth section.
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 

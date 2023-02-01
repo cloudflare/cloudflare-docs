@@ -25,7 +25,7 @@ To create rules based on device serial numbers, you first need to create a [Gate
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **My Team** > **Lists**.
 
-1. Select **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's [API endpoint](https://api.cloudflare.com/#zero-trust-lists-properties).
+1. Select **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
 
 1. Give your list a descriptive name, as this name will appear when configuring your policies.
 
@@ -65,3 +65,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
     ```txt
     sudo dmidecode -s system-serial-number
     ```
+
+### On iOS, Android and ChromeOS
+
+Serial number checks are not supported on mobile devices.

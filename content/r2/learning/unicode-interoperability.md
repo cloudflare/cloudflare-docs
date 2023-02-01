@@ -1,9 +1,10 @@
 ---
 title: Filename encoding and interoperability problems
-pcx_content_type: reference
+weight: 3
+pcx_content_type: concept
 ---
 
-## Filename encoding and interoperability problems
+# Filename encoding and interoperability problems
 
 R2 is built on top of Workers and it supports Unicode natively. One nuance of Unicode that is often overlooked is the issue of [filename interoperability](https://en.wikipedia.org/wiki/Filename#Encoding_indication_interoperability) due to [Unicode equivalence](https://en.wikipedia.org/wiki/Unicode_equivalence).
 

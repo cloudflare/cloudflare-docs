@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Verify custom hostnames
-weight: 5
+weight: 1
 ---
 
 # Verify custom hostnames
@@ -57,7 +57,7 @@ When you are adding a new custom hostname to Cloudflare, the few seconds Cloudfl
 
 ## TXT
 
-Each API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname) provides a TXT _ownership_verification_ record for your customer to add to their DNS for ownership validation of the Custom Hostname.
+Each API call to [create a Custom Hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname) provides a TXT _ownership_verification_ record for your customer to add to their DNS for ownership validation of the Custom Hostname.
 
 ```json
 {
@@ -89,7 +89,7 @@ Each API call to create a Custom Hostname also provides an HTTP _ownership_verif
 
 To get and use an HTTP ownership_verification record:
 
-1.  Make an API call to [create a Custom Hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+1.  Make an API call to [create a Custom Hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
 
 2.  In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
 

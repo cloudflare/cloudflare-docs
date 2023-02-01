@@ -5,11 +5,11 @@ title: Use Direct Upload with continuous integration
 
 # Use Direct Upload with continuous integration
 
-Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/get-started/). This guide will teach you how to deploy your application to Pages, using continuous integration.
+Cloudflare Pages now supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
 ## Deploy with Wrangler
 
-In your project directory, install [Wrangler](/workers/wrangler/get-started/) so you can deploy a folder of prebuilt assets by running the following command:
+In your project directory, install [Wrangler](/workers/wrangler/install-and-update/) so you can deploy a folder of prebuilt assets by running the following command:
 
 ```sh
 # Publish created project
@@ -143,11 +143,11 @@ workflows:
      - Publish-to-Pages
 ```
 
-Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:18`. It first checks out the repository with the Node version specified in the image.
+Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:18.7.0`. It first checks out the repository with the Node version specified in the image.
 
 {{<Aside type="note" header="Note">}}
 
-If your project uses a Node version less than 16, you will have to upgrade your Node version as Wrangler requires at least Node.js v16.7.0.
+If your project uses a Node version less than `16.13.0`, you will have to upgrade your Node version as Wrangler requires at least Node.js version `16.13.0`.
 
 {{</Aside>}}
 
@@ -165,7 +165,7 @@ Set the environment variable's name and value and the branch you want it to be a
 
 ### Setup
 
-Go to Travis-ci.com and enable your repository by login in with your preferred provider. This guide uses GitHub. Next, create a `.travis.yml` file and copy the following into the file:
+Go to [Travis-ci.com](https://Travis-ci.com) and enable your repository by login in with your preferred provider. This guide uses GitHub. Next, create a `.travis.yml` file and copy the following into the file:
 
 ```yaml
 ---
@@ -189,4 +189,4 @@ env:
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-In the code block above you have specified the language as `node_js` and listed the value as `16.7.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.

@@ -52,12 +52,6 @@ For example, this configuration blocks every request to the application, except 
 | Block  | Include   | Everyone | `Everyone` |
 |        | Exclude   | Email    | `user-1@team.com`|
 
-{{<Aside type="warning">}}
-
-An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
-
-{{</Aside>}}
-
 ### Bypass
 
 The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
@@ -94,13 +88,13 @@ Service Auth rules enforce authentication flows that do not require an identity 
 
 ## Rule types
 
-Rules work like logical operators. They help you define which categories of users your policy will affect. Each policy needs at least an Include rule; you can set as many rules as you need.
-
-These are the rule types you can choose from:
+Rules work like logical operators. They help you define which categories of users your policy will affect.
 
 | Include | Exclude | Require |
 | ------- | ------- | ------- |
 | The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+
+All Access policies must contain an Include rule. This is what defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to enforce specific policies for those users.
 
 ### Requiring multiple conditions
 
@@ -128,26 +122,30 @@ Next, you can create a policy for your application that requires the group, and 
 
 ## Selectors
 
-When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.
+When you add a rule to your policy, you will be asked to specify the criteria you want users to meet.  
 
-Here is a list of all the criteria you can apply:
+These criteria are available for all Access application types, including [SaaS](/cloudflare-one/applications/configure-apps/saas-apps/), [self-hosted](/cloudflare-one/applications/configure-apps/self-hosted-apps/), and [non-HTTP](/cloudflare-one/applications/non-http/) applications. Identity-based attributes are only checked when a user authenticates, whereas other attributes are polled continuously for changes during the session.
 
-- **Access groups** — `example-team`
-- **Emails** — `you@company.com`
-- **Emails ending in** — `@company.com`
-- **External Evaluation** - allows or denies access based on custom logic in an external API. For more information, refer to the [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/) page.
-- **IP ranges** — `192.168.100.14` (supports IPv4 and IPv6).
-- **Country** – uses the IP address to determine country.
-- **Everyone** — allows, denies, or bypasses access to everyone.
-- **Common Name** - The request will need to present a valid certificate with an expected common name.
-- **Valid Certificate** - the request will need to present any valid client certificate.
-- **Service Token** - the request will need to present the correct service token headers configured for the specific application
-- **Any Access Service Token** - the request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account.
-- **Login Methods** - checks the identity provider used at the time of login.
-- **Authentication Method** - checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider.
-- **Identity provider groups** — employs the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.
-- **Warp** - checks that the device is connected to WARP, including the consumer version.
-- **Gateway** - checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).
+{{<table-wrap>}}
+| Selector | Description  | Checked at login | Checked continuously |
+| -------- | ------------ | ---------------- | -------------------- |
+| Emails   | `you@company.com`  | ✅ | ❌ |
+| Emails ending in | `@company.com`| ✅ | ❌ |
+| External Evaluation | Allows or denies access based on [custom logic](/cloudflare-one/policies/access/external-evaluation/) in an external API. | ✅ | ❌ |
+| IP ranges | `192.168.100.14` (supports IPv4 and IPv6). | ✅ | ✅ |
+| Country | Uses the IP address to determine country. | ✅ | ✅ |
+| Everyone | Allows, denies, or bypasses access to everyone. |  ✅ | ❌ |
+| Common Name | The request will need to present a valid certificate with an expected common name. | ✅ | ✅ |
+| Valid Certificate | The request will need to present any valid client certificate. |✅ | ✅ |
+| Service Token| The request will need to present the correct service token headers configured for the specific application. |✅ | ✅ |
+| Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/identity/service-tokens/) created for this account. |✅ | ✅ |
+| Login Methods | Checks the identity provider used at the time of login. | ✅ | ❌ |
+| Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
+| Identity provider group| Checks the user groups (if supported) you configured with your identity provider (IdP) or LDAP with Access. The IdP group option only displays if you use an OIDC or SAML identity provider.| ✅ | ❌ |
+| Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |
+| Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
+| Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
+{{</table-wrap>}}
 
 ## Order of execution
 
@@ -161,8 +159,4 @@ For example, if you have a list of policies arranged as follows:
 - Bypass D
 - Allow E
 
-The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
-
-{{<Aside type="warning">}}
-  Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application.
-{{</Aside>}}
+The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E. Once a user matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision.

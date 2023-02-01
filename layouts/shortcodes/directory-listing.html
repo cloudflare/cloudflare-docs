@@ -1,14 +1,22 @@
 {{- $current := .Page.RelPermalink -}}
 {{- $len := len (split $current "/") -}}
 
+{{- $showDescriptions := default false (.Get "showDescriptions") -}}
+{{- $truncate := default 250 (.Get "char_limit") -}}
+{{- $link := "" }}
+
 <ul>
 {{- range (where .Site.Pages "Section" .Page.Section).ByWeight -}}
   {{- $x := .RelPermalink -}}
   {{- $self := eq $x $current -}}
   {{- $delta := sub (len (split $x "/")) $len -}}
-  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
+  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) (not .Params.hidden) -}}
   <li>
-    {{ $link := printf "[%s](%s)" .Title .RelPermalink -}}
+    {{- if $showDescriptions -}}
+      {{- $link = printf "[%s](%s): %s" .Title .RelPermalink (partial "seo-meta-description.html" (dict "content" .Content "params" .Params "truncate" $truncate )) -}}
+    {{- else -}}
+      {{- $link = printf "[%s](%s)" .Title .RelPermalink -}}
+    {{- end -}}
     {{- .Page.RenderString $link -}}
   </li>
   {{- end -}}

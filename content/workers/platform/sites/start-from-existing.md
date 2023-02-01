@@ -10,7 +10,7 @@ weight: 1
 Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler2) — make sure to use the [latest version](/workers/wrangler/get-started/#update).
+Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler2) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
 
 To deploy a pre-existing static site project, start with a pre-generated site. Workers Sites works with all static site generators, for example:
 
@@ -18,7 +18,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 - [Gatsby](https://www.gatsbyjs.org/docs/quick-start/), requires Node
 - [Jekyll](https://jekyllrb.com/docs/), requires Ruby
 - [Eleventy](https://www.11ty.io/#quick-start), requires Node
-- [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Workers](/workers/tutorials/deploy-a-static-wordpress-site/))
+- [WordPress](https://wordpress.org) (refer to the tutorial on [deploying static WordPress sites with Pages](/pages/how-to/deploy-a-wordpress-site/))
 
 ## Getting started
 
@@ -57,26 +57,63 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
 
 4.  Replace the contents of `src/index.ts` with the following code snippet:
 
-    ```js
-    import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
 
-    addEventListener("fetch", (event) => {
-      event.respondWith(handleEvent(event));
-    });
+```js
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
+import manifestJSON from '__STATIC_CONTENT_MANIFEST';
+const assetManifest = JSON.parse(manifestJSON);
 
-    async function handleEvent(event) {
-      try {
-        // Add logic to decide whether to serve an asset or run your original Worker code
-        return await getAssetFromKV(event);
-      } catch (e) {
-        let pathname = new URL(event.request.url).pathname;
-        return new Response(`"${pathname}" not found`, {
-          status: 404,
-          statusText: "not found",
-        });
-      }
+export default {
+  async fetch(request, env, ctx) {
+    try {
+      // Add logic to decide whether to serve an asset or run your original Worker code
+      return await getAssetFromKV(
+        {
+          request,
+          waitUntil: ctx.waitUntil.bind(ctx),
+        },
+        {
+          ASSET_NAMESPACE: env.__STATIC_CONTENT,
+          ASSET_MANIFEST: assetManifest,
+        }
+      );
+    } catch (e) {
+      let pathname = new URL(request.url).pathname;
+      return new Response(`"${pathname}" not found`, {
+        status: 404,
+        statusText: 'not found',
+      });
     }
-    ```
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
+```js
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
+
+addEventListener("fetch", (event) => {
+  event.respondWith(handleEvent(event));
+});
+
+async function handleEvent(event) {
+  try {
+    // Add logic to decide whether to serve an asset or run your original Worker code
+    return await getAssetFromKV(event);
+  } catch (e) {
+    let pathname = new URL(event.request.url).pathname;
+    return new Response(`"${pathname}" not found`, {
+      status: 404,
+      statusText: "not found",
+    });
+  }
+}
+```
+{{</tab>}}
+{{</tabs>}}
 
 5.  Run `wrangler dev` or `wrangler publish` to preview or publish your site on Cloudflare.
     Wrangler will automatically upload the assets found in the configured directory.
@@ -92,7 +129,7 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
     ```
 
     {{<Aside type="note">}}
-Refer to the documentation on [Routes](/workers/platform/routing/routes/) to configure a `route` properly.
+Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
     {{</Aside>}}
 
 Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).

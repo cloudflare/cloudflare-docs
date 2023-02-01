@@ -7,17 +7,17 @@ weight: 2
 
 # Work with custom rulesets in the dashboard
 
-Create custom rulesets in **Application Security** > **WAF** > **Custom rulesets**. After creating a custom ruleset, you must deploy it to your account to apply its rules.
+Create custom rulesets in Account Home > **WAF** > **Custom rulesets**. After creating a custom ruleset, you must deploy it to your account to apply its rules.
 
 {{<Aside type="note">}}
-Account-level WAF configuration is only available for Enterprise customers with the WAF Advanced plan.
+Account-level WAF configuration requires an Enterprise plan with a paid add-on.
 {{</Aside>}}
 
 ## Create a custom ruleset
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Navigate to **Application Security** > **WAF** > **Custom rulesets**.
+2. Navigate to Account Home > **WAF** > **Custom rulesets**.
 
     ![Custom rulesets page in the Cloudflare dashboard](/waf/static/account/custom-rulesets-dashboard.png)
 
@@ -47,7 +47,7 @@ To enable the custom ruleset you created, you must deploy it to your account.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Navigate to **Application Security** > **WAF** > **Custom rulesets**.
+2. Navigate to Account Home > **WAF** > **Custom rulesets**.
 
 3. Next to **Deployed custom rulesets**, select **Deploy custom ruleset**.
 
@@ -58,10 +58,10 @@ To enable the custom ruleset you created, you must deploy it to your account.
 6. Under **Execution scope**, review the scope of the deployed custom ruleset. If necessary, select **Edit scope** and configure the expression that will determine the scope of the current rule.
 
     {{<Aside type="warning">}}
-Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must include `AND zone.level eq "ENT"` in your expression so that the rule only applies to your domains on an Enterprise plan.
+Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
     {{</Aside>}}
 
-7. To deploy your rule immediately, click **Deploy**. If you are not ready to deploy your rule, click **Save as draft**.
+7. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as draft**.
 
 ## Configuring a custom response for blocked requests
 

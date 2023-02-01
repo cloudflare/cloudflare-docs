@@ -67,7 +67,7 @@ Vue.createApp({
     </div>
     <div class="background">
     <div v-for="(element, index) in elements" v-on:change="onRadioButtonChange">
-        <div class="learningPathModule" v-if="element.type === 'module'">
+        <div class="learningPathModule" v-if="element.type === 'module' || element.type === 'note'">
         <div class="moduleHeader">
             <h2 :id="slugify(element.title)"><span class="DocsMarkdown--header-anchor-positioner">
                 <a
@@ -76,13 +76,15 @@ Vue.createApp({
                 >&#8203;​</a
                 >
             </span>
-            <span>Step [[ calculateModuleNumber(element) ]] - [[ element.title ]]</span>
+            <span v-if="element.type === 'module'">Step [[ calculateModuleNumber(element) ]] - [[ element.title ]]</span>
+            <span v-if="element.type === 'note'">[[ element.title ]]</span>
             </h2>
             <p v-if="element.estimated_time" class="durationEstimate">~[[ element.estimated_time ]] mins</p>
         </div>
         <div v-if="element.description" v-html="element.description"></div>
         <details v-if="element.pages">
-            <summary>Contains [[ element.pages.length ]] units</summary>
+            <summary v-if="element.type === 'module'">Contains [[ element.pages.length ]] units</summary>
+            <summary v-if="element.type === 'note'">Contains [[ element.pages.length ]] related resources</summary>
             <div>
                 <ul>
                     <li v-for="page in element.pages"><a :href="page.url_path" target="_blank">[[ page.link_title ]]

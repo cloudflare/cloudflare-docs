@@ -8,10 +8,10 @@ weight: 4
 
 | Requirements                                                                                                             |
 | ------------------------------------------------------------------------------------------------------------------------ |
-| [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) installed on your machine                |
+| [Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) installed on your machine                |
 | The [Cloudflare provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) properly configured |
 
-[Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://www.terraform.io/docs/providers/cloudflare/). Listed below are examples to help you get started with building Access with Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
+[Terraform](https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials/install-cli) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building [Cloudflare resources](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). Listed below are examples to help you get started with building Access with Terraform. For a more generalized guide on configuring Cloudflare and Terraform, visit our [Getting Started with Terraform and Cloudflare](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/) blog post.
 
 ## Create an application with Terraform
 
@@ -38,7 +38,7 @@ weight: 4
 
 2.  Next, we need to export our environment variables and secrets:
 
-    ```bash
+    ```sh
     $ export CLOUDFLARE_EMAIL=<CLOUDFLARE_EMAIL>
     $ export CLOUDFLARE_API_KEY=<CLOUDFLARE_API_KEY>
     ```
@@ -156,7 +156,7 @@ To do so:
 
 2.  Next, apply these changes using the `apply` command, once they look accurate and you're comfortable moving forward:
 
-    ```bash
+    ```sh
     $ terraform apply --auto-approve
     ```
 
@@ -192,4 +192,4 @@ The example below shows how you can configure an identity provider and attach it
     }
     ```
 
-These are the basics to get up and running with Access and Terraform. See our [API documentation](https://api.cloudflare.com/#access-organizations-properties) for other endpoints that can be managed via Terraform.
+These are the basics to get up and running with Access and Terraform. Refer to our [API documentation](https://developers.cloudflare.com/api/) for other endpoints that can be managed via Terraform.

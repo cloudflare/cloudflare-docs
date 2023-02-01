@@ -6,13 +6,15 @@ weight: 13
 
 # Minimum TLS Version
 
-Transport Layer Security (TLS) guarantees encrypted communications between a client and a web server via HTTPS. It replaces the now deprecated Secured Sockets Layer (SSL) protocol. When web traffic is encrypted with TLS, users see a green padlock in their browser window, near the URL box.
-
-{{<render file="_minimum-tls-definition.md">}}
+Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
 For example, if TLS 1.1 is selected, visitors attempting to connect with TLS 1.0 will be rejected. Visitors attempting to connect using TLS 1.1, 1.2, or 1.3 (if enabled) will be allowed to connect.
 
 You can use the API to [configure cipher suites](/ssl/reference/cipher-suites/).
+
+## Availability
+
+{{<feature-table id="ssl.minimum_tls">}}
 
 ## Using Minimum TLS Version in Cloudflare SSL/TLS
 
@@ -31,12 +33,10 @@ To update this setting in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update your **Minimum TLS Version** with the API, send a [`PATCH`](https://api.cloudflare.com/#zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
+To update your **Minimum TLS Version** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-minimum-tls-version-setting) request with the `value` parameter specifying your preferred minimum version.
  
 {{</tab>}}
 {{</tabs>}}
-
-
 
 Selecting a minimum version ensures that all subsequent, newer versions of the protocol are also supported. TLS 1.0 is the version that Cloudflare sets by default for all customers using certificate-based encryption. In this case, it means that Cloudflare also accepts requests encrypted with all TLS versions beyond 1.0.
 

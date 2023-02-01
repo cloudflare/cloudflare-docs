@@ -3,7 +3,7 @@
   <head>
     {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
-    <link rel="stylesheet" href="/home.css"/>
+    <link rel="stylesheet preconnect" href="/home.css" />
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
     {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
@@ -11,6 +11,11 @@
     {{ if gt (len (findRE "\\/learning\\-paths\\/.+" .Page.RelPermalink)) 0 }}
     {{- partial "vue" -}}
     {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
+    {{ end }}
+
+    {{ if eq .Page.RelPermalink "/dashboard-landing/" }}
+    {{- partial "vue" -}}
+    {{- partial "script" (dict "src" "dashboard-landing.js" "defer" true) -}}
     {{ end }}
     
   </head>
@@ -56,8 +61,8 @@
           <a class="SiteHeader--nav-link" href="/products/"><span>Products</span></a>
           <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
           <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
-          <a class="SiteHeader--nav-link" href="https://support.cloudflare.com/hc/"><span>Support</span></a>
-          <a class="SiteHeader--nav-link" href="/sponsorships/"><span>Sponsorships</span></a>
+          <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
+          <a class="SiteHeader--nav-link" href="https://dash.cloudflare.com/?to=/:account/support"><span>Support</span></a>
         </div>
 
         <div class="SiteHeader--theme-toggle">

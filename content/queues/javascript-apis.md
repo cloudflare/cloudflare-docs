@@ -18,6 +18,8 @@ In the future, we expect to support other APIs, such as HTTP endpoints to send o
 
 These APIs allow a producer Worker to send messages to a Queue.
 
+An example of writing a single message to a Queue:
+
 ```ts
 type Environment = {
   readonly MY_QUEUE: Queue;
@@ -35,6 +37,17 @@ export default {
 };
 ```
 
+The Queues API also supports writing multiple messages at once:
+
+```ts
+const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
+  const batch: MessageSendRequest[] = results.map((value) => ({
+    body: JSON.stringify(value)
+  }));
+  await env.queue.sendBatch(batch);
+}
+```
+
 ### `Queue`
 
 A binding that allows a producer to send messages to a Queue.
@@ -42,6 +55,7 @@ A binding that allows a producer to send messages to a Queue.
 ```ts
 interface Queue<Body = any> {
   send(body: Body): Promise<void>;
+  sendBatch(messages: Iterable<MessageSendRequest<Body>>): Promise<void>;
 }
 ```
 
@@ -52,6 +66,30 @@ interface Queue<Body = any> {
   - Sends a message to the Queue. The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
   - When the promise resolves, the message is confirmed to be written to disk.
 
+- {{<code>}}sendBatch(body{{<param-type>}}Iterable\<MessageSendRequest\<any\>>{{</param-type>}}){{</code>}} {{<type>}}Promise\<void>{{</type>}}
+
+  - Sends a batch of messages to the Queue. Each item in the provided [Iterable](https://www.typescriptlang.org/docs/handbook/iterators-and-generators.html) must be supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types). A batch can contain up to 100 messages, though items are limited to 128 KB each, and the total size of the array cannot exceed 256 KB.
+  - When the promise resolves, the messages are confirmed to be written to disk.
+
+{{</definitions>}}
+
+### `MessageSendRequest`
+
+A wrapper type used for sending message batches.
+
+```ts
+type MessageSendRequest<Body = any> = {
+  body: Body
+}
+```
+
+{{<definitions>}}
+
+- {{<code>}}body{{<param-type>}}any{{</param-type>}}{{</code>}}
+
+  - The body of the message.
+  - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
+
 {{</definitions>}}
 
 ## Consumer
@@ -60,15 +98,35 @@ These APIs allow a consumer Worker to consume messages from a Queue.
 
 To define a consumer Worker, add a `queue` function to the default export of the Worker. This will allow it to receive messages from the Queue.
 
+By default, all messages in the batch will be acknowledged as soon as all of the following conditions are met:
+
+1. The `queue` function has returned.
+2. If the `queue` function returned a promise, the promise has resolved.
+3. Any promises passed to `waitUntil()` have resolved.
+
+If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
+
 ```ts
 export default {
-  async queue(batch: MessageBatch, env: Environment) {
+  async queue(batch: MessageBatch, env: Environment, ctx: ExecutionContext) {
     for (const message of batch.messages) {
       console.log("Received", message);
     }
   },
 };
 ```
+
+The `env` and `ctx` fields are as [documented in the Workers docs](/workers/learning/migrating-to-module-workers/).
+
+Or alternatively, a queue consumer can be written using service worker syntax:
+
+```js
+addEventListener("queue", (event) => {
+  event.waitUntil(handleMessages(event));
+});
+```
+
+In service worker syntax, `event` provides the same fields and methods as `MessageBatch`, as defined below, in addition to [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil).
 
 ### `MessageBatch`
 
@@ -90,7 +148,7 @@ interface MessageBatch<Body = any> {
 
 - {{<code>}}messages{{<param-type>}}Message[]{{</param-type>}}{{</code>}}
 
-  - An array of messages in the batch. Ordering of messages is not guaranteed.
+  - An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published. If you are interested in guaranteed FIFO ordering, please [email the Queues team](mailto:queues@cloudflare.com).
 
 - {{<code>}}retryAll() {{<type>}}void{{</type>}}{{</code>}}
 

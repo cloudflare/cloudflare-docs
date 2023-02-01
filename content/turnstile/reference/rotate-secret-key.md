@@ -1,7 +1,7 @@
 ---
 title: Rotate secret key
 pcx_content_type: how-to
-weight: 10
+weight: 9
 layout: single
 ---
 # Rotate the secret key

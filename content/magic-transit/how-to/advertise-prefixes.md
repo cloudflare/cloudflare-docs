@@ -15,6 +15,7 @@ List all prefixes and the ASNs where they should originate. When specifying pref
 - When using contiguous prefixes, specify aggregate prefixes where possible.
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS209242).
+- Prefixes using BGP-controlled advertisements cannot be used in conjunction with on-demand auto-advertisement. You must use dynamic advertisement.
 
 <details>
 <summary>
@@ -41,18 +42,19 @@ If you do not have an ASN or do not want to bring your ASN to Cloudflare, you ca
 
 ## Add an IP prefix
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit**.
-2. From the **IP Prefixes** tab, click **Add IP Prefix**. 
-3. Fill out the information for your prefix and click **Add IP Prefix**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
+3. From the **IP Prefixes** tab, select **Add IP Prefix**. 
+4. Fill out the information for your prefix and select **Add IP Prefix**.
 
 After you add the prefix, you can edit its status.
 
 ## Edit the status of a prefix
 
-1. From the **IP Prefixes** tab, locate the prefix you want to modify and click **Edit**.
+1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Edit**.
 2. On the **Edit IP Prefix** page under **Status**, choose a status.
 3. *(Optional)* Edit the description for your prefix.
-4. Click **Edit IP Prefix** to save your changes.
+4. Select **Edit IP Prefix** to save your changes.
 
 {{<Aside type="note" header="Note:">}}
 
@@ -64,8 +66,8 @@ To avoid latency and potentially dropped routes, enable prefix advertisement fro
 
 You can only delete a prefix with an **Unapproved** status. To delete prefixes with a different status, contact your administrator or account manager.
 
-1. From the **IP Prefixes** tab, locate the prefix you want to modify and click **Delete**.
-2. Confirm your choice from the modal by clicking **Delete**.
+1. From the **IP Prefixes** tab, locate the prefix you want to modify and select **Delete**.
+2. Confirm your choice from the modal by selecting **Delete**.
 
 ## Border Gateway Protocol (BGP) control for advertisements
 

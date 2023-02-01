@@ -23,9 +23,9 @@ To create a new rate limiting rule:
 
 2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
 
-3. Select **Create rate limiting rule**.
+3. Select **Create rule**.
 
-4. In the page that displays, enter a descriptive name for the rule in **Rule name**.
+4. Enter a descriptive name for the rule in **Rule name**.
 
     ![The Create rate limiting rule page in the Cloudflare dashboard](/waf/static/custom-rules/rate-limiting-create.png)
 
@@ -39,7 +39,7 @@ To create a new rate limiting rule:
 
 9. Under **When rate exceeds**, define the maximum number of requests and the time period to consider when determining the rate.
 
-10. Under **With the same**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) for more information.
+10. Under **With the same value of**, add one or more characteristics that will define the request counters for rate limiting purposes. Each value combination will have its own counter to determine the rate. Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) for more information.
 
 11. (Optional) Under **Counter**, enable **Use custom counting expression** to define an expression that specifies the conditions for incrementing the rate counter. By default, the counting expression is the same as the rule expression. The counting expression can include [response fields](/ruleset-engine/rules-language/fields/#http-response-fields).
 

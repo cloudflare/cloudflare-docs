@@ -3,11 +3,11 @@ updated: 2022-08-17
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
-title: Generate Youtube thumbnails with Workers and Cloudflare Image Resizing
+title: Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 layout: single
 ---
 
-# Generate Youtube thumbnails with Workers and Cloudflare Image Resizing
+# Generate YouTube thumbnails with Workers and Cloudflare Image Resizing
 
 {{<render file="_tutorials-before-you-start.md">}}
 
@@ -19,7 +19,7 @@ In this tutorial, you will learn how to programmatically generate a custom youtu
 
 ## Prerequisites
 
-To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers/wrangler/get-started/#install) installed on your machine.
+To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers/wrangler/install-and-update/) installed on your machine.
 
 ## Learning Goals
 
@@ -56,7 +56,7 @@ $ curl --request POST \
  --header 'Authorization: Bearer <API_TOKEN>' \
  --form 'url=<PATH_TO_IMAGE>' \
  --form 'metadata={"key":"value"}' \
- --form 'requireSignedURLs=false' 
+ --form 'requireSignedURLs=false'
 
 ```
 
@@ -94,7 +94,7 @@ Now that we've uploaded the image we'll be using it as a background for our thum
 The next phase of this tutorial is to create a worker that will enable you to transform text to image so this can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/templates/tree/main/worker-rust). Go ahead and clone the repository and run it locally.
 
 ```sh
-$ npm init cloudflare worker-to-text worker-rust
+$ npx wrangler generate worker-to-text worker-rust
 ```
 
 In the `lib.rs` file, add the following code block:
@@ -483,7 +483,7 @@ if (url.pathname === '/thumbnail') {
 }
 ```
 
-Next, we'll add overlay options in the image object. Resize the image to the preferred width and height for Youtube thumbnails and use the [draw](/images/image-resizing/draw-overlays/#draw-options) option to add overlay text using the deployed URL of our **`text-to-image`** Worker.
+Next, we'll add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/image-resizing/draw-overlays/#draw-options) option to add overlay text using the deployed URL of our **`text-to-image`** Worker.
 
 ```js
 ---
@@ -496,7 +496,7 @@ fetch(imageURL, {
      height: 720,
      draw: [
        {
-         url: 'https://text-to-image.examples.workers.dev',         
+         url: 'https://text-to-image.examples.workers.dev',
          left: 40,
        },
      ],
@@ -554,11 +554,11 @@ There you go! You've successfully made a custom youtube thumbnail generator for 
 
 ## Taking it one step forward: Service for anyone to use
 
-This is a very useful tool for anyone creating content on Youtube, you can use this as a one-time service for generating the thumbnails you add to the videos you upload. It's very flexible as you can change the background anytime you want and add more custom text if you want to. Feel free to take this tutorial, play around with it and see how you can use it for your specific use case.
+This is a very useful tool for anyone creating content on YouTube, you can use this as a one-time service for generating the thumbnails you add to the videos you upload. It's very flexible as you can change the background anytime you want and add more custom text if you want to. Feel free to take this tutorial, play around with it and see how you can use it for your specific use case.
 
 ## Related Resources
 
-In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom Youtube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to the following resources:
+In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom YouTube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to the following resources:
 
 - [Cloudflare Workers Documentation](/workers/)
 - [Draw overlay and watermarks](/images/image-resizing/draw-overlays/)

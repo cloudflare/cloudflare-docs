@@ -16,9 +16,9 @@ Only use this method if your domain can tolerate a few minutes of downtime.
 
 HTTP DCV is only available for [proxied domains](/dns/manage-dns-records/reference/proxied-dns-records/).
 
-HTTP DCV validation also does not work for wildcard certificates or certificates with multiple SANs.
+HTTP DCV validation also does not work for wildcard certificates.
 
-If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT](/ssl/edge-certificates/changing-dcv-method/methods/txt/) or [Email](/ssl/edge-certificates/changing-dcv-method/methods/email/) validation.
+If you want to use wildcard certificates or pre-validate your certificate — either to avoid downtime or prevent any issuance errors — use [TXT validation](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
 Based on your chosen Certificate Authority, you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 

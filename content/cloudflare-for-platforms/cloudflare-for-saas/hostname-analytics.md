@@ -8,7 +8,7 @@ weight: 7
 
 You can use custom hostname analytics for two general purposes: exploring how your customers use your product and sharing the benefits provided by Cloudflare with your customers.
 
-These analytics include **Site Analytics**, **Bot Analytics**, **Cache Analytics**, **Firewall Analytics**, and [any other datasets](/analytics/graphql-api/features/data-sets/) with the `clientRequestHTTPHost` field.
+These analytics include **Site Analytics**, **Bot Analytics**, **Cache Analytics**, **Security Events**, and [any other datasets](/analytics/graphql-api/features/data-sets/) with the `clientRequestHTTPHost` field.
 
 {{<Aside type="note">}}
 
@@ -37,3 +37,13 @@ With custom hostname analytics, you can also share site information with your cu
 - How fast their site is.
 
 Build custom dashboards to share this information by specifying an individual custom hostname in `clientRequestHTTPHost` field of [any dataset](/analytics/graphql-api/features/data-sets/) that includes this field.
+
+## Logpush
+
+[Logpush](/logs/about/) sends metadata from Cloudflare products to your cloud storage destination or SIEM.
+
+Using [filters](/logs/reference/filters/), you can send set sample rates (or not include logs altogether) based on filter criteria. This flexibility allows you to maintain selective logs for custom hostnames without massively increasing your log volume.
+
+Filtering is available for [all Cloudflare datasets](/logs/reference/log-fields/zone/).
+
+{{<render file="../../logs/_partials/_filtering-limitations.md">}}

@@ -9,7 +9,7 @@ weight: 4
 
 {{<Aside>}}
 
-Install the <a href="/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/">Cloudflare Root Certificate</a> before creating HTTP policies.
+Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/">Cloudflare Root Certificate</a> before creating HTTP policies.
 
 {{</Aside>}}
 
@@ -85,13 +85,7 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 ### Application
 
-You can apply HTTP policies to a growing list of popular web applications. Refer to the [Application and app types](/cloudflare-one/policies/filtering/application-app-types) page for more information.
-
-| UI name | API example |
-| -- | -- |
-| Application | `any(app.ids[*] in {505}` |
-
-A list of supported applications and their ID numbers is available through the [Gateway API endpoint](https://api.cloudflare.com/#zero-trust-gateway-application-and-application-type-mappings-properties).
+{{<render file="gateway/_application.md" withParameters="HTTP">}}
 
 ### Content Categories
 
@@ -99,32 +93,29 @@ A list of supported applications and their ID numbers is available through the [
 | -- | -- |
 | Content Categories | `not(any(http.request.uri.content_category[*] in {1}))` |
 
+For more information, refer to our list of [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
+
 ### Destination Continent
 
-The continent to which the request is destined. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
 
-- AF – Africa
-- AN – Antarctica
-- AS – Asia
-- EU – Europe
-- NA – North America
-- OC – Oceania
-- SA – South America
-- T1 – Tor network
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Destination Continent IP Geolocation | `http.dst.geo.continent == "EU"` |
+{{<render file="gateway/_destination-continent.md" withParameters="http..dst_ip">}}
 
 ### Destination Country
 
-The country that the request is destined for. Geolocation is determined from the target IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
 
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Destination Country IP Geolocation | `http.dst.geo.country == "RU"` |
+{{<render file="gateway/_destination-country.md" withParameters="http.dst_ip">}}
 
 ### Destination IP
+
+{{<Aside type="note">}}
+Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
+{{</Aside>}}
 
 | UI name        | API example                  |
 | -------------- | ---------------------------- |
@@ -132,9 +123,11 @@ The country that the request is destined for. Geolocation is determined from the
 
 ### Domain
 
+Use this selector to match against a domain and all subdomains — for example, if you want to block `example.com` and subdomains such as `www.example.com`.
+
 | UI name | API example |
 | -- | -- |
-| Domain | `http.request.domains == "a.example.com"` |
+| Domain | `any(http.request.domains[*] == "example.com")` |
 
 ### Download and Upload Mime Type
 
@@ -154,13 +147,15 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### Host
 
+Use this selector to match only the hostname specified — for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
+
 | UI name | API example |
 | -- | -- |
-| Host | `http.request.host == ".*example\.com"` |
+| Host | `http.request.host == "test.example.com"` |
 
-{{<Aside type="note" header="Host or Domain?">}}
+{{<Aside type="note">}}
 
-The `Host` selector matches the exact entry input by a customer in the value field or list. The `Domain` selector matches the exact entry and all subdomains in the value field or list.
+Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
 
 {{</Aside>}}
 
@@ -178,42 +173,25 @@ The `Host` selector matches the exact entry input by a customer in the value fie
 
 ### Device Posture
 
-With the Device Posture selector, admins can use signals from end-user devices to secure access to their internal and external resources. For example, a security admin can choose to limit all access to internal applications based on whether specific software is installed on a device and/or if the device or software are configured in a particular way.
+{{<render file="gateway/_device-posture.md">}}
 
-| UI name | API example |
-| --- | --- |
-| Passed Device Posture Checks | `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})` |
-
-### Security Categories
+### Security Risks
 
 | UI name | API example |
 | -- | -- |
-| Security Categories | `any(http.request.uri.category[*] in {1})` |
+| Security Risks | `any(http.request.uri.category[*] in {1})` |
+
+For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories-1).
 
 ### Source Continent
 
-The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a continent, enter its two-letter code into the **Value** field:
-
-- AF – Africa
-- AN – Antarctica
-- AS – Asia
-- EU – Europe
-- NA – North America
-- OC – Oceania
-- SA – South America
-- T1 – Tor network
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Continent IP Geolocation | `http.src.geo.continent == "EU"` |
+The continent of the user making the request.
+{{<render file="gateway/_source-continent.md" withParameters="http.src_ip">}}
 
 ### Source Country
 
-The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Country IP Geolocation | `http.src.geo.country == "RU"` |
+The country of the user making the request.
+{{<render file="gateway/_source-country.md" withParameters="http.src_ip">}}
 
 ### Source IP
 
@@ -247,12 +225,12 @@ The country of the user making the request. Geolocation is determined from the d
 
 ### Users
 
-The **User**, **User Group**, and **SAML Attributes** selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in the organization via the WARP client. For more information on identity-based selectors, refer to the [Identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) page.
+{{<render file="gateway/_users.md">}}
 
 ## Operators
 
-{{<render file="_policies-operators.md">}}
+{{<render file="gateway/_operators.md">}}
 
 ## Value
 
-{{<render file="_policies-value.md">}}
+{{<render file="gateway/_value.md">}}

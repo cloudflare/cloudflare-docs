@@ -9,9 +9,11 @@ meta:
 
 # Deploy and configure Cisco IronPort with Area 1 as MX Record
 
-![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/cisco-area1-mx.png)
+![A schematic showing where Area 1 security is in the life cycle of an email received](/email-security/static/deployment/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
 
 In this tutorial, you will learn how to configure Cisco IronPort with Area 1 as MX record. This tutorial is broken down into several steps.
+
+{{<render file="_mx-deployment-prerequisites.md">}}
 
 ## 1. Add a Sender Group for Area 1 Email Protection IPs
 
@@ -32,6 +34,7 @@ To add a new Sender Group:
 
 4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
+![Sender group](/email-security/static/deployment/inline-setup/cisco-area1-mx/step1.png)
 
 ## 2. Configure Incoming Relays
 
@@ -49,25 +52,6 @@ You need to configure the Incoming Relays section to tell IronPort to ignore ups
 
 Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Area 1 hosts. This will have to be done for every domain where Area 1 will be the primary MX.
 
-To update your MX records with Area 1, use the following:
+{{<render file="_mx-deployment-values.md">}}
 
-MX Priority | Host
---- | ---
-`10` | `mailstream-east.mxrecord.io`
-`10` | `mailstream-west.mxrecord.io`
-`50` | `mailstream-central.mxrecord.mx`
-
-When configuring the Area 1 MX records, it is important to configure both hosts with the same MX priority, this will allow mail flows to load balance between the hosts.
-
-European customers should update  MX records with Area 1 European hosts:
-
-MX Priority | Host
---- |---
-`10` | `mailstream-eu1.mxrecord.io`
-`20` | `mailstream-east.mxrecord.io`
-`20` | `mailstream-west.mxrecord.io`
-`50` | `mailstream-central.mxrecord.mx`
-
-The European region will be the primary MX, with a fail-over to the US regions. If you wish to exclusively use the European region, update with only the European host.
-
-Once the MX records updates complete, the DNS updates may take up to 36 hours to fully propagate around the Internet. Some of the faster DNS providers will start to update records within minutes. The DNS update will typically reach the major DNS servers in about an hour.
+DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).

@@ -34,6 +34,10 @@ Using Custom Cache Keys may result in cache sharding and reduction of your cache
 
 To create a Cache Key, see [Create a Custom Cache Key](/cache/how-to/create-cache-keys/).
 
+## Availability
+
+{{<feature-table id="cache.cache_key">}}
+
 ## Cache Key Template
 
 There are a couple of common reasons to change the Cache Key Template. You might change the Cache Key Template to:
@@ -123,3 +127,7 @@ User feature fields add features about the end-user (client) into the Cache Key.
 - `device_type` classifies a request as `mobile`, `desktop`, or `tablet` based on the User Agent
 - `geo` includes the client’s country, derived from the IP address
 - `lang` includes the first language code contained in the `Accept-Language` header sent by the client
+
+## Limitations
+
+The Prefetch feature is not compatible with the custom cache keys. With custom cache key Page Rules or Cache Rules, the custom cache key is used to cache all assets. However, Prefetch always uses the default cache key. This results in a key mismatch.

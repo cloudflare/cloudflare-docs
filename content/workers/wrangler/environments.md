@@ -1,15 +1,9 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: concept
 title: Environments
-weight: 6
+weight: 7
 ---
 
-## Environments
+# Environments
 
-{{<Aside type="note">}}
-
-We have temporarily disabled the creation of Service Environments while we are improving this feature.
-
-{{</Aside>}}
-
-Wrangler 2 supports [environments](/workers/platform/environments/) from Wrangler 1. We are currently working on support for [Service Environments](/workers/learning/using-services/). You can find the documentation on Wrangler 1 legacy environments [here](/workers/platform/environments/).
+Wrangler 2 supports [environments](/workers/platform/environments/) from Wrangler 1.  Refer to the [Wrangler 1 environments](/workers/platform/environments/) for more information.

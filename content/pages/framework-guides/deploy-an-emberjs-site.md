@@ -32,9 +32,6 @@ Create a new GitHub repository by visiting [repo.new](https://repo.new). When cr
 In your terminal, `cd` into your new Ember project directory and run:
 
 ```sh
-$ git init
-$ git add -A
-$ git commit -m "<YOUR_COMMIT_MESSAGE>"
 $ git remote add origin <YOUR_NEW_GITHUB_REPOSITORY_URL>
 $ git push -u origin main
 ```

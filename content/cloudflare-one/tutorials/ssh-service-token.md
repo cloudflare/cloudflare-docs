@@ -11,13 +11,13 @@ You can use Cloudflare Access to create Zero Trust rules that determine which us
 
 This walkthrough extends a [previous guide](/cloudflare-one/tutorials/gitlab/) that describes configuring GitLab with Cloudflare Access. In this case, an administrator needs to reach GitLab over SSH using a service token. While this tutorial uses that as an example, any deployment can use these steps to add service tokens as an option.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Create a service token in Cloudflare Access
 - Add a rule to an existing Access policy to allow `cloudflared` to reach the resource using the service token
 - Configure the `cloudflared` command to connect to the protected resource
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 1 hour
 

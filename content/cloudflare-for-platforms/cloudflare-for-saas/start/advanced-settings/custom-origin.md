@@ -19,7 +19,7 @@ To use a custom origin server, you need to meet the following requirements:
 
 ## Use a custom origin
 
-To use a custom origin, select that option when [creating a new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname).
+To use a custom origin, select that option when [creating a new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
 
 ## SNI rewrites
 
@@ -58,7 +58,7 @@ Choose how your custom hostname populates the SNI value with SNI rewrites:
 
 To set an SNI rewrite in the dashboard, choose your preferred option from **Origin SNI value** when [creating a custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
 
-To set an SNI rewrite via the API, set the `custom_origin_sni` parameter when [creating a custom hostname](https://api.cloudflare.com/#custom-hostname-for-a-zone-create-custom-hostname):
+To set an SNI rewrite via the API, set the `custom_origin_sni` parameter when [creating a custom hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname):
 
 - **Custom origin name** (default): Applies if you do not set the parameter
 - **Host header**: Specify `":request_host_header:"`

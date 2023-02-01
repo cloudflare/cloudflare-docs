@@ -48,5 +48,8 @@ If you have an account on an Enterprise plan, you can assign multiple roles to a
 | Log Share | Can edit Log Share configuration. |
 | Log Share Reader | Can read Enterprise Log Share. |
 | SSL/TLS, Caching, Performance, Page Rules, and Customization | Can edit most Cloudflare settings except for DNS and Firewall. |
+| Trust & Safety | Can access trust and safety related services. |
+| Waiting Room Admin | Can edit Waiting Room configuration. |
+| Waiting Room Read  | Can read Waiting Room configuration. |
 | Zaraz Admin | Can edit Zaraz configuration. |
 | Zaraz Read | Can read Zaraz configuration. |

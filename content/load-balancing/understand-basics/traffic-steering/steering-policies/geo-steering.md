@@ -34,7 +34,7 @@ When [creating or editing a load balancer](/load-balancing/how-to/create-load-ba
 
 #### Via the API
 
-Use the `regions_pool` property of the [Update Load Balancers](https://api.cloudflare.com/#load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region. 
+Use the `regions_pool` property of the [Update Load Balancers](https://developers.cloudflare.com/api/operations/load-balancers-update-load-balancer) command to specify an array of regions. Specify each region using the [appropriate region code](/load-balancing/reference/region-mapping-api/#list-of-load-balancer-regions) followed by a list of origin servers to use for that region. 
 
 In the example below, `WNAM` and `ENAM` represent the West and East Coasts of North America, respectively.
 
@@ -79,7 +79,7 @@ When [creating or editing a load balancer](/load-balancing/how-to/create-load-ba
 
 #### Via the API
 
-When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
+When creating a load balancer [via the API](https://developers.cloudflare.com/api/operations/load-balancers-create-load-balancer), include the `country_pools` object to map countries to a list of pool IDs (ordered by their failover priority).
 
 To get a list of country codes, use the [Region API](/load-balancing/reference/region-mapping-api/).
 
@@ -88,7 +88,7 @@ Any country not explicitly defined will fall back to using the corresponding `re
 
 ### PoP steering
 
-When creating a load balancer [via the API](https://api.cloudflare.com/#load-balancers-create-load-balancer), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
+When creating a load balancer [via the API](https://developers.cloudflare.com/api/operations/load-balancers-create-load-balancer), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
 
 For help finding data center identifiers, refer to [this community thread](https://community.cloudflare.com/t/is-there-a-way-to-retrieve-cloudflare-pops-list-and-locations-programmatically/234643).
 

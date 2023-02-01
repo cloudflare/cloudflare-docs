@@ -25,15 +25,19 @@ To add a custom domain:
 
 ![Adding a custom domain for your Pages project through the Cloudflare dashboard](/pages/platform/media/domains.png)
 
+### Add a custom apex domain
+
 If you are deploying to an apex domain (for example, `example.com`), then you will need to add your site as a Cloudflare zone and [configure your nameservers](#configure-nameservers). 
 
-If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site.
-
-### Configure nameservers
+#### Configure nameservers
 
 To use a custom apex domain (for example, `example.com`) with your Pages project, [configure your nameservers to point to Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/). If your nameservers are successfully pointed to Cloudflare, Cloudflare will proceed by creating a CNAME record for you.
 
-### Add a custom CNAME record 
+### Add a custom subdomain
+
+If you are deploying to a subdomain, it is not necessary for your site to be a Cloudflare zone. You will need to [add a custom CNAME record](#add-a-custom-cname-record) to point the domain to your Cloudflare Pages site. To deploy your Pages project to a custom apex domain, that custom domain must be a zone on the Cloudflare account you have created your Pages project on.
+
+#### Add a custom CNAME record 
 
 If you do not want to point your nameservers to Cloudflare, you must create a custom CNAME record to use a subdomain with Cloudflare Pages. After logging in to your DNS provider, add a CNAME record for your desired subdomain, for example, `shop.example.com`. This record should point to your custom Pages subdomain, for example, `<YOUR_SITE>.pages.dev`.
 
@@ -55,7 +59,7 @@ To detach a custom domain from your Pages project, you must modify your zone's D
 
 First, log in to the Cloudflare dashboard > select your account in **Account Home** > select your website > **DNS**.
 
-Then, in **DNS**:
+Then, in **DNS** > **Records**:
 
 1.  Locate your Pages project's CNAME record.
 2.  Select **Edit**.

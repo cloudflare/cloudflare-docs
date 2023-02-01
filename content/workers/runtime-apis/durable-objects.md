@@ -199,7 +199,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 - {{<code>}}list(options{{<param-type>}}Object{{</param-type>}}){{</code>}} {{<type>}}Promise\<Map\<string, any>>{{</type>}}
 
-  - Returns keys associated with the current Durable Object according to the parameters in the provided options object.
+  - Returns keys and values associated with the current Durable Object according to the parameters in the provided options object.
 
     **Supported options:**
 
@@ -274,6 +274,14 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
     **Supported options:** Like `put()` above, but without `noCache`.
 
+- {{<code>}}sync(){{</code>}} {{<type>}}Promise{{</type>}}
+
+  - Synchronizes any pending writes to disk.
+
+    This is similar to normal behavior from automatic write coalescing. If there are any pending writes in the write buffer (including those submitted with `allowUnconfirmed`), the returned promise will resolve when they complete. If there are no pending writes, the returned promise will be already resolved.
+
+    **Supported options:** None.
+
 {{</definitions>}}
 
 ### `alarm()` handler method
@@ -311,26 +319,6 @@ When generating an ID randomly, you need to store the ID somewhere in order to b
 Unique IDs are unguessable, therefore they can be used in URL-based access control.
 
 To store the ID in external storage, use its `.toString()` method to convert it into a hexadecimal string and `OBJECT_NAMESPACE.idFromString()` to convert the string back into an ID later.
-
-#### Restricting objects to a jurisdiction
-
-Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations. You must specify the jurisdiction when generating the Durable Object's ID.
-
-```js
-let id = OBJECT_NAMESPACE.newUniqueId({ jurisdiction: 'eu' });
-```
-
-The `jurisdiction` option for the `newUniqueId()` method creates a new Object ID that will only run and persist data within the European Union. The jurisdiction feature is useful for building applications that are compliant with regulations such as the [GDPR](https://gdpr-info.eu/). Jurisdiction constraints can only be used with IDs created by `newUniqueId()` and are not currently compatible with IDs created by `idFromName(name)`.
-
-{{<Aside type="note" header="ID logging">}}
-
-Object IDs will be logged outside of the EU even if you specify a jurisdiction.
-
-{{</Aside>}}
-
-Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
-
-The only jurisdiction currently supported is `eu` (the European Union).
 
 {{<Aside type="note" header="Unique IDs perform best">}}
 
@@ -403,6 +391,94 @@ If the remote Object does not already exist, it will be created. Thus, there wil
 
 This method always returns the stub immediately, before it has connected to the remote object. This allows you to begin making requests to the object right away, without waiting for a network round trip.
 
+#### Providing a location hint
+
+Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. To manually create Durable Obkects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
+
+```js
+let stub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
+```
+
+The following `locationHint`s are supported. Note that hints are a best effort and not a guarantee. Durable Objects do not currently run in all of the locations below. The closest nearby region will be used until those locations are fully supported.
+
+| Location Hint Parameter  | Location              |
+| ------------------------ | --------------------- |
+| wnam                     | Western North America |
+| enam                     | Eastern North America |
+| sam                      | South America         |
+| weur                     | Western Europe        |
+| eeur                     | Eastern Europe        |
+| apac                     | Asia-Pacific          |
+| oc                       | Oceania               |
+| afr                      | Africa                |
+| me                       | Middle East           |
+
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
+
+### Restricting objects to a jurisdiction
+
+Durable Objects can be created so that they only run and store data within a specific jurisdiction to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/). To use a jurisdiction, first create a jursidictional subnamespace:
+
+```js
+let subnamespace = OBJECT_NAMESPACE.jurisdiction('eu');
+```
+
+A jursidictional subnamespace works exactly like a normal Durable Object namespace (`OBJECT_NAMESPACE` above), except that IDs created within them permanently encode the jurisdiction that was used to create the subnamespace. Additionally, the `idFromString` and `get` methods will throw an exception if the IDs passed into them are not within the subnamespace's jurisdiction. Once you have a subnamespace you can use all of the namespace methods documented above.
+
+To create a new Object ID that will only run and persist data within the jurisdiction:
+
+```js
+let id = subnamespace.newUniqueId();
+```
+
+To derive a unique object ID from the given name string that will only run and persist data within the jurisdiction:
+
+```js
+let id = subnamespace.idFromName(name);
+```
+
+{{<Aside type="note" header="IDs derived from the same name but different jurisdictions will differ">}}
+
+Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
+
+This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
+
+{{</Aside>}}
+
+To parse a previously-created ID from a string:
+
+```js
+let id = subnamespace.idFromString(id);
+```
+
+To obtain an object stub:
+
+```js
+let stub = subnamespace.get(id)
+```
+
+While you cannot use an ID from a different jurisdiction in a subnamespace's `idFromString` or `get` methods, you can use any valid ID in the top-level namespace's methods. Object IDs created with a jurisdiction will still only run and persist data within the jurisdiction.
+
+```js
+let id = subnamespace.idFromName(name);
+
+// This is valid.
+OBJECT_NAMESPACE.idFromString(id.toString())
+
+// And so is this.
+OBJECT_NAMESPACE.get(id)
+```
+
+Your Workers may still access Objects constrained to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Durable Object itself runs and persists data. Consider using [Regional Services](https://blog.cloudflare.com/introducing-regional-services/) to control the regions from which Cloudflare responds to requests.
+
+The currently supported jurisdictions are `eu` (the European Union) and `fedramp` (FedRAMP).
+
+{{<Aside type="note" header="ID logging">}}
+
+Object IDs will be logged outside of the specified jurisdiction for billing and debugging purposes.
+
+{{</Aside>}}
+
 ## Object stubs
 
 A Durable Object stub is a client object used to send requests to a remote Durable Object.
@@ -430,7 +506,7 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be
 
 ## Listing Durable Objects
 
-The Cloudflare REST API supports retrieving a [list of Durable Objects](https://api.cloudflare.com/#durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://api.cloudflare.com/#durable-objects-namespace-list-namespaces) associated with an account.
+The Cloudflare REST API supports retrieving a [list of Durable Objects](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 
 ## Related resources
 

@@ -19,9 +19,8 @@ This guide will:
 - Create a `<broker>.<namespace>.cloudflarepubsub.com` endpoint ready to publish and subscribe to using any MQTT v5.0 compatible client.
 - Help you send your first message to the Pub/Sub Broker.
 
-Before you begin, you should be familiar with using the command line and the curl command for making HTTP requests.
+Before you begin, you should be familiar with using the command line and running basic terminal commands.
 
-In the future, we will be adding support for Pub/Sub to [wrangler](/workers/wrangler/) (our developer CLI) and the Cloudflare dashboard to make creating and managing Pub/Sub Brokers easier.
 
 ## Prerequisite: Create a Cloudflare account
 
@@ -35,7 +34,7 @@ During the Private Beta, your account will need to be explicitly granted access.
 
 {{<Aside type="note">}}
 
-Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/get-started/#update).
+Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using an older version of Wrangler, ensure you [update the installed version](/workers/wrangler/install-and-update/#update-wrangler).
 
 {{</Aside>}}
 
@@ -103,7 +102,7 @@ Before you begin, consider the following:
 
 - **Choose your namespace carefully**. Although it can be changed later, it will be used as part of the hostname for your Brokers. You should not use secrets or other data that cannot be exposed on the Internet.
 - Namespace names are global; they are globally unique.
-- Namespaces must be valid DNS names per RFC1035. In most cases, this means only a-z, 0-9, and hyphens are allowed. Names are case-insensitive.
+- Namespaces must be valid DNS names per RFC 1035. In most cases, this means only a-z, 0-9, and hyphens are allowed. Names are case-insensitive.
 
 For example, a namespace of `my-namespace` and a broker of `staging` would create a hostname of `staging.my-namespace.cloudflarepubsub.com` for clients to connect to.
 
@@ -136,17 +135,17 @@ This broker will be configured to accept `TOKEN` authentication. In MQTT terms, 
 Broker names must be:
 
 - Chosen carefully. Although it can be changed later, the name will be used as part of the hostname for your brokers. Do not use secrets or other data that cannot be exposed on the Internet.
-- Valid DNS names (per RFC1035). In most cases, this means only `a-z`, `0-9` and hyphens are allowed. Names are case-insensitive.
+- Valid DNS names (per RFC 1035). In most cases, this means only `a-z`, `0-9` and hyphens are allowed. Names are case-insensitive.
 - Unique per namespace.
 
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
 
 
 ```sh
-$ wrangler pubsub namespace create example-broker --namespace=my-namespace
+$ wrangler pubsub broker create example-broker --namespace=my-namespace
 ```
 
-You should receive a success response that resembles the following:
+You should receive a success response that resembles the following example:
 
 ```json
 {
