@@ -32,15 +32,4 @@ $ wrangler pages dev -- <COMMAND>
 
 ## Attach bindings to local development
 
-To attach a binding in your local development, pass through the relevant argument to the dev command. For example, if you want to bind KV, you would run:
-```
-$ wrangler pages dev <DIRECTORY-OF-ASSETS> --kv KV
-```
-
-Then your KV binding will be accessible through `env.KV` like usual. Read the section below for all the specific binding arguments.
-
-{{<Aside type="note">}}
-Local development uses local storage, it cannot access data stored on Cloudflare’s servers.
-
-By default, data in local development is not persisted. This means if you write a value into KV for example, the next time you start dev, it will no longer exist. Enable persistence with `--persist`.
-{{</Aside>}}
+To attach a binding to local development, refer to [Bindings](/pages/platform/functions/bindings/) and find the resource you would like to work with.
