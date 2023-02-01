@@ -69,7 +69,7 @@ To create a queue, run:
 wrangler queues create <MY_FIRST_QUEUE>
 ```
 
-Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
+Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`.
 
 Queue names must be 1 to 63 characters long. Queue names cannot contain special characters outside dashes (`-`), and must start and end with a letter or number.
 
@@ -109,20 +109,25 @@ You will now configure your producer Worker to create messages to publish to you
 2. Transform the request to JSON format.
 3. Write the request directly to your queue.
 
-In your Worker project directory, open the `src` folder and add the following to your `index.ts` file:
+In your Worker project directory, open the `src` folder and replace the content of the `index.ts` file with:
 
-```toml
----
-filename: src/index.ts
-highlight: [4]
----
+```ts
+export interface Env {
+  MY_QUEUE: Queue;
+}
+
 export default {
- async fetch(request: Request, env: Environment): Promise<Response> {
-   let log = await request.json();
-   await env.<MY_QUEUE>.send(log);
-   return new Response("Success!");
- }
- ```
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    let message = await request.json();
+    await env.MY_QUEUE.send(message);
+    return new Response("Success!");
+  },
+};
+```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
 
@@ -146,7 +151,13 @@ Published <YOUR-WORKER-NAME> (0.29 sec)
   https://<YOUR-WORKER-NAME>.<YOUR-ACCOUNT>.workers.dev
 ```
 
-Copy your `*.workers.dev` subdomain and paste it into a new browser tab. Refresh the page a few times to start publishing requests to your queue. Your browser should return the `Success` response after writing the request to the queue each time.
+Now make a POST request to your worker using cURL:
+
+```sh
+$ curl --request POST --url https://<YOUR-WORKER-NAME>.<YOUR-ACCOUNT>.workers.dev/ --header 'content-type: application/json' --data '{"message": "Hello World!"}'
+```
+
+This should return a `Success` response.
 
 You have built a queue and a producer Worker to publish messages to the queue. You will now create a consumer Worker to consume the messages published to your queue. Without a consumer Worker, the messages will stay on the queue until they expire, which defaults to four (4) days.
 
@@ -158,29 +169,23 @@ In this guide, you will create a consumer Worker and use it to log and inspect t
 
 To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 
-```sh
----
-filename: src/index.ts
-highlight: [4]
----
+```ts
 export default {
- async fetch(request: Request, env: Environment): Promise<Response> {
-   let log = await request.json();
-   await env.<MY_QUEUE>.send(log);
-   return new Response("Success!");
- }
- async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-   let messages = JSON.stringify(batch.messages)
-   console.log(`consumed from our queue: ${messages}`)
- }
+  /// ... existing fetch handler
+
+  async queue(
+    batch: MessageBatch<Error>,
+    env: Env
+  ): Promise<void> {
+    let messages = JSON.stringify(batch.messages);
+    console.log(`${messages}`);
+  },
 }
 ```
 
-Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
-
 Every time messages are published to the queue, your consumer Worker's `queue` handler (`async queue`) is called and it is passed one or more messages.
 
-In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](/r2/)), write to a database (like [D1](/d1/)), or further process messages before calling an external API, such as an [email API](/workers/tutorials/) or a data warehouse with your legacy cloud provider.  
+In this example, your consumer Worker transforms the queue's JSON formatted message back to a string and logs that output. In a real world application, your consumer Worker can be configured to write messages to object storage (such as [R2](/r2/)), write to a database (like [D1](/d1/)), or further process messages before calling an external API, such as an [email API](/workers/tutorials/) or a data warehouse with your legacy cloud provider.
 
 ### Connect the consumer Worker to your queue
 
@@ -192,7 +197,7 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
 
 ```toml
 [[queues.consumers]]
- queue = "<YOUR_QUEUE_NAME>"
+ queue = "YOUR_QUEUE_NAME"
  # Required: this should match the name of the queue you created in step 3.
  # If you misspell the name, you will receive an error when attempting to publish your Worker.
  max_batch_size = 10 # optional: defaults to 10
@@ -201,7 +206,7 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
 
 Replace `YOUR_QUEUE_NAME` with the queue you created in step 3.
 
-In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first. 
+In your consumer Worker, you are using queues to auto batch messages using the `max_batch_size` option and the `max_batch_timeout` option. The consumer Worker will receive messages in batches of `10` or every `5` seconds, whichever happens first.
 
 `max_batch_size` (defaults to 10) helps to reduce the amount of times your consumer Worker needs to be called. Instead of being called for every message, it will only be called after 10 messages have entered the queue.
 
@@ -217,7 +222,7 @@ $ wrangler publish
 
 ## 6. Read messages from your queue
 
-After you set up consumer Worker, you can read messages from the queue. 
+After you set up consumer Worker, you can read messages from the queue.
 
 Run `wrangler tail` to start waiting for our consumer to log the messages it receives:
 
@@ -225,17 +230,21 @@ Run `wrangler tail` to start waiting for our consumer to log the messages it rec
 $ wrangler tail
 ```
 
-With `wrangler tail` running, open the Worker URL you opened in step 4. 
+With `wrangler tail` running, make another POST request to the producer Worker URL you published in step 4:
+
+```sh
+$ curl --request POST --url https://<YOUR-WORKER-NAME>.<YOUR-ACCOUNT>.workers.dev/ --header 'content-type: application/json' --data '{"message": "Hello World!"}'
+```
 
 You should receive a `Success` message in your browser window.
 
-If you receive a `Success` message, refresh the URL a few times to generate messages and push them onto the queue. 
+If you receive a `Success` message, make some additional POST requests using cURL to generate messages and push them onto the queue.
 
 With `wrangler tail` running, your consumer Worker will start logging the requests generated by refreshing.
 
-If you refresh less than 10 times, it may take a few seconds for the messages to appear because batch timeout is configured for 10 seconds. After 10 seconds, messages should arrive in your terminal.
+If you make less than 10 requests, it may take a few seconds for the messages to appear because batch timeout is configured for 10 seconds. After 10 seconds, messages should arrive in your terminal.
 
-If you get errors when you refresh, check that the queue name you created in step 3 and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
+If you get errors when making POST requests, check that the queue name you created in step 3 and the queue you referenced in your `wrangler.toml` file is the same. You should ensure that your producer Worker is returning `Success` and is not returning an error.
 
 By completing this guide, you have now created a queue, a producer Worker that publishes messages to that queue, and a consumer Worker that consumes those messages from it.
 
