@@ -6,7 +6,7 @@ weight: 4
 
 # Role scopes
 
-When you assign roles to account members, you can scope these roles to apply to all domains or various combinations of included and excluded domains.
+When you assign domain specific roles to account members, you can scope these roles to apply to all domains or various combinations of included and excluded domains.
 
 ---
 

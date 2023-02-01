@@ -35,9 +35,9 @@ To add a member to your account:
 5. Select **Continue to summary**.
 6. Review the information, then select **Update**.
 
-## Resend an inviation
+## Resend an invitation
 
-If you invited a member to your account but they cannot find the invitation, you can resend the invitation through the Cloudflare dashboard:
+If you invited a member to your account but they cannot find the invitation or the invitation expires, you can resend the invitation through the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
 2. Go to **Manage Account** > **Members**.
