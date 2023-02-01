@@ -12,7 +12,11 @@ In an effort to make analytics an ubiquitous component of all Cloudflare's produ
 
 You can access root-level analytics that give you an overview of metadata related to your Cloudflare account, analytics related to specific properties and products, and the GraphQL API that gives you more control over how you visualize the analytics and log information available on the Cloudflare dashboard.
 
+In a small number of cases, the analytics provided on the Cloudflare dashboard and GraphQL Analytics API are based on a sample — a subset of the dataset. In these cases, [Cloudflare Analytics returns an estimate derived from the sampled value](https://developers.cloudflare.com/analytics/graphql-api/sampling/). For example, suppose that during an attack the sampling rate is 10% and 5,000 events are sampled. Cloudflare will estimate 50,000 total events (5,000 × 10) and report this value in Analytics.
+
 Refer to [Types of analytics](/fundamentals/data-products/types-of-analytics/) for more information regarding this subject.
+
+
 
 ## How Cloudflare captures and processes analytics data
 
@@ -41,5 +45,25 @@ You may not be seeing metrics on Cloudflare Analytics for the following reasons:
 * If you signed up directly with Cloudflare, your nameservers might not be pointing to Cloudflare at your registrar just yet. Registrars can take 24-72 hours to update their nameservers. Metrics will not start gathering until we detect the nameservers pointing to Cloudflare.
 * If you signed up through a Cloudflare [hosting partner option](https://www.cloudflare.com/partners/), something might not be configured correctly. Contact the hosting partner for support.
 * Some browser extensions designed to block ads may prevent analytics from loading. To address this issue, disable the ad block extension or allow `cloudflare.com` on it.
+
+
+## Data Retention
+
+Regarding the time of data retention, that depends on the Cloudflare product and features that you've enabled, and also from the zone plan choosed.
+
+In Network Analytics v2 dashboard, the range of historical data you can query is 120 days. When you select Previous 30 minutes, the Network Analytics card will show the data from the last 30 minutes, refreshing every 20 seconds.  Learn more about [how to adjust the time range](https://developers.cloudflare.com/analytics/network-analytics/configure/time-range/).
+
+However, when you are using the [Logpull API](https://developers.cloudflare.com/logs/logpull/understanding-the-basics/#data-retention-period), you can query for logs starting from 1 minute in the past (relative to the actual time that you make the query) and go back at least 3 days and up to 7 days.
+
+When using [Workers](https://developers.cloudflare.com/workers/learning/metrics-and-analytics/#metrics-retention), the script metrics can be inspected for up to three months in the past in maximum increments of one week, and on the zone analytics, the data can be scoped by time range within the last 30 days.
+
+For the Security Events the historical time depends on the zone plan, which means that for a free plan the data it's only available for the last 24 hours, but for Enterprise you can check the data up to 30 days. Check all the [historical time per plan](https://developers.cloudflare.com/waf/security-events/#availability).
+
+If you are trying to collect the data more than that times, we can recommend you to explore the [Clouflare Logpush](https://developers.cloudflare.com/logs/about/) available only for Enterprise plans. In addition, [Workers Trace Events Logpush](https://developers.cloudflare.com/workers/platform/logpush/) is available on the [Workers Paid plan](https://developers.cloudflare.com/workers/platform/pricing/).
+
+
+
+
+
 
 {{<Aside type="note">}}Activations through a hosting partner works via a [CNAME setup](/dns/zone-setups/partial-setup/) on the `www` record. If most of your traffic actually goes to `domain.com`, [forward your traffic](/rules/url-forwarding/bulk-redirects/) from `domain.com` to `www.domain.com`.{{</Aside>}}
