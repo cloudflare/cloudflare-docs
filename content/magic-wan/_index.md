@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare Magic WAN
 
-Magic WAN provides secure, performant connectivity and routing for your entire corporate networking, reducing cost and operation complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with Magic WAN, enabling you to enforce network firewall policies at the edge, across traffic from any entity within your network.
+Magic WAN provides secure, performant connectivity and routing for your entire corporate networking, reducing cost and operation complexity. [Magic Firewall](/magic-firewall/) integrates smoothly with Magic WAN, enabling you to enforce network firewall policies at Cloudflare's global network, across traffic from any entity within your network.
 
 With Magic WAN, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare’s network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 
