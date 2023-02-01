@@ -33,7 +33,7 @@ The following routes will be generated based on the above file structure. These 
 
 {{<Aside type="note" header="Trailing slash">}}
 
-Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/functions/foo.js` or `/functions/foo/index.js`
+Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/functions/foo.js` or `/functions/foo/index.js`. If your project has both a `/functions/foo.js` and `/functions/foo/index.js` file, `/foo` and `/foo/` would route to `/functions/foo/index.js`.
 
 {{</Aside>}}
 
@@ -133,7 +133,7 @@ The above logic will return `["daniel", "xyz", "123"]` for requests to `/users/d
 
 On a purely static project, Pages offers unlimited free requests. However, once you add Functions on a Pages project, all requests by default will invoke your Function. To continue receiving unlimited free static requests, exclude your project's static routes by creating a `_routes.json` file. This file will be automatically generated if a `functions` directory is detected in your project when you publish your project with Pages CI or Wrangler.
 
-{{<Aside type="note" header="">}}
+{{<Aside type="note">}}
 
 Some frameworks (such as Remix, SvelteKit) will also automatically generate a `_routes.json` file. However, if your preferred framework does not, create an issue on their framework repository with a link to this page or let us know on [Discord](https://discord.gg/cloudflaredev). Refer to the [Framework guide](/pages/framework-guides/) for more information on full-stack frameworks.
 
@@ -151,7 +151,7 @@ This file will include three different properties:
 
 {{<Aside type="note">}}
 
-Wildcards match any number of path segments (slashes). For example, `/users/*` will match everything.
+Wildcards match any number of path segments (slashes). For example, `/users/*` will match everything after the`/users/` path.
 
 {{</Aside>}}
 
