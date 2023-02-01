@@ -15,27 +15,49 @@ $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>" \
 
 Never send or store your API token secret in plaintext. Also be sure not to check it into code repositories, especially public ones.
 
+## Making API calls on Windows
 
-## Using Cloudflare API on Windows CMD or Powershell
+### Using a Command Prompt window
 
-In order to use Cloudflare API on Windows CMD or Powershell, you will need to replace the single `'` quote with `"` quote, and add another `"` next to `"` quote in the API endpoints that have `--data payload`. Otherwise, you'll get a JSON formatting error.
+To use the Cloudflare API on a Command Prompt window, you must use double quotes (`"`) as string delimiters instead of single quotes (`'`).
 
+A typical `POST` request will be similar to the following:
 
-On MAC terminal or Unix shell, the correct syntax would be:
-
-```
-GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d'{"flag":true}'
-```
-
-On Windows OS, you need to replace any single-quote `'` with double-quotes `"` and replace any double-quotes `"` with additional double-quote `""`, as demonstrated in the next example:
-
-```
-GET "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -d"{""flag"":true}"
+```txt
+C:\> curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -H "Authorization: Bearer <API_TOKEN>" -d "{""flag"": true}"
 ```
 
+To escape a double quote character in a request body (for example, a body specified with `-d` or `--data` in a `POST` request), prepend it with another double quote (`"`) or a backslash (`\`) character.
 
-You can also try to install the [Microsoft Visual Studio](https://visualstudio.microsoft.com/) along with the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) will allow for much easier interactions with the Cloudflare API, or use the [the *json* processor jq](https://developers.cloudflare.com/logs/tutorials/parsing-json-log-data/) for Windows to get a formatted output.
+To break a single command in two or more lines, use `^` as the line continuation character at the end of a line:
 
+```txt
+C:\> curl -X POST ^
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" ^
+-H "Authorization: Bearer <API_TOKEN>" ^
+-d "{""flag"": true}"
+```
+
+### Using PowerShell
+
+In PowerShell, `curl` is an alias to the `Invoke-WebRequest` cmdlet, which supports a different syntax from the usual cURL tool. To use cURL, enter `curl.exe` instead.
+
+A typical `POST` request will be similar to the following:
+
+```txt
+PS C:\> curl.exe -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" -H "Authorization: Bearer <API_TOKEN>" -d '{\"flag\": true}'
+```
+
+To escape a double quote (`"`) character in a request body (specified with `-d` or `--data`), prepend it with another double quote (`"`) or a backslash (`\`). You must escape double quotes even when using single quotes (`'`) as string delimiters.
+
+To break a single command in two or more lines, use a backtick (`` ` ``) character as the line continuation character at the end of a line:
+
+```txt
+PS C:\> curl.exe -X POST `
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logs/control/retention/flag" `
+-H "Authorization: Bearer <API_TOKEN>" `
+-d '{\"flag\": true}'
+```
 
 ## Using Cloudflare’s APIs
 
