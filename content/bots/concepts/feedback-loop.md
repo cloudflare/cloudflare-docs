@@ -143,12 +143,12 @@ curl -X GET 'https://api.cloudflare.com/client/v4/zones/4e6d50a41172bca54f222576
 | --- | --- | --- | --- |
 | `type` | string |  The feedback report type. | `false_positive` |
 | `description` | string | The feedback report description with  more details on the issue. | Legitimate customers having low scores. |
-| `expression` | string | The wirefilter expression matching reported requests. | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` | 
-| `first_request_seen_at` | string | The time range start when the first request has been seen, RFC3339 format. |  `2022-08-01T00:00:00Z` | 
-| `last_request_seen_at` | string | The time range end when the last request has been seen, RFC3339 format. | `2022-08-10T00:00:00Z` | 
-| `requests` | integer | The total number of reported requests. | `100` | 
-| `requests_by_score` | object | The requests breakdown by score. | See example below. | 
-| `requests_by_score_src` | object | Requests breakdown by score source. | See example below. | 
+| `expression` | string | The wirefilter expression matching reported requests. | `(cf.bot_management.score le 46 and ip.geoip.asnum eq 132892 and http.host eq "app.example.com" and cf.bot_management.ja3_hash eq "3fed133de60c35724739b913924b6c24")` |
+| `first_request_seen_at` | string | The time range start when the first request has been seen, RFC 3339 format. |  `2022-08-01T00:00:00Z` |
+| `last_request_seen_at` | string | The time range end when the last request has been seen, RFC 3339 format. | `2022-08-10T00:00:00Z` |
+| `requests` | integer | The total number of reported requests. | `100` |
+| `requests_by_score` | object | The requests breakdown by score. | See example below. |
+| `requests_by_score_src` | object | Requests breakdown by score source. | See example below. |
 | `requests_by_attribute` | object | Requests breakdown by attribute (optional). | See example below. |
 
 `requests_by_score`

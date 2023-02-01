@@ -102,7 +102,7 @@ Before you begin, consider the following:
 
 - **Choose your namespace carefully**. Although it can be changed later, it will be used as part of the hostname for your Brokers. You should not use secrets or other data that cannot be exposed on the Internet.
 - Namespace names are global; they are globally unique.
-- Namespaces must be valid DNS names per RFC1035. In most cases, this means only a-z, 0-9, and hyphens are allowed. Names are case-insensitive.
+- Namespaces must be valid DNS names per RFC 1035. In most cases, this means only a-z, 0-9, and hyphens are allowed. Names are case-insensitive.
 
 For example, a namespace of `my-namespace` and a broker of `staging` would create a hostname of `staging.my-namespace.cloudflarepubsub.com` for clients to connect to.
 
@@ -135,7 +135,7 @@ This broker will be configured to accept `TOKEN` authentication. In MQTT terms, 
 Broker names must be:
 
 - Chosen carefully. Although it can be changed later, the name will be used as part of the hostname for your brokers. Do not use secrets or other data that cannot be exposed on the Internet.
-- Valid DNS names (per RFC1035). In most cases, this means only `a-z`, `0-9` and hyphens are allowed. Names are case-insensitive.
+- Valid DNS names (per RFC 1035). In most cases, this means only `a-z`, `0-9` and hyphens are allowed. Names are case-insensitive.
 - Unique per namespace.
 
 To create a new MQTT Broker called `example-broker` in the `my-namespace` namespace from the example above:
