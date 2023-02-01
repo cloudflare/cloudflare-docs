@@ -739,10 +739,10 @@
 /cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/ 301
 /cloudflare-one/connections/connect-devices/agentless/native-os/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ 301
-/cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/connections/connect-devices/warp/warp-settings/#enable-proxy 301
+/cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/deployment/macOS-Teams/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/ 301
 /cloudflare-one/connections/connect-devices/warp/deployment/parameters/ /cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/ 301
-/cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/warp-settings/#device-enrollment-rules 301
+/cloudflare-one/connections/connect-devices/warp/device-enrollment/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-networks/ /cloudflare-one/connections/connect-apps/private-net/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
