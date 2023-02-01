@@ -5,6 +5,8 @@ title: Observability
 
 # Observability
 
+Workers for Platforms provides you with logs and analytics that can be used to share data with end users.
+
 ## Logs
 
 Learn how to access logs with Workers for Platforms.
@@ -13,12 +15,12 @@ Learn how to access logs with Workers for Platforms.
 
 Workers Trace Events logpush is used to get raw Workers execution logs. Refer to [Logpush](/workers/platform/logpush/) for more information.
 
-Logpush can be enabled for an entire namespace or a single Worker. To capture logs for all of the user Workers in your namespace:
+Logpush can be enabled for an entire dispatch namespace or a single user Worker. To capture logs for all of the user Workers in a dispatch namespace:
 
-1. [Create a Logpush job](/workers/platform/logpush/#create-a-logpush-job) for your account.
-2. [Enable logging](/workers/platform/logpush/#enable-logging-on-your-worker) on your dispatch Worker.
+1. Create a [Logpush job](/workers/platform/logpush/#create-a-logpush-job).
+2. Enable [logging](/workers/platform/logpush/#enable-logging-on-your-worker) on your dispatch Worker.
 
-Logs for both the dispatch Worker and for any user Workers are collected. Logs are automatically collected for all new Workers added to a dispatch namespace.
+Enabling logging on your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, skip step 1 and complete step 2 on your user Worker.
 
 All logs will get forwarded to the Logpush job that you have setup for your account. Logpush filters can be used on the `Outcome` or `Script Name` field to include or exclude specific values or send logs to different destinations. 
 
