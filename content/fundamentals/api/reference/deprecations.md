@@ -25,7 +25,7 @@ Cloudflare Tunnel API
 ## Transfer-Encoding and Content-Length headers 
 **End of life date: March 31, 2023**
 
-Previously, RFC2616 allowed the use of `Transfer-Encoding` and `Content-Length` HTTP headers in the same request. RFC7230 supersedes RFC2616 and prohibits the use of `Transfer-Encoding` and `Content-Length` headers in the same request because they can cause HTTP request smuggling vulnerabilities.
+Previously, RFC 2616 allowed the use of `Transfer-Encoding` and `Content-Length` HTTP headers in the same request. RFC 7230 supersedes RFC 2616 and prohibits the use of `Transfer-Encoding` and `Content-Length` headers in the same request because they can cause HTTP request smuggling vulnerabilities.
 
 Starting on March 31, 2023, Cloudflare will decline requests with both `Transfer-Encoding` and `Content-Length` HTTP headers.
 
