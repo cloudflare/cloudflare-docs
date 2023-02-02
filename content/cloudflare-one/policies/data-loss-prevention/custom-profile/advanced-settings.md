@@ -7,7 +7,7 @@ layout: single
 
 # Profile settings
 
-This page lists the **Advanced settings** available when configuring a predefined or custom profile.
+This page lists the advanced settings available when configuring a predefined or custom DLP profile.
 
 ## Match count
 
