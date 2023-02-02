@@ -6,7 +6,8 @@ meta:
   title: Home
 ---
 
-<div class="QuadBlockGrid">
+<div class="HeaderBlock">
+  <div class="QuadBlockGrid">
 <div>
 {{<quad-block>}}
   [Fundamentals](/products/)
@@ -28,17 +29,15 @@ meta:
 {{</quad-block>}}
 </div>
 </div>
+  <h1 class="leading">Looking to improve security, <br /> performance, and reliability?</h1>
+    <a class="StartHere" href="/learning-paths/get-started/">Start here</a>
+  </div>
 
-<div class="HomeTitle">
-<h1 class="title">Looking to improve security, <br /> performance, and reliability?</h1>
-  <a class="StartHere" href="/learning-paths/get-started/">Start here</a>
-</div>
-
-<div class="TriBlockGrid">
-<div>
-{{<tri-block>}}
-<div class="TriBlockHeader">
-<p>Most visited</p>
+  <div class="TriBlockGrid">
+  <div>
+  {{<tri-block>}}
+  <div class="TriBlockHeader">
+  <p>Most visited</p>
 </div>
 
 - ![screw](/icons/screw.svg) [Troubleshoot 5XX and 1XXX errors](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
@@ -71,8 +70,8 @@ meta:
 - ![access](/icons/access.svg)[Access](/cloudflare-one/policies/access/)
 - ![tunnel](/icons/tunnel.svg)[Tunnel](/cloudflare-one/connections/connect-apps/)
 - ![gateway](/icons/gateway.svg)[Gateway](/cloudflare-one/policies/filtering/)
-- ![vpn](/icons/dns.svg)[Replace your VPN](/learning-paths/replace-vpn/)
-- ![browser](/icons/browser-isolation.svg)[Browser Isolation](/learning-paths/replace-vpn/)
+- ![browser](/icons/browser-isolation.svg)[Browser Isolation](/cloudflare-one/policies/browser-isolation/)
+- ![vpn](/icons/vpn.svg)[Replace your VPN](/learning-paths/replace-vpn/)
 
 {{</tri-block>}}
 </div>
@@ -94,9 +93,9 @@ meta:
 {{<featured-content-block>}}
 <div class="FeatureContentGrid">
   <div class="FeatureContentWithImage">
-  <img class="DeveloperAreaImage" alt="Developer Area">
-  <h2>Developer Area</h2>
-  <p>The Cloudflare Developer Platform offers everything your teams need to deliver serverless applications. Compute, storage, and services to deploy your full-stack applications including image optimization, and video streaming.</p>
+  <img class="DeveloperAreaImage" alt="Developer Platform">
+  <h2>Developer Platform</h2>
+  <p>The Cloudflare Developer Platform provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.</p>
   </div>
   <div class="FeatureContentWithCard">
   <p class="FeatureContentTitle">Create API Tokens</p>
@@ -113,7 +112,7 @@ meta:
 </div>
 {{</featured-content-block>}}
 {{<featured-content-block>}}
-<div class="FeatureContentGrid">
+<div class="FeatureContentGrid featured--zero-trust">
   <div class="FeatureContentWithCard">
   <p class="FeatureContentTitle">Install the WARP Client</p>
   <p class="FeatureContentDescription"> The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.</p>
@@ -129,15 +128,15 @@ meta:
   <div class="FeatureContentWithImage">
   <img class="ZeroTrustImage" alt="Zero Trust Icon">
   <h2>Zero Trust</h2>
-  <p>Cloudflare delivers Internet-native Zero Trust services through one unified, composable platform. Secure any user accessing any application, on any device, in any location.</p>
+  <p>Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world.</p>
   </div>
 </div>
 {{</featured-content-block>}}
 </div>
 </div>
 
-<div class="Recommendation Recommendation--full-bleed">
-<h2> Other docs you might also like</h2>
+<div class="Recommendation">
+<h2 class="RecommendationTitle"> Other docs you might also like</h2>
 <div class="RecommendedContentGrid">
   <div class="RecommendedContentWithCard">
   {{<recommended-content-block>}}
@@ -145,7 +144,7 @@ meta:
   <p class="RecommendedContentTitle">Install an Origin CA certificate</p>
   <p class="RecommendedContentDescription"> Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.</p>
   
-  [Create tokens >](/ssl/origin-configuration/origin-ca/)
+  [Install Origin CA >](/ssl/origin-configuration/origin-ca/)
   </div>
   {{</recommended-content-block>}}
   </div>
@@ -153,7 +152,7 @@ meta:
   {{<recommended-content-block>}}
   <div>
   <p class="RecommendedContentTitle">Change your nameservers</p>
-  <p class="RecommendedContentDescription"> UR2 gives you the freedom to create the multi-cloud architectures you desire with an S3-compatible distributed object storage.</p>
+  <p class="RecommendedContentDescription"> Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.</p>
   
   [Update nameservers >](/dns/zone-setups/full-setup/setup/)
   </div>
@@ -163,7 +162,7 @@ meta:
   {{<recommended-content-block>}}
   <div>
   <p class="RecommendedContentTitle">SSL/TLS Encryption mode</p>
-  <p class="RecommendedContentDescription">Review fully functional sample scripts to get started with Workers.</p>
+  <p class="RecommendedContentDescription">Your domain's SSL/TLS encryption mode controls how Cloudflare connects to your origin web server and how SSL certificates presented by your origin will be validated.</p>
   
   [Set encryption mode >](/ssl/origin-configuration/ssl-modes/)
   </div>
@@ -173,7 +172,7 @@ meta:
   {{<recommended-content-block>}}
   <div>
   <p class="RecommendedContentTitle">Create IP access rules</p>
-  <p class="RecommendedContentDescription"> Review fully functional sample scripts to get startedMake Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar. with Workers.</p>
+  <p class="RecommendedContentDescription"> Use IP Access rules to allowlist, block, and challenge traffic based on the visitor’s IP address, country, or Autonomous System Number (ASN).</p>
   
   [Create IP access rules >](/waf/tools/ip-access-rules/)
   </div>
@@ -182,80 +181,45 @@ meta:
 </div>
 </div>
 
-<div class="HeroBlockGrid">
-  <div>
+<div class="HeroBlockGrid HeroBlockGrid--full-bleed">
+<div>
 {{<hero-block>}}
   ## Community
 
   The Cloudflare community is a place for Cloudflare users to share ideas, answers, code and compare notes.
 
-  <div class="QuadBlockGrid">
-  <a href="https://discord.com/invite/cloudflaredev/">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/icons/discord.svg" aria-hidden="true" />
-  </div>
-  <p>Discord</p>
-  <div>
-  </div>
-  {{</community-block>}}
-</div>
-  </a>
-  <a href="https://twitter.com/CloudflareDev">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/icons/twitter.svg" aria-hidden="true" />
-  </div>
-  <p>Twitter</p>
-  <div>
-  </div>
-  {{</community-block>}}
-</div>
-  </a>
-  <a href="https://community.cloudflare.com/">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/community-icon.svg" aria-hidden="true" />
-  </div>
-  <p>Community Forum</p>
-  <div>
-  </div>
-  {{</community-block>}}
-</div>
-  </a>
-  </div>
+  ![discord](./icons/discord.svg) [Discord](https://discord.com/invite/cloudflaredev/)
+
+  ![twitter](./icons/twitter.svg) [Twitter](https://twitter.com/CloudflareDev)
+  
+  ![community](./community.svg) [Community Forum](https://community.cloudflare.com/)
+
 {{</hero-block>}}
 </div>
   
-  <div>
+<div>
 {{<hero-block>}}
   ## Open source
 
   Cloudflare contributes to the open-source ecosystem in a variety of ways, including:
 
-  - Developing many projects [directly](https://github.com/cloudflare).
-  - Sponsoring [world-changing open-source projects](/sponsorships/).
+  ![github](./github-icon.svg) [GitHub Projects](https://github.com/cloudflare)
+
+  ![sponsor](./icons/help-giving.svg) [Sponsorship Projects](/sponsorships/)
 
 {{</hero-block>}}
-  </div>
 </div>
 
-<div class="BlogSection BlogSection--full-bleed">
-{{<blog-block>}}
-  <img class="BlogImage" aria-hidden="true"/>
-  <div>
-    <h1>Blog</h1>
-    <p> Get the latest news on Cloudflare products, technologies, and culture.</p>
-  </div>
+<div>
+{{<hero-block>}}
+  ## Blog
 
-  {{<button type="tertiary" href="https://blog.cloudflare.com/">}}
-    Read the blog
-  {{</button>}}
+  Get the latest news on Cloudflare products, technologies, and culture.
 
-{{</blog-block>}}
+  ![blog](./icons/learning-center-book.svg) [Read the blog](https://blog.cloudflare.com/)
+
+{{</hero-block>}}
+</div>
 </div>
 
 <div class="FooterBlockGrid">
@@ -265,9 +229,8 @@ meta:
 <p>Contact</p>
 </div>
 
-- [Become a Partner](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
--  [Contact Sales](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
-- [Call Sales: +1 (888) 993 5273](/dns/manage-dns-records/)
+- [Become a Partner](https://www.cloudflare.com/partners/)
+- [Call Sales: +1 (888) 993 5273](tel:+18889935273)
 {{</footer-block>}}
 </div>
 
@@ -277,8 +240,8 @@ meta:
 <p>Stay in touch</p>
 </div>
 
-- [GitHub](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
--  [Discord](/registrar/)
+- [GitHub](https://github.com/cloudflare)
+-  [Discord](https://discord.gg/cloudflaredev)
 {{</footer-block>}}
 </div>
 
@@ -288,11 +251,11 @@ meta:
 <p>Resources</p>
 </div>
 
-- [API](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
--  [New to Cloudflare? Start here](/registrar/)
--  [Products](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
-- [Sponsorships](/dns/manage-dns-records/)
-- [Open Source](/cache/)
+- [API](/api/)
+-  [New to Cloudflare? Start here](/fundamentals/)
+-  [Products](/products/)
+- [Sponsorships](/sponsorships/)
+- [Open Source](https://github.com/cloudflare)
 {{</footer-block>}}
 </div>
 
@@ -302,10 +265,10 @@ meta:
 <p>Support</p>
 </div>
 
-- [Help Center](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
--  [System Status](/registrar/)
--  [Compliance](https://dash.cloudflare.com/?to=/:account/support/error-analytics)
-- [GDPR](/dns/manage-dns-records/)
+- [Help Center](https://support.cloudflare.com/)
+- [System Status](https://www.cloudflarestatus.com/)
+- [Compliance](https://www.cloudflare.com/compliance/)
+- [GDPR](https://www.cloudflare.com/gdpr/introduction/)
 {{</footer-block>}}
 </div>
 
@@ -315,8 +278,8 @@ meta:
 <p>What we do</p>
 </div>
 
-- [Our Team](https://support.cloudflare.com/hc/sections/200820298-Cloudflare-Errors)
--  [Careers](/registrar/)
+- [Our Team](https://www.cloudflare.com/people/)
+- [Careers](https://www.cloudflare.com/careers/)
 {{</footer-block>}}
 </div>
 </div>
