@@ -94,7 +94,6 @@
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
 
 # area1
-
 /email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
 /email-security/static/GSuite-Area1-MX.pdf /email-security/deployment/inline/setup/gsuite-area1-mx/ 301
 /email-security/static/Cisco-Area1-MX.pdf /email-security/deployment/inline/setup/cisco-area1-mx/ 301
@@ -175,7 +174,6 @@
 # cloudflare for platforms
 /cloudflare-for-platforms/workers-for-platforms/platform/analytics/ /cloudflare-for-platforms/workers-for-platforms/platform/observability/ 301
 
-
 # d1
 /d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
@@ -249,6 +247,8 @@
 /firewall/recipes/require-valid-client-certificate/ /api-shield/products/mtls/configure/ 301
 
 # fundamentals
+/fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/account-and-billing/members/roles/ 301
+/fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/account-and-billing/members/ 301
 /fundamentals/get-started/cdn/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/how-cloudflare-works/ /fundamentals/get-started/concepts/how-cloudflare-works/ 301
 /fundamentals/get-started/cloudflare-cookies/ /fundamentals/get-started/reference/cloudflare-cookies/ 301
