@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Google Drive
-weight: 1
+weight: 2
 layout: single
 ---
 
