@@ -20,7 +20,7 @@ Cloudflare DLP provides predefined profiles for common detections, or you can de
 To get started with a predefined profile:
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DLP Profiles**.
-2. Choose a [predefined profile](/cloudflare-one/policies/filtering/data-loss-prevention/predefined-profiles/) and select **Configure**.
+2. Choose a [predefined profile](/cloudflare-one/policies/data-loss-prevention/predefined-profiles/) and select **Configure**.
 3. Enable one or more **Detection entries** according to your preferences. The DLP Profile matches using the OR logical operator — if multiple entries are enabled, your data needs to match only one of the entries.
 4. Select **Save profile**.
 

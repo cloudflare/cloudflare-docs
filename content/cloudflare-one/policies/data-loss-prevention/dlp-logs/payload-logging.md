@@ -30,7 +30,7 @@ You can enable payload logging for any Allow or Block HTTP policy that uses the 
 
 1. Go to **Gateway** > **Policies** > **HTTP**.
 
-2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/filtering/data-loss-prevention/#2-create-a-dlp-policy).
+2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/#2-create-a-dlp-policy).
 
 3. In the policy builder, scroll down to **Configure policy settings** and enable **Log the payload of matched rules**.
 
