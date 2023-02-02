@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Total TLS
 weight: 14
+layout: single
 ---
 
 # Total TLS
