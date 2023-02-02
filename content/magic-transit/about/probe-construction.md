@@ -53,8 +53,8 @@ When all health checks or at least three samples in the last one second fail, Ma
 
 When Magic Transit identifies a route that is not healthy, it applies the these penalties:
 
-- Degraded: Add 500,000 to priority.
-- Down: Add 1,000,000 to priority.
+- **Degraded**: Add 500,000 to priority.
+- **Down**: Add 1,000,000 to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/magic-transit/how-to/configure-static-routes/).
 
