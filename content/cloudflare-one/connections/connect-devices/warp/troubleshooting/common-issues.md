@@ -6,7 +6,7 @@ weight: 1
 
 # Common issues
 
-This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If your issue is not listed below, refer to the [FAQ]() or [contact Support]().
+This section covers the most common issues you might encounter as you deploy the WARP client in your organization, or turn on new features that interact with the client. If your issue is not listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/teams-troubleshooting/) or [contact Cloudflare support]().
 
 ## Unable to turn on WARP
 
@@ -25,11 +25,11 @@ If the WARP client is stuck in the `Disconnected` state, this indicates that the
 
 ### A third-party firewall is blocking WARP
 
-A hardware or software firewall may have a policy in place which blocks the [IP addresses used by WARP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/). In particular, Microsoft Intune’s default security policy creates a firewall rule that will block WARP by default.
+A hardware or software firewall may have a policy in place which blocks the [IP addresses required by WARP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/). In particular, Microsoft Intune’s default security policy creates a firewall rule that will block WARP by default.
 
 **To diagnose the issue**:
 1. Retrieve [debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs).
-2. Inspect `ps.txt` or `process.txt` for the presence of a third-party firewall product.
+2. Inspect `ps.txt` or `process.txt` for the presence of a third-party firewall product. Examples include ....?
 3. In `daemon.log`:
     1. Find the most recent time the WARP client attempted to connect:
     ```txt
@@ -47,7 +47,11 @@ Configure your firewall to exempt the [WARP IPs and domains](/cloudflare-one/con
 
 ### A third-party VPN is interfering with WARP
 
-Running VPNs alongside the WARP client may interfere with traffic routing or DNS resolution.
+[Running VPNs alongside the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/vpn/) may interfere with traffic routing or DNS resolution. The most common places we see interference with WARP from these products are:
+
+- **Control of the routing table:** In the default WARP configuration where exclude-split tunnel rules are in place, WARP needs control over the default route. Third-party VPNs need to be set to only include routes to your internal resource.
+
+- **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
 
 **To diagnose the issue**:
 
@@ -64,26 +68,19 @@ Running VPNs alongside the WARP client may interfere with traffic routing or DNS
         Added; Interface: 8; Destination: 10.133.27.205/32; Next hop: 100.64.0.2;
     ```
     This indicates that a third-party service is fighting for control over the WARP routing table.
-3. In `dns_check.txt`, check whether the device is using the WARP DNS servers (`127.0.2.2` and `127.0.2.3`) or another third-party DNS tool.
-4. Inspect `ps.txt` or `process.txt` for the presence of a third-party VPN product.
+3. In `dns_check.txt`, check whether DNS resolution is handled by the WARP DNS servers (`127.0.2.2` and `127.0.2.3`).
+4. Inspect `ps.txt` or `process.txt` for the presence of a third-party VPN product. Examples include Umbrella, AnyConnect, and Fortinet.
 5. Temporarily uninstall (not disable or disconnect) the VPN to confirm the root cause.
 
 **To resolve the issue**:
 
-1.
-2.
+1. Disable all DNS enforcement on the VPN.
+2. On the Zero Trust dashboard, create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+3. On the VPN, configure split tunnel routes so that they do not overlap with the Split Tunnel settings in Zero Trust. For example....?
 
-[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#use-warp-alongside-a-vpn)
+### Your ISP or country is blocking WARP
 
-[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/)
-
-The most common places we see interference with WARP from these products are:
-
-- **Control of the routing table:** In the default configuration of WARP where exclude-split tunnel rules are in place, WARP needs control over the default route. Third-party VPNs need to be set to only include routes to your internal resource.
-
-- **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
-
-- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+Some countries explicitly block the use of VPN or VPN-like software that intentionally encrypts traffic. If you suspect your country may be blocking this traffic, please work with your ISP to verify.
 
 ### (Mac/Linux) The device's `/etc/resolv.conf` file has an unsupported character
 
@@ -93,3 +90,4 @@ The most common places we see interference with WARP from these products are:
 
 ## Turned on WARP and lost Internet access
 
+## Cannot connect to a specific website or app

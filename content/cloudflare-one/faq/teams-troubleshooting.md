@@ -125,9 +125,9 @@ Those three components are bundled into a single PEM file that is downloaded one
 
 The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
-## Firefox shows network protocol violation when using the WARP client
+## Firefox shows a network protocol violation when I use the WARP client
 
-You may have to disable the DNS over HTTPs setting in Firefox. To do so, navigate to Firefox Preferences, scroll down to **Network Settings**, and uncheck **Enable DNS over HTTPS > OK**.
+If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
 ## `cloudflared access` shows an error `websocket: bad handshake`
 
