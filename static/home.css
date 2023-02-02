@@ -483,7 +483,7 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
 [theme=dark] .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-dark-gray.svg");
+    background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
     box-shadow: 0 0 0px .5px #1d1f20 inset;
 }
 }
@@ -549,6 +549,10 @@ html[is-site-page] .DocsContent {
 .HeroBlock [id^=twitter-widget] {
     border-radius: .5em;
     overflow: hidden
+}
+
+.HeroBlock ul li {
+    
 }
 
 .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
@@ -913,28 +917,38 @@ html[is-site-page] .DocsContent {
 }
 
  .FeaturedContentSection {
-    margin-top: 5em;
+    margin-top: 2em;
  }
 
  .FeatureContentGrid {
     display: flex;
-    flex-direction: row;
     align-items: flex-end;
     margin-bottom: 3em;
  }
 
  .FeatureContentWithImage {
-    margin: 30px;
+    margin: 0 30px;
  }
 
  .FeatureContentWithCard {
+    padding: 1em;
     margin: 1em;
     height: 20em;
-    width: 45em;
-    padding: 1.5em;
+    width: 30em;
     border: 1px solid #c8c6c6;
     border-radius: 6px;
  }
+
+ .FeatureContentDescription {
+    font-size: .85em;
+    width: 16em;
+    align-self: flex-start;
+ }
+
+ .FeatureContentTitle {
+     font-size: 1.3em;
+ }
+
 
   .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
@@ -949,11 +963,6 @@ html[is-site-page] .DocsContent {
       background: inherit;
       border-bottom-color: var(--code-orange);
   }
-
-.FeatureContentTitle {
-    font-size: 1.2em;
-    font-weight: 500;
-}
 
 .ZeroTrustImage {
     content: url('./zero-trust-light.svg');
