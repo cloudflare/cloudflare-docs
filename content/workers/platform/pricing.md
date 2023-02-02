@@ -12,9 +12,9 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
   
-All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
@@ -25,7 +25,7 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 |          | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
 | -------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
 | Requests<sup>1</sup> | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
-| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
+| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3,4</sup> |
 
 {{</table-wrap>}}
 
@@ -34,6 +34,8 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
 3.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
+
+4. Workers triggered by a single incoming request using Service Bindings are charged a single billable duration.
 
 ### Usage models
 
@@ -184,6 +186,12 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 5.  Each alarm write is billed as a single write request unit.
 
 Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
+
+## Service Bindings
+
+Service Bindings cost the same as any normal Worker; each invocation is charged as if it’s a request from the Internet – with one major and important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+
+For more information on how service bindings work, [read the docs](https://developers.cloudflare.com/workers/platform/bindings/about-service-bindings/).
 
 ## Fine Print
 
