@@ -13,7 +13,7 @@ This tutorial explains how to set up a policy-based or route-based IPsec VPN wit
 2. Choose an interface from the **Available network ports** list.
 3. Select **Add**. The **General Configuration** dialog displays.
 
-{{<Aside header="Note:">}}
+{{<Aside header="Note">}}
 
 You may need to adjust the MSS on the LAN interface. With the selected IPsec encryption ciphers, 1406 is the idle MSS as pfSense will subtract 40 from the value you specify.
 

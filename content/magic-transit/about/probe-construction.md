@@ -33,7 +33,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 
 There are three tunnel health states: **Healthy**, **Degraded**, and **Down**.
 
-**Healthy** tunnels are preferred to **Degraded** tunnels, and Degraded tunnels are preferred to those that are **Down**.
+**Healthy** tunnels are preferred to **Degraded** tunnels, and **Degraded** tunnels are preferred to those that are **Down**.
 
 Magic Transit steers traffic to tunnels based on priorities you set when you [assign tunnel route priorities](/magic-transit/how-to/configure-static-routes/) during onboarding. Tunnel routes with lower values have priority over those with higher values.
 
@@ -53,8 +53,8 @@ When all health checks or at least three samples in the last one second fail, Ma
 
 When Magic Transit identifies a route that is not healthy, it applies the these penalties:
 
-- Degraded: Add 500,000 to priority.
-- Down: Add 1,000,000 to priority.
+- **Degraded**: Add 500,000 to priority.
+- **Down**: Add 1,000,000 to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration](/magic-transit/how-to/configure-static-routes/).
 

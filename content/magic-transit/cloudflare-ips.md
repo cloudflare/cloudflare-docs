@@ -6,7 +6,7 @@ weight: 7
 
 # Use a Cloudflare IP
 
-In addition to using Magic Transit with your own IP address, you can use Magic Transit with a Cloudflare-managed IP address. This option is helpful for users who do not meet the /24 prefix length requirements or who want to protect a smaller network.
+In addition to using Magic Transit with your own IP address, you can use Magic Transit with a Cloudflare-managed IP address. This option is helpful for users who do not meet the `/24` prefix length requirements or who want to protect a smaller network.
 
 To protect your network using a Cloudflare IP address, contact your account manager. After you receiving your IP address, you will need to:
 

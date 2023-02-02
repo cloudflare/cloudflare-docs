@@ -216,9 +216,9 @@ end
 
 Next, configure the GRE and the WAN (Internet) interface. The example below uses the following attributes:
 
-- WAN/Internet Interface (Customer GRE Endpoint IP): WAN1
-- GRE Interface name: toCF
-- Tunnel Inside IP Subnet: 10.10.10.0/31
+- **WAN/Internet Interface (Customer GRE Endpoint IP)**: `WAN1`
+- **GRE Interface name**: `toCF`
+- **Tunnel Inside IP Subnet**: `10.10.10.0/31`
 
 ```bash
 ---
