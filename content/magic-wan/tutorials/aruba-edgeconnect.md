@@ -37,8 +37,8 @@ For the purpose of this tutorial, the integration will refer to a scenario with 
 
 There are 2 branch offices each with distinct subnets.
 
-- The east branch office has a 10.3.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
-- The west branch office has a 10.30.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
+- The east branch office has a `10.3.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
+- The west branch office has a `10.30.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
 
 ![Table of branch subnet information](/magic-wan/static/branch-subnets.png)
 
@@ -62,11 +62,9 @@ The Deployment screenshot displays several different IP addresses and interfaces
 
 For the purpose of this tutorial, the integration will refer to a scenario with two branch offices, each with distinct subnets.
 
-The central branch office has a 10.22.0.0/24 network with an EdgeConnect terminating the
-Anycast IPSec tunnel. 
+The central branch office has a `10.22.0.0/24` network with an EdgeConnect terminating the Anycast IPSec tunnel. 
 
-The west branch office has a 10.77.0.0/24 network with an EdgeConnect terminating the
-Anycast IPSec tunnel.
+The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the Anycast IPSec tunnel.
 
 ![IPsec tunnel values for east and west branches](/magic-wan/static/central-west-branch-ipsec.png)
 
@@ -292,13 +290,13 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 1. Define static routes on the Cloudflare dashboard for the LAN subnet(s) attached to the EdgeConnect appliance. Use the private IP pair for the EdgeConnect tunnel endpoint. 
 
-    In the example below, the traffic to subnet 10.3.0.0/16 attached to the **east_branch** EdgeConnect appliance has a next hop of 10.40.8.10.
+    In the example below, the traffic to subnet `10.3.0.0/16` attached to the **east_branch** EdgeConnect appliance has a next hop of `10.40.8.10`.
 
 ![Static route information for each branch](/magic-wan/static/static-routes-cf.png)
 
 2. Define static routes on the Orchestrator so Cloudflare can route traffic between sites. 
 
-    In the example below, we create a route for the subnet 10.30.0.0/24 on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
+    In the example below, we create a route for the subnet `10.30.0.0/24` on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
 
 ![Static route information for each branch](/magic-wan/static/static-routes-edgeconnect.png)
 </div>
@@ -346,13 +344,13 @@ To validate east-west traffic flow, perform a traceroute as shown in the example
 
 ![Traceroute example for verifying east-west traffic](/magic-wan/static/validate-traceroute.png)
 
-The example shows a client in GCP East (10.3.0.3), which can ping the private IP of a client in GCP West (10.30.0.4). 
+The example shows a client in GCP East (`10.3.0.3`), which can ping the private IP of a client in GCP West (`10.30.0.4`). 
 
-The traceroute shows the path going from the client (10.3.0.3) <br>
-→ to the GCP East lan0 IP on the EdgeConnect (10.3.0.2) <br>
-→ to the Cloudflare private GRE endpoint IP (10.4.8.11) <br>
-→ to the GCP West lan0 IP on the West EdgeConnect (10.30.0.3) <br>
-→ to the GCP West client (10.30.0.4). 
+The traceroute shows the path going from the client (`10.3.0.3`) <br>
+→ to the GCP East lan0 IP on the EdgeConnect (`10.3.0.2`) <br>
+→ to the Cloudflare private GRE endpoint IP (`10.4.8.11`) <br>
+→ to the GCP West lan0 IP on the West EdgeConnect (`10.30.0.3`) <br>
+→ to the GCP West client (`10.30.0.4`). 
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 </div>
@@ -380,13 +378,13 @@ To validate east-west traffic flow, perform a traceroute as shown in the example
 
 ![Traceroute example for IPsec validation](/magic-wan/static/traceroute-ipsec.png)
 
-The example shows a client in GCP Central (10.22.0.9), which can ping the private IP of a client in GCP West (10.77.0.10).
+The example shows a client in GCP Central (`10.22.0.9`), which can ping the private IP of a client in GCP West (`10.77.0.10`).
 
-The traceroute shows the path going from the client (10.22.0.9) <br>
-→ to the GCP Central lan0 IP on the EdgeConnect (10.22.0.2) <br>
-→ to the Cloudflare private IPSec endpoint IP (192.168.10.11) <br>
-→ to the GCP West EdgeConnect private IPSec endpoint IP (192.168.15.10) <br>
-→ to the GCP West client (10.77.0.10).
+The traceroute shows the path going from the client (`10.22.0.9`) <br>
+→ to the GCP Central lan0 IP on the EdgeConnect (`10.22.0.2`) <br>
+→ to the Cloudflare private IPSec endpoint IP (`192.168.10.11`) <br>
+→ to the GCP West EdgeConnect private IPSec endpoint IP (`192.168.15.10`) <br>
+→ to the GCP West client (`10.77.0.10`).
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 </div>
