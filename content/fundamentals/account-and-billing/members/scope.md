@@ -60,7 +60,7 @@ To create a domain group:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/account-and-billing/account-setup/verify-email-address/)).
 2. Go to **Manage Account** > **Configurations**.
-3. For **Domain Group Manager**, select **Create**
+3. For **Domain Group Manager**, select **Create**.
 4. Create your domain group:
 
     1. Select the domains to include.
