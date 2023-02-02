@@ -12,7 +12,9 @@ Rules are written as using the Cloudflare Rules language - a DSL intended to mim
 
 To start with a simple case, review below how you would match a source IP:
 
-`ip.src == 192.0.2.0`
+```txt
+ip.src == 192.0.2.0
+```
 
 Expressions can be more complex by joining multiple clauses via a logical operator:
 
