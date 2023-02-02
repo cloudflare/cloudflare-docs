@@ -193,7 +193,8 @@
     right: 0;
     max-width: var(--docs-max-page-width);
     margin-left: auto;
-    margin-right: auto
+    margin-right: auto;
+    background-color: var(--background-color);
 }
 
 .SiteHeader--logo-section {
@@ -551,10 +552,6 @@ html[is-site-page] .DocsContent {
     overflow: hidden
 }
 
-.HeroBlock ul li {
-    
-}
-
 .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
     color: #0051C3;
@@ -821,26 +818,17 @@ html[is-site-page] .DocsContent {
     --border-bottom-color-rgb: 256, 256, 256;
 }
 
-.TriBlock ul li {
-    list-style-type: none;
-    text-decoration: none;
-    padding: 6px 0; 
-    margin-top: 0px;
-    margin-left: 0px;
+.TriBlock li {
     display: flex;
+    align-items: flex-end;
     gap: 10px;
-}
-
-.TriBlockHeader {
-    display: flex;
-    justify-content:flex-start;
-    align-items:baseline;
+    padding: 6px 0; 
 }
 
 .TriBlockHeader p {
     font-size: 1.25em;
     font-weight: 500;
-    padding: .5em 0 .75em 0;
+    padding: .5em 0 .5em 0;
 }
 
 /* Docs-wide style overrides for tri */
