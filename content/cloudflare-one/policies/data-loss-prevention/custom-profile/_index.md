@@ -20,7 +20,8 @@ To define a custom profile:
     - Regexes are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
     - Detected text patterns are limited to 1024 bytes in length.
     - Regexes with `+` are not supported as they are prone to exceeding the length limit. For example `a+` can detect an infinite number of a's. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
-6. Select **Done** to save and enable the detection entry.
-7. Select **Save profile**.
+6. Select **Done** to save the detection entry.
+7. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/custom-profile/advanced-settings/) for the profile.
+8. Select **Save profile**.
 
-You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-loss-prevention/setup/#2-create-a-dlp-policy).
+Next, [create a DLP policy](/cloudflare-one/policies/data-loss-prevention/setup/#2-create-a-dlp-policy) to log or block HTTP requests that match this profile.
