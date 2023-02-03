@@ -13,7 +13,7 @@ Bot Management provides access to several [new variables](/ruleset-engine/rules-
 - **Serves Static Resource**: An identifier that matches [file extensions](/bots/reference/static-resources/) for many types of static resources. Use this variable if you send emails that retrieve static images.
 - **ja3Hash**: A [**JA3 Fingerprint**](/bots/concepts/ja3-fingerprint/) helps you profile specific SSL/TLS clients across different destination IPs, Ports, and X509 certificates.
 - **js_score**: Customers should not use `js_score` when creating Bot Management firewall rules because it will always be blank.
-- **Bot DetectionIDs**: List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request).
+- **Bot Detection IDs**: List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request).
 
 These variables are also available as part of the [request.cf](/workers/runtime-apis/request/#incomingrequestcfproperties) object via Cloudflare Workers:
 
