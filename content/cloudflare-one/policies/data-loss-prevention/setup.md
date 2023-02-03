@@ -7,7 +7,7 @@ layout: single
 
 # Get started with DLP
 
-Data Loss Prevention is enabled through Secure Web Gateway HTTP policies. To perform DLP filtering, first configure a DLP Profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regexes specified in the DLP profile.
+Data Loss Prevention is enabled through Secure Web Gateway HTTP policies. To perform DLP filtering, first configure a DLP Profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regular expressions (regexes) specified in the DLP profile.
 
 ## Prerequisites
 
