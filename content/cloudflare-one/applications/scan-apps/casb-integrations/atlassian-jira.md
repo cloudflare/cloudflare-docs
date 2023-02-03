@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Atlassian Jira
+rss: file
 ---
 
 # Atlassian Jira
@@ -21,18 +22,16 @@ At this time, the CASB integration for Jira is only compatible with Jira Cloud a
 
 For the Jira Cloud integration to function, Cloudflare CASB requires the following permissions via an OAuth 2.0 app:
 
-| Permission | Access | Description |
-| ---------- | -------- | ----------- |
-| `jira-work` | `Read` | Read Jira project and issue data, search for issues, and objects associated with issues like attachments and worklogs. |
-| `jira-user` | `Read` |  View user information in Jira that the user has access to, including usernames, email addresses, and avatars. |
+* `read:jira-work`
+* `read:jira-user`
 
-These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more, refer to the [Atlassian scopes documentation](https://developer.atlassian.com/cloud/jira/platform/scopes-for-oauth-2-3LO-and-forge-apps/).
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Atlassian scopes documentation](https://developer.atlassian.com/cloud/jira/platform/scopes-for-oauth-2-3LO-and-forge-apps/).
 
 ## Security findings
 
 The Jira Cloud integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/manage-findings/#severity-levels).
 
-Bookmark this page to stay up-to-date with new CASB findings as they are added.
+Subscribe to the RSS feed for this page to stay up-to-date with new CASB findings as they are added.
 
 ### Access security
 
