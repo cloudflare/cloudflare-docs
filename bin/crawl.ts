@@ -325,8 +325,10 @@ try {
 
 try {
   await testREDIRECTS(REDIRECT_FILE);
-  let msg = "\n~> /content/redirects files DONE with:";
-  if (REDIRECT_ERRORS.length > 0) {
+  if (REDIRECT_ERRORS.length == 0) {
+    console.log("\n~> /content/_redirects file DONE~!\n\n");
+  } else {
+    let msg = "\n~> /content/_redirects file DONE with:";
     process.exitCode = 1;
     msg +=
       "\n    - " +
@@ -337,8 +339,8 @@ try {
     for (let i = 0; i < REDIRECT_ERRORS.length; i++) {
       msg += REDIRECT_ERRORS[i];
     }
+    console.log(msg + "\n\n");
   }
-  console.log(msg + "\n\n");
 } catch (err) {
   console.error(err.stack || err);
   process.exit(1);
