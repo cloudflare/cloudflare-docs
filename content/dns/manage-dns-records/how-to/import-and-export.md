@@ -29,7 +29,7 @@ To import a zone file using the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS** > **Records**.
-3.  Click **Advanced**.
+3.  Click **Import and Export**.
 4.  For **Import DNS records**, select your [formatted file](#format-your-zone-file).
 5.  If you do not want [applicable records](/dns/manage-dns-records/reference/proxied-dns-records/) proxied, unselect **Proxy imported DNS records**.
 
@@ -49,7 +49,7 @@ To export records using the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS** > **Records**.
-3.  Click **Advanced**.
+3.  Click **Import and Export**.
 4.  Click **Export**.
 
 ### Using the API
