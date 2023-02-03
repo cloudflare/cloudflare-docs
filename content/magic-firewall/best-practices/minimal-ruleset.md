@@ -1,6 +1,6 @@
 ---
 title: Minimal ruleset
-pcx_content_type: concept
+pcx_content_type: configuration
 weight: 2
 meta:
   title: Minimal suggested ruleset
