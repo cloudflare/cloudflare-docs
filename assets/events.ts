@@ -1,4 +1,4 @@
-import * as bots_path from "./data/learning-paths/test-path-1.json";
+import { learning_paths as paths } from "json-collector";
 
 let SEARCH_ID = /^(Docs|Site)Search/;
 let SEARCH_INPUT: HTMLElement;
@@ -330,8 +330,18 @@ export function learningNavigation() {
   if (currentLocation.includes("/learning-paths/modules")) {
     let params = new URLSearchParams(document.location.search);
     let currentLearningPath = params.get("learning_path")
+    let currentPathData;
+
+    
+
     if ( currentLearningPath !== null ) {
-      
+
+      for (let path in paths) {
+        if (paths[path]["uid"] === currentLearningPath) {
+          currentPathData = paths[path]
+        }
+      }
+
       // Update navigational links to keep the current context
       const navigationLinks = document.getElementsByClassName("learningNavigation");
       if(navigationLinks) {
@@ -343,15 +353,16 @@ export function learningNavigation() {
 
       // Update final next link to point to the next module
       const nextModuleLink = document.getElementById("nextModuleLink");
-      if (nextModuleLink) {
+      if (nextModuleLink && currentPathData !== undefined) {
         const moduleNameRegex = new RegExp('\/learning-paths\/modules\/(.*?)\/'); 
         const result = currentLocation.match(moduleNameRegex)
         const currentModule = result[1]
         let nextModule = ""
-        bots_path.modules.forEach((c, i) => {
+        
+        currentPathData.modules.forEach((c, i) => {
           if (currentModule === c.uid) {
-            if (i+1 < bots_path.modules.length) {
-              nextModule = bots_path.modules[i+1]["uid"]
+            if (i+1 < currentPathData.modules.length) {
+              nextModule = currentPathData.modules[i+1]["uid"]
             }
           }
         
@@ -364,7 +375,6 @@ export function learningNavigation() {
           nextModuleLink.setAttribute("href", "/learning-paths/")
         }
       }
-      console.log(bots_path)
     }
   }
 }
