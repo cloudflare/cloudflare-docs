@@ -433,7 +433,7 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><p><code>cf.bot_management.detection_ids</code><br />{{<type>}}Array&lt;Number>{{</type>}}</p>
         </td>
         <td>
-          <p>List of IDs that correlate to the Bot Management Heuristic detections made on a request (Multiple Heuristics can be made on a single request). Can be used to explicitly match a specfic heuristic or to exclude a heuristic in a rule.
+          <p>List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request). Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule.
           </p>
           <p>Example:
           <br />
