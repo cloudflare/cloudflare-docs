@@ -32,7 +32,7 @@ The possible network scores are:
 
 ## Improve your network score
 
-You have a few options to help improve network scores. 
+You have a few options to help improve network scores.
 
 - **Switch to a wired connection.** When possible, switch to a wired connection instead of wireless to avoid performance issues due to radio interference and signal strength.
 - **Move closer to your router.** If you are unable to use a wired connection, try to move closer to your wireless router. Signal strength drops as you move away from your wireless router and a weaker signal means poorer connectivity. Keep in mind that any objects or materials between you and your wireless router can also have a negative impact on signal strength.
