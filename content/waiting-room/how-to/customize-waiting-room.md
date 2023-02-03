@@ -10,7 +10,7 @@ A waiting room can be customized from the dashboard or via API.
 
 ## Customize a waiting room from the dashboard
 
-To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create Waiting Room** page.
+To design and preview the appearance of a waiting room, select the **Customization** tab in the **Create waiting room** page.
 
 Cloudflare offers options to customize the appearance of your waiting room:
 
@@ -27,7 +27,7 @@ To choose the default, unbranded waiting room:
 
 1.  Select a waiting room.
 2.  Go to the **Customization** step.
-3.  Select **Default Waiting Room**.
+3.  Select **Default waiting room**.
 4.  Select the language for your waiting room default page.
 
 ### Custom waiting room
@@ -38,11 +38,11 @@ To customize a waiting room:
 
 1.  Select a waiting room.
 2.  Go to the **Customization** step.
-3.  Select **Custom Waiting Room**.
+3.  Select **Custom waiting room**.
 
 You can edit the HTML code directly in the text box:
 
-- Select **Download Template** to download a HTML file containing the default template content to your computer.
+- Select **Download default template** to download a HTML file containing the default template content to your computer.
 - Select **Download** to download a HTML file containing the text box content to your computer.
 - Select **Copy** to copy the text from the text box to your clipboard, then paste it into an editor of your choice.
 
@@ -110,13 +110,13 @@ If you are using images or other resources for your customized waiting room, **d
 
 To preview the appearance of a waiting room:
 
-1.  In your application, go to **Traffic** > **Waiting Rooms**.
+1.  In your application, go to **Traffic** > **Waiting Room**.
 2.  Either [create a waiting room](/waiting-room/how-to/create-waiting-room/#create-a-waiting-room-from-the-dashboard/) or [edit an existing one](/waiting-room/how-to/edit-delete-waiting-room/).
 3.  Go to the **Review** step.
-4.  Select **Preview Waiting Room**:
+4.  Select **Preview waiting room**:
 
-- Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is not enabled.
-- Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue all** is enabled. When **Queue all** is enabled for a waiting room, the estimated wait time is not displayed.
+- Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue-all** is not enabled.
+- Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue-all** is enabled. When **Queue-all** is enabled for a waiting room, the estimated wait time is not displayed.
 
 ### Troubleshooting
 
