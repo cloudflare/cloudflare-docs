@@ -23,7 +23,7 @@ let REDIRECT_ERRORS: string[] = [];
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
 const LEARNING_PATH_DIR = join(ROOT, "assets/json");
-const REDIRECT_DIR = join(ROOT, "content/_redirects");
+const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
 const DEV_DOCS_HOSTNAME = "developers.cloudflare.com";
@@ -324,7 +324,7 @@ try {
 }
 
 try {
-  await testREDIRECTS(REDIRECT_DIR);
+  await testREDIRECTS(REDIRECT_FILE);
   let msg = "\n~> /content/redirects files DONE with:";
   if (REDIRECT_ERRORS.length > 0) {
     process.exitCode = 1;
