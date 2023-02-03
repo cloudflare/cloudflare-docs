@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx_content_type: how-to
+pcx_content_type: get-started
 weight: 2
 ---
 
