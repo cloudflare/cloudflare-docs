@@ -37,16 +37,12 @@ In addition to the message parameters above, there are additional detection sear
 - phish_submission_response
 - user_submission
 - team_submission
-- vendor_miss
-- microsoft_miss
-- proofpoint_miss
-- google_miss
 - auto-retraction
 - browser_isolation_rewrite
 
 For disposition specific submission searches refer to the Service Addresses page in the Portal https://horizon.area1security.com/support/service-addresses
 
-### Data retention
+## Data retention
 
 For Area 1 Horizon Enterprise customers, detections search would index for a period of 12 months and rotate over to a rolling 12-month period.
 
