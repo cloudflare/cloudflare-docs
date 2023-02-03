@@ -18,7 +18,7 @@ let WARNS = 0;
 let ERRORS = 0;
 let JSON_WARNS = 0;
 let JSON_ERRORS = 0;
-let REDIRECT_ERRORS : string[] = [];
+let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
@@ -170,29 +170,24 @@ async function testJSON(file: string) {
 }
 
 async function testREDIRECTS(file: string) {
-  if (process.platform === "win32") {
-    // Local imports must have a `file://` scheme on Windows
-    file = `file://${file}`;
-  }
+  const textPlaceholder = await fs.readFile(file, "utf-8");
+  const destinationURLRegex = new RegExp("/.*/*? (/.*/)");
 
-  const textPlaceholder = await fs.readFile(file, 'utf-8');
-  const destinationURLRegex = new RegExp('\/.*\/\*? (\/.*\/)')
-
-  for (const line of textPlaceholder.split(/[\r\n]+/)){
+  for (const line of textPlaceholder.split(/[\r\n]+/)) {
     let exists = false;
-    if (!line.startsWith("#") ) {
-      const result = line.match(destinationURLRegex)
-      
+    if (!line.startsWith("#")) {
+      const result = line.match(destinationURLRegex);
+
       if (result !== null) {
-        const match = result[1]
-        let local = join(PUBDIR, match)
+        const match = result[1];
+        let local = join(PUBDIR, match);
         exists = existsSync(local);
 
         if (!exists) {
           REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
         }
-  }
-  }
+      }
+    }
   }
 }
 
@@ -329,13 +324,18 @@ try {
 }
 
 try {
-  await testREDIRECTS(REDIRECT_DIR)
+  await testREDIRECTS(REDIRECT_DIR);
   let msg = "\n~> /content/redirects files DONE with:";
   if (REDIRECT_ERRORS.length > 0) {
     process.exitCode = 1;
-    msg += "\n    - " + REDIRECT_ERRORS.length.toLocaleString() + " error(s)" + " (due to bad destination URLs)" + "\n\n" ;
+    msg +=
+      "\n    - " +
+      REDIRECT_ERRORS.length.toLocaleString() +
+      " error(s)" +
+      " (due to bad destination URLs)" +
+      "\n\n";
     for (let i = 0; i < REDIRECT_ERRORS.length; i++) {
-      msg += REDIRECT_ERRORS[i]
+      msg += REDIRECT_ERRORS[i];
     }
   }
   console.log(msg + "\n\n");
