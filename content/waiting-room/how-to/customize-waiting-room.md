@@ -116,7 +116,7 @@ To preview the appearance of a waiting room:
 4.  Select **Preview waiting room**:
 
 - Choose **Queueing** to display the waiting room appearance when it is enabled on the dashboard and **Queue-all** is not enabled.
-- Choose **Queue All** to display the waiting room appearance when it is enabled on the dashboard and **Queue-all** is enabled. When **Queue-all** is enabled for a waiting room, the estimated wait time is not displayed.
+- Choose **Queue-All** to display the waiting room appearance when it is enabled on the dashboard and **Queue-all** is enabled. When **Queue-all** is enabled for a waiting room, the estimated wait time is not displayed.
 
 ### Troubleshooting
 
