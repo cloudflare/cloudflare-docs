@@ -5200,8 +5200,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     }
 }
 
-.DocsFooter--content {
-    display: flex
+.DocsFooter--content div {
+    margin-bottom: 1em;
 }
 
 @media (max-width:414px) {
