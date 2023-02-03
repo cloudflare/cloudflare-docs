@@ -171,7 +171,7 @@ async function testJSON(file: string) {
 
 async function testREDIRECTS(file: string) {
   const textPlaceholder = await fs.readFile(file, "utf-8");
-  const destinationURLRegex = new RegExp("/.*/*? (/.*/)");
+  const destinationURLRegex = new RegExp(/\/.*\/*? (\/.*\/)/);
 
   for (const line of textPlaceholder.split(/[\r\n]+/)) {
     let exists = false;
