@@ -262,6 +262,10 @@
 /fundamentals/get-started/task-guides/secure-your-website/ /learning-paths/application-security/ 301
 /fundamentals/get-started/task-guides/optimize-site-speed/ /learning-paths/optimize-site-speed/ 301
 /fundamentals/notifications/create-pagerduty/ /fundamentals/notifications/create-notifications/create-pagerduty/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/ /fundamentals/speed/amp-real-ulr/ 301
+/fundamentals/signed-exchanges/signed-exchanges/ /fundamentals/speed/signed-exchanges/ 301
+/fundamentals/signed-exchanges/signed-exchanges/enable-signed-exchange/ /fundamentals/speed/signed-exchanges/enable-signed-exchange/ 301
+/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ / /speed/signed-exchanges/signed-exchanges-caveats/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/filtering/ 301
