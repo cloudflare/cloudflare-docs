@@ -41,13 +41,13 @@ Example condition: `ends_with(http.request.uri.path, ".js")`
 To create a new bypass rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Within your application, go to **Traffic** > **Waiting Rooms**.
-3. Expand a waiting room and select **Go to rules**.
-4. Select **Create new Bypass rule**.
+2. Within your application, go to **Traffic** > **Waiting Room**.
+3. Expand a waiting room and select **Manage rules**.
+4. Select **Create new bypass rule**.
 5. Enter a descriptive name for the rule in **Rule name**.
 6. Under **When incoming requests match**, define the rule expression. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 7. Under **Then**, the Bypass Waiting Room action is automatically selected. Before saving, review your expression and ensure that the traffic that matches your expression is the traffic that you do not want the waiting room to apply to.
-8. To save and deploy your rule, select **Save and deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+8. To save and deploy your rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 ### Operators and grouping symbols
 
