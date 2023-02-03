@@ -1,0 +1,55 @@
+{
+    "parents": [
+        {
+            "uid": "learn.build-javascript-applications-nodejs",
+            "type": "learningPath",
+            "title": "Build JavaScript applications with Node.js",
+            "url": "/training/paths/build-javascript-applications-nodejs/",
+            "iconUrl": "/training/achievements/build-javascript-applications-nodejs.svg",
+            "durationInMinutes": 192,
+            "points": 1050
+        }
+    ],
+    "units": [
+        {
+            "uid": "learn.bots.concepts.intro",
+            "type": "unit",
+            "title": "Introduction",
+            "url": "/learning-paths/modules/test-module-2/test1/",
+            "durationInMinutes": 3
+        },
+        {
+            "uid": "learn.bots.concepts.bots",
+            "type": "unit",
+            "title": "Introduction",
+            "url": "/learning-paths/modules/test-module-2/test2/",
+            "durationInMinutes": 3
+        },
+        {
+            "uid": "learn.bots.concepts.botscore",
+            "type": "unit",
+            "title": "Introduction",
+            "url": "/learning-paths/modules/test-module-2/test3/",
+            "durationInMinutes": 3
+        }
+    ],
+    "summary": "Learn about Node.js: what it is, how it works, and when to use it. Create a Node.js application with JavaScript using Visual Studio Code.",
+    "abstract": "<p>By the end of this module, you'll be able to:</p>\n<ul>\n<li>Explain what Node.js is</li>\n<li>Describe how Node.js works</li>\n<li>Identify when to use Node.js</li>\n<li>Create and run a Node.js script from the command line</li>\n</ul>\n",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "developer",
+        "student"
+    ],
+    "products": [
+        "azure"
+    ],
+    "subjects": [
+        "development-tools"
+    ],
+    "uid": "learn.bots.concepts",
+    "type": "module",
+    "title": "Concepts - Bot Management",
+    "url": "/learning-paths/modules/test-module-2/"
+}

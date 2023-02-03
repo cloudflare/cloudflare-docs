@@ -15,6 +15,7 @@ declare global {
   navs.init();
   timeago.init();
   events.load();
+  events.learningNavigation();
   events.focus();
   events.mobile();
   events.dropdowns();

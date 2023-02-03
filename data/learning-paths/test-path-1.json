@@ -1,0 +1,12 @@
+{
+    "modules": [ 
+        {
+            "uid": "test-module-1"
+        },
+        {
+            "uid": "test-module-2"
+        }
+
+    ],
+    "uid": "learn.bots"
+}

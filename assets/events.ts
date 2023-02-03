@@ -1,3 +1,5 @@
+import * as bots_path from "./data/learning-paths/test-path-1.json";
+
 let SEARCH_ID = /^(Docs|Site)Search/;
 let SEARCH_INPUT: HTMLElement;
 
@@ -319,5 +321,50 @@ export function toggleSidebar() {
         item.toggleAttribute(attr, !isHidden);
       });
   });
+  }
+}
+
+export function learningNavigation() {
+  const currentLocation = window.location.href
+
+  if (currentLocation.includes("/learning-paths/modules")) {
+    let params = new URLSearchParams(document.location.search);
+    let currentLearningPath = params.get("learning_path")
+    if ( currentLearningPath !== null ) {
+      
+      // Update navigational links to keep the current context
+      const navigationLinks = document.getElementsByClassName("learningNavigation");
+      if(navigationLinks) {
+        for (let item of navigationLinks) {
+          const currentHref = item.getAttribute("href")
+          item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
+        }
+      }
+
+      // Update final next link to point to the next module
+      const nextModuleLink = document.getElementById("nextModuleLink");
+      if (nextModuleLink) {
+        const moduleNameRegex = new RegExp('\/learning-paths\/modules\/(.*?)\/'); 
+        const result = currentLocation.match(moduleNameRegex)
+        const currentModule = result[1]
+        let nextModule = ""
+        bots_path.modules.forEach((c, i) => {
+          if (currentModule === c.uid) {
+            if (i+1 < bots_path.modules.length) {
+              nextModule = bots_path.modules[i+1]["uid"]
+            }
+          }
+        
+        })
+        if (nextModule !== "") {
+          nextModuleLink.setAttribute("href", "/learning-paths/modules/" + nextModule + "?learning_path=" + currentLearningPath)
+          nextModuleLink.innerHTML = "Continue to next module >"
+        } else {
+          nextModuleLink.innerHTML = "Finish learning path >"
+          nextModuleLink.setAttribute("href", "/learning-paths/")
+        }
+      }
+      console.log(bots_path)
+    }
   }
 }

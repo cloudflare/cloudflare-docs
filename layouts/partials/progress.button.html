@@ -1,0 +1,32 @@
+{{- $currentLocation := split .RelPermalink "/" -}}
+{{- $currentModule := index $currentLocation 3 -}}
+{{- $currentUnit := index $currentLocation 4 -}}
+{{- $moduleData :=  index .Site.Data.modules $currentModule -}}
+{{- $moduleLength := len (index $moduleData "units") -}}
+{{- $baseURL := "/learning-paths/modules/" -}}
+{{- $previousUnit := "" -}}
+{{- $nextUnit := "" -}}
+
+{{- range $index, $item := (index $moduleData "units") -}}
+
+{{- if eq (print $baseURL $currentModule "/" $currentUnit "/") $item.url -}}
+    {{- if ne $index 0 -}}
+        {{- $previousUnit = index (index (index $moduleData "units") (sub $index 1)) "url" -}}
+    {{- end -}}
+
+    {{- if ne $index (sub $moduleLength 1) -}}
+        {{- $nextUnit = index (index (index $moduleData "units") (add $index 1)) "url" -}}
+    {{- end -}}
+
+{{- end -}}
+{{- end -}}
+
+{{- if ne $previousUnit "" }}
+    <a href="{{$previousUnit}}" id="previousLink" class="learningNavigation">Previous</a>
+    <br/>
+{{- end -}}
+{{- if ne $nextUnit "" -}}
+    <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation">Next</a>
+{{- else -}}
+    <a href="{{$baseURL}}" id="nextModuleLink" class="learningNavigation">Finish module</a>
+{{- end -}}
