@@ -23,6 +23,19 @@ With this change, Stream responds to the upload request with an error, allowing 
 
 Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
 
+## 2022-11-29
+
+### Multiple audio tracks (closed beta)
+
+Stream now supports adding multiple audio tracks to an existing video upload. This allows you to:
+
+- Provide viewers with audio tracks in multiple languages
+- Provide dubbed audio tracks, or audio commentary tracks (ex: Director’s Commentary)
+- Allow your users to customize the customize the audio mix, by providing separate audio tracks for music, speech or other audio tracks.
+- Provide Audio Description tracks to ensure your content is accessible. ([WCAG 2.0 Guideline 1.2 1](https://www.w3.org/TR/WCAG20/#media-equiv-audio-desc-only))
+
+To request an invite to the beta, refer to [this post](https://community.cloudflare.com/t/new-in-beta-support-for-multiple-audio-tracks/439629).
+
 ## 2022-11-22
 
 ### VP9 support for WebRTC live streams (beta)

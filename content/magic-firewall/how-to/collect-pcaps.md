@@ -16,11 +16,11 @@ This feature is available for Advanced Magic Firewall users. For access, contact
 
 ## Send a packet capture request
 
-Currently, when a packet capture is requested, packets flowing at the edge through the Magic Transit system are captured, and the system is `magic-transit`.
+Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured, and the system is `magic-transit`.
 
 Cloudflare supports two types of packet captures:
 
-- **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all edge metals to build a PCAP file.
+- **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all data centers from Cloudflare's global network to build a PCAP file.
 - **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center or set of data centers and sent to either a GCP or AWS bucket specified by the user.
 
 {{<Aside type="note" header="Note:">}}

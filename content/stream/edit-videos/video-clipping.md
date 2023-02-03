@@ -50,7 +50,7 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<Y
 --data-raw '{
     "clippedFromVideoUID": "0ea62994907491cf9ebefb0a34c1e2c6",
     "startTimeSeconds": 10,
-    "endTimeSeconds": 15,
+    "endTimeSeconds": 15
     }'
 ```
 

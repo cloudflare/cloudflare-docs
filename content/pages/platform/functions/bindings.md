@@ -10,6 +10,12 @@ A [binding](/workers/platform/bindings/) enables your Pages Functions to interac
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
+{{<Aside type="note">}}
+Local development uses local storage. It cannot access data stored on Cloudflare’s servers.
+
+By default, data in local development is not persisted. This means if you write a value into KV, for example, the next time you start local dev, it will no longer exist. Enable persistence with the `--persist` flag.
+{{</Aside>}}
+
 ## KV namespaces
 
 [Workers KV](/workers/wrangler/workers-kv/) is Cloudflare's key-value storage solution. To bind your KV namespace to your Pages Function:
