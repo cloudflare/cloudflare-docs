@@ -32,7 +32,7 @@ Magic WAN steers traffic along tunnel routes based on priorities you define duri
 {{</feature>}}
 
 {{<feature header="Network analytics" href="/magic-wan/how-to/view-analytics/">}}
-Check traffic patterns and DDoS attacks in near real-time, to troubleshoot IP traffic issues.
+Network analytics allows you to check traffic patterns and DDoS attacks in near real-time, to troubleshoot IP traffic issues.
 {{</feature>}}
  
 ---
@@ -40,7 +40,7 @@ Check traffic patterns and DDoS attacks in near real-time, to troubleshoot IP tr
 ## Related products
  
 {{<related header="Magic Firewall" href="/magic-firewall/" product="magic-firewall">}}
-Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, scalable protection.
+Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, and scalable protection.
 {{</related>}}
 
 {{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
