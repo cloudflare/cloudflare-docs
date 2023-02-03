@@ -197,7 +197,7 @@ To connect your queue to your consumer Worker, open your `wrangler.toml` file an
 
 ```toml
 [[queues.consumers]]
- queue = "YOUR_QUEUE_NAME"
+ queue = "<YOUR_QUEUE_NAME>"
  # Required: this should match the name of the queue you created in step 3.
  # If you misspell the name, you will receive an error when attempting to publish your Worker.
  max_batch_size = 10 # optional: defaults to 10
