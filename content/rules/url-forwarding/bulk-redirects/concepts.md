@@ -55,7 +55,7 @@ URL redirects are the list items of Bulk Redirect Lists.
 
 ## Bulk Redirect Lists
 
-Bulk Redirect Lists allow you to create distinct groups of URL redirects for different purposes. You can use a URL redirect List in one or more Bulk Redirect Rules.
+Bulk Redirect Lists allow you to create distinct groups of URL redirects for different purposes. You can use a Bulk Redirect List in one or more Bulk Redirect Rules.
 
 A Bulk Redirect List does not perform any redirects on its own — you must reference the list in a Bulk Redirect Rule to enable the redirects in the list.
 
