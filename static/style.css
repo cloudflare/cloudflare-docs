@@ -5432,3 +5432,40 @@ pre {
   display: inline;
   white-space: nowrap;
 }
+
+/* Highly specific override rules to make the cookie prefs button stylistically consistent */
+html #ot-sdk-btn.ot-sdk-show-settings {
+  color: inherit;
+  border: none !important;
+  transition: none !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  font-size: inherit !important;
+
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.08;
+  --background-color: rgba( var(--background-color-rgb), var(--background-color-alpha) );
+  background-color: var(--background-color) !important;
+  text-decoration: none;
+
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+  --border-bottom-color-alpha: 0.3;
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha)) !important;
+}
+
+[theme="dark"] #ot-sdk-btn.ot-sdk-show-settings {
+  --background-color-alpha: 0.03;
+  --border-bottom-color-rgb: var(--orange-rgb);
+  --border-bottom-color-alpha: 0.35;
+  color: var(--code-orange);
+}
+
+html #ot-sdk-btn.ot-sdk-show-settings:hover {
+  --background-color-alpha: 0.15;
+  color: inherit;
+}
+
+[theme="dark"] #ot-sdk-btn.ot-sdk-show-settings:hover {
+  color: var(--code-orange);
+}
