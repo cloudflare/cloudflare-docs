@@ -22,6 +22,7 @@ Cloudflare Zero Trust allows you to build Zero Trust rules based on device UUIDs
 ## 1. Assign UUIDs to devices
 
 1. Generate a unique identifier for each corporate device. For best practices on choosing UUIDs, refer to the [Android documentation](https://developer.android.com/training/articles/user-data-ids#best-practices-android-identifiers).
+
 2. Enter the UUIDs into your MDM configuration file using the [`unique_client_id` key](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#unique_client_id).
 
 ## 2. Create a list of UUIDs
@@ -39,6 +40,10 @@ To create rules based on device UUIDs, you first need to create a [Gateway List]
 5. Enter the UUIDs of the devices your team manages, or upload your CSV file.
 
 6. Select **Save**.
+
+{{<Aside type="note">}}
+Hyphens are automatically stripped from UUIDs. For example, the posture check will match `123e4567-e89b-12d3-a456-426614174000` to `123e4567e89b12d3a456426614174000`.
+{{</Aside>}}
 
 ## 3. Enable the posture check
 
