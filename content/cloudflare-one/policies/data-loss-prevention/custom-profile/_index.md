@@ -15,7 +15,7 @@ To define a custom profile:
 2. Select **Create Profile**.
 3. Enter a name and optional description for the profile.
 4. Select **Add detection entry** and give it a name.
-5. In **Value**, enter a regular expression that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by 2 digits.
+5. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by 2 digits.
 
     - Regexes are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
     - Detected text patterns are limited to 1024 bytes in length.
