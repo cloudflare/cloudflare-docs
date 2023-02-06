@@ -575,6 +575,10 @@ html[is-site-page] .DocsContent {
     margin-bottom: -6px;
 }
 
+[theme=dark] .DocsMarkdown .HeroBlock img {
+    filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
+}
+
 [theme=dark] .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
     color: var(--code-orange);
