@@ -6,9 +6,9 @@ weight: 2
 
 # Deprecations
 
-This document describes the difference between Wrangler 1 and 2, specifically deprecations and breaking changes.
+This document describes the difference between Wrangler v1 and v2, specifically deprecations and breaking changes.
 
-Wrangler 2 introduces some new fields for configuration, while also deprecating some redundant fields.
+Wrangler v2 introduces some new fields for configuration, while also deprecating some redundant fields.
 
 ## Common deprecations
 
@@ -20,7 +20,7 @@ Here are common fields that are no longer required.
 - `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
 - `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
 - `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler/migration/eject-webpack/).
-  Here are the Wrangler 1 commands that are no longer supported:
+  Here are the Wrangler v1 commands that are no longer supported:
 - `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
 - `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
 - `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
@@ -55,7 +55,7 @@ These are new fields that can be added to your `wrangler.toml`.
 
 ### Non-mandatory fields
 
-A few configuration fields which were previously required, are now optional in particular situations. They can either be inferred, or added as an optimization. No fields are required anymore when starting with Wrangler 2, and you can gradually add configuration as the need arises.
+A few configuration fields which were previously required, are now optional in particular situations. They can either be inferred, or added as an optimization. No fields are required anymore when starting with Wrangler v2, and you can gradually add configuration as the need arises.
 
 - **`name`**: `string`
 
@@ -101,7 +101,7 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 ## Deprecated commands
 
-The following commands are deprecated in Wrangler as of Wrangler 2.
+The following commands are deprecated in Wrangler as of Wrangler v2.
 
 ### `build`
 
@@ -165,7 +165,7 @@ Routes are specified in the `wrangler.toml` configuration file.
   });
   ```
 
-  Wrangler 1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in Wrangler 2, but will also log a deprecation warning. In the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
+  Wrangler v1 would resolve `import SomeDependency from "some-dependency.js";` to the file `some-dependency.js`. This will also work in Wrangler v2, but will also log a deprecation warning. In the future, this will break with an error. Instead, you should rewrite the import to specifiy that it is a relative path, like so:
 
   ```diff
   - import SomeDependency from "some-dependency.js";
