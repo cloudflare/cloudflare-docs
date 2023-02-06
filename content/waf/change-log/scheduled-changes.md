@@ -53,7 +53,7 @@ rss: file
     <tr>
       <td>2023-01-30</td>
       <td>2023-02-13</td>
-      <td>Log</td>
+      <td>Block</td>
       <td>100303_BETA</td>
       <td>...d5488862</td>
       <td>Command Injection - Nslookup</td>
