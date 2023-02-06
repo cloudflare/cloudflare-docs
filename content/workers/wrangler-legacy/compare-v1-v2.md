@@ -55,7 +55,7 @@ Prefer a video format? The following video describes some of the major changes i
 
 | Property              | v1   | v2   | Notes                                                                          |
 | --------------------- | --- | --- | ------------------------------------------------------------------------------ |
-| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate.                                        |
+| `type = "webpack"`    | ✅  | ❌  | Removed, refer to [this guide](/workers/wrangler-legacy/migration/eject-webpack/#migrate-webpack-projects-from-wrangler-version-1) to migrate.                                        |
 | `type = "rust"`       | ✅  | ❌  | Removed, use [`workers-rs`](https://github.com/cloudflare/workers-rs) instead. |
 | `type = "javascript"` | ✅  | 🚧  | No longer required, can be omitted.                                            |
 

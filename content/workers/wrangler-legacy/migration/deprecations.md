@@ -19,7 +19,7 @@ Here are common fields that are no longer required.
 - `build.upload.format` is no longer used. The format is now inferred automatically from the code.
 - `build.upload.main` and `build.upload.dir` are no longer required. Use the top level `main` field, which now serves as the entry-point for the Worker.
 - `site.entry-point` is no longer required. The entry point should be specified through the `main` field.
-- `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler/migration/eject-webpack/).
+- `webpack_config` and `webpack` properties are no longer supported. Refer to [Ejecting Webpack](/workers/wrangler-legacy/migration/eject-webpack/).
   Here are the Wrangler v1 commands that are no longer supported:
 - `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
 - `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
@@ -97,7 +97,7 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
 - **`type`**: `rust` | `javascript` | `webpack`, deprecated
 
-  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler/migration/eject-webpack/) to modify your project and use a custom build instead.
+  The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler-legacy/migration/eject-webpack/) to modify your project and use a custom build instead.
 
 ## Deprecated commands
 
