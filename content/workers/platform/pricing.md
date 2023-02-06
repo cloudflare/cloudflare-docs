@@ -187,7 +187,7 @@ Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-
 
 ## Service bindings
 
-Service Bindings cost the same as any normal Worker; each invocation is charged as if it’s a request from the Internet – with one major and important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
 
 For more information on how service bindings work, [read the docs](https://developers.cloudflare.com/workers/platform/bindings/about-service-bindings/).
 
