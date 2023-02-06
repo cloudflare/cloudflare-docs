@@ -39,7 +39,7 @@ export function init() {
         const firstLearningBreadcrumb = document.getElementById("firstLearningBreadcrumb");
         if (firstLearningBreadcrumb) {
             firstLearningBreadcrumb.insertAdjacentHTML("afterend", `<li id="firstLearningBreadcrumb">
-            <a href="${currentPathData["url"]}" class="DocsMarkdown--link">
+            <a href="${currentPathData["path"]}" class="DocsMarkdown--link">
               <span class="DocsMarkdown--link-content">${currentPathData["title"]}</span></a>
           </li>&nbsp;&nbsp;>&nbsp;&nbsp;`)
         }

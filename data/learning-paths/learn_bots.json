@@ -13,5 +13,11 @@
     ],
     "title": "Get started with Bot Management",
     "uid": "learn-bots",
-    "url": "/learning-paths/learn-bots/"
+    "path": "/learning-paths/learn-bots/",
+    "priority": 2,
+    "description": "Learn how to protect your domain from bad bots.",
+    "products": [
+      "Bot Management"
+    ],
+    "category": ["Security"]
 }
