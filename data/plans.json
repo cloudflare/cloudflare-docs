@@ -1606,7 +1606,7 @@
     "title": "Speed",
     "amp": {
       "title": "AMP Real URL",
-      "link": "/fundamentals/signed-exchanges/amp-real-ulr/",
+      "link": "/fundamentals/speed/amp-real-ulr/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1634,7 +1634,7 @@
     },
     "automatic_signed_exchanges": {
       "title": "Automatic Signed Exchanges (SXGs)",
-      "link": "/fundamentals/signed-exchanges/signed-exchanges/",
+      "link": "/fundamentals/speed/signed-exchanges/",
       "properties": {
         "availability": {
           "title": "Availability",
