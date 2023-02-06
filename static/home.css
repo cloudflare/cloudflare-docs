@@ -628,12 +628,11 @@ html[is-site-page] .DocsContent {
 
 .Recommendation {
     background: #e2f5fa;
-    padding: 1em;
+    padding: 1em 0;
 }
 
 [theme=dark] .Recommendation {
     background: #222629;
-    padding: 1em;
 }
 
 .Recommendation--full-bleed {
@@ -682,6 +681,10 @@ html[is-site-page] .DocsContent {
     border-radius: 6px;
 }
 
+[theme=dark] .RecommendedContentWithCard {
+    border: 1px solid var(--code-orange);
+}   
+
 .RecommendedContentTitle {
     font-size: 1.3em;
 }
@@ -699,6 +702,13 @@ html[is-site-page] .DocsContent {
     }
 
     .RecommendedContentWithCard {
+        width: unset;
+        margin: 0;
+        height: auto;
+    }
+
+    .RecommendedContentDescription {
+        font-size: 1em;
         width: unset;
     }
 }
@@ -989,21 +999,35 @@ html[is-site-page] .DocsContent {
     }
 
     .FeatureContentGrid {
-        margin-bottom: 0;
+        margin-bottom: .8em;
         flex-direction: column;
         align-items: flex-start;
+        gap: .6em;
     }
 
-    .FeatureContentWithImage {
-        margin: 30px;
-        width: unset;
+    .featured--zero-trust {
+        flex-direction: column-reverse;
     }
 
     .FeatureContentWithCard {
-        height: 15em;
+        width: 100%;
+        height: unset;
+        margin: .6em .2em;   
+    }
+
+    .FeatureContentWithImage {
         width: unset;
-        padding: 1.5em;
-        margin: .6em;
+        margin: .6em .2em;   
+    }
+
+    .FeatureContentTitle {
+        font-size: 1.5em;
+    }
+
+    .FeatureContentDescription {
+        width: unset;
+        height: unset;
+        font-size: 1em;
     }
 }
 
