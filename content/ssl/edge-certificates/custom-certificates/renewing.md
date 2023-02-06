@@ -14,7 +14,7 @@ Cloudflare automatically sends email notification 30 and 14 days before your cus
 When renewing a custom certificate, you can reuse a [previously generated CSR](/ssl/edge-certificates/additional-options/certificate-signing-requests/).
 {{</Aside>}}
 
-## Expired certificates and Legacy Client Support
+## Expired certificates
 
 For custom certificates, Cloudflare will remove the certificate in the 24 hours before expiration if a valid replacement is already available. If no valid replacement is available, Cloudflare will remove the certificate 30 minutes before it expires. 
 
