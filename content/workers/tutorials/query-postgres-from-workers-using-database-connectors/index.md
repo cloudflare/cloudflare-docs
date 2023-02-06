@@ -11,6 +11,8 @@ layout: single
 
 <TutorialsBeforeYouStart />
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 ## Overview
 
 In this tutorial, you will learn how to retrieve data in your Cloudflare Workers applications from a PostgreSQL database using [Postgres database connector](https://github.com/cloudflare/worker-template-postgres).
