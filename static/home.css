@@ -563,6 +563,11 @@ html[is-site-page] .DocsContent {
     display: none;
 }
 
+.DocsMarkdown .HeroBlock img {
+    display: inline-flex;
+    margin-bottom: -6px;
+}
+
 [theme=dark] .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
     color: var(--code-orange);
@@ -630,8 +635,13 @@ html[is-site-page] .DocsContent {
     clip-path: inset(0 -100vmax);
 }
 
-.Recommendation h2 {
-    padding-bottom: 1.2em;
+.RecommendedContentGrid {
+    display: flex;
+    gap: 2em;
+}
+
+.RecommendationTitle {
+    padding-bottom: .8em;
 }
 
 .RecommendedContentBlock {
@@ -657,13 +667,8 @@ html[is-site-page] .DocsContent {
     margin: 1em;
     height: 20em;
     width: 45em;
-    border: 1px solid #c8c6c6;
+    border: 1px solid #0051C3;
     border-radius: 6px;
-}
-
-.RecommendedContentGrid {
-    display: flex;
-    gap: 2em;
 }
 
 .RecommendedContentTitle {
@@ -910,6 +915,7 @@ html[is-site-page] .DocsContent {
 
  .FeatureContentGrid {
     display: flex;
+    gap: 2em;
     align-items: flex-end;
     margin-bottom: 3em;
  }
@@ -936,7 +942,6 @@ html[is-site-page] .DocsContent {
  .FeatureContentTitle {
      font-size: 1.3em;
  }
-
 
   .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
