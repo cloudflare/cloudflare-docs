@@ -38,10 +38,10 @@ export function init() {
         // Add learning path to breadcrumb list
         const firstLearningBreadcrumb = document.getElementById("firstLearningBreadcrumb");
         if (firstLearningBreadcrumb) {
-            firstLearningBreadcrumb.insertAdjacentHTML("afterend", `&nbsp;&nbsp;>&nbsp;&nbsp;<li id="firstLearningBreadcrumb">
+            firstLearningBreadcrumb.insertAdjacentHTML("afterend", `<li id="firstLearningBreadcrumb">
             <a href="${currentPathData["url"]}" class="DocsMarkdown--link">
               <span class="DocsMarkdown--link-content">${currentPathData["title"]}</span></a>
-          </li>`)
+          </li>&nbsp;&nbsp;>&nbsp;&nbsp;`)
         }
 
   
