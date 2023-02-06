@@ -1,8 +1,11 @@
 {{- $currentLocation := split .RelPermalink "/" -}}
 {{- $currentModule := index $currentLocation 3 -}}
 {{- $moduleData :=  index .Site.Data.modules $currentModule -}}
+{{- $moduleTitle := index $moduleData "title" -}}
 {{- $moduleSummary := index $moduleData "summary" -}}
 {{- $moduleObjectives := index $moduleData "abstract" -}}
+
+<h1>{{$moduleTitle}}</h1>
 
 {{- $moduleSummary | .Page.RenderString -}}
 <br/>
