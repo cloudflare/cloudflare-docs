@@ -26,7 +26,7 @@ rss: file
     <tr>
       <td>2023-02-06</td>
       <td>2023-02-13</td>
-      <td>Log</td>
+      <td>Block</td>
       <td>100561</td>
       <td>...d3cdd6ac</td>
       <td>Remote Code Execution - Double Extension</td>
