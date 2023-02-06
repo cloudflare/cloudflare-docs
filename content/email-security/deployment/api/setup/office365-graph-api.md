@@ -3,7 +3,7 @@ title: Office 365 Graph API setup
 pcx_content_type: tutorial
 weight: 4
 meta:
-    Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API set up.
+    Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
 ---
 
 {{<beta>}}Office 365 Graph API set up with Area 1{{</beta>}}
@@ -21,7 +21,7 @@ Area 1 uses two roles for retraction and directory integration purposes:
 - **Privileged authentication administrator**: Users with this role can view the current authentication method information and set or reset non-password credentials for all users, including global administrators. Privileged authentication administrators can force users to re-register against existing non-password credentials (like MFA or FIDO) and revoke the `remember MFA on the device` message prompting for MFA on the next login of all users.
 - **Privileged role administrator**: Users with this role can manage role assignments in Azure Active Directory, as well as within Privileged Identity Management. In addition, this role allows management of all aspects of Privileged Identity Management.
 
-Directory Integration requires the use of both roles mentioned above. Email retraction only requires the **Privileged role administrator**. Any Azure administrator with a membership in the required role can perform these authorizations. The authorization process grants the Area 1 dashboard access to the Azure environment. This access is performed with the least applicable privileges required to function, as shown in the table below. 
+Directory Integration requires the use of both roles mentioned above. Email retraction only requires the **Privileged role administrator**. Any Azure administrator with a membership in the required role can perform these authorizations. The authorization process grants the Area 1 dashboard access to the Azure environment. This access is performed with the least applicable privileges required to function, as shown in the [table below](#azure-applications). 
 
 The Enterprise Applications that Area 1 registers are not tied to any administrator account. Inside of the Azure Active Directory admin center you can review the permissions granted to each application in the Enterprise Application section. Refer to [Application management documentation](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/) for more information.
 
