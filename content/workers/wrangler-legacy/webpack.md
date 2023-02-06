@@ -6,11 +6,7 @@ weight: 5
 
 # Webpack
 
-{{<Aside type="note">}}
-
-Wrangler has launched a new version. This is documentation for Wrangler v1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
-
-{{</Aside>}}
+{{<render file="_wrangler-v1-deprecation.md">}}
 
 Wrangler allows you to develop modern ES6 applications with support for modules. This support is possible because of Wrangler's [webpack](https://webpack.js.org/) integration. This document describes how Wrangler uses webpack to build your Workers and how you can bring your own configuration.
 

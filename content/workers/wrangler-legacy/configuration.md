@@ -6,11 +6,7 @@ weight: 4
 
 # Configuration
 
-{{<Aside type="note">}}
-
-Wrangler has launched a new version. This is documentation for Wrangler v1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
-
-{{</Aside>}}
+{{<render file="_wrangler-v1-deprecation.md">}}
 
 ## Background
 

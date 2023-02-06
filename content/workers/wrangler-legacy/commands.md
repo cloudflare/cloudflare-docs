@@ -6,11 +6,7 @@ weight: 3
 
 # Commands
 
-{{<Aside type="note">}}
-
-Wrangler has launched a new version. This is documentation for Wrangler v1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
-
-{{</Aside>}}
+{{<render file="_wrangler-v1-deprecation.md">}}
 
 Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler-legacy), the Workers CLI.
 
