@@ -42,7 +42,7 @@ Prefer a video format? The following video describes some of the major changes i
 | `route`     | ✅  | ❌  | Removed, use `publish` instead.                |
 | `tail`      | ✅  | ✅  |
 | `kv`        | ✅  | ✅  |
-| `r2`        | 🚧  | ✅  | Introduced in wrangler v1.19.8.                 |
+| `r2`        | 🚧  | ✅  | Introduced in Wrangler v1.19.8.                 |
 | `pages`     | ❌  | ✅  |
 | `config`    | ✅  | ❔  |
 | `login`     | ✅  | ✅  |
