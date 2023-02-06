@@ -572,7 +572,7 @@
 /workers/cli-wrangler/ /workers/wrangler/ 301
 /workers/cli-wrangler/install-update/ /workers/wrangler/install-and-update/ 301
 /workers/cli-wrangler/authentication/ /workers/wrangler/install-and-update/ 301
-/workers/cli-wrangler/webpack/ /workers/wrangler/migration/eject-webpack/ 301
+/workers/cli-wrangler/webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
 /workers/wrangler-legacy/migration/migrating-from-wrangler-1/ /workers/wrangler-legacy/migration/ 301
 
@@ -675,8 +675,8 @@
 /workers/tooling/wrangler/secrets/ /workers/wrangler/commands/ 301
 /workers/tooling/wrangler/sites/ /pages/ 301
 /workerssites/config/ /pages/ 301
-/workers/tooling/wrangler/webpack/ /workers/wrangler/cli-wrangler/webpack/ 301
-/workers/wrangler/webpack/ /workers/wrangler/cli-wrangler/webpack/ 301
+/workers/tooling/wrangler/webpack/ /workers/wrangler-legacy/webpack/ 301
+/workers/wrangler/webpack/ /workers/wrangler-legacy/webpack/ 301
 /workers/tutorials/authorize-users-with-auth0/ /workers/ 301
 /workers/tutorials/build-a-rustwasm-function/ /workers/tutorials/hello-world-rust/ 301
 /workers/templates/pages/rustwasm/ /workers/tutorials/hello-world-rust/ 301
@@ -685,7 +685,7 @@
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
-/workers/wrangler/eject-webpack/ /workers/wrangler/migration/eject-webpack/ 301
+/workers/wrangler/eject-webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/learning/debugging-workers/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
