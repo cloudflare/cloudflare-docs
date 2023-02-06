@@ -70,7 +70,7 @@ Your authorized domain will show up in **Email Configuration** > **Domains & Rou
 
 ### Directory Integration
 
-The following table shows Directory Integration as it appears in Azure Enterprise applications.
+The following table shows API permissions required for Directory Integration as it appears in Azure Enterprise applications.
 
 {{<table-wrap style="font-size:90%">}}
 
