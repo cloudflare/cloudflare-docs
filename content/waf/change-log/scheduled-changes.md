@@ -35,7 +35,7 @@ rss: file
     <tr>
       <td>2023-02-06</td>
       <td>2023-02-13</td>
-      <td>Log</td>
+      <td>Block</td>
       <td>100016_BETA</td>
       <td>...dd4a65f4</td>
       <td>Version Control - Information Disclosure - BETA</td>
