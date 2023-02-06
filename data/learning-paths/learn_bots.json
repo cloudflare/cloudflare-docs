@@ -1,12 +1,17 @@
 {
     "modules": [ 
         {
-            "uid": "test-module-1"
+            "uid": "bots-concepts"
         },
         {
-            "uid": "test-module-2"
+            "uid": "analyze-traffic"
+        },
+        {
+            "uid": "create-firewall-rules"
         }
 
     ],
-    "uid": "learn_bots"
+    "title": "Get started with Bot Management",
+    "uid": "learn-bots",
+    "url": "/learning-paths/learn-bots/"
 }

@@ -12,29 +12,29 @@
     ],
     "units": [
         {
-            "uid": "learn.bots.concepts.intro",
+            "uid": "learn.bots.preanalysis.intro",
             "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/test-module-1/test1/",
+            "url": "/learning-paths/modules/analyze-traffic/intro/",
             "durationInMinutes": 3
         },
         {
-            "uid": "learn.bots.concepts.bots",
+            "uid": "learn.bots.preanalysis.botanalytics",
             "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/test-module-1/test2/",
+            "url": "/learning-paths/modules/analyze-traffic/bot-analytics/",
             "durationInMinutes": 3
         },
         {
-            "uid": "learn.bots.concepts.botscore",
+            "uid": "learn.bots.preanalysis.otherdata",
             "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/test-module-1/test3/",
+            "url": "/learning-paths/modules/analyze-traffic/other-data-sources/",
             "durationInMinutes": 3
         }
     ],
-    "summary": "Learn about Node.js: what it is, how it works, and when to use it. Create a Node.js application with JavaScript using Visual Studio Code.",
-    "abstract": "<p>By the end of this module, you'll be able to:</p>\n<ul>\n<li>Explain what Node.js is</li>\n<li>Describe how Node.js works</li>\n<li>Identify when to use Node.js</li>\n<li>Create and run a Node.js script from the command line</li>\n</ul>\n",
+    "summary": "Learn how to understand the traffic reaching your application",
+    "abstract": "<p>By the end of this module, you'll be able to:</p>\n<ul>\n<li>Explore data using Bot Analytics</li>\n<li>Review log data for bot-related characteristics</li>\n<li>etc.</li>\n</ul>\n",
     "levels": [
         "beginner"
     ],
@@ -50,6 +50,6 @@
     ],
     "uid": "learn.bots.concepts",
     "type": "module",
-    "title": "Analyze Traffic",
-    "url": "/learning-paths/modules/test-module-1/"
+    "title": "Concepts - Bot Management",
+    "url": "/learning-paths/modules/test-module-2/"
 }

@@ -1,0 +1,10 @@
+{{- $currentLocation := split .RelPermalink "/" -}}
+{{- $currentModule := index $currentLocation 3 -}}
+{{- $moduleData :=  index .Site.Data.modules $currentModule -}}
+{{- $moduleSummary := index $moduleData "summary" -}}
+{{- $moduleObjectives := index $moduleData "abstract" -}}
+
+{{- $moduleSummary | .Page.RenderString -}}
+<br/>
+<br/>
+{{- $moduleObjectives | .Page.RenderString -}}

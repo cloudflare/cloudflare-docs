@@ -1,5 +1,3 @@
-import { learning_paths as paths } from "json-collector";
-
 let SEARCH_ID = /^(Docs|Site)Search/;
 let SEARCH_INPUT: HTMLElement;
 
@@ -321,60 +319,5 @@ export function toggleSidebar() {
         item.toggleAttribute(attr, !isHidden);
       });
   });
-  }
-}
-
-export function learningNavigation() {
-  const currentLocation = window.location.href
-
-  if (currentLocation.includes("/learning-paths/modules")) {
-    let params = new URLSearchParams(document.location.search);
-    let currentLearningPath = params.get("learning_path")
-    let currentPathData;
-
-    
-
-    if ( currentLearningPath !== null ) {
-
-      for (let path in paths) {
-        if (paths[path]["uid"] === currentLearningPath) {
-          currentPathData = paths[path]
-        }
-      }
-
-      // Update navigational links to keep the current context
-      const navigationLinks = document.getElementsByClassName("learningNavigation");
-      if(navigationLinks) {
-        for (let item of navigationLinks) {
-          const currentHref = item.getAttribute("href")
-          item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
-        }
-      }
-
-      // Update final next link to point to the next module
-      const nextModuleLink = document.getElementById("nextModuleLink");
-      if (nextModuleLink && currentPathData !== undefined) {
-        const moduleNameRegex = new RegExp('\/learning-paths\/modules\/(.*?)\/'); 
-        const result = currentLocation.match(moduleNameRegex)
-        const currentModule = result[1]
-        let nextModule = ""
-        
-        currentPathData.modules.forEach((c, i) => {
-          if (currentModule === c.uid) {
-            if (i+1 < currentPathData.modules.length) {
-              nextModule = currentPathData.modules[i+1]["uid"]
-            }
-          }
-        
-        })
-        if (nextModule !== "") {
-          nextModuleLink.setAttribute("href", "/learning-paths/modules/" + nextModule + "?learning_path=" + currentLearningPath)
-          nextModuleLink.innerHTML = "Continue to next module >"
-        } else {
-          nextModuleLink.innerHTML = "Finish learning path >"
-          nextModuleLink.setAttribute("href", "/learning-paths/")
-        }
-      }
-    }
   }
 }

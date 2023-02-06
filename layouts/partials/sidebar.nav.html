@@ -4,17 +4,7 @@
 
 {{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
 
-<div class="DocsSidebar">
-  <div class="DocsSidebar--sections">
-    <div class="DocsSidebar--section DocsSidebar--header-section">
-      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
-        <div class="DocsNavLogoLockup">
-          {{ partial "logo" "Docs" }}
-        </div>
-      </a>
-    </div>
-
-    <div class="DocsSidebar--section-separator"></div>
+{{- partial "docs.page.logo" . -}}
 
     <div class="DocsSidebar--section DocsSidebar--docs-title-section">
       <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="{{ $root }}">

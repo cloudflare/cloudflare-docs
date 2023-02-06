@@ -1,8 +1,8 @@
 ---
-title: Test 1
+title: Introduction to Bot Management
 pcx_content_type: overview
 weight: 1
 layout: learning-module
 ---
 
-# Test 1 (test module 2)
+# Introduction to Bot Management

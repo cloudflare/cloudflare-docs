@@ -1,3 +1,4 @@
+{{- $layout := .Params.layout -}}
 {{- $currentLocation := split .RelPermalink "/" -}}
 {{- $currentModule := index $currentLocation 3 -}}
 {{- $currentUnit := index $currentLocation 4 -}}
@@ -7,26 +8,50 @@
 {{- $previousUnit := "" -}}
 {{- $nextUnit := "" -}}
 
+{{- if eq $layout "learning-module" -}}
+    {{- $nextUnit = index (index (index $moduleData "units") 0) "url" -}}
+
+    <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation  Button Button-is-docs-primary">
+        <span class="DocsMarkdown--link-content">Start module</span>
+    </a>
+
+{{- else -}}
+
+{{- with .NextInSection -}}
+    {{- $previousUnit = .RelPermalink -}}
+{{- end -}}
+
+{{- with .PrevInSection -}}
+    {{- $nextUnit = .RelPermalink -}}
+{{- else -}}
 {{- range $index, $item := (index $moduleData "units") -}}
 
 {{- if eq (print $baseURL $currentModule "/" $currentUnit "/") $item.url -}}
-    {{- if ne $index 0 -}}
-        {{- $previousUnit = index (index (index $moduleData "units") (sub $index 1)) "url" -}}
-    {{- end -}}
-
     {{- if ne $index (sub $moduleLength 1) -}}
         {{- $nextUnit = index (index (index $moduleData "units") (add $index 1)) "url" -}}
     {{- end -}}
 
 {{- end -}}
 {{- end -}}
-
-{{- if ne $previousUnit "" }}
-    <a href="{{$previousUnit}}" id="previousLink" class="learningNavigation">Previous</a>
-    <br/>
 {{- end -}}
-{{- if ne $nextUnit "" -}}
-    <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation">Next</a>
-{{- else -}}
-    <a href="{{$baseURL}}" id="nextModuleLink" class="learningNavigation">Finish module</a>
+
+<p class="DocsMarkdown--button-group">
+    <span class="DocsMarkdown--button-group-content">
+    {{- if ne $previousUnit "" }}
+        <a href="{{$previousUnit}}" id="previousLink" class="learningNavigation Button Button-is-docs-secondary">
+            <span class="DocsMarkdown--link-content">Previous</span>
+        </a>
+        <br/>
+    {{- end -}}
+    {{- if ne $nextUnit "" -}}
+        <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation  Button Button-is-docs-primary">
+            <span class="DocsMarkdown--link-content">Next</span>
+        </a>
+    {{- else -}}
+        <a href="{{$baseURL}}" id="nextModuleLink" class="learningNavigation Button Button-is-docs-primary">
+            <span class="DocsMarkdown--link-content">Finish module</span>
+            </a>
+    {{- end -}}
+</span>
+</p>
 {{- end -}}
