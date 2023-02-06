@@ -185,7 +185,7 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 
 Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
 
-## Service Bindings
+## Service bindings
 
 Service Bindings cost the same as any normal Worker; each invocation is charged as if it’s a request from the Internet – with one major and important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
 
