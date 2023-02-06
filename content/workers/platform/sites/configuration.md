@@ -151,4 +151,4 @@ Learn more about the standard patterns used for include and exclude in the [giti
 
 ## Customizing your build
 
-Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/workers/wrangler/cli-wrangler/webpack/#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. You can [bring your own webpack configuration](/workers/wrangler-legacy/webpack/#using-with-workers-sites), however it is important to be cognizant of your `entry` and `context` settings.

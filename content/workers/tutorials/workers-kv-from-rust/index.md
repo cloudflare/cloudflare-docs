@@ -322,7 +322,7 @@ pub async fn handle(kv: WorkersKvJs, req: JsValue) -> Result<Response, JsValue> 
 }
 ```
 
-You can use [`wrangler dev`](/workers/wrangler/cli-wrangler/commands/#dev) to test the Worker:
+You can use [`wrangler dev`](/workers/wrangler-legacy/commands/#dev) to test the Worker:
 
 ```sh
 $ curl 'localhost:8787/foo'
