@@ -1,12 +1,12 @@
 ---
-title: Wrangler 1 (legacy)
+title: Wrangler (legacy)
 pcx_content_type: navigation
 weight: 30
 meta:
-  title: Wrangler 1 (legacy)
+  title: Wrangler (legacy)
 ---
 
-# Wrangler 1 (legacy)
+# Wrangler v1 (legacy)
 
 {{<Aside type="warning">}}
 

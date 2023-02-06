@@ -573,6 +573,9 @@
 /workers/cli-wrangler/install-update/ /workers/wrangler/install-and-update/ 301
 /workers/cli-wrangler/authentication/ /workers/wrangler/install-and-update/ 301
 /workers/cli-wrangler/webpack/ /workers/wrangler/migration/eject-webpack/ 301
+/workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
+/workers/wrangler-legacy/migration/migrating-from-wrangler-1/ /workers/wrangler-legacy/migration/ 301
+
 /workers/deploying-workers/serverless/ /workers/learning/integrations/ 301
 /workers/deploying-workers/terraform/ /workers/learning/integrations/ 301
 /workers/examples/rustwasm/ /workers/tutorials/hello-world-rust/ 301
@@ -821,6 +824,8 @@
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/workers/wrangler/migration/* /workers/wrangler-legacy/migration/:splat 301
+/workers/wrangler/cli-wrangler/* /workers/wrangler-legacy/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

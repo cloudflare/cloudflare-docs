@@ -1,10 +1,21 @@
 ---
+title: Migration to Wrangler v2
 pcx_content_type: how-to
-title: Migrating from Wrangler 1
-weight: 1
+meta:
+  title: Migration
 ---
 
-# Migrate from Wrangler 1
+# Migration to Wrangler v2
+
+{{<Aside type="note">}}
+
+Wrangler 2 is a major update to Wrangler.
+Find out more about how to migrate from Wrangler 1.
+
+{{</Aside>}}
+
+{{<directory-listing>}}
+
 
 This document describes the steps to migrate a project from Wrangler 1 to Wrangler 2.
 
@@ -89,3 +100,4 @@ Here is an example of some warnings and errors:
 ## Deprecations
 
 Refer to the [deprecations guide](/workers/wrangler/migration/deprecations/) for more details on what is no longer supported.
+
