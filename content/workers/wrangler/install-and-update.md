@@ -16,7 +16,7 @@ Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler
 
-To install [Wrangler](https://github.com/cloudflare/workers-sdk), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
+To install [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
 
 {{<Aside type="warning" header="Install Wrangler locally">}}
 

@@ -41,4 +41,4 @@ These are some of the features we plan to add in the future:
 - **Fake migrations**: Mark a migration as already applied without changing the database.
 - **Apply only a specific migration**: Apply only a specific migration without going through the sequential order.
 
-To request more features or to contribute directly to the Wrangler project, go to the [Wrangler repository](https://github.com/cloudflare/workers-sdk).
+To request more features or to contribute directly to the Wrangler project, go to the [Wrangler repository](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).
