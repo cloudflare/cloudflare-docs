@@ -42,7 +42,7 @@ Wrangler v2 drops support for project types, including `type = webpack` and conf
 
 1. Add [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin) as a `devDependency`.
 
-[wrangler-js](https://www.npmjs.com/package/wrangler-js), shipped as a separate library from [wrangler v1](https://www.npmjs.com/package/@cloudflare/wrangler/v/1.19.11), is a Node script that configures and executes [webpack 4](https://unpkg.com/browse/wrangler-js@0.1.11/package.json) for you. When you set `type = webpack`, wrangler v1 would execute this script for you. We have ported the functionality over to a new package, [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin), which you can use as a [webpack plugin](https://v4.webpack.js.org/configuration/plugins/).
+[wrangler-js](https://www.npmjs.com/package/wrangler-js), shipped as a separate library from [Wrangler v1](https://www.npmjs.com/package/@cloudflare/wrangler/v/1.19.11), is a Node script that configures and executes [webpack 4](https://unpkg.com/browse/wrangler-js@0.1.11/package.json) for you. When you set `type = webpack`, Wrangler v1 would execute this script for you. We have ported the functionality over to a new package, [wranglerjs-compat-webpack-plugin](https://www.npmjs.com/package/wranglerjs-compat-webpack-plugin), which you can use as a [webpack plugin](https://v4.webpack.js.org/configuration/plugins/).
 
 To do that, you will need to add it as a dependency:
 
