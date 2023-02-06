@@ -265,7 +265,7 @@
 /fundamentals/signed-exchanges/amp-real-ulr/ /fundamentals/speed/amp-real-ulr/ 301
 /fundamentals/signed-exchanges/signed-exchanges/ /fundamentals/speed/signed-exchanges/ 301
 /fundamentals/signed-exchanges/signed-exchanges/enable-signed-exchange/ /fundamentals/speed/signed-exchanges/enable-signed-exchange/ 301
-/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ /speed/signed-exchanges/signed-exchanges-caveats/ 301
+/fundamentals/signed-exchanges/signed-exchanges/signed-exchanges-caveats/ /fundamentals/speed/signed-exchanges/signed-exchanges-caveats/ 301
 
 # gateway
 /gateway/about/ /cloudflare-one/policies/filtering/ 301

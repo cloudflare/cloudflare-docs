@@ -382,7 +382,7 @@ Refer to [Create a Configuration Rule via API](/rules/configuration-rules/create
 
 ## SXG
 
-Enable or disable [Signed Exchanges (SXG)](/fundamentals/signed-exchanges/signed-exchanges/) [^16] for matching requests.
+Enable or disable [Signed Exchanges (SXG)](/fundamentals/speed/signed-exchanges/ ) [^16] for matching requests.
 
 <details>
 <summary>API information</summary>
