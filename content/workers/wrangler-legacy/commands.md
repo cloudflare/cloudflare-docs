@@ -12,7 +12,7 @@ Wrangler has launched a new version. This is documentation for Wrangler v1. Acce
 
 {{</Aside>}}
 
-Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI.
+Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler-legacy), the Workers CLI.
 
 ---
 
@@ -278,7 +278,7 @@ $ wrangler dev
 👂  Listening on http://127.0.0.1:8787
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler).
+With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler-legacy).
 
 ---
 

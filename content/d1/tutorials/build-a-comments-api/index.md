@@ -12,7 +12,7 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 ## Set up your project
 
-First, use [Wrangler](https://github.com/cloudflare/wrangler2), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
+First, use [Wrangler](https://github.com/cloudflare/workers-sdk), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
 ```sh
 $ npx wrangler init d1-example

@@ -62,13 +62,13 @@ $ cargo install wrangler --features sys-openssl
 
 ### Manual install
 
-1.  Download the binary tarball for your platform from the [releases page](https://github.com/cloudflare/wrangler/releases). You do not need the `wranglerjs-*.tar.gz` download – Wrangler will install that for you.
+1.  Download the binary tarball for your platform from the [releases page](https://github.com/cloudflare/wrangler-legacy/releases). You do not need the `wranglerjs-*.tar.gz` download – Wrangler will install that for you.
 
 2.  Unpack the tarball and place the Wrangler binary somewhere on your `PATH`, preferably `/usr/local/bin` for Linux/macOS or `Program Files` for Windows.
 
 ## Update
 
-To update [Wrangler](https://github.com/cloudflare/wrangler), run one of the following:
+To update [Wrangler](https://github.com/cloudflare/wrangler-legacy), run one of the following:
 
 ### Update with `npm`
 

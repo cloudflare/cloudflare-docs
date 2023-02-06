@@ -24,7 +24,7 @@ Here are common fields that are no longer required.
 - `wrangler preview` - Use the `wrangler dev` command, for running your worker in your local environment.
 - `wrangler generate` - If you want to use a starter template, clone its GitHub repository and manually initialize it.
 - `wrangler route` - Routes are defined in the `wrangler.toml` configuration file.
-- `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/wrangler2/issues/new/choose).
+- `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 - `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
 
 ### New fields

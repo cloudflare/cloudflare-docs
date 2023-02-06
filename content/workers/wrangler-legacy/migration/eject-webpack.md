@@ -18,7 +18,7 @@ As a developer using webpack with Workers, you may be in one of four categories:
 
 4. [I use `type = webpack` and `webpack_config = <path/to/webpack.config.js>` to perform code-transforms and/or other code-modifying functionality.](#i-use-type--webpack-and-webpack_config--pathtowebpackconfigjs-to-perform-code-transforms-andor-other-code-modifying-functionality).
 
-If you do not see yourself represented, [file an issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we can assist you with your specific situation and improve this guide for future readers.
+If you do not see yourself represented, [file an issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) and we can assist you with your specific situation and improve this guide for future readers.
 
 ### I use `[build]` to run webpack (or another bundler) external to Wrangler.
 
