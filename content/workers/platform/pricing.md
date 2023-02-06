@@ -12,9 +12,9 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
   
-All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
@@ -184,6 +184,12 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 5.  Each alarm write is billed as a single write request unit.
 
 Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
+
+## Service bindings
+
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+
+For more information on how service bindings work, refer to [About Service bindings](https://developers.cloudflare.com/workers/platform/bindings/about-service-bindings/).
 
 ## Fine Print
 
