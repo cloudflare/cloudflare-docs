@@ -5,11 +5,11 @@ import * as replace_vpn from "./json/replace-vpn.json";
 import * as partners_integrations from "./json/technology-partner-integrations.json";
 
 let learning_paths = [
-  get_started["default"],
-  optimize_site_speed["default"],
-  application_security["default"],
-  replace_vpn["default"],
-  partners_integrations["default"],
+  get_started,
+  optimize_site_speed,
+  application_security,
+  replace_vpn,
+  partners_integrations,
 ];
 
 export { learning_paths };

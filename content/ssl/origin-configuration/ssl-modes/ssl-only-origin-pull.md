@@ -16,12 +16,12 @@ Connections to the origin will always be made using SSL/TLS, regardless of the s
 
 The certificate presented by the origin will be validated the same as with [Full (strict) mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
-<div class="mermaid">
+```mermaid
 flowchart LR
     accTitle: Strict (SSL-Only Origin Pull) SSL/TLS Encryption
     accDescr: With an encryption mode of Strict (SSL-Only Origin Pull), all connections to the origin will always be made using SSL/TLS.
     A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server (verified) &#9989;")]
-</div>
+```
 
 ## Use when
 

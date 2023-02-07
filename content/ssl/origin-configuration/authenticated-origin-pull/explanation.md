@@ -44,26 +44,26 @@ For more details, refer to [What is a TLS handshake?](https://www.cloudflare.com
 
 Without authenticated origin pulls - and even with [Full](/ssl/origin-configuration/ssl-modes/full/) or [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) encryption modes - Cloudflare performs standard TLS handshakes between a client device and Cloudflare and Cloudflare and your origin.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: Connection diagram without authenticated origin pulls
       A[End user query for <code>example.com</code>] --Standard TLS Handshake--> B[Cloudflare edge]
       B --Standard TLS Handshake--> C[Origin server]
       D[External device] --Standard TLS Handshake ----> C
-</div>
+```
 <br/>
 
 This lack of authentication means that - even if your origin is [protected behind Cloudflare](/fundamentals/get-started/concepts/how-cloudflare-works/) - attackers with your origin's IP address will still receive a response from your origin for HTTPS requests.
 
 With authenticated origin pulls, Cloudflare performs standard TLS handshakes between a client device and Cloudflare, but a client-authenticated TLS handshake between Cloudflare and your origin.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: Connection diagram without authenticated origin pulls
       A[End user query for <code>example.com</code>] --Standard TLS Handshake--> B[Cloudflare edge]
       B --Client authenticated TLS Handshake--> C[Origin server]
       D[External device] --Standard TLS Handshake -----x C
-</div>
+```
 <br/>
 
 This additional layer of authentication ensures that any HTTPS requests outside of Cloudflare will not receive a response from your origin.

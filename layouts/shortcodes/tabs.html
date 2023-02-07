@@ -102,5 +102,5 @@
     </ul>
   </nav>
 
-  {{ replace .Inner "UNIQUE_ID" $unique_id | markdownify }}
+  {{ replace .Inner "UNIQUE_ID" $unique_id | .Page.RenderString  }}
 </div>

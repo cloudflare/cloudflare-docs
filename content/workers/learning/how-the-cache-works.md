@@ -42,7 +42,7 @@ In the previous example, `https://notexample.com/hello` is not proxied through C
 
 To better understand the example, take a look at the following diagram:
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Single file purge  assets cached by a worker
 accDescr: This diagram is meant to help choose how to purge a file.
@@ -53,7 +53,7 @@ A("You have a Worker script that runs on https://example.com/hello and this Work
     C -- No --> F(Purge https://notexample.com/hello from the original example.com zone.)
     E -- Yes --> G(Purge https://notexample.com/hello from the notexample.com zone.)
     E -- No --> H(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
-</div>
+```
 
 ### Purging assets stored with the Cache API
 

@@ -9,4 +9,4 @@ meta:
 
 {{<dynamic-learning-path-header file="get-started.json">}}
 
-{{<dynamic-learning-path>}}
+{{<Vue name="DynamicLearningPath"/>}}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ .Site.LanguageCode }}" theme="light"  {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}} is-docs-page js-focus-visible-polyfill-available>
+<html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}}>
   <head>
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
@@ -21,5 +21,14 @@
     {{- with $.Page.Params.structured_data -}}{{- if or (eq $.Page.Params.pcx_content_type "how-to") (eq $.Page.Params.pcx_content_type "tutorial") -}}</div>{{- end -}}{{- end -}}
     {{- partial "gtag" -}}
     {{- partial "littlefoot" -}}
+    {{ if .Page.Store.Get "hasMermaid" }}
+      <script type="module" defer>
+        import mermaid from 'mermaid';
+
+        export function init() {
+          mermaid.initialize({ startOnLoad: true, 'theme': 'neutral' })
+        }
+      </script>
+    {{ end }}
   </body>
 </html>
