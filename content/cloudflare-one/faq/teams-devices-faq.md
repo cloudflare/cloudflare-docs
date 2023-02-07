@@ -27,27 +27,6 @@ Sites inside Cloudflare network are able to see this information. If a site is s
 
 Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. However, WARP is built to trade some throughput for enhanced privacy, because it encryps all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
 
-## Why is my device not connecting to the Internet after I deploy WARP?
-
-
-### Is the Cloudflare root certificate installed in all the places?
-
-Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
-
-In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
-
-If you ever see an error like _Certificate not trusted_ or _Not trusted identity_ or _SSL Error_, it is likely related to our root certificates.
-
-As a last resort, add the application to a **Do Not Inspect** policy in Gateway.
-
-### Have you set up a Do Not Inspect policy for applications not compatible with TLS decryption?
-
-You may need to set up a Do Not Inspect policy to exclude some applications that do not support SSL inspection, or are otherwise incompatible with TLS decryption, from Gateway inspection. These applications could show errors once the WARP client is connected. For more information, refer to our documentation on [Do Not Inspect applications](/cloudflare-one/policies/filtering/application-app-types/#do-not-inspect-applications).
-
-### As a last resort, does WARP or your configuration work on a clean machine?
-
-To eliminate issues related to a particular Cloudflare Zero Trust configuration or policy, you can try running WARP in consumer mode. This will allow you to ensure basic connectivity can be achieved. Once this is verified, you can slowly start applying additional complexity and testing along the way.
-
 ## Why is my device not connecting to my private network?
 
 If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/):
