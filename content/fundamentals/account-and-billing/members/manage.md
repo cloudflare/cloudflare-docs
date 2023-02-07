@@ -26,6 +26,8 @@ To add a member to your account:
 5. Select **Continue to summary**.
 6. Review the information, then select **Invite**.
 
+*Note:* the `Direct Add`function it's only available when the user is already registered on Cloudflare.
+
 ## Edit member permissions
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account[^2].
