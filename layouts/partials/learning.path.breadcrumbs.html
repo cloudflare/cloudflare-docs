@@ -24,7 +24,6 @@
         {{- $title = $page.Title -}}
     
       {{- if and (le (sub $length $index ) $counter)  (ne (sub $length $index ) 0) -}}
-      &nbsp;&nbsp;>&nbsp;&nbsp;
         <li>
           <a href="{{- print $rellink "/" -}}" class="DocsMarkdown--link subsequentBreacrumb">
             <span class="DocsMarkdown--link-content">{{$title}}</span></a>
