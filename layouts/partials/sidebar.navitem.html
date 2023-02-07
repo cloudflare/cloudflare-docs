@@ -26,7 +26,7 @@
 
     <a {{ if $active }}aria-current="page" {{ end }}class="DocsSidebar--nav-link" {{with .Context.Params.external_link }} href="{{ . }}" {{else}} href="{{ $current }}" {{ end }} {{ if $active }} is-active{{ else if not $isLinkTabbable }} tabindex="-1"{{ end }}>
       <span class="DocsSidebar--nav-link-highlight"></span>
-      <span class="DocsSidebar--nav-link-text">{{ .Context.Title }}</span>
+      <span class="DocsSidebar--nav-link-text">{{ .Context.Title }}{{- with .Context.Params.show_time }}{{print " | " $.Context.ReadingTime " mins"}}{{end}}</span>
       {{- with .Context.Params.external_link }}
       {{- partialCached "external.icon" . -}}
       {{- end -}}
@@ -45,7 +45,7 @@
             <div class="DocsSidebar--nav-item-collapse-content">
               <ul class="DocsSidebar--nav-subnav" depth="{{ .Depth }}" style="--depth:{{ .Depth }}">
                 {{- range (sort .Context.Pages.ByWeight) -}}
-                  {{- partial "sidebar.navitem" (dict "Context" . "Depth" $next "Active" $bool) }}
+                  {{- partial "sidebar.navitem" (dict "Context" . "Depth" $next "Active" $bool ) }}
                 {{- end -}}
               </ul>
             </div>

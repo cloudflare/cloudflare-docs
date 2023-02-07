@@ -71,7 +71,7 @@
 
         <ul class="DocsSidebar--nav">
           {{ with .Site.GetPage "section" $pageModule }}
-            {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
+            {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url "ShowTime" true) }}
           {{ end }}
         </ul>
       </div>

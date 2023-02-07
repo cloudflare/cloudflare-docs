@@ -41,14 +41,14 @@ export function init() {
                 nextModule = currentPathData.modules[i+1]["uid"]
               }
             }
-          
           })
-          if (nextModule !== "") {
-            nextModuleLink.setAttribute("href", "/learning-paths/modules/" + nextModule + "?learning_path=" + currentLearningPath)
-            nextModuleLink.innerHTML = "Continue to next module >"
-          } else {
+
+          if (nextModule === "") {
             nextModuleLink.innerHTML = "Finish learning path >"
             nextModuleLink.setAttribute("href", "/learning-paths/")
+          } else {
+            nextModuleLink.setAttribute("href", "/learning-paths/modules/" + nextModule + "?learning_path=" + currentLearningPath)
+            nextModuleLink.innerHTML = "Continue to next module >"
           }
         }
   

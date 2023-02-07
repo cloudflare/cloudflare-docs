@@ -11,7 +11,7 @@
 {{- if eq $layout "learning-module" -}}
     {{- $nextUnit = index (index (index $moduleData "units") 0) "url" -}}
 
-    <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation  Button Button-is-docs-primary">
+    <a href="{{$nextUnit}}" class="learningNavigation  Button Button-is-docs-primary">
         <span class="DocsMarkdown--link-content">Start module</span>
     </a>
 
@@ -44,11 +44,11 @@
         <br/>
     {{- end -}}
     {{- if ne $nextUnit "" -}}
-        <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation  Button Button-is-docs-primary">
+        <a href="{{$nextUnit}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
             <span class="DocsMarkdown--link-content">Next</span>
         </a>
     {{- else -}}
-        <a href="{{$baseURL}}" id="nextModuleLink" class="learningNavigation Button Button-is-docs-primary">
+        <a href="{{$baseURL}}" id="nextModuleLink" class="Button Button-is-docs-primary">
             <span class="DocsMarkdown--link-content">Finish module</span>
             </a>
     {{- end -}}
