@@ -526,10 +526,13 @@ html[is-site-page] .DocsContent {
     }
 
 .HeroBlockGrid {
-    padding: 2em 0 2em 0;
+    padding: 2em 0;
     background: #e2f5fa;
     display: flex;
-    gap: 2em;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-content: center;
+    gap: 6em;
 }
 
 .HeroBlockGrid--full-bleed {
@@ -557,6 +560,14 @@ html[is-site-page] .DocsContent {
     margin-top: 1.5em;
 }
 
+.HeroBlock--content p {
+    width: 20em;
+}
+
+.HeroBlock--content .DocsMarkdown--link-content {
+    text-decoration: none;
+}
+
 .HeroBlock--content>:first-child {
     margin-top: 0
 }
@@ -571,10 +582,8 @@ html[is-site-page] .DocsContent {
 }
 
 .HeroBlock .DocsMarkdown--link .DocsMarkdown--link-content {
-    text-decoration: none;
-    color: #0051C3;
-    background: inherit;
-    border-bottom-color: #0051C3;
+    border: none;
+    background-color: inherit;
 }
 
 .HeroBlock .DocsMarkdown--link-external-icon {
@@ -599,6 +608,12 @@ html[is-site-page] .DocsContent {
     color: var(--code-orange);
     background: inherit;
     border-bottom-color: var(--code-orange);
+}
+
+@media (max-width:768px) {
+    .HeroBlockGrid {
+        gap: 2em;
+    }
 }
 
 .QuadBlockGrid {
@@ -678,7 +693,7 @@ html[is-site-page] .DocsContent {
     margin: 1em;
     height: 20em;
     width: 45em;
-    border: 1px solid #0051C3;
+    border: 1px solid #b6b6b6;
     border-radius: 6px;
 }
 
@@ -990,8 +1005,12 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
 }
 
-.DocsMarkdown .ViewProducts details summary, details[open] {
+.ViewProducts details {
     background: #E2F5FA;
+}
+
+[theme=dark] .ViewProducts details {
+    background: #222629;
 }
 
 .StartHere {
