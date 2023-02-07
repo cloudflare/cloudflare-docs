@@ -1,10 +1,10 @@
 {{- $name := .Get "name" -}}
-{{ .Page.Store.Add "componentId" 1 }}
-<div id="vue-{{ .Page.Store.Get "componentId" }}">
+{{ .Page.Scratch.Add "componentId" 1 }}
+<div id="vue-{{ .Page.Scratch.Get "componentId" }}">
     {{- .Page.RenderString .Inner -}}
 </div>
 <script type="module">
     import { createApp } from 'vue'
     import Component from "@/{{ $name }}.vue"
-    createApp(Component).mount('#vue-{{ .Page.Store.Get "componentId" }}', true)
+    createApp(Component).mount('#vue-{{ .Page.Scratch.Get "componentId" }}', true)
 </script>
