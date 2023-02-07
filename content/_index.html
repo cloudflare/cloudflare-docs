@@ -29,8 +29,8 @@ meta:
 </div>
 </div>
 
-<div class="HomeTitle">
-<h1 class="title">Looking to improve security, <br /> performance, and reliability?</h1>
+<div>
+<h1 class="leading">Looking to improve security, <br /> performance, and reliability?</h1>
   <a class="StartHere" href="/learning-paths/get-started/">Start here</a>
 </div>
 
@@ -71,8 +71,8 @@ meta:
 - ![access](/icons/access.svg)[Access](/cloudflare-one/policies/access/)
 - ![tunnel](/icons/tunnel.svg)[Tunnel](/cloudflare-one/connections/connect-apps/)
 - ![gateway](/icons/gateway.svg)[Gateway](/cloudflare-one/policies/filtering/)
-- ![vpn](/icons/dns.svg)[Replace your VPN](/learning-paths/replace-vpn/)
-- ![browser](/icons/browser-isolation.svg)[Browser Isolation](/learning-paths/replace-vpn/)
+- ![browser](/icons/browser-isolation.svg)[Browser Isolation](/cloudflare-one/policies/browser-isolation/)
+- ![vpn](/icons/vpn.svg)[Replace your VPN](/learning-paths/replace-vpn/)
 
 {{</tri-block>}}
 </div>
@@ -136,7 +136,7 @@ meta:
 </div>
 </div>
 
-<div class="Recommendation Recommendation--full-bleed">
+<div class="Recommendation">
 <h2 class="RecommendationTitle"> Other docs you might also like</h2>
 <div class="RecommendedContentGrid">
   <div class="RecommendedContentWithCard">
@@ -145,7 +145,7 @@ meta:
   <p class="RecommendedContentTitle">Install an Origin CA certificate</p>
   <p class="RecommendedContentDescription"> Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.</p>
   
-  [Create tokens >](/ssl/origin-configuration/origin-ca/)
+  [Install Origin CA >](/ssl/origin-configuration/origin-ca/)
   </div>
   {{</recommended-content-block>}}
   </div>
@@ -153,7 +153,7 @@ meta:
   {{<recommended-content-block>}}
   <div>
   <p class="RecommendedContentTitle">Change your nameservers</p>
-  <p class="RecommendedContentDescription"> R2 gives you the freedom to create the multi-cloud architectures you desire with an S3-compatible distributed object storage.</p>
+  <p class="RecommendedContentDescription"> Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.</p>
   
   [Update nameservers >](/dns/zone-setups/full-setup/setup/)
   </div>
@@ -163,7 +163,7 @@ meta:
   {{<recommended-content-block>}}
   <div>
   <p class="RecommendedContentTitle">SSL/TLS Encryption mode</p>
-  <p class="RecommendedContentDescription">Review fully functional sample scripts to get started with Workers.</p>
+  <p class="RecommendedContentDescription">Your domain's SSL/TLS encryption mode controls how Cloudflare connects to your origin web server and how SSL certificates presented by your origin will be validated.</p>
   
   [Set encryption mode >](/ssl/origin-configuration/ssl-modes/)
   </div>
@@ -173,7 +173,7 @@ meta:
   {{<recommended-content-block>}}
   <div>
   <p class="RecommendedContentTitle">Create IP access rules</p>
-  <p class="RecommendedContentDescription"> Review fully functional sample scripts to get startedMake Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar. with Workers.</p>
+  <p class="RecommendedContentDescription"> Use IP Access rules to allowlist, block, and challenge traffic based on the visitor’s IP address, country, or Autonomous System Number (ASN).</p>
   
   [Create IP access rules >](/waf/tools/ip-access-rules/)
   </div>
@@ -182,80 +182,45 @@ meta:
 </div>
 </div>
 
-<div class="HeroBlockGrid">
-  <div>
+<div class="HeroBlockGrid HeroBlockGrid--full-bleed">
+<div>
 {{<hero-block>}}
   ## Community
 
   The Cloudflare community is a place for Cloudflare users to share ideas, answers, code and compare notes.
 
-  <div class="QuadBlockGrid">
-  <a href="https://discord.com/invite/cloudflaredev/">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/icons/discord.svg" aria-hidden="true" />
-  </div>
-  <p>Discord</p>
-  <div>
-  </div>
-  {{</community-block>}}
-</div>
-  </a>
-  <a href="https://twitter.com/CloudflareDev">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/icons/twitter.svg" aria-hidden="true" />
-  </div>
-  <p>Twitter</p>
-  <div>
-  </div>
-  {{</community-block>}}
-</div>
-  </a>
-  <a href="https://community.cloudflare.com/">
-  <div>
-  {{<community-block>}}
-  <div>
-  <img src="/community-icon.svg" aria-hidden="true" />
-  </div>
-  <p>Community Forum</p>
-  <div>
-  </div>
-  {{</community-block>}}
-</div>
-  </a>
-  </div>
+  ![discord](./icons/discord.svg) [Discord](https://discord.com/invite/cloudflaredev/)
+
+  ![twitter](./icons/twitter.svg) [Twitter](https://twitter.com/CloudflareDev)
+  
+  ![community](./community.svg) [Community Forum](https://community.cloudflare.com/)
+
 {{</hero-block>}}
 </div>
   
-  <div>
+<div>
 {{<hero-block>}}
   ## Open source
 
   Cloudflare contributes to the open-source ecosystem in a variety of ways, including:
 
-  - Developing many projects ![github](./github-icon.svg) [directly](https://github.com/cloudflare).
-  - Sponsoring [world-changing open-source projects](/sponsorships/).
+  ![github](./github-icon.svg) [GitHub Projects](https://github.com/cloudflare)
+
+  ![sponsor](./icons/help-giving.svg) [Sponsorship Projects](/sponsorships/)
 
 {{</hero-block>}}
-  </div>
 </div>
 
-<div class="BlogSection BlogSection--full-bleed">
-{{<blog-block>}}
-  <img class="BlogImage" aria-hidden="true"/>
-  <div>
-    <h1>Blog</h1>
-    <p> Get the latest news on Cloudflare products, technologies, and culture.</p>
-  </div>
+<div>
+{{<hero-block>}}
+  ## Blog
 
-  {{<button type="tertiary" href="https://blog.cloudflare.com/">}}
-    Read the blog
-  {{</button>}}
+  Get the latest news on Cloudflare products, technologies, and culture.
 
-{{</blog-block>}}
+  ![blog](./icons/learning-center-book.svg) [Read the blog](https://blog.cloudflare.com/)
+
+{{</hero-block>}}
+</div>
 </div>
 
 <div class="FooterBlockGrid">

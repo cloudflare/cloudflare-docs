@@ -526,12 +526,24 @@ html[is-site-page] .DocsContent {
     }
 
 .HeroBlockGrid {
-    padding-left: .75em;
-    padding-top: 2em;
-    max-width: 90%;
+    padding: 2em 0 2em 0;
+    background: #e2f5fa;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 2em;
+}
+
+.HeroBlockGrid--full-bleed {
+    box-shadow: 0 0 0 100vmax #e2f5fa;
+    clip-path: inset(0 -100vmax);
+}
+
+[theme=dark] .HeroBlockGrid {
+    background: #222629;
+}
+
+[theme=dark] .HeroBlockGrid--full-bleed {
+    box-shadow: 0 0 0 100vmax #222629;
+    clip-path: inset(0 -100vmax);
 }
 
 .HeroBlockGrid>* {
@@ -539,11 +551,10 @@ html[is-site-page] .DocsContent {
 }
 
 .HeroBlock {
-    width: 28em;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2em;
+    margin-top: 1.5em;
 }
 
 .HeroBlock--content>:first-child {
@@ -568,6 +579,10 @@ html[is-site-page] .DocsContent {
 
 .HeroBlock .DocsMarkdown--link-external-icon {
     display: none;
+}
+
+.DocsMarkdown .HeroBlock h2 {
+    font-size: 1.2em;
 }
 
 .DocsMarkdown .HeroBlock img {
@@ -627,22 +642,8 @@ html[is-site-page] .DocsContent {
 
 
 .Recommendation {
-    background: #e2f5fa;
+    border-top: 1px solid #b6b6b6;
     padding: 1em 0;
-}
-
-[theme=dark] .Recommendation {
-    background: #222629;
-}
-
-.Recommendation--full-bleed {
-    box-shadow: 0 0 0 100vmax #e2f5fa;
-    clip-path: inset(0 -100vmax);
-}
-
-[theme=dark] .Recommendation--full-bleed {
-    box-shadow: 0 0 0 100vmax #222629;
-    clip-path: inset(0 -100vmax);
 }
 
 .RecommendedContentGrid {
@@ -740,51 +741,6 @@ html[is-site-page] .DocsContent {
     height: 1.6em;
 }
 
-.BlogSection {
-    background-color: #fef1e6 ;
-    margin-top: 3em;
-    padding: 3em;
-}
-
-.BlogSection--full-bleed {
-    box-shadow: 0 0 0 100vmax #fef1e6;
-    clip-path: inset(0 -100vmax);
-}
-
-.BlogBlock--content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4em;
-}
-
-.BlogImage {
-    content: url("/blog-icon-light.svg");
-}
-
-[theme=dark] .BlogImage {
-    content: url("/blog-icon-dark.svg");
-}
-
-[theme=dark] .BlogSection {
-    background-color: #252423;
-    margin-top: 3em;
-    padding: 3em;
-}
-
-@media (max-width: 768px) {
-    .BlogBlock--content {
-      flex-direction: column;
-      gap: 1em;
-      text-align: center;
-    }
-}
-
-[theme=dark] .BlogSection--full-bleed {
-    box-shadow: 0 0 0 100vmax #252423;
-    clip-path: inset(0 -100vmax);
-}
-
 [theme=dark] .CommunityBlock img {
     filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
@@ -803,7 +759,6 @@ html[is-site-page] .DocsContent {
     display: flex;
     width: 24em;
     height: 20em;
-    background: #fef1e6;
     border-left: 5px solid #F6821F;
     padding: .5em 2em;
     margin-bottom: 1em;
@@ -823,11 +778,8 @@ html[is-site-page] .DocsContent {
         display: inline-block;
         width: 100%;
         margin-top: 1em;
+        padding: 0;
     }
-}
-
-[theme=dark] .TriBlock {
-    background: #252423;
 }
 
 .TriBlock a {
@@ -1038,9 +990,14 @@ html[is-site-page] .DocsContent {
     max-width: 100%;
 }
 
+.DocsMarkdown .ViewProducts details summary, details[open] {
+    background: #E2F5FA;
+}
+
 .StartHere {
-    font-size: 1.7em;
+    font-size: 1.8em;
     font-weight: 400;
+    padding-top: 1em;
     text-decoration: underline;
     color: #131313;
 }
@@ -1049,9 +1006,16 @@ html[is-site-page] .DocsContent {
     color: #fff;
 }
 
-.HomeTitle {
-    padding-top: 3em;
-    line-height: 5em;
+.leading {
+font-size: 2.5em;
+padding: 1em 0;
+line-height: 20px;
+font-weight: 400;
+color: #313131;
+}
+
+[theme=dark] .leading {
+    color: #fff;
 }
 
 @font-face {
