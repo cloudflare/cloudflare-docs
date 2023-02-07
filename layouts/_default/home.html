@@ -8,9 +8,9 @@
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
     {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
 
-    {{ if gt (len (findRE "\\/learning\\-paths\\/.+" .Page.RelPermalink)) 0 }}
-    {{- partial "vue" -}}
-    {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
+    {{ if and (gt (len (findRE "\\/learning\\-paths\\/.+" .Page.RelPermalink)) 0) (ne .Page.Params.new_learning_path true)}}
+      {{- partial "vue" -}}
+      {{- partial "script" (dict "src" "dynamic-learning-path-vue.js" "defer" true) -}}
     {{ end }}
 
     {{ if eq .Page.RelPermalink "/dashboard-landing/" }}

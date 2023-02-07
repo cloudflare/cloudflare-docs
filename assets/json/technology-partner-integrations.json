@@ -10,7 +10,7 @@
     "Logs"
   ],
   "category": ["Analytics Integrations"],
-  "elements": [
+  "modules": [
     {
       "type": "module",
       "title": "Analytics integrations",

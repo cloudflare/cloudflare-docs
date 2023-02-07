@@ -151,6 +151,10 @@ html {
     align-self: center;
 }
 
+.DocsMarkdown--button-group span a {
+    color: inherit;
+}
+
 .background a,
 .viewOtherPaths a {
     color: #0055DC;
