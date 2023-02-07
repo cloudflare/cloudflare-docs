@@ -17,13 +17,30 @@ To use Service bindings in your code, you must first create a Service binding fr
 
 ### Interface
 
+{{<tabs labels="ts/esm | js/esm">}}
+{{<tab label="ts/esm" default="true">}}
+```ts
+interface Environment {
+	BINDING: Fetcher;
+}
+
+export default <ExportedHandler<Environment>> {
+	async fetch(req, env) {
+		return await env.BINDING.fetch(req);
+	},
+};
+```
+{{</tab>}}
+{{<tab label="js/esm">}}
 ```js
 export default {
-    async fetch(request, environment) {
-        return await environment.BINDING.fetch(request)
-    }
-}
+	async fetch(req, env) {
+		return await env.BINDING.fetch(req);
+	},
+};
 ```
+{{</tab>}}
+{{</tabs>}}
 
 Service bindings use the standard [Fetch](/workers/runtime-apis/fetch/) API. A Service binding will trigger a [FetchEvent](../../runtime-apis/fetch-event) on the target Worker. To access a target Worker from a parent Worker, you must first configure the target Worker with a binding for that target Workers Service. The binding definition includes a variable name on which the `fetch()` method will be accessible. The `fetch()` method has the exact same signature as the [global `fetch`](/workers/runtime-apis/fetch/). However, instead of sending an HTTP request to the Internet, the request is always sent to the Worker to which the Service binding points.
 
