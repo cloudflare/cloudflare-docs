@@ -612,7 +612,7 @@ html[is-site-page] .DocsContent {
 
 @media (max-width:768px) {
     .HeroBlockGrid {
-        gap: 2em;
+        gap: 1.8em;
     }
 }
 
