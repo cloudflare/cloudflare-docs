@@ -65,7 +65,7 @@ $ cat /etc/ssh/sshd_config
 
 ## 7. Create an Audit SSH policy
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Firewall Policies**.
 
 2. In the **Network** tab, create a new network policy.
 
