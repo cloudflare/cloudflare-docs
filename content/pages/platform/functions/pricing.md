@@ -4,10 +4,12 @@ title: Pricing
 weight: 12
 ---
 
-# Pricing 
-Requests to your Functions are billed as Cloudflare Workers requests. Plans and pricing can be found [here](/workers/platform/pricing/)
+# Pricing
+
+Requests to your Functions are billed as Cloudflare Workers requests. Workers plans and pricing can be found [in the Workers documentation](/workers/platform/pricing/).
 
 ## Paid Plans
+
 Requests to your Pages functions count towards your quota for Workers Paid plans, including requests from your Function to KV or Durable Object bindings.
 
 Pages supports both Bundled and Unbound Usage Models. When an account is first upgraded to a Paid Plan, Unbound is the default Usage Model. This default applies only to new projects created after upgrading your plan; existing projects created under the Free Plan will continue to use the Bundled Usage Model. To change the default Usage Model, go to Account Home > Pages and select Change next to the Default Usage Model in the top right of the page.
