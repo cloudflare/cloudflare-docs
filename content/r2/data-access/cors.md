@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: CORS
+title: Configure CORS
 weight: 3
 ---
 
