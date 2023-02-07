@@ -1,56 +1,78 @@
 {{- $url := .RelPermalink -}}
-{{- $page := .GetPage $url -}}
+{{- $urlSplit := (split $url "/") -}}
 {{- $root := relURL (printf "/%s/" .Section) -}}
 {{- $DATA := (index $.Site.Data .Section) -}}
 
 {{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
+{{- $page := $.Site.GetPage (replaceRE "/$" "" $url) -}}
+{{- $pageType := $page.Kind -}}
+{{- $pageModule := "" -}}
 
-{{- $folder := "" }}
-{{- $folderTitle := "" }}
-
-{{- range $index, $ancestor := .Ancestors -}}
-{{- if eq $index 0 -}}
-{{- $folder = $ancestor.RelPermalink -}}
-{{- $folderTitle = $ancestor.Title -}}
+{{- if eq $pageType "section" -}}
+  {{ $pageModule = index $urlSplit (sub (len $urlSplit) 2) }}
+{{- else -}}
+  {{ $pageModule = index $urlSplit (sub (len $urlSplit) 3) }}
 {{- end -}}
-{{- end -}}
 
-
-
-{{- partial "docs.page.logo" -}}
-<div class="DocsSidebar--section DocsSidebar--docs-title-section">
-    <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="{{ $folder }}">
-      <div class="DocsNavLogoLockup">
-        <div class="DocsNavLogoLockup--logo">
+<div class="DocsSidebar">
+  <div class="DocsSidebar--sections">
+    <div class="DocsSidebar--section DocsSidebar--header-section">
+      <a class="DocsSidebar--cloudflare-logo-link DocsSidebar--link" href="/">
+        <div class="DocsNavLogoLockup">
+          {{ partial "logo" "Docs" }}
         </div>
+      </a>
+    </div>
 
-        <span class="DocsNavLogoLockup--text">
-          <span class="DocsSidebar--docs-title-text-scaler" style="--length:{{ len $title }}">{{ $folderTitle }}</span>
-        </span>
+    <div class="DocsSidebar--section-separator"></div>
+
+    <div class="DocsSidebar--section DocsSidebar--docs-title-section">
+      <a aria-current="page" class="DocsSidebar--docs-title-logo-link DocsSidebar--link" href="{{ $root }}">
+        <div class="DocsNavLogoLockup">
+          <div class="DocsNavLogoLockup--logo">
+            <span title="Cloudflare {{ $title }} logo">
+              {{- safeHTML $DATA.logo -}}
+            </span>
+          </div>
+
+          <span class="DocsNavLogoLockup--text">
+            <span class="DocsSidebar--docs-title-text-scaler" style="--length:{{ len $title }}">{{ $title }}</span>
+          </span>
+        </div>
+      </a>
+
+      <div class="DocsSidebar--section-more Dropdown" data-expanded="false">
+        <button class="DocsSidebar--section-more-button Button" aria-expanded="false">
+          <div class="DocsSidebar--section-more-button-icon">
+            <svg viewBox="0 0 4 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" fill="currentColor" role="img" aria-labelledby="title-6032186738345315"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-6032186738345315">Dropdown icon</title>
+              <path d="M2,2v0m0,6v0m0,6v0z"></path>
+            </svg>
+            <span is-visually-hidden>{{ $title }} menu</span>
+          </div>
+        </button>
+
+        <div class="DocsSidebar--section-more-dropdown Dropdown--dropdown">
+          <ul class="Dropdown--list">
+            {{- range $DATA.externals -}}
+              <li class="Dropdown--item">
+                <a class="Dropdown--link" href="{{ .url }}" tabindex="-1">{{ .title }}</a>
+              </li>
+            {{- end -}}
+          </ul>
+        </div>
       </div>
-    </a>
-  </div>
-
+    </div>
 
     <div class="DocsSidebar--section DocsSidebar--nav-section" style="position:relative;overflow:hidden;width:100%;height:100%">
       <div style="position: absolute; inset: 0px; overflow-y: auto; margin-right: 0px; margin-bottom: 0px;">
         <div class="DocsSidebar--nav-section-shadow" style="opacity: 0;"></div>
 
         <ul class="DocsSidebar--nav">
-
-          {{- $current := .Page.RelPermalink -}}
-          {{- $len := len (split $current "/") -}}
-            {{- range .FirstSection.Pages.ByWeight -}}
-            {{- $x := .RelPermalink -}}
-
-              {{- $delta := sub (len (split $x "/")) $len -}}
-                
-              {{- if and (hasPrefix $x $current) (lt $delta 2) -}}
-                {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
-              {{- else if not (hasPrefix $x $current) -}}
-                {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
-            {{- end -}}
-          {{- end -}}
+          {{ with .Site.GetPage "section" $pageModule }}
+            {{- partial "sidebar.navitem" (dict "Context" . "Depth" 1 "Active" $url) }}
+          {{ end }}
         </ul>
       </div>
       <div style="position:absolute;height:6px;display:none;right:2px;bottom:2px;left:2px;border-radius:3px">

@@ -17,23 +17,6 @@ export function init() {
             currentPathData = paths[path]
           }
         }
-  
-        // Update navigational links to keep the current context
-        const navigationLinks = document.getElementsByClassName("learningNavigation");
-        if(navigationLinks) {
-          for (let item of navigationLinks) {
-            const currentHref = item.getAttribute("href")
-            item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
-          }
-        }
-
-        const subsequentBreacrumb = document.getElementsByClassName("subsequentBreacrumb");
-        if(subsequentBreacrumb) {
-          for (let item of subsequentBreacrumb) {
-            const currentHref = item.getAttribute("href")
-            item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
-          }
-        }
 
         // Add learning path to breadcrumb list
         const firstLearningBreadcrumb = document.getElementById("firstLearningBreadcrumb");
@@ -44,7 +27,6 @@ export function init() {
           </li>`)
         }
 
-  
         // Update final next link to point to the next module
         const nextModuleLink = document.getElementById("nextModuleLink");
         if (nextModuleLink && currentPathData !== undefined) {
@@ -69,6 +51,33 @@ export function init() {
             nextModuleLink.setAttribute("href", "/learning-paths/")
           }
         }
+  
+        // Update navigational links to keep the current context
+        const navigationLinks = document.getElementsByClassName("learningNavigation");
+        if(navigationLinks) {
+          for (let item of navigationLinks) {
+            const currentHref = item.getAttribute("href")
+            item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
+          }
+        }
+
+        // Update breadcrumbs to keep the current context
+        const subsequentBreacrumb = document.getElementsByClassName("subsequentBreacrumb");
+        if(subsequentBreacrumb) {
+          for (let item of subsequentBreacrumb) {
+            const currentHref = item.getAttribute("href")
+            item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
+          }
+        }
+
+        // Update side nav to keep the current context
+        const navLinks = document.getElementsByClassName("DocsSidebar--nav-link");
+        if(navLinks) {
+          for (let item of navLinks) {
+            const currentHref = item.getAttribute("href")
+            item.setAttribute("href", currentHref + "?learning_path=" + currentLearningPath)
+          }
+        }        
       }
     }
   }

@@ -24,13 +24,11 @@ const currentLocation = window.location.href;
   events.clipboardButton();
   events.copy();
   contents.toc();
-  
+  events.toggleSidebar();
   events.activeTab();
   events.tabs();
   mermaid.init();
   if (currentLocation.includes("/learning-paths/modules")) {
       learningPathNavigation.init()
-    } else {
-      events.toggleSidebar();
     }
 })();
