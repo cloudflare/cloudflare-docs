@@ -76,7 +76,7 @@ header: Response
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>addressing/regional_hostnames" \
+curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames" \
      -H "Content-Type:application/json" \
      -H "X-Auth-Key:<API_KEY>" \
      -H "X-Auth-Email:<EMAIL>" \
