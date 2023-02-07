@@ -74,8 +74,8 @@ console.log(url);
 
 Test the presigned URL by uploading an object using cURL.
 
-```java
-curl -H "Content-Type: text/plain"`
+```json
+curl -H "Content-Type: text/plain"
 ```
 
 ## Add CORS policies from the dashboard
@@ -84,21 +84,20 @@ curl -H "Content-Type: text/plain"`
 2. Locate and select your bucket from the list.
 3. From your bucket’s page, select **Settings**.
 4. Under **CORS Policy**, select **Add CORS policy**.
-5. Choose one of two options:
-    1. On the **Add CORS policy** page, select the **Policy builder** tab and add the details for your policy and select **Save** when you are done. 
-    2. From the **JSON** tab, manually enter or copy and paste your policy into the text box.
+5. From the **JSON** tab, manually enter or copy and paste your policy into the text box.
 6. When you are done, select **Save**.
 
 Your policy displays on the **Settings** page for your bucket.
 
-## Additional headers
+## Response headers
 
 You can use the headers below to customize the CORS policy.
 
-- `AllowedMethods`: Specifies the values you can use. Includes `GET`, `PUT`, `POST`, `DELETE`, `HEAD`.
-- `AllowedOrigins`: Specifies the origins you allow cross-domain requests from. Example: `http://www.example.com` 
-- `AllowedHeaders`: Specifies which headers are during the preflight request. The preflight checks if the server allows the type of request being sent.
-- `ExposeHeaders`: Specifies which header users can access from their applications.
+- `AllowedOrigins`: Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. Example: `http://www.example.com`
+- `AllowedMethods`: Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser.
+- `AllowedHeaders`: Specifies the value `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser
+- `ExposeHeaders`: Object headers used when requesting an object from a browser.
+- `MaxAgeSeconds`: The amount of time in seconds browsers are allowed to cache CORS preflight responses.
 
 ## Example
 
@@ -108,7 +107,7 @@ The `AllowedOrigins` specify the web server being used, and `localhost:3000` is 
 
 The `AllowedMethods` specify that only `GET` requests are allowed.
 
-```java
+```json
 [ 
   { 
     "AllowedOrigins": [ 
