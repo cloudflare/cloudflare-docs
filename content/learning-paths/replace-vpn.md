@@ -9,4 +9,4 @@ meta:
 
 {{<dynamic-learning-path-header file="replace-vpn.json">}}
 
-{{<Vue name="DynamicLearningPath"/>}}
+<vue-component name="DynamicLearningPath"/>

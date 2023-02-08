@@ -9,4 +9,4 @@ meta:
 
 {{<dynamic-learning-path-header file="application-security.json">}}
 
-{{<Vue name="DynamicLearningPath"/>}}
+<vue-component name="DynamicLearningPath"/>

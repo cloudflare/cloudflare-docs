@@ -1,12 +1,5 @@
-{{ .Page.Scratch.Add "componentId" 1 }}
 <div class="code-container">
     <pre data-language="{{ .Type }}" data-code="{{ .Inner | base64Encode  }}">
     </pre>
-    <div id="vue-{{ .Page.Scratch.Get "componentId" }}">
-    </div>
-    <script type="module">
-        import { createApp } from 'vue'
-        import Component from "@/CodeCopy.vue"
-        createApp(Component).mount('#vue-{{ .Page.Scratch.Get "componentId" }}', true)
-    </script>
+    <vue-component name="CodeCopy" />
 </div>
