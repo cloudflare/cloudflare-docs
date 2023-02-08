@@ -40,7 +40,9 @@ Presigned URLs are an S3 concept that contain a special signature that encodes d
 
 You will need a pair of S3-compatible credentials to use when you generate the presigned URL.
 
-```java
+The example below shows how to generate a presigned `PutObject` URL using the [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) package for JavaScript.
+
+```js
 import {
   PutObjectCommand,
   S3,
