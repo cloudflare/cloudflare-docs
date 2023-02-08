@@ -7,21 +7,24 @@ import vue from "@vitejs/plugin-vue";
 const renderCodeBlock = (): PluginOption => {
   return {
     name: "html-transform",
-    transformIndexHtml(html: string) {
-      const parsedHtml = parse(html);
-      const codeBlocks = parsedHtml.querySelectorAll("pre[data-code]");
+    transformIndexHtml: {
+      order: "pre",
+      handler: (html: string) => {
+        const parsedHtml = parse(html);
+        const codeBlocks = parsedHtml.querySelectorAll("pre[data-code]");
 
-      for (const block of codeBlocks) {
-        // Base64 is used in order to preserve whitespace
-        block.replaceWith(
-          highlight(
-            atob(block.attributes["data-code"]),
-            block.attributes["data-language"],
-            ""
-          )
-        );
-      }
-      return parsedHtml.outerHTML;
+        for (const block of codeBlocks) {
+          // Base64 is used in order to preserve whitespace
+          block.replaceWith(
+            highlight(
+              atob(block.attributes["data-code"]),
+              block.attributes["data-language"],
+              ""
+            )
+          );
+        }
+        return parsedHtml.outerHTML;
+      },
     },
   };
 };
@@ -37,6 +40,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: glob.sync("public/**/*.html"),
-    }
+    },
   },
 });
