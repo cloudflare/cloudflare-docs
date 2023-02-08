@@ -41,13 +41,9 @@ const renderCodeBlock = (): PluginOption => {
       const codeBlocks = parsedHtml.querySelectorAll("pre[data-code]");
 
       for (const block of codeBlocks) {
-        // Base64 is used in order to preserve whitespace
+        const code = block.attributes["data-code"] + "\n";
         block.replaceWith(
-          highlight(
-            atob(block.attributes["data-code"]),
-            block.attributes["data-language"],
-            ""
-          )
+          highlight(code, block.attributes["data-language"], "")
         );
       }
       return parsedHtml.outerHTML;
