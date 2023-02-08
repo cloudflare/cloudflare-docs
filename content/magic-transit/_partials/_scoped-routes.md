@@ -36,7 +36,7 @@ Cloudflare has nine geographic regions across the world which are listed below.
 <details>
   <summary>Region codes and associated regions</summary>
 
-| Region Code     | Region                |
+| Region code     | Region                |
 | --------------- | --------------------- |
 | AFR             | Africa                |
 | APAC            | Asia Pacific          |
