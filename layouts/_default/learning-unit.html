@@ -17,6 +17,8 @@
       <div class="DocsContent" id="main" page-type="document">
         
         <article class="DocsMarkdown">
+          <h1 id="{{.Title | urlize }}">{{.Title}}</h1>
+          <p class="timeEstimate">{{- .ReadingTime -}}&nbsp;min read</p>
           {{- .Content -}}
           {{- partial "progress.button" . -}}
         </article>

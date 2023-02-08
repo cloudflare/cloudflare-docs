@@ -7,6 +7,7 @@
 {{- $baseURL := "/learning-paths/modules/" -}}
 {{- $previousUnit := "" -}}
 {{- $nextUnit := "" -}}
+{{- $currentUnitNumber := 0 -}}
 
 {{- if eq $layout "learning-module" -}}
     {{- $nextUnit = index (index (index $moduleData "units") 0) "url" -}}
@@ -17,23 +18,29 @@
 
 {{- else -}}
 
+    {{- range $index, $item := (index $moduleData "units") -}}
+        {{- if eq (print $baseURL $currentModule "/" $currentUnit "/") $item.url -}}
+            {{- $currentUnitNumber = (add $index 1) -}}
+            {{- if ne $index (sub $moduleLength 1) -}}
+                {{- $nextUnit = index (index (index $moduleData "units") (add $index 1)) "url" -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}    
+
     {{- with .NextInSection -}}
         {{- $previousUnit = .RelPermalink -}}
     {{- end -}}
 
     {{- with .PrevInSection -}}
         {{- $nextUnit = .RelPermalink -}}
-    {{- else -}}
-    {{- range $index, $item := (index $moduleData "units") -}}
-        {{- if eq (print $baseURL $currentModule "/" $currentUnit "/") $item.url -}}
-            {{- if ne $index (sub $moduleLength 1) -}}
-                {{- $nextUnit = index (index (index $moduleData "units") (add $index 1)) "url" -}}
-            {{- end -}}
-        {{- end -}}
-    {{- end -}}
 {{- end -}}
 
-<p class="DocsMarkdown--button-group">
+<div class="progressIndicator">
+{{- if eq $layout "learning-unit" -}}
+<p>Unit {{ $currentUnitNumber }} of {{ $moduleLength }}</p>
+{{- end -}}
+
+<p class="DocsMarkdown--button-group" style="align-items: center;">
 <span class="DocsMarkdown--button-group-content">
 {{- if ne $previousUnit "" -}}
     <a href="{{- $previousUnit -}}" id="previousLink" class="learningNavigation Button Button-is-docs-secondary">
@@ -53,3 +60,4 @@
 </span>
 </p>
 {{- end -}}
+</div>

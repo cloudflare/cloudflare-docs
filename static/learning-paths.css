@@ -221,3 +221,16 @@ details div ul li {
 label {
     margin-left: .5em;
 }
+
+.progressIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    max-width: 80%;
+}
+
+.timeEstimate {
+    margin-top: -.75em;
+    padding-bottom: 1em;
+    font-size: .9em;
+}
