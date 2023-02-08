@@ -30,7 +30,7 @@ Before you configure CORS, you must have:
 
 To use CORS with a public bucket, ensure your bucket is set to allow public access.
 
-Next, add a CORS policy to your bucket to allow the file to be shared.
+Next, [add a CORS policy](#add-cors-policies-from-the-dashboard) to your bucket to allow the file to be shared.
 
 ## Use CORS with a presigned URL
 
@@ -105,9 +105,7 @@ You can use the headers below to customize the CORS policy.
 
 This example shows a CORS policy added for a bucket that contains the `Roboto-Light.ttf` object, which is a font file.
 
-The `AllowedOrigins` specify the web server being used, and `localhost:3000` is the hostname where the web server is running.
-
-The `AllowedMethods` specify that only `GET` requests are allowed.
+The `AllowedOrigins` specify the web server being used, and `localhost:3000` is the hostname where the web server is running. The `AllowedMethods` specify that only `GET` requests are allowed and can read objects in your bucket.
 
 ```json
 [ 
