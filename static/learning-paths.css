@@ -99,9 +99,13 @@ html {
 }
 
 .background {
-    margin-top: 0px;
+    margin-top: 3em;
     display: flex;
     flex-direction: column;
+}
+
+.learningPathModule:first-of-type {
+    margin-top: .5em;
 }
 
 .learningPathModule {
