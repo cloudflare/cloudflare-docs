@@ -32,10 +32,10 @@ Universal SSL certificates issued for Free plan zones require user agents that s
 - Opera 8 (with TLS 1.1 enabled)
 - Google Chrome v5.0.342.0
 - Safari 2.1
-- Mobile Browsers
 
-**Mobile Safari for iOS 4.0**:
+**Mobile Browsers**:
 
+- Mobile Safari for iOS 4.0
 - Android 3.0 (Honeycomb) and later
 - Windows Phone 7
 
