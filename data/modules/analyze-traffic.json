@@ -1,36 +1,19 @@
 {
-    "parents": [
-        {
-            "uid": "learn.build-javascript-applications-nodejs",
-            "type": "learningPath",
-            "title": "Build JavaScript applications with Node.js",
-            "url": "/training/paths/build-javascript-applications-nodejs/",
-            "iconUrl": "/training/achievements/build-javascript-applications-nodejs.svg",
-            "durationInMinutes": 192,
-            "points": 1050
-        }
-    ],
     "units": [
         {
             "uid": "learn.bots.preanalysis.intro",
-            "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/analyze-traffic/intro/",
-            "durationInMinutes": 3
+            "url": "/learning-paths/modules/analyze-traffic/intro/"
         },
         {
             "uid": "learn.bots.preanalysis.botanalytics",
-            "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/analyze-traffic/bot-analytics/",
-            "durationInMinutes": 3
+            "url": "/learning-paths/modules/analyze-traffic/bot-analytics/"
         },
         {
             "uid": "learn.bots.preanalysis.otherdata",
-            "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/analyze-traffic/other-data-sources/",
-            "durationInMinutes": 3
+            "url": "/learning-paths/modules/analyze-traffic/other-data-sources/"
         }
     ],
     "summary": "Learn how to understand the traffic reaching your application",

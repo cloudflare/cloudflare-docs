@@ -1,9 +1,9 @@
 ---
-title: Bot score
+title: What are firewall rules?
 pcx_content_type: overview
-weight: 3
+weight: 2
 layout: learning-unit
 show_time: true
 ---
 
-# Bot score
+# What are firewall rules?

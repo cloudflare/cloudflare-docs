@@ -1,36 +1,19 @@
 {
-    "parents": [
-        {
-            "uid": "learn.build-javascript-applications-nodejs",
-            "type": "learningPath",
-            "title": "Build JavaScript applications with Node.js",
-            "url": "/training/paths/build-javascript-applications-nodejs/",
-            "iconUrl": "/training/achievements/build-javascript-applications-nodejs.svg",
-            "durationInMinutes": 192,
-            "points": 1050
-        }
-    ],
     "units": [
         {
             "uid": "learn.bots.concepts.intro",
-            "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/bots-concepts/intro/",
-            "durationInMinutes": 3
+            "url": "/learning-paths/modules/bots-concepts/intro/"
         },
         {
             "uid": "learn.bots.concepts.bots",
-            "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/bots-concepts/bots/",
-            "durationInMinutes": 3
+            "url": "/learning-paths/modules/bots-concepts/bots/"
         },
         {
             "uid": "learn.bots.concepts.botscore",
-            "type": "unit",
             "title": "Introduction",
-            "url": "/learning-paths/modules/bots-concepts/bot-score/",
-            "durationInMinutes": 3
+            "url": "/learning-paths/modules/bots-concepts/bot-score/"
         }
     ],
     "summary": "Learn the basic concepts behind bots on the Internet, especially those utilized within Cloudflare Bot Management",

@@ -1,9 +1,9 @@
 ---
-title: Bot score
+title: Introduction
 pcx_content_type: overview
-weight: 3
+weight: 1
 layout: learning-unit
 show_time: true
 ---
 
-# Bot score
+# Introduction

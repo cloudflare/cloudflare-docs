@@ -5,6 +5,9 @@
         },
         {
             "uid": "analyze-traffic"
+        },
+        {
+            "uid": "learning-firewall-rules"
         }
     ],
     "title": "Get started with Bot Management",
