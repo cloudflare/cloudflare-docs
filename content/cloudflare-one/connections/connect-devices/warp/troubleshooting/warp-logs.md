@@ -22,7 +22,7 @@ To view debug logs on desktop devices:
     ```sh
     $ warp-diag
     ```
-This will place a `warp-debugging-info.zip` on your Desktop.
+This will place a `warp-debugging-info-<date>-<time>.zip` on your Desktop.
 
 {{</tab>}}
 {{<tab label="windows" no-code="true">}}
@@ -32,7 +32,7 @@ This will place a `warp-debugging-info.zip` on your Desktop.
     ```bash
     C:\Users\JohnDoe>warp-diag
     ```
-This will place a `warp-debugging-info.zip` on your Desktop.
+This will place a `warp-debugging-info-<date>-<time>.zip` on your Desktop.
 
 {{</tab>}}
 {{<tab label="linux" no-code="true">}}
@@ -42,24 +42,24 @@ This will place a `warp-debugging-info.zip` on your Desktop.
     ```sh
     $ warp-diag
     ```
-This will place a `warp-debugging-info.zip` in the same folder you ran the command from.
+This will place a `warp-debugging-info-<date>-<time>.zip` in the same folder you ran the command from.
 
 {{</tab>}}
 {{</tabs>}}
 
 ### `warp-diag` logs
 
-The `warp-debugging-info.zip` archive contains the following files:
+The `warp-debugging-info-<date>-<time>.zip` archive contains the following files:
 
 {{<table-wrap>}}
 | File name          | Description |
 | ------------------ | ----------- |
-| `boringtun.log`    | Log for the WireGuard tunnel that serves traffic from the device to Cloudflare's edge. |
-| `connectivity.txt` | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check). The trace for `connectivity.cloudflareclient.com` should show `warp=on` and optionally `gateway=on` (if TCP proxy is enabled). The trace for `engage.cloudflareclient.com` should show `warp=off` and `gateway=off`. |
-| `daemon.log`       | Communication between the device and Cloudflare's edge.|
+| `boringtun.log`    | Log for the WARP tunnel that serves traffic from the device to Cloudflare's global network. |
+| `connectivity.txt` | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-check).
+| `daemon.log`       | Detailed log of all actions performed by the WARP client, including all communication between the device and Cloudflare's global network.  **Note:** This is the most useful debug log. |
 | `daemon_dns.log`   | Contains detailed DNS logs if **Log DNS queries** was enabled on WARP. |
 | `date.txt`         | Date and time (UTC) when you ran the `warp-diag` command.|
-| `dns-check.txt`    | Verifies that the WARP DNS servers are set as system default. For [operating modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) where DNS filtering is enabled, this file should contain the IPs of the WARP DNS servers (`127.0.2.2` and `127.0.2.3`). |
+| `dns-check.txt`    | Verifies that the WARP DNS servers are set as system default. For [operating modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) where DNS filtering is enabled, this file contains the IPs of the local WARP DNS proxy (`127.0.2.2:0`, `127.0.2.3:0`, `[fd01:db8:1111::2]:0`, and `[fd01:db8:1111::3]:0`).|
 | `dns_stats.log`    | Statistics on the DNS queries received and resolved by WARP, generated every two minutes. |
 | `etc-hosts.txt`    | Static DNS config of device. |
 | `gui-launcher.log` | macOS console log showing application launch|
@@ -67,7 +67,7 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `hostname.txt`     | Name of the device. |
 | `ifconfig.txt` </br> `ipconfig.txt`    | IP configuration of each network interface. |
 | `installer.log`    | MSI or PKG installation log |
-| `mdm.xml` </br> `mdm.plist` </br> `local_policy_redacted.txt` | [Managed deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) on the device. |
+| `local_policy_redacted.txt` | [Managed deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) on the device. |
 | `netstat.txt` </br> `routetable.txt` | Routing table used by the device.  |
 | `netstat-v6.txt`   | IPv6 routing table (Linux only). |
 | `platform.txt`     | Operating system of the device. |
@@ -76,12 +76,12 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `route.txt`        | Output from the `route get` command used to verify that network traffic is going over the correct interface. |
 | `scutil-dns.txt`   | DNS configuration on Mac/Linux (available in `ipconfig.txt` on Windows). |
 | `scutil-proxy.txt` | Proxy configuration on Mac/Linux (available in `ipconfig.txt` on Windows). |
-| `stats.log`        | Uptime and throughput stats for the Wireguard tunnel, generated every two minutes. |
+| `stats.log`        | Uptime and throughput stats for the WARP tunnel, generated every two minutes. |
 | `sw-vers.txt`      | Operating system of the device. |
 | `sysinfo.json`     | CPU and memory usage when `warp-diag` was run. This information is useful for determining whether slow speeds are due to heavy system load. |
 | `systeminfo.txt` </br> `system-profile.txt` | System software overview.  |
 | `timezone.txt`     | Local timezone of the device specified as a UTC offset. |
-| `traceroute.txt`   | Traceroute to the [WARP ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) showing the path from the device to Cloudflare's edge.|
+| `traceroute.txt`   | Traceroute to the [WARP ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) showing the path from the device to Cloudflare's global network.|
 | `uname.txt`        |  Linux-only system information including kernel version. |
 | `v4interfaces.txt` </br> `v4subinterfaces.txt` </br> `v6interfaces.txt` </br> `v6subinterfaces.txt` | IPv4 and IPv6 network configuration on Windows. |
 | `version.txt`      | [WARP client version](/cloudflare-one/connections/connect-devices/warp/download-warp/) installed on the device. |
@@ -90,8 +90,8 @@ The `warp-debugging-info.zip` archive contains the following files:
 | `warp-dns-stats.txt`| Summary of recent DNS queries on the device since `dns-stats.log` was generated. |
 | `warp-network.txt` | Network settings on the device detected by WARP. |
 | `warp-settings.txt`| [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) applied to the device. |
-| `warp-stats.txt`   | Uptime and throughput of the Wireguard tunnel since `stats.log` was generated. |
-| `warp-status.txt`  | Status of WARP switch (connected or disconnected). |
+| `warp-stats.txt`   | Uptime and throughput of the WARP tunnel since `stats.log` was generated. |
+| `warp-status.txt`  | Status of WARP switch (`Connected` or `Disconnected`). |
 
 {{</table-wrap>}}
 
