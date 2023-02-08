@@ -109,15 +109,15 @@ html {
     flex-direction: column;
     width: 90%;
     margin-top: 3em;
-    border: 1px solid #242628;
+    border: .25px solid #242628;
     padding: 0em 1em 1em 1.75em;
-    border-radius: .5em;
+    border-radius: 1em;
     background: linear-gradient(var(--background-color),
     rgba(var(--background-color-rgb)));
 }
 
 [theme=dark] .learningPathModule {
-    border: 1px solid #f3f3f4;
+    border: .25px solid #f3f3f4;
     background-color: rgb(var(--background-color-rgb));
 }
 
@@ -151,8 +151,21 @@ html {
     align-self: center;
 }
 
-.DocsMarkdown--button-group span a {
-    color: inherit;
+.Button-is-docs-primary .DocsMarkdown--link-content {
+    color: #fff;
+}
+
+.Button-is-docs-secondary .DocsMarkdown--link-content {
+    color: #1d1f20;
+}
+
+[theme="dark"] .Button-is-docs-secondary .DocsMarkdown--link-content {
+    color: #fff;
+}
+
+.learningNavigation {
+    width: 9em;
+    text-align: center;
 }
 
 .background a,

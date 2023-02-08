@@ -298,6 +298,10 @@
 /images/worker/ /images/image-resizing/resize-with-workers/ 301
 /images/cloudflare-images/export-image/ /images/cloudflare-images/transform/export-image/ 301
 
+# learning-paths
+
+/learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
+
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
 /load-balancing/create-load-balancer-ui/ /load-balancing/how-to/create-load-balancer/ 301
@@ -367,11 +371,11 @@
 /pages/platform/functions/billing/ /pages/platform/functions/pricing/ 301
 
 # partners
-/partners/ /learning-paths/technology-partner-integrations/ 301
-/partners/analytics/ /learning-paths/technology-partner-integrations/#analytics-integrations/ 301
-/partners/logs/ /learning-paths/technology-partner-integrations/#cloudflare-logs 301
+/partners/ /fundamentals/partners/ 301
+/partners/analytics/ /fundamentals/partners/#analytics-integrations/ 301
+/partners/logs/ /fundamentals/partners/#cloudflare-logs 301
 /partners/email-security/ /email-security/partners/ 301
-/partners/network-interconnect/ /learning-paths/technology-partner-integrations/#cloudflare-network-interconnect/ 301
+/partners/network-interconnect/ /fundamentals/partners/#cloudflare-network-interconnect/ 301
 /partners/tenant/ /tenant/ 301
 
 # page-shield

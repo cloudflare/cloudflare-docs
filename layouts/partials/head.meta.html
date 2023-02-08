@@ -125,7 +125,7 @@
   {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
 {{- end -}}
 
-{{- if in $.Context.RelPermalink "/learning-paths/" -}}
+{{- if (in $.Context.RelPermalink "/learning-paths/") -}}
 <link rel="stylesheet preconnect" href="/learning-paths.css"/>
 {{- end -}}
 
