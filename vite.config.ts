@@ -37,6 +37,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: glob.sync("public/**/*.html"),
-    },
+    }
   },
 });

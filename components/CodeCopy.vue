@@ -86,7 +86,7 @@ function copyCode(e: MouseEvent) {
   </button>
 </template>
 
-<style>
+<style scoped>
 .copyCode-button {
   position: absolute;
   top: 0.5em;

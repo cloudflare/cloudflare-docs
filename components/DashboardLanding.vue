@@ -40,7 +40,7 @@ const visibleData = dashArea
   </div>
 </template>
 
-<style>
+<style scoped>
 .recommendations {
   display: flex;
   flex-direction: column;
