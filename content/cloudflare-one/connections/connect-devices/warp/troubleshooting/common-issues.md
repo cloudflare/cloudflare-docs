@@ -101,7 +101,7 @@ If you suspect your country may be blocking WARP traffic, contact your ISP to ve
 **To resolve the issue:**
 
 1. Open the `/etc/resolv.conf` file on your device.
-2. In the `search` directives, check for invalid hostname characters such as `!@#$%^&*()<>?`.
+2. In the `search` directives, check for invalid URL characters such as `!@#$%^&*()<>?`.
 3. ??
 Why would there be an invalid char in the first place? How do you remove it without breaking functionality?
 
@@ -146,6 +146,9 @@ Installing and trusting a [root CA](/cloudflare-one/connections/connect-devices/
 
 You see untrusted certificate warnings on every website. Example warnings include `Certificate not trusted`, `Not trusted identity` or `SSL Error`.
 
+best way to check if the root CA is installed?
+
+
 **To resolve the issue:**
 
 [Install the root CA](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on all of your devices.
@@ -173,6 +176,7 @@ In the third-party security product, disable TLS decryption for all traffic incl
 Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#limitations).
 
 **To diagnose the issue:**
+?
 
 **To resolve the issue:**
 
@@ -183,6 +187,7 @@ Create a Do Not Inspect policy to exclude the application from Gateway inspectio
 In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
 **To diagnose the issue:**
+?
 
 **To resolve the issue:**
 
@@ -191,6 +196,8 @@ Refer to [our instructions](/cloudflare-one/connections/connect-devices/warp/use
 ### A Gateway Network or HTTP policy is blocking the app or site
 
 You may have a Gateway Network or HTTP in place that accidentally blocks a port, IP, or domain that the app or site relies on.
+
+**To diagnose the issue:**
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Gateway** > **Firewall Policies**.
 2. Disable all Network and HTTP policies.
@@ -211,4 +218,5 @@ An app relies on a route to specific DNS entries, like localhost in order to fun
 Inspect split tunnel settings and ensure all of the sites traffic is either inside/outside the tunnel.  Have the customer save their custom DNS records for Exclude mode, and then advise the customer to restore the default set of IPs for Exclude mode.  Note here, that any entry you have manually added to the Split Tunnels list will be permanently deleted. The change will take effect immediately.  
 
 **To resolve the issue:**
-Advise the customer to add the custom DNS entries for Exclude mode afterwards.
+
+add the custom DNS entries for Exclude mode
