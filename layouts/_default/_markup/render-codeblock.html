@@ -1,5 +1,4 @@
 <div class="code-container">
-    <pre data-language="{{ .Type }}" data-code="{{ .Inner }}">
-    </pre>
-    <vue-component name="CodeCopy" />
+    <unparsed-codeblock data-language="{{ .Type }}" data-code="{{ urlquery .Inner }}"></unparsed-codeblock>
+    <vue-component name="CodeCopy"></vue-component>
 </div>

@@ -1,32 +1,62 @@
 import { fileURLToPath, URL } from "node:url";
-import { parse } from "node-html-parser";
+import { HTMLRewriter, type ElementHandlers } from "html-rewriter-wasm";
 import { defineConfig, type PluginOption } from "vite";
 import glob from "glob";
 import { highlight } from "./bin/prism.config";
 import vue from "@vitejs/plugin-vue";
+
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
+async function rewrite(
+  document: string,
+  handlers: [string, ElementHandlers][]
+) {
+  let output = "";
+  const rewriter = new HTMLRewriter((outputChunk) => {
+    output += decoder.decode(outputChunk);
+  });
+  handlers.forEach(([el, handler]) => rewriter.on(el, handler));
+  try {
+    await rewriter.write(encoder.encode(document));
+    await rewriter.end();
+    return output;
+  } finally {
+    rewriter.free();
+  }
+}
+
 const hydrateVueComponents = (): PluginOption => {
   return {
     name: "hydrate-vue",
     transformIndexHtml: {
       order: "pre",
-      handler: (html: string) => {
+      handler: async (html: string) => {
         let componentId = 1;
-        const parsedHtml = parse(html);
-        const vueComponents = parsedHtml.querySelectorAll("vue-component");
-        for (const component of vueComponents) {
-          const nId = componentId++;
-          const name = component.attributes["name"];
+        return await rewrite(html, [
+          [
+            "vue-component",
+            {
+              element: (element) => {
+                const nId = componentId++;
+                const name = element.getAttribute("name");
 
-          component.replaceWith(`<div id="vue-c-${nId}">
-            ${component.innerHTML}
+                element.replace(
+                  `<div id="vue-c-${nId}">
         </div>
         <script type="module">
             import { createApp } from 'vue'
             import Component from "@/${name}.vue"
             createApp(Component).mount('#vue-c-${nId}', true)
-        </script>`);
-        }
-        return parsedHtml.outerHTML;
+        </script>`,
+                  {
+                    html: true,
+                  }
+                );
+              },
+            },
+          ],
+        ]);
       },
     },
   };
@@ -35,18 +65,33 @@ const hydrateVueComponents = (): PluginOption => {
 const renderCodeBlock = (): PluginOption => {
   return {
     name: "render-code-block",
-    transformIndexHtml(html: string) {
-      const parsedHtml = parse(html);
+    async transformIndexHtml(html: string) {
+      return await rewrite(html, [
+        [
+          "unparsed-codeblock",
+          {
+            element: (element) => {
+              const data = element
+                .getAttribute("data-code")!
+                // Hugo's url encoding is ...odd
+                .replaceAll("&#43;", " ");
 
-      const codeBlocks = parsedHtml.querySelectorAll("pre[data-code]");
-
-      for (const block of codeBlocks) {
-        const code = block.attributes["data-code"] + "\n";
-        block.replaceWith(
-          highlight(code, block.attributes["data-language"], "")
-        );
-      }
-      return parsedHtml.outerHTML;
+              if (data.includes("&#")) {
+                throw new Error("Unexpected HTML entity: " + data);
+              }
+              const decoded = decodeURIComponent(data);
+              console.log(decoded);
+              const code = decoded + "\n";
+              element.replace(
+                highlight(code, element.getAttribute("data-language")!, ""),
+                {
+                  html: true,
+                }
+              );
+            },
+          },
+        ],
+      ]);
     },
   };
 };
