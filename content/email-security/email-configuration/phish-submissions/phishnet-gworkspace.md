@@ -32,9 +32,9 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
     </div>
 
-4. Agree with Google’s terms of service, and select **Finish**.
+4. After choosing the groups you want to install PhishNet for, agree with Google’s terms of service, and select **Finish**.
 
-5. After a moment, Google Workspace will inform you that Cloudflare PhishNet has been installed. Select **Done** to continue.
+5. Google Workspace will inform you that Cloudflare PhishNet has been installed. Select **Done** to continue.
 
     <div class="large-img">
 
@@ -47,7 +47,7 @@ Cloudflare PhishNet is now installed.
 ## Submit phish with PhishNet
 
 1. In your Gmail web client, open the message you would like to flag as either spam or phish.
-2. (Optional) Open Gmail’s **side panel**.
+2. (Optional) Open Gmail’s **side panel** if it is not already opened.
 
     <div class="large-img">
 
@@ -73,4 +73,4 @@ Cloudflare PhishNet is now installed.
 
 5. Select **Submit Report**.
 
-Once the email has been successfully submitted to Cloudflare Area 1 for review, PhishNet will show you a Submission Complete message.
+PhishNet will show you a **Submission Complete** message once the email has been successfully submitted to Cloudflare Area 1 for review, 
