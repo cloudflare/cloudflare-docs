@@ -2,7 +2,7 @@
     "units": [
         {
             "title": "Hostname preparation",
-            "url": "/learning-paths/modules/performance/load-balancing-plan/hostname-preparation/"
+            "url": "/learning-paths/modules/performance/load-balancing-setup/hostname-preparation/"
         },
         {
             "title": "Create monitor",
