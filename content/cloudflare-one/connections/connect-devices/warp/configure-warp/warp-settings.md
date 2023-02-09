@@ -201,11 +201,7 @@ When `Enabled`, the **Send Feedback** button in the WARP client appears and will
 </div>
 </details>
 
-Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) for a detailed description of each mode.
-
-- **Gateway with WARP** DNS and Device traffic is encrypted and processed by Gateway. This mode is required if you want to enable HTTP rules, Browser Isolation, Anti-Virus scanning and DLP.
-- **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.
-- **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
+Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes) for a detailed description of each mode.
 
 ### Local Domain Fallback
 
