@@ -8,6 +8,11 @@ rss: file
 
 # Changelog
 
+## 2023-02-06
+
+- Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
+- Previously, an error would be thrown when trying to access unimplemented standard `Request` and `Response` properties. Now those will be left as `undefined`.
+
 ## 2023-01-13
 
 - Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.

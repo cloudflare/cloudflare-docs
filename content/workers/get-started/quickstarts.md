@@ -58,7 +58,7 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Router" repo="cloudflare/worker-template-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic.">}}
 
-{{<worker-starter title="Miniflare Example Project" repo="mrbbot/miniflare-typescript-esbuild-jest" description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment.">}}
+{{<worker-starter title="Miniflare Example Project" repo="cloudflare/miniflare-typescript-esbuild-jest" description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment.">}}
 
 {{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Workers Sites for static assets.">}}
 

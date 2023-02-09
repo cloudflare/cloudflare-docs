@@ -166,9 +166,9 @@ $ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
-- `--command` {{<type>}}string{{</type>}} 
+- `--command` {{<type>}}string{{</type>}}
   - The SQL query you wish to execute.
-- `--file` {{<type>}}string{{</type>}} 
+- `--file` {{<type>}}string{{</type>}}
   - Path to the SQL file you wish to execute.
 - Note that you must provide either `--command` or `--file` for this command to run successfully.
 {{</definitions>}}
@@ -236,7 +236,7 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 ### `migrations create`
 
-Create a new migration. 
+Create a new migration.
 
 This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
 
@@ -245,7 +245,7 @@ This will generate a new versioned file inside the `migrations` folder. Name you
 The filename will include a version number and the migration name you specify below.
 
 ```sh
-$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>" 
+$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
 ```
 
 {{<definitions>}}
@@ -268,7 +268,7 @@ $ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to list unapplied migrations for.
-- `--local` {{<type>}}boolean{{</type>}} 
+- `--local` {{<type>}}boolean{{</type>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
 {{</definitions>}}
 
@@ -276,7 +276,7 @@ $ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 
 Apply any unapplied migrations.
 
-This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured.
 
 The progress of each migration will be printed in the console.
 
@@ -292,7 +292,7 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
-- `--local` {{<type>}}boolean{{</type>}} 
+- `--local` {{<type>}}boolean{{</type>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
 {{</definitions>}}
 
@@ -535,8 +535,9 @@ Below is an example of using the `create` command to create a KV namespace calle
 
 ```sh
 $ wrangler kv:namespace create "MY_KV"
-🌀  Creating namespace with title "worker-MY_KV"
-✨  Add the following to your wrangler.toml:
+🌀 Creating namespace with title "worker-MY_KV"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
 kv_namespaces = [
   { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
 ]
@@ -549,9 +550,9 @@ Below is an example of using the `create` command to create a preview KV namespa
 
 ```sh
 $ wrangler kv:namespace create "MY_KV" --preview
-🌀  Creating namespace with title "my-site-MY_KV_preview"
-✨  Success!
-Add the following to your wrangler.toml:
+🌀 Creating namespace with title "my-site-MY_KV_preview"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
 kv_namespaces = [
   { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
 ]
@@ -618,8 +619,8 @@ Below is an example of deleting a KV namespace called MY_KV.
 $ wrangler kv:namespace delete --binding=MY_KV
 Are you sure you want to delete namespace f7b02e7fc70443149ac906dd81ec1791? [y/n]
 yes
-🌀  Deleting namespace f7b02e7fc70443149ac906dd81ec1791
-✨  Success
+Deleting namespace f7b02e7fc70443149ac906dd81ec1791
+Deleted namespace f7b02e7fc70443149ac906dd81ec1791
 ```
 
 {{</Aside>}}
@@ -631,8 +632,8 @@ Below is an example of deleting a preview KV namespace called MY_KV.
 $ wrangler kv:namespace delete --binding=MY_KV --preview
 Are you sure you want to delete namespace 15137f8edf6c09742227e99b08aaf273? [y/n]
 yes
-🌀  Deleting namespace 15137f8edf6c09742227e99b08aaf273
-✨  Success
+Deleting namespace 15137f8edf6c09742227e99b08aaf273
+Deleted namespace 15137f8edf6c09742227e99b08aaf273
 ```
 
 {{</Aside>}}
@@ -687,7 +688,7 @@ Below is an example that puts a key-value into the namespace with binding name o
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value"
-✨  Success
+Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -697,7 +698,7 @@ Below is an example that puts a key-value into the preview namespace with bindin
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
-✨  Success
+Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
 ```
 
 {{</Aside>}}
@@ -707,7 +708,7 @@ Below is an example that puts a key-value into a namespace, with a time-to-live 
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
-✨  Success
+Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -717,7 +718,7 @@ Below is an example that puts a key-value into a namespace, where the value is r
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
-✨  Success
+Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -836,10 +837,7 @@ Below is an example that deletes the key-value pair with key `"my-key"` from the
 
 ```sh
 $ wrangler kv:key delete --binding=MY_KV "my-key"
-Are you sure you want to delete key "my-key"? [y/n]
-yes
-🌀  Deleting key "my-key"
-✨  Success
+Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -929,8 +927,7 @@ Here is an example of writing all the key-value pairs found in the `allthethings
 
 ```sh
 $ wrangler kv:bulk put --binding=MY_KV allthethingsupload.json
-🌀  uploading 1 key value pairs
-✨  Success
+Success!
 ```
 
 {{</Aside>}}
@@ -974,10 +971,8 @@ Below is an example of deleting all the keys found in the `allthethingsdelete.js
 
 ```sh
 $ wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
-Are you sure you want to delete all keys in allthethingsdelete.json? [y/n]
-y
-🌀  deleting 1 key value pairs
-✨  Success
+? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
+Success!
 ```
 
 {{</Aside>}}
@@ -1134,7 +1129,7 @@ You will be prompted to input the secret's value. For example:
 
 ```sh
 $ wrangler secret put FOO
-Enter a secret value: ***
+? Enter a secret value: › ***
 🌀 Creating the secret for script worker-app
 ✨ Success! Uploaded secret FOO
 ```
@@ -1216,7 +1211,7 @@ Manage multiple secrets for a Worker.
 The path to a JSON file containing secrets in key-value pairs to upload.
 
 ```sh
-$ wrangler secret:bulk json <FILE> [OPTIONS]
+$ wrangler secret:bulk <JSON> [OPTIONS]
 ```
 
 {{<definitions>}}

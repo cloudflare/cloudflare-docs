@@ -20,7 +20,7 @@ Gateway automatically enables a block page for all HTTP policies. When a user is
 
 To specify a policy-specific block message:
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies** > **HTTP**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Firewall Policies** > **HTTP**.
 2. Find the policy you want to customize and click **Edit**. You can only edit the block page for policies with a Block action.
 3. Scroll down to the **Configure policy settings** step.
 4. In the **Block page customised text** field, enter a custom block message.
@@ -32,7 +32,7 @@ Users will now see a custom message when they are blocked by this HTTP policy.
 
 For DNS policies, you will need to enable the block page on a per-policy basis.
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Policies** > **DNS**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Firewall Policies** > **DNS**.
 2. Find the policy for which you would like to display a block page and click **Edit**. You can only enable the block page for policies with a Block action.
 3. Scroll down to the **Configure policy settings** step.
 4. Enable **Display block page**.
