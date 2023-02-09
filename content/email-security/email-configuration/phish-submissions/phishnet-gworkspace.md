@@ -26,7 +26,7 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
 3. In the window that opens, choose between installing Cloudflare PhishNet for **Everyone at your organization** or **Certain groups or organizational units**. If you choose this last option, you will also have to select which users you want to install PhishNet to.
 
-    <div class="large-img">
+    <div class="medium-img">
 
     ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gworkspace/step3-select-users.png)
 
@@ -36,7 +36,7 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
 5. Google Workspace will inform you that Cloudflare PhishNet has been installed. Select **Done** to continue.
 
-    <div class="large-img">
+    <div class="medium-img">
 
     ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gworkspace/step5-done.png)
 
@@ -49,7 +49,7 @@ Cloudflare PhishNet is now installed.
 1. In your Gmail web client, open the message you would like to flag as either spam or phish.
 2. (Optional) Open Gmail’s **side panel** if it is not already opened.
 
-    <div class="large-img">
+    <div class="medium-img">
 
     ![Open the side panel on Gmail's interface if you need to](/email-security/static/phish-submissions/phishnet-gworkspace/step2-side-panel.png)
 
@@ -57,7 +57,7 @@ Cloudflare PhishNet is now installed.
 
 3. Select the **PhishNet logo**.
 
-    <div class="large-img">
+    <div class="medium-img">
 
     ![Select PhishNet's logo](/email-security/static/phish-submissions/phishnet-gworkspace/step3-logo.png)
 
@@ -65,7 +65,7 @@ Cloudflare PhishNet is now installed.
 
 4. Under **Select Submission Type**, select the type of your submission — Spam or Phish.
 
-    <div class="large-img">
+    <div class="medium-img">
 
     ![Choose the type of submission you'd like to make](/email-security/static/phish-submissions/phishnet-gworkspace/step4-submission-type.png)
 
