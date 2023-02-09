@@ -1,4 +1,2 @@
-<div class="mermaid">
-    {{- .Inner }}
-</div>
-{{ .Page.Scratch.Set "hasMermaid" true }}
+<vue-component name="Mermaid" data-mermaid="{{ urlquery .Inner }}">
+</vue-component>

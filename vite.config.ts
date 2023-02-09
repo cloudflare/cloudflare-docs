@@ -4,7 +4,6 @@ import { defineConfig, type PluginOption } from "vite";
 import glob from "glob";
 import { highlight } from "./bin/prism.config";
 import vue from "@vitejs/plugin-vue";
-
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
@@ -40,18 +39,17 @@ const hydrateVueComponents = (): PluginOption => {
               element: (element) => {
                 const nId = componentId++;
                 const name = element.getAttribute("name");
-
-                element.replace(
-                  `<div id="vue-c-${nId}">
-        </div>
-        <script type="module">
-            import { createApp } from 'vue'
-            import Component from "@/${name}.vue"
-            createApp(Component).mount('#vue-c-${nId}', true)
-        </script>`,
-                  {
-                    html: true,
-                  }
+                element.tagName = "div";
+                element.removeAttribute("name");
+                element.setAttribute("id", `vue-c-${nId}`);
+                element.after(
+                  `<script type="module">
+                  import { createApp } from 'vue'
+                  import Component from "@/${name}.vue"
+                  const root = document.getElementById('vue-c-${nId}')
+                  createApp(Component, {...root.dataset}).mount(root, true)
+              </script>`,
+                  { html: true }
                 );
               },
             },
@@ -80,7 +78,6 @@ const renderCodeBlock = (): PluginOption => {
                 throw new Error("Unexpected HTML entity: " + data);
               }
               const decoded = decodeURIComponent(data);
-              console.log(decoded);
               const code = decoded + "\n";
               element.replace(
                 highlight(code, element.getAttribute("data-language")!, ""),

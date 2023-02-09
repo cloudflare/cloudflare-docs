@@ -13,7 +13,9 @@
     "crawl": "tsm bin/crawl.ts",
     "build:hugo": "hugo",
     "build:vite": "vite build",
-    "build": "npm run build:hugo && npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public"
+    "build:post": "npm run build:vite && mv public/dist dist && cp -nr public/. dist/ && rm -rf public && mv dist public",
+    "build": "npm run build:hugo && npm run build:post",
+    "build:local": "./hugo && npm run build:post"
   },
   "dependencies": {
     "fromnow": "3.0.1",
@@ -43,5 +45,6 @@
   },
   "volta": {
     "node": "18.10.0"
-  }
+  },
+  "type": "module"
 }
