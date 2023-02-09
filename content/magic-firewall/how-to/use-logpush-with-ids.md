@@ -1,5 +1,6 @@
 ---
 title: Use Logpush with IDS
+pcx_content_type: concept
 ---
 
 # Configure a Logpush Destination

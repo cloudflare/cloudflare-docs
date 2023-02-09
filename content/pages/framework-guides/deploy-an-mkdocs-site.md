@@ -5,7 +5,7 @@ title: Deploy an Mkdocs site
 
 # Deploy an Mkdocs site
 
-[Mkdocs](https://Mkdocs.org) is a modern documentation platform where teams can document products, internal knowledge bases and APIs.
+[Mkdocs](https://www.mkdocs.org/) is a modern documentation platform where teams can document products, internal knowledge bases and APIs.
 
 ## Install Mkdocs
 

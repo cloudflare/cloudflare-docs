@@ -6,13 +6,9 @@ weight: 3
 
 # Commands
 
-{{<Aside type="note">}}
+{{<render file="_wrangler-v1-deprecation.md">}}
 
-Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
-
-{{</Aside>}}
-
-Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler), the Workers CLI.
+Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler-legacy), the Workers CLI.
 
 ---
 
@@ -30,7 +26,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `$NAME` {{<type>}}=worker{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler-legacy/configuration/) file.
 
 - `$TEMPLATE` {{<type>}}=https://github.com/cloudflare/worker-template{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -61,7 +57,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 - `$NAME` {{<type>}}=(Name of working directory){{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler-legacy/configuration/) file.
 
 - `--type=$TYPE` {{<type>}}=webpack{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -76,9 +72,9 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 ## build
 
-Build your project (if applicable). This command looks at your `wrangler.toml` file and reacts to the [`"type"` value](/workers/wrangler/cli-wrangler/configuration/#keys) specified.
+Build your project (if applicable). This command looks at your `wrangler.toml` file and reacts to the [`"type"` value](/workers/wrangler-legacy/configuration/#keys) specified.
 
-When using `type = "webpack"`, Wrangler will build the Worker using its internal webpack installation. When using `type = "javascript"` , the [`build.command`](/workers/wrangler/cli-wrangler/configuration/#build-1), if defined, will run.
+When using `type = "webpack"`, Wrangler will build the Worker using its internal webpack installation. When using `type = "javascript"` , the [`build.command`](/workers/wrangler-legacy/configuration/#build-1), if defined, will run.
 
 ```sh
 $ wrangler build [--env $ENVIRONMENT_NAME]
@@ -171,7 +167,7 @@ To use this command, the following fields are required in your `wrangler.toml` f
 
 - `name` {{<type>}}string{{</type>}}
 
-  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/cli-wrangler/configuration/) file.
+  - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler-legacy/configuration/) file.
 
 - `type` {{<type>}}string{{</type>}}
 
@@ -265,7 +261,7 @@ $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <ho
 
 {{</definitions>}}
 
-These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler/cli-wrangler/configuration/#dev) documentation for more information.
+These arguments can also be set in your `wrangler.toml` file. Refer to the [`wrangler dev` configuration](/workers/wrangler-legacy/configuration/#dev) documentation for more information.
 
 ### Usage
 
@@ -278,7 +274,7 @@ $ wrangler dev
 👂  Listening on http://127.0.0.1:8787
 ```
 
-With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler).
+With `wrangler dev` running, you can send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal. If either of these things do not happen, or you think the output is incorrect, [file an issue](https://github.com/cloudflare/wrangler-legacy).
 
 ---
 
@@ -313,7 +309,7 @@ Like all Wrangler commands, run `wrangler tail` from your Worker’s root direct
 
 {{<Aside type="warning" header="Legacy issues with existing cloudflared configuration">}}
 
-`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Update to the [latest Wrangler version](/workers/wrangler/cli-wrangler/install-update/#update) to avoid any issues.
+`wrangler tail` versions older than version 1.19.0 use `cloudflared` to run. Update to the [latest Wrangler version](/workers/wrangler-legacy/install-update/#update) to avoid any issues.
 
 {{</Aside>}}
 
@@ -350,7 +346,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 ### kv_namespaces
 
-If you are using [kv_namespaces](/workers/wrangler/cli-wrangler/configuration/#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your `wrangler.toml` file before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should ensure that you are not writing values to KV that would break your production Worker.
+If you are using [kv_namespaces](/workers/wrangler-legacy/configuration/#kv_namespaces) with `wrangler preview`, you will need to specify a `preview_id` in your `wrangler.toml` file before you can start the session. This is so that you do not accidentally write changes to your production namespace while you are developing. You may make `preview_id` equal to `id` if you would like to preview with your production namespace, but you should ensure that you are not writing values to KV that would break your production Worker.
 
 To create a `preview_id` run:
 

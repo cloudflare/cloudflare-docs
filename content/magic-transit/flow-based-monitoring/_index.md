@@ -1,6 +1,6 @@
 ---
 title: Flow-based monitoring
-pcx_content_type: navigation
+pcx_content_type: concept
 weight: 6
 ---
 

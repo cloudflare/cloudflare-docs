@@ -1,6 +1,6 @@
 ---
 title: How to
-pcx_content_type: how-to
+pcx_content_type: navigation
 weight: 5
 ---
 

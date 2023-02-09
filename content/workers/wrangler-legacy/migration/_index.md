@@ -1,34 +1,45 @@
 ---
+title: Migration to Wrangler v2
 pcx_content_type: how-to
-title: Migrating from Wrangler 1
-weight: 1
+meta:
+  title: Migration
 ---
 
-# Migrate from Wrangler 1
+# Migration to Wrangler v2
 
-This document describes the steps to migrate a project from Wrangler 1 to Wrangler 2.
+{{<Aside type="note">}}
 
-Wrangler 2 ships with new features and improvements that may require some changes to your configuration.
+Wrangler v2 is a major update to Wrangler.
+Find out more about how to migrate from Wrangler v1.
+
+{{</Aside>}}
+
+{{<directory-listing>}}
+
+
+This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2.
+
+Wrangler v2 ships with new features and improvements that may require some changes to your configuration.
 
 The CLI itself will guide you through the upgrade process.
 
 <div style="position: relative; padding-top: 56.25%;"><iframe src="https://iframe.videodelivery.net/2a60561afea1159f7dd270fd9dce999f?poster=https%3A%2F%2Fcloudflarestream.com%2F2a60561afea1159f7dd270fd9dce999f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
 
 {{<Aside type="note">}}
-To learn more about the improvements to Wrangler, refer to the [Comparing Wrangler 1 & 2 page](/workers/wrangler/compare-v1-v2/).
+To learn more about the improvements to Wrangler, refer to the [Comparing Wrangler v1 & v2 page](/workers/wrangler-legacy/compare-v1-v2/).
 {{</Aside>}}
 
 ## Update Wrangler version
 
-### 1. Uninstall Wrangler 1
+### 1. Uninstall Wrangler v1
 
-If you had previously installed Wrangler 1 globally using NPM, you can uninstall it with:
+If you had previously installed Wrangler v1 globally using NPM, you can uninstall it with:
 
 ```sh
 $ npm uninstall -g @cloudflare/wrangler
 ```
 
-If you used Cargo to install Wrangler 1, you can uninstall it with:
+If you used Cargo to install Wrangler v1, you can uninstall it with:
 
 ```sh
 $ cargo uninstall wrangler
@@ -50,11 +61,11 @@ To check that you have installed the correct Wrangler version, run:
 $ wrangler --version
 ```
 
-## Test Wrangler 2 on your previous projects
+## Test Wrangler v2 on your previous projects
 
-Now you will test that Wrangler 2 can build your Wrangler 1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
+Now you will test that Wrangler v2 can build your Wrangler v1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
 
-If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler 2 to error, refer to [Deprecations](/workers/wrangler/migration/deprecations/).
+If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler v2 to error, refer to [Deprecations](/workers/wrangler-legacy/migration/deprecations/).
 
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
@@ -70,7 +81,7 @@ $ wrangler dev
 Here is an example of some warnings and errors:
 
 ```bash
- ⛅️ wrangler 2.0.0
+ ⛅️ wrangler 2.x
 -------------------------------------------------------
 ▲ [WARNING] Processing wrangler.toml configuration:
   - 😶 Ignored: "type":
@@ -88,4 +99,5 @@ Here is an example of some warnings and errors:
 
 ## Deprecations
 
-Refer to the [deprecations guide](/workers/wrangler/migration/deprecations/) for more details on what is no longer supported.
+Refer to the [deprecations guide](/workers/wrangler-legacy/migration/deprecations/) for more details on what is no longer supported.
+
