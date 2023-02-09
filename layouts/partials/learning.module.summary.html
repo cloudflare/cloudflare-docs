@@ -5,10 +5,14 @@
 {{- $moduleTitle := index $moduleData "title" -}}
 {{- $moduleSummary := index $moduleData "summary" -}}
 {{- $moduleObjectives := index $moduleData "abstract" -}}
+{{- $modulePrereqs := index $moduleData "prereqs" -}}
 
 <h1>{{$moduleTitle}}</h1>
 
 {{- $moduleSummary | .Page.RenderString -}}
-<br/>
-<br/>
+
+<h2>Objectives</h2>
 {{- $moduleObjectives | .Page.RenderString -}}
+
+<h2>Prerequisites</h2>
+{{- $modulePrereqs | .Page.RenderString -}}

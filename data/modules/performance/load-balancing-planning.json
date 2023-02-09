@@ -1,0 +1,31 @@
+{
+    "units": [
+        {
+            "title": "Network layers",
+            "url": "/learning-paths/modules/performance/load-balancing-planning/network-layers/"
+        },
+        {
+            "title": "Proxy status",
+            "url": "/learning-paths/modules/performance/load-balancing-planning/proxy-status/"
+        },
+        {
+            "title": "Session affinity",
+            "url": "/learning-paths/modules/performance/load-balancing-planning/session-affinity/"
+        },
+        {
+            "title": "Traffic steering",
+            "url": "/learning-paths/modules/performance/load-balancing-planning/traffic-steering/"
+        }
+    ],
+    "summary": "Plan your load balancing setup.",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Describe the difference between load balancing at different layers of the network stack.</li>\n<li>Explain the differences between proxied and DNS-only load balancers.</li>\n<li>Describe the different types of traffic steering</li>\n<li>Recognize when your load balancer needs to prioritize session affinity.</li>\n</ul>\n",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Setup",
+    "url": "/learning-paths/modules/performance/load-balancing-planning/"
+}

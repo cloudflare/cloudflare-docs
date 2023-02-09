@@ -36,7 +36,6 @@ export function init() {
       let nextModule = "";
 
       currentPathData.modules.forEach((c, i) => {
-        console.log(c);
         if (currentModule === c.uid) {
           if (i + 1 < currentPathData.modules.length) {
             nextModule =
