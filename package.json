@@ -18,6 +18,7 @@
   "dependencies": {
     "fromnow": "3.0.1",
     "mermaid": "9.1.7",
+    "node-html-parser": "^6.1.4",
     "vue": "^3.2.45"
   },
   "devDependencies": {
