@@ -91,12 +91,6 @@ Data transmission was not acknowledged and the retransmit of data did not succee
 #### Solution
 Confirm whether the SYN-ACK for the handshake takes place at your origin and contact [Cloudflare support](https://support.cloudflare.com/hc/en-us/articles/200172476).
 
-### TLS Handshake Failure​​
-#### Cause
-This indicates that the browser’s connection to the web server is not secure.
-#### Solution
-Change wifi networks, connect to a wired network, or verify the network connection is stable.
-
 ### ​​Network Unreachable
 #### Cause
 Cloudflare cannot connect to the origin web server due to network unavailability. This is usually caused by a network issue or incorrect origin IP.
