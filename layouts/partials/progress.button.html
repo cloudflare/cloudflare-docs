@@ -1,13 +1,16 @@
 {{- $layout := .Params.layout -}}
-{{- $currentLocation := split .RelPermalink "/" -}}
-{{- $currentModule := index $currentLocation 3 -}}
-{{- $currentUnit := index $currentLocation 4 -}}
+{{- $currentLocation := .RelPermalink -}}
+{{- $splitURL := split $currentLocation "/" -}}
+{{- $currentModule := index $splitURL 4 -}}
+{{- $currentUnit := index $splitURL 5 -}}
 {{- $moduleData :=  index .Site.Data.modules $currentModule -}}
 {{- $moduleLength := len (index $moduleData "units") -}}
 {{- $baseURL := "/learning-paths/modules/" -}}
 {{- $previousUnit := "" -}}
 {{- $nextUnit := "" -}}
 {{- $currentUnitNumber := 0 -}}
+
+
 
 {{- if eq $layout "learning-module" -}}
     {{- $nextUnit = index (index (index $moduleData "units") 0) "url" -}}
@@ -19,7 +22,7 @@
 {{- else -}}
 
     {{- range $index, $item := (index $moduleData "units") -}}
-        {{- if eq (print $baseURL $currentModule "/" $currentUnit "/") $item.url -}}
+        {{- if eq $currentLocation $item.url -}}
             {{- $currentUnitNumber = (add $index 1) -}}
             {{- if ne $index (sub $moduleLength 1) -}}
                 {{- $nextUnit = index (index (index $moduleData "units") (add $index 1)) "url" -}}

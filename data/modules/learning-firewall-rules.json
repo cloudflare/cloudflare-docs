@@ -3,17 +3,17 @@
         {
             "uid": "learn.bots.firewall.intro",
             "title": "Introduction",
-            "url": "/learning-paths/modules/learning-firewall-rules/intro/"
+            "url": "/learning-paths/modules/security/learning-firewall-rules/intro/"
         },
         {
             "uid": "learn.bots.firewall.create.rules",
             "title": "Introduction",
-            "url": "/learning-paths/modules/learning-firewall-rules/firewall-rules/"
+            "url": "/learning-paths/modules/security/learning-firewall-rules/firewall-rules/"
         },
         {
             "uid": "learn.bots.firewall.evaluate.rules",
             "title": "Introduction",
-            "url": "/learning-paths/modules/learning-firewall-rules/bot-management-variables/"
+            "url": "/learning-paths/modules/security/learning-firewall-rules/bot-management-variables/"
         }
     ],
     "summary": "Create bot-specific firewall rules",
@@ -34,5 +34,5 @@
     "uid": "learn.bots.firewall",
     "type": "module",
     "title": "Create Firewall Rules",
-    "url": "/learning-paths/modules/learning-firewall-rules/"
+    "url": "/learning-paths/modules/security/learning-firewall-rules/"
 }

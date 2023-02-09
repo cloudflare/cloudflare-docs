@@ -3,17 +3,17 @@
         {
             "uid": "learn.bots.preanalysis.intro",
             "title": "Introduction",
-            "url": "/learning-paths/modules/analyze-traffic/intro/"
+            "url": "/learning-paths/modules/security/analyze-traffic/intro/"
         },
         {
             "uid": "learn.bots.preanalysis.botanalytics",
             "title": "Introduction",
-            "url": "/learning-paths/modules/analyze-traffic/bot-analytics/"
+            "url": "/learning-paths/modules/security/analyze-traffic/bot-analytics/"
         },
         {
             "uid": "learn.bots.preanalysis.otherdata",
             "title": "Introduction",
-            "url": "/learning-paths/modules/analyze-traffic/other-data-sources/"
+            "url": "/learning-paths/modules/security/analyze-traffic/other-data-sources/"
         }
     ],
     "summary": "Learn how to understand the traffic reaching your application",
@@ -34,5 +34,5 @@
     "uid": "learn.bots.concepts",
     "type": "module",
     "title": "Analyze traffic for bots",
-    "url": "/learning-paths/modules/analyze-traffic/"
+    "url": "/learning-paths/modules/security/analyze-traffic/"
 }

@@ -3,17 +3,17 @@
         {
             "uid": "learn.bots.concepts.intro",
             "title": "Introduction",
-            "url": "/learning-paths/modules/bots-concepts/intro/"
+            "url": "/learning-paths/modules/security/bots-concepts/intro/"
         },
         {
             "uid": "learn.bots.concepts.bots",
             "title": "Introduction",
-            "url": "/learning-paths/modules/bots-concepts/bots/"
+            "url": "/learning-paths/modules/security/bots-concepts/bots/"
         },
         {
             "uid": "learn.bots.concepts.botscore",
             "title": "Introduction",
-            "url": "/learning-paths/modules/bots-concepts/bot-score/"
+            "url": "/learning-paths/modules/security/bots-concepts/bot-score/"
         }
     ],
     "summary": "Learn the basic concepts behind bots on the Internet, especially those utilized within Cloudflare Bot Management",
@@ -34,5 +34,5 @@
     "uid": "learn.bots.concepts",
     "type": "module",
     "title": "Introduction to Bot Management",
-    "url": "/learning-paths/modules/bots-concepts/"
+    "url": "/learning-paths/modules/security/bots-concepts/"
 }

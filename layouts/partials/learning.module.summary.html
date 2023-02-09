@@ -1,5 +1,5 @@
 {{- $currentLocation := split .RelPermalink "/" -}}
-{{- $currentModule := index $currentLocation 3 -}}
+{{- $currentModule := index $currentLocation 4 -}}
 {{- $moduleData :=  index .Site.Data.modules $currentModule -}}
 {{- $moduleTitle := index $moduleData "title" -}}
 {{- $moduleSummary := index $moduleData "summary" -}}

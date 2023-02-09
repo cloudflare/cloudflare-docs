@@ -30,7 +30,7 @@ export function init() {
     // Update final next link to point to the next module
     const nextModuleLink = document.getElementById("nextModuleLink");
     if (nextModuleLink && currentPathData !== undefined) {
-      const moduleNameRegex = new RegExp("/learning-paths/modules/(.*?)/");
+      const moduleNameRegex = new RegExp("/learning-paths/modules/.*?/(.*?)/");
       const result = currentLocation.match(moduleNameRegex);
       const currentModule = result[1];
       let nextModule = "";
@@ -38,7 +38,7 @@ export function init() {
       currentPathData.modules.forEach((c, i) => {
         if (currentModule === c.uid) {
           if (i + 1 < currentPathData.modules.length) {
-            nextModule = currentPathData.modules[i + 1]["uid"];
+            nextModule = currentPathData.modules[i + 1]["url"];
           }
         }
       });
@@ -49,8 +49,7 @@ export function init() {
       } else {
         nextModuleLink.setAttribute(
           "href",
-          "/learning-paths/modules/" +
-            nextModule +
+          nextModule +
             "?learning_path=" +
             currentLearningPath
         );
