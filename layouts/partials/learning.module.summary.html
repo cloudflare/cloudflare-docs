@@ -14,5 +14,7 @@
 <h2>Objectives</h2>
 {{- $moduleObjectives | .Page.RenderString -}}
 
+{{- with $modulePrereqs -}}
 <h2>Prerequisites</h2>
-{{- $modulePrereqs | .Page.RenderString -}}
+{{- $modulePrereqs | $.Page.RenderString -}}
+{{- end -}}

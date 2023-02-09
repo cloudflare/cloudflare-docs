@@ -14,7 +14,7 @@
         }
     ],
     "title": "Load balancing",
-    "uid": "learn-bots",
+    "uid": "load-balancing",
     "path": "/learning-paths/load-balancing/",
     "priority": 2,
     "description": "Maximize application performance and availability.",
