@@ -225,7 +225,7 @@ async function sendText(message) {
 }
 ```
 
-To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler/cli-wrangler/commands/#put) in your command line.
+To make this work, you need to set some secrets to hide your `ACCOUNT_SID` and `AUTH_TOKEN` from the source code. You can set secrets with [`wrangler secret put`](/workers/wrangler-legacy/commands/#put) in your command line.
 
 ```sh
 $ wrangler secret put ACCOUNT_SID

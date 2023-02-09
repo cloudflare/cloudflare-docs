@@ -14,11 +14,11 @@ To troubleshoot runtime errors related to Bulk Redirects, refer to [Troubleshoot
 
 ## What happens if the same source URL appears in two different Bulk Redirect Lists?
 
-In this situation, Cloudflare will use the URL Redirect of the first rule that triggers. This will be determined by the order of the Bulk Redirect Rules enabling each Bulk Redirect List in the `http_request_redirect` phase entry point ruleset.
+In this situation, Cloudflare will use the URL redirect of the first rule that triggers. This will be determined by the order of the Bulk Redirect Rules enabling each Bulk Redirect List in the `http_request_redirect` phase entry point ruleset.
 
-## How many URL Redirects can I have in a single Bulk Redirect List?
+## How many URL redirects can I have in a single Bulk Redirect List?
 
-Each account has a maximum number of URL Redirects across all lists which depends on your Cloudflare plan. If you wish, you can use all the URL Redirects available in your plan in a single Bulk Redirect List, but you will not be able to create any other URL Redirects in a different list. Refer to [Availability](/rules/url-forwarding/#availability) for more information.
+Each account has a maximum number of URL redirects across all lists which depends on your Cloudflare plan. If you wish, you can use all the URL redirects available in your plan in a single Bulk Redirect List, but you will not be able to create any other URL redirects in a different list. Refer to [Availability](/rules/url-forwarding/#availability) for more information.
 
 ## How can I redirect based on the non-normalized version of a URL?
 

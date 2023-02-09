@@ -68,7 +68,7 @@
             "link_title": "Set up two-factor authentication (2FA)"
           },
           {
-            "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
+            "url_path": "/fundamentals/account-and-billing/members/manage/",
             "link_title": "(Optional) Add public domains and subdomains to Cloudflare",
             "additional_description": "You will use these domains to test agentless access to web services. Alternatively, you could purchase a new testing domain through <a href='/registrar/get-started/register-domain/'>Cloudflare Registrar</a>."
           }
@@ -148,7 +148,7 @@
             "additional_description": "We recommend <a href='/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/'>manually deploying</a> the client during your pilot and revisiting <a href='/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/'>automated deployments</a> during implementation."
           },
           {
-            "url_path": "/cloudflare-one/connections/connect-devices/warp/#proxy-mode",
+            "url_path": "/cloudflare-one/policies/filtering/initial-setup/network/#connect-devices",
             "link_title": "Enable the Proxy",
             "additional_description": "This will allow WARP to build a Wireguard-based, encrypted tunnel on your device to route traffic to Cloudflare."
           },

@@ -12,12 +12,10 @@ In this tutorial, you will learn how to use D1 to add comments to a static blog 
 
 ## Set up your project
 
-First, use [Wrangler](https://github.com/cloudflare/wrangler2), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
+First, use [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), the command-line tool for Cloudflare's developer products, to create a new directory and initialize a new Worker project:
 
 ```sh
-$ mkdir d1-example && d1-example
-$ npm init -y && npm install -D wrangler
-$ npx wrangler init
+$ npx wrangler init d1-example
 ```
 
 In this example, you will use [Hono](https://github.com/honojs/hono), an Express.js-style framework, to build your API. To use Hono in this project, install it using npm:
@@ -48,7 +46,7 @@ export default app
 
 ## Create a database
 
-You will now create a D1 database. In Wrangler 2, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
+You will now create a D1 database. In Wrangler v2, there is support for the `wrangler d1` subcommand, which allows you to create and query your D1 databases directly from the command line. Create a new database with `wrangler d1 create`:
 
 ```sh
 $ wrangler d1 create d1-example
@@ -63,7 +61,7 @@ database_name = "d1-example"
 database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"
 ```
 
-With your binding configured in your `wrangler.toml`file, you can interact with your database from the command line, and inside your Workers function.
+With your binding configured in your `wrangler.toml` file, you can interact with your database from the command line, and inside your Workers function.
 
 ## Interact with D1
 

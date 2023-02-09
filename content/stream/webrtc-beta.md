@@ -120,6 +120,7 @@ Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/ma
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
+- [Larix Broadcaster for iOS](https://softvelum.com/larix/ios/) (free app)
 
 ### WHEP
 
@@ -133,7 +134,7 @@ As more WHIP and WHEP clients are published, we are committed to supporting them
 
 - [VP9](https://developers.google.com/media/vp9) (recommended for highest quality)
 - [VP8](https://en.wikipedia.org/wiki/VP8)
-- [h264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) (coming soon) (Constrained Baseline Profile Level 3.1, referred to as `42e01f` in the SDP offer's `profile-level-id` parameter.)
+- [h264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) (Constrained Baseline Profile Level 3.1, referred to as `42e01f` in the SDP offer's `profile-level-id` parameter.)
 
 ## Conformance with WHIP and WHEP specifications
 

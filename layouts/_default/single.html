@@ -13,8 +13,10 @@
       {{ partial "sidebar.toc" . }}
 
       <div id="docs-content" data-reach-skip-nav-content></div>
+      {{- partial "breadcrumbs" . -}}
 
       <div class="DocsContent" id="main" page-type="document">
+        
         <article class="DocsMarkdown">
           {{- .Content -}}
         </article>

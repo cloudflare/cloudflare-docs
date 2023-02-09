@@ -30,7 +30,7 @@ Conceptually, there are two ways to interact with Cloudflare’s Cache using a W
 
 ---
 
-### Using Workers to purge
+### Single file purge  assets cached by a worker
 
 When using single-file purge to purge assets cached by a Worker, make sure not to purge the end user URL. Instead, purge the URL that is in the `fetch` request. For example, you have a Worker that runs on `https://example.com/hello` and this Worker makes a `fetch` request to `https://notexample.com/hello`.
 
@@ -38,7 +38,22 @@ As far as cache is concerned, the asset in the `fetch` request (`https://notexam
 
 Purging the end user URL, `https://example.com/hello`, will not work because that is not the URL that cache sees. You need to confirm in your Worker which URL you are actually fetching, so you can purge the correct asset.
 
-In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied (orange-clouded) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
+In the previous example, `https://notexample.com/hello` is not proxied through Cloudflare. If `https://notexample.com/hello` was proxied ([orange-clouded](/dns/manage-dns-records/reference/proxied-dns-records/#proxied-records)) through Cloudflare, then you must own `notexample.com` and purge `https://notexample.com/hello` from the `notexample.com` zone.
+
+To better understand the example, take a look at the following diagram:
+
+<div class="mermaid">
+flowchart TD
+accTitle: Single file purge  assets cached by a worker
+accDescr: This diagram is meant to help choose how to purge a file.
+A("You have a Worker script that runs on https://example.com/hello and this Worker makes a `fetch` request to https://notexample.com/hello.") --> B(Is notexample.com an active zone on Cloudflare?)
+    B -- Yes --> C(Is https://notexample.com/ proxied through Cloudflare?)
+    B -- No  --> D(Purge https://notexample.com/hello from the original example.com zone.)
+    C -- Yes --> E(Do you own notexample.com?)
+    C -- No --> F(Purge https://notexample.com/hello from the original example.com zone.)
+    E -- Yes --> G(Purge https://notexample.com/hello from the notexample.com zone.)
+    E -- No --> H(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
+</div>
 
 ### Purging assets stored with the Cache API
 

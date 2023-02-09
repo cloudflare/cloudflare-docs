@@ -26,7 +26,7 @@ Proper routing techniques, such as policy-based routing, should also be utilized
 
 ## Example scenario
 
-For the purpose of this tutorial, setup will reference a scenario where an enterprise has three sites: headquarters, a branch office, and a data center. Each site has a local private network with RFC1918 address assignments:
+For the purpose of this tutorial, setup will reference a scenario where an enterprise has three sites: headquarters, a branch office, and a data center. Each site has a local private network with RFC 1918 address assignments:
 
 - Headquarters is assigned a `192.168.0.0/16` network, and Router A is the site router terminating the Anycast GRE or IPsec tunnel
 - Branch office is assigned `10.0.1.0/24` network, and Router B is the site router terminating the Anycast GRE or IPsec tunnel
@@ -38,13 +38,14 @@ Each site's private network has an on-ramp to Cloudflare's Anycast network using
 
 ## Add Anycast GRE or IPsec tunnel
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select **Magic Transit**.
-2.  Next to **GRE tunnels and static routes configuration**, click **Configure**.
-3.  From **GRE tunnels**, click **Create**.
-4.  On the **Add GRE tunnels** page, fill out the information for the Anycast GRE or IPsec tunnel.
-5.  (Optional) We recommend you test your tunnel before officially adding it. To test the tunnel, click **Test tunnels**.
-6.  To add multiple tunnels, click **Add GRE tunnel** for each new tunnel.
-7.  When you are done, click **Add tunnels**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
+2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**. 
+3. In the **Tunnels** tab, select **Create**.
+4. Select **GRE tunnel** or **IPsec tunnel** > **Next**.
+5. Fill out the information for the Anycast GRE or IPsec tunnel.
+6. (Optional) We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+7. To add multiple tunnels, select **Add GRE tunnel** / **Add IPsec tunnel** for each new tunnel.
+8. When you are done, select **Add tunnels**.
 
 In keeping with the example scenario, the list of tunnels should match the example below.
 
@@ -52,11 +53,11 @@ In keeping with the example scenario, the list of tunnels should match the examp
 
 ## Add static routes
 
-1.  From **Magic Transit**, click **Static routes**.
-2.  On the **Static Routes** page, click **Create** to add a new route.
+1.  From **Magic Transit**, select **Manage Magic Transit configuration**.
+2.  On the **Static Routes** tab, select **Create** to add a new route.
 3.  Enter the information for your route.
-4.  While optional, we highly recommend testing your route before adding it by clicking **Test routes**.
-5.  If your test was successful, click **Add routes** when you are done.
+4.  While optional, we highly recommend testing your route before adding it by selecting **Test routes**.
+5.  If your test was successful, select **Add routes** when you are done.
 
 In keeping with the example scenario, the list of static routes should match the example below.
 
@@ -68,4 +69,4 @@ After setting up the Anycast GRE and static routes, configure your Cloudflare Ga
 
 The Cloudflare Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
 
-After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare edge network.
+After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare global network.

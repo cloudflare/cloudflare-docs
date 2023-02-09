@@ -42,11 +42,11 @@ After the association is complete, the JSON blob is added to the defined custom 
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your account.
 
-2. Select **Application Security** > **WAF**.
+2. Select Account Home > **WAF**.
 
 {{<Aside type="note">}}
 
-**Application Security** will only be visible on Enterprise plans. If you do not see this option, contact your account manager.
+**WAF** at the account level will only be visible on Enterprise plans. If you do not see this option, contact your account manager.
 
 {{</Aside>}}
 

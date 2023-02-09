@@ -1,8 +1,6 @@
 ---
 pcx_content_type: concept
 title: Anti-replay protection
-_build:
-  list: never
 ---
 
 # Anti-replay protection
@@ -41,4 +39,4 @@ There are several reasons that make replay attacks difficult with tunnel mode:
 - **Replay attacks are only viable when the same encryption keys are used.** After rekeying, old, replayed packets will result in dropped packets at the router.
 - **Most protocols are not susceptible to replay at the packet level.** The Internet can duplicate packets, which means TCP and many protocols built on UDP already include sequence numbers or similar to handle duplicate packets coming off the wire. For those, the replay traffic just looks like a duplicate packet and is handled by the end host correctly.
 - **Anti-replay protection is available in a higher OSI layer.** Many modern day applications use secure communication protocols such as SSL/TLS, SSH, SFTP, etc. to transport application data. These secure communication protocols (at a higher OSI layer than network layer) natively support anti-replay protection.
-- **The “attack surface” is reduced which lowers the probability for packet interception.** IPsec tunnels are site-to-site VPN tunnels between a user’s site router and Cloudflare’s edge network, via dedicated ISP network connections, which are typically very secure. Additionally, the Anycast nature of Cloudflare’s IPsec implementation terminates the IPsec tunnel to one of the 300+ Cloudflare data centers closest to the customer’s edge router, which minimizes the physical distance and footprint the encrypted packets have to traverse.
+- **The “attack surface” is reduced which lowers the probability for packet interception.** IPsec tunnels are site-to-site VPN tunnels between a user’s site router and Cloudflare’s global network, via dedicated ISP network connections, which are typically very secure. Additionally, the Anycast nature of Cloudflare’s IPsec implementation terminates the IPsec tunnel to one of the 300+ Cloudflare data centers closest to the customer’s edge router, which minimizes the physical distance and footprint the encrypted packets have to traverse.

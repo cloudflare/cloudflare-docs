@@ -58,7 +58,7 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
 
 {{<worker-starter title="Router" repo="cloudflare/worker-template-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic.">}}
 
-{{<worker-starter title="Miniflare Example Project" repo="mrbbot/miniflare-typescript-esbuild-jest" description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment.">}}
+{{<worker-starter title="Miniflare Example Project" repo="cloudflare/miniflare-typescript-esbuild-jest" description="An example Cloudflare Workers project that uses Miniflare for local development, TypeScript, esbuild for bundling, and Jest for testing, with Miniflare's custom Jest environment.">}}
 
 {{<worker-starter title="Sunder Starter (Typescript)" repo="sunderjs/sunder-worker-template" description="A complete starter template using Sunder, TypeScript, Miniflare, esbuild, Jest, and Sass. Uses Workers Sites for static assets.">}}
 
@@ -94,6 +94,8 @@ description="Measure download / upload connection speed from the client side, us
 {{<worker-starter title="Edge-side rendering - Vitedge" repo="frandiox/vitessedge-template" description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more.">}}
 
 {{<worker-starter title="REST API with Fauna" repo="fauna-labs/fauna-workers" description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications.">}}
+
+{{<worker-starter title="Analytics Engine Forwarder" repo="cloudflare/templates/worker-analytics-engine-forwarder" description="Use a Worker to capture analytics data with Analytics Engine.">}}
 
 ---
 

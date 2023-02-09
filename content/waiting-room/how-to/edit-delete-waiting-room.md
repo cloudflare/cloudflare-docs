@@ -14,7 +14,7 @@ You can manage your waiting rooms using the [Waiting Room dashboard](/waiting-ro
 
 ### Edit a waiting room
 
-1.  In your application, go to **Traffic** > **Waiting Rooms**.
+1.  In your application, go to **Traffic** > **Waiting Room**.
 2.  On a record, select **Edit**.
 3.  Select **Settings**.
 4.  Edit the settings. For a description of settings, refer to [Configuration settings](/waiting-room/reference/configuration-settings/).
@@ -23,7 +23,7 @@ You can manage your waiting rooms using the [Waiting Room dashboard](/waiting-ro
 
 ### Delete a waiting room
 
-1.  In your application, go to **Traffic** > **Waiting Rooms**.
+1.  In your application, go to **Traffic** > **Waiting Room**.
 2.  On a record, select **Delete**.
 3.  Select **Delete** again.
 

@@ -8,6 +8,55 @@ rss: file
 
 # Changelog
 
+## 2023-02-06
+
+- Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
+- Previously, an error would be thrown when trying to access unimplemented standard `Request` and `Response` properties. Now those will be left as `undefined`.
+
+## 2023-01-13
+
+- Durable Objects can now use jurisdictions with `idFromName` via a new subnamespace API.
+- V8 updated to 10.9.
+
+## 2022-12-16
+
+- Conditional `PUT` requests have been fixed in the R2 bindings API.
+
+## 2022-12-02
+
+- Queues no longer support calling `send()` with an undefined JavaScript value as the message.
+
+## 2022-11-30
+- The DOMException constructor has been updated to align better with the standard specification. Specifically, the message and name arguments can now be any JavaScript value that is coercible into a string (previously, passing non-string values would throw).
+- Extended the R2 binding API to include support for multipart uploads.
+
+## 2022-11-17
+
+- V8 update: 10.6 → 10.8
+
+## 2022-11-02
+
+- Implemented `toJSON()` for R2Checksums so that it is usable with `JSON.stringify()`.
+
+## 2022-10-21
+
+- The alarm retry limit will no longer apply to errors that are our fault.
+- Compatibility dates have been added for multiple flags including the new streams implementation.
+- `DurableObjectStorage` has a new method `sync()` that provides a way for a Worker to wait for its writes (including those performed with `allowUnconfirmed`) to be synchronized with storage.
+## 2022-10-10
+
+- Fixed a bug where if an ES-modules-syntax script exported an array-typed value from the top-level module, the upload API would refuse it with a [`500` error](https://community.cloudflare.com/t/community-tip-fixing-error-500-internal-server-error/44453).
+- `console.log` now prints more information about certain objects, for example Promises.
+- The Workers Runtime is now built from the Open Source code in: [GitHub - cloudflare/workerd: The JavaScript / Wasm runtime that powers Cloudflare Workers](https://github.com/cloudflare/workerd).
+
+## 2022-09-16
+
+- R2 `put` bindings options can now have an `onlyIf` field similar to `get` that does a conditional upload.
+- Allow deleting multiple keys at once in R2 bindings.
+- Added support for SHA-1, SHA-256, SHA-384, SHA-512 checksums in R2 `put` options.
+- User-specified object checksums will now be available in the R2 `get/head` bindings response. MD5 is included by default for non-multipart uploaded objects.
+- Updated V8 to 10.6.
+
 ## 2022-08-12
 
 - A `Headers` object with the `range` header can now be used for range within `R2GetOptions` for the `get` R2 binding.
@@ -220,7 +269,7 @@ rss: file
 ## 2021-07-30
 
 - Fixed a hang in Durable Objects when reading more than 16MB of data at once (for example, with a large `list()` operation).
-- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use wrangler 1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [wrangler compatibility flag notes](https://github.com/cloudflare/wrangler/pull/2009) for details.
+- Added a new compatibility flag `html_rewriter_treats_esi_include_as_void_tag` which causes `HTMLRewriter` to treat `<esi:include>` and `<esi:comment>` as void tags, such that they are considered to have neither an end tag nor nested content. To opt a worker into the new behavior, you must use Wrangler v1.19.0 or newer and specify the flag in `wrangler.toml`. Refer to the [Wrangler compatibility flag notes](https://github.com/cloudflare/wrangler-legacy/pull/2009) for details.
 
 ## 2021-07-23
 

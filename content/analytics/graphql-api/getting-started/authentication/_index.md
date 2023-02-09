@@ -29,7 +29,7 @@ This table outlines the differences between Cloudflare API keys and tokens:
       <tr>
         <td><a href='/fundamentals/api/get-started/keys/'>API Keys</a></td>
         <td><p>Unique to each Cloudflare user and used only for authentication. API keys do not authorize access to accounts or zones.</p>
-        <p>Use the Global API Key for authentication. Only use the Origin CA Key when you create origin certificates through the API.</p></td>
+        <p>Use the Global API Key for authentication.</p></td>
       </tr>
   </tbody>
 </table>

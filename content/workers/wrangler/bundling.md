@@ -45,6 +45,10 @@ export default {
 Cloudflare Workers does not support `WebAssembly.instantiateStreaming()`.
 {{</Aside>}}
 
+## Conditional exports
+
+Wrangler respects the [conditional `exports` field](https://nodejs.org/api/packages.html#conditional-exports) in `package.json`. This allows developers to implement isomorphic libraries that have different implementations depending on the JavaScript runtime they are running in. When bundling, Wrangler will try to load the [`workerd` key](https://runtime-keys.proposal.wintercg.org/#workerd). Refer to the Wrangler repository for [an example isomorphic package](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/isomorphic-random-example).
+
 ## Disable bundling
 
 {{<Aside type="warning">}}

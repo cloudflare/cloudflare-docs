@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Bindings
+layout: single
 ---
 
 # Bindings

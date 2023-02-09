@@ -23,6 +23,12 @@ Send messages to Area 1 via BCC configurations within your email provider:
 
    - [Office 365 Journaling Setup](/email-security/deployment/api/setup/office365-journaling)
 
+## Microsoft Graph API
+
+Send messages to Area 1 via a Microsoft Graph API configuration within your email provider:
+ 
+ - [Office 365 Microsoft Graph API setup](/email-security/deployment/api/setup/office365-graph-api/)
+
 ## Next steps
 
 Regardless of your setup (BCC or Journaling), you may also want to set up either manual or automatic [retraction](/email-security/email-configuration/retract-settings/) to take post-delivery actions against suspicious messages.

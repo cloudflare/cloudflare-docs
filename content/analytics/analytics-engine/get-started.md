@@ -42,7 +42,7 @@ analytics_engine_datasets = [
 ]
 ```
 
-## 3. Write data from the Workers Runtime API
+## 3. Write data from your Worker
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
 

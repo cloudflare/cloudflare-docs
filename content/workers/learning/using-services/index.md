@@ -35,15 +35,9 @@ There are multiple types of bindings available today:
 
 ## Deployments
 
-Deployments are an audit log of static historical versions of your Worker. They include the bundled code, configuration, and bindings associated with your Worker at a given point in time. A change to any of these will trigger a new deployment on Cloudflare’s network.
+Deployments provide static historical versions of your Worker. They include the bundled code, configuration, and bindings associated with your Worker at a given point in time, and are created when changes to Worker code or configuration is detected.
 
 Read more about [Deployments](/workers/platform/deployments).
-
-## Service environments
-
-We have temporarily disabled the creation of Service Environments while we are improving this feature.
-
-We recommend leveraging [Deployments](/workers/platform/deployments) in place of Environments.
 
 {{<Aside type="note">}}
 

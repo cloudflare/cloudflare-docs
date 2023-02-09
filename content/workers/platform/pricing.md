@@ -12,9 +12,9 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 
 All included usage is on a monthly basis.
 
-{{<Aside type="note">}} 
+{{<Aside type="note">}}
   
-All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing. 
+All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
 
@@ -43,7 +43,7 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
+You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/configuration/) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
 
 ### Same features
 
@@ -184,6 +184,12 @@ The [Durable Objects storage API](/workers/runtime-apis/durable-objects/#transac
 5.  Each alarm write is billed as a single write request unit.
 
 Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-durable-objects/#accessing-persistent-storage-from-a-durable-object) or that use the [multi-key versions of get/put/delete methods](/workers/runtime-apis/durable-objects/#transactional-storage-api) are billed the same as if they were a normal, individual request for each key.
+
+## Service bindings
+
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+
+For more information on how service bindings work, refer to [About Service bindings](https://developers.cloudflare.com/workers/platform/bindings/about-service-bindings/).
 
 ## Fine Print
 

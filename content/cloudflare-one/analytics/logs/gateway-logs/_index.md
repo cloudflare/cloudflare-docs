@@ -21,7 +21,7 @@ To view Gateway activity logs, log in to your [Zero Trust dashboard](https://das
 
 By default, Gateway logs all events, including DNS queries and HTTP requests that are allowed and not a risk. You can choose to disable logs or only log blocked requests. To customize what type of events are recorded, log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/) and navigate to **Settings** > **Network**. Under **Activity Logging**, indicate your DNS, Network, and HTTP log preferences.
 
-These settings will only apply to logs displayed on the Zero Trust dashboard. [Logpush data](#export-gateway-logs-with-logpush) is unaffected.
+These settings will only apply to logs displayed on the Zero Trust dashboard. [Logpush data](/cloudflare-one/analytics/logs/logpush/) is unaffected.
 
 ## DNS logs
 
@@ -122,31 +122,3 @@ Since the request is generated in an isolated browser, the result is rendered in
 | **Categories**       | Category or categories associated with the packet.                                      |
 
 {{</table-wrap>}}
-
-## Export Gateway logs with Logpush
-
-{{<Aside>}}
-
-This feature is only available on the Zero Trust Enterprise plan.
-
-{{</Aside>}}
-
-You can configure the automatic export of Gateway logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
-
-This feature builds on Cloudflare's Logpush Service — refer to the Logpush documentation to find a list of available fields for [DNS](/logs/reference/log-fields/account/gateway_dns/), [Network](/logs/reference/log-fields/account/gateway_network/), and [HTTP](/logs/reference/log-fields/account/gateway_http/) logs.
-
-To enable Logpush for Gateway logs:
-
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Logs** > **Logpush**.
-2. Click **Connect a service**.
-3. Enter a **Job name**.
-4. From the drop-down menu, choose whether to export the _Gateway DNS_, _Gateway Network_, or _Gateway HTTP_ dataset.
-5. Next, select the data fields you want to include in the log.
-6. In the **Advanced settings** card, choose the timestamp format you prefer, and whether you want to enable logs sampling.
-7. Click **Next**.
-8. Select the service you want to export your logs to.
-9. Follow the service-specific instructions on the Zero Trust dashboard to validate your destination.
-
-The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
-
-You can configure multiple destinations and add additional fields to your logs by returning to the **Logpush** page.

@@ -7,6 +7,10 @@ rss: file
 
 # Changelog
 
+## 2023-01-27
+
+- R2 authentication tokens created via the R2 token page are now scoped to a single account by default.
+
 ## 2022-12-07
 
 - Fix CORS preflight requests for the S3 API, which allows using the S3 SDK in the browser.
