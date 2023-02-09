@@ -1,20 +1,20 @@
 ---
-title: PhishNet - Gsuite
+title: PhishNet Google Workspace
 pcx_content_type: how-to
 weight: 2
 ---
 
-# PhishNet - Gsuite
+# PhishNet for Google Workspace
 
 PhishNET is an add-in button that helps users to submit directly to Area 1 phish samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
 
 ## Prerequisites
 
-To set up PhishNet with Gsuite you need admin access to your Gsuite account.
+To set up PhishNet with Google Workspace you need admin access to your Google Workspace account.
 
-{{<Aside type="note">}}Only admin users can deploy PhishNet for all users in Google’s Gsuite. Non-admin users can deploy PhishNet for themselves, but no other users will have access to it.{{</Aside>}}
+{{<Aside type="note">}}Only admin users can deploy PhishNet.{{</Aside>}}
 
-## Setup PhishNet for Gsuite
+## Setup PhishNet for Google Workspace
 
 1. Log in to [Google Workspace Marketplace apps](https://workspace.google.com/marketplace/app/cloudflare_phishnet/11369379045) using this direct link and an administrator account.
 
@@ -22,7 +22,7 @@ To set up PhishNet with Gsuite you need admin access to your Gsuite account.
 
     <div class="large-img">
 
-    ![Select Admin install to start installing Cloudflare PhishNet](/email-security/static/phish-submissions/phishnet-gsuite/step1-phishnet-install.png)
+    ![Select Admin install to start installing Cloudflare PhishNet](/email-security/static/phish-submissions/phishnet-gworkspace/step1-phishnet-install.png)
 
     </div>
 
@@ -30,17 +30,17 @@ To set up PhishNet with Gsuite you need admin access to your Gsuite account.
 
     <div class="large-img">
 
-    ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gsuite/step3-select-users.png)
+    ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gworkspace/step3-select-users.png)
 
     </div>
 
 4. Agree with Google’s terms of service, and select **Finish**.
 
-5. After a moment, Gsuite will inform you that Cloudflare PhishNet has been installed. Select **Done** to continue.
+5. After a moment, Google Workspace will inform you that Cloudflare PhishNet has been installed. Select **Done** to continue.
 
     <div class="large-img">
 
-    ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gsuite/step5-done.png)
+    ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gworkspace/step5-done.png)
 
     </div>
 
@@ -53,7 +53,7 @@ Cloudflare PhishNet is now installed.
 
     <div class="large-img">
 
-    ![Open the side panel on Gmail's interface if you need to](/email-security/static/phish-submissions/phishnet-gsuite/step2-side-panel.png)
+    ![Open the side panel on Gmail's interface if you need to](/email-security/static/phish-submissions/phishnet-gworkspace/step2-side-panel.png)
 
     </div>
 
@@ -61,7 +61,7 @@ Cloudflare PhishNet is now installed.
 
     <div class="large-img">
 
-    ![Select PhishNet's logo](/email-security/static/phish-submissions/phishnet-gsuite/step3-logo.png)
+    ![Select PhishNet's logo](/email-security/static/phish-submissions/phishnet-gworkspace/step3-logo.png)
 
     </div>
 
@@ -69,7 +69,7 @@ Cloudflare PhishNet is now installed.
 
     <div class="large-img">
 
-    ![Choose the type of submission you'd like to make](/email-security/static/phish-submissions/phishnet-gsuite/step4-submission-type.png)
+    ![Choose the type of submission you'd like to make](/email-security/static/phish-submissions/phishnet-gworkspace/step4-submission-type.png)
 
     </div>
 
