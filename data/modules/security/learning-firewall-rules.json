@@ -31,7 +31,7 @@
     "subjects": [
         "development-tools"
     ],
-    "uid": "learn.bots.firewall",
+    "uid": "learn.bots.firewall-rules",
     "type": "module",
     "title": "Create Firewall Rules",
     "url": "/learning-paths/modules/security/learning-firewall-rules/"

@@ -1,16 +1,15 @@
 {{- $layout := .Params.layout -}}
 {{- $currentLocation := .RelPermalink -}}
 {{- $splitURL := split $currentLocation "/" -}}
+{{- $currentFolder := index $splitURL 3 -}}
 {{- $currentModule := index $splitURL 4 -}}
 {{- $currentUnit := index $splitURL 5 -}}
-{{- $moduleData :=  index .Site.Data.modules $currentModule -}}
+{{- $moduleData := index (index .Site.Data.modules $currentFolder) $currentModule -}}
 {{- $moduleLength := len (index $moduleData "units") -}}
 {{- $baseURL := "/learning-paths/modules/" -}}
 {{- $previousUnit := "" -}}
 {{- $nextUnit := "" -}}
 {{- $currentUnitNumber := 0 -}}
-
-
 
 {{- if eq $layout "learning-module" -}}
     {{- $nextUnit = index (index (index $moduleData "units") 0) "url" -}}
@@ -18,9 +17,7 @@
     <a href="{{$nextUnit}}" class="learningNavigation  Button Button-is-docs-primary">
         <span class="DocsMarkdown--link-content">Start module</span>
     </a>
-
 {{- else -}}
-
     {{- range $index, $item := (index $moduleData "units") -}}
         {{- if eq $currentLocation $item.url -}}
             {{- $currentUnitNumber = (add $index 1) -}}
@@ -36,31 +33,31 @@
 
     {{- with .PrevInSection -}}
         {{- $nextUnit = .RelPermalink -}}
-{{- end -}}
+    {{- end -}}
 
-<div class="progressIndicator">
-{{- if eq $layout "learning-unit" -}}
-<p>Unit {{ $currentUnitNumber }} of {{ $moduleLength }}</p>
-{{- end -}}
+    <div class="progressIndicator">
+    {{- if eq $layout "learning-unit" -}}
+    <p>Unit {{ $currentUnitNumber }} of {{ $moduleLength }}</p>
+    {{- end -}}
 
-<p class="DocsMarkdown--button-group" style="align-items: center;">
-<span class="DocsMarkdown--button-group-content">
-{{- if ne $previousUnit "" -}}
-    <a href="{{- $previousUnit -}}" id="previousLink" class="learningNavigation Button Button-is-docs-secondary">
-        <span class="DocsMarkdown--link-content">Previous</span>
-    </a>
-    <br/>
-{{- end -}}
-{{- if ne $nextUnit "" -}}
-    <a href="{{- $nextUnit -}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
-        <span class="DocsMarkdown--link-content">Next</span>
-    </a>
-{{- else -}}
-    <a href="{{- $baseURL -}}" id="nextModuleLink" class="Button Button-is-docs-primary">
-        <span class="DocsMarkdown--link-content">Finish module</span>
+    <p class="DocsMarkdown--button-group" style="align-items: center;">
+    <span class="DocsMarkdown--button-group-content">
+    {{- if ne $previousUnit "" -}}
+        <a href="{{- $previousUnit -}}" id="previousLink" class="learningNavigation Button Button-is-docs-secondary">
+            <span class="DocsMarkdown--link-content">Previous</span>
         </a>
-{{- end -}}
-</span>
-</p>
+        <br/>
+    {{- end -}}
+        {{- if ne $nextUnit "" -}}
+            <a href="{{- $nextUnit -}}" id="nextLink" class="learningNavigation Button Button-is-docs-primary">
+                <span class="DocsMarkdown--link-content">Next</span>
+            </a>
+        {{- else -}}
+            <a href="{{- $baseURL -}}" id="nextModuleLink" class="Button Button-is-docs-primary">
+                <span class="DocsMarkdown--link-content">Finish module</span>
+                </a>
+        {{- end -}}
+    </span>
+    </p>
 {{- end -}}
 </div>

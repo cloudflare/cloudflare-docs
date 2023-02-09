@@ -36,12 +36,18 @@ export function init() {
       let nextModule = "";
 
       currentPathData.modules.forEach((c, i) => {
+        console.log(c);
         if (currentModule === c.uid) {
           if (i + 1 < currentPathData.modules.length) {
-            nextModule = currentPathData.modules[i + 1]["url"];
+            nextModule =
+              currentPathData.modules[i + 1]["folder"] +
+              "/" +
+              currentPathData.modules[i + 1]["uid"] +
+              "/";
           }
         }
       });
+      console.log(nextModule);
 
       if (nextModule === "") {
         nextModuleLink.innerHTML = "Finish learning path >";
@@ -49,7 +55,8 @@ export function init() {
       } else {
         nextModuleLink.setAttribute(
           "href",
-          nextModule +
+          "/learning-paths/modules/" +
+            nextModule +
             "?learning_path=" +
             currentLearningPath
         );

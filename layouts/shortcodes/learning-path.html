@@ -4,7 +4,6 @@
 {{- $totalUnits := 0 -}}
 {{- $totalReadingTime := 0 -}}
 
-
 <!-- Get the data from the correct folder -->
 {{- range readDir "./data/learning-paths/" -}}
 {{- if eq .Name $filename }}
@@ -26,7 +25,8 @@
   
   <!--Loop through and get module data-->
   {{- $currentModuleId := index (index $pathModules $index) "uid" }}
-  {{- $currentModuleData := index $.Site.Data.modules ($currentModuleId | string) -}}
+  {{- $currentModuleFolder := index (index $pathModules $index) "folder" }}
+  {{- $currentModuleData := index (index $.Site.Data.modules $currentModuleFolder) ($currentModuleId | string) -}}
   {{- $moduleDataArray = $moduleDataArray | append $currentModuleData -}}
 
   <!--Get various values needed elsewhere in template-->

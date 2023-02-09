@@ -1,12 +1,15 @@
 {
     "modules": [ 
         {
+            "folder": "security",
             "uid": "bots-concepts"
         },
         {
+            "folder": "security",
             "uid": "analyze-traffic"
         },
         {
+            "folder": "security",
             "uid": "learning-firewall-rules"
         }
     ],

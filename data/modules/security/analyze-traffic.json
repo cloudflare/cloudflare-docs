@@ -31,7 +31,7 @@
     "subjects": [
         "development-tools"
     ],
-    "uid": "learn.bots.concepts",
+    "uid": "learn.bots.analyze-traffic",
     "type": "module",
     "title": "Analyze traffic for bots",
     "url": "/learning-paths/modules/security/analyze-traffic/"
