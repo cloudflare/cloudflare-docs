@@ -9,8 +9,6 @@ layout: single
 
 # Query Postgres from Workers using a database connector
 
-<TutorialsBeforeYouStart />
-
 {{<render file="_tutorials-wrangler-v1-warning.md">}}
 
 ## Overview
