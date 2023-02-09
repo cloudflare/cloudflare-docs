@@ -21,10 +21,6 @@ For more information on WAF Managed Rules, refer to [Managed Rules](/waf/managed
 
 ## Before you start
 
-### Delete any existing rulesets before using Terraform
-
-{{<render file="_delete-existing-rulesets.md">}}
-
 ### Obtain the necessary account, zone, and managed ruleset IDs
 
 The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy managed rulesets.
@@ -33,6 +29,10 @@ The Terraform configurations provided in this page need the zone ID (or account 
 * To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://developers.cloudflare.com/api/operations/zone-list-zones) API operation.
 
 The deployment of managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF's managed rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing managed rulesets.
+
+### (Optional) Import existing rulesets
+
+If you already have managed rulesets deployed for your account or zone, you can [import them](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset#import).  
 
 ## Deploy managed rulesets
 
