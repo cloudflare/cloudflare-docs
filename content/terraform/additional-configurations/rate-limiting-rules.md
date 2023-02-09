@@ -17,6 +17,18 @@ For more information on rate limiting rules, refer to [Rate limiting rules](/waf
 For more information on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation.
 {{</Aside>}}
 
+## Before you start
+
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### (Optional) Delete existing rulesets to start from scratch
+
+{{<render file="_delete-existing-rulesets.md">}}
+
+---
+
 ## Create a rate limiting rule
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` blocking traffic that exceeds the configured rate:
@@ -80,3 +92,9 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
   }
 }
 ```
+
+---
+
+## Importing existing rulesets to Terraform
+
+{{<render file="_import-existing-rulesets.md">}}

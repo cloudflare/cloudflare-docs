@@ -20,18 +20,15 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 ## Before you start
 
-### Delete any existing rulesets before using Terraform
+### Obtain the necessary account, zone, and managed ruleset IDs
+
+{{<render file="_find-ids-managed-rulesets.md">}}
+
+### (Optional) Delete existing rulesets to start from scratch
 
 {{<render file="_delete-existing-rulesets.md">}}
 
-### Obtain the necessary account, zone, and managed ruleset IDs
-
-The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy DDoS managed rulesets.
-
-* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) API operation.
-* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://developers.cloudflare.com/api/operations/zone-list-zones) API operation.
-
-The deployment of DDoS managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of DDoS managed rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing DDoS managed rulesets.
+---
 
 ## Configure HTTP DDoS Attack Protection
 
@@ -103,3 +100,9 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
 ```
 
 For more information about Network-layer DDoS Attack Protection, refer to [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
+
+---
+
+## Importing existing rulesets to Terraform
+
+{{<render file="_import-existing-rulesets.md">}}

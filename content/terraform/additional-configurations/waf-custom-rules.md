@@ -22,6 +22,18 @@ This page provides examples of creating WAF custom rules in a zone or account us
 
 For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
 
+## Before you start
+
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### (Optional) Delete existing rulesets to start from scratch
+
+{{<render file="_delete-existing-rulesets.md">}}
+
+---
+
 ## Zone-level configurations
 
 ### Add a custom rule to a zone
@@ -159,3 +171,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   }
 }
 ```
+
+---
+
+## Importing existing rulesets to Terraform
+
+{{<render file="_import-existing-rulesets.md">}}
