@@ -113,7 +113,7 @@ $ wrangler generate [name] [template]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -1297,7 +1297,7 @@ Configure Cloudflare Pages.
 
 {{<Aside type="warning">}}
 The `wrangler pages ...` commands are in beta.<br>
-Report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
+Report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose.
 {{</Aside>}}
 
 ### `dev`

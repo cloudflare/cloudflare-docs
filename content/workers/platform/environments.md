@@ -96,7 +96,7 @@ Environments enable you to write and deploy projects to multiple places.
 
 You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key.
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/wrangler/cli-wrangler/configuration/#keys) for each environment.
+The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
 ```toml
 ---
@@ -145,7 +145,7 @@ Published my-worker
   example.com/*
 ```
 
-Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/cli-wrangler/configuration/#vars) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
