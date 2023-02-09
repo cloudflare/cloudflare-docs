@@ -28,7 +28,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 1. Select **Disk Encryption**.
 1. Enter a descriptive name for the check.
 1. Select your operating system.
-1. Turn on  **Enable Disk Encryption**.
+1. Either enable disk encryption for all volumes, or input the specific volume(s) you want to check for encryption (for example, `C`).
 1. Select **Save**.
 
 Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the disk encryption check is returning the expected results.
