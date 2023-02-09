@@ -159,6 +159,14 @@ html {
     color: #fff;
 }
 
+[theme="dark"] .getStarted {
+    color: #1d1f20;
+}
+
+[theme="dark"] .getStartedButton {
+    background: #e06d10 !important;
+}
+
 .Button-is-docs-secondary .DocsMarkdown--link-content {
     color: #1d1f20;
 }
