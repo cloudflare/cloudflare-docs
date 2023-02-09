@@ -37,12 +37,12 @@ Before running the sample plan, edit the waiting room in the test plan to point 
 
 ![Select Request origin with waiting room in the Waiting Room Simulation panel](/waiting-room/static/simulation-panel.png)
 
-2. In the **HTTP Request** section update the **Protocol**, **Server Name or IP**, and **Path** fields to point to your test URL with waiting room enabled. For example, if your full URL looks like `https://www.example-shop.com/deals/summer`, then the fields should match as the following:
+2. In the **HTTP Request** section update the **Protocol**, **Server Name or IP**, and **Path** fields to point to your test URL with waiting room enabled. For example, if your full URL looks like `https://www.example.com/deals/summer`, then the fields should match as the following:
 
 Field | Value
 ------| -----
 Protocol | https 
-Server Name or IP | www.example-shop.com
+Server Name or IP | www.example.com
 Path | deals/summer
 
 ![Update the HTTP Request section](/waiting-room/static/http-request-section.png)

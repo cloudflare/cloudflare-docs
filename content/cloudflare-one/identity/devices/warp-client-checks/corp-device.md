@@ -25,7 +25,7 @@ To create rules based on device serial numbers, you first need to create a [Gate
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **My Team** > **Lists**.
 
-1. Select **Create manual list** or **Upload CSV**. For larger teams, it is recommended to upload a CSV or use Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
+1. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
 
 1. Give your list a descriptive name, as this name will appear when configuring your policies.
 
@@ -39,7 +39,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
 
 ## Determine the serial number
 
-### On macOS
+### macOS
 
 1. Open a terminal window.
 1. Use the `system_profiler` command to check for the value of `SPHardwareDataType` and retrieve the serial number.
@@ -48,7 +48,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
     system_profiler SPHardwareDataType | grep 'Serial Number'
     ```
 
-### On Windows
+### Windows
 
 1. Open a Powershell window.
 1. Use the `Get-CimInstance` command to get the SerialNumber property of the `Win32_BIOS` class.
@@ -57,7 +57,7 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
     Get-CimInstance Win32_BIOS
     ```
 
-### On Linux
+### Linux
 
 1. Open a Terminal Window
 1. Use the `dmidecode` command to get the version property `system-serial-number`.
@@ -66,6 +66,6 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
     sudo dmidecode -s system-serial-number
     ```
 
-### On iOS, Android and ChromeOS
+### iOS, Android and ChromeOS
 
-Serial number checks are not supported on mobile devices.
+Serial number checks are not supported on mobile devices. You can identify mobile devices by a [unique client ID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid)  instead of by serial number.

@@ -1,6 +1,6 @@
 ---
 title: Netflow/IPFIX configuration
-pcx_content_type: overview
+pcx_content_type: how-to
 weight: 3
 ---
 

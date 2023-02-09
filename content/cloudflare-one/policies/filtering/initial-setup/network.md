@@ -39,4 +39,4 @@ To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](
 
 ## 3. Add policies
 
-To create a new network policy, navigate to **Gateway** > **Policies** > **Network** in the Zero Trust dashboard. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.
+To create a new network policy, navigate to **Gateway** > **Firewall Policies** > **Network** in the Zero Trust dashboard. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.
