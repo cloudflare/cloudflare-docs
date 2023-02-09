@@ -6,7 +6,7 @@ weight: 3
 
 # Configure Cross-Origin Resource Sharing (CORS)
 
-Cross-Origin Resource Sharing (CORS) is a standardized method that prevents domain X from accessing the resources of domain Y. It does so by using special headers in HTTP responses from domain Y, that allow your browser to verify that domain Y permits domain X to access these resources.
+[Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) is a standardized method that prevents domain X from accessing the resources of domain Y. It does so by using special headers in HTTP responses from domain Y, that allow your browser to verify that domain Y permits domain X to access these resources.
 
 While CORS can help protect your data from malicious websites, CORS is also used to interact with objects in your bucket and configure policies on your bucket.
 
@@ -15,8 +15,6 @@ CORS is used when you interact with a bucket from a web browser, and you have tw
 **[Set a bucket to public:](#use-cors-with-a-public-bucket)** This option makes your bucket accessible on the Internet as read-only, which means anyone can request and load objects from your bucket in their browser or anywhere else. This option is ideal if your bucket contains images used in a public blog.
 
 **[Presigned URLs:](#use-cors-with-a-presigned-url)** Allows anyone with access to the unique URL to perform specific actions on your bucket.
-
-For more information about CORS, refer to [Cross Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 ## Prerequisites
 
@@ -28,7 +26,7 @@ Before you configure CORS, you must have:
 
 ## Use CORS with a public bucket
 
-To use CORS with a public bucket, ensure your bucket is set to allow public access.
+[To use CORS with a public bucket](/r2/data-access/public-buckets/), ensure your bucket is set to allow public access.
 
 Next, [add a CORS policy](#add-cors-policies-from-the-dashboard) to your bucket to allow the file to be shared.
 
@@ -45,7 +43,7 @@ The example below shows how to generate a presigned `PutObject` URL using the [`
 ```js
 import { PutObjectCommand, S3 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-const s3 = new S3({
+const s3 = new S3Client({
 	endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
@@ -55,7 +53,7 @@ const s3 = new S3({
 	region: "auto",
 });
 const url = await getSignedUrl(
-	s3,
+	s3Client,
 	new PutObjectCommand({
 		Bucket: bucket,
 		Key: object,
@@ -69,10 +67,10 @@ console.log(url);
 
 ### Test the presigned URL
 
-Test the presigned URL by uploading an object using cURL.
+Test the presigned URL by uploading an object using cURL. The example below would upload the `123` text to R2 with a `Content-Type` of `text/plain`.
 
 ```json
-curl -H "Content-Type: text/plain"
+curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
 ```
 
 ## Add CORS policies from the dashboard
@@ -92,7 +90,7 @@ You can use the headers below to customize the CORS policy.
 
 - `AllowedOrigins`: Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. Example: `http://www.example.com`
 - `AllowedMethods`: Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser.
-- `AllowedHeaders`: Specifies the value `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser
+- `AllowedHeaders`: Specifies the for value `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.
 - `ExposeHeaders`: Object headers used when requesting an object from a browser.
 - `MaxAgeSeconds`: The amount of time in seconds browsers are allowed to cache CORS preflight responses.
 
