@@ -104,7 +104,7 @@ The `AllowedOrigins` specify the web server being used, and `localhost:3000` is 
 [ 
   { 
     "AllowedOrigins": [ 
-       "localhost:3000" 
+       "http://localhost:3000" 
     ],  
     "AllowedMethods": [
        "GET",
