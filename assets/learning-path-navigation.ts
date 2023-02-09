@@ -47,7 +47,6 @@ export function init() {
           }
         }
       });
-      console.log(nextModule);
 
       if (nextModule === "") {
         nextModuleLink.innerHTML = "Finish learning path >";
