@@ -18,7 +18,7 @@
         
         <article class="DocsMarkdown">
           <h1 id="{{.Title | urlize }}">{{.Title}}</h1>
-          <p class="timeEstimate">{{- .ReadingTime -}}&nbsp;min read</p>
+          <p class="timeEstimate">{{- partialCached "time.icon" . -}}&nbsp;&nbsp;{{- .ReadingTime -}}&nbsp;min read</p>
           {{- .Content -}}
           {{- partial "progress.button" . -}}
         </article>
