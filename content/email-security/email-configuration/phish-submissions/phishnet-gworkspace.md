@@ -12,8 +12,6 @@ PhishNET is an add-in button that helps users to submit directly to Area 1 phish
 
 To set up PhishNet with Google Workspace you need admin access to your Google Workspace account.
 
-{{<Aside type="note">}}Only admin users can deploy PhishNet.{{</Aside>}}
-
 ## Setup PhishNet for Google Workspace
 
 1. Log in to [Google Workspace Marketplace apps](https://workspace.google.com/marketplace/app/cloudflare_phishnet/11369379045) using this direct link and an administrator account.
