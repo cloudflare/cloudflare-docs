@@ -38,7 +38,7 @@ To set up PhishNet with Google Workspace you need admin access to your Google Wo
 
     <div class="medium-img">
 
-    ![Select to which users you want to install PhishNet to](/email-security/static/phish-submissions/phishnet-gworkspace/step5-done.png)
+    ![If everything goes well, you will need to select Done to continue.](/email-security/static/phish-submissions/phishnet-gworkspace/step5-done.png)
 
     </div>
 
