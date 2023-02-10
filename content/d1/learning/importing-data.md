@@ -1,28 +1,28 @@
 ---
-title: Importing Data
+title: Importing data
 weight: 1
 pcx_content_type: concept
 ---
 
-# Importing Data
+# Importing data
 
-D1 allows you to import existing SQLite tables & their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers + D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
+D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
 
-## Import an Existing Database
+## Import an existing database
 
-To import an existing SQLite database into D1, you need to:
+To import an existing SQLite database into D1, you must have:
 
-1. Have the Cloudflare [Wrangler CLI installed](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
-2. Create a database to use as the target
-3. Have an existing SQLite (version 3.0+) database file to import
+1. The Cloudflare [Wrangler CLI installed](https://developers.cloudflare.com/workers/wrangler/install-and-update/).
+2. A database to use as the target
+3. An existing SQLite (version 3.0+) database file to import.
 
 {{<Aside type="note">}}
 
-You cannot import a raw SQLite database (`.sqlite3` files) directly. See [how to convert an existing SQLite file](#converting-sqlite-database-files) first.
+You cannot import a raw SQLite database (`.sqlite3` files) directly. Refer to [how to convert an existing SQLite file](#converting-sqlite-database-files) first.
 
 {{</Aside>}}
 
-For example, consider the following `users_export.sql` schema & values, which includes a `CREATE TABLE IF NOT EXISTS` statement
+For example, consider the following `users_export.sql` schema & values, which includes a `CREATE TABLE IF NOT EXISTS` statement:
 
 ```sql
 CREATE TABLE IF NOT EXISTS users (
@@ -37,7 +37,7 @@ insert into users (id, full_name, created_on) values ('01GREFXCNDGQNBQAJG1AP0TYX
 insert into users (id, full_name, created_on) values ('01GREFXCNF67KV7FPPSEJVJMEW', 'Riane Zamora', '2022-12-24 06:49:04');
 ```
 
-With our `users_export.sql` file in the current working directory, we can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema & values:
+With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
 ➜  wrangler d1 execute example-db --file=users_export.sql
@@ -48,7 +48,7 @@ With our `users_export.sql` file in the current working directory, we can pass t
 🚣 Executed 1 command in 61.64555000513792ms
 ```
 
-To confirm our table was imported correctly and is queryable, we can execute a simple `SELECT` statement against our `users` table directly:
+To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
 
 ```sh
 ➜  wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
@@ -72,11 +72,11 @@ To confirm our table was imported correctly and is queryable, we can execute a s
 └────────────────────────────┴──────────────────┴─────────────────────┘
 ```
 
-Note that we apply a `LIMIT 100` clause here as a precaution: if we were importing a larger database with hundreds or thousands of rows, we may not want to output every row to the terminal.
+Note that we apply a `LIMIT 100` clause here as a precaution: if you were importing a larger database with hundreds or thousands of rows, you may not want to output every row to the terminal.
 
-From here, we can now query our new table from our Worker [using the D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
+From here, you can now query our new table from our Worker [using the D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
 
-## Converting SQLite Database Files
+## Converting SQLite database files
 
 {{<Aside type="note">}}
 
