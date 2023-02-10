@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 6
 meta:
   title: Configure Transform Rules with Terraform
-layout: list
 ---
 
 # Configure Transform Rules
@@ -15,6 +14,18 @@ This page provides examples of creating Transform Rules in a zone using Terrafor
 * [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
 
 For more information on Transform Rules, refer to [Transform Rules](/rules/transform/).
+
+## Before you start
+
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### (Optional) Delete existing rulesets to start from scratch
+
+{{<render file="_delete-existing-rulesets.md">}}
+
+---
 
 ## Create a Rewrite URL Rule
 
@@ -128,3 +139,9 @@ resource "cloudflare_ruleset" "transform_modify_response_headers" {
 ```
 
 For more information on modifying response headers, refer to [HTTP Response Header Modification Rules](/rules/transform/response-header-modification/).
+
+---
+
+## Importing existing rulesets to Terraform
+
+{{<render file="_import-existing-rulesets.md">}}

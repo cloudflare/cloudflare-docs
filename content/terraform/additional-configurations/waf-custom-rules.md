@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 5
 meta:
   title: Configure WAF custom rules with Terraform
-layout: list
 ---
 
 # Configure WAF custom rules
@@ -21,6 +20,18 @@ This page provides examples of creating WAF custom rules in a zone or account us
     * [Add a custom rule checking for exposed credentials](#add-a-custom-rule-checking-for-exposed-credentials)
 
 For more information on custom rules, refer to [Custom rules](/waf/custom-rules/) in the Cloudflare WAF documentation.
+
+## Before you start
+
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### (Optional) Delete existing rulesets to start from scratch
+
+{{<render file="_delete-existing-rulesets.md">}}
+
+---
 
 ## Zone-level configurations
 
@@ -159,3 +170,9 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   }
 }
 ```
+
+---
+
+## Importing existing rulesets to Terraform
+
+{{<render file="_import-existing-rulesets.md">}}
