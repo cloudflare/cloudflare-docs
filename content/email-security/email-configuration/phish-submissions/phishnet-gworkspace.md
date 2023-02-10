@@ -1,5 +1,5 @@
 ---
-title: PhishNet Google Workspace
+title: PhishNet for Google Workspace
 pcx_content_type: how-to
 weight: 2
 ---

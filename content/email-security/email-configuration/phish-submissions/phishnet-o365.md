@@ -1,5 +1,5 @@
 ---
-title: PhishNet Office 365
+title: PhishNet for Office 365
 pcx_content_type: how-to
 weight: 1
 ---
