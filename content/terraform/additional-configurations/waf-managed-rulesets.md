@@ -24,9 +24,9 @@ For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/man
 
 {{<render file="_find-ids-managed-rulesets.md">}}
 
-### (Optional) Delete existing rulesets to start from scratch
+### Import or delete existing rulesets
 
-{{<render file="_delete-existing-rulesets.md">}}
+{{<render file="_import-delete-existing-rulesets.md">}}
 
 ---
 
@@ -255,9 +255,3 @@ highlight: [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
     enabled = true
   }
 ```
-
----
-
-## Importing existing rulesets to Terraform
-
-{{<render file="_import-existing-rulesets.md">}}

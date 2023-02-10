@@ -25,7 +25,7 @@ For more information on DDoS managed rulesets, refer to [Managed rulesets](/ddos
 
 ### (Optional) Delete existing rulesets to start from scratch
 
-{{<render file="_delete-existing-rulesets.md">}}
+{{<render file="_import-delete-existing-rulesets.md">}}
 
 ---
 
@@ -99,9 +99,3 @@ resource "cloudflare_ruleset" "account_level_network_ddos_config" {
 ```
 
 For more information about Network-layer DDoS Attack Protection, refer to [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/).
-
----
-
-## Importing existing rulesets to Terraform
-
-{{<render file="_import-existing-rulesets.md">}}

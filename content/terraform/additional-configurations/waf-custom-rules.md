@@ -27,9 +27,9 @@ For more information on custom rules, refer to [Custom rules](/waf/custom-rules/
 
 {{<render file="_find-ids.md">}}
 
-### (Optional) Delete existing rulesets to start from scratch
+### Import or delete existing rulesets
 
-{{<render file="_delete-existing-rulesets.md">}}
+{{<render file="_import-delete-existing-rulesets.md">}}
 
 ---
 
@@ -170,9 +170,3 @@ resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
   }
 }
 ```
-
----
-
-## Importing existing rulesets to Terraform
-
-{{<render file="_import-existing-rulesets.md">}}

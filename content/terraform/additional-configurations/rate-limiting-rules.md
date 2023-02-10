@@ -22,9 +22,9 @@ For more information on configuring the previous version of rate limiting rules 
 
 {{<render file="_find-ids.md">}}
 
-### (Optional) Delete existing rulesets to start from scratch
+### Import or delete existing rulesets
 
-{{<render file="_delete-existing-rulesets.md">}}
+{{<render file="_import-delete-existing-rulesets.md">}}
 
 ---
 
@@ -91,9 +91,3 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
   }
 }
 ```
-
----
-
-## Importing existing rulesets to Terraform
-
-{{<render file="_import-existing-rulesets.md">}}
