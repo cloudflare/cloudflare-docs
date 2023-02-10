@@ -2348,7 +2348,7 @@
     },
     "health_checks": {
       "title": "Health checks",
-      "link": "https://support.cloudflare.com/hc/articles/4404867308429",
+      "link": "/health-checks/",
       "properties": {
         "availability": {
           "title": "Availability",

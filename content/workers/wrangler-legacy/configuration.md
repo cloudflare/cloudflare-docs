@@ -6,11 +6,7 @@ weight: 4
 
 # Configuration
 
-{{<Aside type="note">}}
-
-Wrangler has launched a new version. This is documentation for Wrangler 1. Access the new Wrangler documentation by [visiting the new Wrangler homepage](/workers/wrangler)</a>.
-
-{{</Aside>}}
+{{<render file="_wrangler-v1-deprecation.md">}}
 
 ## Background
 
@@ -46,7 +42,7 @@ routes = ["example.com/*"]
 
 Environment configuration {{<prop-meta>}}(optional){{</prop-meta>}}: the configuration values you specify under an `[env.name]` in your `wrangler.toml` file.
 
-Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler/cli-wrangler/commands/) that are deploying live Workers:
+Environments allow you to deploy the same project to multiple places under multiple names. These environments are utilized with the `--env` or `-e` flag on the [commands](/workers/wrangler-legacy/commands/) that are deploying live Workers:
 
 - `build`
 - `dev`
@@ -144,7 +140,7 @@ Cloudflare will continue to support `rust` and `webpack` project types, but reco
 
 - `webpack_config` {{<type>}}inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/workers/wrangler/cli-wrangler/webpack/) for more information.
+  - This is the path to a custom webpack configuration file for your Worker. You must specify this field to use a custom webpack configuration, otherwise Wrangler will use a default configuration for you. Refer to the [Wrangler webpack page](/workers/wrangler-legacy/webpack/) for more information.
 
 - `vars` {{<type>}}not inherited{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -207,7 +203,7 @@ vars = { FOO = "some value", BAR = "some other string" }
 
 {{<Aside type="note">}}
 
-Secrets should be handled using the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command.
+Secrets should be handled using the [`wrangler secret`](/workers/wrangler-legacy/commands/#secret) command.
 
 {{</Aside>}}
 
@@ -267,7 +263,7 @@ let value = await FOO.get("keyname");
 
 {{<Aside type="note">}}
 
-Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/workers/wrangler/cli-wrangler/commands/#kv).
+Creating your KV namespaces can be handled using Wrangler’s [KV Commands](/workers/wrangler-legacy/commands/#kv).
 
 You can also define your `kv_namespaces` using an [alternative TOML syntax](https://github.com/toml-lang/toml/blob/master/toml.md#user-content-table).
 
@@ -275,7 +271,7 @@ You can also define your `kv_namespaces` using an [alternative TOML syntax](http
 
 ### site
 
-A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/wrangler/cli-wrangler/commands/#generate) or [`wrangler init --site`](/workers/wrangler/cli-wrangler/commands/#init).
+A [Workers Site](/workers/platform/sites/) generated with [`wrangler generate --site`](/workers/wrangler-legacy/commands/#generate) or [`wrangler init --site`](/workers/wrangler-legacy/commands/#init).
 
 Usage:
 
@@ -356,7 +352,7 @@ Refer to the [gitignore documentation](https://git-scm.com/docs/gitignore) to le
 
 #### Customizing your Sites Build
 
-Workers Sites projects use webpack by default. Though you can [bring your own webpack configuration](/workers/wrangler/cli-wrangler/webpack/#using-with-workers-sites), be aware of your `entry` and `context` settings.
+Workers Sites projects use webpack by default. Though you can [bring your own webpack configuration](/workers/wrangler-legacy/webpack/#using-with-workers-sites), be aware of your `entry` and `context` settings.
 
 You can also use the `[build]` section with Workers Sites, as long as your build step will resolve dependencies in `node_modules`. Refer to the [custom builds](#build) section for more information.
 

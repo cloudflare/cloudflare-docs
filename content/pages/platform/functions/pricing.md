@@ -6,7 +6,7 @@ weight: 12
 
 # Pricing
 
-Requests to your Functions are billed as Cloudflare Workers requests. Plans and pricing can be found [here](/workers/platform/pricing/)
+Requests to your Functions are billed as Cloudflare Workers requests. Workers plans and pricing can be found [in the Workers documentation](/workers/platform/pricing/).
 
 ## Paid Plans
 

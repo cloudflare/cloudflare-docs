@@ -27,7 +27,7 @@ Developers can create multiple queues. Creating multiple queues can be useful to
 * Horizontally scale your overall throughput (messages per second) by using multiple queues to scale out.
 * Configure different batching strategies for each consumer connected to a queue.
 
-For most applications, a single producer Worker per queue, with each producer writing to multiple queues is easier to manage, and allows you to logically separate the processing for each of your queues.
+For most applications, a single producer Worker per queue, with a single consumer Worker consuming messages from that queue allows you to logically separate the processing for each of your queues.
 
 ## Producers
 
@@ -44,7 +44,9 @@ export default {
 };
 ```
 
-A queue can have multiple producers. For example, you may have multiple Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue. Additionally, multiple queues can be bound to a single Worker. That single Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
+A queue can have multiple producer Workers. For example, you may have multiple producer Workers writing events or logs to a shared queue based on incoming HTTP requests from users. There is no limit to the total number of producer Workers that can write to a single queue.
+
+Additionally, multiple queues can be bound to a single Worker. That single Worker can decide which queue to write to (or write to multiple) based on any logic you define in your code.
 
 ## Consumers
 
@@ -73,6 +75,12 @@ filename: wrangler.toml
 ```
 
 Importantly, each queue can only have one active consumer. This allows Cloudflare Queues to achieve at least once delivery and minimize the risk of duplicate messages beyond that.
+
+{{<Aside type="note" header="Best practice">}}
+
+Configure a single consumer per queue. This both logically separates your queues, and ensures that errors (failures) in processing messages from one queue do not impact your other queues.
+
+{{</Aside>}}
 
 Notably, you can use the same consumer with multiple queues. The queue handler that defines your consumer Worker will be invoked by the queues it is connected to.
 
