@@ -28,7 +28,7 @@ The matching private key is required to view logs. If you lose your private key,
 
 You can enable payload logging for any Allow or Block HTTP policy that uses the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector.
 
-1. Go to **Gateway** > **Policies** > **HTTP**.
+1. Go to **Gateway** > **Firewall Policies** > **HTTP**.
 
 2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/#2-create-a-dlp-policy).
 

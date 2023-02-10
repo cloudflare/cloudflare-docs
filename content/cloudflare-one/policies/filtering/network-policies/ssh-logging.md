@@ -31,7 +31,7 @@ Other short-lived CAs, such as those used to [secure SSH servers behind Cloudfla
 
 To generate a Gateway SSH proxy CA and get its public key:
 
-1. Make a request to the Cloudflare API with your email address and [API key](/api) as request headers.
+1. Make a request to the Cloudflare API with your email address and [API key](/fundamentals/api/get-started/keys/) as request headers.
 
     ```bash
     curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/gateway_ca"\
@@ -65,7 +65,7 @@ $ cat /etc/ssh/sshd_config
 
 ## 7. Create an Audit SSH policy
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Policies**.
+1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Firewall Policies**.
 
 2. In the **Network** tab, create a new network policy.
 

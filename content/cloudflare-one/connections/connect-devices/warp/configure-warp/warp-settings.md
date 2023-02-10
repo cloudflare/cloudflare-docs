@@ -77,7 +77,7 @@ Captive portal detection is the ability for the WARP client to detect a third-pa
 
 When `Enabled`, the WARP client will automatically turn off when it detects a captive portal, and it will automatically turn back on after the **Timeout** duration.
 
-Since captive portal implementations vary, WARP may not detect all captive portals. If captive portal detection does not work, you can provide end users with a temporary [admin override](#admin-override) code. For more information, refer to the [FAQ](/cloudflare-one/faq/teams-devices-faq/#why-is-my-device-unable-to-connect-to-a-public-wifi).
+Since captive portal implementations vary, WARP may not detect all captive portals. If captive portal detection does not work, you can provide end users with a temporary [admin override](#admin-override) code. For more information, refer to the [FAQ](/cloudflare-one/faq/teams-devices-faq/#why-is-my-device-not-connecting-to-a-public-wifi).
 
 ### Mode switch
 

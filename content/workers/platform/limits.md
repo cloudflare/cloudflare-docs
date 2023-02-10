@@ -121,6 +121,8 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 ## Durable Objects limits
 
+Durable Objects are only available on the Workers Paid plan.
+
 {{<table-wrap>}}
 
 | Feature                                    | Limit                                          |
