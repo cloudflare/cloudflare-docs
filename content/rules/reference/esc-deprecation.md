@@ -14,7 +14,7 @@ Edge Side Code (ESC) is a customization option used by several Enterprise custom
 
 ## Will this deprecation affect my account?
 
-If your account is currently using ESC, your account team will contact you so that you can discuss the migration from ESC to other existing Cloudflare products
+If your account is currently using ESC, your account team will contact you so that you can discuss the migration from ESC to other existing Cloudflare products.
 
 ## Which Cloudflare products should I use instead?
 
