@@ -55,6 +55,7 @@ export const OWNERS: Record<string, string[]> = {
   spectrum: ["angelampcosta"],
   ssl: ["kodster28"],
   stream: ["dcpena"],
+  support: ["kodster28"],
   tenant: ["kodster28"],
   terraform: ["ranbel"],
   "time-services": ["kodster28"],

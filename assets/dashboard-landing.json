@@ -198,7 +198,7 @@
       "dashPath": "/:accountId/members",
       "recommendations": [
         {
-          "url_path": "/fundamentals/account-and-billing/account-setup/manage-account-members/",
+          "url_path": "/fundamentals/account-and-billing/members/manage/",
           "title": "Manage account members"
         },
         {

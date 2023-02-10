@@ -8,7 +8,7 @@ weight: 5
 
 After a packet capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](/magic-firewall/how-to/pcaps-bucket-setup/).
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 This feature is available for Advanced Magic Firewall users. For access, contact your account team.
 
@@ -16,11 +16,11 @@ This feature is available for Advanced Magic Firewall users. For access, contact
 
 ## Send a packet capture request
 
-Currently, when a packet capture is requested, packets flowing at the edge through the Magic Transit system are captured, and the system is `magic-transit`.
+Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured, and the system is `magic-transit`.
 
 Cloudflare supports two types of packet captures:
 
-- **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all edge metals to build a PCAP file.
+- **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all data centers from Cloudflare's global network to build a PCAP file.
 - **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center or set of data centers and sent to either a GCP or AWS bucket specified by the user.
 
 {{<Aside type="note" header="Note:">}}
@@ -43,11 +43,12 @@ For help determining which data center to select for a packet capture, visit htt
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
-2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
-3. Select the **Captures** tab and select **Start a capture**.
-4. From **Packet captures - Capture configuration**, choose a capture type and select **Next**.
-5. Fill out the required fields to begin the capture and then select **Start**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **Magic Transit** or **Magic WAN**.
+3. In **Captures**, select **Start a capture**.
+4. Select the **Captures** tab > **Start a capture**.
+5. Choose the type of capture you want to perform, and select **Next**.
+6. Fill out the required fields to begin the capture and then select **Start**.
 
 The main **Packet captures** page displays a list of captures.
 
@@ -190,9 +191,10 @@ header: Simple PCAP example response
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
-2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
-3. From the **Packet Capture** page, select the **Captures** tab.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **Magic Transit** or **Magic WAN**.
+3. In **Packet captures**, select **Start a capture**.
+4. Select the **Captures** tab.
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -242,7 +244,7 @@ The capture status displays one of the following options:
 
 - **Complete:** The capture request is done and ready for download.
 - **In progress:** The capture request was captured but still processing.
-- **Failure:** The capture . If this occurs, verify your ownership information.
+- **Failure:** The capture failed. If this occurs, verify your ownership information.
 
 ## Download packet captures
 
@@ -251,10 +253,11 @@ After your request finishes processing, you can download your packet captures.
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
-2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
-3. From the **Packet captures** page, select the **Captures** tab.
-4. Locate your packet capture you want to download and under **Captures**, select the link to download it.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **Magic Transit** or **Magic WAN**.
+3. In **Packet captures**, select **Start a capture**.
+4. Select the **Captures** tab.
+5. Locate your packet capture you want to download, and select **Download**.
 
 Packet captures are available to download when the **Status** displays **Success**. 
 
@@ -288,9 +291,10 @@ Once the simple PCAP collection is complete, you can download the PCAP by specif
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select **Magic Transit** or **Magic WAN**.
-2. On the **Magic Transit** or **Magic WAN** page next to **Packet captures**, select **Start a capture**.
-3. From the **Packet captures** page, select the **Captures** tab.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
+2. Select **Magic Transit** or **Magic WAN**.
+3. In **Packet captures**, select **Start a capture**.
+4. Select the **Captures** tab.
 
 The list of packet captures associated with your account displays.
 

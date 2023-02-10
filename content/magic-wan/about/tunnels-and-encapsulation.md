@@ -6,7 +6,7 @@ weight:
 
 # Tunnels & encapsulation
 
-Magic WAN uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnels to transmit packets from Cloudflare’s edge to your origin network. Cloudflare sets up tunnel endpoints on edge servers inside your network namespace, and you [set up tunnel endpoints](/magic-wan/how-to/configure-tunnels/) on routers at your data center.
+Magic WAN uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnels to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you [set up tunnel endpoints](/magic-wan/how-to/configure-tunnels/) on routers at your data center.
 
 ## Encapsulation
 
@@ -26,4 +26,4 @@ Magic WAN uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycas
 
 This works because the Anycast protocol is stateless — each packet is processed independently and does not require any negotiation or coordination between tunnel endpoints. Tunnel endpoints are technically bound to IP addresses but do not need to be bound to specific devices. Any device that can strip off the outer headers and then route the inner packet can handle any packet sent over the tunnel.
 
-Cloudflare’s Anycast architecture provides a conduit to your Anycast tunnel for every server in every data center on Cloudflare’s global edge network.
+Cloudflare’s Anycast architecture provides a conduit to your Anycast tunnel for every server in every data center on Cloudflare’s global network.

@@ -52,7 +52,7 @@ There are also several account-level products - such as [Workers](/workers/), [P
 
 After you [log in](https://dash.cloudflare.com) and select an account - but before you select a zone - the sidebar will list account-level products.
 
-Accounts also have their own settings, including [account billing profiles](/fundamentals/account-and-billing/account-setup/create-billing-profile/), [account members](/fundamentals/account-and-billing/account-setup/manage-account-members/), [lists](/fundamentals/global-configurations/lists/), and more.
+Accounts also have their own settings, including [account billing profiles](/fundamentals/account-and-billing/account-setup/create-billing-profile/), [account members](/fundamentals/account-and-billing/members/), [lists](/fundamentals/global-configurations/lists/), and more.
 
 ### Navigation
 

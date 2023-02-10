@@ -17,6 +17,7 @@ The URL redirect parameters are the following:
     - API field name: `source_url`.
     - The URL string that the incoming request URL must match for the redirect to be applied. This property is mandatory. The maximum length of the source URL is 32 KB.
     - The value must be a valid URL, but the URL scheme is not required (for example, `https`); when the scheme is omitted, the redirect applies to both `http` and `https` URL schemes.
+    - A Bulk Redirect List cannot contain several URL redirects with the exact same source URL.
     - The exact behavior of the [URL matching algorithm](/rules/url-forwarding/bulk-redirects/how-it-works/#url-matching-algorithm), which matches an incoming request with the redirect’s source URL, depends on the values of the **Include subdomains** and **Subpath matching** parameters.
     - For more information on the supported URL components, refer to [Supported URL components](/rules/url-forwarding/bulk-redirects/reference/url-components/).
 

@@ -12,13 +12,13 @@ meta:
 
 {{<Aside type="note">}}
 
-This guide is tailored to Wrangler 2. If you are still using Wrangler 1, refer to the [Migrate from Wrangler 1 guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+This guide is tailored to Wrangler v2. If you are still using Wrangler v1, refer to the [Migrate from Wrangler v1 guide](/workers/wrangler-legacy/migration/).
 
 {{</Aside>}}
 
 To create your R2 bucket, install [Wrangler](/workers/get-started/guide/#2-install-the-workers-cli), the Workers CLI.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
+To install [`wrangler`](https://github.com/cloudflare/wrangler-legacy), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues or to easily change Node.js versions, then run:
 
 ```sh
 $ npm install -g wrangler
@@ -110,7 +110,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/cli-wrangler/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler-legacy/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 
@@ -228,7 +228,7 @@ This secret is now available as the global variable `AUTH_KEY_SECRET` in your Wo
 
 ## 7. Deploy your bucket
 
-With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler/cli-wrangler/commands/#publish) to deploy to Cloudflare's global network:
+With your Worker and bucket set up, run the `wrangler publish` [command](/workers/wrangler-legacy/commands/#publish) to deploy to Cloudflare's global network:
 
 ```sh
 $ wrangler publish

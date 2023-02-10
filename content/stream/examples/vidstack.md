@@ -42,18 +42,14 @@ defineCustomElements();
 3. Add player markup:
 
 ```html
-<vds-media
-  controls
+<media-player
+  src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
   poster="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg"
-  view="video"
+  controls
+  aspect-ratio="16/9"
 >
-  <vds-hls-video>
-    <video
-      src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
-      preload="none"
-    ></video>
-  </vds-hls-video>
-</vds-media>
+  <media-outlet></media-outlet>
+</media-player>
 ```
 
 You're all setup! You can refer to the [Vidstack documentation](https://www.vidstack.io/docs/player/getting-started/editor-setup)
@@ -75,23 +71,18 @@ import "vidstack/styles/base.css";
 import "vidstack/styles/ui/buttons.css";
 import "vidstack/styles/ui/sliders.css";
 
-import { HLSVideo, Media } from "@vidstack/react";
+import { MediaPlayer, MediaOutlet } from "@vidstack/react";
 
-function MediaPlayer() {
+function Player() {
   return (
-    <Media
-      controls
+    <MediaPlayer
+      src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
       poster="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg"
-      view="video"
+      controls
+      aspectRatio={16/9}
     >
-      <HLSVideo>
-        <video
-          src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
-          preload="none"
-          data-video="0"
-        />
-      </HLSVideo>
-    </Media>
+      <MediaOutlet />
+    </MediaPlayer>
   );
 }
 ```
@@ -113,18 +104,14 @@ You're all setup! You can refer to the [Vidstack documentation](https://www.vids
 2. Setup player:
 
 ```html
-<vds-media
-  controls
+<media-player
+  src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
   poster="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/thumbnails/thumbnail.jpg"
-  view="video"
+  controls
+  aspect-ratio="16/9"
 >
-  <vds-hls-video>
-    <video
-      src="https://customer-m033z5x00ks6nunl.cloudflarestream.com/b236bde30eb07b9d01318940e5fc3eda/manifest/video.m3u8"
-      preload="none"
-    ></video>
-  </vds-hls-video>
-</vds-media>
+  <media-outlet></media-outlet>
+</media-player>
 ```
 
 You're all setup! You can refer to the [Vidstack documentation](https://www.vidstack.io/docs/player/getting-started/editor-setup) to continue getting started.
