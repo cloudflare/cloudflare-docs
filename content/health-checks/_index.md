@@ -43,4 +43,4 @@ Cloudflare Load Balancing distributes traffic across your servers, which reduces
 
 ## Availability
 
-Standalone Health Checks is available for Pro, Business, and Enterprise customers.
+{{<feature-table id="traffic.health_checks">}}
