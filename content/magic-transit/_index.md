@@ -30,7 +30,7 @@ Magic Transit users have two options for their implementation: ingress traffic o
 ## Features
  
 {{<feature header="Health checks" href="/magic-transit/about/health-checks/">}}
-Magic WAN health checks monitor network status and the health of specific network components.
+Magic Transit and Magic WAN health checks monitor network status and the health of specific network components.
 {{</feature>}}
 
 {{<feature header="Traffic steering" href="/magic-transit/about/traffic-steering/">}}
@@ -42,7 +42,7 @@ Magic WAN steers traffic along tunnel routes based on priorities you define duri
 ## Related products
  
 {{<related header="Magic Firewall" href="/magic-firewall/" product="magic-firewall">}}
-Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, and scalable protection.
+Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, scalable protection.
 {{</related>}}
 
 {{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
