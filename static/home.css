@@ -504,17 +504,18 @@ html[is-site-page] .DocsContent {
 
 @media (min-width:768px) {
     .ZTHeroImage {
-        background-image: url("/zt-light-background-image.svg");
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         background-repeat: no-repeat;
         margin: 0 auto;
         position: relative;
         box-shadow: 0 0 0px .5px white inset;
+        margin-top: 3em;
     }
     }
     
     @media (min-width:768px) {
     [theme=dark] .ZTHeroImage {
-        background-image: url("/zt-dark-background-image.svg");
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
     }
@@ -773,12 +774,9 @@ html[is-site-page] .DocsContent {
 }
 
 .TriBlock {    
-    display: flex;
-    width: 24em;
-    height: 20em;
     border-left: 5px solid #F6821F;
     padding: .5em 2em;
-    margin-bottom: 1em;
+    height: 19em;
 }
 
 .TriBlock img {
