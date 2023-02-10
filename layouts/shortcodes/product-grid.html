@@ -1,97 +1,99 @@
-{{/* The product grid order */}}
-{{/* Names reflect data/*.yaml files */}}
-{{- $order := slice
-  "api"
-  "api-shield"
-  "analytics"
-  "apps"
-  "email-security"
-  "argo-smart-routing"
-  "automatic-platform-optimization"
-  "bots"
-  "byoip"
-  "cache"
-  "china-network"
-  "cloudflare-one"
-  "fundamentals"
-  "cloudflare-for-platforms"
-  "images"
-  "data-localization"
-  "dns"
-  "1.1.1.1"
-  "ddos-protection"
-  "email-routing"
-  "firewall"
-  "health-checks"
-  "load-balancing"
-  "logs"
-  "magic-transit"
-  "magic-firewall"
-  "magic-network-monitoring"
-  "magic-wan"
-  "network-error-logging"
-  "network-interconnect"
-  "pages"
-  "page-shield"
-  "pub-sub"
-  "queues"
-  "r2"
-  "radar"
-  "railgun"
-  "randomness-beacon"
-  "reference-architecture"
-  "registrar"
-  "rules"
-  "ruleset-engine"
-  "security-center"
-  "spectrum"
-  "ssl"
-  "stream"
-  "support"
-  "tenant"
-  "terraform"
-  "time-services"
-  "turnstile"
-  "version-management"
-  "waf"
-  "waiting-room"
-  "warp-client"
-  "web3"
-  "workers"
-  "zaraz"
--}}
+{{/* The product grid order */}} {{/* Names reflect data/*.yaml files */}} {{-
+$infrastructure := slice "1.1.1.1" "api-shield" "analytics" "apps"
+"argo-smart-routing" "automatic-platform-optimization" "bots" "byoip" "cache"
+"china-network" "cloudflare-for-platforms" "cloudflare-one" "data-localization"
+"ddos-protection" "dns" "email-routing" "email-security" "firewall"
+"load-balancing" "logs" "magic-firewall" "magic-network-monitoring"
+"magic-transit" "magic-wan" "network-error-logging" "network-interconnect"
+"page-shield" "radar" "railgun" "randomness-beacon" "reference-architecture"
+"registrar" "rules" "ruleset-engine" "security-center" "spectrum" "ssl" "tenant"
+"terraform" "time-services" "turnstile" "version-management" "waf"
+"waiting-room" "warp-client" "web3" "zaraz" -}} {{- $quicklinks := slice "api"
+"fundamentals" -}} {{- $developers := slice "images" "pages" "pub-sub" "queues"
+"r2" "stream" "workers" -}}
 
 <style>
   .ProductGrid--content {
-    --n: 1;
     display: grid;
-    flex-direction: column;
-    grid-template-columns: repeat(var(--n), 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .ProductGrid--title {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 1.2em 0;
   }
 
   @media screen and (min-width: 600px) {
-    .ProductGrid--content { --n: 2 }
+    .ProductGrid--content {
+      --n: 2;
+    }
   }
 
   @media screen and (min-width: 978px) {
-    .ProductGrid--content { --n: 3 }
+    .ProductGrid--content {
+      --n: 3;
+    }
   }
 
   @media screen and (min-width: 1200px) {
-    .ProductGrid--content { --n: 4 }
+    .ProductGrid--content {
+      --n: 4;
+    }
   }
 </style>
 
 <div class="ProductGrid">
-	<div class="ProductGrid--content">
-    {{- range $key := $order -}}
-      {{- $data := (index $.Site.Data $key) -}}
-      {{- $product := (index $data "product") -}}
-      {{- $wrap := default false $product.wrap -}}
-      <a class="ProductGrid--link" data-wrap-title="{{ $wrap }}" href="{{ $product.url }}">
-        <div>{{ safeHTML $data.logo }}</div>
-        <span>{{ $product.title }}</span>
-      </a>
+  <div class="ProductGrid--title">
+    <span>Infrastructure</span>
+  </div>
+  <div class="ProductGrid--content">
+    {{- range $key := $infrastructure -}} {{- $data := (index $.Site.Data $key)
+    -}} {{- $product := (index $data "product") -}} {{- $wrap := default false
+    $product.wrap -}}
+    <a
+      class="ProductGrid--link"
+      data-wrap-title="{{ $wrap }}"
+      href="{{ $product.url }}"
+    >
+      <div>{{ safeHTML $data.logo }}</div>
+      <span>{{ $product.title }}</span>
+    </a>
+    {{- end -}}
+  </div>
+  <div class="ProductGrid--title">
+    <span>Quick Links</span>
+  </div>
+  <div class="ProductGrid--content">
+    {{- range $key := $quicklinks -}} {{- $data := (index $.Site.Data $key) -}}
+    {{- $product := (index $data "product") -}} {{- $wrap := default false
+    $product.wrap -}}
+    <a
+      class="ProductGrid--link"
+      data-wrap-title="{{ $wrap }}"
+      href="{{ $product.url }}"
+    >
+      <div>{{ safeHTML $data.logo }}</div>
+      <span>{{ $product.title }}</span>
+    </a>
+    {{- end -}}
+  </div>
+  <div class="ProductGrid--title">
+    <span>Developers</span>
+  </div>
+  <div class="ProductGrid--content">
+    {{- range $key := $developers -}} {{- $data := (index $.Site.Data $key) -}}
+    {{- $product := (index $data "product") -}} {{- $wrap := default false
+    $product.wrap -}}
+    <a
+      class="ProductGrid--link"
+      data-wrap-title="{{ $wrap }}"
+      href="{{ $product.url }}"
+    >
+      <div>{{ safeHTML $data.logo }}</div>
+      <span>{{ $product.title }}</span>
+    </a>
     {{- end -}}
   </div>
 </div>
