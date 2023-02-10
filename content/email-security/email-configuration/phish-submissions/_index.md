@@ -15,9 +15,12 @@ Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a
 
 There are two different ways to submit a phish sample:
 
-- **User submission**: Submitted directly by the end users, and used with phish submission buttons. Refer to [PhishNet for Office 365](/email-security/email-configuration/phish-submissions/phishnet-o365/) to learn how to configure this feature on Office 365.
+- **User submission**: Submitted directly by the end users, and used with phish submission buttons. <br />
+    To learn more about user-submitted phish, refer to the following documentation:
+    {{<directory-listing>}}
 
-- **Team submission**: To be used when IT administrators or security teams submit to Area 1. Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses/). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. 
+- **Team submission**: To be used when IT administrators or security teams submit to Area 1. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses/). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. <br />
+Phish samples submitted to this address will be considered as submissions from the customer's email security team. This increases the chances of similar samples being detected as malicious in the future. 
 
 ## What happens after a phish submission
 
