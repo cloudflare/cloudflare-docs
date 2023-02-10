@@ -28,7 +28,7 @@ On both free and paid plans, requests to static assets are free and unlimited. A
 
 ## Free Plan
 
-Requests to your Pages functions count towards your quota for the Workers Free plan. For example, you could use 50,000 Functions requests and 50,000 Workers requests to use your full 100,000 daily request usage. Free plan daily request counts reset at midnight UTC.
+Requests to your Pages Functions count towards your quota for the Workers Free plan. For example, you could use 50,000 Functions requests and 50,000 Workers requests to use your full 100,000 daily request usage. The free plan daily request limit resets at midnight UTC.
 
 There are two modes in Project Settings that determine how a Function will behave once the daily request limit has been reached: 1) Fail open and 2) Fail closed.
 
