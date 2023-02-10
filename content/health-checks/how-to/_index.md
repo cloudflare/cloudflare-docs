@@ -1,10 +1,10 @@
 ---
-title: Reference
+title: How to
 pcx_content_type: navigation
 weight: 7
 ---
 
-# Reference
+# How to
 
 See the following pages for more information about standalone Health Checks:
 
