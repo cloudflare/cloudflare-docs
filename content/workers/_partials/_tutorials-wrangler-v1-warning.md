@@ -7,6 +7,6 @@ _build:
 
 {{<Aside type="warning">}}
 
-This tutorial was developed with Wrangler v1, which has now been deprecated. Please see [Migration to Wrangler v2](/workers/wrangler-legacy/migration/) for instructions on how to upgrade to the latest version.
+This tutorial was developed with Wrangler v1, which has now been deprecated. Refer to [Migration to Wrangler v2](/workers/wrangler-legacy/migration/) for instructions on how to upgrade to the latest version.
 
 {{</Aside>}}
