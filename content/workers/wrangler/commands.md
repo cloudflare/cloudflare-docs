@@ -29,7 +29,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
-- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace) 
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
 
 
 {{<Aside type="note">}}
@@ -1569,14 +1569,14 @@ Source: Wrangler
 
 ### list
 
- List all dispatch namespaces
+ List all dispatch namespaces.
 
 ```sh
 $ wrangler dispatch-namespace list 
 ```
 ### get
 
-Get information about a dispatch namespace
+Get information about a dispatch namespace.
 
 ```sh
 $ wrangler dispatch-namespace get <NAME>
@@ -1590,7 +1590,7 @@ $ wrangler dispatch-namespace get <NAME>
 
 ### create
 
-Create a dispatch namespace
+Create a dispatch namespace.
 
 ```sh
 $ wrangler dispatch-namespace create <NAME>
@@ -1604,7 +1604,7 @@ $ wrangler dispatch-namespace create <NAME>
 
 ### delete
 
-Delete a dispatch namespace
+Delete a dispatch namespace.
 
 ```sh
 $ wrangler dispatch-namespace get <NAME>
@@ -1621,7 +1621,7 @@ You must delete all Workers in the dispatch namespace before it can be deleted.
 
 ### rename
 
-Rename a dispatch namespace
+Rename a dispatch namespace.
 
 ```sh
 $ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
