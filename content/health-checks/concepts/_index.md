@@ -2,8 +2,6 @@
 title: Concepts
 pcx_content_type: concept
 weight: 4
-meta:
-  title: Health Checks
 ---
 
 # Concepts

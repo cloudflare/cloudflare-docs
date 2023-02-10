@@ -1,10 +1,8 @@
 ---
 title: Health Checks notifications
-pcx_content_type: concept
+pcx_content_type: how-to
 layout: 
 weight: 9
-meta:
-  title: Health Checks
 ---
 
 # Evaluate your Health Check or server

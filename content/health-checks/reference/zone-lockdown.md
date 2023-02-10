@@ -3,12 +3,12 @@ title: Zone Lockdown
 pcx_content_type: how-to
 weight: 8
 meta:
-  title: Health Checks
+  title: Zone lockdown migration guide
 ---
 
 # Zone Lockdown migration guide
 
-Currently, any Cloudflare customer on a paid plan can configure Health Checks against any host or IP. Zone Lockdown specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. It allows multiple destinations in a single rule as well as IPv4 and IPv6 addresses. IP addresses not specified in the Zone Lockdown rule are denied access to the specified resources.
+Currently, any Cloudflare customer on a paid plan can configure Health Checks against any host or IP. [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131) specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. It allows multiple destinations in a single rule as well as IPv4 and IPv6 addresses. IP addresses not specified in the Zone Lockdown rule are denied access to the specified resources.
 
 When a customer enables zone lockdown, any Health Checks targeting that zone regardless of ownership will still get through because Cloudflare's ASN is on an allow-list.
 
@@ -31,9 +31,9 @@ To allow a specific Health Check, verify if the user agent contains the first 16
 
 ```json
 
-curl -X POST "https://api.cloudflare.com/client/v4/zones/023e105f4ecef8ad9ca31a8372d0c353/firewall/rules" \
+curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/firewall/rules" \
      -H "X-Auth-Email: user@example.com" \
-     -H "X-Auth-Key: c2547eb745079dac9320b638f5e225cf483cc5cfdda41" \
+     -H "X-Auth-Key: <AUTH_KEY>" \
      -H "Content-Type: application/json" \
      --data '[{ "description": "bypass zone lockdown - specific healthcheck","action": "bypass","products": ["zoneLockdown"],"filter": {"expression": "(http.user_agent contains \"1234567890abcdef\")"}}]
 

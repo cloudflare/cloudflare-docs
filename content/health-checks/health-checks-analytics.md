@@ -2,8 +2,6 @@
 title: Health Checks Analytics
 pcx_content_type: reference
 weight: 3
-meta:
-  title: Health Checks
 ---
 
 # Health Checks Analytics
