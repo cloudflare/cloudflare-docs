@@ -22,7 +22,7 @@ For Enterprise customers, please contact your Customer Success Manager for infor
 
 {{</Aside>}}
 
-### Static Asset Requests
+### Static asset requests
 
 On both free and paid plans, requests to static assets are free and unlimited. A request is considered static when it does not invoke Functions. Refer to [Functions invocation routes](/pages/platform/functions/routing/#functions-invocation-routes) to learn more about when Functions are invoked.
 
