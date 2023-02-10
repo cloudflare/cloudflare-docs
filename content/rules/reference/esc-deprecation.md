@@ -250,4 +250,4 @@ $ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/dis
 
 ## Final remarks
 
-Some configurations currently done using ESC will not be directly available in any other Cloudflare product. In this rare situation, Cloudflare will discontinue the custom behavior currently obtained through ESC and work with customers to help them understand alternative solutions for their use cases.
+Some configurations currently done using ESC will not be directly available in any other Cloudflare product. In this rare situation, Cloudflare will discontinue the custom behavior currently obtained through ESC and work with you to help you understand alternative solutions for your use cases.
