@@ -57,7 +57,7 @@ The [available API operations](#api-operations) allow you to do the following:
 
 Cloudflare recommends that you start doing tests using individual HTTP requests, to make sure the triggered rules and the response you get match your expectations.
 
-[Configure a secret](#create-esc-secret-for-a-zone) and include it in a request cookie to disable ESC for that specific request.
+Start by [configuring a secret](#create-esc-secret-for-a-zone) and including it in a request cookie to disable ESC for specific requests.
 
 If these tests are successful, [disable ESC for the entire zone](#disable-esc-for-a-zone). Perform some additional tests to make sure that your configuration with ESC disabled performs as intended. If you detect any issues, [re-enable ESC for the zone](#re-enable-esc-for-a-zone).
 
