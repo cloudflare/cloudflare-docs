@@ -13,8 +13,6 @@ meta:
 
 {{<plan type="enterprise">}}
 
-![Magic Transit deployment diagram showing how traffic moves through the Cloudflare network](/magic-transit/static/egress-diagram.png)
-
 Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
 
 Magic Transit delivers its connectivity, security, and performance benefits by serving as the front door to your IP network. This means it accepts IP packets destined for your network, processes them, and then outputs them to your origin infrastructure.
@@ -24,6 +22,8 @@ The Cloudflare network uses Border Gateway Protocol (BGP) to announce your compa
 Once packets hit Cloudflare’s network, traffic is inspected for attacks, filtered, steered, accelerated, and sent onward to your origin. Magic Transit connects to your origin infrastructure using Anycast Generic Routing Encapsulation (GRE) tunnels over the Internet or, with [Cloudflare Network Interconnect (CNI)](/network-interconnect/), via physical or virtual interconnect.
 
 Magic Transit users have two options for their implementation: ingress traffic or ingress and egress traffic. Users with an egress implementation will need to set up policy-based routing (PBR) or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
+
+![Magic Transit deployment diagram showing how traffic moves through the Cloudflare network](/magic-transit/static/egress-diagram.png)
 
 ---
  
@@ -47,8 +47,4 @@ Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare 
 
 {{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
-{{</related>}}
-
-{{<related header="Cloudflare Magic Network Monitoring" href="/magic-network-monitoring/" product="magic-network-monitoring">}}
-Magic Network Monitoring provides visibility into your network traffic by analyzing network flow data sent from a customer’s routers.
 {{</related>}}
