@@ -29,6 +29,7 @@ export const OWNERS: Record<string, string[]> = {
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
+  "health-checks": ["patriciasantaana"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],

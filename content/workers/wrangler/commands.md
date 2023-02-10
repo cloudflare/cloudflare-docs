@@ -29,6 +29,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
+
 
 {{<Aside type="note">}}
 
@@ -1558,7 +1560,79 @@ Source: Wrangler
 {{</definitions>}}
 
 ---
+## dispatch namespace
 
+### list
+
+ List all dispatch namespaces.
+
+```sh
+$ wrangler dispatch-namespace list 
+```
+### get
+
+Get information about a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the dispatch namespace to get details about.
+
+### create
+
+Create a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace create <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the dispatch namespace to create.
+
+### delete
+
+Delete a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace get <NAME>
+```
+{{<Aside type="note">}}
+You must delete all user Workers in the dispatch namespace before it can be deleted.
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the dispatch namespace to delete.
+
+### rename
+
+Rename a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
+```
+
+{{<definitions>}}
+
+- `OLD NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The previous name of the dispatch namespace.
+
+- `NEW NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The new name of the dispatch namespace.
+
+---
 ## types
 
 Generate types from bindings and module rules in configuration.
