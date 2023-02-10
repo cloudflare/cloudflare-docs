@@ -1,7 +1,6 @@
 ---
 title: Health Checks notifications
 pcx_content_type: how-to
-layout: 
 weight: 9
 ---
 
