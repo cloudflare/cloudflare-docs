@@ -22,7 +22,7 @@ If an Operation ID is missing, Cloudflare will generate one from the method and 
 
 ## Specifications
 
-API Shield supports API schemas using [OpenAPI Specification v3]([url](https://swagger.io/specification/v3/)).
+API Shield supports API schemas using [OpenAPI Specification v3](https://swagger.io/specification/v3/).
 
 The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 
