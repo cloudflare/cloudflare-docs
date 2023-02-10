@@ -9,6 +9,8 @@ layout: single
 
 # Build data-driven applications with Workers and PostgreSQL
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 ## Overview
 
 Many applications for the web are built using industry standards like [PostgreSQL](https://postgresql.org), an open-source SQL database. Instead of directly connecting their user interface to that database, it is common for developers to use a back-end server to format and proxy API requests to that database. Rather than building a back-end server for this task, you will make use of Cloudflare Workers and an improvement to the PostgreSQL developer experience — [PostgREST](https://postgrest.org): a REST API built specifically for PostgreSQL. By doing this, you will handle API requests to your database without needing to maintain another piece of infrastructure.

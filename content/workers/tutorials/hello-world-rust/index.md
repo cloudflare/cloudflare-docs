@@ -9,6 +9,8 @@ layout: single
 
 # Hello World in Rust
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 In this tutorial, you will learn how to generate, build, preview, configure, and publish a Rust-generated WebAssembly serverless function that parses Markdown for Cloudflare Workers.
 
 {{<render file="_tutorials-before-you-start.md">}}
