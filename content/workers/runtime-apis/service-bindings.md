@@ -17,7 +17,7 @@ To use Service bindings in your code, you must first create a Service binding fr
 
 ### Interface
 
-{{<tabs labels="js/esm | js/esm">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm"  default="true">}}
 ```js
 export default {
