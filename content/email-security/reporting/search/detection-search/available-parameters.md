@@ -31,7 +31,7 @@ You can pull information for a message in [search detections](/email-security/re
 
 ## Search terms
 
-In addition to the message parameters above, there are additional detection search strings
+In addition to the message parameters above, you can use these additional detection search strings:
 
 - phish_submission
 - phish_submission_response
@@ -40,7 +40,7 @@ In addition to the message parameters above, there are additional detection sear
 - auto-retraction
 - browser_isolation_rewrite
 
-For disposition specific submission searches refer to the Service Addresses page in the Portal https://horizon.area1security.com/support/service-addresses
+For disposition-specific submission searches, refer to [Service Addresses](https://horizon.area1security.com/support/service-addresses) in the Area 1 dashboard. 
 
 ## Data retention
 
