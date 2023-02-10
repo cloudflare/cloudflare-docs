@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 6
 meta:
   title: Configure Transform Rules with Terraform
-layout: list
 ---
 
 # Configure Transform Rules

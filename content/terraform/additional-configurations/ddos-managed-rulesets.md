@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 3
 meta:
   title: Configure DDoS managed rulesets with Terraform
-layout: list
 ---
 
 # Configure DDoS managed rulesets
