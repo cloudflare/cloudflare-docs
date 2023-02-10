@@ -16,7 +16,7 @@ Sometimes phish is missed as Cloudflare Area 1 uses several techniques to make a
 There are two different ways to submit a phish sample:
 
 - **User submission**: Submitted directly by the end users, and used with phish submission buttons. <br />
-    To learn more about user-submitted phish, refer to the following docs:
+    To learn more about user-submitted phish, refer to the following documentation:
     {{<directory-listing>}}
 
 - **Team submission**: To be used when IT administrators or security teams submit to Area 1. Submit original phish samples as an attachment in EML format to the appropriate [Team Submissions address](https://horizon.area1security.com/support/service-addresses/). For example, if you think an email should be marked as spoof, send it to the `SPOOF` address listed in Team Submissions. <br />
