@@ -17,23 +17,23 @@ To use Service bindings in your code, you must first create a Service binding fr
 
 ### Interface
 
-{{<tabs labels="ts/esm | js/esm">}}
-{{<tab label="ts/esm" default="true">}}
-```ts
-interface Environment {
-	BINDING: Fetcher;
-}
-
-export default <ExportedHandler<Environment>> {
+{{<tabs labels="js/esm | js/esm">}}
+{{<tab label="js/esm"  default="true">}}
+```js
+export default {
 	async fetch(req, env) {
 		return await env.BINDING.fetch(req);
 	},
 };
 ```
 {{</tab>}}
-{{<tab label="js/esm">}}
-```js
-export default {
+{{<tab label="ts/esm">}}
+```ts
+interface Environment {
+	BINDING: Fetcher;
+}
+
+export default <ExportedHandler<Environment>> {
 	async fetch(req, env) {
 		return await env.BINDING.fetch(req);
 	},
