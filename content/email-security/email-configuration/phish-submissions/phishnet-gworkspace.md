@@ -6,13 +6,13 @@ weight: 2
 
 # PhishNet for Google Workspace
 
-PhishNET is an add-in button that helps users to submit directly to Area 1 phish samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
+PhishNet is an add-in button that helps users to submit directly to Area 1 phish samples missed by Area 1’s detection. PhishNet avoids the previous process, where users had to report phish to their email admins, which then had to manually download and forward the sample to Area 1.
 
 ## Prerequisites
 
 To set up PhishNet with Google Workspace you need admin access to your Google Workspace account.
 
-## Setup PhishNet for Google Workspace
+## Set up PhishNet for Google Workspace
 
 1. Log in to [Google Workspace Marketplace apps](https://workspace.google.com/marketplace/app/cloudflare_phishnet/11369379045) using this direct link and an administrator account.
 
@@ -63,7 +63,7 @@ Cloudflare PhishNet is now installed.
 
     </div>
 
-4. Under **Select Submission Type**, select the type of your submission — Spam or Phish.
+4. Under **Select Submission Type**, select the type of your submission — _Spam_ or _Phish_.
 
     <div class="medium-img">
 
@@ -73,4 +73,4 @@ Cloudflare PhishNet is now installed.
 
 5. Select **Submit Report**.
 
-PhishNet will show you a **Submission Complete** message once the email has been successfully submitted to Cloudflare Area 1 for review, 
+PhishNet will show you a **Submission Complete** message once the email has been successfully submitted to Cloudflare Area 1 for review. 
