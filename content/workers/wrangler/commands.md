@@ -1610,7 +1610,7 @@ Delete a dispatch namespace.
 $ wrangler dispatch-namespace get <NAME>
 ```
 {{<Aside type="note">}}
-You must delete all Workers in the dispatch namespace before it can be deleted.
+You must delete all user Workers in the dispatch namespace before it can be deleted.
 {{</Aside>}}
 
 {{<definitions>}}
@@ -1631,7 +1631,7 @@ $ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
 
 - `OLD NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The old name of the dispatch namespace .
+  - The previous name of the dispatch namespace.
 
 - `NEW NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
