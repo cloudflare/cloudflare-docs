@@ -175,11 +175,12 @@
 /cloudflare-for-platforms/workers-for-platforms/platform/analytics/ /cloudflare-for-platforms/workers-for-platforms/platform/observability/ 301
 
 # d1
-/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
-/d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/client-api/ /d1/platform/client-api/ 301
-/d1/migrations/ /d1/platform/migrations/ 301
 /d1/community-projects/ /d1/platform/community-projects/ 301
+/d1/learning/using-d1-from-pages /pages/platform/functions/bindings/#d1-databases 301
+/d1/migrations/ /d1/platform/migrations/ 301
+/d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
+/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
 
 # ddos-protection
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
