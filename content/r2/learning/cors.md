@@ -41,9 +41,9 @@ You will need a pair of S3-compatible credentials to use when you generate the p
 The example below shows how to generate a presigned `PutObject` URL using the [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) package for JavaScript.
 
 ```js
-import { PutObjectCommand, S3 } from "@aws-sdk/client-s3";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-const s3 = new S3Client({
+const S3 = new S3Client({
 	endpoint: "https://4893d737c0b9e484dfc37ec392b5fa8a.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "7dc27c125a22ad808cd01df8ec309d41",
@@ -53,7 +53,7 @@ const s3 = new S3Client({
 	region: "auto",
 });
 const url = await getSignedUrl(
-	s3Client,
+	S3,
 	new PutObjectCommand({
 		Bucket: bucket,
 		Key: object,
@@ -90,7 +90,7 @@ You can use the headers below to customize the CORS policy.
 
 - `AllowedOrigins`: Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. Example: `http://www.example.com`
 - `AllowedMethods`: Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser.
-- `AllowedHeaders`: Specifies the for value `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.
+- `AllowedHeaders`: Specifies the value for the `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.
 - `ExposeHeaders`: Object headers used when requesting an object from a browser.
 - `MaxAgeSeconds`: The amount of time in seconds browsers are allowed to cache CORS preflight responses.
 
