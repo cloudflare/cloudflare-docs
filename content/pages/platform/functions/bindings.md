@@ -234,6 +234,57 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
 
+## Queue Producers
+
+[Queue Producers](/queues/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **Queue Producers bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **Dataset**, input your desired dataset. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use Queue Producers in your Function. In this example, the binding is named `MY_QUEUE`:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+export async function onRequest(context) {
+  await env.MY_QUEUE.send({
+    url: request.url,
+    method: request.method,
+    headers: Object.fromEntries(request.headers),
+  });
+
+  return new Response('Sent!');
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+interface Env {
+  MY_QUEUE: Queue;
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  await env.MY_QUEUE.send({
+    url: request.url,
+    method: request.method,
+    headers: Object.fromEntries(request.headers),
+  });
+
+  return new Response('Sent!');
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
+### Interact with your Queue Producer binding locally
+
+At this time, Wrangler does not support interacting with Queue Producers during local development. We recommend testing on a preview branch instead.
+
 ## Analytics Engine
 
 [Analytics Engine](/analytics/analytics-engine/) enable you to write analytics within your Pages Function. To add a Analytics Engine binding to your Pages Function:
