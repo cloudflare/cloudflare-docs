@@ -6,7 +6,7 @@ weight: 7
 
 # Bindings
 
-A [binding](/workers/platform/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments. 
+A [binding](/workers/platform/bindings/) enables your Pages Functions to interact with resources on the Cloudflare developer platform. Use bindings to integrate your Pages Functions with Cloudflare resources like [KV](/workers/learning/how-kv-works/), [Durable Objects](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](/d1/). You can set bindings for both production and preview environments.
 
 This guide will instruct you on configuring a binding for your Pages Function. You must already have a resource set up to continue.
 
@@ -74,7 +74,7 @@ Below is an example of how to use Durable Objects in your Function. Your DO bind
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-export async function onRequestGet(context) {  
+export async function onRequestGet(context) {
   const id = context.env.DURABLE_OBJECT.newUniqueId();
   const stub = context.env.DURABLE_OBJECT.get(id);
 
@@ -118,11 +118,11 @@ Below is an example of how to use R2 buckets in your Function. Your R2 binding i
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-export async function onRequest(context) {  
+export async function onRequest(context) {
   const obj = await context.env.BUCKET.get('some-key');
   if (obj === null) {
-    return new Response('Not found', { status: 404 });  
-  }  
+    return new Response('Not found', { status: 404 });
+  }
   return new Response(obj.body);
 }
 ```
@@ -136,8 +136,8 @@ interface Env {
 export const onRequest: PagesFunction<Env> = async (context) => {
   const obj = await context.env.BUCKET.get('some-key');
   if (obj === null) {
-    return new Response('Not found', { status: 404 });  
-  }  
+    return new Response('Not found', { status: 404 });
+  }
   return new Response(obj.body);
 }
 ```
@@ -165,9 +165,9 @@ Below is an example of how to use D1 databases in your Function. Your D1 binding
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-export async function onRequest(context) { 
+export async function onRequest(context) {
   // Create a prepared statement with our query
-  const ps = context.env.NORTHWIND_DB.prepare('SELECT * from users'); 
+  const ps = context.env.NORTHWIND_DB.prepare('SELECT * from users');
   const data = await ps.first();
 
   return Response.json(data);
@@ -182,7 +182,7 @@ interface Env {
 
 export const onRequest: PagesFunction<Env> = async (context) => {
   // Create a prepared statement with our query
-  const ps = context.env.NORTHWIND_DB.prepare('SELECT * from users'); 
+  const ps = context.env.NORTHWIND_DB.prepare('SELECT * from users');
   const data = await ps.first();
 
   return Response.json(data);
@@ -212,7 +212,7 @@ Below is an example of how to use service bindings in your Function. Your servic
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
 ```js
-export async function onRequestGet(context) {  
+export async function onRequestGet(context) {
   return context.env.SERVICE.fetch(context.request);
 }
 ```
@@ -233,6 +233,61 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 ### Interact with your Service binding locally
 
 While developing locally, interact with a service by adding `--service=<BINDING_NAME>=<WORKER_NAME>` to your run command. For example, if your service is bound to `SERVICE`, access this service in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --service=SERVICE=my-worker`. You will need to also have the `my-worker` Worker running in `wrangler pages dev --local`. Interact with this binding by using `context.env` (for example, `context.env.SERVICE`).
+
+## Analytics Engine
+
+[Analytics Engine](/analytics/analytics-engine/) enable you to write analytics within your Pages Function. To add a Analytics Engine binding to your Pages Function:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. In **Account Home**, select **Pages**.
+3. In your Pages project, go to **Settings** > **Functions** > **Analytics Engine bindings** > **Add binding**.
+4. Choose whether you would like to set up the binding in your **Production** or **Preview** environment.
+5. Give your binding a name under **Variable name**.
+6. Under **Dataset**, input your desired dataset. You must repeat steps 5 and 6 for both the **Production** and **Preview** environments.
+7. Redeploy your project for the binding to take effect.
+
+Below is an example of how to use Analytics Engine in your Function. In this example, the binding is named `ANALYTICS_ENGINE`:
+
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+```js
+export async function onRequest(context) {
+  const url = new URL(context.request.url);
+
+  context.env.ANALYTICS_ENGINE.writeDataPoint({
+    indexes: [],
+    blobs: [url.hostname, url.pathname],
+    doubles: [],
+  });
+
+  return new Response('Logged analytic');
+}
+```
+{{</tab>}}
+{{<tab label="ts">}}
+```ts
+interface Env {
+  ANALYTICS_ENGINE: AnalyticsEngineDataset;
+}
+
+export const onRequest: PagesFunction<Env> = async (context) => {
+  const url = new URL(context.request.url);
+
+  context.env.ANALYTICS_ENGINE.writeDataPoint({
+    indexes: [],
+    blobs: [url.hostname, url.pathname],
+    doubles: [],
+  });
+
+  return new Response('Logged analytic');
+}
+```
+{{</tab>}}
+{{</tabs>}}
+
+### Interact with your Analytics Engine binding locally
+
+At this time, Wrangler does not support interacting with Analytics Engine during local development. We recommend testing on a preview branch instead.
 
 ## Environment variables
 
