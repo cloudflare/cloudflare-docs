@@ -381,10 +381,10 @@
 
 # partners
 /partners/ /fundamentals/partners/ 301
-/partners/analytics/ /fundamentals/partners/#analytics-integrations/ 301
+/partners/analytics/ /fundamentals/partners/#analytics-integrations 301
 /partners/logs/ /fundamentals/partners/#cloudflare-logs 301
 /partners/email-security/ /email-security/partners/ 301
-/partners/network-interconnect/ /fundamentals/partners/#cloudflare-network-interconnect/ 301
+/partners/network-interconnect/ /fundamentals/partners/#cloudflare-network-interconnect 301
 /partners/tenant/ /tenant/ 301
 
 # page-shield
