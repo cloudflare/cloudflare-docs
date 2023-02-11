@@ -1,21 +1,4 @@
 {
-    "units": [
-        {
-            "uid": "learn.bots.firewall.intro",
-            "title": "Introduction",
-            "url": "/learning-paths/modules/security/learning-firewall-rules/intro/"
-        },
-        {
-            "uid": "learn.bots.firewall.create.rules",
-            "title": "Introduction",
-            "url": "/learning-paths/modules/security/learning-firewall-rules/firewall-rules/"
-        },
-        {
-            "uid": "learn.bots.firewall.evaluate.rules",
-            "title": "Introduction",
-            "url": "/learning-paths/modules/security/learning-firewall-rules/bot-management-variables/"
-        }
-    ],
     "summary": "Create bot-specific firewall rules",
     "abstract": "<p>By the end of this module, you'll be able to:</p>\n<ul>\n<li>Describe the variables available through Bot Management</li>\n<li>Create bot-specific firewall rules</li>\n<li>Evaluate rule effectiveness and make adjustments as needed</li>\n</ul>\n",
     "levels": [

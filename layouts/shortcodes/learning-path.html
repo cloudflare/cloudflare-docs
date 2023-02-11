@@ -27,16 +27,19 @@
   {{- $currentModuleId := index (index $pathModules $index) "uid" }}
   {{- $currentModuleFolder := index (index $pathModules $index) "folder" }}
   {{- $currentModuleData := index (index $.Site.Data.modules $currentModuleFolder) ($currentModuleId | string) -}}
-  {{- $moduleDataArray = $moduleDataArray | append $currentModuleData -}}
 
+  {{- $modulePage := $.Site.GetPage (index $currentModuleData "url" )}}
+  {{- $unitData := slice -}}
+  {{- range $modulePage.RegularPagesRecursive.ByWeight }}
+    {{- $unitData = $unitData | append . -}}
+    {{- $totalReadingTime = add $totalReadingTime .ReadingTime -}}
+  {{- end -}}
+  {{ $currentModuleData = merge $currentModuleData (dict "units" $unitData) }}
+  {{- $moduleDataArray = $moduleDataArray | append $currentModuleData -}}
   <!--Get various values needed elsewhere in template-->
   {{- $totalUnits = (add $totalUnits 1) -}}
   {{- if eq $index 0 -}}
     {{- $firstModuleURL = index $currentModuleData "url" -}}
-  {{- end -}}
-  {{- range (index $currentModuleData "units") -}}
-    {{- $page := $.Site.GetPage (replaceRE "/$" "" .url) -}}
-    {{- $totalReadingTime = add $totalReadingTime $page.ReadingTime -}}
   {{- end -}}
 {{- end -}}
 
@@ -91,17 +94,12 @@
   <details>
   {{- end -}}
 
-    {{- $moduleUnits := $moduleData.units -}}
-
     <summary>Overview</summary>
     <div>
         <ul>
-        {{- range $moduleUnits -}}
-          {{- with $.Site.GetPage (replaceRE "/$" "" .url) -}}
-          
+        {{- range index $moduleData "units" -}}  
           <li><a href="{{- print .RelPermalink "?learning_path=" $pathUID -}}">{{- .Title -}}</a>
             <p style="margin-top: -2em; font-size: .8em">{{- .ReadingTime -}}&nbsp;min</p>
-          {{- end -}}
         {{- end -}}
         
         </li>
