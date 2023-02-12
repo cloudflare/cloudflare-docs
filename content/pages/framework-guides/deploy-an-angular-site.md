@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Angular application
+title: Deploy an Angular site
 ---
 
-# Deploy an Angular application
+# Deploy an Angular site
 
 [Angular](https://angular.io/) is an incredibly popular framework for building reactive and powerful front-end applications.
 

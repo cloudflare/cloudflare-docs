@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Nuxt.js site
+title: Deploy a Nuxt site
 ---
 
 # Deploy a Nuxt site

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Vue application
+title: Deploy a Vue site
 ---
 
-# Deploy a Vue application
+# Deploy a Vue site
 
 [Vue](https://vuejs.org/) is a progressive JavaScript framework for building user interfaces. A core principle of Vue is incremental adoption: this makes it easy to build Vue applications that live side-by-side with your existing code.
 

@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a React application
+title: Deploy a React site
 ---
 
-# Deploy a React application
+# Deploy a React site
 
 [React](https://reactjs.org/) is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
