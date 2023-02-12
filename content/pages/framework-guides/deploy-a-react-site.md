@@ -60,6 +60,4 @@ By default, Cloudflare Pages assumes you are developing a single-page applicatio
 
 {{</Aside>}}
 
-## Learn more
-
-By completing this guide, you have successfully deployed your React site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="React">}}

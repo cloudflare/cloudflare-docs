@@ -151,6 +151,4 @@ The Cloudflare adapter accepts the same options as [Miniflare](https://miniflare
 
 After setting up the binding locally, you only need to set the binding in the Cloudflare dashboard as well and it will be available for your Solid application on your next deployment. To add the binding there, refer to [Bindings](/pages/platform/functions/bindings/).
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Solid site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Solid">}}

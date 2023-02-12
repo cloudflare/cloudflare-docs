@@ -81,6 +81,4 @@ It is not currently possible to access bindings from a Nuxt application (refer t
 
 When bindings are accessible from a Nuxt application, we will update this guide accordingly.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Nuxt.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Nuxt">}}
