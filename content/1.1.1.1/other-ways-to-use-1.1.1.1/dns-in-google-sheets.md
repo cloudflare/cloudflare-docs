@@ -100,6 +100,11 @@ For example, typing:
 ```txt
 NSLookup(B1, B2)
 ```
+or
+```txt
+NSLookup(B1; B2)
+```
+depending on your regional settings
 
 <div class="medium-img">
 
