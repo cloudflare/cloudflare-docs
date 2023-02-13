@@ -107,7 +107,7 @@ Parameter | Type | Description |
 `creative`               | String | Label for creative asset of promotion being tracked.
 `query`                  | String | Product search term.
 `step`                   | Number | The Number of the checkout step in the checkout process.
-`payment_type`           | String | The type of payment used. Maps to `payment_method` in GA4.
+`payment_type`           | String | The type of payment used.
 
 {{</table-wrap>}}
 
