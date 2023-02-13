@@ -287,7 +287,7 @@ At this time, Wrangler does not support interacting with Queue Producers during 
 
 ## Analytics Engine
 
-[Analytics Engine](/analytics/analytics-engine/) enable you to write analytics within your Pages Function. To add a Analytics Engine binding to your Pages Function:
+The [Analytics Engine](/analytics/analytics-engine/) binding enables you to write analytics within your Pages Function. To add a Analytics Engine binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages**.
