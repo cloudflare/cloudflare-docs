@@ -62,11 +62,11 @@ If you are using Cloudflare in a stacked CDN and authenticating HTTP requests ba
 
 ## X-Forwarded-For
 
-`X-Forwarded-For` maintains proxy server and original visitor IP addresses. If there was no existing `X-Forwarded-For` header in the request sent to Cloudflare, `X-Forwarded-For` has an identical value to the `CF-Connecting-IP` header. For example: `X-Forwarded-For: 203.0.113.1`.
+`X-Forwarded-For` maintains proxy server and original visitor IP addresses. If there was no existing `X-Forwarded-For`header in the request sent to Cloudflare, `X-Forwarded-For` has an identical value to the `CF-Connecting-IP` header.
 
-If an `X-Forwarded-For` header was already present in the request to Cloudflare, Cloudflare appends the IP address of the HTTP proxy to the header: `X-Forwarded-For: 203.0.113.1,198.51.100.101,198.51.100.102`
+For example, if the original visitor IP address is `203.0.113.1` and the request sent to Cloudflare does not contain an X-Forwarded-For header, then Cloudflare will send `X-Forwarded-For: 203.0.113.1` to the origin.
 
-In the examples above, `203.0.113.1` is the original visitor IP address and `198.51.100.101` and `198.51.100.102` are proxy server IP addresses provided to Cloudflare via the `X-Forwarded-For` header.
+If, on the other hand, an `X-Forwarded-For` header was already present in the request to Cloudflare, Cloudflare will append the IP address of the HTTP proxy connecting to Cloudflare to the header. For example, if the original visitor IP address is `203.0.113.1` and a request is proxied through two proxies: proxy A with an IP address of `198.51.100.101` and proxy B with an IP address of `198.51.100.102` before being proxied to Cloudflare. Then Cloudflare will send `X-Forwarded-For: 203.0.113.1,198.51.100.101,198.51.100.102` to the origin. This is because proxy A will append the original visitor IP address (`203.0.113.1`) to `X-Forwarded-For` before proxying the request to proxy B which, in turn, will append Proxy A IP address (`198.51.100.101`) to `X-Forwarded-For` before proxying the request to Cloudflare and finally Cloudflare will append proxy B IP address (`198.51.100.102`) to `X-Forwarded-For` before proxying the request to the origin.
 
 If you do not wish to receive the `X-Forwarded-For` header or any HTTP header that may contain the visitor's IP address, [enable the **Remove visitor IP headers** Managed Transform](/rules/transform/managed-transforms/configure/).
 
