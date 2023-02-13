@@ -129,7 +129,7 @@ $ dig TXT 2022._domainkey.email.cloudflare.net +short
 
 ## Sender rewriting
 
-Email Routing rewrites the SMTP envelope sender (`MAIL FROM`) to the forwarding domain to avoid issues with SPF. Email Routing uses a scheme similar to the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme).
+Email Routing rewrites the SMTP envelope sender (`MAIL FROM`) to the forwarding domain to avoid issues with [SPF](#spf-record). Email Routing uses the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme) to achieve this.
 
 For example, when receiving an email at `mycfdomain.com` with a sender address of `me@example.com`, Email Routing will rewrite the `MAIL FROM` to `me=example.com@mycfdomain.com`. The rewriting happens during the SMTP session to the destination upstream.
 
