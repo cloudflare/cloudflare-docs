@@ -105,8 +105,6 @@ _Ranges last updated: October 4th, 2022_
 
 Email Routing rewrites the SMTP envelope sender (`MAIL FROM`) to the forwarding domain to avoid issues with [SPF](#spf-record). Email Routing uses the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme) to achieve this.
 
-For example, when receiving an email at `mycfdomain.com` with a sender address of `me@example.com`, Email Routing will rewrite the `MAIL FROM` to `me=example.com@mycfdomain.com`. The rewriting happens during the SMTP session to the destination upstream.
-
 This has no effect to the end user's experience, though. The message headers will still report the original sender's `From:` address.
 
 ## SMTP errors
