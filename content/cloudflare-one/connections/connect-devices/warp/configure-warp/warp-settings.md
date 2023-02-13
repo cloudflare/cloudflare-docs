@@ -186,7 +186,7 @@ We recommend keeping this set to a very low value — usually just enough time f
 When `Enabled`, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
 
 - `https://support.example.com`: Use an https:// link to open your companies internal help site.
-- `mailto:yoursupport@example.com`: Use a`mailto: link to open your default mail client.
+- `mailto:yoursupport@example.com`: Use a `mailto:` link to open your default mail client.
 
 ### Service mode
 
@@ -201,11 +201,7 @@ When `Enabled`, the **Send Feedback** button in the WARP client appears and will
 </div>
 </details>
 
-Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) for a detailed description of each mode.
-
-- **Gateway with WARP** DNS and Device traffic is encrypted and processed by Gateway. This mode is required if you want to enable HTTP rules, Browser Isolation, Anti-Virus scanning and DLP.
-- **Gateway with DoH** Enforcement of DNS policies only through DoH. All other traffic is handled by default mechanisms on your devices.
-- **Proxy Only** Only traffic sent to the localhost proxy is encrypted by Gateway. This mode does not process DNS traffic.
+Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes) for a detailed description of each mode.
 
 ### Local Domain Fallback
 
