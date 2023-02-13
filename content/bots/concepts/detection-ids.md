@@ -19,7 +19,7 @@ You can create or edit their existing Logpush jobs to include the new Bot Detect
 
 ### Via the Cloudflare dashboard
 
-1. [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Navigate to **Analytics & Logs** > **Logs**.
 3. Select **Add Logpush Job**.
 4. Select **HTTP Requests** as the dataset.
