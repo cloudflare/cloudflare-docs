@@ -54,7 +54,7 @@ For more information on these actions, refer to the [Actions](/ruleset-engine/ru
 
 * **Security rule:** One of the following rule types:
 
-  * [WAF managed rule](/waf/managed-rulesets/)
+  * [WAF managed rule](/waf/managed-rules/)
   * [WAF custom rule](/waf/custom-rules/)
   * [WAF rate limiting rule](/waf/rate-limiting-rules/)
 
