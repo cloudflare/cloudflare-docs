@@ -8,11 +8,6 @@ weight: 6
 
 Below, you will find information regarding the current limitations for Email Routing.
 
-
-## Message size
-
-Currently, Email Routing does not support messages bigger than 25 MiB.
-
 ## Email Workers size limits
 
 When you process emails with Email Workers and you are on [Workers’ free pricing tier](/workers/platform/pricing/) you might encounter an allocation error. This may happen due to the size of the emails you are processing and / or the complexity of your Email Worker. Refer to [Workers limits](/workers/platform/limits/#worker-limits) for more information.
