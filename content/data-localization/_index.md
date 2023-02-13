@@ -74,6 +74,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Platform | Logpull | ⚫️ | ✅ | 🚧[^12] |
 | | Logpush | ⚫️ | ✅ | 🚧[^13] |
 | Zero Trust | Access | 🚧[^14] | 🚧[^15] | 🚧[^16] |
+| | Area1 | ⚫️ | ✅[^23] | 🚧[^24] |
 | | Browser Isolation | ⚫️ | 🚧[^17] | ✅ |
 | | CASB | ⚫️ | ⚫️ | ✘ |
 | | Cloudflare Tunnel | ⚫️ | 🚧[^18] | ⚫️ |
@@ -103,3 +104,5 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^20]:You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 [^21]:Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
 [^22]:Logs are currently stored in the US only, but customers have the [option to exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/).
+[^23]:US and EU region only. <br> For Area 1, this is called the **Processing & Inspection Boundary**.
+[^24]:Email metadata (subject, from:, to:) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (i.e. malicious or spam).
