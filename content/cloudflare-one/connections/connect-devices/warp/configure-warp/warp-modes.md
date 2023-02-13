@@ -36,7 +36,7 @@ This mode is best suited for organizations that want to filter traffic directed 
 {{<Aside type="note">}}
 
  * Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
- * This mode is only available on Windows, Linux and macOS.
+ * This mode is only available on Windows, Linux, and macOS.
 
 {{</Aside>}}
 
