@@ -74,7 +74,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Platform | Logpull | ⚫️ | ✅ | 🚧[^12] |
 | | Logpush | ⚫️ | ✅ | 🚧[^13] |
 | Zero Trust | Access | 🚧[^14] | 🚧[^15] | 🚧[^16] |
-| | Area1 | ⚫️ | ✅[^23] | 🚧[^24] |
+| | Area 1 | ⚫️ | ✅[^23] | 🚧[^24] |
 | | Browser Isolation | ⚫️ | 🚧[^17] | ✅ |
 | | CASB | ⚫️ | ⚫️ | ✘ |
 | | Cloudflare Tunnel | ⚫️ | 🚧[^18] | ⚫️ |
