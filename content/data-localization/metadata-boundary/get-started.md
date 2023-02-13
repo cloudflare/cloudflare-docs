@@ -6,13 +6,13 @@ weight: 1
 
 # Get Started
 
-You can configure the Customer Metadata Boundary and change the region where your logs and analytics are stored via [API](https://developers.cloudflare.com/api/operations/get-accounts-account_identifier-logs-control-cmb-config).
+You can configure the Customer Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
 
-Currently, the Metadata Boundary can only be enabled by Cloudflare for an entire account . If you only want the Metadata Boundary applied to some zones but not other zones in the same account, you will have to move those zones to a new account.
+Currently, the Metadata Boundary can only be enabled at the account-level. If you only want the Metadata Boundary to be applied on a portion of zones beneath the same account, you will have to [move the rest of zones to a new account](/fundamentals/get-started/basic-tasks/manage-domains/move-domain/).
 
-## API examples
+## API
 
-These are some examples of API requests. 
+These are some examples of [API requests](https://developers.cloudflare.com/api/operations/get-accounts-account_identifier-logs-control-cmb-config). 
 
 <details>
 <summary>Get current regions</summary>
@@ -69,3 +69,11 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 
 </div>
 </details>
+  
+## Dashboard
+
+To view or change your Customer Metadata Boundary setting:
+
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2.  Go to **Manage Account** > **Configurations** > **Preferences**.
+3.  Locate the **Customer Metadata Boundary** section.
