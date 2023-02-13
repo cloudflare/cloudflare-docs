@@ -314,6 +314,7 @@
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
 /load-balancing/create-load-balancer-ui/ /load-balancing/how-to/create-load-balancer/ 301
+/load-balancing/get-started/ /learning-paths/load-balancing/ 301
 /load-balancing/load-balancing-analytics/ /load-balancing/reference/load-balancing-analytics/ 301
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
