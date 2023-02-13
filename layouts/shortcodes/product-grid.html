@@ -1,16 +1,69 @@
-{{/* The product grid order */}} {{/* Names reflect data/*.yaml files */}} {{-
-$infrastructure := slice "1.1.1.1" "api-shield" "analytics" "apps"
-"argo-smart-routing" "automatic-platform-optimization" "bots" "byoip" "cache"
-"china-network" "cloudflare-for-platforms" "cloudflare-one" "data-localization"
-"ddos-protection" "dns" "email-routing" "email-security" "firewall"
-"load-balancing" "logs" "magic-firewall" "magic-network-monitoring"
-"magic-transit" "magic-wan" "network-error-logging" "network-interconnect"
-"page-shield" "radar" "railgun" "randomness-beacon" "reference-architecture"
-"registrar" "rules" "ruleset-engine" "security-center" "spectrum" "ssl" "tenant"
-"terraform" "time-services" "turnstile" "version-management" "waf"
-"waiting-room" "warp-client" "web3" "zaraz" -}} {{- $quicklinks := slice "api"
-"fundamentals" -}} {{- $developers := slice "images" "pages" "pub-sub" "queues"
-"r2" "stream" "workers" -}}
+{{/* The product grid order */}} 
+{{/* Names reflect data/*.yaml files */}} 
+{{- $infrastructure := slice 
+  "1.1.1.1" 
+  "api-shield" 
+  "analytics" 
+  "apps"
+  "argo-smart-routing" 
+  "automatic-platform-optimization" 
+  "bots" 
+  "byoip" 
+  "cache"
+  "china-network" 
+  "cloudflare-for-platforms" 
+  "cloudflare-one" 
+  "data-localization"
+  "ddos-protection" 
+  "dns" 
+  "email-routing" 
+  "email-security" 
+  "firewall"
+  "load-balancing" 
+  "logs" 
+  "magic-firewall" 
+  "magic-network-monitoring"
+  "magic-transit" 
+  "magic-wan" 
+  "network-error-logging" 
+  "network-interconnect"
+  "page-shield" 
+  "radar" 
+  "railgun" 
+  "randomness-beacon" 
+  "reference-architecture"
+  "registrar" 
+  "rules" 
+  "ruleset-engine" 
+  "security-center" 
+  "spectrum" 
+  "ssl" 
+  "tenant"
+  "terraform" 
+  "time-services" 
+  "turnstile" 
+  "version-management" 
+  "waf"
+  "waiting-room" 
+  "warp-client" 
+  "web3" 
+  "zaraz" 
+-}} 
+
+{{- $quicklinks := slice 
+  "api"
+  "fundamentals" 
+-}} 
+
+{{- $developers := slice 
+  "images" 
+  "pages" 
+  "pub-sub" 
+  "queues"
+  "r2" 
+  "stream" 
+  "workers"   
+-}}
 
 <style>
   .ProductGrid--content {
