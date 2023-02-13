@@ -71,7 +71,6 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
     | **Valid Certificate** | Any client certificate that can authenticate with the Root CA will be allowed to proceed. |
 
 11. Save the policy.
-12. In the application **Overview** tab, set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
 
 {{<Aside type="warning">}}
 
