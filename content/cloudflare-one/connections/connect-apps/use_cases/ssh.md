@@ -90,7 +90,7 @@ $ ssh -i ~/.ssh/gcp_ssh <username>@<server IP>
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `ssh.example.com`).
 
-3. For **Service**,  select _SSH_ and enter `localhost:22`.
+3. For **Service**,  select _SSH_ and enter `localhost:22`. If the SSH server is on a different machine from where you installed the tunnel, enter `<server IP>:22`.
 
 4. Select **Save hostname**.
 
