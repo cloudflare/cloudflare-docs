@@ -206,11 +206,20 @@ details div ul li {
     details div ul li {
         line-height: 4;
     }
+    .readingTime {
+        margin-top: -2em; 
+        font-size: .8em;
+    }
 }
 
 @media (max-width: 599px) {
     details div ul li {
-        line-height: 1.5;
+        line-height: 2;
+        margin-bottom: 3em;
+    }
+    .readingTime {
+        margin-top: 0em; 
+        font-size: .8em;
     }
     .learningPathModule {
         padding-left: 1em;

@@ -99,7 +99,7 @@
         <ul>
         {{- range index $moduleData "units" -}}  
           <li><a href="{{- print .RelPermalink "?learning_path=" $pathUID -}}">{{- .Title -}}</a>
-            <p style="margin-top: -2em; font-size: .8em">{{- .ReadingTime -}}&nbsp;min</p>
+            <p class="readingTime">{{- .ReadingTime -}}&nbsp;min</p>
         {{- end -}}
         
         </li>
