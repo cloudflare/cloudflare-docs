@@ -64,6 +64,7 @@ To create a complete tracking event, you need to add an event and one or more pa
 - `Order Cancelled`
 - `Clicked Promotion`
 - `Viewed Promotion`
+- `Shipping Info Entered`
 
 ## List of supported parameters:
 
@@ -106,6 +107,7 @@ Parameter | Type | Description |
 `creative`               | String | Label for creative asset of promotion being tracked.
 `query`                  | String | Product search term.
 `step`                   | Number | The Number of the checkout step in the checkout process.
+`payment_type`           | String | The type of payment used. Maps to `payment_method` in GA4.
 
 {{</table-wrap>}}
 
