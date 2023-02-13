@@ -19,7 +19,7 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 1. Cache Rules are stackable. This means that multiple matching rules will be combined and applied. So if multiple cache rules match the same URL, then the features set in those cache rules will all be applied.
 
-2. If you have conflicting settings, then ordering matters and rules will be applied in the order they appear in your Cloudflare dashboard, from bottom to top. For example, if the top rule is set to cache everything on `example.com/images/*` and the bottom rule is set to bypass cache on `example.com/*`, then because we apply rules from bottom to top, cache will be bypassed for all URLS that match `example.com/*`.
+2. If you have conflicting settings, then ordering matters and rules will be applied in the order they appear in your Cloudflare dashboard, from bottom to top. For example, if the top rule is set to cache everything on `example.com/images` and the bottom rule is set to bypass cache on `example.com`, then because we apply rules from bottom to top, cache will be bypassed for all URLs that match `example.com`. To create this type of wildcard rule to apply to everything in the URI directory, select the option _URI_ in **Field**, _starts with_ in **Operator** and `example.com` in **Value**.
   
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, we plan on releasing a one-click migration tool for Page Rules.
 
