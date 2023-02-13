@@ -113,7 +113,7 @@ In most cases, Email Routing simply forwards the upstream SMTP errors back to th
 
 ## Spam and abusive traffic
 
-Handling spam and abusive traffic is essential to any email provider. Email Routing filters emails based on advanced anti-spam criteria, [powered by Area 1](https://blog.cloudflare.com/why-we-are-acquiring-area-1/). When Email Routing detects and blocks a spam email, you will receive a message with details explaining what happened. For example:
+Handling spam and abusive traffic is essential to any email provider. Email Routing filters emails based on advanced anti-spam criteria, [powered by Area 1](/email-security/). When Email Routing detects and blocks a spam email, you will receive a message with details explaining what happened. For example:
 
 ```txt
 554 <YOUR_IP_ADDRESS> found on one or more DNSBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
