@@ -186,7 +186,7 @@ We recommend keeping this set to a very low value — usually just enough time f
 When `Enabled`, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
 
 - `https://support.example.com`: Use an https:// link to open your companies internal help site.
-- `mailto:yoursupport@example.com`: Use a`mailto: link to open your default mail client.
+- `mailto:yoursupport@example.com`: Use a `mailto:` link to open your default mail client.
 
 ### Service mode
 
