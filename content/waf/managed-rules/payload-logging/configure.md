@@ -8,6 +8,10 @@ meta:
 
 # Configure payload logging for a managed ruleset in the dashboard
 
+{{<Aside type="note">}}
+Only the **Super Administrator** can see the option to configure Payload Logging. The decryption of logs is available to everyone as long as they have access to the private key.
+{{</Aside>}}
+
 Configure payload logging for a ruleset in the ruleset configuration page.
 
 1.  Open **Security** > **WAF** > **Managed rules**.
