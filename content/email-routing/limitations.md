@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: Known limitations
+title: Limitations
 weight: 6
 ---
 
-# Known limitations
+# Limitations
 
 Below, you will find information regarding the current limitations for Email Routing.
 
