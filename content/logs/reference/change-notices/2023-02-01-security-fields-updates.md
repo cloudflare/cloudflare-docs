@@ -1,7 +1,7 @@
 ---
-title: Updates to security fields
+title: 2023-02-01 - Updates to security fields
 pcx_content_type: overview
-weight: 2
+weight: 300
 ---
 
 # 2023-02-01 - Updates to security fields in Cloudflare Logs
@@ -103,7 +103,7 @@ Field name    | Type   | Description
 
 ## Changes to GraphQL datasets
 
-The following fields will be added to the `httpRequestsAdaptive `and `httpRequestsAdaptiveGroups `datasets:
+Cloudflare will add the following fields to the `httpRequestsAdaptive `and `httpRequestsAdaptiveGroups `datasets:
 
 {{<table-wrap>}}
 
@@ -114,7 +114,7 @@ Field name       | Type   | Description
 
 {{</table-wrap>}}
 
-The following field will be added to the `firewallEventsAdaptive`, `firewallEventsAdaptiveGroups`, and `firewallEventsAdaptiveByTimeGroups` datasets:
+Cloudflare will also add the following field to the `firewallEventsAdaptive`, `firewallEventsAdaptiveGroups`, and `firewallEventsAdaptiveByTimeGroups` datasets:
 
 {{<table-wrap>}}
 
