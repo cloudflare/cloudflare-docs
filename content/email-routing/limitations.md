@@ -12,6 +12,10 @@ Below, you will find information regarding the current limitations for Email Rou
 
 Right now, you can configure a maximum of 200 [rules](/email-routing/setup/email-routing-addresses/) and 200 [destination addresses](/email-routing/setup/email-routing-addresses/#destination-addresses) in Email Routing
 
+## Message size
+
+Currently, Email Routing does not support messages bigger than 25 MiB.
+
 ## Email Workers size limits
 
 When you process emails with Email Workers and you are on [Workers’ free pricing tier](/workers/platform/pricing/) you might encounter an allocation error. This may happen due to the size of the emails you are processing and / or the complexity of your Email Worker. Refer to [Workers limits](/workers/platform/limits/#worker-limits) for more information.

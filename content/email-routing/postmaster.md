@@ -56,10 +56,6 @@ gmail-smtp-in.l.google.com. 17 IN AAAA 2a00:1450:400c:c09::1b
 
 Email Routing also supports IPv6 through Cloudflare’s inbound MX servers.
 
-## Message size
-
-Currently, Email Routing does not support messages bigger than 25 MiB.
-
 ## MX, SPF, and DKIM records
 
 Email Routing automatically adds a few DNS records to the zone when our customers enable Email Routing. If we take `example.com` as an example:
