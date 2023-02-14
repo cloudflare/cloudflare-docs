@@ -18,7 +18,7 @@ To use Customer Metadata Boundary in the dashboard:
 2. Go to **Manage Account** > **Configurations**.
 3. In **Customer Metadata Boundary**, select the region you want to use.
 
-## Customer Metadata Boundary via API
+## Configure Customer Metadata Boundary via API
 
 You can also use Customer Metadata Boundary via API. These are some examples of API requests.
 
