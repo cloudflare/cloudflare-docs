@@ -17,7 +17,7 @@ This tutorial skips inspection for additional applications beyond those in the l
 **This walkthrough covers how to:**
 
 - Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
-- Configure that policies precedence in your Gateway configuration
+- Configure that policy's precedence in your Gateway configuration
 
 **Time to complete:**
 
@@ -25,22 +25,22 @@ This tutorial skips inspection for additional applications beyond those in the l
 
 ## Before you start
 
-[Enable HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
+* [Enable HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/)
 
 ## Build the policy
 
-1.  Navigate to the **HTTP** tab of the `Policies` page in Cloudflare Gateway. Click **Add a rule**.
+1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**. Select **Create a policy**.
 
-1.  Name the policy and, optionally, provide a description.
+2.  Name the policy and, optionally, provide a description.
 
-1.  Under **Selector** choose **Application**. Select **in** in the **Operator field**. In the **Value** field, select the applications you wish to include.
+3.  Under **Selector**, choose **Application**. Select **in** in the **Operator field**. In the **Value** field, select the applications you wish to include.
 
-1.  Scroll to the bottom of the page and select **Do Not Inspect** in the `Select an action` section, then click **Create rule**.
+4.  In **Select an action**, select **Do Not Inspect**. Select **Create policy**.
 
 ## Change rule precedence
 
 New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for do-not-inspect rules. Those are always evaluated first.
 
-We do recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
+We recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
 
 ![Gateway rules displayed in recommended order.](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)
