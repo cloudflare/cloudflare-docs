@@ -60,15 +60,11 @@ Operating systems determine disk encryption in various ways. The following infor
       FileVault:                 Yes
     ```
 
-All disks on the system must be encrypted for the posture check to pass.
-
 ### On Windows
 
 1. Open a Powershell window.
 1. Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
-1. **Protection Status** must be set to **On**.
-
-All disks on the system must be encrypted for the posture check to pass.
+1. **Protection Status** must be set to **On** for the disk to be considered encrypted.
 
 ### On Linux
 
