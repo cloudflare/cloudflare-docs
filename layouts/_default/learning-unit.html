@@ -10,6 +10,7 @@
     </div>
 
     <main class="DocsBody">
+      {{ partial "sidebar.toc" . }}
 
       <div id="docs-content" data-reach-skip-nav-content></div>
       {{- partial "learning.path.breadcrumbs" . -}}
@@ -20,6 +21,9 @@
           <h1 id="{{.Title | urlize }}">{{.Title}}</h1>
           <p class="timeEstimate">{{- partialCached "time.icon" . -}}&nbsp;&nbsp;{{- .ReadingTime -}}&nbsp;min read</p>
           {{- .Content -}}
+          <br/>
+          <br/>
+          <br/>
           {{- partial "progress.button" . -}}
         </article>
       </div>

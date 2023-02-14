@@ -7,9 +7,6 @@ weight: 1
 # Pools
 
 {{<render file="_pool-definition.md">}}
-<br/>
-
-If you are familiar with DNS terminology, think of a pool as a “record set,” except Cloudflare only returns addresses that are considered healthy. You can attach health checks to individual pools for customized monitoring.
 
 {{<Aside>}}
 

@@ -16,19 +16,13 @@ But how does your load balancer _know_ which servers can handle the traffic? We 
 
 Dynamic load balancing happens through a combination of [origin pools](/load-balancing/understand-basics/pools/)[^1], [monitors](/load-balancing/understand-basics/monitors/)[^2], and health checks[^3]. 
 
-
 {{<render file="_health-check-diagram.md">}}
 
 ---
 
 ## How an origin becomes unhealthy
 
-The purpose of each **health check** is to determine whether an origin has changed status from the previous health check.
-
-A health check will fail if one of the following conditions are met:
-
-- The health check exceeds the duration specified in the monitor's **Timeout** field (and does so more than the specified number of **Retries**).
-- The origin does not return the **Expected codes** or **Response body** specified in the monitor's configuration.
+{{<render file="_health-check-definition.md">}}
 
 {{<render file="_health-check-regions.md">}}
 
@@ -65,9 +59,7 @@ When a pool reaches **Critical** health, your load balancer will begin diverting
 
 ### Fallback pools
 
-Because a load balancer **Fallback Pool** is meant to be a pool of last resort, it's health is not taken into account when directing traffic.
-
-If all pools in a Load Balancer are manually disabled or unhealthy, traffic will always go to the fallback pool.
+{{<render file="_fallback-pools.md">}}
 
 ---
 
