@@ -1,28 +1,22 @@
 ---
-pcx_content_type: configuration
+pcx_content_type: concept
 title: Application paths
 weight: 5
 ---
 
 # Application paths
 
+Application paths define the URLs protected by an Access policy. When adding a [self-hosted web application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to Access, you can choose to protect the entire website by entering its apex domain, or alternatively, protect specific subdomains and paths.
+
+## Inheritance
+
 Cloudflare Zero Trust allows you to create unique rules for parts of an application that share a root path. Imagine an example application is deployed at `dashboard.com/eng` that anyone on the engineering team should be able to access. However, a tool deployed at `dashboard.com/eng/exec` should only be accessed by the executive team.
 
 When multiple rules are set for a common root path, the more specific rule takes precedence. For example, when setting rules for `dashboard.com/eng` and `dashboard.com/eng/exec` separately, the more specific rule for `dashboard.com/eng/exec` takes precedence, and no rule is inherited from `dashboard.com/eng`. If no separate, specific rule is set for `dashboard.com/eng/exec`, it will inherit any rules set for `dashboard.com/eng`.
 
-In the Zero Trust dashboard, when adding a [self-hosted web application](/cloudflare-one/applications/configure-apps/self-hosted-apps/), you can choose to protect the entire website by entering its apex domain, or alternatively, you can specify any subdomains and paths in the dedicated fields.
+## Wildcards
 
-{{<Aside>}}
-
-Cloudflare Zero Trust does not support port numbers in the URL. Requests to URLs with port numbers are redirected to the URL and the port numbers stripped.
-
-{{</Aside>}}
-
-## Using wildcards in subdomains and paths
-
-When you create an application for a specific subdomain or path, you can use asterisks (`*`) as wildcards. Wildcards allow you to extend the application you're creating to all the subdomains or paths of a given apex domain.
-
-This is how to use wildcards effectively:
+When you create an application for a specific subdomain or path, you can use asterisks (`*`) as wildcards. Wildcards allow you to extend the application you are creating to multiple subdomains or paths in a given apex domain.
 
 ### Protect all subdomains of an apex domain
 
@@ -92,3 +86,13 @@ You cannot use wildcards to partially match subdomain and path names. Using aste
 | `*ing.example.com`  | `ing.example.com`, `engineering.example.com` |
 
 {{</Aside>}}
+
+## Unsupported URLs
+
+### Port numbers
+
+Port numbers are not supported in Access application paths. If a request includes a port number in the URL, Access will strip the port number and redirect the request to the default HTTP/HTTPS port.
+
+### Anchor links
+
+Since anchor links are processed by the browser and not the server, Access applications do not support `#` characters in the URL. For example, requests to `dashboard.com/#settings` will redirect to `dashboard.com`.
