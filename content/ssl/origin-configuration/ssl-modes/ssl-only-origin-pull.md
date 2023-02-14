@@ -29,7 +29,9 @@ You want the most secure configuration available for your origin, you are an Ent
 
 ## Required setup
 
-The setup is the same as [**Full (strict)** mode](/ssl/origin-configuration/ssl-modes/full-strict/), but you select **Strict (SSL-Only Origin Pull)** for your encryption mode.
+The setup is generally the same as [**Full (strict)** mode](/ssl/origin-configuration/ssl-modes/full-strict/), but you select **Strict (SSL-Only Origin Pull)** for your encryption mode.
+
+You also need to enable [Authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/) for this to work.
 
 ## Limitations
 
