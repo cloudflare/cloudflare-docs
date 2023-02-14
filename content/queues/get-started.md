@@ -111,7 +111,7 @@ You will now configure your producer Worker to create messages to publish to you
 
 In your Worker project directory, open the `src` folder and add the following to your `index.ts` file:
 
-```toml
+```ts
 ---
 filename: src/index.ts
 highlight: [4]
@@ -158,7 +158,7 @@ In this guide, you will create a consumer Worker and use it to log and inspect t
 
 To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 
-```sh
+```ts
 ---
 filename: src/index.ts
 highlight: [4]
