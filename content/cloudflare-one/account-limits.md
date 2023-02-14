@@ -35,7 +35,7 @@ This page lists the default account limits for rules, applications, fields, and 
 | Number of DNS policies per account               | 500   |
 | Number of HTTP policies per account              | 500   |
 | Number of Network policies per account           | 500   |
-| Number of source IP networks for proxy endpoints | 2,000 |
+| Number of source IP addresses per proxy endpoint | 2,000 |
 
 ## Cloudflare Tunnel
 
