@@ -1,4 +1,14 @@
+{{- $heading := .Get "heading" -}}
+
 <div class="DocsMarkdown-deprecated">
-    <h1>{{- .Page.RenderString .Inner -}}</h1>
+    <!-- If "heading=" tag is included -->
+    {{ if $heading }}
+        {{ printf "<%s>" $heading | safeHTML }}
+        {{- .Page.RenderString .Inner -}}
+        {{ printf "</%s>" $heading | safeHTML }}
+    <!-- Otherwise render as <h1> -->
+    {{ else }}
+        <h1>{{- .Page.RenderString .Inner -}}</h1>
+    {{ end }}
     <div class="DocsMarkdown--pill DocsMarkdown--pill-deprecated">Deprecated</div>
 </div>
