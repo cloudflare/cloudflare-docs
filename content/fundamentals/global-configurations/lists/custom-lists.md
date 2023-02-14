@@ -6,7 +6,7 @@ weight: 4
 
 # Custom lists
 
-A custom list contains one or more strings of the same type (for example, a list of hostnames) that you can reference collectively, by name, in rule expressions.
+A custom list contains one or more items of the same type (for example, a list of hostnames) that you can reference collectively, by name, in rule expressions.
 
 ## Create a custom list
 
@@ -20,17 +20,11 @@ Use custom lists in rule [expressions](/ruleset-engine/rules-language/expression
 <FIELD> in $<LIST_NAME>
 ```
 
-The fields you can use with custom lists depend on the exact type of the list items. For custom lists with hostnames, use one of the following fields:
-* `http.host`
-* TODO
+For custom lists with hostnames, use the `http.host` field.
 
 ---
 
 ## List item format
-
-The allowed formats of list items depend on the type of elements in the custom list.
-
-### Hostnames
 
 List items in custom lists with hostnames must be Fully Qualified Domain Names (FQDNs). An item may contain a `*` prefix/subdomain wildcard, which must be followed by a `.` (period). An item cannot include a scheme (for example, `https://`) or a URL path.
 
@@ -46,7 +40,7 @@ You can add any valid hostname (a valid FQDN) to a custom list with hostnames. T
 
 ## CSV file format for bulk import operations
 
-When uploading items to a custom list via CSV file, use one of the following file formats according to the list item type. Use the following format for custom lists with hostnames:
+When uploading items to a custom list with hostnames via CSV file, use the following file format:
 
 ```txt
 <HOSTNAME_1>
