@@ -4317,32 +4317,32 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   }
 
   .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
+    color: rgba(var(--color-rgb), 0.85);
     opacity: 1;
   }
 
   .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
+    color: rgba(var(--color-rgb), 0.85);
     opacity: 1;
   }
 
   .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
+    color: rgba(var(--color-rgb), 0.85);
     opacity: 1;
   }
 
   [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
+    color: rgba(var(--color-rgb), 0.85);
     opacity: 1;
   }
 
   [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
+    color: rgba(var(--color-rgb), 0.85);
     opacity: 1;
   }
 
   [theme="dark"] .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
+    color: rgba(var(--color-rgb), 0.85);
     opacity: 1;
   }
 }
@@ -4695,11 +4695,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocsFooterResources {
   display: flex;
-  justify-content:baseline;
+  justify-content: baseline;
   flex-wrap: wrap;
   margin-bottom: 1em;
   width: 100%;
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 .DocsFooterResources > * {
@@ -5039,7 +5039,7 @@ pre {
 }
 
 [theme="dark"] .tabs > ul {
-  background-color: rgba(var(--color-rgb),.1)
+  background-color: rgba(var(--color-rgb), 0.1);
 }
 
 .tabs > ul > li {
@@ -5143,9 +5143,11 @@ pre {
 }
 
 .noCodeTab {
-  padding: 1em .75em .75em .5em;
-  background: linear-gradient(var(--background-color),
-    rgba(var(--background-color-rgb)));
+  padding: 1em 0.75em 0.75em 0.5em;
+  background: linear-gradient(
+    var(--background-color),
+    rgba(var(--background-color-rgb))
+  );
   border: 1px solid rgb(216 216 218);
   color: inherit;
 }
@@ -5197,10 +5199,13 @@ pre {
 }
 
 /* Beta pill */
-.DocsMarkdown-beta, .DocsMarkdown-deprecated {
+.DocsMarkdown-beta,
+.DocsMarkdown-deprecated {
   display: flex;
   flex-direction: row;
   column-gap: 1em;
+
+  align-items: flex-end;
 }
 
 .DocsMarkdown--pill {
@@ -5210,7 +5215,7 @@ pre {
   padding: 4px 8px;
 
   position: relative;
-  top: 16px;
+  bottom: 1.8em;
   height: 18px;
 
   border-radius: 20px;
@@ -5281,7 +5286,7 @@ pre {
 /* 'Features' section */
 .DocsMarkdown--feature-group {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) .85fr;
+  grid-template-columns: minmax(0, 3fr) 0.85fr;
   gap: 1em;
   align-items: center;
 }
@@ -5393,20 +5398,21 @@ pre {
   background: rgba(110, 110, 110, 0.5);
 }
 
- .mermaid {
+.mermaid {
   background: #f5f5f5 !important;
 }
 
 .RSS svg {
-  opacity: .7;
+  opacity: 0.7;
 }
 
-[theme=dark] .RSS svg {
-  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg) brightness(116%) contrast(100%);
+[theme="dark"] .RSS svg {
+  filter: invert(100%) sepia(4%) saturate(159%) hue-rotate(297deg)
+    brightness(116%) contrast(100%);
 }
 
 .breadcrumb {
-  margin-top: .75em;
+  margin-top: 0.75em;
   margin-left: var(--docs-content-gap);
   padding-left: 0;
   list-style: none;
@@ -5418,14 +5424,14 @@ pre {
 @media (max-width: 768px) {
   .breadcrumb {
     margin-left: 0;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
   }
 }
 
 .breadcrumb.collapsed {
-    padding-left: 0em;
-    padding-right: 0em;
-    margin-left: -10em;
+  padding-left: 0em;
+  padding-right: 0em;
+  margin-left: -10em;
 }
 
 .breadcrumb li {
