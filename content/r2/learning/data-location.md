@@ -34,7 +34,7 @@ CreateBucketConfiguration: { LocationConstraint: "WNAM" },
 )
 ```
 
-Refer to [Examples](/examples) for additional examples of S3 SDKs.
+Refer to [Examples](/r2/examples/) for additional examples of S3 SDKs.
 
 ## Current limitations of Location Hints beta
 
