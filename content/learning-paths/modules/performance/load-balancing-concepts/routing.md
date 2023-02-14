@@ -20,7 +20,7 @@ There are four main components to routing:
 
 At Cloudflare, a load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) controls how the load balancer distributes requests to pools. Routing decisions can be based on proximity, pool performance, geography, and more.
 
-Then, [origin steering options](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) controls how each pool distributes requests to the servers in the pool.
+Then, [origin steering options](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) control how each pool distributes requests to the servers in the pool.
 
 If a server or pool [becomes unhealthy](/load-balancing/understand-basics/health-details/), the load balancer will adjust routing accordingly.
 
