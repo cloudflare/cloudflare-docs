@@ -12,7 +12,7 @@ Currently, the Metadata Boundary can only be enabled by Cloudflare for an entire
 
 ## Configure Customer Metadata Boundary in the dashboard
 
-To use Customer Metadata Boundary in the dashboard:
+To configure Customer Metadata Boundary in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Manage Account** > **Configurations**.
