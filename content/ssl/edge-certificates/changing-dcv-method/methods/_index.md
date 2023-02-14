@@ -29,7 +29,9 @@ For full zones[^1], the only required action is to confirm the your nameservers 
 
 For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
 
-{{<render file="_partial-zone-acm-dcv.md">}}
+{{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
+
+{{<render file="_partial-zone-acm-dcv-wildcard.md">}}
 
 ---
 

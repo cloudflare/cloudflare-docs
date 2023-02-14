@@ -87,12 +87,15 @@ If you want to take control of migrating your certificates and choose a particul
 For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
 
 {{<render file="_full-zone-acm-dcv.md">}}
+<br/>
 
 #### DCV - Partial zones
 
 For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
 
-{{<render file="_partial-zone-acm-dcv.md">}}
+{{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
+
+{{<render file="_partial-zone-acm-dcv-wildcard.md">}}
 
 ##### Fetch DCV tokens
 
