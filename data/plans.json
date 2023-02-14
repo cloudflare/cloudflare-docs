@@ -417,15 +417,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "With separate bundle"
-        },
-        "g_custom_lists": {
-          "title": "Custom lists (hostnames)",
-          "link": "/fundamentals/global-configurations/lists/custom-lists/",
-          "free": 2,
-          "pro": 10,
-          "biz": 10,
-          "ent": 100
+          "ent": "With separate add-on"
         }
       }
     }
