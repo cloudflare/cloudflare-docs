@@ -1579,7 +1579,7 @@ Rollback from: MOCK-DEPLOYMENT-ID-2222
 Retrieve details for the specified deployment. Details include Deployment ID, Author, Source, Created on, and indicates which deployment is Active.
 
 ```sh
-wrangler deployments view y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+wrangler deployments view <DEPLOYMENT_ID>
 ```
 
 Output:
