@@ -1576,7 +1576,7 @@ Rollback from: MOCK-DEPLOYMENT-ID-2222
 {{</definitions>}}
 
 ### view <deployment-id>
-Retrieve details for the 10 most recent deployments. Details include Deployment ID, Author, Source, Created on, and indicates which deployment is Active.
+Retrieve details for the specified deployment. Details include Deployment ID, Author, Source, Created on, and indicates which deployment is Active.
 
 ```sh
 wrangler deployments view y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
