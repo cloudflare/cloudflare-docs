@@ -10,28 +10,28 @@ title: Skip inspection for groups of applications
 
 You can configure Cloudflare Zero Trust to skip inspection for certain groups of applications.
 
-Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The TLS inspection performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a `do-not-inspect` HTTP policy.
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The TLS inspection performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
 
 **This walkthrough covers how to:**
 
-- Build a `Do not inspect` policy using Cloudflare's list of certificate pinned resources
+- Build a Do Not Inspect policy using Cloudflare's list of certificate pinned resources
 - Configure that policy's precedence in your Gateway configuration
 
 **Time to complete:**
 
 5 minutes
 
-## Before you start
-
-* [Enable HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/)
-
 ## Build the policy
+
+{{<Aside>}}
+Before you start, you must [enable HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
+{{</Aside>}}
 
 1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**. Select **Create a policy**.
 
 2.  Name the policy and, optionally, provide a description.
 
-3.  Under **Selector**, choose **Application**. Select **in** in the **Operator field**. In the **Value** field, select the applications you wish to include.
+3. Under **Selector**, choose **Application**. In the **Operator** field, select **in**. In the **Value** field, select the applications you wish to include.
 
 4.  In **Select an action**, select **Do Not Inspect**. Select **Create policy**.
 
@@ -39,6 +39,6 @@ Certain client applications, such as Zoom or Apple services, rely on certificate
 
 New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for do-not-inspect rules. Those are always evaluated first.
 
-We recommend dragging the **Do Not Inspect** rule to the top of the list to reduce confusion.
+We recommend moving the Do Not Inspect rule to the top of the list to reduce confusion.
 
 ![Gateway rules displayed in recommended order.](/cloudflare-one/static/secure-web-gateway/exempt-cert-pinning/rules-last.png)
