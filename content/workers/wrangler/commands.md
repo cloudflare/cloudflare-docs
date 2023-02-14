@@ -1542,12 +1542,14 @@ $ wrangler deployments
 Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on: 2022-11-11T15:49:08.117218Z
 Author: example@cloudflare.com
-Source: Dashboard
+Trigger: Upload from Wrangler 🤠
+Rollback from: MOCK-DEPLOYMENT-ID-2222
 
 Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
 Created on: 2022-11-11T15:51:20.79936Z
 Author: example@cloudflare.com
-Source: Wrangler
+Trigger: Upload from Wrangler 🤠
+Rollback from: MOCK-DEPLOYMENT-ID-2222
 🟩 Active
 
 ```
