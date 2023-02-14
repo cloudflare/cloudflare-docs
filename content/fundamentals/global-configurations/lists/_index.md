@@ -7,7 +7,7 @@ layout: single
 
 # Lists
 
-Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own custom lists or use lists managed by Cloudflare, such as [Managed IP Lists](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists).
+Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own lists or use lists managed by Cloudflare, such as [Managed IP Lists](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists).
 
 Lists have the following advantages:
 
