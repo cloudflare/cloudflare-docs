@@ -10,7 +10,7 @@ You can configure the Customer Metadata Boundary and change the region where you
 
 Currently, the Metadata Boundary can only be enabled by Cloudflare for an entire account. If you only want the Metadata Boundary applied to some zones but not other zones in the same account, you will have to move those zones to a new account.
 
-## Customer Metadata Boundary in the dashboard
+## Configure Customer Metadata Boundary in the dashboard
 
 To use Customer Metadata Boundary in the dashboard:
 
