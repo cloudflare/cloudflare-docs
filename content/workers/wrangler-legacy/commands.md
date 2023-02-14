@@ -37,7 +37,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `--site` {{<prop-meta>}}optional{{</prop-meta>}}
-  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/tree/main/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/platform/sites/) project.
+  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/platform/sites/) project.
 
 {{</definitions>}}
 
@@ -64,7 +64,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `--site` {{<prop-meta>}}optional{{</prop-meta>}}
-  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/tree/main/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/platform/sites/) project.
+  - When defined, the default `$TEMPLATE` value is changed to [`cloudflare/workers-sdk/templates/worker-sites`](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites). This scaffolds a [Workers Site](/workers/platform/sites/) project.
 
 {{</definitions>}}
 
