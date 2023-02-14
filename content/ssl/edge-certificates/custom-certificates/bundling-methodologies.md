@@ -10,9 +10,9 @@ When an SSL certificate is deployed to the Cloudflare edge, it may be augmented 
 
 ## Intermediate and root certificates
 
-Cloudflare maintains its intermediate and roots used for bundling at https://github.com/cloudflare/cfssl_trust, removing and adding these certificates as they expire or are removed by certificate authorities. 
+Cloudflare maintains its intermediate and roots used for bundling at https://github.com/cloudflare/cfssl_trust, removing and adding these certificates as they expire or are removed by certificate authorities.
 
-Expiration values for these certificates may appear in the `expires_on` field when using the [`zones/<ZONE_ID>/ssl/analyze` endpoint](https://developers.cloudflare.com/api/operations/analyze-certificate-analyze-certificate) - often when using the [compatible](#compatible) methodology. However, these expiration values reflect intermediate and root certificates (which are handled by Cloudflare), not the leaf certificate you would have previously uploaded to Cloudflare. 
+Expiration values for these certificates may appear in the `expires_on` field when using the [`zones/<ZONE_ID>/ssl/analyze` endpoint](https://developers.cloudflare.com/api/operations/analyze-certificate-analyze-certificate) - often when using the [compatible](#compatible) methodology. However, these expiration values reflect intermediate and root certificates (which are handled by Cloudflare), not the leaf certificate you would have previously uploaded to Cloudflare.
 
 ---
 
