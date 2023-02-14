@@ -20,9 +20,7 @@ To use Customer Metadata Boundary in the dashboard:
 
 ## Configure Customer Metadata Boundary via API
 
-You can also use Customer Metadata Boundary via API. These are some examples of API requests.
-
-These are some examples of API requests.
+You can also configure Customer Metadata Boundary via API. These are some examples of API requests.
 
 <details>
 <summary>Get current regions</summary>
