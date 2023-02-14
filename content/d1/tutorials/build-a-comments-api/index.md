@@ -182,7 +182,7 @@ $ curl https://d1-example.signalnerve.workers.dev/api/posts/hello-world/comments
 
 ## Test with an optional frontend
 
-This application is just an API back end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/templates/tree/main/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/templates/blob/main/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
+This application is just an API back end, best served for use with a front-end UI for creating and viewing comments. To test this back-end with a prebuild front-end UI, refer to the example UI in the [example-frontend directory](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend). Notably, the [`loadComments` and `submitComment` functions](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api/example-frontend/src/views/PostView.vue#L57-L82) make requests to a deployed version of this site, meaning you can take the frontend and replace the URL with your deployed version of the codebase in this tutorial to use your own data.
 
 Note that interacting with this API from a front end will require enabling specific Cross-Origin Resource Sharing (or *CORS*) headers in your back-end API. Luckily, Hono has a quick way to enable this for your application. Import the `cors` module and add it as middleware to your API in `src/index.js`:
 
@@ -201,4 +201,4 @@ Now, when you make requests to `/api/*`, Hono will automatically generate and ad
 
 ## Conclusion
 
-In this example, you built a comments API for powering a blog. To see the full source for this D1-powered comments API, you can visit [cloudflare/templates/worker-d1-api](https://github.com/cloudflare/templates/tree/main/worker-d1-api).
+In this example, you built a comments API for powering a blog. To see the full source for this D1-powered comments API, you can visit [cloudflare/workers-sdk/tree/main/templates/worker-d1-api](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-d1-api).

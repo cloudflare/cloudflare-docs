@@ -29,7 +29,7 @@ You will use the Workers TypeScript template to generate our project. If you do 
 ---
 header: Creating a new Workers project with Wrangler
 ---
-$ git clone https://github.com/cloudflare/worker-typescript-template
+$ git clone https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript
 $ cd worker-typescript-template
 $ npm install
 ```

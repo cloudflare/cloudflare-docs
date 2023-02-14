@@ -20,7 +20,7 @@ This guide shows how to quickly start a new Workers Sites project from scratch.
     The following example creates a project called `my-site`:
 
     ```sh
-    $ git clone --depth=1 --branch=wrangler2 https://github.com/cloudflare/worker-sites-template my-site
+    $ git clone --depth=1 --branch=wrangler2 https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites my-site
     ```
 2.  Run `npm install` to install all dependencies.
 3.  You can preview your site by running the [`wrangler dev`](/workers/wrangler/commands/#dev) command:
