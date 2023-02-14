@@ -31,8 +31,15 @@ The command line interface is the primary way to use WARP.
 
 To connect for the very first time you must call `register` first:
 
+#### Proxy Mode
 1. Register the client `warp-cli register`.
-2. Connect `warp-cli connect`.
+2. Set to local proxy `warp-cli set-mode proxy` and listen on `socks5h://localhost:40000`.
+3. Run `curl -x socks5h://localhost:40000 https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
+
+#### Warp Mode
+//Warning! You may lost connection to the remote server due to default setting take over the global network.
+1. Register the client `warp-cli register`.
+2. Connect `warp-cli connect`. 
 3. Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
 
 ### Always stay connected
