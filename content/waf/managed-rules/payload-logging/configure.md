@@ -8,11 +8,13 @@ meta:
 
 # Configure payload logging for a managed ruleset in the dashboard
 
+Configure payload logging for a ruleset in the ruleset configuration page.
+
 {{<Aside type="note">}}
-Only the **Super Administrator** can see the option to configure Payload Logging. The decryption of logs is available to everyone as long as they have access to the private key.
+Only users with the [Super Administrator role](/fundamentals/account-and-billing/members/roles/) can configure payload logging and decrypt payloads in the Cloudflare dashboard. Other users can decrypt payloads if they have access to the logs and to the private key.
 {{</Aside>}}
 
-Configure payload logging for a ruleset in the ruleset configuration page.
+Do the following:
 
 1.  Open **Security** > **WAF** > **Managed rules**.
 
