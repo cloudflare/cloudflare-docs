@@ -28,7 +28,7 @@ When sending the [`POST`](https://developers.cloudflare.com/api/operations/custo
 
 {{<Aside type="note">}}
 
-You also have access to the `geo_restrictions` parameter, which is mutually exclusive to the `policy` parameter and is part of [Geo Key Manager v1](#geo-key-manager-v1).
+You also have access to the `geo_restrictions` parameter, which is mutually exclusive with the `policy` parameter and is part of [Geo Key Manager v1](#geo-key-manager-v1).
 
 {{</Aside>}}
 
