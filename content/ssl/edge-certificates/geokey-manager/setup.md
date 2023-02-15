@@ -25,11 +25,11 @@ To use Geo Key Manager v2 with the API, generally, follow the steps to [upload a
 
 When sending the [`POST`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `policy` parameter to define policies which comprise of allow and block lists of countries or regions where the private key should be stored.
 
-You also have access to the `geo_restrictions` parameter, which is mutually exclusive to the `policy` parameter and includes the following options:
+{{<Aside type="note">}}
 
-- `us`
-- `eu`
-- `highest_security`([more details](/ssl/edge-certificates/geokey-manager/supported-options/#highest-security-data-centers))
+You also have access to the `geo_restrictions` parameter, which is mutually exclusive to the `policy` parameter and is part of [Geo Key Manager v1](#geo-key-manager-v1).
+
+{{</Aside>}}
 
 ### Examples
 

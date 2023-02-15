@@ -16,13 +16,14 @@ For customers with Geo Key Manager v2, you can use the `policy` parameter to spe
 | Region code | Region name |
 | --- | --- |
 | AFR | Africa |
-| EU | European Union |
-| OC | Oceania |
 | APAC | Asia Pacific |
-| ME | Middle East |
-| WEUR | Western Europe |
-| SAM | South America |
+| EEUR | Eastern Europe |
 | ENAM | Eastern North America |
+| EU | European Union |
+| ME | Middle East |
+| OC | Oceania |
+| SAM | South America |
+| WEUR | Western Europe |
 | WNAM | Western North America |
 
 ---
