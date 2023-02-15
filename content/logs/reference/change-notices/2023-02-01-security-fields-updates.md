@@ -95,9 +95,9 @@ The following fields will be added to the [Firewall Events](/logs/reference/log-
 {{<table-wrap>}}
 
 Field name    | Type   | Description
---------------|--------|-------------------------------
-`Description` | String | Rule message for this event.
-`Ref`         | String | Rule reference for this event.
+--------------|--------|--------------------------------------------
+`Description` | String | Rule description for this event.
+`Ref`         | String | User-defined rule reference for this event.
 
 {{</table-wrap>}}
 
@@ -120,7 +120,7 @@ Cloudflare will also add the following field to the `firewallEventsAdaptive`, `f
 
 Field name    | Type   | Description
 --------------|--------|-----------------------------
-`description` | String | Rule message for this event.
+`description` | String | Rule description for this event.
 
 {{</table-wrap>}}
 
