@@ -34,26 +34,26 @@ name = "my-worker"
 ---
 filename: worker.ts
 ---
-type Environment = {
+  type Environment = {
   readonly ERROR_QUEUE: Queue;
-  readonly ERROR_BUCKET: R2Bucket;
+readonly ERROR_BUCKET: R2Bucket;
 };
 
 export default {
-  async fetch(request: Request, env: Environment): Promise<Response> {
+  async fetch(req: Request, env: Environment): Promise<Response> {
     try {
-      return doRequest(request);
+      return doRequest(req);
     } catch (error) {
       await env.ERROR_QUEUE.send(error);
       return new Response(error.message, { status: 500 });
     }
   },
   async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-    let file = "";
+    let file = '';
     for (const message of batch.messages) {
       const error = message.body;
       file += error.stack || error.message || String(error);
-      file += "\r\n";
+      file += '\r\n';
     }
     await env.ERROR_BUCKET.put(`errors/${Date.now()}.log`, file);
   },
@@ -61,8 +61,8 @@ export default {
 
 function doRequest(request: Request): Promise<Response> {
   if (Math.random() > 0.5) {
-    return new Response("Success!");
+    return new Response('Success!');
   }
-  throw new Error("Failed!");
+  throw new Error('Failed!');
 }
 ```
