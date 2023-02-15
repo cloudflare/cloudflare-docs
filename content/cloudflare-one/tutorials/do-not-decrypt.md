@@ -27,13 +27,13 @@ Certain client applications, such as Zoom or Apple services, rely on certificate
 
 ## Build the policy
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**. Select **Create a policy**.
+1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**. Select **Add a policy**.
 
-2.  Name the policy and, optionally, provide a description.
+2. Name the policy and, optionally, provide a description.
 
-3. Under **Selector**, choose **Application**. In the **Operator** field, select **in**. In the **Value** field, search for `Do Not Inspect` and select the applications you wish to include.
+3. Under **Selector**, choose **Application**. In the **Operator** field, select **in**. In the **Value** field, search for `Do Not Inspect`. You may select the entire set, which will update as new applications are added, or select individual applications.
 
-4.  In **Select an action**, select **Do Not Inspect**. Select **Create policy**.
+4. In **Select an action**, select **Do Not Inspect**. Select **Create policy**.
 
 ## Change rule precedence
 
