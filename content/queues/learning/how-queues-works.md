@@ -36,11 +36,19 @@ A producer is the term for a client that is publishing or producing messages on 
 For example, if we bound a queue named `my-first-queue` to a binding of `MY_FIRST_QUEUE`, messages can be written to the queue by calling `.send()` on the binding:
 
 ```ts
+type Environment = {
+  readonly MY_FIRST_QUEUE: Queue;
+};
+
 export default {
-    async fetch(req: Request, env: Environment): Promise<Response> {
-        let message = request.json()
-        await env.MY_FIRST_QUEUE.send(message) // This will throw an exception if the send fails for any reason
-    }
+  async fetch(req: Request, env: Environment): Promise<Response> {
+    let message = {
+      url: req.url,
+      method: req.method,
+      headers: Object.fromEntries(req.headers),
+    };
+    await env.MY_FIRST_QUEUE.send(message); // This will throw an exception if the send fails for any reason
+  },
 };
 ```
 
@@ -54,11 +62,11 @@ A consumer is the term for a client that is subscribing to or _consuming_ messag
 
 ```ts
 export default {
-    async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-        // Do something with messages in the batch
-        // i.e. write to R2 storage, D1 database, or POST to an external API 
-        // You can also iterate over each message in the batch by looping over batch.messages
-    }
+  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+    // Do something with messages in the batch
+    // i.e. write to R2 storage, D1 database, or POST to an external API
+    // You can also iterate over each message in the batch by looping over batch.messages
+  },
 };
 ```
 
@@ -91,22 +99,22 @@ For example, a consumer configured to consume messages from multiple queues woul
 
 ```ts
 export default {
-    async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-        // MessageBatch has a `queue` property we can switch on
-        switch (batch.queue) {
-            case "log-queue":
-                // Write the batch to R2
-                break;
-            case "debug-queue":
-                // Write the message to the console or to another queue
-                break;
-            case "email-reset":
-                // Trigger a password reset email via an external API
-                break;
-            default:
-                // Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
-        }
+  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+    // MessageBatch has a `queue` property we can switch on
+    switch (batch.queue) {
+      case 'log-queue':
+        // Write the batch to R2
+        break;
+      case 'debug-queue':
+        // Write the message to the console or to another queue
+        break;
+      case 'email-reset':
+        // Trigger a password reset email via an external API
+        break;
+      default:
+      // Handle messages we haven't mentioned explicitly (write a log, push to a DLQ)
     }
+  },
 };
 ```
 
