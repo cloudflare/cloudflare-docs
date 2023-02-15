@@ -5,6 +5,7 @@ weight: 1
 layout: single
 meta:
     title: Setup - Geo Key Manager
+    description: Learn how to set up Geo Key Manager and choose the geographical boundaries of where your private encryption keys are stored.
 ---
 
 # Setup
