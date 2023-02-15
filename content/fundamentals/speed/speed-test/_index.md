@@ -14,7 +14,7 @@ As its name suggests, synthetic testing uses servers to simulate the conditions 
 
 ## Real user monitoring (RUM)
 
-Real user monitoring (also known as RUM), on the other hand, captures real metrics from real users accessing a website. This provides information that synthetic tests cannot capture, as users might access your website from different parts of the world, with different network conditions, ISPs, browsers and computer hardware. However, RUM data is only applied to your own website. Real user data also includes two user interaction metrics that synthetic tests do not offer - [First Input Delay (FID)](/fundamentals/speed/speed-test/run-speed-test/#first-input-delay-fid) and [Interaction to Next Paint (INP)](/fundamentals/speed/speed-test/run-speed-test/#interaction-to-next-paint-inp).
+Real user monitoring (also known as RUM), on the other hand, captures real metrics from real users accessing a website. This provides information that synthetic tests cannot capture, as users might access your website from different parts of the world, with different network conditions, ISPs, browsers and computer hardware. However, RUM data is only applied to your own website. Real user data also includes two user interaction metrics that synthetic tests do not offer - [First Input Delay (FID)](/fundamentals/speed/speed-test/test-results/#first-input-delay-fid) and [Interaction to Next Paint (INP)](/fundamentals/speed/speed-test/test-results/#interaction-to-next-paint-inp).
 
 {{<button-group>}}
   {{<button type="primary" href="/fundamentals/speed/speed-test/run-speed-test/">}}Run Speed test{{</button>}}
