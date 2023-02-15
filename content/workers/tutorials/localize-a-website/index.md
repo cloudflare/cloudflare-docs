@@ -29,10 +29,10 @@ If you would like to deploy your own version of the site, you can find the sourc
 
 ## Create a project
 
-Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/worker-sites-template) template on GitHub and pass `i18n-example` as the project name.
+Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
 
 ```sh
-~/ $ git clone https://github.com/cloudflare/worker-sites-template i18n-example
+~/ $ git clone https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites i18n-example
 ~/ $ cd i18n-example
 ~/i18n-example $
 ```

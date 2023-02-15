@@ -172,6 +172,7 @@
 /cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
 
 # cloudflare for platforms
+/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/analytics/ /cloudflare-for-platforms/workers-for-platforms/platform/observability/ 301
 
 # d1
@@ -194,6 +195,7 @@
 /email-routing/email-routing-options/ /email-routing/setup/ 301
 /email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
 /email-routing/get-started/settings/ /email-routing/setup/ 301
+/email-routing/known-limitations/ /email-routing/postmaster/ 301
 
 # firewall
 /firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
