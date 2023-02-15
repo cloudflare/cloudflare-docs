@@ -153,42 +153,11 @@ This response means:
 
 You can read more about SPF, DKIM, and DMARC in our [Tackling Email Spoofing and Phishing](https://blog.cloudflare.com/tackling-email-spoofing/) blog.
 
-
-
-
-
-
-
-
-
-
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## Known limitations
 
 Below, you will find information regarding known limitations for Email Routing.
-
-
-
-
-
-
-
-
-
 
 ### Email address internationalization (EAI)
 
