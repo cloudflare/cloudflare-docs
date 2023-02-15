@@ -5,6 +5,7 @@ weight: 2
 layout: single
 meta:
     title: Supported options - Geo Key Manager
+    description: Learn which options are supported for Geo Key Manager.
 ---
 
 # Supported options
@@ -42,22 +43,22 @@ For customers with both Geo Key Manager v1 and v2, you can use the `geo_restrict
 
 The following aspects are unique to our highest security data centers, but the baseline security requirements for all data centers are also detailed in [our blog](https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/).
 
-### Pre-Scheduled, Biometric Controlled Facility Access
+### Pre-scheduled and biometric controlled facility access
 
 Employees of Cloudflare permitted to access the facility must have previously scheduled a visit before access will be granted.
 
 Access to the entrance of the facility is controlled through the use of a biometric hand reader combined with an assigned access code.
 
-### Private Cages with Biometric Readers
+### Private cages with biometric readers
 
 All equipment is in private cages with physical access controlled via biometrics and recorded in audit logs.
 Entrants have to pass through five separate readers before they can access the cage.
 
-### Exterior Security Controls and Monitoring
+### Exterior security controls and monitoring
 
 All points of ingress/egress are monitored by an intrusion detection system (IDS), with authorized users and access events archived for historical review.
 
-### Interior Security Controls and Monitoring
+### Interior security controls and monitoring
 
 Interior points of ingress/egress are controlled by the access control subsystem, with entry routed through a mantrap. All areas are monitored and recorded with closed-circuit television, with data kept for a minimum of thirty days.
 
