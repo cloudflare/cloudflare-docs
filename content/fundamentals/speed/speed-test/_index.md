@@ -6,7 +6,7 @@ weight: 1
 
 # Speed test
 
-Speed test uses synthetic tests and real user data from browsers to assess the performance of your website. These metrics provide different types of insights into your website’s performance. Cloudflare then uses the analysis run by Speed test to recommend optimizations with the tools that best suit your performance issues.
+Speed test uses synthetic tests and real user data from browsers to assess the performance of your website. These data sources produce metrics that provide different types of insights into your website’s performance. Cloudflare then uses the analysis run by Speed test to recommend optimizations with the tools that best suit your performance issues.
 
 ## Synthetic tests
 
