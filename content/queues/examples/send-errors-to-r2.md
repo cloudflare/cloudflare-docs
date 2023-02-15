@@ -34,9 +34,9 @@ name = "my-worker"
 ---
 filename: worker.ts
 ---
-  type Environment = {
-  readonly ERROR_QUEUE: Queue;
-readonly ERROR_BUCKET: R2Bucket;
+type Environment = {
+	readonly ERROR_QUEUE: Queue;
+	readonly ERROR_BUCKET: R2Bucket;
 };
 
 export default {
