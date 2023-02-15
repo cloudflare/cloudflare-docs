@@ -30,7 +30,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
-
+- [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 
 {{<Aside type="note">}}
 
@@ -1633,6 +1633,106 @@ $ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
   - The new name of the dispatch namespace.
 
 ---
+## `mtls-certificate`
+
+Manage client certificates used for mTLS connections in subrequests.
+
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+
+### `upload`
+
+Upload a client certificate.
+
+```sh
+$ wrangler mtls-certificate upload [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--cert` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A path to the TLS certificate to upload. Certificate chains are supported
+- `--key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A path the private key to upload.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Below is an example of using the `upload` command to upload an mTLS certificate.
+
+```sh
+$ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-origin-cert
+Uploading mTLS Certificate my-origin-cert...
+Success! Uploaded mTLS Certificate my-origin-cert
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+You can then add this certificate as a binding in your `wrangler.toml`:
+```toml
+mtls_certificates = [
+  { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
+]
+```
+{{</Aside>}}
+
+### `list`
+
+List mTLS certificates associated with the current account ID.
+
+```sh
+$ wrangler mtls-certificate list
+```
+
+{{<Aside type="note">}}
+Below is an example of using the `list` command to upload an mTLS certificate.
+
+```sh
+$ wrangler mtls-certificate list
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Name: my-origin-cert
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+
+ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
+Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+```
+{{</Aside>}}
+
+### `delete`
+
+```sh
+$ wrangler mtls-certificate delete [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--id` {{<type>}}string{{</type>}}
+  - The ID of the mTLS certificate.
+- `--name` {{<type>}}string{{</type>}}
+  - The name assigned to the mTLS certificate at upload.
+- Note that you must provide either `--id` or `--name` for this command to run successfully.
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Below is an example of using the `delete` command to delete an mTLS certificate.
+
+```sh
+$ wrangler mtls-certificate delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
+yes
+Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
+Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
+```
+{{</Aside>}}
+
+---
+
 ## types
 
 Generate types from bindings and module rules in configuration.

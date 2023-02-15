@@ -11,7 +11,7 @@ meta:
 This is a high-level, step-by-step walkthrough on how to get started with WARP in your organization. From downloading the client to sending the first queries to Cloudflare's edge, here is a guide on how to do it for the first time.
 
 ## Gateway with WARP (default)
-This mode enables our complete suite of [device security features](/cloudflare-one/connections/connect-devices/warp/#gateway-with-warp-default).
+This mode enables our complete suite of [device security features](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes).
 
 ### 1. Create a Cloudflare Zero Trust account.
 

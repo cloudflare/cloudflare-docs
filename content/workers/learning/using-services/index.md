@@ -26,6 +26,7 @@ There are multiple types of bindings available today:
 3. [R2 bucket bindings](/r2/data-access/workers-api/workers-api-reference/#create-a-binding) for communication between a Worker and an R2 bucket.
 4. [Durable Object bindings](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for communication between a Worker and a Durable Object.
 5. [Queue bindings](/queues/configuration/) for communication between a Worker and a Queue.
+6. [mTLS certificate bindings](/workers/runtime-apis/mtls) enable communication between a Worker and an origin server secured by mTLS using an uploaded certificate.
 
 {{<Aside type="note">}}
 
