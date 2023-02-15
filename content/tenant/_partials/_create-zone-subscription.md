@@ -17,6 +17,10 @@ To create a zone subscription, send a [POST](https://developers.cloudflare.com/a
 
     - Additional services depending on your reseller agreement, such as additional `page_rules`.
 
+- `frequency` {{<type>}}string{{</type>}}
+
+    - How often the subscription is renewed automatically (defaults to `"monthly"`)
+
 {{</definitions>}}
 
 ```bash
