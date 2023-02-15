@@ -34,7 +34,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/subscription'
 -d '{
    "rate_plan": {
       "id": "<RATE_PLAN>"
-   }
+   },
+   "frequency": "annual"
 }'
 ```
 
