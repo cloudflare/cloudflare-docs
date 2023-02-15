@@ -26,13 +26,13 @@ type Environment = {
 };
 
 export default {
-  async fetch(request: Request, env: Environment) {
+  async fetch(req: Request, env: Environment): Promise<Response> {
     await env.MY_QUEUE.send({
-      url: request.url,
-      method: request.method,
-      headers: Object.fromEntries(request.headers),
+      url: req.url,
+      method: req.method,
+      headers: Object.fromEntries(req.headers),
     });
-    return new Response("Sent!");
+    return new Response('Sent!');
   },
 };
 ```
@@ -42,10 +42,10 @@ The Queues API also supports writing multiple messages at once:
 ```ts
 const sendResultsToQueue = async (results: Array<any>, env: Environment) => {
   const batch: MessageSendRequest[] = results.map((value) => ({
-    body: JSON.stringify(value)
+    body: JSON.stringify(value),
   }));
   await env.queue.sendBatch(batch);
-}
+};
 ```
 
 ### `Queue`
@@ -79,8 +79,8 @@ A wrapper type used for sending message batches.
 
 ```ts
 type MessageSendRequest<Body = any> = {
-  body: Body
-}
+  body: Body;
+};
 ```
 
 {{<definitions>}}
@@ -108,9 +108,13 @@ If the `queue` function throws, or the promise returned by it or any of the prom
 
 ```ts
 export default {
-  async queue(batch: MessageBatch, env: Environment, ctx: ExecutionContext) {
+  async queue(
+    batch: MessageBatch,
+    env: Environment,
+    ctx: ExecutionContext
+  ): Promise<void> {
     for (const message of batch.messages) {
-      console.log("Received", message);
+      console.log('Received', message);
     }
   },
 };
@@ -121,8 +125,8 @@ The `env` and `ctx` fields are as [documented in the Workers docs](/workers/lear
 Or alternatively, a queue consumer can be written using service worker syntax:
 
 ```js
-addEventListener("queue", (event) => {
-  event.waitUntil(handleMessages(event));
+addEventListener('queue', (event) => {
+	event.waitUntil(handleMessages(event));
 });
 ```
 
