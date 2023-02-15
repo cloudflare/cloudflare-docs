@@ -98,14 +98,16 @@ Only the first redirect will apply, for example, in the following scenario, a re
 /b /c 200
 ```
 
-Be aware that proxying pages can have an adverse effect on SEO. Search engines often penalize websites that serve duplicate content, so consider adding a Link HTTP header which informs search engines of the canonical source of content.
+{{<Aside heading="Proxying's impact on SEO">}}
+Be aware that proxying pages can have an adverse effect on search engine optimization (SEO). Search engines often penalize websites that serve duplicate content, so consider adding a `Link` HTTP header which informs search engines of the canonical source of content.
 
-For example, if you have added `/about/faq/* /about/faqs 200` to your _redirects file, you will likely also want to add the following to your _headers file:
+For example, if you have added `/about/faq/* /about/faqs 200` to your `_redirects` file, you will likely also want to add the following to your `_headers` file:
 
-```
+```txt
 /about/faq/*
   Link: </about/faqs>; rel="canonical"
 ```
+{{</Aside>}}
 
 ## Related resources
 
