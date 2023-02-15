@@ -64,7 +64,7 @@ Cloudflare currently offers limited support for advanced redirects. More support
 | Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | See [Placeholders](#placeholders)                                                                 |
 | Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                                                                                   |
 | Force                               | Yes     | `/pagethatexists /otherpage`                                    | Redirects are always followed, regardless of whether or not an asset matches the incoming request. |
-| Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | It only supports relative URLs, i.e. other pages on your site                                     |
+| Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying)                                                                    |
 | Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                                                                                   |
 | Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                                                                                   |
 | Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                                                                                   |
@@ -86,6 +86,26 @@ The matched value can be used in the redirect location with `:splat`.
 A placeholder can be defined with `:placeholder_name`. A colon indicates the start of a placeholder, and the name that follows may be composed of alphanumeric characters and underscores, `:\w+`. A placeholder with any given name can only be used once in the URL. Placeholders match all characters apart from the delimiter, which: when part of the host, is a period or a forward-slash; and when part of the path, is a forward-slash.
 
 Similarly, the matched value can be used in the redirect location with `:placeholder_name`.
+
+#### Proxying
+
+Proxying will only support relative URLs on your site - i.e. you can't proxy external domains.
+
+Only the first redirect will apply, for example, in the following scenario, a request to `/a` will render `/b`, and a request to `/b` will render `/c`, but `/a` will not render `/c`.
+
+```
+/a /b 200
+/b /c 200
+```
+
+Be aware that proxying pages can have an adverse effect on SEO. Search engines often penalize websites that serve duplicate content, so consider adding a Link HTTP header which informs search engines of the canonical source of content.
+
+For example, if you have added `/about/faq/* /about/faqs 200` to your _redirects file, you will likely also want to add the following to your _headers file:
+
+```
+/about/faq/*
+  Link: </about/faqs>; rel="canonical"
+```
 
 ## Related resources
 
