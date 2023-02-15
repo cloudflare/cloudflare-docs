@@ -161,7 +161,7 @@ Below, you will find information regarding known limitations for Email Routing.
 
 ### Email address internationalization (EAI)
 
-Email Routing [does not support internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports[Internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name). 
+Email Routing does not support [internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports [internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name). 
 
 This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the `@` symbol). Refer to the following examples:
 
