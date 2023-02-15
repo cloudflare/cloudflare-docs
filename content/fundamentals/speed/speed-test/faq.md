@@ -10,8 +10,7 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 ## How long does it take for a test to load?
 
-It can vary from about 25 seconds to over a minute.
-If you leave your speed tab open, your test is still going to run. You can leave and return and still see your test results.
+It can vary from about 25 seconds to over a minute. If you leave your speed tab open, your test is still going to run. You can leave and return and still see your test results.
 
 ## I get a `500` response when running the tests at `cfwebpagetest.com`.
 

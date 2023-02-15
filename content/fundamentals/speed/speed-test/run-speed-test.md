@@ -10,7 +10,7 @@ weight: 2
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
 
-2. Go to **Speed**>**Speed Test** and enter the URL, subdomain or path you want to test. Then, select **Run test**. 
+2. Go to **Speed** > **Speed Test**, and enter the URL, subdomain or path you want to test. Then, select **Run test**. 
 
 3. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/fundamentals/speed/speed-test/run-speed-test/#understand-test-results) for more information.
 
@@ -18,7 +18,7 @@ weight: 2
 
 ## Enable real user monitoring (RUM)
 
-1. Once a speed test has been run, you can enable RUM data,  in the test results page. In **Real user measurements**, select **Enable Rum for free**. 
+1. Once a speed test has been run, you can enable RUM data in the test results page. In **Real user measurements**, select **Enable Rum for free**. 
 You can always manage your website preferences in the **Web Analytics** section in the dashboard which also uses RUM data.
 
 2. Once RUM data is running on your site, you can access **Real user measurements** on your test results page. Usually it takes less than five minutes to see the data coming in, but it will depend on traffic. 
@@ -30,6 +30,7 @@ You can always manage your website preferences in the **Web Analytics** section 
 The test result page shows you how your website performed regarding several key industry metrics. Some of these metrics are presented for synthetic tests and the real user monitoring, and others only apply to synthetic tests or only to real user monitoring.
 
 ### Synthetic tests and real user monitoring metrics
+
 These metrics are presented for the synthetic tests and they are also collected as part of the real user data.
 
 #### Time to First Byte (TTFB)
@@ -49,6 +50,7 @@ These metrics are presented for the synthetic tests and they are also collected 
 [CLS is a measure](https://web.dev/cls/) of the largest burst of layout shift scores for every unexpected layout shift that occurs during the entire lifespan of a page.
 
 ### Synthetic tests metrics
+
 These metrics result from the synthetic tests. 
 
 #### Time to Interactive (TTI)
@@ -56,6 +58,7 @@ These metrics result from the synthetic tests.
 [TTI metric](https://web.dev/tti/) measures the time from when the page starts loading to when its main sub-resources have loaded and it is capable of reliably responding to user input quickly.
 
 #### Total Blocking Time (TBT)
+
 [TBT measures](https://web.dev/tbt/) the total amount of time between First Contentful Paint (FCP) and Time to Interactive (TTI) where the main thread was blocked for long enough to prevent input responsiveness.
 
 #### Speed index
@@ -63,6 +66,7 @@ These metrics result from the synthetic tests.
 [Speed index](https://web.dev/speed-index/) measures how quickly content is visually displayed during page load.
 
 ### Real user monitoring metrics
+
 These metrics are collected as part of the real user data, as they require real user interaction with a page.
 
 #### Interaction to Next Paint (INP)
@@ -77,7 +81,7 @@ These metrics are collected as part of the real user data, as they require real 
 
 Quota limits for the number of tests you can run are currently the following:
 
-Plan | Tests
+Plan | Number of tests
 ---- | ----
 Free | 5
 Pro  | 10
