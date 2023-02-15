@@ -4,7 +4,7 @@ title: Run Speed test
 weight: 2
 ---
 
-# Run Speed test
+{{<beta>}}Run Speed test{{</beta>}}
 
 ## Run Synthetic test
 
