@@ -11,8 +11,6 @@
                 >&#8203;</a
                 >
             </span>
-    <!-- If "heading=" tag is included -->
-    {{ if $heading }}
         {{ printf "<%s>" $heading | safeHTML }}
         {{- .Page.RenderString .Inner -}}
         {{ printf "</%s>" $heading | safeHTML }}
