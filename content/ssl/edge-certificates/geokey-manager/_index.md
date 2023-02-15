@@ -11,6 +11,8 @@ layout: single
 Restrict where the private keys used for TLS certificates are stored and managed.
 {{</description>}}
 
+Geo Key Manager allows customers to store and manage the encryption keys for their domains in different geographic locations so they can meet compliance regulations and keep data secure.
+
 ## Resources
 
 {{<directory-listing>}}
