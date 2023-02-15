@@ -38,3 +38,7 @@ Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare 
 {{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
 {{</related>}}
+
+{{<related header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">}}
+Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.
+{{</related>}}

@@ -69,7 +69,7 @@ $ cat /etc/ssh/sshd_config
 
 2. In the **Network** tab, create a new network policy.
 
-3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/filtering/network-policies/#destination-ip) or [hostname](/cloudflare-one/policies/filtering/network-policies/#sni) for your origin server.
+3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/filtering/network-policies/#destination-ip) for your origin server.
 
 4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
 

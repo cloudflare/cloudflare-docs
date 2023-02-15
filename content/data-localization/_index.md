@@ -24,11 +24,11 @@ Support by product and region is summarized in the following table:
 | --- | --- | --- | --- |
 | US | &#x2705; | &#x2705; | &#x2705; |
 | EU | &#x2705; | &#x2705; | &#x2705; |
-| UK | &#x2705; | &#x2705; | Can use EU metadata boundary. |
-| Canada | &#x2705; | &#x2705; | ✘ |
-| Australia | &#x2705; | &#x2705; | ✘ |
-| Japan | &#x2705; | &#x2705; | ✘ |
-| India | &#x2705; | &#x2705; | ✘ |
+| UK | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
+| Canada | &#x2705;[^25] | &#x2705; | ✘ |
+| Australia | &#x2705;[^25] | &#x2705; | ✘ |
+| Japan | &#x2705;[^25] | &#x2705; | ✘ |
+| India | &#x2705;[^25] | &#x2705; | ✘ |
 
 Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
 
@@ -106,3 +106,4 @@ Overview by product-behavior is summarized in the following table. Below you can
 [^22]:Logs are currently stored in the US only, but customers have the [option to exclude PII from logs](/cloudflare-one/analytics/logs/gateway-logs/manage-pii/).
 [^23]:US and EU region only. <br> For Area 1, this is called the **Processing & Inspection Boundary**.
 [^24]:Email metadata (`subject`, `from:`, `to:`) can only be stored in US. <br> Customers have the option to obfuscate  metadata from being viewed by Cloudflare. <br> Email message bodies are only stored for emails that are marked with a disposition (like `MALICIOUS` or `SPAM`).
+[^25]: Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).
