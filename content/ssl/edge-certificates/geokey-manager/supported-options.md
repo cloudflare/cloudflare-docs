@@ -30,7 +30,7 @@ For customers with Geo Key Manager v2, you can use the `policy` parameter to spe
 
 ## Available countries
 
-For customers with Geo Key Manager v2, you can use the `policy` parameter to individual countries as well. Cloudflare is constantly expanding the number of supported countries. To indicate a country, specify the two-letter (ISO 3166) country code.
+For customers with Geo Key Manager v2, you can use the `policy` parameter to specify individual countries as well. Cloudflare is constantly expanding the number of supported countries. To indicate a country, specify the two-letter (ISO 3166) country code.
 
 Examples of supported countries are Japan, Canada, India, and Austrailia.
 
@@ -51,7 +51,7 @@ Access to the entrance of the facility is controlled through the use of a biomet
 ### Private Cages with Biometric Readers
 
 All equipment is in private cages with physical access controlled via biometrics and recorded in audit logs.
-Entrants have to pass through 5 separate readers before the cage can be accessed.
+Entrants have to pass through five separate readers before they can access the cage.
 
 ### Exterior Security Controls and Monitoring
 
@@ -61,4 +61,4 @@ All points of ingress/egress are monitored by an intrusion detection system (IDS
 
 Interior points of ingress/egress are controlled by the access control subsystem, with entry routed through a mantrap. All areas are monitored and recorded with closed-circuit television, with data kept for a minimum of thirty days.
 
-Exterior walls are airtight and may incorporate additional security measure such as reinforced concrete, Kevlar bullet board, vapor barriers, or bullet-proof front doors.
+Exterior walls are airtight and may incorporate additional security measures such as reinforced concrete, Kevlar bullet board, vapor barriers, or bullet-proof front doors.

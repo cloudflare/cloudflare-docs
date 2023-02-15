@@ -19,11 +19,11 @@ Geo Key Manager v2 is only available through the Cloudflare API.
 
 Geo Key Manager v2 gives customers flexibility when choosing the geographical boundaries of where their keys are stored.
 
-Using the `policy` field, customers can define policies which comprise of allow and block lists of countries or regions where the private key should be stored. 
+Using the `policy` field, customers can define policies containing allow and block lists of countries or regions where the private key should be stored. 
 
 To use Geo Key Manager v2 with the API, generally, follow the steps to [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api).
 
-When sending the [`POST`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `policy` parameter to define policies which comprise of allow and block lists of countries or regions where the private key should be stored.
+When sending the [`POST`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `policy` parameter to define policies containing allow and block lists of countries or regions where the private key should be stored.
 
 {{<Aside type="note">}}
 
@@ -35,10 +35,10 @@ You also have access to the `geo_restrictions` parameter, which is mutually excl
 
 ```json
 ---
-header: Store private keys in EU and US
+header: Store private keys in the E.U. and the U.S.
 ---
 curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_certificates" \
-     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Email: <EMAIL>" \
      -H "X-Auth-Key: <AUTH_KEY>" \
      -H "Content-Type: application/json" \
      --data '
@@ -52,10 +52,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_certif
 
 ```json
 ---
-header: Store private keys in the EU, but not in France
+header: Store private keys in the E.U., but not in France
 ---
 curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_certificates" \
-     -H "X-Auth-Email: user@example.com" \
+     -H "X-Auth-Email: <EMAIL>" \
      -H "X-Auth-Key: <AUTH_KEY>" \
      -H "Content-Type: application/json" \
      --data '
