@@ -5,6 +5,6 @@ _build:
   list: never
 ---
 
-Often, load balancers have an origin pool designated as the **Fallback Pool**. This pool is meant to be the pool of last resort, meaning that it's health is not taken into account when directing traffic.
+This pool is meant to be the pool of last resort, meaning that it's health is not taken into account when directing traffic.
 
 Fallback pools are important because traffic still might be coming to your load balancer even when all the pools are unreachable (disabled or unhealthy). Your load balancer needs somewhere to route this traffic, so it will send it to the fallback pool.

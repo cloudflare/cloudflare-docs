@@ -5,24 +5,53 @@ weight: 4
 layout: learning-unit
 ---
 
-Before, we mentioned that load balancers forward requests to pools and pools forward those requests to individual servers.
+Before, we covered how requests move from load balancers to pools and then from pools to individual servers.
 
-What we did not mention, however, was how the load balancer and pools make those "routing" decisions.
+What we did not mention, however, was *how* the load balancer and pools make those decisions.
+
+This is a concept known as routing.
 
 ## How it works
 
-There are four main components to routing:
+Generally, there are five questions involved with routing:
 
-1. How the load balancer distributes requests to pools.
-2. How the pools distribute requests to individual servers.
-3. The health of servers and pools.
-4. Specialized routing requirements.
+1. By default, how does the load balancer distributes requests to pools?
+2. By default, how do pools distribute requests to individual servers?
+3. Within a pool, which servers are healthy?
+4. Within a load balancer, which pools are healthy?
+5. Are there any specialized routing rules?
 
-At Cloudflare, a load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) controls how the load balancer distributes requests to pools. Routing decisions can be based on proximity, pool performance, geography, and more.
+### Distributing requests to pools
 
-Then, [origin steering options](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) control how each pool distributes requests to the servers in the pool.
+A load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/) controls how the load balancer distributes requests to pools.
 
-If a server or pool [becomes unhealthy](/load-balancing/understand-basics/health-details/), the load balancer will adjust routing accordingly.
+Routing decisions can be based on proximity, pool performance, geography, and more.
+
+### Distributing requests within pools
+
+Once the request reaches a pool, that pool's [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) control how each pool distributes requests to the servers in the pool.
+
+These decisions can be based on default percentages of traffic sent to individual servers (also known as the **Weight**), where previous requests from the same IP address went, or both.
+
+### Server health
+
+If a server fails a health check - which would mark it as unhealthy - its pool will adjust routing according to its origin steering policy.
+
+Both new and existing requests will go to healthy servers in the pool, ignoring the unhealthy server.
+
+### Pool health
+
+With enough unhealthy servers, the pool itself may be considered unhealthy as well.
+
+{{<render file="../../load-balancing/_partials/_unhealthy-pool-traffic-distribution.md">}}
+
+#### Fallback pools
+
+Often, load balancers have a special pool known as the **Fallback Pool**, which receives traffic no matter what.
+
+{{<render file="../../load-balancing/_partials/_fallback-pools.md">}}
+
+### Specialized routing
 
 Finally, specific settings can also affect the ways a load balancer distributes traffic, such as:
 

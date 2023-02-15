@@ -1,6 +1,6 @@
 {
-    "summary": "Learn the concepts involved with load balancing.",
-    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Explain what load balancing is.</li>\n<li>Describe the differences between load balancers, origin pools, and origin servers.</li>\n<li>List the different ways your traffic can be routed.</li>\n<li>Explain what failover is and how it affects load balancer traffic.</li>\n</ul>\n",
+    "summary": "Learn the concepts behind load balancing, whether you are using Cloudflare or another provider.",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Explain what load balancing is.</li>\n<li>Describe the differences between load balancers, pools, and servers.</li>\n<li>Explain what pool health is and how it affects load balancer traffic.</li>\n<li>List the different ways your traffic can be routed.</li>\n</ul>\n",
     "levels": [
         "beginner"
     ],
