@@ -962,12 +962,12 @@ html[is-site-page] .DocsContent {
     content: url('./zero-trust-light.svg');
 }
 
-.DeveloperAreaImage {
-    content: url('./data-privacy-light.svg');
+.DeveloperPlatformImage {
+    content: url('./developer-platform-light.svg');
 }
 
-[theme=dark] .DeveloperAreaImage {
-    content: url('./data-privacy-dark.svg');
+[theme=dark] .DeveloperPlatformImage {
+    content: url('./developer-platform-dark.svg');
 }
 @media (max-width:768px) { 
     .FeaturedContentSection {
