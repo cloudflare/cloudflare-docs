@@ -1,9 +1,16 @@
 {{- $heading := .Get "heading" -}}
 
 <div class="DocsMarkdown-deprecated">
-    <!-- If "heading=" tag is included -->
-    {{ if $heading }}
+    <!-- If "heading=" tag that isn't h1 is included -->
+    {{ if and ($heading) (not (eq $heading "h1")) }}
         {{ printf "<%s>" $heading | safeHTML }}
+            <span class="DocsMarkdown--header-anchor-positioner">
+                <a
+                class="DocsMarkdown--header-anchor Link Link-without-underline"
+                href="#{{ .Inner | safeURL | anchorize }}"
+                >&#8203;​</a
+                >
+            </span>
         {{- .Page.RenderString .Inner -}}
         {{ printf "</%s>" $heading | safeHTML }}
     <!-- Otherwise render as <h1> -->
