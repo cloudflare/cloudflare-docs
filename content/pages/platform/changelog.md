@@ -10,7 +10,7 @@ rss: file
 
 * Added support for [Analytics Engine](/analytics/analytics-engine/) in Functions.
 
-## 2022-01-05
+## 2023-01-05
 
 * Added support for [Queues](/queues/) producer in Functions.
 
