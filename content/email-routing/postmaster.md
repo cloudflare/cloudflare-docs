@@ -1,12 +1,12 @@
 ---
 pcx_content_type: reference
-title: Reference
+title: Postmaster
 weight: 8
 meta:
     description: Reference page with postmaster information for professionals, as well as a known limitations section.
 ---
 
-# Reference
+# Postmaster
 
 This page provides technical information about Email Routing to professionals who administer email systems, and other email providers.
 
