@@ -13,7 +13,7 @@ The Workers Paid plan includes Workers, Pages Functions, Workers KV, and Durable
 All included usage is on a monthly basis.
 
 {{<Aside type="note">}}
-  
+
 All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Billing](/pages/platform/functions/pricing/) for more information on Pages Functions pricing.
 
 {{</Aside>}}
@@ -22,10 +22,10 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 
 {{<table-wrap>}}
 
-|          | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
-| -------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
+|                      | Free plan                  | Paid Plan - Bundled                | Paid plan - Unbound                               |
+| -------------------- | -------------------------- | ---------------------------------- | ------------------------------------------------- |
 | Requests<sup>1</sup> | 100,000 / day              | 10 million / month, +$0.50/million | 1 million / month, + $0.15/million                |
-| Duration | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
+| Duration             | 10ms CPU time / invocation | 50 ms CPU time / invocation        | 400,000 GB-s, + $12.50/million GB-s<sup>2,3</sup> |
 
 {{</table-wrap>}}
 
@@ -34,6 +34,8 @@ All [Pages Functions](/pages/platform/functions/) are billed as Workers. All pri
 2.  Cloudflare will bill for duration charges based on the higher of your wall time or CPU time, with a multiple of 8 applied to the CPU time to account for the processing power allotted to your Worker. Cloudflare will not bill for wall time duration charges beyond the execution [limit](/workers/platform/limits/#worker-limits) given.
 
 3.  Duration billing will charge for the 128 MB of memory allocated to your Worker, regardless of actual usage. If your account has significant traffic to a single Worker, multiple instances of that Worker may run in the same isolate on the same physical machine and share the 128 MB of memory. These Workers are still billed as if they were separate instances, with each being charged as if it had its own 128 MB of memory.
+
+4.  Billable duration may be lower than the total duration of all Unbound Workers when using [Service Bindings](/workers/platform/pricing/#service-bindings).
 
 ### Usage models
 
@@ -73,17 +75,17 @@ Total = ~$6.35 + Minimum $5/mo usage = $11.35
 
 ## Workers Trace Events Logpush
 
-Workers Logpush is only available on the Workers Paid plan. 
+Workers Logpush is only available on the Workers Paid plan.
 
 {{<table-wrap>}}
 
-|                             | Paid plan                          |
-| --------------------------- | ---------------------------------- |
-| Requests <sup>1</sup>       | 10 million / month, +$0.05/million |
+|                       | Paid plan                          |
+| --------------------- | ---------------------------------- |
+| Requests <sup>1</sup> | 10 million / month, +$0.05/million |
 
 {{</table-wrap>}}
 
-<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling. 
+<sup>1</sup> Workers Logpush charges for request logs that reach your end destination after applying filtering or sampling.
 
 ## Workers KV
 
@@ -187,7 +189,9 @@ Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-
 
 ## Service bindings
 
-Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
+Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers and Pages Functions triggered by a single incoming request.
+
+For example, if Worker A makes a Internet subrequest to Worker B, and each Worker takes three seconds during the same time period, then the billable duration will be six seconds. However, if Worker A uses Service Bindings to make a request to Worker B, the billable duration will only be three seconds because only the start and end timestamp are considered, rather than each Worker billing it's own separate duration.
 
 For more information on how service bindings work, refer to [About Service bindings](https://developers.cloudflare.com/workers/platform/bindings/about-service-bindings/).
 
