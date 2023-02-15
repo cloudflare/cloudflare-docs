@@ -6,11 +6,11 @@ meta:
     description: Reference page with postmaster information for professionals, as well as a known limitations section.
 ---
 
-# Postmaster
+# Postmaster reference page
 
 This page provides technical information about Email Routing to professionals who administer email systems, and other email providers.
 
-Here you will find information regarding Email Routing, along with best practices, rules, guidelines, troubleshooting tools, and a known limitations.
+Here you will find information regarding Email Routing, along with best practices, rules, guidelines, troubleshooting tools, as well as known limitations for Email Routing.
 
 ## Postmaster
 
