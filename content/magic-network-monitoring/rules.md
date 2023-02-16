@@ -14,7 +14,7 @@ You can create and edit Magic Network Monitoring rules in the [Cloudflare dashbo
 
 ## Rule fields
 
-| Field | Description |
+| Field <div style="width: 100px"> | Description |
 |-------| ------------|
 | **Rule name** | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`).  Max 256 characters. |
 | **Rule threshold type** | Can be defined in either bits per second or packets per second. |
