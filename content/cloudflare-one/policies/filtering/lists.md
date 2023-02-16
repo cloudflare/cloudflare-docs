@@ -50,7 +50,7 @@ Your list will now appear in the **Lists** page.
 2. Select **Edit**. This will allow you to:
 
     - Edit list name and description by selecting on the three-dots menu to the right of your list's name.
-    - Delete the list by selecting on the three-dots menu to the right of your list's name.
+    - Delete the list by selecting the three-dots menu to the right of your list's name.
     - Delete individual entries.
     - Manually add entries to your list.
 
