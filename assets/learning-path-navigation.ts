@@ -29,7 +29,7 @@ export function init() {
 
     // Update final next link to point to the next module
     const nextModuleLink = document.getElementById("nextModuleLink");
-    if (nextModuleLink && currentPathData !== undefined) {
+    if (nextModuleLink && currentPathData) {
       const moduleNameRegex = new RegExp("/learning-paths/modules/.*?/(.*?)/");
       const result = currentLocation.match(moduleNameRegex);
       const currentModule = result[1];

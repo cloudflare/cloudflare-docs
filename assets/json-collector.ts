@@ -9,7 +9,7 @@ let learning_paths = [
   optimize_site_speed["default"],
   application_security["default"],
   replace_vpn["default"],
-  load_balancing
+  load_balancing,
 ];
 
 export { learning_paths };
