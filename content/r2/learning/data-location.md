@@ -11,7 +11,7 @@ Learn how the location of data stored in R2 is determined and about the differen
 
 When you create a new bucket, the data location is set to Automatic by default. Currently, this option chooses a bucket location in the closest available region to the create bucket request based on the location of the caller.
 
-{{<beta heading="h2">}} Location Hints {{</beta>}}
+## Location Hints
 
 {{<Aside type="note">}}
 
@@ -27,20 +27,18 @@ Currently, you can set the Location Hint via the `LocationConstraint` parameter 
 
 ```js
 await S3.send(
-new CreateBucketCommand({
-Bucket,
-CreateBucketConfiguration: { LocationConstraint: "WNAM" },
-})
+    new CreateBucketCommand({
+        Bucket,
+        CreateBucketConfiguration: {
+            LocationConstraint: "WNAM"
+        },
+    })
 )
 ```
 
 Refer to [Examples](/r2/examples/) for additional examples of S3 SDKs.
 
-## Current limitations of Location Hints beta
-
-Location Hints are only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket’s location will be used.
-
-### Available Hints
+### Available hints
 
 The following hint locations are supported:
 
@@ -50,3 +48,7 @@ The following hint locations are supported:
 | enam | Eastern North America |
 | weur | Western Europe        |
 | apac | Asia-Pacific          |
+
+### Current limitations
+
+Location Hints are only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket’s location will be used.
