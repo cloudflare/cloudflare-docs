@@ -82,8 +82,56 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 ### 2. Configure journal rule
 
-{{<Aside type="note" header="Note">}}
-If you have customers in the EU as well as other regions, for compliance purposes you might be required to process emails from EU customers in EU servers. If that is your case, you should [create two Office 365 distribution lists](https://learn.microsoft.com/en-us/microsoft-365/admin/setup/create-distribution-lists?view=o365-worldwide#create-a-distribution-group-list) - one for the EU and one for the US - before configuring your journal rule. Then, make the appropriate choices on step 7.{{</Aside>}}
+1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
+
+2. Navigate to **Data lifecycle management** > **Exchange (legacy)**.
+
+3. Select **Settings** (the gear icon).
+
+4. In **Send undeliverable journal reports to** enter the email address of a valid user account. Note that you cannot use a team or group address.
+
+    ![Configure undeliverable emails](/email-security/static/deployment/api-setup/journaling/step4-undeliverable.png)
+
+5. Select **Save**. 
+
+6. Still in the Exchange (legacy) screen, select **Journal Rules**.
+
+    ![Select journal rules](/email-security/static/deployment/api-setup/journaling/step6-journal-rules.png)
+
+7. Select **New rule** to configure a journaling rule, and configure it as follows:
+
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). For example, `<customer_name>@journaling.mxrecord.io`.
+    * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
+    * **Journal messages sent or received from**: _Everyone_
+    * **Type of message to journal**: _External messages only_
+
+8. Select **Next**.
+
+9. Verify the information is correct, and select **Submit** > **Done**. 
+
+    ![Verify the journal rule information](/email-security/static/deployment/api-setup/journaling/step9-verify-journal-rules.png)
+
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.
+
+### (Optional) 3. Sort users by region
+
+If you have customers in the EU as well as other regions, for compliance purposes you might be required to process emails from EU customers in EU servers. If that is your case, you should create two Office 365 distribution lists - one for the EU and one for the US - before configuring your journal rule. 
+
+1. Go to the [Microsoft 365 admin center](admin.microsoft.com).
+2. Select **Teams & Groups** > **Active teams & groups**.
+3. Search for the **Distribution list** tab, and select **Add a group**.
+4. Choose **Distribution** as the group type, and select **Next**.
+5. Give your group a descriptive **name** and **description**, like `EU Area 1 group list`, and select **Next**.
+6. Select **Assign owners** and add at least one user who will be the group owner for this list.
+7. Now you can add members to this list. Select **Add members**.
+8. In **Group email address**, give your list an email address.
+9 Select **Next** > **Create group**.
+
+Repeat the steps above to create your US / international group of users.
+
+#### Configure journal rule
+
+Now that you created distribution lists based on regions for your user, configure your journal rule.
 
 1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
 
@@ -103,11 +151,11 @@ If you have customers in the EU as well as other regions, for compliance purpose
 
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-    - **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses) (for example, `<customer_name>@journaling.mxrecord.io`). If you created distribution lists for customers in different regions:
+    - **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). 
         - Choose `<customer_name>@journaling.mxrecord.io` if you plan to use with the group you created for your US/international users. 
         - Choose `<customer_name>@mailstream-eu.journaling.mxrecord.io` if you plan to use with the group you created for your EU users.
     - **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
-    - **Journal messages sent or received from**: _Everyone_. If you created distribution lists for customers in different regions, choose _A specific user or group_ and select the appropriate user group.
+    - **Journal messages sent or received from**: _A specific user or group_ and select the user group you [created above](#optional-3-sort-users-by-region).
     - **Type of message to journal**: _External messages only_
 
 8. Select **Next**.
