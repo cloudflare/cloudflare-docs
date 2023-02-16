@@ -8,9 +8,9 @@ weight: 4
 
 Magic Network Monitoring rules will allow you to monitor the traffic volume destined for IP addresses or IP prefixes on your network. You can also receive alerts if the volume of traffic arriving at specific destinations exceeds a defined threshold.
 
-If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), you can also configure Magic Network Monitoring rules to automatically activate Magic Transit if the rule’s threshold is exceeded.
+If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), you can also enable **Auto-Advertisement** for Magic Network Monitoring's rules, to automatically activate Magic Transit if the rule’s threshold is exceeded.
 
-You can create and edit Magic Network Monitoring rules in the [Cloudflare dashboard](https://dash.cloudflare.com/login) from **Analytics & Logs** > **Magic Monitoring** and selecting **Configure Magic Network Monitoring**.
+You can create and edit Magic Network Monitoring rules in the [Cloudflare dashboard](https://dash.cloudflare.com/login) from **Analytics & Logs** > **Magic Monitoring** > **Configure Magic Network Monitoring**.
 
 ## Rule fields
 
