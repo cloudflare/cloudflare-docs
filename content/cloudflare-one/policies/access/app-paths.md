@@ -2,13 +2,14 @@
 pcx_content_type: concept
 title: Application paths
 weight: 5
+layout: single
 ---
 
 # Application paths
 
 Application paths define the URLs protected by an Access policy. When adding a [self-hosted web application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) to Access, you can choose to protect the entire website by entering its apex domain, or alternatively, protect specific subdomains and paths.
 
-## Inheritance
+## Policy inheritance
 
 Cloudflare Zero Trust allows you to create unique rules for parts of an application that share a root path. Imagine an example application is deployed at `dashboard.com/eng` that anyone on the engineering team should be able to access. However, a tool deployed at `dashboard.com/eng/exec` should only be accessed by the executive team.
 
@@ -18,74 +19,66 @@ When multiple rules are set for a common root path, the more specific rule takes
 
 When you create an application for a specific subdomain or path, you can use asterisks (`*`) as wildcards. Wildcards allow you to extend the application you are creating to multiple subdomains or paths in a given apex domain.
 
-### Protect all subdomains of an apex domain
+### Examples
 
-Using a wildcard in the _subdomain_ field **does not cover the apex domain**.
+#### Match all subdomains of an apex domain
 
-{{<table-wrap>}}
+Using a wildcard in the **Subdomain** field does not cover the apex domain.
 
-| Entry           | Covers                                  | Doesn't cover |
+| Application       | Covers                                  | Does not cover |
 | --------------- | --------------------------------------- | ------------- |
-| `*.example.com` | `alpha.example.com`, `beta.example.com` | `example.com` |
+| `*.example.com` | `alpha.example.com` </br> `beta.example.com` | `example.com` |
 
-{{</table-wrap>}}
-
-### Protect all paths of an apex domain
+#### Match all paths of an apex domain
 
 If you want to protect an apex domain and all of the paths under it, leave the path field empty.
 
-{{<table-wrap>}}
-
-| Entry         | Covers                                                 | Doesn't cover       |
+| Application        | Covers                   | Does not cover       |
 | ------------- | ------------------------------------------------------ | ------------------- |
-| `example.com` | `example.com`, `example.com/alpha`, `example.com/beta` | `alpha.example.com` |
+| `example.com` | `example.com` </br> `example.com/alpha` </br> `example.com/beta` | `alpha.example.com` |
 
-{{</table-wrap>}}
+To protect all the paths under an apex domain, but not the apex domain itself, use a wildcard in the **Path** field.
 
-To protect all the paths under an apex domain, but not the apex domain itself, use a wildcard in the _path_ field.
-
-{{<table-wrap>}}
-
-| Entry           | Covers                                  | Doesn't cover |
+| Application            | Covers                                  | Does not cover |
 | --------------- | --------------------------------------- | ------------- |
-| `example.com/*` | `example.com/alpha`, `example.com/beta` | `example.com` |
+| `example.com/*` | `example.com/alpha` </br> `example.com/beta` | `example.com` |
 
-{{</table-wrap>}}
+#### Match multi-level subdomains
 
-### Protect multi-level subdomains
+Using a wildcard in the **Subdomain** field to protect multi-level subdomains does not cover that subdomain's top subdomain nor the apex domain.
 
-Using a wildcard in the _subdomain_ field to protect multi-level subdomains **does not cover that subdomain's top subdomain nor the apex domain**.
-
-{{<table-wrap>}}
-
-| Entry                | Covers                                            | Doesn't cover                     |
+| Application | Covers                                            | Does not cover                     |
 | -------------------- | ------------------------------------------------- | --------------------------------- |
-| `*.test.example.com` | `alpha.test.example.com`, `beta.test.example.com` | `example.com`, `test.example.com` |
+| `*.test.example.com` | `alpha.test.example.com` </br> `beta.test.example.com` | `example.com` </br> `test.example.com` |
 
-{{</table-wrap>}}
+#### Match multi-level paths
 
-### Protect multi-level paths
+Using a wildcard in the **Path** field to protect multi-level paths does not cover that subpath's parent path nor the apex domain.
 
-Using a wildcard in the _path_ field to protect multi-level paths **does not cover that subpath's parent path nor the apex domain**.
+| Application             | Covers          | Does not cover                |
+| --------------------- | ----------------- | --------------------------------- |
+| `example.com/alpha/*` | `example.com/alpha/one` </br> `example.com/alpha/two` | `example.com` </br> `example.com/beta` |
 
-{{<table-wrap>}}
+#### Partially match subdomains
 
-| Entry                 | Covers                                           | Doesn't cover                     |
-| --------------------- | ------------------------------------------------ | --------------------------------- |
-| `example.com/alpha/*` | `example.com/alpha/one`, `example.com/alpha/two` | `example.com`, `example.com/beta` |
+Wildcards in the **Subdomain** field do not apply across multiple levels of the subdomain.
 
-{{</table-wrap>}}
+| Application         | Covers               | Does not cover                 |
+| ------------------- | -------------------- | -------------------------------|
+| `*test.example.com`  | `test.example.com` </br> `alphatest.example.com` | `beta.test.example.com` |
 
-{{<Aside type="warning" header="Important">}}
+#### Partially match paths
 
-You cannot use wildcards to partially match subdomain and path names. Using asterisks in any way other than the ones outlined above **will cause the wildcard to be invalidated**. This means your application won't be effective, and neither will be any rules you may try to enforce on it at a later time.
+Wildcards in the **Path** field apply across URL segments.
 
-| Entry               | Does NOT cover                               |
-| ------------------- | -------------------------------------------- |
-| `example.com/cat-*` | `example.com/cat`, `example.com/cat-food`    |
-| `*ing.example.com`  | `ing.example.com`, `engineering.example.com` |
+| Application         | Covers               |
+|---------------------|----------------------|
+| `example.com/foo*/bar` | `example.com/foo/bar`</br> `example.com/food/bar` </br> `example.com/food/stuff/bar`   |
 
-{{</Aside>}}
+### Limitations
+
+- At most one wildcard in between each dot in the hostname. For example, `foo*bar*baz.example.com` is not allowed.
+- At most one wildcard in between each slash in the path. For example, `example.com/foo*bar*baz` is not allowed.
 
 ## Unsupported URLs
 
