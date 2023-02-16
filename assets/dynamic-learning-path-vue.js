@@ -82,7 +82,7 @@ Vue.createApp({
             <p v-if="element.estimated_time" class="durationEstimate">~[[ element.estimated_time ]] mins</p>
         </div>
         <div v-if="element.description" v-html="element.description"></div>
-        <details v-if="element.pages">
+        <details class="pathDetails" v-if="element.pages">
             <summary v-if="element.type === 'module'">Contains [[ element.pages.length ]] units</summary>
             <summary v-if="element.type === 'note'">Contains [[ element.pages.length ]] related resources</summary>
             <div>

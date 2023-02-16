@@ -6,27 +6,11 @@ weight: 17
 
 # Session affinity
 
-When you enable session affinity, your load balancer directs all requests from a particular end user to a specific origin server. This continuity preserves information about the user session — such as items in their shopping cart — that might otherwise be lost if requests were spread out among multiple servers.
-
-Session affinity can also help reduce network requests, leading to savings for customers with usage-based billing.
-
-{{<Aside type="warning" header="Important">}}
-
-Cloudflare only supports cookie-based session affinity. Other methods, such as TCP session affinity, are not supported.
-
-{{</Aside>}}
+{{<render file="_session-affinity-definition.md">}}
 
 ## Process
 
-Session Affinity automatically directs requests from the same client to the same origin web server:
-
-1.  When a client makes its first request, Cloudflare sets a `CFLib` cookie on the client (to track the associated origin web server).
-2.  Subsequent requests by the same client are forwarded to that origin for the duration of the cookie and as long as the origin server remains healthy.
-3.  If the cookie expires or the origin server becomes unhealthy, Cloudflare sets a new cookie tracking the new failover origin.
-
-All sessions default to 23 hours unless you set a custom session _Time to live_ (TTL).
-
-The session cookie is secure when [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) is enabled. Additionally, HttpOnly is always enabled for the cookie to prevent cross-site scripting attacks.
+{{<render file="_session-affinity-process.md">}}
 
 ---
 

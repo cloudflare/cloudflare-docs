@@ -192,18 +192,18 @@ html {
     color: #ff9e40;
 }
 
-details div ul li {
+.pathDetails div ul li {
     list-style: none;
     padding-left: 0;
     border-bottom: .5px solid #242628;
 }
 
-[theme=dark] details div ul li {
+[theme=dark] .pathDetails div ul li {
     border-bottom: .5px solid #f3f3f4;
 }
 
 @media (min-width: 599px) {
-    details div ul li {
+    .pathDetails div ul li {
         line-height: 4;
     }
     .readingTime {
@@ -213,7 +213,7 @@ details div ul li {
 }
 
 @media (max-width: 599px) {
-    details div ul li {
+    .pathDetails div ul li {
         line-height: 2;
         margin-bottom: 3em;
     }

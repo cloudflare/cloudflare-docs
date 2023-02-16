@@ -89,9 +89,9 @@
 </p>
 
   {{- if eq $index 0 -}}
-  <details open>
+  <details class="pathDetails" open>
   {{- else -}}
-  <details>
+  <details class="pathDetails">
   {{- end -}}
 
     <summary>Contains {{ len (index $moduleData "units") }} units</summary>
