@@ -51,6 +51,8 @@ Refer to **Router status description** to confirm whether data is successfully b
 
 When you are done with router configuration, select **Finish onboarding**.
 
+{{<Aside type="note">}}This will only be visible during the onboarding process. When you are finished onboarding, this page will no longer be visible.{{</Aside>}}
+
 5. Create rules
 
 Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/magic-network-monitoring/rules/) for more information.
