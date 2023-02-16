@@ -21,7 +21,7 @@ This feature is currently in beta. If you have feedback, reach out to us on the 
 
 Location Hints are optional parameters you can provide during bucket creation to indicate the primary geographical location you expect data will be accessed from.
 
-Using Location Hint can be a good choice when you expect the majority of access to data in a bucket to come from a different location than where the create bucket request originates. Keep in mind Location Hints are a best effort and not a guarantee, and they should only be used as a way to optimize performance by placing regularly updated content closer to users.
+Using Location Hints can be a good choice when you expect the majority of access to data in a bucket to come from a different location than where the create bucket request originates. Keep in mind Location Hints are a best effort and not a guarantee, and they should only be used as a way to optimize performance by placing regularly updated content closer to users.
 
 Currently, you can set the Location Hint via the `LocationConstraint` parameter using the S3 API:
 
