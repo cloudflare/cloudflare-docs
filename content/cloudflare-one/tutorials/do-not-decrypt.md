@@ -31,13 +31,13 @@ Certain client applications, such as Zoom or Apple services, rely on certificate
 
 2. Name the policy and, optionally, provide a description.
 
-3. Under **Selector**, choose **Application**. In the **Operator** field, select **in**. In the **Value** field, search for `Do Not Inspect`. You can select either individual applications or the entire _Do Not Inspect_ set, which will update as new applications are added.
+3. In the **Selector** field, choose _Application_. In **Operator**, select _in_. In **Value**, search for `Do Not Inspect`. You can select either individual applications or the entire _Do Not Inspect_ set, which will update as new applications are added.
 
-4. In **Select an action**, select **Do Not Inspect**. Select **Create policy**.
+4. In **Select an action**, select _Do Not Inspect_. Select **Create policy**.
 
 ## Change rule precedence
 
-New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for Do Not Inspect rules. Those are always evaluated first. We recommend moving the Do Not Inspect rule to the top of the list to reduce confusion.
+New rules are saved at the bottom of the rule list in Gateway. Gateway evaluates rules from top-to-bottom, except for Do Not Inspect rules. Those are always evaluated first. We recommend moving your Do Not Inspect rules to the top of the list to reduce confusion.
 
 For more information, go to [Order of enforcement](/cloudflare-one/policies/filtering/order-of-enforcement/).
 
