@@ -21,7 +21,7 @@ You can create and edit Magic Network Monitoring rules in the [Cloudflare dashbo
 | **Rule threshold** | The number of bits per second or packets per second for the rule alert. When this value is exceeded for the rule duration, an alert notification is sent. Minimum of `1` and no maximum. |
 | **Rule duration** | The amount of time in seconds the rule threshold must exceed to send an alert notification. The minimum is 60 seconds and maximum is six hours (21,600 seconds).|
 | **Auto-advertisement** | If you are a Magic Transit On Demand customer, you can enable this feature to automatically enable Magic Transit if the rule alert is triggered. |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5000 unique CIDR entries. |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. Max is 5,000 unique CIDR entries. |
 
 ## Enable per-prefix thresholds
 
