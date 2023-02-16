@@ -31,7 +31,7 @@ Using a wildcard in the **Subdomain** field does not cover the apex domain.
 
 #### Match all paths of an apex domain
 
-If you want to protect an apex domain and all of the paths under it, leave the path field empty.
+To protect an apex domain and all of the paths under it, leave the **Path** field empty.
 
 | Application        | Covers                   | Does not cover       |
 | ------------- | ------------------------------------------------------ | ------------------- |
@@ -45,31 +45,31 @@ To protect all the paths under an apex domain, but not the apex domain itself, u
 
 #### Match multi-level subdomains
 
-Using a wildcard in the **Subdomain** field to protect multi-level subdomains does not cover that subdomain's top subdomain nor the apex domain.
+Using a wildcard in the **Subdomain** field does not cover the parent subdomain nor the apex domain.
 
 | Application | Covers                                            | Does not cover                     |
 | -------------------- | ------------------------------------------------- | --------------------------------- |
-| `*.test.example.com` | `alpha.test.example.com` </br> `beta.test.example.com` | `example.com` </br> `test.example.com` |
-
-#### Match multi-level paths
-
-Using a wildcard in the **Path** field to protect multi-level paths does not cover that subpath's parent path nor the apex domain.
-
-| Application             | Covers          | Does not cover                |
-| --------------------- | ----------------- | --------------------------------- |
-| `example.com/alpha/*` | `example.com/alpha/one` </br> `example.com/alpha/two` | `example.com` </br> `example.com/beta` |
+| `*.test.example.com` | `alpha.test.example.com` </br> `beta.test.example.com` | `test.example.com`  </br> `example.com` |
 
 #### Partially match subdomains
 
-Wildcards in the **Subdomain** field do not apply across multiple levels of the subdomain.
+Using a wildcard at the beginning or end of the **Subdomain** field does not cover multiple levels of the subdomain.
 
 | Application         | Covers               | Does not cover                 |
 | ------------------- | -------------------- | -------------------------------|
 | `*test.example.com`  | `test.example.com` </br> `alphatest.example.com` | `beta.test.example.com` |
 
+#### Match multi-level paths
+
+Using a wildcard in the **Path** field does not cover the parent path nor the apex domain.
+
+| Application             | Covers          | Does not cover                |
+| --------------------- | ----------------- | --------------------------------- |
+| `example.com/alpha/*` | `example.com/alpha/one` </br> `example.com/alpha/two` | `example.com/alpha` </br> `example.com` |
+
 #### Partially match paths
 
-Wildcards in the **Path** field apply across URL segments.
+Using a wildcard in the middle of the **Path** field covers multiple segments of the URL.
 
 | Application         | Covers               |
 |---------------------|----------------------|
@@ -77,8 +77,8 @@ Wildcards in the **Path** field apply across URL segments.
 
 ### Limitations
 
-- At most one wildcard in between each dot in the hostname. For example, `foo*bar*baz.example.com` is not allowed.
-- At most one wildcard in between each slash in the path. For example, `example.com/foo*bar*baz` is not allowed.
+- At most one wildcard in between each dot in the **Subdomain**. For example, `foo*bar*baz.example.com` is not allowed.
+- At most one wildcard in between each slash in the **Path**. For example, `example.com/foo*bar*baz` is not allowed.
 
 ## Unsupported URLs
 
