@@ -42,10 +42,8 @@ This mode is best suited for organizations that want to filter traffic directed 
 
 ### Device Information Only
 
-This mode is best suited for organizations that only want to enforce [WARP client device posture checks](/cloudflare-one/identity/devices/warp-client-checks/) for zones in your account. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices.
+This mode is best suited for organizations that only want to enforce [WARP client device posture checks](/cloudflare-one/identity/devices/warp-client-checks/) for zones in your account. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices. To setup Device Information Only mode, refer to the [dedicated page](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/device-information-only/).
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- |
-| No | No | Device posture [Access policies](/cloudflare-one/policies/access/)|
-
-To enable Device Information Only mode, refer to the [dedicated page]().
+| No | No | Device posture rules in [Access policies](/cloudflare-one/policies/access/)|
