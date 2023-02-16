@@ -1,4 +1,4 @@
-{{- $currentLocation := split .RelPermalink "/" -}}
+{{- $currentLocation := split .Page.RelPermalink "/" -}}
 {{- $currentFolder := index $currentLocation 3 -}}
 {{- $currentModule := index $currentLocation 4 -}}
 {{- $moduleData := index (index .Site.Data.modules $currentFolder) $currentModule -}}
@@ -7,14 +7,16 @@
 {{- $moduleObjectives := index $moduleData "abstract" -}}
 {{- $modulePrereqs := index $moduleData "prereqs" -}}
 
-<h1>{{$moduleTitle}}</h1>
-
 {{- $moduleSummary | .Page.RenderString -}}
 
 <h2>Objectives</h2>
+<div class="learningSummary">
 {{- $moduleObjectives | .Page.RenderString -}}
+</div>
 
 {{- with $modulePrereqs -}}
 <h2>Prerequisites</h2>
+<div class="learningSummary">
 {{- $modulePrereqs | $.Page.RenderString -}}
+</div>
 {{- end -}}

@@ -251,3 +251,34 @@ label {
     padding-bottom: 1em;
     font-size: .9em;
 }
+
+.learningSummary a {
+    text-decoration: none;
+    color: inherit;
+  --background-color-rgb: var(--orange-rgb);
+  --background-color-alpha: 0.08;
+  --border-bottom-color-rgb: var(--orange-3-rgb);
+  --border-bottom-color-alpha: 0.3;
+  --background-color: rgba(
+    var(--background-color-rgb),
+    var(--background-color-alpha)
+  );
+  background-color: var(--background-color);
+  border-bottom: 1px solid
+    rgba(var(--border-bottom-color-rgb), var(--border-bottom-color-alpha));
+  }
+  
+  .learningSummary a:hover {
+    --background-color-alpha: 0.2;
+  }
+  
+  [theme="dark"] .learningSummary a {
+    --background-color-alpha: 0.03;
+    --border-bottom-color-rgb: var(--orange-rgb);
+    --border-bottom-color-alpha: 0.35;
+    color: var(--code-orange);
+  }
+  
+  [theme="dark"] .learningSummary a:hover {
+    --background-color-alpha: 0.1;
+  }
