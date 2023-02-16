@@ -37,3 +37,10 @@ To use Version Management, the following must all be true:
 - Your account uses the [new WAF](https://blog.cloudflare.com/new-cloudflare-waf/) (if not, contact your account team).
 - Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/#view-your-api-key)).
 - You must use the dashboard to manage versioning. API support will be announced at a future date.
+
+{{<Aside type="note" header="Header text">}}
+ 
+Currently, API support is not available for versioning. Deploying Workers used by zones with versioning enabled via Wrangler is also not supported.
+ 
+{{</Aside>}}
+
