@@ -31,7 +31,7 @@ Certain client applications, such as Zoom or Apple services, rely on certificate
 
 2. Name the policy and, optionally, provide a description.
 
-3. In the **Selector** field, choose _Application_. In **Operator**, select _in_. In **Value**, search for `Do Not Inspect`. You can select either individual applications or the entire _Do Not Inspect_ set, which will update as new applications are added.
+3. In the **Selector** field, choose _Application_. In the **Operator** field, select _in_. In the **Value** field, search for `Do Not Inspect`. You can select either individual applications or the entire _Do Not Inspect_ set, which will update as new applications are added.
 
 4. In **Select an action**, select _Do Not Inspect_. Select **Create policy**.
 
