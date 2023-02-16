@@ -42,10 +42,10 @@ This mode is best suited for organizations that want to filter traffic directed 
 
 ### Device Information Only
 
-This mode is best suited for organizations that only want to enforce device posture for Access applications. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices.
+This mode is best suited for organizations that only want to enforce [WARP client device posture checks](/cloudflare-one/identity/devices/warp-client-checks/) for zones in your account. DNS, Network and HTTP traffic is handled by the default mechanisms on your devices.
 
 | DNS filtering | HTTP filtering | Features enabled |
 | ------------- | -------------- | ---------------- |
-| No | No | Device posture rules in [Access policies](/cloudflare-one/policies/access/) |
+| No | No | Device posture [Access policies](/cloudflare-one/policies/access/)|
 
-When you enroll a device in Device Information Only mode, the WARP client will automatically create and install a client certificate on the device (unless you have previously installed the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/)). The client certificate is necessary to confirm the source of outgoing traffic. You can view the certificate on the [Cloudflare dashboard](https://dash.cloudflare.com/) by selecting your domain and going to **SSL/TLS** > **Client Certificates**.
+To enable Device Information Only mode, refer to the [dedicated page]().
