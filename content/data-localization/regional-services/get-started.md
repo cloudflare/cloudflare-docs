@@ -9,7 +9,7 @@ layout: list
 
 You can use Regional Services through the dashboard or via API.
 
-## Regional Services in the dashboard
+## Configure Regional Services in the dashboard
 
 To use Regional Services, you need to first create a DNS record in the dashboard:
 
@@ -26,7 +26,7 @@ To use Regional Services, you need to first create a DNS record in the dashboard
     - United States
     - FedRAMP Compliant
 
-## Regional Services via API
+## Configure Regional Services via API
 
 You can also use Regional Services via API. These are some examples of API requests.
 
@@ -76,7 +76,7 @@ header: Response
 ---
 header: Request
 ---
-curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>addressing/regional_hostnames" \
+curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/addressing/regional_hostnames" \
      -H "Content-Type:application/json" \
      -H "X-Auth-Key:<API_KEY>" \
      -H "X-Auth-Email:<EMAIL>" \

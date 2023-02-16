@@ -144,7 +144,7 @@ $ openssl s_client -servername app.example.com -connect $CNAME_TARGET:443 </dev/
 
 ## Step 5 — Have customer create a CNAME record
 
-Your customer needs to set up a CNAME record at their DNS provider that points to your [CNAME target](#step-1--create-fallback-origin-and-cname-target). For an existing site, ensure your custom hostname and certificate are verified and valid prior to completing this step. Shifting traffic before the certificate has been issued may cause an insecurity in your domain.
+Your customer needs to set up a CNAME record at their DNS provider that points to your [CNAME target](#step-1--create-fallback-origin-and-cname-target)[^1]. For an existing site, ensure your custom hostname and certificate are verified and valid prior to completing this step. Shifting traffic before the certificate has been issued may cause an insecurity in your domain.
 
 For example:
 
@@ -153,6 +153,8 @@ app CNAME john.customers.saasprovider.com
 ```
 
 This routes traffic from `app.customer.com` to your origin.
+
+[^1]: If you have [regional services](/data-localization/regional-services/) set up for your custom hostnames, Cloudflare always uses the processing region associated with your CNAME target record (instead of the processing region of any [custom origins](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/)).
 
 ---
 

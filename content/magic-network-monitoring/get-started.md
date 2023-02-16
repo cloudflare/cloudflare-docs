@@ -12,11 +12,9 @@ If you are an Enterprise customer and would like to use Magic Network Monitoring
 
 ## 1. Verify NetFlow or SFlow capabilities
 
-Verify your routers are capable of exporting NetFlow or sFlow to an IP address on Cloudflare’s network.
+Verify your routers are capable of exporting NetFlow or sFlow to an IP address on Cloudflare’s network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
-Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive. 
-
-Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
 
 ## 2. Register your router with Cloudflare
 
@@ -51,6 +49,8 @@ Refer to **Router status description** to confirm whether data is successfully b
 
 When you are done with router configuration, select **Finish onboarding**.
 
-5. Create rules
+{{<Aside type="note">}}This will only be visible during the onboarding process. When you are finished onboarding, this page will no longer be visible.{{</Aside>}}
+
+## 5. Create rules
 
 Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/magic-network-monitoring/rules/) for more information.

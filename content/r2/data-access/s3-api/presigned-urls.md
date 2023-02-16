@@ -63,110 +63,77 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-A possible use case may be restricting an application to only be able to upload to a specific URL. With presigned URLs, your central signing application might look like the following JavaScript code running on Cloudflare Workers, workerd, or another platform:
+A possible use case may be restricting an application to only be able to upload to a specific URL. With presigned URLs, your central signing application might look like the following JavaScript code running on Cloudflare Workers, workerd, or another platform.
+
+If the Worker received a request for `https://example.com/uploads/dog.png`, it would respond with a presigned URL allowing a user to upload to your R2 bucket at the `/uploads/dog.png` path.
 
 ```ts
-import { AwsClient } from 'aws4fetch';
+import { AwsClient } from "aws4fetch";
 
 const r2 = new AwsClient({
-	accessKeyId: '',
-	secretAccessKey: '',
-	service: 's3',
-	region: 'auto',
+  accessKeyId: "",
+  secretAccessKey: "",
 });
 
 export default <ExportedHandler>{
-	async fetch(request) {
-		const authorization = await authorize(request);
-// `authorize` is not provided in the Worker
-// It is best practice to add some form of authorization to protect your bucket from abuse, such as a preshared secret in a header
-		if (authorization === undefined) {
-			return new Response('invalid authorization', { status: 401 });
-		}
-		if (authorization.application === 'drop-box') {
-			const url = new URL(request.url);
+  async fetch(req) {
+    // This is just an example to demonstrating using aws4fetch to generate a presigned URL.
+    // This Worker should not be used as-is as it does not authenticate the request, meaning
+    // that anyone can upload to your bucket.
+    //
+    // Consider implementing authorization, such as a preshared secret in a request header.
+    const requestPath = new URL(req.url).pathname;
 
-			// Check that the application is only requesting a URL
-			if (url.pathname.startsWith('/my-upload-folder/')) {
-				return new Response('invalid destination folder', { status: 403 });
-			}
+    // Cannot upload to the root of a bucket
+    if (requestPath === "/") {
+      return new Response("Missing a filepath", { status: 400 });
+    }
 
-			const signedUrl = await r2.sign(
-				new Request(
-					`https://<DROPBOX BUCKET>.<ACCOUNT ID>.r2.cloudflarestorage.com${url.pathname}`,
-					{
-						method: 'PUT',
-					}
-				),
-				{
-					aws: { signQuery: true },
-					headers: {
-						// The signed request is valid for 1 hour.
-						'X-Amz-Expires': 3600,
-					},
-				}
-			);
+    const bucketName = "";
+    const accountId = "";
 
-			// Caller can now use this URL to upload to that object.
-			return new Response(signedUrl.url, { status: 200 });
-		}
+    const url = new URL(
+      `https://${bucketName}.${accountId}.r2.cloudflarestorage.com`
+    );
 
-		// ... handle other kinds of requests
-	},
-};
-```
+    // preserve the original path
+    url.pathname = requestPath;
 
-An equivalent Cloudflare Worker would be:
+    // Specify a custom expiry for the presigned URL, in seconds
+    url.searchParams.set("X-Amz-Expires", "3600");
 
-```ts
-interface Env {
-	DROP_BOX_BUCKET: R2Bucket;
-}
+    const signed = await r2.sign(
+      new Request(url, {
+        method: "PUT",
+      }),
+      {
+        aws: { signQuery: true },
+      }
+    );
 
-export default <ExportedHandler<Env>>{
-	async fetch(req, env) {
-		const authorization = await authorize(request);
-		if (authorization === undefined) {
-			return new Response('invalid authorization', { status: 401 });
-		}
-		if (authorization.application === 'drop-box') {
-			const url = new URL(request.url);
+    // Caller can now use this URL to upload to that object.
+    return new Response(signed.url, { status: 200 });
+  },
 
-			// Check that the application is only requesting a URL
-			if (url.pathname.startsWith('/my-upload-folder/')) {
-				return new Response('invalid destination folder', { status: 403 });
-			}
-
-			await env.DROP_BOX_BUCKET.put(url.toString().substring(1), request.body);
-
-			return new Response(null, { status: 200 });
-		}
-
-		//  ... handle other kinds of requests
-	},
+  // ... handle other kinds of requests
 };
 ```
 
 Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml` [binding](/r2/data-access/workers-api/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
 
-In some cases, Workers lets you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once, with pre-signed URLs, you would need to sign specific headers and require the sender to send them. This adds some complexity:
+In some cases, Workers lets you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once, with pre-signed URLs, you would need to sign specific headers and require the sender to send them. You can modify the previous Worker to sign additional headers:
 
 ```ts
-const signedUrl = await r2.sign(
-	new Request(
-		`https://<DROPBOX BUCKET>.<ACCOUNT ID>.r2.cloudflarestorage.com${url.pathname}`,
-		{
-			method: 'PUT',
-		}
-	),
-	{
-		aws: { signQuery: true },
-		headers: {
-			// The signed request is valid for 1 hour.
-			'X-Amz-Expires': 3600,
-			'If-Unmodified-Since': 'Tue, 28 Sep 2021 16:00:00 GMT',
-		},
-	}
+const signed = await r2.sign(
+  new Request(url, {
+    method: "PUT",
+  }),
+  {
+    aws: { signQuery: true },
+    headers: {
+      "If-Unmodified-Since": "Tue, 28 Sep 2021 16:00:00 GMT",
+    },
+  }
 );
 ```
 

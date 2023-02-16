@@ -6,15 +6,15 @@ weight: 5
 
 # Middleware 
 
-Middlewares are reusable chunks of logic that can be executed before or after for some section of your application. Middlewares are typically utility functions: error handling, user authentication, and logging are typical candidates for middleware within an application.
+Middleware is reusable logic that can be run before your [`onRequest`](/pages/platform/functions/api-reference/#onrequests) function. Middlewares are typically utility functions. Error handling, user authentication, and logging are typical candidates for middleware within an application.
 
-## Adding middleware
+## Add middleware
 
-Middleware is similar to standard Functions except they are always defined in a file named `_middleware.js`. A `_middleware.js` file exports a Pages Function request handler that will run on requests which would match any sibling and child Pages Functions in the folder structure. For example, `functions/users/_middleware.js` file will match requests for `/functions/users/nevi`, `/functions/users/nevi/123` and `functions/users`.
+Middleware is similar to standard Pages Functions but middleware is always defined in a `_middleware.js` file in your project's `/functions` directory. A `_middleware.js` file exports an [`onRequest`](/pages/platform/functions/api-reference/#onrequests) function. The middleware will run on requests that match any Pages Functions in the same `/functions` directory, including subdirectories. For example, `functions/users/_middleware.js` file will match requests for `/functions/users/nevi`, `/functions/users/nevi/123` and `functions/users`.
 
-If you want to run a middleware on your entire application, including in front of static files, you can create a `functions/_middleware.js` file.
+If you want to run a middleware on your entire application, including in front of static files, create a `functions/_middleware.js` file.
 
-In `_middleware.js` files, you may export an `onRequest` handler or any of its method-specific variants. The following is an example middleware which handles any errors thrown in child or sibling Pages Functions, using the `next()` method available in the request handler's context object:
+In `_middleware.js` files, you may export an `onRequest` handler or any of its method-specific variants. The following is an example middleware which handles any errors thrown in your project's Pages Functions. This example uses the `next()` method available in the request handler's context object:
 
 ```js
 ---
@@ -29,9 +29,9 @@ export async function onRequest(context) {
 }
 ```
 
-## Chaining middleware
+## Chain middleware
 
-Additionally, you may export an array of Functions as your middleware handler. This allows you to 'chain' together multiple middlewares that you want to run. For example, here we can handle any errors, and also naively check if the user is authenticated:
+You can export an array of Pages Functions as your middleware handler. This allows you to chain together multiple middlewares that you want to run. In the following example, you can handle any errors generated from your project's Functions, and check if the user is authenticated:
 
 ```js
 ---
@@ -56,4 +56,4 @@ function authentication(context) {
 export const onRequest = [errorHandling, authentication];
 ```
 
-Here, the `errorHandling` function will run first, capturing any errors in the `authentication` function or any other subsequent child Pages Functions.
+In the above example, the `errorHandling` function will run first. It will capture any errors in the `authentication` function and any errors in any other subsequent Pages Functions.
