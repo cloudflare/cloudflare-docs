@@ -2,6 +2,8 @@
 title: Recommended sampling rate
 pcx_content_type: reference
 weight: 2
+meta:
+    description: The best sampling rate recommendations for your network’s traffic volume.
 ---
 
 # Recommended sampling rate

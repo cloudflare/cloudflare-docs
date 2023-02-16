@@ -2,6 +2,8 @@
 title: Supported routers
 pcx_content_type: reference
 weight: 1
+meta:
+    description: A list of open source, NetFlow, and sFlow routers.
 ---
 
 # Supported routers
