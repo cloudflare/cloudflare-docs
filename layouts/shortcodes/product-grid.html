@@ -99,7 +99,7 @@
     class="ProductGrid--filter"
     type="text"
     id="search"
-    onkeyup="filterList()"
+    onkeyup="filterProducts()"
     placeholder="Search products..."
   />
   <div class="ProductGrid--content" id="ProductGrid--range">
@@ -120,13 +120,14 @@
 </div>
 
 <script>
-  function filterList() {
+  function filterProducts() {
     // Search input and items
-    var input = document.getElementById("search");
-    var grid = document.getElementById("ProductGrid--range");
+    var input = document.getElementById("search"); // User input
+    var query = input.value.toUpperCase(); // Make input non-case sensitive
+    var grid = document.getElementById("ProductGrid--range"); // Convert Hugo range to JS
+    var items = grid.getElementsByTagName("a"); // Extract tiles
 
-    var query = input.value.toUpperCase();
-    var items = grid.getElementsByTagName("a");
+    // TODO: Search by URL, description (i.e. "cloudflare one" = Cloudflare Zero Trust)
 
     // Iterate through products
     for (var i = 0; i < items.length; i++) {
