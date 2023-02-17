@@ -145,7 +145,7 @@ After creating the distribution lists based on regions for your users, configure
         - Choose `<customer_name>@journaling.mxrecord.io` if you plan to use with the group you created for your US/international users. 
         - Choose `<customer_name>@mailstream-eu.journaling.mxrecord.io` if you plan to use with the group you created for your EU users.
     - **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
-    - **Journal messages sent or received from**: _A specific user or group_ and select the user group you [created above](#3-optional-eu-compliance).
+    - **Journal messages sent or received from**: _A specific user or group_ and select the user group you [created above](#3-compliance).
     - **Type of message to journal**: _External messages only_
 
 8. Select **Next**.
