@@ -14,7 +14,6 @@ Magic Network Monitoring rules will allow you to monitor the traffic volume dest
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring** > **Add new rule**.
 4. Create your rule according to your needs. Refer to [Rule fields](#rule-fields) for more information on what each field does.
-        {{<Aside type="note" header="Automatically enable Magic Transit">}}If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), enable **Auto-Advertisement** if you want to automatically activate Magic Transit when a certain threshold is exceeded.{{</Aside>}}
 5. Select **Create a new rule** when you are finished.
 
 ## Edit or delete rules
@@ -22,10 +21,15 @@ Magic Network Monitoring rules will allow you to monitor the traffic volume dest
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring**.
-4. Find the rule you want to edit.
-5. Select **Delete** if you want to delete that rule, or **Edit** to edit it.
+4. Find the rule you want to edit, and select **Edit**. Optionally, you can also select **Delete** to delete a rule.
 6. Edit the appropriate fields.
 7. Select **Save** when you are finished.
+
+## Rule Auto-Advertisement
+
+If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), enable **Auto-Advertisement** if you want to automatically activate Magic Transit when a certain threshold is exceeded.
+
+Follow the previous steps to create or edit a rule. Then, make sure you enable **Auto-Advertisement**.
 
 
 ## Rule fields
@@ -41,7 +45,7 @@ Magic Network Monitoring rules will allow you to monitor the traffic volume dest
 
 ## Enable per-prefix thresholds with the API
 
-You can also use the API to configure custom thresholds for specific prefixes.
+You can also use the [Magic Network Monitoring API](https://developers.cloudflare.com/api/operations/magic-network-monitoring-rules-list-rules) to configure custom thresholds for specific prefixes.
 
 The system uses the concept of rules, and each rule consists of a group of prefixes. All prefixes inside a rule are evaluated as a whole, and you should set up a rule if you want the prefixes' aggregated traffic to trigger an alert or advertisement. For thresholds on singular prefixes or IPs, you can create an individual rule with one prefix and the desired threshold.
 
@@ -69,4 +73,4 @@ For more granular thresholds, create a more focused rule as shown below.
        ]
 ```
 
-Refer to the [API documentation](https://developers.cloudflare.com/api/operations/magic-network-monitoring-rules-list-rules) for more information.
+Refer to the [Magic Network Monitoring API documentation](https://developers.cloudflare.com/api/operations/magic-network-monitoring-rules-list-rules) for more information.
