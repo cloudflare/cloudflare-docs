@@ -96,14 +96,12 @@ Below you will find the configuration parameters Magic WAN supports for the diff
 
 ## Supported key ID formats
 
-**RFC name:** `ID_RFC822_ADDR`<br>
-**Format:** `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`<br>
-**Example:** `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`<br>
+{{<table-wrap>}}
 
-**RFC name:** `ID_FQDN`<br>
-**Format:** `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com`<br>
-**Example:** `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`<br>
+RFC name | Format | Example
+--- | --- | ---
+`ID_RFC822_ADDR` | `ipsec@<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com` | `ipsec@f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`
+`ID_FQDN` | `<TUNNEL_ID>.<ACCOUNT_ID>.ipsec.cloudflare.com` | `f5407d8db1a542b196c59f6d04ba8bd1.123456789.ipsec.cloudflare.com`
+`ID_KEY_ID` | `<ACCOUNT_ID>_<TUNNEL_ID>` | `123456789_f5407d8db1a542b196c59f6d04ba8bd1`
 
-**RFC name:** `ID_KEY_ID`<br>
-**Format:** `<ACCOUNT_ID>_<TUNNEL_ID>`<br>
-**Example:** `123456789_f5407d8db1a542b196c59f6d04ba8bd1`<br>
+{{</table-wrap>}}
