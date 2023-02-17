@@ -61,6 +61,7 @@
   "zaraz"
 -}}
 
+
 <style>
   .ProductGrid--content {
     --n: 1;
@@ -70,28 +71,66 @@
   }
 
   @media screen and (min-width: 600px) {
-    .ProductGrid--content { --n: 2 }
+    .ProductGrid--content {
+      --n: 2;
+    }
   }
 
   @media screen and (min-width: 978px) {
-    .ProductGrid--content { --n: 3 }
+    .ProductGrid--content {
+      --n: 3;
+    }
   }
 
   @media screen and (min-width: 1200px) {
-    .ProductGrid--content { --n: 4 }
+    .ProductGrid--content {
+      --n: 4;
+    }
   }
 </style>
 
 <div class="ProductGrid">
-	<div class="ProductGrid--content">
+  <input
+    type="text"
+    id="search"
+    onkeyup="filterList()"
+    placeholder="Search products..."
+  />
+  <div class="ProductGrid--content" id="ProductGrid--range">
     {{- range $key := $order -}}
       {{- $data := (index $.Site.Data $key) -}}
       {{- $product := (index $data "product") -}}
       {{- $wrap := default false $product.wrap -}}
-      <a class="ProductGrid--link" data-wrap-title="{{ $wrap }}" href="{{ $product.url }}">
+      <a
+        class="ProductGrid--link"
+        data-wrap-title="{{ $wrap }}"
+        href="{{ $product.url }}"
+      >
         <div>{{ safeHTML $data.logo }}</div>
         <span>{{ $product.title }}</span>
       </a>
     {{- end -}}
   </div>
 </div>
+
+<script>
+  function filterList() {
+    // Search input and items
+    var input = document.getElementById("search");
+    var grid = document.getElementById("ProductGrid--range");
+
+    var query = input.value.toUpperCase();
+    var items = grid.getElementsByTagName("a");
+
+    // Iterate through products
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var text = item.innerText.toUpperCase();
+      if (text.indexOf(query) > -1) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    }
+  }
+</script>
