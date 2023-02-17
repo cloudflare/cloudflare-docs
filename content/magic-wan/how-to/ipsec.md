@@ -25,7 +25,7 @@ Review the information below to learn more about phases to establish IPsec conne
 
 - **Auth Exchange:** (sometimes called Phase 2) Using the secure tunnel established in the Initial Exchange, the IPsec peers further negotiate and establish an ESP IPsec tunnel that encrypts user traffic. Security Associations (SAs) established in this phase are often referred to as IPsec SAs or sometimes Child SAs.
 
-- **IPsec user data transmission:** User traffic is securely – encrypted and authenticated – transmitted between the IPsec peers in the ESP IPsec tunnel established at the end of the Auth Exchange.
+- **IPsec user data transmission:** User traffic is encrypted and authenticated to be securely transmitted between the IPsec peers in the ESP IPsec tunnel established at the end of the Auth Exchange.
 
 ## 1. Create IPsec tunnels
 
