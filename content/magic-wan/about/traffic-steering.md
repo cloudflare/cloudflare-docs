@@ -95,6 +95,4 @@ For example, in a scenario where you want to route 70% of your traffic through I
 
 Note that because ECMP balances flows probabilistically, the use of weights is only approximate.
 
-For more on Magic WAN tunnel weights, contact your Cloudflare account manager.
-
 {{</Aside>}}
