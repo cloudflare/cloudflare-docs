@@ -85,8 +85,8 @@ Below you will find the configuration parameters Magic WAN supports for the diff
 
 ### Optional configuration parameters
 
-- **Null encryption:** This option should not be used unless necessary as it reduces security because IPsec traffic is not ecrypted. You must explicitly opt in to use this option.
-- **NAT-T:** IPsec NAT-T support requires the IKE session begin on port 4500. Most IPsec implementations allow this to be configured, but some devices require beginning the IKE session on port 500 even when NAT-T is used. 
+- **Null encryption:** This option should not be used unless necessary as it reduces security because IPsec traffic is not encrypted. You must explicitly opt in to use this option.
+- **NAT-T:** IPsec NAT-T support requires the IKE session begin on port `4500`. Most IPsec implementations allow this to be configured, but some devices require beginning the IKE session on port `500` even when NAT-T is used. 
 
   {{<Aside type="note">}}
   
