@@ -13,7 +13,7 @@ For a list of compatible devices, refer to [Device compatibility](/magic-wan/ref
 
 {{<Aside type="note" header="Note">}}
 
-Magic WAN only supports Internet Key Exchange version 2 IKEv2.
+Magic WAN only supports Internet Key Exchange version 2 (IKEv2).
 
 {{</Aside>}}
 
