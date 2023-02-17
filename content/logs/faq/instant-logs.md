@@ -28,4 +28,4 @@ Finally, make sure the destination is proxied through Cloudflare (also known as 
 
 ## I am getting an error fetching my data. How can I solve this?
 
-Make sure you have the correct permissions. To use Instant Logs you need Super Administrator, Administrator, Log Share, or Log Share Reader permissions.
+Make sure you have the correct permissions. To use Instant Logs you need Super Administrator, Administrator, Log Share, or Log Share Reader permissions. 
