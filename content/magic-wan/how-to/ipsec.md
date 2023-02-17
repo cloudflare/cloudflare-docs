@@ -43,6 +43,8 @@ To set up your static routes, refer to [Configure static routes](/magic-wan/how-
 
 ## Supported configuration parameters
 
+Below you will find the configuration parameters Magic WAN supports for the different IPsec phases.
+
 ### Phase 1
 
 - **Encryption**: 
