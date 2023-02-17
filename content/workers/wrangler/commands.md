@@ -225,7 +225,7 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 Download existing data to your local machine.
 
 ```sh
-$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+$ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
