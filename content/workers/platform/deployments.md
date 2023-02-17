@@ -74,8 +74,8 @@ Deployments are in active development. To give feedback, request a [live chat](h
 Rollbacks are a means to change the code running on the edge, this can be used for instance if there is an unintended publish. 
 It is not limited to just the previous deployment, rollbacks can currently be done up to 10 deployments back from the current one.
 There are scenarios where you cannot rollback which include:
-1. 
-2.
-3. 
+- A Durable Object migration has occurred between latest deployment and target deployment
+- If the target deployment has a binding to an R2 bucket, KV namespace, or Queue that no longer exists
+- Currently if the target deployment has a binding to a D1 database, this will be removed in the future
 Additionally there are caveats with resources bound to the deployment, for instance the structure of your resource may have changed since the deployment
 being rolled back onto, in which the deployed code would handle the resource data erroneously. 
