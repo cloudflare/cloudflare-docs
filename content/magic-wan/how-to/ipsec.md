@@ -7,7 +7,7 @@ title: Set up IPsec tunnels
 
 Use Anycast IPsec as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel. To learn more about Anycast IPsec, refer to [What is IPsec?](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/).
 
-Before you begin, make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/analytics/graphql-api/getting-started/authentication/api-key-auth/).
+Before you begin, make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 For a list of compatible devices, refer to [Device compatibility](/magic-wan/reference/device-compatibility/).
 
