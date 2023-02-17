@@ -96,7 +96,7 @@ Below you will find the configuration parameters Magic WAN supports for the diff
 
 ## Supported key ID formats
 
-Magic WAN supports the following key ID formats:
+Magic WAN supports the following key ID formats for IPsec:
 
 {{<table-wrap>}}
 
