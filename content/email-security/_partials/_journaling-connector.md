@@ -113,7 +113,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Cloudflare Area 1. After it propagates, you can access the Cloudflare Area 1 dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Cloudflare Area 1 from your Exchange server.
 
-### 3. (Optional) EU compliance
+### 3. Compliance
 
 #### Create Office 365 distribution lists
 
