@@ -22,14 +22,14 @@ Magic Network Monitoring rules will allow you to monitor the traffic volume dest
 2. Go to **Analytics & Logs** > **Magic Monitoring**.
 3. Select **Configure Magic Network Monitoring**.
 4. Find the rule you want to edit, and select **Edit**. Optionally, you can also select **Delete** to delete a rule.
-6. Edit the appropriate fields.
+6. Edit the appropriate fields. Refer to [Rule fields](#rule-fields) for more information on what each field does.
 7. Select **Save** when you are finished.
 
 ## Rule Auto-Advertisement
 
 If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit/on-demand), enable **Auto-Advertisement** if you want to automatically activate Magic Transit when a certain threshold is exceeded.
 
-Follow the previous steps to create or edit a rule. Then, make sure you enable **Auto-Advertisement**.
+Follow the previous steps to [create](#create-rules) or [edit](#edit-or-delete-rules) a rule. Then, make sure you enable **Auto-Advertisement**.
 
 
 ## Rule fields
