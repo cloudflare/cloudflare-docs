@@ -43,7 +43,7 @@ Enable Logpush to R2 via the dashboard.
 
 2.  Select the Enterprise account or domain you want to use with Logpush.
 
-3.  Go to **Analytics** > **Logs**.
+3.  Go to **Analytics & Logs** > **Logs**.
 
 4.  Click **Connect a service** and a modal window will open.
 
