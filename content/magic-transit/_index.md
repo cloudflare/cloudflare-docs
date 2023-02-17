@@ -49,7 +49,7 @@ Cloudflare DDoS protection secures websites, applications, and entire networks w
  
 {{<resource-group>}}
  
-{{<resource header="Magic Transit Reference Architecture" href="/reference-architecture/magic-transit-reference-architecture/" icon="reference-architecture">}}
+{{<resource header="Magic Transit reference architecture" href="/reference-architecture/magic-transit-reference-architecture/" icon="reference-architecture">}}
 Deep dive into the key architecture, functionalities, and network deployment options of Cloudflare Magic Transit.
 {{</resource>}}
  
