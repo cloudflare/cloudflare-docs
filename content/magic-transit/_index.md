@@ -42,3 +42,15 @@ Cloudflare Network Interconnect (CNI) allows you to connect your network infrast
 {{<related header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">}}
 Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.
 {{</related>}}
+
+---
+ 
+## More resources
+ 
+{{<resource-group>}}
+ 
+{{<resource header="Magic Transit Reference Architecture" href="/reference-architecture/magic-transit-reference-architecture/" icon="reference-architecture">}}
+Deep dive into the key architecture, functionalities, and network deployment options of Cloudflare Magic Transit.
+{{</resource>}}
+ 
+{{</resource-group>}}
