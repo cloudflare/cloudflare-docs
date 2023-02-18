@@ -106,13 +106,12 @@ Get alerted when users set their email to be forwarded externally. This can eith
 | Active Message Rule Forwards Externally               | Low      |
 | Active Message Rule Redirects Externally              | Low      |
 
-## Microsoft Information Protection (MIP) Sensitivity Labels
+## Microsoft Information Protection (MIP) sensitivity labels
 
-### Prerequisite
+{{<Aside type="note">}}
 
-MIP label support requires [DLP](https://developers.cloudflare.com/cloudflare-one/policies/data-loss-prevention/)
+Requires [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/).
 
-### Using Labels
+{{</Aside>}}
 
-Microsoft provides [MIP sensitivity labels](https://learn.microsoft.com/en-us/microsoft-365/compliance/sensitivity-labels?view=o365-worldwide) to classify and protect sensitive data. If you have Information Protection labels configured, Cloudflare retrieves the labels from your Microsoft account and populates them in a [DLP Profile](https://developers.cloudflare.com/cloudflare-one/policies/data-loss-prevention/integration-profiles/).
-
+Microsoft provides [MIP sensitivity labels](https://learn.microsoft.com/en-us/microsoft-365/compliance/sensitivity-labels?view=o365-worldwide) to classify and protect sensitive data. When you add the CASB Microsoft 365 integration, Cloudflare will automatically retrieve the labels from your Microsoft account and populate them in a [DLP Profile](/cloudflare-one/policies/data-loss-prevention/integration-profiles/).
