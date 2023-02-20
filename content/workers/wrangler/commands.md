@@ -29,6 +29,8 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
+- [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 
 {{<Aside type="note">}}
 
@@ -113,7 +115,7 @@ $ wrangler generate [name] [template]
 Interact with Cloudflare's D1 service.
 
 {{<Aside type="note">}}
-D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+D1 is currently in open alpha and is not recommended for production data and traffic. Report D1 bugs to the [Wrangler team](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 {{</Aside>}}
 
 ### `create`
@@ -166,9 +168,9 @@ $ wrangler d1 execute <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database to execute a query on.
-- `--command` {{<type>}}string{{</type>}} 
+- `--command` {{<type>}}string{{</type>}}
   - The SQL query you wish to execute.
-- `--file` {{<type>}}string{{</type>}} 
+- `--file` {{<type>}}string{{</type>}}
   - Path to the SQL file you wish to execute.
 - Note that you must provide either `--command` or `--file` for this command to run successfully.
 {{</definitions>}}
@@ -223,7 +225,7 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 Download existing data to your local machine.
 
 ```sh
-$ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
+$ wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>
 ```
 
 {{<definitions>}}
@@ -236,7 +238,7 @@ $ wrangler d1 backup restore <DATABASE_NAME> <BACKUP_ID>
 
 ### `migrations create`
 
-Create a new migration. 
+Create a new migration.
 
 This will generate a new versioned file inside the `migrations` folder. Name your migration file as a description of your change. This will make it easier for you to find your migration in the `migrations` folder. An example filename looks like:
 
@@ -245,7 +247,7 @@ This will generate a new versioned file inside the `migrations` folder. Name you
 The filename will include a version number and the migration name you specify below.
 
 ```sh
-$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>" 
+$ wrangler d1 migrations create <DATABASE_NAME> "<MIGRATION_NAME>"
 ```
 
 {{<definitions>}}
@@ -268,7 +270,7 @@ $ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to list unapplied migrations for.
-- `--local` {{<type>}}boolean{{</type>}} 
+- `--local` {{<type>}}boolean{{</type>}}
   - Show the list of unapplied migration files on your locally persisted D1 database.
 {{</definitions>}}
 
@@ -276,7 +278,7 @@ $ wrangler d1 migrations list <DATABASE_NAME> [OPTIONS]
 
 Apply any unapplied migrations.
 
-This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured. 
+This command will prompt you to confirm the migrations you are about to apply. Confirm that you would like to proceed. After, a backup will be captured.
 
 The progress of each migration will be printed in the console.
 
@@ -292,7 +294,7 @@ $ wrangler d1 migrations apply <DATABASE_NAME> [OPTIONS]
 
 - `DATABASE_NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The name of the D1 database you wish to apply your migrations on.
-- `--local` {{<type>}}boolean{{</type>}} 
+- `--local` {{<type>}}boolean{{</type>}}
   - Execute any unapplied migrations on your locally persisted D1 database.
 {{</definitions>}}
 
@@ -535,8 +537,9 @@ Below is an example of using the `create` command to create a KV namespace calle
 
 ```sh
 $ wrangler kv:namespace create "MY_KV"
-🌀  Creating namespace with title "worker-MY_KV"
-✨  Add the following to your wrangler.toml:
+🌀 Creating namespace with title "worker-MY_KV"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
 kv_namespaces = [
   { binding = "MY_KV", id = "e29b263ab50e42ce9b637fa8370175e8" }
 ]
@@ -549,9 +552,9 @@ Below is an example of using the `create` command to create a preview KV namespa
 
 ```sh
 $ wrangler kv:namespace create "MY_KV" --preview
-🌀  Creating namespace with title "my-site-MY_KV_preview"
-✨  Success!
-Add the following to your wrangler.toml:
+🌀 Creating namespace with title "my-site-MY_KV_preview"
+✨ Success!
+Add the following to your configuration file in your kv_namespaces array:
 kv_namespaces = [
   { binding = "MY_KV", preview_id = "15137f8edf6c09742227e99b08aaf273" }
 ]
@@ -618,8 +621,8 @@ Below is an example of deleting a KV namespace called MY_KV.
 $ wrangler kv:namespace delete --binding=MY_KV
 Are you sure you want to delete namespace f7b02e7fc70443149ac906dd81ec1791? [y/n]
 yes
-🌀  Deleting namespace f7b02e7fc70443149ac906dd81ec1791
-✨  Success
+Deleting namespace f7b02e7fc70443149ac906dd81ec1791
+Deleted namespace f7b02e7fc70443149ac906dd81ec1791
 ```
 
 {{</Aside>}}
@@ -631,8 +634,8 @@ Below is an example of deleting a preview KV namespace called MY_KV.
 $ wrangler kv:namespace delete --binding=MY_KV --preview
 Are you sure you want to delete namespace 15137f8edf6c09742227e99b08aaf273? [y/n]
 yes
-🌀  Deleting namespace 15137f8edf6c09742227e99b08aaf273
-✨  Success
+Deleting namespace 15137f8edf6c09742227e99b08aaf273
+Deleted namespace 15137f8edf6c09742227e99b08aaf273
 ```
 
 {{</Aside>}}
@@ -687,7 +690,7 @@ Below is an example that puts a key-value into the namespace with binding name o
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value"
-✨  Success
+Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -697,7 +700,7 @@ Below is an example that puts a key-value into the preview namespace with bindin
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV --preview "my-key" "some-value"
-✨  Success
+Writing the value "some-value" to key "my-key" on namespace 15137f8edf6c09742227e99b08aaf273.
 ```
 
 {{</Aside>}}
@@ -707,7 +710,7 @@ Below is an example that puts a key-value into a namespace, with a time-to-live 
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" "some-value" --ttl=10000
-✨  Success
+Writing the value "some-value" to key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -717,7 +720,7 @@ Below is an example that puts a key-value into a namespace, where the value is r
 
 ```sh
 $ wrangler kv:key put --binding=MY_KV "my-key" --path=value.txt
-✨  Success
+Writing the contents of value.txt to the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -836,10 +839,7 @@ Below is an example that deletes the key-value pair with key `"my-key"` from the
 
 ```sh
 $ wrangler kv:key delete --binding=MY_KV "my-key"
-Are you sure you want to delete key "my-key"? [y/n]
-yes
-🌀  Deleting key "my-key"
-✨  Success
+Deleting the key "my-key" on namespace f7b02e7fc70443149ac906dd81ec1791.
 ```
 
 {{</Aside>}}
@@ -929,8 +929,7 @@ Here is an example of writing all the key-value pairs found in the `allthethings
 
 ```sh
 $ wrangler kv:bulk put --binding=MY_KV allthethingsupload.json
-🌀  uploading 1 key value pairs
-✨  Success
+Success!
 ```
 
 {{</Aside>}}
@@ -974,10 +973,8 @@ Below is an example of deleting all the keys found in the `allthethingsdelete.js
 
 ```sh
 $ wrangler kv:bulk delete --binding=MY_KV allthethingsdelete.json
-Are you sure you want to delete all keys in allthethingsdelete.json? [y/n]
-y
-🌀  deleting 1 key value pairs
-✨  Success
+? Are you sure you want to delete all keys in allthethingsdelete.json from kv-namespace with id "f7b02e7fc70443149ac906dd81ec1791"? › (Y/n)
+Success!
 ```
 
 {{</Aside>}}
@@ -1134,7 +1131,7 @@ You will be prompted to input the secret's value. For example:
 
 ```sh
 $ wrangler secret put FOO
-Enter a secret value: ***
+? Enter a secret value: › ***
 🌀 Creating the secret for script worker-app
 ✨ Success! Uploaded secret FOO
 ```
@@ -1216,7 +1213,7 @@ Manage multiple secrets for a Worker.
 The path to a JSON file containing secrets in key-value pairs to upload.
 
 ```sh
-$ wrangler secret:bulk json <FILE> [OPTIONS]
+$ wrangler secret:bulk <JSON> [OPTIONS]
 ```
 
 {{<definitions>}}
@@ -1302,7 +1299,7 @@ Configure Cloudflare Pages.
 
 {{<Aside type="warning">}}
 The `wrangler pages ...` commands are in beta.<br>
-Report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose.
+Report any issues to https://github.com/cloudflare/workers-sdk/issues/new/choose.
 {{</Aside>}}
 
 ### `dev`
@@ -1545,12 +1542,14 @@ $ wrangler deployments
 Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on: 2022-11-11T15:49:08.117218Z
 Author: example@cloudflare.com
-Source: Dashboard
+Trigger: Upload from Wrangler 🤠
+Rollback from: MOCK-DEPLOYMENT-ID-2222
 
 Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
 Created on: 2022-11-11T15:51:20.79936Z
 Author: example@cloudflare.com
-Source: Wrangler
+Trigger: Upload from Wrangler 🤠
+Rollback from: MOCK-DEPLOYMENT-ID-2222
 🟩 Active
 
 ```
@@ -1561,6 +1560,178 @@ Source: Wrangler
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 
 {{</definitions>}}
+
+---
+## dispatch namespace
+
+### list
+
+ List all dispatch namespaces.
+
+```sh
+$ wrangler dispatch-namespace list 
+```
+### get
+
+Get information about a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace get <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the dispatch namespace to get details about.
+
+### create
+
+Create a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace create <NAME>
+```
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the dispatch namespace to create.
+
+### delete
+
+Delete a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace get <NAME>
+```
+{{<Aside type="note">}}
+You must delete all user Workers in the dispatch namespace before it can be deleted.
+{{</Aside>}}
+
+{{<definitions>}}
+
+- `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The name of the dispatch namespace to delete.
+
+### rename
+
+Rename a dispatch namespace.
+
+```sh
+$ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
+```
+
+{{<definitions>}}
+
+- `OLD NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The previous name of the dispatch namespace.
+
+- `NEW NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The new name of the dispatch namespace.
+
+---
+## `mtls-certificate`
+
+Manage client certificates used for mTLS connections in subrequests.
+
+These certificates can be used in [`mtls_certificate` bindings](/workers/runtime-apis/mtls), which allow a Worker to present the certificate when establishing a connection with an origin that requires client authentication (mTLS).
+
+### `upload`
+
+Upload a client certificate.
+
+```sh
+$ wrangler mtls-certificate upload [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--cert` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A path to the TLS certificate to upload. Certificate chains are supported
+- `--key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+  - A path the private key to upload.
+- `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Below is an example of using the `upload` command to upload an mTLS certificate.
+
+```sh
+$ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-origin-cert
+Uploading mTLS Certificate my-origin-cert...
+Success! Uploaded mTLS Certificate my-origin-cert
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Expires: 1/01/2025
+```
+
+You can then add this certificate as a binding in your `wrangler.toml`:
+```toml
+mtls_certificates = [
+  { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
+]
+```
+{{</Aside>}}
+
+### `list`
+
+List mTLS certificates associated with the current account ID.
+
+```sh
+$ wrangler mtls-certificate list
+```
+
+{{<Aside type="note">}}
+Below is an example of using the `list` command to upload an mTLS certificate.
+
+```sh
+$ wrangler mtls-certificate list
+ID: 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Name: my-origin-cert
+Issuer: CN=my-secured-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+
+ID: c5d004d1-8312-402c-b8ed-6194328d5cbe
+Issuer: CN=another-origin.com,OU=my-team,O=my-org,L=San Francisco,ST=California,C=US
+Created on: 1/01/2023
+Expires: 1/01/2025
+```
+{{</Aside>}}
+
+### `delete`
+
+```sh
+$ wrangler mtls-certificate delete [OPTIONS]
+```
+
+{{<definitions>}}
+
+- `--id` {{<type>}}string{{</type>}}
+  - The ID of the mTLS certificate.
+- `--name` {{<type>}}string{{</type>}}
+  - The name assigned to the mTLS certificate at upload.
+- Note that you must provide either `--id` or `--name` for this command to run successfully.
+
+{{</definitions>}}
+
+{{<Aside type="note">}}
+Below is an example of using the `delete` command to delete an mTLS certificate.
+
+```sh
+$ wrangler mtls-certificate delete --id 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d
+Are you sure you want to delete certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d (my-origin-cert)? [y/n]
+yes
+Deleting certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d...
+Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
+```
+{{</Aside>}}
 
 ---
 

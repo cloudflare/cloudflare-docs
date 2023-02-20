@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="note">}}
 
-This is an installation guide for the new version of Wrangler. If you previously had Wrangler 1 installed or were working on a Wrangler 1 project, refer to the [Migration guide](/workers/wrangler/migration/migrating-from-wrangler-1/).
+This is an installation guide for the new version of Wrangler. If you previously had Wrangler v1 installed or were working on a Wrangler v1 project, refer to the [Migration guide](/workers/wrangler-legacy/migration/).
 
 {{</Aside>}}
 
@@ -16,7 +16,7 @@ Wrangler is a command-line tool for building with Cloudflare developer products.
 
 ## Install Wrangler
 
-To install [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
+To install [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [Node.js](https://nodejs.org/en/) and [npm](https://docs.npmjs.com/getting-started) installed, preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Wrangler requires a Node.js version of `16.13.0` or later.
 
 {{<Aside type="warning" header="Install Wrangler locally">}}
 
@@ -65,13 +65,7 @@ $ wrangler version
 To update Wrangler only in your current directory containing a `package.json`, run:
 
 ```sh
-$ npm upgrade wrangler --save
-```
-
-or
-
-```sh
-$ npm update wrangler --save
+$ npm install wrangler
 ```
 
 ### Update Wrangler globally

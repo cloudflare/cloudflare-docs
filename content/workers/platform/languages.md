@@ -18,7 +18,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 | Language   | Template                                                                                          |
 | ---------- | ------------------------------------------------------------------------------------------------- |
 | JavaScript | [cloudflare/worker-template](https://github.com/cloudflare/worker-template)                       |
-| TypeScript | [cloudflare/worker-typescript-template](https://github.com/cloudflare/worker-typescript-template) |
+| TypeScript | [cloudflare/workers-sdk/templates/worker-typescript](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript) |
 
 {{</table-wrap>}}
 
@@ -38,7 +38,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 | Language | Template                                                                                          |
 | -------- | ------------------------------------------------------------------------------------------------- |
 | Rust     | [cloudflare/rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template)     |
-| C        | [cloudflare/worker-emscripten-template](https://github.com/cloudflare/worker-emscripten-template) |
+| C        | [cloudflare/workers-sdk/templates/worker-emscripten](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-emscripten) |
 | Cobol    | [cloudflare/cobol-worker-template](https://github.com/cloudflare/cobol-worker-template)           |
 
 {{</table-wrap>}}

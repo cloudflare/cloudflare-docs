@@ -19,7 +19,7 @@ To enable a Logpush service to New Relic via the dashboard:
 
 2.  Select the Enterprise account or domain you want to use with Logpush.
 
-3.  Go to **Analytics** > **Logs**.
+3.  Go to **Analytics & Logs** > **Logs**.
 
 4.  Select **Connect a service** and a modal window will open.
 

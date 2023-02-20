@@ -24,41 +24,33 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-02-06</td>
-      <td>2023-02-13</td>
+      <td>2023-02-17</td>
+      <td>2023-02-27</td>
       <td>Block</td>
-      <td>100561</td>
-      <td>...d3cdd6ac</td>
-      <td>Remote Code Execution - Double Extension</td>
+      <td>100564</td>
+      <td>...5d38ed42</td>
+      <td>Oracle E-Business Suite - Remote Code Execution - CVE:CVE-2022-21587</td>
       <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-02-06</td>
-      <td>2023-02-13</td>
+      <td>2023-02-17</td>
+      <td>2023-02-27</td>
       <td>Block</td>
-      <td>100016_BETA</td>
-      <td>...dd4a65f4</td>
-      <td>Version Control - Information Disclosure - BETA</td>
-      <td>This detection will replace 100016 on Legacy WAF and ...0550c529 on new WAF</td>
-    </tr>
-    <tr>
-      <td>2023-02-06</td>
-      <td>2023-02-13</td>
-      <td>Disabled</td>
-      <td>100563</td>
-      <td>...a6fda143</td>
-      <td>Template Injection</td>
+      <td>100566</td>
+      <td>...d7e78753</td>
+      <td>Ruby on Rails - Remote Code Execution</td>
       <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-01-30</td>
-      <td>2023-02-13</td>
+      <td>2023-02-17</td>
+      <td>2023-02-27</td>
       <td>Block</td>
-      <td>100303_BETA</td>
-      <td>...d5488862</td>
-      <td>Command Injection - Nslookup</td>
-      <td>This detection will replace 100303 on Legacy WAF and ...b090ba9a on new WAF</td>
+      <td>100568</td>
+      <td>...72612a5b</td>
+      <td>Cacti - Remote Code Execution - CVE:CVE-2022-46169</td>
+      <td>N/A</td>
     </tr>
-</tbody>
+  </tbody>
 </table>
 {{</table-wrap>}}
+
