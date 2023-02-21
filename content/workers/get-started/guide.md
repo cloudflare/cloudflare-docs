@@ -22,7 +22,7 @@ The Workers command-line interface, Wrangler, allows you to [`init`](/workers/wr
 
 To use [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
 
-To create a project, run:
+To create a new Workers project (named `my-project`), run:
 
 ```sh
 $ npx wrangler init my-project
