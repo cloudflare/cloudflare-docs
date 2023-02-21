@@ -26,8 +26,8 @@
       {{- end -}}
       &nbsp;&nbsp;>&nbsp;&nbsp;
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="{{- print $rellink "/" -}}" itemprop="item" {{- if eq $title "..." -}}aria-label="{{- $page.Title -}}" title="{{- $page.Title -}}"{{- end -}}class="DocsMarkdown--link">
-            <span class="DocsMarkdown--link-content" {{- if ne $title "..." -}}itemprop="name"{{- end -}}>{{- $title -}}</span></a>
+          <a href="{{- print $rellink "/" -}}" itemprop="item" class="DocsMarkdown--link" {{if eq $title "..."}}aria-label="{{- $page.Title -}}" title="{{- $page.Title -}}"{{end}}>
+            <span class="DocsMarkdown--link-content" {{if ne $title "..."}} itemprop="name" {{end}}>{{- $title -}}</span></a>
           {{- if eq $title "..." -}}
           <meta itemprop="name" content="{{$page.Title}}" />
           {{- end -}}

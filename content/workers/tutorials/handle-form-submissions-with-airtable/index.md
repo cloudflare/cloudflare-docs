@@ -9,6 +9,8 @@ layout: single
 
 # Handle form submissions with Airtable
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -183,7 +185,7 @@ Further down the page, you will begin to see example requests, showing you how t
 
 ![An example request in Airtable's API documentation, with the Airtable API key highlighted](api-key.png)
 
-To make this API key available in your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
+To make this API key available in your codebase, use the [`wrangler secret`](/workers/wrangler-legacy/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
 
 Run `wrangler secret put`, passing `AIRTABLE_API_KEY` as the name of your secret:
 
@@ -298,7 +300,7 @@ const createAirtableRecord = body => {
 }
 ```
 
-To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler/cli-wrangler/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
+To make an authenticated request to Airtable, you need to provide three constants that represent data about your Airtable account, base, and table name. You have already set `AIRTABLE_API_KEY` using `wrangler secret`, since it is a value that should be encrypted. The **Airtable base ID** and **table name** are values that can be publicly shared in places like GitHub. Use Wrangler's [`vars`](/workers/wrangler-legacy/configuration/#vars) feature to pass public environment variables from your `wrangler.toml` file.
 
 Add a `vars` table at the end of your `wrangler.toml` file:
 

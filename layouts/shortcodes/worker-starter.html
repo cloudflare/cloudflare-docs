@@ -5,7 +5,8 @@
 {{- $remote := printf "https://github.com/%s" $repo -}}
 {{- $template := cond (hasPrefix $repo "cloudflare/templates/") (path.Base $repo) $repo -}}
 {{- $command := printf "npx wrangler generate my-app %s" $template -}}
-{{- $link := cond (hasPrefix $repo "cloudflare/templates/") (printf "https://github.com/cloudflare/templates/tree/main/%s" $template) $remote}}
+{{- $link := cond (hasPrefix $repo "cloudflare/templates/") (printf
+"https://github.com/cloudflare/templates/tree/main/%s" $template) $remote}}
 
 <div class="WorkerStarter">
   <div class="WorkerStarter--title">
@@ -17,13 +18,5 @@
     {{- $descr -}}
   </div>
 
-  <div class="WorkerStarter--command">
-    <div class="WorkerStarter--command-copy-button-wrapper">
-      <button class="Button" data-clipboard="{{ $command }}">Copy</button>
-    </div>
-
-    <div class="WorkerStarter--command-codeblock-wrapper">
-      {{- .Page.RenderString (printf "```txt\n%s\n```" $command) -}}
-    </div>
-  </div>
+  {{- .Page.RenderString (printf "```sh\n$ %s\n```" $command) -}}
 </div>

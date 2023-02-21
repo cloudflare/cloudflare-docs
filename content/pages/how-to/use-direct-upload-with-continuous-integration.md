@@ -189,4 +189,4 @@ env:
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler 2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+In the code block above you have specified the language as `node_js` and listed the value as `18.0.0` because Wrangler v2 depends on this Node version or higher. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.

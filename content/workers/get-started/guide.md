@@ -20,7 +20,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 The Workers command-line interface, Wrangler, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To use [Wrangler](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
+To use [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
 
 To create a new Workers project (named `my-project`), run:
 
@@ -49,7 +49,7 @@ In your project directory, `wrangler init` has generated the following files:
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
 2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
-4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://github.com/cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
+4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://www.npmjs.com/package/@cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
 
 ---
 

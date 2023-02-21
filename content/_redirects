@@ -172,14 +172,16 @@
 /cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
 
 # cloudflare for platforms
+/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/analytics/ /cloudflare-for-platforms/workers-for-platforms/platform/observability/ 301
 
 # d1
-/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
-/d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/client-api/ /d1/platform/client-api/ 301
-/d1/migrations/ /d1/platform/migrations/ 301
 /d1/community-projects/ /d1/platform/community-projects/ 301
+/d1/learning/using-d1-from-pages/ /pages/platform/functions/bindings/#d1-databases 301
+/d1/migrations/ /d1/platform/migrations/ 301
+/d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
+/d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
 
 # ddos-protection
 /ddos-protection/managed-rulesets/tcp-protection/ /ddos-protection/tcp-protection/ 301
@@ -193,6 +195,7 @@
 /email-routing/email-routing-options/ /email-routing/setup/ 301
 /email-routing/get-started/email-addresses/ /email-routing/setup/email-routing-addresses/ 301
 /email-routing/get-started/settings/ /email-routing/setup/ 301
+/email-routing/known-limitations/ /email-routing/postmaster/ 301
 
 # firewall
 /firewall/api/cf-lists/ /fundamentals/global-configurations/lists/lists-api/ 301
@@ -385,6 +388,12 @@
 # page-shield
 /page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
 /page-shield/use-dashboard/configure-reporting-endpoint/ /page-shield/reference/settings/#csp-reporting-endpoint 301
+
+# queues
+/queues/configuration/ /queues/platform/configuration/ 301
+/queues/javascript-apis/ /queues/platform/javascript-apis/ 301
+/queues/limits/ /queues/platform/limits/ 301
+/queues/pricing/ /queues/platform/pricing/ 301
 
 # radar
 /fundamentals/radar/ /radar/ 301
@@ -580,7 +589,10 @@
 /workers/cli-wrangler/ /workers/wrangler/ 301
 /workers/cli-wrangler/install-update/ /workers/wrangler/install-and-update/ 301
 /workers/cli-wrangler/authentication/ /workers/wrangler/install-and-update/ 301
-/workers/cli-wrangler/webpack/ /workers/wrangler/migration/eject-webpack/ 301
+/workers/cli-wrangler/webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
+/workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
+/workers/wrangler-legacy/migration/migrating-from-wrangler-1/ /workers/wrangler-legacy/migration/ 301
+
 /workers/deploying-workers/serverless/ /workers/learning/integrations/ 301
 /workers/deploying-workers/terraform/ /workers/learning/integrations/ 301
 /workers/examples/rustwasm/ /workers/tutorials/hello-world-rust/ 301
@@ -680,8 +692,8 @@
 /workers/tooling/wrangler/secrets/ /workers/wrangler/commands/ 301
 /workers/tooling/wrangler/sites/ /pages/ 301
 /workerssites/config/ /pages/ 301
-/workers/tooling/wrangler/webpack/ /workers/wrangler/cli-wrangler/webpack/ 301
-/workers/wrangler/webpack/ /workers/wrangler/cli-wrangler/webpack/ 301
+/workers/tooling/wrangler/webpack/ /workers/wrangler-legacy/webpack/ 301
+/workers/wrangler/webpack/ /workers/wrangler-legacy/webpack/ 301
 /workers/tutorials/authorize-users-with-auth0/ /workers/ 301
 /workers/tutorials/build-a-rustwasm-function/ /workers/tutorials/hello-world-rust/ 301
 /workers/templates/pages/rustwasm/ /workers/tutorials/hello-world-rust/ 301
@@ -690,7 +702,7 @@
 /workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
-/workers/wrangler/eject-webpack/ /workers/wrangler/migration/eject-webpack/ 301
+/workers/wrangler/eject-webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/learning/debugging-workers/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
@@ -829,6 +841,8 @@
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/workers/wrangler/migration/* /workers/wrangler-legacy/migration/:splat 301
+/workers/wrangler/cli-wrangler/* /workers/wrangler-legacy/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

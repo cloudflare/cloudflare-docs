@@ -10,7 +10,7 @@ meta:
 
 When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to create a child domain depend on the parent domain's setup and whether the child domain already exists.
 
-<div class="mermaid">
+```mermaid
     flowchart TD
       accTitle: DNS resolution flow with CNAME target in same partial zone
       A[<code>example.com</code>] --> B[<code>docs.example.com</code>]
@@ -22,7 +22,7 @@ When using a [subdomain setup](/dns/zone-setups/subdomain-setup/), the steps to 
         B
         C
       end
-</div>
+```
 
 ---
 

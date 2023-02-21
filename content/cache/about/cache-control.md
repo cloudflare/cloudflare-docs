@@ -126,25 +126,25 @@ The table below lists directives and their behaviors when Origin Cache-Control i
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        <code>no-cache=&ltheaders&gt</code>
+        <code>no-cache=&lt;headers&gt;</code>
       </td>
       <td colspan="5" rowspan="1">
         Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Caches if headers mentioned in <code>no-cache=&ltheaders&gt</code> do not exist. Always
-        revalidates if any header mentioned in <code>no-cache=&ltheaders&gt</code> is present.
+        Caches if headers mentioned in <code>no-cache=&lt;headers&gt;</code> do not exist. Always
+        revalidates if any header mentioned in <code>no-cache=&lt;headers&gt;</code> is present.
       </td>
     </tr>
     <tr>
       <td colspan="5" rowspan="1">
-        <code>Private=&ltheaders&gt</code>
+        <code>Private=&lt;headers&gt;</code>
       </td>
       <td colspan="5" rowspan="1">
         Will not cache at all
       </td>
       <td colspan="5" rowspan="1">
-        Does not cache <code>&ltheaders&gt</code> values mentioned in <code>Private=&ltheaders&gt</code> directive.
+        Does not cache <code>&lt;headers&gt;</code> values mentioned in <code>Private=&lt;headers&gt;</code> directive.
       </td>
     </tr>
     <tr>

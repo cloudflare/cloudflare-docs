@@ -8,7 +8,7 @@ weight: 2
 
 Version Management works through a combination of **environments** and **versions**.
 
-<div class="mermaid">
+```mermaid
 stateDiagram-v2
     V2: Version 2
     V22: Version 2 <br/>(applied manually)
@@ -38,7 +38,7 @@ stateDiagram-v2
     note right of Revert
             Once promoted into an environment, a version can be rolled back.
         end note
-</div>
+```
 
 ## Environments
 

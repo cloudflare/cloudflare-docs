@@ -6,15 +6,15 @@ weight: 8
 
 # TypeScript
 
-Pages Functions supports TypeScript. You can author any files in your `functions/` directory with a `.ts` extension instead of a `.js` extension to start taking advantage of TypeScript.
+Pages Functions supports TypeScript. Author any files in your `/functions` directory with a `.ts` extension instead of a `.js` extension to start using TypeScript.
 
-The runtime types can be added to your project by installing the following:
+To add the runtime types to your project, run:
 
 ```sh
 $ npm install --save-dev typescript @cloudflare/workers-types
 ```
 
-And then configured by creating a `functions/tsconfig.json` file:
+Then configure the runtime types by creating a `functions/tsconfig.json` file:
 
 ```json
 ---
@@ -30,7 +30,7 @@ filename: functions/tsconfig.json
 }
 ```
 
-If you already have a tsconfig.json at the root of your project, you may wish to explicitly exclude the functions directory to avoid conflicts:
+If you already have a `tsconfig.json` at the root of your project, you may wish to explicitly exclude the `/functions` directory to avoid conflicts. To exlude the `/functions` directory:
 
 ```json
 ---
@@ -45,8 +45,12 @@ filename: tsconfig.json
 }
 ```
 
-Pages Functions themselves can be typed using the `PagesFunction` type. This type accepts an Env parameter. You can use it like so:
+Pages Functions can be typed using the `PagesFunction` type. This type accepts an `Env` parameter. To use the `env` parameter:
+
 ```ts
+---
+filename: functions/example.ts
+---
 interface Env {
 	KV: KVNamespace;
 }

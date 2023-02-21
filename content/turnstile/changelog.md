@@ -7,7 +7,11 @@ rss: file
 
 # Changelog
 
-## 2022-02-01
+## 2023-02-15
+
+- Added the [`[turnstile.ready]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) callback.
+
+## 2023-02-01
 
 - Added the [`[data-]language`](/turnstile/get-started/client-side-rendering/#configurations) parameter.
 

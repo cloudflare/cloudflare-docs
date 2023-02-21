@@ -38,6 +38,20 @@ You can bypass the **Are you sure** prompt by passing `-f` as a parameter to the
 
 {{</Aside>}}
 
+## Linux
+
+On CentOS 8, RHEL 8:
+
+```sh
+$ sudo yum remove cloudflare-warp
+```
+
+On Ubuntu 18.04, Ubuntu 20.04, Ubuntu 22.04, Debian 9, Debian 10, Debian 11:
+
+```sh
+$ sudo apt remove cloudflare-warp
+```
+
 ## iOS and Android
 
 1. Find the 1.1.1.1 application on the home screen.

@@ -84,6 +84,8 @@ When using this option, HTML elements with the `cf-turnstile` class will not sho
 
 ```html
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
+<!-- OR and then call turnstile.ready(onloadTurnstileCallback) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
 ```
 </div>
 
@@ -101,6 +103,9 @@ window.onloadTurnstileCallback = function () {
         },
     });
 };
+
+// if using synchronous loading, will be called once the DOM is ready
+turnstile.ready(onloadTurnstileCallback);
 
 ```
 </div>

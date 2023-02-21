@@ -10,7 +10,7 @@ After you [add a new domain](/fundamentals/get-started/setup/add-site/) to Cloud
 
 This error occurs when visitors get stuck in a redirect loop.
 
-<div class="mermaid">
+```mermaid
 flowchart LR
 accTitle: Redirect loops illustration
 A[Request for <code>http://example.com</code>] --> B[Redirect to <code>https://example.com</code>]
@@ -20,7 +20,7 @@ subgraph Redirect Loop
 B
 C
 end
-</div>
+```
 <br/>
 
 This error is commonly caused by:
@@ -48,7 +48,7 @@ If your domain's encryption mode is set to [**Flexible**](/ssl/origin-configurat
 
 Redirect loops will occur if your origin server automatically redirects all HTTP requests to HTTPS.
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for Flexible mode
 A[Request for <code>https://example.com</code>] --> B[Encryption mode redirects to <code>http://example.com</code>]
@@ -60,7 +60,7 @@ end
 subgraph Origin server
 C
 end
-</div>
+```
 <br/>
 
 To solve this issue, either remove HTTPS redirects from your origin server or update your SSL/TLS Encryption Mode to be [**Full**](/ssl/origin-configuration/ssl-modes/full/) or higher (requires an SSL certificate configured at your origin server).
@@ -71,7 +71,7 @@ If your domain's encryption mode is set to [**Full**](/ssl/origin-configuration/
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP.
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for Full or Full (strict) mode
 A[Request for <code>http://example.com</code>] --> B[Encryption mode redirects to <code>https://example.com</code>]
@@ -83,7 +83,7 @@ end
 subgraph Origin server
 C
 end
-</div>
+```
 <br/>
 
 To solve this issue, remove HTTP redirects from your origin server.
@@ -98,7 +98,7 @@ If you have [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/alw
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP.
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for Always Use HTTPS
 A[Request for <code>http://example.com</code>] --> B[Always Use HTTPS redirects to <code>https://example.com</code>]
@@ -110,7 +110,7 @@ end
 subgraph Origin server
 C
 end
-</div>
+```
 <br/>
 
 To solve this issue, remove HTTPS redirects from your origin server or [disable **Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/).
@@ -121,7 +121,7 @@ If you have [**HTTP Strict Transport Security (HSTS)**](/ssl/edge-certificates/a
 
 Redirect loops will occur if your origin server automatically redirects all HTTPS requests to HTTP or if you have your domain's encryption mode set to [**Off**](/ssl/origin-configuration/ssl-modes/off/).
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for HTTP Strict Transport Security
 A[Request for <code>https://example.com</code>] --> B[Encryption mode redirects to <code>http://example.com</code>]
@@ -136,7 +136,7 @@ end
 subgraph Origin server
 D
 end
-</div>
+```
 <br/>
 
 To solve this issue, remove HTTPS redirects from your origin server and make sure your domain's encryption mode is [**Flexible**](/ssl/origin-configuration/ssl-modes/flexible/) or higher.
@@ -149,7 +149,7 @@ Alternatively, [disable **HTTP Strict Transport Security (HSTS)**](/ssl/edge-cer
 
 Redirect loops can also occur if you have conflicting URL redirects.
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Redirect loops illustration for redirect rules
 A[Request for <code>https://a.example.com</code>] --> B[Redirect to <code>http://b.example.com</code>]
@@ -159,7 +159,7 @@ subgraph Cloudflare
 B
 C
 end
-</div>
+```
 <br/>
 
 To solve this issue, review your various [URL forwarding rules](/rules/url-forwarding/) and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to make sure no rules are not in conflict with each other.

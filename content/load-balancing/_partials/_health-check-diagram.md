@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-<div class="mermaid">
+```mermaid
     flowchart LR
       accTitle: Load balancing monitor flow
       accDescr: Dynamic load balancing involves pools, origins, monitors, and health checks.
@@ -15,4 +15,4 @@ _build:
       Origin1((Origin 1))
       Origin2((Origin 2))
       end
-</div>
+```

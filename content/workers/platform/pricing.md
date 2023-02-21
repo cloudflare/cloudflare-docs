@@ -43,7 +43,7 @@ Workers are available under two Usage Models: Bundled and Unbound. Usage Models 
 
 When an account is first upgraded to the Paid plan, the Unbound plan is used as the default Usage Model. You may change your default Usage Model account-wide by going to the **Account Home** > **Workers** > **Overview** > **Default Usage Model** > **Change**. Cloudflare recommends setting the default to the type of Worker you create the most. Existing Workers will not be impacted when changing the default Usage Model.
 
-You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/cli-wrangler/configuration#keys) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
+You may change the Usage Model for individual Workers without affecting your account-wide default. You can do this through the [`usage_model` key](/workers/wrangler/configuration/) in your `wranger.toml` file or through the dashboard: **Workers** > **select your Worker** > **Settings** > **Usage Model**.
 
 ### Same features
 
@@ -103,7 +103,7 @@ Workers Logpush is only available on the Workers Paid plan.
 
 ## Queues
 
-Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/pricing/).
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/platform/pricing/).
 
 ## Durable Objects
 

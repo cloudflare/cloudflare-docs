@@ -27,7 +27,7 @@ To allow `jdoe@example.com` to log in as the user `johndoe`, add the following t
 
 ```txt
 Match user johndoe
-  AuthorizedPrincipalsCommand echo 'jdoe'
+  AuthorizedPrincipalsCommand /bin/echo 'jdoe'
   AuthorizedPrincipalsCommandUser nobody
 ```
 
@@ -56,7 +56,7 @@ To allow any Access user to log in as `vmuser`, add the following command to the
 
 ```txt
 Match user vmuser
-  AuthorizedPrincipalsCommand bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
+  AuthorizedPrincipalsCommand /bin/bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
   AuthorizedPrincipalsCommandUser nobody
 ```
 
@@ -67,7 +67,7 @@ This command takes the certificate presented by the user and authorizes whatever
 To allow any Access user to log in with any username, add the following to the server's `/etc/ssh/sshd_config`:
 
 ```txt
-AuthorizedPrincipalsCommand bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
+AuthorizedPrincipalsCommand /bin/bash -c "echo '%t %k' | ssh-keygen -L -f - | grep -A1 Principals"
 AuthorizedPrincipalsCommandUser nobody
 ```
 

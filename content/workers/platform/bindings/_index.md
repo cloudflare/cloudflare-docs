@@ -48,10 +48,17 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
-* Configure Queue bindings via your [`wrangler.toml` file](/queues/configuration/).
+* Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
 * Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dynamic-dispatch-worker).
+
+### mTLS certificate bindings
+
+mTLS certificate bindings enable Worker subrequests to present a client certificate when communicating with a service that requires client authentication.
+
+* Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
+* Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).

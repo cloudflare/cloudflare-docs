@@ -37,14 +37,14 @@ Note that while in beta, only live streams or live recordings created after Octo
 The video below is playing using the AV1 codec.
 
 <figure data-type="stream">
-  <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
+  <div class="AspectRatio" style="--aspect-ratio: calc(16 / 9)">
     <iframe
-      className="AspectRatio--content"
+      class="AspectRatio--content"
       src="https://cool-sf-videos.pages.dev/"
       title="Example Stream video"
-      frameBorder="0"
+      frame-border="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen></iframe>
+      allow-full-screen></iframe>
   </div>
 </figure>
 
