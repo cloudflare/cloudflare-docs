@@ -116,7 +116,7 @@ header: Publish to workers.dev
 $ npx wrangler publish
 ```
 
-You can preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
+Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 {{<Aside type="note" header="Note">}}
 
