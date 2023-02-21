@@ -10,4 +10,4 @@ Each health check is trying to answer two questions:
 1. **Is the server offline?**: Does the server respond to the health check at all? If so, does it respond quickly enough (as specified in the monitor's **Timeout** field)?
 2. **Is the server working as expected?**: Does the server respond with the expected HTTP response codes? Does it include specific information in the response body?
 
-If the answer to either of these questions result is a "No", then the server fails the health check.
+If the answer to either of these questions result in a "No", then the server fails the health check.
