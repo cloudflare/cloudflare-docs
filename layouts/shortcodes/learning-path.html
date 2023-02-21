@@ -5,9 +5,9 @@
 {{- $totalReadingTime := 0 -}}
 
 <!-- Get the data from the correct folder -->
-{{- range readDir "./data/learning-paths/" -}}
+{{- range readDir "./assets/json/" -}}
 {{- if eq .Name $filename }}
-{{- $fileplaceholder :=  print "./data/learning-paths/" .Name -}}
+{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
 {{- $file_data := getJSON $fileplaceholder -}}
 {{- $data = $data | append $file_data -}}
 {{- end -}}
