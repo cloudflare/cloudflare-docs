@@ -1,9 +1,9 @@
 ---
-title: Data Location
+title: Data location
 pcx_content_type: concept
 ---
 
-# Data Location 
+# Data location 
 
 Learn how the location of data stored in R2 is determined and about the different available inputs that control the physical location where objects in your buckets are stored.
 
