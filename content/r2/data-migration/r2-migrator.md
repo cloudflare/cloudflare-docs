@@ -3,15 +3,15 @@ title: R2 Migrator
 pcx_content_type: how-to
 ---
 
-# R2 Migrator
+{{<beta heading="h1">}} R2 Migrator {{</beta>}}
+
+R2 Migrator (also known as [Super Slurper](https://blog.cloudflare.com/cloudflare-r2-super-slurper/)) allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
 {{<Aside type="note">}}
 
 This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.gg/rrZXVVcKQF) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
 
 {{</Aside>}}
-
-R2 Migrator (also known as [Super Slurper](https://blog.cloudflare.com/cloudflare-r2-super-slurper/)) allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
 Migration jobs created by R2 Migrator:
 
@@ -48,7 +48,7 @@ To create credentials with the correct permissions:
 1. Log in to your AWS IAM account.
 2. Create a policy with the following format and replace `<BUCKET_NAME>` with the bucket you want to grant access to:
 
-```js
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -69,4 +69,4 @@ To create credentials with the correct permissions:
 
 3. Create a new user and attach the created policy to that user.
 
-You can now use both the Access Key ID and Secret Access Key when defining your source bucket. Refer to Migrating data from Amazon S3 to R2 to learn more.
+You can now use both the Access Key ID and Secret Access Key when defining your source bucket. Refer to [Migrate data from Amazon S3 to R2](/r2/data-migration/r2-migrator/#migrate-data-from-amazon-s3-to-r2) to learn more.
