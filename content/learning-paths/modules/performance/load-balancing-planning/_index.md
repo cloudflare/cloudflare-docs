@@ -6,3 +6,5 @@ layout: learning-module
 ---
 
 # Planning your load balancer
+
+{{<learning-module-summary>}}

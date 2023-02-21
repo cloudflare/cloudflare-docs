@@ -1,4 +1,4 @@
-import { learning_paths as paths } from "json-collector";
+import { learning_paths as paths } from "../assets/json-collector";
 
 export function init() {
   const currentLocation = window.location.href;

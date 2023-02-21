@@ -15,16 +15,16 @@ Cloudflare will deploy some updates to security-related fields in Cloudflare Log
 
 To minimize possible impacts on our customers' existing Security Information and Event Management (SIEM) configurations, these updates will happen in two phases according to the following timeline:
 
-### Phase 1 (starting on February 1, 2023)
+### Phase 1 (February 1, 2023)
 
-For the log fields being added, they will start becoming available from February 1, 2023 onwards.
+For the log fields being added, Cloudflare will gradually start adding them to logs datasets.
 
 For the log fields being renamed, Cloudflare will:
 
-- **Add new fields** with the same data as the fields that will be removed on phase 2 (described in this document as old fields). Refer to the next sections for details.
-- **Announce the deprecation of the old fields.** These fields will be removed from logs datasets on August 1, 2023, giving you a six-month period to adapt.
+- **Add new fields** with the same data as the fields that will be removed on phase 2 (described in this document as old fields). These new fields will become gradually available. Refer to the next sections for details.
+- **Announce the deprecation of the old fields.** Cloudflare will remove these fields from logs datasets on August 1, 2023.
 
-For the logs fields being removed because they no longer apply, Cloudflare will announce their deprecation. These fields will also be removed from logs datasets on August 1, 2023.
+For the log fields being removed, Cloudflare is announcing them as deprecated. Their removal from logs datasets will occur on August 1, 2023.
 
 In addition to these Cloudflare Logs changes, Cloudflare will also add new security-related fields to the following [GraphQL datasets](/analytics/graphql-api/features/data-sets/):
   - `httpRequestsAdaptive `
@@ -37,7 +37,7 @@ In addition to these Cloudflare Logs changes, Cloudflare will also add new secur
 
 For the log fields being renamed, Cloudflare will remove the old fields from the Cloudflare logs datasets. From August 1, 2023 onwards, only the new fields will be available.
 
-For the log fields being removed because they no longer apply, Cloudflare will also remove them from the Cloudflare logs datasets. From August 1, 2023 onwards, these fields will no longer be available.
+For the log fields being removed, Cloudflare will also remove them from the Cloudflare logs datasets. From August 1, 2023 onwards, these fields will no longer be available.
 
 ## Concepts
 
@@ -64,7 +64,7 @@ The following fields will be renamed in the [HTTP Requests](/logs/reference/log-
 
 {{<table-wrap>}}
 
-New field name<br>(starting Feb 1, 2023) | Type | Description | Old field name<br>(removed on Aug 1, 2023)
+New field name | Type | Description | Old field name<br>(removed on Aug 1, 2023)
 ---|---|---|---
 `SecurityRuleID` | String | Rule ID of the security rule that triggered a terminating action, if any. | `WAFRuleID`
 `SecurityRuleDescription`	| String | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`
@@ -133,5 +133,5 @@ For more information on the available datasets, refer to [GraphQL datasets](/ana
 You may need to update external filters or reports in your SIEM systems to reflect the renamed, added, or removed log fields.
 
 {{<Aside type="note" header="Additional storage requirements">}}
-Cloudflare Logs will have additional fields between the start of Phase 1 and the beginning of Phase 2 (from Feb 1 to Aug 1) due to the field renaming strategy outlined in the overview section (add new fields first, remove old fields later). This means that each log entry will require additional storage space during this six-month period.
+Cloudflare Logs will have additional fields between the start of Phase 1 and the beginning of Phase 2, due to the field renaming strategy outlined in the overview section (add new fields first, remove old fields later). This means that each log entry will require additional storage space during this period.
 {{</Aside>}}

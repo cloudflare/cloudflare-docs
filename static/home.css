@@ -724,7 +724,7 @@ html[is-site-page] .DocsContent {
 @media (max-width:570px)  {
     .FeaturedContentBlock {
         width: unset;
-    };
+    }
 }
 
 [theme=dark] .FeaturedContentBlock {

@@ -11,7 +11,7 @@ Session Affinity automatically directs requests from the same client to the same
 2.  Subsequent requests by the same client are forwarded to that origin for the duration of the cookie and as long as the origin server remains healthy.
 3.  If the cookie expires or the origin server becomes unhealthy, Cloudflare sets a new cookie tracking the new failover origin.
 
-<div class="mermaid">
+```mermaid
     flowchart LR
       accTitle: Session affinity process
       accDescr: Session affinity directs requests from the same client to the same server.
@@ -25,7 +25,7 @@ Session Affinity automatically directs requests from the same client to the same
         O1[Origin 1]
         O2[Origin 2]
      end
-</div>
+```
 <br/>
 
 All sessions default to 23 hours unless you set a custom session _Time to live_ (TTL).

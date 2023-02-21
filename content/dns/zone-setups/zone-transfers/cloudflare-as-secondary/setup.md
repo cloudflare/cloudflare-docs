@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Setup
-weight: 2
+weight: 1
 meta:
    title: Set up incoming zone transfers (Cloudflare as Secondary)
 ---

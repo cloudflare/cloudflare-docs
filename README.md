@@ -31,7 +31,7 @@ When making changes to the site, including any content changes, you may run a lo
 $ npm run dev
 ```
 
-This spawns a server that will be accessible via `http://localhost:1313` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
+This spawns a server that will be accessible via `http://localhost:8788` in your browser. Additionally, any changes made within the project – including `content/**` changes – will automatically reload your browser tab(s), allowing you to instantly preview your changes!
 
 Additionally, this project includes a CI step for ensuring consistent code style. This applies to all files within the project, including markdown (`*.md`) files, but will not affect the content itself or the content's output display. To see the style error(s), you may run:
 

@@ -22,7 +22,7 @@ With a load balancer, requests first go through the load balancer. Your load bal
 
 Within each pool, requests then go to individual servers. And that server is what responds to the request.
 
-<div class="mermaid">
+```mermaid
     flowchart LR
       accTitle: Pool traffic flow
       accDescr: When an incoming request reaches a pool, it then goes to a server within the pool.
@@ -31,7 +31,7 @@ Within each pool, requests then go to individual servers. And that server is wha
         Origin1((Origin 1))
         Origin2((Origin 2))
       end
-</div>
+```
 <br/>
 
 This progression of load balancer --> pool --> server is the core part of how a load balancer works.

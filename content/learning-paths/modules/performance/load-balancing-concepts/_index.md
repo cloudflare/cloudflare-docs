@@ -6,3 +6,5 @@ layout: learning-module
 ---
 
 # Load balancing concepts
+
+{{<learning-module-summary>}}

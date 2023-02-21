@@ -13,7 +13,7 @@ title: Limits
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
+| [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
@@ -250,7 +250,7 @@ Simultaneous Open Connections are measured from the top-level request, meaning a
 
 ## Environment variables
 
-The maximum number of environment variables (secret and text combined) for a Worker is 64 variables.
+The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Paid plan, and 64 variables on the Free plan.
 There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.

@@ -8,7 +8,7 @@ weight: 3
 
 ## Background
 
-The `addEventListener` function defines triggers for a Worker script to execute. There are currently three types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/workers/runtime-apis/fetch-event/), `"scheduled"` listeners which are sent a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) and `"queue"` listeners which are sent [`QueueEvent`](/queues/javascript-apis/).
+The `addEventListener` function defines triggers for a Worker script to execute. There are currently three types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/workers/runtime-apis/fetch-event/), `"scheduled"` listeners which are sent a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) and `"queue"` listeners which are sent [`QueueEvent`](/queues/platform/javascript-apis/).
 
 ## Syntax
 
@@ -60,7 +60,7 @@ addEventListener('scheduled', event => {
 
 ### Queue Listener
 
-A Queue listener acts as [a consumer for one or more queues](https://developers.cloudflare.com/queues/javascript-apis/#consumer).
+A Queue listener acts as [a consumer for one or more queues](https://developers.cloudflare.com/queues/platform/javascript-apis/#consumer).
 
 ```js
 addEventListener("queue", (event) => {

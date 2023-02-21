@@ -10,7 +10,7 @@ Workers was designed and built on top of Cloudflare's edge network to allow deve
 
 By allowing developers to write to the cache, Workers provide a way to customize cache behavior on Cloudflare’s CDN. To learn about the benefits of caching, refer to the Learning Center’s article on [What is Caching?](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
-Since Cloudflare Workers can run before, and after the cache, a Worker can also be utilized to modify assets once they are returned from the cache, to sign or personalize responses, while reducing load on an origin, or latency to the end user by serving assets from a nearby location.
+Cloudflare Workers can run before and after the cache but can also be utilized to modify assets once they are returned from the cache. Modifying assets returned from cache allows for the ability to sign or personalize responses while also reducing load on an origin and reducing latency to the end user by serving assets from a nearby location.
 
 ---
 
@@ -42,7 +42,7 @@ In the previous example, `https://notexample.com/hello` is not proxied through C
 
 To better understand the example, take a look at the following diagram:
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: Single file purge  assets cached by a worker
 accDescr: This diagram is meant to help choose how to purge a file.
@@ -53,7 +53,7 @@ A("You have a Worker script that runs on https://example.com/hello and this Work
     C -- No --> F(Purge https://notexample.com/hello from the original example.com zone.)
     E -- Yes --> G(Purge https://notexample.com/hello from the notexample.com zone.)
     E -- No --> H(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
-</div>
+```
 
 ### Purging assets stored with the Cache API
 
@@ -81,7 +81,7 @@ Other means to control Cloudflare’s cache that are not mentioned in this docum
 
 {{<Aside type="note" header="What should I use: the Cache API or fetch for caching objects on Cloudflare?">}}
 
-For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no back end (that is, the entire project is on Workers as in [Workers Sites](/workers/platform/sites/)) the Cache API is the only option to customize caching.
+For requests where Workers are behaving as middleware (that is, Workers are sending a subrequest via `fetch`) it is recommended to use `fetch`. This is because preexisting settings are in place that optimize caching while preventing unintended dynamic caching. For projects where there is no backend (that is, the entire project is on Workers as in [Workers Sites](/workers/platform/sites/)) the Cache API is the only option to customize caching.
 
 The asset will be cached under the hostname specified within the Worker's subrequest — not the Worker's own hostname. Therefore, in order to purge the cached asset, the purge will have to be performed for the hostname included in the Worker subrequest.
 
