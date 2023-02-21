@@ -120,7 +120,7 @@ You can preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 {{<Aside type="note" header="Note">}}
 
-When pushing to your `*.workers.dev` subdomain for the first time, you may initially see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. It should work without any errors after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](https://support.cloudflare.com/hc/articles/115003011431#523error) while DNS is propagating. These errors should resolve themselves after a minute or so.
 
 {{</Aside>}}
 
