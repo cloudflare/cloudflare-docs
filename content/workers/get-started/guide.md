@@ -38,7 +38,7 @@ In your terminal, you will be asked a series of questions related to your projec
 
 You can also use one of [Cloudflare's templates](https://github.com/cloudflare/templates#usage) to start a new project.
 
-This will create new directory (`my-project`), and setup a new Workers project within it. To start developing your worker, `cd` into your new project directory:
+To start developing your Worker, `cd` into your new project directory:
 
 ```sh
 $ cd my-project
