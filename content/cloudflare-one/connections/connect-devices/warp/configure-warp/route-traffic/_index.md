@@ -32,7 +32,7 @@ Traffic excluded from WARP by Split Tunnel configuration will not be encrypted, 
 
 When you use the WARP client together with `cloudflared` Tunnels or third-party VPNs, Cloudflare evaluates each request and routes it according to the following traffic flow.
 
-<div class="mermaid">
+```mermaid
 flowchart TD
 accTitle: WARP traffic is evaluated and routed through various parts of the Cloudflare network
 A[WARP User requests resource] -- Domain does not match Local Domain Fallback --> C{WARP client resolves query according to Gateway DNS policies}
@@ -44,4 +44,4 @@ E -- "Passes CF Gateway network policies (allowed or unblocked)" --> H[Evaluated
 H -- Tunnel routes do not include resolver IP --> I{CF Gateway proxies query to resolver IP via normal WARP egress route}
 H -- Tunnel routes include resolver IP --> J[Cloudflare Tunnel advertises route that includes Resolver IP]
 J --> L{Private resolver returns IP address to WARP client}
-</div>
+```

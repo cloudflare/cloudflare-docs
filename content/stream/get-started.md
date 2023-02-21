@@ -96,14 +96,14 @@ To play video on your website with the [Stream Player](/stream/viewing-videos/us
 The embed code above can also be found in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
 
 <figure data-type="stream">
-  <div className="AspectRatio" style={{"--aspect-ratio": "calc(16 / 9)"}}>
+  <div class="AspectRatio" style="--aspect-ratio: calc(16 / 9)">
     <iframe
-      className="AspectRatio--content"
+      class="AspectRatio--content"
       src="https://iframe.videodelivery.net/5d5bc37ffcf54c9b82e996823bffbb81?muted=true"
       title="Example Stream video"
-      frameBorder="0"
+      frame-border="0"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen></iframe>
+      allow-full-screen></iframe>
   </div>
 </figure>
 
