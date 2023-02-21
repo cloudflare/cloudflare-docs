@@ -139,10 +139,6 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 
 {{</Aside>}}
 
-Finally, you must add two compatibility flags to your project to enable using the Streams API which Next.js relies on. In your Pages project, go to **Settings** > **Functions** and **Compatibility flags**. For both production and preview, enter the following two flags: `streams_enable_constructors` and `transformstream_enable_standard_constructor`.
-
-These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `@cloudflare/next-on-pages`, your project dependencies, and building your site before deploying it.
 
 ## Create a new static project
