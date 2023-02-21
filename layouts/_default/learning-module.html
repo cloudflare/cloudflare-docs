@@ -17,12 +17,13 @@
       <div class="DocsContent" id="main" page-type="document">
         
         <article class="DocsMarkdown">
-          {{.Content}}
+          {{- .Content -}}
           <br/>
           <br/>
           {{- partial "progress.button" . -}}
         </article>
       </div>
     </main>
+    {{ partial "footer" . }}
   </div>
 {{ end }}

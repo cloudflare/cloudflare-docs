@@ -243,8 +243,7 @@ export function toggleSidebar() {
         ".DocsContent",
         ".DocsMarkdown",
         ".DocsSidebar--sections .toggleSidebar",
-        ".breadcrumb",
-        ".DocsFooter"
+        ".breadcrumb"
       ];
 
       classToggleList.forEach(function (querySelector) {

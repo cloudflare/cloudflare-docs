@@ -21,7 +21,6 @@
 {{- if eq $layout "learning-module" -}}
     {{- $placeholder := index (index $moduleData "units") 0  -}}
     {{- $nextUnit := $placeholder.RelPermalink -}}
-
     <a href="{{$nextUnit}}" class="learningNavigation  Button Button-is-docs-primary">
         <span class="DocsMarkdown--link-content">Start module</span>
     </a>
@@ -64,5 +63,5 @@
         {{- end -}}
     </span>
     </p>
-{{- end -}}
 </div>
+{{- end -}}
