@@ -107,7 +107,7 @@ To experiment with more premade Workers, refer to [Workers Examples](/workers/ex
 
 ## 4. Publish your project
 
-With your project configured, you can now publish your Worker. You can publish your Worker to a custom domain, or, if not configured, the Worker will publish to a `*.workers.dev` subdomain by default. If you haven't configured a `*.workers.dev` subdomain, Wrangler will prompt you during the publish process in order to set one up.
+With your project configured, you can now publish your Worker, to a `*.workers.dev` subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 ---
