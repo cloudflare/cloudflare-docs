@@ -95,7 +95,7 @@ This event handler will be called when your Worker receives a [`fetch` event](/w
 
 3. Parameters: `request`, `env`, `context`
 
-The event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-module-worker).
+The `fetch` event handler will always get three parameters passed into it: [`request`, `env` and `context`](/workers/runtime-apis/fetch-event/#syntax-module-worker).
 
 4. The `Response` object: `return new Response("Hello World!");`
 
