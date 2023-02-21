@@ -1,9 +1,9 @@
 {{ $data := slice }}
 {{ $fileplaceholder := "" }}
 
-<!-- Get previous generation of learning paths from ./assets/json folder -->
-{{- range readDir "./assets/json/" -}}
-{{- $fileplaceholder :=  print "./assets/json/" .Name -}}
+<!-- Get learning paths from ./assets/json folder -->
+{{- range readDir "./data/learning-paths/" -}}
+{{- $fileplaceholder :=  print "./data/learning-paths/" .Name -}}
 {{- $file_data := getJSON $fileplaceholder -}}
 {{ $data = $data | append $file_data }}
 {{- end -}}

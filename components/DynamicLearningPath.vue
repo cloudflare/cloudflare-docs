@@ -2,8 +2,6 @@
 import { ref, computed } from "vue";
 import { learning_paths as paths } from "../assets/json-collector";
 
-console.log(paths)
-
 interface LearningPath {
   path: string;
   title: string;

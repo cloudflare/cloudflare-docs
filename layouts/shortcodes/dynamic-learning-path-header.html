@@ -1,9 +1,9 @@
 {{ $filename := default (.Get "file") (.Get 0) }}
 {{ $data := slice }}
 {{ $fileplaceholder := "" }}
-{{ range readDir "./assets/json/" }}
+{{ range readDir "./data/learning-paths/" }}
 {{ if eq .Name $filename }}
-{{ $fileplaceholder :=  print "./assets/json/" .Name }}
+{{ $fileplaceholder :=  print "./data/learning-paths/" .Name }}
 {{ $file_data := getJSON $fileplaceholder }}
 {{ $data = $data | append $file_data }}
 {{ end }}
