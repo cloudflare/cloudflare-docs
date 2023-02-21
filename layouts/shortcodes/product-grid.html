@@ -1,7 +1,10 @@
 {{/* The product grid order */}} 
 {{/* Names reflect data/*.yaml files */}} 
+{{- $quicklinks := slice 
+  "api"
+  "fundamentals" 
+-}} 
 {{- $infrastructure := slice 
-  "1.1.1.1" 
   "api-shield" 
   "analytics" 
   "apps"
@@ -45,14 +48,13 @@
   "version-management" 
   "waf"
   "waiting-room" 
-  "warp-client" 
   "web3" 
   "zaraz" 
 -}} 
 
-{{- $quicklinks := slice 
-  "api"
-  "fundamentals" 
+{{- $consumer := slice 
+  "1.1.1.1"
+  "warp-client" 
 -}} 
 
 {{- $developers := slice 
@@ -99,6 +101,23 @@
 
 <div class="ProductGrid">
   <div class="ProductGrid--title">
+    <span>Quick Links</span>
+  </div>
+  <div class="ProductGrid--content">
+    {{- range $key := $quicklinks -}} {{- $data := (index $.Site.Data $key) -}}
+    {{- $product := (index $data "product") -}} {{- $wrap := default false
+    $product.wrap -}}
+    <a
+      class="ProductGrid--link"
+      data-wrap-title="{{ $wrap }}"
+      href="{{ $product.url }}"
+    >
+      <div>{{ safeHTML $data.logo }}</div>
+      <span>{{ $product.title }}</span>
+    </a>
+    {{- end -}}
+  </div>
+  <div class="ProductGrid--title">
     <span>Infrastructure</span>
   </div>
   <div class="ProductGrid--content">
@@ -116,10 +135,10 @@
     {{- end -}}
   </div>
   <div class="ProductGrid--title">
-    <span>Quick Links</span>
+    <span>Consumer products</span>
   </div>
   <div class="ProductGrid--content">
-    {{- range $key := $quicklinks -}} {{- $data := (index $.Site.Data $key) -}}
+    {{- range $key := $consumer -}} {{- $data := (index $.Site.Data $key) -}}
     {{- $product := (index $data "product") -}} {{- $wrap := default false
     $product.wrap -}}
     <a
