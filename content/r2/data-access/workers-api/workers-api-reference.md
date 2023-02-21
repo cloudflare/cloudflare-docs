@@ -1,6 +1,6 @@
 ---
 pcx_content_type: reference
-title: Workers API Reference
+title: Workers API reference
 ---
 
 # R2

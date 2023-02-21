@@ -1,10 +1,10 @@
 ---
-title: Consistency Model
+title: Consistency model
 weight: 1
 pcx_content_type: concept
 ---
 
-# Consistency Model
+# Consistency model
 
 This page details R2's consistency model, including where R2 is strongly, globally consistent and which operations this applies to.
 
