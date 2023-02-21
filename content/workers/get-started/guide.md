@@ -18,7 +18,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ## 1. Start a new project with Wrangler (the Workers CLI)
 
-`wrangler` the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
 To use [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
 
