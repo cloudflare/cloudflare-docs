@@ -1,6 +1,6 @@
 import { learning_paths as paths } from "./json-collector";
 
-export function init() {
+(function () {
   const currentLocation = window.location.href;
   const params = new URLSearchParams(document.location.search);
   const currentLearningPath = params.get("learning_path");
@@ -101,4 +101,4 @@ export function init() {
       }
     }
   }
-}
+})();

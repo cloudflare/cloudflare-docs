@@ -2,7 +2,6 @@ import * as events from "./events";
 import * as contents from "./contents";
 import * as timeago from "./timeago";
 import * as navs from "./navlinks";
-import * as learningPathNavigation from "./learning-path-navigation";
 
 declare global {
   interface Window {
@@ -24,7 +23,4 @@ const currentLocation = window.location.href;
   events.toggleSidebar();
   events.activeTab();
   events.tabs();
-  if (currentLocation.includes("/learning-paths/modules")) {
-    learningPathNavigation.init();
-  }
 })();
