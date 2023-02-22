@@ -5774,3 +5774,23 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 .slashPlaceholder {
       visibility: hidden;
 }
+
+.legalInformation {
+    padding: 1em 0em;
+    display: flex;
+    width: 100%;
+    justify-content: right;
+}
+
+.legalInformation ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.legalInformation ul li + li:before {
+    content: "|";
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+}
