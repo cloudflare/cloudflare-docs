@@ -3,7 +3,7 @@ title: Data location
 pcx_content_type: concept
 ---
 
-# Data location 
+# Data location
 
 Learn how the location of data stored in R2 is determined and about the different available inputs that control the physical location where objects in your buckets are stored.
 
@@ -27,13 +27,13 @@ Currently, you can set the Location Hint via the `LocationConstraint` parameter 
 
 ```js
 await S3.send(
-    new CreateBucketCommand({
-        Bucket,
-        CreateBucketConfiguration: {
-            LocationConstraint: "WNAM"
-        },
-    })
-)
+  new CreateBucketCommand({
+    Bucket,
+    CreateBucketConfiguration: {
+      LocationConstraint: "WNAM",
+    },
+  })
+);
 ```
 
 Refer to [Examples](/r2/examples/) for additional examples of S3 SDKs.
@@ -43,7 +43,7 @@ Refer to [Examples](/r2/examples/) for additional examples of S3 SDKs.
 The following hint locations are supported:
 
 | Hint | Hint description      |
-|------|-----------------------|
+| ---- | --------------------- |
 | wnam | Western North America |
 | enam | Eastern North America |
 | weur | Western Europe        |
