@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42 2
 product:
   title: Logs
   url: /logs/
-  group: Infrastructure
+  group: Cloudflare essentials
 
 meta:
   title: Cloudflare Logs docs

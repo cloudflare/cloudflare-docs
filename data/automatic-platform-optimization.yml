@@ -5,7 +5,7 @@ product:
   title: Automatic Platform Optimization
   url: /automatic-platform-optimization/
   wrap: true
-  group: Infrastructure
+  group: Performance
 
 meta:
   title: Cloudflare Automatic Platform Optimization docs

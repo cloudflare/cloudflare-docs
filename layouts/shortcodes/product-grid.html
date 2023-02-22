@@ -1,5 +1,5 @@
 {{- $dataArray := slice }}
-{{- $availableOptions := slice "Cloudflare Essentials" "Infrastructure" "Zero Trust" "Consumer products" "Developer platform" -}}
+{{- $availableOptions := slice -}}
 
 {{- range readDir "./data/" -}}
 {{- if in .Name ".yml"}}
@@ -7,6 +7,13 @@
 {{ $dataArray = $dataArray | append (index $.Site.Data $productName) }}
 {{- end -}}
 {{- end -}}
+
+{{- range $dataArray -}}
+{{- with .product.group -}}
+{{ $availableOptions = $availableOptions | append . }}
+{{- end -}}
+{{- end -}}
+{{- $availableOptions = $availableOptions | uniq | sort -}}
 
 <style>
   .ProductGrid--content {
@@ -17,12 +24,6 @@
     gap: 5px;
     padding-bottom: 1em;
     border-bottom: 1px solid gray;
-  }
-
-  .ProductGrid--filter {
-    width: 90%;
-    height: 3rem;
-    padding: 1rem;
   }
 
   .ProductGrid--title {
@@ -51,24 +52,11 @@
 </style>
 
 <div class="ProductGrid">
-  <input
-    class="ProductGrid--filter"
-    type="text"
-    id="search"
-    onkeyup="filterProducts()"
-    placeholder="Search products..."
-  />
   <div id="ProductGrid--range">
   {{- range $availableOptions -}}
   {{- $currentOption := . }}
-  {{- $title := "" -}}
-  {{- if eq $currentOption "Cloudflare Essentials" -}}
-    {{- $title = "Quick links" -}}
-  {{- else -}}
-    {{- $title = $currentOption -}}
-  {{- end -}}
   <div class="ProductGrid--title">
-    <span>{{$title}}</span>
+    <span>{{$currentOption}}</span>
   </div>
   <div class="ProductGrid--content">
     {{- range $dataArray -}} 
