@@ -664,6 +664,7 @@ html[is-site-page] .DocsContent {
 .RecommendedContentGrid {
     display: flex;
     gap: 2em;
+    flex-wrap: wrap;
 }
 
 .RecommendationTitle {
@@ -692,7 +693,7 @@ html[is-site-page] .DocsContent {
     padding: 1em;
     margin: 1em;
     height: 20em;
-    width: 45em;
+    width: 20%;
     border: 1px solid #b6b6b6;
     border-radius: 6px;
 }
@@ -707,25 +708,23 @@ html[is-site-page] .DocsContent {
 
 .RecommendedContentDescription {
     font-size: .85em;
-    width: 16em;
     align-self: flex-start;
 }
 
-@media (max-width:768px) {
+@media (max-width:1200px) {
     .RecommendedContentGrid {
         flex-direction: column;
         gap: .8em;
     }
 
     .RecommendedContentWithCard {
-        width: unset;
+        width: 75%;
         margin: 0;
         height: auto;
     }
 
     .RecommendedContentDescription {
         font-size: 1em;
-        width: unset;
     }
 }
 
