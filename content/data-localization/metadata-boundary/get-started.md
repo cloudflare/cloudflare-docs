@@ -78,7 +78,7 @@ curl -s -D "/dev/stderr" https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_
 </div>
 </details>
   
-## Dashboard
+## View or change settings
 
 To view or change your Customer Metadata Boundary setting:
 
