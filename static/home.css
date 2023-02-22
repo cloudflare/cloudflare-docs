@@ -634,7 +634,7 @@ html[is-site-page] .DocsContent {
 }
 
 /* Docs-wide style overrides for quadblock link */
-.QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+.QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content, .ViewProducts a {
     text-decoration: none;
     background-color: inherit;
     border-bottom-color: #000;
@@ -644,13 +644,13 @@ html[is-site-page] .DocsContent {
     display: none;
 }
 
-[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
+[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content, .ViewProducts a {
     color: #fff;
     background-color: inherit;
     border-bottom-color: #fff;
 }
 
-.QuadBlockGrid a {
+.QuadBlockGrid a, .ViewProducts a {
     color: inherit;
     text-decoration: none;
 }
@@ -1005,18 +1005,6 @@ html[is-site-page] .DocsContent {
         height: unset;
         font-size: 1em;
     }
-}
-
-.ViewProducts {
-    max-width: 100%;
-}
-
-.ViewProducts details {
-    background: #E2F5FA;
-}
-
-[theme=dark] .ViewProducts details {
-    background: #222629;
 }
 
 .StartHere {

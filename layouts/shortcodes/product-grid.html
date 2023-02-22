@@ -106,7 +106,7 @@
   <div id="ProductGrid--range">
   {{- range $availableOptions -}}
   {{- $currentOption := . }}
-  <h2 class="ProductGrid--title" style="padding-top:2em;" id="{{ $currentOption | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
+  <h2 class="ProductGrid--title" style="padding-top:1em; padding-bottom:1em;font-size:2em;" id="{{ $currentOption | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
     <a
       class="DocsMarkdown--header-anchor Link Link-without-underline"
       href="#{{ $currentOption | safeURL | anchorize }}"
