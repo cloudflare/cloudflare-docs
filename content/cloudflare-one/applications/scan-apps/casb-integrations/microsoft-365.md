@@ -22,6 +22,7 @@ For the Microsoft 365 integration to function, Cloudflare CASB requires the foll
 * `Calendars.Read`
 * `Domain.Read.All`
 * `Group.Read.All`
+* `InformationProtectionPolicy.Read.All`
 * `MailboxSettings.Read`
 * `offline_access`
 * `RoleManagement.Read.All`
@@ -104,3 +105,13 @@ Get alerted when users set their email to be forwarded externally. This can eith
 | Active Message Rule Forwards Externally As Attachment | Low      |
 | Active Message Rule Forwards Externally               | Low      |
 | Active Message Rule Redirects Externally              | Low      |
+
+## Microsoft Information Protection (MIP) sensitivity labels
+
+{{<Aside type="note">}}
+
+Requires [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/).
+
+{{</Aside>}}
+
+Microsoft provides [MIP sensitivity labels](https://learn.microsoft.com/en-us/microsoft-365/compliance/sensitivity-labels?view=o365-worldwide) to classify and protect sensitive data. When you add the CASB Microsoft 365 integration, Cloudflare will automatically retrieve the labels from your Microsoft account and populate them in a [DLP Profile](/cloudflare-one/policies/data-loss-prevention/integration-profiles/).
