@@ -3,7 +3,7 @@ pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 4
 meta:
-    description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
+  description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -54,14 +54,15 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
   If you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance), Gateway will only connect if the origin supports [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
 
 If none of the above scenarios apply, contact Cloudflare support with the following information:
-  - Operating System (Windows 10, macOS 10.x, iOS 14.x)
-  - Web browser (Chrome, Firefox, Safari, Edge)
-  - URL of the request
-  - Screenshot or copy/paste of the content from the error page
+
+- Operating System (Windows 10, macOS 10.x, iOS 14.x)
+- Web browser (Chrome, Firefox, Safari, Edge)
+- URL of the request
+- Screenshot or copy/paste of the content from the error page
 
 ## I see error 504 when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), or contact your account team to revert all devices to preferring IPv4.
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query type AAAA for the specific domain.
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -85,7 +86,7 @@ A browser isolation session is a connection from your local browser to a remote 
 
 ## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard. For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
