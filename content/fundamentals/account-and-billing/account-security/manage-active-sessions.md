@@ -15,8 +15,8 @@ If you notice any suspicious activity, you can also revoke any active sessions.
 {{<Aside type="note">}}
 
 By default, the session timeout for the [Cloudflare dashboard](https://dash.cloudflare.com) and [Cloudflare Zero Trust dashboard](https://dash.teams.cloudflare.com/) is 24 hours. 
-By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO). Once you have configured SSO
-escalate to your Customer Success Manager for Cloudflare Dashboard SSO and the timeout to be configured.
+
+Some customers can also enforce single-sign on (SSO) by [adding a Dashboard SSO application](/cloudflare-one/applications/configure-apps/dash-sso-apps/).
 
 {{</Aside>}}
 
