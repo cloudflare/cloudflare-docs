@@ -728,6 +728,31 @@ html[is-site-page] .DocsContent {
     }
 }
 
+@media (max-width:768px) { 
+    .RecommendedContentGrid {
+        margin-bottom: .8em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6em;
+    }
+
+    .RecommendedContentWithCard {
+        width: 100%;
+        height: unset;
+        margin: .6em .2em;   
+    }
+
+    .RecommendedContentTitle {
+        font-size: 1.5em;
+    }
+
+    .RecommendedContentDescription {
+        width: unset;
+        height: unset;
+        font-size: 1em;
+    }
+}
+
 .CommunityBlock {
     display: flex;
     max-width: 100%;
