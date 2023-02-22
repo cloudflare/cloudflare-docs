@@ -35,10 +35,6 @@ To install the Cloudflare root certificate, follow the steps found [here](/cloud
 
 ## I see error 526 when browsing to a website.
 
-<div class="medium-img">
-  <img alt="Example of a Gateway 526 error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
-</div>
-
 Gateway presents an **HTTP Response Code: 526** error page in the following cases:
 
 - **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
