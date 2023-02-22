@@ -634,7 +634,7 @@ html[is-site-page] .DocsContent {
 }
 
 /* Docs-wide style overrides for quadblock link */
-.QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content, .ViewProducts a {
+.QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
     background-color: inherit;
     border-bottom-color: #000;
@@ -644,7 +644,7 @@ html[is-site-page] .DocsContent {
     display: none;
 }
 
-[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content, .ViewProducts a {
+[theme=dark] .QuadBlock .DocsMarkdown--link .DocsMarkdown--link-content {
     color: #fff;
     background-color: inherit;
     border-bottom-color: #fff;
