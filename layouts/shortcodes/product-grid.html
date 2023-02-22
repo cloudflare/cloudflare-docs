@@ -2,15 +2,17 @@
 {{- $availableOptions := slice -}}
 
 {{- range readDir "./data/" -}}
-{{- if in .Name ".yml"}}
+{{- if in .Name ".yml" -}}
 {{- $productName :=  replace .Name ".yml" "" -}}
 {{ $dataArray = $dataArray | append (index $.Site.Data $productName) }}
 {{- end -}}
 {{- end -}}
 
-{{- range $dataArray -}}
-{{- with .product.group -}}
+{{- range $index, $item := $dataArray -}}
+{{- with index (index $item "product") "group" -}}
+{{- if ne (index (index $item "product") "show") false -}}
 {{ $availableOptions = $availableOptions | append . }}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 {{- $availableOptions = $availableOptions | uniq | sort -}}
@@ -60,7 +62,7 @@
   </div>
   <div class="ProductGrid--content">
     {{- range $dataArray -}} 
-      {{- if eq $currentOption .product.group -}}
+      {{- if and (eq $currentOption .product.group) (ne .product.show false) -}}
         {{- $product := .product -}} 
         {{- $wrap := default false $product.wrap -}}
         <a
