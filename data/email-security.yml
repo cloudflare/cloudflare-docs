@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 
 product:
   title: Area 1 Email Security
   url: /email-security/
-  group: Zero Trust
+  group: Cloudflare One
 
 meta:
   title: Cloudflare Area 1 Email Security docs
