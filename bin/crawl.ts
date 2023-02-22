@@ -22,7 +22,7 @@ let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNING_PATH_DIR = join(ROOT, "assets/json");
+const LEARNING_PATH_DIR = join(ROOT, "data/learning-paths");
 const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
