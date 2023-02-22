@@ -5797,3 +5797,14 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     padding-right: 0.8rem;
     padding-left: 0.8rem;
 }
+
+@media (max-width:768px) {
+    .legalInformation {
+        flex-direction: column;
+        width: 100%;
+        gap: 2em;
+        padding: 2em 1em;
+        padding-top: 0;
+        justify-content: flex-start;
+    }
+}
