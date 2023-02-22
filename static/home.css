@@ -359,7 +359,6 @@ html[is-site-page] .DocsContent {
 .ProductGrid {
     max-width: 100%;
     margin: 0 auto;
-    padding: 0 2rem
 }
 
 .ProductGrid--content {
@@ -787,6 +786,7 @@ html[is-site-page] .DocsContent {
 @media (max-width: 768px) {
     .TriBlock {
         width: unset;
+        margin-bottom: 20px;
     }
 
     .TriBlockGrid {

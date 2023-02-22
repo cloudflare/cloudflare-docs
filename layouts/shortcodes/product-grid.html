@@ -69,9 +69,11 @@
 
 <style>
   .ProductGrid--content {
+    --n: 1;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
+    flex-direction: column;
+    grid-template-columns: repeat(var(--n), 1fr);
+    gap: 5px
   }
 
   .ProductGrid--title {
