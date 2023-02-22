@@ -47,6 +47,7 @@ The following hint locations are supported:
 | wnam | Western North America |
 | enam | Eastern North America |
 | weur | Western Europe        |
+| eeur | Eastern Europe        |
 | apac | Asia-Pacific          |
 
 ### Current limitations
