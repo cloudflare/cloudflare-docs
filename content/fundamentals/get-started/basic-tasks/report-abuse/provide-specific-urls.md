@@ -16,12 +16,13 @@ If you are [submitting an abuse report](https://abuse.cloudflare.com) to Cloudfl
 To get the URL for a specific piece of content on a webpage:
 
 1. Open your web browser (Google Chrome, Safari, Firefox, Edge).
-2. Right click on the content you wish to report (often a video or image).
-3. Select **Inspect Element**.
-4. In the **DevTools** panel, look for the **src** attribute in the selected the image, video, or iFrame.
+2. Go to the web page you want to report.
+3. Right click on the content you wish to report (often a video or image).
+4. Select **Inspect Element**.
+5. In the **DevTools** panel, look for the **src** attribute in the selected the image, video, or iFrame.
     ![Look for the URL in the src attribute of the video or image](/fundamentals/static/images/get-started/identify-url.png)
 
-5. Copy the URL.
+6. Copy the URL.
 
 This is typically the most specific and helpful URL that someone reporting abuse can provide to Cloudflare, so that Cloudflare can correctly identify any services Cloudflare may be providing with respect to that content. 
 
