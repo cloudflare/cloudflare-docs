@@ -5,6 +5,7 @@ product:
   title: Network Error Logging
   url: /network-error-logging/
   wrap: true
+  group: Infrastructure
 
 meta:
   title: Cloudflare Network Error Logging docs

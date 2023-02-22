@@ -5,6 +5,7 @@ product:
   title: Network Interconnect
   url: /network-interconnect/
   wrap: true
+  group: Infrastructure
 
 meta:
   title: Cloudflare Network Interconnect docs

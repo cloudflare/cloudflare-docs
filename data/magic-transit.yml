@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m10.7
 product:
   title: Magic Transit
   url: /magic-transit/
+  group: Infrastructure
 
 meta:
   title: Cloudflare Magic Transit docs

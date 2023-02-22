@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path fill-rul
 product:
   title: Waiting Room
   url: /waiting-room/
+  group: Infrastructure
 
 meta:
   title: Cloudflare Waiting Room docs

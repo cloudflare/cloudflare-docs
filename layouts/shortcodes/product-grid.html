@@ -1,73 +1,12 @@
-{{/* The product grid order */}} 
-{{/* Names reflect data/*.yaml files */}} 
-{{- $quicklinks := slice 
-  "api"
-  "fundamentals" 
--}} 
-{{- $infrastructure := slice 
-  "api-shield" 
-  "analytics" 
-  "apps"
-  "argo-smart-routing" 
-  "automatic-platform-optimization" 
-  "bots" 
-  "byoip" 
-  "cache"
-  "china-network" 
-  "cloudflare-for-platforms" 
-  "cloudflare-one" 
-  "data-localization"
-  "ddos-protection" 
-  "dns" 
-  "email-routing" 
-  "email-security" 
-  "firewall"
-  "health-checks"
-  "load-balancing" 
-  "logs" 
-  "magic-firewall" 
-  "magic-network-monitoring"
-  "magic-transit" 
-  "magic-wan" 
-  "network-error-logging" 
-  "network-interconnect"
-  "page-shield" 
-  "radar" 
-  "railgun" 
-  "randomness-beacon" 
-  "reference-architecture"
-  "registrar" 
-  "rules" 
-  "ruleset-engine" 
-  "security-center" 
-  "spectrum" 
-  "ssl" 
-  "support"
-  "tenant"
-  "terraform" 
-  "time-services" 
-  "turnstile" 
-  "version-management" 
-  "waf"
-  "waiting-room" 
-  "web3" 
-  "zaraz" 
--}} 
+{{- $dataArray := slice }}
+{{- $availableOptions := slice "Cloudflare Essentials" "Infrastructure" "Zero Trust" "Consumer products" "Developer platform" -}}
 
-{{- $consumer := slice 
-  "1.1.1.1"
-  "warp-client" 
--}} 
-
-{{- $developers := slice 
-  "images" 
-  "pages" 
-  "pub-sub" 
-  "queues"
-  "r2" 
-  "stream" 
-  "workers"   
--}}
+{{- range readDir "./data/" -}}
+{{- if in .Name ".yml"}}
+{{- $productName :=  replace .Name ".yml" "" -}}
+{{ $dataArray = $dataArray | append (index $.Site.Data $productName) }}
+{{- end -}}
+{{- end -}}
 
 <style>
   .ProductGrid--content {
@@ -104,72 +43,32 @@
 </style>
 
 <div class="ProductGrid">
+  {{- range $availableOptions -}}
+  {{- $currentOption := . }}
+  {{- $title := "" -}}
+  {{- if eq $currentOption "Cloudflare Essentials" -}}
+    {{- $title = "Quick links" -}}
+  {{- else -}}
+    {{- $title = $currentOption -}}
+  {{- end -}}
   <div class="ProductGrid--title">
-    <span>Quick Links</span>
+    <span>{{$title}}</span>
   </div>
   <div class="ProductGrid--content">
-    {{- range $key := $quicklinks -}} {{- $data := (index $.Site.Data $key) -}}
-    {{- $product := (index $data "product") -}} {{- $wrap := default false
-    $product.wrap -}}
-    <a
-      class="ProductGrid--link"
-      data-wrap-title="{{ $wrap }}"
-      href="{{ $product.url }}"
-    >
-      <div>{{ safeHTML $data.logo }}</div>
-      <span>{{ $product.title }}</span>
-    </a>
-    {{- end -}}
+    {{- range $dataArray -}} 
+      {{- if eq $currentOption .product.group -}}
+        {{- $product := .product -}} 
+        {{- $wrap := default false $product.wrap -}}
+        <a
+          class="ProductGrid--link"
+          data-wrap-title="{{ $wrap }}"
+          href="{{ $product.url }}"
+        >
+          <div>{{ safeHTML .logo }}</div>
+          <span>{{ $product.title }}</span>
+        </a>
+        {{- end -}}
+      {{- end -}}
   </div>
-  <div class="ProductGrid--title">
-    <span>Infrastructure</span>
-  </div>
-  <div class="ProductGrid--content">
-    {{- range $key := $infrastructure -}} {{- $data := (index $.Site.Data $key)
-    -}} {{- $product := (index $data "product") -}} {{- $wrap := default false
-    $product.wrap -}}
-    <a
-      class="ProductGrid--link"
-      data-wrap-title="{{ $wrap }}"
-      href="{{ $product.url }}"
-    >
-      <div>{{ safeHTML $data.logo }}</div>
-      <span>{{ $product.title }}</span>
-    </a>
-    {{- end -}}
-  </div>
-  <div class="ProductGrid--title">
-    <span>Consumer products</span>
-  </div>
-  <div class="ProductGrid--content">
-    {{- range $key := $consumer -}} {{- $data := (index $.Site.Data $key) -}}
-    {{- $product := (index $data "product") -}} {{- $wrap := default false
-    $product.wrap -}}
-    <a
-      class="ProductGrid--link"
-      data-wrap-title="{{ $wrap }}"
-      href="{{ $product.url }}"
-    >
-      <div>{{ safeHTML $data.logo }}</div>
-      <span>{{ $product.title }}</span>
-    </a>
-    {{- end -}}
-  </div>
-  <div class="ProductGrid--title">
-    <span>Developers</span>
-  </div>
-  <div class="ProductGrid--content">
-    {{- range $key := $developers -}} {{- $data := (index $.Site.Data $key) -}}
-    {{- $product := (index $data "product") -}} {{- $wrap := default false
-    $product.wrap -}}
-    <a
-      class="ProductGrid--link"
-      data-wrap-title="{{ $wrap }}"
-      href="{{ $product.url }}"
-    >
-      <div>{{ safeHTML $data.logo }}</div>
-      <span>{{ $product.title }}</span>
-    </a>
-    {{- end -}}
-  </div>
+  {{- end -}}
 </div>

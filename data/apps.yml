@@ -4,6 +4,7 @@ logo: <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><p
 product:
   title: Apps
   url: https://www.cloudflare.com/apps/developer/docs/getting-started
+  group: Infrastructure
 
 meta:
   title: Cloudflare Apps docs

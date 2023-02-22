@@ -5,6 +5,7 @@ product:
   title: Cloudflare Zero Trust
   url: /cloudflare-one/
   wrap: true
+  group: Zero Trust
 
 meta:
   title: Cloudflare Zero Trust docs
