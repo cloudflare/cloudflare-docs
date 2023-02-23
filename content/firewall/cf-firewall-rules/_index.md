@@ -7,9 +7,9 @@ meta:
 layout: single
 ---
 
-# About Cloudflare Firewall Rules
+{{<deprecated>}} About Cloudflare Firewall Rules {{</deprecated>}}
 
-**Cloudflare Firewall Rules** is a flexible and intuitive framework for filtering HTTP requests. It gives you fine-grained control over which requests reach your applications, proactively inspecting incoming site traffic and automatically responding to threats.
+Cloudflare Firewall Rules is a flexible and intuitive framework for filtering HTTP requests. It gives you fine-grained control over which requests reach your applications, proactively inspecting incoming site traffic and automatically responding to threats.
 
 {{<render file="_deprecation-notice.md">}}
 
