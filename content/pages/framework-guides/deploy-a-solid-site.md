@@ -137,7 +137,7 @@ You can then access the binding in the environment variable provided to you by S
 ```ts
 export function routeData() {
   return createServerData$(async (_, { env }) => {
-    const { MY_KV } = (env as { MY_KV:  KVNamespace }));
+    const { MY_KV } = (env as { MY_KV: KVNamespace }));
     // ...
   });
 }
