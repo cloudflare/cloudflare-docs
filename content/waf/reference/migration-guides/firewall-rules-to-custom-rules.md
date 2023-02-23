@@ -126,7 +126,7 @@ If you are currently using the [`cloudflare_firewall_rule`](https://registry.ter
 
 You should start planning the manual migration of any Terraform configuration based on these resources to [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resources to prevent any issues.
 
-During this period where all three resources are available (`cloudflare_firewall_rule`, `cloudflare_filter`, and `cloudflare_ruleset`), there will be a single list of rules for both firewall rules and WAF custom rules. Some features of WAF custom rules are not supported in the deprecated Terraform resources. To take advantage of the new features, Cloudflare recommends that you use the `cloudflare_ruleset` resource.
+For the time being, all three Terraform resources will be available (`cloudflare_firewall_rule`, `cloudflare_filter`, and `cloudflare_ruleset`). There will be a single list of rules for both firewall rules and WAF custom rules. Some features of WAF custom rules are not supported in the deprecated Terraform resources. To take advantage of the new features, Cloudflare recommends that you use the `cloudflare_ruleset` resource.
 
 Refer to the documentation about Terraform for [examples of configuring WAF custom rules using Terraform](/terraform/additional-configurations/waf-custom-rules/).
 
