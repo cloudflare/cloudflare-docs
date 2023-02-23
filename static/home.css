@@ -5835,4 +5835,8 @@ html #ot-sdk-btn.ot-sdk-show-settings {
     background-color: transparent !important;
     text-decoration: none;
     border-bottom: none;
-  }
+}
+
+html #ot-sdk-btn.ot-sdk-show-settings:hover {
+    color: inherit;
+}
