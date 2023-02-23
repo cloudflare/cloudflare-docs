@@ -10,7 +10,7 @@ Certificates statuses show which stage of the issuance process each certificate 
 
 ## New certificates
 
-When you create a [new certificate](/ssl/edge-certificates/), it moves through the various stages as it progresses to Cloudflare’s edge:
+When you order a new certificate, either an [edge certificate](/ssl/edge-certificates/) or a certificate used for a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), its status will move through various stages as it progresses to Cloudflare’s edge:
 
 1.  Initializing
 2.  Pending Validation
@@ -18,9 +18,9 @@ When you create a [new certificate](/ssl/edge-certificates/), it moves through t
 4.  Pending Deployment
 5.  Active
 
-Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** within five minutes. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
+Once you issue a certificate, it should be in **Pending Validation**, but change to **Active** after the validation is completed. If you see any errors, you or your customer may need to take additional actions to validate the certificate.
 
-If you deactivate a certificate, that certificate will go to a **Deactivating** and then an **Inactive** status.
+If you deactivate a certificate, it will become a **Deactivating** and then an **Inactive** status.
 
 ## Custom certificates
 
@@ -38,6 +38,15 @@ When you create certificates in your [staging environment](/ssl/edge-certificate
 - **Staging active**: Similar to **Active**, but for staging certificates.
 - **Deactivating**: Your staging certificate is in the process of becoming **Inactive**.
 - **Inactive**: Your staging certificate is not at the edge, but you can deploy it if needed.
+
+## Client certificates
+
+When you use [client certificates](/ssl/client-certificates/), those client certificates have their own set of statuses:
+
+- **Active**: The client certificate is active.
+- **Revoked**: The client certificate is revoked.
+- **Pending Reactivation**: The client certificate was revoked, but it is being restored.
+- **Pending Revocation**: The client certificate was active, but it is being revoked.
 
 ---
 

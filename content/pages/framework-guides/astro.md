@@ -101,12 +101,12 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 <div>
 
-| Configuration option  | Value              |
-| --------------------- | ------------------ |
-| Production branch     | `main`             |
-| Build command         | `npm run build`    |
-| Build directory       | `dist`             |
-| Environment Variables | `NODE_VERSION: 14` |
+| Configuration option  | Value                   |
+| --------------------- | ----------------------- |
+| Production branch     | `main`                  |
+| Build command         | `npm run build`         |
+| Build directory       | `dist`                  |
+| Environment Variables | `NODE_VERSION: 16.12.0` |
 
 </div>
 
@@ -114,7 +114,7 @@ Optionally, you can customize the **Project name** field. It defaults to the Git
 
 {{<Aside type="warning" header="Important">}}
 
-Astro requires Node.js version `14` or later to build successfully. When creating your Pages project, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+Astro requires Node.js version `16.12.0` or later to build successfully. When creating your Pages project, you must expand the **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16.12.0` or greater.
 
 {{</Aside>}}
 

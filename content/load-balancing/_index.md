@@ -57,7 +57,7 @@ Review comprehensive analytics to evaluate traffic flow, assess origin health st
 
 ## Related products
 
-{{<related header="Standalone Health Checks" href="https://support.cloudflare.com/hc/articles/4404867308429" product="load-balancing">}}
+{{<related header="Standalone Health Checks" href="/health-checks/" product="health-checks">}}
 Actively monitor whether your origin server is online by sending specific requests at regular intervals.
 {{</related>}}
 

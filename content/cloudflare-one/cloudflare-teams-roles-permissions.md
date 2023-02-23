@@ -8,7 +8,7 @@ weight: 21
 
 When creating a Cloudflare Zero Trust account, you will be given the Super Administrator role. As a Super Administrator, you can invite members to join your Zero Trust account and assign them different roles. There is no limit to the number of members which can be added to a given account. Any members with the proper permissions will be able to make configuration changes while actively logged into the Zero Trust dashboard (unless [read-only mode](/cloudflare-one/api-terraform/#set-dashboard-to-read-only) is enabled).
 
-To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/account-and-billing/account-setup/manage-account-members/) documentation.
+To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/account-and-billing/members/) documentation.
 
 ## Zero Trust roles
 

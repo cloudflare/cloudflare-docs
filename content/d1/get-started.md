@@ -81,6 +81,8 @@ When you execute the `wrangler d1 create` command, the client API package (which
 
 {{</Aside>}}
 
+You can also bind your D1 database to a Pages Function. For more information, refer to [Functions Bindings](/pages/platform/functions/bindings/#d1-databases).
+
 ## 5. Run a query against your D1 database
 
 ### Configure your D1 database

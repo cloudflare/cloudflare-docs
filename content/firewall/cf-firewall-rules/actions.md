@@ -69,18 +69,18 @@ For reference information on rule actions available for Cloudflare products powe
             <li>
               <p>Matching requests exempt from evaluation by a user-defined list containing one or more of the following Cloudflare security features:</p>
               <ul>
-                <li>User-agent Blocking</li>
-                <li>Browser Integrity Check</li>
-                <li>Hotlinking Protection</li>
-                <li>Security Level (IP Reputation)</li>
-                <li>Rate Limiting (previous version)</li>
-                <li>Zone Lockdown (PRO, BIZ, ENT)</li>
-                <li>WAF managed rules (previous version; PRO, BIZ, ENT)</li>
+                <li><a href="https://support.cloudflare.com/hc/articles/115001856951">User Agent Blocking</a></li>
+                <li><a href="https://support.cloudflare.com/hc/articles/200170086">Browser Integrity Check</a></li>
+                <li><a href="https://support.cloudflare.com/hc/articles/200170026">Hotlink Protection</a></li>
+                <li><a href="https://support.cloudflare.com/hc/articles/200170056">Security Level (IP Reputation)</a></li>
+                <li><a href="https://support.cloudflare.com/hc/articles/115001635128">Rate Limiting (previous version)</a></li>
+                <li><a href="https://support.cloudflare.com/hc/articles/115001595131">Zone Lockdown</a></li>
+                <li><a href="https://support.cloudflare.com/hc/articles/200172016">WAF managed rules (previous version)</a></li>
               </ul>
               <p><strong>Notes:</strong></p>
               <ul>
                 <li>Currently, you cannot bypass Bot Fight Mode or Super Bot Fight Mode. For more information on these products, refer to <a href="/bots/">Cloudflare bot solutions</a>.</li>
-                <li>You cannot bypass the new <a href="/waf/">Cloudflare WAF</a>, only its previous version (<a href="https://support.cloudflare.com/hc/articles/200172016">WAF managed rules</a>).</li>
+                <li>You cannot bypass the new <a href="/waf/managed-rules/">WAF managed rules</a> using this action, only the previous version of WAF managed rules. To skip one or more managed rules in the new WAF for specific requests, <a href="/waf/managed-rules/waf-exceptions/">create a WAF exception</a>.</li>
               </ul>
               <p></p>
             </li>

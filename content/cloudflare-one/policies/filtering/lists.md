@@ -7,10 +7,10 @@ weight: 11
 # Lists
 
 {{<Aside>}}
-Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,000 for Standard subscriptions. A CSV file containing a list of URLs or hostnames must be smaller than 2 MB.
+Your lists can include up to 5,000 entries for Enterprise subscriptions and 1,000 for Standard subscriptions. An uploaded CSV file must be smaller than 2 MB.
 {{</Aside>}}
 
-With Cloudflare Zero Trust, you can create lists of URLs, hostnames, or other entries to reference when creating [Secure Web Gateway policies](/cloudflare-one/policies/filtering/). This allows you to quickly create rules that match and take actions against several items at once.
+With Cloudflare Zero Trust, you can create lists of URLs, hostnames, or other entries to reference when creating [Gateway policies](/cloudflare-one/policies/filtering/) or [Access policies](/cloudflare-one/policies/access/). This allows you to quickly create rules that match and take actions against several items at once.
 
 You can create a list by:
 
@@ -28,30 +28,30 @@ If you would like to test how this feature works, here is a [sample CSV file](/c
 To upload the list to the Zero Trust dashboard:
 
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Lists**.
-2. Click **Upload CSV**.
+2. Select **Upload CSV**.
 3. Next, specify a **List name**, enter an optional description, and choose a **List type**.
-4. Drag and drop a file into the **CSV file** window, or click **Select a file**.
-5. Click **Create**.
+4. Drag and drop a file into the **CSV file** window, or select a file.
+5. Select **Create**.
 
 Your list will now appear in the **Lists** page.
 
 ## Create a manual list
 
 1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Lists**.
-2. Click **Create manual list**.
+2. Select **Create manual list**.
 3. Next, specify a **List name**, enter an optional description, and choose a **List type**.
-4. Enter your list element manually into the **Add entry** field and click **Add**.
-5. Click **Save**.
+4. Enter your list element manually into the **Add entry** field and select **Add**.
+5. Select **Save**.
 
 ## Edit a list
 
 1. In the **Lists** page, locate the list you want to edit.
 
-2. Click **Edit**. This will allow you to:
+2. Select **Edit**. This will allow you to:
 
-    - Edit list name and description by clicking on the three-dots menu to the right of your list's name.
-    - Delete the list by clicking on the three-dots menu to the right of your list's name.
+    - Edit list name and description by selecting on the three-dots menu to the right of your list's name.
+    - Delete the list by selecting the three-dots menu to the right of your list's name.
     - Delete individual entries.
     - Manually add entries to your list.
 
-3. Once you have edited your list, click **Save**.
+3. Once you have edited your list, select **Save**.

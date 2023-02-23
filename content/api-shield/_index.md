@@ -33,3 +33,9 @@ Cloudflare offers the following features to help secure your APIs:
 ## Availability
 
 Cloudflare API Security products are available to Enterprise customers only, though anyone can set up [Mutual TLS](/api-shield/security/mtls/) with a Cloudflare-managed certificate authority.
+
+## Related products
+
+{{<related header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">}}
+Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.
+{{</related>}}

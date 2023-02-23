@@ -1,5 +1,5 @@
 ---
-title: S3 API Compatibility
+title: S3 API compatibility
 pcx_content_type: reference
 weight: 1
 ---

@@ -1,38 +1,35 @@
 ---
 pcx-content-type: how-to
-title: Local Development
+title: Local development
 weight: 6
 ---
 
 # Local development
 
-You can run your entire application locally with our Wrangler Command Line Interface (CLI). To get started with Wrangler, you can install it with the following command:
-```sh
-$ npm install --global wrangler
-```
+Run your Pages application locally with our Wrangler Command Line Interface (CLI).
 
-The main command for local development on Pages is `wrangler pages dev`. This will let you run your Pages application locally which includes serving static assets and running your Functions. If you have a folder of static assets then you can run the following command to start local development:
+## Install Wrangler
+
+To get started with Wrangler, refer to the [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+
+## Run your Pages project locally
+
+The main command for local development on Pages is `wrangler pages dev`. This will let you run your Pages application locally, which includes serving static assets and running your Functions. 
+
+With your folder of static assets set up, run the following command to start local development:
 
 ```sh
-$ wrangler pages dev <directory-of-assets>
+$ wrangler pages dev <DIRECTORY-OF-ASSETS>
 ```
 
 This will then start serving your Pages project. You can press `B` to open the browser on your local site.
-If you’re using a framework, you can pass through the framework provided dev command (i.e. npm run dev) to run development and benefit from the framework hot-reloading and any special build process around it. You can do this with:
+
+If you are using a framework, you can pass through the framework-provided dev command (such as, `npm run dev`) to run development. This enables you to benefit from the framework hot-reloading and any special build process around it. To run a framework-provided dev command:
 
 ```sh
-$ wrangler pages dev -- <command>
+$ wrangler pages dev -- <COMMAND>
 ```
 
-If you wish to attach a binding in your local development, you can simply pass through the relevant argument to the dev command. For example, if you want to bind KV, you would run:
-```
-$ wrangler pages dev <directory-of-assets> --kv KV
-```
+## Attach bindings to local development
 
-Then your KV binding will be accessible through `env.KV` like usual. Read the section below for all the specific binding arguments.
-
-{{<Aside>}}
-Local development uses local storage, it cannot access data stored on Cloudflare’s servers.
-
-By default, data in local development is not persisted. This means if you write a value into KV for example, the next time you start dev, it will no longer exist. You can enable persistence with `--persist`
-{{</Aside>}}
+To attach a binding to local development, refer to [Bindings](/pages/platform/functions/bindings/) and find the resource you would like to work with.

@@ -1556,8 +1556,9 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Paid add-on",
-          "free": "Paid add-on",
+          "summary": "Paid add-on for Pro and above",
+          "free": "No",
+          "lite": "No",
           "pro": "Paid add-on",
           "biz": "Paid add-on",
           "ent": "Paid add-on"
@@ -1606,7 +1607,7 @@
     "title": "Speed",
     "amp": {
       "title": "AMP Real URL",
-      "link": "/fundamentals/signed-exchanges/amp-real-ulr/",
+      "link": "/fundamentals/speed/amp-real-ulr/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1634,7 +1635,7 @@
     },
     "automatic_signed_exchanges": {
       "title": "Automatic Signed Exchanges (SXGs)",
-      "link": "/fundamentals/signed-exchanges/signed-exchanges/",
+      "link": "/fundamentals/speed/signed-exchanges/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -2348,7 +2349,7 @@
     },
     "health_checks": {
       "title": "Health checks",
-      "link": "https://support.cloudflare.com/hc/articles/4404867308429",
+      "link": "/health-checks/",
       "properties": {
         "availability": {
           "title": "Availability",

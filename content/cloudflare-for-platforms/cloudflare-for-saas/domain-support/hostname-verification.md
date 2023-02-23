@@ -204,7 +204,7 @@ Applicable hostname verification status includes:
 </tr>
 <tr>
 <td>Moved</td>
-<td>Custom hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule.</td>
+<td>Custom hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule, or it no longer points to the fallback origin.</td>
 </tr>
 <tr>
 <td>Deleted</td>

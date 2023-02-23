@@ -27,6 +27,12 @@ To enable **Always Use HTTPS** in the dashboard:
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **Always Use HTTPS**, switch the toggle to **On**.
 
+{{<Aside type="note">}}
+
+When you set your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) to **Off**, you will not have an option for **Always Use HTTPS** visible in your Cloudflare dashboard.
+
+{{</Aside>}}
+
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 

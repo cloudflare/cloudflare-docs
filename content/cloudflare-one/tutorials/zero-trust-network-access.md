@@ -94,7 +94,7 @@ Finally, you will need to establish the private RFC 1918 IP address or range tha
     $ cloudflared tunnel route ip add 10.0.0.0/8 8e343b13-a087-48ea-825f-9783931ff2a5
     ```
 
-2. Log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account, and go to **Gateway** > **Policies**.
+2. Log in to your [Zero Trust dashboard](https://dash.teams.cloudflare.com/), select your account, and go to **Gateway** > **Firewall Policies**.
 
 3. [Create a network policy](/cloudflare-one/policies/filtering/network-policies/) to allow traffic from specific users to reach that application. For example:
 

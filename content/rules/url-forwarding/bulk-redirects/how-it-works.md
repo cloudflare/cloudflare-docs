@@ -101,8 +101,12 @@ This does not affect URL redirects with **Subpath matching** disabled. Exact pat
 
 If multiple URL redirects can apply, then the redirect that wins is determined by the following rules:
 
-1. URL redirects with the exact hostname win over URL redirects with the **Include subdomains** option enabled.
-2. URL redirects with **Include subdomains** enabled win over other URL redirects with **Include subdomains** enabled if their domain is more specific.
-3. URL redirects with a concrete scheme win over URL redirects that match both `http` and `https` schemes.
+1. Given two URL redirects with **Subpath matching** enabled, the URL redirect with the most specific path wins over the other URL redirect.<br>
+If there are two URL redirects with source URL paths `/folder` and `/folder/subfolder`, an incoming request for the `/folder/subfolder/item` URL path will match the second redirect (`/folder/subfolder`) because it is more specific.
 
-Regarding ordering rule 2 (more specific domains win over less specific domains), if there are two URL redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request to `qux.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
+2. URL redirects with the exact hostname win over URL redirects with the **Include subdomains** option enabled.
+
+3. Given two URL redirects with **Include subdomains** enabled, the URL with the most specific domain wins over the other URL redirect.<br>
+If there are two URL redirects with source URL hostnames `bar.com` and `foo.bar.com`, an incoming request to `qux.foo.bar.com` will match the second redirect (`foo.bar.com`) because it is more specific.
+
+4. URL redirects with a concrete scheme win over URL redirects that match both `http` and `https` schemes.

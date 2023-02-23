@@ -9,6 +9,8 @@ layout: single
 
 # Build a QR code generator
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -21,7 +23,7 @@ If you would like to review the code for this tutorial, the final version of the
 
 ## Init
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to start writing Workers. You will make use of the default JavaScript template to start building your project.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler-legacy), supports various templates — pre-built collections of code that make it easy to start writing Workers. You will make use of the default JavaScript template to start building your project.
 
 In the command line, run the `wrangler init` command to create your Worker project and pass the project name `qr-code-generator`:
 
@@ -139,7 +141,7 @@ header: Installing the qr-image package
 $ npm install --save qr-image
 ```
 
-To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler/cli-wrangler/webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler/cli-wrangler/configuration/) in the Wrangler documentation.
+To use the `qr-image` package, configure the `type` to `"webpack"`. This instructs Wrangler to use [Webpack](/workers/wrangler-legacy/webpack/) to package your project for deployment. Learn more about [`type` configuration](/workers/wrangler-legacy/configuration/) in the Wrangler documentation.
 
 ```toml
 ---

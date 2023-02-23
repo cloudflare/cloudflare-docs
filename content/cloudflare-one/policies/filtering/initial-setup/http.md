@@ -32,7 +32,7 @@ To filter HTTP requests from a device:
 
 ## 3. Add recommended policies
 
-To create a new HTTP policy, navigate to **Gateway** > **Policies** > **HTTP** in the Zero Trust dashboard.
+To create a new HTTP policy, navigate to **Gateway** > **Firewall Policies** > **HTTP** in the Zero Trust dashboard.
 We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications

@@ -28,7 +28,7 @@ To remedy a false positive:
 
     <details><summary>For Magic Transit and Spectrum customers</summary><div>
 
-    1\. In the account home page, open **Network Analytics**.
+    1\. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
     2\. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 

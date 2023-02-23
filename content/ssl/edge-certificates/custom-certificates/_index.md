@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: overview
 title: Custom certificates
 weight: 3
 layout: single
@@ -24,7 +24,7 @@ Typically, customers will upload both the SSL certificate and the private key. T
 
 ## Geo Key Manager (private key restriction)
 
-By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. Customers who wish to restrict where these keys may be used can elect to specify a [Private Key Restriction](https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/) during upload.
+By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. To restrict where these keys may be used, use [Geo Key Manager](/ssl/edge-certificates/geokey-manager/).
 
 ## Certificate packs
 

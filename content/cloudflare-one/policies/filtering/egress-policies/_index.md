@@ -103,4 +103,6 @@ The country of the user making the request.
 
 ## Value
 
-{{<render file="gateway/_value.md">}}
+You can input a single value or use regular expressions to specify a range of values.
+
+Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).

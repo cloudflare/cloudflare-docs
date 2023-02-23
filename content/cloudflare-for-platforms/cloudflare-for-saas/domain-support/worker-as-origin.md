@@ -12,7 +12,7 @@ If you are building your application on [Cloudflare Workers](/workers/), you can
 
     - **Example**: `service.example.com AAAA 100::`
 
-2.  In that same zone, navigate to **Workers**.
+2.  In that same zone, navigate to **Workers Routes**.
 
 3.  Click **Add route**.
 

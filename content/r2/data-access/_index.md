@@ -1,9 +1,9 @@
 ---
-title: Data Access
+title: Data access
 pcx_content_type: navigation
 weight: 3
 ---
 
-# Data Access
+# Data access
 
 {{<directory-listing>}}

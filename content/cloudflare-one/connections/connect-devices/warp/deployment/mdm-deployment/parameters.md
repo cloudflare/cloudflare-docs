@@ -157,6 +157,14 @@ This functionality is intended for use with a Cloudflare China local network par
 
 The string must be a valid IPv4 or IPv6 socket address (containing the IP address and port number), otherwise the WARP client will fail to parse the entire MDM file.
 
+### `unique_client_id`
+
+Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid).
+
+**Value Type:** `string`
+
+**Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
+
 ## Authentication with service tokens
 
 {{<Aside>}}

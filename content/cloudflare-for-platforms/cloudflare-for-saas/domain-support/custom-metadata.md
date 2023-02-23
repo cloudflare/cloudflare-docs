@@ -56,7 +56,7 @@ Changes to metadata will propagate across Cloudflare’s edge within 30 seconds.
 
 The metadata object will be accessible on each request using the `request.cf.hostMetadata` property. You can then read the data, and customize any behavior on it using the Worker.
 
-In the example below we will user_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
+In the example below we will use the user_id in the Worker that was submitted using the API call above `"custom_metadata":{"customer_id":"12345","redirect_to_https": true,"security_tag":"low"}`, and set a request header to send the `customer_id` to the origin:
 
 ```js
 addEventListener('fetch', event => {

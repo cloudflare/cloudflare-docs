@@ -22,10 +22,6 @@ Environment variables are defined via the `[vars]` configuration in your `wrangl
 filename: wrangler.toml
 ---
 name = "my-worker-dev"
-type = "javascript"
-
-account_id = "<YOUR ACCOUNTID>"
-workers_dev = true
 
 # Define top-level environment variables
 # under the `[vars]` block using
@@ -105,10 +101,6 @@ KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configurat
 filename: wrangler.toml
 ---
 name = "my-worker-dev"
-type = "javascript"
-
-account_id = "<YOUR ACCOUNTID>"
-workers_dev = true
 
 [[kv_namespaces]]
 binding = "Customers"

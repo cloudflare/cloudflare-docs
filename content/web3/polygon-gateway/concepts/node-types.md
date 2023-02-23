@@ -8,6 +8,6 @@ weight: 3
 
 ## Nodes at Cloudflare
 
-Cloudflare's Polygon Gateway provides access to full and archive nodes.
+Cloudflare's Polygon Gateway provides access to full nodes.
 
 Please refer to [Ethereum node types](/web3/ethereum-gateway/concepts/node-types/) for more information.

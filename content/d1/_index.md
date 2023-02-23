@@ -45,6 +45,6 @@ To discuss an issue with the D1 team, open a thread on the [Community Forum](htt
 
 ### Connect with the Wrangler team
 
-If you are having issues with Wrangler, report issues in the [wrangler2 GitHub repository](https://github.com/cloudflare/wrangler2/issues/new/choose).
+If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</content-column>}}

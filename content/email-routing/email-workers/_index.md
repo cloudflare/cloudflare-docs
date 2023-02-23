@@ -44,4 +44,4 @@ For example, say that you create an allowlist Email Worker and bind it to a `hel
 
 ## Limits
 
-If you encounter any allocation errors while using Email Workers, refer to [Known limitations](/email-routing/known-limitations/#email-workers-size-limits) for more information.
+If you encounter any allocation errors while using Email Workers, refer to [Limits](/email-routing/limits/#email-workers-size-limits) for more information.

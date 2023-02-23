@@ -7,6 +7,14 @@ rss: file
 
 # Changelog
 
+## 2023-02-15
+
+- Added the [`[turnstile.ready]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) callback.
+
+## 2023-02-01
+
+- Added the [`[data-]language`](/turnstile/get-started/client-side-rendering/#configurations) parameter.
+
 ## 2022-12-12
 
 - [`POST /siteverify`](/turnstile/get-started/server-side-validation/) supports JSON requests now.

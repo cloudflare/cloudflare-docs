@@ -69,9 +69,9 @@ If you want to permanently revoke a user's access:
 
 2. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Users**.
 
-3. Search for and select the user you want to revoke.
+3. Select the checkbox next to the user you want to revoke.
 
-4. Select **Update Status** > **Revoke access**.
+4. Select **Action** > **Revoke access**.
 
 The user will no longer be able to log in to any application protected by Access. The user will still count towards your seat subscription until you [remove the user](/cloudflare-one/identity/users/seat-management) from your account.
 

@@ -14,7 +14,7 @@ A waiting room can be created from the dashboard or via API.
 
 {{<Aside>}}For additional context on creating a waiting room, refer to [Get started](/waiting-room/get-started/).{{</Aside>}}
 
-1.  Within your application, go to **Traffic** > **Waiting Rooms**.
+1.  Within your application, go to **Traffic** > **Waiting Room**.
 2.  Select **Create**.
 3.  Customize the [settings](/waiting-room/reference/configuration-settings/) for your waiting room. For additional guidance refer to [Best practices](/waiting-room/reference/best-practices/).
 4.  Select **Next**.

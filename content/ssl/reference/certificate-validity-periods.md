@@ -10,10 +10,12 @@ meta:
 
 When you order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can select the following values for the **Certificate validity period**:
 
-- **1 year** (soon to be [deprecated](/ssl/reference/migration-guides/digicert-update/))
-- **3 months**
-- **1 month**
-- **2 weeks**
+| Certificate validity period | Auto renewal period | Notes |
+| --- | --- | --- |
+| 1 year | 30 days | Soon to be [deprecated](/ssl/reference/migration-guides/digicert-update/) |
+| 3 months | 30 days |
+| 1 month | 7 days |
+| 2 weeks | 3 days |
 
 {{<Aside type="note">}}
 

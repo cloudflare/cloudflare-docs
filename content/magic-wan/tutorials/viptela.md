@@ -89,7 +89,7 @@ Refer to [Configure static routes](/magic-wan/how-to/configure-static-routes) fo
 
 ## 5. Validate traffic flow
 
-In the example below, a request for neverssl.com was issued, which has a Cloudflare policy blocking traffic to neverssl.com.
+In the example below, a request for `neverssl.com` was issued, which has a Cloudflare policy blocking traffic to `neverssl`.com.
 
 On the client VM (192.168.30.3), a blocked response is visible.
 

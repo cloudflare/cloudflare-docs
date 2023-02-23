@@ -6,7 +6,7 @@ weight: 1
 
 # Proxy status
 
-The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record. Cloudlare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records.
+The **Proxy status** of a DNS record affects how Cloudflare treats incoming traffic to that record. Cloudflare recommends enabling our proxy for all `A`, `AAAA`, and `CNAME` records.
 
 ![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/dns/static/proxy-status-screenshot.png)
 

@@ -1,10 +1,10 @@
 ---
-title: Data Security
+title: Data security
 weight: 2
 pcx_content_type: concept
 ---
 
-# Data Security
+# Data security
 
 This page details the data security properties of R2, including encryption-at-rest (EAR), encryption-in-transit (EIT), and Cloudflare's compliance certifications.
 

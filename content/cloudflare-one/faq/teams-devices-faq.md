@@ -27,6 +27,21 @@ Sites inside Cloudflare network are able to see this information. If a site is s
 
 Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. However, WARP is built to trade some throughput for enhanced privacy, because it encryps all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
 
+## Why is my device not connecting to a public WiFi?
+
+The WiFi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily disable WARP. After you login to the captive portal through your browser, you can re-enable WARP to access corporate resources.
+
+To allow end users to connect through a captive portal, administrators can do the following:
+
+1. Enable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch).
+2. Enable [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection).
+3. Set an [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) time period.
+4. If WARP fails to automatically detect a portal, provide an [admin override code](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) to your end users. This will allow users to manually turn off WARP and connect to the portal. WARP will automatically turn back on after the auto connect period.
+
+## Why is my device not connecting to the Internet after I deploy WARP?
+
+A third-party service or ISP may be blocking WARP, or Zero Trust settings may be misconfigured. For a list of common issues and steps to resolve, refer to our [troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/).
+
 ## Why is my device not connecting to my private network?
 
 If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/):

@@ -151,7 +151,7 @@ Cloudflare Access will now synchronize changes in group membership with Azure AD
 
 Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/filtering/http-policies/) to isolate traffic for risky user groups.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Policies** > **HTTP**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 
 2. Select **Create a policy**.
 

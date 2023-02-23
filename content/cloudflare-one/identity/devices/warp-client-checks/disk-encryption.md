@@ -28,7 +28,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 1. Select **Disk Encryption**.
 1. Enter a descriptive name for the check.
 1. Select your operating system.
-1. Turn on  **Enable Disk Encryption**.
+1. Either enable disk encryption for all volumes, or input the specific volume(s) you want to check for encryption (for example, `C`).
 1. Select **Save**.
 
 Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the disk encryption check is returning the expected results.
@@ -60,15 +60,11 @@ Operating systems determine disk encryption in various ways. The following infor
       FileVault:                 Yes
     ```
 
-All disks on the system must be encrypted for the posture check to pass.
-
 ### On Windows
 
 1. Open a Powershell window.
 1. Run the `Get-BitLockerVolume` command to list all volumes detected on the system.
-1. **Protection Status** must be set to **On**.
-
-All disks on the system must be encrypted for the posture check to pass.
+1. **Protection Status** must be set to **On** for the disk to be considered encrypted.
 
 ### On Linux
 

@@ -26,13 +26,13 @@ When you revoke a user, this action will terminate active sessions, but will not
 
 ## Check number of Active Users
 
-You can check for the number of active users in the [Zero Trust dashboard](https://dash.teams.cloudflare.com) home. 
+You can check for the number of active users in the [Zero Trust dashboard](https://dash.teams.cloudflare.com) home.
 
 ## Remove a user
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Users**.
-2. Search for and select the user you want to remove.
-3. Click **Update Status** > **Remove users**.
+2. Select the checkbox next to an active user.
+3. Select **Action** > **Remove users**.
 
 If a user is removed, and then authenticates once more, they will count as a seat again.
 

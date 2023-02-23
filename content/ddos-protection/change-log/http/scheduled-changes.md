@@ -22,13 +22,13 @@ layout: list
   </thead>
   <tbody>
     <tr>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>2023-02-08</td>
+      <td>2023-02-20</td>
+      <td>...863134d5</td>
+      <td>HTTP requests from known bad user agents.</td>
+      <td>block</td>
+      <td>ddos_dynamic</td>
+      <td>Detect more load testing tools.</td>
     </tr>
   </tbody>
 </table>

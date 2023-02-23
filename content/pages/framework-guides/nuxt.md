@@ -3,26 +3,25 @@ pcx_content_type: how-to
 title: Deploy a Nuxt.js site
 ---
 
-# Deploy a Nuxt.js site
+# Deploy a Nuxt site
 
-[Nuxt.js](https://nuxtjs.org/) is a framework making web development simple and powerful.
+[Nuxt](https://nuxt.com) is a web framework making web Vue.js-based development simple and powerful.
 
-In this guide, you will create a new Nuxt.js application and deploy it using Cloudflare Pages.
+In this guide, you will create a new Nuxt application and deploy it using Cloudflare Pages.
 
-## Setting up a new project
+## Create a new project
 
-Create a new project using `npx`, giving it the title `my-nuxt-app` in your terminal.
+Create a new project by running the following commands in your terminal:
 
 ```sh
-$ npx create-nuxt-app my-nuxt-app
+$ npx nuxi init my-nuxt-app
+$ cd my-nuxt-app
+$ npm install
 ```
 
-You will be prompted to fill in various fields, such as `Project name`, `UI option`, `Linting tools`, and `Testing framework`, in your terminal. When asked which deployment target to use, you will be given two options: **Server** and **Static**. Select **Static** as your option for hosting.
-
-Next, navigate to the project and run it using the command:
+Next, run the application using the command:
 
 ```sh
-$ cd my-nuxt-app
 $ npm run dev
 ```
 
@@ -33,16 +32,11 @@ $ npm run dev
 Create a new GitHub repository by visiting [repo.new](https://repo.new). After your repository is set up, push your application to GitHub by running the following commands in your terminal:
 
 ```sh
-# Setup the local repository
 $ git init
 $ git remote add origin https://github.com/<username>/<repo>
+$ git add .
+$ git commit -m "Initial commit"
 $ git branch -M main
-
-# Commit all initial files
-$ git add -A
-$ git commit -m "initial commit"
-
-# Send commit to new GitHub repo
 $ git push -u origin main
 ```
 
@@ -56,17 +50,16 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 
 <div>
 
-| Configuration option | Value           |
-| -------------------- | --------------- |
-| Production branch    | `main`          |
-| Build command        | `npm run build` |
-| Build directory      | `dist`          |
+| Configuration option  | Value              |
+| --------------------- | ------------------ |
+| Production branch     | `main`             |
+| Build command         | `npm run build`    |
+| Build directory       | `.output/public`   |
+| Environment Variables | `NODE_VERSION: 17` |
 
 </div>
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
-
-### Finalize Setup
 
 After completing configuration, click the **Save and Deploy** button.
 
@@ -81,14 +74,12 @@ Additionally, you will have access to [preview deployments](/pages/platform/prev
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
 {{</Aside>}}
-  
-{{<Aside type="warning" header="Auto Minify and Nuxt.js">}}
 
-If you are going to use a custom domain that is proxied through Cloudflare, you may run into issues with the Auto Minify feature. If enabled for HTML, it will strip comments which Nuxt.js and some other frameworks may rely on.
+## Use bindings in your Nuxt application
 
-Refer to [Using Cloudflare Auto Minify](https://support.cloudflare.com/hc/en-us/articles/200168196-Using-Cloudflare-Auto-Minify) for how to configure this feature.
+It is not currently possible to access bindings from a Nuxt application (refer to this [Nuxt GitHub issue](https://github.com/nuxt/nuxt/issues/18599)).
 
-{{</Aside>}}
+When bindings are accessible from a Nuxt application, we will update this guide accordingly.
 
 ## Learn more
 

@@ -31,7 +31,7 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 ### Step 2 — Add DS record to your registrar
 
-You now need to add a **DS** record to your registrar.
+You now need to add a **DS** record to your registrar. If Algorithm 13 - Cloudflare's preferred cipher choice - is not listed by your registrar, it may also be called *ECDSA Curve P-256 with SHA-256*.
 
 {{<render file="_dnssec-providers.md">}}
 
@@ -63,4 +63,4 @@ If your registrar does not support DNSSEC with Cloudflare's preferred cipher cho
 - Transfer your domain to a different registrar that supports DNSSEC with Algorithm 13
 - File a [complaint with ICANN](https://forms.icann.org/en/resources/compliance/complaints/registrars/standards-complaint-form), citing your registrar's lack of compliance.
 
-If your top-level domain does not support DNSSEC with Algorithm 13, [contact that top-level domain](https://www.iana.org/domains/root/db).
+If your top-level domain does not support DNSSEC with Algorithm 13 (also known as *ECDSA Curve P-256 with SHA-256*), [contact that top-level domain](https://www.iana.org/domains/root/db).

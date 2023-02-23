@@ -30,7 +30,7 @@ To enable Queues:
 2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
 3. Select **Enable Queues Beta**.
 
-Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/pricing/) for more details.
+Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
 
 ## 2. Install Wrangler
 
@@ -53,7 +53,7 @@ $ yarn global add wrangler
 Queues requires Wrangler version `2.2.1` or higher. Run `wrangler version` to check your version:
 
 ```sh
-wrangler --version
+$ wrangler --version
 2.2.1
 ```
 
@@ -66,7 +66,7 @@ To use queues, you need to create at least one queue to publish messages to and 
 To create a queue, run:
 
 ```sh
-wrangler queues create <MY_FIRST_QUEUE>
+$ wrangler queues create <MY_FIRST_QUEUE>
 ```
 
 Choose a name that is descriptive and relates to the types of messages you intend to use this queue for. Descriptive queue names look like: `debug-logs`, `user-clickstream-data`, or `password-reset-prod`. 
@@ -111,18 +111,23 @@ You will now configure your producer Worker to create messages to publish to you
 
 In your Worker project directory, open the `src` folder and add the following to your `index.ts` file:
 
-```toml
+```ts
 ---
 filename: src/index.ts
-highlight: [4]
+highlight: [8]
 ---
 export default {
- async fetch(request: Request, env: Environment): Promise<Response> {
-   let log = await request.json();
-   await env.<MY_QUEUE>.send(log);
-   return new Response("Success!");
- }
- ```
+  async fetch(req: Request, env: Environment): Promise<Response> {
+    let log = {
+      url: req.url,
+      method: req.method,
+      headers: Object.fromEntries(req.headers),
+    };
+    await env.<MY_QUEUE>.send(log);
+    return new Response('Success!');
+  },
+};
+```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.
 
@@ -158,22 +163,26 @@ In this guide, you will create a consumer Worker and use it to log and inspect t
 
 To create a consumer Worker, open your `index.ts` file and add the following `queue` handler to your existing `fetch` handler:
 
-```sh
+```ts
 ---
 filename: src/index.ts
-highlight: [4]
+highlight: [11]
 ---
 export default {
- async fetch(request: Request, env: Environment): Promise<Response> {
-   let log = await request.json();
-   await env.<MY_QUEUE>.send(log);
-   return new Response("Success!");
- }
- async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
-   let messages = JSON.stringify(batch.messages)
-   console.log(`consumed from our queue: ${messages}`)
- }
-}
+  async fetch(req: Request, env: Environment): Promise<Response> {
+    let log = {
+      url: req.url,
+      method: req.method,
+      headers: Object.fromEntries(req.headers),
+    };
+    await env.<MY_QUEUE>.send(log);
+    return new Response('Success!');
+  },
+  async queue(batch: MessageBatch<Error>, env: Environment): Promise<void> {
+    let messages = JSON.stringify(batch.messages);
+    console.log(`consumed from our queue: ${messages}`);
+  },
+};
 ```
 
 Replace `MY_QUEUE` with the name you have set for your binding from your `wrangler.toml`.

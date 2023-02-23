@@ -43,9 +43,9 @@ List relevant R2 objects containing logs matching the provided query parameters,
 
 ### Query parameters
 
-- `start` (required) string <date-time> (TimestampRFC3339) - Start time in RFC3339 format, for example `start=2022-06-06T16:00:00Z`.
+- `start` (required) string <date-time> (TimestampRFC3339) - Start time in RFC 3339 format, for example `start=2022-06-06T16:00:00Z`.
 
-- `end` (required) string <date-time> (TimestampRFC3339) - End time in RFC3339 format, for example `end=2022-06-06T16:00:00Z`.
+- `end` (required) string <date-time> (TimestampRFC3339) - End time in RFC 3339 format, for example `end=2022-06-06T16:00:00Z`.
 
 - `bucket` (required) string (Bucket) - R2 bucket name, for example `bucket=cloudflare-logs`.
 
@@ -59,9 +59,9 @@ Stream logs stored in R2 that match the provided query parameters, using the end
 
 ### Query parameters
 
-- `start` (required) string <date-time> (TimestampRFC3339) - Start time in RFC3339 format, for example `start=2022-06-06T16:00:00Z`
+- `start` (required) string <date-time> (TimestampRFC3339) - Start time in RFC 3339 format, for example `start=2022-06-06T16:00:00Z`
 
-- `end` (required) string <date-time> (TimestampRFC3339) - End time in RFC3339 format, for example `end=2022-06-06T16:00:00Z`
+- `end` (required) string <date-time> (TimestampRFC3339) - End time in RFC 3339 format, for example `end=2022-06-06T16:00:00Z`
 
 - `bucket` (required) string (Bucket) - R2 bucket name, for example `bucket=cloudflare-logs`
 

@@ -14,11 +14,11 @@ Note that the **Total active users** and **Queued users** shown in the dashboard
 
 ## Status in the dashboard
 
-Open the **Waiting Rooms** dashboard to view the list of your waiting rooms.
+Open the **Waiting Room** dashboard to view the list of your waiting rooms.
 
 The **Status** column displays the current state of the waiting room:
 
-- **Not Queueing**:
+- **Not queueing**:
   - Waiting room enabled, but has not reached traffic threshold to send visitors to waiting room.
   - Shows estimated number of users in the application.
 - **Queueing**:
@@ -26,7 +26,7 @@ The **Status** column displays the current state of the waiting room:
   - Shows estimated number of users in the queue.
   - On hover, shows maximum wait time expected for users.
 - **Disabled**: The waiting room is suspended.
-- **Queue All**:
+- **Queue-all**:
   - Forces all traffic to queue in the waiting room.
   - On hover, shows estimated number of users in the queue.
 
@@ -51,6 +51,7 @@ GET zones/{zone_identifier}/waiting_rooms/{identifier}
 
 The endpoint above [fetches all settings](https://developers.cloudflare.com/api/operations/waiting-room-waiting-room-details) for a configured waiting room:
 
+```bash
       "success": true,
       "errors": [],
       "messages": [],
@@ -76,6 +77,7 @@ The endpoint above [fetches all settings](https://developers.cloudflare.com/api/
         },
         "custom_page_html": "{{#waitTimeKnown}} {{waitTime}} mins {{/waitTimeKnown}} {{^waitTimeKnown}} Queue all enabled {{/waitTimeKnown}}"
       }
+```
 
 The value of `suspended` indicates whether a waiting room is activated or suspended:
 

@@ -67,14 +67,14 @@ If you would like to create a policy for an IP/CIDR range instead of a specific 
     | Action | Selector | Operator | Value |
     |--|--|--|--|
     | Allow  | Destination IP |in|`10.128.0.7` |
-    |        |User email| Matches regex| `*@example.com`|
+    |        |User email| Matches regex| `.*@example.com`|
 
     - **Policy 2**
     | Block  | Selector | Operator | Value |
     |--|--|--|--|
     | Block |  Destination IP |in|`10.128.0.7` |
 
-    Access rules are evaluated in order, so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/filtering/network-policies/).
+    Policies are evaluated in [numerical order](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/filtering/network-policies/).
 
 9. Select **Add application**.
 

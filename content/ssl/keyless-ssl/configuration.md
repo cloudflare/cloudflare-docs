@@ -92,7 +92,7 @@ Add your Cloudflare account details to the configuration file located at `/etc/k
 
 1.  Set the hostname of the key server, for example, `11aa40b4a5db06d4889e48e2f.example.com`.
 2.  Set the Zone ID (found on **Overview** tab of the Cloudflare dashboard).
-3.  [Set the Origin CA API key](https://dash.cloudflare.com/profile).
+3.  [Set the Origin CA API key](/fundamentals/api/get-started/ca-keys).
 
 ### Populate keys
 

@@ -1,6 +1,6 @@
 ---
 title: Prerequisites
-pcx_content_type: how-to
+pcx_content_type: reference
 weight: 3
 ---
 
@@ -10,7 +10,7 @@ Before you can begin using Magic WAN, verify that you meet Cloudflare's onboardi
 
 ## Use compatible tunnel endpoint routers
 
-Magic WAN relies on GRE and IPsec tunnels to transmit packets from Cloudflare’s edge to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
+Magic WAN relies on GRE and IPsec tunnels to transmit packets from Cloudflare’s global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
 
 - Support Anycast tunneling.
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
@@ -22,7 +22,7 @@ Magic WAN relies on GRE and IPsec tunnels to transmit packets from Cloudflare’
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
-Cloudflare uses tunnels to deliver packets from our edge to your locations, while Cloudflare Magic WAN encapsulates these packets, adding a new IP header and GRE protocol header.
+Cloudflare uses tunnels to deliver packets from our global network to your locations, while Cloudflare Magic WAN encapsulates these packets, adding a new IP header and GRE protocol header.
 
 To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces):
 

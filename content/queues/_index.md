@@ -19,9 +19,9 @@ Cloudflare Queues allows developers to send and receive messages with guaranteed
 
 {{<button-group>}}
 {{<button type="primary" href="https://github.com/Electroid/queues-demo#cloudflare-queues-demo" target="_blank">}}Try the Demo{{</button>}}
-{{<button type="secondary" href="/queues/javascript-apis/">}}JavaScript APIs{{</button>}}
-{{<button type="secondary" href="/queues/configuration/">}}Configuration{{</button>}}
-{{<button type="secondary" href="/queues/pricing/">}}Pricing{{</button>}}
+{{<button type="secondary" href="/queues/platform/javascript-apis/">}}JavaScript APIs{{</button>}}
+{{<button type="secondary" href="/queues/platform/configuration/">}}Configuration{{</button>}}
+{{<button type="secondary" href="/queues/platform/pricing/">}}Pricing{{</button>}}
 {{</button-group>}}
 
 Cloudflare Queues enable you to build applications that can:

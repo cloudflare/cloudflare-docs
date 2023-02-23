@@ -30,7 +30,7 @@ At the same time, this structure keeps your customers' data and settings separat
 
 Since non-Enterprise accounts can only have one Super administrator, your account will be the only Super administrator allowed on their account.
 
-For more details, refer to [Super administrators](/fundamentals/account-and-billing/account-setup/manage-account-members/#change-super-administrator).
+For more details, refer to [Super administrators](/fundamentals/account-and-billing/members/roles/#change-super-administrator).
 
 [^1]: {{<render file="_account-definition.md">}}
 [^2]: {{<render file="_user-definition.md">}}

@@ -12,7 +12,7 @@ Durable Objects provide low-latency coordination and consistent storage for the 
 
 - The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
-For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
+For a high-level introduction to Durable Objects, refer to [the announcement blog post](https://blog.cloudflare.com/durable-objects-open-beta/).
 
 For details on the specific Durable Object APIs, refer to the [Runtime API documentation](/workers/runtime-apis/durable-objects/).
 
@@ -428,7 +428,7 @@ In particular, a Durable Object may be superseded in this way in the event of a 
 
 The Workers editor in [the Cloudflare dashboard](https://dash.cloudflare.com/) allows you to interactively edit and preview your Worker and Durable Objects. Note that in the editor Durable Objects can only be talked to by a preview request if the Worker being previewed both exports the Durable Object class and binds to it. Durable Objects exported by other Workers cannot be talked to in the editor preview.
 
-[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler 2](/workers/wrangler/compare-v1-v2/) will emit a warning in that case. 
+[`wrangler dev`](/workers/wrangler/commands/#dev) has read access to Durable Object storage, but writes will be kept in memory and will not affect persistent data. However, if you specify the `script_name` explicitly in the Durable Object binding, then writes will affect persistent data. [Wrangler](/workers/wrangler/) will emit a warning in that case. 
 
 ### Object location
 

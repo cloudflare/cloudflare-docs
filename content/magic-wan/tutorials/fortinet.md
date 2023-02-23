@@ -216,9 +216,9 @@ end
 
 Next, configure the GRE and the WAN (Internet) interface. The example below uses the following attributes:
 
-- WAN/Internet Interface (Customer GRE Endpoint IP): WAN1
-- GRE Interface name: toCF
-- Tunnel Inside IP Subnet: 10.10.10.0/31
+- **WAN/Internet Interface (Customer GRE Endpoint IP)**: `WAN1`
+- **GRE Interface name**: `toCF`
+- **Tunnel Inside IP Subnet**: `10.10.10.0/31`
 
 ```bash
 ---
@@ -259,7 +259,7 @@ end
 
 ### Create a policy based route
 
-Next, create a Policy Based Route to route desired traffic down the tunnel. The example below tunnels all RFC1918 address spaces.
+Next, create a Policy Based Route to route desired traffic down the tunnel. The example below tunnels all RFC 1918 address spaces.
 
 ```bash
 ---
