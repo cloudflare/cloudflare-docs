@@ -8,34 +8,31 @@ weight: 2
 
 Device Information Only mode allows you to enforce device posture rules when a user connects to your [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-apps/). This mode relies on a client certificate generated from your account to establish trust between the Access application and the device.
 
-To setup Device Information Only mode:
+To set up Device Information Only mode:
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following minimum permissions:
-    * **Zero Trust: Edit**
-    *  **SSL and Certificates: Edit**
-
-2. Enable client certificate provisioning for [your zone](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/):
+1. Enable client certificate provisioning for [your zone](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/):
 
     ```sh
     curl -X PATCH 'https://api.cloudflare.com/client/v4/zones/<ZONE ID>/devices/policy/certificates' \
-    -h 'Authorization: Bearer <API TOKEN>' \
-    -d '{"enabled": true}'
+        -H "X-Auth-Email: <EMAIL>" \
+        -H "X-Auth-Key: <API_KEY>" \
+        --data '{"enabled": true}'
     ```
 
-3. In your [WARP profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), scroll down to **Service mode** and select **Device Information Only**.
+2. In your [WARP profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), scroll down to **Service mode** and select **Device Information Only**.
 
-4. [Enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) into your Zero Trust organization.
+3. [Enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) into your Zero Trust organization.
 
     When enrolled in Device Information Only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 
-5. (Optional) To view the client certificate on the device:
+4. (Optional) Verify the client certificate on the device:
 
 {{<tabs labels="Windows | macOS">}}
 {{<tab label="windows" no-code="true">}}
 
 1. Open the Start menu and select **Run**.
 2. Enter `certlm.msc`.
-3. Navigate to **Personal** > **Certificates**.
+3. Go to **Personal** > **Certificates**.
 
 The certificate name should match the **Device ID** in your WARP client **Preferences**.
 ![Verifying the Device Information Only mode certificate in Windows](/cloudflare-one/static/documentation/connections/device-information-only-windows.png)
@@ -51,15 +48,14 @@ The certificate name should match the **Device ID** in your WARP client **Prefer
 {{</tab>}}
 {{</tabs>}}
 
-
-6. (Optional) To view the client certificate in your Cloudflare account:
+5. (Optional) Verify the client certificate in your Cloudflare account:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select the zone for which you enabled client certificates.
     2. Go to **SSL/TLS** > **Client Certificates**.
 
     The certificate name is the WARP enrollment **Device ID**.
     ![Example client certificate in the Cloudflare dashboard](/cloudflare-one/static/documentation/connections/device-information-only-cert.png)
 
-7. Lastly, block traffic from devices that do not have a valid client certificate:
+6. Next, block traffic from devices that do not have a valid client certificate:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **SSL/TLS** > **Client Certificates**.
     2. Under **Hosts**, add the domain you want to protect with device posture rules.
     3. Select **Create mTLS rule**.
