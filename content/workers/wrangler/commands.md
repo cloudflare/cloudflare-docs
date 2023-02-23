@@ -1548,6 +1548,8 @@ $ wrangler whoami
 Deployments are currently in Public Beta and subcommands are currently in Beta. Please report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 {{</Aside>}}
 
+You can read more about deployments and how they work [here](/workers/platform/deployments).
+
 Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
 
 ```sh
@@ -1608,7 +1610,7 @@ export default {
 
 ### rollback <deployment-id>
 
-Rollback to a specific deployment by ID.
+Rollback to a specific deployment by ID. There are limitations on what deployments you can rollback to which you can read about [here](/workers/platform/deployments#rollbacks)
 
 {{<Aside type="warning">}}
 Rollbacks will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.

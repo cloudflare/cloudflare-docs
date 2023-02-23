@@ -11,58 +11,43 @@ Deployments are currently in Public Beta and subcommands are currently in Beta. 
 
 {{</Aside>}}
 
-Deployments are an audit log of static historical versions of your Worker. They include the bundled code, configuration, and bindings associated with your Worker at a given point in time.
+Deployments are a log of static historical versions of your Worker. They track changes to the bundled code, bindings, compatibility date, and usage model associated with a Worker over time. They also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
 
-Only one deployment is active at any time. The active deployment is your latest deployment. The active deployment is accessible via any of your configured custom domains, routes, service bindings, schedules, and your `*.workers.dev` subdomain.
-
-## Creating a new Deployment
-
-New Deployments will be created whenever you change code, configuration, or bindings. This includes:
-
-* Changes to a Worker’s bindings, code, or configuration in the Cloudflare dashboard.
-* Changes to a Worker’s bindings, code, or configuration in the REST API.
-* Changes to a Worker’s bindings, code, or configuration in the CLI via [wrangler publish](/workers/wrangler/commands#publish).
-
-When you deploy changes to your Worker, Cloudflare will track the user, token, or interface from which your code was last deployed. This is useful to understand and audit who or what is making changes to your applications.
+The latest deployment for a Worker is considered the "active deployment". [You can view your latest 10 deployments via the cloudflare dashboard or the `wrangler deployments` command.](#Interacting-with-Deployments)
 
 {{<Aside type="note">}}
 
-Changing routes, custom domains, or cron triggers will not issue a new deployment.
+Associated resources for a worker such as KV, R2, Durable Objects etc. will not be tracked with deployments.
 
 {{</Aside>}}
 
-### Updating Code
+## Creating a new Deployment
 
-Any changes to code will trigger a new deployment. This can be as small as a simple whitespace change.
+New Deployments will be created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. These can be done via the Cloudflare Dashboard, [Workers API](/api), or [`wrangler publish` command](/workers/wrangler/commands#publish).
 
-### Updating Bindings
+Notably, this does not include changes to bound resources. For example if two workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Further changes to the service binding on Worker A will not trigger a new deployment for Worker B.
 
-Updates to bindings include a change to the value or variable name of a binding, or any CRUD operation on an individual binding. 
+{{<Aside type="note">}}
 
-Notably, this does not include changes to the target resource itself. For example, changing the code of a Worker B that is connected via a service binding from Worker A will not trigger a new deployment on Worker A. Only changes to the service binding between Worker A and Worker B will trigger a new deployment.
+Changing triggers such as routes, custom domains, or cron triggers will not issue a new deployment.
 
-### Updating Configuration
-
-Updates to configuration include:
-
-* Changing a Worker’s usage model.
-* Changing a Worker’s secret or environment variable names and values.
+{{</Aside>}}
 
 ## Interacting with Deployments
 
-Deployment information can be obtained via Wrangler, the Cloudflare Dashboard, or Cloudflare's REST API.
-
 ### via Wrangler
 
-The [`wrangler deployments`](/workers/wrangler/commands#deployments) command will output detailed information about the most recent deployments, including source, timestamp, identifier, and author.
+Wrangler allows you to view the 10 most recent deployments as well as source code, bindings and runtime information about a specific deployment.
+
+More details about the `wrangler deployments` and `wrangler deployments view` command can be found [here](/workers/wrangler/commands#deployments).
 
 ### via the Cloudflare Dashboard
 
 Access Deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
 
-## Via the API
+### via the API
 
-Read more about accessing Deployment information via Cloudflare's REST API [here](https://api.cloudflare.com/#worker-deployments-properties).
+Read more about accessing Deployment information via Cloudflare's REST API [here](/api/#worker-deployments-properties).
 
 {{<Aside type="note">}}
 
@@ -71,12 +56,20 @@ Deployments are in active development. To give feedback, request a [live chat](h
 {{</Aside>}}
 
 ## Rollbacks
-Rollbacks are a means to change the code running on the edge, this can be used for instance if there is an unintended publish. 
-It is not limited to just the previous deployment, rollbacks can currently be done up to 10 deployments back from the current one.
-There are scenarios where you cannot rollback which include:
-- A Durable Object migration has occurred between latest deployment and target deployment.
-- If the target deployment has a binding to an R2 bucket, KV namespace, or Queue that no longer exists.
-- If the target deployment has a binding to a D1 database, this will be removed in the future.
+Rollbacks are a way to quickly deploy an older deployment to the edge. This could be useful if a breaking change or unintended publish is made to a production Worker.
 
-Additionally there are caveats with resources bound to the deployment, for instance the structure of your resource may have changed since the deployment
-being rolled back onto, in which the deployed code would handle the resource data erroneously. 
+### via Wrangler
+
+You can rollback in wrangler using the `wrangler deployments rollback` command, you can learn about it [here](/workers/wrangler/commands#rollback).
+
+### via the Cloudflare Dashboard
+
+In the deployements tab under your Worker you can select the menu dropdown on the right of the deployment and select **`Rollback to this deployment`**.
+
+Rollbacks are only valid to the latest 10 deployments. Further rollbacks will be invalid if external resources have been deleted or modified between the target deployment and the active deployment. Specifically if:
+
+- A Durable Object migration has occurred between the active deployment and target deployment.
+- If the target deployment has a binding to an R2 bucket, KV namespace, or Queue that no longer exists.
+- If the target deployment has a binding to a D1 database (this limitation will be removed in the future)
+
+Bound resources will not be changed during a rollback. This means if the structure of data has changed between the active deployment and target deployment, errors could occur using older bundled code with changed data.
