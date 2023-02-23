@@ -5827,7 +5827,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
     .legalInformation li + li:before {
         content: "|";
-        padding-right: 1rem;
+        padding-right: .5rem;
     }
 
     .legalInformation {
