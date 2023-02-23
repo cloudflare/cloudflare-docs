@@ -47,7 +47,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Trust & Safety | Can access trust and safety related services. |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
-| Zaraz Admin | Can edit [Zaraz](/zaraz/) configuration. |
+| Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.
+| Zaraz Edit | Can edit [Zaraz](/zaraz/) configuration. |
 | Zaraz Read | Can read [Zaraz](/zaraz/) configuration. |
 | Zone Versioning (Account-Wide) | Can view and edit [Zone Versioning](/version-management/) for all domains in account. |
 | Zone Versioning Read (Account-Wide) | Can view [Zone Versioning](/version-management/) for all domains in account. |

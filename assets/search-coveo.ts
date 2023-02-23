@@ -1,4 +1,5 @@
 (function () {
+
   let tag = document.currentScript;
   let $ = document.querySelector.bind(document);
 
@@ -7,7 +8,7 @@
   let { org, token } = dataset || {};
 
   function setReferrerValue() {
-    let referrer = (document.referrer.match("(?:developers\.cloudflare\.com|docs\.cloudflare\.com|cloudflare\-docs\-7ou\.pages\.dev)(\/.+?\/)"));
+    const referrer = (document.referrer.match("(?:developers\.cloudflare\.com|docs\.cloudflare\.com|cloudflare\-docs\-7ou\.pages\.dev)(\/.+?\/)"));
     if (referrer !== null) {
       return referrer[1];
     }
@@ -95,6 +96,7 @@
     }
       coveo.$$(root).on('newQuery', () => showLoadingToggle(true))
       coveo.$$(root).on('newResultsDisplayed', () => showLoadingToggle(false))
+
   }
 
   // init
@@ -102,6 +104,7 @@
     if (!org || !token) return;
     if (coveo = window.Coveo) {
       // coveo loaded, initialize
+
       location.pathname.startsWith('/search')
         ? loadSearchResults()
         : loadCustomSearchBox();

@@ -70,74 +70,6 @@ export function mobile() {
     });
 }
 
-function $copy(ev: MouseEvent) {
-  let btn = (ev.target as HTMLElement).closest("button");
-  let txt = btn.getAttribute("data-clipboard");
-  if (txt) {
-    try {
-      navigator.clipboard.writeText(txt);
-    } catch (err) {
-      /* no support */
-    }
-  }
-}
-
-export function copy() {
-  let btns = document.querySelectorAll("button[data-clipboard]");
-  for (let i = 0; i < btns.length; i++)
-    btns[i].addEventListener("click", $copy);
-}
-
-function $clicktoClipboard(ev: MouseEvent) {
-  const button = ev.target as HTMLElement;
-  const pre = button.parentElement;
-  if (pre) {
-    const codeNodes = pre.getElementsByTagName("code");
-    if (codeNodes.length >= 1){
-      // the markdown's code blocks adds a class "CodeBlock--token-unselectable", if it is not supposed to be copied.
-      // clone the code node, we do not want to modify the DOM.
-      const code = codeNodes[0].cloneNode(true) as HTMLElement;
-      const unselectableTokens = code.getElementsByClassName("CodeBlock--token-unselectable");
-      for (let i = 0; i < unselectableTokens.length; i++){
-        unselectableTokens[i].remove();
-      }
-      const text = code.innerText;
-      if (text) {
-        try {
-          //copy to clipboard
-          navigator.clipboard.writeText(text);
-          //change SVG
-          button.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"  style= "width:1rem; pointer-events: none;"  aria-label="Copied to clipboard button" focusable="true"><title>Copied Button</title><path d="M8.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L2.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093L8.95 4.992a.252.252 0 0 1 .02-.022zm-.92 5.14.92.92a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 1 0-1.091-1.028L9.477 9.417l-.485-.486-.943 1.179z"></path></svg>`;
-          setTimeout(() => {
-            button.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style= "width:1rem; pointer-events: none;" aria-label="Copy to clipboard button" focusable="true"><title>Copy Button</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>`;
-          }, 1500);
-        } catch (err) {
-          /* no support */
-        }
-      }
-    }
-  }
-}
-
-export function clipboardButton() {
-  const copyButtonLabel = "Copy to clipboard";
-  // get all codeblocks
-  let blocks = document.getElementsByClassName("CodeBlock");
-  for (let i = 0; i < blocks.length; i++) {
-    if (navigator.clipboard) {
-      // Create a button to copy the code
-      let button = document.createElement("button");
-      button.className = "copyCode-button";
-      button.setAttribute("aria-label", copyButtonLabel);
-      button.setAttribute("Title", "Copy to clipboard");
-      // Add SVG icon
-      button.innerHTML += `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" style= "width:1rem; pointer-events: none;" aria-label="Copy to clipboard button" focusable="true"><title>Copy Button</title><path fill="none" d="M0 0h24v24H0z"></path><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></svg>`;
-      button.addEventListener("click", $clicktoClipboard);
-      blocks[i].appendChild(button);
-    }
-  }
-}
-
 // add focus attribute to activeElement if keyboard trigger
 export function focus() {
   let isTAB = false;
@@ -193,7 +125,9 @@ export function tabs() {
           const parts = defaultTab.id.split("-");
           const tabId = parts.slice(0, parts.length - 1).join("-");
 
-          const defaultTabLabel = wrappers[i].querySelector(`a[data-link=${tabId}]`);
+          const defaultTabLabel = wrappers[i].querySelector(
+            `a[data-link=${tabId}]`
+          );
 
           (defaultTab as HTMLElement).style.display = "block";
           (defaultTabLabel as HTMLElement).classList.add("active");
@@ -297,27 +231,39 @@ export function dropdowns() {
 }
 
 export function toggleSidebar() {
-
   const toggleButton = document.getElementsByClassName("toggleSidebar");
-  if(toggleButton){
-    let div = document.querySelector(".DocsSidebar--sections .toggleSidebar")
+  if (toggleButton) {
+    let div = document.querySelector(".DocsSidebar--sections .toggleSidebar");
     let btn = div.querySelector("button");
     btn.addEventListener("click", () => {
-      let classToggleList = ['.DocsSidebar', '.DocsToolbar', '.DocsFooter', '.DocsContent', '.DocsMarkdown', '.DocsSidebar--sections .toggleSidebar', '.breadcrumb'];
+      let classToggleList = [
+        ".DocsSidebar",
+        ".DocsToolbar",
+        ".DocsFooter",
+        ".DocsContent",
+        ".DocsMarkdown",
+        ".DocsSidebar--sections .toggleSidebar",
+        ".breadcrumb",
+      ];
 
-      classToggleList.forEach(function(querySelector){
+      classToggleList.forEach(function (querySelector) {
         let item = document.querySelector(querySelector);
-        item.classList.toggle('collapsed');
+        item.classList.toggle("collapsed");
       });
 
-      let attr = 'is-visually-hidden';
-      let attrToggleList = ['.DocsSidebar--nav-item', '.DocsSidebar--section-more', '.DocsSidebar--docs-title-section a div span span', '.DocsSidebar--header-section a div span'];
+      let attr = "is-visually-hidden";
+      let attrToggleList = [
+        ".DocsSidebar--nav-item",
+        ".DocsSidebar--section-more",
+        ".DocsSidebar--docs-title-section a div span span",
+        ".DocsSidebar--header-section a div span",
+      ];
 
-      attrToggleList.forEach(function(querySelector){
+      attrToggleList.forEach(function (querySelector) {
         let item = document.querySelector(querySelector);
         let isHidden = item.hasAttribute(attr);
         item.toggleAttribute(attr, !isHidden);
       });
-  });
+    });
   }
 }

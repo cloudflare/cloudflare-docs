@@ -389,6 +389,12 @@
 /page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
 /page-shield/use-dashboard/configure-reporting-endpoint/ /page-shield/reference/settings/#csp-reporting-endpoint 301
 
+# queues
+/queues/configuration/ /queues/platform/configuration/ 301
+/queues/javascript-apis/ /queues/platform/javascript-apis/ 301
+/queues/limits/ /queues/platform/limits/ 301
+/queues/pricing/ /queues/platform/pricing/ 301
+
 # radar
 /fundamentals/radar/ /radar/ 301
 /fundamentals/radar/glossary/ /radar/glossary/ 301

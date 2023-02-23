@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Configuration tips
-weight: 5
+weight: 6
 meta:
   title: DLP configuration tips
 ---

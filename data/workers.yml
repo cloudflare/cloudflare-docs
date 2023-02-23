@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m18.6
 product:
   title: Workers
   url: /workers/
+  group: Developer platform
 
 meta:
   title: Cloudflare Workers docs

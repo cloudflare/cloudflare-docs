@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Public Buckets
+title: Public buckets
 weight: 3
 ---
 
-# Create Public Buckets on R2
+# Create public buckets on R2
 
 ## Overview
 

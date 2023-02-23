@@ -4,6 +4,11 @@ meta:
   author: '@cloudflare'
   image: /core-services-preview.png
 
+product:
+  title: Home page
+  url: /
+  show: false
+
 externals:
   - title: Cloudflare homepage
     url: https://cloudflare.com

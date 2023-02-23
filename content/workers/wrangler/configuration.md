@@ -659,11 +659,11 @@ Consider using [Cloudflare Pages](/pages/) for hosting static applications inste
 
   - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file.
 
-- `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An exclusive list of `.gitignore`-style patterns that match file  or directory names from your bucket location. Only matched items will be uploaded.
 
-- `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `exclude` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   -  A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 

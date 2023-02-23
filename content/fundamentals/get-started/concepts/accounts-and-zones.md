@@ -8,7 +8,7 @@ weight: 4
 
 Within the Cloudflare ecosystem, there are three organizing concepts that control where specific settings live: user profiles, accounts, and zones.
 
-<div class="mermaid">
+```mermaid
 flowchart LR
 accTitle: Accounts contain zones and user profiles contain user settings
 subgraph Account
@@ -28,7 +28,7 @@ subgraph User profile
     H[Language]
     I[Communication preferences]
 end
-</div>
+```
 
 ---
 

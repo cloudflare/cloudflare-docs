@@ -55,7 +55,7 @@ To enable Consumer Worker to Queue communication, set up a binding in your `wran
   dead_letter_queue = "my-queue-dlq"
 ```
 
-Refer to [Limits](/queues/limits) to review the maximum values for each of these options.
+Refer to [Limits](/queues/platform/limits) to review the maximum values for each of these options.
 
 {{<definitions>}}
 
@@ -73,7 +73,9 @@ Refer to [Limits](/queues/limits) to review the maximum values for each of these
 
 - {{<code>}}max_retries{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/javascript-apis/#messagebatch) is invoked.
+  - The maximum number of retries for a message, if it fails or [`retryAll()`](/queues/platform/javascript-apis/#messagebatch) is invoked.
+// An example that shows how to consume and transform Pub/Sub messages from a Cloudflare Worker.
+/// <reference types="@cloudflare/workers-types" />
 
 - {{<code>}}dead_letter_queue{{<param-type>}}string{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 

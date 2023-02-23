@@ -30,7 +30,7 @@ To enable Queues:
 2. Go to **Workers** > [**Queues**](https://dash.cloudflare.com/?to=/:account/workers/queues).
 3. Select **Enable Queues Beta**.
 
-Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/pricing/) for more details.
+Queues is included in the monthly subscription cost of your Paid Workers plan, and charges based on operations against your queues. Refer to [Pricing](/queues/platform/pricing/) for more details.
 
 ## 2. Install Wrangler
 

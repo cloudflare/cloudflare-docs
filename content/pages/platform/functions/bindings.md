@@ -236,7 +236,7 @@ While developing locally, interact with a service by adding `--service=<BINDING_
 
 ## Queue Producers
 
-[Queue Producers](/queues/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
+[Queue Producers](/queues/platform/javascript-apis/#producer) enable you to send messages into a Queue within your Pages Function. To add a Queue producer binding to your Pages Function:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. In **Account Home**, select **Pages**.

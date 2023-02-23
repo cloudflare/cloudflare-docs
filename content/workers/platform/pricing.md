@@ -103,7 +103,7 @@ Workers Logpush is only available on the Workers Paid plan.
 
 ## Queues
 
-Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/pricing/).
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/platform/pricing/).
 
 ## Durable Objects
 

@@ -42,6 +42,9 @@
 {{- with .Context.Params.pcx_content_type -}}
 <meta name="pcx_content_type" content= "{{ . }}" />
 {{- end -}}
+{{- with $DATA.product.group -}}
+<meta name="pcx_content_group" content= "{{ . }}" />
+{{- end -}}
 {{ with $.Context.Params.rss -}}
 
   {{ if eq . "folder" }}
@@ -124,9 +127,6 @@
 <link rel="stylesheet preconnect" href="/learning-paths.css"/>
 {{- end -}}
 
-{{ if eq $.Context.RelPermalink "/dashboard-landing/" }}
-<link rel="stylesheet preconnect" href="/dashboard-landing.css"/>
-{{- end -}}
 
 {{ if eq $.Context.RelPermalink "/plans/" }}
 <link rel="stylesheet preconnect" href="/plans.css"/>
