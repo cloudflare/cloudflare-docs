@@ -22,7 +22,7 @@ Cloudflare Firewall Rules allows you to create rules that inspect incoming traff
 
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
-{{<feature-table id="security.firewall_rules">}}
+{{<feature-table id="security.x_firewall_rules">}}
 
 ## Next steps
 
