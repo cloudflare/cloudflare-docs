@@ -19,13 +19,17 @@ To set up Device Information Only mode:
         --data '{"enabled": true}'
     ```
 
-2. In your [WARP profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), scroll down to **Service mode** and select **Device Information Only**.
+2. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
 
-3. [Enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) into your Zero Trust organization.
+3. In the **Profile settings** card, choose a [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and select **Configure**.
+
+4. For **Service mode**, select **Device Information Only**.
+
+5. Next, [enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) into your Zero Trust organization.
 
     When enrolled in Device Information Only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 
-4. (Optional) Verify the client certificate on the device:
+6. (Optional) Verify the client certificate on the device:
 
 {{<tabs labels="Windows | macOS">}}
 {{<tab label="windows" no-code="true">}}
@@ -48,14 +52,14 @@ The certificate name should match the **Device ID** in your WARP client **Prefer
 {{</tab>}}
 {{</tabs>}}
 
-5. (Optional) Verify the client certificate in your Cloudflare account:
+7. (Optional) Verify the client certificate in your Cloudflare account:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select the zone for which you enabled client certificates.
     2. Go to **SSL/TLS** > **Client Certificates**.
 
     The certificate name is the WARP enrollment **Device ID**.
     ![Example client certificate in the Cloudflare dashboard](/cloudflare-one/static/documentation/connections/device-information-only-cert.png)
 
-6. Next, block traffic from devices that do not have a valid client certificate:
+8. Lastly, block traffic from devices that do not have a valid client certificate:
     1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **SSL/TLS** > **Client Certificates**.
     2. Under **Hosts**, add the domain you want to protect with device posture rules.
     3. Select **Create mTLS rule**.
