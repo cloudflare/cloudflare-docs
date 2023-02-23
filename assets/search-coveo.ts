@@ -7,7 +7,7 @@
   const result = currentLocation.match(paramRegex);
   let productGroup
   
-  if (result[1]) {
+  if (result !== null) {
     const params = new URLSearchParams(result[1]);
     productGroup = params.get("product_group")
   }
