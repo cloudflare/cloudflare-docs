@@ -18,6 +18,18 @@
 {{- $availableOptions = $availableOptions | uniq | sort -}}
 
 <style>
+  .QuadBlockGrid {
+    max-width: var(--docs-max-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2.6rem var(--docs-content-gap) 3.5rem;
+    text-align: center;
+  }
+  .QuadBlock {
+    display: inline-block;
+    padding: 0 0.5rem 1rem;
+  }
+  
   .ProductGrid--content {
     --n: 1;
     display: grid;
@@ -28,12 +40,6 @@
     border-bottom: 1px solid gray;
   }
 
-  .ProductGrid--title {
-    font-size: 2.5em;
-    font-weight: 600;
-    margin: 1.2em 0;
-  }
-
   @media screen and (min-width: 600px) {
     .ProductGrid--content {
       --n: 2;
@@ -41,6 +47,10 @@
   }
 
   @media screen and (min-width: 978px) {
+    .QuadBlockGrid {
+      flex-direction: row;
+    }
+
     .ProductGrid--content {
       --n: 3;
     }
@@ -51,6 +61,7 @@
       --n: 4;
     }
   }
+
 </style>
 
 <div class="QuadBlockGrid">
@@ -67,7 +78,7 @@
   <div id="ProductGrid--range">
   {{- range $availableOptions -}}
   {{- $currentOption := . }}
-  <h2 class="ProductGrid--title" style="padding-top:1em; padding-bottom:1em;font-size:2em;" id="{{ $currentOption | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
+  <h2 class="ProductGrid--title" style="padding-bottom:1em;font-size:2em; scroll-margin-top: 2em;" id="{{ $currentOption | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
     <a
       class="DocsMarkdown--header-anchor Link Link-without-underline"
       href="#{{ $currentOption | safeURL | anchorize }}"
@@ -95,26 +106,3 @@
   {{- end -}}
 </div>
 </div>
-
-<script>
-  function filterProducts() {
-    // Search input and items
-    var input = document.getElementById("search"); // User input
-    var query = input.value.toUpperCase(); // Make input non-case sensitive
-    var grid = document.getElementById("ProductGrid--range"); // Convert Hugo range to JS
-    var items = grid.getElementsByTagName("a"); // Extract tiles
-
-    // TODO: Search by URL, description (i.e. "cloudflare one" = Cloudflare Zero Trust)
-
-    // Iterate through products
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      var text = item.innerText.toUpperCase();
-      if (text.indexOf(query) > -1) {
-        item.style.display = "";
-      } else {
-        item.style.display = "none";
-      }
-    }
-  }
-</script>
