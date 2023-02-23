@@ -35,4 +35,4 @@ If your private network is [exposed via Cloudflare Tunnel](/cloudflare-one/conne
 - Verify that the user is allowed through by your Access and Gateway policies.
 - Verify that the [local LAN settings](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/#router-configuration) for the device do not overlap with the CIDR range of your private network.
 
-When contacting Cloudflare support, ensure that you include [WARP Client logs](/cloudflare-one/connections/connect-devices/warp/warp-logs/) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
+When contacting Cloudflare support, ensure that you include [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/) for your device. These logs will help Cloudflare support understand the overall architecture of your machine and networks.
