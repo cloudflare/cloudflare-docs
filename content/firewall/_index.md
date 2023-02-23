@@ -7,7 +7,7 @@ meta:
   title: Cloudflare Firewall Rules
 ---
 
-# Cloudflare Firewall Rules
+{{<deprecated>}} Cloudflare Firewall Rules {{</deprecated>}}
 
 Cloudflare Firewall Rules allows you to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
 
@@ -19,8 +19,6 @@ Cloudflare Firewall Rules allows you to create rules that inspect incoming traff
 * **Complex custom rules**: Each rule's expression can reference multiple fields from all the available HTTP request parameters and fields, allowing you to create complex rules.
 
 ## Availability
-
-Cloudflare Firewall Rules is available to all customers. However, the number of active firewall rules you can have and support for the *Log* action and regular expressions depend on your Cloudflare plan.
 
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
