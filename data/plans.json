@@ -1160,7 +1160,7 @@
         }
       }
     },
-    "firewall_analytics": {
+    "security_events": {
       "title": "Security Events",
       "link": "/waf/security-events/",
       "properties": {
@@ -1203,8 +1203,8 @@
         }
       }
     },
-    "firewall_rules": {
-      "title": "Firewall rules",
+    "x_firewall_rules": {
+      "title": "Firewall rules (deprecated)",
       "link": "/firewall/",
       "properties": {
         "availability": {
@@ -1232,7 +1232,7 @@
           "biz": "All except Log",
           "ent": "All"
         },
-        "regex_support": {
+        "z_regex_support": {
           "title": "Regex support",
           "free": "No",
           "pro": "No",
@@ -1241,7 +1241,7 @@
         }
       }
     },
-    "ip_access_rules": {
+    "x_ip_access_rules": {
       "title": "IP Access Rules",
       "link": "/waf/tools/ip-access-rules/",
       "properties": {
@@ -1269,9 +1269,9 @@
         }
       }
     },
-    "managed_rules": {
-      "title": "Web Application Firewall (WAF)",
-      "link": "/waf/",
+    "waf_a_managed_rules": {
+      "title": "WAF Managed Rules",
+      "link": "/waf/managed-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1290,7 +1290,7 @@
           "ent": "Yes"
         },
         "managed_rulesets": {
-          "title": "WAF Managed Rules",
+          "title": "Other WAF managed rulesets",
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
@@ -1298,24 +1298,53 @@
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "custom_rules": {
-          "title": "Custom rules",
-          "link": "/waf/custom-rules/",
-          "summary": "All plans",
+        }
+      }
+    },
+    "waf_b_custom_rules": {
+      "title": "WAF custom rules",
+      "link": "/waf/custom-rules/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
         },
-        "custom_rulesets": {
+        "b_custom_rules": {
+          "title": "Number of rules",
+          "free": "5",
+          "lite": "20",
+          "pro": "20",
+          "pro_plus": "40",
+          "biz": "100",
+          "ent": "1,000"
+        },
+        "d_supported_actions": {
+          "title": "Supported actions",
+          "link": "/ruleset-engine/rules-language/actions/",
+          "free": "All except Log",
+          "pro": "All except Log",
+          "biz": "All except Log",
+          "ent": "All"
+        },
+        "f_regex_support": {
+          "title": "Regex support",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "z_custom_rulesets": {
           "title": "Custom rulesets",
           "link": "/waf/custom-rulesets/",
           "summary": "Enterprise with add-on",
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Certain Enterprise plans"
+          "ent": "Paid add-on"
         }
       }
     },
@@ -1399,8 +1428,9 @@
       }
     },
     "rate_limiting": {
-      "title": "Rate Limiting Rules (new version)",
+      "title": "Rate limiting rules (new version)",
       "link": "/waf/rate-limiting-rules/",
+      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1416,13 +1446,14 @@
           "pro": 2,
           "biz": 5,
           "ent": 5,
+          "ent_plus": 100,
           "waf_essential": 100,
           "advanced": 100
         }
       }
     },
     "rate_limiting_previous": {
-      "title": "Rate Limiting Rules (previous version)",
+      "title": "Rate limiting rules (previous version)",
       "link": "https://support.cloudflare.com/hc/articles/115001635128",
       "properties": {
         "availability": {
@@ -1453,7 +1484,7 @@
         }
       }
     },
-    "user_agent_rules": {
+    "x_user_agent_rules": {
       "title": "User Agent Blocking",
       "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
       "properties": {
@@ -1476,7 +1507,7 @@
         }
       }
     },
-    "zone_lockdown_rules": {
+    "x_zone_lockdown_rules": {
       "title": "Zone Lockdown",
       "link": "https://support.cloudflare.com/hc/en-us/articles/115001595131",
       "properties": {
