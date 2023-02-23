@@ -16,6 +16,7 @@
 
       if (text.length > 0) {
         redirect += '#q=' + encodeURIComponent(text);
+        redirect += '&t=Docs'
         if (productGroup) {
           redirect += '&product_group=' + encodeURIComponent(productGroup.content);
         }
