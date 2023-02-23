@@ -5800,36 +5800,37 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .legalInformation {
-    display: flex;
-    width: 80%;
-    justify-content: flex-end;
     max-width: var(--docs-max-page-width);
     margin-left: auto;
     margin-right: auto;
-    gap: 6em;
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
+    text-align: center;
 }
 
 .legalInformation ul {
     list-style-type: none;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
-.legalInformation ul li + li:before {
-    content: "|";
-    padding-right: 0.8rem;
-    padding-left: 0.8rem;
+.legalInformation li {
+    display: inline-block;
+    padding: 0 0.5rem 1rem;
 }
 
-@media (max-width:768px) {
+@media (min-width:900px) {
+    .legalInformation li {
+        padding-left: 0;
+    }
+
+    .legalInformation li + li:before {
+        content: "|";
+        padding-right: 1rem;
+    }
+
     .legalInformation {
-        flex-direction: column;
-        width: 100%;
-        gap: 2em;
-        padding: 2em 1em;
-        padding-top: 0;
-        justify-content: flex-start;
+        text-align: left;
     }
 }
