@@ -131,5 +131,5 @@ For the time being, all three Terraform resources will be available (`cloudflare
 Refer to the documentation about Terraform for [examples of configuring WAF custom rules using Terraform](/terraform/additional-configurations/waf-custom-rules/).
 
 {{<Aside type="note" header="Migration tip">}}
-Consider using the [cf-terraforming](https://github.com/cloudflare/cf-terraforming) tool to generate the Terraform configuration for your current WAF custom rules (converted by Cloudflare from your firewall rules), and to import the new resources to Terraform state. For details on this procedure, refer to [Import Cloudflare resources](/terraform/advanced-topics/import-cloudflare-resources/).
+Consider using the [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) tool to generate the Terraform configuration for your current WAF custom rules (converted by Cloudflare from your firewall rules), and to import the new resources to Terraform state. For details on this procedure, refer to [Import Cloudflare resources](/terraform/advanced-topics/import-cloudflare-resources/).
 {{</Aside>}}
