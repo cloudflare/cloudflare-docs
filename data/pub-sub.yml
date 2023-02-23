@@ -5,6 +5,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
 product: 
   title: Pub/Sub
   url: /pub-sub/
+  group: Developer platform
 
 meta:
   title: Cloudflare Pub/Sub

@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="m21.3
 product:
   title: Pages
   url: /pages/
+  group: Developer platform
 
 meta:
   title: Cloudflare Pages docs
