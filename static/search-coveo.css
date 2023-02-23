@@ -62,8 +62,12 @@
   background-color: var(--gray-00) !important;
 }
 
-[theme="dark"] .CoveoTab.coveo-selected,.CoveoTab.coveo-selected:hover  {
+[theme="dark"] .CoveoTab.coveo-selected,.CoveoTab.coveo-selected:hover, .coveo-small-tabs  {
   border-bottom: 4px solid orange;
+}
+
+[theme="dark"] .coveo-small-tabs .CoveoTab.coveo-selected,.coveo-small-tabs .CoveoTab.coveo-selected:hover  {
+  border-bottom: 4px solid orange !important;
 }
 
 [theme="dark"] .CoveoTab.coveo-selected:hover  {
@@ -77,6 +81,12 @@
 
 [theme="dark"] .coveo-tab-section {
   background: var(--color-rgb)
+}
+
+@media (max-width: 480px) {
+  [theme="dark"] .CoveoSearchInterface .coveo-tab-section {
+      background-color:var(--color-rgb)
+  }
 }
 
 [theme="dark"] .CoveoResult a.CoveoResultLink, 
