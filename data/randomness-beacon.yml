@@ -5,6 +5,7 @@ product:
   title: Randomness Beacon
   url: /randomness-beacon/
   wrap: true
+  group: Cloudflare essentials
 
 meta:
   title: Cloudflare Randomness Beacon docs

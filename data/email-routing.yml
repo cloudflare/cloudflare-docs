@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42.0
 product:
   title: Email Routing
   url: /email-routing/
+  group: Developer platform
 
 meta:
   title: Cloudflare Email Routing docs

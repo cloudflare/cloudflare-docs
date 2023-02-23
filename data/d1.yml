@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m18.6
 product:
   title: D1
   url: /d1/
+  group: Developer platform
 
 meta:
   title: Cloudflare D1 docs
