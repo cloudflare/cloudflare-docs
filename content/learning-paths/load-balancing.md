@@ -5,6 +5,7 @@ layout: home
 new_learning_path: true
 pcx_content_type: learning-path
 meta:
+    title: Get started with Load Balancing
     description: Maximize application performance and availability.
 ---
 
