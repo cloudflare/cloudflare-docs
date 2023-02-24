@@ -15,8 +15,7 @@
       let text = (element.value || '').trim();
 
       if (text.length > 0) {
-        redirect += '#q=' + encodeURIComponent(text);
-        redirect += '&t=Docs'
+        redirect += '#q=' + encodeURIComponent(text) + '&t=Docs';
         if (productGroup) {
           redirect += '&product_group=' + encodeURIComponent(productGroup.content);
         }

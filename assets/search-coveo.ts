@@ -3,13 +3,13 @@
   let tag = document.currentScript;
   let $ = document.querySelector.bind(document);
   const currentLocation = window.location.href;
-  const paramRegex = new RegExp("\/search\/\#(.+)");
+  const paramRegex = new RegExp("/search/#(.+)");
   const result = currentLocation.match(paramRegex);
-  let productGroup
+  let productGroup = "";
   
-  if (result !== null) {
+  if (result) {
     const params = new URLSearchParams(result[1]);
-    productGroup = params.get("product_group")
+    productGroup = params.get("product_group") || "";
   }
 
   let coveo: any;
@@ -23,12 +23,10 @@
     }
   }
 
-  function setProductGroupValue() {
-    if (productGroup !== null || productGroup !== undefined) {
-      return productGroup;
-    }
+  function getProductGroupValue() {
+    return productGroup;
   }
-
+  
   function loadCustomSearchBox() {
     let element = $('#DocsSearch--input') || $('#SiteSearch--input');
     const CustomSearchbox = (function(_super) {
@@ -96,13 +94,13 @@
       let pipelineContext = coveo.$$(root).find(".CoveoPipelineContext");
       pipelineContext = coveo.get(pipelineContext);
       pipelineContext.setContextValue("referrer", setReferrerValue());
-      pipelineContext.setContextValue("product_group", setProductGroupValue());
+      pipelineContext.setContextValue("product_group", getProductGroupValue());
     })
 
     coveo.$$(root).on('changeAnalyticsCustomData', (e, args) => {
       if (args.type === 'ClickEvent' || args.type === 'CustomEvent'){
         args.metaObject.context_referrer = setReferrerValue();
-        args.metaObject.context_product_group = setProductGroupValue();
+        args.metaObject.context_product_group = getProductGroupValue();
       }});
 
     // Hacky fix to manually control search/loading icons

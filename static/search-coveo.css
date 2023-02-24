@@ -80,12 +80,12 @@
 }
 
 [theme="dark"] .coveo-tab-section {
-  background: var(--color-rgb)
+  background: var(--color-rgb);
 }
 
 @media (max-width: 480px) {
   [theme="dark"] .CoveoSearchInterface .coveo-tab-section {
-      background-color:var(--color-rgb)
+      background-color:var(--color-rgb);
   }
 }
 
