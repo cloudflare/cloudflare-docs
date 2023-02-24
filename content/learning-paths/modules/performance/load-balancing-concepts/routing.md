@@ -1,5 +1,5 @@
 ---
-title: Routing
+title: Routing traffic
 pcx_content_type: learning-unit
 weight: 4
 layout: learning-unit
@@ -31,7 +31,7 @@ Routing decisions can be based on proximity, pool performance, geography, and mo
 
 Once the request reaches a pool, that pool's [origin steering policy](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) control how each pool distributes requests to the servers in the pool.
 
-These decisions can be based on default percentages of traffic sent to individual servers (also known as the **Weight**), where previous requests from the same IP address went, or both.
+These decisions can be based on default percentages of traffic sent to individual servers (also known as the **Weight**), aspects of the request (such as source IP address), or both.
 
 ### Server health
 

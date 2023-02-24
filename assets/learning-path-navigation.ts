@@ -27,6 +27,23 @@ import { learning_paths as paths } from "./json-collector";
       );
     }
 
+    // Update the link and title of the path in side navigation
+    const titleNavText = document.getElementsByClassName("DocsSidebar--docs-title-text-scaler")
+    const titleLength = currentPathData["title"].length
+    if (titleNavText) {
+      for (const item of titleNavText) {
+        item.setAttribute("style", `--length:${titleLength}`)
+        item.innerHTML = currentPathData["title"]
+      }
+    }
+    
+    const titleNavLinks = document.getElementsByClassName("DocsSidebar--docs-title-logo-link");
+    if (titleNavLinks) {
+      for (const item of titleNavLinks) {
+        item.setAttribute("href", currentPathData["path"])
+      }
+    }
+
     // Update final next link to point to the next module
     const nextModuleLink = document.getElementById("nextModuleLink");
     if (nextModuleLink && currentPathData) {
