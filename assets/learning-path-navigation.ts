@@ -44,7 +44,6 @@ import { learning_paths as paths } from "./json-collector";
       }
     }
 
-
     // Update final next link to point to the next module
     const nextModuleLink = document.getElementById("nextModuleLink");
     if (nextModuleLink && currentPathData) {
