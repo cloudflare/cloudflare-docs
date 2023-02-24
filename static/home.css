@@ -5840,3 +5840,10 @@ html #ot-sdk-btn.ot-sdk-show-settings {
 html #ot-sdk-btn.ot-sdk-show-settings:hover {
     color: inherit;
 }
+
+/* Should be last to avoid flashes of unstyled content */
+
+html {
+    visibility: visible;
+    opacity: 1;
+  }
