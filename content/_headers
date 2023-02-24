@@ -2,4 +2,4 @@ https://:project.pages.dev/*
  X-Robots-Tag: noindex
 
 /*
-  Link: </styles.css>; rel=preload; as=style
+  Link: </style.css>; rel=preload; as=style
