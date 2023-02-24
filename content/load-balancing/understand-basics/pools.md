@@ -8,7 +8,7 @@ weight: 1
 
 {{<render file="_pool-definition.md">}}
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
 For more details about how origins and pools become unhealthy, refer to [Origin and pool health](/load-balancing/understand-basics/health-details/).
 
