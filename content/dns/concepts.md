@@ -14,7 +14,7 @@ This page defines and articulates key concepts that are relevant to the Cloudfla
 
 ## Domain
 
-Also known as domain name, it is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query takes place and a domain name is mapped to the actual IP address where the website is hosted.
+Also known as domain name, it is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query takes place and the domain name is mapped to the actual IP address where the website is hosted.
 
 ## Registrar
 
@@ -35,3 +35,7 @@ Although the resolution of a DNS query involves a number of different servers, i
 ## DNS records
 
 DNS records are instructions that live in the authoritative DNS servers and provide information about a zone. This includes what IP address is associated with a particular domain, but can also cover many other use cases, such as directing emails to a mail server or validating ownership of a domain.
+
+## DNSSEC
+
+DNSSEC stands for DNS Security Extensions. It increases security by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/en-gb/learning/dns/dns-security/).
