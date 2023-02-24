@@ -88,21 +88,15 @@
   </span>
 </p>
 
-  {{- if eq $index 0 -}}
   <details class="pathDetails" open>
-  {{- else -}}
-  <details class="pathDetails">
-  {{- end -}}
-
     <summary>Contains {{ len (index $moduleData "units") }} units</summary>
     <div>
         <ul>
         {{- range index $moduleData "units" -}}  
           <li><a href="{{- print .RelPermalink "?learning_path=" $pathUID -}}">{{- .Title -}}</a>
             <p class="readingTime">{{- .ReadingTime -}}&nbsp;min</p>
+          </li>
         {{- end -}}
-        
-        </li>
         </ul>
     </div>
     </details>
