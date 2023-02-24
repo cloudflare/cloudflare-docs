@@ -32,10 +32,16 @@ For the purpose of this documentation, the main aspect to keep in mind is that e
 
 Although the resolution of a DNS query involves a number of different servers, in this documentation nameserver usually refers to the Cloudflare authoritative nameservers. As explained in the [article about DNS server types](https://www.cloudflare.com/learning/dns/dns-server-types/), the authoritative nameserver is the last stop in the query, the server that returns the IP address for the requested domain.  
 
+When you have a domain using a [full setup](/dns/zone-setups/full-setup), Cloudflare provides the authoritative nameservers for your domain.
+
 ## DNS records
 
 DNS records are instructions that live in the authoritative DNS servers and provide information about a zone. This includes what IP address is associated with a particular domain, but can also cover many other use cases, such as directing emails to a mail server or validating ownership of a domain.
 
+For more details about using DNS records within Cloudflare, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) and [DNS record types](/dns/manage-dns-records/reference/dns-record-types/)
+
 ## DNSSEC
 
-DNSSEC stands for DNS Security Extensions. It increases security by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/en-gb/learning/dns/dns-security/).
+DNSSEC stands for DNS Security Extensions. It increases security by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/learning/dns/dns-security/).
+
+For help setting up DNSSEC in Cloudflare, refer to [Enable DNSSEC](/dns/additional-options/dnssec/)
