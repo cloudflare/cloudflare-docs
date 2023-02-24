@@ -3,8 +3,14 @@
   <head>
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
-    <link rel="stylesheet preconnect" href="/style.css" />
-    {{- block "styles" . -}}{{- end -}}
+    {{- if hugo.IsProduction -}}
+      <link rel="preload" href="/style.css" as="style" />
+    {{- else -}}
+      <link rel="stylesheet preconnect" href="/style.css" />
+    {{- end -}}
+
+    
+    {{- block "styles" . -}}{{- end -}} 
 
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
     {{- partial "script" (dict "src" "main.ts" "defer" true) -}}

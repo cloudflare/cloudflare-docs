@@ -650,7 +650,7 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #fff;
 }
 
-.QuadBlockGrid a {
+.QuadBlockGrid a, .ViewProducts a {
     color: inherit;
     text-decoration: none;
 }
@@ -664,6 +664,7 @@ html[is-site-page] .DocsContent {
 .RecommendedContentGrid {
     display: flex;
     gap: 2em;
+    flex-wrap: wrap;
 }
 
 .RecommendationTitle {
@@ -692,7 +693,7 @@ html[is-site-page] .DocsContent {
     padding: 1em;
     margin: 1em;
     height: 20em;
-    width: 45em;
+    width: 20%;
     border: 1px solid #b6b6b6;
     border-radius: 6px;
 }
@@ -707,25 +708,48 @@ html[is-site-page] .DocsContent {
 
 .RecommendedContentDescription {
     font-size: .85em;
-    width: 16em;
     align-self: flex-start;
 }
 
-@media (max-width:768px) {
+@media (max-width:1200px) {
     .RecommendedContentGrid {
         flex-direction: column;
         gap: .8em;
     }
 
     .RecommendedContentWithCard {
-        width: unset;
+        width: 75%;
         margin: 0;
         height: auto;
     }
 
     .RecommendedContentDescription {
         font-size: 1em;
+    }
+}
+
+@media (max-width:768px) { 
+    .RecommendedContentGrid {
+        margin-bottom: .8em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6em;
+    }
+
+    .RecommendedContentWithCard {
+        width: 100%;
+        height: unset;
+        margin: .6em .2em;   
+    }
+
+    .RecommendedContentTitle {
+        font-size: 1.5em;
+    }
+
+    .RecommendedContentDescription {
         width: unset;
+        height: unset;
+        font-size: 1em;
     }
 }
 
@@ -1005,18 +1029,6 @@ html[is-site-page] .DocsContent {
         height: unset;
         font-size: 1em;
     }
-}
-
-.ViewProducts {
-    max-width: 100%;
-}
-
-.ViewProducts details {
-    background: #E2F5FA;
-}
-
-[theme=dark] .ViewProducts details {
-    background: #222629;
 }
 
 .StartHere {
@@ -5773,4 +5785,40 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .slashPlaceholder {
       visibility: hidden;
+}
+
+.legalInformation {
+    max-width: var(--docs-max-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2.6rem var(--docs-content-gap) 3.5rem;
+    text-align: center;
+}
+
+.legalInformation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.legalInformation li {
+    display: inline-block;
+    padding: 0 0.5rem 1rem;
+}
+
+@media (min-width:900px) {
+    .legalInformation li {
+        padding-left: 0;
+    }
+
+    .legalInformation li + li:before {
+        content: "|";
+        padding-right: .5rem;
+    }
+
+    .legalInformation {
+        text-align: left;
+    }
 }

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: DLP logs
-weight: 3
+weight: 5
 layout: single
 ---
 
