@@ -84,4 +84,3 @@ addEventListener('fetch', async event => {
 ```
 {{</tab>}}
 {{</tabs>}}
-
