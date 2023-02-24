@@ -2,6 +2,7 @@
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}}>
   <head>
     {{- partial "onetrust" -}}
+    <style>html{visibility: hidden;opacity:0;}</style>
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
     {{- if hugo.IsProduction -}}

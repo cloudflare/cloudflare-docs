@@ -5420,3 +5420,10 @@ html #ot-sdk-btn.ot-sdk-show-settings:hover {
 [theme="dark"] #ot-sdk-btn.ot-sdk-show-settings:hover {
   color: var(--code-orange);
 }
+
+/* Should be last to avoid flashes of unstyled content */
+
+html {
+  visibility: visible;
+  opacity: 1;
+}
