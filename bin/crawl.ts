@@ -22,7 +22,7 @@ let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNING_PATH_DIR = join(ROOT, "assets/json");
+const LEARNING_PATH_DIR = join(ROOT, "data/learning-paths");
 const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
@@ -306,9 +306,9 @@ try {
 try {
   await walkJsonFiles(LEARNING_PATH_DIR);
   if (!JSON_ERRORS && !JSON_WARNS) {
-    console.log("\n~> /assets/json files DONE~!\n\n");
+    console.log("\n~> /data/learning-paths/ files DONE~!\n\n");
   } else {
-    let msg = "\n~> /assets/json files DONE with:";
+    let msg = "\n~> /data/learning-paths/ files DONE with:";
     if (JSON_ERRORS > 0) {
       process.exitCode = 1;
       msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";
