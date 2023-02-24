@@ -813,6 +813,10 @@ html[is-site-page] .DocsContent {
     padding: 6px 0; 
 }
 
+.TriBlock img{
+    height: 25px;
+}
+
 .TriBlockHeader p {
     font-size: 1.25em;
     font-weight: 500;
