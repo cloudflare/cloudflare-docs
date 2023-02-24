@@ -511,14 +511,14 @@ html[is-site-page] .DocsContent {
         margin-top: 3em;
     }
     }
-    
+
     @media (min-width:768px) {
     [theme=dark] .ZTHeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
     }
-    
+
     @media (max-width:768px) {
         .ZTHeroImage {
             background-image: none;
@@ -700,7 +700,7 @@ html[is-site-page] .DocsContent {
 
 [theme=dark] .RecommendedContentWithCard {
     border: 1px solid var(--code-orange);
-}   
+}
 
 .RecommendedContentTitle {
     font-size: 1.3em;
@@ -728,7 +728,7 @@ html[is-site-page] .DocsContent {
     }
 }
 
-@media (max-width:768px) { 
+@media (max-width:768px) {
     .RecommendedContentGrid {
         margin-bottom: .8em;
         flex-direction: column;
@@ -739,7 +739,7 @@ html[is-site-page] .DocsContent {
     .RecommendedContentWithCard {
         width: 100%;
         height: unset;
-        margin: .6em .2em;   
+        margin: .6em .2em;
     }
 
     .RecommendedContentTitle {
@@ -796,7 +796,7 @@ html[is-site-page] .DocsContent {
     justify-content: space-between;
 }
 
-.TriBlock {    
+.TriBlock {
     border-left: 5px solid #F6821F;
     padding: .5em 1.8em;
     height: 19em;
@@ -839,7 +839,7 @@ html[is-site-page] .DocsContent {
     display: flex;
     align-items: flex-end;
     gap: 10px;
-    padding: 6px 0; 
+    padding: 6px 0;
 }
 
 .TriBlockHeader p {
@@ -993,7 +993,7 @@ html[is-site-page] .DocsContent {
 [theme=dark] .DeveloperPlatformImage {
     content: url('./developer-platform-dark.svg');
 }
-@media (max-width:768px) { 
+@media (max-width:768px) {
     .FeaturedContentSection {
         margin-top: 5em;
     }
@@ -1012,12 +1012,12 @@ html[is-site-page] .DocsContent {
     .FeatureContentWithCard {
         width: 100%;
         height: unset;
-        margin: .6em .2em;   
+        margin: .6em .2em;
     }
 
     .FeatureContentWithImage {
         width: unset;
-        margin: .6em .2em;   
+        margin: .6em .2em;
     }
 
     .FeatureContentTitle {
@@ -5143,12 +5143,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   .DocsSearch--input:focus:-ms-input-placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   .DocsSearch--input:focus::placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
@@ -5158,12 +5158,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   [theme="dark"] .DocsSearch--input:focus::placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
@@ -5486,8 +5486,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     }
 }
 
-.DocsFooter--content {
-    display: flex
+.DocsFooter--content div {
+    margin-bottom: 1em;
 }
 
 @media (max-width:414px) {
@@ -5821,4 +5821,22 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     .legalInformation {
         text-align: left;
     }
+}
+
+/* Highly specific override rules to make the cookie prefs button stylistically consistent */
+html #ot-sdk-btn.ot-sdk-show-settings {
+    color: inherit;
+    border: none !important;
+    transition: none !important;
+    padding: 0 !important;
+    line-height: inherit !important;
+    font-size: inherit !important;
+
+    background-color: transparent !important;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+html #ot-sdk-btn.ot-sdk-show-settings:hover {
+    color: inherit;
 }
