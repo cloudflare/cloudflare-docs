@@ -143,7 +143,7 @@ After creating the distribution lists based on regions for your users, configure
 
     - **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). 
         - Choose `<customer_name>@journaling.mxrecord.io` if you plan to use with the group you created for your US/international users. 
-        - Choose `<customer_name>@mailstream-eu.journaling.mxrecord.io` if you plan to use with the group you created for your EU users.
+        - Choose `<customer_name>@mailstream-eu-primary.journaling.mxrecord.io` if you plan to use with the group you created for your EU users.
     - **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     - **Journal messages sent or received from**: _A specific user or group_ and select the user group you [created above](#3-compliance).
     - **Type of message to journal**: _External messages only_
