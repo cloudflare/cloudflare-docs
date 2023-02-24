@@ -106,5 +106,6 @@ export default defineConfig({
     rollupOptions: {
       input: glob.sync("public/**/*.html"),
     },
+    cssCodeSplit: false
   },
 });
