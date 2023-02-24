@@ -808,7 +808,7 @@ html[is-site-page] .DocsContent {
 
 .TriBlock li {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
     padding: 6px 0; 
 }
