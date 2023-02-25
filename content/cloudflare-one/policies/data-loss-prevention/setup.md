@@ -1,28 +1,21 @@
 ---
 pcx_content_type: how-to
-title: Get started
+title: Scan HTTP traffic with DLP
 weight: 1
 layout: single
 ---
 
-# Get started with DLP
+# Scan HTTP traffic with DLP
 
-Data Loss Prevention is enabled through Secure Web Gateway HTTP policies. To perform DLP filtering, first configure a DLP Profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regular expressions (regexes) specified in the DLP profile.
+Data Loss Prevention is enabled through Secure Web Gateway HTTP policies. To perform DLP filtering, first configure a DLP profile with the data patterns you want to detect, and then build a Gateway HTTP policy to allow or block the sensitive data from leaving your organization. Gateway will parse and scan your HTTP traffic for strings matching the keywords or regular expressions (regexes) specified in the DLP profile.
 
 ## Prerequisites
 
 Enable [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/).
 
-## 1. Configure a DLP Profile
+## 1. Configure a DLP profile
 
-Cloudflare DLP provides predefined profiles for common detections, or you can define your own regexes in a [custom profile](/cloudflare-one/policies/data-loss-prevention/custom-profile/).
-
-To get started with a predefined profile:
-
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DLP Profiles**.
-2. Choose a [predefined profile](/cloudflare-one/policies/data-loss-prevention/predefined-profiles/) and select **Configure**.
-3. Enable one or more **Detection entries** according to your preferences. The DLP Profile matches using the OR logical operator — if multiple entries are enabled, your data needs to match only one of the entries.
-4. Select **Save profile**.
+Refer to [Configure a DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/). We recommend getting started with a predefined profile.
 
 {{<Aside type="warning" header="Important">}}
 DLP scans will not start until you [create an HTTP policy](#2-create-a-dlp-policy).

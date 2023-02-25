@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Integration profiles
-weight: 2
+weight: 4
 ---
 
 # Integration profiles

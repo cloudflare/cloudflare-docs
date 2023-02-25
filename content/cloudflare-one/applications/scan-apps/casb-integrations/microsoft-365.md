@@ -37,6 +37,8 @@ These permissions follow the principle of least privilege to ensure that only th
 
 The Microsoft 365 integration currently scans for the following findings or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
 
+To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+
 ### User account settings
 
 Keep user accounts safe by ensuring the following settings are maintained. Review password configurations and password strengths to ensure alignment to your organization's security policies and best practices.
