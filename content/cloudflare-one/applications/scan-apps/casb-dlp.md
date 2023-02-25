@@ -54,6 +54,7 @@ In order to scan historical data, you must enable the DLP profile during the [in
 
 ## Limitations
 
-- DLP can only scan files that are visible to anyone on the Internet.
-- DLP can only scan text-based files such as documents, spreadsheets, and PDFs. Images are not supported.
-- Max file size is 100 MB.
+DLP can only scan:
+- Files that are visible to anyone on the Internet.
+- Text-based files such as documents, spreadsheets, and PDFs. Images are not supported.
+- Files ≤ 100 MB.
