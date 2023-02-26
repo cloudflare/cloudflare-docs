@@ -17,7 +17,7 @@ To view and manage these backups, including any manual backups you have made, yo
 For example, to list all of the backups of a D1 database named `existing-db`:
 
 ```sh
-➜  wrangler d1 backup list existing-db
+$ wrangler d1 backup list existing-db
 
 ┌──────────────┬──────────────────────────────────────┬────────────┬─────────┐
 │ created_at   │ id                                   │ num_tables │ size    │
@@ -44,7 +44,7 @@ To back up a D1 database, you must have:
 For example, to create a manual backup of a D1 database named `example-db`, call `d1 backup create`.
 
 ```sh
-➜  wrangler d1 backup create example-db
+$ wrangler d1 backup create example-db
 
 ┌─────────────────────────────┬──────────────────────────────────────┬────────────┬─────────┬───────┐
 │ created_at                  │ id                                   │ num_tables │ size    │ state │
@@ -62,7 +62,7 @@ To download a backup locally, call `wrangler d1 backup <DATABASE_NAME> <BACKUP_I
 For example, to download a specific backup for a database named `example-db`:
 
 ```sh
-➜  wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
+$ wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
 
 🌀 Downloading backup 123a81a2-ab91-4c2e-8ebc-64d69633faf1 from 'example-db'
 🌀 Saving to /Users/you/projects/example-db.123a81a2.sqlite3
@@ -84,7 +84,7 @@ Restoring a backup will overwrite the current running version of a database with
 To restore a previous backup of a D1 database named `existing-db`, pass the ID of that backup to `d1 backup restore`:
 
 ```sh
-➜  wrangler d1 backup restore existing-db  6cceaf8c-ceab-4351-ac85-7f9e606973e3
+$ wrangler d1 backup restore existing-db  6cceaf8c-ceab-4351-ac85-7f9e606973e3
 
 Restoring existing-db from backup 6cceaf8c-ceab-4351-ac85-7f9e606973e3....
 Done!
