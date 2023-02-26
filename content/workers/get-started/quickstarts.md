@@ -50,7 +50,7 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
 
 ## Templates
 
-{{<worker-starter title="JavaScript Starter" repo="cloudflare/wrangler2/templates/worker" description="A bare-bones Workers starter project, in JavaScript.">}}
+{{<worker-starter title="JavaScript Starter" repo="cloudflare/workers-sdk/tree/main/templates/worker" description="A bare-bones Workers starter project, in JavaScript.">}}
 
 {{<worker-starter title="TypeScript Starter" repo="cloudflare/workers-sdk/tree/main/templates/worker-typescript" description="A bare-bones Workers starter project, in TypeScript.">}}
 
