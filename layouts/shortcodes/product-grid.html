@@ -1,5 +1,5 @@
 {{- $dataArray := slice }}
-{{- $availableOptions := slice -}}
+{{- $availableOptions := slice "All products" -}}
 
 {{- range readDir "./data/" -}}
 {{- if in .Name ".yml" -}}
@@ -70,7 +70,7 @@
       <a class="DocsMarkdown--link" href="#{{ . | safeURL | anchorize }}">
         <span class="DocsMarkdown--link-content">{{.}}</span>
       </a>
-      </div>
+  </div>
   {{- end -}}
   </div>
 
@@ -89,7 +89,7 @@
     </h2>
   <div class="ProductGrid--content">
     {{- range $dataArray -}} 
-      {{- if and (eq $currentOption .product.group) (ne .product.show false) -}}
+      {{- if and (or (eq $currentOption .product.group) (eq $currentOption "All products")) (ne .product.show false) -}}
         {{- $product := .product -}} 
         {{- $wrap := default false $product.wrap -}}
         <a
