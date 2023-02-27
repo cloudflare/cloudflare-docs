@@ -117,7 +117,9 @@ The `AllowedOrigins` specify the web server being used, and `localhost:3000` is 
 
 ## Common Issues
 
-* Only a cross-origin request will include CORS response headers. A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy. A request without an `Origin` HTTP request header will *not* return any CORS response headers. Origin values must match exactly.
+* Only a cross-origin request will include CORS response headers.
+  * A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy.
+  * A request without an `Origin` HTTP request header will *not* return any CORS response headers. Origin values must match exactly.
 * The value(s) for `AllowedOrigins` in your CORS policy must be a valid [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does *not* include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
   * Valid `AllowedOrigins` value: `https://static.example.com` - includes the scheme and host. A port is optional and implied by the scheme.
   * Invalid `AllowedOrigins` value: `https://static.example.com/` or `https://static.example.com/fonts/Calibri.woff2` - incorrectly includes the path component.
