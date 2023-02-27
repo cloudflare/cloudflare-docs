@@ -33,7 +33,7 @@ For an example edge routing configuration, refer to the example below.
 
 </details>
 
-{{<render file="../../magic-transit/_partials/_scoped-routes.md">}}
+{{<render file="_scoped-routes.md" productFolder="magic-transit" >}}
 
 ## Create a static route
 
@@ -41,4 +41,4 @@ For an example edge routing configuration, refer to the example below.
 2. Select **Magic WAN** > **Manage Magic WAN configuration** > **Configure**.
 
 
-{{<render file="../../magic-transit/_partials/_static-routes.md">}}
+{{<render file="_static-routes.md" productFolder="magic-transit" >}}

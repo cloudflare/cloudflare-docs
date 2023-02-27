@@ -4,4 +4,4 @@ title: Health checks
 weight: 0
 ---
 
-{{<render file="../../magic-transit/_partials/_health-checks.md">}}
+{{<render file="_health-checks.md" productFolder="magic-transit" >}}
