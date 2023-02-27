@@ -56,7 +56,7 @@ You can test your DLP policy on any device connected to your Zero Trust organiza
 
 The request will be allowed or blocked according to your DLP policies. If the data matches a DLP policy, you will see the request in your [DLP logs](#4-view-dlp-logs).
 
-Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/data-loss-prevention/configuration-guides/).
+Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/data-loss-prevention/dlp-policies/configuration-guides/).
 
 ## 4. View DLP logs
 
@@ -66,4 +66,4 @@ Different sites will send requests in different ways. For example, some sites wi
     * **DLP Profiles** shows the requests which matched a specific DLP profile.
     * **Policy** shows the requests which matched a specific DLP policy.
 
-You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/).
+You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).

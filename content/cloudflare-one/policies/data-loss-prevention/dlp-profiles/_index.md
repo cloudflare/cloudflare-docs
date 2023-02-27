@@ -12,11 +12,11 @@ A DLP profile is a collection of regular expressions (also known as detection en
 ## Configure a predefined profile
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **DLP** > **DLP Profiles**.
-2. Choose a [predefined profile](/cloudflare-one/policies/data-loss-prevention/predefined-profiles/) and select **Configure**.
+2. Choose a [predefined profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/) and select **Configure**.
 3. Enable one or more **Detection entries** according to your preferences. The DLP Profile matches using the OR logical operator — if multiple entries are enabled, your data needs to match only one of the entries.
 4. Select **Save profile**.
 
-You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-loss-prevention/setup/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/applications/scan-apps/casb-dlp/).
+You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/applications/scan-apps/casb-dlp/).
 
 ## Build a custom profile
 
@@ -30,7 +30,7 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
     - Detected text patterns are limited to 1024 bytes in length.
     - Regexes with `+` are not supported as they are prone to exceeding the length limit. For example `a+` can detect an infinite number of a's. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
 6. Select **Done** to save the detection entry.
-7. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/advanced-settings/) for the profile.
+7. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
 8. Select **Save profile**.
 
-You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-loss-prevention/setup/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/applications/scan-apps/casb-dlp/).
+You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/applications/scan-apps/casb-dlp/).
