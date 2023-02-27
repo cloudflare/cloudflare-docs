@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Recommended third-party tools
-weight: 10
+weight: 2
 ---
 
 # Recommended third-party tools

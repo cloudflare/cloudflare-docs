@@ -1,0 +1,89 @@
+---
+pcx_content_type: reference
+title: Analytics API properties
+weight: 1
+---
+
+# Analytics API properties
+
+This page describes API properties that can be used in your [DNS analytics API requests](https://developers.cloudflare.com/api/operations/dns-analytics-table).
+
+## Metrics
+
+A metric is a numerical value that is based on an attribute of the data, for example a query count.
+
+In API requests, `metrics` are set in the metrics parameter. If you need to list multiple metrics, separate them with commas.
+
+{{<table-wrap>}}
+
+| Metric             | Name                                | Example | Unit                 |
+| -------------------| ----------------------------------- | ------- | -------------------- |
+| queryCount         | Query count                         | 1000    | Count                |
+| uncachedCount      | Uncached query count                | 1       | Count                |
+| staleCount         | Stale query count                   | 1       | Count                |
+| responseTimeAvg    | Average response time               | 1.0     | Time in milliseconds |
+| responseTimeMedian | Median response time                | 1.0     | Time in milliseconds |
+| responseTime90th   | 90th percentile response time       | 1.0     | Time in milliseconds |
+| responseTime99th   | 99th percentile response time       | 1.0     | Time in milliseconds |
+
+{{</table-wrap>}}
+
+## Dimensions
+
+Dimensions can be used to break down the data by given attributes.
+
+In API requests, dimensions are set in the `dimensions` parameter. If you need to list multiple dimensions, separate them with commas.
+
+{{<table-wrap>}}
+
+| Dimension          | Name                 | Example     | Notes                                                                                    |
+|--------------------|----------------------|-------------|------------------------------------------------------------------------------------------|
+| queryName          | Query Name           | `example.com` |                                                                                          |
+| queryType          | Query Type           | `AAAA`        | Types defined by IANA, unknown types are empty.                                          |
+| responseCode       | Response Code        | `NOERROR`     | Response codes defined by IANA (always uppercase).                                       |
+| responseCached     | Response Cached      | `Cached`      | Either `Cached` or `Uncached`.                                                               |
+| coloName           | Colo Name            | SJC         | PoP code.                                                                                |
+| origin             | Origin               | `2001:db8::1` | Origin used to resolve the query (empty if N/A or if the query was answered from cache). |
+| dayOfWeek          | Day Of Week          | `1`           | Break down by day of week, (Monday is 1, and Sunday is 7).                               |
+| tcp                | TCP                  | `1`           | Either `1` or `0` depending on the protocol used.                                            |
+| ipVersion          | IP Version           | `6`           | IP protocol version used (currently `4` or `6`).                                             |
+| querySizeBucket    | Query Size Bucket    | `16-31`       | Query size bucket by multiples of 16.                                                    |
+| responseSizeBucket | Response Size Bucket | `16-31`       | Response size bucket by multiples of 16.                                                 |
+
+{{</table-wrap>}}
+
+## Filters
+
+A filter uses the form `dimension operator expression`, where each part corresponds to the following:
+- **Dimension**: Specifies the dimension to filter on. For example: `queryName`.
+- **Operator**: Defines the type of filter match to use. Operators are specific to dimensions.
+- **Expression**: States the values to be included in or excluded from the results. Expressions use regular expression syntax.
+
+
+{{<table-wrap>}}
+
+| Operator | Name                     | Example                | Notes                                                            | URL Encoded |
+|----------|--------------------------|------------------------|------------------------------------------------------------------|-------------|
+| `==`       | Equals                   | `queryName==example.com` | Return results where query name is exactly `example.com`            | `%3D%3D`      |
+| `!=`       | Does not equal           | `responseCode!=NOERROR`  | Return results where response code is different from `NOERROR`.    | `!%3D`        |
+| `>`        | Greater than             | `dimension>1000`        | Return results where a dimension is higher than `1000`             | `%3E`         |
+| `<`        | Less than                | `dimension<1000`        | Return results where a dimension is lower than `1000`              | `%3C`         |
+| `>=`       | Greater than or equal to | `dimension>=1000`        | Return results where a dimension is higher than or equal to `1000` | `%3E%3D`      |
+| `<=`       | Less than or equal to    | `dimension<=1000`        | Return results where a dimension is lower than or equal to `1000`  | `%3C%3D`      |
+
+{{</table-wrap>}}
+
+Filters can be combined using `OR` and `AND` boolean logic.
+
+- `AND` takes precedence over `OR` in all expressions.
+- `OR` operator is defined using a comma `,` or the `OR` keyword surrounded by whitespace.
+
+  Examples:
+  - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
+  - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
+
+- `AND` operator is defined using a semicolon `;` or the `AND` keyword surrounded by whitespace.
+
+  Examples:
+  - `responseCode==NOERROR;queryType==AAAA` indicates response code is `NOERROR` and query type is `AAAA`.
+  - `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
