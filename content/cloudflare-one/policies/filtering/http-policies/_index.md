@@ -15,7 +15,7 @@ Install the <a href="/cloudflare-one/connections/connect-devices/warp/user-side-
 
 HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/filtering/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
 
-An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use conditionals to build complex expressions.
+An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use the AND conditional to combine conditions, or the OR conditional to compare conditions.
 
 - [Actions](#actions)
 - [Selectors](#selectors)
