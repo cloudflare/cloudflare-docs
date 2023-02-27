@@ -30,16 +30,7 @@ rss: file
       <td>100524_BETA</td>
       <td>...9d787fc2</td>
       <td>Java - Remote Code Execution - Beta</td>
-      <td>This detectin will replace 100524 on Legacy waf and ...f2cc4e84 on new waf</td>
-    </tr>
-    <tr>
-      <td>2023-02-17</td>
-      <td>2023-02-27</td>
-      <td>Block</td>
-      <td>100566</td>
-      <td>...d7e78753</td>
-      <td>Ruby on Rails - Remote Code Execution</td>
-      <td>N/A</td>
+      <td>This detection will replace 100524 on Legacy WAF and ...f2cc4e84 on new WAF</td>
     </tr>
     <tr>
       <td>2023-02-27</td>
