@@ -37,8 +37,8 @@ filename: ~/.config/rclone/rclone.conf
 [r2demo]
 type = s3
 provider = Cloudflare
-access_key_id = abc123 # Your access_key_id
-secret_access_key = xyz456 # Your access_key_secret
+access_key_id = abc123
+secret_access_key = xyz456
 endpoint = https://<accountid>.r2.cloudflarestorage.com
 acl = private
 ```
