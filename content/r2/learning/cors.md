@@ -88,13 +88,13 @@ Your policy displays on the **Settings** page for your bucket.
 
 The following fields in an R2 CORS policy map to HTTP response headers. These response headers are only returned when the incoming HTTP request is a valid CORS request.
 
-| Field Name        | Description                                          | Example  |
-|-------------------|------------------------------------------------------|----------|
-| `AllowedOrigins`  | Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. | If a website at `www.example.com` needs to access resources (e.g. fonts, scripts) on a [custom domain]([https://developers.cloudflare.com/r2/data-access/public-buckets/](https://developers.cloudflare.com/r2/data-access/public-buckets/#custom-domains-configuration) of `static.example.com`, you would set `https://static.example.com` as an `AllowedOrigin`. |
-| `AllowedMethods`  | Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser. | `GET`, `POST`, `PUT` |
-| `AllowedHeaders`  | Specifies the value for the `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.Cross-origin requests that include custom headers (e.g. `x-user-id`) should specify these headers as `AllowedHeaders`. | `x-requested-by`, `User-Agent` |
-| `ExposeHeaders`   | Specifies the headers that can be exposed back, and accessed by, the JavaScript making the cross-origin request. If you need to access headers beyond the [safelisted response headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers#examples), such as `Content-Encoding` or `cf-cache-status`, you must specify it here. | `Content-Encoding`, `cf-cache-status`, `Date`  |
-| `MaxAgeSeconds`   | Specifies the amount of time (in seconds) browsers are allowed to cache CORS preflight responses. Browsers may limit this to 2 hours or less, even if the maximum value (86400) is specified.  | `3600` |
+| Field Name           | Description                                          | Example  |
+|----------------------|------------------------------------------------------|----------|
+| `AllowedOrigins`     | Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. | If a website at `www.example.com` needs to access resources (e.g. fonts, scripts) on a [custom domain]([https://developers.cloudflare.com/r2/data-access/public-buckets/](https://developers.cloudflare.com/r2/data-access/public-buckets/#custom-domains-configuration) of `static.example.com`, you would set `https://static.example.com` as an `AllowedOrigin`. |
+| `AllowedMethods`     | Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser. | `GET`, `POST`, `PUT` |
+| `AllowedHeaders`     | Specifies the value for the `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.Cross-origin requests that include custom headers (e.g. `x-user-id`) should specify these headers as `AllowedHeaders`. | `x-requested-by`, `User-Agent` |
+| `ExposeHeaders`      | Specifies the headers that can be exposed back, and accessed by, the JavaScript making the cross-origin request. If you need to access headers beyond the [safelisted response headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers#examples), such as `Content-Encoding` or `cf-cache-status`, you must specify it here. | `Content-Encoding`, `cf-cache-status`, `Date`  |
+| `MaxAgeSeconds`      | Specifies the amount of time (in seconds) browsers are allowed to cache CORS preflight responses. Browsers may limit this to 2 hours or less, even if the maximum value (86400) is specified.  | `3600` |
 
 ## Example
 
