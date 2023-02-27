@@ -21,7 +21,9 @@ SSH certificates include one or more `principals` in their signature which indic
 
 By default, SSH servers authenticate the Unix username against the principals listed in the user's certificate. You can configure your SSH server to accept principals that do not match the Unix username.
 
-Please note that these methods **currently don't work with the browser-based terminal**. If you'd like to use short lived certificates with the browser-based terminal, you will need your users' usernames to match.
+{{<Aside type="note">}}
+Differing usernames do not work with the browser-based terminal. If you would like to use short-lived certificates with the browser-based terminal, you will need your users' usernames to match.
+{{</Aside>}}
 
 **Username matches a different email**
 
@@ -33,10 +35,8 @@ Match user johndoe
   AuthorizedPrincipalsCommandUser nobody
 ```
 
-This tells the SSH server that, when someone tries to authenticate as the user `johndoe`, check their certificate for the principal `jdoe`.
-
-This would allow the user `jdoe@example.com` to sign into the server with a command such as:
-```txt
+This tells the SSH server that, when someone tries to authenticate as the user `johndoe`, check their certificate for the principal `jdoe`. This would allow the user `jdoe@example.com` to sign into the server with a command such as:
+```sh
 $ ssh johndoe@server
 ```
 
@@ -51,7 +51,7 @@ Match user vmuser
 
 This tells the SSH server to load a list of principles from a file. Then, in `/etc/ssh/vmusers-list.txt`, list the email prefixes that can log in as `vmuser`, one per line:
 
-```text
+```txt
 jdoe
 bwayne
 robin
