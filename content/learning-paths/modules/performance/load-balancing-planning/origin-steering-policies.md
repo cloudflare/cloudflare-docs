@@ -5,24 +5,24 @@ weight: 3
 layout: learning-unit
 ---
 
-{{<render file="../../load-balancing/_partials/_origin-steering-definition.md">}}
+{{<render file=_origin-steering-definition.md productFolder="load-balancing">}}
 
 ---
 
 ## Policies
 
-{{<render file="../../load-balancing/_partials/_origin-steering-policies.md">}}
+{{<render file=_origin-steering-policies.md productFolder="load-balancing">}}
 
 ---
 
 ## Weights
 
-{{<render file="../../load-balancing/_partials/_origin-steering-weights-definition.md">}}
+{{<render file=_origin-steering-weights-definition.md productFolder="load-balancing">}}
 
 ### Customize weights
 
-{{<render file="../../load-balancing/_partials/_origin-steering-weights-process.md">}}
+{{<render file=_origin-steering-weights-process.md productFolder="load-balancing">}}
 
 ### Limitations
 
-{{<render file="../../load-balancing/_partials/_origin-steering-weights-limitations.md">}}
+{{<render file=_origin-steering-weights-limitations.md productFolder="load-balancing">}}

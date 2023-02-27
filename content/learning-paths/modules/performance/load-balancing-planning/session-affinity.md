@@ -5,8 +5,8 @@ weight: 2
 layout: learning-unit
 ---
 
-{{<render file="../../load-balancing/_partials/_session-affinity-definition.md">}}
+{{<render file=_session-affinity-definition.md productFolder="load-balancing">}}
 
 ## How it works
 
-{{<render file="../../load-balancing/_partials/_session-affinity-process.md">}}
+{{<render file=_session-affinity-process.md productFolder="load-balancing">}}

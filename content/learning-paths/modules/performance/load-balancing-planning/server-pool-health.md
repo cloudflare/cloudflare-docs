@@ -7,10 +7,10 @@ layout: learning-unit
 
 As discussed before, a monitor issues health checks periodically to evaluate the health of a each server within a pool.
 
-{{<render file="../../load-balancing/_partials/_health-check-diagram.md">}}
+{{<render file=_health-check-diagram.md productFolder="load-balancing">}}
 <br/>
 
-{{<render file="../../load-balancing/_partials/_health-check-definition.md">}}
+{{<render file=_health-check-definition.md productFolder="load-balancing">}}
 
 ---
 
@@ -22,16 +22,16 @@ Based on the characteristics of your server pools, you have several customizatio
 
 #### Health threshold
 
-{{<render file="../../load-balancing/_partials/_pool-health-threshold.md">}}
+{{<render file=_pool-health-threshold.md productFolder="load-balancing">}}
 <br/>
 
 #### Health check regions
 
-{{<render file="../../load-balancing/_partials/_health-check-regions.md">}}
+{{<render file=_health-check-regions.md productFolder="load-balancing">}}
 
 ##### Configurations
 
-{{<render file="../../load-balancing/_partials/_monitor-health-check-regions-options.md">}}
+{{<render file=_monitor-health-check-regions-options.md productFolder="load-balancing">}}
 
 ---
 
@@ -43,7 +43,7 @@ When you [create a monitor](/load-balancing/how-to/create-monitor/), there are s
 <summary>Basic settings</summary>
 <div>
 
-{{<render file="../../load-balancing/_partials/_monitor-settings-basic.md">}}
+{{<render file=_monitor-settings-basic.md productFolder="load-balancing">}}
 
 </div>
 </details>
@@ -52,12 +52,12 @@ When you [create a monitor](/load-balancing/how-to/create-monitor/), there are s
 <summary>Advanced settings</summary>
 <div>
 
-{{<render file="../../load-balancing/_partials/_monitor-settings-advanced.md">}}
+{{<render file=_monitor-settings-advanced.md productFolder="load-balancing">}}
 
 </div>
 </details>
 
-{{<render file="../../load-balancing/_partials/_monitor-settings-consecutive.md">}}
+{{<render file=_monitor-settings-consecutive.md productFolder="load-balancing">}}
 
 ---
 
@@ -65,4 +65,4 @@ When you [create a monitor](/load-balancing/how-to/create-monitor/), there are s
 
 You also need to decide which of the associated pools in a load balancer should be the fallback pool.
 
-{{<render file="../../load-balancing/_partials/_fallback-pools.md">}}
+{{<render file=_fallback-pools.md productFolder="load-balancing">}}

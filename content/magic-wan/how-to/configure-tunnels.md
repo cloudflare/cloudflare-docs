@@ -37,4 +37,4 @@ TNL_4_ATL | `104.40.112.125` | `10.10.10.106/31` | `10.10.10.106` | `10.10.10.10
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select **Magic WAN** > **Manage Magic WAN configuration** > **Configure**.
 
-{{<render file="../../magic-transit/_partials/_tunnel-configuration.md">}}
+{{<render file="_tunnel-configuration.md" productFolder="magic-transit" >}}

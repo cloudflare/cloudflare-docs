@@ -17,7 +17,7 @@ Normally, requests to your application would go to individual servers directly.
 
 With a load balancer, requests first go through the load balancer. Your load balancer then routes requests to specific pools.
 
-{{<render file="../../load-balancing/_partials/_load-balancing-diagram.md">}}
+{{<render file=_load-balancing-diagram.md productFolder="load-balancing">}}
 <br/>
 
 Within each pool, requests then go to individual servers. And that server is what responds to the request.

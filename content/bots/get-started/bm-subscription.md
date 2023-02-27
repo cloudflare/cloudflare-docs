@@ -20,11 +20,14 @@ This Enterprise product provides the most flexibility to customers by:
 
 ## Enable Bot Management for Enterprise
 
-Our Solutions Engineering team will work with you to begin setting up the product. Most customers choose to write firewall rules, but others use Bot Analytics or perform custom actions using our Workers platform.
+To enable [Bot Management](https://dash.cloudflare.com/?to=/:account/:zone/security/bots) for Enterprise:
+
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Security** > **Bots**.
+3. Select **Enable**.
 
 ### Before you begin
 
-- Make sure you have purchased Bot Management for Enterprise (should be visible at **Security** > **Bots**).
 - Review the following concepts:
 
   - [Bot score](/bots/concepts/bot-score/): Learn how Cloudflare scores bot requests.
