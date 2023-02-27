@@ -2,8 +2,6 @@
 pcx_content_type: concept
 title: Concepts
 weight: 3
-
-
 meta: 
     title: DNS concepts 
 ---
