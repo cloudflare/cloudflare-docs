@@ -4,7 +4,7 @@ logo: <svg width="64" height="65" viewBox="0 0 64 65" fill="none" xmlns="http://
 product:
   title: Radar
   url: /radar/
-  group: Consumer products
+  group: Consumer services
 
 meta:
   title: Cloudflare Radar docs
