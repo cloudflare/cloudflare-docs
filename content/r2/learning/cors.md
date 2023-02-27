@@ -69,8 +69,8 @@ console.log(url);
 
 Test the presigned URL by uploading an object using cURL. The example below would upload the `123` text to R2 with a `Content-Type` of `text/plain`.
 
-```json
-curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
+```sh
+$ curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
 ```
 
 ## Add CORS policies from the dashboard
