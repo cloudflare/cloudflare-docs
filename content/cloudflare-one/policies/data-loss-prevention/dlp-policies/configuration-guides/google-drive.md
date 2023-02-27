@@ -5,9 +5,13 @@ weight: 2
 layout: single
 ---
 
-# DLP for Google Drive
+# In-line DLP for Google Drive
 
 Cloudflare Data Loss Prevention can inspect upload and download traffic to and from Google Drive.
+
+{{<Aside type="note" header="Data-at-rest">}}
+To scan all publicly accessible files in Google Drive, [add](/cloudflare-one/applications/scan-apps/casb-dlp/) Cloudflare CASB Google Workspace integration.
+{{</Aside>}}
 
 ## Configuring for compatibility
 

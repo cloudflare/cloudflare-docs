@@ -20,7 +20,7 @@ Microsoft provides [MIP sensitivity labels](https://learn.microsoft.com/en-us/mi
 
 ### Setup
 
-To add MIP sensitivity labels to a DLP Profile, simply integrate your Microsoft account with [Cloudflare CASB](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/). A new integration profile will appear under **Gateway** > **DLP Profiles**. The profile is named **MIP Sensitivity Labels** followed by the name of the CASB integration.
+To add MIP sensitivity labels to a DLP Profile, simply integrate your Microsoft account with [Cloudflare CASB](/cloudflare-one/applications/scan-apps/casb-integrations/microsoft-365/). A new integration profile will appear under **DLP** > **DLP Profiles**. The profile is named **MIP Sensitivity Labels** followed by the name of the CASB integration.
 
 ### Syncing
 

@@ -8,4 +8,6 @@ meta:
 
 # Configuration tips
 
+This section provides additional guidance on configuring in-line DLP.
+
 {{<directory-listing>}}

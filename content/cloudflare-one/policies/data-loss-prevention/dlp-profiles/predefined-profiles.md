@@ -6,7 +6,7 @@ weight: 2
 
 # Predefined profiles
 
-Cloudflare Zero Trust provides predefined DLP Profiles for common types of sensitive data. A DLP Profile is a collection of regular expressions (also known as detection entries) that Gateway will match on when scanning your HTTP traffic. Some detection entries include built-in validation checks to increase detection granularity.
+Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection granularity.
 
 ## Financial information
 
