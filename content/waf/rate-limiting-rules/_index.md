@@ -72,6 +72,8 @@ Number of rules | 1 | 2 | 5 | 100 | 100
 For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](https://support.cloudflare.com/hc/articles/115001635128#4gd3s4xzV2xOE4CUbRIEAo) in the Support KB.
 {{</Aside>}}
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Next steps
 
 You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.

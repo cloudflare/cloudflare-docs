@@ -1,5 +1,5 @@
 {{- $filename := default (.Get "file") (.Get 0) -}}
-{{- $dir := (path.Join .Page.Section "_partials") -}}
+{{- $dir := default (path.Join .Page.Section "_partials") (path.Join (.Get "productFolder") "_partials") -}}
 {{- $url := (path.Join $dir $filename) -}}
 {{- $parentPagePath := .Page.File.Path -}}
 {{- $sep := ";;" -}}

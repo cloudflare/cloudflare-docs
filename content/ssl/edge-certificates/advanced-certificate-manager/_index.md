@@ -10,6 +10,7 @@ layout: single
 Advanced certificates offers a flexible and customizable way to issue and manage certificates.
 
 {{<render file="_acm-definition.md">}}
+<br/>
 
 ## Features
 
@@ -34,7 +35,8 @@ Enterprise customers can also purchase a subscription for Advanced Certificate M
 
 {{<feature-table id="ssl.advanced_certificates">}}
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Related resources
 
-*   [Manage certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/)
-*   [Common API commands](/ssl/edge-certificates/advanced-certificate-manager/api-commands/)
+{{<directory-listing>}}
