@@ -6,7 +6,7 @@ weight: 1
 
 # Analytics API properties
 
-This page describes API properties that can be used in your [DNS analytics API requests](https://developers.cloudflare.com/api/operations/dns-analytics-table).
+This page describes API properties that can be used in your [API requests for DNS analytics](https://developers.cloudflare.com/api/operations/dns-analytics-table).
 
 ## Metrics
 
@@ -55,7 +55,7 @@ In API requests, dimensions are set in the `dimensions` parameter. If you need t
 ## Filters
 
 Filters use the form `dimension operator expression`, where each part corresponds to the following:
-- **Dimension**: Specifies the dimension to filter on. For example: `queryName`.
+- **Dimension**: Specifies the [dimension](#dimensions) to filter on. For example: `queryName`.
 - **Operator**: Defines the type of filter match to use. Operators are specific to dimensions.
 - **Expression**: States the values to be included in or excluded from the results. Expressions use regex syntax.
 
