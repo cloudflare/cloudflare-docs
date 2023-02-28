@@ -40,7 +40,7 @@ insert into users (id, full_name, created_on) values ('01GREFXCNF67KV7FPPSEJVJME
 With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) our table schema and values:
 
 ```sh
-➜  wrangler d1 execute example-db --file=users_export.sql
+$ wrangler d1 execute example-db --file=users_export.sql
 
 🌀 Mapping SQL input into an array of statements
 🌀 Parsing 1 statements
@@ -51,7 +51,7 @@ With your `users_export.sql` file in the current working directory, you can pass
 To confirm your table was imported correctly and is queryable, execute a `SELECT` statement against your `users` table directly:
 
 ```sh
-➜  wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
+$ wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
 
 🌀 Mapping SQL input into an array of statements
 🌀 Parsing 1 statements

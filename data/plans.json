@@ -1115,7 +1115,6 @@
         "super_bot_fight_mode": {
           "title": "Super Bot Fight Mode",
           "free": "No",
-          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -1175,7 +1174,6 @@
         "dashboard_features": {
           "title": "Dashboard features",
           "free": "Activity log only",
-          "lite": "All",
           "pro": "All",
           "biz": "All",
           "ent": "All"
@@ -1294,7 +1292,6 @@
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
-          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"

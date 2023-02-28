@@ -11,11 +11,11 @@
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./components/*"]
+      "@/*": ["./components/*"],
+      "data/*": ["./data/*"]
     },
     "resolveJsonModule": true
   },
-
   "references": [
     {
       "path": "./tsconfig.config.json"

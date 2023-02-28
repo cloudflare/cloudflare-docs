@@ -23,10 +23,10 @@ We include an uninstall script as part of the macOS package that you originally 
 
 1. To find and run the uninstall script, run the following commands:
 
-    ```sh
-    cd /Applications/Cloudflare\ WARP.app/Contents/Resources
-    ./uninstall.sh
-    ```
+```sh
+$ cd /Applications/Cloudflare\ WARP.app/Contents/Resources
+$ ./uninstall.sh
+```
 
 2. If prompted, enter your admin credentials to proceed with the uninstall.
 

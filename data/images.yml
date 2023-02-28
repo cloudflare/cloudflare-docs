@@ -5,6 +5,7 @@ product:
   title: Cloudflare Image Optimization
   url: /images/
   wrap: true
+  group: Developer platform
 
 meta:
   title: Cloudflare Image Optimization docs

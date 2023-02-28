@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 
 product:
   title: R2
   url: /r2/
+  group: Developer platform
 
 meta:
   title: Cloudflare R2 docs

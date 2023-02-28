@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="M24 5
 product:
   title: WARP Client
   url: /warp-client/
+  group: Consumer services
 
 meta:
   title: Cloudflare WARP client docs

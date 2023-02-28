@@ -15,3 +15,5 @@ Images you upload to Cloudflare Images are not attached to any domain in your Cl
 ## Availability
 
 Cloudflare Images is available [to all plans](/images/faq/#cloudflare-images-faq).
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
