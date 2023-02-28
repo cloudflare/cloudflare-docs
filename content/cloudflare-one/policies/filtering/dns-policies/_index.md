@@ -264,4 +264,6 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 ## Conditionals
 
-{{<render file="gateway/_conditionals.md">}}
+{{<render file="gateway/_conditionals.md" withParameters="**Identity**">}}
+
+{{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}

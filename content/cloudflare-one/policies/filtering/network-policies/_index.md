@@ -146,4 +146,4 @@ The _In_ operator allows you to specify IP addresses or networks using CIDR nota
 
 ## Conditionals
 
-{{<render file="gateway/_conditionals.md">}}
+{{<render file="gateway/_conditionals.md" withParameters="**Identity** or **Device Posture**">}}

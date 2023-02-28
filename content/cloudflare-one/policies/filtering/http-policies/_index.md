@@ -238,4 +238,6 @@ The country of the user making the request.
 
 ## Conditionals
 
-{{<render file="gateway/_conditionals.md">}}
+{{<render file="gateway/_conditionals.md" withParameters="**Identity** or **Device Posture**">}}
+
+{{<render file="gateway/_response.md" withParameters="request;;_Source IP_;;a _DLP Profile_">}}
