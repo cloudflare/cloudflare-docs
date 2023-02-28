@@ -1,7 +1,7 @@
 ---
 title: Common tasks
 pcx_content_type: navigation
-weight: 4
+weight: 5
 meta:
   title: Common Page Shield tasks
 ---
