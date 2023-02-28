@@ -4,12 +4,10 @@ type: overview
 pcx_content_type: overview
 weight: 1
 meta:
-  title: Cloudflare R2 documentation
+  title: Cloudflare R2 
 ---
 
-{{<content-column>}}
-
-# Cloudflare R2 documentation
+# Cloudflare R2 
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
@@ -24,23 +22,46 @@ You can use R2 for multiple scenarios, including but not limited to:
 {{<button-group>}}
 {{<button type="primary" href="/r2/get-started/">}}Get started{{</button>}}
 {{<button type="secondary" href="/r2/examples/">}}Browse the examples{{</button>}}
-{{<button type="secondary" href="/r2/data-access/workers-api/workers-api-reference">}}Review the Workers APIs{{</button>}}
 {{</button-group>}}
 
----
+## Features
 
-## Related Resources
+{{<feature header="Workers API" href="/r2/data-access/workers-api/workers-api-reference">}}
 
-- [Pricing](/r2/platform/pricing/) – Learn about the free tier and paid rates.
-- [Changelog](/r2/platform/changelog/) – Review updates in R2.
-- [Limits](/r2/platform/limits/) – Learn about account limits.
+R2’s deep integration with Workers and the rest of the Cloudflare Developer Platform allow developers to customize data processing and storage with code.
 
----
+{{</feature>}}
 
-## Community
+{{<feature header="Examples" href="/r2/examples/">}}
 
-[Connect with the Workers community on Discord](https://discord.gg/cloudflaredev) to ask questions, show off what you are building, and discuss the platform with other developers.
+Learn how to configure different applications to use with R2.
 
-[Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Workers.
+{{</feature>}}
 
-{{</content-column>}}
+## Related products
+
+{{<related header="Workers" href="/workers/" product="workers">}}
+
+A [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
+{{</related>}}
+
+{{<related header="Stream" href="/stream/" product="stream">}}
+
+Upload, store, encode, and deliver live and on-demand video with one API, without configuring or maintaining infrastructure.
+{{</related>}}
+
+{{<related header="Images" href="/images/" product="images">}}
+
+A suite of products tailored to your image-processing needs.
+{{</related>}}
+
+## More resources
+
+{{<resource-group>}}
+
+{{<resource header="Pricing" href="/r2/reference/pricing" icon="price">}} Understand pricing for free and paid tier rates. {{</resource>}}
+
+{{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
+
+{{<resource header="Twitter" href="https://twitter.com/cloudflaredev" icon="twitter">}} Learn about product announcements, new tutorials, and what is new in Cloudflare Workers. {{</resource>}}
+
