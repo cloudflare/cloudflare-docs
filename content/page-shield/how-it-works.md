@@ -1,18 +1,12 @@
 ---
-title: About
+title: How it works
 pcx_content_type: concept
 weight: 3
 meta:
-  title: About Cloudflare Page Shield
+  title: How Page Shield works
 ---
 
-# About Cloudflare Page Shield
-
-Your application runs a lot of code, much of it that you did not write yourself. You might use internal libraries or third-party scripts to add functionality like chatbots or marketing analytics.
-
-But, more code brings greater security risks. Attackers can add or change existing scripts to steal payment or personal information. When you have a lot of code on your website — particularly code you did not write yourself — it is difficult to prevent [these attacks](https://sansec.io/what-is-magecart).
-
-## How Page Shield works
+# How Page Shield works
 
 Page Shield simplifies external script management by tracking loaded resources like scripts and providing alerts when it detects new resources or malicious scripts. Page Shield also tracks the connections made by scripts on your domain's pages and checks if they are malicious based on their destination.
 
@@ -27,11 +21,15 @@ The **All Reported Scripts** and **All Reported Connections** dashboards show th
 
 Since the script and connection lists are based on sampling, there may be a small delay between deploying a script and having its data displayed in Page Shield's dashboards.
 
+## Additional features
+
 If you are an Enterprise customer with a paid add-on, you will have access to the following additional features:
 
-* **Detect potentially malicious scripts and connections in your domain**: Scripts and connections considered malicious will appear at the top of their corresponding dashboards. For more information on add-on features, refer to [Detecting malicious scripts and connections](/page-shield/about/malicious-script-detection/) and [Review changed scripts](/page-shield/use-dashboard/review-changed-scripts/).
+* **Detect potentially [malicious scripts and connections](#) in your domain**: Scripts and connections considered malicious will appear at the top of their corresponding dashboards.
 
-* **Define a positive security model using policies**: Ensures only allowed scripts are loaded by the browser, heavily reducing the attack surface for unwanted third-party scripts being loaded or injected in the application.
+* [**Code change alerts**](/page-shield/reference/alerts/): Configure a notification for code change alerts to receive a daily notification about changed scripts in your domain.
+
+* **Define a positive security model using [policies](#)**: Ensures only allowed scripts are loaded by the browser, heavily reducing the attack surface for unwanted third-party scripts being loaded or injected into your application.
 
 ## Learn more
 
