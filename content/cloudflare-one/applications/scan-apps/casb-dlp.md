@@ -14,7 +14,7 @@ Requires Cloudflare CASB and Cloudflare DLP.
 {{</Aside>}}
 
 You can use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to discover if files stored in your SaaS application contain sensitive data.
-To perform DLP scans in a SaaS app, first configure a DLP profile with the data patterns you want to detect, and then enable those profiles in a CASB integration.
+To perform DLP scans in a SaaS app, first configure a DLP profile with the data patterns you want to detect, then enable those profiles in a CASB integration.
 
 ## Configure a DLP profile
 
@@ -24,7 +24,7 @@ Refer to the [DLP documentation](/cloudflare-one/policies/data-loss-prevention/d
 
 ### Add a new integration
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **CASB** > **Integrations**.
+1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Select **Add integration** and choose a [supported integration](#supported-integrations).
 3. During the setup process, you will be prompted to select DLP profiles for the integration.
 4. Select **Save integration**.
