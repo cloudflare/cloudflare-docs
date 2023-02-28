@@ -1,0 +1,13 @@
+{
+    "summary": "Learn the concepts behind bot protection.",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Explain what a bot is and how bots can be used.</li>\n<li>Describe the differences between the different bot detection mechanisms Cloudflare offers.</li>\n<li>Explain what a Challenge Solve Rate (CSR) is and evaluate what different rates might signal.</li>\n</ul>\n",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Concepts",
+    "url": "/learning-paths/modules/security/bot-management-concepts/"
+}
