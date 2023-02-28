@@ -11,7 +11,7 @@ meta:
   description: The Cloudflare WARP client allows individuals or organizations to
     have a faster, more secure and private experience online.
   author: '@cloudflare'
-  image: /zt-preview.png
+  
 
 externals:
   - title: Blog announcement
