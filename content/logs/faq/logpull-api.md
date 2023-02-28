@@ -2,6 +2,8 @@
 pcx_content_type: faq
 tittle: Logpull API
 weight: 3
+meta:
+    description: Review frequently asked questions about the Logpull API.
 ---
 
 [❮ Back to FAQ](/logs/faq/)

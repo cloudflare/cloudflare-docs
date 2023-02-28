@@ -16,7 +16,7 @@ However, this behavior can prevent a waiting room from queueing a user properly 
 
 ## Available options
 
-To customize how your waiting room responds to cookies, include the `cookie_attributes` object when you [create a Waiting Room](https://api.cloudflare.com/#waiting-room-create-waiting-room) (only available via the API).
+To customize how your waiting room responds to cookies, include the `cookie_attributes` object when you [create a waiting room](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room) (only available via the API).
 
 Available options include:
 
@@ -35,7 +35,7 @@ Available options include:
 
 ## Allow cookies to pass through iFrames
 
-If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a Waiting Room](https://api.cloudflare.com/#waiting-room-create-waiting-room) (only available via the API):
+If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a waiting room](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room) (only available via the API):
 
 *   `samesite`: `none`
 *   `secure`: If you have [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) enabled, set to `auto`. If you have it disabled, set to `always`.

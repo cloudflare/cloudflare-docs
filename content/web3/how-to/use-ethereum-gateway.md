@@ -20,8 +20,8 @@ Each blob use a valid [`method` parameter](/web3/ethereum-gateway/reference/supp
 
 To send this query to your [custom Ethereum Gateway](/web3/how-to/manage-gateways/), you could use a cURL command:
 
-```bash
-curl https://web3-trial.cloudflare-eth.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
+```sh
+$ curl https://web3-trial.cloudflare-eth.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x2244", true],"id":1}'
 ```
 
 You can also write the same query using the JS Fetch API:
@@ -88,8 +88,8 @@ Once you have a wallet set up and a method of signing your own transactions, you
 
 Then you can use your [custom Gateway](/web3/how-to/manage-gateways/) to send the transaction to the network with a cURL command:
 
-```bash
-curl https://web3-trial.cloudflare-eth.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"],"id":1}'
+```sh
+$ curl https://web3-trial.cloudflare-eth.com/v1/mainnet -H 'Content-Type: application/json' --data '{"jsonrpc":"2.0","method":"eth_sendRawTransaction","params":["0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"],"id":1}'
 ```
 
 You could also use a JS Fetch API request:
@@ -102,8 +102,7 @@ await fetch(
       jsonrpc: '2.0',
       method: 'eth_sendRawTransaction',
       params: [
-        '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675',
-        true,
+        '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
       ],
       id: 1,
     }),

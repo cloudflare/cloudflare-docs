@@ -90,7 +90,7 @@ You now have secure, remote access to the RDP server.
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
 
-3. For **Service**,  select _RDP_ and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `80`, `443`, or `3389`.
+3. For **Service**,  select _RDP_ and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `3389`.
 
 4. Select **Save hostname**.
 
@@ -99,13 +99,17 @@ You now have secure, remote access to the RDP server.
 ### 2. Connect as a user
 
 1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on the client machine.
-2. Run this command to listen on the RDP port:
+2. Run this command to open an RDP listening port:
 
     ```sh
     $ cloudflared access rdp --hostname rdp.example.com --url rdp://localhost:3389
     ```
 
     This process will need to be configured to stay alive and autostart. If the process is killed, users will not be able to connect.
+
+{{<Aside type="note">}}
+If the client machine is running Windows, port `3389` may already be consumed locally.  Select an alternative port to `3389` that is not being used.
+{{</Aside>}}
 
 3. While `cloudflared access` is running, connect from an RDP client such as Microsoft Remote Desktop:
     1. Open Microsoft Remote Desktop and select **Add a PC**.

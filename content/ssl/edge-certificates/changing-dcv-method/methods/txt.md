@@ -17,12 +17,15 @@ meta:
 ### Full zones
 
 {{<render file="_full-zone-acm-dcv.md">}}
+<br/>
 
 ### Partial zones
 
 For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
 
-{{<render file="_partial-zone-acm-dcv.md">}}
+{{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
+
+{{<render file="_partial-zone-acm-dcv-wildcard.md">}}
 
 ---
 

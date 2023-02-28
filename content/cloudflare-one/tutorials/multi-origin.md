@@ -12,12 +12,12 @@ You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to co
 
 You can deploy a single instance of `cloudflared` to proxy traffic to a single service with a single hostname or multiple destinations for multiple hostnames.
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a machine to Cloudflare for multiple applications
 - Give those applications hostnames where users can connect
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

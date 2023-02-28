@@ -130,13 +130,13 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 1. Open a terminal and create a new Workers project.
 
     ```sh
-    wrangler generate redirect-worker
+    $ wrangler generate redirect-worker
     ```
 
 2. Navigate to the project directory.
 
     ```sh
-    cd redirect-worker
+    $ cd redirect-worker
     ```
 
 3. Open `wrangler.toml` in a text editor and insert your Account ID. To find your Account ID, open your [Cloudflare dashboard](https://dash.cloudflare.com/) and click the **Workers** tab.
@@ -191,7 +191,15 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
     newRequest.headers.set('cf-access-client-id', CF_ACCESS_CLIENT_ID)
     newRequest.headers.set('cf-access-client-secret', CF_ACCESS_CLIENT_SECRET)
     try {
-        return await fetch(newRequest)
+        const response = await fetch(newRequest);     
+
+        // Copy over the response   
+        const modifiedResponse = new Response(response.body, response);
+
+        // Delete the set-cookie from the response so it doesn't override existing cookies
+        modifiedResponse.headers.delete("set-cookie")
+
+        return  modifiedResponse;
     } catch (e) {
         return new Response(JSON.stringify({ error: e.message }), { status: 500 })
     }
@@ -205,7 +213,7 @@ Follow [these instructions](/cloudflare-one/identity/service-tokens/) to generat
 5. Publish the Worker to your account.
 
     ```sh
-    wrangler publish
+    $ wrangler publish
     ```
 
 ### 4. Configure the Worker

@@ -2,29 +2,39 @@
 title: Get started
 pcx_content_type: get-started
 weight: 2
+meta:
+    description: Learn how to enable Argo Smart Routing in the Cloudflare dashboard.
 ---
 
 # Get started with Argo Smart Routing
 
-## Enable Argo Smart Routing
+Argo Smart Routing is a one-click solution to speed up your global traffic.
 
-{{<Aside type="note">}}
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
 
-If you are an Enterprise user, you can add the Argo permission to your account by contacting your Account Executive or Customer Success Manager.
-
-{{</Aside>}}
+To enable [Argo Smart Routing](https://dash.cloudflare.com/?to=/:account/:zone/traffic) in the dashboard:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Traffic** > **Argo**.
+3. For **Argo Smart Routing**, switch the toggle to **On**.
+4. Provide your billing information.
 
-1. Go to **Traffic** > **Argo**.
-
-1. From **Argo Smart Routing**, turn on the **toggle**.
-
-1. Provide your billing information.
-
-    * If you do not have a billing profile, enter your billing information.
+    * If you do not have a [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/), enter your billing information.
 
     * If you have a billing profile, confirm your billing information.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To enable or disable Argo Smart Routing with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/argo-smart-routing-patch-argo-smart-routing-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+
+You will need to already have a [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) on your account to enable Argo Smart Routing.
+
+{{</tab>}}
+{{</tabs>}}
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Enable Argo Tiered Cache
 

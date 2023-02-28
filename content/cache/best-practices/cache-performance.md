@@ -22,16 +22,16 @@ Several examples of helpful insights into your site performance via Cache Analyt
 
 - Not caching HTML.
 
-  - Identify the issue: Click **Add filter** and select **Cache status equals Dynamic**.
+  - Identify the issue: Select **Add filter** and select **Cache status equals Dynamic**.
   - Resolution: Set a Cloudflare Page Rule to [cache dynamic content](/cache/best-practices/customize-cache/).
 
 - Short cache expiration TTL.
 
-  - Identify the issue: Click **Add filter** and select **Cache status equals Revalidated**.
+  - Identify the issue: Select **Add filter** and select **Cache status equals Revalidated**.
   - Resolution: [Increase Cloudflare’s Edge Cache TTL via a Page Rule](/cache/about/edge-browser-cache-ttl/).
 
 - Need to enable Tiered Cache or Custom Cache Key
 
-  - Identify the issue: Click **Add filter** and select **Cache status equals Miss**.
+  - Identify the issue: Select **Add filter** and select **Cache status equals Miss**.
   - Resolution: Enable Argo Tiered Caching or [create a custom cache key](/cache/about/cache-keys/).
 

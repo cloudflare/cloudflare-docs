@@ -9,7 +9,7 @@ title: Connect through Cloudflare Access using kubectl
 
 You can connect to machines over `kubectl` using Cloudflare's Zero Trust platform.
 
-**🗺️ This walkthrough covers how to:**
+**This walkthrough covers how to:**
 
 - Build a policy in Cloudflare Access to secure the machine
 - Connect a machine to Cloudflare's network using kubectl
@@ -19,7 +19,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 - [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/)
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 30 minutes
 

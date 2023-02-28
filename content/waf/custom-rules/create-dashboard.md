@@ -26,7 +26,7 @@ To create a new custom rule:
 
 3. Navigate to **Security** > **WAF** > **Custom rules**.
 
-4. Select **Create custom rule**.
+4. Select **Create rule**.
 
 5. Enter a descriptive name for the rule in **Rule name**.
 

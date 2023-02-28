@@ -18,7 +18,7 @@ Also, make sure that your [SSL encryption mode](/ssl/origin-configuration/ssl-mo
 
 ## Step 1 — Evaluate existing redirects
 
-To make sure that your visitors do not get stuck in a [redirect loop](https://support.cloudflare.com/hc/articles/115000219871), evaluate existing redirects at your origin server and within the Cloudflare dashboard.
+To make sure that your visitors do not get stuck in a [redirect loop](/ssl/troubleshooting/too-many-redirects/), evaluate existing redirects at your origin server and within the Cloudflare dashboard.
 
 You should generally avoid redirects at your origin server. Not only are you likely to forget about them, but they also reduce application performance. It is much faster for Cloudflare to redirect requests before they ever reach your origin.
 

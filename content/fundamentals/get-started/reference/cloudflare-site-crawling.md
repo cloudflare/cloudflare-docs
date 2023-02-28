@@ -20,7 +20,7 @@ Cloudflare will crawl your site when you have specific products enabled:
     * This crawler ignores your `robots.txt` file unless there are rules explicitly targeting the user agent.
 * [**Load balancing monitors**](/load-balancing/understand-basics/monitors/)
     * *User-Agent*: `Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; pool-id: <POOLID>)`
-* [**Health checks**](https://support.cloudflare.com/hc/en-us/articles/4404867308429)
+* [**Health checks**](/health-checks/)
     * *User-Agent*: `Mozilla/5.0 (compatible; Cloudflare-Traffic-Manager/1.0; +https://www.cloudflare.com/traffic-manager/; healthcheck-id: <HEALTHCHECK_ID>)`
 
 ### Other situations
@@ -29,7 +29,7 @@ Cloudflare will also crawl your site in other, specific situations:
 
 * **Speed tests**
     * *User-Agent*: `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 PTST/190628.140653`
-    * *Triggered when*: You launch a speed test from within [the Cloudflare dashboard](https://support.cloudflare.com/hc/articles/5550125973005) or at https://www.cloudflare.com/lp/can-your-website-be-faster/.
+    * *Triggered when*: You launch a speed test from within [the Cloudflare dashboard](https://support.cloudflare.com/hc/articles/5550125973005).
 * **Support diagnostics**: 
     * *User-Agent*: `Cloudflare-diagnostics`
     * *Triggered when*: Cloudflare support engineers perform error checks and by continuous monitoring used to raise intelligent alerts in the Cloudflare dashboard.

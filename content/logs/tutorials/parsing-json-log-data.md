@@ -24,7 +24,7 @@ To aggregate a field appearing in the log, such as by IP address, URI, or referr
 
 The following examples match on a field name and provide a count of each field instance, sorted in ascending order by count.
 
-```bash
+```sh
 $ jq -r .ClientRequestURI logs.json | sort -n | uniq -c | sort -n | tail
 2 /nginx-logo.png
 2 /poweredby.png
@@ -38,7 +38,7 @@ $ jq -r .ClientRequestURI logs.json | sort -n | uniq -c | sort -n | tail
 54 /
 ```
 
-```bash
+```sh
 $ jq -r .ClientRequestUserAgent logs.json | sort -n | uniq -c | sort -n | tail
 1 python-requests/2.9.1
 2 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17
@@ -48,7 +48,7 @@ $ jq -r .ClientRequestUserAgent logs.json | sort -n | uniq -c | sort -n | tail
 51 curl/7.46.0-DEV
 ```
 
-```bash
+```sh
 $ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 2 http://example.com/testagain
 3 http://example.com/testing
@@ -62,7 +62,7 @@ $ jq -r .ClientRequestReferer logs.json | sort -n | uniq -c | sort -n | tail
 
 Another common use case involves filtering data for a specific field value and then aggregating after that. This helps answer questions like _Which URLs saw the most 502 errors?_ For example:
 
-```bash
+```sh
 $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort -n | uniq -c | sort -n | tail
 1 "/favicon.ico"
 1 "/testing"
@@ -74,7 +74,7 @@ $ jq 'select(.OriginResponseStatus == 502) | .ClientRequestURI' logs.json | sort
 
 To find out the top IP addresses blocked by the Cloudflare WAF, use the following query:
 
-```bash
+```sh
 $ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c | sort -n
 1 127.0.0.1
 ```
@@ -83,7 +83,7 @@ $ jq -r 'select(.WAFAction == "drop") | .ClientIP' logs.json | sort -n | uniq -c
 
 To retrieve your cache ratios, try the following query:
 
-```bash
+```sh
 $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 3 hit
 3 null
@@ -97,7 +97,7 @@ $ jq -r '.CacheCacheStatus' logs.json | sort -n | uniq -c | sort -n
 
 To find out which TLS versions your visitors are using — for example, to decide if you can disable TLS versions that are older than 1.2 — use the following query:
 
-```bash
+```sh
 $ jq -r '.ClientSSLProtocol' logs.json | sort -n | uniq -c | sort -n
 42 none
 58 TLSv1.2

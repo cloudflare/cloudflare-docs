@@ -6,7 +6,7 @@ weight: 8
 
 # Domain control validation backoff schedule
 
-Domain control validation (DCV) has to happen before a Certificate Authority (CA) will issue a certificate for a domain.
+Domain control validation (DCV) has to happen before a Certificate Authority (CA) will issue a certificate for a domain. If DCV fails, Cloudflare automatically retries it on a schedule.
 
 DCV happens with Cloudflare's CA partners according to the following schedule:
 

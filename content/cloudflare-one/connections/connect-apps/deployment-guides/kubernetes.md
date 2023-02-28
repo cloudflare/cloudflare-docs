@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Kubernetes
-weight: 41
+weight: 6
 ---
 
 # Kubernetes
@@ -62,7 +62,7 @@ $ kubectl get pods
 ```
 
 ## Routing with Cloudflare Tunnel
-The tunnel can be created through the dashboard using [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). Instead of running the command to install a connector you will select docker as the environment and copy just the token rather than the whole command. Configure the tunnel to route to k8.example.com from the service http://web-service:80. Create the cloudflared-deployement.yml file with the following content.
+The tunnel can be created through the dashboard using [this guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/). Instead of running the command to install a connector you will select docker as the environment and copy just the token rather than the whole command. Configure the tunnel to route to k8.example.com from the service http://web-service:80. Create the cloudflared-deployment.yml file with the following content.
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -86,12 +86,25 @@ spec:
       - command:
         - cloudflared
         - tunnel
+        # In a k8s environment, the metrics server needs to listen outside the pod it runs on. 
+        # The address 0.0.0.0:2000 allows any pod in the namespace.
+        - --metrics
+        - 0.0.0.0:2000
         - run
         args:
         - --token
         - <token value>
         image: cloudflare/cloudflared:latest
         name: cloudflared
+        livenessProbe:
+          httpGet:
+          # Cloudflared has a /ready endpoint which returns 200 if and only if
+          # it has an active connection to the edge.
+            path: /ready
+            port: 2000
+          failureThreshold: 1
+          initialDelaySeconds: 10
+          periodSeconds: 10
 ```
 This file will be deployed with the following command.
 ```sh

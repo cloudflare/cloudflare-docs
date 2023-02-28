@@ -6,7 +6,7 @@ pcx_content_type: reference-architecture
 
 ## 1 Introduction
 
-The purpose of this document is to describe the key architecture, functionalities, and network deployment options of Cloudflare Magic Transit — a BGP-based DDoS protection and traffic acceleration service for Internet-facing network infrastructure. 
+The purpose of this document is to describe the key architecture, functionalities, and network deployment options of [Cloudflare Magic Transit](/magic-transit/) — a BGP-based DDoS protection and traffic acceleration service for Internet-facing network infrastructure. 
 
 ## 2 What Is Magic Transit?
 Protecting network infrastructure from DDoS attacks demands a unique combination of strength and speed. Volumetric attacks can easily overwhelm hardware boxes and their bandwidth-constrained Internet links. And most cloud-based solutions redirect traffic to centralized scrubbing centers, which impacts network performance significantly. 
@@ -26,7 +26,7 @@ At a high level, Magic Transit works as follows:
 
 ### Baking resilience into our network using Anycast
 
-Magic Transit uses Anycast IP addresses for its end of the network tunnel endpoints — so a single tunnel configured from a customer’s network to Cloudflare connects to all Cloudflare global data centers (excluding the China Network). This does not add strain on the router; from the router’s perspective, it is a single tunnel to a single IP endpoint.
+Magic Transit uses Anycast IP addresses for its end of the network tunnel endpoints — so a single tunnel configured from a customer’s network to Cloudflare connects to all Cloudflare global data centers (excluding the [China Network](/china-network/)). This does not add strain on the router; from the router’s perspective, it is a single tunnel to a single IP endpoint.
 
 This works because while the tunnel endpoint is technically bound to an IP address, it need not be bound to a specific device. Any device that can strip off the outer headers and then route the inner packet can handle any packet sent over the tunnel.
 
@@ -47,7 +47,7 @@ The network diagram in Figure 2 illustrates such a Magic Transit setup, and the 
 
 * The customer end of the Anycast GRE tunnel needs to be a publicly routable address. It is typically the IP address of the WAN interface on the customer edge router. In this example it is 192.0.2.153.
 
-* The IP addresses of the tunnel interfaces are RFC1918 private addresses. These addresses are only “locally significant” within the particular Magic Transit service instance that they are part of. Therefore, the customer can select any RFC1918 addresses they desire, as long as they do not overlap with those of other tunnels configured within the same Magic Transit service instance. 
+* The IP addresses of the tunnel interfaces are RFC 1918 private addresses. These addresses are only “locally significant” within the particular Magic Transit service instance that they are part of. Therefore, the customer can select any RFC 1918 addresses they desire, as long as they do not overlap with those of other tunnels configured within the same Magic Transit service instance.
 
 * As best practice, given the tunnels are point-to-point connections, a /31 subnet is sufficient for allocating the 2 IP addresses required for a given tunnel. In the above example, the 10.10.10.0/31 subnet is chosen, with the Cloudflare end of the tunnel interface being 10.10.10.0/31 and the customer’s DC edge router side being 10.10.10.1/31.
 
@@ -70,9 +70,9 @@ The following network diagram illustrates the end-to-end packet flow between the
 * The ingress traffic flow is the same as in use case 3.1. 
 
 
-* For egress traffic to be received and processed by Magic Transit, the source IP addresses of the traffic need to be in the range of the Magic Transit-protected IP prefixes, and the destination IP addresses need to be public Internet routable, i.e. non-RFC1918 addresses.
+* For egress traffic to be received and processed by Magic Transit, the source IP addresses of the traffic need to be in the range of the Magic Transit-protected IP prefixes, and the destination IP addresses need to be public Internet routable, i.e. non-RFC 1918 addresses.
 
-It is worth noting that for customers who bring their own public IP addresses (BYOIP) for cloud-hosted services, the Magic Transit Egress option can provide additional value by eliminating the need for them to purchase and implement BYOIP services with their cloud providers, reducing their cloud bill and lowering operational costs.
+It is worth noting that for customers who bring their own public IP addresses ([BYOIP](/byoip/)) for cloud-hosted services, the Magic Transit Egress option can provide additional value by eliminating the need for them to purchase and implement BYOIP services with their cloud providers, reducing their cloud bill and lowering operational costs.
 
 To accomplish this, the IP tunnels that on-ramps to Magic Transit are configured between the cloud providers’ VPCs and the Cloudflare network. With the Magic Transit Egress option, both directions of client-server traffic would flow through these tunnels. The BYOIP addresses in the tunneled packets are hidden behind the outer tunnel endpoint IP addresses and the tunnel header, making them “invisible” to the underlying cloud provider network elements between the VPCs and the Cloudflare network.
 
@@ -116,7 +116,7 @@ Note that with the Magic Transit Egress option, the customer can bypass each clo
 
 ### 3.5 Magic Transit and Magic WAN
 
-In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic) with the Cloudflare Magic Transit service, customers can protect east-west “intra-enterprise” internal traffic (e.g. RFC1918 private addresses), interconnecting all the sites of an enterprise, using [Cloudflare Magic WAN](/magic-wan/).
+In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic) with the Cloudflare Magic Transit service, customers can protect east-west “intra-enterprise” internal traffic (e.g. RFC 1918 private addresses), interconnecting all the sites of an enterprise, using [Cloudflare Magic WAN](/magic-wan/).
 
 Magic WAN replaces legacy WAN architectures with the Cloudflare network, providing global connectivity, cloud-based security, performance, and control through one simple user interface.
 
@@ -174,4 +174,4 @@ Cloudflare offers comprehensive network services to connect and protect on-premi
 
 * In addition to protecting and routing traffic for external-facing services of an enterprise (i.e. north-south Internet-routable traffic), customers can connect and protect east-west “intra-enterprise” internal traffic using Cloudflare Magic WAN.
 
-If you would like to learn more about Magic Transit, Magic WAN, or Magic Firewall, please [reach out](https://www.cloudflare.com/magic-transit/?utm_source=promo&utm_medium=affiliate&utm_term=&utm_content=&utm_campaign=acg421n-mt-mt-ref-arq-whitepaper) to us for a demo.
+If you would like to learn more about Magic Transit, Magic WAN, or Magic Firewall, please [reach out](https://www.cloudflare.com/magic-transit/) to us for a demo.

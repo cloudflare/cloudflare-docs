@@ -43,7 +43,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### API
 
-Refer to the [Stream video details API documentation](https://api.cloudflare.com/#stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](https://developers.cloudflare.com/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 
@@ -76,6 +76,8 @@ If you need ultra low latency, and your users view live video in native apps, yo
 ![Diagram showing SRT and RTMPS playback via the Cloudflare Network](/stream/static/stream-rtmps-srt-playback-magic-hdmi-cable.png)
 
 SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will need to integrate ffmpeg with your own video player —  neither [AVPlayer (iOS)](/stream/viewing-videos/using-own-player/ios/) nor [ExoPlayer (Android)](/stream/viewing-videos/using-own-player/android/) natively support SRT or RTMPS playback.
+
+{{<render file="_srt-supported-modes.md">}}
 
 We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
 

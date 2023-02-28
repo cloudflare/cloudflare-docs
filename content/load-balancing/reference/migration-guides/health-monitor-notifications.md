@@ -26,7 +26,7 @@ First you should determine which pools are using notifications. It's often easie
 <summary>With code</summary>
 <div>
 
-Use the [Cloudflare API](https://api.cloudflare.com/#account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
+Use the [Cloudflare API](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-list-pools) to list all your pools and then look for whether each pool has a value for the `notification_email` parameter.
 
 ```json
 ---
@@ -91,7 +91,7 @@ In this step, you should create new notifications to replace all of your existin
 
 <div>
 
-If using the Cloudflare API, [re-create all your existing notifications](https://api.cloudflare.com/#notification-policies-create-a-notification-policy) with the following parameters specified:
+If using the Cloudflare API, [re-create all your existing notifications](https://developers.cloudflare.com/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
 
 ```json
 "alert_type": "load_balancing_health_alert",
@@ -126,7 +126,7 @@ Though you can perform these steps in the dashboard, Cloudflare recommends you u
 
 <div>
 
-If using the Cloudflare API, we recently added a [`PATCH`](https://api.cloudflare.com/#account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
+If using the Cloudflare API, we recently added a [`PATCH`](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-patch-pools) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
 ```json
 ---
@@ -153,7 +153,7 @@ If needed, you can remove legacy notifications by using the dashboard.
 
 <div>
 
-Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, toggle the **Health Check Notifications** on your pool to **Off**.
+Once you created your new notification in [Step 2](#step-2---create-new-notifications), you will return to the pool you were editing previously. To disable the deprecated notifications, you must remove all notification email addresses from the field.
 
 </div>
 </details>

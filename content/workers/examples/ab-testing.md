@@ -18,11 +18,15 @@ const NAME = "myExampleWorkersABTest";
 
 export default {
   async fetch(req) {
+
     const url = new URL(req.url);
+
     // Enable Passthrough to allow direct access to control and test routes.
     if (url.pathname.startsWith("/control") || url.pathname.startsWith("/test")) return fetch(req);
+
     // Determine which group this requester is in.
     const cookie = req.headers.get("cookie");
+    
     if (cookie && cookie.includes(`${NAME}=control`)) {
       url.pathname = "/control" + url.pathname;
     } else if (cookie && cookie.includes(`${NAME}=test`)) {

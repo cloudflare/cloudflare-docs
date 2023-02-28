@@ -23,7 +23,7 @@ resource "cloudflare_ruleset" "http_origin_example" {
     action = "route"
     action_parameters {
       host_header = "example.net"
-      origin = {
+      origin {
         host = "example.net"
         port = 8000
       }

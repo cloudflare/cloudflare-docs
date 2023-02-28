@@ -34,7 +34,7 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 ## 4. Ensure traffic is going through WARP
 
-[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/), ensure that the following domains are included in WARP:
+[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
 * The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 * `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
@@ -50,7 +50,7 @@ Because Gateway evaluates network and HTTP policies on every request, it maintai
 
 #### WARP client checks
 
-By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](https://api.cloudflare.com/#device-posture-rules-create-device-posture-rule).
+By default, the WARP client polls the device for status changes every five minutes. If for some reason the new posture result does not update on Cloudflare's edge, the previous result is considered valid for 24 hours. You can modify the polling `schedule` and `expiration` duration using the [API](https://developers.cloudflare.com/api/operations/device-posture-rules-create-device-posture-rule).
 
 #### Service provider checks
 

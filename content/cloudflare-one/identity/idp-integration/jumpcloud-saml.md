@@ -20,7 +20,7 @@ To set up JumpCloud SAML as your identity provider:
 
     If you do not have a certificate, this command generates one using OpenSSL:
 
-    ```bash
+    ```sh
     $ openssl genrsa -out samlidp.key 2048 ; openssl req -new -x509 -sha256 -key samlidp.key -out samlidp.crt -days 1095
     Generating RSA private key, 2048 bit long modulus
     .................................................................................+++++

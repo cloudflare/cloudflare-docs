@@ -19,9 +19,9 @@ To enable the Cloudflare Logpush service:
 
 1.  Log in to the Cloudflare dashboard.
 
-2.  Select the Enterprise domain you want to use with Logpush.
+2.  Select the Enterprise account or domain you want to use with Logpush.
 
-3.  Go to **Analytics** > **Logs**.
+3.  Go to **Analytics & Logs** > **Logs**.
 
 4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
 
@@ -60,7 +60,7 @@ Logpush will stop working if you regenerate the HTTP Source Address (URL). Refer
 {{</Aside>}}
 
 {{<Aside type="info" header="Info">}}
-Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/Manage/Ingestion-and-Volume/01Manage-Ingestion).
+Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/docs/manage/ingestion-volume/log-ingestion/).
 {{</Aside>}}
 
 {{<Aside type="note" header="Note">}}

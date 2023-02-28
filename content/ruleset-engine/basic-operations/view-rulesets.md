@@ -26,7 +26,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 
 The response displays the following rulesets:
 
-- Managed Rulesets you can deploy, indicated by `"kind": "managed"`
+- Managed rulesets you can deploy, indicated by `"kind": "managed"`
 - Zone-level phase entry points, if configured, indicated by `"kind": "zone"`
 - Custom rulesets, if configured, indicated by `"kind": "custom"`
 
@@ -87,7 +87,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
 
 The response displays the following rulesets:
 
-- Managed Rulesets you can deploy, indicated by `"kind": "managed"`
+- Managed rulesets you can deploy, indicated by `"kind": "managed"`
 - Account-level phase entry points, if configured, indicated by `"kind": "root"`
 - Custom rulesets, if configured, indicated by `"kind": "custom"`
 
@@ -145,7 +145,7 @@ header: Response
 
 ## View the rules included in a ruleset
 
-You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of Managed Rulesets.
+You can view all versions of phase entry points (at the account and zone levels) and custom rulesets, but you can only view the most recent version of managed rulesets.
 
 <details>
 <summary>Example: View rules in a phase entry point ruleset at the zone level</summary>
@@ -169,7 +169,7 @@ header: Response
   "result": {
     "id": "<RULESET_ID>",
     "name": "Zone-level phase entry point ruleset",
-    "description": "This ruleset executes a Managed Ruleset.",
+    "description": "This ruleset executes a managed ruleset.",
     "kind": "zone",
     "version": "2",
     "rules": [
@@ -197,10 +197,10 @@ header: Response
 </details>
 
 <details>
-<summary>Example: View rules in a Managed Ruleset</summary>
+<summary>Example: View rules in a managed ruleset</summary>
 <div>
 
-The following example lists the rules in version `2` of a Managed Ruleset (the most recent version of that ruleset).
+The following example lists the rules in version `2` of a managed ruleset (the most recent version of that ruleset).
 
 ```bash
 ---
@@ -260,7 +260,7 @@ header: Response
 }
 ```
 
-Each rule in a Managed Ruleset can have associated tags or categories, listed in the `categories` field.
+Each rule in a managed ruleset can have associated tags or categories, listed in the `categories` field.
 
 </div>
 </details>

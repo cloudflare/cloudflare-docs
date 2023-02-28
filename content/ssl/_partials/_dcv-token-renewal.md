@@ -9,4 +9,4 @@ If possible, DCV tokens for proxied hostnames are always renewed [via HTTP](/ssl
 
 However, some certificates — for example, if you are using wildcard certificates or certificates with multiple SANs or your hostname is not proxied — are not eligible for HTTP validation.
 
-If your certificate is not eligible for HTTP validation, you will need to repeat the DCV process with your chosen method.
+If your certificate is not eligible for HTTP validation, you will need to repeat the DCV process with your chosen method. Cloudflare generates these renewal TXT tokens 30 days before certificate expiration.

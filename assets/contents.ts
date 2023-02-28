@@ -9,6 +9,7 @@ export function toc() {
 
   if (article) {
     let headers = article.querySelectorAll('h2,h3,h4');
+    
     let i = 0,
       tmp: Element,
       last: ListItem,
@@ -17,7 +18,6 @@ export function toc() {
 
     for (; i < headers.length; i++) {
       tmp = headers[i];
-
       if (tmp.nodeName === 'H2') {
         container = target;
       } else if (last && tmp.nodeName > last.h) {

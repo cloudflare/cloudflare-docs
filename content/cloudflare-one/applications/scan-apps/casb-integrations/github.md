@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: GitHub
-weight: 1
 ---
 
 # GitHub

@@ -6,7 +6,7 @@ weight: 3
 
 # Certificate Transparency Monitoring
 
-{{<render file="_cert-transparency-monitoring-definition.md">}}
+Certificate Transparency Monitoring sends you emails when certificates — including [backup certificates](/ssl/edge-certificates/universal-ssl/#backup-certificates) — are issued for your domain. This feature is in **public beta** and is opt-in.
 
 {{<Aside type="note">}}
 
@@ -36,10 +36,7 @@ For even more details, refer to the [introductory blog post](https://blog.cloudf
 
 Alerts are turned off by default. If you want to receive alerts, go to [SSL/TLS](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) in the Cloudflare dashboard.
 
-Features vary by plan:
-
-- **Free** and **Pro** customers will see a toggle to turn **On** or **Off**. Emails will go to all Cloudflare account members.
-- **Business** and **Enterprise** customers will see an option to **add emails**. These addresses do not have to be tied to Cloudflare accounts. If you want to send emails to more than 10 people, consider setting up an email alias.
+{{<feature-table id="ssl.cert_transparency">}}
 
 To stop receiving alerts, switch the toggle to **Off** or remove your emails from the feature card.
 

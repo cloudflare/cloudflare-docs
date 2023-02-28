@@ -195,7 +195,7 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 ## Enable custom rules via dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select the domain you want to use.
-2. Go to **Analytics** > **Logs**.
+2. Go to **Analytics & Logs** > **Logs**.
 3. In the **Custom Fields** section, select **Edit Custom Fields**.
 4. Select **Set new Custom Field**. 
 5. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**. 

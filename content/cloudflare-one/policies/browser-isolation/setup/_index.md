@@ -26,7 +26,7 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 
 To configure Browser Isolation policies:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Policies** > **HTTP**.
+1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 2. Select **Create a policy** and enter a name for the policy.
 3. Use the HTTP policy [selectors](/cloudflare-one/policies/filtering/http-policies/#selectors) and [operators](/cloudflare-one/policies/filtering/http-policies/#operators) to specify the websites or content you want to isolate.
 4. For **Action**, choose either [_Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate) or [_Do not Isolate_](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
@@ -64,5 +64,5 @@ Users can see if a webpage is isolated by using one of the following methods:
 
 #### Disconnect Browser Isolation
 
-WARP users can temporarily disable remote browsing by [disconnecting the WARP client](/cloudflare-one/connections/connect-devices/warp/warp-settings/#lock-warp-switch).
+WARP users can temporarily disable remote browsing by [disconnecting the WARP client](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch).
 Once WARP is disconnected, a refresh will return the non-isolated page.

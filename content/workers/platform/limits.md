@@ -5,12 +5,6 @@ title: Limits
 
 # Limits
 
-{{<Aside type="note">}}
-
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
-{{</Aside>}}
-
 ## Account plan limits
 
 {{<table-wrap>}}
@@ -19,14 +13,21 @@ You can request adjustments to limits that conflict with your project goals by c
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
+| [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 1 MB      |
-| [Number of Workers](#number-of-workers)                                         | 30        | 100       |
+| [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
+| [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
+| [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
 
 {{</table-wrap>}}
+
+{{<Aside type="note">}}
+
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+{{</Aside>}}
 
 ## Request limits
 
@@ -120,6 +121,8 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 ## Durable Objects limits
 
+Durable Objects are only available on the Workers Paid plan.
+
 {{<table-wrap>}}
 
 | Feature                                    | Limit                                          |
@@ -145,11 +148,17 @@ Cloudflare’s abuse protection methods do not affect well-intentioned traffic. 
 
 The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
 
+{{<Aside type="warning">}}
+
+If you are currently being rate limited, upgrade to a [Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+
+{{</Aside>}}
+
 ### Burst rate
 
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
-Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Overview** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
+Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your site > **Security** > **Events** > scroll to **Activity log**  and review the log for a Web Application Firewall Block event with a `ruleID` of `worker`.
 
 ### Daily request
 
@@ -177,7 +186,7 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type. 
+Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
 
 * A Worker may consume up to **10 milliseconds** on the Free plan.
 * A Worker or [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.
@@ -226,6 +235,8 @@ While handling a request, each Worker is allowed to have up to six connections o
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/workers/runtime-apis/kv/).
 - `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
+- `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
+- `send()` and `sendBatch()`, methods of [Queues](/queues/).
 
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
@@ -241,18 +252,22 @@ Simultaneous Open Connections are measured from the top-level request, meaning a
 
 ## Environment variables
 
-The maximum number of environment variables (secret and text combined) for a Worker is 64 variables.
+The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Paid plan, and 64 variables on the Free plan.
 There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
 
-### Worker size
+## Worker size
 
-A Worker can be up to 1 MB in size after compression. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
-### Number of Workers
+## Worker startup time
 
-Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 100 Workers at any given time. Free Workers accounts are limited to a maximum of 30 Workers at any given time.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
+## Number of Workers
+
+Unless otherwise negotiated as a part of an enterprise level contract, all paid Workers accounts are limited to a maximum of 500 Workers at any given time. Free Workers accounts are limited to a maximum of 100 Workers at any given time.
 
 {{<Aside type="note">}}
 

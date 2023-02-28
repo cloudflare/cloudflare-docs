@@ -69,8 +69,8 @@ To clone and deploy the cloud function:
 
 4.  Then in the **Google Shell**, run the following command to deploy your instance of the cloud function:
 
-    ```bash
-    sh ./deploy.sh
+    ```sh
+    $ sh ./deploy.sh
     ```
 
 Once you've deployed your new cloud function, verify that it appears in the **Cloud Functions** interface by navigating to **Google Cloud Platform** > **Compute** > **Cloud Functions**.
@@ -133,7 +133,7 @@ The following dashboards are included in the Insights template:
 
 - **Snapshot**: Gives you an overview of the most important metrics from your Cloudflare logs, including total number of requests, top visitors by geography, IP, user agent, traffic type, total number of threats, and bandwidth usage.
 
-- **Security**: Provides insights on threat identification and mitigations by our **Web Application Firewall**, including **Firewall Rules**, **Rate Limiting**, and **IP Firewall**. Metrics include total threats stopped, threat traffic source, blocked IPs and user agents, top threat requests, Firewall events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and avoid false positives.
+- **Security**: Provides insights on threat identification and mitigations by our **Web Application Firewall**, including **Firewall Rules**, **Rate Limiting**, and **IP Firewall**. Metrics include total threats stopped, threat traffic source, blocked IPs and user agents, top threat requests, security events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and avoid false positives.
 
 - **Performance**: Helps you identify and address issues like slow pages and caching misconfigurations. Metrics include total vs. cached bandwidth, cache ratio, top uncached requests, static vs. dynamic content, slowest URIs, and more.
 

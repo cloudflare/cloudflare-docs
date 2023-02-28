@@ -10,13 +10,13 @@ title: Connect without long-lived API keys
 
 You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to connect applications and servers to Cloudflare's network without leaving sensitive API keys lingering in your environment. These applications can be both public-facing or protected by [Cloudflare Access](/cloudflare-one/glossary/#cloudflare-access).
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a server to Cloudflare
 - Keep that connection running after deleting the initial authentication file
 - Give that application a hostname where users can reach the resource
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 
@@ -24,7 +24,7 @@ You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to co
 
 In this example, the resource being connected is a [Hugo site](https://gohugo.io/getting-started/quick-start/). Hugo, a static site generator, provides a built-in server that can be used for testing changes. That server is available at `localhost:1313` - an address only available currently on the same machine as the server.
 
-![New Hugo](/cloudflare-one/static/secure-origin-connections/share-new-site/hugo-new.png)
+![Hugo website page accessed with localhost:1333 in the URL bar.](/cloudflare-one/static/secure-origin-connections/share-new-site/hugo-new.png)
 
 To share this work-in-progress with an audience on the Internet, start by [downloading and installing](/cloudflare-one/connections/connect-apps/install-and-setup/) the Cloudflare Tunnel daemon, `cloudflared`. On Mac, you can do so by running the following `brew` command. If you do not have Homebrew, follow the [documentation here](https://docs.brew.sh/Installation) to install it.
 
@@ -36,13 +36,11 @@ Once installed, run the following command in your Terminal to authenticate this 
 
 The command will launch a browser window and prompt you to login with your Cloudflare account. Choose a website that you have added into your account. The website selected does not need to be the website where the environment will be made available.
 
-![Choose Site](/cloudflare-one/static/secure-origin-connections/share-new-site/pick-site.png)
-
 Once you click one of the sites in your account, Cloudflare will download a certificate file, called `cert.pem` to authenticate this instance of `cloudflared`. The `cert.pem` file uses a certificate to authenticate your instance of `cloudflared` and includes an API key for your account to perform actions like DNS record changes.
 
 You can now use `cloudflared` to control Cloudflare Tunnel connections in your Cloudflare account.
 
-![Download Cert](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
+![Terminal window ready for user input.](/cloudflare-one/static/secure-origin-connections/share-new-site/cert-download.png)
 
 ## Create a Tunnel
 
@@ -54,7 +52,7 @@ Run the following command to create a Tunnel. You can replace `new-website` with
 
 Cloudflare will create the Tunnel with that name and generate an ID and credentials file for that Tunnel.
 
-![New Tunnel](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
+![Terminal window displaying new Tunnel name and credentials.](/cloudflare-one/static/secure-origin-connections/share-new-site/create.png)
 
 ## Delete the `cert.pem` file
 
@@ -94,7 +92,7 @@ Click **Add record** and choose `CNAME`. In the **Name** field, add the name of 
 5157d321-5933-4b30-938b-d889ca87e11b.cfargotunnel.com
 ```
 
-![Add DNS](/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
+![Example of Cloudflare DNS configuration.](/cloudflare-one/static/secure-origin-connections/share-new-site/add-dns.png)
 
 Alternatively, you can create a DNS record from `cloudflared` directly.
 

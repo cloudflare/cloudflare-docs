@@ -14,6 +14,7 @@ function slugify(input: string): string {
   input = input.toLowerCase().replace(/\s+/g, '-');
   if (input === 'image-optimization') return 'images';
   if (input === 'pub/sub') return 'pub-sub';
+  if (input === 'zero-trust') return 'cloudflare-one';
   return input.replace(/\//g, '');
 }
 
@@ -26,6 +27,7 @@ function slugify(input: string): string {
 
     const { action, repository, issue } = payload;
     if (!issue) throw new Error('Missing "issue" object!');
+    if (!repository) throw new Error('Missing "repository" object!');
     if (action !== 'opened') throw new Error('Must be "issues.opened" event!');
 
     // stop here if "engineering" issue

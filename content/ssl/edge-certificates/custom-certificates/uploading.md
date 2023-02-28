@@ -112,7 +112,7 @@ EOF
 
 #### Step 2 — Upload your certificate and key
 
-Use the [POST](https://api.cloudflare.com/#custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
+Use the [POST](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) endpoint to upload your certificate and key.
 
 ```bash
 $ curl -sX POST https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
@@ -143,7 +143,7 @@ To update a certificate in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To update a certificate using the API, send a [`PATCH`](https://api.cloudflare.com/#custom-ssl-for-a-zone-edit-ssl-configuration) command.
+To update a certificate using the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-edit-ssl-configuration) command.
  
 {{</tab>}}
 {{</tabs>}}

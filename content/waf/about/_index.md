@@ -19,15 +19,22 @@ A Web Application Firewall or WAF creates a shield between a web app and the Int
 
 ---
 
-## Managed Rulesets
+## Rules and rulesets
 
-The Cloudflare WAF includes [several Managed Rulesets](/waf/managed-rulesets/), provided by Cloudflare, that you can enable and configure.
+Refer to the [Ruleset Engine](/ruleset-engine/about/rules/) documentation for more information on the following concepts:
 
-When you enable these Managed Rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
+* [Rule](/ruleset-engine/about/rules/): Defines a filter and an action to perform on the incoming requests that match the filter.
+* [Ruleset](/ruleset-engine/about/rulesets/): An ordered set of rules that you can apply to traffic at the edge.
 
-You can override the default action or disable one or more rules included in Managed Rulesets. To customize the rules behavior you define specific **configurations** or **overrides**.
+## WAF Managed Rules
 
-You can define a configuration that affects an entire Managed Ruleset, or configure the action and status of one or more rules in the ruleset. Rules have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
+WAF Managed Rules allows you to deploy [managed rulesets](/waf/managed-rules/) preconfigured by Cloudflare, and adjust their rules' behavior if necessary.
+
+When you enable these managed rulesets, you get immediate protection from a broad set of security rules that are regularly updated. Each of these rules has a default action that varies according to the severity of the rule.
+
+You can override the default action or disable one or more rules included in managed rulesets. To customize the rules behavior you define specific **configurations** or **overrides**.
+
+You can define a configuration that affects an entire managed ruleset, or configure the action and status of one or more rules in the ruleset. Rules have associated **tags** that allow you to search for a specific group of rules and configure them in bulk.
 
 ## Rule execution order
 
@@ -37,7 +44,7 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 2. [Custom rulesets](/waf/custom-rulesets/)
 3. [Custom rules](/waf/custom-rules/)
 4. [Rate limiting rules](/waf/rate-limiting-rules/)
-5. [WAF Managed Rulesets](/waf/managed-rulesets/)
+5. [WAF Managed Rules](/waf/managed-rules/)
 6. [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) (previous version)
 
 For more information on the Ruleset Engine phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).

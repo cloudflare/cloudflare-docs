@@ -7,6 +7,10 @@ pcx_content_type: how-to
 
 Vary for Images is enabled through Cloudflare’s API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
 
+## Availability
+
+{{<feature-table id="cache.vary_for_images">}}
+
 ## Create a variants rule
 
 ```json

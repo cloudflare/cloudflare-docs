@@ -90,7 +90,7 @@ Note that this `PUT` request, corresponding to the [Update zone entry point rule
 
 ### Custom HTML response with updated status code
 
-This example configures a custom HTML error response for origin responses with a `500` HTTP status code, and redefines the response status code to `503`.
+This example configures a custom HTML error response for responses with a `500` HTTP status code, and redefines the response status code to `503`.
 
 ```json
 $ curl -X PUT \
@@ -103,11 +103,11 @@ $ curl -X PUT \
       "action": "serve_error",
       "action_parameters": {
         "content": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Application unavailable</title></head><body><h1>Application temporarily unavailable</h1><p>Please try again later.</p></body></html>",
-        "content_type": "text/html"
+        "content_type": "text/html",
+        "status_code": 503
       },
       "expression": "http.response.code eq 500",
-      "enabled": true,
-      "status_code": 503
+      "enabled": true
     }
   ]
 }'

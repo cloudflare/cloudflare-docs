@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Copyrights
 weight: 102
+meta:
+    description: View associated copyrights. 
 ---
 
 # Copyrights

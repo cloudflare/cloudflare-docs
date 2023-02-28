@@ -33,9 +33,9 @@ To access the **Bot Report**, go to **Security** > **Bots**. If you see a double
 
 ![Example traffic distribution as part of a bot report](/bots/static/bot-report-pro.png)
 
-### Firewall events
+### Security events
 
-You can see bot-related actions by going to **Security** > **Overview**. Any requests challenged by this product will be labeled **Super Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
+You can see bot-related actions by going to **Security** > **Events**. Any requests challenged by this product will be labeled **Super Bot Fight Mode** in the **Service** field. This allows you to observe, analyze, and follow trends in your bot traffic over time.
 
 ## Ruleset Engine
 

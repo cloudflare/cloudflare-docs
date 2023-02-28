@@ -26,7 +26,7 @@ Modify the URLs of incoming requests so that they conform to a consistent format
 {{</feature>}}
 
 {{<feature header="URL forwarding" href="/rules/url-forwarding/">}}
-Redirect visitors from a source URL to a target URL with a specific HTTP status code. Use Bulk Redirects or Dynamic Redirects depending on your use case.
+Redirect visitors from a source URL to a target URL with a specific HTTP status code. Use Single Redirects or Bulk Redirects depending on your use case.
 {{</feature>}}
 
 {{<feature header="Origin Rules" href="/rules/origin-rules/">}}
@@ -48,10 +48,6 @@ Trigger certain actions when a request matches a URL pattern.
 ---
 
 ## Related products
-
-{{<related header="Firewall rules" href="/firewall/" product="firewall">}}
-Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
-{{</related>}}
 
 {{<related header="Custom rules" href="/waf/custom-rules/" product="waf">}}
 Control incoming traffic by filtering requests to a zone. You can block or challenge incoming requests according to rules you define.

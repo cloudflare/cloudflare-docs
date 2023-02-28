@@ -28,7 +28,7 @@ If you are using the Akamai CDN in front of Cloudflare, it is recommended that y
 - Change the rule’s action to _Log_ (only available on Enterprise plans) to view the flagged traffic in the [analytics dashboard](/ddos-protection/reference/analytics/).
 - Alternatively, change the rule's **Sensitivity Level** to _Essentially Off_ to prevent the rule from being triggered.
 
-For more information, refer to [HTTP DDoS Attack Protection Managed Ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
+For more information, refer to [HTTP DDoS Attack Protection managed ruleset: Ruleset configuration](/ddos-protection/managed-rulesets/http/#ruleset-configuration).
 
 ## Using VPNs, NATs, and other third-party services
 
@@ -42,7 +42,7 @@ Additionally, since this traffic may also be targeting a limited set of destinat
 
 If your organization uses VPNs, NATs, or third-party services at high rates of over 100 Mbps, it is recommended that you one of the following:
 
-- Change the **Sensitivity Level** of the relevant rules to a lower level. Changing the level to _Essentially Off_ will prevent the rules from being triggered. Refer to [HTTP DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/http/) and [Network-layer DDoS Attack Protection Managed Ruleset](/ddos-protection/managed-rulesets/network/) for more information on the available adjustments per ruleset and how to perform them.
+- Change the **Sensitivity Level** of the relevant rules to a lower level. Changing the level to _Essentially Off_ will prevent the rules from being triggered. Refer to [HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/) and [Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/) for more information on the available adjustments per ruleset and how to perform them.
 
 - Exclude the desired traffic from the Managed DDoS rule using expression filters. You can exclude a combination of source ports, source IP addresses, destination ports, destination IP addresses, and protocol. For more information, refer to [Configure Network-layer DDoS Attack Protection via API](/ddos-protection/managed-rulesets/network/configure-api/).
 

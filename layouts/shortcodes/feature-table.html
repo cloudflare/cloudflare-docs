@@ -1,0 +1,62 @@
+{{- $plan_json := $.Site.Data.plans -}}
+{{- $id := split (.Get "id")  "." -}}
+{{- $info :=  index $plan_json $id -}}
+{{- $properties := index $info "properties" -}}
+{{- $map := dict "ent" "Enterprise" "pro" "Pro" "biz"
+"Business" "free" "Free" -}}
+
+<div class="DocsMarkdown--table-wrap">
+<div class="DocsMarkdown--table-wrap-inner">
+<table>
+    <tr>
+        <td></td>
+        <td>
+            <strong>{{ index $map "free" }}</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "pro" }}</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "biz" }}</strong>
+        </td>
+        <td>
+            <strong>{{ index $map "ent" }}</strong>
+        </td>
+        {{ if $info.ent_plus}}
+        <td>
+            <strong>{{$info.ent_plus}}</strong>
+        </td>
+        {{- end -}}
+    </tr>
+{{- range $elem_key, $elem_val := $properties -}}
+<tr>
+    <td>
+        <p>{{ if .link }}
+            <a href= {{.link}}>{{ .title | markdownify }}</a>
+        {{ else }}
+        {{ .title | markdownify }}
+        {{ end }}
+    </p>
+    </td>
+    <td>
+        {{ .free | markdownify }}
+    </td>
+    <td>
+        {{ .pro | markdownify }}
+    </td>
+    <td>
+        {{ .biz | markdownify }}
+    </td>
+    <td>
+        {{ .ent | markdownify }}
+    </td>
+    {{ if .ent_plus }}
+        <td>
+            {{ .ent_plus | markdownify }}
+        </td>
+    {{- end -}}
+</tr>
+{{- end -}}
+</table>
+</div>
+</div>

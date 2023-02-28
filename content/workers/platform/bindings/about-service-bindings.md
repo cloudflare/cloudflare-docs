@@ -17,6 +17,8 @@ Service bindings allow you to:
 
 While the interface among Service bindings is HTTP, the networking is not. Unlike the typical microservice architecture, where services communicate over a network and can suffer from latency or interruption, Service bindings are a zero-cost abstraction. When one Worker invokes another, there is no network delay and the request is executed immediately.
 
+More details are available in our [Runtime API Documentation for Service bindings](/workers/runtime-apis/service-bindings).
+
 ![Service bindings are a zero-cost abstraction](/workers/platform/bindings/media/service-bindings-comparison.png)
 
 ## Set a Service binding
@@ -27,11 +29,7 @@ To manage a Workers Service binding:
 
 1. Log in to the Cloudflare dashboard > Account Home > [Workers](https://dash.cloudflare.com/?zone=workers). 
 2. Select your **Worker**.
-3. Go to **Settings**> **Variables** > **Service bindings** > **Edit variables**. 
-
-You can also change the environment of a Workers Service binding, so you can target a specific version of a Workers Service.
-
-![To configure a Service binding, go to your Worker > Settings > Variables and follow the steps above](/workers/platform/bindings/media/service-bindings-config.png)
+3. Go to **Settings** > **Variables** > **Service bindings** > **Edit variables**. 
 
 ### Wrangler
 
@@ -46,7 +44,6 @@ The `wrangler.toml` options are:
 
 * `binding`: Variable name for the binding in your Worker code, accessible under the `env` parameter in [Module syntax](/workers/learning/migrating-to-module-workers/), or in the global scope in [Service Worker syntax](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
 * `service`: Name of the target Worker you would like to communicate with. This Worker should be on your account.
-* `environment` (optional): Name of the environment on the target Worker you would like to communicate with. This is optional, by default the Default environment will be inferred.
 
 ### `wrangler.toml` example
 
@@ -55,11 +52,11 @@ For the example outlined above, a `wrangler.toml` might look like this:
 ```toml
 services = [
   { binding = "auth", service = "authentication" },
-  { binding = "logout", service = "logout", environment = "production" }
+  { binding = "logout", service = "logout" }
 ]
 ```
 
-In the example above, the Service bindings for the `authentication` and `logout` Workers are accessible in code via `env.auth` and `env.logout`, respectively (when using Module syntax).
+In the example above, the Service bindings for the `authentication` and `logout` Workers are accessible in code via `env.auth` and `env.logout`, respectively (when using Module syntax), or globally at `auth` and `logout` (when using Service Worker syntax).
 
 ### Local development
 

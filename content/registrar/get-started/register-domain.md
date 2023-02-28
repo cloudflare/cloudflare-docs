@@ -9,7 +9,7 @@ weight: 1
 ## Prerequisites and restrictions
 
 * Cloudflare Registrar is only available for customers that use Cloudflare as their authoritative DNS provider (also known as a [full setup](/dns/zone-setups/)).
-* Cloudflare does not currently support internationalized domain names (IDNs), also known as unicode.
+* Cloudflare Registrar does not currently support internationalized domain names (IDNs), also known as Unicode.
 
 {{<render file="_email-verification.md">}}
 
@@ -21,7 +21,7 @@ weight: 1
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account. 
 
-2. Go to **Registrar** > **Register Domains**.
+2. Go to **Domain Registration** > **Register Domains**.
 
 3. In the search box, enter the domain name you wish to register, and select **Search**. You may also enter one or more keywords. The search results will contain a list of suggested domains. If the domain you entered does not appear in the list, this means it is not available for registration.
 

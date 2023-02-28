@@ -20,13 +20,13 @@ If you are migrating from "classic" Cloudflare Tunnel deployments to the new, pe
 
 {{</Aside>}}
 
-**🗺️ This tutorial covers how to:**
+**This tutorial covers how to:**
 
 - Start a secure, outbound-only, connection from a machine to Cloudflare
 - Give the application a hostname where users can connect
 - Complete the entire process with a single command using `cloudflared`
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 10 minutes
 

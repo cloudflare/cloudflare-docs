@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Devices
 weight: 6
+meta:
+    description: Review frequently asked questions about devices in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -25,6 +27,17 @@ Sites inside Cloudflare network are able to see this information. If a site is s
 
 Cloudflare WARP is in part powered by 1.1.1.1. When visiting sites or going to a new location on the Internet, you should see blazing fast DNS lookups. However, WARP is built to trade some throughput for enhanced privacy, because it encryps all traffic both to and from your device. While this isn't noticeable at most mobile speeds, on desktop systems in countries where high speed broadband is available, you may notice a drop. We think the tradeoff is worth it though and continue to work on improving performance all over the system.
 
+## Why is my device not connecting to a public WiFi?
+
+The WiFi network may have a captive portal that is blocking WARP from establishing a secure connection. In order to access the portal, and therefore the Internet, you will need to temporarily disable WARP. After you login to the captive portal through your browser, you can re-enable WARP to access corporate resources.
+
+To allow end users to connect through a captive portal, administrators can do the following:
+
+1. Enable [Lock WARP switch](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#lock-warp-switch).
+2. Enable [Captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#captive-portal-detection).
+3. Set an [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) time period.
+4. If WARP fails to automatically detect a portal, provide an [admin override code](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) to your end users. This will allow users to manually turn off WARP and connect to the portal. WARP will automatically turn back on after the auto connect period.
+
 ## Firefox is showing a network protocol violation when I use the WARP client.
 
 If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
@@ -35,7 +48,7 @@ Deploying new software can come with unexpected issues. This section covers the 
 
 ### Is the Cloudflare root certificate installed in all the places?
 
-Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
+Installing and trusting the [Cloudflare root cert](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) is a necessary step to enable advanced security features, such as Browser Isolation, HTTP filtering, AV scanning, and device posture. It is required once you enable the Proxy in **Settings** > **Network** > **HTTP Filtering**.
 
 In addition to ensuring the root certificate is trusted at the device level, many applications also rely on their own certificate store. Applications like Firefox, Docker, Python, and NPM all rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
@@ -59,9 +72,9 @@ Some countries explicitly block the use of VPN or VPN-like software that intenti
 
 Running VPNs or firewalls alongside the WARP client may interfere with some of its functionalities. Please refer to the following documentation on how to use WARP alongside a VPN, or on how to exclude traffic from the WARP client:
 
-[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/#use-warp-alongside-a-vpn)
+[❯ Use WARP alongside a VPN](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#use-warp-alongside-a-vpn)
 
-[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/)
+[❯ Exclude traffic from WARP](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/)
 
 The most common places we see interference with WARP from these products are:
 
@@ -69,7 +82,7 @@ The most common places we see interference with WARP from these products are:
 
 - **Control of DNS:** WARP must be the last client to touch the primary and secondary DNS server on the default interface. Make sure any DNS setting is disabled in third-party VPNs.
 
-- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+- If running alongside a third-party VPN, you must create an exclude [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) for the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
 
 ### As a last resort, does WARP or your configuration work on a clean machine?
 

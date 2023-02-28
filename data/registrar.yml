@@ -4,12 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M24.6
 product:
   title: Registrar
   url: /registrar/
+  group: Consumer services
 
 meta:
   title: Cloudflare Registrar docs
   description: Welcome to Cloudflare Registrar. The first registrar you can love.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /core-services-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/reliability/registrar/53

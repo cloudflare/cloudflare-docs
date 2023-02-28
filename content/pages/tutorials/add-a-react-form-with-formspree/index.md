@@ -49,8 +49,8 @@ Next, you will build the form component using a helper library from Formspree, [
 
 Install it with:
 
-```bash
-npm install --save @formspree/react
+```sh
+$ npm install --save @formspree/react
 ```
 
 Then paste the following code snippet into the `ContactForm.js` file:

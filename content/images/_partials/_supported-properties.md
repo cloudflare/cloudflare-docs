@@ -25,7 +25,7 @@ cf: {image: {anim: false}}
 
 #### `background`
 
-Background color to add underneath the image. Applies only to images with transparency (for example, PNG). Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`. Example:
+Background color to add underneath the image. Applies to images with transparency (for example, PNG) and images resized with `fit=pad`. Accepts any CSS color, such as `#RRGGBB` and `rgba(…)`. Example:
 
 ```js
 ---

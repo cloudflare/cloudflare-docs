@@ -2,6 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
+layout: single
 meta:
   title: Cloudflare Firewall Rules
 ---
@@ -17,57 +18,9 @@ Cloudflare Firewall Rules allows you to create rules that inspect incoming traff
 
 ## Availability
 
-Cloudflare Firewall Rules is available to all customers. However, the number of active firewall rules you can have and support for the *Log* action and regular expressions depend on your Cloudflare plan.
-
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
-{{<table-wrap>}}
-<table>
-<thead>
-<tr>
-  <td></td>
-  <td colspan="4" style="text-align:center"><strong>Cloudflare plan</strong></td>
-</tr>
-<tr>
-  <td><strong>Feature</strong></td>
-  <td><strong>Free</strong></td>
-  <td><strong>Pro</strong></td>
-  <td><strong>Business</strong></td>
-  <td><strong>Enterprise</strong></td>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>Active rules</td>
-  <td>5</td>
-  <td>20</td>
-  <td>100</td>
-  <td>1,000</td>
-</tr>
-<tr>
-  <td>Supported actions</td>
-  <td>All except <em>Log</em></td>
-  <td>All except <em>Log</em></td>
-  <td>All except <em>Log</em></td>
-  <td>All</td>
-</tr>
-<tr>
-  <td>Regular expression support</td>
-  <td>No</td>
-  <td>No</td>
-  <td>Yes</td>
-  <td>Yes</td>
-</tr>
-<tr>
-  <td>Number of <a href='/firewall/cf-firewall-rules/rules-lists/'>IP Lists</a></td>
-  <td>1</td>
-  <td>10</td>
-  <td>10</td>
-  <td>10</td>
-</tr>
-</tbody>
-</table>
-{{</table-wrap>}}
+{{<feature-table id="security.x_firewall_rules">}}
 
 ## Next steps
 
@@ -80,7 +33,7 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 * You can also manage firewall rules through Terraform. For more information, refer to [Getting Started with Terraform](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
 
-## Related resources 
+## Related resources
 
 For additional information, refer to the following pages:
 

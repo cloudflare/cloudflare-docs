@@ -67,6 +67,8 @@ Finally, you will need to configure your SaaS application to require users to lo
     * **Public key**
 
     ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+    
+    You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata`
 
 2. Select **Done**.
 

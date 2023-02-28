@@ -6,7 +6,7 @@ weight: 4
 
 # Record and replay live streams
 
-Live streams are automatically recorded, and available instantly once a live stream ends. To get a list of recordings for a given input ID, make a [`GET` request to `/live_inputs/<UID>/videos`](https://api.cloudflare.com/#stream-live-inputs-retrieve-a-live-input) and filter for videos where `state` is set to `ready`:
+Live streams are automatically recorded, and available instantly once a live stream ends. To get a list of recordings for a given input ID, make a [`GET` request to `/live_inputs/<UID>/videos`](https://developers.cloudflare.com/api/operations/stream-live-inputs-retrieve-a-live-input) and filter for videos where `state` is set to `ready`:
 
 ```bash
 ---

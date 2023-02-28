@@ -11,7 +11,7 @@ You can manage your Cloudflare Logpush service from the command line using cURL.
 Before getting started, review:
 
 - [API configuration](/logs/get-started/api-configuration/)
-- [Logpush job object definition](https://api.cloudflare.com/#logpush-jobs-properties)
+- [Logpush job object definition](https://developers.cloudflare.com/api/operations/logpush-jobs-list-logpush-jobs)
 
 {{<Aside type="note">}}
 
@@ -37,7 +37,7 @@ $ curl -s -XPOST https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/ow
 
 A challenge file will be written to the destination, and the filename will be in the response (the filename may be expressed as a path if appropriate for your destination). For example:
 
-```bash
+```json
 {
   "success": true,
   "errors": [],
@@ -248,8 +248,8 @@ Be careful when deleting a job because this action cannot be reversed.
 
 Retrieve a specific job, using the job ID:
 
-```bash
-curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
+```sh
+$ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/146 | jq .
 ```
 
 ### Response
@@ -277,8 +277,8 @@ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs
 
 Retrieve all jobs for all datasets:
 
-```bash
-curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs | jq .
+```sh
+$ curl -s -X GET https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs | jq .
 ```
 
 ### Response

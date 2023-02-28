@@ -35,4 +35,4 @@ The frequency of security scans depends on your Cloudflare plan — refer to [Sc
 
 ## Limitation
 
-*   Users with a [Administrator Read Only](/fundamentals/account-and-billing/account-setup/account-roles/#enterprise-roles) role cannot access the Cloudflare Security Center.
+*   Users with a [Administrator Read Only](/fundamentals/account-and-billing/members/roles/#enterprise-roles) role cannot access the Cloudflare Security Center.

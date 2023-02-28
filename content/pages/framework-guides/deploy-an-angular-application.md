@@ -22,9 +22,9 @@ $ cd my-angular-app
 
 Alternatively, you can use [`npx`](https://www.npmjs.com/package/npx), which is included with all modern `npm` versions, to avoid the global installation:
 
-{{<Aside>}}
+{{<Aside type="note">}}
 
-**Note:** All modern versions of `npm` already include the `npx` executable. You do not need to install anything for this approach.
+All modern versions of `npm` already include the `npx` executable. You do not need to install anything for this approach.
 
 {{</Aside>}}
 
@@ -66,6 +66,12 @@ Select the new GitHub repository that you created and, in the **Set up builds an
 | Build directory      | `dist/my-angular-app`            |
 
 </div>
+
+{{<Aside type="warning" header="Minimum Node.js version">}}
+
+Angular requires a Node version of `14.15` or `16.10` to deploy successfully to Cloudflare Pages. When setting up your project, select **Environment variables (advanced)** and input an environment variable `NODE_VERSION` with one of these values.
+
+{{</Aside>}}
 
 Optionally, you can customize the **Project name** field. It defaults to the GitHub repository's name, but it does not need to match. The **Project name** value is assigned as your `*.pages.dev` subdomain.
 

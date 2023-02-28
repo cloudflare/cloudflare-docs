@@ -14,8 +14,6 @@ These backup certificates are not normally deployed, but they will be deployed a
 
 For additional details, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-backup-certificates/).
 
-{{<Aside type="note">}}
+## Availability
 
-Enterprise customers can opt out of backup certificates. For more details, reach out to your account team.
-
-{{</Aside>}}
+{{<feature-table id="ssl.backup_certificates">}}

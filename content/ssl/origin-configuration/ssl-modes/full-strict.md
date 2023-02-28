@@ -10,12 +10,12 @@ meta:
 
 When you set your encryption mode to **Full (strict)**, Cloudflare does everything in [Full mode](/ssl/origin-configuration/ssl-modes/full/) but also enforces more stringent requirements for origin certificates.
 
-<div class="mermaid">
+```mermaid
 flowchart LR
     accTitle: Full - Strict SSL/TLS Encryption
     accDescr: With an encryption mode of Full (strict), your application encrypts traffic going to and coming from Cloudflare.
     A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[("Origin server (verified) &#9989;")]
-</div>
+```
 
 ## Use when
 
@@ -26,6 +26,12 @@ Your origin needs to be able to support an SSL certificate that is:
 - Unexpired, meaning the certificate notBeforeDate < now() < notAfterDate.
 - Issued by a [publicly trusted certificate authority](https://github.com/cloudflare/cfssl_trust) or [Cloudflare’s Origin CA](/ssl/origin-configuration/origin-ca/).
 - Contains a Common Name (CN) or Subject Alternative Name (SAN) that matches the requested or target hostname.
+
+{{<Aside type="note">}}
+
+In addition to **Full (strict)** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
+
+{{</Aside>}}
 
 ## Required setup
 

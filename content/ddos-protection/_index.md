@@ -11,11 +11,11 @@ meta:
 
 Cloudflare automatically detects and mitigates [Distributed Denial of Service](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) (DDoS) attacks using its Autonomous Edge.
 
-The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloudflare DDoS Protection Managed Rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
+The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloudflare DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/). You can customize the mitigation rules included in these rulesets to optimize and tailor the protection to your needs.
 
 {{<button-group>}}
   {{<button type="primary" href="/ddos-protection/about/">}}Learn more{{</button>}}
-  {{<button type="secondary" href="/ddos-protection/managed-rulesets/">}}Managed Rulesets{{</button>}}
+  {{<button type="secondary" href="/ddos-protection/managed-rulesets/">}}Managed rulesets{{</button>}}
 {{</button-group>}}
 
 ***
@@ -30,7 +30,7 @@ The Autonomous Edge includes multiple dynamic mitigation rules exposed as [Cloud
     *   IP applications onboarded to [Spectrum](/spectrum/)
     *   IP Prefixes onboarded to [Magic Transit](/magic-transit/)
 
-    Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection Managed Ruleset.
+    Only Enterprise customers of Magic Transit and Spectrum can customize the Network-layer DDoS Attack Protection managed ruleset.
 
 * **Advanced TCP Protection**. Available to all [Magic Transit](/magic-transit/) customers.
 

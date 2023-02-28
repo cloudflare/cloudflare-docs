@@ -44,6 +44,18 @@ If you are interested in how Cloudflare handles security with the Workers runtim
 
 Most Workers scripts are a variation on the default Workers flow:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    return new Response('Hello worker!', { status: 200 });
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
@@ -53,6 +65,8 @@ async function handleRequest(request) {
   return new Response('Hello worker!', { status: 200 });
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 When a request to your `*.workers.dev` subdomain or to your Cloudflare-managed domain is received by any of Cloudflare's runtimes, the Workers script is passed a [`FetchEvent`](/workers/runtime-apis/fetch-event/) argument to the event handler defined in the script. From there you can generate a [`Response`](/workers/runtime-apis/response/) by computing a response on the spot, calling to another server using [`fetch`](/workers/runtime-apis/fetch/), etc.. The CPU cycles needed to get to the point of the `respondWith` call all contribute to the compute time. For example, a `setInterval` timeout does not consume CPU cycles while waiting.
 

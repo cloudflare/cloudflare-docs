@@ -6,7 +6,7 @@ weight: 1
 
 # Verify email address
 
-For security reasons, Cloudflare attempts to verify the email address associated with your account. You cannot perform certain tasks within the Cloudflare dashboard - for example, [adding a new member](/fundamentals/account-and-billing/account-setup/manage-account-members/#add-account-members) or [updating your communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/) - without verifying your email.
+For security reasons, Cloudflare attempts to verify the email address associated with your account. You cannot perform certain tasks within the Cloudflare dashboard - for example, [adding a new member](/fundamentals/account-and-billing/members/manage/#add-account-members) or [updating your communication preferences](/fundamentals/account-and-billing/account-setup/customize-account/communication-preference/) - without verifying your email.
 
 ## When creating your account
 
@@ -24,6 +24,8 @@ If someone else used your email to sign up for a Cloudflare account, you can rem
 
 {{</Aside>}}
 
+---
+
 ## Resend verification emails
 
 If you cannot find your verification email or your email has expired, you can request another verification email:
@@ -31,3 +33,9 @@ If you cannot find your verification email or your email has expired, you can re
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **My Profile**.
 3. For **Email Address**, select **Send verification email** (if this option is not available, your email has already been verified).
+
+---
+
+## Verification issues
+
+If you experience issues with your verification link, click the link in a different browser or an incognito window.

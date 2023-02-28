@@ -23,11 +23,11 @@ Imagine you want to grant access to your applications to your team based in Lisb
 - an Include rule granting access to everyone in Portugal, and
 - a Require rule restricting access to users whose email ends in `@team.com`.
 
-![Groups](/cloudflare-one/static/documentation/identity/users/access-groups.png)
+![Rule configuration example for an Access Group that demonstrates the use of the Include and Require fields.](/cloudflare-one/static/documentation/identity/users/access-groups.png)
 
 Once the group is set up, you can use it to configure rules within your applications as follows:
 
-![Access Groups with Policies](/cloudflare-one/static/documentation/identity/users/access-groups-setup.png)
+![Using the previously created Access Group to configure a rule.](/cloudflare-one/static/documentation/identity/users/access-groups-setup.png)
 
 ## Create a group
 
@@ -38,9 +38,6 @@ To create and manage groups:
 1.  Click **Add a Group**.
 1.  Enter a name for the group.
 1.  Specify as many rules as needed to define your user group.
-
-    ![Group Rules](/cloudflare-one/static/documentation/identity/users/group-rules.png)
-
 1.  Click **Save**.
 
 ## Group criteria

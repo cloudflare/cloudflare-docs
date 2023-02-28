@@ -12,6 +12,10 @@ Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cl
 For more background information on Origin CA certificates, refer to the [introductory blog post](https://blog.cloudflare.com/cloudflare-ca-encryption-origin/).
 {{</Aside>}}
 
+## Availability
+
+{{<feature-table id="ssl.origin_certificates">}}
+
 ---
 
 ## Deploy an Origin CA certificate
@@ -108,14 +112,14 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls.
+To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys).
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
-| [List certificates](https://api.cloudflare.com/#origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
-| [Create certificate](https://api.cloudflare.com/#origin-ca-create-certificate) | `POST` | `certificates` |
-| [Get certificate](https://api.cloudflare.com/#origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
-| [Revoke certificate](https://api.cloudflare.com/#origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
+| [List certificates](https://developers.cloudflare.com/api/operations/origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
+| [Create certificate](https://developers.cloudflare.com/api/operations/origin-ca-create-certificate) | `POST` | `certificates` |
+| [Get certificate](https://developers.cloudflare.com/api/operations/origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
+| [Revoke certificate](https://developers.cloudflare.com/api/operations/origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
 
 ## Troubleshooting
 

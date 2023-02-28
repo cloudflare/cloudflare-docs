@@ -9,7 +9,7 @@ layout: single
 
 The WAF provides two types of alerts that inform you of any spikes in security events:
 
-- **Security Events Alert**: Alerts about spikes across all services that generate log entries in firewall events.
+- **Security Events Alert**: Alerts about spikes across all services that generate log entries in Security Events.
 - **Advanced Security Events Alert**: Similar to Security Events Alert with support for additional filtering options.
 
 For details on alert types and their availability, refer to [Alert types](#alert-types).
@@ -32,7 +32,7 @@ WAF alerts use a static threshold together with a [z-score](https://en.wikipedia
 
 Available for zones on Business and Enterprise plans. The mean time to detection is two hours.
 
-This alert will look for spikes across all services that generate log entries in [firewall events](/logs/reference/log-fields/zone/firewall_events/).
+This alert will look for spikes across all services that generate log entries in [security/firewall events](/logs/reference/log-fields/zone/firewall_events/).
 
 ### Advanced Security Events Alert
 

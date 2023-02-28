@@ -4,6 +4,7 @@ pcx_content_type: how-to
 weight: 2
 meta:
   title: Get started with Network Analytics v2
+  description: Learn how to view and use data from Network Analytics v2.
 ---
 
 # Get started with Network Analytics
@@ -17,7 +18,7 @@ Network Analytics v2 requires the following:
 ## View the Network Analytics dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account that has access to Magic Transit or Spectrum.
-2. On the account’s **Home** page, navigate to **Analytics** > **Network Analytics**.
+2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
 ## Get Network Analytics data via API
 

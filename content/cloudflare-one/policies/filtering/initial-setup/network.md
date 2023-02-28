@@ -16,7 +16,7 @@ To filter network traffic from a device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 2. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device .
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device .
 4. Enable the Gateway proxy:
     1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Network**.
     2. Enable **Proxy** for TCP.
@@ -39,4 +39,4 @@ To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](
 
 ## 3. Add policies
 
-To create a new network policy, navigate to **Gateway** > **Policies** > **Network** in the Zero Trust dashboard. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.
+To create a new network policy, navigate to **Gateway** > **Firewall Policies** > **Network** in the Zero Trust dashboard. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.

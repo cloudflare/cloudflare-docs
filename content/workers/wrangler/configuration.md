@@ -8,6 +8,10 @@ weight: 3
 
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
 
+{{<Aside type="warning">}}
+Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+{{</Aside>}}
+
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample `wrangler.toml` configuration
@@ -128,6 +132,10 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
   - Whether Wrangler should keep variables configured in the dashboard on publish. Refer to [source of truth](#source-of-truth).
 
+- `logpush` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Enables Workers Trace Events Logpush for a Worker. Any scripts with this property will automatically get picked up by the Workers Logpush job configured for your account. Defaults to `false`.
+
 {{</definitions>}}
 
 ## Non-inheritable keys
@@ -186,7 +194,7 @@ Example: `"example.com/*"`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -206,7 +214,7 @@ Example: `{ pattern = "example.com/*", zone_id = "foo" }`
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -214,7 +222,7 @@ Example: `{ pattern = "example.com/*", zone_name = "example.com" }`
 
 ### Custom Domain route
 
-This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{<definitions>}}
 
@@ -224,7 +232,7 @@ This will use a Custom Domain as opposed to a route. Refer to [Custom Domains](/
 
 - `custom_domain` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/.
+  - Whether the Worker should be on a Custom Domain as opposed to a route. Defaults to `false`. Refer to [Custom Domains](/workers/platform/triggers/custom-domains/).
 
 {{</definitions>}}
 
@@ -315,7 +323,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The service environment of the `script_name` to bind to.
+  - The environment of the `script_name` to bind to.
 
 {{</definitions>}}
 
@@ -451,7 +459,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
@@ -465,6 +473,67 @@ services = [
   { binding = "<TEST_BINDING>", service = "<TEST_WORKER>" }
 ]
 ```
+
+### Analytics Engine Datasets
+
+[Workers Analytics Engine](/analytics/analytics-engine/) provides analytics, observability and data logging from Workers. Write data points to your Worker binding then query the data using the [SQL API](/analytics/analytics-engine/sql-api/).
+
+To bind Analytics Engine datasets to your Worker, assign an array of the below object to the `analytics_engine_datasets` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the dataset.
+
+- `dataset` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - The dataset name to write to. This will default to the same name as the binding if it is not supplied.
+
+{{</definitions>}}
+
+Example:
+
+```toml
+---
+header: wrangler.toml
+---
+analytics_engine_datasets = [
+    { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
+]
+```
+
+### mTLS Certificates
+
+To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
+
+To create a [binding](/workers/platform/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the certificate.
+
+- `certificate_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the certificate. Wrangler displays this via the `mtls-certificate upload` and `mtls-certificate list` commands.
+
+{{</definitions>}}
+
+Example of a `wrangler.toml` configuration that includes an mTLS certificate binding:
+
+```toml
+---
+header: wrangler.toml
+---
+mtls_certificates = [
+    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
+]
+```
+
+mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
+
 
 ## Bundling
 
@@ -557,7 +626,7 @@ local_protocol = "http"
 
 ### Environmental variables
 
-When developing locally, you can create a `.dev.vars` file in the project root which allows you to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`.
+When developing your Worker or Pages Functions, create a `.dev.vars` file in the root of your project to define variables that will be used when running `wrangler dev` or `wrangler pages dev`, as opposed to using another environment and `[vars]` in `wrangler.toml`. This works both in the local and remote development modes.
 
 This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 
@@ -565,7 +634,7 @@ This file should be formatted like a `dotenv` file, such as `KEY=VALUE`.
 ---
 header: .dev.vars
 ---
-SECRET_KEY = "value"
+SECRET_KEY=value
 ```
 
 ## Node compatibility
@@ -590,11 +659,11 @@ Consider using [Cloudflare Pages](/pages/) for hosting static applications inste
 
   - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file.
 
-- `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An exclusive list of `.gitignore`-style patterns that match file  or directory names from your bucket location. Only matched items will be uploaded.
 
-- `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `exclude` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   -  A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 
@@ -625,8 +694,8 @@ To configure this on macOS, add `HTTP_PROXY=http://<YOUR_PROXY_HOST>:<YOUR_PROXY
 
 Example:
 
-```bash
-HTTP_PROXY=http://localhost:8080 wrangler dev
+```sh
+$ HTTP_PROXY=http://localhost:8080 wrangler dev
 ```
 
 If your IT team has configured your computer's proxy settings, be aware that the first non-empty environment variable in this list will be used when Wrangler makes outgoing requests.
@@ -635,10 +704,12 @@ For example, if both `https_proxy` and `http_proxy` are set, Wrangler will only 
 
 ## Source of truth
 
-It is a recommended best practice to treat `wrangler.toml` as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard. This allows you to treat `wrangler.toml` as a form of Infrastructure as Code.
+We recommend treating your `wrangler.toml` file as the source of truth for your Worker configuration, and to avoid making changes to your Worker via the Cloudflare dashboard if you are using Wrangler. 
+
+If you need to make changes to your Worker from the Cloudflare dashboard, the dashboard will generate a TOML snippet for you to copy into your `wrangler.toml` file, which will help ensure your `wrangler.toml` file is always up to date.
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wranglr.toml`. Currently, there is no way to disable this behaviour.
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler v1 [deprecation guide](/workers/wrangler-legacy/migration/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

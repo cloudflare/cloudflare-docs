@@ -10,10 +10,40 @@ You can access logs and exceptions for your Workers using the dashboard or [`wra
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
+{{<Aside type="warning" header="Warning">}}
+This feature is not available for zones on the [Cloudflare China Network](/china-network/).
+
+{{</Aside>}}
+
+{{<Aside type="note">}}
+
+To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush/).
+
+{{</Aside>}}
+
 ## Adding custom logs
 
 Any `console.log` statements within your Worker will appear within `wrangler tail` and the dashboard output. The following example demonstrates a custom `console.log` within a Worker request handler.
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    const { cf } = request;
+    const { city, country } = cf;
+
+    console.log(`Request came from city: ${city} in country: ${country}`);
+
+    return new Response("Hello worker!", {
+      headers: { "content-type": "text/plain" },
+    });
+  }
+}
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
@@ -34,11 +64,13 @@ async function handleRequest(request) {
   });
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 After you deploy the above code, run `wrangler tail` in your terminal, and then access your Worker. Your terminal will display:
 
 ```sh
-☁  logging-example [master] ⚡  wrangler tail --format=pretty
+$ wrangler tail --format=pretty
 [2021-08-18 17:06:55] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/
  | [Info] Request came from city: Pacifica in country: US
 [2021-08-18 17:06:56] [LAX] [Ok] GET https://logging-example.jkup.workers.dev/favicon.ico
@@ -135,6 +167,27 @@ A Worker can make HTTP requests to any HTTP service on the public Internet. You 
 
 When using an external logging strategy, remember that outstanding asynchronous tasks are canceled as soon as a Worker finishes sending its main response body to the client. To ensure that a logging subrequest completes, pass the request promise to [`event.waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil). For example:
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    function postLog(data) {
+      return fetch("https://log-service.example.com/", {
+        method: "POST",
+        body: data,
+      });
+    }
+
+    // Without ctx.waitUntil(), the `postLog` function may or may not complete.
+    ctx.waitUntil(postLog(stack));
+    return fetch(request);
+  }
+}
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 addEventListener("fetch", (event) => {
   event.respondWith(handleEvent(event));
@@ -155,10 +208,27 @@ function postLog(data) {
   });
 }
 ```
+{{</tab>}}
+{{</tabs>}}
 
 ### Go to origin on error
 
 By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    ctx.passThroughOnException();
+    // an error here will return the origin response, as if the Worker wasn't present
+    return fetch(request);
+  }
+}
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 
 ```js
 addEventListener("fetch", (event) => {
@@ -172,3 +242,5 @@ async function handleRequest(request) {
   return fetch(request);
 }
 ```
+{{</tab>}}
+{{</tabs>}}

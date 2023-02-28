@@ -10,11 +10,11 @@ When [provisioning services for an account](/tenant/how-to/manage-subscriptions/
 
 The subscriptions available to you will vary depending on your current partner program ([Self-Service Partner Program](https://www.cloudflare.com/cloudflare-partners-self-serve-program-closed-beta/) or [Enterprise Resellers and MSP Program](https://portal.cloudflarepartners.com)).
 
-The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](https://api.cloudflare.com/#zone-rate-plan-list-available-rate-plans) or [account subscriptions](https://api.cloudflare.com/#account-subscriptions-list-subscriptions) endpoints.
+The following values are samples and not exhaustive. For the complete list of subscription values available to you, make an API call to the [zone subscriptions](https://developers.cloudflare.com/api/operations/zone-rate-plan-list-available-rate-plans) or [account subscriptions](https://developers.cloudflare.com/api/operations/account-subscriptions-list-subscriptions) endpoints.
 
 ## Zone plans
 
-When creating or updating a [zone plan](https://api.cloudflare.com/#zone-subscription-properties), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
+When creating or updating a [zone plan](https://developers.cloudflare.com/api/operations/zone-subscription-zone-subscription-details), Partners can use one of the following values for the `id` of the `rate_plan` field (which controls the zone-level plan subscription).
 
 | Partner program | Available subscriptions |
 | --- | --- |
@@ -60,7 +60,7 @@ The following table lists sample values for various application performance and 
 | [Load balancing](/load-balancing/) | `PARTNERS_LOAD_BALANCING`, `PARTNERS_LOAD_BALANCING_ENT`, `LOAD_BALANCING_BASIC_PLUS` |
 | [Rate limiting](/waf/rate-limiting-rules/) | `PARTNERS_RATE_LIMITING` |
 | [Spectrum](/spectrum/) | `PARTNERS_SPECTRUM` |
-| [Waiting room](/waiting-room/) | `WAITING_ROOMS_BASIC` |
+| [Waiting Room](/waiting-room/) | `WAITING_ROOMS_BASIC` |
 
 ## Getting new subscriptions
 

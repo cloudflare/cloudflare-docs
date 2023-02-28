@@ -5,10 +5,6 @@ pcx_content_type: concept
 
 # Cache Analytics
 
-Cache Analytics is available for customers on Pro, Business, and Enterprise plans.
-
-## Overview
-
 Use Cache Analytics to improve site performance or reduce origin web server traffic. Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching. Cache Analytics includes filter by hostname, list of top URLs that miss cache, and a query of up to three days of data.
 
 First, determine whether to focus on Requests or Data Transfer. The default view is Requests, which helps with understanding performance because every cache miss degrades the speed of content delivery. Data Transfer helps with understanding cost because most hosting providers charge for every byte that leaves their network.
@@ -17,11 +13,15 @@ You can toggle between Requests and Data Transfer while keeping other analytics 
 
 For best practices related to Cache Analytics, refer to [Cache performance](/cache/best-practices/cache-performance/).
 
+## Availability
+
+{{<feature-table id="cache.cache_analytics">}}
+
 ## Add filters
 
 Cache Analytics also allows for flexible filtering of data. Create filters to focus on the traffic to optimize. Example filters include **Cache status**, **Host**, **Path**, or **Content type**.
 
-To add filters, under **Cache Performance**, click **Add filter**. Click **Apply** when you are done.
+To add filters, under **Cache Performance**, select **Add filter**. Select **Apply** when you are done.
 
 ## Review cache status
 

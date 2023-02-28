@@ -54,7 +54,7 @@ $ curl -X PUT \
 -d '{
   "rules": [
     {
-      "expression": "(http.request.uri.query contains \"/eu/\")",
+      "expression": "http.request.uri.query contains \"/eu/\"",
       "description": "My first Origin Rule",
       "action": "route",
       "action_parameters": {
@@ -86,7 +86,7 @@ header: Response
         "action_parameters": {
           "host_header": "eu_server.example.net"
         },
-        "expression": "(http.request.uri.query contains \"/eu/\")",
+        "expression": "http.request.uri.query contains \"/eu/\"",
         "description": "My first Origin Rule",
         "last_updated": "2022-06-02T14:42:04.219025Z",
         "ref": "<RULE_REF>"
@@ -138,10 +138,83 @@ $ curl -X PUT \
 </details>
 
 <details>
-<summary>Example: Add a rule that overrides the URL and port of incoming requests</summary>
+<summary>Example: Add a rule that overrides the resolved DNS record and the <code>Host</code> header of incoming requests</summary>
 <div>
 
-The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the URL and port of incoming requests — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the resolved DNS record and the `Host` header of incoming requests — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
+
+```json
+---
+header: cURL example request
+---
+$ curl -X PUT \
+"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/<RULESET_ID>" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "rules": [
+    {
+      "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
+      "description": "Origin Rule for the company's HR application",
+      "action": "route",
+      "action_parameters": {
+        "host_header": "hr-server.example.com",
+        "origin": {
+          "host": "hr-server.example.com"
+        }
+      }
+    }
+  ]
+}'
+```
+
+The response contains the complete definition of the ruleset you updated.
+
+```json
+---
+header: Response
+---
+{
+  "result": {
+    "id": "<RULESET_ID>",
+    "name": "Origin Rules ruleset",
+    "description": "Zone-level ruleset that will execute Origin Rules.",
+    "kind": "zone",
+    "version": "2",
+    "rules": [
+      {
+        "id": "<RULE_ID>",
+        "version": "1",
+        "action": "route",
+        "action_parameters": {
+          "host_header": "hr-server.example.com",
+          "origin": {
+            "host": "hr-server.example.com"
+          }
+        },
+        "expression": "starts_with(http.request.uri.path, \"/hr-app/\")",
+        "description": "Origin Rule for the company's HR application",
+        "last_updated": "2022-06-03T14:42:04.219025Z",
+        "ref": "<RULE_REF>"
+      }
+    ],
+    "last_updated": "2022-06-03T14:42:04.219025Z",
+    "phase": "http_request_origin"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Example: Add a rule that overrides the port of incoming requests</summary>
+<div>
+
+The following example sets the rules of an existing phase ruleset (`<RULESET_ID>`) to a single Origin Rule — overriding the port of incoming requests — using the [Update ruleset](/ruleset-engine/rulesets-api/update/) method:
 
 ```json
 ---
@@ -159,7 +232,6 @@ $ curl -X PUT \
       "action": "route",
       "action_parameters": {
         "origin": {
-          "host": "internalserver.example.com",
           "port": 9000
         }
       }
@@ -188,7 +260,6 @@ header: Response
         "action": "route",
         "action_parameters": {
           "origin": {
-            "host": "internalserver.example.com",
             "port": 9000
           }
         },

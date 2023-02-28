@@ -2,6 +2,7 @@
 pcx_content_type: concept
 title: Compatibility dates
 layout: compatibility-dates
+rss: https://github.com/cloudflare/cloudflare-docs/commits/production/content/workers/_partials/_platform-compatibility-dates.atom
 outputs:
   - html
   - json

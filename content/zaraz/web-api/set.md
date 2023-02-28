@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Set
-weight: 5
+weight: 2
 meta:
   title: zaraz.set
 ---

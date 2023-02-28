@@ -16,7 +16,7 @@ At this stage, WAF content scanning API endpoints may change on short notice.
 
 {{</Aside>}}
 
-When enabled, content scanning will attempt to detect content objects such as uploaded files and scan them for malicious signatures like malware. The scan results, along with additional metadata, will be exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
+When enabled, content scanning attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
 
 ## Default configuration
 
@@ -47,7 +47,8 @@ Enable the feature using a `POST` request similar to the following:
 ```bash
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 ### 2. (Optional) Configure a custom scan expression
@@ -57,7 +58,8 @@ If you wish to check uploaded content in a way that is not covered by the [defau
 ```json
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "Authorization: Bearer <API_TOKEN>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
 -d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
 ```
 
@@ -81,7 +83,7 @@ The content scanner will automatically decode Base64 strings.
 
 Use Security Analytics and HTTP logs to validate that malicious content objects are being detected correctly.
 
-Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate firewall events (available in **Security** > **Overview**) that will allow you to validate your configuration.
+Alternatively, create a WAF custom rule like described in the next step using a _Log_ action instead of a mitigation action like _Block_. This rule will generate security events (available in **Security** > **Events**) that will allow you to validate your configuration.
 
 ### 4. Create a WAF custom rule
 
@@ -109,6 +111,7 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
     (cf.waf.content_scan.has_obj and cf.bot_management.score lt 10)
     ```
 
+For additional examples, refer to [Example rules](#example-rules).
 
 ---
 
@@ -162,6 +165,26 @@ When enabled, WAF content scanning provides the following fields you can use in 
 
 ---
 
+## Example rules
+
+The following custom rule example logs all requests with at least one uploaded content object:
+* Expression: `cf.waf.content_scan.has_obj`
+* Action: _Log_
+
+The following example blocks requests addressed at `/upload.php` that contain at least one uploaded content object considered malicious:
+* Expression: `cf.waf.content_scan.has_malicious_obj and http.request.uri.path eq "/upload.php"`
+* Action: _Block_
+
+The following example blocks requests addressed at `/upload` with uploaded content objects that are not PDF files:
+* Expression: `any(cf.waf.content_scan.obj_types[*] != "application/pdf") and http.request.uri.path eq "/upload"`
+* Action: _Block_
+
+The following example blocks requests addressed at `/upload` with uploaded content objects over 500 KB in size:
+* Expression: `any(cf.waf.content_scan.obj_sizes[*] > 500000) and http.request.uri.path eq "/upload"`
+* Action: _Block_
+
+---
+
 ## Common API calls
 
 ### General operations
@@ -178,7 +201,8 @@ header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/enable" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -196,7 +220,8 @@ header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/disable" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -213,7 +238,8 @@ To obtain the current status of the content scanning feature, use a `GET` reques
 header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/settings" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>
@@ -232,7 +258,8 @@ To get a list of existing custom scan expressions, use a `GET` request similar t
 header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 ```json
@@ -267,7 +294,8 @@ header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads" \
--H "Authorization: Bearer <API_TOKEN>" \
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>" \
 -d '[{"payload": "lookup_json_string(http.request.body.raw, \"file\")"}]'
 ```
 
@@ -286,7 +314,8 @@ header: Example cURL request
 ---
 $ curl -X DELETE \
 "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/content-upload-scan/payloads/<EXPRESSION_ID>" \
--H "Authorization: Bearer <API_TOKEN>"
+-H "X-Auth-Email: <EMAIL>" \
+-H "X-Auth-Key: <API_KEY>"
 ```
 
 </div>

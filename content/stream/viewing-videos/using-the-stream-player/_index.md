@@ -157,3 +157,12 @@ The `<video>` element does not force the browser to follow the value of this opt
 ## Debug Info
 
 The Stream player Debug menu can be shown and hidden using the key combination `Shift-D` while the video is playing.
+
+## Live stream recording playback
+
+After a live stream ends, a recording is automatically generated and available within 60 seconds. To ensure successful video viewing and playback, keep the following in mind:
+
+- If a live stream ends while a viewer is watching, viewers should wait 60 seconds and then reload the player to view the recording of the live stream.
+- After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.  
+
+While the recording of the live stream is generating, the video may report as `not-found` or `not-started`.

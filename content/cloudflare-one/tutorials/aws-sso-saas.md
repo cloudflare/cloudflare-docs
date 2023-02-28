@@ -20,15 +20,13 @@ For this tutorial, you will need:
 
 {{</Aside>}}
 
-**⏲️ Time to complete:**
+**Time to complete:**
 
 20 minutes
 
 ## Configure AWS
 
 1.  In the AWS admin panel, search for `SSO`.
-
-    ![AWS SSO](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-sso-search.png)
 
 1.  Add **AWS Single Sign** on to your AWS account.
 
@@ -37,8 +35,6 @@ For this tutorial, you will need:
 1.  Change the identity source to **External Identity provider**.
 
 1.  Click **Show individual metadata values**. These will be the fields that are added to the Cloudflare Access for SaaS app.
-
-    ![AWS metadata](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-metadata.png)
 
 1.  Copy the **AWS SSO ACS URL**.
 
@@ -57,13 +53,11 @@ For this tutorial, you will need:
 
     The **Name ID Format** must be set to: Email.
 
-    ![AWS application](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-application.png)
+    ![Fields configured using information copied from an AWS account.](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-application.png)
 
 1.  (Optional) Additional Attribute Statements can be passed from your IdP to AWS SSO. More information about AWS Attribute mapping can be found at [Attribute mappings - AWS Single Sign-On](https://docs.aws.amazon.com/singlesignon/latest/userguide/attributemappingsconcept.html#supportedidpattributes).
 
-1.  Copy the Cloudflare IdP metadata values and save them for the Final AWS configuration:
-
-    ![AWS Cloudflare metadata](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-cloudflare-metadata.png)
+1.  Copy the Cloudflare IdP metadata values and save them for the Final AWS configuration.
 
 1.  Click **Next**.
 
@@ -96,7 +90,7 @@ For this tutorial, you will need:
 
 1.  Set Provisioning to _Manual_.
 
-    ![AWS settings](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
+    ![AWS settings panel demonstrating correct settings for manual provisioning.](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-settings.png)
 
     {{<Aside type="warning" header="Important">}}
 
@@ -111,5 +105,3 @@ For this tutorial, you will need:
 ## Test your connection
 
 User should now be able to successfully log in. To test your connection, open the user portal URL.
-
-![AWS portal](/cloudflare-one/static/zero-trust-security/aws-sso-saas/aws-portal.png)

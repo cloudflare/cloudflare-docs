@@ -21,7 +21,7 @@ The example below uses Python 3.8, but should run on Python 3.6 and above.
 
 ```sh
 # Ensure you have paho-mqtt installed
-pip3 install paho-mqtt
+$ pip3 install paho-mqtt
 ```
 
 Create a file called `pubsub.py` with the following content, and use `python3 pubsub.py` to run the example:

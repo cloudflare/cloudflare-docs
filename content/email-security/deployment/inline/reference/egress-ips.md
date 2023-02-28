@@ -16,11 +16,7 @@ For customers in the United States, enter the following IP addresses:
 
 ## Europe
 
-For customers in Europe, add all our US IP addresses:
-
-{{<render file="_us-egress-ips.md">}}
-
-Additionally, you need to add the following IP addresses for our European data centers:
+For customers in Europe, add all our US IP addresses. Additionally, you need to add the following IP addresses for our European data centers:
 
 - `52.58.35.43`
 - `35.157.195.63`

@@ -7,10 +7,10 @@ title: Import Cloudflare resources
 
 An important point to understand about Terraform is that it can only manage configuration it created or was explicitly told about after the fact. The reason for this limitation is that Terraform expects to be authoritative for the resources it manages. It relies on two types of files to understand what resources it controls and what state they are in. Terraform determines when and how to make changes from the following:
 
-- A [configuration file](https://www.terraform.io/language) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
-- A local [state file](https://www.terraform.io/language/state) that maps the resource names defined in your configuration file — for example, `cloudflare_load_balancer.www-lb` — to the resources that exist in Cloudflare.
+- A [configuration file](https://developer.hashicorp.com/terraform/language) (ending in `.tf`) that defines the configuration of resources for Terraform to manage. This is what you worked with in the tutorial steps.
+- A local [state file](https://developer.hashicorp.com/terraform/language/state) that maps the resource names defined in your configuration file — for example, `cloudflare_load_balancer.www-lb` — to the resources that exist in Cloudflare.
 
-When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/terraform/tutorial/), it persists those IDs to a state file. By default, Terraform uses the `terraform.tfstate` file in your directory, but this can also be a [remote location](https://www.terraform.io/language/state/remote). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
+When Terraform makes calls to Cloudflare's API to create new resources as explained in the [tutorial](/terraform/tutorial/), it persists those IDs to a state file. By default, Terraform uses the `terraform.tfstate` file in your directory, but this can also be a [remote location](https://developer.hashicorp.com/terraform/language/state/remote). These IDs are later looked up and refreshed when you call `terraform plan` and `terraform apply`.
 
 If you configured Cloudflare through other means, for example, by logging in to the Cloudflare dashboard or making `curl` calls to `api.cloudflare.com`, Terraform does not yet have these resource IDs in the state file. To manage this preexisting configuration, you will need to first reproduce the configuration in your config file and then import resources individually by providing their IDs and resource names.
 

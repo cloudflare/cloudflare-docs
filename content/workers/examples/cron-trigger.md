@@ -9,9 +9,18 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/sw | js/esm">}}
-{{<tab label="js/sw" default="true">}}
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
 
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		console.log('cron processed');
+	},
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 addEventListener("scheduled", (event) => {
   event.waitUntil(triggerEvent(event.scheduledTime));
@@ -22,16 +31,6 @@ async function triggerEvent(scheduledTime) {
   // Update API
   console.log("cron processed");
 }
-```
-{{</tab>}}
-{{<tab label="js/esm">}}
-
-```js
-export default {
-	async scheduled(controller, env, ctx) {
-		console.log('cron processed');
-	},
-};
 ```
 {{</tab>}}
 {{</tabs>}}

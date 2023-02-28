@@ -1,19 +1,21 @@
 ---
 pcx_content_type: how-to
 weight: 5
-title: Enable Load Balancing
+title: Enable
+meta:
+    title: Enable Load Balancing
+    description: Learn how to enable load balancing.
 ---
 
 # Enable Load Balancing
 
-If you want to enable load balancing as an add-on for your account, the process depends on your plan type.
+Load balancing is an add-on for your account, meaning your account needs a [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/).
 
-Accounts with at least one **Enterprise** plan should contact their account team.
+To enable [Load Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing):
 
-All other accounts should enable Load Balancing in the dashboard:
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Traffic** > **Load Balancing**.
+3. Select **Enable Load Balancing**.
+4. Choose your plan options and confirm payment.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Choose your account and website.
-3. Go to **Traffic** > **Load Balancing**.
-4. Click **Enable Load Balancing**.
-5. Choose your plan options and confirm payment.
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}

@@ -45,7 +45,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
 
 ### Example Response to Add or Modify a Caption
 
-```bash
+```json
 {
   "result": {
     "language": "en",
@@ -68,7 +68,7 @@ https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/stream/<VIDEO_UID>/ca
 
 ### Example response to get the captions associated with a video
 
-```bash
+```json
 {
   "result": [
     {
@@ -107,7 +107,7 @@ deleted.
 
 ### Example response to delete the caption
 
-```bash
+```json
 {
   "result": "",
   "success": true,

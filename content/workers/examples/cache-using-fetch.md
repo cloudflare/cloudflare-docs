@@ -12,6 +12,37 @@ weight: 1001
 layout: example
 ---
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    // Only use the path for the cache key, removing query strings
+    // and always store using HTTPS, for example, https://www.example.com/file-uri-here
+    const someCustomKey = `https://${url.hostname}${url.pathname}`;
+    let response = await fetch(request, {
+      cf: {
+        // Always cache this fetch regardless of content type
+        // for a max of 5 seconds before revalidating the resource
+        cacheTtl: 5,
+        cacheEverything: true,
+        //Enterprise only feature, see Cache API for other plans
+        cacheKey: someCustomKey,
+      },
+    });
+    // Reconstruct the Response object to make its headers mutable.
+    response = new Response(response.body, response);
+    // Set cache control headers to cache on browser for 25 minutes
+    response.headers.set('Cache-Control', 'max-age=1500');
+    return response;
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 async function handleRequest(request) {
   const url = new URL(request.url);
@@ -42,8 +73,8 @@ addEventListener('fetch', event => {
   return event.respondWith(handleRequest(event.request));
 });
 ```
-
----
+{{</tab>}}
+{{</tabs>}}
 
 {{<content-column>}}
 
@@ -73,6 +104,32 @@ fetch(event.request, { cf: { cacheKey: 'some-string' } });
 
 Normally, Cloudflare computes the cache key for a request based on the request's URL. Sometimes, though, you may like different URLs to be treated as if they were the same for caching purposes. For example, if your website content is hosted from both Amazon S3 and Google Cloud Storage - you have the same content in both places, and you can use a Worker to randomly balance between the two. However, you do not want to end up caching two copies of your content. You could utilize custom cache keys to cache based on the original request URL rather than the subrequest URL:
 
+{{</content-column>}}
+
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    let url = new URL(request.url);
+
+    if (Math.random() < 0.5) {
+      url.hostname = 'example.s3.amazonaws.com';
+    } else {
+      url.hostname = 'example.storage.googleapis.com';
+    }
+
+    let newRequest = new Request(url, request);
+    return fetch(newRequest, {
+      cf: { cacheKey: request.url },
+    });
+  },
+};
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
+
 ```js
 addEventListener('fetch', event => {
   let url = new URL(event.request.url);
@@ -90,6 +147,10 @@ addEventListener('fetch', event => {
   );
 });
 ```
+{{</tab>}}
+{{</tabs>}}
+
+{{<content-column>}}
 
 Workers operating on behalf of different zones cannot affect each other's cache. You can only override cache keys when making requests within your own zone (in the above example `event.request.url` was the key stored), or requests to hosts that are not on Cloudflare. When making a request to another Cloudflare zone (for example, belonging to a different Cloudflare customer), that zone fully controls how its own content is cached within Cloudflare; you cannot override it.
 

@@ -10,16 +10,22 @@ meta:
 
 When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
-<div class="mermaid">
+```mermaid
 flowchart LR
         accTitle: Full SSL/TLS Encryption
         accDescr: With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.
         A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[(Origin server)]
-</div>
+```
 
 ## Use when
 
 Choose **Full** mode when your origin can support an SSL certification, but — for various reasons — it cannot support a valid, publicly trusted certificate.
+
+{{<Aside type="note">}}
+
+In addition to **Full** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
+
+{{</Aside>}}
 
 ## Required setup
 

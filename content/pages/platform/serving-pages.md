@@ -15,7 +15,7 @@ If an HTML file is found with a matching path to the current route requested, Pa
 
 You can define a custom page to be displayed when Pages cannot find a requested file by creating a `404.html` file. Pages will then attempt to find the closest 404 page. If one is not found in the same directory as the route you are currently requesting, it will continue to look up the directory tree for a matching `404.html` file, ending in `/404.html`. This means that you can define custom 404 paths for situations like `/blog/404.html` and `/404.html`, and Pages will automatically render the correct one depending on the situation.
 
-## Single-page app (SPA) rendering
+## Single-page application (SPA) rendering
 
 If your project does not include a top-level `404.html` file, Pages assumes that you are deploying a single-page application. This includes frameworks like React, Vue, and Angular. Pages' default single-page application behavior matches all incoming paths to the root (`/`), allowing you to capture URLs like `/about` or `/help` and respond to them from within your SPA.
 

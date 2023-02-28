@@ -16,7 +16,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 - See DocuSign’s [checklist](https://support.docusign.com/en/guides/org-admin-guide-single-sign-on-overview) for additional requirements.
 - A [SAML IdP](/cloudflare-one/identity/idp-integration/generic-saml/) configured with SAML Attributes configured.
 
-**⏲️ Time to complete:** 10 minutes
+**Time to complete:** 10 minutes
 
 ## Create the Access for SaaS application
 
@@ -36,7 +36,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
     - Ensure you are collecting SAML attributes from your IdP:
 
-    ![DocuSign SAML Attributes](/cloudflare-one/static/zero-trust-security/docusign/saml-attributes.png)
+    ![List of DocuSign SAML Attributes](/cloudflare-one/static/zero-trust-security/docusign/saml-attributes.png)
 
 1.  These IdP SAML values can then be mapped to the following DocuSign SAML attributes:
 
@@ -81,8 +81,6 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Go back to the Identity Provider's screen and select **Actions** > **Endpoints**. Copy and save the following:
     - Service Provider Issuer URL.
     - Service Provider Assertion Consumer Service URL.
-
-![DocuSign SAML 2.0 Endpoints](/cloudflare-one/static/zero-trust-security/docusign/saml-endpoints.png)
 
 ## Finalize your Cloudflare configuration
 

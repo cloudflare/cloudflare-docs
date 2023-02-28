@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To create an account subscription, send a [POST](https://api.cloudflare.com/#account-subscriptions-create-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions` endpoint and include the following values:
+To create an account subscription, send a [POST](https://developers.cloudflare.com/api/operations/account-subscriptions-create-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
     
@@ -17,9 +17,13 @@ To create an account subscription, send a [POST](https://api.cloudflare.com/#acc
 
     - Additional services depending on your reseller agreement, such as additional origins for load balancing or additional seats for Cloudflare Zero Trust. If not included, the subscription includes the default values associated with each purchase.
 
+- `frequency` {{<type>}}string{{</type>}}
+
+    - How often the subscription is renewed automatically (defaults to `"monthly"`)
+
 {{</definitions>}}
 
-```sh
+```bash
 ---
 header: Request
 ---

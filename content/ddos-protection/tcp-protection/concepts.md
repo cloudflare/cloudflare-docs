@@ -24,3 +24,33 @@ The Advanced TCP Protection allowlist is a list of prefixes that will bypass all
 For example, you could add prefixes used only by partners of your company to the allowlist so that they are exempt from packet inspection and mitigation actions performed by Advanced TCP Protection.
 
 {{<render file="_allowlist-ip-spoofing.md">}}
+
+## Rule
+
+A rule allows you to configure Advanced TCP Protection for a given [scope](/ddos-protection/tcp-protection/rule-settings/#scope), defining several [settings](/ddos-protection/tcp-protection/rule-settings/): execution mode, burst sensitivity, and rate sensitivity.
+
+Each advanced TCP protection type (SYN flood protection and out-of-state TCP protection) has its own list of rules.
+
+## Filter
+
+A filter allows you to modify Advanced TCP Protection's [execution mode](/ddos-protection/tcp-protection/rule-settings/#mode) — monitoring, mitigation (enabled), or disabled — for all incoming packets matching an expression. The expression can reference source and destination IP addresses and ports.
+
+Each type of advanced TCP protection (SYN flood protection and out-of-state TCP protection) has its own list of filters.
+
+{{<Aside type="warning" header="Important notes">}}
+* Currently, you can only manage filters [via API](/ddos-protection/tcp-protection/api/).
+* For each type of TCP protection (SYN flood protection or out-of-state TCP protection), you can only create one filter for each mode.
+{{</Aside>}}
+
+---
+
+## Determining the execution mode
+
+When you have both rules and filters configured, the execution mode is determined according to the following:
+
+1. If there is a match for one of the configured filters, use the filter's execution mode. The filter evaluation order  is based on their mode, in the following order:
+    1. Filter with `enabled` mode
+    2. Filter with `monitoring` mode
+    3. Filter with `disabled` mode
+2. If no filter matched, use the execution mode determined by existing rules.
+3. If no rules match, disable Advanced TCP Protection.

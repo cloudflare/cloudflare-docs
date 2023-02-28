@@ -62,7 +62,7 @@ To use PTR records, you need to create a reverse DNS zone and add a PTR record f
 
 4.  Skip the rest of the onboarding process.
 
-5.  Once finished with onboarding, go to **DNS**.
+5.  Once finished with onboarding, go to **DNS** > **Records**.
 
 6.  For each IP within the prefix, add a PTR record using the least significant octet(s) as the subdomain.
 

@@ -6,15 +6,11 @@ weight: 11
 
 # Certificate Signing Requests (CSRs)
 
-{{<render file="_csr-definition.md">}}
+{{<render file="_csr-definition.md">}} 
 
-A CSR contains information about your domain: your organization name and address, the common name (domain name), and Subject Alternative Names (SANs).
+## Availability
 
-{{<Aside type="note">}}
-
-At the moment, CSRs are only available to Enterprise customers who have purchased an account-level subscription for [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/).
-
-{{</Aside>}}
+{{<feature-table id="ssl.csr">}}
 
 ## Types of CSRs
 

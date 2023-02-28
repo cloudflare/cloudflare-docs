@@ -5,13 +5,14 @@ product:
   title: Cloudflare Image Optimization
   url: /images/
   wrap: true
+  group: Developer platform
 
 meta:
   title: Cloudflare Image Optimization docs
   description: Choose between Cloudflare Images and Cloudflare Image Resizing, two
     products tailored to your different needs.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /dev-products-preview.png
 
 resources:
   community: https://community.cloudflare.com/c/developers/images

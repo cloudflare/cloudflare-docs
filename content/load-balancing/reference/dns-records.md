@@ -14,7 +14,7 @@ When you [create a load balancer](/load-balancing/how-to/create-load-balancer/),
 
 For customers on non-Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, and `CNAME` records.
 
-For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, **SRV**, and **TXT** records.
+For customers on Enterprise plans, Cloudflare supports load balancing for `A`, `AAAA`, `CNAME`, **MX**, and **SRV** records.
 
 ## Priority order
 
@@ -61,9 +61,9 @@ As a current workaround for a domain or first-level subdomain (`lb.example.com`)
 
 For example, if your load balancer hostname was `lb.example.com`, you could create the following record solely for the purpose of SSL/TLS coverage.
 
-| Type |   LB  | IPv4 address | Proxy status |
+| Type |  Name | IPv4 address | Proxy status |
 | ---- | ----- | ------------ | ------------ |
-| A    | `www` | `192.0.2.1`  | Proxied      |
+| A    | `lb` | `192.0.2.1`  | Proxied      |
 
 Based on the [priority order](#priority-order), it would not receive any traffic because it is as equally specific as the LB hostname.
 

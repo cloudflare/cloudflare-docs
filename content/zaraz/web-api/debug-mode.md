@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Debug mode
-weight: 0
+weight: 4
 ---
 
 # Debug mode

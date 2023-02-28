@@ -16,4 +16,4 @@ Browser Isolation is available as an add-on to Zero Trust Pay-as-you-go and Ente
 
 ## Privacy
 
-Cloudflare Browser Isolation is a security product. In order to serve transparent isolated browsing and block web based threats our network decrypts Internet traffic using the [Cloudflare Root CA](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/). Traffic logs are retained as per the [Zero Trust](/cloudflare-one/analytics/) documentation.
+Cloudflare Browser Isolation is a security product. In order to serve transparent isolated browsing and block web based threats our network decrypts Internet traffic using the [Cloudflare Root CA](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/). Traffic logs are retained as per the [Zero Trust](/cloudflare-one/analytics/) documentation.

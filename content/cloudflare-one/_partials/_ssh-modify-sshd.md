@@ -29,7 +29,7 @@ The following procedure makes two changes to the `sshd_config` file on the remot
 
     Save the file and quit the editor. You might need to use the following command again to save and exit.
 
-      ```bash
-      :w !sudo tee %
-      :q!
-      ```
+    ```bash
+    :w !sudo tee %
+    :q!
+    ```

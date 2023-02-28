@@ -40,7 +40,7 @@ header: Response
 
 ## Control when you start and stop simulcasting
 
-You can enable and disable individual live outputs via the [API](https://api.cloudflare.com/#stream-live-inputs-update-a-single-output-on-a-live-input) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
+You can enable and disable individual live outputs via the [API](https://developers.cloudflare.com/api/operations/stream-live-inputs-update-a-single-output-on-a-live-input) or [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs), allowing you to:
 
 - Start a live stream, but wait to start simulcasting to YouTube and Twitch until right before the content begins.
 - Stop simulcasting before the live stream ends, to encourage viewers to transition from a third-party service like YouTube or Twitch to a direct live stream.
@@ -60,7 +60,7 @@ By default, all live outputs are enabled.
 
 | Command      | Method | Endpoint|
 |--------------|--------|---------|
-| [List outputs](https://api.cloudflare.com/#stream-live-inputs-list-live-inputs)| `GET` | `accounts/:account_identifier/stream/live_inputs`|
-| [Delete outputs](https://api.cloudflare.com/#stream-live-inputs-delete-a-live-input)| `DELETE` |  `accounts/:account_identifier/stream/live_inputs/:live_input_identifier`|
+| [List outputs](https://developers.cloudflare.com/api/operations/stream-live-inputs-list-live-inputs)| `GET` | `accounts/:account_identifier/stream/live_inputs`|
+| [Delete outputs](https://developers.cloudflare.com/api/operations/stream-live-inputs-delete-a-live-input)| `DELETE` |  `accounts/:account_identifier/stream/live_inputs/:live_input_identifier`|
 
 If the associated live input is already retransmitting to this output when you make the `DELETE` request, that output will be disconnected within 30 seconds.

@@ -27,7 +27,7 @@ Adding mTLS to your application using your own certificate authority (CA) is onl
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
 
-Currently, mTLS does not work with HTTP3 traffic.
+Currently, mTLS does not work with HTTP/3 traffic.
 
 ![mTLS handshake diagram](/cloudflare-one/static/documentation/identity/devices/mtls.png)
 
@@ -71,7 +71,6 @@ To enforce mTLS authentication from the [Zero Trust dashboard](https://dash.team
     | **Valid Certificate** | Any client certificate that can authenticate with the Root CA will be allowed to proceed. |
 
 11. Save the policy.
-12. In the application **Overview** tab, set the application session duration to `no duration, expires immediately`. This ensures the certificate is checked on every request.
 
 {{<Aside type="warning">}}
 
@@ -86,7 +85,7 @@ To test the application protected by an mTLS policy:
     This curl command example is for the site `example.com` that has an [Access policy](/cloudflare-one/policies/access/) set for `https://auth.example.com`:
 
     ```sh
-    curl -sv https://auth.example.com
+    $ curl -sv https://auth.example.com
     ```
 
     Without a client certificate in the request, a `403 forbidden` response displays and the site cannot be accessed.
@@ -94,7 +93,7 @@ To test the application protected by an mTLS policy:
 2. Now, add your client certificate information to the request:
 
     ```sh
-    curl -sv https://auth.example.com --cert example.pem --key key.pem
+    $ curl -sv https://auth.example.com --cert example.pem --key key.pem
     ```
 
 When the authentication process completes successfully, a `CF_Authorization Set-Cookie` header returns in the response.

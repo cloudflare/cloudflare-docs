@@ -29,13 +29,15 @@ For full zones[^1], the only required action is to confirm the your nameservers 
 
 For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
 
-{{<render file="_partial-zone-acm-dcv.md">}}
+{{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
+
+{{<render file="_partial-zone-acm-dcv-wildcard.md">}}
 
 ---
 
 ## Verify DCV status
 
-To verify the [DCV status](/ssl/reference/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](https://api.cloudflare.com/#ssl-verification-ssl-verification-details).
+To verify the [DCV status](/ssl/reference/certificate-statuses/) of a certificate, either monitor the certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or use the [Verification Status endpoint](https://developers.cloudflare.com/api/operations/ssl-verification-ssl-verification-details).
 
 A status of `active` means that the certificate has been deployed to Cloudflare’s edge network and will be served as soon as HTTP traffic is proxied to Cloudflare.
 

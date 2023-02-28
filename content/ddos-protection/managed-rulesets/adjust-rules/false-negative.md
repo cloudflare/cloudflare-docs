@@ -35,7 +35,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     1\. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
 
-    2\. Navigate to **Security** > **Overview**.
+    2\. Navigate to **Security** > **Events**.
 
     3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
@@ -43,7 +43,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
     <details><summary>For Magic Transit and Spectrum customers</summary><div>
 
-    1\. In the account home page, open **Network Analytics**.
+    1\. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
 
     2\. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
 
@@ -53,7 +53,7 @@ If you are experiencing a DDoS attack detected by Cloudflare and the applied mit
 
 4. Copy the rule name.
 
-5. Navigate to **Security** > **DDoS** and select **Configure** next to the Managed Ruleset containing the rule you will adjust.
+5. Navigate to **Security** > **DDoS** and select **Configure** next to the managed ruleset containing the rule you will adjust.
 
 6. Select **Browse rules** and paste the rule name in the search field.
 

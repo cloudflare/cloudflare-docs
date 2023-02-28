@@ -35,3 +35,21 @@ Update the server-side integration by replacing the siteverify URL. Replace:
 With:
 
 `https://challenges.cloudflare.com/turnstile/v0/siteverify`
+
+{{<Aside type= "warning" header="Differences to reCAPTCHA's siteverify">}}
+
+reCAPTCHA supports `GET` requests using query parameters, i.e: `GET /siteverify?response=<response>&secret=<secret>`.
+
+Turnstile's siteverify endpoint does **not** support this and only accepts `POST` requests with a FormData or JSON body.
+
+Refer to [server-side validation](/turnstile/get-started/server-side-validation/) for more information.
+
+{{</Aside>}}
+
+{{<Aside type= "Note">}}
+
+Turnstile supports:
+* the `render()` call 
+* reCAPTCHA v2 invisible mode with the `execute()` call
+
+{{</Aside>}}

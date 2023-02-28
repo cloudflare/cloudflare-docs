@@ -2,6 +2,8 @@
 pcx_content_type: navigation
 title: Policies
 weight: 7
+meta:
+    description: A policy is a set of rules that regulate network activity, such as who logs in to your applications or which websites your users can reach.
 ---
 
 # Policies

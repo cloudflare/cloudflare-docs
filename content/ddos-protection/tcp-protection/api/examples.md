@@ -14,7 +14,7 @@ This example obtains the current status of Advanced TCP Protection (enabled or d
 
 ```bash
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_protection_status" \
 -H "Authorization: Bearer <API_TOKEN>"
@@ -40,7 +40,7 @@ This example enables Advanced TCP Protection.
 
 ```json
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl -X PATCH \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_protection_status" \
@@ -57,7 +57,7 @@ This example fetches all existing prefixes in Advanced TCP Protection.
 
 ```bash
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes" \
 -H "Authorization: Bearer <API_TOKEN>"
@@ -87,7 +87,7 @@ This example adds two prefixes. The second prefix excludes a subset of the first
 
 ```json
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/prefixes/bulk" \
@@ -140,7 +140,7 @@ header: Example response
 
 ```bash
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist" \
 -H "Authorization: Bearer <API_TOKEN>"
@@ -173,7 +173,7 @@ This example adds a prefix to the allowlist of the account.
 
 ```json
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/allowlist" \
@@ -211,7 +211,7 @@ This example creates a SYN flood rule with a regional scope (Western Europe) in 
 
 ```json
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/rules" \
@@ -255,7 +255,7 @@ This example creates an out-of-state TCP rule in monitoring mode, with a regiona
 
 ```json
 ---
-header: cURL request
+header: Example cURL request
 ---
 $ curl -X POST \
 "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/rules" \
@@ -292,3 +292,80 @@ header: Example response
 ```
 
 Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+
+## Create a SYN flood filter
+
+This example creates a SYN flood filter setting SYN flood protection to monitoring mode for a specific range of destination IP addresses.
+
+```json
+---
+header: Example cURL request
+---
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/syn_protection/filters" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "expression": "ip.dst in { 192.0.2.0/24 }",
+  "mode": "monitoring"
+}'
+```
+
+```json
+---
+header: Example response
+---
+{
+  "result": {
+    "id": "<SYN_FLOOD_FILTER_ID>",
+    "expression": "ip.dst in { 192.0.2.0/24 }",
+    "mode": "monitoring",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+
+## Create an out-of-state TCP filter
+
+This example creates an out-of-state TCP filter disabling out-of-state TCP protection for a specific range of destination IP addresses and ports.
+
+```json
+---
+header: Example cURL request
+---
+$ curl -X POST \
+"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/advanced_tcp_protection/configs/tcp_flow_protection/filters" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
+-d '{
+  "expression": "ip.dst in { 203.0.113.0/24 } and tcp.dstport in { 8000..8081 }",
+  "mode": "disabled"
+}'
+```
+
+```json
+---
+header: Example response
+---
+{
+  "result": {
+    "id": "<OOS_TCP_FILTER_ID>",
+    "expression": "ip.dst in { 203.0.113.0/24 } and tcp.dstport in { 8000..8081 }",
+    "mode": "disabled",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Refer to [JSON objects](/ddos-protection/tcp-protection/api/json-objects/) for more information on the fields in the JSON body.
+

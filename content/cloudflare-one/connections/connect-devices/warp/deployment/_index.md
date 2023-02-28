@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Deploy WARP
-weight: 4
+weight: 5
 meta:
   title: Deploy WARP to your organization
 ---

@@ -10,7 +10,7 @@ This section covers how to validate your Gateway DNS configuration.
 
 ## Prerequisites
 
-Before you start, make sure you are connected to a network that is associated with the [location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) where the policy is applied.
+Before you start, make sure you are connected to a network that is associated with the [DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) where the policy is applied.
 
 ## Test a DNS policy
 
@@ -68,12 +68,12 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 ## Test EDNS configuration
 
-If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) for your location, you can validate EDNS as follows:
+If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) for your DNS location, you can validate EDNS as follows:
 
-1. Obtain your location's DOH subdomain:
+1. Obtain your DNS location's DOH subdomain:
 
-    1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Locations**.
-    2. Select the location you are testing.
+    1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DNS Locations**.
+    2. Select the DNS location you are testing.
     3. Note the value of **DNS over HTTPS**.
 
 2. Open a terminal and run the following command:

@@ -22,4 +22,4 @@ Configuring a purpose justification screen is done as part of configuring an Acc
 1.  (Optional) set a custom purpose justification message. This will appear on the purpose justification screen and will be visible to the user.
 1.  Once configured, a user will see the following screen:
 
-![Purpose Justification](/cloudflare-one/static/documentation/policies/purpose-justification.png)
+![Finalized purpose justification screen displaying custom message.](/cloudflare-one/static/documentation/policies/purpose-justification.png)

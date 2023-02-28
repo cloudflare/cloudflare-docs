@@ -19,13 +19,7 @@ The Configuration Rule expression will determine to which requests the rule sett
 
 The number of available Configuration Rules varies according to your Cloudflare plan:
 
-{{<table-wrap>}}
-
-|                               | Free | Pro | Business | Enterprise |
-|-------------------------------|:----:|:---:|:--------:|:----------:|
-| Number of Configuration Rules |  10  | 25  |    50    |    125     |
-
-{{</table-wrap>}}
+{{<feature-table id="rules.config_rules">}}
 
 ## Execution order
 

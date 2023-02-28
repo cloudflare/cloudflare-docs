@@ -47,7 +47,7 @@ You will then receive a response similar to this:
 
 If your origin server returns an error while fetching the images, the API response will return a `4xx` error.
 
-Refer to [Upload an image using a single HTTP request](https://api.cloudflare.com/#cloudflare-images-upload-an-image-using-a-single-http-request) for more information.
+Refer to [Upload an image using a single HTTP request](https://developers.cloudflare.com/api/operations/cloudflare-images-upload-an-image-via-url) for more information.
 
 {{<Aside type="note" header="Note">}}
 

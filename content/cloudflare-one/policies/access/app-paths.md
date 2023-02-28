@@ -12,8 +12,6 @@ When multiple rules are set for a common root path, the more specific rule takes
 
 In the Zero Trust dashboard, when adding a [self-hosted web application](/cloudflare-one/applications/configure-apps/self-hosted-apps/), you can choose to protect the entire website by entering its apex domain, or alternatively, you can specify any subdomains and paths in the dedicated fields.
 
-![Application domain](/cloudflare-one/static/documentation/applications/path-subdomain.png)
-
 {{<Aside>}}
 
 Cloudflare Zero Trust does not support port numbers in the URL. Requests to URLs with port numbers are redirected to the URL and the port numbers stripped.

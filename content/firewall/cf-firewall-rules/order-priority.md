@@ -14,7 +14,7 @@ Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests
 
 {{<Aside type="warning" header="Important">}}
 
-- You can use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass [WAF Managed Rulesets](/waf/managed-rulesets/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
+- You can use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist requests under certain conditions, effectively excluding these requests from all security checks. However, allowing a given country code will not bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016).
 
 - The execution order diagram does not include products powered by the [Ruleset Engine](/ruleset-engine/) like the [WAF](/waf/) or [Transform Rules](/rules/transform/).
 
@@ -65,7 +65,7 @@ The **Priority** column in the rules list displays the priority value for each r
 
 ## Working with priority ordering
 
-Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update firewall rules command to set the `priority` property. Refer to [Cloudflare API: Firewall rules](https://api.cloudflare.com/#firewall-rules-properties) for details.
+Cloudflare has designed priority ordering to be extremely flexible. This flexibility is particularly useful for managing large rulesets programmatically via the Cloudflare API. Use the Update firewall rules command to set the `priority` property. Refer to [Cloudflare API: Firewall rules](https://developers.cloudflare.com/api/operations/firewall-rules-list-firewall-rules) for details.
 
 While your priority numbering scheme can be arbitrary, keep the following in mind:
 

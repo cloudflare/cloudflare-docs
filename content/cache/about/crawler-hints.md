@@ -19,6 +19,10 @@ For a website owner, Crawler Hints ensures that search engines and other bot-pow
 
 Crawler Hints also means less traffic hitting your origin, improving resource consumption, site performance, and environmental impact.
 
+## Availability
+
+{{<feature-table id="cache.crawler_hints">}}
+
 ## How to enable
 
 To enable Crawler Hints, refer to [Enable Crawler Hints](/cache/how-to/enable-crawler-hints/).

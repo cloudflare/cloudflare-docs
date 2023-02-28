@@ -25,5 +25,5 @@ You can create IP Access rules in the Cloudflare dashboard or via API.
 
 ## Using the API
 
-Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [Get IP Access rules](https://api.cloudflare.com/#ip-access-rules-for-a-user-get-ip-access-rules).
+Use the Cloudflare API to programmatically create IP Access rules. For more information, refer to [Get IP Access rules](https://developers.cloudflare.com/api/operations/ip-access-rules-for-a-user-list-ip-access-rules).
 

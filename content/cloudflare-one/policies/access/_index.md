@@ -52,12 +52,6 @@ For example, this configuration blocks every request to the application, except 
 | Block  | Include   | Everyone | `Everyone` |
 |        | Exclude   | Email    | `user-1@team.com`|
 
-{{<Aside type="warning">}}
-
-An Exclude rule will allow any user meeting that criteria to access an application when a Block Action is configured.
-
-{{</Aside>}}
-
 ### Bypass
 
 The Bypass action disables any Access enforcement for traffic that meets the defined rule criteria. This may be useful if you want to ensure your employees have direct permanent access to your internal applications, while still ensuring that any external resource is always asked to authenticate.
@@ -94,13 +88,13 @@ Service Auth rules enforce authentication flows that do not require an identity 
 
 ## Rule types
 
-Rules work like logical operators. They help you define which categories of users your policy will affect. Each policy needs at least an Include rule; you can set as many rules as you need.
-
-These are the rule types you can choose from:
+Rules work like logical operators. They help you define which categories of users your policy will affect.
 
 | Include | Exclude | Require |
 | ------- | ------- | ------- |
 | The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria. | The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application. | The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access. |
+
+All Access policies must contain an Include rule. This is what defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to enforce specific policies for those users.
 
 ### Requiring multiple conditions
 
@@ -152,6 +146,7 @@ These criteria are available for all Access application types, including [SaaS](
 | Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
 | Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
 {{</table-wrap>}}
+
 ## Order of execution
 
 Policies are evaluated based on their action type and ordering. Bypass and Service Auth policies are evaluated first, from top to bottom as shown in the UI. Then, Block and Allow policies are evaluated based on their order.
@@ -164,8 +159,4 @@ For example, if you have a list of policies arranged as follows:
 - Bypass D
 - Allow E
 
-The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E.
-
-{{<Aside type="warning">}}
-  Block policies will not terminate policy evaluation. If a user matches a block policy but passes a subsequent Allow policy, they will be allowed into the application.
-{{</Aside>}}
+The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E. Once a user matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision.

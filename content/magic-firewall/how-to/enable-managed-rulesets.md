@@ -3,17 +3,17 @@ title: Enable Managed Rulesets
 pcx_content_type: how-to
 ---
 
-# Enable Managed Rulesets
+# Enable managed rulesets
 
-With [Managed Rulesets](/ruleset-engine/managed-rulesets/), you can quickly deploy rules maintained by Cloudflare, and you can use Magic Firewall to control which rules are enabled.
+With [managed rulesets](/ruleset-engine/managed-rulesets/), you can quickly deploy rules maintained by Cloudflare, and you can use Magic Firewall to control which rules are enabled.
 
 {{<Aside type="note" header="Note:">}}
 
-Before you can begin using Managed Rulesets with Magic Firewall, your account must first be entitled to use Managed Rulesets. Contact your account team for access.
+Before you can begin using managed rulesets with Magic Firewall, your account must first be entitled to use managed rulesets. Contact your account team for access.
 
 {{</Aside>}}
 
-To enable or disable a rule, you can specify which properties should be overriden. The overrides occur in the Managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides. 
+To enable or disable a rule, you can specify which properties should be overriden. The overrides occur in the Managed phase, root kind ruleset. Currently, you can only have one rule in the root ruleset, but a single rule can contain multiple overrides.
 
 You have multiple options for enabling rules:
 
@@ -23,7 +23,7 @@ You have multiple options for enabling rules:
 
 ## 1. Create a Managed phase Managed kind ruleset
 
-To create a Managed Ruleset, you must first build a request with the following:
+To create a managed ruleset, you must first build a request with the following:
 
 - `managed_ruleset_id`: The ID of the Managed phase Managed kind ruleset that contains the rule you want to enable.
 - `managed_rule_id`: The ID of the rule you want to enable.

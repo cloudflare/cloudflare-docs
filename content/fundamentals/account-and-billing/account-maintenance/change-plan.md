@@ -37,9 +37,38 @@ To change the Cloudflare plan for a domain in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To change the Cloudflare plan for a domain using the API, first send a [`GET`](https://api.cloudflare.com/#zone-rate-plan-list-available-plans) request to review available subscriptions.
+To change the Cloudflare plan for a domain using the API, first send a [`GET`](https://developers.cloudflare.com/api/operations/zone-rate-plan-list-available-plans) request to review available subscriptions.
 
-Then, send a [`PUT`](https://api.cloudflare.com/#zone-subscription-update-zone-subscription) request with your desired plan type in the `rate_plan` object.
+Then, send a [`PUT`](https://developers.cloudflare.com/api/operations/zone-subscription-update-zone-subscription) request with your desired plan type in the `rate_plan` object.
+ 
+{{</tab>}}
+{{</tabs>}}
+
+## Change plan duration
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To change the duration of your Cloudflare plan in the dashboard:
+ 
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. Go to **Overview**.
+3. For Plan Extensions, select **Change**.
+
+    ![Screenshot of the Overview page with the Plan extension section highlighted](/fundamentals/static/images/get-started/change-plan.png)
+
+4. Switch the toggle between **Monthly** or **Annual**.
+
+    ![Screenshot of the Plan choice with the annual or monthly toggle highlighted](/fundamentals/static/images/get-started/plan-duration.png)
+
+5. Choose the appropriate plan type, then select **Continue**.
+
+6. Select **Confirm**.
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+To change the duration of a Cloudflare plan for a domain using the API, send a [`PUT`](https://developers.cloudflare.com/api/operations/zone-subscription-update-zone-subscription) request with an updated value for the `frequency` parameter.
  
 {{</tab>}}
 {{</tabs>}}

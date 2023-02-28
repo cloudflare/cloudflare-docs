@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Firewall rules
-weight: 4
+weight: 5
 meta:
   title: Firewall rules (previous version of custom rules)
 ---
@@ -11,9 +11,7 @@ meta:
 Firewall rules allow users to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
 
 {{<Aside type="note">}}
-Cloudflare Firewall Rules is the previous version of WAF's [custom rules](/waf/custom-rules/). 
+Use Cloudflare Firewall Rules if you do not have access to [WAF custom rules](/waf/custom-rules/).
 {{</Aside>}}
-
-Even though firewall rules are not based on the [Ruleset Engine](/ruleset-engine/), you can use the same [Rules language](/ruleset-engine/rules-language/) to define firewall rule expressions.
 
 For more information on firewall rules, refer to [Cloudflare Firewall Rules](/firewall/).

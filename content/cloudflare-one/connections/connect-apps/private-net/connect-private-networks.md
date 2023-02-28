@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Connect private networks
 weight: 1
 layout: single
-
 ---
 
 # Connect private networks
@@ -37,15 +36,14 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ### Route private network IPs through Gateway
 
-By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/exclude-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
+By default, WARP automatically excludes some IP addresses from Gateway visibility as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). For example, WARP automatically excludes RFC 1918 IP addresses such as `10.0.0.0/8`, which are IP addresses typically used in private networks and not reachable from the Internet. You will need to make sure that traffic to the IP/CIDR you are associating with your private network are sent to Gateway for filtering.
 
-To configure your Split Tunnel settings:
+To configure Split Tunnels settings:
 
-1. In the Zero Trust dashboard, go to **Settings** > **Network**.
-2. Scroll down to **Split Tunnels** and note whether you have selected **Exclude** or **Include** mode.
-3. Select **Manage**.
-    - If you are using **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption. If your network's IP/CIDR range is listed on this page, delete it.
-    - If you are using **Include** mode, the IP ranges you see listed are the only ones Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
+1. Check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude** or **Include** mode.
+2. [Edit the split tunnel entries](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-an-ip-address):
+   - If you are using **Exclude** mode, the IP ranges you see listed are those that Cloudflare excludes from WARP encryption. If your network's IP/CIDR range is listed on this page, delete it.
+   - If you are using **Include** mode, the IP ranges you see listed are the only ones Cloudflare is encrypting through WARP. Add your network's IP/CIDR range to the list.
 
 ### Create Zero Trust policies
 
@@ -56,26 +54,26 @@ You can create Zero Trust policies to manage access to specific applications on 
 3. Name your application.
 4. For **Application type**, select _Destination IP_.
 5. For **Value**, enter the IP address for your application (for example, `10.128.0.7`).
-{{<Aside type="note">}}
-If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/filtering/network-policies/) using the **Destination IP** selector.
-{{</Aside>}}
+   {{<Aside type="note">}}
+   If you would like to create a policy for an IP/CIDR range instead of a specific IP address, you can build a [Gateway Network policy](/cloudflare-one/policies/filtering/network-policies/) using the **Destination IP** selector.
+   {{</Aside>}}
 
 6. Configure your [App Launcher](/cloudflare-one/applications/app-launcher/) visibility and logo.
 7. Select **Next**. You will see two auto-generated Gateway Network policies: one that allows access to the destination IP and another that blocks access.
 8. Modify the policies to include additional identity-based conditions. For example:
 
-    - **Policy 1**
+   - **Policy 1**
     | Action | Selector | Operator | Value |
     |--|--|--|--|
     | Allow  | Destination IP |in|`10.128.0.7` |
-    |        |User email| Matches regex| `*@example.com`|
+    |        |User email| Matches regex| `.*@example.com`|
 
-    - **Policy 2**
-    | Block  | Selector | Operator | Value |
+   - **Policy 2**
+    | Action | Selector | Operator | Value |
     |--|--|--|--|
-    | Block |  Destination IP |in|`10.128.0.7` |
+    | Block | Destination IP |in|`10.128.0.7` |
 
-    Access rules are evaluated in order, so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/filtering/network-policies/).
+    Policies are evaluated in [numerical order](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence), so a user with an email ending in @example.com will be able to access `10.128.0.7` while all others will be blocked. For more information on building network policies, refer to our [dedicated documentation](/cloudflare-one/policies/filtering/network-policies/).
 
 9. Select **Add application**.
 

@@ -9,6 +9,19 @@ weight: 1001
 layout: example
 ---
 
+{{<tabs labels="js/esm | js/sw">}}
+{{<tab label="js/esm" default="true">}}
+
+```js
+export default {
+  async fetch(request) {
+    console.log(new Map(request.headers))
+    return new Response("Hello world")
+  }
+}
+```
+{{</tab>}}
+{{<tab label="js/sw">}}
 ```js
 async function handleRequest(request) {
   console.log(new Map(request.headers))
@@ -20,6 +33,8 @@ addEventListener("fetch", event => {
   return event.respondWith(handleRequest(event.request))
 })
 ```
+{{</tab>}}
+{{</tabs>}}
 
 ***
 

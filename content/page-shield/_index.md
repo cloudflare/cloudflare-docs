@@ -2,7 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
-layout: single
+layout: list
 meta:
   title: Cloudflare Page Shield
 ---
@@ -27,15 +27,4 @@ Page Shield includes the following features:
 
 ## Availability
 
-{{<table-wrap>}}
-
-Feature | Free | Pro | Business | Enterprise | Enterprise<br/>with add-on
---------|------|-----|----------|------------|----------------------------
-Script monitor                               | –   | Yes | Yes | Yes | Yes
-New Script Alerts<br/> and New Domain Alerts | –   | –   | Yes | Yes | Yes
-Page attribution                             | –   | –   | Yes | Yes | Yes
-Malicious script detection<br/> and alerting | –   | –   | –   | –   | Yes
-Code change detection<br/> and alerting      | –   | –   | –   | –   | Yes
-Connection monitor                           | –   | –   | –   | –   | Yes
-
-{{</table-wrap>}}
+{{<feature-table id="security.page_shield">}}

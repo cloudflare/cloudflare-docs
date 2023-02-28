@@ -28,7 +28,7 @@ Each input should be named – using the [`name`](https://developer.mozilla.org/
 Below is an example HTML5 form with a few inputs and their validation rules defined:
 
 ```html
-<form method="POST" action="/submit">
+<form method="POST" action="/api/submit">
   <input type="text" name="fullname" pattern="[A-Za-z]+" required />
   <input type="email" name="email" required />
   <input type="number" name="age" min="18" required />
@@ -44,7 +44,7 @@ Form elements may also have a [`<label>`](https://developer.mozilla.org/en-US/do
 To enable this, you must create a `<label>` element for each input and assign each `<input>` element and unique `id` attribute value. The `<label>` must also possess a [`for`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attr-for) attribute that reflects its input's unique `id` value. Amending the previous snippet should produce the following:
 
 ```html
-<form method="POST" action="/submit">
+<form method="POST" action="/api/submit">
   <label for="i-fullname">Full Name</label>
   <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
 
@@ -69,7 +69,7 @@ When this `<form>` is submitted with valid data, its data contents are sent to t
 By default, HTML forms send their contents in the `application/x-www-form-urlencoded` MIME type. This value will be reflected in the `Content-Type` HTTP header, which the receiving server must read to determine how to parse the data contents. You may customize the MIME type through the [`enctype`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-enctype) attribute. For example, to accept files (via `type=file`), you must change the `enctype` to the `multipart/form-data` value:
 
 ```html
-<form method="POST" action="/submit" enctype="multipart/form-data">
+<form method="POST" action="/api/submit" enctype="multipart/form-data">
   <label for="i-fullname">Full Name</label>
   <input id="i-fullname" type="text" name="fullname" pattern="[A-Za-z]+" required />
 

@@ -5,9 +5,15 @@ title: Traffic steering
 
 # Traffic steering
 
-Magic WAN uses a static configuration to route traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s edge to your network and from your network to Cloudflare's edge.
+Magic WAN uses a static configuration to route traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s global network to your network, and from your network to Cloudflare's global network.
 
-Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
+Magic WAN steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
+
+{{<Aside type="note">}}
+
+To enable TCP download optimization for eligible traffic, contact your account team.
+
+{{</Aside>}}
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
@@ -29,7 +35,7 @@ Using ECMP has a number of consequences:
 
 - Routing changes in the number of equal-cost next hops can cause traffic to use different tunnels. For example, dynamic prioritization triggered by health check events can cause traffic to use different tunnels.
 
-{{<render file="../../magic-transit/_partials/_ecmp-flow-hashing.md">}}
+{{<render file="_ecmp-flow-hashing.md" productFolder="magic-transit" >}}
 
 
 ### Examples
@@ -88,7 +94,5 @@ Magic WAN supports a weight field that you can apply to a tunnel so that a speci
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
 Note that because ECMP balances flows probabilistically, the use of weights is only approximate.
-
-For more on Magic WAN tunnel weights, contact your Cloudflare account manager.
 
 {{</Aside>}}

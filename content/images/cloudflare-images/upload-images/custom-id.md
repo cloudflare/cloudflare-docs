@@ -56,3 +56,7 @@ Refer to [Make your first API request](/images/cloudflare-images/api-request/) t
 ## Custom IDs in delivery URLs
 
 When [serving images](/images/cloudflare-images/serve-images), you can include non URL-encoded Custom IDs directly in the image URLs. However, any `%` characters present in Custom IDs must be encoded to `%25` in the image delivery URLs.
+
+## Custom IDs and private images
+
+Images with a [custom ID](/images/cloudflare-images/upload-images/custom-id/) cannot be made private using [signed URL tokens](/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/).

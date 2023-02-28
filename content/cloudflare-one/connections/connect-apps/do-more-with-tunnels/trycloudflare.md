@@ -10,7 +10,7 @@ Developers can use the TryCloudflare tool to experiment with Cloudflare Tunnel w
 
 ## Using TryCloudflare
 
-1.  Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to install `cloudflared`. If you have an older copy, update to 2019.4.0 or later.
+1.  Follow [these instructions](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) to install `cloudflared`. If you have an older copy, update to 2020.5.1 or later.
 1.  Launch a web server that is available over localhost to `cloudflared`.
 1.  Run the following terminal command to start a free tunnel.
 

@@ -26,7 +26,7 @@ You can search these audit logs by user email or domain and filter by date range
 
 ### Using the API
 
-To get audit logs from the Cloudflare API, send a [GET request](https://api.cloudflare.com/#audit-logs-properties).
+To get audit logs from the Cloudflare API, send a [GET request](https://developers.cloudflare.com/api/operations/audit-logs-get-account-audit-logs).
 
 We recommending using the API for downloading historical audit log data.
 
@@ -34,4 +34,4 @@ To maintain Audit Logs query performance, the Audit Logs API was modified on 201
 
 ## Retention
 
-Cloudflare will maintain full Audit Logs for the life of a customer's account and potentially longer if required by law or to otherwise comply with regulatory obligations.
+Audit Logs are retained for 18 months before being deleted. Enterprise customers can use [Log Push](/logs/about/) to store Audit Logs for longer periods of time.

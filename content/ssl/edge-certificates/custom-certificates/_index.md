@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: overview
 title: Custom certificates
 weight: 3
 layout: single
@@ -8,10 +8,9 @@ layout: single
 # Custom certificates
 
 {{<render file="_custom-certificates-definition.md">}}
+<br/>
 
 Custom certificates require that you [upload the certificate](uploading/), [manually renew these certificates](/ssl/edge-certificates/custom-certificates/renewing/), and upload these certificates in advance of expiration (otherwise your visitors will be unable to browse your site).
-
-Currently the Business and Enterprise plan each include one Custom Certificate, and Enterprise customers may purchase additional slots as needed by speaking with their Customer Success Manager.
 
 If you have first-level hostnames not covered by your custom SSL certificate, they will be covered by your [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), if enabled.
 
@@ -25,7 +24,7 @@ Typically, customers will upload both the SSL certificate and the private key. T
 
 ## Geo Key Manager (private key restriction)
 
-By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. Customers who wish to restrict where these keys may be used can elect to specify a [Private Key Restriction](https://blog.cloudflare.com/introducing-cloudflare-geo-key-manager/) during upload.
+By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. To restrict where these keys may be used, use [Geo Key Manager](/ssl/edge-certificates/geokey-manager/).
 
 ## Certificate packs
 
@@ -38,3 +37,7 @@ Each pack only counts as one SSL certificate against your custom certificate quo
 You cannot delete the primary certificate if secondary certificates are present in the pack.
 
 {{</Aside>}}
+
+## Availability
+
+{{<feature-table id="ssl.custom_certificates">}}

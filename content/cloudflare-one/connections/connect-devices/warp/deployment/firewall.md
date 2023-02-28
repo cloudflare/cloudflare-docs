@@ -12,15 +12,15 @@ If your organization uses a firewall or other policies to restrict or intercept 
 
 The WARP client talks with our edge via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
 
-- IPv4 API Endpoint: `162.159.137.105` and `162.159.138.105`
-- IPv6 API Endpoint: `2606:4700:7::a29f:8969` and `2606:4700:7::a29f:8a69`
+- IPv4 API Endpoints: `162.159.137.105` and `162.159.138.105`
+- IPv6 API Endpoints: `2606:4700:7::a29f:8969` and `2606:4700:7::a29f:8a69`
 
 ## DoH IP
 
 All DNS requests through WARP are sent outside the tunnel via DoH (DNS over HTTPS). The following IP addresses must be reachable for DNS to work correctly.
 
-- IPv4 DoH Address: `162.159.36.1`
-- IPv6 DoH Address: `2606:4700:4700::1111`
+- IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
+- IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
 
 ## WARP ingress IP
 

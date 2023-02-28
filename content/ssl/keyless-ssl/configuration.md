@@ -92,13 +92,13 @@ Add your Cloudflare account details to the configuration file located at `/etc/k
 
 1.  Set the hostname of the key server, for example, `11aa40b4a5db06d4889e48e2f.example.com`.
 2.  Set the Zone ID (found on **Overview** tab of the Cloudflare dashboard).
-3.  [Set the Origin CA API key](https://dash.cloudflare.com/profile).
+3.  [Set the Origin CA API key](/fundamentals/api/get-started/ca-keys).
 
 ### Populate keys
 
 Install your private keys in `/etc/keyless/keys/` and set the user and group to keyless with 400 permissions. Keys must be in PEM or DER format and have an extension of `.key`:
 
-```bash
+```sh
 $ ls -l /etc/keyless/keys
 -r-------- 1 keyless keyless 1675 Nov 18 16:44 example.com.key
 ```

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: E-commerce
-weight: 6
+weight: 3
 meta:
   title: zaraz.ecommerce
 ---
@@ -10,11 +10,13 @@ meta:
 
 You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
-`zaraz.ecommerce()` allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website.
+`zaraz.ecommerce()` allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. It is an `async` function, so you can choose to `await` it if you would like to make sure it completed before running other code.
 
 To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
 Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing and Facebook Pixel.
+
+{{<Aside type="note" header="Note">}}It is crucial you follow the guidelines set by third-party tools, such as Google Analytics 3 and Google Analytics 4, to ensure compliance with their limitations on payload size and length. For instance, if your `Order Completed` call includes a large number of products, it may exceed the limitations of the selected tool.{{</Aside>}}
 
 ## Enable e-commerce tracking
 
@@ -24,7 +26,7 @@ You do not need to map e-commerce events to triggers. Zaraz will automatically f
 2. Select **Zaraz** > **Settings**.
 3. Enable **E-commerce tracking**.
 4. Select **Save**.
-5. Go to **Zaraz** > **Tools**.
+5. Go to **Zaraz** > **Tools Configuration** > **Third-party tools**.
 6. Locate the tool you want to use with e-commerce tracking and select **Edit**.
 7. Select **Settings**.
 8. Under **Advanced**, enable **E-commerce tracking**.

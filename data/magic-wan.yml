@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M43.5
 product:
   title: Magic WAN
   url: /magic-wan/
+  group: Cloudflare One
 
 meta:
   title: Cloudflare Magic WAN docs
@@ -11,7 +12,7 @@ meta:
     network, providing global connectivity, cloud-based security, performance,
     and control through one simple user interface.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  image: /zt-preview.png
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-wan

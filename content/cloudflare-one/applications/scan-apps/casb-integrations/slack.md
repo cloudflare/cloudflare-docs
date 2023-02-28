@@ -1,7 +1,6 @@
 ---
 pcx_content_type: reference
 title: Slack
-weight: 3
 ---
 
 # Slack

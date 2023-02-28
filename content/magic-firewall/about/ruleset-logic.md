@@ -47,4 +47,4 @@ Managed phase rulesets are updated and maintained by Cloudflare, and Cloudflare 
 Cloudflare maintains the expressions and order of execution for rules in the Managed phase. Rules
 can be enabled, disabled, or made to log matching packets.
 
-Refer to [Enable Managed Rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.
+Refer to [Enable managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/) for more information.

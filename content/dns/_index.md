@@ -18,7 +18,7 @@ Beyond these benefits, Cloudflare authoritative DNS also provides [free DNSSEC](
 
 ## Availability
 
-Cloudflare's authoritative DNS is available to all customers for free. Other types of DNS setups may be limited to specific plan types. For additional details, refer to [Zone setup options](/dns/zone-setups/).
+{{<product-table id="dns">}}
 
 ## Other Cloudflare DNS products
 

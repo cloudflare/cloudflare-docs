@@ -7,7 +7,7 @@ title: Custom Domains
 
 ## About Custom Domains
 
-Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or do extra certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker.
+Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or perform any certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker, with no need for an external origin server.
 
 ## Build a Custom Domain
 
@@ -20,11 +20,12 @@ The interface provides active feedback on valid and invalid entries. Valid entri
 
 ## Configure your `wrangler.toml`
 
-To configure a subdomain for a Custom Domain in your `wrangler.toml`, add the following to your environment:
+To configure a subdomain for a Custom Domain in your `wrangler.toml`, add the `custom_domain=true` option on each pattern under `routes`. For example, multiple Custom Domains may be configured like so:
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true, zone_name = "example.com" }
+	{ pattern = "subdomain.example.com", custom_domain = true },
+	{ pattern = "subdomain-two.example.com", custom_domain = true }
 ]
 ```
 
@@ -54,7 +55,7 @@ In the example above, a Custom Domain for `api.example.com` can point to your Wo
 
 ## Certificates
 
-Creating a Custom Domain will also generate an Advanced Certificate on your target zone, with a Subject Name of the target hostname. These certificates are generated with default settings. To override these settings, create your certificate in the Cloudflare Dashboard or via API.
+Creating a Custom Domain will also generate an Advanced Certificate on your target zone, with a Subject Name of the target hostname. These certificates are generated with default settings. To override these settings, delete the generated certificate and create your own certificate in the Cloudflare Dashboard or via API.
 
 ## Configuring your Custom Domain
 
@@ -62,7 +63,9 @@ Custom Domains need to be configured on an appropriate zone. If you attempt to c
 
 ## Migrate from Routes
 
+{{<Aside type="note">}}
 If you are currently invoking a Worker using a [Route](/workers/platform/triggers/routes) with `/*`, and your DNS points to `100::` or similar, a Custom Domain is a recommended replacement. 
+{{</Aside>}}
 
 To migrate the Route `app.example.com/*`, create a Custom Domain on `app.example.com`, replacing the existing record. You can then delete the route `app.example.com/*` in your **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Routes** table.
 

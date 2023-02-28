@@ -18,10 +18,12 @@ let WARNS = 0;
 let ERRORS = 0;
 let JSON_WARNS = 0;
 let JSON_ERRORS = 0;
+let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNING_PATH_DIR = join(ROOT, "assets/json");
+const LEARNING_PATH_DIR = join(ROOT, "data/learning-paths");
+const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
 const DEV_DOCS_HOSTNAME = "developers.cloudflare.com";
@@ -167,6 +169,28 @@ async function testJSON(file: string) {
   }
 }
 
+async function testREDIRECTS(file: string) {
+  const textPlaceholder = await fs.readFile(file, "utf-8");
+  const destinationURLRegex = new RegExp(/\/.*\/*? (\/.*\/)/);
+
+  for (const line of textPlaceholder.split(/[\r\n]+/)) {
+    let exists = false;
+    if (!line.startsWith("#")) {
+      const result = line.match(destinationURLRegex);
+
+      if (result !== null) {
+        const match = result[1];
+        let local = join(PUBDIR, match);
+        exists = existsSync(local);
+
+        if (!exists) {
+          REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
+        }
+      }
+    }
+  }
+}
+
 async function task(file: string) {
   let html = await fs.readFile(file, "utf8");
 
@@ -282,15 +306,38 @@ try {
 try {
   await walkJsonFiles(LEARNING_PATH_DIR);
   if (!JSON_ERRORS && !JSON_WARNS) {
-    console.log("\n~> /assets/json files DONE~!\n\n");
+    console.log("\n~> /data/learning-paths/ files DONE~!\n\n");
   } else {
-    let msg = "\n~> /assets/json files DONE with:";
+    let msg = "\n~> /data/learning-paths/ files DONE with:";
     if (JSON_ERRORS > 0) {
       process.exitCode = 1;
       msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";
     }
     if (JSON_WARNS > 0) {
       msg += "\n    - " + JSON_WARNS.toLocaleString() + " warning(s)";
+    }
+    console.log(msg + "\n\n");
+  }
+} catch (err) {
+  console.error(err.stack || err);
+  process.exit(1);
+}
+
+try {
+  await testREDIRECTS(REDIRECT_FILE);
+  if (REDIRECT_ERRORS.length == 0) {
+    console.log("\n~> /content/_redirects file DONE~!\n\n");
+  } else {
+    let msg = "\n~> /content/_redirects file DONE with:";
+    process.exitCode = 1;
+    msg +=
+      "\n    - " +
+      REDIRECT_ERRORS.length.toLocaleString() +
+      " error(s)" +
+      " (due to bad destination URLs)" +
+      "\n\n";
+    for (let i = 0; i < REDIRECT_ERRORS.length; i++) {
+      msg += REDIRECT_ERRORS[i];
     }
     console.log(msg + "\n\n");
   }

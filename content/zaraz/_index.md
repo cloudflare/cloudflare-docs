@@ -13,7 +13,7 @@ meta:
 Offload third-party tools and services to the cloud and improve the speed and security of your website.
 {{</description>}}
 
-{{<plan type="all">}}
+{{<plan id="zaraz.zaraz.properties.availability.summary">}}
 
 Cloudflare Zaraz (beta) gives you complete control over third-party tools and services for your website, and allows you to offload them to Cloudflare's edge, improving the speed and security of your website. With Cloudflare Zaraz you can load tools such as analytics tools, advertising pixels and scripts, chatbots, marketing automation tools, and more, in the most optimized way.
 

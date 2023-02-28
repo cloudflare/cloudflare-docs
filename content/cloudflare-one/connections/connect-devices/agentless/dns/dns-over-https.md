@@ -6,7 +6,7 @@ weight: 2
 
 # Configure DNS over HTTPS
 
-With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by location or by user without needing to install the WARP client on your devices.
+With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by [DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or by user without needing to install the WARP client on your devices.
 
 Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#filter-doh-requests-by-location), while identity-based policies require that requests include a [user-specific DoH token](#filter-doh-requests-by-user).
 
@@ -24,7 +24,7 @@ Obtain your location's [DoH subdomain](/cloudflare-one/glossary/#doh-subdomain).
 
 ### Configure browser for DoH
 
-Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway location as your DoH endpoint, otherwise Gateway DNS filtering will not occur in that browser.
+Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choose to configure DoH directly in your browser, you must choose a Gateway DNS location as your DoH endpoint, otherwise DNS filtering will not occur in that browser.
 
 <details>
 <summary>Mozilla Firefox</summary>
@@ -97,7 +97,7 @@ As of today, Safari does not support DNS over HTTPS.
 </div>
 </details>
 
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [Location selector](/cloudflare-one/connections/connect-devices/agentless/dns/locations).
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
 
 ## Filter DoH requests by user
 

@@ -85,7 +85,7 @@ add:
 
 With the config file saved, restart `gokeyless` and verify it started successfully.
 
-```bash
+```sh
 $ sudo systemctl restart gokeyless.service
 $ sudo systemctl status gokeyless.service -l
 ```

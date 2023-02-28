@@ -1,12 +1,13 @@
 ---
 pcx_content_type: reference
 title: Microsoft 365
-weight: 3
 ---
 
 # Microsoft 365
 
 The Microsoft 365 (M365) integration detects a variety of user security, data loss prevention, and misconfiguration risks in an integrated Microsoft 365 account that could leave you and your organization vulnerable.
+
+This integration covers Microsoft 365 products, including OneDrive and SharePoint.
 
 ## Integration prerequisites
 
@@ -21,17 +22,20 @@ For the Microsoft 365 integration to function, Cloudflare CASB requires the foll
 * `Calendars.Read`
 * `Domain.Read.All`
 * `Group.Read.All`
+* `InformationProtectionPolicy.Read.All`
 * `MailboxSettings.Read`
 * `offline_access`
 * `RoleManagement.Read.All`
 * `User.Read.All`
 * `UserAuthenticationMethod.Read.All`
+* `Files.Read.All`
+* `AuditLog.Read.All`
 
 These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
 
 ## Security findings
 
-The Microsoft 365 integration currently scans for the following findings, or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
+The Microsoft 365 integration currently scans for the following findings or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
 
 ### User account settings
 
@@ -55,9 +59,17 @@ Keep user accounts safe by ensuring the following settings are maintained. Revie
 
 Get alerted when calendars in your Microsoft 365 account have their permissions changed to a less secure setting.
 
-| Finding                                       | Severity |
-|-----------------------------------------------|----------|
-| Calendar Shared Externally                    | Low      |
+|  Finding                                            | Severity |
+|-----------------------------------------------------|----------|
+| Microsoft File Publicly Accessible Read and Write   | Critical |
+| Microsoft File Publicly Accessible Read Only        | High     |
+| Microsoft File Shared Company Wide Read and Write   | Medium   |
+| Microsoft File Shared Company Wide Read Only        | Medium   |
+| Microsoft Folder Publicly Accessible Read and Write | Critical |
+| Microsoft Folder Publicly Accessible Read Only      | High     |
+| Microsoft Folder Shared Company Wide Read and Write | Medium   |
+| Microsoft Folder Shared Company Wide Read Only      | Medium   |
+| Calendar shared externally                          | Low      |
 
 ### Third-party apps
 
@@ -93,3 +105,13 @@ Get alerted when users set their email to be forwarded externally. This can eith
 | Active Message Rule Forwards Externally As Attachment | Low      |
 | Active Message Rule Forwards Externally               | Low      |
 | Active Message Rule Redirects Externally              | Low      |
+
+## Microsoft Information Protection (MIP) sensitivity labels
+
+{{<Aside type="note">}}
+
+Requires [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/).
+
+{{</Aside>}}
+
+Microsoft provides [MIP sensitivity labels](https://learn.microsoft.com/en-us/microsoft-365/compliance/sensitivity-labels?view=o365-worldwide) to classify and protect sensitive data. When you add the CASB Microsoft 365 integration, Cloudflare will automatically retrieve the labels from your Microsoft account and populate them in a [DLP Profile](/cloudflare-one/policies/data-loss-prevention/integration-profiles/).

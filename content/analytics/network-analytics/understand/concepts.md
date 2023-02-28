@@ -20,8 +20,8 @@ Network Analytics v2 (NAv2) can provide accurate data due to the sample rate and
 
 NAv2 sample rates vary depending on the mitigation service. For example:
 
-* The sample rate for `dosd` is 1/10,000 packets.
+* The sample rate for `dosd` changes dynamically from 1/100 to 1/10,000 packets based on the volume of packets.
 * The sample rate for Magic Firewall events changes dynamically from 1/100 to 1/1,000,000 packets based on the number of packets.
-* The sample rate for `flowtrackd` changes dynamically from 1/100 to 1/10,000 packets based on the volume of packets.
+* The sample rate for `flowtrackd` is 1/10,000 packets.
 
 NAv2 uses a data logging pipeline that relies on Edge Sample Enrichment. By delegating the packet sample enrichment and cross-referencing to the edge data centers, the data pipeline’s resilience and tolerance against congestion are improved. Using this method, enriched packet samples are immediately stored in Cloudflare’s core data centers as soon as they arrive.

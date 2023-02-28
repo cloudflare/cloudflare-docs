@@ -16,7 +16,7 @@ You can apply Gateway HTTP policies at the browser level by configuring a Proxy 
 
 ## Prerequisites
 
-Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/) on your device.
+Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your device.
 
 ## 1. Generate a proxy endpoint
 
@@ -106,9 +106,8 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 2. Verify that nothing is returned by a `curl` command:
 
-    ```bash
+    ```sh
     $ curl -4 -p -x https://3ele0ss56t.proxy.cloudflare-gateway.com https://example.com
-    $
     ```
 
 {{<Aside type="note">}}

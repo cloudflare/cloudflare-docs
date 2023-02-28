@@ -14,14 +14,14 @@ The descriptions below detail the fields available for `dns_logs`.
 
 | Field | Value | Type |
 | -- | -- | -- |
-| ColoCode | IATA airport code of data center that received the request | string |
-| EDNSSubnet | EDNS Client Subnet (IPv4 or IPv6). <br />See here: [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs) | string |
-| EDNSSubnetLength | EDNS Client Subnet length. <br />See here: [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs) | int |
-| QueryName | Name of the query that was sent | string |
-| QueryType | Integer value of query type. <br />See here: [Query type](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4) | int |
-| ResponseCached | Whether the response was cached or not | bool |
-| ResponseCode | Integer value of response code. <br />See here: [Response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6) | int |
-| SourceIP | IP address of the client (IPv4 or IPv6) | string |
-| Timestamp | Timestamp at which the query occurred | int or string |
+| ColoCode | IATA airport code of data center that received the request. | string |
+| EDNSSubnet | EDNS Client Subnet (IPv4 or IPv6). For more information refer to [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs). | string |
+| EDNSSubnetLength | EDNS Client Subnet length. For more information refer to [EDNS Client Subnet](/logs/reference/glossary/#edns-client-subnet-ecs). | int |
+| QueryName | Name of the query that was sent. | string |
+| QueryType | Integer value of query type. For more information refer to [Query type](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4). | int |
+| ResponseCached | Whether the response was cached or not. | bool |
+| ResponseCode | Integer value of response code. For more information refer to  [Response code](https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6). | int |
+| SourceIP | IP address of the client (IPv4 or IPv6). | string |
+| Timestamp | Timestamp at which the query occurred. | int or string |
 
 {{</table-wrap>}}

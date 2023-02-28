@@ -10,7 +10,7 @@ Magic Transit uses endpoint health checks to determine the overall health of you
 
 {{<render file="_endpoint-health-checks.md">}}
 
-| Prefix          | Endpoint IP address |
-| --------------- | ------------------- |
-| 103.21.244.0/24 | 103.21.244.100      |
-| 103.21.245.0/24 | 103.21.245.100      |
+| Prefix            | Endpoint IP address |
+| ----------------- | ------------------- |
+| `103.21.244.0/24` | `103.21.244.100`    | 
+| `103.21.245.0/24` | `103.21.245.100`    |

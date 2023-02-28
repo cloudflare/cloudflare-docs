@@ -17,4 +17,4 @@ You can use Cloudflare Image Resizing with either a [pre-defined URL format](/im
 
 ## Availability
 
-Image Resizing is currently available for Pro, Business, and Enterprise customers. To get started, make sure you have [enabled Image Resizing](/images/image-resizing/enable-image-resizing/) in the Cloudflare dashboard.
+{{<feature-table id="speed.image_resizing">}}

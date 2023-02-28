@@ -20,6 +20,10 @@ If you have a large domain with a lot of traffic, we recommend Bot Management fo
 
 To see the differences in features and functionality, visit [Plans](/bots/plans/).
 
+## Availability
+
+{{<feature-table id="security.bots">}}
+
 ## Next steps
 
 {{<button-group>}}

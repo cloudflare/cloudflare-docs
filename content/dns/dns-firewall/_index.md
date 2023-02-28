@@ -9,7 +9,9 @@ layout: single
 
 Cloudflare DNS Firewall proxies all DNS queries to your nameservers through Cloudflare’s global edge network. This action protects upstream nameservers from DDoS attacks and reduces load by caching DNS responses.
 
-DNS Firewall is for customers who need to speed up and protect entire authoritative nameservers, while [authoritative DNS](/dns/zone-setups/full-setup/) is for customers who need to speed up and protect individual zones.
+DNS Firewall is for customers who need to speed up and protect entire authoritative nameservers, while [full](/dns/zone-setups/full-setup/) or [partial](/dns/zone-setups/partial-setup/) authoritative DNS is for customers who need to speed up and protect individual zones.
+
+![Diagram showing protection provided by DNS Firewall. For more details, read further.](/dns/static/dns-firewall-overview.png)
 
 ## How it works
 
@@ -36,10 +38,11 @@ DNS Firewall provides the following benefits while allowing organizations total 
 
 ## Availability
 
-DNS Firewall is only available to customers on the [Enterprise plan](https://www.cloudflare.com/plans/enterprise/).
+{{<feature-table id="dns.dns_firewall">}}
 
 ## Resources
 
 *   [Setup](/dns/dns-firewall/setup/)
 *   [Analytics](/dns/dns-firewall/analytics/)
+*   [Random prefix attack mitigation](/dns/dns-firewall/random-prefix-attacks/)
 *   [FAQs](/dns/dns-firewall/faq/)

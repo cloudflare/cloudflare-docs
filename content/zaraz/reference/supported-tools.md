@@ -37,6 +37,7 @@ Segment                           | Customer Data Platform
 Snapchat                          | Advertising
 Taboola                           | Advertising
 Tatari                            | Advertising
+TikTok                            | Advertising
 Twitter Pixel                     | Advertising
 Upward                            | Recruiting
 ZipRecruiter                      | Recruiting
