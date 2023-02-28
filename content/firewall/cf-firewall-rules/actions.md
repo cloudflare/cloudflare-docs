@@ -13,8 +13,6 @@ layout: list
 
 The action of a firewall rule tells Cloudflare how to handle HTTP requests that have matched the rule expression.
 
-{{<render file="_deprecation-notice.md">}}
-
 ## Supported actions
 
 The table below lists the actions available in firewall rules. These actions are listed in order of precedence. If the same request matches two different rules which have the same priority, precedence determines the action to take.

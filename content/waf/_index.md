@@ -21,6 +21,7 @@ Get automatic protection from vulnerabilities and the flexibility to create cust
 ## Features
 
 {{<feature header="Custom rules" href="/waf/custom-rules/">}}
+{{<plan id="security.waf_b_custom_rules.properties.availability.summary">}}
 Create your own custom rules to protect your website and your APIs from malicious incoming traffic. Use advanced features like [WAF attack score](/waf/about/waf-attack-score/) and [uploaded content scanning](/waf/about/content-scanning/) in your custom rules.
 {{</feature>}}
 
@@ -55,7 +56,7 @@ Displays information about all incoming HTTP requests, including those not affec
 Documentation on the previous implementation of WAF managed rules.
 {{</resource>}}
 
-{{<resource header="Firewall rules (deprecated)" href="/firewall/" icon="documentation-clipboard">}}
+{{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}
 Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests. Use firewall rules if you do not have access to WAF custom rules.
 {{</resource>}}
 

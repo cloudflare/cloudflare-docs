@@ -1202,7 +1202,7 @@
       }
     },
     "x_firewall_rules": {
-      "title": "Firewall rules (deprecated)",
+      "title": "Firewall rules",
       "link": "/firewall/",
       "properties": {
         "availability": {
@@ -1304,35 +1304,11 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
-        },
-        "b_custom_rules": {
-          "title": "Number of rules",
-          "free": "5",
-          "lite": "20",
-          "pro": "20",
-          "pro_plus": "40",
-          "biz": "100",
-          "ent": "1,000"
-        },
-        "d_supported_actions": {
-          "title": "Supported actions",
-          "link": "/ruleset-engine/rules-language/actions/",
-          "free": "All except Log",
-          "pro": "All except Log",
-          "biz": "All except Log",
-          "ent": "All"
-        },
-        "f_regex_support": {
-          "title": "Regex support",
+          "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
-          "biz": "Yes",
-          "ent": "Yes"
+          "biz": "No",
+          "ent": "Certain Enterprise plans"
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
@@ -1341,7 +1317,7 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
-          "ent": "Paid add-on"
+          "ent": "Certain Enterprise plans"
         }
       }
     },

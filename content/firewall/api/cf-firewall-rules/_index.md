@@ -9,8 +9,6 @@ layout: single
 
 Use the Firewall Rules API to programmatically manage your rules.
 
-{{<render file="_deprecation-notice.md">}}
-
 When working with the Firewall Rules API, refer to these topics for additional context:
 
 * [Firewall rules actions](/firewall/cf-firewall-rules/actions/)

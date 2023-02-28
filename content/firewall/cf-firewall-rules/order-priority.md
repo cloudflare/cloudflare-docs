@@ -10,8 +10,6 @@ weight: 3
 
 Cloudflare Firewall Rules is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below. For example, Firewall Rules only evaluates requests that first clear IP Access rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.
 
-{{<render file="_deprecation-notice.md">}}
-
 ![Flow chart of request evaluation at Cloudflare for security products that are not powered by the Ruleset Engine](/firewall/static/firewall-rules-order-and-priority-1.png)
 
 {{<Aside type="warning" header="Important">}}
