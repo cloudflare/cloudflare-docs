@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Review malicious scripts and connections
-weight: 5
+weight: 6
 ---
 
 # Review malicious scripts and connections
@@ -27,9 +27,9 @@ To review the scripts considered malicious:
     - **Malicious domain**: Whether the script's domain is known to be malicious according to threat intelligence feeds.
     - **Malicious category**: The categorization of the script considered malicious according to threat intelligence feeds.
 
-    For more information, refer to [Detecting malicious scripts and connections](/page-shield/about/malicious-script-detection/).
+    For more information, refer to [Detecting malicious scripts and connections](/page-shield/detection/malicious-script-detection/).
 
-4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/use-dashboard/monitor-scripts/#view-script-details), review and update the pages where the malicious script was detected.
+4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/detection/monitor-connections-scripts/#view-script-or-connection-details), review and update the pages where the malicious script was detected.
 
 You can configure alerts for detected malicious scripts. Refer to [Alerts](/page-shield/reference/alerts/) for more information on the available alert types.
 
@@ -47,6 +47,6 @@ To review the connections considered malicious:
     - **Domain match**: Whether the connection's target domain is known to be malicious according to threat intelligence feeds.
     - **Category**: The categorization of the connection considered malicious according to threat intelligence feeds.
 
-    For more information, refer to [Detecting malicious scripts and connections](/page-shield/about/malicious-script-detection/).
+    For more information, refer to [Detecting malicious scripts and connections](/page-shield/detection/malicious-script-detection/).
 
 4.  Based on the displayed information, and with the help of the [last seen/first seen fields in the connection details](/page-shield/use-dashboard/monitor-connections/#view-connection-details), review and update the pages where the malicious connection was detected.
