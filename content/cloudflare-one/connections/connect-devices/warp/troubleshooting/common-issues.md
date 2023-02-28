@@ -22,8 +22,7 @@ In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troub
 
 - Happy Eyeball checks failing:
     ```txt
-    2022-03-23T23:01:22.469Z  WARN warp::warp::happy_eyeballs: Happy eyeballs to [2606:4700:100::a29f:c104]:4500 failed: Os { code: 10051, kind: NetworkUnreachable, message: "A socket operation was attempted to an unreachable network." }
-    2022-03-23T23:01:22.469Z ERROR warp::warp::happy_eyeballs: Happy eyeballs error Custom { kind: NotConnected, error: "All Happy Eyeballs checks failed" }
+    2022-03-23T23:01:22.469Z ERROR main_loop: warp::warp::happy_eyeballs: Happy eyeballs error Custom { kind: NotConnected, error: "All Happy Eyeballs checks failed" }
     ```
 - Many other checks timing out:
     ```txt
