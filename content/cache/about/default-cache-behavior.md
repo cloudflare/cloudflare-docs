@@ -11,7 +11,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
 
 - Cloudflare **does not** cache the resource when:
   - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
-  - The `Set-Cookie` header exists.
+  - The `Set-Cookie` header exists. (this will return a `cf-cache-status: BYPASS` response)
 - Cloudflare **does** cache the resource when:
   - The `Cache-Control` header is set to `public` and `max-age` is greater than 0. Note that Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl). 
   - The `Expires` header is set to a future date.
