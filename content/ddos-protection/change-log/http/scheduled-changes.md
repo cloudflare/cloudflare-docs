@@ -21,7 +21,7 @@ layout: list
     </tr>
   </thead>
   <tbody>
-<tr>
+    <tr>
       <td>2023-02-27</td>
       <td>2023-03-06</td>
       <td>...97003a74</td>
