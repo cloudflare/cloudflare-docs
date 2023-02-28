@@ -27,7 +27,7 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 2. Select **Create a policy**.
-3. [Build an HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
+3. Build an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
     | Policy name |
     | ---- |
@@ -56,7 +56,7 @@ You can test your DLP policy on any device connected to your Zero Trust organiza
 
 The request will be allowed or blocked according to your DLP policies. If the data matches a DLP policy, you will see the request in your [DLP logs](#4-view-dlp-logs).
 
-Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/data-loss-prevention/dlp-policies/configuration-guides/).
+Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application.
 
 ## 4. View DLP logs
 
