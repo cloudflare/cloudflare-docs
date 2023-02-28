@@ -11,7 +11,7 @@ meta:
   description: Balance traffic loads, manage failovers, monitor server and pool
     health, and apply geographic control with Cloudflare Load Balancing
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/tag/loadbalancing

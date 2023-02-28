@@ -12,7 +12,7 @@ meta:
     world a given client is located, even if their true client IP address is
     obscured by our proxy systems.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  
 
 externals:
   - title: Cloudflare home
