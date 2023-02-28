@@ -1,12 +1,12 @@
 ---
-title: Configure `aws-sdk-php` for R2
+title: aws-sdk-php
 summary: Example of how to configure `aws-sdk-php` to use R2.
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `aws-sdk-php` for R2
+
+{{<render file="_keys.md">}}<br>
 
 This example uses version 3 of the [aws-sdk-php](https://packagist.org/packages/aws/aws-sdk-php) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 

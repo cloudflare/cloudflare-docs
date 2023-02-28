@@ -1,12 +1,10 @@
 ---
-title: Configure `boto3` for R2
-summary: Example of how to configure `boto3` to use R2.
+title: boto3
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
+# Configure `boto3` for R2
 
-{{<render file="_keys.md">}}
+{{<render file="_keys.md">}}<br>
 
 You must configure [`boto3`](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) to use a preconstructed `endpoint_url` value. This can be done through any `boto3` usage that accepts connection arguments; for example:
 

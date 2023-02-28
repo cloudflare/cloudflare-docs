@@ -1,12 +1,11 @@
 ---
-title: Configure `aws-sdk-go` for R2
-summary: Example of how to configure `aws-sdk-go` to use R2.
+title: aws-sdk-go
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `aws-sdk-go` for R2
+
+{{<render file="_keys.md">}}<br>
 
 This example uses version 2 of the [aws-sdk-go](https://github.com/aws/aws-sdk-go-v2) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 

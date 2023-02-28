@@ -1,10 +1,9 @@
 ---
-title: Configure `aws` CLI for R2
-summary: Example of how to configure `aws` CLI to use R2.
+title: aws CLI
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
+
+# Configure `aws` CLI for R2
 
 {{<render file="_keys.md">}}<br>
 

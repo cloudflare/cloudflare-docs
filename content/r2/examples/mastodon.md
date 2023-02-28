@@ -1,10 +1,10 @@
 ---
-title: Using R2 with Mastodon
-summary: Learn how to configure Mastodon's object storage to use R2.
+title: Mastodon
 pcx_content_type: tutorial
-weight: 1001
 ---
+
 # Use R2 with Mastodon
+
 [Mastodon](https://joinmastodon.org/) is a popular [fediverse](https://en.wikipedia.org/wiki/Fediverse) software. This guide will explain how to configure R2 to be the object storage for a self hosted Mastodon instance, for either [a new instance](#setting-up-a-new-instance) or [an existing instance](#migration-to-r2).
 
 ## Set up a new instance

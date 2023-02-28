@@ -1,12 +1,11 @@
 ---
-title: Configure `aws-sdk-net` for R2
-summary: Example of how to configure `aws-sdk-net` to use R2.
+title: aws-sdk-net
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `aws-sdk-net` for R2
+
+{{<render file="_keys.md">}}<br>
 
 This example uses version 3 of the [aws-sdk-net](https://www.nuget.org/packages/AWSSDK.S3) package. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 

@@ -1,12 +1,11 @@
 ---
-title: Configure `aws-sdk-js` for R2
-summary: Example of how to configure `aws-sdk-js` to use R2.
+title: aws-sdk-js
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `aws-sdk-js` for R2
+
+{{<render file="_keys.md">}}<br>
 
 JavaScript or TypeScript users may continue to use the [`aws-sdk`](https://www.npmjs.com/package/aws-sdk) npm package as per normal. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 

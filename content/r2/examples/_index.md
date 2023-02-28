@@ -1,6 +1,5 @@
 ---
 type: overview
-hideChildren: true
 pcx_content_type: navigation
 title: Examples
 weight: 6
@@ -9,4 +8,6 @@ layout: list
 
 # Examples
 
-{{<list-examples>}}
+Learn how to use different SDKs and tools with R2.
+
+{{<directory-listing>}}

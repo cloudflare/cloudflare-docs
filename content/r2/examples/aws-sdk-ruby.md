@@ -1,12 +1,11 @@
 ---
-title: Configure `aws-sdk-ruby` for R2
-summary: Example of how to configure `aws-sdk-ruby` to use R2.
+title: aws-sdk-ruby
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `aws-sdk-ruby` for R2
+
+{{<render file="_keys.md">}}<br>
 
 Many Ruby projects also store these credentials in environment variables instead.
 

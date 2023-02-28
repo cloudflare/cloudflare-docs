@@ -1,12 +1,11 @@
 ---
-title: Configure `aws4fetch` for R2
-summary: Example of how to configure `aws4fetch` to use R2.
+title: aws4fetch
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `aws4fetch` for R2
+
+{{<render file="_keys.md">}}<br>
 
 JavaScript or TypeScript users may continue to use the [`aws4fetch`](https://www.npmjs.com/package/aws4fetch) npm package as per normal. This package uses the `fetch` and `SubtleCrypto` APIs which you will be familiar with when working in browsers or with Cloudflare Workers.
 
