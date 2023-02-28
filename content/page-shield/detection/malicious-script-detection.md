@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Detecting malicious scripts and connections
-weight: 3
+weight: 7
 ---
 
 # Detecting malicious scripts and connections
