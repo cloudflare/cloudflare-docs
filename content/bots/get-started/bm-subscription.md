@@ -1,9 +1,11 @@
 ---
+pcx_content_type: navigation
 title: Enterprise Bot Management
-pcx_content_type: get-started
+external_link: /learning-paths/bot-management/
 weight: 4
-meta:
-  title: Get started with Bot Management for Enterprise
+_build:
+  publishResources: false
+  render: never
 ---
 
 # Get started with Bot Management for Enterprise

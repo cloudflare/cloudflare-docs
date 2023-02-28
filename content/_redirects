@@ -63,7 +63,6 @@
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/what-is-1.1.1.1/ /1.1.1.1/
 
-
 # access
 /access/about/ /cloudflare-one/identity/ 301
 /access/other-protocols/tcp-guide/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
@@ -157,7 +156,9 @@
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
-/bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
+/bots/bot-management-enterprise/ /learning-paths/bot-management/ 301
+/bots/get-started/bm-subscription/ /learning-paths/bot-management/ 301
+
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
