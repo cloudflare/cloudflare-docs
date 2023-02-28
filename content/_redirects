@@ -811,6 +811,13 @@
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
 /cloudflare-one/policies/browser-isolation/configuration/ /cloudflare-one/policies/browser-isolation/setup/ 301
+/cloudflare-one/policies/data-loss-prevention/setup/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
+/cloudflare-one/policies/data-loss-prevention/predefined-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/ 301
+/cloudflare-one/policies/data-loss-prevention/integration-profiles/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/ 301
+/cloudflare-one/policies/data-loss-prevention/custom-profile/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/ 301
+/cloudflare-one/policies/data-loss-prevention/custom-profile/advanced-settings/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/ 301
+/cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
+/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ 301
 
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
 
@@ -825,6 +832,7 @@
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
 /cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
+/cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /distributed-web/* /web3/:splat 301
 /docs-engine/* https://github.com/cloudflare/cloudflare-docs/blob/production/README.md 301
 /fundamentals/internet/* /fundamentals/the-internet/ 301
