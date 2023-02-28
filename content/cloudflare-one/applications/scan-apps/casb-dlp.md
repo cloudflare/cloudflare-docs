@@ -29,7 +29,7 @@ Refer to the [DLP documentation](/cloudflare-one/policies/data-loss-prevention/d
 3. During the setup process, you will be prompted to select DLP profiles for the integration.
 4. Select **Save integration**.
 
-CASB will scan [every publicly accessible file](#limitations) in the integration for text that matches the DLP profile. The initial scan may take up to a few hours to complete.
+CASB will scan every publicly accessible file in the integration for text that matches the DLP profile. The initial scan may take up to a few hours to complete.
 
 ### Modify an existing integration
 
@@ -38,13 +38,13 @@ CASB will scan [every publicly accessible file](#limitations) in the integration
 3. Under **DLP profiles**, select the profiles that you want the integration to scan for.
 4. Select **Save integration**.
 
-If you enable a DLP profile from the **Manage integrations** page, CASB will only scan publicly accessible files that have had a modification event since enabling the DLP profile. Modification events include changes to:
+If you enable a DLP profile from the **Manage integrations** page, CASB will only scan publicly accessible files that have had a modification event since enabling the DLP profile. Modification events include changes to the following attributes:
 
-- The contents of the file
-- The name of the file
-- The visibility of the file (only if changed to publicly accessible)
-- The owner of the file
-- The location of the file (for example, moved to a different folder)
+- Contents of the file
+- Name of the file
+- Visibility of the file (only if changed to publicly accessible)
+- Owner of the file
+- Location of the file (for example, moved to a different folder)
 
 In order to scan historical data, you must enable the DLP profile during the [integration setup flow](#add-a-new-integration).
 
@@ -56,5 +56,5 @@ In order to scan historical data, you must enable the DLP profile during the [in
 
 DLP will only scan:
 - Files that are visible to anyone on the Internet.
-- Text-based files such as documents, spreadsheets, and PDFs. Images are not supported.
+- [Text-based files](/cloudflare-one/policies/data-loss-prevention/#supported-file-types) such as documents, spreadsheets, and PDFs. Images are not supported.
 - Files ≤ 100 MB.
