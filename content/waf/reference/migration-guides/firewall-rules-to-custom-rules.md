@@ -130,11 +130,11 @@ For the time being, all three Terraform resources will be available (`cloudflare
 
 Refer to the documentation about Terraform for [examples of configuring WAF custom rules using Terraform](/terraform/additional-configurations/waf-custom-rules/).
 
-### Replacing your configuration using `cf-terraforming`
+### Replace your configuration using `cf-terraforming`
 
-Consider using the [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) tool to generate the Terraform configuration for your current WAF custom rules (converted by Cloudflare from your firewall rules). Then, you can import the new resources to Terraform state.
+You can use the [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) tool to generate the Terraform configuration for your current WAF custom rules (converted by Cloudflare from your firewall rules). Then, import the new resources to Terraform state.
 
-The recommended steps for replacing your firewall rules (and filters) configuration in Terraform with a new ruleset configuration are the following:
+The recommended steps for replacing your firewall rules (and filters) configuration in Terraform with a new ruleset configuration are the following.
 
 1. Run the following command to generate all ruleset configurations for a zone:
 
