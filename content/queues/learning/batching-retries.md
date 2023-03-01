@@ -1,8 +1,7 @@
 ---
 title: Batching and Retries
-pcx_content_type: overview
+pcx_content_type: reference
 weight: 3
-layout: list
 ---
 
 # Batching and Retries
@@ -28,7 +27,7 @@ For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that i
 
 When determining what size and timeout settings to configure, you will want to take into account latency (how long can you wait to receive messages?), overall batch size (when writing to external systems), and cost (fewer-but-larger batches). 
 
-## Explicit acknowlegment
+## Explicit acknowledgement
 
 You can acknowledge individual messages with a batch by explicitly acknowledging each message as it is processed. Messages that are explicitly acknowledged will not be re-delivered, even if your queue consumer fails on a subsequent message and/or fails to return successfully when processing a batch.
 
@@ -72,7 +71,6 @@ Note that calls to `.ack()`, `.retry()` and their `.ackAll()` / `.retryAll` equi
 * If you call `.ack()` on a message, subsequent calls to `.ack()` or `.retry()` are silently ignored.
 * If you call `.retry()` on a message and then call `.ack()`: the `.ack()` is ignored. The first method call wins in all cases.
 * If you call either `.ack()` or `.retry()` on a single message, and then either/any of `.ackAll()` or `.retryAll()` on the batch, the call on the single message takes precedence. That is, the batch-level call does _not_ apply to that message (or messages, if multiple calls were made).
-* Although you can call `.ackAll()` o 
 
 ## Retries
 

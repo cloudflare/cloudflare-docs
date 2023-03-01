@@ -11,7 +11,9 @@ rss: file
 
 ### Explicit acknowledgement
 
-**New feature** You can now [acknowledge individual messages with a batch](https://developers.cloudflare.com/queues/learning/batching-retries/#explicit-acknowledgment) by calling `.ack()` on a message. This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being re-delivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages.
+**New feature** You can now [acknowledge individual messages with a batch](https://developers.cloudflare.com/queues/learning/batching-retries/#explicit-acknowledgement) by calling `.ack()` on a message.
+
+This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being re-delivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages within a batch.
 
 ## 2023-03-01
 
