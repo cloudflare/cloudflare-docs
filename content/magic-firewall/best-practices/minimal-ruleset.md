@@ -63,9 +63,9 @@ The list below is a common list of traffic types you should also consider blocki
 - RCP
 - SMCP
 - NTP
-  - Common vector for reflection attacks. Consider using [Cloudflare Gateway](/web3/), [1.1.1.1's DNS over HTTPs (DoH)](/1.1.1.1/), or an internal DNS service if possible. Consider restricting your firewall rules to only allow the source and destination of DNS traffic.
+  - Common vector for reflection attacks. Consider using [Cloudflare Gateway](/web3/), [1.1.1.1's DNS over HTTPS (DoH)](/1.1.1.1/), or an internal DNS service if possible. Consider restricting your firewall rules to only allow the source and destination of DNS traffic.
 - MS-SQL
-  - Common vector and [increasingly used as vector for DDos attacks](https://blog.cloudflare.com/ddos-attack-trends-for-2021-q4/). Block if unused or consider restricting only to the required source IP addresses.
+  - Common vector and [increasingly used as vector for DDoS attacks](https://blog.cloudflare.com/ddos-attack-trends-for-2021-q4/). Block if unused or consider restricting only to the required source IP addresses.
 - HTTP and HTTPS
   - If you only have servers on your Magic Transit prefixes, consider blocking ingress traffic on TCP source ports 80 and 443 from outside. If you have endpoints on your Magic Transit prefixes, you can allow traffic on the source ports but consider creating a disabled rule you can activate to respond to reflection attacks as needed.
 
