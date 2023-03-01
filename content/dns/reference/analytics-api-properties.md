@@ -18,13 +18,13 @@ In API requests, metrics are set in the `metrics` parameter. If you need to list
 
 | Metric             | Name                                | Example | Unit                 |
 | -------------------| ----------------------------------- | ------- | -------------------- |
-| queryCount         | Query count                         | 1000    | Count                |
-| uncachedCount      | Uncached query count                | 1       | Count                |
-| staleCount         | Stale query count                   | 1       | Count                |
-| responseTimeAvg    | Average response time               | 1.0     | Time in milliseconds |
-| responseTimeMedian | Median response time                | 1.0     | Time in milliseconds |
-| responseTime90th   | 90th percentile response time       | 1.0     | Time in milliseconds |
-| responseTime99th   | 99th percentile response time       | 1.0     | Time in milliseconds |
+| queryCount         | Query count                         | `1000`    | Count                |
+| uncachedCount      | Uncached query count                | `1`       | Count                |
+| staleCount         | Stale query count                   | `1`       | Count                |
+| responseTimeAvg    | Average response time               | `1.0`     | Time in milliseconds |
+| responseTimeMedian | Median response time                | `1.0`     | Time in milliseconds |
+| responseTime90th   | 90th percentile response time       | `1.0`     | Time in milliseconds |
+| responseTime99th   | 99th percentile response time       | `1.0`     | Time in milliseconds |
 
 {{</table-wrap>}}
 
@@ -80,25 +80,25 @@ Combine filters using `OR` and `AND` boolean logic. `AND` takes precedence over 
 
 The `OR` operator is defined using a comma `,` or the `OR` keyword surrounded by whitespace.
 
-  <details>
-  <summary>Examples</summary>
-  <div>
+<details>
+<summary>Examples</summary>
+<div>
 
-  - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
+- `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
 
-  - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
+- `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
   
-  </div>
-  </details>
+</div>
+</details>
 
 The `AND` operator is defined using a semicolon `;` or the `AND` keyword surrounded by whitespace.
   
-  <details>
+<details>
 <summary>Examples</summary>
 <div>
   
-  - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
-  - `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
+- `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
+- `queryType==AAAA AND coloName==SJC` indicates `AAAA` queries in `SJC`.
 
 </div>
 </details>
