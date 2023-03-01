@@ -33,3 +33,9 @@ If you modify cached assets, the new asset is not displayed to repeat visitors b
 3.  Under **Browser Cache TTL**, select the drop-down menu to select the desired cache expiration time.
 
 The **Respect Existing Headers** option tells Cloudflare to honor the settings in the `Cache-Control` headers from your origin web server.
+
+{{<Aside type="note" header="Respect Existing Headers Availability">}}
+
+For all plan types, you can set Browser Cache TTL to Respect Existing Headers at a zone level (zone setting). If you want to set Browser Cache TTL to Respect Existing Headers via Page Rules, this is currently only a Enterprise zone feature. 
+  
+{{</Aside>}}
