@@ -106,7 +106,7 @@ The response will be in a Cloudflare `v4` response envelope and the result conta
 ## Observe requests matching the policy
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Navigate to **Security** > **Events** to view the Firewall Events.
+2. Navigate to **Security** > **Events**.
 3. Filter for a specific rule ID. The rule ID used for filtering can be obtained from the response after creating the `POST` command to send the token validation configuration to Cloudflare’s API.
 
 ## Maintenance
@@ -158,7 +158,7 @@ Make sure to replace `{zoneID}` with the relevant zone ID and add your [authenti
 
 ### Update parts of the configuration
 
-You may want to first log requests that fail the policy in the firewall and only later block them. Similarly, requirements may change and other parts of the configuration need to be changed. To support this, we allow modifying parts of an existing configuration.
+You may want to first log requests that fail the policy using WAF custom rules and only later block them. Similarly, requirements may change and other parts of the configuration need to be changed. To support this, we allow modifying parts of an existing configuration.
 
 Use `PATCH` to update other configuration parameters. 
 
@@ -184,14 +184,14 @@ Make sure to replace `{zoneID}` with the relevant zone ID and add your [authenti
 
 ### Acting on JWT Validation
 
-JWT Validation manages the Cloudflare firewall on your behalf. There is no need to create firewall rules and customers may not create custom firewall rules with JWT validation properties. Your token validation configuration applies to the entire zone.
+JWT Validation manages the Cloudflare Web Application Firewall (WAF) on your behalf. There is no need to manually create custom rules with JWT validation properties. Your token validation configuration applies to the entire zone.
 
-There are three properties in a token validation configuration that control how the firewall is configured: `enabled`, `action`, and `allow_absent_token`. Refer to the [required information for setup](/api-shield/security/jwt-validation/configure/#required-information) for example values of these fields.
+There are three properties in a token validation configuration that control how the WAF is configured: `enabled`, `action`, and `allow_absent_token`. Refer to the [required information for setup](/api-shield/security/jwt-validation/configure/#required-information) for example values of these fields.
 
-| Property | Description | 
+| Property | Description |
 | --- | --- |
 | `enabled` | This acts as a global on/off switch. |
-| `allow_absent_token` | This enables a hybrid mode in which the firewall will not act on requests that completely lack a JWT. | 
+| `allow_absent_token` | This enables a hybrid mode in which the WAF will not act on requests that completely lack a JWT. |
 | `action` | This allows to either block a request or log the request. |
 
 ### Performing JWT Validation
@@ -219,4 +219,4 @@ Here is an overview of how JWT Validation processes incoming requests:
   The same accuracy applies as for EXP claims.  As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator.
   {{</Aside>}}
 
-7. The final validation result and whether a token was present at all is made available to the firewall which applies the policy’s configured action (`log`/`block`).
+7. The final validation result and whether a token was present at all is made available to the WAF which applies the policy’s configured action (`log`/`block`).
