@@ -14,7 +14,7 @@ View the content of the matched rule payload in the dashboard by entering your p
 
 3.  Under **Payload match**, select **Decrypt payload log**.
 
-    ![Example of a firewall event with available payload match data (still encrypted)](/waf/static/transform-rules/payload-logging-example.png)
+    ![Example of a security event with available payload match data (still encrypted)](/waf/static/transform-rules/payload-logging-example.png)
 
 4.  Enter your private key in the pop-up window and select **Decrypt**.
 

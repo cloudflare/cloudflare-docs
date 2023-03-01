@@ -18,7 +18,7 @@ You can apply multiple filters and exclusions to narrow the scope of Security Ev
 
 {{<render file="_analytics-filter-report-duration.md">}}
 
-## Create firewall rule from current filters
+## Create custom rule from current filters
 
 {{<render file="_analytics-create-firewall-rule.md">}}
 
