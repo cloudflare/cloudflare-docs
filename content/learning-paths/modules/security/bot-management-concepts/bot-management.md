@@ -11,4 +11,10 @@ For example, if a bot operator wants to hoard inventory or test out stolen credi
 
 Much in the same way, other malicious bots pretend to be friendly bots. They might adjust their `user-agent` to be the same as Google's, so it's hard to tell the difference between content indexing and content scraping.
 
-Bot management solutions give you the tools to separate bots from humans, and malicious bots from good bots.
+Bot management solutions help you separate bots from humans, and malicious bots from good bots. Once you know where requests are coming from, you can decide which actions your application should take, such as:
+
+- Allowing the request
+- Challenging or blocking the request.
+- Providing alternative content.
+- Redirecting to another page.
+- Logging the request for future investigation.

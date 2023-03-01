@@ -45,10 +45,18 @@ html {
 }
 
 .pathGrid {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin-top: 2em;
+    padding-top: 3em;
+    margin-bottom: 3em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+}
+
+@media (max-width: 1000px) {
+    .pathGrid {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .pathGrid a {
@@ -65,10 +73,10 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: .5em;
-    max-width: 100%;
+    padding: 1em;
+    max-width: 90%;
     margin-bottom: 1em;
-    height: 10em;
+    height: 12em;
 }
 
 [theme=dark] .individualPath {

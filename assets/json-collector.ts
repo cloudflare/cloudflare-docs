@@ -4,9 +4,11 @@ import * as application_security from "data/learning-paths/application-security.
 import * as replace_vpn from "data/learning-paths/replace-vpn.json";
 import * as bot_management from "data/learning-paths/bot-management.json";
 import * as load_balancing from "data/learning-paths/load-balancing.json";
+import * as workers from "data/learning-paths/workers.json";
 
 let learning_paths = [
   get_started,
+  workers,
   bot_management,
   load_balancing,
   replace_vpn,
