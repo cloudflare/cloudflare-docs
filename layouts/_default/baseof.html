@@ -5,6 +5,7 @@
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
     {{- if hugo.IsProduction -}}
+      <link rel="preload" href="/style.css" as="style" />
     {{- else -}}
       <link rel="stylesheet preconnect" href="/style.css" />
     {{- end -}}

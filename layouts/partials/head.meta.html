@@ -119,6 +119,7 @@
 <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
 <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
 <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
+
 {{- $coveo := index $.Context.Site.Params "coveo" -}}
 {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
   <link rel="stylesheet preconnect" href="/search-coveo.css"/>
