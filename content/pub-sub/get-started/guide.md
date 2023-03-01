@@ -54,8 +54,8 @@ $ yarn global add wrangler
 
 Validate that you have a version of `wrangler` that supports Pub/Sub:
 
-```
-wrangler --version
+```sh
+$ wrangler --version
 2.0.16 # should show 2.0.16 or greater - e.g. 2.0.17 or 2.1.0
 ```
 
