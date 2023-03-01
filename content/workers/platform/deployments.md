@@ -17,7 +17,7 @@ The latest deployment for a Worker is considered the "active deployment". [You c
 
 {{<Aside type="note">}}
 
-Associated resources for a worker such as KV, R2, Durable Objects etc. will not be tracked with deployments.
+Associated resources for a worker such as KV, R2, and Durable Objects are not tracked with deployments.
 
 {{</Aside>}}
 
