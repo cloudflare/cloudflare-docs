@@ -2,7 +2,6 @@
 language_tag: spanish
 source: https://support.cloudflare.com/hc/es-es/articles/200167906-Asegurar-el-acceso-del-usuario-con-autenticaci%C3%B3n-en-dos-fases-2FA-
 title: Asegurar el acceso del usuario con autenticación en dos fases (2FA)
-title: Asegurar el acceso del usuario con autenticación en dos fases (2FA)
 ---
 
 # Asegurar el acceso del usuario con autenticación en dos fases (2FA) – Centro de Ayuda de Cloudflare
