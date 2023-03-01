@@ -128,7 +128,7 @@ To disable 2FA:
 -   Click **Delete method** in the **Mobile App Authentication** card. A popup window appears.
 -   Enter your Cloudflare password, authenticator app code, or a recovery code,  then click **Disable**.
 
-![gif showing how you would disable your TOTP mobile app authentication.](/support/static/https://developerdocsgifs.cloudflaretraining.com/resampled_5fps_disable_mobile_auth_v2_final.gif)
+![gif showing how you would disable your TOTP mobile app authentication.](https://developerdocsgifs.cloudflaretraining.com/resampled_5fps_disable_mobile_auth_v2_final.gif)
 
 ___
 
