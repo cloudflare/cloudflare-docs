@@ -50,7 +50,6 @@ const stmt = db.prepare('SELECT * FROM users WHERE name = ?2 AND age = ?1').bind
 ## Type conversion
 Type conversion from Javascript inputs to D1 inputs is as follows:
 
-
 | Javascript | D1 |
 | ----- | ----- |
 | null | `NULL` |
@@ -58,6 +57,7 @@ Type conversion from Javascript inputs to D1 inputs is as follows:
 | Number[^1] | `INTEGER` |
 | String | `TEXT` |
 | ArrayBuffer | `BLOB` |
+| undefined | Not supported. Queries with `undefined` values will return a `D1_TYPE_ERROR` |
 
 `[^1]`: D1 supports 64-bit signed INTEGERs internally, however we don't support [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) in the API yet. Javascript integer's are safe up to [Number.MAX_SAFE_INTEGER](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
@@ -400,6 +400,7 @@ try {
 | Message | Cause |
 | ---- | ---- |
 | `D1_ERROR` | Generic error |
+| `D1_TYPE_ERROR` | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null` | 
 | `D1_COLUMN_NOTFOUND` | Column not found |
 | `D1_DUMP_ERROR` | Database dump error |
 | `D1_EXEC_ERROR` | Exec error in line x: y error |
