@@ -55,7 +55,7 @@ Displays information about all incoming HTTP requests, including those not affec
 Documentation on the previous implementation of WAF managed rules.
 {{</resource>}}
 
-{{<resource header="Firewall rules" href="/firewall/" icon="documentation-clipboard">}}
+{{<resource header="Firewall rules (deprecated)" href="/firewall/" icon="documentation-clipboard">}}
 Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests. Use firewall rules if you do not have access to WAF custom rules.
 {{</resource>}}
 

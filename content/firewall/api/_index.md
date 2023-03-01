@@ -11,6 +11,8 @@ layout: single
 
 Cloudflare offers APIs that work together to achieve the same effect as the UI-based **Firewall rules** feature under **Security** > **WAF**.
 
+{{<render file="_deprecation-notice.md">}}
+
 These APIs are the following:
 
 * [**Firewall Rules API**](/firewall/api/cf-firewall-rules/): Manage firewall rules and their actions, based on criteria separately defined through filters.
