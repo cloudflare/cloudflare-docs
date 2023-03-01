@@ -6,11 +6,11 @@ weight: 1
 
 # Analytics API properties
 
-This page describes API properties that can be used in your [API requests for DNS analytics](https://developers.cloudflare.com/api/operations/dns-analytics-table).
+This page describes API properties that you can use in [API requests for DNS analytics](https://developers.cloudflare.com/api/operations/dns-analytics-table).
 
 ## Metrics
 
-A metric is a numerical value that is based on an attribute of the data, for example a query count.
+A metric is a numerical value based on an attribute of the data, for example a query count.
 
 In API requests, metrics are set in the `metrics` parameter. If you need to list multiple metrics, separate them with commas.
 
@@ -39,10 +39,10 @@ In API requests, dimensions are set in the `dimensions` parameter. If you need t
 | Dimension          | Name                 | Example     | Notes                                                                                    |
 |--------------------|----------------------|-------------|------------------------------------------------------------------------------------------|
 | queryName          | Query Name           | `example.com` |                                                                                          |
-| queryType          | Query Type           | `AAAA`        | [Types defined by IANA](http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4).Unknown types are empty.                                          |
+| queryType          | Query Type           | `AAAA`        | [Types defined by IANA](http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4). Unknown types are empty.                                          |
 | responseCode       | Response Code        | `NOERROR`     | [Response codes defined by IANA](http://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6). Always uppercase.                                       |
 | responseCached     | Response Cached      | `Cached`      | Either `Cached` or `Uncached`.                                                               |
-| coloName           | Colo Name            | SJC         | PoP code.                                                                                |
+| coloName           | Colo Name            | `SJC`         | PoP code.                                                                                |
 | origin             | Origin               | `2001:db8::1` | Origin used to resolve the query. Empty if N/A or if the query was answered from cache. |
 | dayOfWeek          | Day Of Week          | `1`           | Break down by day of week. Monday is `1`, and Sunday is `7`.                               |
 | tcp                | TCP                  | `1`           | Either `1` or `0` depending on the protocol used.                                            |
@@ -55,9 +55,9 @@ In API requests, dimensions are set in the `dimensions` parameter. If you need t
 ## Filters
 
 Filters use the form `dimension operator expression`, where each part corresponds to the following:
-- **Dimension**: Specifies the [dimension](#dimensions) to filter on. For example: `queryName`.
+- **Dimension**: Specifies the [dimension](#dimensions) to filter on. For example, `queryName`.
 - **Operator**: Defines the type of filter match to use. Operators are specific to dimensions.
-- **Expression**: States the values to be included in or excluded from the results. Expressions use regex syntax.
+- **Expression**: States the values to include or exclude from the results. Expressions use regular expression (regex) syntax.
 
 ### Filter operators
 
@@ -76,7 +76,7 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 ### Combining filters
 
-Filters can be combined using `OR` and `AND` boolean logic. `AND` takes precedence over `OR` in all expressions.
+Combine filters using `OR` and `AND` boolean logic. `AND` takes precedence over `OR` in all expressions.
 
 The `OR` operator is defined using a comma `,` or the `OR` keyword surrounded by whitespace.
 
