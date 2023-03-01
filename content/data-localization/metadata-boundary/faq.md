@@ -19,7 +19,7 @@ Some of the data for which Cloudflare is a controller, as defined in the [Cloudf
 Some examples:
 
 - Customer account data (for example, name and billing information).
-- Customer configuration data (for example, the content of Firewall Rules).
+- Customer configuration data (for example, the content of WAF custom rules).
 - Metadata that is “operational” in nature —  data needed for Cloudflare to properly operate our network. This includes metadata such as:
     - System data generated for debugging (for example, application logs from internal systems, core dumps).
     - Networking flow data (for example, sFlow from our routers), including data on DDoS attacks.
