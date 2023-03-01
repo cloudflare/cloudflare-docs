@@ -71,7 +71,7 @@ Commands:
 
 The available `wrangler pubsub broker` sub-commands include:
 
-```bash
+```sh
 $ wrangler pubsub broker --help
 
 Interact with your Pub/Sub Brokers
