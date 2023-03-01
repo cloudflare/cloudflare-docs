@@ -1,5 +1,8 @@
 {{ $DATA := (index $.Site.Data .Section) }}
 {{ $productName := $DATA.product.title }}
+{{- $currentLocation := .RelPermalink -}}
+
+{{- if not (in $currentLocation "/support/other-languages") -}}
 
 <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -35,3 +38,5 @@
       {{- end -}}
     {{- end -}}
   </ol>
+
+  {{- end -}}
