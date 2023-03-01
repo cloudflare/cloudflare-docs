@@ -1,0 +1,13 @@
+---
+source: https://support.cloudflare.com/hc/en-us/articles/200169376-Can-I-use-Cloudflare-and-Varnish-together-
+title: Can I use Cloudflare and Varnish together
+                  2 years ago
+---
+
+# Can I use Cloudflare and Varnish together?
+
+
+
+## Varnish Compatibility
+
+Yes, you can use Cloudflare and Varnish together. See [Cloudflare and Varnish](http://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish) for more information.
