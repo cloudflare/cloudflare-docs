@@ -10,7 +10,7 @@ When a website is protected by Cloudflare, there are several occasions when it w
 
 - The visitor's IP address has shown suspicious behavior online (as tracked by [Project Honeypot](http://www.projecthoneypot.org/search_ip.php)).
 - The website owner has blocked the country associated with the visitor's IP address.
-- The visitor's actions have activated a [firewall rule](/firewall/) enabled by the website owner.
+- The visitor's actions have activated a [WAF custom rule](/waf/custom-rules/) or a firewall rule enabled by the website owner.
 
 If the visitor passes the challenge, their request is allowed. If they fail, the request will be blocked.
 
@@ -22,7 +22,7 @@ If the visitor passes the challenge, their request is allowed. If they fail, the
 
 Managed challenges are where Cloudflare dynamically chooses the appropriate type of challenge based on the characteristics of a request. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
 
-Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various firewall rules.
+Unless there are specific compatibility issues or other reasons to use other types of challenges, you should use managed challenges for your various custom rules.
 
 Depending on the characteristics of a request, Cloudflare will choose an appropriate type of challenge, which may include but is not limited to:
 

@@ -192,7 +192,7 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 {{<Aside type="note" header="Note">}}
 
-To get bot requests identified correctly, use only one firewall rule, configured with the action _Interactive Challenge_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one WAF custom rule (or firewall rule), configured with the action _Interactive Challenge_. To learn more about custom rules, refer to the [WAF documentation](/waf/custom-rules/).
 
 {{</Aside>}}
 

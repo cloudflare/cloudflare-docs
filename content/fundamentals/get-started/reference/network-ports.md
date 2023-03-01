@@ -67,10 +67,7 @@ If traffic for your domain is destined for a different port than the ones listed
 
 ## How to block traffic on additional ports
 
-Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing one of the following:
-
-- If you are using [WAF managed rules](https://support.cloudflare.com/hc/articles/200172016), enable rule ID 100015: "Anomaly:Port - Non Standard Port (not 80 or 443)".
-- If you are using the new [Cloudflare Web Application Firewall (WAF)](/waf/), create a [custom rule](/waf/custom-rules/) for this purpose (rule ID 100015 was deprecated in the new WAF). For example, you could use a rule configuration similar to the following:
+To block traffic on ports other than 80 and 443, create a [WAF custom rule](/waf/custom-rules/) (or a firewall rule) for this purpose. For example, you could use a rule configuration similar to the following:
 
   - Expression: `not (cf.edge.server_port in {80 443})`
   - Action: _Block_
@@ -78,11 +75,11 @@ Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing o
 Ports 80 and 443 are the only ports compatible with:
 
 - HTTP/HTTPS traffic within China data centers for domains that have the **China Network** enabled, and
-- Proxying of [Cloudflare Apps](https://www.cloudflare.com/apps/developer/docs/getting-started)
+- Proxying of [Cloudflare Apps](https://cloudflareapps.com/apps/developer/docs/getting-started)
 
 {{<render file="_open-ports-blocked-traffic.md" productFolder="firewall" >}}
 
-WAF managed rules or the new Cloudflare Web Application Firewall (WAF) will block traffic at the application layer (layer 7 in the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), preventing HTTP/HTTPS requests over non-standard ports from reaching the origin server.
+The WAF's [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) includes a rule that will block traffic at the application layer (layer 7 in the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), preventing HTTP/HTTPS requests over non-standard ports from reaching the origin server.
 
 {{<Aside type="note">}}
 
