@@ -10,7 +10,7 @@ This example class imports jose as well as [cookie](https://www.npmjs.com/packag
 
 ```js
 ---
-filename: src/auth0.js
+filename: src/auth0.mjs
 ---
 import cookie from 'cookie'
 import * as jose from 'jose'
@@ -61,7 +61,14 @@ export default class Auth0 {
     const iss = new URL(payload.iss).hostname
     if (iss !== this.domain) {
       throw new Error(
-        `Token iss value (${iss}) doesn't match configured AUTH0_DOMAIN (${this.domain})`,
+        `Token iss value (${iss}) doesn't match configured AUTH0_DOMAIN`,
+      )
+    }
+
+    // Verify aud claim
+    if (payload.aud !== this.clientId) {
+      throw new Error(
+        `Token aud value (${payload.aud}) doesn't match configured AUTH0_CLIENT_ID`,
       )
     }
 
@@ -209,6 +216,7 @@ export default class Auth0 {
       let kvStored = null
       let userInfo = null
       try {
+        // this is the response body from the Auth0 token endpoint, saved by persistAuth()
         kvStored = JSON.parse(kvData)
         userInfo = await this.validateToken(kvStored.id_token)
       } catch (err) {
