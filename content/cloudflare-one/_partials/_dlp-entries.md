@@ -22,7 +22,7 @@ _build:
 </details>
 
 <details>
-<summary>Use a predefined entry</summary>
+<summary>Add a predefined entry</summary>
 <div class="special-class" markdown="1">
 
 1. Select **Add existing entries**. Choose which entries to want to add, then select **Confirm**.

@@ -16,9 +16,8 @@ To define a custom profile:
 1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Gateway** > **DLP Profiles**.
 2. Select **Create Profile**.
 3. Enter a name and optional description for the profile.
-4. Select **Add custom entry** and give it a name.
-
-{{<render file="_dlp-entries.md">}}
+4. You can add both custom and predefined detection entries to your DLP profile.
+   {{<render file="_dlp-entries.md">}}
 
 5. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/custom-profile/advanced-settings/) for the profile.
 6. Select **Save profile**.
