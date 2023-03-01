@@ -30,7 +30,7 @@ Advanced certificates allow you multiple customization options:
 
 {{<Aside type="note">}}
 
-Advanced Certificate Manager is unable to be used with Cloudflare Pages due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority). This is because Pages uses Cloudflare for SaaS for Custom Domains.
+Advanced Certificate Manager cannot be used with Cloudflare Pages due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority). This is because Pages uses Cloudflare for SaaS for Custom Domains.
 
 {{</Aside>}}
 
