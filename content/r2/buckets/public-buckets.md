@@ -15,7 +15,7 @@ Public buckets can be set up in either one of two ways:
 1. The first exposes your bucket as a custom domain under your control.
 2. The second exposes your bucket as a Cloudflare-managed subdomain under `https://r2.dev`.
 
-To configure firewall rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
+To configure WAF custom rules, caching, access controls, or bot management for your bucket, you must do so through a custom domain.
 Using a custom domain does not require enabling `r2.dev`.
 
 ## Custom domains
