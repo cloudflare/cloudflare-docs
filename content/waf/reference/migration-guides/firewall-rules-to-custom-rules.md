@@ -130,6 +130,110 @@ For the time being, all three Terraform resources will be available (`cloudflare
 
 Refer to the documentation about Terraform for [examples of configuring WAF custom rules using Terraform](/terraform/additional-configurations/waf-custom-rules/).
 
-{{<Aside type="note" header="Migration tip">}}
-Consider using the [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) tool to generate the Terraform configuration for your current WAF custom rules (converted by Cloudflare from your firewall rules), and to import the new resources to Terraform state. For details on this procedure, refer to [Import Cloudflare resources](/terraform/advanced-topics/import-cloudflare-resources/).
-{{</Aside>}}
+### Replacing your configuration using `cf-terraforming`
+
+Consider using the [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) tool to generate the Terraform configuration for your current WAF custom rules (converted by Cloudflare from your firewall rules). Then, you can import the new resources to Terraform state.
+
+The recommended steps for replacing your firewall rules (and filters) configuration in Terraform with a new ruleset configuration are the following:
+
+1. Run the following command to generate all ruleset configurations for a zone:
+
+  ```sh
+  ---
+  highlight: [3,6]
+  ---
+  $ cf-terraforming generate --zone <ZONE_ID> --resource-type "cloudflare_ruleset"
+
+  resource "cloudflare_ruleset" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
+    kind    = "zone"
+    name    = "default"
+    phase   = "http_request_firewall_custom"
+    zone_id = "<ZONE_ID>"
+    rules {
+      [...]
+    }
+    [...]
+  }
+  [...]
+  ```
+
+2. Since you are migrating firewall rules, keep only the Terraform resource for the `http_request_firewall_custom` phase and save it to a `.tf` configuration file. The previous command may return additional ruleset configurations for other Cloudflare products also based on the [Ruleset Engine](/ruleset-engine/). You will need the full resource name in the next step.
+
+3. Run the following command to import the `cloudflare_ruleset` resource you previously identified into Terraform state. For example:
+
+  ```sh
+  $ terraform import cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31
+
+  cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31"...
+  cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import prepared!
+    Prepared cloudflare_ruleset for import
+  cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+
+  Import successful!
+
+  The resources that were imported are shown above. These resources are now in
+  your Terraform state and will henceforth be managed by Terraform.
+  ```
+
+4. Run `terraform plan` to validate that Terraform now checks the state of the new `cloudflare_ruleset` resource, in addition to other existing resources already managed by Terraform. For example:
+
+  ```sh
+  $ terraform plan
+
+  cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+  [...]
+  cloudflare_filter.my_filter: Refreshing state... [id=14a2524fd75c419f8d273116815b6349]
+  cloudflare_firewall_rule.my_firewall_rule: Refreshing state... [id=0580eb5d92e344ddb2374979f74c3ddf]
+  [...]
+  ```
+
+5. Remove any state related to firewall rules and filters from your Terraform state:
+
+    {{<Aside type="warning" header="Important">}}
+You must remove firewall rules and filters from Terraform state before deleting their configuration from `.tf` configuration files to prevent issues.
+    {{</Aside>}}
+
+      1. Run the following command to find all resources related to firewall rules and filters:
+      ```sh
+      $ terraform state list | grep -E '^cloudflare_(filter|firewall_rule)\.'
+
+      cloudflare_filter.my_filter
+      cloudflare_firewall_rule.my_firewall_rule
+      ```
+
+      2. Run the `terraform state rm ...` command in dry-run mode to understand the impact of removing those resources without performing any changes:
+      ```sh
+      $ terraform state rm -dry-run cloudflare_filter.my_filter cloudflare_firewall_rule.my_firewall_rule
+
+      Would remove cloudflare_filter.my_filter
+      Would remove cloudflare_firewall_rule.my_firewall_rule
+      ```
+
+      3. If the impact looks correct, run the same command without the `-dry-run` parameter to actually remove the resources from Terraform state:
+      ```sh
+      $ terraform state rm cloudflare_filter.my_filter cloudflare_firewall_rule.my_firewall_rule
+
+      Removed cloudflare_filter.my_filter
+      Removed cloudflare_firewall_rule.my_firewall_rule
+      Successfully removed 2 resource instance(s).
+      ```
+
+6. After removing firewall rules and filters resources from Terraform state, delete `cloudflare_filter` and `cloudflare_firewall_rule` resources from `.tf` configuration files.
+
+7. Run `terraform plan` to verify that the resources you deleted from configuration files no longer appear. You should not have any pending changes.
+
+  ```sh
+  $ terraform plan
+
+  cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+  [...]
+
+  No changes. Your infrastructure matches the configuration.
+
+  Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+  ```
+
+For details on importing Cloudflare resources to Terraform and using the `cf-terraforming` tool, refer to the following resources:
+
+* [Import Cloudflare resources](/terraform/advanced-topics/import-cloudflare-resources/)
+* [`cf-terraforming` GitHub repository](https://github.com/cloudflare/cf-terraforming)
