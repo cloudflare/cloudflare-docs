@@ -270,7 +270,7 @@ Rate (Requests / Period) | 5 requests / 3 minutes
 Action                   | Managed Challenge
 {{</table-wrap>}}
 
-To control the rate of actions performed by automated sources, consider use rate limiting rules together with [Cloudflare Bot Management](/bots/get-started/bm-subscription/). With Bot Management, you can use the [bot score](/bots/concepts/bot-score/) as part of the matching criteria to apply the rule only to automated or likely automated traffic. For example, you can use a maximum score (or threshold) of `30` for likely automated traffic and `10` for automated traffic.
+To control the rate of actions performed by automated sources, consider use rate limiting rules together with [Cloudflare Bot Management](/learning-paths/bot-management/). With Bot Management, you can use the [bot score](/bots/concepts/bot-score/) as part of the matching criteria to apply the rule only to automated or likely automated traffic. For example, you can use a maximum score (or threshold) of `30` for likely automated traffic and `10` for automated traffic.
 
 If your application tracks sessions using a cookie, you can use the cookie to set the rate limiting context (that is, use it as a counting characteristic). By setting the rate limiting characteristic to Cookie, the rule will group together requests from different IP addresses but belonging to the same session, which is a common scenario when dealing with a bot network performing a distributed attack.
 
@@ -300,7 +300,7 @@ Action                   | Block
 
 _These example rules require Advanced Rate Limiting and Bot Management._
 
-If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/concepts/ja3-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/bots/get-started/bm-subscription/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
+If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/concepts/ja3-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/learning-paths/bot-management/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
 
 {{<table-wrap>}}
 Setting                  | Value
