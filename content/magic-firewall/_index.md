@@ -1,7 +1,7 @@
 ---
 title: Overview
 pcx_content_type: overview
-weight: 2
+weight: 1
 meta:
   title: Magic Firewall
 ---
