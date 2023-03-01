@@ -7,6 +7,12 @@ rss: file
 
 # Changelog
 
+## 2023-03-01
+
+### Higher per-queue throughput
+
+The per-queue throughput limit has now been [raised to 400 messages per second](/queues/platform/limits/). Happy queueing!
+
 ## 2022-12-12
 
 ### Increased per-account limits
