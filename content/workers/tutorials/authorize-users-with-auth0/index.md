@@ -29,7 +29,7 @@ Assumptions:
 
 ## Set up Auth0
 
-If you do not already have an Auth0 account, sign up for a free account at [auth0.com](https://www.auth0.com). This tutorial supports integration with Auth0’s free tier.
+If you do not already have an Auth0 account, sign up for a free account at [auth0.com](https://auth0.com). This tutorial supports integration with Auth0’s free tier.
 
 ### Configure an Auth0 application
 
@@ -37,7 +37,7 @@ Every Auth0 account contains applications, which allow developers to create logi
 
 ![Create an Auth0 application by selecting your application type](./media/creating-an-application.png)
 
-Inside of your application’s settings, the "Domain", "Client ID" and "Client Secret" are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the [**Publish** section](/workers/tutorials/authorize-users-with-auth0/#publish) of this tutorial, you will later fill in these values with the final deployed URL of your application.
+Inside of your application’s settings, the "Domain", "Client ID" and "Client Secret" are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the **Publish** section of this tutorial, you will later fill in these values with the final deployed URL of your application.
 
 ## Generate a new project
 
@@ -242,7 +242,7 @@ export default class Auth0 {
 }
 ```
 
-The `Auth0` class gets instantiated with the Workers `environment` object, from which the class can access several secrets. Those are encrypted values that can be defined and used by your script. In the [**Publish** section](/workers/tutorials/authorize-users-with-auth0/#publish) of this tutorial, you will define these secrets using the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command.
+The `Auth0` class gets instantiated with the Workers `environment` object, from which the class can access several secrets. Those are encrypted values that can be defined and used by your script. In the **Publish** section of this tutorial, you will define these secrets using the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command.
 
 The `validateToken` method verifies a JWT token against the JWKs hosted in your Auth0 tenant. This step is critical, as it allows your application to trust the contents of the JWT. For more information about JWT best practices, refer to the [the Auth0 documentation](https://auth0.com/docs/secure/tokens/token-best-practices).
 
@@ -381,7 +381,7 @@ The `default export` defines the `fetch`  event handler for your Worker. The `fe
 
 When the `/login` endpoint is requested, the `Auth0.authorize` method is called, which in turn calls `Auth0.verifySession` to check for an existing valid session. If one is found, it returns an array with a boolean `authorized` as `true` and an `authorization` object constaining an `accessToken`, `idToken`, and `userInfo` object. If no valid session is found, `authorized` will be `false` and the object will contain a `redirectUrl` property, which sends the user to Auth0’s login form.
 
-When a user logs in via Auth0’s login form, they will be redirected back to the callback URL specified by your application. [In the next section](/workers/tutorials/authorize-users-with-auth0/#handling-a-login-redirect), you will handle that redirect and get a user access token as part of the login code flow.
+When a user logs in via Auth0’s login form, they will be redirected back to the callback URL specified by your application. In the next section, you will handle that redirect and get a user access token as part of the login code flow.
 
 ![A user logging in via Auth0's login form](./media/auth0-login.png)
 
@@ -524,7 +524,7 @@ On succesful authentication, the user is redirected to the URL that was stored i
 
 You have now completed the authorization/authentication portion of the tutorial. Your application will authorize any incoming users, redirecting them to Auth0 and verifying their access tokens before they are allowed to access protected routes.
 
-To configure your deployment and publish the application, you can go to the [**Publish** section](/workers/tutorials/authorize-users-with-auth0/#publish), but in the next few portions of the tutorial you will focus on some of the more interesting aspects of this project; for example, accessing user information within your application, edge state hydration, logging out users, and making the application more production-ready with some improvements and customizations.
+To configure your deployment and publish the application, you can go to the **Publish** section. The next few portions of the tutorial will review some interesting additions to this project.
 
 ### Improvements and customizations
 
@@ -532,7 +532,7 @@ This tutorial introduces concepts for implementing authentication in Workers usi
 
 #### Using user data in your application
 
-In the previous section of the tutorial, you made middleware for your instance of `itty-router`, which provides information such as name and email address for use in your protected routes. Using Workers’ [HTML Rewriter](/workers/runtime-apis/html-rewriter/), you can embed the `userInfo` object directly into your site by creating an instance of the `HTMLRewriter` class and attaching a `hydrateState` handler to any found `head` tags that pass through the rewriter. The `hydrateState` handler will add a new `script` tag with an ID of `edge_state`, which you can parse and utilize in any front-end JavaScript code you will deploy with your application.
+In the previous section of the tutorial, you made middleware for your instance of `itty-router`, which provides information such as name and email address for use in your protected routes. Using Workers’ [HTML Rewriter](/workers/runtime-apis/html-rewriter/), you can embed the `userInfo` object directly into your site by creating an instance of the `HTMLRewriter` class and attaching a handler to any found `head` tags that pass through the rewriter. The handler will add a new `script` tag with an ID of `edge_state`, which you can parse and utilize in any front-end JavaScript code you might deploy with your application.
 
 #### Logging out users
 
@@ -584,18 +584,13 @@ router.get('/logout', async (request, env) => {
 
 #### Deploying to origin/originless
 
-While this tutorial assumes that you are deploying a Workers Sites application, you may want to put this authorization logic in front of an existing domain. This concept, known as deploying to an origin, is in contrast to the originless deploy, where your Workers deployment is the final destination for any requests from users of your application.
+While this tutorial assumes that you are deploying a Workers Sites application, you may want to put this authorization logic in front of an existing domain. This concept, known as deploying to an origin or proxying an origin, is in contrast to the originless deploy, where your Workers deployment _is_ the final destination for any requests from users of your application.
 
-The next section of this tutorial, [**Publish**](/workers/tutorials/authorize-users-with-auth0/#publish), assumes deployment to Workers’ built-in deployment target, `*.workers.dev`, but if you want to handle deploying to an existing domain, known commonly as a zone, you will need to take the following steps:
-
-1.  Update the `handleEvent` function to make a request to your origin.
-
-Replace the catch-all route handler with a request to your origin:
+The **Publish** section of this tutorial assumes deployment to Workers’ built-in deployment target, `*.workers.dev`, but if you want to handle deploying to an existing domain, you will need to update the catch-all route handler with a request to your origin:
 
 ```js
 ---
 filename: /index.js
-highlight: [10]
 ---
 
 // Catch-all route
@@ -629,8 +624,6 @@ $ wrangler secret put AUTH0_COOKIE_KEY
 $ wrangler secret put AUTH0_COOKIE_DOMAIN
 $ wrangler secret put AUTH0_LOGOUT_URL
 ```
-
-![Customize basic application configuration in Auth0 settings](./media/auth0-settings.png)
 
 #### Setting the callback url
 
