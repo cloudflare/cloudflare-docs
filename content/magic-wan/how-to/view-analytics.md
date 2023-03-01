@@ -1,7 +1,6 @@
 ---
 title: View Network Analytics
 pcx_content_type: how-to
-weight: 4
 ---
 
 # View Network Analytics

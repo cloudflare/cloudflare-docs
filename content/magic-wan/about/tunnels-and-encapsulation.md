@@ -6,7 +6,7 @@ weight:
 
 # Tunnels & encapsulation
 
-Magic WAN uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnels to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you [set up tunnel endpoints](/magic-wan/how-to/configure-tunnels/) on routers at your network location.
+Magic WAN uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnels to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you [set up tunnel endpoints](/magic-wan/get-started/configure-tunnels/) on routers at your network location.
 
 ## Encapsulation
 
