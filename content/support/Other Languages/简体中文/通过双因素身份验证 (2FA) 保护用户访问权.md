@@ -1,6 +1,5 @@
 ---
 language_tag: chinese
-created: 2023-01-06T08:38:41 (UTC -08:00)
 title: 通过双因素身份验证 (2FA) 保护用户访问权
 source: https://support.cloudflare.com/hc/zh-cn/articles/200167906-%E9%80%9A%E8%BF%87%E5%8F%8C%E5%9B%A0%E7%B4%A0%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81-2FA-%E4%BF%9D%E6%8A%A4%E7%94%A8%E6%88%B7%E8%AE%BF%E9%97%AE%E6%9D%83
 title: 通过双因素身份验证 (2FA) 保护用户访问权
@@ -40,7 +39,6 @@ ___
 
 所有 Cloudflare 帐户持有人都需要启用 2FA。如果您不是超级管理员，
 
--   在接受邀请加入 Cloudflare 帐户成为成员之前，您将必须打开 2FA。
 -   选择您喜欢的身份验证应用，然后将其下载到您的移动设备上。有许多身份验证应用可用，包括 [Google Authenticator](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DAndroid&hl=en&oco=0) 和 [Authy](https://authy.com/features/)。您会看到一个二维码。 
 
 要启用 2FA，请执行以下操作：
