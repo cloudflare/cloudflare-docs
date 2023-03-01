@@ -6,7 +6,7 @@ weight: 0
 
 # Bot Management variables
 
-## Firewall fields
+## Ruleset Engine/Firewall fields
 
 {{<render file="_firewall-variables.md">}}
 
