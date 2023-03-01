@@ -158,13 +158,13 @@ Response:
 
 Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.
 
-### 3. Create firewall rule for Splunk HEC endpoint (optional)
+### 3. Create WAF custom rule for Splunk HEC endpoint (optional)
 
-If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see a challenge when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a firewall rule that allows Cloudflare to bypass the HEC endpoint.
+If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see a challenge when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF custom rule that allows Cloudflare to bypass the HEC endpoint. If you do not have access to custom rules, create a firewall rule instead.
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Firewall rules**.
-2.  Click **Create firewall rule** and enter a descriptive name for it (for example, Splunk).
-3.  Under **When incoming requests match...**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, click **And** to create the next row of rules. Refer to the table below for the values you should input:
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Custom rules**.
+2.  Select **Create rule** and enter a descriptive name for it (for example, `Splunk`).
+3.  Under **If incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
 
 {{<table-wrap>}}
 
@@ -185,9 +185,9 @@ If you have the Cloudflare Web Application Firewall (WAF) turned on, you may see
 (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.geoip.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
 ```
 
-1.  Under the **Then...** > **Choose an action** dropdown, select _Bypass_.
-2.  In the **Choose a feature** dropdown, select _WAF Managed Rules_.
-3.  Click **Deploy**.
+1.  Under the **Then** > **Choose an action** dropdown, select _Skip_.
+2.  Under **WAF components to skip**, select _All managed rules_.
+3.  Select **Deploy**.
 
 The WAF should now ignore requests made to Splunk HEC by Cloudflare.
 
