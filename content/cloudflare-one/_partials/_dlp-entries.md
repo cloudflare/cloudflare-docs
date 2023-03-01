@@ -16,17 +16,17 @@ _build:
    - Detected text patterns are limited to 1024 bytes in length.
    - Regexes with `+` are not supported as they are prone to exceeding the length limit. For example `a+` can detect an infinite number of a's. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
 
-3. Select **Done** to save the detection entry.
+3. To save the detection entry, select **Done**.
 
 </div>
 </details>
 
 <details>
-<summary>Add a predefined entry</summary>
+<summary>Add predefined entries</summary>
 <div class="special-class" markdown="1">
 
 1. Select **Add existing entries**. Choose which entries to want to add, then select **Confirm**.
-2. Select **Done** to save the detection entry.
+2. To save the detection entry, select **Done**.
 
 </div>
 </details>

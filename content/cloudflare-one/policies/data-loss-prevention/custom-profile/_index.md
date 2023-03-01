@@ -17,6 +17,7 @@ To define a custom profile:
 2. Select **Create Profile**.
 3. Enter a name and optional description for the profile.
 4. You can add both custom and predefined detection entries to your DLP profile.
+
    {{<render file="_dlp-entries.md">}}
 
 5. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/custom-profile/advanced-settings/) for the profile.
