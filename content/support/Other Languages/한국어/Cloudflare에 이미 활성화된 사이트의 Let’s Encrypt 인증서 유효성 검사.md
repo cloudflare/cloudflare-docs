@@ -69,9 +69,6 @@ Cloudflare에 이미 활성화된 사이트에 처음으로 Let’s Encrypt를 �
     SAN에 추가할 호스트 이름을 지정합니다.
     
 4.  이 확인 방법을 성공적으로 완료하면 다음과 비슷한 메시지가 나타납니다.  
-
-
-</span></div></span></span></span></code></pre>{{</raw>}}
     
 5.  인증서와 키는 모두 `/etc/letsencrypt/live/example.tld/` 에 저장됩니다. 이들을 확보한 후 가상 호스트를 수동 업데이트하여 이 키/인증서 쌍을 사용하게 해야 합니다.
 
