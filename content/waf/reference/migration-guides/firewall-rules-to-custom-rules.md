@@ -157,7 +157,7 @@ The recommended steps for replacing your firewall rules (and filters) configurat
   [...]
   ```
 
-2. Since you are migrating firewall rules, keep only the Terraform resource for the `http_request_firewall_custom` phase and save it to a `.tf` configuration file. The previous command may return additional ruleset configurations for other Cloudflare products also based on the [Ruleset Engine](/ruleset-engine/). You will need the full resource name in the next step.
+2. The previous command may return additional ruleset configurations for other Cloudflare products also based on the [Ruleset Engine](/ruleset-engine/). Since you are migrating firewall rules to custom rules, keep only the Terraform resource for the `http_request_firewall_custom` phase and save it to a `.tf` configuration file. You will need the full resource name in the next step.
 
 3. Run the following command to import the `cloudflare_ruleset` resource you previously identified into Terraform state. For example:
 
