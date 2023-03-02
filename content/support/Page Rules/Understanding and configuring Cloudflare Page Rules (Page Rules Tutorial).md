@@ -13,52 +13,7 @@ You can define a page rule to trigger one or more actions whenever a certain URL
 
 The default number of allowed page rules depends on the domain plan as shown below.
 
-| **Plan** | **Page rules allowed** |
-| --- | --- |
-| 
-Free & Lite
-
- | 
-
-3
-
- |
-| 
-
-Pro
-
- | 
-
-20
-
- |
-| 
-
-Pro Plus
-
- | 
-
-30
-
- |
-| 
-
-Business
-
- | 
-
-50
-
- |
-| 
-
-Enterprise
-
- | 
-
-125
-
- |
+{{<feature-table id="rules.page_rules">}}
 
 You can [purchase additional rules](https://www.cloudflare.com/features-page-rules/) (up to a maximum of 100) for domains in the Free, Lite, Pro, Pro Plus, and Business plans.
 
