@@ -58,7 +58,7 @@ Download **specific** fields from Cloudflare Logs, save to els.txt:
 
 This command will include only the following fields in the logs you requested: _CacheCacheStatus, CacheResponseBytes, CacheResponseStatus, CacheTieredFill, ClientASN_.
 
-See the full list of Cloudflare Logs fields [here](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-Logpull-REST-API).  Template:
+Refer to the full list of Cloudflare Logs fields [here](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-Logpull-REST-API).  Template:
 
 ```
 curl -sv -o els.txt-H "X-Auth-Email:email" -H "X-Auth-Key:api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received?start=starttime&end=endtime&fields=CacheCacheStatus,CacheResponseBytes,CacheResponseStatus,CacheTieredFill,ClientASN”

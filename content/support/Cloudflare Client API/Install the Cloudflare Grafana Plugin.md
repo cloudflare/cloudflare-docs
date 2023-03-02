@@ -24,7 +24,7 @@ ___
 
 `grafana-cli plugins install cloudflare-app`
 
-3\. Now when you launch Grafana, you will see Cloudflare for Grafana on the home screen under installed apps.
+3\. Now when you launch Grafana, Cloudflare for Grafana will appear on the home screen under installed apps.
 
 ![Old URL: https://support.cloudflare.com/hc/en-us/article_attachments/115005811168/Screen_Shot_20017-02-09_at_11.55.21_AM.png
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin

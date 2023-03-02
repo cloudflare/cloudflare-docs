@@ -12,7 +12,7 @@ title: Understanding Cloudflare Under Attack mode (advanced DDOS protection)
 
 Cloudflare **Under Attack Mode** performs additional security checks to help mitigate Layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attacked (and will temporarily pause access to your site and impact your site analytics).
 
-When enabled, visitors see an interstitial page.
+When enabled, visitors receive an interstitial page.
 
 The "_Checking your browser before accessing_..." challenge determines whether to block or allow a visitor within 5 seconds.  After passing the challenge, the visitor does not observe another challenge until the duration configured in **Challenge Passage**, in **Security** > **Settings**.
 

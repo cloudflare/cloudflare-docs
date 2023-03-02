@@ -32,7 +32,7 @@ ___
 
 ## What records are added to keep Universal SSL enabled?
 
-If you use Cloudflare’s free Universal SSL certificates, you will see [several CAA records added by Cloudflare](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records#caa-records-added-by-cloudflare).
+If you use Cloudflare’s free Universal SSL certificates, [several CAA records are added by Cloudflare](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records#caa-records-added-by-cloudflare).
 
 Used alone, _issuewild_ only permits wildcard issuance.  Therefore, Cloudflare cannot add your root domain to the certificate unless you specify the _Allow wildcards and specific hostnames_ option in the **Tag** dropdown:
 

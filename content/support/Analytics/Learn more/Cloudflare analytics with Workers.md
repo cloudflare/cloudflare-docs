@@ -23,13 +23,13 @@ ___
 
 ## Worker analytics
 
-For a breakdown of subrequest traffic (origin facing traffic), you may go to the Cloudflare **Analytics** app and click on the **Workers** tab. Under the **Workers** tab, below the Service Workers panel, you will see a **Subrequests** breakdown by count, **Bandwidth** and **Status Codes**. This will help you spot and debug errors at your origin (such as spikes in 500s), and identify your cache-hit ratio to help you understand traffic going to your origin.
+For a breakdown of subrequest traffic (origin facing traffic), you may go to the Cloudflare **Analytics** app and click on the **Workers** tab. Under the **Workers** tab, below the Service Workers panel, are a **Subrequests** breakdown by count, **Bandwidth** and **Status Codes**. This will help you spot and debug errors at your origin (such as spikes in 500s), and identify your cache-hit ratio to help you understand traffic going to your origin.
 
 ___
 
 ## FAQ
 
-**Why don’t I see any analytics for Workers?**
+**Why don’t I have any analytics for Workers?**
 
 -   If you are not currently using Workers (don’t have Workers deployed on any routes or filters), we will not have any information to show you.
 -   If your Worker sends a static response back to the client without ever calling fetch() to an origin, you are not making any subrequests, thus, all traffic will be shown in zone Analytics
@@ -40,4 +40,4 @@ No, [billing for Workers](https://developers.cloudflare.com/workers/about/prici
 
 **Why am I seeing such a high cache hit ratio?**
 
-Requests served by a Worker always show as cached. For an accurate cache hit ratio on subrequests, see the **Subrequests** graph in the **Analytics** app under the **Workers** analytics tab.
+Requests served by a Worker always show as cached. For an accurate cache hit ratio on subrequests, refer to the **Subrequests** graph in the **Analytics** app under the **Workers** analytics tab.

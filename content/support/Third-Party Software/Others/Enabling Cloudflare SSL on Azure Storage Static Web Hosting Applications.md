@@ -19,7 +19,7 @@ https://<<account>>.blob.core.windows.net/
 https://<<account>>.<<foo.com>>.web.core.windows.net
 ```
 
-A Static Web Hosting custom domain, _foo.com_, uses a _CNAME_ to point to another _CNAME_ which utilizes the **\*.blob, \*.web** URLs.  That _CNAME_ then resolves to another _CNAME_ which is the _A record_ of the FE pool for the Azure storage account.  To clarify this configuration, see the following example:
+A Static Web Hosting custom domain, _foo.com_, uses a _CNAME_ to point to another _CNAME_ which utilizes the **\*.blob, \*.web** URLs.  That _CNAME_ then resolves to another _CNAME_ which is the _A record_ of the FE pool for the Azure storage account.  To clarify this configuration, refer to the following example:
 
 ```
 storage.foo.com CNAME foo.blob.core.windows.net

@@ -47,4 +47,4 @@ If you manage DNS records via the **DNS** app in Cloudflare's Dashboard and yo
 
 ### Unresolved IP address
 
-In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.  Reload the page after a short wait to see if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/) may help. Contact your hosting provider for additional help with your current DNS resolver.
+In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.  Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/) may help. Contact your hosting provider for additional help with your current DNS resolver.

@@ -43,7 +43,7 @@ ___
 
 ## ICP application process
 
-It is recommended that you apply for an ICP license through your hosting or Cloud Services Provider. You will need to provide the necessary documents (see _Required documents_ above) to your provider to register the ICP number on your behalf.
+It is recommended that you apply for an ICP license through your hosting or Cloud Services Provider. You will need to provide the necessary documents (refer to _Required documents_ above) to your provider to register the ICP number on your behalf.
 
 After all required documents are submitted, it can take 4 to 8 weeks to obtain an ICP number depending on the type of website and the province where the company is registered. Although there is no cost to register with the MIIT, your provider may charge you a fee.
 

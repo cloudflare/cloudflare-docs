@@ -38,7 +38,7 @@ Some self-signed keys and keys from certain manufacturers have been found to [no
 
 ___
 
-For more details on how we set up Cryptographic Attestation of Personhood, see the [introductory blog post](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/).
+For more details on how we set up Cryptographic Attestation of Personhood, refer to the [introductory blog post](https://blog.cloudflare.com/introducing-cryptographic-attestation-of-personhood/).
 
 ___
 

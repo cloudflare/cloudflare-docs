@@ -10,7 +10,7 @@ title: Exposing applications running on Microsoft Azure with Cloudflare Argo Tun
 
 ## Overview
 
-Cloudflare Argo Tunnel can expose applications running on the Microsoft Azure platform. See Cloudflare's [install & configure Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) guide. Also, a prebuilt Cloudflare Linux image exists on the Azure Marketplace. To simplify the process of connecting Azure applications to Cloudflare’s network, deploy the prebuilt image to an Azure resource group.
+Cloudflare Argo Tunnel can expose applications running on the Microsoft Azure platform. Refer to Cloudflare's [install & configure Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) guide. Also, a prebuilt Cloudflare Linux image exists on the Azure Marketplace. To simplify the process of connecting Azure applications to Cloudflare’s network, deploy the prebuilt image to an Azure resource group.
 
 Prerequisites include:
 

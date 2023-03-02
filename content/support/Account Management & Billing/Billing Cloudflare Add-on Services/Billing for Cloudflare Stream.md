@@ -48,9 +48,9 @@ You can view your Cloudflare Stream billable minutes in the Cloudflare dashboard
 To view your Stream minutes watched, 
 
 1.  Log in to your Cloudflare account.
-2.  Under the **My Profile** dropdown, click **Billing**. You will see a list of the domains associated with your Cloudflare account.
+2.  Under the **My Profile** dropdown, click **Billing**. A list of the domains associated with your Cloudflare account appears.
 3.  Choose the domain that has Stream enabled.
-4.  In the left navigation, click **Billable Usage**. You will see a graph that displays your current daily traffic.
+4.  In the left navigation, click **Billable Usage**. A graph that displays your current daily traffic appears.
 5.  Choose **Previous month** from the dropdown above the graph and click **Month to date** to view your previous month’s usage.
 
 ![The Billing tab from the Cloudflare Dashboard showing the Billable Usage section and an increasing amount of usage over three weeks.](/support/static/hc-import-stream_billing_subcriptions_previous_month.png)

@@ -85,7 +85,7 @@ To enable 2FA mobile app authentication:
 
 7\. Click **Download**, **Print**, or **Copy** to save the codes, then click **Next**.
 
-8\. Click **Next** on the backup code page to complete the recovery code set up. You will see that Two-Factor Authentication is now _Enabled_.
+8\. Click **Next** on the backup code page to complete the recovery code set up. Two-Factor Authentication is now _Enabled_.
 
 ### Reconfigure TOTP mobile app authentication
 

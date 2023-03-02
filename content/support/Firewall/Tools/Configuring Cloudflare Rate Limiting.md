@@ -172,7 +172,7 @@ Rate limit actions are based on the domain plan as mentioned above in **Rate Lim
 
 Setting a timeout shorter than the threshold causes the API to automatically increase the timeout to equal the threshold. 
 
-**Rate Limiting** visitors receive a default HTML page if a [custom error page](https://support.cloudflare.com/hc/articles/200172706) is not specified.  In addition, Business and Enterprise customers can specify a response in the rule itself, see _Task 3: Configure Advanced Response_ below.
+**Rate Limiting** visitors receive a default HTML page if a [custom error page](https://support.cloudflare.com/hc/articles/200172706) is not specified.  In addition, Business and Enterprise customers can specify a response in the rule itself, refer to _Task 3: Configure Advanced Response_ below.
 
 ___
 

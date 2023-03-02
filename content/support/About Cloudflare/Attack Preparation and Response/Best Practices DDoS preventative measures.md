@@ -36,7 +36,7 @@ Set your DNS records for maximum protection via the following steps:
 
 ### Restore original visitor IPs in your origin server logs
 
-To see the real IPs behind an attack, [restore the original visitor IPs](https://support.cloudflare.com/hc/sections/200805497) in your origin server logs. Otherwise, all traffic lists Cloudflare’s IPs in your logs. Cloudflare always includes the original visitor IP address in the request, [as an HTTP header.](https://support.cloudflare.com/hc/articles/200170986) Inform your hosting provider that you use a reverse proxy and that all traffic will come from Cloudflare’s IPs when looking at current connections.
+To review the real IPs behind an attack, [restore the original visitor IPs](https://support.cloudflare.com/hc/sections/200805497) in your origin server logs. Otherwise, all traffic lists Cloudflare’s IPs in your logs. Cloudflare always includes the original visitor IP address in the request, [as an HTTP header.](https://support.cloudflare.com/hc/articles/200170986) Inform your hosting provider that you use a reverse proxy and that all traffic will come from Cloudflare’s IPs when looking at current connections.
 
 ### Change server IP addresses after moving site to Cloudflare
 

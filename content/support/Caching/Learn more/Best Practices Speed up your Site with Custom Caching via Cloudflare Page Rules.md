@@ -38,7 +38,7 @@ ___
 
 All domain plans can use the _Cache Everything_ setting in the **Page Rules** app.
 
-However, this option caches all HTML regardless of the presence of dynamic content. If you use this approach to cache pages that contain dynamic content, it is quite likely that visitors will see information that is not intended for them.
+However, this option caches all HTML regardless of the presence of dynamic content. If you use this approach to cache pages that contain dynamic content, it is quite likely that visitors will get information that is not intended for them.
 
 To add a _Cache Everything_ page rule:
 
@@ -49,7 +49,7 @@ To add a _Cache Everything_ page rule:
 5.  Select the _Cache Everything_ setting value.
 6.  Save and deploy the rule.
 
-In conclusion, this recommendation is only appropriate for HTML pages that are static and anonymous. To learn more, see [How do I use Cache Everything with Cloudflare?](https://support.cloudflare.com/hc/articles/202775670)
+In conclusion, this recommendation is only appropriate for HTML pages that are static and anonymous. To learn more, refer to [How do I use Cache Everything with Cloudflare?](https://support.cloudflare.com/hc/articles/202775670)
 
 ___
 
@@ -76,4 +76,4 @@ To learn more about the technique described, consult:
 -   [Caching Anonymous Page Views with Magento 1 and Magento 2](https://support.cloudflare.com/hc/articles/236168808)
 -   [How do I cache static HTML?](https://support.cloudflare.com/hc/articles/202775670)
 
-Note that the Cloudflare **Caching** app allows you to purge the cache so that new requests are sent to the origin for re-fetching. To learn more, see [How do I purge my cache?](https://support.cloudflare.com/hc/articles/200169246-)
+Note that the Cloudflare **Caching** app allows you to purge the cache so that new requests are sent to the origin for re-fetching. To learn more, refer to [How do I purge my cache?](https://support.cloudflare.com/hc/articles/200169246-)

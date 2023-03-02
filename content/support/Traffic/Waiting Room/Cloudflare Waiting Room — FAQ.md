@@ -12,7 +12,7 @@ title: Cloudflare Waiting Room — FAQ
 
 Cloudflare Waiting Room keeps your site online during large surges of legitimate traffic.
 
-For more information about waiting rooms and how to set them up, see the [developer documentation](https://developers.cloudflare.com/waiting-room/).
+For more information about waiting rooms and how to set them up, refer to the [developer documentation](https://developers.cloudflare.com/waiting-room/).
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 ## Which features are included in my Waiting Room plan?
 
-To see which features are available to different plan types, see [Plans](https://developers.cloudflare.com/waiting-room/about/plans).
+For more details about which features are available to different plan types, refer to [Plans](https://developers.cloudflare.com/waiting-room/about/plans).
 
 ___
 
@@ -68,7 +68,7 @@ If you notice users not being queued to your waiting room, make sure the **path*
 
 The path is case-sensitive, so if you have a waiting room set up for **/Black-Friday-Sale** and users go to **/black-friday-sale**, they will bypass your waiting room.
 
-For more details, see [Best practices for Waiting Rooms](https://developers.cloudflare.com/waiting-room/reference/best-practices).
+For more details, refer to [Best practices for Waiting Rooms](https://developers.cloudflare.com/waiting-room/reference/best-practices).
 
 ___
 
@@ -80,9 +80,9 @@ However, if they close their tab and then try to access the application again du
 
 ___
 
-## Why do I see a few users being queued in the dashboard?
+## Why are a few users being queued in the dashboard?
 
-Some users might be queued before your waiting room reaches is limit due to architectural designs. For more details on the behavior and how to fix it, see [Monitor Waiting Rooms](https://developers.cloudflare.com/waiting-room/how-to/monitor-waiting-room#queueing-activation).
+Some users might be queued before your waiting room reaches is limit due to architectural designs. For more details on the behavior and how to fix it, refer to [Monitor Waiting Rooms](https://developers.cloudflare.com/waiting-room/how-to/monitor-waiting-room#queueing-activation).
 
 ___
 

@@ -44,4 +44,4 @@ When you change plans, you will keep your Page Rules add-on subscription.
 
 You will be billed for and have access to your additional Page Rules until the end of your current billing cycle.
 
-Your plan will adjust at the start of your next billing cycle. For more details, see [our billing policy](https://support.cloudflare.com/hc/articles/360025829831).
+Your plan will adjust at the start of your next billing cycle. For more details, refer to our billing policy](https://support.cloudflare.com/hc/articles/360025829831).

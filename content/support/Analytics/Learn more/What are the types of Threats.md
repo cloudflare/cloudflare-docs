@@ -14,7 +14,7 @@ Cloudflare classifies the threats that it blocks or challenges. To help you unde
 
 ### Bad browser:
 
-The source of the request was not legitimate or the request itself was malicious. Users would see a [1010 error page](https://support.cloudflare.com/hc/articles/360029779472#error1010) in their browser.
+The source of the request was not legitimate or the request itself was malicious. Users would receive a [1010 error page](https://support.cloudflare.com/hc/articles/360029779472#error1010) in their browser.
 
 Cloudflare's Browser Integrity Check looks for common HTTP headers abused most commonly by spammers and denies them access to your page. It will also challenge visitors that do not have a user agent or a non standard user agent (also commonly used by bots, crawlers, or visitors).
 

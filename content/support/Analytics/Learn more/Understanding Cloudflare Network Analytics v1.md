@@ -211,7 +211,7 @@ The **Source Country,** **Source**, and **Destination** panels display the top i
 
 To select the number of items to display, use the drop-down list associated with the view.
 
-To see the top data centers, select _Data center_ from the drop-down list in the **Source country** view. The **Source data center** view replaces the **Source country** view.
+To review the top data centers, select _Data center_ from the drop-down list in the **Source country** view. The **Source data center** view replaces the **Source country** view.
 
 ___
 

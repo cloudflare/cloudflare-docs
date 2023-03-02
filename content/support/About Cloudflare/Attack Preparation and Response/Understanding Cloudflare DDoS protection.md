@@ -67,7 +67,7 @@ There are two common scenarios where Cloudflare is falsely perceived to attack y
 -   Unless you [restore the original visitor IP addresses](https://support.cloudflare.com/hc/en-us/sections/200805497-Restoring-Visitor-IPs), Cloudflare IP addresses appear in your server logs for all proxied requests.
 -   The attacker is spoofing Cloudflare's IPs. Cloudflare only [sends traffic to your origin web server over a few specific ports](https://support.cloudflare.com/hc/articles/200169156) unless you use [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started/).
 
-Ideally, because Cloudflare is a reverse proxy, your hosting provider observes attack traffic connecting from [Cloudflare IP addresses](https://www.cloudflare.com/ips/). In contrast, if you see connections from IP addresses that do not belong to Cloudflare, the attack is direct to your origin web server. Cloudflare cannot stop attacks directly to your origin IP address because the traffic bypasses Cloudflare’s network.
+Ideally, because Cloudflare is a reverse proxy, your hosting provider observes attack traffic connecting from [Cloudflare IP addresses](https://www.cloudflare.com/ips/). In contrast, if you notice connections from IP addresses that do not belong to Cloudflare, the attack is direct to your origin web server. Cloudflare cannot stop attacks directly to your origin IP address because the traffic bypasses Cloudflare’s network.
 
 ___
 

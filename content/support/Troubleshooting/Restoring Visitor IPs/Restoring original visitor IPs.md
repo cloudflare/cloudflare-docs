@@ -134,7 +134,7 @@ ___
 
 ## Web server instructions
 
-See below for instructions on how to configure your web server to log original visitor IPs based on your web server type:
+Refer below for instructions on how to configure your web server to log original visitor IPs based on your web server type:
 
 1.  Make sure the following is installed:
     -   Red Hat/Fedora`sudo yum install httpd-devel libtool git`
@@ -170,7 +170,7 @@ real_ip_header CF-Connecting-IP;
 
 That list of prefixes needs to be updated regularly, and we publish the full list in [Cloudflare IP addresses](https://www.cloudflare.com/ips).
 
-Also see: [Cloudflare and NGINX](https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/).
+Also refer to: [Cloudflare and NGINX](https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/).
 
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
@@ -206,7 +206,7 @@ Follow the directions [here](https://techcommunity.microsoft.com/t5/iis-support
 
 ##### For IIS 8.5 - 10:
 
-From IIS 8.5 onwards, custom logging is a built-in option. See [IIS Enhanced Logging](http://www.iis.net/learn/get-started/whats-new-in-iis-85/enhanced-logging-for-iis85)
+From IIS 8.5 onwards, custom logging is a built-in option. Refer to [IIS Enhanced Logging](http://www.iis.net/learn/get-started/whats-new-in-iis-85/enhanced-logging-for-iis85).
 
 1.  In IIS Manager, double click on **Logging** in the _Actions_ menu of the site you are working on.
 2.  After this launches, select **W3C** as the format and then click **Select Fields** next to the format drop-down in the _Log File_ sub-section.
@@ -226,7 +226,7 @@ Which would result in your logs looking like this:
 
 `Visitor IP - Cloudflare IP - [04/Dec/2014:23:18:15 -0500] - "GET / HTTP/1.1" - 200 - 1895 - 193d704b85200296-SJC`
 
-See this third-party tutorial on restoring original visitor IP with [Magento and Cloudflare](https://tall-paul.co.uk/2012/03/02/magento-show-remote-ip-when-using-cloudflare/).
+Refer to this third-party tutorial on restoring original visitor IP with [Magento and Cloudflare](https://tall-paul.co.uk/2012/03/02/magento-show-remote-ip-when-using-cloudflare/).
 
 Similarly, Cloudflare did not write this [Magento extension](https://marketplace.magento.com/), but some of our customers have found it helpful.
 

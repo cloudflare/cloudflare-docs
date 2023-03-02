@@ -18,7 +18,7 @@ Cloudflare for Teams consists of two products: [Cloudflare Access](https://devel
 
 **Cloudflare Gateway** is a modern [next generation firewall](https://www.cloudflare.com/learning/cloud/what-is-a-next-generation-firewall/) between your user, device or network and the public Internet. Once you set up Cloudflare Gateway, Gateway's DNS filtering service will inspect all Internet bound DNS queries, log them and apply corresponding policies. Read more on how to subscribe to the [Cloudflare Gateway standalone plan](https://support.cloudflare.com/hc/articles/360048153211-Billing-for-Cloudflare-Gateway).
 
-This article covers the mechanics of the Cloudflare for Teams plans and billing cycles. For more information on features and availability, please see the Cloudflare for Teams [subscription page](https://www.cloudflare.com/en-gb/teams-pricing/).
+This article covers the mechanics of the Cloudflare for Teams plans and billing cycles. For more information on features and availability, refer to the Cloudflare for Teams [subscription page](https://www.cloudflare.com/en-gb/teams-pricing/).
 
 ___
 
@@ -42,7 +42,7 @@ Users who authenticate to either product count as an entire Teams seat.
 
 Cloudflare for Teams Enterprise plan offers everything in the Standard plan, plus features such as logpush of Access and Gateway logs, certificate-based authentication, and 24x7x365 support with faster response time.
 
-The Enterprise plan is billed by invoice instead of credit card. For more information, please see the [Enterprise plan page](https://www.cloudflare.com/en-gb/teams/plans/enterprise/).
+The Enterprise plan is billed by invoice instead of credit card. For more information, refer to the [Enterprise plan page](https://www.cloudflare.com/en-gb/teams/plans/enterprise/).
 
 ![Overview of subscription plans for Cloudflare for Teams.](/support/static/Screenshot_2020-08-14_at_16.10.06.png)
 

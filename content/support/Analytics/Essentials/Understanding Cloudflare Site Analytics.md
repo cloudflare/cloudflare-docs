@@ -19,11 +19,11 @@ To view metrics for your website:
 2.  Click the appropriate Cloudflare **account** for your site, then pick the **domain**.
 3.  Next, click the **Analytics** app icon.
 
-Once it loads, the Analytics app displays a set of tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, see _Review your website metrics_ below.
+Once it loads, the Analytics app displays a set of tabs for **Traffic**, **Security**, **Performance**, **DNS**, **Workers**, and **Logs** (Enterprise domains only). To understand the various metrics available, refer to _Review your website metrics_ below.
 
 ![Analytics app UI in the Cloudflare dashboard displaying web traffic data](/support/static/hc-dash-analytics-dashboard_overview.png)
 
-Pro, Business, and Enterprise plans see the latest Web Analytics under the Traffic tab.
+Pro, Business, and Enterprise plans, refer to the latest Web Analytics under the Traffic tab.
 
 ![Cloudflare Analytics dashboard for Pro, Business, and Enterprise customers showing the Traffic tab](/support/static/hc-dash-analytics-web_traffic.png)
 
@@ -57,7 +57,7 @@ Analytics are based on Cloudflare’s edge logs, with no need for third party sc
 -   **Requests** - An HTTP request. A typical page view requires many requests.
 -   **Data Transfer** - Total HTTP data transferred in requests.
 
-To see more detailed metrics, **Add filter**. You can also filter each metric by **Referer**, **Host**, **Country**, **Path**, **Status code**, **Origin status code**, **Browser**, **Operating system**, or **Device type**. 
+To receive more detailed metrics, **Add filter**. You can also filter each metric by **Referer**, **Host**, **Country**, **Path**, **Status code**, **Origin status code**, **Browser**, **Operating system**, or **Device type**. 
 
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
 
@@ -74,7 +74,7 @@ For this tab, the number and type of charts may vary based on existing data and 
 
 The metrics aggregated under this tab span multiple Cloudflare services.  The panels available include:
 
--   **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, see [Argo Analytics](https://support.cloudflare.com/hc/articles/115001255631-Argo-Analytics).
+-   **Origin Performance (Argo)** (add-on service) - Displays metrics related to response time between the Cloudflare edge network and origin servers for the last 48 hours.  For additional details, refer to [Argo Analytics](https://support.cloudflare.com/hc/articles/115001255631-Argo-Analytics).
 -   **Overview** - Displays a set of pie charts for: **Client HTTP Version Used**, **Bandwidth Saved**, and **Content Type Breakdown**. If available, the expandable **Details** link display a table with numerical data.
 
 ### DNS
@@ -84,7 +84,7 @@ The DNS tab presents several statistics for DNS queries.  Note that metrics are
 The metrics panels available under the DNS tab include:
 
 -   **DNS Queries** - Displays several area charts and data tables for DNS record metrics including queries by _Response Code_, _Record Type_ as well as records that return an _NXDOMAIN_ response (dns record doesn’t exist). You can filter by one or several DNS records by entering record names (for example, www.example.com) in the dropdown near the top.
--   **DNS Queries by Data Center** - Lets you see DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _Traffic_, _NXDOMAIN_, and _NOERROR_.
+-   **DNS Queries by Data Center** - Lets you view DNS query distribution across Cloudflare’s data centers. Metrics appear as interactive maps and data tables, and include statistics for _Traffic_, _NXDOMAIN_, and _NOERROR_.
 
 ### Workers
 

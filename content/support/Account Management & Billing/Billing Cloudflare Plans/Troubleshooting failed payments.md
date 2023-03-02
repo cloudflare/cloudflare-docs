@@ -47,7 +47,7 @@ Contact your bank to check for any restriction that would prevent Cloudflare fro
 
 The billing information that Cloudflare has on file is inaccurate or incomplete. Also, the credit card on file might have expired.
 
-To ensure all billing information is current and accurate, see [Updating your Cloudflare billing information](https://support.cloudflare.com/hc/en-us/articles/200170236-How-do-I-update-my-billing-information-).
+To ensure all billing information is current and accurate, refer to [Updating your Cloudflare billing information](https://support.cloudflare.com/hc/en-us/articles/200170236-How-do-I-update-my-billing-information-).
 
 ### Insufficient funds
 

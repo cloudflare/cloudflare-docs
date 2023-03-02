@@ -36,7 +36,7 @@ A **201** response means that the request was successful and one or more new res
 
 Typically, you will find the new resource's location in the server's response (either the **Location** header or the request's URI).
 
-See [RFC 7231](https://tools.ietf.org/html/rfc7231#section-7.2) for a discussion on validator header fields in a 201 response, such as **ETag** and **Last-Modified.**
+Refer to [RFC 7231](https://tools.ietf.org/html/rfc7231#section-7.2) for a discussion on validator header fields in a 201 response, such as **ETag** and **Last-Modified.**
 
 ___
 
@@ -77,4 +77,4 @@ This request should also return either:
 -   A partial payload that includes the **Content-Range** header that indicates the range and the data present in that range
 -   A multipart payload that **does not** include the **Content-Range** header on the top-level HTTP response, but includes **Content-Type** and **Content-Range** headers on each individual part
 
-For more details, see [RFC 7233 Section 4.1](https://tools.ietf.org/html/rfc7233#page-10).
+For more details, refer to [RFC 7233 Section 4.1](https://tools.ietf.org/html/rfc7233#page-10).

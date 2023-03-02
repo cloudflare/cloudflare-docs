@@ -18,19 +18,19 @@ If you do not disable **DNSSEC** before changing your nameservers, you might e
 -   DNS query response status is _SERVFAIL_
 -   The domain remains in a _Pending_ status in the Cloudflare Overview app
 
-If you experience these issues, see [Configuring DNSSEC](https://developers.cloudflare.com/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](https://support.cloudflare.com/hc/articles/360021111972-Troubleshooting-DNSSEC).
+If you experience these issues, refer to [Configuring DNSSEC](https://developers.cloudflare.com/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](https://support.cloudflare.com/hc/articles/360021111972-Troubleshooting-DNSSEC).
 
 ___
 
 ## Step 2 - Register the domain
 
-If the issue is with your registrar, you may see the following error messages:
+If the issue is with your registrar, you may receive the following error messages:
 
 -   _exampledomain.com is not a registered domain (Code: 1049)_
 -   _We were unable to identify bad.psl-example as a registered domain. Please ensure you are providing the root domain and not any subdomains (e.g., example.com, not subdomain.example.com) (Code: 1099)_
 -   _Failed to lookup registrar and hosting information of exampledomain.com at this time. Please contact Cloudflare Support or try again later. (Code: 1110)_
 
-If you see these error messages, make sure that:
+If you receive these error messages, make sure that:
 
 -   You are providing the root domain (`example.com`) and not a subdomain (`www.example.com`)
 -   You domain is fully registered and its registration data lists its nameservers
@@ -56,7 +56,7 @@ ___
 
 ## Step 4 - Check if the domain is restricted at Cloudflare
 
-If Cloudflare has temporary or permanent restrictions on a domain, you will see the following errors:
+If Cloudflare has temporary or permanent restrictions on a domain, you will receive the following errors:
 
 -   _**Error 1105**_
     -   **Message**_: Error with Cloudflare request: \[1105\] This zone is temporarily restricted and cannot be added to Cloudflare at this time, please contact Cloudflare Support._

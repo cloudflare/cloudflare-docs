@@ -27,7 +27,7 @@ Alternatively under **Menu**, locate the **Products** section and select **Analy
 
 ![Under Menu, selecting Analytics in the Products section](/support/static/hc-dash-account-level-analytics_button.png)
 
-Once it loads, the Account Analytics app displays a collection of categorized charts with aggregated metrics for your account.  To understand the various metrics available, see _Review your account metrics_ below.
+Once it loads, the Account Analytics app displays a collection of categorized charts with aggregated metrics for your account.  To understand the various metrics available, refer to _Review your account metrics_ below.
 
 ___
 

@@ -100,7 +100,7 @@ The following articles from ClickFunnels outline how to best configure the two s
 -   [Adding a Cloudflare subdomain](https://help.clickfunnels.com/hc/en-us/articles/360005906774-Adding-A-Cloudflare-Subdomain-)
 -   [Cloudflare CNAME record](https://help.clickfunnels.com/hc/en-us/articles/360005906094-Cloudflare-CNAME-Record)
 
-See the examples below for adding proper Zoho DNS records to Cloudflare. In all examples, replace _example.com_ with the actual domain name:
+Refer to the examples below for adding proper Zoho DNS records to Cloudflare. In all examples, replace _example.com_ with the actual domain name:
 
 -   Add Zoho _MX records_:
 

@@ -132,7 +132,7 @@ For Ajax requests, the following scores are applied instead:
 -   _Medium_ - 80 and higher
 -   _High_ - 65 and higher
 
-Review the [Activity log](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) to see the final score as well as the individual triggered rules.
+Review the [Activity log](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log) for the final score as well as the individual triggered rules.
 
 ### Control Cloudflare’s OWASP package
 

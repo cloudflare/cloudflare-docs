@@ -18,13 +18,13 @@ Under certain circumstances, the **DNS Records** panel in the Cloudflare dashb
 
 When your server’s IP address is exposed, your server is more vulnerable to direct attacks.  It is still possible (but more difficult) for attackers to determine your origin server IP address when proxying traffic to Cloudflare.
 
-Below are two cases where you might see an IP exposure warning from Cloudflare.
+Below are two cases where you might receive an IP exposure warning from Cloudflare.
 
 ___
 
 ## Case 1 - DNS records that should be orange-clouded
 
-If you see the following warning:
+If you receive the following warning:
 
 `_This record is exposing your origin server’s IP address. To hide your origin IP address, and increase your server security, click on the grey cloud to change it to orange._`
 

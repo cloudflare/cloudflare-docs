@@ -20,7 +20,7 @@ ___
 
 In this stage, you are reinforcing the zone’s security features, which may cause additional disruption to admin features until exceptions can be applied. For that reason, it’s recommended to make these changes with expected administrative downtime. 
 
-The following should be considered an overview of some recommended security actions, and not a comprehensive guide. See the developer documentation for specific products or features for more information.
+The following should be considered an overview of some recommended security actions, and not a comprehensive guide. Refer to the developer documentation for specific products or features for more information.
 
 ### Cloudflare Managed Rulesets
 
@@ -88,7 +88,7 @@ Now that you’ve elevated your security to protect the publicly accessible part
 
 ### Zero Trust
 
-[Zero Trust](https://www.cloudflare.com/plans/zero-trust-services/) Web Applications is the best way to limit access to your admin panel. You can restrict access based on user instead of device, and it allows for very granular control. Setup of a Self-hosted web application is very easy, for more information see the [Self-hosted applications](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps/) section of the Zero Trust developer documentation.
+[Zero Trust](https://www.cloudflare.com/plans/zero-trust-services/) Web Applications is the best way to limit access to your admin panel. You can restrict access based on user instead of device, and it allows for very granular control. Setup of a Self-hosted web application is very easy, for more information refer to the [Self-hosted applications](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-apps/) section of the Zero Trust developer documentation.
 
 After configuring a web application, users will be required to authenticate in some way before they can access the restricted content. The default method is through email multifactor authentication:
 
@@ -111,7 +111,7 @@ While designed for authenticating appliances that can’t perform a log in, you 
 
 Rate limiting rules can help protect your login page from an attacker trying to guess your account password with a [brute force attack](https://www.cloudflare.com/learning/bots/brute-force-attack/). You can define rate limits for requests matching an expression, as well as the action to perform when those rate limits are reached. 
 
-Rate Limiting Rules are now available unmetered, on all plans. For more information, see the [developer documentation](https://developers.cloudflare.com/waf/rate-limiting-rules/).
+Rate Limiting Rules are now available unmetered, on all plans. For more information, refer to the [developer documentation](https://developers.cloudflare.com/waf/rate-limiting-rules/).
 
 ___
 

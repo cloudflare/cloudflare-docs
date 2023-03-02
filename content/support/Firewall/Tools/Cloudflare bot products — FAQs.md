@@ -12,25 +12,25 @@ title: Cloudflare bot products — FAQs
 
 Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 
-For more information about these bot solutions and how to set them up, see the [developer documentation](https://developers.cloudflare.com/bots/).
+For more information about these bot solutions and how to set them up, refer to the [developer documentation](https://developers.cloudflare.com/bots/).
 
 ___
 
 ## How does Cloudflare detect bots?
 
-Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details see, [Cloudflare bot products](https://developers.cloudflare.com/bots/about/plans).
+Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](https://developers.cloudflare.com/bots/about/plans).
 
 ___
 
 ## How do I know what's included in my plan?
 
-To know what's included in your plan, see our [developer documentation](https://developers.cloudflare.com/bots/about/plans).
+To know what's included in your plan, refer to our [developer documentation](https://developers.cloudflare.com/bots/about/plans).
 
 ___
 
 ## How do I set up my bot product?
 
-To learn how to set up your bot product, see our [developer documentation](https://developers.cloudflare.com/bots/get-started).
+To learn how to set up your bot product, refer to our [developer documentation](https://developers.cloudflare.com/bots/get-started).
 
 ___
 
@@ -41,7 +41,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 **Workarounds:**
 
 -   Disable the WAF managed rule with id 100203 temporarily,
--   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** See our [developer documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions).
+-   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [developer documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions).
 
 **Solution:**
 

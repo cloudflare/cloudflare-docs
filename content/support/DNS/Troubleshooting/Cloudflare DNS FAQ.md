@@ -148,7 +148,7 @@ The IP address associated with a specific Cloudflare nameserver can be retrieved
 
 ___
 
-## Why do I see Cloudflare A or AAAA records / IP addresses for my domain's DNS responses?
+## Why are Cloudflare's A or AAAA records / IP addresses for my domain's DNS responses appearing?
 
 For DNS records proxied to Cloudflare, Cloudflare's IP addresses are returned in DNS queries instead of your original server IP address. This allows Cloudflare to optimize, cache, and protect all requests for your website.
 
@@ -156,7 +156,7 @@ ___
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, see our [support guide](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
+By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -182,7 +182,7 @@ Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`
 
 ___
 
-## Why do I see hundreds of random DNS records after adding my domain?
+## Why am I getting hundreds of random DNS records after adding my domain?
 
 This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk using the API: https://api.cloudflare.com/#dns-records-for-a-zone-delete-dns-record . Or you can also delete your domain from the Cloudflare Dashboard, then delete the wildcard record from your authoritative DNS, and then re-add the domain again
 

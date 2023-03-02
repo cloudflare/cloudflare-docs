@@ -266,7 +266,7 @@ Bypass Cache and fetch resources from the origin server if a regular expression 
 
 If you add both this setting and the _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.
 
-_See Additional details below to learn about limited regular expression support._
+_Refer to the Additional details below to learn about limited regular expression support._
 
  | 
 
@@ -470,7 +470,7 @@ Forwarding URL
 
  | 
 
-Redirects one URL to another using an _HTTP 301/302 redirect_. _See [Understand wildcard matching and referencing above](https://support.cloudflare.com/hc/articles/218411427#h_6N5SySNYCjYUUnCKnC1Ea6)._
+Redirects one URL to another using an _HTTP 301/302 redirect_. _Refer to [Understand wildcard matching and referencing above](https://support.cloudflare.com/hc/articles/218411427#h_6N5SySNYCjYUUnCKnC1Ea6)._
 
  | 
 
@@ -705,11 +705,11 @@ ___
 
 **Page Rule configuration issue leading to "****_Error 500 (Internal server error)_****"**
 
-**Root cause**: This may be due to a configuration issue on a Page Rule. When creating a Page Rule that uses two wildcards, like a _Forwarding URL_ rule, it is possible to create a rule that mentions the second wildcard with the $2 placeholder. See example below:
+**Root cause**: This may be due to a configuration issue on a Page Rule. When creating a Page Rule that uses two wildcards, like a _Forwarding URL_ rule, it is possible to create a rule that mentions the second wildcard with the $2 placeholder. Refer to the example below:
 
 ![Example Page Rule configuration with two wildcards. The forwarding URL contains a $2 placeholder, which will be replaced with the content matched by the second ](/support/static/page-rule-create.png)
 
-When updating the same rule, you can remove one of the wildcard in the **If the URL matches** field and save it. See example below:
+When updating the same rule, you can remove one of the wildcard in the **If the URL matches** field and save it. Refer to the example below:
 
 ![Incorrect Page Rule configuration with a single wildcard, but still using the $2 placeholder in the forwarding URL. This configuration causes ](/support/static/page-rule-update.png)
 

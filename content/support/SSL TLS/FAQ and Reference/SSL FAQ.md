@@ -22,7 +22,7 @@ ___
 
 Yes, Google announced that they use [HTTPS as a ranking signal for SEO](http://googleonlinesecurity.blogspot.co.uk/2014/08/https-as-ranking-signal_6.html).
 
-For further SEO tweaks, see our article on [improving SEO Rankings with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/231109348-How-do-I-Improve-SEO-Rankings-On-My-Website-Using-Cloudflare-).
+For further SEO tweaks, refer to our article on [improving SEO Rankings with Cloudflare](https://support.cloudflare.com/hc/en-us/articles/231109348-How-do-I-Improve-SEO-Rankings-On-My-Website-Using-Cloudflare-).
 
 ___
 
