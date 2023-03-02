@@ -66,7 +66,7 @@ description="Measure download / upload connection speed from the client side, us
 
 {{<worker-starter title="AWS DynamoDB SQS" repo="cloudflare/workers-sdk/templates/worker-aws" description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker">}}
 
-{{<worker-starter title="Edge-side rendering - Vitedge" repo="frandiox/vitessedge-template" description="Use Vite to render pages at the edge with great DX. Includes i18n, markdown support and more.">}}
+{{<worker-starter title="Edge-Side Rendering - Vitedge" repo="frandiox/vitessedge-template" description="Use Vite to render pages on Cloudflare's global network with great DX. Includes i18n, markdown support and more.">}}
 
 {{<worker-starter title="REST API with Fauna" repo="fauna-labs/fauna-workers" description="Build a fast, globally distributed REST API using Cloudflare Workers and Fauna, the data API for modern applications.">}}
 
