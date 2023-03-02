@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/217720788-Troubleshooting-issues-sharing-to-Facebook
 title: Troubleshooting issues sharing to Facebook
 ---

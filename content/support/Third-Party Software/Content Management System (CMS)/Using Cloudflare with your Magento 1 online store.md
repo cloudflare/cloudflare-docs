@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115004180727-Using-Cloudflare-with-your-Magento-1-online-store
 title: Using Cloudflare with your Magento 1 online store
 ---

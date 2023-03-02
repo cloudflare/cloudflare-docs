@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/205359838-I-cannot-add-my-domain-to-Cloudflare
 title: I cannot add my domain to Cloudflare
 ---

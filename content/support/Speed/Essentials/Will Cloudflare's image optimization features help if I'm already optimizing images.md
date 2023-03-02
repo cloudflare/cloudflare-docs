@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200168046-Will-Cloudflare-s-image-optimization-features-help-if-I-m-already-optimizing-images-
 title: Will Cloudflare's image optimization features help if I'm already optimizing images
 ---

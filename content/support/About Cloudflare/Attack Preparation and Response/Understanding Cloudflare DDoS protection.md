@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200172676-Understanding-Cloudflare-DDoS-protection
 title: Understanding Cloudflare DDoS protection
 ---

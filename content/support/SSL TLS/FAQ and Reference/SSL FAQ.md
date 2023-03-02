@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/204144518-SSL-FAQ
 title: SSL FAQ
 ---

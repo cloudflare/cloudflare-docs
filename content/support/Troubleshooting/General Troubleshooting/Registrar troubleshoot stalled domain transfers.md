@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4424747060109-Registrar-troubleshoot-stalled-domain-transfers
 title: Registrar troubleshoot stalled domain transfers
 ---

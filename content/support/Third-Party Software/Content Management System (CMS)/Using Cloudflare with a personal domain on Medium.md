@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/231369048-Using-Cloudflare-with-a-personal-domain-on-Medium
 title: Using Cloudflare with a personal domain on Medium
 ---

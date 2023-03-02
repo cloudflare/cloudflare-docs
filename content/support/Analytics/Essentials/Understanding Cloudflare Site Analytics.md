@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360037684251-Understanding-Cloudflare-Site-Analytics
 title: Understanding Cloudflare Site Analytics
 ---

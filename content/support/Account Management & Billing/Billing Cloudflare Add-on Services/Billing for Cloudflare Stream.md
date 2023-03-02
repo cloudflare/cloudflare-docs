@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360016450871-Billing-for-Cloudflare-Stream
 title: Billing for Cloudflare Stream
 ---

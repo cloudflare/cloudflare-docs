@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115000304671-Billing-for-Cloudflare-Apps
 title: Billing for Cloudflare Apps
 ---

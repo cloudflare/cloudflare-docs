@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360046106112-Understanding-the-CSAM-Scanning-Tool
 title: Understanding the CSAM Scanning Tool
 ---

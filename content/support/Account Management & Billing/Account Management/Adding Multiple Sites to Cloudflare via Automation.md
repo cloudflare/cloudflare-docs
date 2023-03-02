@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360000841472-Adding-Multiple-Sites-to-Cloudflare-via-Automation
 title: Adding Multiple Sites to Cloudflare via Automation
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200169526-Improving-web-security-for-content-management-systems-like-WordPress
 title: Improving web security for content management systems like WordPress
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360050691831-Understanding-Network-Error-Logging
 title: Understanding Network Error Logging
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200168406-Railgun-FAQ
 title: Railgun FAQ
 ---

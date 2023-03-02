@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115000635308-Accelerated-Mobile-Links-sunset-
 title: Accelerated Mobile Links (sunset)
 ---

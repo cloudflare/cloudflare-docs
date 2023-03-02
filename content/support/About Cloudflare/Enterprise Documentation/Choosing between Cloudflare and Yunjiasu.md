@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/209156358-Choosing-between-Cloudflare-and-Yunjiasu
 title: Choosing between Cloudflare and Yunjiasu
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200168236-Configuring-IP-geolocation
 title: Configuring IP geolocation
 ---

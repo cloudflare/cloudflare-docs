@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/5950644218253-Using-Cloudflare-with-BigCommerce
 title: Using Cloudflare with BigCommerce
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200168036-Will-Mirage-and-Polish-optimize-off-site-resources-
 title: Will Mirage and Polish optimize off-site resources
 ---

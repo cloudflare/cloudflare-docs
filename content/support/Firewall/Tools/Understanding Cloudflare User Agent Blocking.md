@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115001856951-Understanding-Cloudflare-User-Agent-Blocking
 title: Understanding Cloudflare User Agent Blocking
 ---

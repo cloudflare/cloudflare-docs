@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/227342487-What-settings-are-applied-when-I-click-Optimize-Cloudflare-for-WordPress-in-Cloudflare-s-WordPress-plugin-
 title: What settings are applied when I click Optimize Cloudflare for WordPress in Cloudflare's WordPress plugin
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/201997250-Cloudflare-and-Joomla-Recommended-First-Steps
 title: Cloudflare and Joomla Recommended First Steps
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115002722267-Install-the-Cloudflare-Grafana-Plugin
 title: Install the Cloudflare Grafana Plugin
 ---

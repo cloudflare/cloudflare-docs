@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115003014432-HTTP-Status-Codes
 title: HTTP Status Codes
 ---

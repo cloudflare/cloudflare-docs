@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/217912538-My-DNS-doesn-t-work
 title: My DNS doesn't work
 ---

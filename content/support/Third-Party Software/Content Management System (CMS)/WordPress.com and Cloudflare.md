@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360058639551-WordPress-com-and-Cloudflare
 title: WordPress.com and Cloudflare
 ---

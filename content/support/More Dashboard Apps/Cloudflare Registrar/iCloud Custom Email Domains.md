@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/6701306098829-iCloud-Custom-Email-Domains
 title: iCloud Custom Email Domains
 ---

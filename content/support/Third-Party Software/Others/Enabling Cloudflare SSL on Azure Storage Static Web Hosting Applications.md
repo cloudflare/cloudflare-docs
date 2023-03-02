@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360021902391-Enabling-Cloudflare-SSL-on-Azure-Storage-Static-Web-Hosting-Applications
 title: Enabling Cloudflare SSL on Azure Storage Static Web Hosting Applications
 ---

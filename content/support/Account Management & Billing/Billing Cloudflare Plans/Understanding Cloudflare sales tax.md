@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360026135951-Understanding-Cloudflare-sales-tax
 title: Understanding Cloudflare sales tax
 ---

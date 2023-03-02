@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4667723574925-Error-when-adding-Secondary-Nameservers-nsXXXX-secondary-cloudflare-com-at-Registrar
 title: Error when adding Secondary Nameservers nsXXXX.secondary.cloudflare.com at Registrar
 ---

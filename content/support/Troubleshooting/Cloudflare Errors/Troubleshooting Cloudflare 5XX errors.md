@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 title: Troubleshooting Cloudflare 5XX errors
 source: 
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/203464660-Using-Cloudflare-with-Shopify
 title: Using Cloudflare with Shopify
 ---

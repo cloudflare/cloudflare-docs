@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200169996-Why-do-I-get-a-Unable-to-make-Cloudflare-API-request-error-with-W3TC-
 title: Why do I get a Unable to make Cloudflare API request error with W3TC
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360059654971-I-was-visiting-another-website-and-saw-a-Cloudflare-error-page
 title: I was visiting another website and saw a Cloudflare error page
 ---

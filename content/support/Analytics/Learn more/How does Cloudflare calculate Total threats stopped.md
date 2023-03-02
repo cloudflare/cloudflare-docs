@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/204964927-How-does-Cloudflare-calculate-Total-threats-stopped-
 title: How does Cloudflare calculate Total threats stopped
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360057976851-Delivering-Videos-with-Cloudflare
 title: Delivering Videos with Cloudflare
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4408869845261-Troubleshooting-for-BYOIP
 title: Troubleshooting for BYOIP
 ---

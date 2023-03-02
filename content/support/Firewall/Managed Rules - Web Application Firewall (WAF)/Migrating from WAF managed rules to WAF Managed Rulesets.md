@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/5995821690637-Migrating-from-WAF-managed-rules-to-WAF-Managed-Rulesets
 title: Migrating from WAF managed rules to WAF Managed Rulesets
 ---

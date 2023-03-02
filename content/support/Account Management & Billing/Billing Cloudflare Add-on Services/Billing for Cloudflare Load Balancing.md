@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115005254367-Billing-for-Cloudflare-Load-Balancing
 title: Billing for Cloudflare Load Balancing
 ---

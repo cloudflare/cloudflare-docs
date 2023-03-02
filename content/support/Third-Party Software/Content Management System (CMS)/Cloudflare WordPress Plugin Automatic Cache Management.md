@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115002708027-Cloudflare-WordPress-Plugin-Automatic-Cache-Management-
 title: Cloudflare WordPress Plugin Automatic Cache Management
 ---

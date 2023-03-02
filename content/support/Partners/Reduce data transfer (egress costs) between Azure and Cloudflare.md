@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4407207972109-Reduce-data-transfer-egress-costs-between-Azure-and-Cloudflare
 title: Reduce data transfer (egress costs) between Azure and Cloudflare
 ---

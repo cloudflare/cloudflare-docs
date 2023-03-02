@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360047356332-Billing-for-Cloudflare-for-Teams
 title: Billing for Cloudflare for Teams
 ---

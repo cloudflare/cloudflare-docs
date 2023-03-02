@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/218048207-Does-Cloudflare-support-SignalR-
 title: Does Cloudflare support SignalR
 ---

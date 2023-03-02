@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs
 title: Restoring original visitor IPs
 ---

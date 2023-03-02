@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/203020124-Recovering-from-a-hacked-site
 title: Recovering from a hacked site
 ---

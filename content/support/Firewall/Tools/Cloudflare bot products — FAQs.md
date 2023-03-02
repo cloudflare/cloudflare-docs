@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360035387431-Cloudflare-bot-products-FAQs
 title: Cloudflare bot products — FAQs
 ---

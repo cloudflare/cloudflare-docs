@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170166-Best-Practices-DDoS-preventative-measures
 title: Best practices DDoS preventative measures
 ---

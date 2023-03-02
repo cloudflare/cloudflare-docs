@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360027710672-Troubleshooting-FAQ-for-new-Cloudflare-customers
 title: Troubleshooting FAQ for new Cloudflare customers
 ---

@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/218344877-Troubleshooting-failed-payments
 title: Troubleshooting failed payments
 ---

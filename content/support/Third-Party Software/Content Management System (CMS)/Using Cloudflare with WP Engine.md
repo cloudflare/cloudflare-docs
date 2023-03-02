@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4424646531597-Using-Cloudflare-with-WP-Engine
 title: Using Cloudflare with WP Engine
 ---

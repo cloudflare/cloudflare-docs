@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200172356-Why-isn-t-a-Page-Rule-working-
 title: Why isn't a Page Rule working
 ---

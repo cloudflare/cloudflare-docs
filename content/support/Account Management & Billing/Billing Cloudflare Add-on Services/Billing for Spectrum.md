@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360041721872-Billing-for-Spectrum
 title: Billing for Spectrum
 ---

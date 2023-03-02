@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360061998911-Disabling-Weak-Cipher-Suites
 title: Disabling Weak Cipher Suites
 ---

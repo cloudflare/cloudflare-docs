@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360038470312-Understanding-SameSite-cookie-interaction-with-Cloudflare
 title: Understanding SameSite cookie interaction with Cloudflare
 ---

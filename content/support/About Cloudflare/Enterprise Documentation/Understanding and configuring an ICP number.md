@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/209714777-Understanding-and-configuring-an-ICP-number
 title: Understanding and configuring an ICP number
 ---

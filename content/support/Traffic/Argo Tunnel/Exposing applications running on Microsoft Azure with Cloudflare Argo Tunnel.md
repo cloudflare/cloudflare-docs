@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360021621972-Exposing-applications-running-on-Microsoft-Azure-with-Cloudflare-Argo-Tunnel
 title: Exposing applications running on Microsoft Azure with Cloudflare Argo Tunnel
 ---

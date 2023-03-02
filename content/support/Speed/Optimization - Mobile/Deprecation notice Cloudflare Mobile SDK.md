@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360054452251-Deprecation-notice-Cloudflare-Mobile-SDK
 title: Deprecation notice Cloudflare Mobile SDK
 ---

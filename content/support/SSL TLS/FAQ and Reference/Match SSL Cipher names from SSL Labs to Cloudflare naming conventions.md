@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4565022761869-Match-SSL-Cipher-names-from-SSL-Labs-to-Cloudflare-naming-conventions
 title: Match SSL Cipher names from SSL Labs to Cloudflare naming conventions
 ---

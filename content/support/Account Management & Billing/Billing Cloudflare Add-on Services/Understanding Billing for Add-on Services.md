@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115004555148-Understanding-Billing-for-Add-on-Services
 title: Understanding Billing for Add-on Services
 ---

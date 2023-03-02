@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
 title: Purchasing Additional Page Rules
 ---

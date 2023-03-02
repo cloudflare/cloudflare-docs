@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115002911927-Caching-HTML-with-Drupal
 title: Caching HTML with Drupal
 ---

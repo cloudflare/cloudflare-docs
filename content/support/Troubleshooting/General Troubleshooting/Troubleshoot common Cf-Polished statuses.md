@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/4412244347917-Troubleshoot-common-Cf-Polished-statuses
 title: Troubleshoot common Cf-Polished statuses
 ---

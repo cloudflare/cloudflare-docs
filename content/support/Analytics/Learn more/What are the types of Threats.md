@@ -1,4 +1,5 @@
 ---
+pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/204191238-What-are-the-types-of-Threats-
 title: What are the types of Threats
 ---
