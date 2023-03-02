@@ -102,7 +102,7 @@ curl -X PATCH "https://api.staging.cloudflare.com/client/v4/accounts/<ACCOUNT_ID
         ],
         "categories": [
         {
-           "category": "simple",
+           "category": "sample",
            "enabled": true
         }
       ]

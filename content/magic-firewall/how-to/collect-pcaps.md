@@ -20,7 +20,7 @@ Currently, when a packet capture is requested, packets flowing at Cloudflare's g
 
 Cloudflare supports two types of packet captures:
 
-- **Simple**: Simple packets are best for debugging and providing a global picture across all data centers. Simple packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all data centers from Cloudflare's global network to build a PCAP file.
+- **Sample**: Sample packets are best for debugging and providing a global picture across all data centers. Sample packets generate single, smaller files and only contain the first 160 bytes of the payload. Sampled packets are collected across all data centers from Cloudflare's global network to build a PCAP file.
 - **Full**: Full packets are best for targeted data collection with a detailed view into a single data center. Full packets generate multiple large files, and they are captured within a given data center or set of data centers and sent to either a GCP or AWS bucket specified by the user.
 
 {{<Aside type="note" header="Note:">}}
@@ -31,7 +31,7 @@ For help determining which data center to select for a packet capture, visit htt
 
 ### Packet capture limits
 
-**Simple and Full**
+**Sample and Full**
 
 - `time_limit`: The minimum value is `1` seconds and maximum value is `300` seconds.
 - `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
@@ -57,7 +57,7 @@ The main **Packet captures** page displays a list of captures.
 
 The PCAPs API needs both `system` and `type` to be specified to start a capture. A PCAP's `system` is the product or logical subsystem where packets are captured, and a PCAP's `type` is how the captured packets are built into a PCAP file.
 
-Currently, you can only send one collect request per minute for simple PCAPs, and you can only have one running or pending full PCAP at a time.
+Currently, you can only send one collect request per minute for sample PCAPs, and you can only have one running or pending full PCAP at a time.
 
 <details>
 <summary>
@@ -65,9 +65,9 @@ Currently, you can only send one collect request per minute for simple PCAPs, an
 </summary>
 <div class="special-class" markdown="1">
 
-For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://developers.cloudflare.com/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than simple packets.
+For full PCAP requests, refer to the required parameters listed at [Create full PCAP requests](https://developers.cloudflare.com/api/operations/magic-pcap-collection-create-pcap-request). Note that full packet captures require two more parameters than sample packets.
 
-The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and simple packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
+The full PCAP request endpoint also contains optional fields you can use to limit the amount of packets captured. Both full and sample packet requests contain an optional `filter_v1` parameter you can use to filter packets by IPv4 Source address, for example. For a full list of the filter options, refer to the parameter lists above.
 
 Leave `filter_v1` empty to collect all packets without any filtering.
 
@@ -121,17 +121,17 @@ header: Full PCAP example response
 
 <details>
 <summary>
-  Simple PCAP
+  Sample PCAP
 </summary>
 <div class="special-class" markdown="1">
 
-To create a simple PCAP request, send a JSON body with the required parameter listed at [Create simple PCAP request](https://developers.cloudflare.com/api/operations/magic-pcap-collection-create-pcap-request).
+To create a sample PCAP request, send a JSON body with the required parameter listed at [Create sample PCAP request](https://developers.cloudflare.com/api/operations/magic-pcap-collection-create-pcap-request).
 
 Leave `filter_v1` to collect all packets without any filtering.
 
 ```bash
 ---
-header: Simple PCAP example request
+header: Sample PCAP example request
 ---
   curl -X POST https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps \
   -H 'Content-Type: application/json' \
@@ -147,7 +147,7 @@ header: Simple PCAP example request
           },
           "time_limit": 300,
           "packet_limit": 10000,
-          "type": "simple",
+          "type": "sample",
           "system": "magic-transit"
   }'
 ```
@@ -156,7 +156,7 @@ The response is a JSON body that contains the details of the job running to buil
 
 ```json
 ---
-header: Simple PCAP example response
+header: Sample PCAP example response
 ---
     {
       "result": {
@@ -172,7 +172,7 @@ header: Simple PCAP example response
         "time_limit": 60,
         "status": "pending",
         "packets_remaining": 0,
-        "type": "simple",
+        "type": "sample",
         "system": "magic-transit"
       },
       "success": true,
@@ -212,7 +212,7 @@ The response will be similar to the one received when requesting a PCAP collecti
 
 ```json
 ---
-header: Simple PCAP example result
+header: Sample PCAP example result
 ---
     {
       "result": {
@@ -228,7 +228,7 @@ header: Simple PCAP example result
         "time_limit": 120,
         "status": "success",
         "packets_remaining": 0,
-        "type": "simple",
+        "type": "sample",
         "system": "magic-transit"
       },
       "success": true,
@@ -270,9 +270,9 @@ For more information on how to process multiple saved capture files into a singl
 
 To obtain full PCAPs, download the files from the bucket specified in `destination_conf` after the PCAP's status is `success`. You may find multiple files named `pcap_<pcap_id>.pcap` per capture as captures can occur across multiple machines.
 
-**Simple PCAPs**
+**Sample PCAPs**
 
-Once the simple PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
+Once the sample PCAP collection is complete, you can download the PCAP by specifying the PCAP identifier used earlier.
 
 ```bash
     curl -X GET https://api.cloudflare.com/client/v4/accounts/${account_id}/pcaps/${pcap_id}/download \
@@ -328,7 +328,7 @@ header: List response example
           "time_limit": 120,
           "status": "success",
           "packets_remaining": 0,
-          "type": "simple",
+          "type": "sample",
           "system": "magic-transit"
         }
       ],
