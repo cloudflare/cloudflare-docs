@@ -151,7 +151,7 @@ Published <YOUR-WORKER-NAME> (0.29 sec)
   https://<YOUR-WORKER-NAME>.<YOUR-ACCOUNT>.workers.dev
 ```
 
-Now make a POST request to your producer Worker using cURL:
+After you have updated your `index.ts` file, make a POST request to your producer Worker using cURL:
 
 ```sh
 $ curl --request POST --url https://<YOUR-WORKER-NAME>.<YOUR-ACCOUNT>.workers.dev/ --header 'content-type: application/json' --data '{"message": "Hello World!"}'
