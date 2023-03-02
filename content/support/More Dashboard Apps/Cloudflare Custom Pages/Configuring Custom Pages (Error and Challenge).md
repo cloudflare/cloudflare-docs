@@ -47,82 +47,17 @@ The following tables list each custom error token grouped by the applicable cust
 
 | **Token** | **Available to** |
 | --- | --- |
-| 
-::CLIENT\_IP::
-
- | 
-
-All pages
-
- |
-| 
-
-::RAY\_ID::
-
- | 
-
-All pages
-
- |
+| ::CLIENT\_IP:: | All pages |
+| ::RAY\_ID:: | All pages |
 
 | **Token** | **Available to** |
 | --- | --- |
-| 
-::GEO::
-
- | 
-
-IP/Country Block
-
- |
-| 
-
-::CAPTCHA\_BOX::
-
- | 
-
--   Legacy CAPTCHA Challenge
--   Country Challenge (CAPTCHA Challenge)
--   Managed Challenge
-
- |
-| 
-
-::IM\_UNDER\_ATTACK\_BOX::
-
- | 
-
--   I'm Under Attack Mode (Interstitial Page)
--   JS Challenge
-
- |
-| 
-
-::CLOUDFLARE\_ERROR\_500S\_BOX::
-
- | 
-
-5XX Errors
-
- |
-| 
-
-::CLOUDFLARE\_ERROR\_1000S\_BOX::
-
- | 
-
-1XXX Errors
-
- |
-| 
-
-::ALWAYS\_ONLINE\_NO\_COPY\_BOX::
-
- | 
-
-Always Online
-
- |
+| ::GEO:: | IP/Country Block |
+| ::CAPTCHA\_BOX:: | Legacy CAPTCHA Challenge<br/>Country Challenge (CAPTCHA Challenge)<br/>Managed Challenge |
+| ::IM\_UNDER\_ATTACK\_BOX:: | I'm Under Attack Mode (Interstitial Page)<br/>JS Challenge |
+| ::CLOUDFLARE\_ERROR\_500S\_BOX:: | 5XX Errors |
+| ::CLOUDFLARE\_ERROR\_1000S\_BOX:: | 1XXX Errors |
+| ::ALWAYS\_ONLINE\_NO\_COPY\_BOX:: | Always Online |
 
 ___
 

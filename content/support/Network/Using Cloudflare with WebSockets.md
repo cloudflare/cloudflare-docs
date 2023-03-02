@@ -17,59 +17,7 @@ ___
 
 ## What plan do I need for WebSockets support on my site?
 
-| Cloudflare plan | Volume of concurrent connections | Example use case |
-| --- | --- | --- |
-| 
-Free
-
- | 
-
-Low
-
- | 
-
-Hobby or demonstration site
-
- |
-| 
-
-Pro
-
- | 
-
-Medium
-
- | 
-
-Project or small business
-
- |
-| 
-
-Business
-
- | 
-
-High
-
- | 
-
-Important to your operations
-
- |
-| 
-
-Enterprise
-
- | 
-
-Custom
-
- | 
-
-Mission critical and significant volume
-
- |
+{{<feature-table id="network.websockets">}}
 
 ___
 

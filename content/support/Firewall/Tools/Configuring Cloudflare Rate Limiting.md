@@ -43,71 +43,12 @@ response headers | Actions | Action Duration | Request Period |
 
 Cloudflare Rate Limiting supports multiple levels of configuration control depending on the domain’s Cloudflare plan.  The table below maps out what you can do based on your plan:
 
-| 
-#
-
- | 
-
-Task
-
- | 
-
-Available in
-
- |
+| Order | Task | Available in |
 | --- | --- | --- |
-| 
-
-1
-
- | 
-
-Configure a basic Rate Limiting rule
-
- | 
-
-All plans
-
- |
-| 
-
-2
-
- | 
-
-Configure Advanced Criteria
-
- | 
-
-Business and Enterprise plans
-
- |
-| 
-
-3
-
- | 
-
-Configure Advanced Response
-
- | 
-
-Business and Enterprise plans
-
- |
-| 
-
-4
-
- | 
-
-Configure the Bypass option
-
- | 
-
-Enterprise plan
-
- |
+| 1 | Configure a basic Rate Limiting rule | All plans |
+| 2 | Configure Advanced Criteria | Business and Enterprise plans |
+| 3 | Configure Advanced Response | Business and Enterprise plans |
+| 4 | Configure the Bypass option | Enterprise plan |
 
 ___
 

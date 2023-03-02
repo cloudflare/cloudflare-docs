@@ -191,65 +191,10 @@ Updating to the new WAF via API requires invoking the following API operations:
 
 | Name | Method + Endpoint | Description |
 | --- | --- | --- |
-| 
-Check WAF update compatibility
-
- | 
-
-`GET /zones/<ZONE_ID>/waf_migration/check?phase_two=1`
-
- | 
-
-Checks if the current zone can be updated to the new WAF, given its current configuration.
-
- |
-| 
-
-Get new WAF configuration
-
- | 
-
-`GET /zones/<ZONE_ID>/waf_migration/config?phase_two=1`
-
- | 
-
-Obtains the new WAF configuration that is equivalent to the current configuration (previous WAF version).
-
- |
-| 
-
-[Update zone entry point ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update/)
-
- | 
-
-`PUT /zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=<VALUE>&phase_two=1`
-
- | 
-
-Updates the configuration of the zone entry point ruleset for the `http_request_firewall_managed` phase.  
-Available values for the `waf_migration` query string parameter:
-
--   `pending` or `1`: Defines the new WAF Managed Rulesets configuration and disables WAF managed rules as soon as the provided configuration is saved and the new WAF is enabled.
--   `validation` or `2`: (Enterprise zones only) Defines the new WAF Managed Rulesets configuration and enables WAF Managed Rulesets side by side with WAF managed rules, entering validation mode. To exit validation mode and finish the migration, invoke the same API endpoint with `waf_migration=pending`.
-
- |
-| 
-
-Get WAF status
-
- | 
-
-`GET /zones/<ZONE_ID>/waf_migration/status`
-
- | 
-
-Obtains the old and new WAF status for a zone (enabled/disabled). The response also includes the current migration state (or mode).
-
- |
-
-You must prepend the Cloudflare API base URL to the endpoints listed above to obtain the full endpoint:
-
-`https://api.cloudflare.com/client/v4`
+| Check WAF update compatibility | `GET /zones/<ZONE_ID>/waf_migration/check?phase_two=1` | Checks if the current zone can be updated to the new WAF, given its current configuration. |
+| Get new WAF configuration | `GET /zones/<ZONE_ID>/waf_migration/config?phase_two=1` | Obtains the new WAF configuration that is equivalent to the current configuration (previous WAF version). |
+| [Update zone entry point ruleset](https://developers.cloudflare.com/ruleset-engine/rulesets-api/update/) | `PUT /zones/<ZONE_ID>/rulesets/phases/http_request_firewall_managed/entrypoint?waf_migration=<VALUE>&phase_two=1` | Updates the configuration of the zone entry point ruleset for the `http_request_firewall_managed` phase.<br/>Available values for the `waf_migration` query string parameter:<br/>`pending` or `1`: Defines the new WAF Managed Rulesets configuration and disables WAF managed rules as soon as the provided configuration is saved and the new WAF is enabled.<br/>`validation` or `2`: (Enterprise zones only) Defines the new WAF Managed Rulesets configuration and enables WAF Managed Rulesets side by side with WAF managed rules, entering validation mode. To exit validation mode and finish the migration, invoke the same API endpoint with `waf_migration=pending`. |
+| Get WAF status | `GET /zones/<ZONE_ID>/waf_migration/status` | Obtains the old and new WAF status for a zone (enabled/disabled). The response also includes the current migration state (or mode). | You must prepend the Cloudflare API base URL to the endpoints listed above to obtain the full endpoint:<br/>`https://api.cloudflare.com/client/v4` |
 
 ___
 
