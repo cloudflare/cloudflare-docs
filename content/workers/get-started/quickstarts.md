@@ -64,7 +64,7 @@ description="Measure download / upload connection speed from the client side, us
 
 {{<worker-starter title="BinAST" repo="xtuc/binast-cf-worker-template" description="Serve a JavaScript Binary AST via a Cloudflare Worker.">}}
 
-{{<worker-starter title="AWS DynamoDB SQS" repo="cloudflare/workers-sdk/templates/worker-aws" description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker">}}
+{{<worker-starter title="AWS DynamoDB SQS" repo="cloudflare/workers-sdk/templates/worker-aws" description="Use AWS services such as DynamoDB and SQS from a Cloudflare Worker.">}}
 
 {{<worker-starter title="Edge-Side Rendering - Vitedge" repo="frandiox/vitessedge-template" description="Use Vite to render pages on Cloudflare's global network with great DX. Includes i18n, markdown support and more.">}}
 
