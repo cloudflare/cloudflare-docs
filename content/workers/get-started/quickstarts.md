@@ -51,7 +51,7 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
 
 ## Example Projects
 
-{{<worker-starter title="Router" repo="cloudflare/workers-sdk/templates/worker-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or apps that require routing logic.">}}
+{{<worker-starter title="Router" repo="cloudflare/workers-sdk/templates/worker-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or applications that require routing logic.">}}
 
 {{<worker-starter title="Speedtest" repo="cloudflare/workers-sdk/templates/worker-speedtest"
 description="Measure download / upload connection speed from the client side, using the Performance Timing API.">}}
