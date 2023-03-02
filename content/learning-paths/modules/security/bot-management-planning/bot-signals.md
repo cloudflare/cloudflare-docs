@@ -1,11 +1,13 @@
 ---
 title: Bot signals
 pcx_content_type: learning-unit
-weight: 5
+weight: 1
 layout: learning-unit
 ---
 
-After running requests through various [detection engines](/learning-paths/modules/security/bot-management-concepts/bot-detections/?learning_path=bot-management), Cloudflare surfaces these insights as part of Bot Management.
+As discussed previously, all requests to Cloudflare's network pass through our [bot detection engines](/learning-paths/modules/security/bot-management-concepts/bot-detections/?learning_path=bot-management).
+
+Cloudflare uses this information to surface different signals to help you identify the true origin of a request.
 
 ## Bot score
 

@@ -1,13 +1,11 @@
 ---
-title: Use bot signals
+title: Implementation methods
 pcx_content_type: learning-unit
-weight: 6
+weight: 2
 layout: learning-unit
 ---
 
-But what good are all of Cloudflare's bot signals if there's nowhere to use them?
-
-Cloudflare surfaces these bot signals in different products so you can take actions based on specific aspects of a request.
+Though most customers choose to implement bot management through [Firewall rules](#firewall), Cloudflare actually makes various [bot signals](/learning-paths/modules/security/bot-management-planning/bot-signals/?learning_path=bot-management) available in several different products.
 
 ```mermaid
     flowchart LR
@@ -29,7 +27,7 @@ Cloudflare surfaces these bot signals in different products so you can take acti
 
 {{<render file="_firewall-variables.md" productFolder="bots" >}}
 
-### Use cases
+### Common use cases
 
 You can use Firewall variables in a variety of actions, including:
 
@@ -46,7 +44,7 @@ For a full list of options, refer to [Firewall actions](/firewall/cf-firewall-ru
 
 {{<render file="_workers-cf-request.md" productFolder="bots" >}}
 
-### Use cases
+### Common use cases
 
 You might want to do the following based on bot information in Cloudflare Workers:
 
@@ -65,6 +63,6 @@ For examples that could be useful in building these actions, refer to [Workers E
 
 {{<render file="_bot-log-fields.md" productFolder="bots" >}}
 
-### Use cases
+### Common use cases
 
 With log information, the main use case is better understanding and analyzing bot traffic.

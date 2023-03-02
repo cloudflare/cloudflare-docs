@@ -6,17 +6,13 @@ weight: 2
 
 # Challenge Solve Rate (CSR)
 
-The Challenge Solve Rate (CSR) is the percentage of issued challenges — Legacy CAPTCHA, JS Challenge, or Managed Challenge actions — that were solved. You can find the CSR of a rule by going to its corresponding dashboard page:
+{{<render file="_challenge-solve-rate.md">}}
+
+You can find the CSR of a rule by going to its corresponding dashboard page:
 
 * For firewall rules, go to **Security** > **WAF** > **Firewall rules**.
 * For custom rules, go to **Security** > **WAF** > **Custom rules**.
 * For rate limiting rules, go to **Security** > **WAF** > **Rate limiting rules**.
-
-```sql
-CSR = number of challenges solved / number of challenges issued
-```
-
-This metric helps you evaluate your rule's effectiveness, as well as whether you need to make any adjustments to the rule's criteria or action.
 
 ## Common scenarios
 

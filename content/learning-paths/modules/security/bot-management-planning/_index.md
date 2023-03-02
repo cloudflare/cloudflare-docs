@@ -1,10 +1,10 @@
 ---
-title: Planning your load balancer
+title: Plan for bot management
 pcx_content_type: overview
 weight: 2
 layout: learning-module
 ---
 
-# Planning your load balancer
+# Plan for bot management
 
 {{<learning-module-summary>}}
