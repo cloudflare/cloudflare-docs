@@ -11,7 +11,7 @@ rss: file
 
 ### Higher per-queue throughput
 
-The per-queue throughput limit has now been [raised to 400 messages per second](/queues/platform/limits/). Happy queueing!
+The per-queue throughput limit has now been [raised to 400 messages per second](/queues/platform/limits/).
 
 ## 2022-12-12
 
