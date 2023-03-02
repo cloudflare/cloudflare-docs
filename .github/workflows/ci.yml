@@ -20,20 +20,20 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v3
         with:
-          node-version: 18.10
+          node-version: 16
       - uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.92.0'
           extended: true
 
       - name: (env) pnpm
-        env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
 
       - run: pnpm install
 
       - run: make build
+          env:
+            NODE_OPTIONS: "--max-old-space-size=8192"
 
       - name: Broken Links
         run: pnpm run crawl
