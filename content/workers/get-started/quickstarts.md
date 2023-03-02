@@ -56,7 +56,7 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
 {{<worker-starter title="Speedtest" repo="cloudflare/workers-sdk/templates/worker-speedtest"
 description="Measure download/upload connection speed from the client side, using the Performance Timing API.">}}
 
-{{<worker-starter title="Sentry" repo="bustle/cf-sentry" description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool.">}}
+{{<worker-starter title="Sentry" repo="mhart/cf-sentry" description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool.">}}
 
 {{<worker-starter title="Image Color" repo="xtuc/img-color-worker" description="Retrieve the dominant color of a PNG or JPEG image">}}
 
