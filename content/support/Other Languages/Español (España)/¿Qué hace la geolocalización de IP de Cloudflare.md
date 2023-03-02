@@ -1,5 +1,6 @@
 ---
 language_tag: spanish
+title: ¿Qué hace la geolocalización de IP de Cloudflare?
 ---
 
 # ¿Qué hace la geolocalización de IP de Cloudflare?
