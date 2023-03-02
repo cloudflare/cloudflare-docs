@@ -9,6 +9,8 @@ layout: single
 
 With Cloudflare DLP, you can build custom DLP profiles specific to your data, organization, and risk tolerance.
 
+You can add both custom and existing detection entries to a custom DLP profile. Existing entries include [predefined profiles](/cloudflare-one/policies/data-loss-prevention/predefined-profiles/) and [integration profiles](/cloudflare-one/policies/data-loss-prevention/integration-profiles/).
+
 ## Create a custom entry
 
 To define a custom profile:
@@ -16,7 +18,7 @@ To define a custom profile:
 1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Gateway** > **DLP Profiles**.
 2. Select **Create Profile**.
 3. Enter a name and optional description for the profile.
-4. You can add both custom and existing detection entries to your DLP profile.
+4. Add custom or existing detection entries.
 
    {{<render file="_dlp-entries.md">}}
 
