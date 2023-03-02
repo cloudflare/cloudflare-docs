@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Traffic section
  
-Below you will find links off to the relavent sections for Traffic focused material
+Below you will find links to the relevant sections for Traffic focused material.
  
 {{<directory-listing>}}

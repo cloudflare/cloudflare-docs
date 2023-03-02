@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Troubleshooting Cloudflare Errors section
  
-Below you will find links off to the relavent sections for Troubleshooting Cloudflare Errors Support focused material
+Below you will find links to the relevant sections for Troubleshooting Cloudflare Errors support-focused material.
  
 {{<directory-listing>}}

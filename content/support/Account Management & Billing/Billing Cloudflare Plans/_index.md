@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Billing Cloudflare Plans section
  
-Below you will find links off to the relavent sections for Billing Cloudflare Plans Support focused material
+Below you will find links to the relevant sections for Billing Cloudflare Plans support-focused material.
  
 {{<directory-listing>}}

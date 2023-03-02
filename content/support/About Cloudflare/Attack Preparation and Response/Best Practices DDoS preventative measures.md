@@ -1,9 +1,9 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170166-Best-Practices-DDoS-preventative-measures
-title: Best Practices DDoS preventative measures
+title: Best practices DDoS preventative measures
 ---
 
-# Best Practices: DDoS preventative measures
+# Best practices: DDoS preventative measures
 
 ## Overview
 

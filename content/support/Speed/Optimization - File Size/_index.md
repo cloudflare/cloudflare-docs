@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Speed - Optimization - File Size Support section
  
-Below you will find links off to the relavent sections for Speed - Optimization - File Size Support focused material
+Below you will find links to the relevant sections for Speed - Optimization - File Size support-focused material.
  
 {{<directory-listing>}}

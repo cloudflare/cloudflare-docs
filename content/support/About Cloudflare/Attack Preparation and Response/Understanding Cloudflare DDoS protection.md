@@ -74,7 +74,7 @@ ___
 ## Related resources
 
 -   [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196)
--   [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/articles/200170166)
+-   [Best practices: DDoS preventative measures](https://support.cloudflare.com/hc/articles/200170166)
 -   [Using Cloudflare Logs to investigate DDoS traffic (Enterprise Only)](https://support.cloudflare.com/hc/en-us/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [What is a DDoS attack?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)
 -   [How DNS Amplification Attacks Work](http://blog.cloudflare.com/deep-inside-a-dns-amplification-ddos-attack)

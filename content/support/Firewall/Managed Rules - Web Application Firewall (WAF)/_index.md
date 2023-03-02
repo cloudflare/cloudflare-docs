@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Firewall - Managed Rules - Web Application Firewall (WAF) Support section
  
-Below you will find links off to the relavent sections for Firewall - Managed Rules - Web Application Firewall (WAF) Support focused material
+Below you will find links to the relevant sections for Firewall - Managed Rules - Web Application Firewall (WAF) support-focused material.
  
 {{<directory-listing>}}

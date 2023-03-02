@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the HTTP Status Codess section
  
-Below you will find links off to the relavent sections for HTTP Status Codes Support focused material
+Below you will find links to the relevant sections for HTTP Status Codes support-focused material.
  
 {{<directory-listing>}}

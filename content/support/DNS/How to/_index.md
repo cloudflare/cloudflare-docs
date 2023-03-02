@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the DNS - How to section
  
-Below you will find links off to the relavent sections for DNS - How to Support focused material
+Below you will find links to the relevant sections for DNS - How to support-focused material.
  
 {{<directory-listing>}}

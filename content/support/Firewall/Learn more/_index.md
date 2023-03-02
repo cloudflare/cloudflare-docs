@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Firewall - Learn more Support section
  
-Below you will find links off to the relavent sections for Firewall - Learn more Support focused material
+Below you will find links to the relevant sections for Firewall - Learn more support-focused material.
  
 {{<directory-listing>}}

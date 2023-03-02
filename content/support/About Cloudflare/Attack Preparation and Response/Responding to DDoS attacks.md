@@ -88,7 +88,7 @@ ___
 ## Related resources
 
 -   [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/articles/200172676)
--   [Best Practices: DDoS preventative measures](https://support.cloudflare.com/hc/articles/200170166)
+-   [Best practices: DDoS preventative measures](https://support.cloudflare.com/hc/articles/200170166)
 -   [What does “I’m Under Attack Mode” do?](https://support.cloudflare.com/hc/articles/200170076)
 -   [Using Cloudflare Logs to investigate DDoS traffic (Enterprise Only)](https://support.cloudflare.com/hc/en-us/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-)
 -   [How to report a DDoS attack to law enforcement](https://www.icann.org/news/blog/how-to-report-a-ddos-attack)

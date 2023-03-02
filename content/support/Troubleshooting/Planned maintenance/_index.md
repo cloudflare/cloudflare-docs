@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Planned Maintenance section
  
-Below you will find links off to the relavent sections for Planned Maintenance Support focused material
+Below you will find links to the relevant sections for Planned Maintenance support-focused material.
  
 {{<directory-listing>}}

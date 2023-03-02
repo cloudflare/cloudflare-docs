@@ -6,6 +6,6 @@ weight: 3
  
 # Welcome to the More Dashboard Apps section
  
-Below you will find links off to the relavent sections for More Dashboard Apps Support focused material
+Below you will find links to the relevant sections for More Dashboard Apps support-focused material.
  
 {{<directory-listing>}}

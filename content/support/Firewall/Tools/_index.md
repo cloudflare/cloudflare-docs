@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Firewall - Tools Support section
  
-Below you will find links off to the relavent sections for Firewall - Tools Support focused material
+Below you will find links to the relevant sections for Firewall - Tools support-focused material.
  
 {{<directory-listing>}}

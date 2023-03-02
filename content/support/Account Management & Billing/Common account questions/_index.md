@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Common account questions section
  
-Below you will find links off to the relavent sections for Common account questions Support focused material
+Below you will find links to the relevant sections for Common account questions support-focused material.
  
 {{<directory-listing>}}

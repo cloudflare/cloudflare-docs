@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Network Support section
  
-Below you will find links off to the relavent sections for Network Support focused material
+Below you will find links to the relevant sections for Network support-focused material.
  
 {{<directory-listing>}}

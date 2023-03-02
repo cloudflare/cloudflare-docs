@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Traffic - Waiting Room Support section
  
-Below you will find links off to the relavent sections for Traffic - Waiting Room Support focused material
+Below you will find links to the relevant sections for Traffic - Waiting Room support-focused material.
  
 {{<directory-listing>}}

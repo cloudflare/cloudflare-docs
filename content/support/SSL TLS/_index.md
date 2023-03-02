@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the SSL TLS Support section
  
-Below you will find links off to the relavent sections for SSL TLS Support focused material
+Below you will find links to the relevant sections for SSL TLS support-focused material.
  
 {{<directory-listing>}}

@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Speed - Optimization - Mobile Support section
  
-Below you will find links off to the relavent sections for Speed - Optimization - Mobile Support focused material
+Below you will find links to the relevant sections for Speed - Optimization - Mobile support-focused material.
  
 {{<directory-listing>}}

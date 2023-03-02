@@ -6,6 +6,6 @@ weight: 2
  
 # Welcome to the Troubleshooting section
  
-Below you will find links off to the relavent sections for Troubleshooting Support focused material
+Below you will find links to the relevant sections for Troubleshooting support-focused material.
  
 {{<directory-listing>}}

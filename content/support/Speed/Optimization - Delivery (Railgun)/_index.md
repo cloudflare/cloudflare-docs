@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Speed - Optimization - Delivery (Railgun) Support section
  
-Below you will find links off to the relavent sections for Speed - Optimization - Delivery (Railgun) Support focused material
+Below you will find links to the relevant sections for Speed - Optimization - Delivery (Railgun) support-focused material.
  
 {{<directory-listing>}}

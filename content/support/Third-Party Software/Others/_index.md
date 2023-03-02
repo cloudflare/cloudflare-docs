@@ -6,6 +6,6 @@ weight: 2
  
 # Welcome to the Others section
  
-Below you will find links off to the relavent sections for Others Support focused material
+Below you will find links to the relevant sections for Others support-focused material.
  
 {{<directory-listing>}}

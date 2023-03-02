@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Caching - Configuration section
  
-Below you will find links off to the relavent sections for Caching - Configuration focused material
+Below you will find links to the relevant sections for Caching - Configuration focused material.
  
 {{<directory-listing>}}

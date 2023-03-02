@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Caching section
  
-Below you will find links off to the relavent sections for Caching focused material
+Below you will find links to the relevant sections for Caching focused material.
  
 {{<directory-listing>}}

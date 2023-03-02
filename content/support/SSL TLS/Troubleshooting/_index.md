@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Troubleshooting section
  
-Below you will find links off to the relavent sections for Troubleshooting SSL TLS focused material
+Below you will find links to the relevant sections for Troubleshooting SSL TLS focused material.
  
 {{<directory-listing>}}

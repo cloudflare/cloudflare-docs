@@ -6,6 +6,6 @@ weight: 3
  
 # Welcome to the Cloudflare Scrape Shield section
  
-Below you will find links off to the relavent sections for Cloudflare Scrape Shield Support focused material
+Below you will find links to the relevant sections for Cloudflare Scrape Shield support-focused material.
  
 {{<directory-listing>}}

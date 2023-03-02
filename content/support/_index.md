@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Support section
  
-Below you will find links off to the relavent sections for Support focused material
+Below you will find links to the relevant sections for support-focused material.
  
 {{<directory-listing>}}

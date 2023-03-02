@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Account Management & Billing section
  
-Below you will find links off to the relavent sections for Account Management & Billing Support focused material
+Below you will find links to the relevant sections for Account Management & Billing support-focused material.
  
 {{<directory-listing>}}

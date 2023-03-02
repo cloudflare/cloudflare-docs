@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Support - Cloudflare Essentials section
  
-Below you will find links off to the relavent sections for Support - Cloudflare Essentials focused material
+Below you will find links to the relevant sections for Support - Cloudflare Essentials focused material.
  
 {{<directory-listing>}}

@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Partners Support section
  
-Below you will find links off to the relavent sections for Partners Support focused material
+Below you will find links to the relevant sections for Partners support-focused material.
  
 {{<directory-listing>}}

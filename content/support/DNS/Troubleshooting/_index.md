@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Troubleshooting DNS section
  
-Below you will find links off to the relavent sections for Troubleshooting DNS Support focused material
+Below you will find links to the relevant sections for Troubleshooting DNS support-focused material.
  
 {{<directory-listing>}}

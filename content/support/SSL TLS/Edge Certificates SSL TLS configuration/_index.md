@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Edge Certificates SSL TLS configuration section
  
-Below you will find links off to the relavent sections for Edge Certificates SSL TLS configuration focused material
+Below you will find links to the relevant sections for Edge Certificates SSL TLS configuration focused material.
  
 {{<directory-listing>}}

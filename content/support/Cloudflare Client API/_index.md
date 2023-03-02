@@ -6,6 +6,6 @@ weight: 2
  
 # Welcome to the Cloudflare Client API section
  
-Below you will find links off to the relavent sections for Cloudflare Client API Support focused material
+Below you will find links to the relevant sections for Cloudflare Client API support-focused material.
  
 {{<directory-listing>}}

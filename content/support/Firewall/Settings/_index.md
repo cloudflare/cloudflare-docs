@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Firewall - Settings Support section
  
-Below you will find links off to the relavent sections for Firewall - Settings Support focused material
+Below you will find links to the relevant sections for Firewall - Settings support-focused material.
  
 {{<directory-listing>}}

@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Client Certificates section
  
-Below you will find links off to the relavent sections for Client Certificates focused material
+Below you will find links to the relevant sections for Client Certificates focused material.
  
 {{<directory-listing>}}

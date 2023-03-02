@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Speed - Essentials Support section
  
-Below you will find links off to the relavent sections for Speed - Essentials Support focused material
+Below you will find links to the relevant sections for Speed - Essentials support-focused material.
  
 {{<directory-listing>}}

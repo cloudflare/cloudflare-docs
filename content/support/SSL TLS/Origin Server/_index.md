@@ -6,6 +6,6 @@ weight: 1
  
 # Welcome to the Origin Server section
  
-Below you will find links off to the relavent sections for Origin Server focused material
+Below you will find links to the relevant sections for Origin Server focused material.
  
 {{<directory-listing>}}
