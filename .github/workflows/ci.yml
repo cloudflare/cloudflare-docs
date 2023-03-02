@@ -31,7 +31,9 @@ jobs:
 
       - run: pnpm install
 
-      - run: make build
+      - run: |
+        export NODE_OPTIONS="--max_old_space_size=8192"
+        make build
 
       - name: Broken Links
         run: pnpm run crawl
