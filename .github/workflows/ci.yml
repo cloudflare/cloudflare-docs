@@ -27,13 +27,13 @@ jobs:
           extended: true
 
       - name: (env) pnpm
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
 
       - run: pnpm install
 
-      - run: |
-        export NODE_OPTIONS="--max-old-space-size=8192"
-        make build
+      - run: make build
 
       - name: Broken Links
         run: pnpm run crawl
