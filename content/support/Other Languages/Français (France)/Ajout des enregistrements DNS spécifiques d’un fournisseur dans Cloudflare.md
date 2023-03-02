@@ -1,5 +1,6 @@
 ---
 language_tag: french
+title: Ajout des enregistrements DNS spécifiques d’un fournisseur dans Cloudflare
 ---
 
 # Ajout des enregistrements DNS spécifiques d’un fournisseur dans Cloudflare
