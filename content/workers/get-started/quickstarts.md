@@ -54,7 +54,7 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
 {{<worker-starter title="Router" repo="cloudflare/workers-sdk/templates/worker-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or applications that require routing logic.">}}
 
 {{<worker-starter title="Speedtest" repo="cloudflare/workers-sdk/templates/worker-speedtest"
-description="Measure download / upload connection speed from the client side, using the Performance Timing API.">}}
+description="Measure download/upload connection speed from the client side, using the Performance Timing API.">}}
 
 {{<worker-starter title="Sentry" repo="bustle/cf-sentry" description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool.">}}
 
