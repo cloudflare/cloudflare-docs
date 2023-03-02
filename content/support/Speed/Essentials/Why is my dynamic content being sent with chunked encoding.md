@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200168386-Why-is-my-dynamic-content-being-sent-with-chunked-encoding-
 title: Why is my dynamic content being sent with chunked encoding
-                  2 years ago
 ---
 
 # Why is my dynamic content being sent with chunked encoding?

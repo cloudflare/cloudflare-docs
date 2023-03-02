@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169316-Why-doesn-t-my-RSS-feed-show-images-
 title: Why doesn't my RSS feed show images
-                  2 years ago
 ---
 
 # Why doesn't my RSS feed show images?

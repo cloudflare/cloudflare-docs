@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360023040812-Best-Practice-Caching-Everything-While-Ignoring-Query-Strings
 title: Best Practice Caching Everything While Ignoring Query Strings
-                  2 years ago
 ---
 
 # Best Practice: Caching Everything While Ignoring Query Strings

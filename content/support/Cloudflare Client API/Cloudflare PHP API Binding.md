@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115001661191-Cloudflare-PHP-API-Binding
 title: Cloudflare PHP API Binding
-                  2 years ago
 ---
 
 # Cloudflare PHP API Binding

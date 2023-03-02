@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169806-Troubleshooting-crawl-errors
 title: Troubleshooting crawl errors
-                  10 months ago
 ---
 
 # Troubleshooting crawl errors

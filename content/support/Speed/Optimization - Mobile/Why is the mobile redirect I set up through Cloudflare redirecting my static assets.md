@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000233611-Why-is-the-mobile-redirect-I-set-up-through-Cloudflare-redirecting-my-static-assets-
 title: Why is the mobile redirect I set up through Cloudflare redirecting my static assets
-                  2 years ago
 ---
 
 # Why is the mobile redirect I set up through Cloudflare redirecting my static assets?

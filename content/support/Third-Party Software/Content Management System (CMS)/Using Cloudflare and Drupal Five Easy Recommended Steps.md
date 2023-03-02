@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/201883834-Using-Cloudflare-and-Drupal-Five-Easy-Recommended-Steps
 title: Using Cloudflare and Drupal Five Easy Recommended Steps
-                  1 year ago
 ---
 
 # Using Cloudflare and Drupal: Five Easy Recommended Steps

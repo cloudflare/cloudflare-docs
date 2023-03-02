@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200168886-How-do-I-add-a-WordPress-com-Custom-Domain-Mapping-site-to-Cloudflare-
 title: How do I add a WordPress.com Custom Domain Mapping site to Cloudflare
-                  1 year ago
 ---
 
 # How do I add a WordPress.com Custom Domain Mapping site to Cloudflare?

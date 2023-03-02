@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170036-What-does-Server-Side-Excludes-SSE-do-
 title: What does Server Side Excludes (SSE) do
-                  20 days ago
 ---
 
 # What does Server Side Excludes (SSE) do?

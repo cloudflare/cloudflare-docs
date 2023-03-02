@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000305872-Removing-Cloudflare-Apps
 title: Removing Cloudflare Apps
-                  2 years ago
 ---
 
 # Removing Cloudflare Apps

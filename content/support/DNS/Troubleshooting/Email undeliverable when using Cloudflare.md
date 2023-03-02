@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200168876-Email-undeliverable-when-using-Cloudflare
 title: Email undeliverable when using Cloudflare
-                  3 months ago
 ---
 
 # Email undeliverable when using Cloudflare

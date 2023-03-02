@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/236166048-Caching-Static-HTML-with-WordPress-WooCommerce
 title: Caching Static HTML with WordPressWooCommerce
-                  2 years ago
 ---
 
 # Caching Static HTML with WordPress/WooCommerce

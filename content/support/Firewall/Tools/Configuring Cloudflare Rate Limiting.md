@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configuring-Cloudflare-Rate-Limiting
 title: Configuring Cloudflare Rate Limiting
-                  2 months ago
 ---
 
 # Configuring Cloudflare Rate Limiting

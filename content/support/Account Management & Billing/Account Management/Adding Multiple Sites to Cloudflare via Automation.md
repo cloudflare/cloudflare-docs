@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360000841472-Adding-Multiple-Sites-to-Cloudflare-via-Automation
 title: Adding Multiple Sites to Cloudflare via Automation
-                  1 year ago
 ---
 
 # Adding Multiple Sites to Cloudflare via Automation

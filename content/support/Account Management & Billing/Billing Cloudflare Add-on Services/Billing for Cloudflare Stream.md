@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360016450871-Billing-for-Cloudflare-Stream
 title: Billing for Cloudflare Stream
-                  9 months ago
 ---
 
 # Billing for Cloudflare Stream

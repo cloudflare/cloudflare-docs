@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003014512-4xx-Client-Error
 title: 4xx Client Error
-                  3 months ago
 ---
 
 # 4xx Client Error

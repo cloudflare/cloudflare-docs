@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/218377098-WordPress-Jetpack-and-Cloudflare
 title: WordPress Jetpack and Cloudflare
-                  10 months ago
 ---
 
 # WordPress Jetpack and Cloudflare

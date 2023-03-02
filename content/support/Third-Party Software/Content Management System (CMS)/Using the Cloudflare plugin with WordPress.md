@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/227634427-Using-the-Cloudflare-plugin-with-WordPress
 title: Using the Cloudflare plugin with WordPress
-                  9 months ago
 ---
 
 # Using the Cloudflare plugin with WordPress

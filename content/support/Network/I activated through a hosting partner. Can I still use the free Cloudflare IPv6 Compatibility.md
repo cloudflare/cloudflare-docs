@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200168806-I-activated-through-a-hosting-partner-Can-I-still-use-the-free-Cloudflare-IPv6-Compatibility-
 title: I activated through a hosting partner. Can I still use the free Cloudflare IPv6 Compatibility
-                  2 years ago
 ---
 
 # I activated through a hosting partner. Can I still use the free Cloudflare IPv6 Compatibility?

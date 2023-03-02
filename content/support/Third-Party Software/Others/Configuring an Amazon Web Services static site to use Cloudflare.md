@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360037983412-Configuring-an-Amazon-Web-Services-static-site-to-use-Cloudflare
 title: Configuring an Amazon Web Services static site to use Cloudflare
-                  3 months ago
 ---
 
 # Configuring an Amazon Web Services static site to use Cloudflare

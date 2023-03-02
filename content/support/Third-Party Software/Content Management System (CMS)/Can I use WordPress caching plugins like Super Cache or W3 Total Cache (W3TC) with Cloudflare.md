@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169756-Can-I-use-WordPress-caching-plugins-like-Super-Cache-or-W3-Total-Cache-W3TC-with-Cloudflare-
 title: Can I use WordPress caching plugins like Super Cache or W3 Total Cache (W3TC) with Cloudflare
-                  2 years ago
 ---
 
 # Can I use WordPress caching plugins like Super Cache or W3 Total Cache (W3TC) with Cloudflare?

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/224509547-Recommended-Page-Rules-to-consider
 title: Recommended Page Rules to consider
-                  3 months ago
 ---
 
 # Recommended Page Rules to consider

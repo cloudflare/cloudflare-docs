@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169376-Can-I-use-Cloudflare-and-Varnish-together-
 title: Can I use Cloudflare and Varnish together
-                  2 years ago
 ---
 
 # Can I use Cloudflare and Varnish together?

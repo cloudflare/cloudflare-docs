@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000305752-Installing-Cloudflare-Apps
 title: Installing Cloudflare Apps
-                  2 years ago
 ---
 
 # Installing Cloudflare Apps

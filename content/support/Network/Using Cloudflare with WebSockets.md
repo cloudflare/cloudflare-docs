@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169466-Using-Cloudflare-with-WebSockets
 title: Using Cloudflare with WebSockets
-                  2 years ago
 ---
 
 # Using Cloudflare with WebSockets

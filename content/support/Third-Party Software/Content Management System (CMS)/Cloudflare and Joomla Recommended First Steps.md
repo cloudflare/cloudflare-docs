@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/201997250-Cloudflare-and-Joomla-Recommended-First-Steps
 title: Cloudflare and Joomla Recommended First Steps
-                  1 year ago
 ---
 
 # Cloudflare and Joomla: Recommended First Steps

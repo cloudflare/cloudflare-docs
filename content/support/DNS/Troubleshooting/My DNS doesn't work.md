@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/217912538-My-DNS-doesn-t-work
 title: My DNS doesn't work
-                  1 year ago
 ---
 
 # My DNS doesn't work

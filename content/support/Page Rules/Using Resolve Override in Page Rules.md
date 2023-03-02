@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/206190798-Using-Resolve-Override-in-Page-Rules
 title: Using Resolve Override in Page Rules
-                  9 months ago
 ---
 
 # Using Resolve Override in Page Rules

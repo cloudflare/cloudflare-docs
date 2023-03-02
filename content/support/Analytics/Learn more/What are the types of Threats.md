@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/204191238-What-are-the-types-of-Threats-
 title: What are the types of Threats
-                  10 months ago
 ---
 
 # What are the types of Threats?

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360059485272-Troubleshooting-Page-Shield
 title: Troubleshooting Page Shield
-                  1 year ago
 ---
 
 # Troubleshooting Page Shield

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360042380772-Partner-Plugin-Supportability
 title: Partner Plugin Supportability
-                  6 months ago
 ---
 
 # Partner Plugin Supportability

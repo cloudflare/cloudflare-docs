@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4404867308429-About-Health-Checks
 title: About Health Checks
-                  6 months ago
 ---
 
 # About Health Checks

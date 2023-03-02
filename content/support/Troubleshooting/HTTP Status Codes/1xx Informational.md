@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003013892-1xx-Informational
 title: 1xx Informational
-                  1 year ago
 ---
 
 # 1xx Informational

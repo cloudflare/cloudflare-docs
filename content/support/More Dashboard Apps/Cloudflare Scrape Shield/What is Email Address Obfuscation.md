@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170016-What-is-Email-Address-Obfuscation-
 title: What is Email Address Obfuscation
-                  10 months ago
 ---
 
 # What is Email Address Obfuscation?

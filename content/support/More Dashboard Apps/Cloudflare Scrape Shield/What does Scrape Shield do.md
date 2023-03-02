@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200171036-What-does-Scrape-Shield-do-
 title: What does Scrape Shield do
-                  10 months ago
 ---
 
 # What does Scrape Shield do?

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200172906-Troubleshooting-surges-or-spikes-in-web-traffic
 title: Troubleshooting surges or spikes in web traffic
-                  3 months ago
 ---
 
 # Troubleshooting surges or spikes in web traffic

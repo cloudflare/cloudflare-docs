@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4408869845261-Troubleshooting-for-BYOIP
 title: Troubleshooting for BYOIP
-                  1 year ago
 ---
 
 # Troubleshooting for BYOIP

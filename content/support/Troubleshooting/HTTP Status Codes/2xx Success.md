@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003014192-2xx-Success
 title: 2xx Success
-                  1 year ago
 ---
 
 # 2xx Success

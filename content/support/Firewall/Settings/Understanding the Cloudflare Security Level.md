@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170056-Understanding-the-Cloudflare-Security-Level
 title: Understanding the Cloudflare Security Level
-                  6 months ago
 ---
 
 # Understanding the Cloudflare Security Level

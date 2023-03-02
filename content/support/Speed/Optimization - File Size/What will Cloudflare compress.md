@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200168396-What-will-Cloudflare-compress-
 title: What will Cloudflare compress
-                  7 months ago
 ---
 
 # What will Cloudflare compress?

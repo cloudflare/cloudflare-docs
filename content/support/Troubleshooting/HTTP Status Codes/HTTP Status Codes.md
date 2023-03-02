@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003014432-HTTP-Status-Codes
 title: HTTP Status Codes
-                  2 years ago
 ---
 
 # HTTP Status Codes

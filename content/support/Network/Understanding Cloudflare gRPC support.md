@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360050483011-Understanding-Cloudflare-gRPC-support
 title: Understanding Cloudflare gRPC support
-                  2 years ago
 ---
 
 # Understanding Cloudflare gRPC support

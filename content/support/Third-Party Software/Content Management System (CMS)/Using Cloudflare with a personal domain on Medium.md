@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/231369048-Using-Cloudflare-with-a-personal-domain-on-Medium
 title: Using Cloudflare with a personal domain on Medium
-                  2 years ago
 ---
 
 # Using Cloudflare with a personal domain on Medium

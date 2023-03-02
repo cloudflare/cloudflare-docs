@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169906-Troubleshooting-missing-images
 title: Troubleshooting missing images
-                  2 years ago
 ---
 
 # Troubleshooting missing images

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169306-How-do-I-get-Cloudflare-to-work-with-VaultPress-
 title: How do I get Cloudflare to work with VaultPress
-                  2 years ago
 ---
 
 # How do I get Cloudflare to work with VaultPress?

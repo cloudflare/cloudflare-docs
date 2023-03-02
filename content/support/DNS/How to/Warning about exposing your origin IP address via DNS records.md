@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003687931-Warning-about-exposing-your-origin-IP-address-via-DNS-records
 title: Warning about exposing your origin IP address via DNS records
-                  8 months ago
 ---
 
 # Warning about exposing your origin IP address via DNS records

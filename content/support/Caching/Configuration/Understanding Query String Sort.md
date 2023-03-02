@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/206776797-Understanding-Query-String-Sort
 title: Understanding Query String Sort
-                  2 years ago
 ---
 
 # Understanding Query String Sort

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4424646531597-Using-Cloudflare-with-WP-Engine
 title: Using Cloudflare with WP Engine
-                  10 months ago
 ---
 
 # Using Cloudflare with WP Engine

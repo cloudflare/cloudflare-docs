@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360021111972-Troubleshooting-DNSSEC
 title: Troubleshooting DNSSEC
-                  1 year ago
 ---
 
 # Troubleshooting DNSSEC

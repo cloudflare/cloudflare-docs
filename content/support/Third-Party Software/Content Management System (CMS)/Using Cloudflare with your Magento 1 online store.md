@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115004180727-Using-Cloudflare-with-your-Magento-1-online-store
 title: Using Cloudflare with your Magento 1 online store
-                  10 months ago
 ---
 
 # Using Cloudflare with your Magento 1 online store

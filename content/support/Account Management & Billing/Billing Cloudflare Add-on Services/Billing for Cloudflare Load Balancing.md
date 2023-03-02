@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115005254367-Billing-for-Cloudflare-Load-Balancing
 title: Billing for Cloudflare Load Balancing
-                  2 years ago
 ---
 
 # Billing for Cloudflare Load Balancing

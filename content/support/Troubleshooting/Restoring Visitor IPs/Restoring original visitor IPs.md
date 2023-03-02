@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170786-Restoring-original-visitor-IPs
 title: Restoring original visitor IPs
-                  6 months ago
 ---
 
 # Restoring original visitor IPs

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170476-Troubleshooting-mixed-content-errors
 title: Troubleshooting mixed content errors
-                  10 months ago
 ---
 
 # Troubleshooting mixed content errors

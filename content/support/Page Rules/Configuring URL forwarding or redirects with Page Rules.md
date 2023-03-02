@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules
 title: Configuring URL forwarding or redirects with Page Rules
-                  2 months ago
 ---
 
 # Configuring URL forwarding or redirects with Page Rules

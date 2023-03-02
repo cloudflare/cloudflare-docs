@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/218505467-Using-ETag-Headers-with-Cloudflare
 title: Using ETag Headers with Cloudflare
-                  2 months ago
 ---
 
 # Using ETag Headers with Cloudflare

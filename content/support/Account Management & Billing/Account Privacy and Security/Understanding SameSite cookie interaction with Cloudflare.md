@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360038470312-Understanding-SameSite-cookie-interaction-with-Cloudflare
 title: Understanding SameSite cookie interaction with Cloudflare
-                  3 months ago
 ---
 
 # Understanding SameSite cookie interaction with Cloudflare

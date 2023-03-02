@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360061946171-Data-Localization-Suite
 title: Data Localization Suite
-                  3 months ago
 ---
 
 # Data Localization Suite

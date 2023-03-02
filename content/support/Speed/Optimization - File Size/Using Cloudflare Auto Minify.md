@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200168196-Using-Cloudflare-Auto-Minify
 title: Using Cloudflare Auto Minify
-                  9 months ago
 ---
 
 # Using Cloudflare Auto Minify

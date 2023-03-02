@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169496-Is-Cloudflare-compatible-with-Bad-Behavior-
 title: Is Cloudflare compatible with Bad Behavior
-                  2 years ago
 ---
 
 # Is Cloudflare compatible with Bad Behavior?

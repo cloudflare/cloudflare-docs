@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360061431012-Cloudflare-Waiting-Room-FAQ
 title: Cloudflare Waiting Room — FAQ
-                  7 months ago
 ---
 
 # Cloudflare Waiting Room — FAQ

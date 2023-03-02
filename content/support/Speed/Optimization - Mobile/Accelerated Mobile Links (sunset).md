@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000635308-Accelerated-Mobile-Links-sunset-
 title: Accelerated Mobile Links (sunset)
-                  2 years ago
 ---
 
 # Accelerated Mobile Links (sunset)

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360058639551-WordPress-com-and-Cloudflare
 title: WordPress.com and Cloudflare
-                  9 months ago
 ---
 
 # WordPress.com and Cloudflare

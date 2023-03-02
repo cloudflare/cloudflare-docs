@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115001992652-Using-Privacy-Pass-with-Cloudflare
 title: Using Privacy Pass with Cloudflare
-                  10 months ago
 ---
 
 # Using Privacy Pass with Cloudflare

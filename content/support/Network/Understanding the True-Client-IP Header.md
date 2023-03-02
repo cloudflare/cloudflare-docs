@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/206776727-Understanding-the-True-Client-IP-Header
 title: Understanding the True-Client-IP Header
-                  6 months ago
 ---
 
 # Understanding the True-Client-IP Header

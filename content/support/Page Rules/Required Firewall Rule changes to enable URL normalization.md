@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360057896851-Required-Firewall-Rule-changes-to-enable-URL-normalization
 title: Required Firewall Rule changes to enable URL normalization
-                  1 year ago
 ---
 
 # Required Firewall Rule changes to enable URL normalization

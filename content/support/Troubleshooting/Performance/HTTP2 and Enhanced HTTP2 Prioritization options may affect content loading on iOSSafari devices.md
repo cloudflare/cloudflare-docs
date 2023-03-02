@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4402614758925-HTTP-2-and-Enhanced-HTTP-2-Prioritization-options-may-affect-content-loading-on-iOS-Safari-devices
 title: HTTP2 and Enhanced HTTP2 Prioritization options may affect content loading on iOSSafari devices
-                  10 months ago
 ---
 
 # HTTP/2 and Enhanced HTTP/2 Prioritization options may affect content loading on iOS/Safari devices

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170026-Understanding-Cloudflare-Hotlink-Protection
 title: Understanding Cloudflare Hotlink Protection
-                  2 years ago
 ---
 
 # Understanding Cloudflare Hotlink Protection

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/202032590-Using-Cloudflare-with-various-forums-vBulletin-Xenforo-MyBB-
 title: Using Cloudflare with various forums (vBulletin, Xenforo, MyBB)
-                  2 years ago
 ---
 
 # Using Cloudflare with various forums (vBulletin, Xenforo, MyBB)

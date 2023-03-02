@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000350252-Using-Cloudflare-with-Wix-Website-Builder
 title: Using Cloudflare with Wix Website Builder
-                  1 year ago
 ---
 
 # Using Cloudflare with Wix Website Builder

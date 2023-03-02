@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360021023712-Best-Practices-Speed-up-your-Site-with-Custom-Caching-via-Cloudflare-Page-Rules
 title: Best practices Speed up your Site with Custom Caching via Cloudflare Page Rules
-                  2 years ago
 ---
 
 # Best practices: Speed up your Site with Custom Caching via Cloudflare Page Rules

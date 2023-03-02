@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/206049798-Setting-up-Response-Buffering
 title: Setting up Response Buffering
-                  2 years ago
 ---
 
 # Setting up Response Buffering

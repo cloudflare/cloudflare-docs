@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360020296512-DNS-Troubleshooting-FAQ
 title: DNS Troubleshooting FAQ
-                  3 months ago
 ---
 
 # DNS Troubleshooting FAQ

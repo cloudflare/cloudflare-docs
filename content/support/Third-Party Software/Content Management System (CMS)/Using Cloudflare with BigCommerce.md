@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/5950644218253-Using-Cloudflare-with-BigCommerce
 title: Using Cloudflare with BigCommerce
-                  8 months ago
 ---
 
 # Using Cloudflare with BigCommerce

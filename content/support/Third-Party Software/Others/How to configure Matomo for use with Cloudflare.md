@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169416-How-to-configure-Matomo-for-use-with-Cloudflare
 title: How to configure Matomo for use with Cloudflare
-                  1 year ago
 ---
 
 # How to configure Matomo for use with Cloudflare

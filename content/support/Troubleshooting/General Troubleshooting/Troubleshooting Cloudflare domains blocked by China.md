@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169566-Troubleshooting-Cloudflare-domains-blocked-by-China
 title: Troubleshooting Cloudflare domains blocked by China
-                  1 year ago
 ---
 
 # Troubleshooting Cloudflare domains blocked by China

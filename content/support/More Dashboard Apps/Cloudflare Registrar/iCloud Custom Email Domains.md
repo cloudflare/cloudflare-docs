@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/6701306098829-iCloud-Custom-Email-Domains
 title: iCloud Custom Email Domains
-                  2 months ago
 ---
 
 # iCloud Custom Email Domains

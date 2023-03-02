@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200170566-Troubleshooting-SSL-errors
 title: Troubleshooting SSL errors
-                  2 months ago
 ---
 
 # Troubleshooting SSL errors

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000308492-Will-Cloudflare-Apps-make-my-site-slower-
 title: Will Cloudflare Apps make my site slower
-                  2 years ago
 ---
 
 # Will Cloudflare Apps make my site slower?

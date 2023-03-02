@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/204144518-SSL-FAQ
 title: SSL FAQ
-                  2 months ago
 ---
 
 # SSL FAQ

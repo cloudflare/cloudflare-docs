@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000307271-Troubleshooting-missing-pages-from-Cloudflare-Apps
 title: Troubleshooting missing pages from Cloudflare Apps
-                  2 years ago
 ---
 
 # Troubleshooting missing pages from Cloudflare Apps

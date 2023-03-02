@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
 title: Purchasing Additional Page Rules
-                  10 months ago
 ---
 
 # Purchasing Additional Page Rules

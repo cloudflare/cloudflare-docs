@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4412024022029-Troubleshoot-Image-Resizing-problems
 title: Troubleshoot Image Resizing problems
-                  1 year ago
 ---
 
 # Troubleshoot Image Resizing problems

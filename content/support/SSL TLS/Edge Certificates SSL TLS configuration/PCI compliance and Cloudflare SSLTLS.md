@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/205043158-PCI-compliance-and-Cloudflare-SSL-TLS
 title: PCI compliance and Cloudflare SSLTLS
-                  5 months ago
 ---
 
 # PCI compliance and Cloudflare SSL/TLS

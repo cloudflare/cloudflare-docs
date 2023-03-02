@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115004180627-Problems-logging-into-Magento-1-Admin-Panel
 title: Problems logging into Magento 1 Admin Panel
-                  2 years ago
 ---
 
 # Problems logging into Magento 1 Admin Panel

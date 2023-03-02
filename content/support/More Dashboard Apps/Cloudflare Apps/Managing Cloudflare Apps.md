@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000304631-Managing-Cloudflare-Apps
 title: Managing Cloudflare Apps
-                  9 months ago
 ---
 
 # Managing Cloudflare Apps

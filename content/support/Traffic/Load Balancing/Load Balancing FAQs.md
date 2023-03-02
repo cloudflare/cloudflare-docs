@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4407016052493-Load-Balancing-FAQs
 title: Load Balancing FAQs
-                  6 months ago
 ---
 
 # Load Balancing FAQs

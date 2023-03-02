@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360035387431-Cloudflare-bot-products-FAQs
 title: Cloudflare bot products — FAQs
-                  3 months ago
 ---
 
 # Cloudflare bot products — FAQs

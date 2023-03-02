@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200172316-How-do-I-include-or-exclude-a-specific-URL-from-Cloudflare-s-page-rules-
 title: How do I include or exclude a specific URL from Cloudflare's page rules
-                  1 year ago
 ---
 
 # How do I include or exclude a specific URL from Cloudflare's page rules?

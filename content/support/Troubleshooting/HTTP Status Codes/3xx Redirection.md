@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003011091-3xx-Redirection
 title: 3xx Redirection
-                  1 year ago
 ---
 
 # 3xx Redirection

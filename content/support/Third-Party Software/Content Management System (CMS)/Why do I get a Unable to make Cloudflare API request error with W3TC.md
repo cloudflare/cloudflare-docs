@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169996-Why-do-I-get-a-Unable-to-make-Cloudflare-API-request-error-with-W3TC-
 title: Why do I get a Unable to make Cloudflare API request error with W3TC
-                  2 years ago
 ---
 
 # Why do I get a "Unable to make Cloudflare API request" error with W3TC?

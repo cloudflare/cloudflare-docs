@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/4424747060109-Registrar-troubleshoot-stalled-domain-transfers
 title: Registrar troubleshoot stalled domain transfers
-                  1 year ago
 ---
 
 # Registrar: troubleshoot stalled domain transfers

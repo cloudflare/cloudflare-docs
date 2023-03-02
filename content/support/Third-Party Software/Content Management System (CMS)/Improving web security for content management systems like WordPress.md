@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200169526-Improving-web-security-for-content-management-systems-like-WordPress
 title: Improving web security for content management systems like WordPress
-                  17 days ago
 ---
 
 # Improving web security for content management systems like WordPress

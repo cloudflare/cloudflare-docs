@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360060050511-Disruptive-Maintenance-Windows
 title: Disruptive Maintenance Windows
-                  1 year ago
 ---
 
 # Disruptive Maintenance Windows

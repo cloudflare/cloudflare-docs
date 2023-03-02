@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites
 title: Gathering information for troubleshooting sites
-                  5 months ago
 ---
 
 # Gathering information for troubleshooting sites

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360020739772-Using-Cloudflare-Logs-ELS-to-Investigate-DDoS-Traffic-Enterprise-Only-
 title: Using Cloudflare Logs (ELS) to Investigate DDoS Traffic (Enterprise Only)
-                  2 years ago
 ---
 
 # Using Cloudflare Logs (ELS) to Investigate DDoS Traffic (Enterprise Only)

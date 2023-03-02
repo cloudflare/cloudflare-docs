@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200172016-Understanding-WAF-managed-rules-Web-Application-Firewall-
 title: Understanding WAF managed rules (Web Application Firewall)
-                  17 days ago
 ---
 
 # Understanding WAF managed rules (Web Application Firewall)

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360020991331-Adding-vendor-specific-DNS-records-to-Cloudflare
 title: Adding vendor-specific DNS records to Cloudflare
-                  1 year ago
 ---
 
 # Adding vendor-specific DNS records to Cloudflare

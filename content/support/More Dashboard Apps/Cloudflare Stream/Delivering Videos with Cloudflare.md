@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/360057976851-Delivering-Videos-with-Cloudflare
 title: Delivering Videos with Cloudflare
-                  2 years ago
 ---
 
 # Delivering Videos with Cloudflare

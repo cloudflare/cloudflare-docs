@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115002708027-Cloudflare-WordPress-Plugin-Automatic-Cache-Management-
 title: Cloudflare WordPress Plugin Automatic Cache Management
-                  2 years ago
 ---
 
 # Cloudflare WordPress Plugin: Automatic Cache Management

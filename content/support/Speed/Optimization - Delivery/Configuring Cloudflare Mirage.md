@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/219178057-Configuring-Cloudflare-Mirage
 title: Configuring Cloudflare Mirage
-                  9 months ago
 ---
 
 # Configuring Cloudflare Mirage

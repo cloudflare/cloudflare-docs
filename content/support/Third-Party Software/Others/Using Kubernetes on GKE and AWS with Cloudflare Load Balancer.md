@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115003384591-Using-Kubernetes-on-GKE-and-AWS-with-Cloudflare-Load-Balancer
 title: Using Kubernetes on GKE and AWS with Cloudflare Load Balancer
-                  9 months ago
 ---
 
 # Using Kubernetes on GKE and AWS with Cloudflare Load Balancer

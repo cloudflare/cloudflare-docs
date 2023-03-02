@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/115000546328-Troubleshooting-Cloudflare-Rate-Limiting
 title: Troubleshooting Cloudflare Rate Limiting
-                  2 years ago
 ---
 
 # Troubleshooting Cloudflare Rate Limiting

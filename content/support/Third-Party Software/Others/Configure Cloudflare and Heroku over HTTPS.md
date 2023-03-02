@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-Cloudflare-and-Heroku-over-HTTPS
 title: Configure Cloudflare and Heroku over HTTPS
-                  2 years ago
 ---
 
 # Configure Cloudflare and Heroku over HTTPS

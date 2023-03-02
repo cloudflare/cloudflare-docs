@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/217720788-Troubleshooting-issues-sharing-to-Facebook
 title: Troubleshooting issues sharing to Facebook
-                  2 years ago
 ---
 
 # Troubleshooting issues sharing to Facebook

@@ -1,7 +1,6 @@
 ---
 source: https://support.cloudflare.com/hc/en-us/articles/200172356-Why-isn-t-a-Page-Rule-working-
 title: Why isn't a Page Rule working
-                  2 years ago
 ---
 
 # Why isn't a Page Rule working?
