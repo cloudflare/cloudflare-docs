@@ -1586,31 +1586,44 @@ wrangler deployments view <DEPLOYMENT_ID>
 
 Output:
 ```javascript
-{
-  Tag: '',
-  Number: 0,
-  'Metadata.author_id': 'Picard-Gamma-6-1-7-2',
-  'Metadata.author_email': 'someone@email.com',
-  'Metadata.source': 'wrangler',
-  'Metadata.created_on': '2021-01-01T00:00:00.000000Z',
-  'Metadata.modified_on': '2021-01-01T00:00:00.000000Z',
-  'resources.script': {
-    etag: 'mock-e-tag',
-    handlers: [ 'fetch' ],
-    last_deployed_from: 'wrangler'
-  },
-  'resources.bindings': []
-}
-export default {
-  async fetch(request) {
-    return new Response('Hello World from Deployment 1701-E');
-  },
+Deployment ID: 07d7143d-0284-427e-ba22-2d5e6e91b479
+Created on:    2023-03-02T21:05:15.622446Z
+Author:        example@cloudflare.com
+Source:        Upload from Wrangler 🤠
+------------------------------------------------------------
+Author ID:          e5a3ca86e08fb0940d3a05691310bb42
+Usage Model:        bundled
+Handlers:           fetch
+Compatibility Date: 2022-10-03
+--------------------------bindings--------------------------
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "testr2"
+
+[[kv_namespaces]]
+id = "79300c6d17eb4180a07270f450efe53f"
+binding = "MY_KV"
+
+---------------------------script---------------------------
+
+// index.js
+var worker_default = {
+  fetch(request) {
+    const base = "https://example.com";
+    const statusCode = 301;
+    const destination = new URL(request.url, base);
+    return Response.redirect(destination.toString(), statusCode);
+  }
 };
+export {
+  worker_default as default
+};
+//# sourceMappingURL=index.js.map
 ```
 
-### rollback <deployment-id>
+### rollback [deployment-id]
 
-Rollback to a specific deployment by ID. There are limitations on what deployments you can rollback to which you can read about [here](/workers/platform/deployments#rollbacks)
+Rollback to a specific deployment by ID. If an ID is not speicified, wrangler will rollback to the previous deployment. There are limitations on what deployments you can rollback to which you can read about [here](/workers/platform/deployments#rollbacks)
 
 {{<Aside type="warning">}}
 Rollbacks will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.

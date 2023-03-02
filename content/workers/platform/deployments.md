@@ -13,7 +13,7 @@ Deployments are currently in Public Beta and subcommands are currently in Beta. 
 
 Deployments are a log of static historical versions of your Worker. They track changes to the bundled code, bindings, compatibility date, and usage model associated with a Worker over time. They also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
 
-The latest deployment for a Worker is considered the "active deployment". [You can view your latest 10 deployments via the cloudflare dashboard or the `wrangler deployments` command.](#Interacting-with-Deployments)
+The latest deployment for a Worker is considered the "active deployment". You can view your latest 10 deployments [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`wrangler deployments` command](#via-wrangler).
 
 {{<Aside type="note">}}
 
@@ -23,9 +23,9 @@ Associated resources for a worker such as KV, R2, and Durable Objects are not tr
 
 ## Creating a new Deployment
 
-New Deployments will be created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. These can be done via the Cloudflare Dashboard, [Workers API](/api), or [`wrangler publish` command](/workers/wrangler/commands#publish).
+New Deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. These can be done via the Cloudflare Dashboard, [Workers API](/api), or [`wrangler publish` command](/workers/wrangler/commands#publish).
 
-Notably, this does not include changes to bound resources. For example if two workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Further changes to the service binding on Worker A will not trigger a new deployment for Worker B.
+Notably, this does not include changes to bound resources. For example, if two workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Changes to the service binding on Worker A will also not trigger a new deployment for Worker B.
 
 {{<Aside type="note">}}
 
@@ -58,15 +58,20 @@ Deployments are in active development. To give feedback, request a [live chat](h
 ## Rollbacks
 Rollbacks are a way to quickly deploy an older deployment to the edge. This could be useful if a breaking change or unintended publish is made to a production Worker.
 
+There are currently two ways to perform a rollback: via Wrangler or via the Cloudflare Dashboard.
+
 ### via Wrangler
 
-You can rollback in wrangler using the `wrangler deployments rollback` command, you can learn about it [here](/workers/wrangler/commands#rollback).
+You can rollback in Wrangler using the `wrangler deployments rollback` command detailed [here](/workers/wrangler/commands#rollback).
 
 ### via the Cloudflare Dashboard
 
-In the deployements tab under your Worker you can select the menu dropdown on the right of the deployment and select **`Rollback to this deployment`**.
+In the Dashboard, find the deployments tab under your Worker. From there, you can select the menu dropdown on the right of the deployment and select **`Rollback to this deployment`**.
 
-Rollbacks are only valid to the latest 10 deployments. Further rollbacks will be invalid if external resources have been deleted or modified between the target deployment and the active deployment. Specifically if:
+## Limitations
+Rollbacks are only valid to the latest 10 deployments. 
+
+Rollbacks will not be allowed if external resources have been deleted or modified between the target deployment and the active deployment. Specifically if:
 
 - A Durable Object migration has occurred between the active deployment and target deployment.
 - If the target deployment has a binding to an R2 bucket, KV namespace, or Queue that no longer exists.
