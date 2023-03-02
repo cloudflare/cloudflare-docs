@@ -32,7 +32,7 @@ jobs:
       - run: pnpm install
 
       - run: |
-        export NODE_OPTIONS="--max_old_space_size=8192"
+        export NODE_OPTIONS="--max-old-space-size=8192"
         make build
 
       - name: Broken Links
