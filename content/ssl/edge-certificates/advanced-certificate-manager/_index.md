@@ -30,20 +30,17 @@ Advanced certificates allow you multiple customization options:
 
 {{<Aside type="note">}}
 
-Advanced Certificate Manager cannot be used with Cloudflare Pages due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority). This is because Pages uses Cloudflare for SaaS for Custom Domains.
-
-{{</Aside>}}
-
-{{<Aside type="note">}}
-
 Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 edge certificates per zone.
 
 {{</Aside>}}
 
 ## Availability
 
-
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
+## Limitations
+
+Advanced Certificate Manager cannot be used with [Cloudflare Pages](/pages/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority). This is because Pages uses Cloudflare for SaaS for Custom Domains.
 
 ## Related resources
 

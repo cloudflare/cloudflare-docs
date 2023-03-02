@@ -35,6 +35,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 ## Custom Domains
 
 - It is currently not possible to add a custom domain with
+    
     - a wildcard, for example, `*.domain.com`.
     - a Worker already routed on that domain.
 
