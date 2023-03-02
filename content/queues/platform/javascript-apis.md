@@ -140,7 +140,6 @@ A batch of messages that are sent to a consumer Worker.
 interface MessageBatch<Body = any> {
   readonly queue: string;
   readonly messages: Message<Body>[];
-  ackAll(): void;
   retryAll(): void;
 }
 ```
@@ -154,10 +153,6 @@ interface MessageBatch<Body = any> {
 - {{<code>}}messages{{<param-type>}}Message[]{{</param-type>}}{{</code>}}
 
   - An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published. If you are interested in guaranteed FIFO ordering, please [email the Queues team](mailto:queues@cloudflare.com).
-
-- {{<code>}}ackAll() {{<type>}}void{{</type>}}{{</code>}}
-
-  - Marks every message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not. 
 
 - {{<code>}}retryAll() {{<type>}}void{{</type>}}{{</code>}}
 
@@ -174,8 +169,6 @@ interface Message<Body = any> {
   readonly id: string;
   readonly timestamp: Date;
   readonly body: Body;
-  ack(): void;
-  retry(): void;
 }
 ```
 
@@ -193,13 +186,5 @@ interface Message<Body = any> {
 
   - The body of the message.
   - The body can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types), as long as its size is less than 128 KB.
-
-- {{<code>}}ack() {{<type>}}void{{</type>}}{{</code>}}
-
-  - Marks a message as successfully delivered, regardless of whether your `queue()` consumer handler returns successfully or not. 
-
-- {{<code>}}retry() {{<type>}}void{{</type>}}{{</code>}}
-
-  - Marks a message to be retried in the next batch.
 
 {{</definitions>}}
