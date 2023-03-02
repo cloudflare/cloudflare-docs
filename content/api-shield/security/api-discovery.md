@@ -35,7 +35,7 @@ This process currently requires a session identifier, like an authorization toke
 
 ### Machine Learning-based Discovery
 
-Your API endpoints are discovered with both the Session Identifier-based Discovery as well as the Machine Learning-based Discovery.
+Your API endpoints are discovered with both the Session Identifier-based Discovery and the Machine Learning-based Discovery.
 
 To access Machine Learning-based Discovery, log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. Go to **API Shield** > **Discovery**. You may filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method. 
 
