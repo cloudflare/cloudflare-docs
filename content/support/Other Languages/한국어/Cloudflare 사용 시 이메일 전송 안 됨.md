@@ -1,6 +1,7 @@
 ---
 language_tag: korean
 source: https://support.cloudflare.com/hc/ko/articles/200168876-Cloudflare-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%A0%84%EC%86%A1-%EC%95%88-%EB%90%A8
+title: Cloudflare 사용 시 이메일 전송 안 됨
 ---
 
 # Cloudflare 사용 시 이메일 전송 안 됨

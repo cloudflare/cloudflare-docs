@@ -1,6 +1,7 @@
 ---
 language_tag: korean
 source: https://support.cloudflare.com/hc/ko/articles/360057976851-Cloudflare%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EB%B9%84%EB%94%94%EC%98%A4-%EC%A0%84%EC%86%A1
+title: Cloudflare를 사용한 비디오 전송
 ---
 
 # Cloudflare를 사용한 비디오 전송
