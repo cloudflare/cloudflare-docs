@@ -12,7 +12,7 @@ meta:
   description: Cloudflare Fundamentals provides information about features that
     span Cloudflare products.
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 externals:
   - title: How Cloudflare works

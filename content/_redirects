@@ -365,6 +365,8 @@
 /magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
+/magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
+/magic-wan/how-to/configure-static-routes/ /magic-wan/get-started/configure-static-routes/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301

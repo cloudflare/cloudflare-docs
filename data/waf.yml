@@ -11,7 +11,7 @@ meta:
   description: Protect against web application vulnerabilities with Cloudflare’s
     Web Application Firewall (WAF).
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/security/6

@@ -11,7 +11,7 @@ meta:
   description: Documentation for Cloudflare Pages, the best way to deploy your
     static and JAMstack sites
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/developers/cloudflare-pages/69

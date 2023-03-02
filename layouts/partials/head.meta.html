@@ -4,6 +4,30 @@
 {{- $metaTruncateLength := 150 -}}
 {{- $title := "" -}}
 
+<!-- Pull the product group -->
+
+{{- $productGroup := "" -}}
+{{- with $DATA.product.group -}}
+{{- $productGroup = . -}}
+{{- end -}}
+
+<!-- Choose the preview image based on the product group -->
+{{- $imagePlaceholder := "/cf-twitter-card.png" | absURL -}}
+{{- $imageDict := dict 
+  "Cloudflare essentials" "/core-services-preview.png" 
+  "Cloudflare One" "/zt-preview.png" 
+  "Developer platform" "/dev-products-preview.png" 
+  "Network services" "/core-services-preview.png" 
+  "Performance" "/core-services-preview.png" 
+  "Security" "/core-services-preview.png" 
+  -}}
+
+{{- range $key, $value := $imageDict -}}
+  {{- if eq $key $productGroup -}}
+    {{- $imagePlaceholder = $value | absURL -}}
+  {{- end -}}
+{{- end -}}
+
 {{- $pt := default .Context.Title .Context.Params.meta.title -}}
 {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
 {{- $title = print .Context.Title " | Training" -}}
@@ -40,22 +64,22 @@
 
 <meta name="description" content="{{ $description }}" />
 
-<meta property="og:image" content="{{ $META.image | absURL }}"/>
+<meta property="og:image" content="{{ $imagePlaceholder }}"/>
 <meta property="og:title" content="{{ $title }}"/>
+<meta property="og:site_name" content="Cloudflare Docs"/>
 <meta property="og:description" content="{{ $description }}"/>
 <meta property="og:type" content="website"/>
 
 <meta name="twitter:title" content="{{ $title }}"/>
-<meta name="twitter:image" content="{{ $META.image | absURL }}"/>
+<meta name="twitter:image" content="{{ $imagePlaceholder }}"/>
 <meta name="twitter:description" content="{{ $description }}"/>
-<meta name="twitter:creator" content="{{ $META.author }}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 
 {{- with .Context.Params.pcx_content_type -}}
 <meta name="pcx_content_type" content= "{{ . }}" />
 {{- end -}}
-{{- with $DATA.product.group -}}
-<meta name="pcx_content_group" content= "{{ . }}" />
+{{- if ne $productGroup "" -}}
+<meta name="pcx_content_group" content= "{{$productGroup}}" />
 {{- end -}}
 {{ with $.Context.Params.rss -}}
 

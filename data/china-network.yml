@@ -10,7 +10,7 @@ meta:
   title: Cloudflare China Network docs
   description: The Cloudflare China Network is a global network that offers a fast experience for visitors inside and outside of China.
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 externals:
   - title: Cloudflare homepage

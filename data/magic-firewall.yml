@@ -11,7 +11,7 @@ meta:
   description: Magic Firewall a network-level firewall delivered through
     Cloudflare to secure your enterprise.
   author: '@cloudflare'
-  image: /zt-preview.png
+  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets/magic_firewall
