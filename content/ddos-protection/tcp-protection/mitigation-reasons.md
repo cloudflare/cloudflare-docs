@@ -20,9 +20,9 @@ The connection states are the following:
 The mitigation reasons are the following:
 
 * **UNEXPECTED**: Packet dropped because it was not expected given the current state of the TCP connection it was associated with.
-* **CHALLENGE_NEEDED**:  Packet challenged because the system determined that the packet is most likely part of a packet flood.
+* **CHALLENGE_NEEDED**: Packet challenged because the system determined that the packet is most likely part of a packet flood.
 * **CHALLENGE_PASSED**: Packet dropped because it belongs to a solved challenge.
-* **NOT_FOUND**: Packet dropped because it is not part of an existing TCP connection or establishing a new connection.
+* **NOT_FOUND**: Packet dropped because it is not part of an existing TCP connection and it is not establishing a new connection.
 * **OUT_OF_SEQUENCE**: Packet dropped because its properties (for example, TCP flags or sequence numbers) do not match the expected values for the existing connection.
 * **ALREADY_CLOSED**: Packet dropped because it belongs to a connection that is already closed.
 
