@@ -25,3 +25,5 @@ Magic Transit users have two options for their implementation: ingress traffic o
 Magic Transit is not yet supported on Cloudflare's China Network.
 
 {{</Aside>}}
+
+For detailed information on Magic Transit architecture, refer to [Magic Transit Use Cases and Reference Architecture](/reference-architecture/magic-transit-reference-architecture/).
