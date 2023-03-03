@@ -7,7 +7,7 @@ layout: single
 
 # Client-side render
 
-You can initialize and customize the Turnstile widget on your web page via implicit or explicit rendering. 
+You can initialize and customize the Turnstile widget on your web page via implicit or explicit rendering.
 
 ## Implicitly render the Turnstile widget
 
@@ -21,7 +21,7 @@ The HTML is scanned for elements that have a `cf-turnstile` class name:
 ```
 </div>
 
-Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice. 
+Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our siteverify endpoint. A token can only be validated once and cannot be consumed twice.
 
 {{<Aside type="note">}}
 
@@ -48,7 +48,7 @@ highlight: [4]
 <form action="/login" method="POST">
    <input type="text" placeholder="username"/>
    <input type="password" placeholder="password"/>
-   <div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div> 
+   <div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div>
    <button type="submit" value="Submit">Log in</button>
 </form>
 
@@ -64,7 +64,7 @@ A form is not protected by having a widget rendered. The corresponding token tha
 
 {{</Aside>}}
 
-### Disable implicit rendering 
+### Disable implicit rendering
 
 You can disable implicit rendering by replacing the script from:
 
@@ -74,27 +74,28 @@ To:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`
 
-When using this option, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.
+Or:
+
+`https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback`
+
+When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.  To combine both options, you would pass a querystring of `?render=explicit&onload=onloadTurnstileCallback`:
+
+`https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
 
 ## Explicitly render the Turnstile widget
 
-1. Insert the JavaScript tag:
+1. Insert the JavaScript tag and related code below (and be sure to replace `<YOUR_SITE_KEY>` with your site key).  **Also ensure that you have renamed the class name of `.cf-turnstile` to `#example-container` (if and only if you do not set the `render=explicit` querystring option as shown above, because it will _still_ render otherwise).**  Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.<br>The challenge can be invoked explicitly with the following JavaScript snippet:
 
 <div>
 
 ```html
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
-<!-- OR and then call turnstile.ready(onloadTurnstileCallback) -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
 ```
 </div>
-
-2. Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.<br>The challenge can be invoked explicitly with the following JavaScript snippet:
 
 <div>
 
 ```javascript
-
 window.onloadTurnstileCallback = function () {
     turnstile.render('#example-container', {
         sitekey: '<YOUR_SITE_KEY>',
@@ -103,20 +104,95 @@ window.onloadTurnstileCallback = function () {
         },
     });
 };
-
-// if using synchronous loading, will be called once the DOM is ready
-turnstile.ready(onloadTurnstileCallback);
-
 ```
 </div>
 
-Turnstile can be programmatically loaded by invoking the `turnstile.render()` function in the global `window` object. 
+Or:
+
+<div>
+
+```html
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
+```
+</div>
+
+<div>
+
+```javascript
+// if using synchronous loading, will be called once the DOM is ready
+turnstile.ready(function () {
+    turnstile.render('#example-container', {
+        sitekey: '<YOUR_SITE_KEY>',
+        callback: function(token) {
+            console.log(`Challenge Success ${token}`);
+        },
+    });
+});
+```
+</div>
+
+Turnstile can be programmatically loaded by invoking the `turnstile.render()` function in the global `window` object.
 
 The `turnstile.render: function (container: string | HTMLElement, params: RenderParameters)` render takes an argument to a HTML widget.
 
 If the invocation is successful, the function returns a `widgetId (string)`. If the invocation is unsuccessful, the function returns `undefined`.
 
 Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
+
+Here's an advanced example for rendering Turnstile widgets using Bootstrap 3 or 4 with modals and responsive widget sizes:
+
+<div>
+
+```javascript
+//
+// Handle explicit Cloudflare Turnstile (Advanced Example with Bootstrap/Modals/Responsive Support)
+// <https://github.com/forwardemail/forwardemail.net>
+// <https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget>
+//
+function handleExplicitTurnstile() {
+  let widgetId = $(this).data('widgetId');
+  if (widgetId) return;
+
+  const isModal = $(this).parents('.modal:first').length > 0;
+
+  widgetId = window.turnstile.render(this, {
+    sitekey: '<YOUR_SITE_KEY>',
+    tabindex: isModal ? -1 : 0,
+    'error-callback': (err) => console.error(err)
+    // uncomment this if you want to render a smaller size (e.g. 576px = Bootstrap "md" breakpoint)
+    // size: window.matchMedia('(min-width: 576px)').matches ? 'normal' : 'compact'
+  });
+
+  if (widgetId) {
+    $(this).data('widgetId', widgetId);
+    return;
+  }
+
+  console.error(new Error('[Cloudflare Turnstile] widgetId missing'));
+  alert('Turnstile render error, please try again or contact us.');
+  window.location.reload();
+}
+
+// an alternative approach for performance is to use IntersectionObserver API
+window.onloadTurnstileCallback = function () {
+  // handle elements on page
+  $('.cf-explicit-turnstile')
+    .filter(function () {
+      // render if not inside modal or if inside modal that's shown
+      // (e.g. in case you render a modal on the page when it loads; which is an anti-pattern)
+      const $modal = $(this).parents('.modal:first');
+      if ($modal.length === 0) return true;
+      return $modal.is(':visible');
+    })
+    .each(handleExplicitTurnstile);
+
+  // handle modals
+  $('body').on('show.bs.modal hide.bs.modal', '.modal', function () {
+    $(this).find('.cf-explicit-turnstile').each(handleExplicitTurnstile);
+  });
+};
+```
+</div>
 
 ## Access a widget's state
 
