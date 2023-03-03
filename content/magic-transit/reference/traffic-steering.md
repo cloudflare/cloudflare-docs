@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Traffic steering
-weight: 0
 ---
 
 # Traffic steering
