@@ -64,7 +64,7 @@ If a zone has [URI-based WAF overrides](https://developers.cloudflare.com/api/op
 
 After the update process is complete, the Cloudflare dashboard will display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**, where you can deploy managed rulesets and adjust their configuration.
 
-![After migrating to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](/support/static/waf-migration-dashboard-differences.png)
+![After migrating to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](/waf/static/reference/waf-migration-dashboard-differences.png)
 
 Unlike the WAF managed rules, there is no global on/off setting to enable the WAF in the new interface. Instead, you deploy each managed ruleset individually in your zone.
 
