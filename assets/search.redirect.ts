@@ -2,9 +2,9 @@
   let $ = document.querySelector.bind(document);
   let element = $('#DocsSearch--input') || $('#SiteSearch--input');
   let productGroup = $('meta[name="pcx_content_group"]')
-  let title = $('meta[property="og:title"]')
+  let canonical = $('link[rel="canonical"]')
   let searchTab = '&t=Docs'
-  if (title.content.includes('Cloudflare Support docs')) {
+  if (canonical.href.includes('https://developers.cloudflare.com/support/')) {
     searchTab = '&t=Other'
   }
 
