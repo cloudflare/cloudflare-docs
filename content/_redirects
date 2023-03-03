@@ -158,6 +158,7 @@
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
 /bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
+/support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
