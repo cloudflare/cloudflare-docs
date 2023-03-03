@@ -1,6 +1,8 @@
 {{ $DATA := (index $.Site.Data .Section) }}
 {{ $productName := $DATA.product.title }}
 
+{{- if ne $productName "Support" -}}
+
 <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
       <a href="/products/" class="DocsMarkdown--link" itemprop="item">
@@ -35,3 +37,5 @@
       {{- end -}}
     {{- end -}}
   </ol>
+
+  {{- end -}}
