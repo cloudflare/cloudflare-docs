@@ -52,8 +52,8 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
 
 ## SSL/TLS for subdomains
 
-{{<render file="../../dns/_partials/_ssltls-subdomains.md">}}
+{{<render file="_ssltls-subdomains.md" productFolder="dns" >}}
 
 ## Customize subdomain behavior
 
-{{<render file="../../dns/_partials/_subdomain-customization.md">}}
+{{<render file="_subdomain-customization.md" productFolder="dns" >}}

@@ -8,7 +8,9 @@ meta:
 
 # Geo steering
 
-Geo Steering directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers. This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
+Geo Steering directs traffic to pools tied to specific countries, regions, or — for Enterprise customers only — data centers. 
+
+This option is extremely useful when you want site visitors to access the origin server closest to them, which improves page-loading performance.
 
 ## Pool assignment
 

@@ -47,8 +47,6 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
   }
 </style>
 
----
-
 ## Example Projects
 
 {{<worker-starter title="Router" repo="cloudflare/workers-sdk/templates/worker-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or applications that require routing logic.">}}

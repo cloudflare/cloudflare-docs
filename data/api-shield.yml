@@ -4,13 +4,14 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M37.8
 product:
   title: API Shield
   url: /api-shield/
+  group: Security
 
 meta:
   title: Cloudflare API Shield docs
   description: Protect your APIs from simple and sophisticated attacks using
     Cloudflare API Shield products.
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield

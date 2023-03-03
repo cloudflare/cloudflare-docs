@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M37.1
 product:
   title: Cache
   url: /cache/
+  group: Performance
 
 meta:
   title: Cloudflare Cache (CDN) docs
@@ -12,7 +13,7 @@ meta:
     reduces your server load and bandwidth, with no extra charges for bandwidth
     spikes
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/tag/caching

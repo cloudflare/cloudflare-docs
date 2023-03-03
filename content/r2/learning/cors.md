@@ -69,8 +69,8 @@ console.log(url);
 
 Test the presigned URL by uploading an object using cURL. The example below would upload the `123` text to R2 with a `Content-Type` of `text/plain`.
 
-```json
-curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
+```sh
+$ curl -X PUT <URL> -H "Content-Type: text/plain" -d "123"
 ```
 
 ## Add CORS policies from the dashboard
@@ -86,13 +86,15 @@ Your policy displays on the **Settings** page for your bucket.
 
 ## Response headers
 
-You can use the headers below to customize the CORS policy.
+The following fields in an R2 CORS policy map to HTTP response headers. These response headers are only returned when the incoming HTTP request is a valid CORS request.
 
-- `AllowedOrigins`: Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. Example: `http://www.example.com`
-- `AllowedMethods`: Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser.
-- `AllowedHeaders`: Specifies the value for the `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.
-- `ExposeHeaders`: Object headers used when requesting an object from a browser.
-- `MaxAgeSeconds`: The amount of time in seconds browsers are allowed to cache CORS preflight responses.
+| Field Name           | Description                                          | Example  |
+|----------------------|------------------------------------------------------|----------|
+| `AllowedOrigins`     | Specifies the value for the `Access-Control-Allow-Origin` header R2 sets when requesting objects in a bucket from a browser. | If a website at `www.example.com` needs to access resources (e.g. fonts, scripts) on a [custom domain](/r2/data-access/public-buckets/#custom-domains-configuration) of `static.example.com`, you would set `https://static.example.com` as an `AllowedOrigin`. |
+| `AllowedMethods`     | Specifies the value for the `Access-Control-Allow-Methods` header R2 sets when requesting objects in a bucket from a browser. | `GET`, `POST`, `PUT` |
+| `AllowedHeaders`     | Specifies the value for the `Access-Control-Allow-Headers` header R2 sets when requesting objects in this bucket from a browser.Cross-origin requests that include custom headers (e.g. `x-user-id`) should specify these headers as `AllowedHeaders`. | `x-requested-by`, `User-Agent` |
+| `ExposeHeaders`      | Specifies the headers that can be exposed back, and accessed by, the JavaScript making the cross-origin request. If you need to access headers beyond the [safelisted response headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers#examples), such as `Content-Encoding` or `cf-cache-status`, you must specify it here. | `Content-Encoding`, `cf-cache-status`, `Date`  |
+| `MaxAgeSeconds`      | Specifies the amount of time (in seconds) browsers are allowed to cache CORS preflight responses. Browsers may limit this to 2 hours or less, even if the maximum value (86400) is specified.  | `3600` |
 
 ## Example
 
@@ -112,3 +114,13 @@ The `AllowedOrigins` specify the web server being used, and `localhost:3000` is 
   }
 ]
 ```
+
+## Common Issues
+
+* Only a cross-origin request will include CORS response headers.
+  * A cross-origin request is identified by the presence of an `Origin` HTTP request header, with the value of the `Origin` representing a valid, allowed origin as defined by the `AllowedOrigins` field of your CORS policy.
+  * A request without an `Origin` HTTP request header will *not* return any CORS response headers. Origin values must match exactly.
+* The value(s) for `AllowedOrigins` in your CORS policy must be a valid [HTTP Origin header value](https://fetch.spec.whatwg.org/#origin-header). A valid `Origin` header does *not* include a path component and must only be comprised of a `scheme://host[:port]` (where port is optional).
+  * Valid `AllowedOrigins` value: `https://static.example.com` - includes the scheme and host. A port is optional and implied by the scheme.
+  * Invalid `AllowedOrigins` value: `https://static.example.com/` or `https://static.example.com/fonts/Calibri.woff2` - incorrectly includes the path component.
+* If you need to access specific header values via JavaScript on the origin page, such as when using a video player, ensure you set `Access-Control-Expose-Headers` correctly and include the headers your JavaScript needs access to, such as `Content-Length`.

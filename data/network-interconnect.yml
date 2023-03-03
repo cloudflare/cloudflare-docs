@@ -5,13 +5,14 @@ product:
   title: Network Interconnect
   url: /network-interconnect/
   wrap: true
+  group: Network services
 
 meta:
   title: Cloudflare Network Interconnect docs
   description: For a faster, more reliable, and more secure experience than
     connecting over the Internet.
   author: '@cloudflare'
-  image: /cf-twitter-card.png
+  
 
 externals:
   - title: Blog announcement

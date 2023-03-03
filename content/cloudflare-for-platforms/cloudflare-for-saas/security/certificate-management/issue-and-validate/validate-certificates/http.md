@@ -36,7 +36,7 @@ Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/s
 <summary>What happens after you create the custom hostname</summary>
 <div>
  
-{{<render file="../../ssl/_partials/_cname-cert-verification.md">}}
+{{<render file="_cname-cert-verification.md" productFolder="ssl" >}}
  
 </div>
  

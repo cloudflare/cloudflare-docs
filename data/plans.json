@@ -1115,7 +1115,6 @@
         "super_bot_fight_mode": {
           "title": "Super Bot Fight Mode",
           "free": "No",
-          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
@@ -1160,7 +1159,7 @@
         }
       }
     },
-    "firewall_analytics": {
+    "security_events": {
       "title": "Security Events",
       "link": "/waf/security-events/",
       "properties": {
@@ -1175,7 +1174,6 @@
         "dashboard_features": {
           "title": "Dashboard features",
           "free": "Activity log only",
-          "lite": "All",
           "pro": "All",
           "biz": "All",
           "ent": "All"
@@ -1203,7 +1201,7 @@
         }
       }
     },
-    "firewall_rules": {
+    "x_firewall_rules": {
       "title": "Firewall rules",
       "link": "/firewall/",
       "properties": {
@@ -1232,7 +1230,7 @@
           "biz": "All except Log",
           "ent": "All"
         },
-        "regex_support": {
+        "z_regex_support": {
           "title": "Regex support",
           "free": "No",
           "pro": "No",
@@ -1241,7 +1239,7 @@
         }
       }
     },
-    "ip_access_rules": {
+    "x_ip_access_rules": {
       "title": "IP Access Rules",
       "link": "/waf/tools/ip-access-rules/",
       "properties": {
@@ -1269,9 +1267,9 @@
         }
       }
     },
-    "managed_rules": {
-      "title": "Managed rules",
-      "link": "/firewall/",
+    "waf_a_managed_rules": {
+      "title": "WAF Managed Rules",
+      "link": "/waf/managed-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1290,25 +1288,29 @@
           "ent": "Yes"
         },
         "managed_rulesets": {
-          "title": "WAF Managed Rules",
+          "title": "Other WAF managed rulesets",
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
-          "lite": "Yes",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "custom_rules": {
-          "title": "Custom rules",
-          "link": "/waf/custom-rules/",
+        }
+      }
+    },
+    "waf_b_custom_rules": {
+      "title": "WAF custom rules",
+      "link": "/waf/custom-rules/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Certain Enterprise plans"
         },
-        "custom_rulesets": {
+        "z_custom_rulesets": {
           "title": "Custom rulesets",
           "link": "/waf/custom-rulesets/",
           "summary": "Enterprise with add-on",
@@ -1399,8 +1401,9 @@
       }
     },
     "rate_limiting": {
-      "title": "Rate Limiting Rules (new version)",
+      "title": "Rate limiting rules (new version)",
       "link": "/waf/rate-limiting-rules/",
+      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1416,13 +1419,14 @@
           "pro": 2,
           "biz": 5,
           "ent": 5,
+          "ent_plus": 100,
           "waf_essential": 100,
           "advanced": 100
         }
       }
     },
     "rate_limiting_previous": {
-      "title": "Rate Limiting Rules (previous version)",
+      "title": "Rate limiting rules (previous version)",
       "link": "https://support.cloudflare.com/hc/articles/115001635128",
       "properties": {
         "availability": {
@@ -1453,7 +1457,7 @@
         }
       }
     },
-    "user_agent_rules": {
+    "x_user_agent_rules": {
       "title": "User Agent Blocking",
       "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
       "properties": {
@@ -1476,7 +1480,7 @@
         }
       }
     },
-    "zone_lockdown_rules": {
+    "x_zone_lockdown_rules": {
       "title": "Zone Lockdown",
       "link": "https://support.cloudflare.com/hc/en-us/articles/115001595131",
       "properties": {
