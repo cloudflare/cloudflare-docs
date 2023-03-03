@@ -20,13 +20,30 @@ If you have a large domain with a lot of traffic, we recommend Bot Management fo
 
 To see the differences in features and functionality, visit [Plans](/bots/plans/).
 
-## Availability
+## Features
 
-{{<feature-table id="security.bots">}}
+{{<feature header="Bot Fight Mode" href="/bots/get-started/free/">}}
+{{<plan id="security.bots.r_bot_fight_mode.properties.availability.summary">}}
+Detect and mitigate bot traffic on your domain. {{</feature>}}
 
-## Next steps
+{{<feature header="Super Bot Fight Mode" href="/bots/get-started/">}}
+{{<plan id="security.bots.super_bot_fight_mode.properties.availability.summary">}}
+Identify traffic matching patterns of known bots, challenge or block bots, protect static resources, and view analytics to help you understand bot traffic using Super Bot Fight Mode. {{</feature>}}
 
-{{<button-group>}}
-  {{<button type="primary" href="/bots/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="/bots/concepts/">}}Learn more{{</button>}}
-{{</button-group>}}
+{{<feature header="Bot Analytics" href="/bots/bot-analytics/">}}
+{{<plan id="security.bots.bot_analytics.properties.availability.summary">}}
+Use Bot Analytics to dynamically examine bot traffic.
+{{</feature>}}
+
+{{<feature header="Firewall variables" href="/bots/reference/bot-management-variables/">}}
+{{<plan id="security.bots.firewall_variables.properties.availability.summary">}}
+Access several new variables within the Firewall expression builder.
+{{</feature>}}
+
+## More resources
+ 
+{{<resource-group>}}
+
+{{<resource header="Plans" href="https://www.cloudflare.com/plans/#overview" icon="documentation-clipboard">}}Compare available Cloudflare plans{{</resource>}}
+ 
+{{</resource-group>}}

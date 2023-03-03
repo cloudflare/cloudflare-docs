@@ -1091,33 +1091,49 @@
         "bot_analytics": {
           "title": "Bot analytics",
           "link": "/bots/bot-analytics/",
-          "free": "No",
-          "pro": "No",
-          "pro_plus": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
+          "properties": {
+            "availability": {
+              "title": "Availability",
+              "summary": "Business and above",
+              "free": "No",
+              "pro": "No",
+              "pro_plus": "Yes",
+              "biz": "Yes",
+              "ent": "Yes"
         },
         "firewall_variables": {
           "title": "Firewall variables",
           "link": "/bots/reference/bot-management-variables/",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Paid add-on"
+          "properties": {
+            "availability": {
+              "title": "Availability",
+              "summary": "Paid add-on for Enterprise",
+              "free": "No",
+              "pro": "No",
+              "biz": "No",
+              "ent": "Paid add-on"
         },
         "r_bot_fight_mode": {
           "title": "Bot Fight Mode",
-          "free": "Yes",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
+          "properties": {
+            "availability": {
+              "title": "Availability",
+              "summary": "Available on all plans",
+              "free": "Yes",
+              "pro": "Yes",
+              "biz": "Yes",
+              "ent": "Yes"
         },
         "super_bot_fight_mode": {
           "title": "Super Bot Fight Mode",
-          "free": "No",
-          "pro": "Yes",
-          "biz": "Yes",
-          "ent": "Yes"
+          "properties": {
+            "availability": {
+              "title": "Availability",
+              "summary": "Pro and above",
+              "free": "No",
+              "pro": "Yes",
+              "biz": "Yes",
+              "ent": "Yes"
         }
       }
     },
