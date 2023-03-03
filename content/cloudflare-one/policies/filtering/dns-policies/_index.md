@@ -13,9 +13,9 @@ A DNS policy consists of an **Action** as well as a logical expression that dete
 
 - [Actions](#actions)
 - [Selectors](#selectors)
-- [Operators](#operators)
+- [Comparison Operators](#comparison-operators)
 - [Value](#value)
-- [Conditionals](#conditionals)
+- [Logical Operators](#logical-operators)
 
 When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. Unless a more specific selector is configured in a policy (for example, user email or source IP address), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
 
@@ -254,7 +254,7 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 {{<render file="gateway/_users.md">}}
 
-## Operators
+## Comparison Operators
 
 {{<render file="gateway/_operators.md">}}
 
@@ -262,7 +262,7 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 {{<render file="gateway/_value.md">}}
 
-## Conditionals
+## Logical Operators
 
 {{<render file="gateway/_conditionals.md" withParameters="**Identity**">}}
 

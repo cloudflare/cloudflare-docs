@@ -6,6 +6,10 @@ _build:
 inputParameters: param1
 ---
 
-You can use AND and OR conditionals to build complex policies. AND conditionals will check if users meet all of the criteria, while OR conditionals will check if users meet one of the criteria.
+<div class="special-class" markdown="1">
+
+You can use AND and OR logical operators to build complex policies. The **And** logical operator checks if users meet all of the criteria, while the **Or** logical operator checks if users meet one of the criteria.
 
 The OR operator will only work with conditions of the same expression type. For example, you cannot compare conditions in **Traffic** with conditions in $1.
+
+</div>

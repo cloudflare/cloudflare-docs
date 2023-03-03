@@ -6,4 +6,8 @@ _build:
 inputParameters: type1;;example2;;example3
 ---
 
+<div class="special-class" markdown="1">
+
 If a condition evaluates both a $1 (such as $2) and a response (such as $3), then the condition will be evaluated when the response is received.
+
+</div>

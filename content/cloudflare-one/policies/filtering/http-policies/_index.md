@@ -19,9 +19,9 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 - [Actions](#actions)
 - [Selectors](#selectors)
-- [Operators](#operators)
+- [Comparison Operators](#comparison-operators)
 - [Value](#value)
-- [Conditionals](#conditionals)
+- [Logical Operators](#logical-operators)
 
 ## Actions
 
@@ -228,7 +228,7 @@ The country of the user making the request.
 
 {{<render file="gateway/_users.md">}}
 
-## Operators
+## Comparison Operators
 
 {{<render file="gateway/_operators.md">}}
 
@@ -236,7 +236,7 @@ The country of the user making the request.
 
 {{<render file="gateway/_value.md">}}
 
-## Conditionals
+## Logical Operators
 
 {{<render file="gateway/_conditionals.md" withParameters="**Identity** or **Device Posture**">}}
 
