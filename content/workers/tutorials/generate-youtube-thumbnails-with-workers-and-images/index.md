@@ -87,7 +87,7 @@ You will then receive a response similar to this:
 }
 ```
 
-Now that we've uploaded the image we'll be using it as a background for our thumbnail image.
+Now that you have uploaded the image, you will be using it as a background for your thumbnail image.
 
 ## Create a Worker to Transform text-to-image
 
@@ -290,7 +290,13 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-The final lib.rs file should look as follows (you can also find the full code as an example repository at [github.com/cloudflare/templates/worker-to-text](https://github.com/cloudflare/templates/tree/main/examples/worker-to-text)).
+The final `lib.rs` file should look as follows.
+
+{{<Aside type="note" header="Cloudflare templates repository">}}
+
+Find the full code as an example repository in [the worker-to-text template](https://github.com/cloudflare/workers-sdk/tree/main/templates/examples/worker-to-text).
+
+{{</Aside>}}
 
 ```rs
 ---

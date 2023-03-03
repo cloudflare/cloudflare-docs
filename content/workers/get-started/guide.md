@@ -36,7 +36,7 @@ In your terminal, you will be asked a series of questions related to your projec
 
 {{</Aside>}}
 
-You can also use one of [Cloudflare's templates](https://github.com/cloudflare/templates#usage) to start a new project.
+You can also use one of [Cloudflare's templates](https://github.com/cloudflare/workers-sdk/tree/main/templates) to start a new project.
 
 To start developing your Worker, `cd` into your new project directory:
 
