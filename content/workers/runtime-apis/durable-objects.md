@@ -302,6 +302,42 @@ The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter 
 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 
+### WebSockets Hibernation API
+
+Durable Objects WebSockets support includes extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow WebSockets that are not actively handling messages to remain connected when the Durable Object is evicted from memory ("hibernation").
+
+#### WebSocket extensions
+
+- {{<code>}}WebSocket.attachment{{</code>}} {{<type>}}Any{{</type>}}
+
+  -  All WebSockets have this property. It starts out null but can be assigned to any serializable value. The property will survive hibernation. Size is limited to 2048 bytes.
+
+#### `state` methods for WebSockets
+
+- {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}){{</code>}}
+
+  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's webSocketMessage() handler, and webSocketClose() will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its send() and close() methods can be used to send messages, but its addEventListener() method won't ever receive any events as they'll be delivered to the DurableObject instead. `tags` are string tags which can be used to look up the WebSocket with getWebSockets().
+
+- {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Array\<WebSocket>{{</type>}}
+
+  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list.
+
+- {{<code>}}state.setEventTimeout(timeoutMs{{<param-type>}}number{{</param-type>}}){{</code>}}
+
+  - Set the maximum amount of time that a single event of any type is allowed to run before the event will be canceled. This is useful for ensuring that a Durable Object cannot be held open by a hanging event leading to unexpected duration billing. This is provided as a safety measure; carefully-written code does not need it. When a WebSocket is accepted using `state.acceptWebSocket()`, the timeout applies to a single message delivery, not to the whole connection.
+
+#### `webSocketMessage` handler method
+
+The system calls the `webSocketMessage` method when an accepted WebSocket receives a message. The method is not called for WebSocket control frames; the system will respond to an incoming Ping automatically without interrupting hibernation. The method takes `(ws: WebSocket, message: String | ArrayBuffer)` as parameters. It does not return a result and can be `async`.
+
+#### `webSocketClose` handler method
+
+The system calls the `webSocketClose` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string)` as parameters. It does not return a result and can be `async`.
+
+#### `webSocketError` handler method
+
+The system calls the `webSocketError` method for any non-disconnection related errors. The method takes an `Error` as the parameter. It does not return a result and can be `async`.
+
 ---
 
 ## Accessing a Durable Object from a Worker
