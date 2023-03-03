@@ -6,6 +6,6 @@ weight: 6
 
 # Reference
 
-For more information on concepts related to Magic WAN, review the information below.
+For more information on concepts related to Magic WAN, review the items below.
 
 {{<directory-listing>}}
