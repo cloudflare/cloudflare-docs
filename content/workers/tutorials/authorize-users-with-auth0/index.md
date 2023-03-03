@@ -654,7 +654,7 @@ $ wrangler publish
 
 Wrangler will compile your code, upload the associated Workers Sites folder (`public`, by default), and begin handling requests sent to your `*.workers.dev` application, or to your zone. To confirm everything works as expected, you should:
 
-1.  Visit your application (for example, [https://my-auth-example.<your_subdomain>.workers.dev/login](https://my-auth-example.<your_subdomain>.workers.dev/login)).
+1.  Visit your application (for example, `https://my-auth-example.<your_subdomain>.workers.dev/login`).
 2.  Log in with an email/password or an identity provider enabled for your Auth0 application.
 3.  Let Auth0 redirect you to `/auth/callback`, and then to `/userinfo`. As this is happening, your Workers application has exchanged a login `code` with Auth0 for an access token, persisted it to Workers KV, and registered you as an authorized user via a cookie.
 4.  If you see your `/userinfo` endpoint, you have successfully authorized users to your Workers application, using Auth0.
