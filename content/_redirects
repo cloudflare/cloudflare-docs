@@ -159,6 +159,13 @@
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
 /bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
+/support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
+/support/other-languages/español-españa/productos-de-detección-de-bots-de-cloudflare-preguntas-frecuentes/ /bots/troubleshooting/ 301
+/support/other-languages/français-france/produits-bot-cloudflare/ /bots/troubleshooting/ 301
+/support/other-languages/português-do-brasil/produtos-de-bot-da-cloudflare/ /bots/troubleshooting/ 301
+/support/other-languages/日本語/cloudflareのボット製品/ /bots/troubleshooting/ 301
+/support/other-languages/简体中文/cloudflare-计费政策/ /bots/troubleshooting/ 301
+/support/other-languages/한국어/cloudflare-bot-제품/ /bots/troubleshooting/ 301
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
