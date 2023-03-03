@@ -1,7 +1,7 @@
 ---
 title: About
 pcx_content_type: concept
-weight: 2
+weight: 10
 meta:
   title: About Magic Transit
 ---

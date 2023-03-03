@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Get started
-weight: 4
+weight: 3
 ---
 
 # Get started
