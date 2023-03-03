@@ -17,13 +17,13 @@ ___
 
 ## How does Cloudflare detect bots?
 
-Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](/bots/about/plans).
+Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](/bots/plans).
 
 ___
 
 ## How do I know what's included in my plan?
 
-To know what's included in your plan, refer to our [developer documentation](/bots/about/plans).
+To know what's included in your plan, refer to our [developer documentation](/bots/plans).
 
 ___
 
