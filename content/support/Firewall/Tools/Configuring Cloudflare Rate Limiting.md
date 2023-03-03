@@ -1,10 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/115001635128-Configuring-Cloudflare-Rate-Limiting
-title: Configuring Cloudflare Rate Limiting
+title: Configuring Cloudflare Rate Limiting (previous version)
 ---
 
-# Configuring Cloudflare Rate Limiting
+# Configuring Cloudflare Rate Limiting (previous version)
 
 
 

@@ -17,7 +17,7 @@ Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare 
 
 Magic Firewall uses Wireshark syntax, a domain-specific language common in the networking world and the same syntax used across our other products. With this syntax, you can easily craft powerful rules to precisely allow or deny any traffic in or out of your network.
 
-Magic Firewall is available with the purchace of [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/).
+Magic Firewall is available with the purchase of [Magic Transit](/magic-transit/) or [Magic WAN](/magic-wan/).
 
 ---
  
