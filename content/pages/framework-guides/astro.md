@@ -154,4 +154,6 @@ export async function get({request}: APIContext) => {
 };
 ```
 
-{{<render file="_learn-more.md" withParameters="Astro">}}
+## Learn more
+
+By completing this guide, you have successfully deployed your Astro site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
