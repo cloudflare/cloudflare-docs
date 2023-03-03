@@ -843,6 +843,18 @@
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 
+# Support
+# - KB: https://support.cloudflare.com/hc/*/articles/5995821690637
+/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/deutsch/migration-von-waf-verwalteten-regeln-zu-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/español-españa/migración-de-reglas-administradas-del-waf-a-conjuntos-de-reglas-administradas-del-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/français-france/migration-depuis-les-règles-gérées-du-pare-feu-waf-vers-les-ensembles-de-règles-gérées-du-pare/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/português-do-brasil/como-migrar-das-regras-gerenciadas-do-waf-para-os-conjuntos-de-regras-gerenciados-do-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/한국어/waf-관리형-규칙으로부터-waf-managed-rulesets로의-마이그레이션/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/日本語/wafマネージドルールからwafマネージドルールセットに移行する/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/简体中文/从-waf-托管规则迁移到-waf-托管规则集/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+
+
 ### DYNAMIC REDIRECTS ###
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
 /api-security/* /api-shield/:splat 301
