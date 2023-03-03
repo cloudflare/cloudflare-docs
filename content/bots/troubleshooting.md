@@ -1,7 +1,6 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: faq
 title: FAQs
-source: https://support.cloudflare.com/hc/en-us/articles/360035387431-Cloudflare-bot-products-FAQs
 weight: 11
 
 ---
@@ -12,25 +11,25 @@ weight: 11
 
 Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
 
-For more information about these bot solutions and how to set them up, refer to the [developer documentation](https://developers.cloudflare.com/bots/).
+For more information about these bot solutions and how to set them up, refer to the [developer documentation](/bots/).
 
 ___
 
 ## How does Cloudflare detect bots?
 
-Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](https://developers.cloudflare.com/bots/about/plans).
+Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](/bots/about/plans).
 
 ___
 
 ## How do I know what's included in my plan?
 
-To know what's included in your plan, refer to our [developer documentation](https://developers.cloudflare.com/bots/about/plans).
+To know what's included in your plan, refer to our [developer documentation](/bots/about/plans).
 
 ___
 
 ## How do I set up my bot product?
 
-To learn how to set up your bot product, refer to our [developer documentation](https://developers.cloudflare.com/bots/get-started).
+To learn how to set up your bot product, refer to our [developer documentation](/bots/get-started).
 
 ___
 
@@ -41,7 +40,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 **Workarounds:**
 
 -   Disable the WAF managed rule with id 100203 temporarily,
--   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [developer documentation](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions).
+-   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [developer documentation](/firewall/cf-firewall-rules/actions).
 
 **Solution:**
 
@@ -74,7 +73,7 @@ The difference is significant:
 -   Threat score (_cf.threat\_score_) is what Cloudflare uses to determine IP Reputation. It goes from 0 (good) to 100 (bad).
 -   Bot management score (_cf.bot\_management.score)_ is what Cloudflare uses in Bot Management to measure if the request is from a human or a script**.** The scores range from 1 (bot) to 99 (human). Lower scores indicate the request came from a script, API service, or an automated agent. Higher scores indicate that the request came from a human using a standard desktop or mobile web browser.
 
-These fields are available via [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules).
+These fields are available via [Cloudflare Firewall Rules](/firewall/cf-firewall-rules).
 
 ___
 
@@ -86,7 +85,7 @@ Cloudflare has built an allowlist of good, automated bots, e.g. Google Search En
 
 This allowlist is large based on reverse DNS verification, meaning that the IPs we allow really match the requesting service. In addition to this, Cloudflare uses multiple validation methods including ASN blocks and public lists. If none of these validation types are available for a customer, we use internal Cloudflare data and machine learning to identify legitimate IP addresses from good bots.
 
-To allow traffic from good bots, use the [Verified Bot](https://developers.cloudflare.com/ruleset-engine/rules-language/fields#dynamic-fields) field in your firewall rule.
+To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-language/fields#dynamic-fields) field in your firewall rule.
 
 ___
 
@@ -94,7 +93,7 @@ ___
 
 Cloudflare maintains a sample list of verified bots in [Cloudflare Radar](https://radar.cloudflare.com/verified-bots).
 
-As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](https://developers.cloudflare.com/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
+As a bot operator, in order to be listed by Cloudflare as a Verified Bot, your bot must conform with our [verified bot public policy](/bots/reference/verified-bots-policy/).  If your bot meets this criteria, submit this [online application](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ___
 
@@ -132,25 +131,24 @@ ___
 
 This is a known issue the Bots team is working to resolve in the near future. In the meantime, there is a workaround to resolve such issue. You will need to run the following API command to check and remove the SBFM ruleset:
 
-1\. List the existing Rulesets at the zone level
+1. List the existing Rulesets at the zone level
 
+```bash
+curl -X GET \ "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets";
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" 
+    -H Content-Type: application/json
+```
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -X GET &quot;https://api.cloudflare.com/client/v4/zones/zone_id/rulesets&quot; \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H &quot;X-Auth-Email: email&quot; \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H &quot;X-Auth-Key: key&quot; \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H &quot;Content-Type: application/json&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+2. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
 
-2\. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
+3. Use the ruleset ID you found to delete the SBFM ruleset
 
-3\. Use the ruleset ID you found to delete the SBFM ruleset
-
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -X DELETE &quot;https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id&quot; \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H &quot;X-Auth-Email: email&quot; \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H &quot;X-Auth-Key: key&quot; \</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">     -H &quot;Content-Type: application/json&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+```bash
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id" \
+    -H "X-Auth-Email: <EMAIL>" \
+    -H "X-Auth-Key: <API_KEY>" 
+    -H "Content-Type: application/json"
+```
 
 Note that you need to replace <key> with your own API key, which can be obtained from [API tokens](https://dash.cloudflare.com/profile/api-tokens).
-
-___
-
-## Related resources
-
--   [Cloudflare Bot Management](https://developers.cloudflare.com/bots/) (Developer Documentation)
--   [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules/) (Developers Documentation)
--   [Cloudflare Bot Management: machine learning and more](https://blog.cloudflare.com/cloudflare-bot-management-machine-learning-and-more/) (Cloudflare Blog)
--   [Stop the Bots: Practical Lessons in Machine Learning](https://blog.cloudflare.com/stop-the-bots-practical-lessons-in-machine-learning/) (Cloudflare Blog)

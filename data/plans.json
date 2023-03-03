@@ -1091,11 +1091,11 @@
         "bot_analytics": {
           "title": "Bot analytics",
           "link": "/bots/bot-analytics/",
-            "free": "No",
-            "pro": "No",
-            "pro_plus": "Yes",
-            "biz": "Yes",
-            "ent": "Yes"
+          "free": "No",
+          "pro": "No",
+          "pro_plus": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
         },
         "firewall_variables": {
           "title": "Firewall variables",
