@@ -214,6 +214,4 @@ To use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases), 
 
 For example, `HUGO_VERSION`: `0.110.0`.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Hugo site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Hugo">}}

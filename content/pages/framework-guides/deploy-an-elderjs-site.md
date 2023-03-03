@@ -76,6 +76,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Elder.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Elder.js">}}

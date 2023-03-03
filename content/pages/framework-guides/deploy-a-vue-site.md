@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a Vue application
+title: Deploy a Vue site
 ---
 
-# Deploy a Vue application
+# Deploy a Vue site
 
 [Vue](https://vuejs.org/) is a progressive JavaScript framework for building user interfaces. A core principle of Vue is incremental adoption: this makes it easy to build Vue applications that live side-by-side with your existing code.
 
@@ -55,6 +55,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Vue application, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Vue site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Vue">}}

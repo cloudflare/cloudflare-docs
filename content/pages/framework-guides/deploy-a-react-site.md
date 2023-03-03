@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a React application
+title: Deploy a React site
 ---
 
-# Deploy a React application
+# Deploy a React site
 
 [React](https://reactjs.org/) is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
@@ -60,6 +60,4 @@ By default, Cloudflare Pages assumes you are developing a single-page applicatio
 
 {{</Aside>}}
 
-## Learn more
-
-By completing this guide, you have successfully deployed your React site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="React">}}

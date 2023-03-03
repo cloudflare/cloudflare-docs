@@ -74,6 +74,4 @@ Every time you commit new code to your Mkdocs site, Cloudflare Pages will automa
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-## Related resources
-
-By completing this guide, you have successfully deployed your Mkdocs site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Mkdocs">}}

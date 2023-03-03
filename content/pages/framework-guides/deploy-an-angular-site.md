@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy an Angular application
+title: Deploy an Angular site
 ---
 
-# Deploy an Angular application
+# Deploy an Angular site
 
 [Angular](https://angular.io/) is an incredibly popular framework for building reactive and powerful front-end applications.
 
@@ -126,6 +126,4 @@ Cloudflare Pages will automatically rebuild your project and deploy it on every 
 
 Additionally, you will have access to [preview deployments](/pages/platform/preview-deployments/), which repeat the build-and-deploy process for pull requests. With these, you can preview changes to your project with a real URL before deploying them to production.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Angular CLI site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Angular">}}

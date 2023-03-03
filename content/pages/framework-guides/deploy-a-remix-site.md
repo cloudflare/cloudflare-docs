@@ -142,6 +142,4 @@ You have to do this because there is no way to export the Durable Object class f
 
 Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Remix.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Remix">}}
