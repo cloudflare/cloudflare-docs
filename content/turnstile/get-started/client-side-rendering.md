@@ -89,7 +89,7 @@ When using `render=explicit`, HTML elements with the `cf-turnstile` class will n
 <div>
 
 ```html
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" defer></script>
 ```
 </div>
 
@@ -158,6 +158,9 @@ function handleExplicitTurnstile() {
   widgetId = window.turnstile.render(this, {
     sitekey: '<YOUR_SITE_KEY>',
     tabindex: isModal ? -1 : 0,
+    action: isModal ? 'modal' : 'page',
+    'expired-callback': (err) => console.error(err),
+    'timeout-callback': (err) => console.error(err),
     'error-callback': (err) => console.error(err)
     // uncomment this if you want to render a smaller size (e.g. 576px = Bootstrap "md" breakpoint)
     // size: window.matchMedia('(min-width: 576px)').matches ? 'normal' : 'compact'
@@ -187,7 +190,7 @@ window.onloadTurnstileCallback = function () {
     .each(handleExplicitTurnstile);
 
   // handle modals
-  $('body').on('show.bs.modal hide.bs.modal', '.modal', function () {
+  $('body').on('show.bs.modal', '.modal', function () {
     $(this).find('.cf-explicit-turnstile').each(handleExplicitTurnstile);
   });
 };
