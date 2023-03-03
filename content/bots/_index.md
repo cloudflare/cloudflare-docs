@@ -23,20 +23,16 @@ To see the differences in features and functionality, visit [Plans](/bots/plans/
 ## Features
 
 {{<feature header="Bot Fight Mode" href="/bots/get-started/free/">}}
-{{<plan id="security.bots.r_bot_fight_mode.properties.availability.summary">}}
 Detect and mitigate bot traffic on your domain. {{</feature>}}
 
 {{<feature header="Super Bot Fight Mode" href="/bots/get-started/">}}
-{{<plan id="security.bots.super_bot_fight_mode.properties.availability.summary">}}
 Identify traffic matching patterns of known bots, challenge or block bots, protect static resources, and view analytics to help you understand bot traffic using Super Bot Fight Mode. {{</feature>}}
 
 {{<feature header="Bot Analytics" href="/bots/bot-analytics/">}}
-{{<plan id="security.bots.bot_analytics.properties.availability.summary">}}
 Use Bot Analytics to dynamically examine bot traffic.
 {{</feature>}}
 
 {{<feature header="Firewall variables" href="/bots/reference/bot-management-variables/">}}
-{{<plan id="security.bots.firewall_variables.properties.availability.summary">}}
 Access several new variables within the Firewall expression builder.
 {{</feature>}}
 
