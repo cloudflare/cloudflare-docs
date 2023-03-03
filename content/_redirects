@@ -372,6 +372,10 @@
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
 /magic-wan/how-to/configure-static-routes/ /magic-wan/get-started/configure-static-routes/ 301
+/magic-wan/about/ /magic-wan/reference/ 301
+/magic-wan/about/health-checks/ /magic-wan/reference/health-checks/ 301
+/magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
+/magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels-and-encapsulation/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
