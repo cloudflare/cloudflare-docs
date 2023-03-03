@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: overview
 title: Record attributes
 weight: 4
 meta: 

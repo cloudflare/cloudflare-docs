@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: overview
 title: Random prefix attack mitigation
 weight: 4
 ---

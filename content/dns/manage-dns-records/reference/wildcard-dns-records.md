@@ -1,5 +1,5 @@
 ---
-pcx_content_type: concept
+pcx_content_type: overview
 title: Wildcard DNS records
 weight: 4
 ---

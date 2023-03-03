@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: navigation
 title: Analytics and logs
 weight: 4
 ---
