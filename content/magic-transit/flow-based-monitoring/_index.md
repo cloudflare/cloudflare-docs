@@ -1,7 +1,7 @@
 ---
 title: Flow-based monitoring
 pcx_content_type: concept
-weight: 5
+weight: 6
 ---
 
 # Flow-based monitoring

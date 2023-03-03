@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: How to
-weight: 4
+weight: 5
 ---
 
 # How to
