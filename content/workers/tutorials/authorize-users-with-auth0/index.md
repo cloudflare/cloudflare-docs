@@ -658,5 +658,5 @@ Wrangler will compile your code, upload the associated Workers Sites folder (`pu
 You can build a lot more with Workers, such as serving static and JAMstack-style applications using Workers Sites, or transforming HTML responses using HTMLRewriter. Below are some more tutorials for you to review and experiment with.
 
 - [Build a Slack bot](/workers/tutorials/build-a-slackbot/)
-- [Deploy a React app using Workers Sites](/workers/tutorials/deploy-a-react-app-with-create-react-app/)
+- [Handle form submissions with Airtable](/workers/tutorials/handle-form-submissions-with-airtable/)
 - [Localize a website using HTMLRewriter](/workers/tutorials/localize-a-website/)
