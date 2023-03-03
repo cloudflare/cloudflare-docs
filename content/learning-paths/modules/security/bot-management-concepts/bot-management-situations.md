@@ -23,20 +23,7 @@ Cloudflare automatically mitigates these kinds of security risks with our [WAF](
 
 Actions such as submitting a username and password or filling out a form are not malicious actions in themselves, but they become that way if done in an automated fashion.
 
-These types of actions fall into two general categories:
-
-- A bot submitting data through a form
-
-    - Credential stuffing on login endpoints
-    - Content spam
-    - Inventory hoarding
-    - Credit card stuffing
-
-- A bot viewing data intended for human eyes only
-
-    - Content scraping
-    - Ad click fraud
-    - Email address harvesting
+{{<render file="_bot-types-attacks.md" productFolder="bots">}}
 
 This is the prime use case for bot management, because action itself is innocent, but you want to distinguish between legitimate humans and bots impersonating humans.
 
