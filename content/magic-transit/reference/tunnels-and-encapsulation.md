@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Tunnels & encapsulation
-weight: 0
 ---
 
 # Tunnels & encapsulation

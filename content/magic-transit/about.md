@@ -26,4 +26,4 @@ Magic Transit is not yet supported on Cloudflare's China Network.
 
 {{</Aside>}}
 
-{{<directory-listing>}}
+For detailed information on Magic Transit architecture, refer to [Magic Transit Use Cases and Reference Architecture](/reference-architecture/magic-transit-reference-architecture/).

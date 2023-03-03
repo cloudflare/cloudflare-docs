@@ -1,12 +1,11 @@
 ---
 pcx_content_type: concept
 title: Traffic steering
-weight: 0
 ---
 
 # Traffic steering
 
-Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/about/tunnels-and-encapsulation/) from Cloudflare’s global network to your data center.
+Magic Transit uses a static configuration to route traffic through [Generic Routing Encapsulation (GRE) tunnels](/magic-transit/reference/tunnels-and-encapsulation/) from Cloudflare’s global network to your data center.
 
 Magic Transit steers traffic along tunnel routes based on priorities you define during the onboarding process.
 

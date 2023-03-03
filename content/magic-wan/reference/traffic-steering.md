@@ -5,7 +5,7 @@ title: Traffic steering
 
 # Traffic steering
 
-Magic WAN uses a static configuration to route traffic through [Anycast tunnels](/magic-wan/about/tunnels-and-encapsulation/) from Cloudflare’s global network to your network, and from your network to Cloudflare's global network.
+Magic WAN uses a static configuration to route traffic through [Anycast tunnels](/magic-wan/reference/tunnels-and-encapsulation/) from Cloudflare’s global network to your network, and from your network to Cloudflare's global network.
 
 Magic WAN steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 

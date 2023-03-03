@@ -346,8 +346,8 @@
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
 
 # magic-transit
-/magic-transit/about/health-checks/endpoint/ /magic-transit/about/health-checks/#endpoint-health-checks 301
-/magic-transit/about/health-checks/tunnel/ /magic-transit/about/health-checks/#tunnel-health-checks 301
+/magic-transit/about/health-checks/endpoint/ /magic-transit/reference/health-checks/#endpoint-health-checks 301
+/magic-transit/about/health-checks/tunnel/ /magic-transit/reference/health-checks/#tunnel-health-checks 301
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
@@ -360,6 +360,11 @@
 /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/about/bandwidth-measurement/ /magic-transit/reference/bandwidth-measurement/ 301
+/magic-transit/about/health-checks/ /magic-transit/reference/health-checks/ 301
+/magic-transit/about/probe-construction/ /magic-transit/reference/probe-construction/ 301
+/magic-transit/about/traffic-steering/ /magic-transit/reference/traffic-steering/ 301
+/magic-transit/about/tunnels-and-encapsulation/ /magic-transit/reference/tunnels-and-encapsulation/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
@@ -367,6 +372,10 @@
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
 /magic-wan/how-to/configure-static-routes/ /magic-wan/get-started/configure-static-routes/ 301
+/magic-wan/about/ /magic-wan/reference/ 301
+/magic-wan/about/health-checks/ /magic-wan/reference/health-checks/ 301
+/magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
+/magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels-and-encapsulation/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301

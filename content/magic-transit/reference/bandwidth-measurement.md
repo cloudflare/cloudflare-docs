@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Bandwidth measurement
-weight: 0
 ---
 
 # Bandwidth measurement
