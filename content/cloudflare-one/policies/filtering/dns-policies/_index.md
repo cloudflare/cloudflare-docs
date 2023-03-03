@@ -9,7 +9,7 @@ weight: 2
 
 When a user makes a DNS request to Gateway, Gateway matches the request against the content or security categories you have set up for your organization. If the domain does not belong to any blocked categories, or if it matches an Override policy, the user's client receives the DNS resolution and initiates an HTTP connection.
 
-A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use the AND conditional to combine conditions, or the OR conditional to compare conditions.
+A DNS policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
 - [Actions](#actions)
 - [Selectors](#selectors)
@@ -17,7 +17,9 @@ A DNS policy consists of an **Action** as well as a logical expression that dete
 - [Value](#value)
 - [Logical Operators](#logical-operators)
 
-When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. Unless a more specific selector is configured in a policy (for example, user email or source IP address), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
+When creating a DNS policy, you can select as many security risk categories and content categories as needed to fully secure your network. Unless a more specific selector is configured in a policy (for example, _User Email_ or _Source IP_), then the policy will be evaluated against all DNS queries that reach Gateway from your organization.
+
+{{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
 {{<Aside>}}
 If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
@@ -265,5 +267,3 @@ Use this selector to apply DNS policies to a specific source IP address that que
 ## Logical Operators
 
 {{<render file="gateway/_conditionals.md" withParameters="**Identity**">}}
-
-{{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
