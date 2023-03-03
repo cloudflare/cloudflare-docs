@@ -235,7 +235,7 @@ export default class Auth0 {
 }
 ```
 
-The `Auth0` class gets instantiated with the Workers `environment` object, from which the class can access several secrets. Those are encrypted values that can be defined and used by your script. In the **Publish** section of this tutorial, you will define these secrets using the [`wrangler secret`](/workers/cli-wrangler/commands/#secret) command.
+The `Auth0` class gets instantiated with the Workers `environment` object, from which the class can access several secrets. Those are encrypted values that can be defined and used by your script. In the **Publish** section of this tutorial, you will define these secrets using the [`wrangler secret`](/workers/wrangler/commands/#secret) command.
 
 The `validateToken` method verifies a JWT token against the JWKs hosted in your Auth0 tenant. This step is critical, as it allows your application to trust the contents of the JWT. For more information about JWT best practices, refer to the [the Auth0 documentation](https://auth0.com/docs/secure/tokens/token-best-practices).
 
@@ -601,7 +601,7 @@ You are ready to deploy your application to Workers. Before you can deploy your 
 
 ### Secrets
 
-In `src/auth0.js`, this tutorial referred to several Auth0 constants, such as "Client ID", and "Client Secret". Before you can deploy your application, set up these secrets, using wrangler’s [`secret`](/workers/cli-wrangler/commands/#secret) command, which will make them available to reference as constants in the Workers runtime environment.
+In `src/auth0.js`, this tutorial referred to several Auth0 constants, such as "Client ID", and "Client Secret". Before you can deploy your application, set up these secrets, using wrangler’s [`secret`](/workers/wrangler/commands/#secret) command, which will make them available to reference as constants in the Workers runtime environment.
 
 Using `wrangler secret`, set each secret directly in the command line:
 
