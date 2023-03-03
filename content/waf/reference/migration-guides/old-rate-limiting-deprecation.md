@@ -1,0 +1,96 @@
+---
+title: Deprecation of old rate limiting
+pcx_content_type: reference
+weight: 3
+meta:
+  title: Rate limiting (previous version) deprecation notice
+  description: Guide on the deprecation of rate limiting rules (previous version) and how to migrate to the new version.
+---
+
+# Rate limiting (previous version) deprecation notice
+
+**The [previous version of rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) is now deprecated.** If you had access to the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until DATE.
+
+![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/waf/static/reference/rate-limiting-both-versions.png)
+
+Cloudflare recommends that you create new rate limiting rules (**A**) in the Cloudflare dashboard to replace any existing rate limiting rules you may have configured in the previous version of the feature (**B**). Refer to [Migrating to the new rate limiting rules](#migrating-to-the-new-rate-limiting-rules) for details.
+
+The old and new implementation of rate limiting rules have separate rules lists, since the two implementations do not offer the same set of features. You will need to recreate your rate limiting configuration (in the previous version) using the new rate limiting rules, either using the Cloudflare dashboard, the [Rulesets API](/ruleset-engine/rulesets-api/), or a different Terraform resource ([`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset)).
+
+For more information on the new rate limiting implementation, including the available features in each Cloudflare plan, refer to [Rate limiting rules](/waf/rate-limiting-rules/) in the developer documentation.
+
+Cloudflare also offers an Advanced version of Rate Limiting, which is available to Enterprise customers. For more information, refer to the [Introducing Advanced Rate Limiting](https://blog.cloudflare.com/advanced-rate-limiting/) blog post.
+
+To learn more about what you can do with the new rate limiting, refer to the [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) page.
+
+## Main differences
+
+* **Billing model:** The previous version of Rate Limiting was billed based on usage and it was available as an add-on on all plans, while the new version is included in Cloudflare plans. For enterprise plans, Rate Limiting is priced based on total HTTP traffic. Also, the new rate limiting rules offer all the capabilities of the previous version of rate limiting along with several additional features.
+
+* **Advanced scope expressions:** The previous version of Rate Limiting allowed you to scope the rules based on a single path and method of the request. In the new version, you can write rules similar to [WAF custom rules](/waf/custom-rules/), combining multiple parameters of the HTTP request.
+
+* **Separate counting and mitigation expressions:** In the new version of Rate Limiting, counting and mitigation expressions are separate (for Business and Enterprise customers). The counting expression defines which requests are used to compute the rate, while the mitigation expression defines which requests are mitigated once the threshold has been reached. Using these separate expressions, you can track the rate of requests on a specific path such as `/login` and, when an IP exceeds the threshold, block every request from the same IP addressed at your domain.
+
+* **Counting dimensions (Advanced Rate Limiting only):** Like in the previous version of rate limiting, most customers get IP-based rate limiting (as in "the way Cloudflare counts requests"). In addition to IP-based rate limiting, customers with Advanced Rate Limiting will be able to group requests based on other characteristics, such as API keys, cookies, session headers, ASN, query parameters, or a specific JSON body field.
+
+* **Number of rules per plan**: Besides the exact features per Cloudflare plan, the number of rules per plan is different in the new version of Rate Limiting (for availability information in the new version, refer to [Rate limiting rules](/waf/rate-limiting-rules/#availability)):
+
+    {{<table-wrap>}}
+
+Product | Free | Pro | Business | Enterprise w/ Rate Limiting add-on, or<br> Application Security Core
+---|:---:|:---:|:---:|:---:|:---:
+Rate Limiting (previous version) | 1 | 10 | 15 | 100
+Rate Limiting (new version)      | 1 | 2  | 5  | 100
+
+    {{</table-wrap>}}
+
+For more details on the differences between old and new rate limiting rules, refer to [our blog post](https://blog.cloudflare.com/unmetered-ratelimiting/).
+
+{{<Aside type="note">}}
+If you believe you do not have the correct number of available rules in the new version, contact your account team.
+{{</Aside>}}
+
+### Relevant changes in the dashboard
+
+If you had access to the previous version of Cloudflare Rate Limiting, you will find both rate limiting products, old and new, in the Cloudflare dashboard in **Security** > **WAF** > **Rate limiting rules**. The previous version (left) allows you to filter traffic for one URL. The new version (right) allows you to combine different fields like in WAF custom rules.
+
+![Comparison between rate limiting rule creation pages (old and new version)](/waf/static/reference/rate-limiting-compare-creation-page.png)
+
+### Relevant changes for API users
+
+The new rate limiting rules are based on the [Ruleset Engine](/ruleset-engine/). Therefore, to configure these rules via API you must use the [Rulesets API](/ruleset-engine/rulesets-api/). The Rulesets API is used on all recent Cloudflare security products to provide a uniform user experience when interacting with our API.
+
+**The [previous Rate Limiting API](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after DATE.
+
+### Relevant changes for Terraform users
+
+To configure the new rate limiting rules with Terraform you must use the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource. Refer to the developer documentation for [examples of configuring the new rate limiting rules using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
+
+**The [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource is now deprecated.** You will not be able to perform configuration updates via Terraform using this resource after DATE.
+
+## Migrating to the new rate limiting rules
+
+Cloudflare recommends that you migrate your rules to the new system, which is a manual step. Since the new version of rate limiting rules is more powerful and offers additional controls, we encourage customers to reevaluate their rate limiting logic considering all the capabilities of the new Cloudflare rate limiting rules.
+
+### Free, Professional, and Business customers
+
+If you are a new customer, the Cloudflare dashboard will not show the interface for configuring the previous version of rate limiting rules.
+
+If you were using the previous version of rate limiting rules, you will have access to both products and they will both apply to your incoming traffic. You will have the same amount of rules granted in the new system as you had on September 20, 2022 or 5 rules, whichever is the largest value.
+
+The previous version of Rate Limiting was billed based on usage ($5 per million requests) while the new rate limiting rules are included in your plan and you will not have additional charges for using this feature.
+
+If you have any rules configured in the previous version of rate limiting rules, these rules will continue to run and you will still be charged based on usage. Cloudflare recommends that you migrate your rules to the new rate limiting rules.
+
+Once you have deleted all rules from the previous version of rate limiting rules, the Cloudflare dashboard will only show the new version.
+
+### Enterprise customers
+
+By default, all Enterprise customers receive the same rule quota as Business customers.
+
+Enterprise contracts that included the previous version of Cloudflare Rate Limiting were based on the "good requests model", where customers are billed based on the predicted usage of the feature.
+
+Contracts that include the previous version of Cloudflare Rate Limiting now have access to new Rate Limiting with the same number of rules at no additional cost. You should migrate your configuration to the new system before DATE.
+
+As an Enterprise customer, you can also upgrade to [Advanced Rate Limiting](https://blog.cloudflare.com/advanced-rate-limiting/), a more feature-rich version of the new Rate Limiting implementation. Reach out to your account team to learn more about Advanced Rate Limiting.
+
