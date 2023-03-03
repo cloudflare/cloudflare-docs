@@ -134,7 +134,7 @@ The country of the user making the request.
 
 ## Comparison Operators
 
-{{<render file="gateway/_operators.md">}}
+{{<render file="gateway/_comparison-operators.md">}}
 
 {{<Aside type="note">}}
 
@@ -148,4 +148,4 @@ The _In_ operator allows you to specify IP addresses or networks using CIDR nota
 
 ## Logical Operators
 
-{{<render file="gateway/_conditionals.md" withParameters="**Identity** or **Device Posture**">}}
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}

@@ -99,7 +99,7 @@ The country of the user making the request.
 
 ## Comparison Operators
 
-{{<render file="gateway/_operators.md">}}
+{{<render file="gateway/_comparison-operators.md">}}
 
 ## Value
 
@@ -109,4 +109,4 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ## Logical Operators
 
-{{<render file="gateway/_conditionals.md" withParameters="**Identity** or **Device Posture**">}}
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}

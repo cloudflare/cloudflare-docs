@@ -232,7 +232,7 @@ The country of the user making the request.
 
 ## Comparison Operators
 
-{{<render file="gateway/_operators.md">}}
+{{<render file="gateway/_comparison-operators.md">}}
 
 ## Value
 
@@ -240,6 +240,6 @@ The country of the user making the request.
 
 ## Logical Operators
 
-{{<render file="gateway/_conditionals.md" withParameters="**Identity** or **Device Posture**">}}
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}
 
 {{<render file="gateway/_response.md" withParameters="request;;_Source IP_;;a _DLP Profile_">}}

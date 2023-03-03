@@ -258,7 +258,7 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 ## Comparison Operators
 
-{{<render file="gateway/_operators.md">}}
+{{<render file="gateway/_comparison-operators.md">}}
 
 ## Value
 
@@ -266,4 +266,4 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 ## Logical Operators
 
-{{<render file="gateway/_conditionals.md" withParameters="**Identity**">}}
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity**">}}
