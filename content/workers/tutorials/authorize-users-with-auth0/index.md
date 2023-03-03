@@ -35,7 +35,7 @@ If you do not already have an Auth0 account, sign up for a free account at [auth
 
 Every Auth0 account contains applications, which allow developers to create login/signup flows that are verified by Auth0. To integrate Auth0 with Workers, create an application in your Auth0 dashboard. If you have created an account for this tutorial, the **Default (Generic)** application provided by Auth0 will work; otherwise, create a new application with the type **Regular Web Application**.
 
-![Create an Auth0 application by selecting your application type](./media/creating-an-application.png)
+![Create an Auth0 application by selecting your application type](./media/creating-an-application.webp)
 
 Inside of your application’s settings, the "Domain", "Client ID" and "Client Secret" are keys that you will provide to your Workers application to authenticate with Auth0. There are several settings and configuration options, but relevant to this tutorial are the **Allowed Callback URLs** and **Allowed Web Origins** options. In the **Publish** section of this tutorial, you will later fill in these values with the final deployed URL of your application.
 
@@ -67,7 +67,7 @@ Before implementing an authorizer in your application, which will verify that a 
 
 In a traditional application that is attached to a database, the authorization tokens Auth0 returns are often persisted in a database. This will allow users to return to the application and continue to use it without the need for re-authorization. With a Workers application, you have access to a quick and easy-to-use data storage solution that lives right next to your serverless application: Workers KV. Using Workers KV, you will store authorization tokens and tie them to a user using an authorization cookie.
 
-[![Auth0 Flow showing how the API responds to user activity. Read above for more information.](./media/auth0-flow.png)](https://auth0.com/docs/flows/concepts/auth-code)
+[![Auth0 Flow showing how the API responds to user activity. Read above for more information.](./media/auth0-flow.webp)](https://auth0.com/docs/flows/concepts/auth-code)
 
 <small>Auth0 Flow Diagram courtesy of <a href="https://auth0.com/docs/flows/concepts/auth-code">Auth0</a></small>
 
@@ -376,7 +376,7 @@ When the `/login` endpoint is requested, the `Auth0.authorize` method is called,
 
 When a user logs in via Auth0’s login form, they will be redirected back to the callback URL specified by your application. In the next section, you will handle that redirect and get a user access token as part of the login code flow.
 
-![A user logging in via Auth0's login form](./media/auth0-login.png)
+![A user logging in via Auth0's login form](./media/auth0-login.webp)
 
 Once the user is logged-in, they can request protected routes. Notice that the `/userinfo` route handler gets the `withAuth` middleware passed-in as the second argument.
 
@@ -632,7 +632,7 @@ This tutorial assumes the usage of a `*.workers.dev` subdomain, which is provide
 
 Auth0 has security defaults and any callback URLs or origins that you will use as sources to log in from need to be explicitly provided in the Auth0 dashboard as part of your application configuration. Using the above `*.workers.dev` example, ensure the following values are set in the application settings page of your Auth0 dashboard, along with any additional URLs used as part of testing (for example, `localhost:8787`)
 
-![Customize Auth0 allowed URLs in the Auth0 dashboard](./media/auth0-allowed-urls.png)
+![Customize Auth0 allowed URLs in the Auth0 dashboard](./media/auth0-allowed-urls.webp)
 
 ### Publishing your application
 
