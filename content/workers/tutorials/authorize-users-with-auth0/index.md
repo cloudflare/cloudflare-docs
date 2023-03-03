@@ -132,13 +132,6 @@ export default class Auth0 {
       )
     }
 
-    // Verify aud claim
-    if (payload.aud !== this.clientId) {
-      throw new Error(
-        `Token aud value (${payload.aud}) doesn't match configured AUTH0_CLIENT_ID`,
-      )
-    }
-
     // Verify expires time
     const date = new Date()
     if (payload.exp < dateInSecs(date)) {
