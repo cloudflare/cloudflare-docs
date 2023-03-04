@@ -8,6 +8,9 @@ meta:
 ---
 
 # View Reports
+{{
+
+}} This feature is only available on Enterprise plans. {{}}
 
 Use NEL reports to view information such as:
 
