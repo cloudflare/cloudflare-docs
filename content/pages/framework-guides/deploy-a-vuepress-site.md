@@ -5,7 +5,7 @@ title: Deploy a Vuepress site
 
 # Deploy a Vuepress site
 
-[VuePress](https://vuepress.vuejs.org/) is a minimalistic static site generator with a Vue-powered theming system and Plugin API. It is well optimized for writing technical documentation and was created to power Vue's own sub projects. 
+[VuePress](https://vuepress.vuejs.org/) is a minimalistic static site generator with a Vue-powered theming system and Plugin API. It is well optimized for writing technical documentation and was created to power Vue's own sub projects.
 
 In this guide, you will create a new Vuepress project and deploy it using Cloudflare Pages. You will use the [`create-vuepress-site-generator`](https://github.com/vuepress/create-vuepress-site), a generator for creating new Vuepress projects.
 
@@ -23,18 +23,7 @@ Once this is done, a scaffolded documentation site will be created in the `docs`
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). When creating your repository, do not select to add a README file, `.gitignore` template or a license as these selections will cause the push to GitHub to fail. After your repository is set up, push your application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git init
-$ git add -A
-$ git commit -m "<YOUR_COMMIT_MESSAGE>"
-$ git remote add origin <YOUR_GITHUB_REPOSITORY_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
