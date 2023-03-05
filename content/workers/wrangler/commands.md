@@ -1585,6 +1585,8 @@ $ wrangler dispatch-namespace get <NAME>
 
   - The name of the dispatch namespace to get details about.
 
+{{</definitions>}}
+
 ### create
 
 Create a dispatch namespace.
@@ -1598,6 +1600,8 @@ $ wrangler dispatch-namespace create <NAME>
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The name of the dispatch namespace to create.
+
+{{</definitions>}}
 
 ### delete
 
@@ -1616,6 +1620,8 @@ You must delete all user Workers in the dispatch namespace before it can be dele
 
   - The name of the dispatch namespace to delete.
 
+{{</definitions>}}
+
 ### rename
 
 Rename a dispatch namespace.
@@ -1633,6 +1639,8 @@ $ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
 - `NEW NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The new name of the dispatch namespace.
+
+{{</definitions>}}
 
 ---
 ## `mtls-certificate`
