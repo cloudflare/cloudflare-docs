@@ -164,14 +164,7 @@ function handleExplicitTurnstile() {
     // size: window.matchMedia('(min-width: 576px)').matches ? 'normal' : 'compact'
   });
 
-  if (widgetId) {
-    $(this).data('widgetId', widgetId);
-    return;
-  }
-
-  console.error(new Error('[Cloudflare Turnstile] widgetId missing'));
-  alert('Turnstile render error, please try again or contact us.');
-  window.location.reload();
+  $(this).data('widgetId', widgetId);
 }
 
 // an alternative approach for performance is to use IntersectionObserver API
