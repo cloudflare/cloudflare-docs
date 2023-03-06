@@ -138,18 +138,20 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `action` | `data-action` | A customer value that can be used to differentiate widgets under the same sitekey in analytics and which is returned upon validation. This can only contain up to 32 alphanumeric characters including `_` and `-`. |
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback that is invoked upon success of the challenge. The callback is passed a token that can be validated. |
-| `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires and does not reset the widget. |
-| `timeout-callback` | `data-timeout-callback` | A JavaScript callback that is invoked when the challenge expires and resets the widget. |
 | `error-callback` | `data-error-callback` | A JavaScript callback that is invoked when there is a network error. |
+| `execution-mode` | `data-execution-mode` | Controls when to obtain the token of the widget can be on `render` (default) or on `execute`), see also Execution Modes.
+| `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires and does not reset the widget. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`zh-cn` and `zh-tw`.|
 | `tabindex` | `data-tabindex` | The tabindex of Turnstile's iframe for accessibility purposes. The default value is `0`. |
+| `timeout-callback` | `data-timeout-callback` | A JavaScript callback that is invoked when the challenge expires and resets the widget. |
 | `response-field` | `data-response-field` | A boolean that controls if an input element with the response token is created, defaults to `true`. |
 | `response-field-name` | `data-response-field-name` | Name of the input element, defaults to `cf-turnstile-response`. |
 | `size` | `data-size` | The widget size. Can take the following values: `normal`, `compact`. |
 | `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry upon failure. |
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
+| `appearance` | `data-appearance` | Controls when a token is visible, can be `always` (default), `execute`, or `interaction-only`, see also Appearance Modes. |
 
 ## Widget size
 
@@ -159,3 +161,23 @@ The Turnstile widget can have two different sizes when using the Managed or Non-
 | --- | --- | --- |
 | Normal | 300px | 65px |
 | Compact | 130px | 120px |
+
+
+## Refreshing a Widget
+A few seconds before a token is expiring the `expired-callback` is invoked.
+The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired. 
+By default the parameter is set to `auto` which will automatically make Turnstile obtain a fresh token. Upon regenerating the token automatically the `callback` - if specified - is invoked.
+The visitor can also be instructed to manually obtain a new token by setting the `refresh-expired` parameter to `manual`.
+Additionally, specifying `never` will not result in a regeneration of a token, and the application using Turnstile will be responsible for obtaining a novel Turnstile token.
+
+
+## Execution Modes
+By default Turnstille tokens are obtained for a visitor upon rendering of a widget (even in invisible mode).
+However, in some secenarios an application may want to embed Turnstile, but hold of obtaining the token until a certain point in time.
+This is where execution mode can be used to control when a token is being generated. There are two options: The token is automatically optained upon call of the `render()` function. 
+Alternatively, the token can be obtained after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
+This detaches the appareance and rendering of a widget from its execution.
+
+## Appearance Modes
+If a widget is visible (i.e. its type is not invisible) the appearance of the widget can be controled via the `appearance-mode` parameter. By default, for visible widget types, the `appearance-mode` is set to `always` and makes widget is always visible. However, if `appearance-mode` is set to execute, the widget will only become visible once it is in the process of obtaining a token (and afterwards). This is helpful in situations where `execute()` is called after `render()`. 
+If `appearance-mode` is set to `interaction-only` the widget will become only visible in cases where an interaction (e.g. clicking a checkbox et al.) is required.
