@@ -1,6 +1,6 @@
 ---
 title: Migrating from reCAPTCHA
-pcx_content_type: get-started
+pcx_content_type: migration
 weight: 3
 layout: single
 ---
@@ -13,7 +13,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 
 ## Client-side integration 
 
-1. Update the client-side integration inserting the Turnstile script snippet in your HTML's `<head>` element:
+1. Update the client-side integration by inserting the Turnstile script snippet in your HTML's `<head>` element:
 
 <div>
 
@@ -21,10 +21,27 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha" async defer></script>
 ```
 
+{{<Aside type= "Note">}}
+
+Adding `?compat=recaptcha` runs Turnstile in compatibility mode, which
+enables the following features:
+* implicit rendering for reCAPTCHA
+* extra `g-recaptcha-response` input name for forms
+* register the Turnstile API as `grecaptcha`
+
+{{</Aside>}}
+
 </div>
 
 2. Locate the `grecaptcha.render()` calls and replace the sitekey with your Turnstile sitekey.
 
+{{<Aside type= "Note">}}
+
+Turnstile supports:
+* the `render()` call 
+* reCAPTCHA v2 invisible mode with the `execute()` call
+
+{{</Aside>}}
 
 ## Server-side integration
 
@@ -43,13 +60,5 @@ reCAPTCHA supports `GET` requests using query parameters, i.e: `GET /siteverify?
 Turnstile's siteverify endpoint does **not** support this and only accepts `POST` requests with a FormData or JSON body.
 
 Refer to [server-side validation](/turnstile/get-started/server-side-validation/) for more information.
-
-{{</Aside>}}
-
-{{<Aside type= "Note">}}
-
-Turnstile supports:
-* the `render()` call 
-* reCAPTCHA v2 invisible mode with the `execute()` call
 
 {{</Aside>}}
