@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-03-06
+
+- [Workers Logpush](/workers/platform/logpush/#limits) now supports 300 characters per log line, up from 150 characters per line.
+
 ## 2023-02-06
 
 - Fixed a bug where transferring large request bodies to a Durable Object was unexpectedly slow.
