@@ -7,9 +7,9 @@ layout: single
 
 # Testing
 
-## Dummy sitekeys
+## Dummy sitekeys and secret keys
 
-The following sitekeys are available for testing.
+The following sitekeys and secret keys are available for testing.
 
 | Sitekey | Description |
 | --- | --- |
