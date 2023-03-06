@@ -7,7 +7,7 @@ title: Deployments
 
 {{<Aside type="note">}}
 
-Deployments are currently in Public Beta and subcommands are currently in Beta. Please report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in Public Beta. Report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 
 {{</Aside>}}
 
@@ -21,11 +21,11 @@ Associated resources for a worker such as KV, R2, and Durable Objects are not tr
 
 {{</Aside>}}
 
-## Creating a new Deployment
+## Creating a new deployment
 
-New Deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. These can be done via the Cloudflare Dashboard, [Workers API](/api), or [`wrangler publish` command](/workers/wrangler/commands#publish).
+New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. These can be done via the Cloudflare dashboard, [Workers API](/api), or [`wrangler publish` command](/workers/wrangler/commands#publish).
 
-Notably, this does not include changes to bound resources. For example, if two workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Changes to the service binding on Worker A will also not trigger a new deployment for Worker B.
+Notably, this does not include changes to bound resources. For example, if two Workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Changes to the service binding on Worker A will also not trigger a new deployment for Worker B.
 
 {{<Aside type="note">}}
 
@@ -56,25 +56,33 @@ Deployments are in active development. To give feedback, request a [live chat](h
 {{</Aside>}}
 
 ## Rollbacks
-Rollbacks are a way to quickly deploy an older deployment to the edge. This could be useful if a breaking change or unintended publish is made to a production Worker.
+Rollbacks are a way to quickly deploy an older deployment to the Cloudflare global network. This could be useful if a breaking change or unintended publish is made to a production Worker.
 
-There are currently two ways to perform a rollback: via Wrangler or via the Cloudflare Dashboard.
+Perform a rollback via:
+1. [Wrangler](/workers/platform/deployments/#via-wrangler-1).
+2. The [Cloudflare dashboard](/workers/platform/deployments/#via-the-cloudflare-dashboard-1).
 
 ### via Wrangler
 
-You can rollback in Wrangler using the `wrangler deployments rollback` command detailed [here](/workers/wrangler/commands#rollback).
+To perform a rollback via Wrangler, use the `wrangler deployments rollback` command. Refer to [Wrangler `rollback` command documentation](/workers/wrangler/commands#rollback) for more information.
 
 ### via the Cloudflare Dashboard
 
-In the Dashboard, find the deployments tab under your Worker. From there, you can select the menu dropdown on the right of the deployment and select **`Rollback to this deployment`**.
+To perform a rollback via the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers** > select your Worker > **Deployments**. 
+3. Find the deployment you would like to rollback to.
+4. Select the three dot icon on the right of the deployment and select **Rollback to this deployment**.
 
 ## Limitations
+
 Rollbacks are only valid to the latest 10 deployments. 
 
-Rollbacks will not be allowed if external resources have been deleted or modified between the target deployment and the active deployment. Specifically if:
+Rollbacks will not be allowed if external resources have been deleted or modified between the target deployment and the active deployment. Specifically, rollbacks will not be allowed if:
 
 - A Durable Object migration has occurred between the active deployment and target deployment.
-- If the target deployment has a binding to an R2 bucket, KV namespace, or Queue that no longer exists.
+- If the target deployment has a binding to an R2 bucket, KV namespace, or queue that no longer exists.
 - If the target deployment has a binding to a D1 database (this limitation will be removed in the future)
 
 Bound resources will not be changed during a rollback. This means if the structure of data has changed between the active deployment and target deployment, errors could occur using older bundled code with changed data.

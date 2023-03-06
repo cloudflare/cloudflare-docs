@@ -1571,7 +1571,7 @@ Source: Wrangler
 {{</definitions>}}
 
 ### view <deployment-id>
-Retrieve details for the specified deployment. Details include Deployment ID, Author, Source, Created on, and indicates which deployment is Active.
+Retrieve details for the specified deployment. Details include Deployment ID, Author, Source, Created on, and bindings.
 
 ```sh
 wrangler deployments view <DEPLOYMENT_ID>
@@ -1614,9 +1614,16 @@ export {
 //# sourceMappingURL=index.js.map
 ```
 
+{{<definitions>}}
+
+- `--content` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - View script content for specified deployment.
+
+{{</definitions>}}
+
 ### rollback [deployment-id]
 
-Rollback to a specific deployment by ID. If an ID is not speicified, wrangler will rollback to the previous deployment. There are limitations on what deployments you can rollback to which you can read about [here](/workers/platform/deployments#rollbacks)
+Rollback to a specific deployment by ID. If an ID is not speicified, wrangler will rollback to the previous deployment. There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
 
 {{<Aside type="warning">}}
 Rollbacks will immediately replace the current deployment and become the active deployment across all your deployed routes and domains. This change will not affect work in your local development environment.
