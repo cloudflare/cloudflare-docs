@@ -151,10 +151,10 @@ This is a known issue the Bots team is working to resolve in the near future. In
 
 1. List the existing Rulesets at the zone level
 
-```sh
-$ curl -X GET \ "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets";
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets" \
     -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" 
+    -H "X-Auth-Key: <API_KEY>" \
     -H Content-Type: application/json
 ```
 
@@ -162,10 +162,10 @@ $ curl -X GET \ "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets";
 
 3. Use the ruleset ID you found to delete the SBFM ruleset
 
-```sh
-$ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id" \
+```bash
+curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id" \
     -H "X-Auth-Email: <EMAIL>" \
-    -H "X-Auth-Key: <API_KEY>" 
+    -H "X-Auth-Key: <API_KEY>" \
     -H "Content-Type: application/json"
 ```
 
