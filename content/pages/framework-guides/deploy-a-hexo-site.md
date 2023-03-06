@@ -96,6 +96,4 @@ Some Hexo themes or plugins have additional requirements for different Node.js v
 
 ![Follow the instructions above to set up an environment variable in the Pages dashboard](/pages/framework-guides/media/node-version-pages.png)
 
-## Related resources
-
-By completing this guide, you have successfully deployed your Hexo site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Hexo">}}

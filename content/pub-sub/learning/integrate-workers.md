@@ -54,7 +54,7 @@ You should be familiar with setting up a [Worker](/workers/get-started/guide/) b
 
 To ensure your Worker can validate incoming requests, you must make the public keys available to your Worker via an [environmental variable](/workers/platform/environment-variables/). To do so, we can fetch the public keys from our Broker:
 
-```bash
+```sh
 $ wrangler pubsub broker public-keys YOUR_BROKER --namespace=NAMESPACE_NAME
 ```
 

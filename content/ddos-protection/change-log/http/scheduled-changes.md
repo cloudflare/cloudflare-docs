@@ -23,7 +23,7 @@ layout: list
   <tbody>
     <tr>
       <td>2023-02-27</td>
-      <td>2023-03-06</td>
+      <td>2023-03-10</td>
       <td>...97003a74</td>
       <td>HTTP requests with unusual HTTP headers or URI path (signature #17).</td>
       <td>N/A</td>
@@ -32,7 +32,7 @@ layout: list
     </tr>
 <tr>
       <td>2023-02-27</td>
-      <td>2023-03-06</td>
+      <td>2023-03-10</td>
       <td>...d2f294d7</td>
       <td>HTTP requests trying to impersonate browsers.</td>
       <td>ddos_dynamic</td>

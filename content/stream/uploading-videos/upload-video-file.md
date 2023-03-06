@@ -85,7 +85,7 @@ Setting arbitrary metadata values in the `Upload-Metadata` header sets values th
 
 {{</definitions>}}
 
-### Additional supported headers
+### Set creator property
 
 Setting a creator value in the `Upload-Creator` header can be used to [identify the creator](/stream/manage-video-library/creator-id/) of the video content, linking the way you identify your users or creators to videos in your Stream account.
 
