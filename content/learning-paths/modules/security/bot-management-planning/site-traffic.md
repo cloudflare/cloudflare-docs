@@ -41,7 +41,14 @@ To allow verified bots, you would need to include `not (cf.botManagement.verifie
 
 ### Situations
 
-By default, Bot management rules will block non-browser traffic. This can be problematic if your site is utilizing certain tools (for example, custom search indexing, content auditing, uptime monitors, secure web gateways) or contains API endpoints.
+By default, Bot management rules will block non-browser traffic.
+
+This can be problematic if your application receives a lot of API traffic, or if you have tools related to:
+
+- Indexing content for search
+- Auditing content (links, headers, etc.)
+- Monitoring uptime
+- Forward proxying traffic, such as secure web gateways
 
 ### Implementation details
 
