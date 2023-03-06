@@ -50,10 +50,12 @@ Turnstile supports:
 
 ## Server-side integration
 
-Update the server-side integration by replacing the siteverify URL. Replace:
+1. Update the server-side integration by replacing the siteverify URL. Replace:
 
 `https://hcaptcha.com/siteverify`
 
 With:
 
 `https://challenges.cloudflare.com/turnstile/v0/siteverify`
+
+2. Replace the `h-captcha-response` input name with `cf-turnstile-response`.
