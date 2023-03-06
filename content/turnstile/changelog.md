@@ -9,7 +9,7 @@ rss: file
 
 ## 2023-02-15
 
-- Added [`[execution]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) and [`[appearance-mode]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget).
+- Added [`[execution]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) and [`[appearance]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget).
 
 ## 2023-02-15
 

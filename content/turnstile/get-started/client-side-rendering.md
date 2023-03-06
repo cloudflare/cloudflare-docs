@@ -139,7 +139,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback that is invoked upon success of the challenge. The callback is passed a token that can be validated. |
 | `error-callback` | `data-error-callback` | A JavaScript callback that is invoked when there is a network error. |
-| `execution-mode` | `data-execution-mode` | Controls when to obtain the token of the widget can be on `render` (default) or on `execute`), see also Execution Modes.
+| `execution` | `data-execution` | Controls when to obtain the token of the widget can be on `render` (default) or on `execute`), see also Execution Modes.
 | `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires and does not reset the widget. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`zh-cn` and `zh-tw`.|
@@ -179,5 +179,5 @@ Alternatively, the token can be obtained after the `render()` function has been 
 This detaches the appareance and rendering of a widget from its execution.
 
 ## Appearance Modes
-If a widget is visible (i.e. its type is not invisible) the appearance of the widget can be controled via the `appearance-mode` parameter. By default, for visible widget types, the `appearance-mode` is set to `always` and makes widget is always visible. However, if `appearance-mode` is set to execute, the widget will only become visible once it is in the process of obtaining a token (and afterwards). This is helpful in situations where `execute()` is called after `render()`. 
-If `appearance-mode` is set to `interaction-only` the widget will become only visible in cases where an interaction (e.g. clicking a checkbox et al.) is required.
+If a widget is visible (i.e. its type is not invisible) the appearance of the widget can be controled via the `appearance` parameter. By default, for visible widget types, `appearance` is set to `always` and makes widget is always visible. However, if `appearance` is set to execute, the widget will only become visible once it is in the process of obtaining a token (and afterwards). This is helpful in situations where `execute()` is called after `render()`. 
+If `appearance` is set to `interaction-only` the widget will become only visible in cases where an interaction (e.g. clicking a checkbox et al.) is required.
