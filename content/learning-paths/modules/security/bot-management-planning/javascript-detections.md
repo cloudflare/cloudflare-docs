@@ -9,7 +9,7 @@ layout: learning-unit
 
 ## Implement JavaScript detections
 
-To adjust your settings, go to **Security** > **Bots**.
+{{<render file="_javascript-detections-enable.md" productFolder="bots" >}}
 
 {{<render file="_javascript-detections-implementation.md" productFolder="bots" >}}
 <br/>

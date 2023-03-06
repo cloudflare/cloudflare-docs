@@ -33,7 +33,7 @@ If bots are viewing data intended for human eyes only, you may want broader rule
 
 Verified bots are blocked by default when you create [firewall rules](/firewall/) using `cf.bot_management.score`.
 
-To allow verified bots, you would need to include `not (cf.botManagement.verifiedBot)` as part of a firewall rule.
+To allow verified bots, you would need to include `not (cf.bot_management.verified_bot)` as part of a firewall rule.
 
 ---
 
@@ -45,10 +45,10 @@ By default, Bot management rules will block non-browser traffic.
 
 This can be problematic if your application receives a lot of API traffic, or if you have tools related to:
 
-- Indexing content for search
-- Auditing content (links, headers, etc.)
-- Monitoring uptime
-- Forward proxying traffic, such as secure web gateways
+- Indexing content for search.
+- Auditing content (links, headers, etc.).
+- Monitoring uptime.
+- Forward proxying traffic, such as secure web gateways.
 
 ### Implementation details
 
@@ -56,4 +56,6 @@ Depending on your application, you may want to write rules that allow specific t
 
 In some cases, APIs might be better suited for [API Shield](/api-shield/) than Bot management.
 
-You should also take time to review [Bot analytics](/bots/bot-analytics/bm-subscription/) to make sure you fully understand the automated traffic reaching your site. Often, you might discover services maintained by a different team or other surprises. Pay specific attention to the top non-Mozilla user agents and whether those requests come from a predictable IP address and ASN, or have a similar [JA3 fingerprint](/bots/concepts/ja3-fingerprint/).
+You should also take time to review [Bot analytics](/bots/bot-analytics/bm-subscription/) to make sure you fully understand the automated traffic reaching your site. Often, you might discover services maintained by a different team or other surprises.
+
+{{<render file="_bot-analytics-traffic-characteristics.md" productFolder="bots">}}

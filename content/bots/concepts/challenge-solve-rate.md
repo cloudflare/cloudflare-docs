@@ -16,11 +16,7 @@ You can find the CSR of a rule by going to its corresponding dashboard page:
 
 ## Common scenarios
 
-The CSR provides an indication of automated traffic:
-
-- If you see a high CSR (above **3%**), you might want to reevaluate the criteria of your rule to prevent human visitors from receiving challenges.
-- If you see a low CSR (below **3%**), you likely do not need to adjust your rule but may still want to review its CSR periodically.
-- If the rate is close to **0%**, your rule is only acting on automated traffic. Consider changing the rule action to _Block_.
+{{<render file="_challenge-solve-recommendations.md">}}
 
 {{<Aside type="warning" header="Important">}}
 

@@ -13,7 +13,9 @@ weight: 0
 
 For Free customers (Bot Fight Mode), JavaScript detections are automatically enabled and cannot be disabled.
 
-For all other customers (Super Bot Fight Mode and Bot Management for Enterprise), JavaScript detections are optional. To adjust your settings, go to **Security** > **Bots**.
+For all other customers (Super Bot Fight Mode and Bot Management for Enterprise), JavaScript detections are optional.
+
+{{<render file="_javascript-detections-enable.md">}}
 
 For more details on how to set up bot protection, see [Get started](/bots/get-started/).
 

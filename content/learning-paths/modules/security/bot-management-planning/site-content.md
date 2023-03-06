@@ -34,7 +34,7 @@ If you want to increase protection and minimize bot traffic - common for financi
 
 If you do not explicitly exclude static resources from your firewall rules, you may block good bots — like mail clients — that routinely fetch static resources.
 
-To exclude static resources, you would need to include `not (cf.botManagement.staticResource)` as part of a firewall rule.
+To exclude static resources, you would need to include `not (cf.bot_management.static_resource)` as part of a firewall rule.
 
 ---
 

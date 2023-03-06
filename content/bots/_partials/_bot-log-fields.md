@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Cloudflare also surfaces bot information in its [HTTP requests log fields](/logs/reference/log-fields/zone/http_requests/):
+Once you enable Bot management, Cloudflare also surfaces bot information in its [HTTP requests log fields](/logs/reference/log-fields/zone/http_requests/):
 
 - BotDetectionIDs
 - BotScore
