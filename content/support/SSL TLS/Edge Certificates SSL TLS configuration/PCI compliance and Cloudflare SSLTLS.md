@@ -14,7 +14,7 @@ Both TLS 1.0 and TLS 1.1 are insufficient for protecting information due to know
 
 PCI standards recommend using TLS 1.2 or higher.
 
-Also refer to [mitigations Cloudflare implements against vulnerabilities](??) for TLS 1.0 and 1.1.
+Also refer to [mitigations Cloudflare implements against vulnerabilities](#cloudflare-mitigations-against-known-tls-vulnerabilities) for TLS 1.0 and 1.1.
 
 ___
 
