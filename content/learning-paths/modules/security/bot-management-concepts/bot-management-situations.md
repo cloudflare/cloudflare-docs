@@ -33,8 +33,8 @@ When you expect automated traffic - for example, with an API - the problem is qu
 
 There, it's not trying to distinguish bots from humans, but rather *bad* automated traffic from *good* automated traffic.
 
-Cloudflare offers a separate service [API Shield](/api-shield/) to help manage this problem.
+Cloudflare offers [API Shield](/api-shield/) as a separate service to help manage this problem.
 
-## When to use bot management
+## Summary
 
 Bot management is the most effective when used to protect something that is usually accessed by humans, but is still vulnerable to automated abuse.
