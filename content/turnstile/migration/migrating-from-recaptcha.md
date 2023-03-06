@@ -26,7 +26,7 @@ To complete the migration, you must obtain the [sitekey and secret key](/turnsti
 Adding `?compat=recaptcha` runs Turnstile in compatibility mode, which
 enables the following features:
 * implicit rendering for reCAPTCHA
-* extra `g-recaptcha-response` input name for forms
+* `g-recaptcha-response` input name for forms
 * register the Turnstile API as `grecaptcha`
 
 {{</Aside>}}
