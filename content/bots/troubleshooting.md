@@ -101,6 +101,16 @@ ___
 
 If you are experiencing errors with your bot solution and need to submit a Support request, include the following information:
 
+{{<Aside type="warning">}}
+
+The following information gathering are required when you are experiencing issues (e.g. false positives) with Enterprise Bot Management only (Enterprise plan). 
+    
+Because Bot Fight Mode (BFM) and Super Bot Fight Mode (SBFM) are set at a domain level, we often find that disabling these features is the best solution to false positives.
+    
+Please follow instructions in the following questions on how to disable BFM and SBFM features. We conduct more thorough investigations for Enterprise Bot Management.
+
+{{</Aside>}}
+
 -   RayIDs
 -   IP addresses
 -   Firewall Rule IDs, rule expression, CAPTCHA solve rates
@@ -116,6 +126,14 @@ If you are experiencing errors with your bot solution and need to submit a Suppo
 ___
 
 ## What should I do if I am getting False positives caused by Bot Fight Mode (BFM) or Super Bot Fight Mode (SBFM)?
+
+{{<Aside type="warning" header="Important considerations you need to be aware of before turning on BFM or SBFM">}}
+
+-   Super Bot Fight Mode is a high security feature intended to very quickly help customers under active attack stop as many bots as possible. Due to the high security threshold, false positives do sometimes happen. If you turned on Super Bot Fight Mode during an attack, and the attack has subsided, we recommend either disabling the feature, using IP Access Rules to bypass BFM/SBFM or looking at [Bot Management for Enterprise](/bots/plans/bm-subscription/), which gives you the ability to precisely customize your security threshold and create exception rules as needed.
+
+-   The current version of BFM/SBFM has limited control. You can’t bypass or skip BFM/SBFM using Firewall Rules or Page Rules. SBFM can be bypassed with IP access "Allow" action rules. BFM will be disabled if there are any IP access rules present.
+
+{{</Aside>}}
 
 **How to disable BFM****/SBFM feature?**
 
@@ -133,8 +151,8 @@ This is a known issue the Bots team is working to resolve in the near future. In
 
 1. List the existing Rulesets at the zone level
 
-```bash
-curl -X GET \ "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets";
+```sh
+$ curl -X GET \ "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets";
     -H "X-Auth-Email: <EMAIL>" \
     -H "X-Auth-Key: <API_KEY>" 
     -H Content-Type: application/json
@@ -144,8 +162,8 @@ curl -X GET \ "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets";
 
 3. Use the ruleset ID you found to delete the SBFM ruleset
 
-```bash
-curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id" \
+```sh
+$ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rulesets_id" \
     -H "X-Auth-Email: <EMAIL>" \
     -H "X-Auth-Key: <API_KEY>" 
     -H "Content-Type: application/json"
