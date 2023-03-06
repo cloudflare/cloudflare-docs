@@ -189,4 +189,4 @@ This detaches the appearance and rendering of a widget from its execution.
 
 If a widget is visible, the appearance of the widget can be controled via the `appearance` parameter. 
 
-By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to execute, the widget will only become visible once it is in the process of obtaining a token and after. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
+By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible once it is in the process of obtaining a token and after. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
