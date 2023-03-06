@@ -2,6 +2,7 @@
 title: Policies
 pcx_content_type: concept
 weight: 5
+layout: single
 meta:
   title: Policies
 ---
