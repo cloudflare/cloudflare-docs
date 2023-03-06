@@ -1,10 +1,10 @@
 ---
 pcx_content_type: concept
-title: Detecting malicious scripts and connections
-weight: 7
+title: Malicious script and connection detection
+weight: 2
 ---
 
-# Detecting malicious scripts and connections
+# Malicious script and connection detection
 
 Page Shield implements different mechanisms to determine if a script, or a connection made by a script, is malicious. These mechanisms are:
 
@@ -48,7 +48,9 @@ The score threshold for considering a script as malicious is currently set to 50
 
 You can configure [Malicious Script Alerts](/page-shield/reference/alerts/). You will receive an alert notification as soon as Cloudflare detects JavaScript code classified as malicious in your domain.
 
-## Malicious script categories
+---
+
+## Malicious script and connection categories
 
 Scripts and connections considered malicious are categorized based on data from threat intelligence feeds. The current categories are the following:
 
