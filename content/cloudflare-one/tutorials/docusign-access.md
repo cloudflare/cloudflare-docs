@@ -58,7 +58,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Set the file extension to `.crt` and save.
     {{</Aside>}}
 
-## Configure your DocuSign SSO instance
+## Configure your DocuSign SSO instance
 
 1.  Ensure you have a domain claimed in Zendesk.
 
