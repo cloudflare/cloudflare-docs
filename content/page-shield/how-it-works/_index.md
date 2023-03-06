@@ -2,6 +2,7 @@
 title: How it works
 pcx_content_type: concept
 weight: 3
+layout: single
 meta:
   title: How Page Shield works
 ---
@@ -20,7 +21,7 @@ Enterprise customers with a paid add-on have access to additional classification
 
 ## Positive security model using policies
 
-Enterprise customers with a paid add-on can create [policies](/page-shield/policies/) to define a [positive security model](#) (also known as positive blocking).
+Enterprise customers with a paid add-on can create [policies](/page-shield/policies/) to define a positive security model (also known as positive blocking).
 
 When you create policies, Page Shield will generate CSP directives from those policies based on their configuration:
 

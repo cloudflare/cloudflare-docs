@@ -42,7 +42,7 @@ Only available to customers on a Business or Enterprise plan.
 Only available to Enterprise customers with a paid add-on.
 {{</Aside>}}
 
-Policies define allowed resources on your websites. [Create policies](#) to implement a positive security model [^1].
+Policies define allowed resources on your websites. [Create policies](/page-shield/policies/create-dashboard/) to implement a positive security model [^1].
 
 [^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.
 
