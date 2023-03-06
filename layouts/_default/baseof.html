@@ -2,6 +2,9 @@
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available {{- with $.Page.Params.structured_data -}}{{- if eq $.Page.Params.pcx_content_type "faq" -}}itemscope itemtype="https://schema.org/FAQPage"{{- end -}}{{- end -}}>
   <head>
     {{- if not (in .Permalink "cloudflare-docs-7ou.pages.dev") -}}
+    <script>
+      console.log("Shouldn't see this in a preview")
+    </script>
       {{- partial "onetrust" -}}
     {{- end -}}
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
