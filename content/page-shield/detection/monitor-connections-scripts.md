@@ -56,3 +56,13 @@ The details of each connection/script include:
 - **First seen at**: The date and time when the connection/script was first detected.
 - **Page URLs**: The most recent pages where the connection/script was detected (up to ten pages).
 - **First page URL**: The page where the connection/script was first detected.
+
+## Export script and connection data in CSV format
+
+{{<Aside type="note">}}
+Only available to customers on Business and Enterprise plans.
+{{</Aside>}}
+
+To export script or connection information in CSV format, select **Download CSV** in one of the cards in the **Monitors** tab (**Active connections** or **Active scripts**). Use this feature to extract data from Page Shield that you can review and annotate.
+
+The data in the exported file will honor any filters you configure in the dashboard.
