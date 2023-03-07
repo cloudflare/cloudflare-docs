@@ -20,10 +20,10 @@ $ npx wrangler generate <NEW_PROJECT_NAME> <GITHUB_REPO_URL>
 
 - `new-project-name`
 
-  - A folder with this name will be created with your new project inside, pre-configured to [your Workers account](/workers/wrangler/configuration/).
+  - A folder with this name will be created with your new project inside, preconfigured to [your Workers account](/workers/wrangler/configuration/).
 
 - `github-repo-url`
-  - This is the URL of the GitHub repo starter, as below.
+  - This is the URL of the GitHub repository starter, as below.
 
 {{</definitions>}}
 
