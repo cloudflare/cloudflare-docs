@@ -13,9 +13,10 @@ Available options are `low`, `mid`, and `high`.
 
 Here is an example of how you would adjust health check frequency:
 
+```bash
 curl --request PUT \
   --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/gre_tunnels/<tunnel_identifier> \
   --header 'Content-Type: application/json' \
   --header 'X-Auth-Email: <YOUR_EMAIL> ' \
   --data ‘'{"health_check": {"rate":"low"}}'’
-
+```
