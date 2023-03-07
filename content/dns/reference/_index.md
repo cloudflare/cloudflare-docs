@@ -6,4 +6,4 @@ weight: 10
 
 # Reference
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions="true" >}}
