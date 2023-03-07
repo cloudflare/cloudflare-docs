@@ -409,7 +409,7 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
-     <tr id="field-cf-bot_management-static_-_resource">
+     <tr id="field-cf-bot_management-static_resource">
         <td><p><code>cf.bot_management.static_resource</code><br />{{<type>}}Boolean{{</type>}}</p>
         </td>
         <td>
