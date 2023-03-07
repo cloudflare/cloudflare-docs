@@ -64,7 +64,7 @@ curl -X PUT \
 
 ### Example B - Rate limiting with a custom response
 
-This example request **replaces all rate limiting rules** in `<ZONE_ID>`, defining a single rate limiting rule with a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
+This example request **replaces all rate limiting rules** in zone `<ZONE_ID>`, defining a single rate limiting rule with a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
 ```json
 ---
@@ -107,7 +107,7 @@ curl -X PUT \
 
 ### Example C - Rate limiting ignoring cached assets
 
-This example request **replaces all limiting rules** in `<ZONE_ID>`, defining a single rate limiting rule that does not consider requests for cached assets when calculating the rate.
+This example request **replaces all limiting rules** in zone `<ZONE_ID>`, defining a single rate limiting rule that does not consider requests for cached assets when calculating the rate.
 
 ```json
 ---
