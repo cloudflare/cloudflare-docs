@@ -11,7 +11,7 @@ Before you implement any bot protection, you should review your site's content, 
 
 ### Situation
 
-The general purpose of your site (and it's intended audience) may affect the thresholds you use for Bot management.
+The general purpose of your site (and its intended audience) may affect the thresholds you use for Bot management.
 
 ### Implementation details
 

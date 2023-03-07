@@ -54,7 +54,7 @@ This can be problematic if your application receives a lot of API traffic, or if
 
 Depending on your application, you may want to write rules that allow specific types of automated traffic or rules that allow all automated traffic to specific endpoints (`/api`, for example).
 
-In some cases, APIs might be better suited for [API Shield](/api-shield/) than Bot management.
+In some cases, APIs might be better suited for [API Shield](/api-shield/) than Bot Management.
 
 You should also take time to review [Bot analytics](/bots/bot-analytics/bm-subscription/) to make sure you fully understand the automated traffic reaching your site. Often, you might discover services maintained by a different team or other surprises.
 
