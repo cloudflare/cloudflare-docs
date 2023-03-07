@@ -6,7 +6,7 @@ meta:
     Description: Learn how to scan and protect Office 365 emails with Area 1 via a Microsoft Graph API setup.
 ---
 
-{{<beta>}}Office 365 Graph API set up with Area 1{{</beta>}}
+# Office 365 Graph API set up with Area 1
 
 For customers using Microsoft Office 365, setting up Area 1 via Microsoft Graph API is quick and easy. The following email flow shows how this works:
 
