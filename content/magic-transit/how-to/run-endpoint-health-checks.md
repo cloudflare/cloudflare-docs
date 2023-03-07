@@ -21,3 +21,5 @@ Refer to the table below for an example endpoint health check configuration.
 | ----------------- | ------------------- |
 | `103.21.244.0/24` | `103.21.244.100`    | 
 | `103.21.245.0/24` | `103.21.245.100`    |
+
+Refer to [Health checks](/magic-transit/reference/health-checks/) for more information on this topic.
