@@ -8,7 +8,7 @@ inputParameters: imgName;;productName;;mssValue
 
 ## Set maximum segment size
 
-![Breakdown of packet maximum segment size as it moves through Magic Transit workflow]($1)
+![Breakdown of packet maximum segment size as it moves through the workflow]($1)
 
 The SYN-ACK packet sent to the client during TCP handshake encodes the value for maximum segment size (MSS). Egress packets are routed via your ISP interface, and each packet must comply with the standard Internet routable maximum transmission unit (MTU), which is 1500 bytes.
 
