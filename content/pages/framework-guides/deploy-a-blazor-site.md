@@ -32,8 +32,10 @@ To deploy, Cloudflare Pages will need a way to build the Blazor project. In the 
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Create a gitignore file
-Create a gitignore file so that only what's needed gets pushed onto your github repository by running the following command:
+## Create a `.gitignore` file
+
+Create a `.gitignore` file so that only what's needed gets pushed onto your GitHub repository by running the following command:
+
 ```sh
 $ dotnet new gitignore
 ```
