@@ -24,7 +24,7 @@ Security Events captures all traffic actioned or flagged by a Cloudflare securit
 
 The available features vary according to your Cloudflare plan:
 
-{{<feature-table id="security.firewall_analytics">}}
+{{<feature-table id="security.security_events">}}
 
 ## Known limitations
 

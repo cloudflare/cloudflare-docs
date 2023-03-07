@@ -35,7 +35,7 @@ For this example scenario, a generic template for `SIG-Branch` was created.
 
 To create a Secure Internet Gateway (SIG) using vManage:
 
-1. From **Cisco vManage** under **Configuration**, click **Generic** and **Add Tunnel**.
+1. From **Cisco vManage** under **Configuration**, select **Generic** and **Add Tunnel**.
 2. Refer to the table below for the setting fields and their options.
 
 |     Setting             |   Type/Detail                          |
@@ -69,7 +69,7 @@ When creating the Feature Template, you can choose values that apply globally or
 
 ## 2. Create tunnels in vManage
 
-From vManage, click **Configuration** > **Templates**. You should see the newly created template where you will update the device values. 
+From vManage, select **Configuration** > **Templates**. You should see the newly created template where you will update the device values. 
 
 Because the template was created to add GRE tunnels, you only need to update the device values. Note that **VPN0** is the default, and the WAN interface used to build the tunnel must be part of **VPN0**.
 
@@ -77,19 +77,19 @@ Because the template was created to add GRE tunnels, you only need to update the
 
 ## 3. Create tunnels in Cloudflare
 
-Refer to [Configure tunnel endpoints](/magic-wan/how-to/configure-tunnels) for more information on creating a GRE tunnel.
+Refer to [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/) for more information on creating a GRE tunnel.
 
 ![Established GRE tunne in Cloudflash dashboard](/magic-wan/static/viptela-gre-tunnel.png)
 
 ## 4. Define static routes
 
-Refer to [Configure static routes](/magic-wan/how-to/configure-static-routes) for more information on configuring your static routes.
+Refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/) for more information on configuring your static routes.
 
 ![Established GRE static routes in Cloudflare dashboard](/magic-wan/static/viptela-gre-static-routes.png)
 
 ## 5. Validate traffic flow
 
-In the example below, a request for neverssl.com was issued, which has a Cloudflare policy blocking traffic to neverssl.com.
+In the example below, a request for `neverssl.com` was issued, which has a Cloudflare policy blocking traffic to `neverssl`.com.
 
 On the client VM (192.168.30.3), a blocked response is visible.
 

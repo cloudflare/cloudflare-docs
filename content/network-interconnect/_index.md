@@ -36,6 +36,11 @@ Use CNI with other products in Cloudflare's suite for additional benefits.
       <td><p>Replaces corporate VPNs with the Cloudflare network.</p></td>
       <td><p>Securely connects your employees to your network no matter where they are when you bring your Multiprotocol Label Switching (MPLS) network to meet Cloudflare's.</p></td>
     </tr>
+     <tr>
+      <td><span style="white-space: nowrap"><a href="/magic-wan/tutorials/secure-web-gateway/">Magic WAN & Gateway</a></span></td>
+      <td><p>Secure Web Gateway inspects and protects traffic from your datacenter.</p></td>
+      <td><p>Provides a secure connection for outbound datacenter traffic that does not traverse the public Internet.</p></td>
+    </tr>
     <tr>
       <td><span style="white-space: nowrap"><a href="https://www.cloudflare.com/cdn/">CDN</a></span></td>
       <td><p>Places content closer to visitors, improving site performance.</p></td>

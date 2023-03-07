@@ -112,7 +112,7 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls.
+To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys).
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |

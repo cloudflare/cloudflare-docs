@@ -29,8 +29,8 @@ For help with endpoints and pagination, refer to [Getting Started: Endpoints](/f
 
 | Operation                                                                             | Method + URL stub                                             | Notes                              |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------- |
-| [List waiting rooms](https://developers.cloudflare.com/api/operations/waiting-room-list-waiting_rooms)     | `GET zones/{:zone_identifier}/waiting_rooms`                  | List all waiting rooms for a zone. |
-| [Create waiting room](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting_room)   | `POST zones/{:zone_identifier}/waiting_rooms`                 | Create a waiting room.             |
+| [List waiting rooms](https://developers.cloudflare.com/api/operations/waiting-room-list-waiting-rooms)     | `GET zones/{:zone_identifier}/waiting_rooms`                  | List all waiting rooms for a zone. |
+| [Create waiting room](https://developers.cloudflare.com/api/operations/waiting-room-create-waiting-room)   | `POST zones/{:zone_identifier}/waiting_rooms`                 | Create a waiting room.             |
 | [Waiting room details](https://developers.cloudflare.com/api/operations/waiting-room-waiting-room-details) | `GET zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Fetch a waiting room.              |
 | [Update waiting room](https://developers.cloudflare.com/api/operations/waiting-room-update-waiting-room) | `PUT zones/{:zone_identifier}/waiting_rooms/{:identifier}`    | Update a waiting room.             |
 | [Delete waiting room](https://developers.cloudflare.com/api/operations/waiting-room-delete-waiting-room) | `DELETE zones/{:zone_identifier}/waiting_rooms/{:identifier}` | Delete a waiting room.             |

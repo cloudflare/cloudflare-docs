@@ -36,7 +36,9 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
     
 4. Select your plan level. For more details on features and pricing, refer to [our Plans page](https://www.cloudflare.com/plans/#compare-features).
 5. Cloudflare will then automatically scan for your DNS records.
-    1. {{<render file="../../dns/_partials/_dns-scan-procedure.md">}}
+    1. {{<render file="_dns-scan-procedure.md" productFolder="dns" >}}
+
+        {{<render file="_dns-nxdomain-warning.md" productFolder="dns" >}}
 
     2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
     3. Depending on your site setup, you may want to adjust the [proxy status](/dns/manage-dns-records/reference/proxied-dns-records/) for certain `A`, `AAAA`, or `CNAME` records.
@@ -45,21 +47,18 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
 6. Click **Done, check nameservers**.
 7. Go through the **Quick Start Guide**, which allows you to:
     
-    - **Improve security**: Make sure that your site enforces HTTPS connections using **Always Use HTTPS** and **Automatic HTTPS Rewrites**. For more help, refer to our[detailed guide](/ssl/edge-certificates/encrypt-visitor-traffic/).
+    - **Improve security**: Make sure that your site enforces HTTPS connections using **Always Use HTTPS** and **Automatic HTTPS Rewrites**. For more help, refer to our [detailed guide](/ssl/edge-certificates/encrypt-visitor-traffic/).
     - **Optimize performance**: Speed up your site by enabling [Auto Minify](https://support.cloudflare.com/hc/en-us/articles/200168196) and [Brotli compression](https://support.cloudflare.com/hc/en-us/articles/200168396).
  8. When you have finished the **Quick Start Guide**, click **Finish**.
 
 ## Step 2 — Update nameservers
 
-Before your domain can begin using Cloudflare for DNS resolution, you need to update your nameservers at your registrar.
+{{<render file="_nameserver-preamble.md" productFolder="dns" >}}
+<br/>
 
-{{<Aside type="note">}}
+Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar.
 
-If your domain is particularly sensitive to downtime, review our suggestions to [minimize downtime](/fundamentals/get-started/setup/minimize-downtime/).
-
-{{</Aside>}}
-
-{{<render file="../../dns/_partials/_update-nameservers.md">}}
+{{<render file="_minimize-downtime-tip.md" productFolder="dns" >}}
 
 ## Step 3 — Complete SSL/TLS setup
 

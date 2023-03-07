@@ -30,7 +30,7 @@ Below is the supported file types for each Direct Upload options:
 
 ### Set up Wrangler
 
-To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/). Note that Pages relies on Wrangler 2.
+To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/). Note that Pages relies on Wrangler v2.
 
 #### Create your project
 

@@ -36,7 +36,7 @@ Cloudflare has nine geographic regions across the world which are listed below.
 <details>
   <summary>Region codes and associated regions</summary>
 
-| Region Code     | Region                |
+| Region code     | Region                |
 | --------------- | --------------------- |
 | AFR             | Africa                |
 | APAC            | Asia Pacific          |
@@ -49,3 +49,5 @@ Cloudflare has nine geographic regions across the world which are listed below.
 | WNAM            | Western North America |
 
 </details>
+
+Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) or [Edit a static route](#edit-a-static-route) for more information on this.

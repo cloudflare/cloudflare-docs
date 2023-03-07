@@ -22,4 +22,10 @@ If the nameservers in your registrar do not exactly match those provided by Clou
 
 ## Are additional nameservers listed at your registrar?
 
+If so, you should remove these nameservers.
+
 You should have only Cloudflare nameservers listed at your registrar.
+
+## Have you waited longer than 24 hours?
+
+For some registrars, you will need to wait up to 24 hours for updates to your nameservers.

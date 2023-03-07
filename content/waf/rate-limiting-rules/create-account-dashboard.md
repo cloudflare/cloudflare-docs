@@ -9,7 +9,7 @@ weight: 15
 
 At the account level, you must first create a custom rate limiting ruleset, containing one or more rate limiting rules, and then deploy it to one or more zones on an Enterprise plan.
 
-Both operations are available in the dashboard in Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
+Both operations are available in the dashboard in Account Home > **WAF** > **Rate limiting rulesets**.
 
 {{<Aside type="note" header="Notes">}}
 * Account-level rate limiting configuration requires an Enterprise plan with a paid add-on.
@@ -23,7 +23,7 @@ To create a new custom rate limiting ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
-2. Navigate to Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
+2. Navigate to Account Home > **WAF** > **Rate limiting rulesets**.
 
 3. Under **Your custom rate limiting rulesets**, select **Create new ruleset**.
 
@@ -63,7 +63,7 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
-2. Navigate to Account Home > **Application Security** > **WAF** > **Rate limiting rulesets**.
+2. Navigate to Account Home > **WAF** > **Rate limiting rulesets**.
 
 3. Under **Your custom rate limiting rulesets** and next to the rate limiting ruleset you wish to deploy, select **Deploy**.
 

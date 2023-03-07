@@ -92,7 +92,7 @@ To summarize, a namespace can be specified in two ways:
     $ wrangler kv:key get --namespace-id=<YOUR_ID> "<KEY>"
     ```
 
-Refer to the [`kv:bulk` documentation](/workers/wrangler/cli-wrangler/commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
+Refer to the [`kv:bulk` documentation](/workers/wrangler-legacy/commands/#kvbulk) to write a file of multiple key-value pairs to a given namespace.
 
 ## Use environments with KV namespaces
 

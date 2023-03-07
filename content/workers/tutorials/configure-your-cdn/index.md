@@ -40,7 +40,7 @@ Finally, to ensure that you can access the objects from your Workers function, y
 
 ## Init
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler-legacy), supports various templates — pre-built collections of code that make it easy to get started writing Workers. You will make use of the default JavaScript template to start building your project.
 
 In the command line, create your Worker project, cloning the [worker-template](https://github.com/cloudflare/worker-template) URL and passing in a project name (for example, `serve-cdn-assets`):
 

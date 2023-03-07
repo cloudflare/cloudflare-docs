@@ -11,7 +11,7 @@ Workers KV is a global, low-latency, key-value data store. It stores data in a s
 
 Learn more about [How KV works](/workers/learning/how-kv-works/).
 
-To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/cli-wrangler/commands/#kv) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
+To use Workers KV, you must create a KV namespace and add a [binding](/workers/runtime-apis/kv/#kv-bindings) to your Worker. Refer to the [instructions for Wrangler KV commands](/workers/wrangler/workers-kv/) or the KV page of the [Workers dashboard](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces) to get started.
 
 The descriptions of KV methods below also contain links to Wrangler or REST API equivalents where appropriate, but using KV from your Worker is generally better for latency, scalability, and availability.
 
@@ -44,7 +44,7 @@ This method returns a `Promise` that you should `await` on in order to verify a 
 
 The maximum size of a value is 25 MiB.
 
-You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [write data via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [write data via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
@@ -52,7 +52,7 @@ Writes are immediately visible to other requests in the same edge location, but 
 
 #### Writing data in bulk
 
-You can [write more than one key-value pair at a time with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvbulk) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
+You can [write more than one key-value pair at a time with Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
 
 A `key` and `value` are required for each KV pair. The entire request size must be less than 100 megabytes. As of January 2022, Cloudflare does not support bulk writes from within a Worker.
 
@@ -86,7 +86,7 @@ The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-va
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 #### Metadata
 
@@ -119,11 +119,11 @@ An example of reading a key from within a Worker:
 
 ```js
 export default {
-  async fetch(request) {
-    const value = await NAMESPACE.get("first-key");
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.get("first-key");
 
     if (value === null) {
-      return new Response("Value not found",  { status:  404})
+      return new Response("Value not found", { status: 404 });
     }
     return new Response(value);
   },
@@ -150,7 +150,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) and [from the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [from the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-read-key-value-pair).
 
 #### Types
 
@@ -207,7 +207,7 @@ This will remove the key and value from your namespace. As with any operations, 
 
 This method returns a promise that you should `await` on in order to verify successful deletion.
 
-You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-delete-key-value-pair).
+You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-delete-key-value-pair).
 
 ### Listing keys
 
@@ -220,8 +220,8 @@ An example:
 
 ```js
 export default {
-  async fetch(request) {
-    const value = await NAMESPACE.list();
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.list();
 
     return new Response(value.keys);
   },
@@ -245,7 +245,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-You can also [list keys on the command line with Wrangler](/workers/wrangler/cli-wrangler/commands/#kvkey) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
+You can also [list keys on the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
 
 Changes may take up to 60 seconds to be visible when listing keys.
 
@@ -302,8 +302,8 @@ You can also list all of the keys starting with a particular prefix. For example
 
 ```js
 export default {
-  async fetch(request) {
-    const value = await NAMESPACE.list({ prefix: "user:1:" });
+  async fetch(request, env, ctx) {
+    const value = await env.NAMESPACE.list({ prefix: "user:1:" });
     return new Response(value.keys);
   },
 };
@@ -375,10 +375,10 @@ With this, the deployed Worker will have a `TODO` global variable. Any methods o
 
 ```js
 export default {
-  async fetch(request) {
+  async fetch(request, env, ctx) {
     // Get the value for the "to-do:123" key
     // NOTE: Relies on the `TODO` KV binding that maps to the "My Tasks" namespace.
-    let value = await TODO.get("to-do:123");
+    let value = await env.TODO.get("to-do:123");
 
     // Return the value, as is, for the Response
     return new Response(value);
@@ -403,7 +403,7 @@ addEventListener("fetch", async (event) => {
 
 {{<Aside type="note">}}
 
-You can create a namespace [using Wrangler](/workers/wrangler/cli-wrangler/commands/#getting-started) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
+You can create a namespace [using Wrangler](/workers/wrangler/install-and-update/) or in the [Cloudflare dashboard](https://dash.cloudflare.com/). You can also bind the namespace to your Worker in the dashboard:
 
 1.  Go to **Workers**.
 2.  Select your **Worker**.
@@ -433,5 +433,6 @@ export class DurableObject {
 
 ## Related resources
 
+- [Use KV with Wrangler](/workers/wrangler/workers-kv/)
 - [Limits](/workers/platform/limits/#kv-limits)
 - [Pricing](/workers/platform/pricing/#kv)

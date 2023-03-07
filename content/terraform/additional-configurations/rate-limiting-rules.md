@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 4
 meta:
   title: Configure rate limiting rules with Terraform
-layout: list
 ---
 
 # Configure rate limiting rules
@@ -16,6 +15,18 @@ For more information on rate limiting rules, refer to [Rate limiting rules](/waf
 {{<Aside type="note">}}
 For more information on configuring the previous version of rate limiting rules in Terraform, refer to the [`cloudflare_rate_limit` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) in the Terraform documentation.
 {{</Aside>}}
+
+## Before you start
+
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### Import or delete existing rulesets
+
+{{<render file="_import-delete-existing-rulesets.md">}}
+
+---
 
 ## Create a rate limiting rule
 

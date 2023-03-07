@@ -6,9 +6,13 @@ rss: file
 
 # Changelog
 
-## 2022-01-05
+## 2023-02-14
 
-* Added support for [Queues](/queues/) producer to Functions.
+* Added support for [Analytics Engine](/analytics/analytics-engine/) in Functions.
+
+## 2023-01-05
+
+* Added support for [Queues](/queues/) producer in Functions.
 
 ## 2022-12-15
 

@@ -1,6 +1,6 @@
 ---
 title: DNS records
-pcx_content_type: how-to
+pcx_content_type: troubleshooting
 weight: 1
 meta:
     title: Troubleshooting misconfigured DNS records

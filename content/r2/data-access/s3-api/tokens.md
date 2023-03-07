@@ -1,9 +1,9 @@
 ---
-title: Generate an S3 Auth token
+title: Generate an S3 auth token
 pcx_content_type: how-to
 ---
 
-# Generate an S3 Auth token
+# Generate an S3 auth token
 
 In this guide, you will learn how to generate an API token to serve as the Access Key for usage with existing S3-compatible SDKs and/or XML APIs. 
 

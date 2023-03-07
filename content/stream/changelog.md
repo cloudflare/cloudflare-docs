@@ -23,6 +23,19 @@ With this change, Stream responds to the upload request with an error, allowing 
 
 Generating MP4 downloads of live stream recordings is now significantly faster. For more, refer to [the docs](https://developers.cloudflare.com/stream/stream-live/download-stream-live-videos/).
 
+## 2022-11-29
+
+### Multiple audio tracks (closed beta)
+
+Stream now supports adding multiple audio tracks to an existing video upload. This allows you to:
+
+- Provide viewers with audio tracks in multiple languages
+- Provide dubbed audio tracks, or audio commentary tracks (ex: Director’s Commentary)
+- Allow your users to customize the customize the audio mix, by providing separate audio tracks for music, speech or other audio tracks.
+- Provide Audio Description tracks to ensure your content is accessible. ([WCAG 2.0 Guideline 1.2 1](https://www.w3.org/TR/WCAG20/#media-equiv-audio-desc-only))
+
+To request an invite to the beta, refer to [this post](https://community.cloudflare.com/t/new-in-beta-support-for-multiple-audio-tracks/439629).
+
 ## 2022-11-22
 
 ### VP9 support for WebRTC live streams (beta)
@@ -41,7 +54,7 @@ For more, refer to [the docs](/stream/webrtc-beta/).
 
 ### Deprecating the "per-video" Analytics API
 
-The [“per-video” analytics API](/stream/getting-analytics/fetching-per-video-analytics/) is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
+The “per-video” analytics API is being deprecated. If you still use this API, you will need to switch to using the [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics/) by February 1, 2023. After this date, the per-video analytics API will be no longer available.
 
 The GraphQL Analytics API provides the same functionality and more, with additional filters and metrics, as well as the ability to fetch data about multiple videos in a single request. Queries are faster, more reliable, and built on a shared analytics system that you can [use across many Cloudflare products](/analytics/graphql-api/features/data-sets/).
 

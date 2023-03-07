@@ -25,7 +25,8 @@ There are multiple types of bindings available today:
 2. [KV namespace bindings](/workers/runtime-apis/kv/#kv-bindings) for communication between a Worker and a KV namespace.
 3. [R2 bucket bindings](/r2/data-access/workers-api/workers-api-reference/#create-a-binding) for communication between a Worker and an R2 bucket.
 4. [Durable Object bindings](/workers/runtime-apis/durable-objects/#accessing-a-durable-object-from-a-worker) for communication between a Worker and a Durable Object.
-5. [Queue bindings](/queues/configuration/) for communication between a Worker and a Queue.
+5. [Queue bindings](/queues/platform/configuration/) for communication between a Worker and a Queue.
+6. [mTLS certificate bindings](/workers/runtime-apis/mtls) enable communication between a Worker and an origin server secured by mTLS using an uploaded certificate.
 
 {{<Aside type="note">}}
 
@@ -35,15 +36,9 @@ There are multiple types of bindings available today:
 
 ## Deployments
 
-Deployments are an audit log of static historical versions of your Worker. They include the bundled code, configuration, and bindings associated with your Worker at a given point in time. A change to any of these will trigger a new deployment on Cloudflare’s network.
+Deployments provide static historical versions of your Worker. They include the bundled code, configuration, and bindings associated with your Worker at a given point in time, and are created when changes to Worker code or configuration is detected.
 
 Read more about [Deployments](/workers/platform/deployments).
-
-## Service environments
-
-We have temporarily disabled the creation of Service Environments while we are improving this feature.
-
-We recommend leveraging [Deployments](/workers/platform/deployments) in place of Environments.
 
 {{<Aside type="note">}}
 

@@ -1,16 +1,22 @@
 ---
 pcx-content-type: how-to
-title: Advanced Mode
+title: Advanced mode
 weight: 9
 ---
 
 # Advanced mode
 
-In some cases, the built-in file path based routing and middleware system is not desirable for existing applications. You may already have a Worker that is fairly complex and/or would be tedious to splice it up into Pages' file-based routing system. For these cases, Pages offers developers the ability to define a `_worker.js` file in the output directory of your Pages project.
+Advanced mode allows you to develop your Pages Functions with a `_workers.js` file rather than the `/functions` directory.
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored – this includes its routing and middleware characteristics. Instead, the `_worker.js` file is deployed **as is** and **must be** written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker). If you have never used Module syntax, refer to the [JavaScript modules blog post to learn more](https://blog.cloudflare.com/workers-javascript-modules/). Using Module Workers enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
+In some cases, Pages Functions' built-in file path based routing and middleware system is not desirable for existing applications. You may have a Worker that is complex and difficult to splice up into Pages' file-based routing system. For these cases, Pages offers the ability to define a `_worker.js` file in the output directory of your Pages project.
 
-Your custom Module Worker will assume full control of all incoming HTTP requests to your domain. Because of this, your custom Worker is required to make and/or forward requests to your project's static assets.
+When using a `_worker.js` file, the entire `/functions` directory is ignored, including its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker). If you have never used Module syntax, refer to the [JavaScript modules blog post](https://blog.cloudflare.com/workers-javascript-modules/) to learn more. Using Module syntax enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
+
+## Set up a Function
+
+In advanced mode, your Function will assume full control of all incoming HTTP requests to your domain. Your Function is required to make or forward requests to your project's static assets. Failure to do so will result in broken or unwanted behavior. Your Function must be written in Module syntax.
+
+After making a `_worker.js` file in your output directory, add the following code snippet:
 
 {{<tabs labels="js | ts">}}
 {{<tab label="js" default="true">}}
@@ -35,7 +41,7 @@ export default {
 {{</tab>}}
 {{<tab label="ts">}}
 ```ts
-// Note: You would need to compile your TS into JS and output it as a _worker.js file. We don't read _worker.ts
+// Note: You would need to compile your TS into JS and output it as a `_worker.js` file. We do not read `_worker.ts`
 
 interface Env {
   ASSETS: Fetcher;
@@ -58,12 +64,24 @@ export default {
 {{</tab>}}
 {{</tabs>}}
 
-The `env.ASSETS.fetch()` function will allow you to send the user to a modified path which is defined through the `url` parameter. `env` is the object that contains your environment variables and bindings. `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
+In the above code, you have configured your Function to return a response under all requests headed for `/api/`. Otherwise, your Function will fallback to returning static assets.
 
-{{<Aside type="warning">}}
+* The `env.ASSETS.fetch()` function will allow you to return assets on a given request.
+* `env` is the object that contains your environment variables and bindings. 
+* `ASSETS` is a default Function binding that allows communication between your Function and Pages' asset serving resource. 
+* `fetch()` calls to Pages' asset-serving resource and serves the requested asset.
 
-Your custom Module Worker is required to forward requests to static assets. Failure to do so will result in broken and/or unwanted behavior because your website's contents will not be served if you do not serve it.
+## Migrate from Workers
 
-{{</Aside>}}
+To migrate an existing Worker to your Pages project, copy your Worker code and paste it into your new `_worker.js` file. Then handle static assets by adding the following code snippet to `_worker.js`:
 
-Then after placing your `_worker.js` file in your output directory, deploy your project normally through your git integration.
+```ts
+---
+filename: _worker.js
+---
+return env.ASSETS.fetch(request);
+```
+
+## Deploy your Function
+
+After you have set up a new Function or migrated your Worker to `_worker.js`, make sure your `_worker.js` file is placed in your Pages' project output directory. Deploy your project through your Git integration for advanced mode to take effect.

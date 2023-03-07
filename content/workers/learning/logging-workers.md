@@ -10,6 +10,11 @@ You can access logs and exceptions for your Workers using the dashboard or [`wra
 
 The Workers platform captures all `console.log`'s and uncaught exceptions, in addition to information about the event itself. All of this can be viewed with either `wrangler tail` or on the dashboard through your **Account Home** > **Workers** > your **Workers script** > **Logs**.
 
+{{<Aside type="warning" header="Warning">}}
+This feature is not available for zones on the [Cloudflare China Network](/china-network/).
+
+{{</Aside>}}
+
 {{<Aside type="note">}}
 
 To push your Worker logs to a third-party provider, refer to [Logpush](/workers/platform/logpush/).
@@ -121,6 +126,12 @@ Note that:
 - Logs will not display if the Worker's requests per second are over 200 for the last 5 minutes.
 - Logs from any [Durable Objects](/workers/learning/using-durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
+
+## Push logs to storage
+
+[Workers Logpush](/workers/platform/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+
+Refer to the [Workers Logpush documentation](/workers/platform/logpush/) to learn how to create and configure Logpush jobs.
 
 ---
 

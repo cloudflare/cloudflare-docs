@@ -42,3 +42,19 @@ const request = new Request(url, incomingRequest);
 request.headers.delete('cf-workers-preview-token');
 return await fetch(request);
 ```
+
+## Custom ports
+
+For Workers subrequests, custom ports are ignored when using HTTPS and are instead always sent to port `443`. When using HTTP, custom ports are respected.
+
+For example:
+
+```js
+await fetch('https://example.com:1234/foo')
+```
+
+is the equivalent of:
+
+```js
+await fetch('https://example.com/foo')
+```

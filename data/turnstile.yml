@@ -3,12 +3,13 @@ logo: <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://
 product:
   title: Turnstile
   url: /turnstile/
+  group: Security
 
 meta:
   title: Cloudflare Turnstile docs
   description: Turnstile is Cloudflare's smart CAPTCHA alternative. 
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/turnstile

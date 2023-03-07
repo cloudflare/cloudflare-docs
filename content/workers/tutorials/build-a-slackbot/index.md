@@ -9,6 +9,8 @@ layout: single
 
 # Build a Slackbot
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -48,7 +50,7 @@ After authorizing your webhook URL, you will be returned to the **Incoming Webho
 
 #### Slash Command
 
-A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send the text `cloudflare/wrangler#1` in a HTTP POST request to your application, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler/issues/1).
+A Slash Command in Slack is a custom-configured command that can be attached to a URL request. For example, if you configured `/weather <zip>`, Slack would make an HTTP POST request to a configured URL, passing the text `<zip>` to get the weather for a specified zip code. In your application, you will use the `/issue` command to look up GitHub issues using the [GitHub API](https://developer.github.com). Typing `/issue cloudflare/wrangler#1` will send the text `cloudflare/wrangler#1` in a HTTP POST request to your application, which the application will use to find the [relevant GitHub issue](https://github.com/cloudflare/wrangler-legacy/issues/1).
 
 1.  On the Slack sidebar, select **Slash Commands**.
 2.  Create your first slash command.
@@ -91,7 +93,7 @@ When your webhook is created, it will attempt to send a test payload to your app
 
 ## Init
 
-Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to create a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
+Cloudflare’s command-line tool for managing Worker projects, [Wrangler](https://github.com/cloudflare/wrangler-legacy), supports various templates — pre-built collections of code that make it easy to get started writing Workers. In this tutorial, you will use the [router template](https://github.com/cloudflare/worker-template-router) to create a Workers project with a built-in router, so you can take incoming requests, and route them to the appropriate JavaScript code.
 
 In the command line, create your Worker project, cloning the [router template](https://github.com/cloudflare/worker-template-router) URL and passing in a project name (for example, `slack-bot`):
 
@@ -389,7 +391,7 @@ export const constructGhIssueSlackMessage = (issue, issue_string) => {
 
 Slack messages accept a variant of Markdown, which supports bold text via asterisks (`*bolded text*`), and links in the format `<https://yoururl.com|Display Text>`.
 
-Given that format, construct `issue_link`, which takes the `html_url` property from the GitHub API `issue` data (in format `https://github.com/cloudflare/wrangler/issues/1`), and the `issue_string` sent from the Slack slash command, and combines them into a clickable link in the Slack message.
+Given that format, construct `issue_link`, which takes the `html_url` property from the GitHub API `issue` data (in format `https://github.com/cloudflare/wrangler-legacy/issues/1`), and the `issue_string` sent from the Slack slash command, and combines them into a clickable link in the Slack message.
 
 `user_link` is similar, using `issue.user.html_url` (in the format `https://github.com/signalnerve`, a GitHub user) and the user’s GitHub username (`issue.user.login`), to construct a clickable link to the GitHub user.
 
@@ -650,7 +652,7 @@ Since this webhook allows developers to post directly to your Slack channel, kee
 
 {{</Aside>}}
 
-To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler/cli-wrangler/commands/#secret) command:
+To use this constant inside of your codebase, use the [`wrangler secret`](/workers/wrangler-legacy/commands/#secret) command:
 
 ```sh
 ---

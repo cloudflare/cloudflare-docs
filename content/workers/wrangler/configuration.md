@@ -8,6 +8,10 @@ weight: 3
 
 Wrangler optionally uses a `wrangler.toml` configuration file to customize the development and publishing setup for a Worker.
 
+{{<Aside type="warning">}}
+Wrangler currently supports an `--experimental-json-config` flag which will read your configuration from a `wrangler.json` file, rather than `wrangler.toml`. The format of this file is exactly the same as the `wrangler.toml` configuration file, except that the syntax is `JSON` rather than `TOML`. This is experimental, and is not recommended for production use.
+{{</Aside>}}
+
 It is best practice to treat `wrangler.toml` as the [source of truth](#source-of-truth) for configuring a Worker.
 
 ## Sample `wrangler.toml` configuration
@@ -319,7 +323,7 @@ To bind Durable Objects to your Worker, assign an array of the below object to t
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The service environment of the `script_name` to bind to.
+  - The environment of the `script_name` to bind to.
 
 {{</definitions>}}
 
@@ -455,7 +459,7 @@ To bind other Workers to your Worker, assign an array of the below object to the
 
 - `environment` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Service Environments](/workers/platform/environments/).
+  -  The environment of the service (for example, `production`, `staging`, etc). Refer to [Environments](/workers/platform/environments/).
 
 {{</definitions>}}
 
@@ -498,6 +502,38 @@ analytics_engine_datasets = [
     { binding = "<BINDING_NAME>", dataset = "<DATASET_NAME>" }
 ]
 ```
+
+### mTLS Certificates
+
+To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
+
+To create a [binding](/workers/platform/bindings/) to an mTLS certificate for your Worker, assign an array of objects with the following shape to the `mtls_certificates` key.
+
+{{<definitions>}}
+
+- `binding` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The binding name used to refer to the certificate.
+
+- `certificate_id` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - The ID of the certificate. Wrangler displays this via the `mtls-certificate upload` and `mtls-certificate list` commands.
+
+{{</definitions>}}
+
+Example of a `wrangler.toml` configuration that includes an mTLS certificate binding:
+
+```toml
+---
+header: wrangler.toml
+---
+mtls_certificates = [
+    { binding = "<BINDING_NAME>", certificate_id = "<CERTIFICATE_ID>" }
+]
+```
+
+mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
+
 
 ## Bundling
 
@@ -623,11 +659,11 @@ Consider using [Cloudflare Pages](/pages/) for hosting static applications inste
 
   - The directory containing your static assets. It must be a path relative to your `wrangler.toml` file.
 
-- `include` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `include` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   - An exclusive list of `.gitignore`-style patterns that match file  or directory names from your bucket location. Only matched items will be uploaded.
 
-- `exclude` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+- `exclude` {{<type>}}string[]{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
   -  A list of `.gitignore`-style patterns that match files or directories in your bucket that should be excluded from uploads.
 
@@ -674,6 +710,6 @@ If you need to make changes to your Worker from the Cloudflare dashboard, the da
 
 If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behavior, add `keep_vars = true` to your `wrangler.toml`.
 
-If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler 1 [deprecation guide](/workers/wrangler/migration/deprecations/#other-deprecated-behaviour).
+If you change your routes in the dashboard, Wrangler will override them in the next deploy with the routes you have set in your `wrangler.toml`. To manage routes via the Cloudflare dashboard only, remove any route and routes keys from your `wrangler.toml` file. Then add `workers_dev = false` to your `wrangler.toml` file. For more information, refer to the Wrangler v1 [deprecation guide](/workers/wrangler-legacy/migration/deprecations/#other-deprecated-behaviour).
 
 Note that Wrangler will not delete your secrets (encrypted environment variables) unless you run `wrangler secret delete <key>`.

@@ -14,7 +14,7 @@ Note that the cipher suites below are ordered based on how they appear in the Cl
 
 ## Supported cipher suites by protocol
 
-| OpenSSL Name                        | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |
+| Cipher name                        | TLS 1.0 | TLS 1.1 | TLS 1.2 | TLS 1.3 |
 | ----------------------------------- | ------- | ------- | ------- | ------- |
 | AEAD-AES128-GCM-SHA256 [^1]        | ❌      | ❌      | ❌      | ✅      |
 | AEAD-AES256-GCM-SHA384 [^1]        | ❌      | ❌      | ❌      | ✅      |

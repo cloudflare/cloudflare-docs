@@ -78,6 +78,7 @@ Many Cloudflare Zero Trust services rely on traffic going through WARP, such as 
 - The IdP used to authenticate to Cloudflare Zero Trust
 - `<your-team-name>.cloudflareaccess.com`
 - The application protected by the Access or Gateway policy
+- `edge.browser.run` if using [Browser Isolation](/cloudflare-one/policies/browser-isolation/)
 
 ## Remove an item from Split Tunnels
 

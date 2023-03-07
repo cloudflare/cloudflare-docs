@@ -1,6 +1,12 @@
 (function () {
   let $ = document.querySelector.bind(document);
   let element = $('#DocsSearch--input') || $('#SiteSearch--input');
+  let productGroup = $('meta[name="pcx_content_group"]')
+  let canonical = $('link[rel="canonical"]')
+  let searchTab = '&t=Docs'
+  if (canonical.href.includes('https://developers.cloudflare.com/support/')) {
+    searchTab = '&t=Other'
+  }
 
   addEventListener('keydown', ev => {
     let key = ev.which;
@@ -14,7 +20,10 @@
       let text = (element.value || '').trim();
 
       if (text.length > 0) {
-        redirect += '#q=' + encodeURIComponent(text);
+        redirect += '#q=' + encodeURIComponent(text) + searchTab;
+        if (productGroup) {
+          redirect += '&product_group=' + encodeURIComponent(productGroup.content);
+        }
         // redirect += '&f:source=[Developer%20docs]';
       }
 

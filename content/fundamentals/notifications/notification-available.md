@@ -284,7 +284,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 **Who is it for?**
 
-Customers who want to be warned about changes to server health as determined by [health checks](https://support.cloudflare.com/hc/articles/4404867308429).
+Customers who want to be warned about changes to server health as determined by [health checks](/health-checks/).
 
 **Other options / filters**
 
@@ -302,7 +302,7 @@ Pro plans or higher.
 
 **What should you do if you receive one?**
 
-Review your [health check analytics](https://support.cloudflare.com/hc/articles/4404867308429#analytics).
+Review your [health check analytics](/health-checks/health-checks-analytics/#common-error-codes).
 
 </div>
 </details>

@@ -1,5 +1,5 @@
 ---
-pcx_content_type: reference
+pcx_content_type: navigation
 title: Manage domains
 weight: 1
 ---

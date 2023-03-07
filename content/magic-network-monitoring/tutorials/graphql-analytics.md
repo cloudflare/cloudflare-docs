@@ -16,10 +16,8 @@ Before you begin, you must have an [API token](/analytics/graphql-api/getting-st
 
 To construct a Magic Network Monitoring GraphQL query for an object, you will need a Cloudflare Account ID.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. From the **Accounts** page, select your account.
-
-In your browser's address bar, the URL should show `https://dash.cloudflare.com/` followed by a hexidecimal string. The hexidecimal string is your Cloudflare Account ID.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+2. The URL in your browser's address bar should show `https://dash.cloudflare.com/` followed by a hex string. The hex string is your Cloudflare Account ID.
 
 ## Explore GraphQL schema with Magic Network Monitoring example
 

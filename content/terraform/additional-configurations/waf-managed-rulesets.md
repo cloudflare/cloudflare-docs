@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 2
 meta:
   title: Configure WAF Managed Rules with Terraform
-layout: list
 ---
 
 # Configure WAF Managed Rules
@@ -17,22 +16,19 @@ This page provides examples of deploying and configuring WAF Managed Rules in yo
 * [Configure overrides](#configure-overrides)
 * [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
-For more information on WAF Managed Rules, refer to [Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
-### Delete any existing rulesets before using Terraform
-
-{{<render file="_delete-existing-rulesets.md">}}
-
 ### Obtain the necessary account, zone, and managed ruleset IDs
 
-The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy managed rulesets.
+{{<render file="_find-ids-managed-rulesets.md">}}
 
-* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) API operation.
-* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://developers.cloudflare.com/api/operations/zone-list-zones) API operation.
+### Import or delete existing rulesets
 
-The deployment of managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF's managed rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing managed rulesets.
+{{<render file="_import-delete-existing-rulesets.md">}}
+
+---
 
 ## Deploy managed rulesets
 

@@ -147,7 +147,7 @@ export default {
         // Handle CORS preflight requests
         return handleOptions(request);
       } else if (
-        request.medthod === 'GET' ||
+        request.method === 'GET' ||
         request.method === 'HEAD' ||
         request.method === 'POST'
       ) {

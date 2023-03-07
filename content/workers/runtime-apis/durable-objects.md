@@ -286,7 +286,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `alarm()` handler method
 
-The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
+The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
 
 The method takes no parameters, does not return a result, and can be `async`.
 
@@ -393,7 +393,7 @@ This method always returns the stub immediately, before it has connected to the 
 
 #### Providing a location hint
 
-Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. To manually create Durable Obkects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
+Durable Objects do not currently move between geographical regions after they are created<sup>1</sup>. By default, Durable Objects are created close to the first client that accesses them via `GET`. To manually create Durable Objects in another location, provide an optional `locationHint` parameter to `GET`. Only the first call to `GET` for a particular object will respect the hint.
 
 ```js
 let stub = OBJECT_NAMESPACE.get(id, { locationHint: 'enam' });
@@ -439,7 +439,7 @@ let id = subnamespace.idFromName(name);
 
 {{<Aside type="note" header="IDs derived from the same name but different jurisdictions will differ">}}
 
-Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different objects! They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
+Because the jurisdiction is encoded permanently in the Object ID, it is possible to have the same name represent different objects in different jurisdictions. For example: `OBJECT_NAMESPACE.idFromName('my-name')` and `OBJECT_NAMESPACE.jurisdiction('eu').idFromName('my-name')` represent different objects. They will have their own transient (in-memory) and persistent state, and will likely run in different geographical regions.
 
 This may be counterintuitive at first, but it would be impossible to enforce two different non-overlapping jurisdictions for a single name. The key insight to remember is that Durable Object namespaces operate on IDs, not names, and the jurisdiction is a permanent part of the ID.
 

@@ -16,10 +16,8 @@ When you make a `HEAD` request for a cacheable resource and Cloudflare does not 
 
 For non-cacheable requests, `Set-Cookie` is always preserved. For cacheable requests, there are three possible behaviors:
 
-- `Set-Cookie` is returned from origin and the default cache level is used. If origin cache control is not enabled, Cloudflare removes the `Set-Cookie` and caches the asset. If origin cache control is enabled, Cloudflare does not cache the asset and preserves the `Set-Cookie`.
+- `Set-Cookie` is returned from origin and the default cache level is used. If origin cache control is not enabled, Cloudflare removes the `Set-Cookie` and caches the asset. If origin cache control is enabled, Cloudflare does not cache the asset and preserves the `Set-Cookie`. A cache status of BYPASS is returned.
 
 - `Set-Cookie` is returned from origin and the cache level is set to `Cache Everything`. In this case, Cloudflare preserves the `Set-Cookie` but does not cache the asset. A cache `MISS` will be returned every time.
 
 - `Set-Cookie` is returned from origin, the cache level is set to `Cache Everything` and edge cache TTL is set. In this case, Cloudflare removes the `Set-Cookie` and the asset is cached.
-
->  In this case, Cloudflare preserves the `Set-Cookie` but a cache `MISS` forever is returned, this means that the asset is not cached and `MISS` is returned every time.

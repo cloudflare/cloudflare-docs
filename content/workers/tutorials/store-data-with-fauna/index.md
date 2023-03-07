@@ -9,6 +9,8 @@ layout: single
 
 # Create a serverless, globally distributed REST API with Fauna
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -100,7 +102,7 @@ You must publish a version of your project before storing your server secret in 
 
 ### Adding your Fauna secret as an environment variable
 
-After creating and deploying your Worker, store your Fauna client [secret](/workers/wrangler/cli-wrangler/commands/#put) safely with the following command:
+After creating and deploying your Worker, store your Fauna client [secret](/workers/wrangler-legacy/commands/#put) safely with the following command:
 
 ```sh
 ---
@@ -909,6 +911,6 @@ If you would like to speak directly with a Fauna expert about building your appl
 [fauna-github]: https://github.com/fauna-labs/fauna-workers
 [http-status-codes]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 [worktop]: https://github.com/lukeed/worktop
-[wrangler-dev]: /workers/wrangler/cli-wrangler/commands/#dev
+[wrangler-dev]: /workers/wrangler-legacy/commands/#dev
 [wrangler-init]: /workers/wrangler/commands/#init
-[wrangler-publish]: /workers/wrangler/cli-wrangler/commands/#publish
+[wrangler-publish]: /workers/wrangler-legacy/commands/#publish

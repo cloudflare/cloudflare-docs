@@ -12,7 +12,7 @@ meta:
 ## Sites not proxied through Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select the **Analytics** drop-down and choose **Web Analytics**.
+2. Select the **Analytics & Logs** drop-down and choose **Web Analytics**.
 3. Select **Add a site**.
 4. In **Set up hostname**, write your website's hostname.
 5. Select the message box that appears to choose the hostname you have input and select **Done**.
@@ -29,7 +29,7 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 ## Sites proxied through Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select the **Analytics** drop-down and choose **Web Analytics**.
+2. Select the **Analytics & Logs** drop-down and choose **Web Analytics**.
 3. Under **Quick Actions**, select **Add a site**.
 4. Select a hostname from the drop-down menu > **Done**.
 
@@ -47,6 +47,6 @@ For more information on how to configure which sites or pages you track with Web
 
 {{<Aside type="warning" header="Important">}}
 
-If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information. 
+If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/about/cache-control/) for more information.
 
 {{</Aside>}}

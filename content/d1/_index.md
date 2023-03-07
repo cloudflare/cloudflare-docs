@@ -35,7 +35,7 @@ While in the Alpha period, there is a possibility of breaking changes. The Alpha
 
 ## Community support
 
-Reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the [#d1-private-alpha channel](https://discord.com/channels/595317990191398933/992060581832032316). In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team.
+Reach out to us on the [Cloudflare Developer Discord](https://discord.com/invite/cloudflaredev) in the [#d1-open-alpha channel](https://discord.com/channels/595317990191398933/992060581832032316). In this channel, you will be able to ask questions, surface any issues you run into, provide feedback and show off your projects directly with our product and engineering team.
 
 [Follow @CloudflareDev on Twitter](https://twitter.com/cloudflaredev) to learn about product announcements, new tutorials, and what is new in Cloudflare Pages.
 
@@ -45,6 +45,6 @@ To discuss an issue with the D1 team, open a thread on the [Community Forum](htt
 
 ### Connect with the Wrangler team
 
-If you are having issues with Wrangler, report issues in the [wrangler2 GitHub repository](https://github.com/cloudflare/wrangler2/issues/new/choose).
+If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
 {{</content-column>}}

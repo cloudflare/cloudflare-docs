@@ -10,7 +10,7 @@ meta:
 
 # Supported URL components in Bulk Redirects
 
-The source and target URLs of a URL Redirect support different URL components.
+The source and target URLs of a URL redirect support different URL components.
 
 In the reference table below, the provided URL component examples are based on the following URL:
 

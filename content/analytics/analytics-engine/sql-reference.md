@@ -666,7 +666,7 @@ GROUP BY hour
 ORDER BY hour ASC
 ```
 
-## extract
+### extract
 
 Usage:
 ```SQL
