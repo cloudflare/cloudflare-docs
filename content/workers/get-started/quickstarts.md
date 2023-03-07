@@ -10,10 +10,10 @@ layout: list
 
 {{<content-column>}}
 
-Quickstarts are GitHub repos that are designed to be a starting point for building a new Cloudflare Workers project. For the projects below, you simply run:
+Quickstarts are GitHub repositories that are designed to be a starting point for building a new Cloudflare Workers project. To start any of the projects below, run:
 
 ```sh
-$ npx wrangler generate <new-project-name> <github-repo-url>
+$ npx wrangler generate <NEW_PROJECT_NAME> <GITHUB_REPO_URL>
 ```
 
 {{<definitions>}}
@@ -47,6 +47,12 @@ $ npx wrangler generate <new-project-name> <github-repo-url>
   }
 </style>
 
+{{<Aside type="note" header="Cloudflare templates repository">}}
+
+To access a full list of available Cloudflare templates, refer to the [Cloudflare templates repository](https://github.com/cloudflare/workers-sdk/tree/main/templates).
+
+{{</Aside>}}
+
 ## Example Projects
 
 {{<worker-starter title="Router" repo="cloudflare/workers-sdk/templates/worker-router" description="Run different logic based on the URL and request method. Use this starter to Build REST APIs or applications that require routing logic.">}}
@@ -56,9 +62,9 @@ description="Measure download/upload connection speed from the client side, usin
 
 {{<worker-starter title="Sentry" repo="mhart/cf-sentry" description="Log exceptions and errors in your Workers application to Sentry.io - an error tracking tool.">}}
 
-{{<worker-starter title="Image Color" repo="xtuc/img-color-worker" description="Retrieve the dominant color of a PNG or JPEG image">}}
+{{<worker-starter title="Image Color" repo="xtuc/img-color-worker" description="Retrieve the dominant color of a PNG or JPEG image.">}}
 
-{{<worker-starter title="Cloud Storage" repo="conzorkingkong/cloud-storage" description="Serve private AWS bucket files from a Worker script">}}
+{{<worker-starter title="Cloud Storage" repo="conzorkingkong/cloud-storage" description="Serve private Amazon Web Services (AWS) bucket files from a Worker script.">}}
 
 {{<worker-starter title="BinAST" repo="xtuc/binast-cf-worker-template" description="Serve a JavaScript Binary AST via a Cloudflare Worker.">}}
 
