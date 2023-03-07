@@ -29,7 +29,7 @@ Add any existing rules in the ruleset to the request by including their rule ID 
 
 ### Example A - Rate limiting based on request properties
 
-This example defines a rate limiting rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
+This example **replaces all rate limiting rules** in zone `<ZONE_ID>`, defining a rate limiting rule based on three characteristics applied to URL paths starting with `/api/` and with action `block`.
 
 ```json
 ---
@@ -62,7 +62,7 @@ curl -X PUT \
 
 ### Example B - Rate limiting with a custom response
 
-This example request defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
+This example request **replaces all rate limiting rules** in `<ZONE_ID>`, defining a single rate limiting rule with a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
 
 ```json
 ---
@@ -103,7 +103,7 @@ curl -X PUT \
 
 ### Example C - Rate limiting ignoring cached assets
 
-This example request creates a rate limiting rule that does not consider requests for cached assets when calculating the rate.
+This example request **replaces all limiting rules** in `<ZONE_ID>`, defining a single rate limiting rule that does not consider requests for cached assets when calculating the rate.
 
 ```json
 ---
@@ -142,7 +142,7 @@ curl -X PUT \
 [Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is available in beta and can only be configured via API.
 {{</Aside>}}
 
-This example configures a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression). When this total score becomes larger than `400` during a 60-second period, any later client requests will be blocked for a period of 600 seconds (10 minutes).
+This example **replaces all rate limiting rules** in zone `<ZONE_ID>`, configuring a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression). When this total score becomes larger than `400` during a 60-second period, any later client requests will be blocked for a period of 600 seconds (10 minutes).
 
 ```json
 ---
