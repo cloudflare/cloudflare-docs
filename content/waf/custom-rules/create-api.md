@@ -45,6 +45,8 @@ curl -X PUT \
 }'
 ```
 
+{{<render file="_api-add-rule-to-ruleset.md">}}
+
 ### Example B
 
 This example request **replaces all rules** in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
@@ -73,3 +75,5 @@ curl -X PUT \
   ]
 }'
 ```
+
+{{<render file="_api-add-rule-to-ruleset.md">}}

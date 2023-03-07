@@ -60,6 +60,8 @@ curl -X PUT \
 }'
 ```
 
+{{<render file="_api-add-rule-to-ruleset.md">}}
+
 ### Example B - Rate limiting with a custom response
 
 This example request **replaces all rate limiting rules** in `<ZONE_ID>`, defining a single rate limiting rule with a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configuring-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
@@ -101,6 +103,8 @@ curl -X PUT \
 }'
 ```
 
+{{<render file="_api-add-rule-to-ruleset.md">}}
+
 ### Example C - Rate limiting ignoring cached assets
 
 This example request **replaces all limiting rules** in `<ZONE_ID>`, defining a single rate limiting rule that does not consider requests for cached assets when calculating the rate.
@@ -135,6 +139,8 @@ curl -X PUT \
   ]
 }'
 ```
+
+{{<render file="_api-add-rule-to-ruleset.md">}}
 
 ### Example D - Complexity-based rate limiting rule
 
@@ -174,3 +180,5 @@ curl -X PUT \
   ]
 }'
 ```
+
+{{<render file="_api-add-rule-to-ruleset.md">}}
