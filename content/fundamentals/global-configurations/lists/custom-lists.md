@@ -1,12 +1,20 @@
 ---
 pcx_content_type: concept
 title: Custom lists
-weight: 4
+weight: 2
 ---
 
 # Custom lists
 
-A custom list contains one or more items of the same type (for example, a list of hostnames) that you can reference collectively, by name, in rule expressions.
+A custom list contains one or more items of the same type (for example, IP addresses or hostnames) that you can reference collectively, by name, in rule expressions.
+
+Cloudflare supports the following custom list types:
+* Lists with IP addresses (also known as IP lists)
+* Lists with hostnames
+
+Each type has its own properties and CSV file format. Refer to the following sections for details.
+
+For more information on lists managed by Cloudflare, like Managed IP Lists, refer to [Managed Lists](/fundamentals/global-configurations/lists/managed-lists/).
 
 ## Create a custom list
 
@@ -20,11 +28,45 @@ Use custom lists in rule [expressions](/ruleset-engine/rules-language/expression
 <FIELD> in $<LIST_NAME>
 ```
 
-For custom lists with hostnames, use the `http.host` field.
+The fields you can use vary according to the list item type:
+
+List item type | Available fields
+---------------|-----------------------------------------------------------------------------------------
+Hostname       | `http.host`
+IP address     | Fields with type `IP address` listed in [Fields](/ruleset-engine/rules-language/fields/)
+
+For more information on using a custom list in the Cloudflare dashboard, refer to [Use lists in expressions](/fundamentals/global-configurations/lists/use-in-expressions/).
 
 ---
 
 ## List item format
+
+### Lists with IP addresses
+
+List items in custom lists with IP addresses must be in one of the following formats:
+
+- Individual IPv4 addresses
+- IPv4 CIDR ranges with a prefix from `/8` to `/32`
+- IPv6 CIDR ranges with a prefix from `/4` to `/64`
+
+You can combine individual addresses and CIDR ranges in the same list.
+
+{{<Aside type="note" header="Note">}}
+
+To specify an IPv6 address, enter it as a CIDR range with a `/64` prefix, the largest supported prefix for IPv6 CIDR ranges.
+
+For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of the following:
+
+- `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
+- `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
+
+The IPv6 address topology describes the last 64 bits as the host identifier. Matching on a `/128` prefix would identify a specific IPv6 address, but not the host in general. It would be possible for an attacker to change their specific IPv6 address from a single machine.
+
+{{</Aside>}}
+
+You can use uppercase or lowercase characters for IPv6 addresses in lists. However, when you save the list, uppercase characters are converted to lowercase.
+
+### Lists with hostnames
 
 List items in custom lists with hostnames must be Fully Qualified Domain Names (FQDNs). An item may contain a `*` prefix/subdomain wildcard, which must be followed by a `.` (period). An item cannot include a scheme (for example, `https://`) or a URL path.
 
@@ -39,6 +81,21 @@ However, `example.com/path/subfolder` would not be a valid entry.
 You can add any valid hostname (a valid FQDN) to a custom list with hostnames. The hostnames do not need to belong to the current Cloudflare account.
 
 ## CSV file format for bulk import operations
+
+The exact format of CSV file entries varies according to the type of list items you are importing.
+
+### Lists with IP addresses
+
+When uploading items to a custom list with IP addresses via CSV file, use the following file format (enter one item per line):
+
+```txt
+<IP_ADDRESS_1>,<DESCRIPTION>
+<IP_ADDRESS_2>
+```
+
+The `<DESCRIPTION>` field is optional.
+
+### Lists with hostnames
 
 When uploading items to a custom list with hostnames via CSV file, use the following file format:
 

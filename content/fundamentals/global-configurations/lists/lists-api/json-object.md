@@ -18,7 +18,7 @@ A JSON response for the [Lists API](https://developers.cloudflare.com/api/operat
   "id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
   "name": "my_list_name",
   "description": "List description.",
-  "kind": "(ip|redirect|hostname)",
+  "kind": "(ip|hostname|redirect)",
   "num_items": 10,
   "num_referencing_filters": 2,
   "created_on": "2021-01-01T08:00:00Z",
@@ -64,7 +64,7 @@ This table summarizes the object properties:
         <tr>
             <td><code>kind</code><br />{{<type>}}String{{</type>}}</td>
             <td>The type of data in the list.</td>
-            <td>Valid values: <code class="InlineCode">ip</code>, <code class="InlineCode">redirect</code>, <code class="InlineCode">hostname</code></td>
+            <td>Valid values: <code class="InlineCode">ip</code>, <code class="InlineCode">hostname</code>, <code class="InlineCode">redirect</code></td>
         </tr>
         <tr>
             <td><code>num_items</code><br />{{<type>}}Number{{</type>}}</td>
@@ -92,7 +92,9 @@ This table summarizes the object properties:
 
 ## List item object structure and properties
 
-A fully populated JSON object for an IP List item has the following structure:
+Each list type (IP address, hostname, redirects) can only contain items of the same type.
+
+A fully populated JSON object for an IP address list item has the following structure:
 
 ```json
 {
@@ -101,6 +103,19 @@ A fully populated JSON object for an IP List item has the following structure:
   "comment": "CF DNS server",
   "created_on": "2021-10-01T05:20:00.12345Z",
   "modified_on": "2021-10-01T05:20:00.12345Z"
+}
+```
+
+A fully populated JSON object for a hostname list item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "hostname": {
+    "url_hostname": "*.example.com"
+  },
+  "created_on": "2021-10-11T12:39:02Z",
+  "modified_on": "2021-10-11T12:39:02Z"
 }
 ```
 
@@ -123,18 +138,6 @@ A fully populated JSON object for a Bulk Redirect List item has the following st
 }
 ```
 
-A fully populated JSON object for a hostname list item has the following structure:
-
-```json
-{
-  "id": "7c5dae5552338874e5053f2534d2767a",
-  "hostname": {
-    "url_hostname": "*.example.com"
-  },
-  "created_on": "2021-10-11T12:39:02Z",
-  "modified_on": "2021-10-11T12:39:02Z"
-}
-```
 
 The JSON object properties for a list item are defined as follows:
 
@@ -161,8 +164,8 @@ The JSON object properties for a list item are defined as follows:
             <td><code>ip</code><br />{{<type>}}String{{</type>}}</td>
             <td>An IP address or CIDR range.</td>
             <td>
-              <p>Applies only to IP Lists.</p>
-              <p>Any of these formats can exist in the same IP List:
+              <p>Applies only to custom lists with IP adresses (IP Lists).</p>
+              <p>Any of these formats can exist in the same custom list with IP addresses:
                 <ul>
                     <li>IPv4 address</li>
                     <li>IPv6 (up to <code>/64</code>) address</li>
@@ -175,7 +178,7 @@ The JSON object properties for a list item are defined as follows:
         <tr>
             <td><code>comment</code><br />{{<type>}}String{{</type>}}</td>
             <td>An informative summary of the item.</td>
-            <td><p>Applies only to IP Lists.</p>
+            <td><p>Applies only to custom lists with IP addresses (IP Lists).</p>
             <p>Maximum length: 500 characters.</p></td>
         </tr>
         <tr>

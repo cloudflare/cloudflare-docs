@@ -7,7 +7,7 @@ layout: single
 
 # Lists
 
-Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own lists or use lists managed by Cloudflare, such as [Managed IP Lists](/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists).
+Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own lists or use lists managed by Cloudflare, such as [Managed IP Lists](/fundamentals/global-configurations/lists/managed-lists/#managed-ip-lists).
 
 Lists have the following advantages:
 
@@ -23,11 +23,14 @@ Cloudflare stores your lists at the account level. You can use the same list in 
 
 Cloudflare supports the following types of lists:
 
-* [IP Lists](/fundamentals/global-configurations/lists/ip-lists/)
-* [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists)
-* [Custom lists](/fundamentals/global-configurations/lists/custom-lists/) (containing hostnames)
+* [Custom lists](/fundamentals/global-configurations/lists/custom-lists/): Includes custom IP lists and hostname lists.
+* [Managed Lists](/fundamentals/global-configurations/lists/managed-lists/): Lists managed and updated by Cloudflare, such as Managed IP Lists.
 
 Refer to the page about each list type for details.
+
+{{<Aside type="note">}}
+Bulk Redirects use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists), a different type of list covered in the Rules documentation.
+{{</Aside>}}
 
 ## List names
 
@@ -62,7 +65,7 @@ List availability varies according to the list type and your Cloudflare plan and
 
 Notes:
 
-* The number of IP Lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your IP Lists, regardless of your plan.
+* The number of IP lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your IP lists, regardless of your plan.
 
 * The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
 
