@@ -58,4 +58,6 @@ Turnstile integrations for popular content managment systems:
 
 ## Other
 
+Other resources related to integrating Turnstile:
+
 - [TypeScript definitions](https://www.npmjs.com/package/turnstile-types)
