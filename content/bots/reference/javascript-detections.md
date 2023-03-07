@@ -22,9 +22,8 @@ For more details on how to set up bot protection, see [Get started](/bots/get-st
 ## Enforcing execution of JavaScript detections
 
 {{<render file="_javascript-detections-implementation.md">}}
-<br/>
 
-## Considerations
+## Limitations
 
 ### If you enabled Bot Management before June 2020
 
