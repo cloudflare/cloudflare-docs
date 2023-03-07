@@ -1328,6 +1328,10 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
   - Bind variable/secret (KEY=VALUE).
 - `--kv` {{<type>}}string[]{{</type>}}
   - KV namespace to bind.
+- `--r2` {{<type>}}string[]{{</type>}}
+  - [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind.
+- `--d1` {{<type>}}string[]{{</type>}}
+  - [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind.
 - `--do` {{<type>}}string[]{{</type>}}
   - Durable Object to bind (NAME=CLASS).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
