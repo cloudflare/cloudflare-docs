@@ -169,7 +169,7 @@ A few seconds before a token expires, the `expired-callback` is invoked.
 
 The `refresh-expired` or `data-refresh-expired` parameter defines the behaviour when the token of a Turnstile widget has expired. 
 
-By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token. Upon regenerating the token, the `callback`, if specified, is invoked.
+By default, the parameter is set to `auto`, which will automatically instruct Turnstile to obtain a new token. Upon regenerating the token, the `callback`, if specified, is invoked with the new token.
 
 The visitor can also be instructed to manually obtain a new token by setting the `refresh-expired` parameter to `manual`.
 
@@ -178,7 +178,7 @@ Additionally, specifying `never` will not result in a regeneration of a token, a
 
 ## Execution Modes
 
-By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some secenarios, an application may want to embed Turnstile, but defer obtaining the token until a certain point in time. This is where execution mode can be used to control when a token is being generated. 
+By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some secenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a token is being generated. 
 
 There are two options: 
 - The token is automatically optained upon call of the `render()` function. 
@@ -187,6 +187,6 @@ This detaches the appearance and rendering of a widget from its execution.
 
 ## Appearance Modes
 
-If a widget is visible, the appearance of the widget can be controled via the `appearance` parameter. 
+If a widget is visible, its appearance can be controlled via the `appearance` parameter. 
 
-By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible once it is in the process of obtaining a token and after. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
+By default, `appearance` is set to `always` for visible widget types. However, if `appearance` is set to `execute`, the widget will only become visible after the process of obtaining a token begins. This is helpful in situations where `execute()` is called after `render()`.  If `appearance` is set to `interaction-only`, the widget will become only visible in cases where an interaction is required.
