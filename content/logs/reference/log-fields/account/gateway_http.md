@@ -28,6 +28,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
 | DownloadedFileNames | List of files downloaded in the HTTP request. | array[string] |
 | Email | Email used to authenticate the client. | string |
+| FileInfo | Information about files detected within the HTTP request. | object |
 | HTTPHost | Content of the host header in the HTTP request. | string |
 | HTTPMethod | HTTP request method. | string |
 | HTTPVersion | Version name for the HTTP request. | string |
@@ -39,6 +40,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | SourceIP | Source ip of the request. | string |
 | SourcePort | Source port of the request. | string |
 | URL | HTTP request URL. | string |
+| UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (e.g. expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>passThrough</em>. | string |
 | UploadedFileNames | List of files uploaded in the HTTP request. | array[string] |
 | UserAgent | Contents of the user agent header in the HTTP request. | string |
 | UserID | User identity where the HTTP request originated from. | string |
