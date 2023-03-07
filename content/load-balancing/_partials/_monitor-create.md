@@ -14,11 +14,11 @@ You can create a monitor within the [load balancer workflow](/load-balancing/how
 3.  Click **Create**.
 
 4.  Add the following information:
-    {{<render file="../../load-balancing/_partials/_monitor-settings-basic.md">}}
+    {{<render file=_monitor-settings-basic.md productFolder="load-balancing">}}
 
 5.  For additional settings, select **Advanced health check settings**:
-    {{<render file="../../load-balancing/_partials/_monitor-settings-advanced.md">}}
+    {{<render file=_monitor-settings-advanced.md productFolder="load-balancing">}}
     
 6.  Select **Save**.
 
-{{<render file="../../load-balancing/_partials/_monitor-settings-consecutive.md">}}
+{{<render file=_monitor-settings-consecutive.md productFolder="load-balancing">}}

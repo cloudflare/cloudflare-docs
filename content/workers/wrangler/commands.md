@@ -93,7 +93,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 
 ## generate
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```sh
 $ wrangler generate [name] [template]
@@ -104,7 +104,7 @@ $ wrangler generate [name] [template]
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
+  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
 {{</definitions>}}
 
@@ -1328,6 +1328,10 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
   - Bind variable/secret (KEY=VALUE).
 - `--kv` {{<type>}}string[]{{</type>}}
   - KV namespace to bind.
+- `--r2` {{<type>}}string[]{{</type>}}
+  - [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind.
+- `--d1` {{<type>}}string[]{{</type>}}
+  - [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind.
 - `--do` {{<type>}}string[]{{</type>}}
   - Durable Object to bind (NAME=CLASS).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -1542,13 +1546,13 @@ $ wrangler deployments
 Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on: 2022-11-11T15:49:08.117218Z
 Author: example@cloudflare.com
-Trigger: Upload from Wrangler 🤠
+Source: Upload from Wrangler 🤠
 Rollback from: MOCK-DEPLOYMENT-ID-2222
 
 Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
 Created on: 2022-11-11T15:51:20.79936Z
 Author: example@cloudflare.com
-Trigger: Upload from Wrangler 🤠
+Source: Upload from Wrangler 🤠
 Rollback from: MOCK-DEPLOYMENT-ID-2222
 🟩 Active
 

@@ -65,6 +65,4 @@ Every time you commit new code to your Docusaurus site and push those changes to
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-## Related resources
-
-By completing this guide, you have successfully deployed your Docusaurus site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Docusaurus">}}

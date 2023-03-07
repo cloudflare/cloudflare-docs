@@ -24,29 +24,12 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-02-27</td>
       <td>2023-03-06</td>
+      <td>2023-03-13</td>
       <td>Block</td>
-      <td>100524_BETA</td>
-      <td>...9d787fc2</td>
-      <td>Java - Remote Code Execution - Beta</td>
-      <td>This detection will replace 100524 on Legacy WAF and ...f2cc4e84 on new WAF</td>
-    </tr>
-    <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
-      <td>Block</td>
-      <td>100572</td>
-      <td>...30d612c4</td>
-      <td>Java - Remote Code Execution</td>
-      <td>N/A</td>
-    <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
-      <td>Block</td>
-      <td>100570</td>
-      <td>...9497744a</td>
-      <td>FortiNAC - Remote Code Execution - CVE:CVE-2022-39952</td>
+      <td>100575</td>
+      <td>...ad679b95</td>
+      <td>ZK Framework - Information Disclosure - CVE:CVE-2022-36537</td>
       <td>N/A</td>
     </tr>
   </tbody>

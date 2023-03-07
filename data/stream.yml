@@ -10,7 +10,7 @@ meta:
   title: Cloudflare Stream docs
   description: Store, encode, deliver, and play videos on your sites and applications.
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/developers/stream/52

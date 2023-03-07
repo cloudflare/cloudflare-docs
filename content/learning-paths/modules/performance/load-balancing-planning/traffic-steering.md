@@ -5,7 +5,7 @@ weight: 5
 layout: learning-unit
 ---
 
-{{<render file="../../load-balancing/_partials/_traffic-steering-definition.md">}}
+{{<render file=_traffic-steering-definition.md productFolder="load-balancing">}}
 <br/>
 
 {{<directory-listing showDescriptions="true" folderDirectory="/load-balancing/understand-basics/traffic-steering/steering-policies/" >}}

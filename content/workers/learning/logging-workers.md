@@ -127,6 +127,12 @@ Note that:
 - Logs from any [Durable Objects](/workers/learning/using-durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
+## Push logs to storage
+
+[Workers Logpush](/workers/platform/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+
+Refer to the [Workers Logpush documentation](/workers/platform/logpush/) to learn how to create and configure Logpush jobs.
+
 ---
 
 ## Identifying and handling errors and exceptions

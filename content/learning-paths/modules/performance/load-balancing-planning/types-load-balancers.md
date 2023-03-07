@@ -15,29 +15,29 @@ With Cloudflare, you can choose between three types of load balancers:
 
 ## Layer 7 load balancing
 
-{{<render file="../../load-balancing/_partials/_layer-7-load-balancing-definition.md">}}
+{{<render file=_layer-7-load-balancing-definition.md productFolder="load-balancing">}}
 
 ### Benefits
 
-{{<render file="../../load-balancing/_partials/_layer-7-load-balancing-benefits.md">}}
+{{<render file=_layer-7-load-balancing-benefits.md productFolder="load-balancing">}}
 
 ---
 
 ## DNS-only load balancing
 
-{{<render file="../../load-balancing/_partials/_dns-load-balancing-definition.md">}}
+{{<render file=_dns-load-balancing-definition.md productFolder="load-balancing">}}
 
 ### Benefits
 
-{{<render file="../../load-balancing/_partials/_dns-load-balancing-benefits.md">}}
+{{<render file=_dns-load-balancing-benefits.md productFolder="load-balancing">}}
 <br/>
 
 ### Limitations
 
-{{<render file="../../load-balancing/_partials/_dns-load-balancing-limitations.md">}}
+{{<render file=_dns-load-balancing-limitations.md productFolder="load-balancing">}}
 
 ---
 
 ## Layer 4 load balancing
 
-{{<render file="../../load-balancing/_partials/_layer-4-load-balancing-definition.md">}}
+{{<render file=_layer-4-load-balancing-definition.md productFolder="load-balancing">}}
