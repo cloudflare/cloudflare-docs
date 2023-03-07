@@ -1,14 +1,14 @@
 ---
-title: Use IP Lists
+title: Use IP lists
 weight: 3
 pcx_content_type: how-to
 meta:
-  title: Define an IP List
+  title: Define an IP list
 ---
 
-# Define an IP List
+# Define an IP list
 
-[IP Lists](/fundamentals/global-configurations/lists/ip-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
+[IP lists](/fundamentals/global-configurations/lists/custom-lists/) defined at the account level can be used to match against `ip.src` and `ip.dst` fields. Currently only IPv4 addresses in these lists are used as IPv6 is currently not supported in Magic Firewall.
 
 To use this feature first [create a new IP list](https://developers.cloudflare.com/api/operations/lists-create-a-list).
 

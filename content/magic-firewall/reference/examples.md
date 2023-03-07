@@ -60,7 +60,7 @@ The example below blocks all packets with a source or destination IP address com
     }'
 ```
 
-## Use an IP List
+## Use an IP list
 
 Magic Firewall supports [using lists in expressions](/fundamentals/global-configurations/lists/use-in-expressions/) for the `ip.src` and `ip.dst` fields. The supported lists are:
 

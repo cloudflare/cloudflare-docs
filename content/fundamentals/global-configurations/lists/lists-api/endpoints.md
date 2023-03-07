@@ -141,7 +141,7 @@ When you make requests to a list while a bulk operation on that list is in progr
       <td>
         <p>Fetches all items in a list.</p>
         <p>Items are sorted in ascending order.</p>
-        <p>In the case of IP Lists, CIDRs are sorted by IP address, then by the subnet mask.</p>
+        <p>In the case of IP lists, CIDRs are sorted by IP address, then by the subnet mask.</p>
       </td>
     </tr>
     <tr>

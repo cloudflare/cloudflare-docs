@@ -14,7 +14,7 @@ To use a list in the [Expression Builder](/firewall/cf-dashboard/edit-expression
 
 1. Select _is in list_ or _is not in list_ from the **Operator** drop-down list.
 
-    ![Selecting an IP List from the Value drop-down list when configuring the expression of a firewall rule](/fundamentals/static/images/lists/cf-open-proxies-list.png)
+    ![Selecting an IP list from the Value drop-down list when configuring the expression of a firewall rule](/fundamentals/static/images/lists/cf-open-proxies-list.png)
 
 1. Select a list from the **Value** drop-down list. Depending on your plan, you may be able to select a [Managed IP List](/fundamentals/global-configurations/lists/managed-lists/#managed-ip-lists).
 
@@ -26,13 +26,13 @@ To use a list in the [Expression Editor](/firewall/cf-dashboard/edit-expressions
 
 Examples:
 
-* Expression matching requests from IP addresses that are in an IP List named `office_network`:
+* Expression matching requests from IP addresses that are in an IP list named `office_network`:
 
     ```txt
     ip.src in $office_network
     ```
 
-* Expression matching requests with a source IP address different from IP addresses in the `office_network` IP List:
+* Expression matching requests with a source IP address different from IP addresses in the `office_network` IP list:
 
     ```txt
     not ip.src in $office_network

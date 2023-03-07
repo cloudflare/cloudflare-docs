@@ -94,7 +94,7 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 [Lists](/fundamentals/global-configurations/lists/) allow you to create a group of items and refer to them collectively, by name, in your expressions. There are different types of lists that support different kinds of list items.
 
-To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an [IP List](/fundamentals/global-configurations/lists/ip-lists/) named `office_network`:
+To refer to a list in a rule expression, use `$<list_name>` and specify the `in` [operator](/ruleset-engine/rules-language/operators/). This example expression filters requests from IP addresses that are in an [IP list](/fundamentals/global-configurations/lists/custom-lists/) named `office_network`:
 
 ```sql
 (ip.src in $office_network)
