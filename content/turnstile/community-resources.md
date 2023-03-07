@@ -55,3 +55,7 @@ Turnstile integrations for popular content managment systems:
 - [Wordpress](https://wordpress.org/plugins/simple-cloudflare-turnstile/)
 - [Statamic](https://statamic.com/addons/aryeh-raber/captcha)
 - [SilverStripe](https://github.com/webbuilders-group/silverstripe-turnstile)
+
+## Other
+
+- [TypeScript definitions](https://www.npmjs.com/package/turnstile-types)
