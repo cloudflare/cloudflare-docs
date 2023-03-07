@@ -16,6 +16,12 @@ Cloudflare uses tunnels to deliver packets from our global network to your data 
 
 $3
 
+{{<Aside type="warning" header="Important">}}
+
+If you are using IPsec inside GRE, set the MSS clamp at the IPsec tunnel interface and subtract 24 bytes from your current MSS value, which may be 1360 bytes or lower. This is because the physical interface will see IPsec-encrypted packets, not TCP packets, and MSS clamping will not apply to those.
+
+{{</Aside>}}
+
 | Standard Internet Routable MTU                         | 1500 bytes  |
 | ------------------------------------------------------ | ----------- |
 | -	&nbsp;&nbsp;&nbsp; Original IP header                | 20 bytes    |
