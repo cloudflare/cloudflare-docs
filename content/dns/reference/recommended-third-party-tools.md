@@ -2,11 +2,13 @@
 pcx_content_type: reference
 title: Recommended third-party tools
 weight: 2
+meta:
+    description: List of recommended thrid-party tools for DNS testing and troubleshooting.
 ---
 
 # Recommended third-party tools
 
-Recommended third-party tools for DNS testing and troubleshooting.
+You can use the third-party tools listed below to test and troubleshoot DNS settings.
 
 - [DNSViz](https://dnsviz.net): A web-based tool for visualizing the status of a DNS zone to understand and troubleshoot the deployment of DNS Security Extensions (DNSSEC).
 
