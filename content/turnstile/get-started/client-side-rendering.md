@@ -139,7 +139,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `cData` | `data-cdata` | A customer payload that can be used to attach customer data to the challenge throughout its issuance and which is returned upon validation. This can only contain up to 255 alphanumeric characters including `_` and `-`.  |
 | `callback` | `data-callback` | A JavaScript callback that is invoked upon success of the challenge. The callback is passed a token that can be validated. |
 | `error-callback` | `data-error-callback` | A JavaScript callback that is invoked when there is a network error. |
-| `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. See [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
+| `execution` | `data-execution` | Execution controls when to obtain the token of the widget and can be on `render` (default) or on `execute`. Refer to [Execution Modes](/turnstile/get-started/client-side-rendering/#execution-modes) for more information. |
 | `expired-callback` | `data-expired-callback` | A JavaScript callback that is invoked when the token expires and does not reset the widget. |
 | `theme` | `data-theme` | The widget theme. Can take the following values: `light`, `dark`, `auto`. <br><br>The default is `auto`, which respects the user preference. This can be forced to light or dark by setting the theme accordingly. |
 | `language` | `data-language` | Language to display, must be either: `auto` (default) to use the language that the visitor has chosen, or an ISO 639-1 two-letter language code (e.g. `en`) or language and country code (e.g. `en-US`). The following languages are currently supported: `ar-eg`,`de`,`en`,`es`,`fa`,`fr`,`id`,`it`,`ja`,`ko`,`nl`,`pl`,`pt-br`,`ru`,`tr`,`zh-cn` and `zh-tw`.|
@@ -151,7 +151,7 @@ Once a widget is no longer needed, it can be removed from the page using `turnst
 | `retry` | `data-retry` | Controls whether the widget should automatically retry to obtain a token if it did not succeed. The default is `auto`, which will retry automatically. This can be set to `never` to disable retry upon failure. |
 | `retry-interval` | `data-retry-interval` | When `retry` is set to `auto`, `retry-interval` controls the time between retry attempts in milliseconds. Value must be a positive integer less than `900000`, defaults to `8000`. |
 | `refresh-expired` | `data-refresh-expired` | Automatically refreshes the token when it expires. Can take `auto`, `manual` or `never`, defaults to `auto`. |
-| `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. See [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
+| `appearance` | `data-appearance` | Appearance controls when the widget is visible. It can be `always` (default), `execute`, or `interaction-only`. Refer to [Appearance Modes](/turnstile/get-started/client-side-rendering/#appearance-modes) for more information. |
 
 ## Widget size
 
@@ -178,10 +178,10 @@ Additionally, specifying `never` will not result in a regeneration of a token, a
 
 ## Execution Modes
 
-By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some secenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a challenge runs and a token is being generated. 
+By default, Turnstile tokens are obtained for a visitor upon the rendering of a widget (even in invisible mode). However, in some scenarios, an application may want to embed Turnstile, but defer running the challenge until a certain point in time. This is where execution mode can be used to control when a challenge runs and a token is being generated.
 
 There are two options: 
-- The challenge runs automatically optained upon call of the `render()` function. 
+- The challenge runs automatically after calling the `render()` function. 
 - The challenge runs after the `render()` function has been called, by invoking the `turnstile.execute(container: string | HTMLElement, jsParams?: RenderParameters)` function separately.
 This detaches the appearance and rendering of a widget from its execution.
 
