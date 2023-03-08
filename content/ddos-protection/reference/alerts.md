@@ -90,7 +90,7 @@ Advanced DDoS attack alerts support additional configuration, allowing you to fi
     * The minimum megabits-per-second rate that will trigger the alert.
     * The protocols for which you wish to receive notifications (all protocols by default).
 
-Advanced DDoS attack alerts are also triggered for rules configured with the _Log_ action, except for [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) rules.
+You will also receive alerts for rules with a _Log_ action, containing information on what triggered the alert.
 
 ## Availability
 
