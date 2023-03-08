@@ -9,11 +9,11 @@ meta:
 
 # Policies
 
-Policies define the resources allowed on your applications. Policies can log violations or they can enforce an allowlist of resources, effectively blocking resources not including in the policies. Create policies to define a positive security model.
-
 {{<Aside type="note">}}
 Only available to Enterprise customers with a paid add-on.
 {{</Aside>}}
+
+Policies define the resources allowed on your applications through Content Security Policy (CSP) directives. Policies can log violations or they can enforce an allowlist of resources, effectively blocking resources not included in the policies.
 
 Policies can be one of the following:
 
