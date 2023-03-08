@@ -128,4 +128,5 @@
 
 .CoveoTab {
   margin-right: 2em;
+  text-transform: none !important;
 }
