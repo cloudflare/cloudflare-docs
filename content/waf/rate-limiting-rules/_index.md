@@ -56,8 +56,8 @@ Available fields<br/>in rule expression | Path, [Verified Bot](/ruleset-engine/r
 Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>2</sup>, JSON body field<sup>3</sup>, Body<sup>3</sup>
 Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
 Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
-Maximum sampling period | 10 seconds | 60 seconds | 10 minutes | 1 hour | 1 hour
-Maximum timeout period | 10 seconds | 1 hour | 1 day | 1 day | 1 day
+Maximum counting period | 10 seconds | 1 minute | 10 minutes | 10 minutes | 1 hour
+Maximum timeout period | 10 seconds | 1 hour | 24 hours | 24 hours | 24 hours
 Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{</table-wrap>}}
