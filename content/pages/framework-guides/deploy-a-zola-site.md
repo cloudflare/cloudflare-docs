@@ -72,15 +72,7 @@ Upon running `zola init`, you will prompted with three questions:
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ## Deploying with Cloudflare Pages
 

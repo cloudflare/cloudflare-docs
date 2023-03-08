@@ -32,19 +32,15 @@ To deploy, Cloudflare Pages will need a way to build the Blazor project. In the 
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
+## Create a `.gitignore` file
 
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+Creating a `.gitignore` file ensures that only what is needed gets pushed onto your GitHub repository. Create a `.gitignore` file by running the following command:
 
 ```sh
 $ dotnet new gitignore
-$ git init
-$ git add -A
-$ git commit -m "Initial commit"
-$ git remote add origin https://github.com/yourgithubusername/githubrepo.git
-$ git branch -M main
-$ git push -u origin main
 ```
+
+{{<render file="_create-github-repository.md">}}
 
 ## Deploying with Cloudflare Pages
 
