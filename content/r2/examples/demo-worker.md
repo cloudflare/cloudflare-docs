@@ -18,7 +18,7 @@ function parseRange(encoded: string | null): undefined | { offset: number, end: 
     return
   }
 
-  const parts = encoded.split("bytes=")[1]?.split("-") ?? []
+  const parts = encoded.split("bytes=")[1]?.split("-").filter(Boolean) ?? []
   if (parts.length !== 2) {
     throw new Error('Not supported to skip specifying the beginning/ending byte at this time')
   }
