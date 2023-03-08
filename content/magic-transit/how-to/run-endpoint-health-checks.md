@@ -15,7 +15,7 @@ When choosing which endpoint IP addresses to monitor with health checks, use the
 
 Cloudflare pings health check IPs from within the [published Cloudflare IP range](https://www.cloudflare.com/ips/), which is also available via the [Cloudflare API](https://developers.cloudflare.com/api/operations/cloudflare-i-ps-cloudflare-ip-details).
 
-Refer to the table below for an example endpoint health check configuration.
+Refer to the table below for an example of an endpoint health check configuration.
 
 | Prefix            | Endpoint IP address |
 | ----------------- | ------------------- |
