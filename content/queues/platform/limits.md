@@ -14,18 +14,18 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 
 {{<table-wrap>}}
 
-| Feature                                               | Limit                                   |
-| ----------------------------------------------------- | --------------------------------------- |
-| Queues                                                | 100 per account <sup>1</sup>            |
-| Maximum message size                                  | 128 KB <sup>2</sup>                     |
-| Maximum message retries                               | 100                                     |
-| Maximum batch size                                    | 100 messages                            |
-| Maximum batch wait time                               | 30 seconds                              |
-| Maximum per-queue message throughput <sup>3</sup>     | 400 messages per second <sup>4</sup>    |
-| Maximum message retention period <sup>5</sup>         | 4 days (96 hours)                       | 
-| Maximum per-queue backlog size <sup>6</sup>           | 25GB                                    | 
-| Maximum concurrent consumer invocations               | 10                                      | 
-| Maximum consumer invocation duration                  | 15 minutes (Refer to [Worker limits](/workers/platform/limits/#cpu-runtime).)  | 
+| Feature                                            | Limit                                   |
+| -------------------------------------------------- | --------------------------------------- |
+| Queues                                             | 100 per account <sup>1</sup>            |
+| Maximum message size                               | 128 KB <sup>2</sup>                     |
+| Maximum message retries                            | 100                                     |
+| Maximum batch size                                 | 100 messages                            |
+| Maximum batch wait time                            | 30 seconds                              |
+| Maximum per-queue message throughput <sup>3</sup>  | 400 messages per second <sup>4</sup>    |
+| Maximum message retention period <sup>5</sup>      | 4 days (96 hours)                       | 
+| Maximum per-queue backlog size <sup>6</sup>        | 25GB                                    | 
+| Maximum concurrent consumer invocations            | 10                                      | 
+| Maximum consumer invocation duration               | 15 minutes (Refer to [Worker limits](/workers/platform/limits/#cpu-runtime).)  | 
 
 {{</table-wrap>}}
 

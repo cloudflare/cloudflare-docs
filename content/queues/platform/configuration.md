@@ -81,12 +81,8 @@ Refer to [Limits](/queues/platform/limits) to review the maximum values for each
   - If a `dead_letter_queue` is not defined, messages that repeatedly fail processing will eventually be discarded.
   - If there is no Queue with the specified name, it will be created automatically.
 
-- {{<code>}}concurrency_enabled{{<param-type>}}boolean{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
-
-  - Whether the consumer should [scale concurrently](/queues/learning/consumer-concurrency/) as the number of messages in the queue (backlog) grows.
-
 - {{<code>}}max_concurrency{{<param-type>}}number{{</param-type>}}{{</code>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
+  - The maximum number of concurrent consumers allowed to run at once. Leaving this unset, or setting it to `null`, will mean that the number of invocations will scale to the [currently supported maximum](/queues/platform/limits/).
 
 {{</definitions>}}
