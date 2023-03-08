@@ -119,8 +119,11 @@ To use `directory` mode, modify your `astro.config.mjs` file to add `mode: "dire
 ```js
 ---
 filename: astro.config.mjs
-highlight: [2]
+highlight: [6]
 ---
+import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
   output: 'server',
   adapter: cloudflare({ mode: "directory" }),
