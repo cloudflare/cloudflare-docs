@@ -228,15 +228,15 @@ If you need to submit a friendly bot to be verified, use [our online form](https
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
-No. The Managed Challenge, Legacy CAPTCHA and JS Challenge actions don't support requests that don't trigger a page refresh.
+No. The Managed Challenge, Legacy CAPTCHA and JS Challenge actions only support requests that trigger a page refresh.
 
-Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), as the visitor doesn't trigger a new page load.
+Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), since visitors do not trigger a new page load.
 
 When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a 403 status.
 
 Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](https://developers.cloudflare.com/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
 
-Alternatively, for an additional layer of security against Credential Stuffing, consider implementing [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site, such as login and checkout forms.
+For an additional layer of security against Credential Stuffing, you could use [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site (such as login or checkout forms).
 
 ### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
