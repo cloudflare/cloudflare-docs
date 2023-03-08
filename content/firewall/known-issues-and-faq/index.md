@@ -236,7 +236,7 @@ When an XHR or AJAX request triggers a Challenge action, the HTTP response will 
 
 Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](https://developers.cloudflare.com/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
 
-Alternatively, for an additional layer of security against Credential Stuffing, consider implementing [Cloudflare Turnstile](https://blog.cloudflare.com/turnstile-private-captcha-alternati`ve/) on the most vulnerable parts of your site, such as login and checkout forms.
+Alternatively, for an additional layer of security against Credential Stuffing, consider implementing [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site, such as login and checkout forms.
 
 ### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
