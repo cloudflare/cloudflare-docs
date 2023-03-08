@@ -683,7 +683,7 @@ Exactly one of `VALUE` or `--path` is required.
 - `--expiration` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 - `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes
+  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
 
 {{</definitions>}}
 
