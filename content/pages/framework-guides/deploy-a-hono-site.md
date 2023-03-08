@@ -112,18 +112,7 @@ You should be able to review your generated web application at `http://localhost
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git init
-$ git remote add origin https://github.com/<username>/my-hono-app
-$ git add .
-$ git commit -m "Initial commit"
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 

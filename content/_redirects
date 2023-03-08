@@ -198,6 +198,9 @@
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
 
+# dns
+/dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
 /email-routing/email-routing-options/ /email-routing/setup/ 301

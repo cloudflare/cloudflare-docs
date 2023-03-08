@@ -103,15 +103,7 @@ module.exports = nextConfig
 
 Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.
 
-### Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin <YOUR_GITHUB_REPO_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ### Deploy with Cloudflare Pages
 
@@ -157,15 +149,7 @@ $ yarn create next-app --example with-static-export my-app
 
 After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
 
-### Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin <YOUR_GITHUB_REPO_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ### Deploy with Cloudflare Pages
 
