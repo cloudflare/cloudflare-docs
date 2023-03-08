@@ -22,6 +22,8 @@ Policies can be one of the following:
 
 With allow policies you can create a positive security model, also known as positive blocking. According to this model, you define what is allowed and reject everything else. Such an approach helps you reduce the attack surface for unwanted third-party scripts in your application.
 
+For details on the CSP directives Page Shield creates for each type of policy, refer to [How Page Shield works](/page-shield/how-it-works/#positive-security-model-using-policies).
+
 ## Next steps
 
 Refer to the following pages for instructions on creating a policy in Page Shield:

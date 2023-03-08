@@ -22,7 +22,7 @@ To enable Page Shield:
 
 When you enable Page Shield, it may take a while to get the list of detected scripts in your domain.
 
-Review the scripts displayed in the [**Monitors** dashboard](/page-shield/use-dashboard/monitor-scripts/), checking them for signs of malicious activity.
+Review the scripts displayed in the [**Monitors** dashboard](/page-shield/detection/monitor-connections-scripts/), checking them for signs of malicious activity.
 
 Depending on your plan, you may be able to also review the connections made by scripts in your domain's pages and check them for malicious activity.
 

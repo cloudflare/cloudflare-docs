@@ -17,7 +17,7 @@ The **Monitors** dashboard will show the list of [active](/page-shield/reference
 
 Since the script and connection lists are based on sampling, there may be a small delay between deploying a script and having its data displayed in Page Shield's dashboards.
 
-Enterprise customers with a paid add-on have access to additional classification mechanisms based on threat feeds to determine if a script, or a connection made by a script, is malicious. For more information, refer to [Detecting malicious scripts and connections](#).
+Enterprise customers with a paid add-on have access to additional classification mechanisms based on threat feeds to determine if a script, or a connection made by a script, is malicious. For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
 ## Positive security model using policies
 
