@@ -21,7 +21,7 @@ ___
 
 ## Installing the prebuilt Linux image
 
-The prebuilt Cloudflare Linux image resides on the [Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_azure?tab=Overview) or can be opened in the [Azure Portal](https://portal.azure.com/#create/cloudflare.cloudflare_azurecloudflare_azure).
+The prebuilt Cloudflare Linux image resides on the [Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_tunnel_vm?tab=Overview) or can be opened in the [Azure Portal](https://portal.azure.com/#create/cloudflare.cloudflare_azurecloudflare_azure).
 
 The Cloudflare virtual machine (VM) is customizable. However, we recommend the following:
 

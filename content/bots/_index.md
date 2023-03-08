@@ -36,6 +36,20 @@ Use Bot Analytics to dynamically examine bot traffic.
 Access several new variables within the Firewall expression builder.
 {{</feature>}}
 
+## Related products
+
+{{<related header="API Shield" href="/api-shield/" product="api-shield">}}
+Identify and address API vulnerabilities using API Shield.
+{{</related>}}
+
+{{<related header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">}}
+Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflare's Autonomous Edge.
+{{</related>}}
+
+{{<related header="WAF" href="/waf/" product="waf">}}
+Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+{{</related>}}
+
 ## More resources
  
 {{<resource-group>}}

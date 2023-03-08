@@ -5329,7 +5329,12 @@ pre {
   max-width: 3em;
 }
 
-[theme="dark"] .littlefoot-footnote__content {
+.littlefoot__content p {
+  font-size: 1.05em;
+  font-weight: 120;
+}
+
+[theme="dark"] .littlefoot__content {
   background: #242628;
 }
 

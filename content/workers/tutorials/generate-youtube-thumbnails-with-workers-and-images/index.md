@@ -290,7 +290,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-The final lib.rs file should look as follows (you can also find the full code as an example repository at [github.com/cloudflare/templates/worker-to-text](https://github.com/cloudflare/templates/tree/main/examples/worker-to-text)).
+The final `lib.rs` file should look as follows. Find the full code as an example repository on [GitHub](https://github.com/cloudflare/workers-sdk/tree/main/templates/examples/worker-to-text).
 
 ```rs
 ---

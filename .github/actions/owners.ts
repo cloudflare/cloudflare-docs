@@ -71,12 +71,12 @@ export const OWNERS: Record<string, string[]> = {
 };
 
 export const REVIEWERS: Record<string, string[]> = {
-  analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov", "jimhawkridge", "46bit"],
+  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit"], // todo: re-add "soheiokamoto", "tlozoot"
   d1: ["nevikashah", "WalshyDev"],
-  "data-localization": ["soheiokamoto", "tlozoot"],
+  "data-localization": [], // todo: re-add "soheiokamoto", "tlozoot"
   radar: ["meddulla", "G4brym"],
-  logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  logs: ["jherre", "bharatnc", "victor-perov"], // todo: re-add "soheiokamoto", "tlozoot"
   pages: ["WalshyDev"],
-  turnstile: ["migueldemoura", "punkeel", "worenga"],
+  turnstile: ["migueldemoura", "punkeel"], // todo: re-add "worenga"
   "waiting-room": ["aolache"],
 };

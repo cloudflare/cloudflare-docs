@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Enable per-prefix thresholds
+weight: 7
 ---
 
 # Enable per-prefix thresholds with prefix auto advertisement
