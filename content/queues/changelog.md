@@ -7,6 +7,14 @@ rss: file
 
 # Changelog
 
+## 2023-03-15
+
+### Consumer concurrency (new feature)
+
+Queue consumers will now automatically scale up as a queues' backlog grows in order to keep overall message processing latency down. Consumers will scale back down as the backlog shrinks, and/or if a consumer starts to generate a higher rate of errors. To learn more about how consumers scale, visit the [consumer concurrency](/queues/learning/consumer-concurrency/) documentation.
+
+**Note**: Concurrency will be enabled on all existing queues by 2023-03-28. To opt-out, or to configure a fixed maximum concurrency, set `concurrency_enabled: false` or set `max_concurrency: 1` in your `wrangler.toml`.
+
 ## 2023-03-02
 
 ### Explicit acknowledgement (new feature)
