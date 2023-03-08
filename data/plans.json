@@ -1394,7 +1394,7 @@
           "ent_plus": "Yes"
         },
         "k_policies": {
-          "title": "Number of policies<br/>(positive security model)",
+          "title": "Number of policies<br/>(positive blocking)",
           "summary": "Enterprise with add-on",
           "free": 0,
           "pro": 0,
