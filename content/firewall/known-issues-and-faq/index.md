@@ -228,16 +228,15 @@ If you need to submit a friendly bot to be verified, use [our online form](https
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
-No. The _Legacy CAPTCHA_ and _JS Challenge_ actions only support HTML requests.
+No. The Managed Challenge, Legacy CAPTCHA and JS Challenge actions don't support requests that don't trigger a page refresh.
 
-Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX.
+Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), as the visitor doesn't trigger a new page load.
 
-When an XHR or AJAX request triggers one of the _Legacy CAPTCHA_ actions, the resulting request will have the following status code:
+When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a 403 status.
 
-- HTTP status code 403 for _Legacy CAPTCHA_
-- HTTP status code 503 for _JS Challenge_
+Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](https://developers.cloudflare.com/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
 
-Your application can use these status codes to handle unexpected challenges.
+Alternatively, for an additional layer of security against Credential Stuffing, consider implementing [Cloudflare Turnstile](https://blog.cloudflare.com/turnstile-private-captcha-alternati`ve/) on the most vulnerable parts of your site, such as login and checkout forms.
 
 ### Does the 'challengeFailed' action accurately represent challenges that users did not pass?
 
@@ -253,7 +252,7 @@ There are multiple reasons for this:
 
 - Users give up on a challenge.
 - Users try to solve a challenge but cannot provide an answer.
-- Users keep refreshing the challenge but never submit an answer.
+- Users keep refreshing the challenge, but never submit an answer.
 - Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 - Cloudflare receives a malformed challenge answer.
 
