@@ -8,7 +8,7 @@ weight: 2
 
 {{<Aside type="note">}}
 
-This feature is only available if your account has at least one paid feature. For more information, see our [plans page] (https://www.cloudflare.com/plans/).
+This feature is only available if your account has at least one paid feature. For more information, see our [plans page](https://www.cloudflare.com/plans/).
 
 {{</Aside>}}
 
