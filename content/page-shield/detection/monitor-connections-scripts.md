@@ -1,5 +1,5 @@
 ---
-title: Active connections and scripts
+title: Monitor active resources
 pcx_content_type: how-to
 weight: 2
 meta:
@@ -10,7 +10,7 @@ meta:
 
 Once you [activate Page Shield](/page-shield/get-started/), the **Monitors** dashboard will show which [active](/page-shield/reference/script-statuses/) scripts and connections are running on your domain.
 
-If you see unexpected scripts or connections on the dashboard, check them for signs of malicious activity. Enterprise customers with a paid add-on will have their [connections and scripts classified as potentially malicious](#) based on threat feeds.
+If you see unexpected scripts or connections on the dashboard, check them for signs of malicious activity. Enterprise customers with a paid add-on will have their [connections and scripts classified as potentially malicious](/page-shield/how-it-works/malicious-script-detection/) based on threat feeds.
 
 {{<Aside type="note">}}
 If you recently activated Page Shield, you may see a delay in reporting.
