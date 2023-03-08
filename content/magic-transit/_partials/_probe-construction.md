@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;onboardingUrl;;routingURL
+inputParameters: productName;;onboardingUrl
 ---
 
 # Probe construction
@@ -67,7 +67,7 @@ When $1 identifies a route that is not healthy, it applies these penalties:
 - Degraded: Add `500,000` to priority.
 - Down: Add `1,000,000` to priority.
 
-The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration]($3).
+The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration]($2).
 
 Applying a penalty instead of removing the route altogether preserves redundancy and maintains options for customers with only one tunnel. Penalties also support the case when multiple tunnels are unhealthy.
 
