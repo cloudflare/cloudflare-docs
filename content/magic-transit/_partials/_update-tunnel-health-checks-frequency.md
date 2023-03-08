@@ -12,7 +12,7 @@ By default, Cloudflare servers send [health checks]($1) to each GRE, CNI, or IPs
 
 Available options are `low`, `mid`, and `high`.
 
-Here is an example of how you would adjust health check frequency:
+Here is an example of how you would adjust health check frequency to `low`:
 
 ```bash
 curl --request PUT \
