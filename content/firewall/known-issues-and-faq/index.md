@@ -232,9 +232,9 @@ No. The Managed Challenge, Legacy CAPTCHA and JS Challenge actions only sup
 
 Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), since visitors do not trigger a new page load.
 
-When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a 403 status.
+When an XHR or AJAX request triggers a Challenge action, the HTTP response will have a `403` status code.
 
-Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](https://developers.cloudflare.com/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
+Your application can use this status codes to handle unexpected challenges, optionally using a [Custom Error Response](/rules/custom-error-responses/) for XHR and AJAX requests instead of a Challenge action. The application could capture the custom error response and raise a challenge by, for example, triggering a page refresh.
 
 For an additional layer of security against Credential Stuffing, you could use [Cloudflare Turnstile](/turnstile/) on the most vulnerable parts of your site (such as login or checkout forms).
 
