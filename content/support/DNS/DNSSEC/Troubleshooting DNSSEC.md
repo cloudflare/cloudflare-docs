@@ -32,6 +32,11 @@ The DNS response includes two records:
 -   _DNSKEY record_ **256** is the public key called Zone-signing-key, used to verify the DNS record signatures for _A, MX, CNAME, SRV_, etc.
 -   _DNSKEY record_ **257** is called the Key-Signing Key, used to verify the signatures of the _DNSKEY, CDS, and CDNSKEY records._
 
+{{<Aside type="note">}}
+Details on how to verify the signatures with the public key are beyond
+the scope of this article.
+{{</Aside>}}
+
 When not using the _+short_ option with _dig_, a DNS response is DNSSEC authenticated if the **ad** flag appears in the response header:
 
 
@@ -40,6 +45,14 @@ When not using the _+short_ option with _dig_, a DNS response is DNSSEC authe
 ___
 
 ## Troubleshooting DNSSEC Validation using DNSViz
+
+{{<Aside type="info">}}
+DNSViz is a public, free online tool to visualize and help discover
+issues with your DNSSEC configuration. It is **not** associated
+Cloudflare. Only [contact Cloudflare
+Support](https://support.cloudflare.com/hc/articles/200172476) if you
+have issues with your DNSSEC configuration.
+{{</Aside>}}
 
 To visualize and discover potential issues with DNSSEC:
 

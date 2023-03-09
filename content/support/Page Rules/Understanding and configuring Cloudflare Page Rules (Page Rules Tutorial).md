@@ -12,6 +12,14 @@ title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
 
 You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in the **Rules** app, in the **Page Rules** tab.
 
+{{<Aside type="warning">}}
+Page Rules require a
+\"[proxied](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)\"
+DNS record for your page rule to work. Page Rules won\'t apply to
+hostnames that don\'t exist in DNS or aren\'t being directed to
+Cloudflare.
+{{</Aside>}}
+
 The default number of allowed page rules depends on the domain plan as shown below.
 
 {{<feature-table id="rules.page_rules">}}
@@ -26,6 +34,11 @@ It is important to understand two basic Page Rules behaviors:
 
 -   Only the highest priority matching page rule takes effect on a request.
 -   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
+
+{{<Aside type="tip">}}
+Cloudflare recommends ordering your rules from most specific to least
+specific.
+{{</Aside>}}
 
 A page rule matches a URL pattern based on the following format (comprised of five segments): <scheme>://<hostname><:port>/<path>?<query\_string>
 
@@ -54,6 +67,19 @@ The steps to create a page rule are:
 8.  To save, click one of the following options:
     -   **Save as Draft** to save the rule and leave it disabled.
     -   **Save and Deploy** to save the rule and enable it immediately.
+
+{{<Aside type="note">}}
+**Note:** We do not support non-ASCII characters (e.g. punycode/unicode
+domain) in Page Rules. Instead, you could URL-encode the string using
+[Punycode converter](https://www.punycoder.com/ "Punycode converter"),
+for example, and this will work.
+{{</Aside>}}
+
+{{<Aside type="tip">}}
+Consult [Recommended Page Rules to
+Consider](https://support.cloudflare.com/hc/en-us/articles/224509547 "Recommended Page Rules to Consider")
+for ideas about the types of page rules you can create.
+{{</Aside>}}
 
 ___
 
@@ -120,6 +146,12 @@ which ends up being forwarded to:
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://example.com/images/cloud/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 To use a literal _$_ character in the forwarding URL, escape it by adding a backslash (\\) in front: _\\$_.
+
+{{<Aside type="warning">}}
+Avoid creating a redirect where the domain points to itself as the
+destination. This can cause an infinite redirect error and your site
+cannot be served to visitors.
+{{</Aside>}}
 
 ___
 

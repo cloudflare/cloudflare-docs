@@ -23,6 +23,12 @@ Review the following Cloudflare Workers documentation to configure Token Authent
 -   [Configure a Worker](https://developers.cloudflare.com/workers/quickstart/#configure)
 -   Use the [Auth with Headers](https://developers.cloudflare.com/workers/templates/snippets/auth_with_headers/#body-inner) template
 
+{{<Aside type="warning">}}
+The Auth with Headers template code contains a generic header key and
+value of \'X-Custom-PS and \'mypresharedkey\'. To best protect your
+resources, change the header key and value in the Workers editor prior
+to saving your code.
+{{</Aside>}}
 ___
 
 ## Option 2: Configure using firewall rules

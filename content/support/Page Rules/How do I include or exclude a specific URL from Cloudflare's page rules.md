@@ -40,4 +40,10 @@ But would not match:   
 
 `https://www.example.com/blog  [missing the trailing slash]` `https://www.example.com/sam/index.php  [sam doesn't contain a "b"]`
 
+{{<Aside type="note">}}
+Page Rules are applied in the order that they are listed. If you want to
+change the position of a Page Rule, you can drag it up or down using the
+icon on the left hand side.
+{{</Aside>}}
+
 For a full Page Rule tutorial, [visit this article.](https://support.cloudflare.com/hc/articles/218411427)

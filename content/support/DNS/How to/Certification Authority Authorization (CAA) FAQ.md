@@ -20,19 +20,45 @@ ___
 
 _CAA records_ are evaluated by a CA, not by Cloudflare.
 
+{{<Aside type="note">}}
+Setting a *CAA record* to specify one or more particular CAs has no
+effect on which CA(s) Cloudflare will use to issue a Universal or
+Advanced SSL certificate for your domain.
+{{</Aside>}}
+
 ___
 
 ## Why must I disable Universal SSL if my CAA records exclude Universal SSL issuance?
 
 Since Universal SSL certificates are shared between customers, your _CAA records_ may prevent issuance of another customer’s Universal SSL. Therefore, Cloudflare must disable Universal SSL for your domain to ensure your _CAA records_ do not affect another customer.
 
+{{<Aside type="note">}}
+*CAA records* are automatically added for the Universal SSL CA providers
+comodoca.com, digicert.com, and letsencrypt.org if Cloudflare\'s
+Universal SSL is enabled and you add a CAA record via the Cloudflare
+**DNS** app.
+{{</Aside>}}
+
 If you do not require Universal SSL from Cloudflare, you can [disable Universal SSL](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl).
+
+{{<Aside type="warning">}}
+Disabling Universal SSL will leave your Cloudflare enabled DNS records
+without SSL support unless you have uploaded a [custom SSL
+certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates)
+(requires Business or Enterprise plan).
+{{</Aside>}}
 
 ___
 
 ## What records are added to keep Universal SSL enabled?
 
 If you use Cloudflare’s free Universal SSL certificates, [several CAA records are added by Cloudflare](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records#caa-records-added-by-cloudflare).
+
+{{<Aside type="warning">}}
+Do not use the *Only allow wildcards* option for the root record (which
+returns only *issuewild* records) for any domain that will use
+Cloudflare\'s Universal SSL.
+{{</Aside>}}
 
 Used alone, _issuewild_ only permits wildcard issuance.  Therefore, Cloudflare cannot add your root domain to the certificate unless you specify the _Allow wildcards and specific hostnames_ option in the **Tag** dropdown:
 

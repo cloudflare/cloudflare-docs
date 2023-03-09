@@ -28,3 +28,13 @@ To check the syntax of your HTML / CSS or JS files we recommend using online val
 -   [JavaScript](https://www.javascriptlint.com/)
 
 If you see that minification still is not taking effect after checking these steps, please [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476). You should include the URLs of the resources that you are seeing issues with.
+
+{{<Aside type="note">}}
+CSS & JS minification will operate on cached CSS and JS files only. Once
+Cloudflare returns a cache HIT for the file it will be returned to
+browsers in minified form. This allows us to deliver a more complete
+minification result. If you need to enable or disable minification for
+CSS & JS you will now need to [purge your Cloudflare
+cache](https://developers.cloudflare.com/cache/how-to/purge-cache) to
+see the effect of any minification setting change.
+{{</Aside>}}

@@ -39,3 +39,8 @@ When it comes time for renewal, using the `letsencrypt renew` [command](https:
 -   There are no redirects applied for that URL. 
 
 Alternately, repeating the steps above will also issue a new certificate.
+
+{{<Aside type="note">}}
+The official client does not yet support the DNS validation method;
+however, third party utilities exist that utilize this method.
+{{</Aside>}}

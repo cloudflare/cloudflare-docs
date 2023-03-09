@@ -48,6 +48,10 @@ Google uses a [variety of User-Agents](https://support.google.com/webmasters/an
 
 `Disallow: /cdn-cgi/`
 
+{{<Aside type="note">}}
+Errors for cdn-cgi do not impact site rankings.
+{{</Aside>}}
+
 -   Ensure your [robots.txt file allows the AdSense crawler](http://support.google.com/webmasters/bin/answer.py?hl=en&answer=1061943).
 -   [Restore original visitor IP addresses](https://support.cloudflare.com/hc/articles/200170786) in your server logs.
 

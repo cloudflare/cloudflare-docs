@@ -22,6 +22,11 @@ If you forget the email address associated with your application:
 
 3\. Cloudflare will send an email to the address associated with your domain name. If you do not receive an email within 20 minutes, check your spam folder. The message will be sent from `no-reply@cloudflare.com` or `noreply@notify.cloudflare.com`.
 
+{{<Aside type="note">}}
+This process does not affect your account or share your email address
+with anyone.
+{{</Aside>}}
+
 If you still cannot access the email address associated with your Cloudflare account, you need to [move your domain to another account](https://support.cloudflare.com/hc/articles/204615358).
 
 Cloudflare requires these steps to prevent account hijacking.
@@ -40,6 +45,20 @@ If you forget your account password:
 
 4\. Select the password reset link. This link will expire after two hours.
 
+{{<Aside type="tip">}}
+Cloudflare recommends strong passwords. Minimum requirements are:
+
+-   Password must be at least 8 characters.
+-   Password must contain a digit.
+-   Password must contain a special character.
+{{</Aside>}}
+
+{{<Aside type="note">}}
+If you still cannot access your account, look for help in the
+[Cloudflare
+Community](https://community.cloudflare.com/t/i-cannot-login-to-my-account/27823).
+{{</Aside>}}
+
 ___
 
 ## Issues with two-factor authentication?
@@ -50,6 +69,12 @@ You might lose access to a mobile device, security key, or authentication code.
 
 Generally, you can solve these issues by using a backup code or retrieving a backup code from your preferred authentication app.
 
+{{<Aside type="tip">}}
+Google\'s documentation describes how to [transfer Google Authenticator
+codes from one Android device to
+another](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DAndroid&hl=en&oco=0).
+{{</Aside>}}
+
 When setting up 2FA, you should have saved your backup codes in a secure location. To restore lost access using a Cloudflare backup code:
 
 1\. Retrieve the backup code from where you stored it.
@@ -57,6 +82,10 @@ When setting up 2FA, you should have saved your backup codes in a secure locatio
 2\. Navigate to the Cloudflare login page.
 
 3\. Enter the backup code in the login screen, then click **Log in**.
+
+{{<Aside type="note">}}
+Once you use a backup code, it becomes invalid.
+{{</Aside>}}
 
 #### **Disable 2FA**
 
@@ -111,6 +140,11 @@ You have several sign-in options for the [Cloudflare dashboard](https://dash.clo
 -   **Sign in with Apple**:
     -   _Same Cloudflare account email as Apple ID_: You can either sign in with your email and password or sign in with Apple.
     -   _Different Cloudflare account email as Apple ID_: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](https://support.cloudflare.com/hc/en-us/articles/203471284-Login-and-account-issues#12345679) to match the one used for your Apple ID.
+
+{{<Aside type="note">}}
+If you login to your Cloudflare user account with Single Sign-On (SSO),
+you will not be able to sign in with Apple.
+{{</Aside>}}
 
 ___
 

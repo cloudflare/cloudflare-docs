@@ -54,6 +54,11 @@ The command outputs a link that allows a domain to be authorized for use with Ar
 
 `cloudsetup`
 
+{{<Aside type="tip">}}
+Set the **origin IP** to *127.0.0.1* if the application is running on
+the Cloudflare VM instance.
+{{</Aside>}}
+
 When using the Cloudflare VM to expose an Azure resource on a different instance, the **origin IP** is the private virtual network IP of the resource running the exposed application. The _cloudsetup_ utility automatically starts **cloudflared** as a service within the instance.
 
 Check the status of the **cloudflared** service:
@@ -69,6 +74,12 @@ ___
 1\. Stop the **cloudflared** tunnel service before changing the configuration of the Cloudflare Argo Tunnel VM:
 
 `service cloudflared stop`
+
+{{<Aside type="tip">}}
+If switching domains, first delete the certificate stored in
+*\~/.cloudflared/* or to authorize a different domain, run: *cloudflared
+login*
+{{</Aside>}}
 
 2\. Delete the **cloudflared** config:
 

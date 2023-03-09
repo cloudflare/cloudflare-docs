@@ -14,6 +14,13 @@ Cloudflare certificates are prioritized by [](https://support.cloudflare.com/hc
 
 Exceptions to general prioritization occur based on hostname specificity.  Certificates that mention a specific hostname are preferred to wildcard certificates. For example, a Universal SSL certificate that explicitly mentions _www.example.com_ takes priority over a certificate that matches the _www_ hostname via a wildcard such as _\*.example.com._ 
 
+{{<Aside type="warning">}}
+When dealing with a child zone, a certificate uploaded whose subject or
+SAN is a wildcard for its parent domain, will show in the web UI as
+being ONLY for the Apex hostname in the domain. Otherwise, the UI will
+include with the wildcard (\*) symbol as expect.
+{{</Aside>}}
+
 For more details on hostname priority, refer to our [developer documentation](https://developers.cloudflare.com/ssl/ssl-tls/certificate-and-hostname-priority).
 
 ___
@@ -60,6 +67,12 @@ ___
 ## Does SSL work for hosting partners?
 
 A Free Universal SSL certificate is available for all new Cloudflare domains added via a hosting partner through both CNAME and Full DNS integrations.
+
+{{<Aside type="note">}}
+For domains added to Cloudflare prior to December 9, 2016, the hosting
+partner must delete and re-add the domain to Cloudflare to provision the
+SSL certificate.
+{{</Aside>}}
 
 Proxy a subdomain through Cloudflare to provision the Free Universal SSL certificate.
 

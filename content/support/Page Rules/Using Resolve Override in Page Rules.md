@@ -12,7 +12,15 @@ title: Using Resolve Override in Page Rules
 
 Cloudflare Page Rules allows you to override the URL or IP address of a request.
 
+{{<Aside type="note">}}
+This feature is only available to Enterprise users.
+{{</Aside>}}
+
 A common use case for this functionality is when you are serving an application from the URI (e.g. mydomain.com/app). In this case the 'app' may live on another server and may even be hosted by a third party. Requests to this endpoint must be directed to the server for that third party application. You can specify a CNAME host.
+
+{{<Aside type="warning">}}
+The CNAME record must exist within the Cloudflare DNS.
+{{</Aside>}}
 
 To make sure you have full control of these records, it is recommended that you set the Resolve Override within the same zone name.
 

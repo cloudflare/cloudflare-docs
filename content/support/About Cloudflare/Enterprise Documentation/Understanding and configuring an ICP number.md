@@ -14,6 +14,9 @@ An ICP (Internet Content Provider) number is a state-issued registration that al
 
 Websites with the same root domain can share the same ICP number. You can use the MIIT website to [check whether a domain already has an ICP Number](https://beian.miit.gov.cn/#/Integrated/recordQuery).
 
+{{<Aside type="note">}}
+The MIIT website is only available in Chinese.
+{{</Aside>}}
 ___
 
 ## Required documents

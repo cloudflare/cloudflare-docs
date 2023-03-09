@@ -10,11 +10,20 @@ title: Email undeliverable when using Cloudflare
 
 ## Troubleshooting tips
 
+{{<Aside type="note">}}
+Consult with your mail administrator or mail provider to ensure you have
+valid DNS record content.
+{{</Aside>}}
+
 If you are following the _best practices for MX records on Cloudflare_ mentioned below and still have issues sending or receiving mail, follow these troubleshooting steps:
 
 ### Are DNS records missing?
 
 Contact your mail administrator to confirm the DNS records for your domain are correct. Refer to our guide on [managing DNS records in Cloudflare](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) if you need assistance to add or edit DNS records.
+
+{{<Aside type="note">}}
+Cloudflare support is unable to modify DNS records within your account.
+{{</Aside>}}
 
 ### Do you have CNAME Flattening enabled?
 
@@ -38,3 +47,11 @@ Follow these guidelines to ensure successful delivery of your mail traffic:
 
 -   Use separate IP addresses for mail traffic and HTTP/HTTPS traffic. Cloudflare recommends using non-contiguous IPs from different IP ranges.
 -   Since mail traffic cannot be proxied through Cloudflare by default, you will expose your origin web server’s IP address. Information on your origin IP address would allow attackers to bypass Cloudflare security features and attack your web server directly.
+
+{{<Aside type="info">}}
+When you set up mail records in Cloudflare, you may notice a new
+dc-\#\#\#\#\# subdomain record in your zone. Refer to [Why do I have a
+dc-\#\#\#\#\#\#\#\#\#
+subdomain?](https://support.cloudflare.com/hc/articles/360020296512) for
+further details.
+{{</Aside>}}

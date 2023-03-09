@@ -15,6 +15,17 @@ Access to Network Analytics requires the following:
 
 Cloudflare’s **Network Analytics** view provides near real-time visibility into network- and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/).
 
+{{<Aside type="note">}}
+-   **The Network Analytics v2 (NAv2) dashboard is now available.** For
+    more information, refer to [Cloudflare Network
+    Analytics](https://developers.cloudflare.com/analytics/network-analytics/)
+    in the developer documentation.
+-   There is also new version of the Network Analytics GraphQL API. If
+    you are still using NAv1, you should migrate from NAv1 to NAv2 by
+    following the [migration
+    guide](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{</Aside>}}
+
 ![Analytics panel showing packets summary per type](/support/static/na-main-dashboard.png)
 
 Network Analytics accelerates reporting and investigation of malicious traffic. You can filter data by these parameters:
@@ -43,6 +54,11 @@ To access the **Network Analytics** view, follow these steps:
 1.  Log in to your Cloudflare account.
 2.  If you have multiple accounts, select an account that has access to Magic Transit or Spectrum.
 3.  On the account’s **Home** page, click **Network Analytics**.
+
+{{<Aside type="note">}}
+Source IPs are stored for 30 days. Report periods older than 30 days do
+not include source IP data.
+{{</Aside>}}
 
 ___
 
@@ -114,6 +130,10 @@ In this example, clicking the **Filter** button narrows the scope of the view to
 
 ### Create a Magic Firewall rule from the applied filters
 
+{{<Aside type="note">}}
+This feature is only available for Magic Transit users.
+{{</Aside>}}
+
 You can create a [Magic Firewall](https://developers.cloudflare.com/magic-firewall) rule that blocks all traffic matching the selected filters in Network Analytics. The currently supported filters are:
 
 -   Destination IP
@@ -183,6 +203,11 @@ You can choose from these options: 
 -   Source IP
 -   Source port
 -   TCP flag
+
+{{<Aside type="note">}}
+Data for source ASN, source IP, source port, and TCP flag is only
+available over the last 24 hours.
+{{</Aside>}}
 
 ### Share Network Analytics filters 
 
