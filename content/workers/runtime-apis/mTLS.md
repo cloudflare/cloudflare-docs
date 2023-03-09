@@ -11,6 +11,10 @@ This process - known as [mTLS](https://www.cloudflare.com/learning/access-manage
 
 To present a client certificate when communicating with a service, you can create and use a [binding](/workers/platform/bindings) to a certificate for use in your Worker project.
 
+{{<Aside type="note">}}
+Currently, mTLS for Workers is not supported for hosts [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) by Cloudflare.
+{{</Aside>}}
+
 First, upload a certificate and its private key to your account using the [`wrangler mtls-certificate`](/workers/wrangler/commands/#mtls-certificate) command:
 
 ```sh
