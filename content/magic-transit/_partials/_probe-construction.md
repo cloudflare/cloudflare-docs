@@ -45,7 +45,7 @@ $1 steers traffic to tunnels based on priorities you set when you [assign tunnel
 
 Cloudflare global network servers may be able to reach the origin infrastructure from some locations at a given time but not others. This occurs because Cloudflare does not synchronize health checks among global network servers and because the Internet is not homogeneous.
 
-As a result, tunnel health may be in different states in different parts of the world at the same time. In this example, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
+As a result, tunnel health may be in different states in different parts of the world at the same time. In the example from the previous paragraph, both tunnels could receive traffic simultaneously, even though Tunnel 1 has priority over Tunnel 2.
 
 {{</Aside>}}
 
