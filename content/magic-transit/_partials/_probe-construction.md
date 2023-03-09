@@ -14,7 +14,7 @@ Cloudflare encapsulates the ICMP reply packet and sends the probe across the tun
 
 Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel [with the API](https://developers.cloudflare.com/api/operations/magic-gre-tunnels-update-gre-tunnel).
 
-When a probe attempt fails for a tunnel that [is healthy](#health-state-and-prioritization), each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second - each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
+When a probe attempt fails for a [healthy](#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
 {{<Aside type="note" header="Note">}}
 
@@ -60,7 +60,7 @@ As a result, tunnel health may be in different states in different parts of the 
 ### Down
 
 - When all health checks of at least three samples in the last one second fail, $1 immediately transitions the tunnel from healthy or degraded to down, and applies a priority penalty to routes through that tunnel.
-- A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded or healthy.
+- A down state determination takes precedence over a degraded state determination. This means that a tunnel can only be one of the following: down, degraded, or healthy.
 
 When $1 identifies a route that is not healthy, it applies these penalties:
 
@@ -84,7 +84,7 @@ Tunnels in a degraded state transition to healthy when the failure rate for the 
 $1’s tunnel health check system allows a tunnel to quickly transition from healthy to degraded or down, but tunnel transition occurs slowly from degraded or down to healthy. This scenario is referred to as hysteresis — which is when a system’s output depends on its history of past inputs — and dampens changes to tunnel routing caused by flapping and other intermittent network failures.
 
 {{<Aside type="note" header="Note">}}
-Cloudflare always attempts to send traffic over available tunnel routes with the highest priority, even when all configured tunnels are in an unhealthy state.
+Cloudflare always attempts to send traffic over available tunnel routes with the highest priority (lowest route value), even when all configured tunnels are in an unhealthy state.
 {{</Aside>}}
 
 ## Example
