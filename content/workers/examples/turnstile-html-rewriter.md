@@ -17,14 +17,14 @@ export default {
 		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
 
-		// Instantiate the API to run on specific elements, e.g. head, div etc.
+		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
 
-			// .on attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
+			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {
 
-					// In this case, we're using append to add a new script to the head element
+					// In this case, you are using `append` to add a new script to the `head` element
 					element.append(`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`, { html: true });
 				},
 			})
@@ -54,21 +54,21 @@ addEventListener('fetch', event => {
 		const SITE_KEY = SITE_KEY
 		let res = await fetch(request)
 
-		// Instantiate the API to run on specific elements, e.g. head, div etc.
+		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
 
-			// .on attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
+			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {
 
-					// In this case, we're using append to add a new script to the head element
+					// In this case, you are using `append` to add a new script to the `head` element
 					element.append(`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`, { html: true });
 				},
 			})
 			.on('div', {
 				element(element) {
 
-					// Here we're using the getAttribute method to retrieve the id or class of an element
+					// You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
 					if (element.getAttribute('id') === <NAME_OF_ATTRIBUTE>) {
 						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`, { html: true });
 					}
