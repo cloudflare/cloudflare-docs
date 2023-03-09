@@ -28,8 +28,12 @@ If you need to modify existing security-related rules you already configured, co
 
 To use Security Analytics:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Analytics**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+
+2. Navigate to the account or zone dashboard:
+
+    - For the zone dashboard, select your domain and go to **Security** > **Analytics**.
+    - For the account dashboard, go to **Security Center** > **Security Analytics**.
 
 ![The Security Analytics dashboard displaying the HTTP requests chart for the past 24 hours.](/waf/static/security-analytics/security-analytics-dashboard.png)
 
