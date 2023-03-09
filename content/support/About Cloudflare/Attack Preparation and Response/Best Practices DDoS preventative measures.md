@@ -43,6 +43,11 @@ To review the real IPs behind an attack, [restore the original visitor IPs](htt
 
 Cloudflare hides your origin server IP addresses for traffic you proxy to Cloudflare. As an extra security precaution, we recommend contacting your hosting provider and requesting new origin server IPs.
 
+{{<Aside type="note">}}
+This task may incur a charge, so discuss with your hosting provider
+based on the risk of attack to your site.
+{{</Aside>}}
+
 ### Use Rate Limiting to prevent brute force and Layer 7 DDoS attacks
 
 To thwart attacks disguised as normal HTTP requests, Rate Limiting allows website administrators to specify fine-grained thresholds on the load they expect their web server to receive. With one simple click, setup basic rate limiting to [protect your login pages from brute force attacks](https://support.cloudflare.com/hc/articles/115001993248).

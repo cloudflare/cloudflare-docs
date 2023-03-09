@@ -26,7 +26,17 @@ Add the following MX records:
 
 Once added, the DNS records appear similar to the following in Cloudflare's **DNS** app:
 
+{{<Aside type="note">}}
+Review the [latest MX records required by Google
+App](https://support.google.com/a/answer/174125?hl%3Den).
+{{</Aside>}}
+
 [Test the Google Apps email configuration](https://toolbox.googleapps.com/apps/checkmx/check).
+
+{{<Aside type="warning">}}
+To avoid unexpected behavior, don't use *MX records* other than
+Google's.
+{{</Aside>}}
 
 Add a _CNAME record_ for Google App Engine to Cloudflare DNS.
 
@@ -35,7 +45,17 @@ For example, if the domain is _www.example.com_, the _CNAME record_ is simila
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www  CNAME  ghs.googlehosted.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Confirm the *CNAME record* value that Google requires for the domain.
+{{</Aside>}}
+
 To configure a redirect for a Google Apps domain, refer to [Google’s guide on URL forwarding](https://support.google.com/a/answer/53340?hl=en).
+
+{{<Aside type="warning">}}
+Google enforces HTTPS on its services. If you see errors about redirect
+loops when browsing to your site through Cloudflare, ensure **SSL** is
+set to *Full* in the **SSL/TLS** app of the Cloudflare dashboard.
+{{</Aside>}}
 
 **Amazon**
 
@@ -63,6 +83,11 @@ Add a _CNAME record_ for the AWS bucket in Cloudflare DNS. For example, if the
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">files  CNAME  files.example.com.s3.amazonaws.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+Amazon requires that the CNAME match the bucket name as in the above
+example.
+{{</Aside>}}
+
 Refer to Amazon’s documentation about [SES and verification settings](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html).
 
 Find the _TXT_ and _CNAME_ verification records that Amazon provides.
@@ -72,13 +97,28 @@ Add the records to Cloudflare DNS.  For example, if the Cloudflare domain is _
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  TXT  &quot;fmxqxT/icOYx4aA/bEUrDPMeax9/s3frblS+niixmqk=&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">verificationstring._domainkey.example.com  CNAME  verificationstring.dkim.amazonses.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+The above TXT record content is an example. Use the correct content
+provided by Amazon SES.
+{{</Aside>}}
+
 Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon.
+
+{{<Aside type="note">}}
+Cloudflare\'s **CNAME Flattening** feature enables a CNAME record on the
+root domain to point to an Elastic Load Balancer.
+{{</Aside>}}
 
 1.  Add a _CNAME record_ to Cloudflare for the hostname; for example: _elb_
 2.  In the Cloudflare **DNS** app, replace **Domain name** with the ELB target: _<AWS hostname>.<region>._elb.amazonaws.com is the proper _CNAME_ target format (for example: _my-cool-cachepp-1344276401.eu-west-1._elb.amazonaws.com).
 3.  Reach out to AWS support to determine _AWS hostname_ or _region_.
 
 **Microsoft**
+
+{{<Aside type="warning">}}
+Add the DNS records that Microsoft utilizes for domain validation (such
+as *autodiscover*) with a grey-cloud icon.
+{{</Aside>}}
 
 Follow Microsoft’s instructions on [configuring Azure DNS settings](https://www.windowsazure.com/en-us/develop/net/common-tasks/custom-dns-web-site/).
 
@@ -89,7 +129,15 @@ For example, if the domain is _example.com_, the record format is similar to:
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  A  203.0.113.1</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com  CNAME  example.azurewebsites.net</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Replace *203.0.113.1* with the actual IP address of the Azure site.
+{{</Aside>}}
+
 For verification records, refer to Azure’s documentation on [creating domain verification records](https://docs.microsoft.com/en-us/office365/admin/dns/create-dns-records-for-azure-dns-zones?view=o365-worldwide#add-a-txt-record-for-verification).
+
+{{<Aside type="warning">}}
+Add DNS records for Azure verification with a grey-cloud icon.
+{{</Aside>}}
 
 **Miscellaneous vendors**
 
@@ -99,6 +147,14 @@ The following articles from ClickFunnels outline how to best configure the two s
 
 -   [Adding a Cloudflare subdomain](https://help.clickfunnels.com/hc/en-us/articles/360005906774-Adding-A-Cloudflare-Subdomain-)
 -   [Cloudflare CNAME record](https://help.clickfunnels.com/hc/en-us/articles/360005906094-Cloudflare-CNAME-Record)
+
+{{<Aside type="note">}}
+Reference [Zoho\'s MX
+documentation](https://www.zoho.com/mail/help/adminconsole/configure-email-delivery.html)
+and [SPF
+documentation](https://www.zoho.com/mail/help/adminconsole/spf-configuration.html)
+before adding DNS records to Cloudflare.
+{{</Aside>}}
 
 Refer to the examples below for adding proper Zoho DNS records to Cloudflare. In all examples, replace _example.com_ with the actual domain name:
 
@@ -119,13 +175,31 @@ Refer to the examples below for adding proper Zoho DNS records to Cloudflare. In
 
 -   (Optional) To add a [Zoho domain validation record](https://www.zoho.com/mail/help/adminconsole/domain-verification.html):
 
+{{<Aside type="note">}}
+The zb record is unique for each domain. Add the unique zb verification
+code provided by Zoho.
+{{</Aside>}}
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zb******** CNAME  business.zoho.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+Add the *CNAME record* with a grey-cloud icon if Cloudflare is activated
+via one of our hosting partners.
+{{</Aside>}}
+
 Typically, the DNS records are similar to the list below. Replace _example.com_ with the actual domain name:
 
+{{<Aside type="note">}}
+Confirm what [records SendGrid requires](https://sendgrid.com/docs/) to
+set in Cloudflare\'s DNS.
+{{</Aside>}}
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">email  CNAME  sendgrid.net</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  SPF  v=spf1 a mx include:sendgrid.net ~all</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  TXT  v=spf1 a mx include:sendgrid.net ~all</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">mtpapi._domainkey.EXAMPLE.com  CNAME  dkim.sendgrid.net.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">smtpapi._domainkey.e.EXAMPLE.COM  CNAME  dkim.sendgrid.net</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="warning">}}
+Add DNS records with a grey-cloud icon. SendGrid cannot verify a mail
+configuration when Cloudflare's proxy is enabled.
+{{</Aside>}}
 
 Refer to Ning's documentation on [Custom Domains and DNS entries](http://www.ning.com/help/?p%3D2870).
 
@@ -134,12 +208,22 @@ If the Ning custom domain is _www.example.com_, add a _CNAME_ and an _A reco
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com  CNAME  example.ning.com.</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.ning.com  A  208.82.16.68</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+Add the DNS records to Cloudflare with a grey-cloud icon until Ning
+verifies the domain.
+{{</Aside>}}
+
 After Ning verifies the domain, change the grey-cloud icon to an orange-cloud for the Ning DNS records so traffic can proxy to Cloudflare.
 
 Consult SmugMug documentation for the latest details on DNS record requirements. Typically, add _CNAME records_ for SmugMug similar to the following:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">photo  CNAME  domains.smugmug.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">photos  CNAME  domains.smugmug.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="warning">}}
+Add the DNS records to Cloudflare with a grey-cloud icon until SmugMug
+verifies the domain.
+{{</Aside>}}
 
 After SmugMug verifies the domain, change the grey-cloud icon to an orange-cloud for the SmugMug DNS records so traffic can proxy to Cloudflare.
 
@@ -163,6 +247,11 @@ An example _CNAME record_ appears as follows:
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">rack  CNAME  e0978.r18.cf2.rackcdn.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+The *CNAME record* cannot be proxied to Cloudflare since rackcdn.com is
+not compatible with Cloudflare.
+{{</Aside>}}
+
 After ensuring that your domain nameservers are set to Cloudflare, 
 
 1.  Log in to the Cloudflare dashboard.
@@ -175,6 +264,13 @@ After ensuring that your domain nameservers are set to Cloudflare, 
 ![screenshot of the cloudflarecontent.com DNS records from Squarespace
 ](/support/static/dns_ui_update_squarespace_records.png)
 
+{{<Aside type="warning">}}
+Squarespace's console may indicate issues (as pictured below in red
+text) when using Cloudflare's proxy services. However, we can confirm
+that Squarespace is compatible with Cloudflare when using a
+configuration as described below.
+{{</Aside>}}
+
 If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**. 
 
 ![Old URL: https://support.cloudflare.com/hc/article_attachments/360039675171/squarespace_dns_settings.png
@@ -185,8 +281,17 @@ Now that your traffic is being sent through Cloudflare, Squarespace and your sit
 
 If _example.com_ is the custom domain, add DNS records to Cloudflare similar to these below:
 
+{{<Aside type="warning">}}
+Tumblr's systems are not compatible with Cloudflare's proxy services and
+Tumblr customers cannot use Cloudflare\'s SSL services.
+{{</Aside>}}
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  A  66.6.44.4</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com  CNAME  domains.tumblr.com</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="warning">}}
+Disable Cloudflare's proxying for any DNS record related to Tumblr.
+Otherwise, Tumblr's custom domain verifications will fail.
+{{</Aside>}}
 
 ___
 

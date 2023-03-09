@@ -12,6 +12,16 @@ To adhere to tax laws in Russia and certain US states, Cloudflare collects sales
 
 To avoid unwanted charges, ensure your billing address and payment method are accurate within your Cloudflare account.
 
+{{<Aside type="note">}}
+Cloudflare customers in a sponsorship program (i.e., [Project
+Athenian](https://support.cloudflare.com/hc/articles/360032879131),
+[Project
+Galileo](https://support.cloudflare.com/hc/articles/202312014-Project-Galileo),
+[Cloudflare for
+Campaigns](https://support.cloudflare.com/hc/articles/360038570912)) are
+not charged sales tax.
+{{</Aside>}}
+
 ___
 
 ## US State sales tax
@@ -37,6 +47,10 @@ Foreign e-services suppliers are required by law to collect taxes on the supply 
 
 [Update your billing information](https://support.cloudflare.com/hc/articles/200170236/#12345682) with your Russian VAT ID to include it in your Cloudflare invoices.
 
+{{<Aside type="note">}}
+There is no tax exemption for Russian customers.
+{{</Aside>}}
+
 ___
 
 ## Singapore taxes
@@ -56,6 +70,10 @@ ___
 ## Canada
 
 All **NON-GST Registered** Customers who are located in Canada are required by law to pay tax
+
+{{<Aside type="note">}}
+Anyone who provides a GST ID is exempt, no other exceptions
+{{</Aside>}}
 
 ___
 

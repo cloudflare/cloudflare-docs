@@ -84,6 +84,12 @@ The presence of `stream` in place of a compression ratio indicates that the re
 
 This status results in the request not being compressed and served in a streaming fashion.
 
+{{<Aside type="note">}}
+Please refer to our [Reading and Interpreting the \'Cf-Railgun\'
+Header](https://support.cloudflare.com/hc/en-us/articles/202963724-Reading-and-Interpreting-the-Cf-Railgun-Header)
+article for additional technical information on the Cf-Railgun header.
+{{</Aside>}}
+
 ### Troubleshooting
 
 If a continual/repeated `stream` status is occurring for requests, please check for the following conditions that are common causes:

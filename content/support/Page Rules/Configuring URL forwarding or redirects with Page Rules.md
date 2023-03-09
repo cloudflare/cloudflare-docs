@@ -20,6 +20,14 @@ ___
 
 ## Redirect with Page Rules
 
+{{<Aside type="note">}}
+Page Rule subdomains require an [\"Orange
+Clouded\"](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+DNS record for the Page Rule to work. Page Rules won\'t apply to
+subdomains that don\'t exist in DNS or aren\'t being directed to
+Cloudflare.
+{{</Aside>}}
+
 To configure URL forwarding or redirects using Page Rules:
 
 1.  Log into your Cloudflare account.
@@ -37,6 +45,11 @@ To configure URL forwarding or redirects using Page Rules:
 ___
 
 ## Forwarding examples
+
+{{<Aside type="warning">}}
+Traffic must pass through Cloudflare for Page Rules to work. If you only
+use Cloudflare for DNS, Page Rules are not active.
+{{</Aside>}}
 
 Imagine you want site visitors to easily reach your website for a variety of URL patterns.  For instance, the Page Rule URL patterns _\*www.example.com/products_ and _\*example.com/products_ match:
 

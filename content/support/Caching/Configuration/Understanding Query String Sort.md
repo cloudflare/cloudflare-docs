@@ -10,6 +10,10 @@ title: Understanding Query String Sort
 
 ## Overview
 
+{{<Aside type="info">}}
+Query String Sort is only available to Enterprise customers.
+{{</Aside>}}
+
 By default, Cloudflare’s cache treats resources as distinct if their URL query strings are in a different order.  For instance, these resources are cached separately:
 
 -   `/video/48088296?title=0&byline=0&portrait=0&color=51a516`

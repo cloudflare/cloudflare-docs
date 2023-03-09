@@ -12,9 +12,25 @@ title: Billing for Cloudflare Rate Limiting
 
 [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128) automatically identifies and mitigates excessive request rates for specific URLs or for an entire domain.  Rate Limiting protects against [DDoS](https://www.cloudflare.com/learning/ddos/glossary/denial-of-service/) and [Brute-force attacks](https://www.cloudflare.com/learning/bots/brute-force-attack/), and limits access to forum searches, API calls, or resources that involve database-intensive operations at your origin.
 
+{{<Aside type="warning">}}
+The information in this page refers to the [previous version of
+Cloudflare Rate
+Limiting](https://support.cloudflare.com/hc/articles/115001635128),
+which is billed based on usage.\
+To benefit from **unmetered rate limiting** (new version), rewrite your
+current rules in the new version of the feature. For more information,
+refer to [Rate limiting
+rules](https://developers.cloudflare.com/waf/rate-limiting-rules/) in
+the developer documentation.
+{{</Aside>}}
+
 Enterprise customers are charged a fixed rate as specified in their contract. All other plans are [billed based on usage](https://support.cloudflare.com/hc/en-us/articles/115004555148), which is reflected in the monthly subscription invoice.
 
 The first 10,000 billable requests across all your websites are free. You will then be charged $0.05 per 10,000 requests thereafter.
+
+{{<Aside type="note">}}
+Rate Limiting rules in *Log* mode do not count as billable requests.
+{{</Aside>}}
 
 For example, if you had a total of 35,000 good/allowed requests matching any rate-limiting rule:
 
@@ -26,6 +42,15 @@ For example, if you had a total of 35,000 good/allowed requests matching any rat
 You will be charged $0.15 in total for Rate Limiting on your next [billing date](https://support.cloudflare.com/hc/en-us/articles/200170286-How-does-CloudFlare-s-billing-for-apps-and-paid-plans-work-#section2). The charge will appear as a line item on your invoice and will list the total number of requests billed.
 
 The first 10,000 requests are across all sites on your account, rather than receiving 10,000 free requests per site: if you have one site with 20,000 requests and another with 30,000, your bill will be $0.20 for the 50,000 total requests, not $0.15.
+
+{{<Aside type="note">}}
+To monitor the usage of Cloudflare add-ons or subscriptions, you can
+[enable email
+notifications](https://support.cloudflare.com/hc/en-us/articles/115004555148/#11aoHZtimmL8WRIrA1jmD0).
+When enabled, you will receive a notification to the billing email
+address on file when the traffic, queries, requests, or minutes watched
+exceed your desired threshold.
+{{</Aside>}}
 
 ___
 

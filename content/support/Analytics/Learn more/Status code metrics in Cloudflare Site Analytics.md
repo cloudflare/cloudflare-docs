@@ -8,11 +8,21 @@ title: Status code metrics in Cloudflare Site Analytics
 
 ## Overview
 
+{{<Aside type="info">}}
+Status Codes analytics by data center is exclusive to the [enterprise
+level of service](https://www.cloudflare.com/plans/enterprise/contact/).
+{{</Aside>}}
+
 Status Codes metrics in the Cloudflare dashboard **Analytics** app provide customers with a deeper insight into the distribution of errors that are occurring on their website per data center. A data center facility where Cloudflare runs its servers that make up our edge network. You can find a list of all of Cloudflare data centers [here](https://www.cloudflarestatus.com/). 
 
 HTTP status codes that appear in a response passing through our edge are displayed in analytics. These codes can be split into three groups: ‘edge network errors’, ‘origin errors’ and '52x errors'.
 
 Errors that originate from our edge servers -such as 502, 503, and 504 with 'Cloudflare'- are not reported as part of the error analytics. However, errors such as 52x, can inform you about problems with your server.
+
+{{<Aside type="note">}}
+Users may also see 100x errors which are not reported. These will be
+displayed as either 403 or 409 (edge) errors.
+{{</Aside>}}
 
 ![Old URL: https://support.cloudflare.com/hc/article_attachments/360040370171/web_traffic_status_codes.png
 Article IDs: 206973867 | Error analytics by Cloudflare data center

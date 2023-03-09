@@ -42,6 +42,12 @@ When you have a grey-clouded _A_, _AAAA_, _CNAME_, or _MX_ record pointing 
 
 `_This record is exposing your origin server’s IP address, potentially exposing it to denial of service._`
 
+{{<Aside type="info">}}
+Cloudflare now supports proxying wildcard \'\*\' record for DNS
+management in all customer plans. This used to only be offered to
+Enterprise plans.
+{{</Aside>}}
+
 A _dig_ query against these records reveals your origin server’s IP address. This information makes it easier for potential attackers to target your origin server directly.
 
 However, there are times when some of your DNS records need to remain grey-clouded. For example:

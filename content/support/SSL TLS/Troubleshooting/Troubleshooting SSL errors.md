@@ -40,6 +40,11 @@ Otherwise, if SSL errors occur when using a newer browser, review these common S
 -   [OCSP response error](https://support.cloudflare.com/hc/en-us/articles/200170566#h_51354cf8-de93-4894-85e6-f0f7453d766d)
 -   [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/en-us/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f)
 
+{{<Aside type="note">}}
+To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
+Antivirus, allow dash.cloudflare.com in Kaspersky.
+{{</Aside>}}
+
 ___
 
 ## Redirect loop errors or HTTP 525 or 526 errors
@@ -73,6 +78,19 @@ ___
 **Symptom**
 
 All active Cloudflare domains are provided a [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl). If you observe SSL errors and do not have a certificate of **Type** _Universal_ within the **Edge Certificates** tab of the Cloudflare **SSL/TLS** app for your domain, the Universal SSL certificate has not yet provisioned.
+
+{{<Aside type="note">}}
+Cloudflare SSL certificates only apply for traffic proxied through
+Cloudflare. If SSL errors only occur for hostnames not proxied to
+Cloudflare, proxy those hostnames through Cloudflare:
+
+-   For domains on Full DNS setups, click the grey cloud icon icon
+    beside the DNS hostname in your Cloudflare DNS app until the icon
+    becomes an orange cloud.
+-   For domains on CNAME setups, review our guide on [adding DNS records
+    to a CNAME
+    setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup).
+{{</Aside>}}
 
 Our SSL vendors verify each SSL certificate request before Cloudflare can issue a certificate for a domain name. This process may take anywhere from 15 minutes to 24 hours. Our SSL certificate vendors sometimes flag a domain name for additional review.
 
