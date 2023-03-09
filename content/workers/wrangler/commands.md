@@ -682,6 +682,8 @@ Exactly one of `VALUE` or `--path` is required.
   - The lifetime (in number of seconds) that the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
 - `--expiration` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
+- `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
 
 {{</definitions>}}
 
@@ -911,6 +913,8 @@ Here is the full schema for key-value entries uploaded via the bulk API:
   - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The UTF-8 encoded string to be stored, up to 10 MB in length.
+- `metadata` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Any arbitrary object (must serialize to JSON) to a maximum of 1024 bytes.
 - `expiration` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
 - `expiration_ttl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
