@@ -62,7 +62,7 @@ FROM
 GROUP BY customer_id, request_endpoint
 ```
 
-This can give you insights into what endpoints different customers are using. This can be useful for business purposes (e.g. understanding customer needs) as well for for your engineers to see activity and behaviour (observability.)
+This can give you insights into what endpoints different customers are using. This can be useful for business purposes (e.g. understanding customer needs) as well for for your engineers to see activity and behaviour (observability).
 
 ## Billing customers
 
