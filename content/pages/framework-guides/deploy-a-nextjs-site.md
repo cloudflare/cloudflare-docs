@@ -46,8 +46,8 @@ export const config = {
   runtime: 'edge',
 }
 
-export default async function (req) {
-  return Response.json({ name: 'John Doe' })
+export default async function handler(req) {
+  return new Response(JSON.stringify({ name: 'John Doe' }))
 }
 ```
 
@@ -66,8 +66,8 @@ export const config = {
   runtime: 'edge',
 }
 
-export default async function (req: NextRequest) {
-  return Response.json({ name: 'John Doe' })
+export default async function handler(req: NextRequest) {
+  return new Response(JSON.stringify({ name: 'John Doe' }))
 }
 ```
 
