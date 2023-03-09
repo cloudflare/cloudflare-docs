@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Inject Turnstile into HTML elements using the HTMLRewriter runtime API
+summary: Inject Turnstile into HTML elements using the HTMLRewriter runtime API.
 tags:
   - Originless
 pcx_content_type: configuration
@@ -31,7 +31,7 @@ export default {
 			.on('div', {
 				element(element) {
 
-					// Here we're using the getAttribute method to retrieve the id or class of an element
+					// You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
 					if (element.getAttribute('id') === <NAME_OF_ATTRIBUTE>) {
 						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`, { html: true });
 					}
