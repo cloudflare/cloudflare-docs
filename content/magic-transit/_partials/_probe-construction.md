@@ -64,8 +64,8 @@ As a result, tunnel health may be in different states in different parts of the 
 
 When $1 identifies a route that is not healthy, it applies these penalties:
 
-- Degraded: Add `500,000` to priority.
-- Down: Add `1,000,000` to priority.
+- **Degraded**: Add `500,000` to priority.
+- **Down**: Add `1,000,000` to priority.
 
 The values for failure penalties are intentionally extreme so that they always exceed the priority values assigned during [routing configuration]($2).
 
@@ -91,8 +91,8 @@ Cloudflare always attempts to send traffic over available tunnel routes with the
 
 Consider two tunnels and their associated routing priorities. Remember that lower route values have priority.
 
-- Tunnel 1, route priority 100
-- Tunnel 2, route priority 200
+- Tunnel 1, route priority `100`
+- Tunnel 2, route priority `200`
 
 When both tunnels are in a healthy state, routing priority directs traffic exclusively to Tunnel 1 because its route priority of 100 beats that of Tunnel 2. Tunnel 2 does not receive any traffic, except for tunnel health check probes. Endpoint health checks only flow over Tunnel 1 to their destination inside the origin network.
 
