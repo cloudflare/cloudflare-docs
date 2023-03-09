@@ -57,6 +57,10 @@ html {
         display: flex;
         flex-direction: column;
     }
+
+    .individualPath {
+        height: 14em;
+    }
 }
 
 .pathGrid a {
@@ -252,6 +256,13 @@ label {
     flex-direction: column;
     align-items:center;
     max-width: 80%;
+}
+
+@media (max-width: 768px) {
+
+.progressIndicator {
+    max-width: 100%;
+}
 }
 
 .timeEstimate {
