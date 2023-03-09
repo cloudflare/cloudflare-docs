@@ -50,7 +50,8 @@ addEventListener('fetch', event => {
 })
 
 	async function handleRequest (request) {
-		const SITE_KEY = env.SITE_KEY
+		// Service  Workers secrets are globab variables
+		const SITE_KEY = SITE_KEY
 		let res = await fetch(request)
 
 		// Instantiate the API to run on specific elements, e.g. head, div etc.
