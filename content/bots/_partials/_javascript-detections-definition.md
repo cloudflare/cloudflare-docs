@@ -16,6 +16,6 @@ These detections are implemented via a lightweight, invisible code injection tha
 
 This detection technique gathers general data about the machines reaching Cloudflare. For example, Cloudflare might learn that a particular user is accessing Cloudflare via Google Chrome on a MacBook Pro. Because there are millions of people using Google Chrome on a MacBook Pro, Cloudflare cannot identify specific individuals. Cloudflare also takes steps to anonymize and phase out data for added privacy.
 
-JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile app traffic is unaffected. Additionally, code is not injected again until its 30-minute session life expires. After page load, the script is deferred and utilizes a separate thread (where available) to ensure that performance impact is minimal.
+JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile app traffic is unaffected. Additionally, code is not injected again until its 30-minute session life expires. After page load, the Picasso script is deferred and utilizes a separate thread (where available) to ensure that performance impact is minimal.
 
 The snippets of JavaScript will contain a source pointing to the challenge platform with paths that start with `/cdn-cgi/challenge-platform/...`.
