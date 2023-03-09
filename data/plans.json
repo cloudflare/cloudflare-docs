@@ -1902,7 +1902,7 @@
           "free": 0,
           "pro": 0,
           "pro_plus": 1,
-          "biz": 1,
+          "biz": 1 (Modern)<br/>1 (Legacy),
           "ent": "1 (Modern) (can purchase more)<br/>1 (Legacy) (can purchase more)"
         }
       }
