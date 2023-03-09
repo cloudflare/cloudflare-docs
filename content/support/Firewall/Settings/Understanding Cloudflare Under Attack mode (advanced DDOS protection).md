@@ -23,7 +23,7 @@ When enabled, visitors receive an interstitial page.
 {{<Aside type="tip">}}
 To preview what **I\'m Under Attack** mode looks like for your visitors,
 go to your [Custom
-pages](dash.cloudflare.com/?to=/:account/configurations/custom-pages).
+pages](https://dash.cloudflare.com/?to=/:account/configurations/custom-pages).
 Then, next to **I\'m Under Attack Mode™ Challenge**, click **Custom
 Pages** \> **View default**.
 {{</Aside>}}
