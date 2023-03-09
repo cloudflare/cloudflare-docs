@@ -50,7 +50,7 @@ addEventListener('fetch', event => {
 })
 
 	async function handleRequest (request) {
-		// Service  Workers secrets are globab variables
+		// Service  Workers secrets are global variables
 		const SITE_KEY = SITE_KEY
 		let res = await fetch(request)
 
