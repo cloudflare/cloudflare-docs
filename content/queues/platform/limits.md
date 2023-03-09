@@ -23,7 +23,7 @@ Many of these limits will increase during Queues' public beta period. [Follow ou
 | Maximum batch wait time                            | 30 seconds                              |
 | Maximum per-queue message throughput <sup>3</sup>  | 400 messages per second <sup>4</sup>    |
 | Maximum message retention period <sup>5</sup>      | 4 days (96 hours)                       | 
-| Maximum queue backlog size <sup>6</sup>            | 25GB                                    | 
+| Maximum per-queue backlog size <sup>6</sup>        | 25GB                                    | 
 | Maximum consumer invocation duration               | 15 minutes (Refer to [Worker limits](/workers/platform/limits/#cpu-runtime).)  | 
 
 
