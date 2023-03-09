@@ -1185,6 +1185,13 @@
           "biz": "All",
           "ent": "All"
         },
+        "dashboard_show_account": {
+          "title": "Account-level dashboard",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
         "historical_data": {
           "title": "Historical time",
           "free": "Up to the last 24 hours",
