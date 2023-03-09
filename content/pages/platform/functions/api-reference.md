@@ -69,12 +69,13 @@ The following are the properties on the `context` object which are passed throug
   
   - `env` [{{<type>}}EnvWithFetch{{</type>}}](#envwithfetch)
   - `params` [{{<type>}}Params&lt;P&gt;{{</type>}}](#params)
+
+      Holds the values from [dynamic routing](https://developers.cloudflare.com/pages/platform/functions/routing/#dynamic-routes).
+
   - `data` [{{<type>}}Data{{</type>}}](#data)
   
 {{</definitions>}}
 
 ### `EnvWithFetch`
 
-Holds the environment variables, secrets, and bindings for a Function. This also holds the `ASSETS` binding which is how you can fallback to the asset-serving behavior. 
-
-Holds the values from the [dynamic routes](/pages/platform/functions/routing/#dynamic-routes).
+Holds the environment variables, secrets, and bindings for a Function. This also holds the `ASSETS` binding which is how you can fallback to the asset-serving behavior.
