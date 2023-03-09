@@ -544,6 +544,13 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+    <tr id="field-cf-waf-score-class">
+        <td><code>cf.waf.score.class</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>The attack score class of the current request, based on the WAF attack score.<br/>Can have one of the following values: <code>Attack</code>, <code>Likely attack</code>, <code>Likely clean</code>, <code>Clean</code>, <code>Unscored</code>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-worker-upstream_zone">
       <td><code>cf.worker.upstream_zone</code> <br />{{<type>}}String{{</type>}}</td>
       <td>
