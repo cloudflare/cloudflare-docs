@@ -13,6 +13,11 @@ title: Ich kann meine Domain nicht zu Cloudflare hinzufügen...
 
 Cloudflare kann keine autoritative DNS-Auflösung für eine Domain bereitstellen, wenn **DNSSEC** in Ihrem Domain-Registrar aktiviert ist. Sie können **DNSSEC** erneut aktivieren, nachdem die Domain _in Cloudflare aktiv_ ist. Sie müssen **DNSSEC** gemäß [Cloudflares](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS) [DNSSEC](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS)[\-Anforderungen jedoch konfigurieren](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS).
 
+{{<Aside type="info">}}
+**DNSSEC** darf nur für Domains in vollständigen Setups deaktiviert
+werden, in denen die Nameserver von Cloudflare maßgeblich sind.
+{{</Aside>}}
+
 Mögliche Symptome für die Aktivierung von **DNSSEC** bei der Registrierungsstelle sind:
 
 -   DNS wird nach dem Wechsel zu Cloudflares Nameservern nicht aufgelöst.
@@ -34,6 +39,11 @@ Es gibt mehrere Probleme bei der Domainregistrierung, die verhindern, dass eine 
 -   Möglicherweise wird ein Fehler angezeigt, der dem folgenden ähnelt:
 
 _Bad.psl-example konnte nicht als registrierte Domain identifiziert werden. Stellen Sie sicher, dass Sie die Root-Domain und nicht die Subdomain (z. B. example.com, nicht subdomain.example.com) angeben (Code: 1099)_
+
+{{<Aside type="note">}}
+Anweisungen zum Aktualisieren der öffentlichen Suffix-Liste finden Sie
+unter <https://github.com/publicsuffix/list/wiki/Guidelines>
+{{</Aside>}}
 
 -   Die Domain ist noch nicht vollständig registriert oder in den Registrierungsdaten sind keine Nameserver aufgeführt
 
@@ -64,6 +74,11 @@ ___
 
 Cloudflare verbietet das dauerhafte oder vorübergehende Hinzufügen bestimmter Domains.  Befolgen Sie die nachstehenden Anweisungen, um eine der beiden Arten der Sperre zu entfernen.
 
+{{<Aside type="note">}}
+Der Cloudflare-Support kann den Ablauf der vorübergehenden Sperre nicht
+beschleunigen.
+{{</Aside>}}
+
 ### Aufhebung einer vorübergehenden Sperre
 
 Wenn Cloudflare zu viele Versuche beobachtet, eine Domain zu Cloudflare hinzuzufügen, wird ein Fehler zurückgegeben:
@@ -79,3 +94,10 @@ Senden Sie eine Anfrage an den Cloudflare-Support, wenn beim Hinzufügen einer D
 
 -   _Fehler: Diese Zone ist gesperrt und kann derzeit nicht zu Cloudflare hinzugefügt werden. Wenden Sie sich an den Cloudflare-Support. (Code: 1097)_
 -   _Diese Zone kann derzeit nicht zu Cloudflare hinzugefügt werden. Wenden Sie sich an den Cloudflare-Support. (Code: 1093)_
+
+{{<Aside type="tip">}}
+Fehler (Code: 1093) oder (Code: 1116) kann auch bedeuten, dass Sie beim
+Hinzufügen der Domain zu Cloudflare eine Subdomain
+(somehost.example.com) anstelle der Root-Domain (example.com) angegeben
+haben.
+{{</Aside>}}

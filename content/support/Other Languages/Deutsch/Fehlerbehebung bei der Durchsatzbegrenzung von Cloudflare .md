@@ -25,6 +25,13 @@ Außerdem gibt es einige häufige Fehler, die die Konfiguration der **Durchsatzb
 -   _Ratelimit.api.not\_entitled_ – Enterprise-Kunden müssen sich an ihr Cloudflare-Kontoteam wenden, bevor sie Regeln hinzufügen.
 -   Andere Fehler werden in der [API-Dokumentation](https://api.cloudflare.com/#rate-limits-for-a-zone-errors) beschrieben. Wenn Sie sich bei einem bestimmten Fehler unsicher sind, kontaktieren Sie den [Cloudflare-Support](https://support.cloudflare.com/hc/articles/200172476) und geben Sie die fehlgeschlagene API-Anfrage an. Schwärzen Sie darin Ihren API-Schlüssel.
 
+{{<Aside type="info">}}
+Der Parameter **origin\_traffic** kann nur beim Enterprise Plan
+eingestellt werden. Die Einstellung **origin\_traffic** = *false* für
+eine Regel auf einer Free-, Pro- oder Enterprise-Domain wird automatisch
+in **origin\_traffic** = *true* umgewandelt.
+{{</Aside>}}
+
 ___
 
 ## Einschränkungen

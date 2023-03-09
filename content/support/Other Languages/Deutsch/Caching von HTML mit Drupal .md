@@ -7,7 +7,13 @@ title: Caching von HTML mit Drupal
 
 # Caching von HTML mit Drupal 
 
-
+{{<Aside type="note">}}
+Kunden mit allen Cloudflare-Tarifen können HTML-Dateien mit Cloudflare
+**Page Rules** zwischenspeichern. Jedoch können nur Kunden der Business
+und Enterprise Plans das HTML-Caching umgehen, wenn ein Cookie gesendet
+wird, indem Sie die Einstellung *Bypass Cache on Cookie* mit
+Cloudflare **Page Rules** vornehmen.
+{{</Aside>}}
 
 ## Browser-Cache-TTL aktivieren
 

@@ -83,6 +83,11 @@ Wenn Sie sich ansehen möchten, wie viele Stream-Minuten betrachtet wurden, gehe
 4.  Klicken Sie im linken Navigationsbereich auf **Kostenpflichtige Nutzung**. Sie sehen eine Grafik, die Ihren momentanen täglichen Traffic wiedergibt.
 5.  Wählen Sie im Dropdown über der Grafik **Vormonat** aus und klicken Sie auf **Monat bisher**. Nun sehen Sie die Nutzung im Vormonat.![stream_billing_subcriptions_previous_month.png](/support/static/stream_billing_subcriptions_previous_month.png)
 
+{{<Aside type="note">}}
+Wir planen, in naher Zukunft auch die gesamte Speicherbelegung im
+Cloudflare Dashboard darzustellen.
+{{</Aside>}}
+
 ___
 
 -   [Die Videoplattform Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)

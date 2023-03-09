@@ -36,6 +36,11 @@ Wenn Sie die Option _\+ short_ mit _dig_ nicht verwenden, wird eine DNS-Antwort 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$ dig www.cloudflare.com[...];; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 65326;; flags: qr rd ra ad; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1 [...] ;; QUESTION SECTION: ;www.cloudflare.com.        IN  A [...] ;; ANSWER SECTION: www.cloudflare.com. 15  IN  A   198.41.215.162 www.cloudflare.com. 15  IN  A   198.41.214.162</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Einzelheiten zum Überprüfen der Signaturen mit dem öffentlichen
+Schlüssel werden in diesem Artikel nicht behandelt.
+{{</Aside>}}
+
 ___
 
 ## Anzeigen der DNSSEC-Vertrauenskette mit Dig
