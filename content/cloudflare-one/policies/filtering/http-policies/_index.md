@@ -37,6 +37,14 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 | ------------------ | -------- | ----------- | ------ |
 | Content Categories | in       | `Education` | Allow  |
 
+Selecting the Allow action displays an additional **Untrusted certificate action** that lets you choose how to handle requests with insecure connections.
+
+| Option       | Action                                                                                                               |
+| ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display browser error page.                                                                                          |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set on the Zero Trust dashboard. |
+| Pass through | Ignore untrusted certificate messages.                                                                               |
+
 ### Block
 
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
