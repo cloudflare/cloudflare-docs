@@ -97,7 +97,7 @@ The country of the user making the request.
 
 {{<render file="gateway/_virtual-network.md">}}
 
-## Comparison Operators
+## Comparison operators
 
 {{<render file="gateway/_comparison-operators.md">}}
 
@@ -107,6 +107,6 @@ You can input a single value or use regular expressions to specify a range of va
 
 Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
 
-## Logical Operators
+## Logical operators
 
 {{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}

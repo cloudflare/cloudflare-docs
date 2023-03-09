@@ -19,9 +19,9 @@ A network policy consists of an **Action** as well as a logical expression that 
 
 - [Actions](#actions)
 - [Selectors](#selectors)
-- [Comparison Operators](#comparison-operators)
+- [Comparison operators](#comparison-operators)
 - [Value](#value)
-- [Logical Operators](#logical-operators)
+- [Logical operators](#logical-operators)
 
 {{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
@@ -132,7 +132,7 @@ The country of the user making the request.
 
 {{<render file="gateway/_virtual-network.md">}}
 
-## Comparison Operators
+## Comparison operators
 
 {{<render file="gateway/_comparison-operators.md">}}
 
@@ -146,6 +146,6 @@ The _In_ operator allows you to specify IP addresses or networks using CIDR nota
 
 {{<render file="gateway/_value.md">}}
 
-## Logical Operators
+## Logical operators
 
 {{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}
