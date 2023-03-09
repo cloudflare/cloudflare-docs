@@ -14,7 +14,7 @@ Domain deletion commonly occurs for the following reasons:
 
 -   A user with access to the domain removed it.
 -   The nameservers no longer point to Cloudflare. Cloudflare continuously monitors domain registration.
--   The domain was not authenticated (pending for 60 days).
+-   The domain was not authenticated (pending for 28 days).
 
 ___
 
