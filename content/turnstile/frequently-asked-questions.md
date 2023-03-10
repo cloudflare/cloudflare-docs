@@ -124,6 +124,18 @@ The siteverify API must not be called by the front end as this may reveal the se
 {{</faq-answer>}}
 {{</faq-item>}}
 
+{{<faq-item>}}
+{{<faq-question level=2 text="Can I use Turnstile when developing locally?" >}}
+
+{{<faq-answer>}}
+
+The dummy sitekeys provided below can be used from any domain, including on `localhost`. 
+
+Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
 
 {{<faq-item>}}
 
@@ -160,23 +172,23 @@ An HTML page rendered in a [WebView](https://github.com/react-native-webview/rea
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Can I use Turnstile when developing locally?" >}}
-
-{{<faq-answer>}}
-
-The dummy sitekeys provided in the [testing reference](/turnstile/reference/testing/#dummy-sitekeys) can be used from any domain, including on `localhost`. 
-
-Cloudflare recommends that sitekeys used in production do not allow local domains (`localhost`, `127.0.0.1`), but users can choose to add local domains to the list of allowed domains.
-
-{{</faq-answer>}}
-{{</faq-item>}}
-
-{{<faq-item>}}
 {{<faq-question level=2 text="Are there sitekeys and secret keys that can be used for testing?" >}}
 
 {{<faq-answer>}}
 
-Yes. They can be found in the [testing reference](/turnstile/reference/testing/#dummy-sitekeys).
+Yes. Use the following sitekeys and secret keys for testing purposes:
+
+| Sitekey | Description |
+| --- | --- |
+| `1x00000000000000000000AA` | Always passes |
+| `2x00000000000000000000AB` | Always blocks |
+| `3x00000000000000000000FF` | Forces an interactive challenge |
+
+|Secret key | Description |
+| --- | --- |
+| `1x0000000000000000000000000000000AA` | Always passes |
+| `2x0000000000000000000000000000000AA` | Always fails | 
+| `3x0000000000000000000000000000000AA` | Yields a "token already spent" error | 
 
 {{</faq-answer>}}
 {{</faq-item>}}
