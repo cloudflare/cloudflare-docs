@@ -43,6 +43,10 @@ Cloudflare NEL uses end-user IP address to determine the following:
 
 The client IP address is only stored in volatile memory for the lifetime of the request to Cloudflare’s NEL endpoint (order of milliseconds) and is dropped immediately after the request completes. Cloudflare does not log the client IP address anywhere in the Network Error Logging pipeline. Customers can opt out of having their end users consume the NEL headers by emailing Cloudflare support.
 
+{{<Aside type="note">}}
+NEL metrics are not currently available on the Cloudflare dashboard.
+{{</Aside>}}
+
 ___
 
 ## Related resources

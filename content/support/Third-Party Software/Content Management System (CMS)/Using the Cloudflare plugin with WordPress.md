@@ -18,6 +18,14 @@ ___
 
 ## Before getting started
 
+{{<Aside type="warning">}}
+The [Automatic Platform Optimization
+(APO)](https://www.cloudflare.com/automatic-platform-optimization/wordpress/)
+feature requires that you be on a [Full
+Setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/)
+using Cloudflare nameservers.
+{{</Aside>}}
+
 Before adding your WordPress site to Cloudflare,
 
 -   [Create a Cloudflare account](https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-CloudFlare-account-and-add-a-website). You can also learn more about how to get started with Cloudflare in our [Cloudflare 101](https://support.cloudflare.com/hc/sections/200820158-Cloudflare-101) documentation.
@@ -44,6 +52,12 @@ After installing the Cloudflare WordPress plugin, to configure plugin settings,
 1.  Click **Settings** and choose the Cloudflare plugin. The Cloudflare login page appears.
 2.  Enter your Cloudflare login credentials, including your email and Cloudflare **API key**, then click **Save API Credentials**.
     -   For more information about the API key and how to retrieve it, review our [documentation](https://support.cloudflare.com/hc/articles/200167836-Managing-API-Tokens-and-Keys#h12345682).
+
+{{<Aside type="tip">}}
+To ensure that the Cloudflare plugin works optimally on your WordPress
+site, apply the default plugin settings by clicking **Apply** in
+**Settings**.
+{{</Aside>}}
 
 After configuring the Cloudflare WordPress plugin, customize your Cloudflare configuration with the following features to further improve security and performance:
 

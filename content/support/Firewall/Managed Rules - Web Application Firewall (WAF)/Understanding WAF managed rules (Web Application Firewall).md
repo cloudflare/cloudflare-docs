@@ -12,6 +12,23 @@ title: Understanding WAF managed rules (previous version)
 
 Managed rules, a feature of Cloudflare WAF (Web Application Firewall), identifies and removes suspicious activity for HTTP GET and POST requests.
 
+{{<Aside type="note">}}
+-   This page contains documentation about the previous implementation
+    of WAF managed rules. For more information on the new version, refer
+    to [WAF Managed
+    Rules](https://developers.cloudflare.com/waf/managed-rules/) in the
+    developer documentation.
+-   All customers with access to the previous version of WAF managed
+    rules (described in this page) can now [migrate to the new version
+    of WAF Managed
+    Rules](https://support.cloudflare.com/hc/articles/5995821690637).
+-   The new WAF Managed Rules provide the [Cloudflare Free Managed
+    Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/) to
+    all customers, including customers on a Free plan. Refer to the
+    [announcement blog
+    post](https://blog.cloudflare.com/waf-for-everyone/) for details.
+{{</Aside>}}
+
 Examples of [malicious content](https://www.cloudflare.com/learning/security/what-is-web-application-security/) that managed rules identify include: 
 
 -   Common keywords used in comment spam (_XX_, _Rolex_, _Viagra_, etc.), 
@@ -96,7 +113,12 @@ The **Cloudflare Managed Ruleset** contains security rules written and curated b
 
 **Cloudflare Specials** is a **Group** that provides core firewall security against [common attacks](https://www.cloudflare.com/learning/security/what-is-web-application-security/).   
 
- 
+{{<Aside type="tip">}}
+Cloudflare recommends that you always leave **Cloudflare Specials**
+enabled. Additionally, only enable rule groups that correspond to your
+technology stack. For example, if you use WordPress, enable the
+**Cloudflare WordPress** group.
+{{</Aside>}} 
 
 When viewing a ruleset, Cloudflare shows default actions for each rule listed under **Default mode**. The **Mode** available for individual rules within a specific **Cloudflare** **Managed Ruleset** are:
 
@@ -143,7 +165,20 @@ To manage OWASP thresholds, set the **Sensitivity** to _Low_, _Medium_, or _High
 -   Certain business industries more likely to trigger the WAF, and
 -   large file uploads. 
 
+{{<Aside type="tip">}}
+With a *High* **Sensitivity**, large file uploads trigger the WAF.
+{{</Aside>}}
+
 Cloudflare recommends initially setting the **Sensitivity** to _Low_ and reviewing for false positives before further increasing the **Sensitivity**.
+
+{{<Aside type="note">}}
+The Activity log displays **Rule ID** *981176* (legacy OWASP) or
+*949110* ([new OWASP](https://blog.cloudflare.com/new-cloudflare-waf/))
+when a request is blocked by OWASP. Also, some OWASP rules listed in the
+Activity log do not appear in the list of rules under **Package: OWASP
+ModSecurity Core Rule Set** because disabling those rules is not
+recommended.
+{{</Aside>}}
 
 ___
 

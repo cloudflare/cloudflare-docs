@@ -47,6 +47,13 @@ _More about_ [_Apache LogFormat_](https://httpd.apache.org/docs/2.4/logs.html)
 
 _More about_ [_NGINX log\_format_](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)
 
+{{<Aside type="info">}}
+The above configuration examples will **only** capture the CF-IPCountry
+information. Alternatively, server administrators often append the log
+variable cf-ipcountry to their existing log configuration with other
+Cloudflare headers like cf-ray, cf-connecting-ip, and cf-visitor.
+{{</Aside>}}
+
 ___
 
 ## Capturing IP geolocation data in application logic

@@ -18,6 +18,16 @@ The diagram below illustrates the different ways that IP addresses are handled w
 
 ![The diagram illustrates the different ways that IP addresses are handled with and without Cloudflare.](/support/static/Restoring_IPs__1_.png)
 
+{{<Aside type="warning">}}
+Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
+operating system. We now recommend
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+for customers using Apache web servers. Customers who are interested in
+building the *mod\_cloudflare* package can [download the
+codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
+{{</Aside>}}
+
 ___
 
 ## mod\_remoteip
@@ -90,9 +100,24 @@ Syntax OK
 sudo systemctl restart apache2
 ```
 
+{{<Aside type="note">}}
+For more information on *mod\_remoteip*, refer to the [Apache
+documentation](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html "Apache Module mod_remoteip").
+{{</Aside>}}
+
 ___
 
 ## mod\_cloudflare
+
+{{<Aside type="warning">}}
+Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
+operating system. We now recommend
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+for customers using Apache web servers. Customers who are interested in
+building the *mod\_cloudflare* package can [download the
+codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
+{{</Aside>}}
 
 There are two methods for installing mod\_cloudflare: by downloading the Apache extension from Github or by adding code to your origin web server.
 
@@ -130,11 +155,26 @@ Mod\_cloudflare is installed by modifying [the nginx configuration file](http:/
 
 To remove _mod\_cloudflare_ you should comment or remove this line, then restart nginx, and _mod\_cloudflare_ should be gone_._
 
+{{<Aside type="note">}}
+To remove *mod\_cloudflare* from other web server types, consult your
+web server documentation for how to remove modules.
+{{</Aside>}}
+
 ___
 
 ## Web server instructions
 
 Refer below for instructions on how to configure your web server to log original visitor IPs based on your web server type:
+
+{{<Aside type="warning">}}
+Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
+operating system. We now recommend
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+for customers using Apache web servers. Customers who are interested in
+building the *mod\_cloudflare* package can [download the
+codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
+{{</Aside>}}
 
 1.  Make sure the following is installed:
     -   Red Hat/Fedora`sudo yum install httpd-devel libtool git`
@@ -170,7 +210,23 @@ real_ip_header CF-Connecting-IP;
 
 That list of prefixes needs to be updated regularly, and we publish the full list in [Cloudflare IP addresses](https://www.cloudflare.com/ips).
 
+{{<Aside type="note">}}
+To Include the original visitor IP in your logs, add the variables
+\$http\_cf\_connecting\_ip and \$http\_x\_forwarded\_for in the
+log\_format directive.
+{{</Aside>}}
+
 Also refer to: [Cloudflare and NGINX](https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/).
+
+{{<Aside type="warning">}}
+Cloudflare no longer updates and supports *mod\_cloudflare*, starting
+with versions **Debian 9** and **Ubuntu 18.04 LTS** of the Linux
+operating system. We now recommend
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+for customers using Apache web servers. Customers who are interested in
+building the *mod\_cloudflare* package can [download the
+codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
+{{</Aside>}}
 
 1.  Run the following script to install mod\_cloudflare as part of EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Upon installing, you will need to recompile your Apache with the new mod\_cloudflare plugin.
@@ -195,6 +251,15 @@ extforward.headers = ("CF-Connecting-IP")
 
 (repeat for all Cloudflare IPs listed at https://www.cloudflare.com/ips/)
 ```
+
+{{<Aside type="tip">}}
+If your origin connects to the internet with IPv6,
+**\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
+ranges does not work when IPv6 is enabled. Using the above method will
+not work when trying to forward IP ranges. Add the following lines to
+lighttpd.conf as an alternative solution:
+`extforward.forwarder = ( "all" => "trust" ) extforward.headers = ("CF-Connecting-IP")`
+{{</Aside>}}
 
 1.  Go to your LiteSpeed Web Admin Console.
 2.  Enable the option Use Client IP in Header in Configuration.

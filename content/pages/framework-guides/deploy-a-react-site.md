@@ -17,17 +17,21 @@ Create a new project using `npx`, giving it the title `my-react-app` in your ter
 $ npx create-react-app my-react-app
 ```
 
-{{<render file="_tutorials-before-you-start.md">}}
-
-## Creating a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
+And move into the application's directory via:
 
 ```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-$ git push -u origin main
+$ cd my-react-app
 ```
+
+From here you can run your application with:
+
+```sh
+$ npm start
+```
+
+{{<render file="_tutorials-before-you-start.md">}}
+
+{{<render file="_create-github-repository_no_init.md">}}
 
 ## Deploying with Cloudflare Pages
 

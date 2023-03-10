@@ -21,3 +21,11 @@ To enable SSE:
 To exclude content from suspicious visitors, wrap the content in the following SSE tags: <!--sse--><!--/sse-->
 
 For example: <!--sse--> Bad visitors won't see my phone number, 555-555-5555 <!--/sse-->
+
+{{<Aside type="note">}}
+SSE only will work with HTML. If you have HTML minification enabled, you
+won\'t see the SSE tags in your HTML source when it\'s served through
+Cloudflare. SSE will still function in this case, as Cloudflare\'s HTML
+minification and SSE functionality occur on-the-fly as the resource
+moves through our network to the visitor\'s computer.
+{{</Aside>}}

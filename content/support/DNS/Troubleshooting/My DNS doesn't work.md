@@ -35,6 +35,12 @@ Ensure that you have the necessary DNS records in the **DNS** app of your Clou
 -   The root domain (e.g., _example.com_)
 -   Any existing subdomains (e.g., _www.example.com, blog.example.com_, etc.)
 
+{{<Aside type="tip">}}
+If you have a [partial zone
+setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup),
+ensure your DNS records also exist in your authoritative nameservers.
+{{</Aside>}}
+
 Learn more about setting up A and CNAME [DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
 
 ### DNSSEC wasn't disabled before the domain was added to Cloudflare

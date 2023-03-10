@@ -28,7 +28,7 @@ To create a custom rule, add a rule to the `http_request_firewall_custom` phase 
 
 ### Example A
 
-This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule that challenges requests from the United Kingdom or France with a threat score greater than `10`:
+This example request **replaces all rules** in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule that challenges requests from the United Kingdom or France with a threat score greater than `10`:
 
 ```json
 curl -X PUT \
@@ -45,9 +45,11 @@ curl -X PUT \
 }'
 ```
 
+{{<render file="_api-add-rule-to-ruleset.md">}}
+
 ### Example B
 
-This example request replaces all rules in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
+This example request **replaces all rules** in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
 
 ```json
 ---
@@ -74,3 +76,4 @@ curl -X PUT \
 }'
 ```
 
+{{<render file="_api-add-rule-to-ruleset.md">}}

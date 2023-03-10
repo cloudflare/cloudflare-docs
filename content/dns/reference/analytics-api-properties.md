@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Analytics API properties
 weight: 1
+meta:
+    description: API properties that you can use in API requests for Cloudflare DNS analytics.
 ---
 
 # Analytics API properties

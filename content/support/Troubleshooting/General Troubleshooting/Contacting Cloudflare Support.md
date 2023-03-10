@@ -16,6 +16,11 @@ Cloudflare Support _cannot_ perform the following actions:
 -   Provide sensitive account info over the phone
 -   Troubleshoot or answer questions about domains not associated with the Cloudflare account email address used to contact support
 
+{{<Aside type="warning">}}
+**Do not share** any sensitive information, such as passwords, credit
+card numbers, private keys, or API keys with Cloudflare.
+{{</Aside>}}
+
 Before notifying Cloudflare of an issue with your site, refer to the [Cloudflare Status Page](https://www.cloudflarestatus.com/). If reporting issues with your site, ensure to provide adequate details in the support ticket _(refer to_ [_Getting help with an issue_](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support#h_7b55d494-b84d-439b-8e60-e291a9fd3d16) _for more information)_.
 
 ___

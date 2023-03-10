@@ -99,3 +99,8 @@ If you do not want to have Landing Page enabled:
 4.  Scroll to Landing Page and select **Disable**.
 
 You now have Landing Page disabled. The page can also be re-enabled through the same process.
+
+{{<Aside type="note">}}
+Customers must disable the landing page before they can add DNS records
+to point to a new website.
+{{</Aside>}}

@@ -12,6 +12,11 @@ title: Load Balancing FAQs
 
 For more detailed information about Load Balancing — including how-to guides, tutorials, and other reference information — check out our [product documentation](https://developers.cloudflare.com/load-balancing/).
 
+{{<Aside type="note">}}
+Are you trying to turn on Load Balancing? [Enable Load
+Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing).
+{{</Aside>}}
+
 ___
 
 ## Why is my origin receiving so many health checks?

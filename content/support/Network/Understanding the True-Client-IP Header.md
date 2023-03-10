@@ -19,3 +19,10 @@ ___
 To add the `True-Client-IP` header to incoming requests, [enable the **Add “True-Client-IP” header** Managed Transform](https://developers.cloudflare.com/rules/transform/managed-transforms/reference/).
 
 For more information, refer to [Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/) in the developers documentation.
+
+{{<Aside type="note">}}
+**Note:** Before Managed Transforms were available, you added the
+`True-Client-IP` header by enabling **True-Client-IP Header** in the
+**Network** app of the Cloudflare dashboard. The current recommended
+procedure is to enable the Managed Transform.
+{{</Aside>}}

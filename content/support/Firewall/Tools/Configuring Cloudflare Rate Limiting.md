@@ -14,6 +14,23 @@ Cloudflare Rate Limiting automatically identifies and mitigates excessive reques
 
 Once an individual IPv4 address or IPv6 /64 IP range exceeds a rule threshold, further requests to the origin web server are blocked with an HTTP 429 response that includes a **Retry-After** header to indicate when the client can resume sending requests.
 
+{{<Aside type="note">}}
+Are you trying to enable on Rate Limiting? [Enable Rate
+Limiting](https://dash.cloudflare.com/?to=/:account/:zone/firewall/tools).
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+The information in this page refers to the [previous version of
+Cloudflare Rate
+Limiting](https://support.cloudflare.com/hc/articles/115001635128),
+which is billed based on usage.\
+To benefit from **unmetered rate limiting** (new version), rewrite your
+current rules in the new version of the feature. For more information,
+refer to [Rate limiting
+rules](https://developers.cloudflare.com/waf/rate-limiting-rules/) in
+the developer documentation.
+{{</Aside>}}
+
 ### Rate limiting and SEO
 
 For customers using the previous version of rate limiting rules (documented in Cloudflare's Support KB), cached resources and known Search Engine crawlers are exempted from your rate limiting rules. Therefore, they do not affect your website's [SEO ranking](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/improve-seo/).
@@ -28,9 +45,20 @@ View rate limiting analytics in **Analytics** > **Security**. Rate Limiting anal
 
 Cloudflare returns an HTTP 429 error for blocked requests.  Details on blocked requests per location are provided to Enterprise customers under **Status codes** in the analytics dashboard available at **Analytics** > **Traffic**. 
 
+{{<Aside type="note">}}
+HTTP 429 includes 429 responses returned from the origin if the origin
+web server also applies its own rate limiting.
+{{</Aside>}}
+
 ___
 
 ## Rate Limiting allowances per plan
+
+{{<Aside type="note">}}
+Cloudflare Rate Limiting (previous version) is an add-on service for all
+customer plans, available in **Security** \> **WAF** \> **Rate limiting
+rules**.
+{{</Aside>}}
 
 The number of allowed Rate Limiting rules depends on the domain’s plan:
 
@@ -164,6 +192,12 @@ Click to expand details on creating the two common types of Cloudflare **Rate Li
 11\. To activate your new rule, click **Save and Deploy**.
 
 The new rule appears in the rate limiting rules list.
+
+{{<Aside type="note">}}
+Any change to a **Rate Limiting** rule clears that rule's currently
+triggered actions. Exercise care when editing **Rate Limiting** rules
+for mitigation of an ongoing attack.
+{{</Aside>}}
 
 In general, when setting a lower threshold:
 

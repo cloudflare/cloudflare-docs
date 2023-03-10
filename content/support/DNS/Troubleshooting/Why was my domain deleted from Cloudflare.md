@@ -14,7 +14,7 @@ Domain deletion commonly occurs for the following reasons:
 
 -   A user with access to the domain removed it.
 -   The nameservers no longer point to Cloudflare. Cloudflare continuously monitors domain registration.
--   The domain was not authenticated (pending for 60 days).
+-   The domain was not authenticated (pending for 28 days).
 
 ___
 
@@ -30,9 +30,20 @@ Cloudflare **Audit Logs** contain information about domain deletion.  Review
 6.  Observe the **Date**, **User IP Address**, and **User** that deleted the domain.
 7.  If **User IP Address** is _127.0.0.1_ or contains no data, the deletion was automatically performed by Cloudflare’s systems: Move to Step 2 
 
+{{<Aside type="note">}}
+*Delete* is an **Action** that denotes domain deletion but is also
+commonly used for deletion of other various account settings. Therefore,
+ensure that **Resource** says *Zone*.
+{{</Aside>}}
+
 ___
 
 ## Step 2 - Check whether domain registration lists Cloudflare nameservers
+
+{{<Aside type="tip">}}
+It is not necessary to check domain registration for domains utilizing a
+Cloudflare CNAME setup.
+{{</Aside>}}
 
 1\. Use either the command-line based “whois” application provided with your Operating System or a website such as [whois.icann.org](https://whois.icann.org/en) or [www.whois.net](https://www.whois.net/).
 
@@ -47,6 +58,11 @@ ___
 ___
 
 ## Step 3 - Check whether domain resolution uses Cloudflare nameservers
+
+{{<Aside type="tip">}}
+It is not necessary to check domain registration for domains utilizing a
+Cloudflare CNAME setup.
+{{</Aside>}}
 
 1\. Use command-line or third-party tools to confirm if Cloudflare's nameservers are configured:
 
@@ -70,11 +86,21 @@ Some online services, such as [whatsmydns.net](https://www.whatsmydns.net/), ch
 
 3\. If the nameserver and domain registration data are correct, reach out to your domain provider to confirm if there have been recent DNS propagation issues.
 
+{{<Aside type="note">}}
+Some registrars provide more than two nameservers; however, use only the
+two provided in the DNS app of your Cloudflare account.
+{{</Aside>}}
+
 ___
 
 ## Recover a deleted domain
 
 Recover a deleted domain via the **\+ Add site** link located on the right side of the top navigation bar in the Cloudflare dashboard. The domain must be added like a new domain.
+
+{{<Aside type="warning">}}
+Cloudflare support is unable to restore DNS or settings for deleted
+domains.
+{{</Aside>}}
 
 ___
 
