@@ -128,4 +128,4 @@ ___
 
 -   [How DNSSEC works](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/)
 -   [DNS security](https://www.cloudflare.com/learning/dns/dns-security/)
--   [Configuring DNSSEC with Cloudflare](https://developers.cloudflare.com/dns/additional-options/dnssec)
+-   [Configuring DNSSEC with Cloudflare](/dns/additional-options/dnssec)

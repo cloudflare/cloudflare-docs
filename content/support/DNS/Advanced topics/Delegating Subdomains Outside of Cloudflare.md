@@ -14,7 +14,7 @@ Subdomain delegation allows different individuals, teams, or organizations to ma
 
 {{<Aside type="note">}}
 DNS delegation is not possible for Cloudflare domains using a [partial
-setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup).
+setup](/dns/zone-setups/partial-setup).
 {{</Aside>}}
 
 For instance, consider _example.com_ as a Cloudflare domain with w_ww.example.com_ managed in Cloudflare’s **DNS** app and _internal.example.com_ delegated to nameservers outside of Cloudflare. In this example, _internal.example.com_ can now be managed by individuals who do not have access to Cloudflare credentials for the _example.com_ domain.
@@ -54,6 +54,6 @@ ___
 
 ## Related Resources
 
--   [Managing DNS records in Cloudflare](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)
--   [Understanding a CNAME setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup)
+-   [Managing DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records)
+-   [Understanding a CNAME setup](/dns/zone-setups/partial-setup)
 -   [Glue Records](https://www.ietf.org/rfc/rfc1912.txt) (RFC 1912 Section 2.3)

@@ -58,7 +58,7 @@ plans](https://www.cloudflare.com/plans/).
 
 Enable [WAF managed rules](https://support.cloudflare.com/hc/en-us/articles/200172016).
 
-If you have access to the new Cloudflare WAF announced in March 2021, [deploy WAF Managed Rulesets](https://developers.cloudflare.com/waf/managed-rulesets/deploy-zone-dashboard/) instead.
+If you have access to the new Cloudflare WAF announced in March 2021, [deploy WAF Managed Rulesets](/waf/managed-rules/deploy-zone-dashboard/) instead.
 
 ___
 
@@ -66,17 +66,17 @@ ___
 
 Under **Security**, you can block traffic via the following methods:
 
--   [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967) \- Recommended for blocking multiple IP addresses, /16 or /24 IP ranges, or Autonomous System Numbers (ASNs). [](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)
--   [**Firewall rules**](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) \- Recommended for blocking a country, any valid IP range, or more complex attack patterns.
+-   [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967) \- Recommended for blocking multiple IP addresses, /16 or /24 IP ranges, or Autonomous System Numbers (ASNs). [](/firewall/cf-dashboard/create-edit-delete-rules/)
+-   [**Firewall rules**](/firewall/cf-dashboard/create-edit-delete-rules/) \- Recommended for blocking a country, any valid IP range, or more complex attack patterns.
 
 {{<Aside type="tip">}}
 [**Firewall
-rules**](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
+rules**](/firewall/cf-firewall-rules/)
 have limits but are more flexible and allow matching upon a wider
 variety of
-[fields](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/)
+[fields](/ruleset-engine/rules-language/fields/)
 and
-[expressions](https://developers.cloudflare.com/ruleset-engine/rules-language/expressions/)
+[expressions](/ruleset-engine/rules-language/expressions/)
 than **IP Access Rules**.
 {{</Aside>}}
 

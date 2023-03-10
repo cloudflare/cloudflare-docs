@@ -24,7 +24,7 @@ ___
 
 **Pods:** is a group of one or more containers (such as Docker containers), with shared storage/network, and a specification for how to run the containers. A pod’s contents are always co-located and co-scheduled, and run in a shared context. Pods are the smallest deployable units of computing that can be created and managed in Kubernetes. **Node:** is a worker machine in Kubernetes. A node may be a VM or physical machine, depending on the cluster. Each node has the services necessary to run pods and is managed by the master components. The services on a node include Docker, kubelet and kube-proxy. **Cluster:** A group of nodes firewalled from the internet, that are the primary compute resources managed by Kubernetes. **Cluster master:** The cluster master runs the Kubernetes control plane processes, including the Kubernetes API server, scheduler, and core resource controllers. **Cluster network:** A set of links, logical or physical, that facilitate communication within a cluster according to the Kubernetes networking model. Examples of a Cluster network include Overlays such as flannel or SDNs such as OVS. **Service:** A Kubernetes Service that identifies a set of pods using label selectors. Unless mentioned otherwise, Services are assumed to have virtual IPs only routable within the cluster network. Kubernetes Engine assigns the external IP address to the [Service resource](https://kubernetes.io/docs/concepts/services-networking/service/)—not the Deployment. The kubectl expose command creates a Service resource, which provides networking and IP support to your application's Pods. Kubernetes Engine creates an external IP and a Load Balancer for your application **Kubectl:** A tool which is used to interact with the cluster. **Kops:** A simple tool provided by Kubernetes, that makes the creation of the cluster very easy. **Ingress:** An [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) is a collection of rules that allow inbound connections to reach the cluster services. It can be configured to give services externally-reachable URLs, load balance traffic, terminate SSL, offer name based virtual hosting, and more. Users request ingress by POSTing the Ingress resource to the API server. **Ingress Controller:** An [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-controllers) is responsible for fulfilling the Ingress, usually with a load balancer, though it may also configure your edge router or additional frontends to help handle the traffic in an HA manner.
 
-## [Cloudflare Load Balancer](https://developers.cloudflare.com/load-balancing/)
+## [Cloudflare Load Balancer](/load-balancing/)
 
 **Load Balancer:** a DNS hostname that you want traffic to be load-balanced for. Geo-based routing is also configured at the Load Balancer level **Monitor:** the configuration used to determine the health of servers. Monitors attached to Pools, so you can monitor different locations or groups of servers differently **Pool:** a group of servers or containers, each identified by their IP address or hostname. You can configure multiple Pools and configure failover priority **Origins:** A single IP or hostname that exist within a Pool. Multiple Origins in a single Pool will be load balanced by Cloudflare via round robin.
 
@@ -172,7 +172,7 @@ Now let’s **create a route 53 domain** for the cluster. Kops uses DNS for di
 
 It will automatically create four name server (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
 
-As Authoritative DNS for my domain usualwebsite.com I am using Cloudflare DNS. Just simply [add four NS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/) under your DNS provider.
+As Authoritative DNS for my domain usualwebsite.com I am using Cloudflare DNS. Just simply [add four NS records](/dns/manage-dns-records/how-to/create-dns-records/) under your DNS provider.
 
 To check if your records were added correctly run the following command:
 
@@ -265,13 +265,13 @@ For creating Cloudflare Load Balancer we will use the following IP addresses whi
 
 ### Step 1: Create Hostname
 
-[Create a load balancer](https://developers.cloudflare.com/load-balancing/how-to/create-load-balancer/) and give it a public hostname. If you are Load Balancing non-HTTP(S) services set it to non-proxied mode by clicking on the cloud icon (orange -> grey).
+[Create a load balancer](/load-balancing/how-to/create-load-balancer/) and give it a public hostname. If you are Load Balancing non-HTTP(S) services set it to non-proxied mode by clicking on the cloud icon (orange -> grey).
 
 For my Load Balancer I used hostname _cloudflarelb.usualwebsite.com_
 
 ### Step 2: Create Origin Pools
 
-Let’s [create two origin pools](https://developers.cloudflare.com/load-balancing/how-to/create-pool/):
+Let’s [create two origin pools](/load-balancing/how-to/create-pool/):
 
 -   GKE:
     -   Pool Name: gke-us-west1
@@ -286,13 +286,13 @@ My primary pool is gke-us-west1 with failover to aws-us-east-1. All my traffic g
 
 ### Step 3: Create Health Checks
 
-We’ll also [create a health check](https://developers.cloudflare.com/load-balancing/how-to/create-monitor/) here to check the health of the service running on our nodes. The default settings should be OK to begin with, but more complex health checks can also be customized under “Advanced Monitoring Settings”.
+We’ll also [create a health check](/load-balancing/how-to/create-monitor/) here to check the health of the service running on our nodes. The default settings should be OK to begin with, but more complex health checks can also be customized under “Advanced Monitoring Settings”.
 
 Save the pool and wait a few moments for the health check to detect the pool as healthy. If it does not confirm that the checks are being run against the correct endpoint and are reachable by the public Internet.
 
 ### Step 4: Set up Geo Routing
 
-I [set up geo steering](https://developers.cloudflare.com/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) to have the traffic routed based on location. For this tutorial for specific regions I have set Geo Routing to route the requests from the following:
+I [set up geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) to have the traffic routed based on location. For this tutorial for specific regions I have set Geo Routing to route the requests from the following:
 
 -   Eastern North America is routed to AWS
 -   Oceania is routed to GKE
@@ -311,7 +311,7 @@ ___
 
 ## Argo Tunnel Ingress Controller
 
-In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
+In addition to Cloudflare Load Balancer, [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) establishes an encrypted tunnel to the Cloudflare edge without needing to open ports in the firewall or have a public IP. This is perfect for NATted environments such as a home or office network, or to allow inbound traffic into egress-only services.
 
 ### **Cloudflare TunnelIngress**
 
