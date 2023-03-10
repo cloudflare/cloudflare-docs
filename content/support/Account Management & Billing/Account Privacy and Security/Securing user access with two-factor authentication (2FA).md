@@ -240,4 +240,4 @@ ___
 
 -   [Google Authentication documentation](https://support.google.com/accounts/answer/1066447?hl=en&ref_topic=2954345&co=GENIE.Platform%3DiOS&oco=0)
 -   [YubiKey documentation](https://www.yubico.com/works-with-yubikey/catalog/cloudflare/)
--   [Setting up multi-user accounts on Cloudflare](https://developers.cloudflare.com/fundamentals/account-and-billing/account-setup/manage-account-members/)
+-   [Setting up multi-user accounts on Cloudflare](/fundamentals/account-and-billing/members/)

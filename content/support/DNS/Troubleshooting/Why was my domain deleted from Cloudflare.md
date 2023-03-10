@@ -107,5 +107,5 @@ ___
 ## Related resources
 
 -   [Secondary Nameservers](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-) (Enterprise feature)
--   [CNAME setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup) (Business and Enterprise feature)
--   [How to change nameservers to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [CNAME setup](/dns/zone-setups/partial-setup) (Business and Enterprise feature)
+-   [How to change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup)

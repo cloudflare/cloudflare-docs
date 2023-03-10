@@ -11,19 +11,19 @@ title: Understanding Cloudflare Network Analytics v1
 Access to Network Analytics requires the following:
 
 -   A Cloudflare Enterprise plan
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) or [Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Cloudflare [Magic Transit](/magic-transit/) or [Spectrum](/spectrum/).
 
-Cloudflare’s **Network Analytics** view provides near real-time visibility into network- and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/).
+Cloudflare’s **Network Analytics** view provides near real-time visibility into network- and transport-layer traffic patterns and DDoS attacks. Network Analytics visualizes packet and bit-level data, the same data available via the [GraphQL Analytics API](/analytics/graphql-api/).
 
 {{<Aside type="note">}}
 -   **The Network Analytics v2 (NAv2) dashboard is now available.** For
     more information, refer to [Cloudflare Network
-    Analytics](https://developers.cloudflare.com/analytics/network-analytics/)
+    Analytics](/analytics/network-analytics/)
     in the developer documentation.
 -   There is also new version of the Network Analytics GraphQL API. If
     you are still using NAv1, you should migrate from NAv1 to NAv2 by
     following the [migration
-    guide](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2/).
+    guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 ![Analytics panel showing packets summary per type](/support/static/na-main-dashboard.png)
@@ -134,7 +134,7 @@ In this example, clicking the **Filter** button narrows the scope of the view to
 This feature is only available for Magic Transit users.
 {{</Aside>}}
 
-You can create a [Magic Firewall](https://developers.cloudflare.com/magic-firewall) rule that blocks all traffic matching the selected filters in Network Analytics. The currently supported filters are:
+You can create a [Magic Firewall](/magic-firewall/) rule that blocks all traffic matching the selected filters in Network Analytics. The currently supported filters are:
 
 -   Destination IP
 -   Protocol
@@ -221,7 +221,7 @@ ___
 
 ## View the Activity log
 
-The Network Analytics **Activity log** shows up to 500 log events in the currently selected time range, paginated with 10 results per page per time range view. (The [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/) does not have this limitation.) 
+The Network Analytics **Activity log** shows up to 500 log events in the currently selected time range, paginated with 10 results per page per time range view. (The [GraphQL Analytics API](/analytics/graphql-api/) does not have this limitation.) 
 
 To display event details, click the expansion widget associated with the events.
 
@@ -278,9 +278,9 @@ ___
 
 ## Related resources
 
--   [Cloudflare Network Analytics v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [Migrating from Network Analytics v1 to Network Analytics v2](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflare Network Analytics v2](/analytics/network-analytics/)
+-   [Migrating from Network Analytics v1 to Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [Cloudflare GraphQL API](/analytics/graphql-api/)
 -   [Cloudflare Analytics: a quick overview](https://support.cloudflare.com/hc/articles/360037684111)
 -   [IANA port numbers and service names](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -405,7 +405,7 @@ When working with attack logs in the dashboard, keep the following in mind:
 -   Attack logs are stored with start and end timestamps, packet and bit statistics for minimum, maximum, and average data rate, as well as totals, attack type, and action taken. 
 -   Source IP addresses are considered personally identifiable information. Therefore, Cloudflare only stores them for 30 days. After 30 days, source IP addresses are discarded, and the logs are rolled up first into 1-hour groups, then 1-day groups. The 1-hour rollups are stored for 6 month. The one day rollups are stored for 1 year.
 
-For more information on querying and accessing log data, refer to the [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/limits). 
+For more information on querying and accessing log data, refer to the [GraphQL Analytics API](/analytics/graphql-api/limits). 
 
 ### Why does Network Analytics say the destination IP is “unavailable”?
 

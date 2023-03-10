@@ -265,7 +265,7 @@ ___
 
 ## Temporarily pause Cloudflare
 
-For more details, refer to [Pause Cloudflare](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
+For more details, refer to [Pause Cloudflare](/fundamentals/get-started/basic-tasks/manage-domains/pause-cloudflare/).
 
 ___
 

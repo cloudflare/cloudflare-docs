@@ -20,8 +20,8 @@ ___
 
 Review the following Cloudflare Workers documentation to configure Token Authentication:
 
--   [Configure a Worker](https://developers.cloudflare.com/workers/quickstart/#configure)
--   Use the [Auth with Headers](https://developers.cloudflare.com/workers/templates/snippets/auth_with_headers/#body-inner) template
+-   [Configure a Worker](/workers/get-started/quickstarts/)
+-   Use the [Auth with Headers](/workers/examples/auth-with-headers/) template
 
 {{<Aside type="warning">}}
 The Auth with Headers template code contains a generic header key and

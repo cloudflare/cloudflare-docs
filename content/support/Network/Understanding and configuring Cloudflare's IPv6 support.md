@@ -32,7 +32,7 @@ Domains on **Enterprise** plans can toggle IPv6 compatibility within the Cloudfl
 Note that even when IPv6 is disabled, domains receive IPv6 traffic via the Tor network. To completely disable all IPv6 traffic, you can:
 
 -   Disable **Onion Routing** via the **Network** tab of the Cloudflare dashboard. Read [Understanding Cloudflare Tor support and Onion Routing](https://support.cloudflare.com/hc/articles/203306930).
--   Use a firewall rule to block _0:0:0:0:0:0:0:0/0_ using the filter `ip.src in {::/0}`. Learn how to create [firewall rules in Cloudflare](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/).
+-   Use a firewall rule to block _0:0:0:0:0:0:0:0/0_ using the filter `ip.src in {::/0}`. Learn how to create [firewall rules in Cloudflare](/firewall/cf-dashboard/create-edit-delete-rules/).
 
 ___
 

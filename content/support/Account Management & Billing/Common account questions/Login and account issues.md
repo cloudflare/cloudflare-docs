@@ -115,19 +115,19 @@ ___
 
 ## Cannot verify your email?
 
-For more help with email verification, refer to [Verify email address](https://developers.cloudflare.com/fundamentals/account-and-billing/account-setup/verify-email-address/).
+For more help with email verification, refer to [Verify email address](/fundamentals/account-and-billing/account-setup/verify-email-address/).
 
 ___
 
 ## Change your Cloudflare email address or password
 
-For more help, refer to [Change password or email address](https://developers.cloudflare.com/fundamentals/account-and-billing/account-maintenance/change-password-or-email/).
+For more help, refer to [Change password or email address](/fundamentals/account-and-billing/account-maintenance/change-password-or-email/).
 
 ___
 
 ## Secure a compromised account
 
-If you observe suspicious activity within your Cloudflare account, secure your account via [these steps](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/).
+If you observe suspicious activity within your Cloudflare account, secure your account via [these steps](/fundamentals/account-and-billing/account-security/securing-a-compromised-account/).
 
 ___
 
@@ -136,7 +136,7 @@ ___
 You have several sign-in options for the [Cloudflare dashboard](https://dash.cloudflare.com/login):
 
 -   **Email and password**: Enter your email address and password to log in.
--   **Single sign on (SSO)**: Enter your email address (so long as your admin has [configured SSO](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/) as a sign in option).
+-   **Single sign on (SSO)**: Enter your email address (so long as your admin has [configured SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) as a sign in option).
 -   **Sign in with Apple**:
     -   _Same Cloudflare account email as Apple ID_: You can either sign in with your email and password or sign in with Apple.
     -   _Different Cloudflare account email as Apple ID_: Will create a new Cloudflare account if you sign in with Apple. If you want to log into an existing account, [change your email address](https://support.cloudflare.com/hc/en-us/articles/203471284-Login-and-account-issues#12345679) to match the one used for your Apple ID.

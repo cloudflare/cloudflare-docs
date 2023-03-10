@@ -37,7 +37,7 @@ ___
 
 ## Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup).
+Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup).
 
 ___
 
@@ -81,13 +81,13 @@ ___
 
 By default, any changes or additions you make to your Cloudflare zone file will push out in 5 minutes or less. Your local DNS cache may take longer to update; as such, propagation everywhere might take longer than 5 minutes.
 
-This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
+This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
 
 ___
 
 ## Does Cloudflare offer domain masking?
 
-No. Cloudflare does not offer domain masking or DNS redirect services (your hosting provider might). However, we do offer URL forwarding through [Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/).
+No. Cloudflare does not offer domain masking or DNS redirect services (your hosting provider might). However, we do offer URL forwarding through [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 ## Should the cloud icon beside my DNS record be orange or gray?
 
-By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
+By default, only A and CNAME records that handle web traffic (HTTP and HTTPs) can be proxied to Cloudflare. All other DNS records should be toggled to a gray cloud. For further details, refer to our [support guide](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
