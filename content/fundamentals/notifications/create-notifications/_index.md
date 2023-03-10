@@ -27,6 +27,6 @@ There are a variety of services you can connect to Cloudflare using webhooks to 
 
 ## Test your notifications
 
-To test a notification - either to verify that notifications will be sent or which details are available - select **Test** on any active notification.
+To test a notification - either to verify that notifications will be sent to the correct location or to view which details are available - select **Test** on any enabled notification.
 
 This actions sends a notification with fake data.
