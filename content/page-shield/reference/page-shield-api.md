@@ -418,17 +418,17 @@ curl -X POST "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/poli
 header: Response
 ---
 {
-    "success": true,
-    "errors": [],
-    "messages": [],
-    "result": {
-        "id": "<POLICY_ID>",
-        "description": "My first policy in log mode",
-        "action": "log",
-        "expression": "http.host eq myapp.example.com",
-        "enabled": "true",
-        "value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js 'self'"
-    }
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": "<POLICY_ID>",
+    "description": "My first policy in log mode",
+    "action": "log",
+    "expression": "http.host eq myapp.example.com",
+    "enabled": "true",
+    "value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js 'self'"
+  }
 }
 ```
 
