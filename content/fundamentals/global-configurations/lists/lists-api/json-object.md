@@ -138,7 +138,6 @@ A fully populated JSON object for a Bulk Redirect List item has the following st
 }
 ```
 
-
 The JSON object properties for a list item are defined as follows:
 
 {{<table-wrap>}}
@@ -188,7 +187,7 @@ The JSON object properties for a list item are defined as follows:
         </tr>
         <tr>
             <td><code>hostname</code><br />{{<type>}}Object{{</type>}}</td>
-            <td>An object containing a <code>url_hostname</code> property with a hostname value. Refer to <a href="/fundamentals/global-configurations/lists/custom-lists/#hostnames">Custom lists</a> for details on the supported hostname values.</td>
+            <td>An object containing a <code>url_hostname</code> property with a hostname value. Refer to <a href="/fundamentals/global-configurations/lists/custom-lists/#lists-with-hostnames">Custom lists</a> for details on the supported hostname values.</td>
             <td><p>Applies only to custom lists with hostnames.</p></td>
         </tr>
         <tr>
