@@ -54,6 +54,9 @@ This node complements the information in the `dosdAttackAnalyticsGroups` node. P
 - `tcpSequenceNumber`
 - `tcpChecksum`
 - `icmpCode`
+- `ruleId`
+- `ruleName`
+- `attackVector`
 
 Each row represents a packet sample. The sample rate is 1/10,000 packets.
 
