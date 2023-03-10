@@ -19,14 +19,14 @@ When you update the content of a list, any rules that use the list are automatic
 
 Cloudflare stores your lists at the account level. You can use the same list in rules of different zones in your Cloudflare account.
 
-## List types
+## Supported lists
 
-Cloudflare supports the following types of lists:
+Cloudflare supports the following lists:
 
 * [Custom lists](/fundamentals/global-configurations/lists/custom-lists/): Includes custom IP lists and hostname lists.
 * [Managed Lists](/fundamentals/global-configurations/lists/managed-lists/): Lists managed and updated by Cloudflare, such as Managed IP Lists.
 
-Refer to the page about each list type for details.
+Refer to each page for details.
 
 {{<Aside type="note">}}
 Bulk Redirects use [Bulk Redirect Lists](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-lists), a different type of list covered in the Rules documentation.
@@ -65,11 +65,13 @@ List availability varies according to the list type and your Cloudflare plan and
 
 Notes:
 
-* The number of IP lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your IP lists, regardless of your plan.
+* The number of available custom lists depends on the highest plan in your account. Any account with at least one paid plan will get the highest quota.
+
+* The maximum number of items across all lists is the following:
+    * 10,000 items across all your IP lists.
+    * 5,000 items across all other custom lists.
 
 * The Cloudflare Enterprise plan provides access to the Cloudflare Open Proxies Managed IP List. Other Managed IP Lists are available as part of Enterprise Security Bundles. For more information, contact your account team.
-
-* The number of custom lists you can create depends on the Cloudflare plans associated with the zones in your account. You can store up to a total of 10,000 items across all your custom lists, regardless of your plan.
 
 * For details on the availability of Bulk Redirect Lists, refer to the [Rules](/rules/url-forwarding/#availability) documentation.
 
