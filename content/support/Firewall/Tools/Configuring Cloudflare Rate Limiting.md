@@ -91,8 +91,8 @@ Incoming requests are matched based on:
 
 For example:
 
--   http://example.com/example
--   http://example.com/example/\*
+-   `http://example.com/example`
+-   `http://example.com/example/\*`
 
 The request path is case insensitive.  Patterns cannot match content after query strings (_?_) or anchors (_#_).  An asterisk (_\*_) matches any sequence of characters, including an empty sequence. For example:
 
@@ -124,8 +124,6 @@ Specify a minimum of two requests.  For single request blocking, make the path 
 
 A rule triggers once a client’s requests exceed the threshold for the specified duration.
 
- 
-
 Rule mitigations consist of:
 
 #### **Mitigation action**
@@ -135,7 +133,7 @@ Rate limit actions are based on the domain plan as mentioned above in **Rate Lim
 -   **Block** **\-** Cloudflare issues an HTTP 429 error when the threshold is exceeded.
 -   **Legacy CAPTCHA** **\-** Visitor must pass a captcha Challenge.  If passed, Cloudflare allows the request.
 -   **JS Challenge** **\-** Visitor must pass a Cloudflare Javascript Challenge. If passed, Cloudflare allows the request.
--   **Log -** Requests are logged in [Cloudflare Logs](https://support.cloudflare.com/hc/articles/216672448). This helps test rules before applying to production.
+-   **Log -** Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 
 #### **Ban duration**
 
@@ -261,10 +259,20 @@ You can use this method to redirect a rate-limited client to a specific URL:
 1\. Create an HTML page on your server that will redirect to the final URL of the page you wish to display. Include a [meta refresh](https://www.w3.org/TR/WCAG20-TECHS/H76.html) tag in the page content, like in the following example:
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;!doctype html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;head&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  &lt;meta charset=&quot;utf-8&quot;&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  &lt;title&gt;Custom RL page&lt;/title&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  &lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url='https://yourzonename/block'&quot; /&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/head&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;body&gt; &lt;/body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/html&gt;</span></div></span></span></span></code></pre>{{</raw>}}
+```html
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Custom RL page</title>
+  <meta http-equiv="refresh" content="0; url='https://yourzonename/block'" />
+</head>
+
+<body> </body>
+
+</html>
+```
 
 Take note of the public URL of the page you created.
 
