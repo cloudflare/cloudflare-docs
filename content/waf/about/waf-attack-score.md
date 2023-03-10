@@ -33,7 +33,7 @@ WAF Attack Score Class | Business  | N/A (global classification) | [`cf.waf.scor
 
 {{</table-wrap>}}
 
-You can use the above fields in expressions of [custom rules](/waf/custom-rules/) and [firewall rules](/waf/firewall-rules/).
+You can use the above fields in expressions of [custom rules](/waf/custom-rules/), [firewall rules](/waf/firewall-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
 
 The score fields vary between `1` and `100`, where:
 
