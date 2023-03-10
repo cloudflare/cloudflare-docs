@@ -25,10 +25,8 @@ Professional plans or higher can configure PagerDuty to receive notifications ab
 
 There are a variety of services you can connect to Cloudflare using webhooks to receive Notifications from your Cloudflare account. Learn [how to link some of the most popular services](/fundamentals/notifications/create-notifications/configure-webhooks/) to your Cloudflare account.
 
-## How to test
+## Test your notifications
 
-We have now a new functionality that permits you to test the configured notification, and will send an e-mail with `fake-zone-name` or service as `fake-product`, and related with the specific product.
+To test a notification - either to verify that notifications will be sent or which details are available - select **Test** on any active notification.
 
-This is intended to show you how the notifications will be sent, and what are the details available.
-
-
+This actions sends a notification with fake data.
