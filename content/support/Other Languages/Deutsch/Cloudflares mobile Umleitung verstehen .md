@@ -15,6 +15,13 @@ Mit mobiler Umleitung können Sie Besucher von Mobilgeräten automatisch auf ein
 
 Sie müssen den Performance-Dienst von Cloudflare aktiviert haben ([orangefarbene Wolke](https://support.cloudflare.com/hc/articles/200169626) in den **DNS**\-Einstellungen), damit die Umleitung aktiv ist.
 
+{{<Aside type="note">}}
+Der mobile Umleitungsdienst ist für Domains, die ursprünglich über
+Hosting-Partner angemeldet wurden, nicht verfügbar.  Möchten Sie
+benachrichtigt werden, wenn es soweit ist?  [Lassen Sie es uns
+wissen](https://support.cloudflare.com/requests/new).
+{{</Aside>}}
+
 ___
 
 ## Mobile Umleitung aktivieren 
@@ -32,6 +39,13 @@ ___
 6\. Wählen Sie aus der Dropdown-Liste die Subdomain aus, die Sie umleiten möchten.
 
 7\. Wählen Sie **Pfad beibehalten** oder **Pfad entfernen** aus_._
+
+{{<Aside type="note">}}
+**Pfad beibehalten** leitet alle mobilen Anfragen zu derselben, aber auf
+Ihrer für Mobilgeräte optimierten Website gehosteten Ressource um.
+**Pfad entfernen** leitet alle mobilen Anfragen auf Ihre für Mobilgeräte
+optimierte Website-Homepage um.
+{{</Aside>}}
 
 8\. Schalten Sie den Schalter auf **Ein**.
 
@@ -53,6 +67,11 @@ Browser von folgenden Mobilgeräten werden auf die für Mobilgeräte optimierte 
 -   Opera mini
 -   AvantGo
 -   Docomo
+
+{{<Aside type="note">}}
+Die User Agents von iPad und Android-Tablet passen nicht und lösen
+deshalb die mobile Umleitungsfunktion nicht aus.
+{{</Aside>}}
 
 ___
 

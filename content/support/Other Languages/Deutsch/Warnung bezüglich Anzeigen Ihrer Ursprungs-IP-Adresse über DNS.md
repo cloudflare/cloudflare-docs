@@ -43,6 +43,12 @@ _`Ein A-, AAAA-, CNAME- oder MX-Eintrag verweist auf Ihren Ursprungsserver, der 
 
 _`Dieser Eintrag zeigt die IP-Adresse Ihres Ursprungsservers an und kann ihn möglicherweise einem Denial-of-Service-Angriff aussetzen.`_
 
+{{<Aside type="info">}}
+Cloudflare unterstützt jetzt das Proxying von Wildcard-„\*"-Einträgen
+für die DNS-Verwaltung in allen Kundentarifen. Bisher war das nur im
+Enterprise Plan möglich.
+{{</Aside>}}
+
 Eine _dig_\-Anfrage für diese Datensätze zeigt die IP-Adresse Ihres Ursprungsservers an. Diese Informationen erleichtern es potenziellen Angreifern, direkt auf Ihren Ursprungsserver zuzugreifen.
 
 Es gibt jedoch Zeiten, in denen einige Ihrer DNS-Einträge mit einer grauen Wolke markiert bleiben müssen. Zum Beispiel:

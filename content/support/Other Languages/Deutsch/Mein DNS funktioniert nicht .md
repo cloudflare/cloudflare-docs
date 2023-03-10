@@ -36,6 +36,13 @@ Vergewissern Sie sich, dass in der **DNS**\-App Ihres Cloudflare Dashboards die 
 -   Die Root-Domain (z. B. _beispiel.de_)
 -   Alle vorhandenen Subdomains (z. B. _www.beispiel.de, blog.beispiel.de_ usw.)
 
+{{<Aside type="tip">}}
+Wenn Sie ein [partielles
+Setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup)
+haben, stellen Sie sicher, dass Ihre DNS-Einträge auch bei Ihren
+autoritativen Nameservern vorhanden sind.
+{{</Aside>}}
+
 Erfahren Sie mehr über das Einrichten von A- und CNAME-[DNS-Einträgen](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
 
 ### Vor dem Hinzufügen der Domain zu Cloudflare wurde DNSSEC nicht deaktiviert

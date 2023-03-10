@@ -18,6 +18,11 @@ Wenn auf Ihrer Website Bilder fehlen, sollten Sie die folgenden Schritte durchf�
 -   Deaktivieren Sie **Rocket Loader** über die **Speed**\-App des Cloudflare Dashboards.
 -   Deaktivieren Sie **Mirage** über die **Speed**\-App des Cloudflare Dashboards.
 
+{{<Aside type="info">}}
+**Mirage** ist nur für Domains mit einem kostenpflichtigen
+Cloudflare-Plan verfügbar.
+{{</Aside>}}
+
 -   [Informieren Sie den Cloudflare-Support](https://support.cloudflare.com/hc/articles/200172476) über das Problem und ob es durch Deaktivierung von **Rocket Loader** oder **Mirage** gelöst wird.
 
 ___
