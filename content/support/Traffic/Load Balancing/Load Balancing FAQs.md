@@ -77,7 +77,7 @@ ___
 
 ## Why do I see different numbers of requests in Load Balancing Analytics?
 
-You may see different numbers of requests when reviewing [Load Balancing Analytics](/load-balancing/load-balancing-analytics), especially when compared to other Cloudflare dashboards (Caching, etc.).
+You may see different numbers of requests when reviewing [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/), especially when compared to other Cloudflare dashboards (Caching, etc.).
 
 Load balancing **requests** are the number of uncached requests made by your load balancer. By default, Cloudflare caches resolved IP addresses for up to five seconds. This built-in caching is often the cause of an discrepancies.
 
@@ -93,4 +93,4 @@ ___
 
 -   [Origin and pool health](/load-balancing/understand-basics/health-details)
 -   [Monitors](/load-balancing/understand-basics/monitors)
--   [Load Balancing Analytics](/load-balancing/load-balancing-analytics)
+-   [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/)

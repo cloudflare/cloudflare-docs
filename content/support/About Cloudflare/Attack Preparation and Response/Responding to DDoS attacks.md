@@ -58,7 +58,7 @@ plans](https://www.cloudflare.com/plans/).
 
 Enable [WAF managed rules](https://support.cloudflare.com/hc/en-us/articles/200172016).
 
-If you have access to the new Cloudflare WAF announced in March 2021, [deploy WAF Managed Rulesets](/waf/managed-rulesets/deploy-zone-dashboard/) instead.
+If you have access to the new Cloudflare WAF announced in March 2021, [deploy WAF Managed Rulesets](/waf/managed-rules/deploy-zone-dashboard/) instead.
 
 ___
 

@@ -397,5 +397,5 @@ ___
 
 ## Related Resources
 
--   [HTTP request headers](/fundamentals/get-started/http-request-headers)
+-   [HTTP request headers](/fundamentals/get-started/http-request-headers/)
 -   [Transform Rules](/rules/transform/)

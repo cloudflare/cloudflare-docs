@@ -21,14 +21,14 @@ verwenden (dokumentiert in Cloudflares Support KB), sind
 Cache-Ressourcen und bekannte Suchmaschinen-Crawler von Ihren
 Durchsatzbegrenzungsregeln ausgenommen. Daher haben sie keinen Einfluss
 auf das
-[SEO-Ranking](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/improve-seo/)
+[SEO-Ranking](https://developers.cloudflare.com/fundamentals/get-started/task-guides/improve-seo/)
 Ihrer Website. Wenn Sie jedoch die [neue Version der
 Durchsatzbegrenzungsregeln](https://developers.cloudflare.com/waf/rate-limiting-rules/)
 verwenden (dokumentiert in der Entwicklerdokumentation), sollten Sie
 darauf achten, dass Ihre Durchsatzbegrenzungsregeln keine bekannten
 guten Bots betreffen. Dies könnte sonst das SEO-Ranking Ihrer Website
 beeinträchtigen. Weitere Informationen finden Sie unter [SEO
-verbessern](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/improve-seo/).
+verbessern](https://developers.cloudflare.com/fundamentals/get-started/task-guides/improve-seo/).
 {{</Aside>}}
 
 {{<Aside type="note">}}

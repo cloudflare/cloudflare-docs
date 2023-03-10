@@ -33,9 +33,9 @@ the developer documentation.
 
 ### Rate limiting and SEO
 
-For customers using the previous version of rate limiting rules (documented in Cloudflare's Support KB), cached resources and known Search Engine crawlers are exempted from your rate limiting rules. Therefore, they do not affect your website's [SEO ranking](/fundamentals/get-started/basic-tasks/improve-seo/).
+For customers using the previous version of rate limiting rules (documented in Cloudflare's Support KB), cached resources and known Search Engine crawlers are exempted from your rate limiting rules. Therefore, they do not affect your website's [SEO ranking](/fundamentals/get-started/task-guides/improve-seo/).
 
-However, if you are using the [new version of rate limiting rules](/waf/rate-limiting-rules/) (documented in the developer documentation), you must ensure that your rate limiting rules are not affecting known good bots, so that the SEO ranking of your website is not affected. For more information, refer to [Improve SEO](/fundamentals/get-started/basic-tasks/improve-seo/).
+However, if you are using the [new version of rate limiting rules](/waf/rate-limiting-rules/) (documented in the developer documentation), you must ensure that your rate limiting rules are not affecting known good bots, so that the SEO ranking of your website is not affected. For more information, refer to [Improve SEO](/fundamentals/get-started/task-guides/improve-seo/).
 
 ___
 

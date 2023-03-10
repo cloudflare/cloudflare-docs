@@ -183,7 +183,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
 
-If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/getting-started#adding-a-custom-domain).
+If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/get-started/#adding-a-custom-domain).
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -266,7 +266,7 @@ updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
 -   No [SNI](https://support.cloudflare.com/hc/articles/360026016272) support
--   The [cipher suites](/ssl/ssl-tls/cipher-suites) accepted by Cloudflare does not match the cipher suites supported by the origin web server
+-   The [cipher suites](/ssl/reference/cipher-suites/) accepted by Cloudflare does not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
 If 525 errors occur intermittently, review the origin web server error
@@ -280,7 +280,7 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 **Additional checks**
 
 -   Check if you have a certificate installed on your origin server. You can check [this article](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
--   [Review the cipher suites](/ssl/ssl-tls/cipher-suites) your server is using to ensure they match what is supported by Cloudflare.
+-   [Review the cipher suites](/ssl/reference/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
 -   Check your server's error logs from the timestamps you see 525s to ensure there are errors that could be causing the connection to be reset during the SSL handshake.
 
 ___

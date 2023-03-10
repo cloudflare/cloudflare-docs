@@ -23,7 +23,7 @@ Managed rules, a feature of Cloudflare WAF (Web Application Firewall), identifie
     of WAF Managed
     Rules](https://support.cloudflare.com/hc/articles/5995821690637).
 -   The new WAF Managed Rules provide the [Cloudflare Free Managed
-    Ruleset](/waf/managed-rulesets/) to
+    Ruleset](/waf/managed-rules/) to
     all customers, including customers on a Free plan. Refer to the
     [announcement blog
     post](https://blog.cloudflare.com/waf-for-everyone/) for details.
@@ -41,7 +41,7 @@ Managed rules are available to Pro, Business, and Enterprise plans for any [subd
 -   **Package: OWASP ModSecurity Core Rule Set**
 -   **Customer Requested Rules** 
 
-Review threats blocked via the [Security Events](/waf/analytics/)' **Activity log** available in **Security** > **Events**.
+Review threats blocked via the [Security Events](/waf/security-events/)' **Activity log** available in **Security** > **Events**.
 
 ### Important considerations
 
@@ -70,7 +70,7 @@ By default, WAF managed rules are fully managed via the Cloudflare dashboard and
 
 The definition of suspicious content is subjective for each website.  For example, PHP code posted to your website is suspicious unless your website teaches how to code and requires PHP code submissions from visitors.  Therefore, such a website must disable related managed rules that interfere with normal operation.
 
-To test for false positives, set WAF managed rules to **Simulate** mode, to record the response to possible attacks without challenging or blocking. Also, use the Firewall Analytics [**Activity log**](/waf/analytics/paid-plans#activity-log) to determine which managed rules caused false positives.
+To test for false positives, set WAF managed rules to **Simulate** mode, to record the response to possible attacks without challenging or blocking. Also, use the Firewall Analytics [**Activity log**](/waf/security-events/paid-plans#activity-log) to determine which managed rules caused false positives.
 
 If you encounter a false positive due to the [legacy WAF](https://support.cloudflare.com/hc/en-us/articles/200172016-Understanding-the-Cloudflare-Web-Application-Firewall-WAF-), there are several potential resolutions:
 
@@ -81,7 +81,7 @@ If you encounter a false positive due to the [legacy WAF](https://support.cloud
 
 If you encounter a false positive due to the [new WAF](https://blog.cloudflare.com/new-cloudflare-waf/), there are several potential resolutions:
 
-1.  **Add WAF Exception:** You can define WAF exceptions in the [Cloudflare dashboard](/waf/managed-rulesets/waf-exceptions/define-dashboard) or using the [Rulesets API](/waf/managed-rulesets/waf-exceptions/define-api).
+1.  **Add WAF Exception:** You can define WAF exceptions in the [Cloudflare dashboard](/waf/managed-rules//waf-exceptions/define-dashboard) or using the [Rulesets API](/waf/managed-rules/waf-exceptions/define-api).
 2.  **Disable the corresponding** [**managed rule(s**](https://support.cloudflare.com/hc/articles/200172016)): Stops blocking or challenging false positives, but reduces overall site security. A request blocked by Rule ID _949110_ refers to the [new OWASP rules](https://blog.cloudflare.com/new-cloudflare-waf/). Decrease OWASP sensitivity to resolve the issue.
 
 **Note:** If [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to verify whether a WAF managed rule triggers as expected, [provide a HAR file](https://support.cloudflare.com/hc/articles/203118044#h_8c9c815c-0933-49c0-ac00-b700700efce7) captured while sending the specific request of concern.
@@ -126,7 +126,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 -   _Disable -_ turns off the specific rule within the group**.**
 -   _Block_ - the request is discarded. 
 -   _Legacy CAPTCHA_ - the visitor receives a CAPTCHA challenge page.
--   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/analytics/paid-plans#activity-log).
+-   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 Cloudflare’s [WAF changelog](/waf/change-log/scheduled-changes/) allows customers to monitor ongoing changes to the **Cloudflare Managed Ruleset.**
 
@@ -140,7 +140,7 @@ ___
 
 -   _Block_ - the request is discarded.
 -   _Challenge_ - the visitor receives a CAPTCHA challenge page.
--   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/analytics/paid-plans#activity-log).
+-   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 The sensitivity score required to trigger the WAF for a specific **Sensitivity** is as follows:
 
@@ -154,7 +154,7 @@ For Ajax requests, the following scores are applied instead:
 -   _Medium_ - 80 and higher
 -   _High_ - 65 and higher
 
-Review the [Activity log](/waf/analytics/paid-plans#activity-log) for the final score as well as the individual triggered rules.
+Review the [Activity log](/waf/security-events/paid-plans#activity-log) for the final score as well as the individual triggered rules.
 
 ### Control Cloudflare’s OWASP package
 
@@ -184,6 +184,6 @@ ___
 
 ## Related resources
 
--   [Security Events](/waf/analytics/)
+-   [Security Events](/waf/security-events/)
 -   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
 -   [Cloudflare’s WAF changelog](/waf/change-log/scheduled-changes/)

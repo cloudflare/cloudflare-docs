@@ -21,7 +21,7 @@ being ONLY for the Apex hostname in the domain. Otherwise, the UI will
 include with the wildcard (\*) symbol as expect.
 {{</Aside>}}
 
-For more details on hostname priority, refer to our [developer documentation](/ssl/ssl-tls/certificate-and-hostname-priority).
+For more details on hostname priority, refer to our [developer documentation](/ssl/reference/certificate-and-hostname-priority/).
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 ## Does Cloudflare support TLS client authentication?
 
-TLS Client Authentication validates that a certificate presented by a client is signed by the company’s root Certificate Authority certificate.  By validating this certificate on each request, access can be limited to authorized client connections.  To enable TLS client authentication via Cloudflare, refer to our documentation on [Mutual TLS authentication](/access/service-auth/mtls/).
+TLS Client Authentication validates that a certificate presented by a client is signed by the company’s root Certificate Authority certificate.  By validating this certificate on each request, access can be limited to authorized client connections.  To enable TLS client authentication via Cloudflare, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 No. Multiple industry leaders — including [Digicert](https://www.digicert.com/blog/certificate-pinning-what-is-certificate-pinning) and [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning) — have discouraged certificate pinning because of security concerns.
 
-For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/certificate-transparency-monitoring).
+For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/certificate-transparency-monitoring/).
 
 ___
 

@@ -24,7 +24,7 @@ The following should be considered an overview of some recommended security acti
 
 ### Cloudflare Managed Rulesets
 
-The [WAF Managed Rulesets](/waf/managed-rulesets/) are pre-configured rulesets that provide immediate protection against a variety of attacks, and are regularly updated. Many rules are turned on by default, but not all. It is recommended that you browse the Cloudflare Managed Ruleset to find any additional rules tagged for your content management system not enabled, and enable them:
+The [WAF Managed Rulesets](/waf/managed-rules/) are pre-configured rulesets that provide immediate protection against a variety of attacks, and are regularly updated. Many rules are turned on by default, but not all. It is recommended that you browse the Cloudflare Managed Ruleset to find any additional rules tagged for your content management system not enabled, and enable them:
 
 ![Dashboard screenshot filtering for WordPress](/support/static/Wordpress-configure-deployment.png)
 
@@ -36,7 +36,7 @@ While the feature to customize these managed rulesets required a paid plan, the 
 -   Shellshock rules;
 -   Rules matching very common WordPress exploits;
 
-Additionally, you can configure many aspects of the [OWASP Core Ruleset](/waf/managed-rulesets/reference/owasp-core-ruleset/), including the anomaly threshold, paranoia level, and individual rules. One good practice is to ensure any rules related to XSS and SQL injection are enabled.
+Additionally, you can configure many aspects of the [OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/), including the anomaly threshold, paranoia level, and individual rules. One good practice is to ensure any rules related to XSS and SQL injection are enabled.
 
 ___
 
@@ -117,8 +117,8 @@ ___
 
 ## Resources
 
--   [WAF Managed Rules](/waf/managed-rulesets/)
--   [Cloudflare OWASP Core Ruleset](/waf/managed-rulesets/reference/owasp-core-ruleset/)
+-   [WAF Managed Rules](/waf/managed-rules/)
+-   [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/)
 -   [Configure a custom rule with the Skip action](/waf/custom-rules/skip/)
 -   [Zero Trust Services](https://www.cloudflare.com/plans/zero-trust-services/)
 -   [Client certificates](/ssl/client-certificates/)
