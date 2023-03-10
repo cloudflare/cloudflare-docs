@@ -10,7 +10,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
@@ -30,28 +30,23 @@ export default {
 
 ```
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts/esm">}}
 
-```js
-import { parse } from 'cookie';
-
-// The name of the cookie
-const COOKIE_NAME = '__uid';
-
-function handleRequest(request) {
-  const cookie = parse(request.headers.get('Cookie') || '');
-
-  if (cookie[COOKIE_NAME] != null) {
-    // Respond with the cookie value
-    return new Response(cookie[COOKIE_NAME]);
-  }
-
-  return new Response('No cookie with name: ' + COOKIE_NAME);
+```ts
+const handler: ExportedHandler = {
+  async fetch(request) {
+    // The name of the cookie
+    const COOKIE_NAME = '__uid';
+    const cookie = parse(request.headers.get('Cookie') || '');
+    if (cookie[COOKIE_NAME] != null) {
+      // Respond with the cookie value
+      return new Response(cookie[COOKIE_NAME]);
+    }
+    return new Response('No cookie with name: ' + COOKIE_NAME);
+  },
 }
 
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}

@@ -9,7 +9,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 ```js
 export default {
@@ -43,15 +43,11 @@ export default {
 }
 ```
 {{</tab>}}
-{{<tab label="js/sw">}}
-```js
-addEventListener('fetch', event => {
-    return event.respondWith(handleRequest(event.request));
-})
-
-	async function handleRequest (request) {
-		// Service  Workers secrets are global variables
-		const SITE_KEY = SITE_KEY
+{{<tab label="ts/esm">}}
+```ts
+const handler: ExportedHandler = {
+	async fetch(request: Request, env: Env) {
+		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
@@ -78,6 +74,8 @@ addEventListener('fetch', event => {
 		return newRes
 	}
 }
+
+export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}

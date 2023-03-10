@@ -12,7 +12,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
@@ -41,37 +41,34 @@ export default {
 };
 ```
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts/esm">}}
 
-```js
-async function handleRequest(request) {
-  const url = new URL(request.url);
-
-  // Only use the path for the cache key, removing query strings
-  // and always store using HTTPS, for example, https://www.example.com/file-uri-here
-  const someCustomKey = `https://${url.hostname}${url.pathname}`;
-
-  let response = await fetch(request, {
-    cf: {
-      // Always cache this fetch regardless of content type
-      // for a max of 5 seconds before revalidating the resource
-      cacheTtl: 5,
-      cacheEverything: true,
-      //Enterprise only feature, see Cache API for other plans
-      cacheKey: someCustomKey,
-    },
-  });
-  // Reconstruct the Response object to make its headers mutable.
-  response = new Response(response.body, response);
-
-  // Set cache control headers to cache on browser for 25 minutes
-  response.headers.set('Cache-Control', 'max-age=1500');
-  return response;
+```ts
+const handler: ExportedHandler = {
+  async fetch(request) {
+    const url = new URL(request.url);
+    // Only use the path for the cache key, removing query strings
+    // and always store using HTTPS, for example, https://www.example.com/file-uri-here
+    const someCustomKey = `https://${url.hostname}${url.pathname}`;
+    let response = await fetch(request, {
+      cf: {
+        // Always cache this fetch regardless of content type
+        // for a max of 5 seconds before revalidating the resource
+        cacheTtl: 5,
+        cacheEverything: true,
+        //Enterprise only feature, see Cache API for other plans
+        cacheKey: someCustomKey,
+      },
+    });
+    // Reconstruct the Response object to make its headers mutable.
+    response = new Response(response.body, response);
+    // Set cache control headers to cache on browser for 25 minutes
+    response.headers.set('Cache-Control', 'max-age=1500');
+    return response;
+  },
 }
 
-addEventListener('fetch', event => {
-  return event.respondWith(handleRequest(event.request));
-});
+export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}
@@ -106,7 +103,7 @@ Normally, Cloudflare computes the cache key for a request based on the request's
 
 {{</content-column>}}
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
@@ -128,24 +125,27 @@ export default {
 };
 ```
 {{</tab>}}
-{{<tab label="js/sw">}}
+{{<tab label="ts/esm">}}
 
-```js
-addEventListener('fetch', event => {
-  let url = new URL(event.request.url);
-  if (Math.random() < 0.5) {
-    url.hostname = 'example.s3.amazonaws.com';
-  } else {
-    url.hostname = 'example.storage.googleapis.com';
-  }
+```ts
+const handler: ExportedHandler = {
+  async fetch(request) {
+    let url = new URL(request.url);
 
-  let request = new Request(url, event.request);
-  event.respondWith(
-    fetch(request, {
-      cf: { cacheKey: event.request.url },
-    })
-  );
-});
+    if (Math.random() < 0.5) {
+      url.hostname = 'example.s3.amazonaws.com';
+    } else {
+      url.hostname = 'example.storage.googleapis.com';
+    }
+
+    let newRequest = new Request(url, request);
+    return fetch(newRequest, {
+      cf: { cacheKey: request.url },
+    });
+  },
+}
+
+export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}
