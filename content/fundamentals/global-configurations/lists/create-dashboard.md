@@ -18,7 +18,7 @@ To create a list, follow these steps:
 
 5. (Optional) Enter a description for the list, with a maximum length of 500 characters.
 
-6. For **Content type**, select the [type of list](/fundamentals/global-configurations/custom-lists/) you are creating.
+6. For **Content type**, select the [type of list](/fundamentals/global-configurations/lists/custom-lists/) you are creating.
 
 7.  Select **Create**.
 
