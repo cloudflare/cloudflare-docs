@@ -43,7 +43,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display browser error page.                                                                                          |
 | Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set on the Zero Trust dashboard. |
-| Pass through | Ignore untrusted certificate messages.                                                                               |
+| Pass through | Bypass untrusted certificate messages.                                                                               |
 
 ### Block
 
