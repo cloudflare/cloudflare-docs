@@ -18,6 +18,23 @@ Once packets hit Cloudflare’s network, traffic is inspected for attacks, filte
 
 Magic Transit users have two options for their implementation: ingress traffic or ingress and egress traffic. Users with an egress implementation will need to set up policy-based routing (PBR) or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
 
+```mermaid
+flowchart LR
+A(DDoS attack) --x B[DDoS protection + Network firewall]
+B[DDoS protection + Network firewall]-- Anycast <br> GRE tunnel ---C(Customer network)
+B[DDoS protection + Network firewall]-- Cloudflare <br> Network Internconnect ---C(Customer network)
+C(Customer network)-. "(Optional) Egress via <br> Direct Server Return" .-> D(User)
+D(User) --- B[DDoS protection + Network firewall]
+style A stroke: red
+style B stroke: orange
+style C stroke: blue
+linkStyle 0 stroke-width:2px,stroke:red
+linkStyle 1 stroke-width:2px,stroke:orange
+linkStyle 2 stroke-width:2px,stroke:blue
+linkStyle 3 stroke-width:2px,stroke:gray
+linkStyle 4 stroke-width:2px,stroke:green
+```
+
 ![Magic Transit deployment diagram showing how traffic moves through the Cloudflare network](/magic-transit/static/egress-diagram.png)
 
 {{<Aside type="note">}}
