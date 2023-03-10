@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Malicious script and connection detection
 weight: 2
 meta:
-  description: Learn more about the different mechanisms Page Shield uses to determine if a script, or a connection made by a script, is malicious.
+  description: Page Shield implements different mechanisms to determine if a script or a connection is malicious.
 ---
 
 # Malicious script and connection detection

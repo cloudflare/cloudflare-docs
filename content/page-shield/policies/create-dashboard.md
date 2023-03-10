@@ -4,6 +4,7 @@ title: Create in the dashboard
 weight: 2
 meta:
   title: Create a policy in the dashboard
+  description: Learn how to create a Page Shield policy in the Cloudflare dashboard.
 ---
 
 # Create a policy in the dashboard

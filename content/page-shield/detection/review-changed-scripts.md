@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Review changed scripts
 weight: 4
+meta:
+  description: Learn how to review scripts on your domain after receiving a code change alert.
 ---
 
 # Review changed scripts

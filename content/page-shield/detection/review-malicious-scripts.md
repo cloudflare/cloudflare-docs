@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Review resources considered malicious
 weight: 3
+meta:
+  description: Learn how to review scripts and connections that Page Shield considered malicious.
 ---
 
 # Review scripts and connections considered malicious
