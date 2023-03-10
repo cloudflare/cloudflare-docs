@@ -542,6 +542,7 @@
 
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
+/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/migrating-from-recaptcha/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
