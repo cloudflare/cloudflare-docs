@@ -52,17 +52,6 @@ html {
     grid-gap: 5px;
 }
 
-@media (max-width: 1000px) {
-    .pathGrid {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .individualPath {
-        height: 14em;
-    }
-}
-
 .pathGrid a {
     color: #0055DC;
 }
@@ -85,6 +74,16 @@ html {
 
 [theme=dark] .individualPath {
     border: 2px solid #242628;
+}
+
+@media (max-width: 1000px) {
+    .pathGrid {
+        display: flex;
+        flex-direction: column;
+    }
+    .individualPath {
+        height: 14em;
+    }
 }
 
 .pathHeading {
