@@ -24,7 +24,7 @@ Page Shield includes the following features:
 
 {{<button-group>}}
   {{<button type="primary" href="/page-shield/get-started/">}}Get started{{</button>}}
-  {{<button type="secondary" href="/page-shield/about/">}}Learn more{{</button>}}
+  {{<button type="secondary" href="/page-shield/how-it-works/">}}How it works{{</button>}}
 {{</button-group>}}
 
 ## Availability
