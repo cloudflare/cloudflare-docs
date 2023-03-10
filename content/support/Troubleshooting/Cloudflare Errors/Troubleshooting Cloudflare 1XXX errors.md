@@ -194,7 +194,7 @@ The owner of the website (e.g. example.com) has banned the country or region you
 
 ### Resolution
 
-Ensure your IP address is allowed under the [IP Access Rules](https://support.cloudflare.com/hc/en-us/articles/217074967-Configuring-IP-Access-Rules) security feature.
+Ensure your IP address is allowed under the [IP Access Rules](https://support.cloudflare.com/hc/en-us/articles/217074967) security feature.
 
 ___
 
@@ -540,7 +540,7 @@ A Cloudflare Worker throws a runtime JavaScript exception.
 
 ### Resolution:
 
-[Provide appropriate issues details](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16) to Cloudflare Support.
+[Provide appropriate issues details](https://support.cloudflare.com/hc/articles/200172476) to Cloudflare Support.
 
 ___
 
@@ -582,5 +582,5 @@ ___
 
 ## Related resources
 
--   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16)
+-   [Contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)
 -   [Customizing Cloudflare error pages](https://support.cloudflare.com/hc/articles/200172706)
