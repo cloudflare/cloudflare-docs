@@ -23,7 +23,7 @@ Please review the product-specific pages for details on pricing and charges:
 -   [Load Balancing](https://support.cloudflare.com/hc/en-us/articles/115005254367)
 -   [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/en-us/articles/115000272247)
 -   [Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360016450871)
--   [Cloudflare Workers and Workers KV](/workers/about/pricing/)
+-   [Cloudflare Workers and Workers KV](/workers/platform/pricing/)
 
 ___
 

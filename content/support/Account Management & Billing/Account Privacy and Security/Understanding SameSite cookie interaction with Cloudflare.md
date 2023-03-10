@@ -46,6 +46,6 @@ ___
 ## Related resources
 
 -   [Learn more about the SameSite cookie](https://web.dev/samesite-cookies-explained/) 
--   [Cloudflare Cookies](/fundamentals/get-started/cloudflare-cookies)
+-   [Cloudflare Cookies](/fundamentals/get-started/reference/cloudflare-cookies/)
 -   [Cloudflare SSL FAQ](https://support.cloudflare.com/hc/articles/204144518#h_999722138611548960019807)
--   [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites)
+-   [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)

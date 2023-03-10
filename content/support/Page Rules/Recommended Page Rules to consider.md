@@ -20,7 +20,7 @@ Keep in mind that not all rules will be right for everyone, but these are some o
 
 {{<Aside type="tip">}}
 Consider using [Dynamic
-Redirects](/rules/url-forwarding/dynamic-redirects/)
+Redirects](/rules/url-forwarding/single-redirects/)
 or [Bulk
 Redirects](/rules/url-forwarding/bulk-redirects/)
 to forward or redirect traffic to a different URL due to ease of use,

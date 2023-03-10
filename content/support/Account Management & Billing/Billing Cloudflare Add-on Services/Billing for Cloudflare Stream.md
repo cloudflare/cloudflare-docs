@@ -81,4 +81,4 @@ Cloudflare dashboard.
 ___
 
 -   [Cloudflare Stream video platform](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Cloudflare Stream developer documentation](/stream/getting-started/)
+-   [Cloudflare Stream developer documentation](/stream/get-started/)

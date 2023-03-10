@@ -20,7 +20,7 @@ ___
 
 Review the following Cloudflare Workers documentation to configure Token Authentication:
 
--   [Configure a Worker](/workers/quickstart/#configure)
+-   [Configure a Worker](/workers/get-started/quickstarts/)
 -   Use the [Auth with Headers](/workers/examples/auth-with-headers/) template
 
 {{<Aside type="warning">}}

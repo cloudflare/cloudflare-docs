@@ -87,7 +87,7 @@ ___
 
 ## Does Cloudflare offer domain masking?
 
-No. Cloudflare does not offer domain masking or DNS redirect services (your hosting provider might). However, we do offer URL forwarding through [Bulk Redirects](/rules/bulk-redirects/).
+No. Cloudflare does not offer domain masking or DNS redirect services (your hosting provider might). However, we do offer URL forwarding through [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
 ___
 

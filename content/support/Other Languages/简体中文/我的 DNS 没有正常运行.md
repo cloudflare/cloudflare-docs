@@ -52,4 +52,4 @@ ___
 
 ### 未解析的 IP 地址
 
-在极少数情况下，请求 URL 的客户端中的 DNS 解析器可能无法将 DNS 记录解析为有效的 IP 地址。请待一段时间后重新加载页面以查看问题是否消失。此问题与 Cloudflare 无关，但使用 [Cloudflare 的 DNS 解析服务](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/)可能会有所帮助。如需当前 DNS 解析器的其他帮助，请与您的主机提供商联系。
+在极少数情况下，请求 URL 的客户端中的 DNS 解析器可能无法将 DNS 记录解析为有效的 IP 地址。请待一段时间后重新加载页面以查看问题是否消失。此问题与 Cloudflare 无关，但使用 [Cloudflare 的 DNS 解析服务](https://developers.cloudflare.com/1.1.1.1/setup/)可能会有所帮助。如需当前 DNS 解析器的其他帮助，请与您的主机提供商联系。
