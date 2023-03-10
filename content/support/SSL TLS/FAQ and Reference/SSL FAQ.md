@@ -133,7 +133,7 @@ ___
 
 No. Multiple industry leaders — including [Digicert](https://www.digicert.com/blog/certificate-pinning-what-is-certificate-pinning) and [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning) — have discouraged certificate pinning because of security concerns.
 
-For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/certificate-transparency-monitoring/).
+For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/).
 
 ___
 
