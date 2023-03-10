@@ -26,7 +26,18 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 {{<render file="_account-preamble.md">}}
 
-{{<render file="_create-account.md">}}
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_create-account-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_create-account-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Step 2 - Grant user access
 

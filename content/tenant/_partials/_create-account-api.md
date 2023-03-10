@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To create an account, make a `POST` request to the `/accounts` endpoint and include the following values:
+To create an account using the API, make a `POST` request to the `/accounts` endpoint and include the following values:
 
 - `name` {{<type>}}string{{</type>}}
 
