@@ -30,7 +30,7 @@ A Cloudflare Pages project can be attached to a certain number of domains per pl
 
 | Free | Pro | Business | Enterprise |
 | ---- | --- | -------- | ---------- |
-| 100  | 250 | 500      | 500        |
+| 100  | 250 | 500      | 5000000000 |
 
 ## Files
 
