@@ -259,9 +259,9 @@ label {
 
 @media (max-width: 768px) {
 
-.progressIndicator {
-    max-width: 100%;
-}
+    .progressIndicator {
+        max-width: 100%;
+    }
 }
 
 .timeEstimate {
