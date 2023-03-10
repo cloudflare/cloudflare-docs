@@ -70,11 +70,13 @@ When Magic WAN health checks determine that Tunnel 2 is unhealthy, that route is
 
 ```mermaid
 flowchart LR
+classDef red fill:#FF0000
+classDef green fill:#00FF00
 accTitle: Tunnels diagram
 accDescr: This example has Tunnel 2 unhealthy, and all traffic prioritized to Tunnel 1.
 A((User)) --> B[Cloudflare] --- C[Anycast IP] --- D(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers)
-C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 50% of flows/] --> H{{Customer network 1}}
-C[Anycast IP] --> F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/] --> I{{Customer network 2}}
+C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 100% of flows/]:::green --> H{{Customer network 1}}
+C[Anycast IP] --> F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --> I{{Customer network 2}}
 C[Anycast IP] --> G[/Tunnel 3 / priority 2 <br> / 0% of flows/] --> J{{Customer network 3}}
 ```
 
@@ -84,12 +86,14 @@ When Magic WAN determines that Tunnel 1 is unhealthy as well, that route is also
 
 ```mermaid
 flowchart LR
+classDef red fill:#FF0000
+classDef green fill:#00FF00
 accTitle: Tunnels diagram
 accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 A((User)) --> B[Cloudflare] --- C[Anycast IP] --- D(Lower-priority tunnels <br> are used when higher-priority tunnels <br> are unhealthy)
-C[Anycast IP]  -- Intermediary <br> network issue -->  E[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/] --> H{{Customer network 1}}
-C[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/] --> I{{Customer network 2}}
-C[Anycast IP] -->  G[/Tunnel 3 / priority 2 <br> / 100% of flows/] --> J{{Customer network 3}}
+C[Anycast IP]  -- Intermediary <br> network issue -->  E[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/]:::red --> H{{Customer network 1}}
+C[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --> I{{Customer network 2}}
+C[Anycast IP] -->  G[/Tunnel 3 / priority 2 <br> / 100% of flows/]:::green --> J{{Customer network 3}}
 ```
 
 When Magic WAN determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
