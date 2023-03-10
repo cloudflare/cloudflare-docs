@@ -37,7 +37,7 @@ export default {
 {{</tab>}}
 {{<tab label="ts/esm">}}
 ```ts
-export default {
+const handler: ExportedHandler = {
 	async fetch(request: Request) {
 		// You can find this in the dashboard, it should look something like this: ZWd9g1K7eljCn_KDTu_MWA
 		const accountHash = '';
@@ -49,7 +49,8 @@ export default {
 
 		return fetch(`https://imagedelivery.net/${accountHash}${pathname}`);
 	}
-};
+}
+export default handler;
 ```
 {{</tab>}}
 {{</tabs>}}

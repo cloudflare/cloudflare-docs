@@ -9,7 +9,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
@@ -21,17 +21,16 @@ export default {
 }
 ```
 {{</tab>}}
-{{<tab label="js/sw">}}
-```js
-async function handleRequest(request) {
-  console.log(new Map(request.headers))
-
-  return new Response("Hello world")
+{{<tab label="ts/esm">}}
+```ts
+const handler: ExportedHandler = {
+  async fetch(request) {
+    console.log(new Map(request.headers))
+    return new Response("Hello world")
+  }
 }
 
-addEventListener("fetch", event => {
-  return event.respondWith(handleRequest(event.request))
-})
+export default handler
 ```
 {{</tab>}}
 {{</tabs>}}
