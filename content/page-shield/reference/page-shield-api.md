@@ -391,7 +391,11 @@ All other scripts would trigger a policy violation.
 For details on Content Security Policy values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
 
 {{<Aside type="warning">}}
-Currently, you can only create Page Shield policies containing `script-src` or `script-src-*` directives.
+Currently, you can only create Page Shield policies containing `script-src` directives. Additionally, the supported keywords in these directives are the following:
+- `'self'`
+- `'none'`
+- `'unsafe-inline'`
+- `'unsafe-eval'`
 {{</Aside>}}
 
 ```bash
