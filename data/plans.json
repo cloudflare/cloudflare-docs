@@ -396,24 +396,32 @@
           "ent": "Yes"
         },
         "b_ip_lists": {
-          "title": "IP Lists",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/",
+          "title": "IP lists",
+          "link": "/fundamentals/global-configurations/lists/custom-lists/",
           "free": 1,
           "pro": 10,
           "biz": 10,
           "ent": 10
         },
-        "c_open_proxies_list": {
+        "c_other_custom_lists": {
+          "title": "Other custom lists (hostnames)",
+          "link": "/fundamentals/global-configurations/lists/custom-lists/",
+          "free": 0,
+          "pro": 10,
+          "biz": 10,
+          "ent": 10
+        },
+        "d_open_proxies_list": {
           "title": "Cloudflare Open Proxies Managed IP List",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "link": "/fundamentals/global-configurations/lists/managed-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Yes"
         },
-        "d_all_managed_ip_lists": {
+        "e_all_managed_ip_lists": {
           "title": "All Managed IP Lists",
-          "link": "/fundamentals/global-configurations/lists/ip-lists/#managed-ip-lists",
+          "link": "/fundamentals/global-configurations/lists/managed-lists/#managed-ip-lists",
           "free": "No",
           "pro": "No",
           "biz": "No",
