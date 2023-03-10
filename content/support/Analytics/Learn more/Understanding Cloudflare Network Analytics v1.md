@@ -134,7 +134,7 @@ In this example, clicking the **Filter** button narrows the scope of the view to
 This feature is only available for Magic Transit users.
 {{</Aside>}}
 
-You can create a [Magic Firewall](/magic-firewall) rule that blocks all traffic matching the selected filters in Network Analytics. The currently supported filters are:
+You can create a [Magic Firewall](/magic-firewall/) rule that blocks all traffic matching the selected filters in Network Analytics. The currently supported filters are:
 
 -   Destination IP
 -   Protocol

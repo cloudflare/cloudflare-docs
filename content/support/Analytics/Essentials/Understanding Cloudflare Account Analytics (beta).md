@@ -104,5 +104,5 @@ ___
 
 ## Related resources
 
--   [Cloudflare Analytics: A quick overview](/analytics)
+-   [Cloudflare Analytics: A quick overview](/analytics/)
 -   [The Cloudflare Analytics GraphQL API](/analytics/)
