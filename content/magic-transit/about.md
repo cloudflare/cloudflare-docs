@@ -20,6 +20,8 @@ Magic Transit users have two options for their implementation: ingress traffic o
 
 ```mermaid
 flowchart LR
+accTitle: Magic Transit
+accDescr: Diagram showing how Magic Transit protects traffic on the customer's network.
 A(DDoS attack) --x B[DDoS protection + Network firewall]
 B[DDoS protection + Network firewall]-- Anycast <br> GRE tunnel ---C(Customer network)
 B[DDoS protection + Network firewall]-- Cloudflare <br> Network Internconnect ---C(Customer network)
@@ -34,8 +36,6 @@ linkStyle 2 stroke-width:2px,stroke:blue
 linkStyle 3 stroke-width:2px,stroke:gray
 linkStyle 4 stroke-width:2px,stroke:green
 ```
-
-![Magic Transit deployment diagram showing how traffic moves through the Cloudflare network](/magic-transit/static/egress-diagram.png)
 
 {{<Aside type="note">}}
 
