@@ -799,6 +799,7 @@ html[is-site-page] .DocsContent {
 
 .TriBlock {
     border: 1px solid #F6821F;
+    border-radius: 6px;
     padding: .5em 1.8em;
     height: 22em;
     width: 25em;
