@@ -36,6 +36,10 @@ You will need to already have a [billing profile](/fundamentals/account-and-bill
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
+## Usage-based notifications
+
+{{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}
+
 ## Enable Argo Tiered Cache
 
 [Cache](/cache/) works by storing a copy of website content at Cloudflare's data centers. Argo Tiered Cache divides these data centers into a hierarchy based on location. This allows Cloudflare to deliver content from data centers closest to your visitor.
