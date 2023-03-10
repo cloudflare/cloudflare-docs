@@ -54,7 +54,7 @@ ___
 
 _No A, AAAA or CNAME record found_ means the Cloudflare **DNS** app lacks proper records for DNS resolution.
 
-[Add the missing DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) to your domain.
+[Add the missing DNS records](/dns/manage-dns-records/how-to/create-dns-records) to your domain.
 
 {{<Aside type="note">}}
 Sites generally have at least an *A record* that points to the origin

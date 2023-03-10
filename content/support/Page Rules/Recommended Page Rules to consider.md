@@ -20,9 +20,9 @@ Keep in mind that not all rules will be right for everyone, but these are some o
 
 {{<Aside type="tip">}}
 Consider using [Dynamic
-Redirects](https://developers.cloudflare.com/rules/url-forwarding/dynamic-redirects/)
+Redirects](/rules/url-forwarding/dynamic-redirects/)
 or [Bulk
-Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/)
+Redirects](/rules/url-forwarding/bulk-redirects/)
 to forward or redirect traffic to a different URL due to ease of use,
 maintenance, and cost. You should only use Page Rules when Dynamic or
 Bulk Redirects do not meet your use case.

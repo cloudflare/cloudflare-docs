@@ -37,7 +37,7 @@ ___
 
 **Will this impact billing?** 
 
-No, [billing for Workers](https://developers.cloudflare.com/workers/about/pricing/) is based on requests that go through a Worker. 
+No, [billing for Workers](/workers/about/pricing/) is based on requests that go through a Worker. 
 
 **Why am I seeing such a high cache hit ratio?**
 

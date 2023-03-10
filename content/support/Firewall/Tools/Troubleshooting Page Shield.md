@@ -29,12 +29,12 @@ Some browsers display scripts being reported as warnings in the console pane of 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">[Report Only] Refused to execute inline script because it violates the following Content Security Policy directive: &quot;script-src 'none'&quot;. Either the 'unsafe-inline' keyword, a hash ('sha256-RFWPLDbv2BY+rCkDzsE+0fr8ylGr2R2faWMhq4lfEQc='), or a nonce ('nonce-...') is required to enable inline execution.</span></div></span></span></span></code></pre>{{</raw>}}
 
-You can safely ignore these warnings, since they are related to the reports that Page Shield requires to detect loaded scripts. For more information, refer to [Page Shield's developer documentation](https://developers.cloudflare.com/page-shield/about).
+You can safely ignore these warnings, since they are related to the reports that Page Shield requires to detect loaded scripts. For more information, refer to [Page Shield's developer documentation](/page-shield/about).
 
 ### Do I have access to Page Shield?
 
-To learn more about availability, visit our [developer documentation](https://developers.cloudflare.com/page-shield/).
+To learn more about availability, visit our [developer documentation](/page-shield/).
 
 ### How do I set up Page Shield?
 
-For help setting up Page Shield, visit our [developer documentation](https://developers.cloudflare.com/page-shield/get-started).
+For help setting up Page Shield, visit our [developer documentation](/page-shield/get-started).

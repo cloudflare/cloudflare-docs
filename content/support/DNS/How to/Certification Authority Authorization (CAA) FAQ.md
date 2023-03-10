@@ -12,7 +12,7 @@ title: Certification Authority Authorization (CAA) FAQ
 
 A Certificate Authority Authorization (CAA) record allows domain owners to restrict issuance to specified Certificate Authorities (CAs). 
 
-For more details and instructions on how to create these records, refer to our [developer documentation](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records).
+For more details and instructions on how to create these records, refer to our [developer documentation](/ssl/edge-certificates/custom-certificates/caa-records).
 
 ___
 
@@ -39,12 +39,12 @@ Universal SSL is enabled and you add a CAA record via the Cloudflare
 **DNS** app.
 {{</Aside>}}
 
-If you do not require Universal SSL from Cloudflare, you can [disable Universal SSL](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl).
+If you do not require Universal SSL from Cloudflare, you can [disable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl).
 
 {{<Aside type="warning">}}
 Disabling Universal SSL will leave your Cloudflare enabled DNS records
 without SSL support unless you have uploaded a [custom SSL
-certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates)
+certificate](/ssl/edge-certificates/custom-certificates)
 (requires Business or Enterprise plan).
 {{</Aside>}}
 
@@ -52,7 +52,7 @@ ___
 
 ## What records are added to keep Universal SSL enabled?
 
-If you use Cloudflare’s free Universal SSL certificates, [several CAA records are added by Cloudflare](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records#caa-records-added-by-cloudflare).
+If you use Cloudflare’s free Universal SSL certificates, [several CAA records are added by Cloudflare](/ssl/edge-certificates/custom-certificates/caa-records#caa-records-added-by-cloudflare).
 
 {{<Aside type="warning">}}
 Do not use the *Only allow wildcards* option for the root record (which
@@ -68,7 +68,7 @@ ___
 
 ## What happens when Universal SSL is disabled?
 
-Your domain name is immediately removed from the Universal SSL certificate and your users will observe SSL errors unless you [upload a custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates) (requires Business or Enterprise plan).
+Your domain name is immediately removed from the Universal SSL certificate and your users will observe SSL errors unless you [upload a custom SSL certificate](/ssl/edge-certificates/custom-certificates) (requires Business or Enterprise plan).
 
 ___
 

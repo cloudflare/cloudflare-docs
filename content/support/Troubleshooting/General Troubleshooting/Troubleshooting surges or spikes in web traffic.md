@@ -89,7 +89,7 @@ Before the high traffic event occurs, you must [open a Support ticket](https://
 -   Target IPs/range/zones/hostnames/full URLs
 -   Contact in case of emergency
 
-[****](https://developers.cloudflare.com/ddos-protection/reference/simulate-ddos-attack/#for-magic-transit-and-spectrum-customers)**For Magic Transit and Spectrum customers**
+[****](/ddos-protection/reference/simulate-ddos-attack/#for-magic-transit-and-spectrum-customers)**For Magic Transit and Spectrum customers**
 
 -   Traffic origin region
 -   Traffic duration

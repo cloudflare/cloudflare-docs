@@ -23,7 +23,7 @@ ___
 
 ## Add IP geolocation information
 
-The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](https://developers.cloudflare.com/rules/transform/managed-transforms/reference/). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
+The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
 
 Besides using the Managed Transform, you can also enable the **IP Geolocation** feature in the [Cloudflare dashboard](https://dash.cloudflare.com/) (**Network** app), which will only add a request header for the visitor's country.
 
@@ -106,8 +106,8 @@ ___
 
 ## Related resources
 
--   [HTTP request headers](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/)
+-   [HTTP request headers](/fundamentals/get-started/http-request-headers)
+-   [Managed Transforms](/rules/transform/managed-transforms/)
 -   [Apache Log Files Format](https://httpd.apache.org/docs/2.4/logs.html)
 -   [Configuring NGINX Logging](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)
 -   [NodeJS Anatomy of an HTTP Transaction](https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/)

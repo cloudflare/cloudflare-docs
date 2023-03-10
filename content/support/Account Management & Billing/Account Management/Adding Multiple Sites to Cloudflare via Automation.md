@@ -19,7 +19,7 @@ domains will be blocked until they are processed.
 -   Are an agency or IT consultancy, and manage multiple domains on behalf of your customers (note: you should consider the Cloudflare [Partner program](https://www.cloudflare.com/partners/))
 -   You're moving an existing set of sites over to Cloudflare
 
-Using the API will allow you to add multiple sites quickly & efficiently, especially if you are already familiar with [how to change your name-servers](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup) or [add a DNS record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
+Using the API will allow you to add multiple sites quickly & efficiently, especially if you are already familiar with [how to change your name-servers](/dns/zone-setups/full-setup/setup) or [add a DNS record](/dns/manage-dns-records/how-to/create-dns-records).
 
 ___
 

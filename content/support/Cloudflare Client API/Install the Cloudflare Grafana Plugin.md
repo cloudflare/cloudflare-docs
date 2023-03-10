@@ -36,14 +36,14 @@ Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
 Article IDs: 115002722267 | Install the Cloudflare Grafana Plugin
 ](/support/static/hc-import-screen_shot_20917_02_09_at_11_55_21_am.png)
 
-5\. This will take you to the Plugin Config page. We highly recommend that you generate an [API token](https://developers.cloudflare.com/api/tokens) for this app. Please make sure the token has the following permissions:
+5\. This will take you to the Plugin Config page. We highly recommend that you generate an [API token](/fundamentals/api/get-started/create-token/) for this app. Please make sure the token has the following permissions:
 
 -   Account / Account Settings / Read
 -   Account / DNS Firewall / Read
 -   Zone / Zone / Read
 -   Zone / Analytics / Read
 
-Alternatively, you may authenticate with your email address and [legacy API key](https://developers.cloudflare.com/api/keys). You can find your Cloudflare API key here: [https://www.cloudflare.com/a/account/my-account](https://www.cloudflare.com/a/account/my-account).
+Alternatively, you may authenticate with your email address and [legacy API key](/fundamentals/api/get-started/keys/).
 
 6\. Now that you have configured the Cloudflare Grafana plugin with your account details, you can go to the main menu at the top and choose Cloudflare Grafana App > Zones or Cloudflare Grafana App > Virtual DNS if you are a Virtual DNS user.
 
