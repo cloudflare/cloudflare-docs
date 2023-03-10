@@ -72,13 +72,13 @@ Because of how mobile applications send requests, Bot Management has the potenti
 
 Take extra time to review [Bot analytics](/bots/bot-analytics/bm-subscription/) to evaluate how your mobile application traffic is performing.
 
-You can generally identify mobile traffic with common user agent strings, though these strings may differ between iOS and Android. Malicious actors might also try to impersonate your mobile application traffic with user strings.
+You can generally identify mobile traffic with common user agent strings, though these strings may differ between iOS and Android. Malicious actors might also try to impersonate your mobile application traffic with user agent strings.
 
 {{<render file="_allow-rules-caveat.md" productFolder="bots">}}
 <br/>
 
 #### Adjust rules
 
-If your application [uses mTLS](/api-shield/security/mtls/), you can also integrate that certificate's presence into your Firewall rules using the `cf.tls_client_auth.cert_verified` field.
+If your application [uses mTLS](/api-shield/security/mtls/), you can also integrate that certificate's presence into your firewall rules using the `cf.tls_client_auth.cert_verified` field.
 
-Native or progressive web applications should also only use *Block* as a [Firewall action](/firewall/cf-firewall-rules/actions/).
+Native or progressive web applications should also only use *Block* as a [firewall rule action](/firewall/cf-firewall-rules/actions/).
