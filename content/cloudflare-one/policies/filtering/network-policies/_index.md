@@ -15,12 +15,15 @@ To enable this feature, download and deploy the [WARP client](/cloudflare-one/co
 
 With Cloudflare Zero Trust, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare Zero Trust [integrates with your identity provider](/cloudflare-one/identity/idp-integration/), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they access that resource from.
 
-A network policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field.
+A network policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
 - [Actions](#actions)
 - [Selectors](#selectors)
-- [Operators](#operators)
+- [Comparison operators](#comparison-operators)
 - [Value](#value)
+- [Logical operators](#logical-operators)
+
+{{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
 ## Actions
 
@@ -129,9 +132,9 @@ The country of the user making the request.
 
 {{<render file="gateway/_virtual-network.md">}}
 
-## Operators
+## Comparison operators
 
-{{<render file="gateway/_operators.md">}}
+{{<render file="gateway/_comparison-operators.md">}}
 
 {{<Aside type="note">}}
 
@@ -142,3 +145,7 @@ The _In_ operator allows you to specify IP addresses or networks using CIDR nota
 ## Value
 
 {{<render file="gateway/_value.md">}}
+
+## Logical operators
+
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}

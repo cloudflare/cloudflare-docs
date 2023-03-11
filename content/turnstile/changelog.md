@@ -7,6 +7,10 @@ rss: file
 
 # Changelog
 
+## 2023-03-06
+
+- Added [`[execution]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) and [`[appearance]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget).
+
 ## 2023-02-15
 
 - Added the [`[turnstile.ready]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) callback.

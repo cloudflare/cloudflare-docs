@@ -63,7 +63,6 @@
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/what-is-1.1.1.1/ /1.1.1.1/
 
-
 # access
 /access/about/ /cloudflare-one/identity/ 301
 /access/other-protocols/tcp-guide/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
@@ -157,7 +156,16 @@
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
-/bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
+/bots/bot-management-enterprise/ /learning-paths/bot-management/ 301
+/bots/get-started/bm-subscription/ /learning-paths/bot-management/ 301
+/support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
+/support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
+/support/other-languages/español-españa/productos-de-detección-de-bots-de-cloudflare-preguntas-frecuentes/ /bots/troubleshooting/ 301
+/support/other-languages/français-france/produits-bot-cloudflare/ /bots/troubleshooting/ 301
+/support/other-languages/português-do-brasil/produtos-de-bot-da-cloudflare/ /bots/troubleshooting/ 301
+/support/other-languages/日本語/cloudflareのボット製品/ /bots/troubleshooting/ 301
+/support/other-languages/简体中文/cloudflare-计费政策/ /bots/troubleshooting/ 301
+/support/other-languages/한국어/cloudflare-bot-제품/ /bots/troubleshooting/ 301
 
 # byoip
 /byoip/dynamic-advertisement/ /byoip/about/dynamic-advertisement/ 301
@@ -189,6 +197,9 @@
 /ddos-protection/managed-rulesets/tcp-protection/configure-dashboard/ /ddos-protection/tcp-protection/setup/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
+
+# dns
+/dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -346,8 +357,8 @@
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
 
 # magic-transit
-/magic-transit/about/health-checks/endpoint/ /magic-transit/about/health-checks/#endpoint-health-checks 301
-/magic-transit/about/health-checks/tunnel/ /magic-transit/about/health-checks/#tunnel-health-checks 301
+/magic-transit/about/health-checks/endpoint/ /magic-transit/reference/health-checks/#endpoint-health-checks 301
+/magic-transit/about/health-checks/tunnel/ /magic-transit/reference/health-checks/#tunnel-health-checks 301
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
@@ -360,6 +371,11 @@
 /magic-transit/get-started/configure-tunnels/specify-gre-tunnel-endpoints/ /magic-transit/how-to/configure-tunnels/ 301
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
+/magic-transit/about/bandwidth-measurement/ /magic-transit/reference/bandwidth-measurement/ 301
+/magic-transit/about/health-checks/ /magic-transit/reference/health-checks/ 301
+/magic-transit/about/probe-construction/ /magic-transit/reference/probe-construction/ 301
+/magic-transit/about/traffic-steering/ /magic-transit/reference/traffic-steering/ 301
+/magic-transit/about/tunnels-and-encapsulation/ /magic-transit/reference/tunnels-and-encapsulation/ 301
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
@@ -367,6 +383,10 @@
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
 /magic-wan/how-to/configure-static-routes/ /magic-wan/get-started/configure-static-routes/ 301
+/magic-wan/about/ /magic-wan/reference/ 301
+/magic-wan/about/health-checks/ /magic-wan/reference/health-checks/ 301
+/magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
+/magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels-and-encapsulation/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -375,10 +395,13 @@
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
 /pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/deploy-a-nextjs-site/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
-/pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-application/ 301
-/pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-application/ 301
+/pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
+/pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
+/pages/how-to/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site/ 301
+/pages/framework-guides/deploy-a-vue-application/ /pages/framework-guides/deploy-a-vue-site 301
 /pages/how-to/deploy-a-zola-site/ /pages/framework-guides/deploy-a-zola-site/ 301
-/pages/how-to/elderjs/ /pages/framework-guides/elderjs/ 301
+/pages/how-to/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
+/pages/framework-guides/elderjs/ /pages/framework-guides/deploy-an-elderjs-site/ 301
 /pages/platform/github-integration/ /pages/platform/git-integration/ 301
 /pages/platform/direct-uploads/ /pages/platform/direct-upload/ 301
 /pages/platform/functions/billing/ /pages/platform/functions/pricing/ 301
@@ -519,6 +542,7 @@
 
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
+/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/migrating-from-recaptcha/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301
@@ -705,7 +729,7 @@
 /workers/templates/pages/rustwasm/ /workers/tutorials/hello-world-rust/ 301
 /workers/tutorials/build-a-serverless-function/ /workers/tutorials/build-a-qr-code-generator/ 301
 /workers/tutorials/build-a-todo-list/ /workers/tutorials/build-a-jamstack-app/ 301
-/workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
+/workers/tutorials/deploy-a-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/tutorials/hosting-static-wordpress-sites/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/tutorials/user-auth-with-auth0/ /workers/ 301
 /workers/wrangler/eject-webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
@@ -713,7 +737,7 @@
 /workers/writing-workers/debugging-tips/ /workers/learning/debugging-workers/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
 /workers/runtime-apis/r2/ /r2/data-access/workers-api/workers-api-reference/ 301
-/workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-application/ 301
+/workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 /workers/get-started/storage-objects/ /workers/platform/storage-objects 301
 /workers/platform/routing/ /workers/learning/how-routing-works/ 301
@@ -822,6 +846,18 @@
 
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
+
+# Support
+# - KB: https://support.cloudflare.com/hc/*/articles/5995821690637
+/support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/deutsch/migration-von-waf-verwalteten-regeln-zu-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/español-españa/migración-de-reglas-administradas-del-waf-a-conjuntos-de-reglas-administradas-del-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/français-france/migration-depuis-les-règles-gérées-du-pare-feu-waf-vers-les-ensembles-de-règles-gérées-du-pare/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/português-do-brasil/como-migrar-das-regras-gerenciadas-do-waf-para-os-conjuntos-de-regras-gerenciados-do-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/한국어/waf-관리형-규칙으로부터-waf-managed-rulesets로의-마이그레이션/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/日本語/wafマネージドルールからwafマネージドルールセットに移行する/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+/support/other-languages/简体中文/从-waf-托管规则迁移到-waf-托管规则集/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
+
 
 ### DYNAMIC REDIRECTS ###
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
