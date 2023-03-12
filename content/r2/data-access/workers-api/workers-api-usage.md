@@ -224,7 +224,7 @@ Enter the secret text you'd like assigned to the variable AUTH_KEY_SECRET on the
 ✨  Success! Uploaded secret AUTH_KEY_SECRET.
 ```
 
-This secret is now available as the global variable `AUTH_KEY_SECRET` in your Worker.
+This secret is now available as `AUTH_KEY_SECRET` on the `env` parameter in your Worker.
 
 ## 7. Deploy your bucket
 
