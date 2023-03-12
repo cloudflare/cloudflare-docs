@@ -176,4 +176,29 @@ Every time you commit new code to your Next.js site, Cloudflare Pages will autom
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
+## Use bindings in your Next.js application
+
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+
+In Next.js you can add server-side code via [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props). In such server side code you can then use access bindings set for your application by accessing them via `process.env`.
+
+The following code block shows an example of accessing a KV namespace in Next.js.
+
+```typescript
+---
+filename: src/index.tsx
+highlight: [4, 5]
+---
+// ...
+
+export async function getServerSideProps({ req }: GetServerSidePropsContext) => {
+  // the type KVNamespace comes from the @cloudflare/workers-types package
+  const { MY_KV } = (process.env as { MY_KV: KVNamespace }));
+
+  return {
+    // ...
+  };
+};
+```
+
 {{<render file="_learn-more.md" withParameters="Next.js">}}
