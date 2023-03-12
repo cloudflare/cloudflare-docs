@@ -24,7 +24,7 @@
         if (productGroup) {
           redirect += '&product_group=' + encodeURIComponent(productGroup.content);
         }
-        // redirect += '&f:source=[Developer%20docs]';
+        redirect += '&f:source=[Product%20documentation]';
       }
 
       return location.assign(redirect);
