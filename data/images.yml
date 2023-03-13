@@ -12,7 +12,7 @@ meta:
   description: Choose between Cloudflare Images and Cloudflare Image Resizing, two
     products tailored to your different needs.
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/developers/images

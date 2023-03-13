@@ -12,7 +12,7 @@ meta:
     entire networks while ensuring the performance of legitimate traffic is not
     compromised.
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/tag/ddos

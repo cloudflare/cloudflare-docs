@@ -17,7 +17,7 @@ Use NEL reports to view information such as:
 - The Cloudflare data center the request was most likely meant for
 
 1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
-2.  Click **Analytics** > **Origin Reachability**.
+2.  Select **Analytics & Logs** > **Edge Reachability**.
 
 Click a tab under **Reachability summary** to view specific information related to your Origin ASN, Origin, IP, or data center. Hover over a location on the map to view the number of reachable requests.
 

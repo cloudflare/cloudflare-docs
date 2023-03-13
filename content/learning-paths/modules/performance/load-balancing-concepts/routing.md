@@ -43,13 +43,13 @@ Both new and existing requests will go to healthy servers in the pool, ignoring 
 
 With enough unhealthy servers, the pool itself may be considered unhealthy as well.
 
-{{<render file="../../load-balancing/_partials/_unhealthy-pool-traffic-distribution.md">}}
+{{<render file=_unhealthy-pool-traffic-distribution.md productFolder="load-balancing">}}
 
 #### Fallback pools
 
 Often, load balancers have a special pool known as the **Fallback Pool**, which receives traffic no matter what.
 
-{{<render file="../../load-balancing/_partials/_fallback-pools.md">}}
+{{<render file=_fallback-pools.md productFolder="load-balancing">}}
 
 ### Specialized routing
 

@@ -12,7 +12,7 @@ meta:
     network, providing global connectivity, cloud-based security, performance,
     and control through one simple user interface.
   author: '@cloudflare'
-  image: /zt-preview.png
+  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/magic-wan

@@ -61,12 +61,12 @@ To remove account-level nameservers and their associated DNS records from a zone
 
 ### Non-Cloudflare Registrar
 
-If you are **not** using [Cloudflare Registrar](/registrar/) for the zone that provides the hostnames for the account-level custom nameservers, your setup is a bit more complicated.
+If you are **not** using [Cloudflare Registrar](/registrar/) for the zone that provides the hostnames for the account-level custom nameservers, you have to set the glue records yourself.
 
 #### Add account nameservers
 
 1.  Create between two and five account-level nameservers with a [POST command](https://developers.cloudflare.com/api/operations/account-level-custom-nameservers-add-account-custom-nameserver).
-2.  Add the [glue records](https://www.ietf.org/rfc/rfc1912.txt) for each entry at your DNS provider.
+2.  If you are not using Cloudflare Registrar for your domain, add the **Custom Nameservers** and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
 3.  Use a [POST command](https://developers.cloudflare.com/api/operations/account-level-custom-nameservers-verify-account-custom-nameserver-glue-records) to verify that the glue records are active.
 4.  To enable the custom nameservers on existing zones:
 

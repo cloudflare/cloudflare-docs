@@ -8,7 +8,8 @@ meta:
 
 # TXT domain control validation (DCV)
 
-{{<render file="../../ssl/_partials/_txt-validation-definition.md">}}
+{{<render file="_txt-validation-definition.md" productFolder="ssl" >}}
+<br/>
 
 ## Non-wildcard custom hostnames
 

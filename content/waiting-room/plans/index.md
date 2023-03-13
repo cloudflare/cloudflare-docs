@@ -14,6 +14,8 @@ The features available for a waiting room depend on your plan type. You can only
 
 {{<feature-table id="traffic.waiting_room">}}
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## How do I get started?
 
 To get started with Waiting Room, review our [setup guide](/waiting-room/get-started/).

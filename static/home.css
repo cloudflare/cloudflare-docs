@@ -595,8 +595,9 @@ html[is-site-page] .DocsContent {
 }
 
 .DocsMarkdown .HeroBlock img {
+    height: 25px;
     display: inline-flex;
-    margin-bottom: -6px;
+    margin-bottom: -5px;
 }
 
 [theme=dark] .DocsMarkdown .HeroBlock img {
@@ -798,16 +799,13 @@ html[is-site-page] .DocsContent {
 
 .TriBlock {
     border-left: 5px solid #F6821F;
+    border-radius: 6px;
     padding: .5em 1.8em;
-    height: 19em;
+    height: 22em;
+    width: 15em;
 }
 
-.TriBlock img {
-    height: 20px;
-    width: 20px;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
     .TriBlock {
         width: unset;
         margin-bottom: 20px;
@@ -837,9 +835,13 @@ html[is-site-page] .DocsContent {
 
 .TriBlock li {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
     padding: 6px 0;
+}
+
+.TriBlock img{
+    height: 25px;
 }
 
 .TriBlockHeader p {
@@ -983,7 +985,7 @@ html[is-site-page] .DocsContent {
 }
 
 [theme=dark] .ZeroTrustImage {
-    content: url('./zero-trust-light.svg');
+    content: url('./zero-trust-dark.svg');
 }
 
 .DeveloperPlatformImage {

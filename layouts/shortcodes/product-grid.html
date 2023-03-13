@@ -30,6 +30,12 @@
     padding: 0 0.5rem 1rem;
   }
 
+  .ProductGrid--filter {
+    width: 100%;
+    height: 3em;
+    padding: 1em;
+  }
+
   .ProductGrid--content {
     --n: 1;
     display: grid;
@@ -65,19 +71,20 @@
 </style>
 
 <div class="QuadBlockGrid">
-  {{- range $availableOptions -}}
-  <div class="QuadBlock">
-      <a class="DocsMarkdown--link" href="#{{ . | safeURL | anchorize }}">
-        <span class="DocsMarkdown--link-content">{{.}}</span>
-      </a>
-      </div>
-  {{- end -}}
+  <input
+    class="ProductGrid--filter"
+    type="text"
+    id="search"
+    onkeyup="filterProducts()"
+    placeholder="Search products..."
+  />
   </div>
 
 <div class="ProductGrid">
   <div id="ProductGrid--range">
   {{- range $availableOptions -}}
   {{- $currentOption := . }}
+  <div class="ProductGridSection">
   <h2 class="ProductGrid--title" style="padding-bottom:1em;font-size:2em; scroll-margin-top: 2em;" id="{{ $currentOption | safeURL | anchorize }}"><span class="DocsMarkdown--header-anchor-positioner">
     <a
       class="DocsMarkdown--header-anchor Link Link-without-underline"
@@ -103,6 +110,48 @@
         {{- end -}}
       {{- end -}}
   </div>
+  </div>
   {{- end -}}
 </div>
 </div>
+
+<script>
+  function filterProducts() {
+    // Search input and items
+    var input = document.getElementById("search"); // User input
+    var query = input.value.toUpperCase(); // Make input non-case sensitive
+    var grid = document.getElementById("ProductGrid--range"); // Convert Hugo range to JS
+    var items = grid.getElementsByTagName("a"); // Extract tiles
+
+    // TODO: Search by URL, description (i.e. "cloudflare one" = Cloudflare Zero Trust)
+
+    // Iterate through products
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var text = item.innerText.toUpperCase();
+      if (text.indexOf(query) > -1) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    }
+
+    var productAreas = document.getElementsByClassName("ProductGridSection")
+    for (section of productAreas) {
+      console.log(section)
+      var visibleLinks = false;
+      var links = section.getElementsByClassName("ProductGrid--link")
+      for (link of links) {
+        if (link.style.display !== "none") {
+          console.log(link)
+          visibleLinks = true
+        }
+      }
+      if (!visibleLinks) {
+        section.style.display = "none";
+      } else {
+        section.style.display = "";
+      }
+    }
+  }
+</script>

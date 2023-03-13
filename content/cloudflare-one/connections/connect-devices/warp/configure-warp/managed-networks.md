@@ -34,7 +34,16 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
         filename: myserver.py
         ---
         import ssl, http.server
-        server = http.server.HTTPServer(('0.0.0.0', 4443), http.server.SimpleHTTPRequestHandler)
+
+        class BasicHandler(http.server.BaseHTTPRequestHandler):
+            def do_GET(self):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                self.wfile.write(b'OK')
+                return
+
+        server = http.server.HTTPServer(('0.0.0.0', 4443), BasicHandler)
         sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
         sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
         server.socket = sslcontext.wrap_socket(server.socket, server_side=True)

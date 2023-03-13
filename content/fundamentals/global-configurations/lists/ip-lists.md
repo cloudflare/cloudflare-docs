@@ -80,6 +80,8 @@ For example, instead of `2001:db8:6a0b:1a01:d423:43b9:13c5:2e8f`, enter one of t
 - `2001:db8:6a0b:1a01:0000:0000:0000:0000/64`
 - `2001:db8:6a0b:1a01::/64` (using the [double colon notation](https://tools.ietf.org/html/rfc5952#section-4.2))
 
+The IPv6 address topology describes the last 64 bits as the host identifier. Matching on a `/128` prefix would identify a specific IPv6 address, but not the host in general. It would be possible for an attacker to change their specific IPv6 address from a single machine.
+
 {{</Aside>}}
 
 You can use uppercase or lowercase characters for IPv6 addresses in lists. However, when you save the list, uppercase characters are converted to lowercase.

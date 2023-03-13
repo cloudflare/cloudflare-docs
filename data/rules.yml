@@ -10,7 +10,7 @@ meta:
   title: Cloudflare Rules docs
   description: Create rules that adjust incoming requests, change Cloudflare settings, or trigger actions.
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/general/rules/66

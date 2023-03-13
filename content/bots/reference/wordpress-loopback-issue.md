@@ -1,11 +1,13 @@
 ---
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 title: WordPress Loopback error
 weight: 0
 ---
+
 # WordPress Loopback error
 
-Cloudflare has observed that when users attempt to run diagnostics in the Site Status page for WordPress installations, loopback issues arise when our bot detection services block them. 
+{{<render file="_wordpress-loopback-definition">}}
+<br/>
 
 In **WordPress 6.0.1** with no additional plugins or themes, the page generated the following 3 requests:
 

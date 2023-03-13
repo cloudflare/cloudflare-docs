@@ -45,10 +45,11 @@ html {
 }
 
 .pathGrid {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    margin-top: 2em;
+    padding-top: 3em;
+    margin-bottom: 3em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
 }
 
 .pathGrid a {
@@ -65,14 +66,24 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: .5em;
-    max-width: 100%;
+    padding: 1em;
+    max-width: 90%;
     margin-bottom: 1em;
-    height: 10em;
+    height: 12em;
 }
 
 [theme=dark] .individualPath {
     border: 2px solid #242628;
+}
+
+@media (max-width: 1000px) {
+    .pathGrid {
+        display: flex;
+        flex-direction: column;
+    }
+    .individualPath {
+        height: 14em;
+    }
 }
 
 .pathHeading {
@@ -224,9 +235,6 @@ html {
     .learningPathModule {
         padding-left: 1em;
     }
-    .individualPath {
-        height: 12em;
-    }
 }
 
 .learningPathNote {
@@ -244,6 +252,13 @@ label {
     flex-direction: column;
     align-items:center;
     max-width: 80%;
+}
+
+@media (max-width: 768px) {
+
+    .progressIndicator {
+        max-width: 100%;
+    }
 }
 
 .timeEstimate {

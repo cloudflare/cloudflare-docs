@@ -88,27 +88,28 @@ If the custom hostname is not proxying traffic through Cloudflare, then the cust
 
 ### Wildcard custom hostnames
 
-{{<render file="../../cloudflare-for-platforms/_partials/_wildcard-hostname-reqs.md">}}
+{{<render file="_wildcard-hostname-reqs.md" productFolder="cloudflare-for-platforms" >}}
 
-{{<render file="../../cloudflare-for-platforms/_partials/_update-dcv-method.md">}}
+{{<render file="_update-dcv-method.md" productFolder="cloudflare-for-platforms" >}}
 
-{{<render file="../../cloudflare-for-platforms/_partials/_txt-validation_preamble.md">}}
+{{<render file="_txt-validation_preamble.md" productFolder="cloudflare-for-platforms" >}}
+<br/>
 
 {{<tabs labels="API | Dashboard">}}
 {{<tab label="api" no-code="true">}}
 
-{{<render file="../../cloudflare-for-platforms/_partials/_txt-validation_api.md">}}
+{{<render file="_txt-validation_api.md" productFolder="cloudflare-for-platforms" >}}
 
 {{</tab>}}
 
 {{<tab label="dashboard" no-code="true">}}
 
-{{<render file="../../cloudflare-for-platforms/_partials/_txt-validation_dashboard.md">}}
+{{<render file="_txt-validation_dashboard.md" productFolder="cloudflare-for-platforms" >}}
 
 {{</tab>}}
 {{</tabs>}}
 
-{{<render file="../../cloudflare-for-platforms/_partials/_txt-validation_post.md">}}
+{{<render file="_txt-validation_post.md" productFolder="cloudflare-for-platforms" >}}
 
 #### Actions required
 

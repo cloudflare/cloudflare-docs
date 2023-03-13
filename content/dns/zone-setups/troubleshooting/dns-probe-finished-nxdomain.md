@@ -1,9 +1,9 @@
 ---
 title: DNS_PROBE_FINISHED_NXDOMAIN
-pcx_content_type: reference
+pcx_content_type: troubleshooting
 weight: 2
 meta:
-  title: DNS_PROBE_FINISHED_NXDOMAIN - Troubleshooting zone setups
+  title: Fix DNS_PROBE_FINISHED_NXDOMAIN
 ---
 
 # DNS_PROBE_FINISHED_NXDOMAIN
