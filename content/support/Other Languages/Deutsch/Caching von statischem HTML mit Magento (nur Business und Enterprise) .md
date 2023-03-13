@@ -7,7 +7,13 @@ title: Caching von statischem HTML mit Magento (nur Business und Enterprise)
 
 # Caching von statischem HTML mit Magento (nur Business und Enterprise) 
 
-
+{{<Aside type="note">}}
+Alle Cloudflare-Kunden können das Zwischenspeichern von HTML-Dateien
+konfigurieren. Jedoch können nur Kunden der Business und Enterprise
+Plans das HTML-Caching umgehen, wenn ein Cookie gesendet wird, indem sie
+die Einstellung Bypass Cache on Cookie mit Cloudflare  **Page Rules**
+vornehmen.
+{{</Aside>}}
 
 ## Überblick
 
@@ -43,6 +49,13 @@ Mit dieser Einstellung können Sie die erforderlichen Page Rules festlegen, um a
 ![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/support/static/hc-import-page_rules_caching_static_html_with_magento.png)
 
 6\. Klicken Sie auf **Speichern und bereitstellen**.
+
+{{<Aside type="note">}}
+Cloudflares Enterprise-Kunden können Custom Cache Keys verwenden, um
+ihre Performance weiter zu verbessern. Wenden Sie sich an den für Sie
+zuständigen Customer Success Manager, um weitere Informationen zu
+erhalten.
+{{</Aside>}}
 
 ___
 

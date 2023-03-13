@@ -912,7 +912,7 @@ Here is the full schema for key-value entries uploaded via the bulk API:
 - `key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The UTF-8 encoded string to be stored, up to 10 MB in length.
+  - The UTF-8 encoded string to be stored, up to 25 MB in length.
 - `metadata` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Any arbitrary object (must serialize to JSON) to a maximum of 1024 bytes.
 - `expiration` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}

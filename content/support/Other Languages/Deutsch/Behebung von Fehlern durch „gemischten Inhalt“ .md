@@ -23,6 +23,15 @@ Wenn Ihre Website alle Ressourcen sicher über HTTPS lädt, sehen Besucher norma
 
 Dies deutet darauf hin, dass Ihre Website über ein funktionsfähiges SSL-Zertifikat verfügt und alle von der Website geladenen Ressourcen über HTTPS geladen werden. Das grüne Schloss gibt den Benutzern die Sicherheit, dass ihre Verbindung sicher ist. Eine der [Ursachen für gemischten Inhalt](https://support.cloudflare.com/hc/de/articles/200170476-Behebung-von-Fehlern-durch-gemischten-Inhalt-#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) ist, dass anstelle des grünen Schlosssymbols verschiedene Symbole angezeigt werden.
 
+{{<Aside type="tip">}}
+Weitere Ursachen für Probleme beim Rendern von Inhalten sind [[Rocket
+Loader]{style="font-weight: 400;"}](https://support.cloudflare.com/hc/en-us/articles/200168056-What-does-Rocket-Loader-do-)[
+und
+]{style="font-weight: 400;"}[[Auto-Minify]{style="font-weight: 400;"}](https://blog.cloudflare.com/an-all-new-and-improved-autominify/)[. 
+Deaktivieren Sie testhalber beide Funktionen, wenn Sie keine Fehler mit
+gemischtem Inhalt feststellen.]{style="font-weight: 400;"}
+{{</Aside>}}
+
 ___
 
 ## Ursachen für das Auftreten von gemischtem Inhalt
@@ -56,6 +65,17 @@ Es gibt zwei Methoden, um Fehler mit gemischtem Inhalt zu beheben.
      _http://domain.com/path/to.file_
 
 2\. Suchen Sie je nach Content Management System nach Plug-ins, die HTTP-Ressourcen automatisch in HTTPS umschreiben. In der**SSL/TLS**\-App bietet Cloudflare einen solchen Service über [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647) an.
+
+{{<Aside type="note">}}
+Cloudflare empfiehlt Wordpress-Benutzern, das [Cloudflare
+WordPress-Plugin](https://wordpress.org/plugins/cloudflare/) zu
+installieren und die Option *Automatic HTTPS Rewrites* im Plugin zu
+aktivieren. Alternativ empfiehlt Cloudflare den [SSL Insecure Content
+Fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/)
+oder das [Really Simple
+SSL](https://en-gb.wordpress.org/plugins/really-simple-ssl/)-Plugin, um
+das HTTP automatisch durch HTTPS zu ersetzen.
+{{</Aside>}}
 
 ___
 

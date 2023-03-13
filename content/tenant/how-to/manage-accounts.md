@@ -10,7 +10,20 @@ weight: 1
 
 ## Create account
 
-{{<render file="_create-account.md">}}
+{{<render file="_account-preamble.md">}}
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_create-account-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_create-account-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Fetch account
 

@@ -12,7 +12,7 @@ title: Restoring original visitor IPs
 
 When your [website traffic is routed through the Cloudflare network](https://support.cloudflare.com/hc/articles/205177068), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
 
-For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). By following our [web server instructions](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](https://developers.cloudflare.com/rules/transform/) and [Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/) configuration.
+For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). By following our [web server instructions](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
 
 The diagram below illustrates the different ways that IP addresses are handled with and without Cloudflare.
 
@@ -397,5 +397,5 @@ ___
 
 ## Related Resources
 
--   [HTTP request headers](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Transform Rules](https://developers.cloudflare.com/rules/transform/)
+-   [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/)
+-   [Transform Rules](/rules/transform/)

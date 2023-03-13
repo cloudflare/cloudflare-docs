@@ -136,7 +136,7 @@ ___
 
 If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](https://developers.cloudflare.com/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
 
 ### 1xxx errors
 
@@ -160,7 +160,7 @@ ___
 
 ## Related Resources
 
--   [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
+-   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
 -   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)

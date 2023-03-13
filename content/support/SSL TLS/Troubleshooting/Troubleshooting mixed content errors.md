@@ -64,7 +64,7 @@ There are two methods to resolve mixed content errors.
 
      _http://domain.com/path/to.file_
 
-2\. Depending on your Content Management System, check for plugins that automatically rewrite HTTP resources to HTTPS. Within the **SSL/TLS** app **Edge Certificates** tab, Cloudflare provides such a service via [Automatic HTTPS Rewrites](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+2\. Depending on your Content Management System, check for plugins that automatically rewrite HTTP resources to HTTPS. Within the **SSL/TLS** app **Edge Certificates** tab, Cloudflare provides such a service via [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
 
 {{<Aside type="note">}}
 Cloudflare recommends WordPress users to install the [Cloudflare

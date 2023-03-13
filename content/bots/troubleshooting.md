@@ -7,29 +7,21 @@ weight: 11
 
 # Frequently Asked Questions
 
-## Overview
-
-Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
-
-For more information about these bot solutions and how to set them up, refer to the [developer documentation](/bots/).
-
-___
-
 ## How does Cloudflare detect bots?
 
-Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](/bots/plans).
+Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Plans](/bots/plans).
 
 ___
 
 ## How do I know what's included in my plan?
 
-To know what's included in your plan, refer to our [developer documentation](/bots/plans).
+To know what's included in your plan, refer to our [Plans](/bots/plans).
 
 ___
 
 ## How do I set up my bot product?
 
-To learn how to set up your bot product, refer to our [developer documentation](/bots/get-started).
+To learn how to set up your bot product, refer to [Get started](/bots/get-started).
 
 ___
 
@@ -40,7 +32,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 **Workarounds:**
 
 -   Disable the WAF managed rule with id 100203 temporarily,
--   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [developer documentation](/firewall/cf-firewall-rules/actions).
+-   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [Firewall actions](/firewall/cf-firewall-rules/actions).
 
 **Solution:**
 
@@ -169,4 +161,4 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rule
     -H "Content-Type: application/json"
 ```
 
-Note that you need to replace <key> with your own API key, which can be obtained from [API tokens](https://dash.cloudflare.com/profile/api-tokens).
+Note that you need to replace <key> with your own [API key](/fundamentals/api/get-started/keys/).

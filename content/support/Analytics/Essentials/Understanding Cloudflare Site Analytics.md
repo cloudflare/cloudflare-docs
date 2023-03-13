@@ -111,11 +111,11 @@ This panel features metrics for Cloudflare Workers. To learn more, read [Cloudfl
 
 ### Logs
 
-The Logs tab is not a metrics feature. Instead, Customers in the Enterprise plan can enable the [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/) service. You can use Logpush to download and analyze data using any analytics tool of your choice. 
+The Logs tab is not a metrics feature. Instead, Customers in the Enterprise plan can enable the [Cloudflare Logs Logpush](/logs/about/) service. You can use Logpush to download and analyze data using any analytics tool of your choice. 
 
 ___
 
 ## Related resources
 
--   [Cloudflare Analytics: A quick overview](https://developers.cloudflare.com/analytics)
--   [The Cloudflare Analytics GraphQL API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: A quick overview](/analytics/)
+-   [The Cloudflare Analytics GraphQL API](/analytics/)

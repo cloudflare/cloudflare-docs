@@ -11,7 +11,22 @@ title: Reaktion auf DDoS-Angriffe
 
 ## Übersicht
 
+{{<Aside type="note">}}
+Bevor Sie den Cloudflare-Support kontaktieren, aktivieren Sie bitte
+**„Under Attack"-Modus** (Schritt 1 unten), um die speziellen Merkmale
+des Angriffs-Traffics in Protokollen festzuhalten, die für den
+Cloudflare-Support zugänglich sind.
+{{</Aside>}}
+
 Cloudflares Netzwerk bekämpft sehr große [DDoS-Angriffe](https://www.cloudflare.com/ddos) automatisch. Durch Zwischenspeichern Ihrer Inhalte bei Cloudflare schützen Sie außerdem Ihre Website gegen kleine DDoS-Angriffe. Für Ressourcen, die nicht zwischengespeichert werden, sind eventuell zusätzliche manuelle Eingriffe nötig, die in dieser Anleitung aufgeführt sind.
+
+{{<Aside type="note">}}
+Die folgenden Schritte helfen nicht, wenn ein Angreifer Ihre
+Ursprungs-IP-Adresse erfahren hat und Ihren Ursprungswebserver direkt
+angreift (unter Umgehung von Cloudflare). Für Einzelheiten siehe unsere
+Anleitung zu [Cloudflares
+DDoS-Schutz](https://support.cloudflare.com/hc/articles/200172676).
+{{</Aside>}}
 
 ___
 
@@ -24,9 +39,30 @@ Zur Aktivierung des **[„Under Attack“-Modus](https://support.cloudflare.com/
 3.  Schalten Sie den **„Under Attack“-Modus** im Abschnitt **Schnelle Maßnahmen** von Cloudflares **Übersicht**\-App auf _Ein_.
 4.  \[Optional\] Stellen Sie das **[Challenge-Zeitfenster](https://support.cloudflare.com/hc/articles/200170136)** in der Registerkarte **Einstellungen** der **Firewall**\-App ein.
 
+{{<Aside type="tip">}}
+Der **„Under Attack"-Modus** kann über Cloudflares **Page Rules**-App
+auch für spezifische URLs konfiguriert werden, indem die
+*Sicherheitsstufe* auf *I'm Under Attack* eingestellt wird.
+{{</Aside>}}
+
+{{<Aside type="warning">}}
+Regulärer Datenverkehr von mobilen Apps oder von Clients, die JavaScript
+und Cookies nicht unterstützen, kann nicht auf Ihre Website zugreifen,
+während der **„Under Attack"-Modus** aktiviert ist. Aus diesem Grund
+wird der **„Under Attack"-Modus** für Ihren API-Datenverkehr nicht
+empfohlen.  Konfigurieren Sie statt dessen [Rate
+Limiting](https://support.cloudflare.com/hc/articles/235240767) oder
+stellen Sie zumindest die **Sicherheitsstufe** in der Registerkarte
+**Einstellungen** der **Firewall**-App auf *Hoch*.
+{{</Aside>}}
+
 ___
 
 ## Schritt 2: Aktivierung der **Web Application Firewall** (WAF)
+
+{{<Aside type="info">}}
+Die WAF ist nur für Domains mit kostenpflichtigen Tarifen verfügbar.
+{{</Aside>}}
 
 Aktivieren Sie die Cloudflare [WAF](https://support.cloudflare.com/hc/en-us/articles/200172016-What-does-the-Web-Application-Firewall-WAF-do-) wie folgt:
 
@@ -45,11 +81,32 @@ Cloudflares **Firewall**\-App erleichtert das Blockieren von Datenverkehr anhand
 **[Zone Lockdown](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-)** wird empfohlen, um nur vertrauenswürdige IP-Adressen oder -Bereiche auf einen Teil Ihrer Website zu lassen.  
 **[User Agent Blocking](https://support.cloudflare.com/hc/en-us/articles/115001856951-How-do-I-block-malicious-User-Agents-with-Cloudflare-)** wird empfohlen, um verdächtige [User-Agent-Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) für Ihre gesamte Domain zu blockieren.
 
+{{<Aside type="tip">}}
+[**Firewall Rules** haben
+Grenzen](https://developers.cloudflare.com/firewall/cf-firewall-rules/),
+sind aber flexibler und können einer [größeren Vielzahl an Feldern und
+Ausdrücken](https://developers.cloudflare.com/firewall/cf-firewall-rules/fields-and-expressions/)
+zugeordnet werden als **IP Access Rules**.
+{{</Aside>}}
+
+{{<Aside type="note">}}
+Firewall-Updates werden innerhalb von 2 Minuten wirksam.
+{{</Aside>}}
+
 Überprüfen Sie Ihre Protokolldateien, um zu entscheiden, welches Land oder welche IPs blockiert oder mit einer Challenge konfrontiert werden sollen. Wenden Sie sich an Ihren Hosting-Provider, um Folgendes identifizieren zu können:
 
 -   den Angriffs-Traffic, der Ihren Ursprungswebserver erreicht,
 -   die Ressourcen, auf die bei dem Angriff zugegriffen wird, und
 -   allgemeine Merkmale des Angriffs (IP-Adressen, User-Agents, Länder oder ASNs usw.)
+
+{{<Aside type="info">}}
+Cloudflare bietet auch **[Rate
+Limiting](https://support.cloudflare.com/hc/articles/235240767)** an, um
+das Anfragevolumen an Ihren Server unter Kontrolle zu halten.  [**Rate
+Limiting** wird auf Nutzungsgrundlage
+berechnet](https://support.cloudflare.com/hc/en-us/articles/115000272247-Billing-for-Cloudflare-Rate-Limiting)
+und ist unabhängig vom Tariftyp.
+{{</Aside>}}
 
 ___
 

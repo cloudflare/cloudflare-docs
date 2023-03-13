@@ -114,7 +114,7 @@ Error 520 occurs when the origin server returns an empty, unknown, or unexpected
 {{<Aside type="note">}}
 A quick workaround while further investigating 520 errors is to either
 make the record
-[DNS-only](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+[DNS-only](/dns/manage-dns-records/reference/proxied-dns-records)
 in the Cloudflare **DNS** app or [temporarily pause
 Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753).
 {{</Aside>}}
@@ -161,7 +161,7 @@ The two most common causes of 521 errors are:
 -   Review origin web server error logs to identify web server application crashes or outages.
 -   Confirm [Cloudflare IP addresses](https://www.cloudflare.com/ips) are not blocked or rate limited
 -   Allow all [Cloudflare IP ranges](https://www.cloudflare.com/ips) in your origin web server's firewall or other security software
--   Confirm that — if you have your **SSL/TLS mode** set to **Full** or **Full (Strict**) — you have installed a [Cloudflare Origin Certificate](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)
+-   Confirm that — if you have your **SSL/TLS mode** set to **Full** or **Full (Strict**) — you have installed a [Cloudflare Origin Certificate](/ssl/origin-configuration/origin-ca)
 -   Find additional troubleshooting information on the [Cloudflare Community](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461).
 
 ___
@@ -183,7 +183,7 @@ Error 522 occurs when Cloudflare times out contacting the origin web server. Two
 -   The origin IP address in your Cloudflare **DNS** app does not match the IP address currently provisioned to your origin web server by your hosting provider.
 -   Packets were dropped at your origin web server.
 
-If you are using [Cloudflare Pages](https://developers.cloudflare.com/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain).
+If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your custom Pages domain. Instructions on how to set up a custom Pages domain can be found [here](/pages/get-started/#adding-a-custom-domain).
 
 If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -251,12 +251,12 @@ ___
 525 errors indicate that the SSL handshake between Cloudflare and the origin web server failed. Error 525 occurs when these two conditions are true:
 
 1.  The [SSL handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) fails between Cloudflare and the origin web server, and
-2.  [_Full_ or _Full (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
+2.  [_Full_ or _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
 
 {{<Aside type="note">}}
 If your hosting provider frequently changes your origin web server's IP
 address, refer to Cloudflare's documentation on [dynamic DNS
-updates](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
+updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
 {{</Aside>}}
 
 **Resolution**
@@ -266,7 +266,7 @@ updates](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managin
 -   No valid SSL certificate installed
 -   Port 443 (or other custom secure port) is not open
 -   No [SNI](https://support.cloudflare.com/hc/articles/360026016272) support
--   The [cipher suites](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) accepted by Cloudflare does not match the cipher suites supported by the origin web server
+-   The [cipher suites](/ssl/reference/cipher-suites/) accepted by Cloudflare does not match the cipher suites supported by the origin web server
 
 {{<Aside type="tip">}}
 If 525 errors occur intermittently, review the origin web server error
@@ -279,8 +279,8 @@ level](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 
 **Additional checks**
 
--   Check if you have a certificate installed on your origin server. You can check [this article](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
--   [Review the cipher suites](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) your server is using to ensure they match what is supported by Cloudflare.
+-   Check if you have a certificate installed on your origin server. You can check [this article](https://support.cloudflare.com/hc/en-us/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) for more details on how to run some tests. In case you don't have any certificate, you can create and install our free [Cloudflare origin CA certificate](/ssl/origin-configuration/origin-ca). Using Origin CA certificates allows you to encrypt traffic between Cloudflare and your origin web server.
+-   [Review the cipher suites](/ssl/reference/cipher-suites/) your server is using to ensure they match what is supported by Cloudflare.
 -   Check your server's error logs from the timestamps you see 525s to ensure there are errors that could be causing the connection to be reset during the SSL handshake.
 
 ___
@@ -290,7 +290,7 @@ ___
 Error 526 occurs when these two conditions are true:
 
 1.  Cloudflare cannot validate the SSL certificate at your origin web server, and
-2.  [_Full SSL (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
+2.  [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes#full-strict) **SSL** is set in the **Overview** tab of your Cloudflare **SSL/TLS** app.
 
 **Resolution**
 
@@ -311,7 +311,7 @@ Request your server administrator or hosting provider to review the origin web s
 
 ![Screen showing an SSL certificate with no errors.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-If the origin server uses a self-signed certificate, configure the domain to use _Full_ _SSL_ instead of _Full SSL (Strict)_. Refer to [recommended SSL settings for your origin](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+If the origin server uses a self-signed certificate, configure the domain to use _Full_ _SSL_ instead of _Full SSL (Strict)_. Refer to [recommended SSL settings for your origin](/ssl/origin-configuration/ssl-modes).
 
 ___
 
@@ -400,7 +400,7 @@ If TLS/SSL errors occur, check the following on the origin web server and ensure
 -   Port 443 is open
 -   An SSL certificate is presented by the origin web server
 -   the SAN or Common Name of the origin web server’s SSL certificate contains the requested or target hostname
--   **SSL** is set to [Full or Full (Strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) in the **Overview** tab of the Cloudflare **SSL/TLS** app
+-   **SSL** is set to [Full or Full (Strict)](/ssl/origin-configuration/ssl-modes) in the **Overview** tab of the Cloudflare **SSL/TLS** app
 
 {{<Aside type="tip">}}
 If your origin web server SSL certificate is self-signed, [set

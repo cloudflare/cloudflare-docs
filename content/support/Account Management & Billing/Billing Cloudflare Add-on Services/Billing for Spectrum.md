@@ -51,7 +51,7 @@ exceed your desired threshold.
 
 ### Pricing per plan
 
-After [enabling Spectrum](https://developers.cloudflare.com/spectrum/get-started), the pricing is as follows:
+After [enabling Spectrum](/spectrum/get-started), the pricing is as follows:
 
 | Plan | Protocols | Free up to | Charges for overages | Maximum concurrent connections |
 | --- | --- | --- | --- | --- |
@@ -72,4 +72,4 @@ ___
 
 ## Related Resources
 
--   [Spectrum developers documentation](https://developers.cloudflare.com/spectrum/get-started)
+-   [Spectrum developers documentation](/spectrum/get-started)

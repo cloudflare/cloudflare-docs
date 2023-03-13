@@ -12,8 +12,8 @@ title: Configuring URL forwarding or redirects with Page Rules
 
 If you want to forward or redirect traffic to a different URL, you have the following options using Cloudflare:
 
--   [Single Redirects](https://developers.cloudflare.com/rules/url-forwarding/single-redirects/): Create static or dynamic redirects at the zone level. Dynamic redirects are advanced URL redirects, such as redirects based on the source country of requests.
--   [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/): Define a large number (thousands or even millions) of essentially static URL redirects at the account level.
+-   [Single Redirects](/rules/url-forwarding/single-redirects/): Create static or dynamic redirects at the zone level. Dynamic redirects are advanced URL redirects, such as redirects based on the source country of requests.
+-   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/): Define a large number (thousands or even millions) of essentially static URL redirects at the account level.
 -   [Page Rules](https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules#how-to): Should only be used when the other two options do not meet your use case.
 
 ___
@@ -22,7 +22,7 @@ ___
 
 {{<Aside type="note">}}
 Page Rule subdomains require an [\"Orange
-Clouded\"](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+Clouded\"](/dns/manage-dns-records/reference/proxied-dns-records)
 DNS record for the Page Rule to work. Page Rules won\'t apply to
 subdomains that don\'t exist in DNS or aren\'t being directed to
 Cloudflare.
@@ -125,6 +125,6 @@ ___
 
 ## Related resources
 
--   [Single Redirects](https://developers.cloudflare.com/rules/url-forwarding/single-redirects/)
--   [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/)
+-   [Single Redirects](/rules/url-forwarding/single-redirects/)
+-   [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)
 -   [Understanding and Configuring Cloudflare Page Rules (Page Rules Tutorial)](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-)

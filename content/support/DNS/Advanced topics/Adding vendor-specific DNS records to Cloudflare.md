@@ -10,7 +10,7 @@ title: Adding vendor-specific DNS records to Cloudflare
 
 ## Adding DNS records for vendors
 
-This article requires prior knowledge of DNS record management via the Cloudflare dashboard.  To learn more, refer to Cloudflare's article on [managing DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
+This article requires prior knowledge of DNS record management via the Cloudflare dashboard.  To learn more, refer to Cloudflare's article on [managing DNS records](/dns/manage-dns-records/how-to/create-dns-records).
 
 **Google**
 
@@ -297,5 +297,5 @@ ___
 
 ## Related resources
 
--   [Managing Cloudflare DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)
--   [CNAME Flattening](https://developers.cloudflare.com/dns/additional-options/cname-flattening)
+-   [Managing Cloudflare DNS records](/dns/manage-dns-records/how-to/create-dns-records)
+-   [CNAME Flattening](/dns/additional-options/cname-flattening)

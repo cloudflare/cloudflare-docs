@@ -228,6 +228,14 @@ ___
 
 Standardmäßig können nur A- und CNAME-Einträge, die Webverkehr (HTTP und HTTPs) regeln, an Cloudflare übergeben werden. Alle anderen DNS-Einträge sollten auf eine graue Wolke umgeschaltet werden. Mehr darüber, [welche Subdomains für Cloudflare geeignet sind](https://support.cloudflare.com/hc/en-us/articles/200169626-What-subdomains-are-appropriate-for-orange-gray-clouds-), erfahren Sie in unserem Support-Handbuch.
 
+{{<Aside type="note">}}
+Bei DNS-Einträgen, die an Cloudflare übergeben wurden, werden in
+DNS-Abfragen Cloudflares IP-Adressen anstelle der ursprünglichen
+IP-Adresse Ihres Servers zurückgegeben. Dies ermöglicht es Cloudflare,
+alle an Ihre Website gerichteten Anforderungen zu optimieren,
+zwischenzuspeichern und zu schützen.
+{{</Aside>}}
+
 ___
 
 ### Können Subdomains direkt zu Cloudflare hinzugefügt werden?
@@ -243,6 +251,12 @@ Wenn Ihre Domain als [CNAME Setup](https://support.cloudflare.com/hc/en-us/artic
 ___
 
 ### Warum werden Warnungen zu SOA-Einträgen angezeigt?
+
+{{<Aside type="note">}}
+Sie können Warnungen von Tools von Drittanbietern über ungültige
+Cloudflare-SOA-Seriennummern oder SOA-Ablaufwerte außerhalb des gültigen
+Bereichs ignorieren.
+{{</Aside>}}
 
 Cloudflare erstellt automatisch den SOA-Eintrag, wenn Sie Ihre Domain auf die Nameserver von Cloudflare verschieben.  Einige Cloudflare-SOA-Felder unterscheiden sich von anderen gängigen DNS-Servern:
 

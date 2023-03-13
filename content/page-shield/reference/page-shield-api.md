@@ -38,20 +38,26 @@ The following table summarizes the available operations:
 | [Update Page Shield status][2]    | `PUT zones/<ZONE_ID>/page_shield`                      | Update the Page Shield status (enabled/disabled).        |
 | [List Page Shield scripts][3]     | `GET zones/<ZONE_ID>/page_shield/scripts`              | Fetch a list of currently monitored scripts.             |
 | [Get a Page Shield script][4]     | `GET zones/<ZONE_ID>/page_shield/scripts/<SCRIPT_ID>`  | Fetch the details of a currently monitored script.       |
-| List Page Shield connections      | `GET zones/<ZONE_ID>/page_shield/connections`          | Fetch a list of currently monitored connections.         |
-| Get a Page Shield connection      | `GET zones/<ZONE_ID>/page_shield/connections/<CONNECTION_ID>` | Fetch the details of a connection.                |
-
+| [List Page Shield connections][5] | `GET zones/<ZONE_ID>/page_shield/connections`          | Fetch a list of currently monitored connections.         |
+| [Get a Page Shield connection][6] | `GET zones/<ZONE_ID>/page_shield/connections/<CONNECTION_ID>` | Fetch the details of a connection.                |
+| List policies                     | `GET zones/<ZONE_ID>/page_shield/policies`             | Fetch a list of all configured CSP policies.             |
+| Get a policy                      | `GET zones/<ZONE_ID>/page_shield/policies/<POLICY_ID>` | Fetch the details of a CSP policy.                       |
+| Create a policy                   | `POST zones/<ZONE_ID>/page_shield/policies`            | Creates a CSP policy with the provided configuration.    |
+| Update a policy                   | `PUT zones/<ZONE_ID>/page_shield/policies/<POLICY_ID>` | Updates an existing CSP policy.                          |
+| Delete a policy                   | `DELETE zones/<ZONE_ID>/page_shield/policies/<POLICY_ID>` | Deletes an existing CSP policy.                       |
 
 [1]: https://developers.cloudflare.com/api/operations/page-shield-get-page-shield-status
 [2]: https://developers.cloudflare.com/api/operations/page-shield-update-page-shield-status
 [3]: https://developers.cloudflare.com/api/operations/page-shield-list-page-shield-scripts
 [4]: https://developers.cloudflare.com/api/operations/page-shield-get-a-page-shield-script
+[5]: https://developers.cloudflare.com/api/operations/page-shield-list-page-shield-connections
+[6]: https://developers.cloudflare.com/api/operations/page-shield-get-a-page-shield-connection
 
 ## API notes
 
 * The malicious script classification (`Malicious` or `Not malicious`) is not directly available in the API. To determine this classification, compare the script's `js_integrity_score` value with the classification threshold, which is currently set to 50 — scripts with a score value higher than the threshold are considered malicious.
 
-* The API provides two separate properties for malicious script/connection categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script categories](/page-shield/about/malicious-script-detection/#malicious-script-categories).
+* The API provides two separate properties for malicious script/connection categories: `malicious_domain_categories` and `malicious_url_categories`, related to the `domain_reported_malicious` and `url_reported_malicious` properties, respectively. The Cloudflare dashboard displays all the categories in a single **Malicious category** field. For more information, refer to [Malicious script and connection categories](/page-shield/how-it-works/malicious-script-detection/#malicious-script-and-connection-categories).
 
 ## Common API calls
 
@@ -370,3 +376,60 @@ header: Response
   "messages": []
 }
 ```
+
+### Create a policy
+
+This example creates a log policy in Page Shield, defining the following scripts as allowed based on where they are hosted:
+
+* Scripts hosted in `myapp.example.com` (which does not include scripts in `example.com`).
+* Scripts hosted in `cdnjs.cloudflare.com`.
+* The Google Analytics script using its full URL.
+* All scripts in the same origin (same HTTP or HTTPS scheme and hostname).
+
+All other scripts would trigger a policy violation.
+
+For details on Content Security Policy values, refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy).
+
+{{<Aside type="warning">}}
+Currently, you can only create Page Shield policies containing `script-src` directives. Additionally, the supported keywords in these directives are the following:
+- `'self'`
+- `'none'`
+- `'unsafe-inline'`
+- `'unsafe-eval'`
+{{</Aside>}}
+
+```bash
+---
+header: Request
+---
+curl -X POST "https://api.cloudflare.com/api/v4/zones/<ZONE_ID>/page_shield/policies" \
+-H "Authorization: Bearer <API_TOKEN>" \
+-d '{
+  "description": "My first policy in log mode",
+  "action": "log",
+  "expression": "http.host eq myapp.example.com",
+  "enabled": "true",
+  "value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js '\''self'\''"
+}'
+```
+
+```json
+---
+header: Response
+---
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": "<POLICY_ID>",
+    "description": "My first policy in log mode",
+    "action": "log",
+    "expression": "http.host eq myapp.example.com",
+    "enabled": "true",
+    "value": "script-src myapp.example.com cdnjs.cloudflare.com https://www.google-analytics.com/analytics.js 'self'"
+  }
+}
+```
+
+To create an allow policy instead of a log policy, use `"action": "allow"` in the request body. In the case of such policy, all scripts not allowed by the policy would be blocked.

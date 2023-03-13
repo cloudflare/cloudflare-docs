@@ -21,7 +21,11 @@ ___
 
 Eine ICP-Nummer (für „Internet Content Provider“) ist eine vom Staat ausgestellte Registrierungsnummer, mit der Sie Ihre Website auf einem Server in Festlandchina hosten oder von dort Inhalte bereitstellen dürfen. Alle öffentlichen Websites in Festlandchina benötigen eine ICP-Nummer. Die ICP-Nummer muss auf der Homepage der Website erscheinen. Wenn Sie keine ICP-Nummer haben, kann die Website ohne Vorwarnung vom Hosting-Provider vom Netz genommen werden.
 
-Eine ICP-Nummer kann für mehrere Websites im Besitz der gleichen Firma verwendet werden. Auf der MIIT-Website können Sie [überprüfen, ob eine Domain schon eine ICP-Nummer hat](http://www.beian.miit.gov.cn/publish/query/indexFirst.action).  
+Eine ICP-Nummer kann für mehrere Websites im Besitz der gleichen Firma verwendet werden. Auf der MIIT-Website können Sie [überprüfen, ob eine Domain schon eine ICP-Nummer hat](http://www.beian.miit.gov.cn/publish/query/indexFirst.action).
+
+{{<Aside type="note">}}
+Die MIIT-Website ist nur in chinesischer Sprache verfügbar.
+{{</Aside>}} 
 
 ## Welche Art ICP-Nummer brauche ich?
 

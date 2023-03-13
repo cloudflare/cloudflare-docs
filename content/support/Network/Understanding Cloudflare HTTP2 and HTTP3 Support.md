@@ -35,7 +35,7 @@ ___
 
 HTTP/3 enables fast, reliable, and secure connections.  HTTP/3 encrypts Internet transport by default using a protocol from Google called QUIC.   Enable HTTP/3 via the Cloudflare **Network** app. 
 
-For more information, review our [HTTP/3 developer documentation](https://developers.cloudflare.com/http3/).
+For more information, refer to the [Learning center](https://www.cloudflare.com/learning/performance/what-is-http3/).
 
 ___
 

@@ -22,7 +22,7 @@ ___
 The [Automatic Platform Optimization
 (APO)](https://www.cloudflare.com/automatic-platform-optimization/wordpress/)
 feature requires that you be on a [Full
-Setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/)
+Setup](/dns/zone-setups/full-setup/)
 using Cloudflare nameservers.
 {{</Aside>}}
 
