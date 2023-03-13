@@ -78,7 +78,7 @@ Or:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback`
 
-When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.  To combine both options, you would pass a querystring of `?render=explicit&onload=onloadTurnstileCallback`:
+When using `render=explicit`, HTML elements with the `cf-turnstile` class will not show a challenge. The `turnstile.render` function must be invoked using the following steps.  To combine both options, pass a query string of `?render=explicit&onload=onloadTurnstileCallback`:
 
 `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback`
 
