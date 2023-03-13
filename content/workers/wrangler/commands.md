@@ -1545,18 +1545,33 @@ Deployments are currently in Public Beta and subcommands are currently in Beta. 
 
 You can read more about deployments and how they work [here](/workers/platform/deployments).
 
-Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and indicates which deployment is `Active`.
+### list
+Retrieve details for the specified deployment. Details include Deployment ID, Author, Source, Created on, and bindings.
+
+Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Author`, `Source`, `Created on`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
 
 ```sh
-$ wrangler deployments
+$ wrangler deployments list
 
 Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on: 2022-11-11T15:49:08.117218Z
 Author: example@cloudflare.com
 Source: Dashboard
 
+Deployment ID: 91943f34-4802-4af7-a350-b5894c73ff34
+Created on: 2022-11-11T15:50:08.117218Z
+Author: example@cloudflare.com
+Source: Dashboard
+
+Deployment ID: 31d8f2f0-fba3-4ce9-8427-933f42541b56
+Created on: 2022-11-11T15:51:08.117218Z
+Author: example@cloudflare.com
+Source: Rollback from Wrangler 🤠
+Rollback from: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
+Message: This is a message submitted on rollback
+
 Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
-Created on: 2022-11-11T15:51:20.79936Z
+Created on: 2022-11-11T15:52:20.79936Z
 Author: example@cloudflare.com
 Source: Wrangler
 🟩 Active
@@ -1571,7 +1586,7 @@ Source: Wrangler
 {{</definitions>}}
 
 ### view <deployment-id>
-Retrieve details for the specified deployment. Details include Deployment ID, Author, Source, Created on, and bindings.
+Retrieve details for the specified deployment, or the latest if no `deployment-id` is provided. Details include Deployment ID, Author, Source, Created on, and bindings. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
 
 ```sh
 wrangler deployments view <DEPLOYMENT_ID>
@@ -1596,32 +1611,9 @@ bucket_name = "testr2"
 [[kv_namespaces]]
 id = "79300c6d17eb4180a07270f450efe53f"
 binding = "MY_KV"
-
----------------------------script---------------------------
-
-// index.js
-var worker_default = {
-  fetch(request) {
-    const base = "https://example.com";
-    const statusCode = 301;
-    const destination = new URL(request.url, base);
-    return Response.redirect(destination.toString(), statusCode);
-  }
-};
-export {
-  worker_default as default
-};
-//# sourceMappingURL=index.js.map
 ```
 
-{{<definitions>}}
-
-- `--content` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - View script content for specified deployment.
-
-{{</definitions>}}
-
-### rollback [deployment-id]
+## rollback
 
 Rollback to a specific deployment by ID. If an ID is not speicified, wrangler will rollback to the previous deployment. There are limitations on what deployments you can rollback to. Refer to [Rollbacks in the Deployments documentation](/workers/platform/deployments#rollbacks) for more information.
 
@@ -1630,15 +1622,23 @@ Rollbacks will immediately replace the current deployment and become the active 
 {{</Aside>}}
 
 ```sh
-wrangler deployments rollback e81fe980-7622-6e1d-740b-1457de3e07e2
+wrangler rollback e81fe980-7622-6e1d-740b-1457de3e07e2
 ```
 
 Output:
 ```sh
 🤖 Using default value in non-interactive context: yes
-🚧\`wrangler deployments\` is a beta command. Please report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose
-Successfully rolled back to deployment ID: 3mEgaU1T-Intrepid-someThing
+🚧 `wrangler rollback` is a beta command. Please report any issues to https://github.com/cloudflare/wrangler2/issues/new/choose
+Successfully rolled back to deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
+Current Deployment ID: 04d22369-6e55-49ff-944a-d21e216d9f3e
 ```
+
+{{<definitions>}}
+
+- `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Add message for rollback. Accepts empty string. When specified, interactive prompt is skipped.
+
+{{</definitions>}}
 
 ---
 
