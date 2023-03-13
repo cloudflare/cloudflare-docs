@@ -33,7 +33,7 @@ You can request adjustments to limits that conflict with your project goals by c
 
 URLs have a limit of 16 KB.
 
-Request headers observe a total limit of 32 KB, but each header is limited to 16 KB.
+Request headers are limited to a total size of 32 KB (all headers combined).
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare Account's plan, which is separate from your Workers plan. When the request body size of your POST/PUT/PATCH requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
