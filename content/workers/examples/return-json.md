@@ -12,25 +12,24 @@ weight: 2
 layout: example
 ---
 
-
 {{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
 export default {
-	async fetch(request) {
-		const data = {
-			hello: 'world',
-		};
+  async fetch(request) {
+    const data = {
+      hello: "world",
+    };
 
-		const json = JSON.stringify(data, null, 2);
+    const json = JSON.stringify(data, null, 2);
 
-		return new Response(json, {
-			headers: {
-				'content-type': 'application/json;charset=UTF-8',
-			},
-		});
-	},
+    return new Response(json, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  },
 };
 ```
 
@@ -40,19 +39,20 @@ export default {
 ```ts
 const handler: ExportedHandler = {
   async fetch(request: Request) {
-		const data = {
-			hello: 'world',
-		};
+    const data = {
+      hello: "world",
+    };
 
-		const json = JSON.stringify(data, null, 2);
+    const json = JSON.stringify(data, null, 2);
 
-		return new Response(json, {
-			headers: {
-				'content-type': 'application/json;charset=UTF-8',
-			},
-		});
-	},
-}
+    return new Response(json, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
+  },
+};
 ```
+
 {{</tab>}}
 {{</tabs>}}

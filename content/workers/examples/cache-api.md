@@ -41,7 +41,7 @@ export default {
       // will limit the response to be in cache for 10 seconds max
 
       // Any changes made to the response here will be reflected in the cached value
-      response.headers.append('Cache-Control', 's-maxage=10');
+      response.headers.append("Cache-Control", "s-maxage=10");
 
       ctx.waitUntil(cache.put(cacheKey, response.clone()));
     } else {
@@ -51,6 +51,7 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -81,7 +82,7 @@ const handler: ExportedHandler = {
       // will limit the response to be in cache for 10 seconds max
 
       // Any changes made to the response here will be reflected in the cached value
-      response.headers.append('Cache-Control', 's-maxage=10');
+      response.headers.append("Cache-Control", "s-maxage=10");
 
       ctx.waitUntil(cache.put(cacheKey, response.clone()));
     } else {
@@ -89,9 +90,10 @@ const handler: ExportedHandler = {
     }
     return response;
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

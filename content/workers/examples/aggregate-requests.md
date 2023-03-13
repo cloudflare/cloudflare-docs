@@ -21,10 +21,10 @@ export default {
      * Replace url1 and url2 with the hosts you wish to send requests to
      * @param {string} url the URL to send the request to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url1 = someHost + '/requests/json';
-    const url2 = someHost + '/requests/json';
-    const type = 'application/json;charset=UTF-8';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url1 = someHost + "/requests/json";
+    const url2 = someHost + "/requests/json";
+    const type = "application/json;charset=UTF-8";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -33,12 +33,12 @@ export default {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return response.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return response.text();
       } else {
         return response.text();
@@ -47,10 +47,10 @@ export default {
 
     const init = {
       headers: {
-        'content-type': type,
+        "content-type": type,
       },
     };
-    
+
     const responses = await Promise.all([fetch(url1, init), fetch(url2, init)]);
     const results = await Promise.all([
       gatherResponse(responses[0]),
@@ -60,6 +60,7 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -71,10 +72,10 @@ const handler: ExportedHandler = {
      * Replace url1 and url2 with the hosts you wish to send requests to
      * @param {string} url the URL to send the request to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url1 = someHost + '/requests/json';
-    const url2 = someHost + '/requests/json';
-    const type = 'application/json;charset=UTF-8';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url1 = someHost + "/requests/json";
+    const url2 = someHost + "/requests/json";
+    const type = "application/json;charset=UTF-8";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -83,12 +84,12 @@ const handler: ExportedHandler = {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return response.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return response.text();
       } else {
         return response.text();
@@ -97,10 +98,10 @@ const handler: ExportedHandler = {
 
     const init = {
       headers: {
-        'content-type': type,
+        "content-type": type,
       },
     };
-    
+
     const responses = await Promise.all([fetch(url1, init), fetch(url2, init)]);
     const results = await Promise.all([
       gatherResponse(responses[0]),
@@ -108,8 +109,9 @@ const handler: ExportedHandler = {
     ]);
     return new Response(results.join(), init);
   },
-}
+};
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

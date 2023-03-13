@@ -25,7 +25,7 @@ export default {
     function rawHtmlResponse(html) {
       return new Response(html, {
         headers: {
-          'content-type': 'text/html;charset=UTF-8',
+          "content-type": "text/html;charset=UTF-8",
         },
       });
     }
@@ -36,14 +36,14 @@ export default {
      * @param {Request} request the incoming request to read from
      */
     async function readRequestBody(request) {
-      const contentType = request.headers.get('content-type');
-      if (contentType.includes('application/json')) {
+      const contentType = request.headers.get("content-type");
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await request.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return request.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return request.text();
-      } else if (contentType.includes('form')) {
+      } else if (contentType.includes("form")) {
         const formData = await request.formData();
         const body = {};
         for (const entry of formData.entries()) {
@@ -53,24 +53,25 @@ export default {
       } else {
         // Perhaps some other type of data was submitted in the form
         // like an image, or some other binary data.
-        return 'a file';
+        return "a file";
       }
     }
 
     const { url } = request;
-    if (url.includes('form')) {
+    if (url.includes("form")) {
       return rawHtmlResponse(someForm);
     }
-    if (request.method === 'POST') {
+    if (request.method === "POST") {
       const reqBody = await readRequestBody(request);
       const retBody = `The request body sent in was ${reqBody}`;
       return new Response(retBody);
-    } else if (request.method === 'GET') {
-      return new Response('The request was a GET');
+    } else if (request.method === "GET") {
+      return new Response("The request was a GET");
     }
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -85,7 +86,7 @@ const handler: ExportedHandler = {
     function rawHtmlResponse(html) {
       return new Response(html, {
         headers: {
-          'content-type': 'text/html;charset=UTF-8',
+          "content-type": "text/html;charset=UTF-8",
         },
       });
     }
@@ -96,14 +97,14 @@ const handler: ExportedHandler = {
      * @param {Request} request the incoming request to read from
      */
     async function readRequestBody(request: Request) {
-      const contentType = request.headers.get('content-type');
-      if (contentType.includes('application/json')) {
+      const contentType = request.headers.get("content-type");
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await request.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return request.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return request.text();
-      } else if (contentType.includes('form')) {
+      } else if (contentType.includes("form")) {
         const formData = await request.formData();
         const body = {};
         for (const entry of formData.entries()) {
@@ -113,26 +114,26 @@ const handler: ExportedHandler = {
       } else {
         // Perhaps some other type of data was submitted in the form
         // like an image, or some other binary data.
-        return 'a file';
+        return "a file";
       }
     }
 
     const { url } = request;
-    if (url.includes('form')) {
+    if (url.includes("form")) {
       return rawHtmlResponse(someForm);
     }
-    if (request.method === 'POST') {
+    if (request.method === "POST") {
       const reqBody = await readRequestBody(request);
       const retBody = `The request body sent in was ${reqBody}`;
       return new Response(retBody);
-    } else if (request.method === 'GET') {
-      return new Response('The request was a GET');
+    } else if (request.method === "GET") {
+      return new Response("The request was a GET");
     }
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
-

@@ -19,7 +19,7 @@ export default {
   async fetch(request) {
     // You will need some super-secret data to use as a symmetric key.
     const encoder = new TextEncoder();
-    const secretKeyData = encoder.encode('my secret symmetric key');
+    const secretKeyData = encoder.encode("my secret symmetric key");
 
     // Convert a ByteString (a string whose code units are all in the range
     // [0, 255]), to a Uint8Array. If you pass in a string with code units larger
@@ -35,21 +35,21 @@ export default {
     const url = new URL(request.url);
 
     // If the path does not begin with our protected prefix, pass the request through
-    if (!url.pathname.startsWith('/verify/')) {
+    if (!url.pathname.startsWith("/verify/")) {
       return fetch(request);
     }
 
     // Make sure you have the minimum necessary query parameters.
-    if (!url.searchParams.has('mac') || !url.searchParams.has('expiry')) {
-      return new Response('Missing query parameter', { status: 403 });
+    if (!url.searchParams.has("mac") || !url.searchParams.has("expiry")) {
+      return new Response("Missing query parameter", { status: 403 });
     }
 
     const key = await crypto.subtle.importKey(
-      'raw',
+      "raw",
       secretKeyData,
-      { name: 'HMAC', hash: 'SHA-256' },
+      { name: "HMAC", hash: "SHA-256" },
       false,
-      ['verify']
+      ["verify"]
     );
 
     // Extract the query parameters we need and run the HMAC algorithm on the
@@ -57,12 +57,12 @@ export default {
     // timestamp. It is crucial to pad the input data, for example, by adding a symbol
     // in-between the two fields that can never occur on the right side. In this
     // case, use the @ symbol to separate the fields.
-    const expiry = Number(url.searchParams.get('expiry'));
+    const expiry = Number(url.searchParams.get("expiry"));
     const dataToAuthenticate = `${url.pathname}@${expiry}`;
 
     // The received MAC is Base64-encoded, so you have to go to some trouble to
     // get it into a buffer type that crypto.subtle.verify() can read.
-    const receivedMacBase64 = url.searchParams.get('mac');
+    const receivedMacBase64 = url.searchParams.get("mac");
     const receivedMac = byteStringToUint8Array(atob(receivedMacBase64));
 
     // Use crypto.subtle.verify() to guard against timing attacks. Since HMACs use
@@ -71,14 +71,14 @@ export default {
     // bail out on the first mismatch, which leaks information to potential
     // attackers.
     const verified = await crypto.subtle.verify(
-      'HMAC',
+      "HMAC",
       key,
       receivedMac,
       encoder.encode(dataToAuthenticate)
     );
 
     if (!verified) {
-      const body = 'Invalid MAC';
+      const body = "Invalid MAC";
       return new Response(body, { status: 403 });
     }
 
@@ -93,14 +93,16 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request) {
     // You will need some super-secret data to use as a symmetric key.
     const encoder = new TextEncoder();
-    const secretKeyData = encoder.encode('my secret symmetric key');
+    const secretKeyData = encoder.encode("my secret symmetric key");
 
     // Convert a ByteString (a string whose code units are all in the range
     // [0, 255]), to a Uint8Array. If you pass in a string with code units larger
@@ -116,21 +118,21 @@ const handler: ExportedHandler = {
     const url = new URL(request.url);
 
     // If the path does not begin with our protected prefix, pass the request through
-    if (!url.pathname.startsWith('/verify/')) {
+    if (!url.pathname.startsWith("/verify/")) {
       return fetch(request);
     }
 
     // Make sure you have the minimum necessary query parameters.
-    if (!url.searchParams.has('mac') || !url.searchParams.has('expiry')) {
-      return new Response('Missing query parameter', { status: 403 });
+    if (!url.searchParams.has("mac") || !url.searchParams.has("expiry")) {
+      return new Response("Missing query parameter", { status: 403 });
     }
 
     const key = await crypto.subtle.importKey(
-      'raw',
+      "raw",
       secretKeyData,
-      { name: 'HMAC', hash: 'SHA-256' },
+      { name: "HMAC", hash: "SHA-256" },
       false,
-      ['verify']
+      ["verify"]
     );
 
     // Extract the query parameters we need and run the HMAC algorithm on the
@@ -138,12 +140,12 @@ const handler: ExportedHandler = {
     // timestamp. It is crucial to pad the input data, for example, by adding a symbol
     // in-between the two fields that can never occur on the right side. In this
     // case, use the @ symbol to separate the fields.
-    const expiry = Number(url.searchParams.get('expiry'));
+    const expiry = Number(url.searchParams.get("expiry"));
     const dataToAuthenticate = `${url.pathname}@${expiry}`;
 
     // The received MAC is Base64-encoded, so you have to go to some trouble to
     // get it into a buffer type that crypto.subtle.verify() can read.
-    const receivedMacBase64 = url.searchParams.get('mac');
+    const receivedMacBase64 = url.searchParams.get("mac");
     const receivedMac = byteStringToUint8Array(atob(receivedMacBase64));
 
     // Use crypto.subtle.verify() to guard against timing attacks. Since HMACs use
@@ -152,14 +154,14 @@ const handler: ExportedHandler = {
     // bail out on the first mismatch, which leaks information to potential
     // attackers.
     const verified = await crypto.subtle.verify(
-      'HMAC',
+      "HMAC",
       key,
       receivedMac,
       encoder.encode(dataToAuthenticate)
     );
 
     if (!verified) {
-      const body = 'Invalid MAC';
+      const body = "Invalid MAC";
       return new Response(body, { status: 403 });
     }
 
@@ -172,10 +174,11 @@ const handler: ExportedHandler = {
     // through.
     return fetch(request);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -206,13 +209,13 @@ export default {
     async function generateSignedUrl(url) {
       // You will need some super-secret data to use as a symmetric key.
       const encoder = new TextEncoder();
-      const secretKeyData = encoder.encode('my secret symmetric key');
+      const secretKeyData = encoder.encode("my secret symmetric key");
       const key = await crypto.subtle.importKey(
-        'raw',
+        "raw",
         secretKeyData,
-        { name: 'HMAC', hash: 'SHA-256' },
+        { name: "HMAC", hash: "SHA-256" },
         false,
-        ['sign']
+        ["sign"]
       );
 
       // Signed requests expire after one minute. Note that you could choose
@@ -229,22 +232,26 @@ export default {
       // concatenating the values.
       const dataToAuthenticate = `${url.pathname}@${expiry}`;
 
-      const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(dataToAuthenticate));
+      const mac = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        encoder.encode(dataToAuthenticate)
+      );
 
       // `mac` is an ArrayBuffer, so you need to make a few changes to get
       // it into a ByteString, and then a Base64-encoded string.
       let base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
 
-      // must convert "+" to "-" as urls encode "+" as " " 
-      base64Mac = base64Mac.replaceAll("+", "-")
-      url.searchParams.set('mac', base64Mac);
-      url.searchParams.set('expiry', expiry);
+      // must convert "+" to "-" as urls encode "+" as " "
+      base64Mac = base64Mac.replaceAll("+", "-");
+      url.searchParams.set("mac", base64Mac);
+      url.searchParams.set("expiry", expiry);
 
       return new Response(url);
     }
 
     const url = new URL(request.url);
-    const prefix = '/generate/';
+    const prefix = "/generate/";
     if (url.pathname.startsWith(prefix)) {
       // Replace the "/generate/" path prefix with "/verify/", which we
       // use in the first example to recognize authenticated paths.
@@ -266,13 +273,13 @@ const handler: ExportedHandler = {
     async function generateSignedUrl(url) {
       // You will need some super-secret data to use as a symmetric key.
       const encoder = new TextEncoder();
-      const secretKeyData = encoder.encode('my secret symmetric key');
+      const secretKeyData = encoder.encode("my secret symmetric key");
       const key = await crypto.subtle.importKey(
-        'raw',
+        "raw",
         secretKeyData,
-        { name: 'HMAC', hash: 'SHA-256' },
+        { name: "HMAC", hash: "SHA-256" },
         false,
-        ['sign']
+        ["sign"]
       );
 
       // Signed requests expire after one minute. Note that you could choose
@@ -289,22 +296,26 @@ const handler: ExportedHandler = {
       // concatenating the values.
       const dataToAuthenticate = `${url.pathname}@${expiry}`;
 
-      const mac = await crypto.subtle.sign('HMAC', key, encoder.encode(dataToAuthenticate));
+      const mac = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        encoder.encode(dataToAuthenticate)
+      );
 
       // `mac` is an ArrayBuffer, so you need to make a few changes to get
       // it into a ByteString, and then a Base64-encoded string.
       let base64Mac = btoa(String.fromCharCode(...new Uint8Array(mac)));
 
-      // must convert "+" to "-" as urls encode "+" as " " 
-      base64Mac = base64Mac.replaceAll("+", "-")
-      url.searchParams.set('mac', base64Mac);
-      url.searchParams.set('expiry', expiry);
+      // must convert "+" to "-" as urls encode "+" as " "
+      base64Mac = base64Mac.replaceAll("+", "-");
+      url.searchParams.set("mac", base64Mac);
+      url.searchParams.set("expiry", expiry);
 
       return new Response(url);
     }
 
     const url = new URL(request.url);
-    const prefix = '/generate/';
+    const prefix = "/generate/";
     if (url.pathname.startsWith(prefix)) {
       // Replace the "/generate/" path prefix with "/verify/", which we
       // use in the first example to recognize authenticated paths.
@@ -314,9 +325,10 @@ const handler: ExportedHandler = {
       return fetch(request);
     }
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

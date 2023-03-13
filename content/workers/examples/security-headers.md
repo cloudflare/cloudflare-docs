@@ -187,9 +187,10 @@ const handler: ExportedHandler = {
       });
     }
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

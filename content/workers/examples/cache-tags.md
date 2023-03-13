@@ -19,12 +19,12 @@ export default {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
     const tags =
-      params && params.has('tags') ? params.get('tags').split(',') : [];
+      params && params.has("tags") ? params.get("tags").split(",") : [];
     const url =
-      params && params.has('uri') ? JSON.parse(params.get('uri')) : '';
+      params && params.has("uri") ? JSON.parse(params.get("uri")) : "";
     if (!url) {
       const errorObject = {
-        error: 'URL cannot be empty',
+        error: "URL cannot be empty",
       };
       return new Response(JSON.stringify(errorObject), { status: 400 });
     }
@@ -35,8 +35,8 @@ export default {
     };
     return fetch(url, init)
       .then((result) => {
-        const cacheStatus = result.headers.get('cf-cache-status');
-        const lastModified = result.headers.get('last-modified');
+        const cacheStatus = result.headers.get("cf-cache-status");
+        const lastModified = result.headers.get("last-modified");
         const response = {
           cache: cacheStatus,
           lastModified: lastModified,
@@ -54,20 +54,22 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request) {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
     const tags =
-      params && params.has('tags') ? params.get('tags').split(',') : [];
+      params && params.has("tags") ? params.get("tags").split(",") : [];
     const url =
-      params && params.has('uri') ? JSON.parse(params.get('uri')) : '';
+      params && params.has("uri") ? JSON.parse(params.get("uri")) : "";
     if (!url) {
       const errorObject = {
-        error: 'URL cannot be empty',
+        error: "URL cannot be empty",
       };
       return new Response(JSON.stringify(errorObject), { status: 400 });
     }
@@ -78,8 +80,8 @@ const handler: ExportedHandler = {
     };
     return fetch(url, init)
       .then((result) => {
-        const cacheStatus = result.headers.get('cf-cache-status');
-        const lastModified = result.headers.get('last-modified');
+        const cacheStatus = result.headers.get("cf-cache-status");
+        const lastModified = result.headers.get("last-modified");
         const response = {
           cache: cacheStatus,
           lastModified: lastModified,
@@ -95,9 +97,10 @@ const handler: ExportedHandler = {
         return new Response(JSON.stringify(errorObject), { status: 500 });
       });
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

@@ -35,11 +35,12 @@ export default {
     // Reconstruct the Response object to make its headers mutable.
     response = new Response(response.body, response);
     // Set cache control headers to cache on browser for 25 minutes
-    response.headers.set('Cache-Control', 'max-age=1500');
+    response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -63,13 +64,14 @@ const handler: ExportedHandler = {
     // Reconstruct the Response object to make its headers mutable.
     response = new Response(response.body, response);
     // Set cache control headers to cache on browser for 25 minutes
-    response.headers.set('Cache-Control', 'max-age=1500');
+    response.headers.set("Cache-Control", "max-age=1500");
     return response;
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -96,7 +98,7 @@ A request's cache key is what determines if two requests are the same for cachin
 
 ```js
 // Set cache key for this request to "some-string".
-fetch(event.request, { cf: { cacheKey: 'some-string' } });
+fetch(event.request, { cf: { cacheKey: "some-string" } });
 ```
 
 Normally, Cloudflare computes the cache key for a request based on the request's URL. Sometimes, though, you may like different URLs to be treated as if they were the same for caching purposes. For example, if your website content is hosted from both Amazon S3 and Google Cloud Storage - you have the same content in both places, and you can use a Worker to randomly balance between the two. However, you do not want to end up caching two copies of your content. You could utilize custom cache keys to cache based on the original request URL rather than the subrequest URL:
@@ -112,9 +114,9 @@ export default {
     let url = new URL(request.url);
 
     if (Math.random() < 0.5) {
-      url.hostname = 'example.s3.amazonaws.com';
+      url.hostname = "example.s3.amazonaws.com";
     } else {
-      url.hostname = 'example.storage.googleapis.com';
+      url.hostname = "example.storage.googleapis.com";
     }
 
     let newRequest = new Request(url, request);
@@ -124,6 +126,7 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -133,9 +136,9 @@ const handler: ExportedHandler = {
     let url = new URL(request.url);
 
     if (Math.random() < 0.5) {
-      url.hostname = 'example.s3.amazonaws.com';
+      url.hostname = "example.s3.amazonaws.com";
     } else {
-      url.hostname = 'example.storage.googleapis.com';
+      url.hostname = "example.storage.googleapis.com";
     }
 
     let newRequest = new Request(url, request);
@@ -143,10 +146,11 @@ const handler: ExportedHandler = {
       cf: { cacheKey: request.url },
     });
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -166,7 +170,7 @@ This feature is available only to Enterprise customers.
 // Force response to be cached for 86400 seconds for 200 status
 // codes, 1 second for 404, and do not cache 500 errors.
 fetch(request, {
-  cf: { cacheTtlByStatus: { '200-299': 86400, '404': 1, '500-599': 0 } },
+  cf: { cacheTtlByStatus: { "200-299": 86400, 404: 1, "500-599": 0 } },
 });
 ```
 

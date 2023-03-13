@@ -18,25 +18,28 @@ layout: example
 ```js
 export default {
   async fetch(request) {
-    const destinationURL = 'https://example.com';
+    const destinationURL = "https://example.com";
     const statusCode = 301;
     return Response.redirect(destinationURL, statusCode);
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request: Request) {
-    const destinationURL = 'https://example.com';
+    const destinationURL = "https://example.com";
     const statusCode = 301;
     return Response.redirect(destinationURL, statusCode);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
@@ -48,40 +51,41 @@ export default handler;
 ```js
 export default {
   async fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
 
     const url = new URL(request.url);
     const { pathname, search } = url;
 
     const destinationURL = `${base}${pathname}${search}`;
-    console.log(destinationURL)
+    console.log(destinationURL);
 
     return Response.redirect(destinationURL, statusCode);
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
 ```ts
 const handler: ExportedHandler = {
   async fetch(request) {
-    const base = 'https://example.com';
+    const base = "https://example.com";
     const statusCode = 301;
 
     const url = new URL(request.url);
     const { pathname, search } = url;
 
     const destinationURL = `${base}${pathname}${search}`;
-    console.log(destinationURL)
+    console.log(destinationURL);
 
     return Response.redirect(destinationURL, statusCode);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
-

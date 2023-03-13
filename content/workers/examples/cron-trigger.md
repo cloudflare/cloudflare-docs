@@ -14,21 +14,24 @@ layout: example
 
 ```js
 export default {
-	async scheduled(controller, env, ctx) {
-		console.log('cron processed');
-	},
+  async scheduled(controller, env, ctx) {
+    console.log("cron processed");
+  },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async scheduled(controller, env, ctx) {
-		console.log('cron processed');
-	},
-}
+    console.log("cron processed");
+  },
+};
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 

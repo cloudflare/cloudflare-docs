@@ -23,20 +23,21 @@ export default {
 
     // Add a custom header with a value
     newResponse.headers.append(
-      'x-workers-hello',
-      'Hello from Cloudflare Workers'
+      "x-workers-hello",
+      "Hello from Cloudflare Workers"
     );
 
     // Delete headers
-    newResponse.headers.delete('x-header-to-delete');
-    newResponse.headers.delete('x-header2-to-delete');
-    
+    newResponse.headers.delete("x-header-to-delete");
+    newResponse.headers.delete("x-header2-to-delete");
+
     // Adjust the value for an existing header
-    newResponse.headers.set('x-header-to-change', 'NewValue');
+    newResponse.headers.set("x-header-to-change", "NewValue");
     return newResponse;
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -50,21 +51,22 @@ const handler: ExportedHandler = {
 
     // Add a custom header with a value
     newResponse.headers.append(
-      'x-workers-hello',
-      'Hello from Cloudflare Workers'
+      "x-workers-hello",
+      "Hello from Cloudflare Workers"
     );
 
     // Delete headers
-    newResponse.headers.delete('x-header-to-delete');
-    newResponse.headers.delete('x-header2-to-delete');
-    
+    newResponse.headers.delete("x-header-to-delete");
+    newResponse.headers.delete("x-header2-to-delete");
+
     // Adjust the value for an existing header
-    newResponse.headers.set('x-header-to-change', 'NewValue');
+    newResponse.headers.set("x-header-to-change", "NewValue");
     return newResponse;
   },
-}
+};
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 

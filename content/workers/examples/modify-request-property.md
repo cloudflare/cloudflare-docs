@@ -22,8 +22,8 @@ export default {
      * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied
      * @param {string} someHost the host the request will resolve too
      */
-    const someHost = 'example.com';
-    const someUrl = 'https://foo.example.com/api.js';
+    const someHost = "example.com";
+    const someUrl = "https://foo.example.com/api.js";
 
     /**
      * The best practice is to only assign new RequestInit properties
@@ -31,14 +31,14 @@ export default {
      */
     const newRequestInit = {
       // Change method
-      method: 'POST',
+      method: "POST",
       // Change body
-      body: JSON.stringify({ bar: 'foo' }),
+      body: JSON.stringify({ bar: "foo" }),
       // Change the redirect mode.
-      redirect: 'follow',
+      redirect: "follow",
       // Change headers, note this method will erase existing headers
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       // Change a Cloudflare feature on the outbound response
       cf: { apps: false },
@@ -58,8 +58,8 @@ export default {
     );
 
     // Set headers using method
-    newRequest.headers.set('X-Example', 'bar');
-    newRequest.headers.set('Content-Type', 'application/json');
+    newRequest.headers.set("X-Example", "bar");
+    newRequest.headers.set("Content-Type", "application/json");
     try {
       return await fetch(newRequest);
     } catch (e) {
@@ -70,8 +70,10 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request) {
@@ -80,8 +82,8 @@ const handler: ExportedHandler = {
      * @param {string} someUrl the URL to send the request to, since we are setting hostname too only path is applied
      * @param {string} someHost the host the request will resolve too
      */
-    const someHost = 'example.com';
-    const someUrl = 'https://foo.example.com/api.js';
+    const someHost = "example.com";
+    const someUrl = "https://foo.example.com/api.js";
 
     /**
      * The best practice is to only assign new RequestInit properties
@@ -89,14 +91,14 @@ const handler: ExportedHandler = {
      */
     const newRequestInit = {
       // Change method
-      method: 'POST',
+      method: "POST",
       // Change body
-      body: JSON.stringify({ bar: 'foo' }),
+      body: JSON.stringify({ bar: "foo" }),
       // Change the redirect mode.
-      redirect: 'follow',
+      redirect: "follow",
       // Change headers, note this method will erase existing headers
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       // Change a Cloudflare feature on the outbound response
       cf: { apps: false },
@@ -116,8 +118,8 @@ const handler: ExportedHandler = {
     );
 
     // Set headers using method
-    newRequest.headers.set('X-Example', 'bar');
-    newRequest.headers.set('Content-Type', 'application/json');
+    newRequest.headers.set("X-Example", "bar");
+    newRequest.headers.set("Content-Type", "application/json");
     try {
       return await fetch(newRequest);
     } catch (e) {
@@ -126,9 +128,10 @@ const handler: ExportedHandler = {
       });
     }
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

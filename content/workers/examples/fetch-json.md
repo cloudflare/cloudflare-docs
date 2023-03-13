@@ -22,8 +22,8 @@ export default {
      * @param {string} someHost the host to send the request to
      * @param {string} url the URL to send the request to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url = someHost + '/static/json';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url = someHost + "/static/json";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -32,8 +32,8 @@ export default {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
       }
       return response.text();
@@ -41,18 +41,20 @@ export default {
 
     const init = {
       headers: {
-        'content-type': 'application/json;charset=UTF-8',
+        "content-type": "application/json;charset=UTF-8",
       },
     };
-    
+
     const response = await fetch(url, init);
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request, env, ctx) {
@@ -62,8 +64,8 @@ const handler: ExportedHandler = {
      * @param {string} someHost the host to send the request to
      * @param {string} url the URL to send the request to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url = someHost + '/static/json';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url = someHost + "/static/json";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -72,8 +74,8 @@ const handler: ExportedHandler = {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
       }
       return response.text();
@@ -81,17 +83,18 @@ const handler: ExportedHandler = {
 
     const init = {
       headers: {
-        'content-type': 'application/json;charset=UTF-8',
+        "content-type": "application/json;charset=UTF-8",
       },
     };
-    
+
     const response = await fetch(url, init);
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

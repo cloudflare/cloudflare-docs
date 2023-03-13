@@ -21,8 +21,8 @@ export default {
      * @param {string} headerNameSrc Header to get the new value from
      * @param {string} headerNameDst Header to set based off of value in src
      */
-    const headerNameSrc = 'foo'; //"Orig-Header"
-    const headerNameDst = 'Last-Modified';
+    const headerNameSrc = "foo"; //"Orig-Header"
+    const headerNameDst = "Last-Modified";
 
     /**
      * Response properties are immutable. To change them, construct a new
@@ -34,17 +34,17 @@ export default {
     // Change status and statusText, but preserve body and headers
     let response = new Response(originalResponse.body, {
       status: 500,
-      statusText: 'some message',
+      statusText: "some message",
       headers: originalResponse.headers,
     });
 
     // Change response body by adding the foo prop
     const originalBody = await originalResponse.json();
-    const body = JSON.stringify({ foo: 'bar', ...originalBody });
+    const body = JSON.stringify({ foo: "bar", ...originalBody });
     response = new Response(body, response);
 
     // Add a header using set method
-    response.headers.set('foo', 'bar');
+    response.headers.set("foo", "bar");
 
     // Set destination header to the value of the source header
     const src = response.headers.get(headerNameSrc);
@@ -61,8 +61,10 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request: Request) {
@@ -70,8 +72,8 @@ const handler: ExportedHandler = {
      * @param {string} headerNameSrc Header to get the new value from
      * @param {string} headerNameDst Header to set based off of value in src
      */
-    const headerNameSrc = 'foo'; //"Orig-Header"
-    const headerNameDst = 'Last-Modified';
+    const headerNameSrc = "foo"; //"Orig-Header"
+    const headerNameDst = "Last-Modified";
 
     /**
      * Response properties are immutable. To change them, construct a new
@@ -83,17 +85,17 @@ const handler: ExportedHandler = {
     // Change status and statusText, but preserve body and headers
     let response = new Response(originalResponse.body, {
       status: 500,
-      statusText: 'some message',
+      statusText: "some message",
       headers: originalResponse.headers,
     });
 
     // Change response body by adding the foo prop
     const originalBody = await originalResponse.json();
-    const body = JSON.stringify({ foo: 'bar', ...originalBody });
+    const body = JSON.stringify({ foo: "bar", ...originalBody });
     response = new Response(body, response);
 
     // Add a header using set method
-    response.headers.set('foo', 'bar');
+    response.headers.set("foo", "bar");
 
     // Set destination header to the value of the source header
     const src = response.headers.get(headerNameSrc);
@@ -108,9 +110,10 @@ const handler: ExportedHandler = {
     }
     return response;
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

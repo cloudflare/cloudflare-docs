@@ -14,21 +14,21 @@ layout: example
 {{<tab label="js/esm" default="true">}}
 
 ```js
-import { parse } from 'cookie';
+import { parse } from "cookie";
 export default {
   async fetch(request) {
     // The name of the cookie
-    const COOKIE_NAME = '__uid';
-    const cookie = parse(request.headers.get('Cookie') || '');
+    const COOKIE_NAME = "__uid";
+    const cookie = parse(request.headers.get("Cookie") || "");
     if (cookie[COOKIE_NAME] != null) {
       // Respond with the cookie value
       return new Response(cookie[COOKIE_NAME]);
     }
-    return new Response('No cookie with name: ' + COOKIE_NAME);
+    return new Response("No cookie with name: " + COOKIE_NAME);
   },
 };
-
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -36,21 +36,21 @@ export default {
 const handler: ExportedHandler = {
   async fetch(request) {
     // The name of the cookie
-    const COOKIE_NAME = '__uid';
-    const cookie = parse(request.headers.get('Cookie') || '');
+    const COOKIE_NAME = "__uid";
+    const cookie = parse(request.headers.get("Cookie") || "");
     if (cookie[COOKIE_NAME] != null) {
       // Respond with the cookie value
       return new Response(cookie[COOKIE_NAME]);
     }
-    return new Response('No cookie with name: ' + COOKIE_NAME);
+    return new Response("No cookie with name: " + COOKIE_NAME);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
-
 
 {{<Aside type="note" header="External dependencies">}}
 

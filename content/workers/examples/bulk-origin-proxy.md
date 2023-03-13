@@ -20,12 +20,12 @@ export default {
      * @param {Object} ORIGINS
      */
     const ORIGINS = {
-      'starwarsapi.yourdomain.com': 'swapi.dev',
-      'google.yourdomain.com': 'www.google.com',
+      "starwarsapi.yourdomain.com": "swapi.dev",
+      "google.yourdomain.com": "www.google.com",
     };
 
     const url = new URL(request.url);
-    
+
     // Check if incoming hostname is a key in the ORIGINS object
     if (url.hostname in ORIGINS) {
       const target = ORIGINS[url.hostname];
@@ -38,22 +38,24 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
-   async fetch(request: Request) {
+  async fetch(request: Request) {
     /**
      * An object with different URLs to fetch
      * @param {Object} ORIGINS
      */
     const ORIGINS = {
-      'starwarsapi.yourdomain.com': 'swapi.dev',
-      'google.yourdomain.com': 'www.google.com',
+      "starwarsapi.yourdomain.com": "swapi.dev",
+      "google.yourdomain.com": "www.google.com",
     };
 
     const url = new URL(request.url);
-    
+
     // Check if incoming hostname is a key in the ORIGINS object
     if (url.hostname in ORIGINS) {
       const target = ORIGINS[url.hostname];
@@ -64,9 +66,10 @@ const handler: ExportedHandler = {
     // Otherwise, process request as normal
     return fetch(request);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

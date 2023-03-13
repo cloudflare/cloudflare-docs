@@ -17,25 +17,25 @@ layout: example
 export default {
   async fetch(request, env, ctx) {
     // Service configured to receive logs
-    const LOG_URL = 'https://log-service.example.com/';
+    const LOG_URL = "https://log-service.example.com/";
 
     async function postLog(data) {
       return await fetch(LOG_URL, {
-        method: 'POST',
+        method: "POST",
         body: data,
       });
     }
 
     let response;
-    
+
     try {
       response = await fetch(request);
       if (!response.ok && !response.redirected) {
         const body = await response.text();
         throw new Error(
-          'Bad response at origin. Status: ' +
+          "Bad response at origin. Status: " +
             response.status +
-            ' Body: ' +
+            " Body: " +
             // Ensure the string is small enough to be a header
             body.trim().substring(0, 10)
         );
@@ -48,38 +48,40 @@ export default {
       // Copy the response and initialize body to the stack trace
       response = new Response(stack, response);
       // Add the error stack into a header to find out what happened
-      response.headers.set('X-Debug-stack', stack);
-      response.headers.set('X-Debug-err', err);
+      response.headers.set("X-Debug-stack", stack);
+      response.headers.set("X-Debug-err", err);
     }
     return response;
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request, env, ctx) {
     // Service configured to receive logs
-    const LOG_URL = 'https://log-service.example.com/';
+    const LOG_URL = "https://log-service.example.com/";
 
     async function postLog(data) {
       return await fetch(LOG_URL, {
-        method: 'POST',
+        method: "POST",
         body: data,
       });
     }
 
     let response;
-    
+
     try {
       response = await fetch(request);
       if (!response.ok && !response.redirected) {
         const body = await response.text();
         throw new Error(
-          'Bad response at origin. Status: ' +
+          "Bad response at origin. Status: " +
             response.status +
-            ' Body: ' +
+            " Body: " +
             // Ensure the string is small enough to be a header
             body.trim().substring(0, 10)
         );
@@ -92,14 +94,15 @@ const handler: ExportedHandler = {
       // Copy the response and initialize body to the stack trace
       response = new Response(stack, response);
       // Add the error stack into a header to find out what happened
-      response.headers.set('X-Debug-stack', stack);
-      response.headers.set('X-Debug-err', err);
+      response.headers.set("X-Debug-stack", stack);
+      response.headers.set("X-Debug-err", err);
     }
     return response;
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

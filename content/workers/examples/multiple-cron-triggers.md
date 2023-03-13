@@ -14,54 +14,57 @@ layout: example
 
 ```js
 export default {
-	async scheduled(event, env, ctx) {
-		// Write code for updating your API
+  async scheduled(event, env, ctx) {
+    // Write code for updating your API
     switch (event.cron) {
       // You can set up to three schedules maximum.
-      case '*/3 * * * *':
+      case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
         break;
-      case '*/10 * * * *':
+      case "*/10 * * * *":
         // Every ten minutes
         await updateAPI2();
         break;
-      case '*/45 * * * *':
+      case "*/45 * * * *":
         // Every forty-five minutes
         await updateAPI3();
         break;
     }
-    console.log('cron processed');
-	},
+    console.log("cron processed");
+  },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async scheduled(event, env, ctx) {
-		// Write code for updating your API
+    // Write code for updating your API
     switch (event.cron) {
       // You can set up to three schedules maximum.
-      case '*/3 * * * *':
+      case "*/3 * * * *":
         // Every three minutes
         await updateAPI();
         break;
-      case '*/10 * * * *':
+      case "*/10 * * * *":
         // Every ten minutes
         await updateAPI2();
         break;
-      case '*/45 * * * *':
+      case "*/45 * * * *":
         // Every forty-five minutes
         await updateAPI3();
         break;
     }
-    console.log('cron processed');
-	},
-}
+    console.log("cron processed");
+  },
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 

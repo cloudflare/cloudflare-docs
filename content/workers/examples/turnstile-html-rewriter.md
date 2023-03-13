@@ -11,6 +11,7 @@ layout: example
 
 {{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
+
 ```js
 export default {
 	async fetch(request, env) {
@@ -42,8 +43,10 @@ export default {
 	}
 }
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
 	async fetch(request: Request, env: Env) {
@@ -77,6 +80,7 @@ const handler: ExportedHandler = {
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 

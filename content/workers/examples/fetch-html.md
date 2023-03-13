@@ -20,8 +20,8 @@ export default {
      * Example someHost at URL is set up to respond with HTML
      * Replace URL with the host you wish to send requests to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url = someHost + '/static/html';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url = someHost + "/static/html";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -30,12 +30,12 @@ export default {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return response.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return response.text();
       } else {
         return response.text();
@@ -44,7 +44,7 @@ export default {
 
     const init = {
       headers: {
-        'content-type': 'text/html;charset=UTF-8',
+        "content-type": "text/html;charset=UTF-8",
       },
     };
 
@@ -54,6 +54,7 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
 
@@ -64,8 +65,8 @@ const handler: ExportedHandler = {
      * Example someHost at URL is set up to respond with HTML
      * Replace URL with the host you wish to send requests to
      */
-    const someHost = 'https://examples.cloudflareworkers.com/demos';
-    const url = someHost + '/static/html';
+    const someHost = "https://examples.cloudflareworkers.com/demos";
+    const url = someHost + "/static/html";
 
     /**
      * gatherResponse awaits and returns a response body as a string.
@@ -74,12 +75,12 @@ const handler: ExportedHandler = {
      */
     async function gatherResponse(response) {
       const { headers } = response;
-      const contentType = headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
+      const contentType = headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
         return JSON.stringify(await response.json());
-      } else if (contentType.includes('application/text')) {
+      } else if (contentType.includes("application/text")) {
         return response.text();
-      } else if (contentType.includes('text/html')) {
+      } else if (contentType.includes("text/html")) {
         return response.text();
       } else {
         return response.text();
@@ -88,7 +89,7 @@ const handler: ExportedHandler = {
 
     const init = {
       headers: {
-        'content-type': 'text/html;charset=UTF-8',
+        "content-type": "text/html;charset=UTF-8",
       },
     };
 
@@ -96,9 +97,10 @@ const handler: ExportedHandler = {
     const results = await gatherResponse(response);
     return new Response(results, init);
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

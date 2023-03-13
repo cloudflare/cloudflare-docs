@@ -17,16 +17,16 @@ layout: example
 ```js
 export default {
   async fetch(request) {
-    const HOMEPAGE_URL = 'https://tutorial.cloudflareworkers.com/';
-    const PROTECTED_TYPE = 'image/';
+    const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/";
+    const PROTECTED_TYPE = "image/";
 
     // Fetch the original request
     const response = await fetch(request);
 
     // If it's an image, engage hotlink protection based on the
     // Referer header.
-    const referer = request.headers.get('Referer');
-    const contentType = response.headers.get('Content-Type') || '';
+    const referer = request.headers.get("Referer");
+    const contentType = response.headers.get("Content-Type") || "";
 
     if (referer && contentType.startsWith(PROTECTED_TYPE)) {
       // If the hostnames don't match, it's a hotlink
@@ -41,21 +41,23 @@ export default {
   },
 };
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(request) {
-    const HOMEPAGE_URL = 'https://tutorial.cloudflareworkers.com/';
-    const PROTECTED_TYPE = 'image/';
+    const HOMEPAGE_URL = "https://tutorial.cloudflareworkers.com/";
+    const PROTECTED_TYPE = "image/";
 
     // Fetch the original request
     const response = await fetch(request);
 
     // If it's an image, engage hotlink protection based on the
     // Referer header.
-    const referer = request.headers.get('Referer');
-    const contentType = response.headers.get('Content-Type') || '';
+    const referer = request.headers.get("Referer");
+    const contentType = response.headers.get("Content-Type") || "";
 
     if (referer && contentType.startsWith(PROTECTED_TYPE)) {
       // If the hostnames don't match, it's a hotlink
@@ -68,9 +70,10 @@ const handler: ExportedHandler = {
     // Everything is fine, return the response normally.
     return response;
   },
-}
+};
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
