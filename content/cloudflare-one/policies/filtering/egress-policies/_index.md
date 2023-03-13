@@ -19,15 +19,15 @@ Egress policies allow you to control which dedicated egress IP is used and when,
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
 
-| Policy name | Selector | Operator | Value   | Egress method |
-| ------------| -------- |--------- |---------|  --------------------------- |
-| Access third-party provider | Destination IP | is  |  `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
+| Policy name                 | Selector       | Operator | Value            | Egress method                   |
+| --------------------------- | -------------- | -------- | ---------------- | ------------------------------- |
+| Access third-party provider | Destination IP | is       | `203.0.113.0/24` | Dedicated Cloudflare egress IPs |
 
 For the best performance, we recommend creating a catch-all policy to route all other users through the default Zero Trust IP range:
 
-| Policy name | Selector | Operator | Value   | Egress method |
-| ----------- | ------- | ----------| ----------------- | ------------------------------------- |
-| Default egress policy | Destination IP | is not | `0.0.0.0`     | Cloudflare default egress method |
+| Policy name           | Selector       | Operator | Value     | Egress method                    |
+| --------------------- | -------------- | -------- | --------- | -------------------------------- |
+| Default egress policy | Destination IP | is not   | `0.0.0.0` | Cloudflare default egress method |
 
 Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will use the closest dedicated egress IP location.
 
@@ -97,12 +97,16 @@ The country of the user making the request.
 
 {{<render file="gateway/_virtual-network.md">}}
 
-## Operators
+## Comparison operators
 
-{{<render file="gateway/_operators.md">}}
+{{<render file="gateway/_comparison-operators.md">}}
 
 ## Value
 
 You can input a single value or use regular expressions to specify a range of values.
 
 Gateway uses Rust to evaluate regular expressions. The Rust implementation is slightly different than regex libraries used elsewhere. To evaluate if your regex matches, you can use [Rustexp](https://rustexp.lpil.uk/).
+
+## Logical operators
+
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}

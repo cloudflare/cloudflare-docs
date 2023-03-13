@@ -6,6 +6,6 @@ weight: 4
 
 # How to
 
-Review the tasks below for more information on setting up or modifying your Magic WAN configuration.
+You can run the following tasks for your Magic WAN configuration:
 
 {{<directory-listing>}}

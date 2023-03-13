@@ -32,15 +32,7 @@ $ npm run dev
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ## Deploying with Cloudflare Pages
 
@@ -76,15 +68,15 @@ Every time you commit new code to your Remix site, Cloudflare Pages will automat
 
 ## Create and add a binding to your Remix application
 
-A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/). 
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
 To add a binding to your Remix application, refer to [Bindings](/pages/platform/functions/bindings/).
 
 ### Use a binding in your Remix application
 
-If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv). 
+If you have created a KV namespace binding called `PRODUCTS_KV`, you can access its data in a [Remix `loader` function](https://remix.run/docs/en/v1/guides/data-loading#cloudflare-kv).
 
-The following code block shows an example of accessing a KV namespace in Remix. 
+The following code block shows an example of accessing a KV namespace in Remix.
 
 ```typescript
 ---
@@ -92,7 +84,7 @@ filename: app/routes/products/$productId.tsx
 highlight: [9,10,11,12,13,17,24]
 ---
 import type { LoaderArgs } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare"; 
+import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
 export const loader = async ({
@@ -108,9 +100,9 @@ export const loader = async ({
 
 export default function Product() {
   const product = useLoaderData<typeof loader>();
-  
+
   if (!product) throw new Response(null, { status: 404 })
-  
+
   return (
     <div>
       <p>Product</p>
@@ -126,19 +118,16 @@ export default function Product() {
 Currently, the only way to use Durable Objects when using Cloudflare Pages is by having a separate Worker, creating a binding, and accessing it in `context`. For example:
 
 ```ts
-export const loader = async ({
-  context,
-  params,
-}: LoaderArgs) => {
+export const loader = async ({ context, params }: LoaderArgs) => {
   const id = context.PRODUCTS_DO.idFromName(params.productId);
   const stub = context.PRODUCTS_DO.get(id);
   const response = await stub.fetch(request);
-  const data = await response.json() as { name: string };
+  const data = (await response.json()) as { name: string };
   return json(data);
 };
 ```
 
-You have to do this because there is no way to export the Durable Object class from a Pages Function. 
+You have to do this because there is no way to export the Durable Object class from a Pages Function.
 
 Refer to the Durable Objects documentation to learn about deploying a [Durable Object](/workers/learning/using-durable-objects/).
 

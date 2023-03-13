@@ -63,7 +63,6 @@
 /1.1.1.1/support-nat64/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/what-is-1.1.1.1/ /1.1.1.1/
 
-
 # access
 /access/about/ /cloudflare-one/identity/ 301
 /access/other-protocols/tcp-guide/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
@@ -157,7 +156,8 @@
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
-/bots/bot-management-enterprise/ /bots/get-started/bm-subscription/ 301
+/bots/bot-management-enterprise/ /learning-paths/bot-management/ 301
+/bots/get-started/bm-subscription/ /learning-paths/bot-management/ 301
 /support/firewall/tools/cloudflare-bot-products-faqs/ /bots/troubleshooting/ 301
 /support/other-languages/deutsch/cloudflare-bot/ /bots/troubleshooting/ 301
 /support/other-languages/español-españa/productos-de-detección-de-bots-de-cloudflare-preguntas-frecuentes/ /bots/troubleshooting/ 301
@@ -415,8 +415,16 @@
 /partners/tenant/ /tenant/ 301
 
 # page-shield
-/page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
+/page-shield/script-monitor/use-dashboard/ /page-shield/detection/monitor-connections-scripts/ 301
 /page-shield/use-dashboard/configure-reporting-endpoint/ /page-shield/reference/settings/#csp-reporting-endpoint 301
+/page-shield/about/ /page-shield/how-it-works/ 301
+/page-shield/about/malicious-script-detection/ /page-shield/how-it-works/malicious-script-detection/ 301
+/page-shield/use-dashboard/ /page-shield/detection/ 301
+/page-shield/use-dashboard/configure-alerts/ /page-shield/detection/configure-alerts/ 301
+/page-shield/use-dashboard/monitor-connections/ /page-shield/detection/monitor-connections-scripts/ 301
+/page-shield/use-dashboard/monitor-scripts/ /page-shield/detection/monitor-connections-scripts/ 301
+/page-shield/use-dashboard/review-changed-scripts/ /page-shield/detection/review-changed-scripts/ 301
+/page-shield/use-dashboard/review-malicious-scripts/ /page-shield/detection/review-malicious-scripts/ 301
 
 # queues
 /queues/configuration/ /queues/platform/configuration/ 301
@@ -542,6 +550,7 @@
 
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
+/turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/migrating-from-recaptcha/ 301
 
 # waf
 /waf/about/file-scanning/ /waf/about/content-scanning/ 301

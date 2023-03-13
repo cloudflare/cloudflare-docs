@@ -6,7 +6,7 @@ weight: 2
 
 # Bot scores
 
-A bot score is a score from _1_ to _99_ that indicates how likely that request came from a bot. For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
+{{<render file="_bot-score-definition.md">}}
 
 Bot scores are available to be used in Firewall fields and with Workers to customize application behavior. For more details, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
@@ -20,13 +20,7 @@ Granular bot scores are only available to Enterprise customers who have purchase
 
 Customers with a Pro plan or higher can automatically see bot traffic divided into groups by going to **Security** > **Bots**.
 
-| Category | Range |
-| ---- | ---- |
-| **Not computed** | Bot scores of 0. |
-| **Automated** | Bot scores of 1. |
-| **Likely automated** | Bot scores of 2 through 29. |
-| **Likely human** | Bot scores of 30 through 99. |
-| **Verified bot** | Non-malicious automated traffic (used to power search engines and other applications). |
+{{<render file="_bot-groupings.md">}}
 
 {{<Aside type="note" header="Note:">}}
 
@@ -43,6 +37,19 @@ The following detection engines only apply to Enterprise Bot Management. For spe
 {{</Aside>}}
 
 {{<render file="_bm-bot-detection-engines.md">}}
+
+### Cloudflare service
+
+{{<render file="_bots-cs.md">}}
+<br/>
+
+### Not computed
+
+{{<render file="_bots-nc.md">}}
+
+### Notes on detection
+
+{{<render file="_bots-cookie.md">}}
 
 ## Comparison to Threat Score
 

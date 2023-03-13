@@ -24,6 +24,12 @@ These fields are:
 
 We have **not enabled URL normalization automatically** for zones that would be impacted by these changes to prevent any change in behavior of your existing Firewall Rules.
 
+{{<Aside type="warning">}}
+We strongly recommend that you **update any Firewall Rules** impacted by
+the URL Normalization changes and that you **enable URL normalization**
+to ensure a stronger security posture on your zone(s).
+{{</Aside>}}
+
 ___
 
 ## Required steps
@@ -48,5 +54,5 @@ ___
 
 ## Related resources
 
--   [URL normalization](https://developers.cloudflare.com/rules/normalization) (Developers Documentation)
+-   [URL normalization](/rules/normalization) (Developers Documentation)
 -   [Dynamic URL Rewriting at the edge with Cloudflare](https://blog.cloudflare.com/introducing-transform-rules-with-url-rewriting-at-the-edge) (Cloudflare Blog)

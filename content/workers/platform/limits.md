@@ -276,6 +276,10 @@ App Workers do not count towards this limit.
 
 {{</Aside>}}
 
+## Number of routes per zone
+
+Each zone has a limit of 1,000 [routes](/workers/platform/triggers/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+
 ---
 
 ## KV

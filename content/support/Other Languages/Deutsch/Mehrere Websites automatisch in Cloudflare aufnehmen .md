@@ -13,6 +13,11 @@ title: Mehrere Websites automatisch in Cloudflare aufnehmen
 
 Wenn Sie mehrere Sites (10 oder mehr) gleichzeitig in Cloudflare aufnehmen möchten, können Sie dies über die Cloudflare API tun. Mehrere Websites gleichzeitig aufzunehmen, kann aus folgenden Gründen nützlich sein:
 
+{{<Aside type="note">}}
+Wenn Sie mehr als 50 Domains gleichzeitig aufzunehmen versuchen, werden
+alle weiteren Domains blockiert, bis sie verarbeitet wurden.
+{{</Aside>}}
+
 -   Sie können mehrere Domains betreiben, die auf eine einzige kanonische Domain zurückgreifen, z. B. Domains in verschiedenen Ländern (.com.au, .co.uk usw.), die Sie durch Cloudflare schützen möchten.
 -   Wenn Sie eine Agentur oder IT-Beratung sind und im Auftrag Ihrer Kunden mehrere Domains verwalten. (Hinweis: Sie sollten unser [Cloudflare-Partnerprogramm](https://www.cloudflare.com/partners/) in Betracht ziehen!)
 -   Wenn Sie eine vorhandene Gruppe von Websites auf Cloudflare verschieben.
@@ -22,6 +27,13 @@ Mit der API können Sie schnell und effizient mehrere Sites hinzufügen, insbeso
 ___
 
 ## Voraussetzungen
+
+{{<Aside type="note">}}
+Mit Ihrem Cloudflare-Konto dürfen nicht mehr ausstehende Websites als
+aktive Websites verknüpft sein. Wir empfehlen Ihnen zu warten, bis die
+ausstehenden Websites verarbeitet wurden, bevor Sie weitere Domains
+hinzufügen.
+{{</Aside>}}
 
 Wenn Sie mehrere Websites automatisch in Cloudflare aufnehmen möchten, brauchen Sie:
 

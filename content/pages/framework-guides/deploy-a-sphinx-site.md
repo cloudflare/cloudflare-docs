@@ -182,6 +182,9 @@ You now have everything you need to start deploying your site to Cloudflare Page
 
 ## Creating a GitHub repository
 
+<!-- TODO: check, do we need to specify all the various ssh + configs here?
+     (if not this should use the _create-github-repository partial instead) -->
+
 In a separate terminal window that is not within the pipenv shell session, verify that SSH key-based authentication is working:
 
 ```shell

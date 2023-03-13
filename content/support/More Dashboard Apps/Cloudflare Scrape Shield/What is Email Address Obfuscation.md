@@ -16,6 +16,13 @@ Web administrators have come up with clever ways to protect against this by writ
 
  For email address obfuscation to work in Cloudflare, a page must have a MIME type (Content-Type) of "text/html" or "application/xhtml+xml". 
 
+{{<Aside type="note">}}
+Dedicated email support is available for all Pro, Business, and
+Enterprise Plan users. Business and Enterprise plan users also have
+access to chat support. If you require additional support, explore [our
+plans](https://www.cloudflare.com/plans/).
+{{</Aside>}}
+
 ___
 
 Cloudflare enables email address obfuscation automatically when you sign up. 

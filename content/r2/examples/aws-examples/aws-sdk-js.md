@@ -7,6 +7,8 @@ pcx_content_type: configuration
 
 {{<render file="_keys.md">}}<br>
 
+If you are interested in the newer version of the AWS JavaScript SDK visit this [dedicated aws-sdk-js-v3 example page](/r2/examples/aws-sdk-js-v3).
+
 JavaScript or TypeScript users may continue to use the [`aws-sdk`](https://www.npmjs.com/package/aws-sdk) npm package as per normal. You must pass in the R2 configuration credentials when instantiating your `S3` service client:
 
 ```ts

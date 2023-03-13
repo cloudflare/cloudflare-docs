@@ -30,6 +30,11 @@ Gather the following information:
 4.  Start time (example format: 1529171100)
 5.  End time (example format: 1529171100)
 
+{{<Aside type="tip">}}
+For the purposes of this tutorial, you can use the following website to
+convert times to Unix time: <https://www.epochconverter.com/>
+{{</Aside>}}
+
 ___
 
 ## Step 2: Download and save the logs
@@ -177,3 +182,8 @@ Pick a URI from this list and output log entries with that URI to their own file
 ```
 
 You can narrow down 200 HTTP responses by both the request URI and the IPs which are requesting those URIs. You could also sort the logs the other way round, narrowing down the log entries by top IP addresses and then seeing which URI is requested the most by IP address.
+
+{{<Aside type="note">}}
+Seeing a high number of requests from a single User-Agent or IP does
+not, on its own, mean the requester is malicious.
+{{</Aside>}}

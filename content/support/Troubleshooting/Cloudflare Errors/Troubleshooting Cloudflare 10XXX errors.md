@@ -51,7 +51,7 @@ This error occurs when you specify a source URL of a URL redirect that is not a 
 
 Specify a valid URL as the source URL.
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ___
 
@@ -63,7 +63,7 @@ This error occurs when you specify a target URL of a URL redirect that is not a 
 
 Specify a valid URL as the target URL.
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect target URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect target URLs.
 
 ___
 
@@ -97,7 +97,7 @@ This error occurs when the source URL of a URL redirect has an invalid scheme.
 
 Review the source URL and ensure that it uses one of the supported schemes: `http`, `https`, or empty (no scheme information, which means that it applies to both schemes).
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ___
 
@@ -109,7 +109,7 @@ This error occurs when the source URL of a URL redirect includes a user info com
 
 Remove the user info component from the redirect source URL.
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ___
 
@@ -121,7 +121,7 @@ This error occurs when the source URL of a URL redirect does not include an auth
 
 Add an authority component to the redirect source URL (for example, include a hostname).
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the required URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect source URLs.
 
 ___
 
@@ -133,7 +133,7 @@ This error occurs when the source URL of a URL redirect includes a port (for exa
 
 Remove the port from the redirect source URL.
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ___
 
@@ -145,7 +145,7 @@ This error occurs when the source URL of a URL redirect includes a query string 
 
 Remove the query string from the redirect source URL.
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ___
 
@@ -159,7 +159,7 @@ Fragment components are not part of an HTTP request; they are an indication for 
 
 Remove the fragment from the redirect source URL.
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the supported URL components for redirect source URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.
 
 ___
 
@@ -210,7 +210,7 @@ This error occurs when you have more than the maximum number of URL redirects wi
 
 Review the path of your source URLs so that you do not have more than the maximum number of URL redirects sharing the same URL path in your account, regardless of their domain or the list they belong to.
 
-Refer to [URL redirect parameters](https://developers.cloudflare.com/rules/bulk-redirects/reference/parameters) for more information on the current limits.
+Refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/) for more information on the current limits.
 
 ___
 
@@ -222,4 +222,4 @@ This error occurs when the target URL of a URL redirect does not include a schem
 
 Review the target URL of the URL redirect and ensure that it contains a scheme (for example, `https`).
 
-Refer to [Supported URL components in Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/reference/url-components) for details on the required URL components for redirect target URLs.
+Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect target URLs.

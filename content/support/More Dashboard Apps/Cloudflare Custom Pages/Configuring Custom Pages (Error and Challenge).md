@@ -6,15 +6,22 @@ title: Configuring Custom Pages (Error and Challenge)
 
 # Configuring Custom Pages (Error and Challenge)
 
-
-
 ## Overview
 
 Cloudflare uses a wide range of [error codes](https://support.cloudflare.com/hc/en-us/sections/200820298-Error-Pages) to identify issues in handling request traffic. By default, these error pages mention Cloudflare; however, custom error pages help you provide a consistent brand experience for your users. 
 
 If you are on the Pro, Business, or Enterprise plan you can customize and brand these pages for your whole account or for specific domains. You can design custom error pages to appear during a security challenge or when an error occurs.
 
+{{<Aside type="note">}}
+500, 501, 503, and 505 responses do not trigger custom error pages to
+avoid breaking specific API endpoints and other web applications.
+{{</Aside>}}
+
 Alternatively, Enterprise customers can customize 5XX error pages at their origin via **Enable Origin Error Pages** in the **Custom Pages** app in the dashboard..
+
+{{<Aside type="note">}}
+Enable Origin Error Pages excludes 521 and 522 errors.
+{{</Aside>}}
 
 ___
 
@@ -26,6 +33,12 @@ You can use the following custom error template to start building your page:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;head&gt;&lt;/head&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> &lt;body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   ::[REPLACE WITH CUSTOM ERROR TOKEN NAME]::</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> &lt;/body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/html&gt;</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="warning">}}
+Your custom error page must include a custom error token and cannot
+exceed 1.43 MB. Also, it must include HTML *\<head\>* and *\</head\>*
+tags.
+{{</Aside>}}
 
 When published, any additional scripts, images, or stylesheets increase the size of your custom error page source by approximately 50%. Download the [collapsify](https://github.com/cloudflare/collapsify) tool to test your page size before publishing.
 
@@ -50,6 +63,10 @@ The following tables list each custom error token grouped by the applicable cust
 | --- | --- |
 | ::CLIENT\_IP:: | All pages |
 | ::RAY\_ID:: | All pages |
+
+{{<Aside type="warning">}}
+Only one page-specific custom error token can be used per page.
+{{</Aside>}}
 
 | **Token** | **Available to** |
 | --- | --- |
@@ -76,6 +93,14 @@ After customizing your custom error page, there are two options for adding the p
 
 -   Account level: the custom error page will apply to every domain associated with your account.
 -   Domain level: the custom error page will apply to only one domain associated with your account.
+
+{{<Aside type="note">}}
+If Cloudflare cannot load your site or you have blocked the United
+States (US) via [IP Access
+Rules](https://support.cloudflare.com/hc/articles/217074967 "Configuring IP Access Rules")
+or firewall rules, publishing and previewing the error page will not
+work.
+{{</Aside>}}
 
 ### Account-level custom error page
 
@@ -111,7 +136,7 @@ ___
 
 If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](https://developers.cloudflare.com/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
 
 ### 1xxx errors
 
@@ -135,7 +160,7 @@ ___
 
 ## Related Resources
 
--   [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
+-   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
 -   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)

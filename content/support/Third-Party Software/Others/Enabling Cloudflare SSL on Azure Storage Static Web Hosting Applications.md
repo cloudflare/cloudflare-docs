@@ -27,6 +27,12 @@ foo.blob.core.windows.net CNAME blob.exampleprdstr01.store.core.windows.net
 blob.exampleprdstr01.store.core.windows.net  A  13.78.152.64
 ```
 
+{{<Aside type="note">}}
+Currently, one IP address is returned for the *A record* except in the
+case of ZRS (zone redundant storage) which will return the IP addresses
+of all FE pools (one in each availability zone).
+{{</Aside>}}
+
 Route traffic from the Static Web Hosting application to Cloudflare in order to enable Cloudflare SSL:
 
 `Browser <—SSL—> Cloudflare Proxy <—SSL—> Static Web Hosting`
@@ -64,6 +70,11 @@ ___
 ## Select an SSL Method
 
 When logged into your Cloudflare account, select the **Overview** tab **SSL/TLS** app.  The default **SSL** setting is Flexible SSL; however, there are [other SSL options](https://support.cloudflare.com/hc/articles/200170416). 
+
+{{<Aside type="note">}}
+For domains activated on Free or Pro plans, it may take up to 24 hours
+for new SSL certificates to issue.
+{{</Aside>}}
 
 Because DNS settings are cached in various locations throughout the Internet, including on a client's browser, changes to SSL settings may take time to propagate and start functioning as expected.
 

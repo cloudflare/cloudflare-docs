@@ -113,7 +113,7 @@ ___
 
 ## Cloudflare 提供域名掩码吗？
 
-不，Cloudflare 不提供域名掩码或 DNS 重定向服务（您的主机提供商可能会为您提供此服务）。但我们通过[批量重定向](https://developers.cloudflare.com/rules/bulk-redirects/)提供 URL 转发。
+不，Cloudflare 不提供域名掩码或 DNS 重定向服务（您的主机提供商可能会为您提供此服务）。但我们通过[批量重定向](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/)提供 URL 转发。
 
 ___
 

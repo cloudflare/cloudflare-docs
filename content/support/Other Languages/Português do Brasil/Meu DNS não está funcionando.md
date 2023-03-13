@@ -52,4 +52,4 @@ Se você gerencia os registros DNS por meio do aplicativo de **DNS** no painel
 
 ### Endereço de IP não resolvido
 
-Raramente, pode ocorrer que o resolvedor de DNS do cliente que está solicitando o URL falhe ao resolver um registro DNS para um endereço de IP válido.  Recarregue a página após alguns minutos para ver se o problema desaparece. Esse problema não tem relação com a Cloudflare, mas utilizar o [resolvedor de DNS da Cloudflare](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/) pode ajudar. Entre em contato com o seu provedor de hospedagem para obter mais ajuda com o seu resolvedor de DNS atual.
+Raramente, pode ocorrer que o resolvedor de DNS do cliente que está solicitando o URL falhe ao resolver um registro DNS para um endereço de IP válido.  Recarregue a página após alguns minutos para ver se o problema desaparece. Esse problema não tem relação com a Cloudflare, mas utilizar o [resolvedor de DNS da Cloudflare](https://developers.cloudflare.com/1.1.1.1/setup/) pode ajudar. Entre em contato com o seu provedor de hospedagem para obter mais ajuda com o seu resolvedor de DNS atual.

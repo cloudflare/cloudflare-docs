@@ -19,6 +19,17 @@ It accelerates image loading by:
 -   Streamlining image requests, so visitors can see optimized images immediately
 -   Acting as a lazy loader, turning all images into load on demand
 
+{{<Aside type="note">}}
+Mirage, like Rocket Loader, is a feature that is applied to a
+customer\'s website through client-side javascript. This means we modify
+the HTML response and insert the javascript code for the browser to
+execute, which is how the optimization is applied. This also means
+disabling Mirage is not done by disabling the feature by the path of the
+image (we don\'t apply any optimization on the server-side), rather it
+is done by disabling by the path of the page that loads the image
+(stopping the script from being inserted in the first page).
+{{</Aside>}}
+
 Read our [blog post](https://blog.cloudflare.com/mirage2-solving-mobile-speed) for more information on Mirage.
 
 ___
@@ -44,6 +55,14 @@ To enable Mirage image optimization for your domain,
 3.  Click the **Optimization** tab.
 4.  Scroll down to the **Optimized Delivery** section.
 5.  Toggle the Mirage switch to _On_.
+
+{{<Aside type="note">}}
+If you send a CSP (content security policy) header that restricts where
+scripts can be loaded, you\'ll need to ensure ajax.cloudflare.com is
+enabled. For example, to allow scripts from your own domain and
+ajax.cloudflare.com enter the following:
+`script-src 'self' ajax.cloudflare.com;`
+{{</Aside>}}
 
 Once enabled Mirage will be active on the entire website.
 
