@@ -41,9 +41,9 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 
 | Option       | Action                                                                                                               |
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Error        | Display browser error page.                                                                                          |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                               |
 | Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set on the Zero Trust dashboard. |
-| Pass through | Bypass untrusted certificate messages.                                                                               |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream.                                          |
 
 ### Block
 
