@@ -36,6 +36,12 @@ When accessing origin servers with certificates not signed by a public certifica
 
 ## Block file types
 
+{{<Aside type="note">}}
+
+Requires [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/).
+
+{{</Aside>}}
+
 Block the upload or download of files based on their type.
 
 | Selector           | Operator | Value                                 | Action |
