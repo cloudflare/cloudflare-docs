@@ -34,8 +34,8 @@ Alternatively, API tokens with Logs edit permissions can also be used for authen
 
 In addition to the required authentication headers mentioned, the following headers are required for the API to access logs stored in your R2 bucket. 
 
-`R2-access-key-id` (required) - [R2 Access Key Id](/r2/data-access/s3-api/tokens/)
-`R2-secret-access-key` (required) - [R2 Secret Access Key](/r2/data-access/s3-api/tokens/)
+`R2-access-key-id` (required) - [R2 Access Key Id](/r2/api/s3/tokens/)
+`R2-secret-access-key` (required) - [R2 Secret Access Key](/r2/api/s3/tokens/)
 
 ## List files
 
