@@ -51,7 +51,7 @@ highlight: [9,10,11]
 }
 ```
 
-Cloudflare will add new IP addresses to this list 30 days in advance before connecting from those IP addresses to an origin server.
+Cloudflare will add new IP addresses to this list 30 days in advance before connecting from those IP addresses to an origin server. If you are using the China Network on JD Cloud, you should update your firewalls to reflect any IP address changes at least once every 30 days.
 
 ## Certifications
 
