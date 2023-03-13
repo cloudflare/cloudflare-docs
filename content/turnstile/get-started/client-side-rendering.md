@@ -139,7 +139,7 @@ If the invocation is successful, the function returns a `widgetId (string)`. If 
 
 Check out the [demo](https://demo.turnstile.workers.dev/explicit) and its [source code](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/explicit.html).
 
-Here's an advanced example for dynamically rendering Turnstile widgets using Bootstrap 3 or 4 with modals and responsive widget sizes:
+This is an advanced example for dynamically rendering Turnstile widgets using Bootstrap 3 or 4 with modals and responsive widget sizes:
 
 <div>
 
