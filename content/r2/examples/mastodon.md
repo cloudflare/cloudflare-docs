@@ -55,7 +55,7 @@ After configuration, you can run your instance. After the instance is running, u
 
 ## Migrate to R2
 
-If you already have an instance running, you can migrate the media files to R2 and benefit from [no egress cost](/r2/platform/pricing/).
+If you already have an instance running, you can migrate the media files to R2 and benefit from [no egress cost](/r2/reference/pricing/).
 
 ### 1. Set up an R2 bucket and start file migration
 
@@ -79,6 +79,6 @@ Depending on your migration plan, you can verify if the bucket is accessible pub
 
 ### 4. Finalize migration
 
-Your instance may be still running during migration, and during migration, you likely have new media files created either through direct uploads or fetched from other federated instances. To upload only the newly created files, you can use a program like [`rclone`](/r2/examples/rclone/). Note that when re-running the sync program, all existing files will be checked using at least [Class B operations](/r2/platform/pricing/#class-b-operations).
+Your instance may be still running during migration, and during migration, you likely have new media files created either through direct uploads or fetched from other federated instances. To upload only the newly created files, you can use a program like [`rclone`](/r2/examples/rclone/). Note that when re-running the sync program, all existing files will be checked using at least [Class B operations](/r2/reference/pricing/#class-b-operations).
 
 Once all the files are synced, you can restart your Mastodon instance with the new object storage configuration as mentioned in [step 3](#3-configure-r2-for-mastodon) of Set up a new instance.
