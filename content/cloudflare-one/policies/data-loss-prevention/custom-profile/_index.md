@@ -11,7 +11,7 @@ With Cloudflare DLP, you can build custom DLP profiles specific to your data, or
 
 You can add both custom and existing detection entries to a custom DLP profile. Existing entries include [predefined profiles](/cloudflare-one/policies/data-loss-prevention/predefined-profiles/) and [integration profiles](/cloudflare-one/policies/data-loss-prevention/integration-profiles/).
 
-## Create a custom entry
+## Create a custom profile
 
 To define a custom profile:
 
