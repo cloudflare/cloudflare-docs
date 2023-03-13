@@ -9,7 +9,7 @@ meta:
 
 # Cloudflare Page Shield
 
-Page Shield provides allows you to take control on the scripts running on your websites.
+Page Shield allows you to take control of the scripts running on your websites.
 
 ## Features
 
