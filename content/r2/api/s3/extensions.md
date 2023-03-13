@@ -30,7 +30,7 @@ These headers map to the `httpMetadata` field in the [R2 bindings](/workers/plat
 | `Expires`             | `httpMetadata.expires`            |
 {{</table-wrap>}}
 
-If using Unicode in object key names, refer to [Unicode Interoperability](/r2/learning/unicode-interoperability/).
+If using Unicode in object key names, refer to [Unicode Interoperability](/r2/reference/unicode-interoperability/).
 
 ## Auto-creating buckets on upload
 
