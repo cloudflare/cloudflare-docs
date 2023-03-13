@@ -155,12 +155,33 @@ The Rules language supports these comparison operators:
 
 \* _Access to the `matches` operator requires a Cloudflare Business or Enterprise plan._
 
-{{<Aside type="note" header="Comparing string values">}}
+### Additional operators in the Cloudflare dashboard
+
+The Cloudflare dashboard shows the following functions as operators:
+
+* _starts with_ (corresponding to the [`starts_with` function](/ruleset-engine/rules-language/functions/#function-starts_with)): Returns `true` when a string starts with a given substring, and `false` otherwise.
+* _ends with_ (corresponding to the [`ends_with` function](/ruleset-engine/rules-language/functions/#function-ends_with)): Returns `true` when a string ends with a given substring, and `false` otherwise.
+
+However, when writing your own custom expressions, you must use these functions in function calls, not as operators. For example:
+
+```sql
+# Valid function call
+ends_with(http.request.uri.path, ".html")
+
+# Invalid use of ends_with function
+http.request.uri.path ends_with ".html"
+```
+
+### Comparing string values
+
 String comparison in rule expressions is case sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#function-lower) function and compare the result with a lowercased string, like in the following example:
 
 ```txt
 lower(http.request.uri.path) contains "/wp-login.php"
 ```
+
+{{<Aside type="warning" header="Wildcards are not supported">}}
+Comparison operators, namely the `eq` operator, do not support wildcards (for example, `*`) in strings. However, the `matches` operator supports regular expressions like `.*`, which matches zero or more occurrences of any character.
 {{</Aside>}}
 
 ## Logical operators
