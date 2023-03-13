@@ -34,6 +34,8 @@ To bypass TLS decryption, add a [Do Not Inspect](/cloudflare-one/policies/filter
 
 HTTPS traffic from `Do Not Inspect` applications will not be intercepted by Gateway or subject to your HTTP policies. You can, however, still apply [network policies](/cloudflare-one/policies/filtering/network-policies/) to these applications.
 
+To allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](../#untrusted-certificates) to _Pass through_.
+
 ### ESNI and ECH
 
 Websites that adhere to [ESNI or ECH standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indicator (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. This is because Gateway relies on the SNI to match an HTTP request to a policy.
@@ -50,16 +52,16 @@ When [FIPS compliance is enabled](#enable-tls-decryption), Gateway will only cho
 
 The following table lists the cipher suites Gateway uses for TLS decryption.
 
-| Cipher suite                | Default | FIPS-compliant |
-| ----------------------------|-------- | -------------- |
-|CHACHA20-POLY1305-SHA256     | ✅      | ✅      |
-|ECDHE-ECDSA-AES128-GCM-SHA256| ✅      | ✅      |
-|ECDHE-ECDSA-AES256-GCM-SHA384| ✅      | ✅      |
-|ECDHE-RSA-AES128-GCM-SHA256  | ✅      | ✅      |
-|ECDHE-RSA-AES256-GCM-SHA384  | ✅      | ✅      |
-|ECDHE-RSA-AES128-SHA         | ✅      | ❌      |
-|ECDHE-RSA-AES256-SHA384      | ✅      | ✅      |
-|AES128-GCM-SHA256            | ✅      | ✅      |
-|AES256-GCM-SHA384            | ✅      | ✅      |
-|AES128-SHA                   | ✅      | ❌      |
-|AES256-SHA                   | ✅      | ❌      |
+| Cipher suite                  | Default | FIPS-compliant |
+| ----------------------------- | ------- | -------------- |
+| CHACHA20-POLY1305-SHA256      | ✅      | ✅             |
+| ECDHE-ECDSA-AES128-GCM-SHA256 | ✅      | ✅             |
+| ECDHE-ECDSA-AES256-GCM-SHA384 | ✅      | ✅             |
+| ECDHE-RSA-AES128-GCM-SHA256   | ✅      | ✅             |
+| ECDHE-RSA-AES256-GCM-SHA384   | ✅      | ✅             |
+| ECDHE-RSA-AES128-SHA          | ✅      | ❌             |
+| ECDHE-RSA-AES256-SHA384       | ✅      | ✅             |
+| AES128-GCM-SHA256             | ✅      | ✅             |
+| AES256-GCM-SHA384             | ✅      | ✅             |
+| AES128-SHA                    | ✅      | ❌             |
+| AES256-SHA                    | ✅      | ❌             |
