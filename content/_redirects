@@ -537,6 +537,37 @@
 /r2/platform/s3-compatibility/tokens/ /r2/data-access/s3-api/tokens/ 301
 /r2/platform/s3-compatibility/extensions/ /r2/data-access/s3-api/extensions/ 301
 /r2/runtime-apis/ /r2/data-access/workers-api/workers-api-reference/ 301
+/r2/data-access/ /r2/api/ 301
+/r2/data-access/workers-api/ /r2/api/workers/ 301
+/r2/data-access/workers-api/workers-api-usage/ /r2/api/workers/workers-api-usage/ 301
+/r2/data-access/workers-api/workers-multipart-usage/ /r2/api/workers/workers-multipart-usage/ 301
+/r2/data-access/workers-api/workers-api-reference/ /r2/api/workers/workers-api-reference/ 301
+/r2/examples/demo-worker/ /r2/api/workers/demo-worker/ 301
+/r2/data-access/s3-api/ /r2/api/s3/ 301
+/r2/data-access/s3-api/api/ /r2/api/s3/api/ 301
+/r2/data-access/s3-api/extensions/ /r2/api/s3/extensions/ 301
+/r2/data-access/s3-api/tokens/ /r2/api/s3/tokens/ 301
+/r2/data-access/s3-api/presigned-urls/ /r2/buckets/presigned-urls/ 301
+/r2/data-access/wrangler-cli/ /r2/buckets/create-buckets/ 301
+/r2/data-migration/ /r2/r2-migrator/ 301
+/r2/data-migration/r2-migrator/ /r2/r2-migrator/ 301
+/r2/learning/consistency/ /r2/reference/consistency/ 301
+/r2/learning/data-security/ /r2/reference/data-security/ 301
+/r2/learning/cors/ /r2/buckets/cors/ 301
+/r2/learning/unicode-interoperability/ /r2/reference/unicode-interoperability/ 301
+/r2/learning/data-location/ /r2/buckets/data-location/ 301
+/r2/platform/pricing/ /r2/reference/pricing/ 301
+/r2/platform/limits/ /r2/reference/limits/ 301
+/r2/platform/changelog/ /r2/reference/changelog/ 301
+/r2/examples/aws-cli/ /r2/examples/aws/aws-cli/ 301
+/r2/examples/aws-sdk-go/ /r2/examples/aws/aws-sdk-go/ 301
+/r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js/ 301
+/r2/examples/aws-sdk-js-v3/ /r2/examples/aws/aws-sdk-js-v3/ 301
+/r2/examples/aws-sdk-net/ /r2/examples/aws/aws-sdk-net/ 301
+/r2/examples/aws-sdk-php/ /r2/examples/aws/aws-sdk-php/ 301
+/r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
+/r2/examples/aws4fetch/ /r2/examples/aws/aws4fetch/ 301
+/r2/examples/boto3/ /r2/examples/aws/boto3/ 301
 
 # tenant_redirects
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
