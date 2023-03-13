@@ -38,11 +38,11 @@ To remedy a false positive:
 
 4. Copy the rule name.
 
-5. Navigate to **Security** > **DDoS** and select **Configure** next to the managed ruleset containing the rule you will adjust.
+5. Navigate to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you have exhausted the number of overrides you can create, edit an existing override to adjust rule configuration.
 
 6. Select **Browse rules** and paste the rule name in the search field.
 
-7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_.
+7. Decrease the rule’s **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_ (if supported by your current plan and subscriptions).
 
 8. Select **Next** and then select **Save**.
 
