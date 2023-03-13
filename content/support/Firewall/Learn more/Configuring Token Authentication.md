@@ -51,7 +51,7 @@ The following example illustrates a rule that blocks any visitor that does not p
 For the following example URL,
 
 ```
-_test.domain.com/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D_
+test.domain.com/download/cat.jpg?verify=1484063787-9JQB8vP1z0yc5DEBnH6JGWM3mBmvIeMrnnxFi3WtJLE%3D
 ```
 
 The example firewall rule looks like:
