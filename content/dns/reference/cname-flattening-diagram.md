@@ -36,8 +36,15 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
  end
  subgraph Y[Cloudflare DNS]
   direction TB
-   C[domain.example IN A] --> D[Check for other cases] --> E[Lookup zone meta information] --> F[Lookup record under found zone] --> G[domain.example is a CNAME to external-origin.example] --> H[Resolve external-origin.example] --external-origin.example IN A 192.0.2.0/24--> I[Append answer and override the qname] --domain.example <$TTL> IN A 192.0.2.0/24--> J[Since forced flattening == true, strip leading CNAMEs in answer] --> K{Proxied?}
-   K --yes--> L[domain.example <$TTL> IN A <$Cloudflare IP>] --> B
-   K --no--> M[domain.example <$TTL> IN A 192.0.2.0/24] --> B
+   C["Question: 
+   domain.example IN A"] 
+   C --- D{{Check for other cases}} --- E{{Look up zone meta information}} --- F{{Look up record under found zone}} --> G["domain.example is a CNAME to external-origin.example
+   Forced flattening enabled"] --- H{{Resolve external-origin.example}} --> I["Answer: 
+   external-origin.example IN A 192.0.2.0/24"] --- J{{Append answer and override the qname}} --> K["Answer: 
+   domain.example {$TTL} IN A 192.0.2.0/24"]--- L{{Since forced flattening == true, strip leading CNAMEs in answer if any}} --- M{Proxied?}
+   M --yes--> O["Answer: 
+   domain.example {$TTL} IN A {$Cloudflare IP}"] --> B
+   M --no--> N["Answer:
+   domain.example {$TTL} IN A 192.0.2.0/24"] --> B
  end
 ```
