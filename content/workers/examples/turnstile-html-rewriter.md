@@ -81,3 +81,7 @@ addEventListener('fetch', event => {
 ```
 {{</tab>}}
 {{</tabs>}}
+
+{{<Aside type= "Note">}}
+This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/). 
+{{</Aside>}}
