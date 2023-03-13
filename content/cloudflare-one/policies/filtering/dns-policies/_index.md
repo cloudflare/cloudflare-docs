@@ -121,7 +121,7 @@ Use this selector to filter DNS responses by their `CNAME` records.
 | ------------------------ | ------------------------------------------------------------- |
 | DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` |
 
-{{<Aside type="note">}}
+{{<Aside>}}
 If one CNAME record points to another CNAME record, each record in the chain will be evaluated. For example, if `abc.example.com` points to `xyz.example.com`, then your DNS policy will evaluate both `abc.example.com` and `xyz.example.com`.
 {{</Aside>}}
 
