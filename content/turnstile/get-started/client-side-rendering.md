@@ -84,7 +84,7 @@ When using `render=explicit`, HTML elements with the `cf-turnstile` class will n
 
 ## Explicitly render the Turnstile widget
 
-1. Insert the JavaScript tag and related code below (and be sure to replace `<YOUR_SITE_KEY>` with your site key).  **Also ensure that you have renamed the class name of `.cf-turnstile` to `#example-container` (if and only if you do not set the `render=explicit` querystring option as shown above, because it will _still_ render otherwise).**  Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.<br>The challenge can be invoked explicitly with the following JavaScript snippet:
+1. Insert the JavaScript tag and the related code below. Ensure that you have renamed the class name of `.cf-turnstile` to `#example-container` (if you do not set the `render=explicit` query string option as shown above, it will still render otherwise). Once the script is embedded, you will have access to a global function with multiple callback options you can customize. For the following function to work properly, the page must contain an HTML element with ID `example-container`.
 
 <div>
 
