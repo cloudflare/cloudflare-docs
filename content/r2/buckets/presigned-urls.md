@@ -45,11 +45,11 @@ Another potential use case for presigned URLs is debugging. For example, if you 
 
 Generate a presigned URL by referring to the following examples:
 
-- [AWS SDK for Go](/r2/examples/aws-sdk-go/#generate-presigned-urls)
-- [AWS SDK for JS v3](/r2/examples/aws-sdk-js-v3/#generate-presigned-urls)
-- [AWS SDK for JS](/r2/examples/aws-sdk-js/#generate-presigned-urls)
-- [AWS SDK for PHP](/r2/examples/aws-sdk-php/#generate-presigned-urls)
-- [AWS CLI](/r2/examples/aws-cli/#generate-presigned-urls)
+- [AWS SDK for Go](/r2/examples/aws/aws-sdk-go/#generate-presigned-urls)
+- [AWS SDK for JS v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
+- [AWS SDK for JS](/r2/examples/aws/aws-sdk-js/#generate-presigned-urls)
+- [AWS SDK for PHP](/r2/examples/aws/aws-sdk-php/#generate-presigned-urls)
+- [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)
 
 ## Presigned URL alternative with Workers
 
