@@ -1,6 +1,5 @@
 ---
 title: Consistency model
-weight: 1
 pcx_content_type: concept
 ---
 
@@ -47,7 +46,7 @@ By default, Cloudflare's cache will cache common, cacheable status codes automat
 
 {{</Aside>}}
 
-When connecting a [custom domain](https://developers.cloudflare.com/r2/data-access/public-buckets/#custom-domains) to an R2 bucket and enabling caching for objects served from that bucket, the consistency model is necessarily relaxed when accessing content via a domain with caching enabled.
+When connecting a [custom domain](/r2/buckets/public-buckets/#custom-domains) to an R2 bucket and enabling caching for objects served from that bucket, the consistency model is necessarily relaxed when accessing content via a domain with caching enabled.
 
 Specifically, you should expect:
 
@@ -55,4 +54,4 @@ Specifically, you should expect:
 * By default, Cloudflare’s cache will [cache HTTP 404 (Not Found) responses](/cache/how-to/configure-cache-status-code/#edge-ttl) automatically. If you upload an object to that same path, the cache may continue to return HTTP 404s until the cache TTL (Time to Live) expires and the new object is fetched from R2 or the [cache is purged](/cache/how-to/purge-cache/).
 * An object for a given key is overwritten with a new object: the old (previous) object will continue to be served to clients until the cache TTL expires (or the object is evicted) or the cache is purged.
 
-The cache does not affect access via [Worker API bindings](/r2/data-access/workers-api/) or the [S3 API](/r2/data-access/s3-api/), as these operations are made directly against the bucket and do not transit through the cache.
+The cache does not affect access via [Worker API bindings](/r2/api/workers/) or the [S3 API](/r2/api/s3/), as these operations are made directly against the bucket and do not transit through the cache.

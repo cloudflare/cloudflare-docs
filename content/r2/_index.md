@@ -7,7 +7,7 @@ meta:
   title: Cloudflare R2 
 ---
 
-# Cloudflare R2 
+# Cloudflare R2
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
@@ -26,15 +26,21 @@ You can use R2 for multiple scenarios, including but not limited to:
 
 ## Features
 
-{{<feature header="Workers API" href="/r2/data-access/workers-api/workers-api-reference">}}
+{{<feature header="Location Hints" href="/r2/buckets/data-location/#location-hints">}}
 
-R2’s deep integration with Workers and the rest of the Cloudflare Developer Platform allow developers to customize data processing and storage with code.
+Location Hints are optional parameters you can provide during bucket creation to indicate the primary geographical location you expect data will be accessed from.
 
 {{</feature>}}
 
-{{<feature header="Examples" href="/r2/examples/">}}
+{{<feature header="CORS" href="/r2/buckets/cors/">}}
 
-Learn how to configure different applications to use with R2.
+Configure CORS to interact with objects in your bucket and configure policies on your bucket.
+
+{{</feature>}}
+
+{{<feature header="Public buckets" href="/r2/buckets/public-buckets/">}}
+
+Public buckets expose the contents of your R2 bucket directly to the Internet. 
 
 {{</feature>}}
 

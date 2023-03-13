@@ -23,7 +23,7 @@ You will receive a confirmation message after a successful upload.
 
 {{<Aside type="note">}}
 
-Wrangler only supports uploading files up to 315MB in size. To upload large files, we recommend [rclone](/r2/examples/rclone/) or an [S3-compatible](https://developers.cloudflare.com/r2/data-access/s3-api/api/) tool of your choice. 
+Wrangler only supports uploading files up to 315MB in size. To upload large files, we recommend [rclone](/r2/examples/rclone/) or an [S3-compatible](/r2/api/s3/) tool of your choice. 
 
 {{</Aside>}}
 

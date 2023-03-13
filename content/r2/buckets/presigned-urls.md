@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 # Presigned URLs
 
-Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) for sharing direct access to your bucket without revealing your token secret. A presigned URL authorizes anyone with the URL to perform an action to the S3 compatibility endpoint for an R2 bucket. By default, the S3 endpoint requires an `AUTHORIZATION` header signed by your token. Every presigned URL has S3 parameters and search parameters containing the signature information that would be present in an `AUTHORIZATION` header. The performable action is restricted to a specific resource, an [operation](/r2/data-access/s3-api/api/), and has an associated timeout.
+Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) for sharing direct access to your bucket without revealing your token secret. A presigned URL authorizes anyone with the URL to perform an action to the S3 compatibility endpoint for an R2 bucket. By default, the S3 endpoint requires an `AUTHORIZATION` header signed by your token. Every presigned URL has S3 parameters and search parameters containing the signature information that would be present in an `AUTHORIZATION` header. The performable action is restricted to a specific resource, an [operation](/r2/api/s3/api/), and has an associated timeout.
 
 There are three kinds of resources in R2: 
 
@@ -25,7 +25,7 @@ Presigned URLs are generated with no communication with R2 and must be generated
 
 There are three ways to grant an application access to R2:
 
-1. The application has its own copy of an [R2 API token](/r2/data-access/s3-api/tokens/).
+1. The application has its own copy of an [R2 API token](/r2/api/s3/tokens/).
 2. The application requests a copy of an R2 API token from a vault application and promises to not permanently store that token locally.
 3. The application requests a central application to give it a presigned URL it can use to perform an action.
 
@@ -147,7 +147,7 @@ export default <ExportedHandler<Env>>{
 };
 ```
 
-Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml` [binding](/r2/data-access/workers-api/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
+Notice the total absence of any configuration or token secrets present in the Worker code. Instead, you would create a `wrangler.toml` [binding](/r2/api//workers/workers-api-usage/#4-bind-your-bucket-to-a-worker) to whatever bucket represents the bucket you will upload to. Additionally, authorization is handled in-line with the upload which can reduce latency.
 
 In some cases, Workers lets you implement certain functionality more easily. For example, if you wanted to offer a write-once guarantee so that users can only upload to a path once, with pre-signed URLs, you would need to sign specific headers and require the sender to send them. This adds some complexity:
 
@@ -195,7 +195,7 @@ Cloudflare Workers currently have some limitations that you may need to consider
 
 * You cannot upload more than 100 MiB (200 MiB for Business customers) to a Worker.
 * Enterprise customers can upload 500 MiB by default and can ask their account team to raise this limit.
-* Detecting [precondition failures](/r2/data-access/s3-api/extensions/#conditional-operations-in-putobject) is currently easier with presigned URLs as compared with R2 bindings.
+* Detecting [precondition failures](/r2/api/s3/extensions/#conditional-operations-in-putobject) is currently easier with presigned URLs as compared with R2 bindings.
 
 Note that these limitations depends on R2's extension for conditional uploads. Amazon's S3 service does not offer such functionality at this time.
 
@@ -205,10 +205,10 @@ Presigned URLs share some superificial similarity with public buckets. If you gi
 
 Presigned URLs can be generated for any S3 operation. After a presigned URL is generated it can be reused as many times as the holder of the URL wants until the signed expiry date.
 
-[Public buckets](/r2/data-access/public-buckets/) are available on a regular HTTP endpoint. By default, there is no authorization or access controls associated with a public bucket. Anyone with a public bucket URL can access an object in that public bucket. If you are using a custom domain to expose the R2 bucket, you can manage authorization and access controls as you would for a Cloudflare zone. Public buckets only provide `GET`/`HEAD` on a known object path. Public bucket errors are rendered as HTML pages.
+[Public buckets](/r2/buckets/public-buckets/) are available on a regular HTTP endpoint. By default, there is no authorization or access controls associated with a public bucket. Anyone with a public bucket URL can access an object in that public bucket. If you are using a custom domain to expose the R2 bucket, you can manage authorization and access controls as you would for a Cloudflare zone. Public buckets only provide `GET`/`HEAD` on a known object path. Public bucket errors are rendered as HTML pages.
 
 Choosing between presigned URLs and public buckets is dependent on your specific use case. You can also use both if your architecture should use public buckets in one situation and presigned URLs in another. It is useful to note that presigned URLs will expose your account ID and bucket name to whoever gets a copy of the URL. Public bucket URLs do not contain the account ID or bucket name. Typically, you will not share presigned URLs directly with end users or browsers, as presigned URLs are used more for internal applications.
 
 ## Related resources
 
-- [Create a public bucket](/r2/data-access/public-buckets/)
+- [Create a public bucket](/r2/buckets/public-buckets/)
