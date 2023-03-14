@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Public buckets
+weight: 2
 ---
 
 # Create public buckets on R2

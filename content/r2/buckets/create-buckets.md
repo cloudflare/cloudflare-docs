@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Create new buckets
+weight: 1
 ---
 
 # Create buckets
