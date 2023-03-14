@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish
-        uses: cloudflare/wrangler-action@1.3.0
+        uses: cloudflare/wrangler-action@2.0.0
 ```
 
 2.  Add support for `CF_API_TOKEN` and `CF_ACCOUNT_ID` in your workflow:
@@ -43,11 +43,10 @@ jobs:
 ```yaml
 # Update "Publish" step from last code snippet
 - name: Publish
-  uses: cloudflare/wrangler-action@1.3.0
+  uses: cloudflare/wrangler-action@2.0.0
   with:
     apiToken: ${{ secrets.CF_API_TOKEN }}
-  env:
-    CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+    accountId: ${{ secrets.CF_ACCOUNT_ID }}
 ```
 
 3.  Add the Markdown code for your button to your project's README, replacing the example `url` parameter with your repository URL.
