@@ -1558,7 +1558,7 @@ $ wrangler deployments list
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 {{</definitions>}}
 
-Example output
+Example output:
 ```sh
 Deployment ID:  y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on:     2022-11-11T15:49:08.117218Z
