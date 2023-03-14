@@ -76,13 +76,19 @@ The WARP client will now launch WebView2 when the user is registering their devi
 
 The Cloudflare WARP macOS client allows for an automated install via tools like Jamf, Intune, Kandji, or JumpCloud or any script or management tool that can place a `com.cloudflare.warp.plist` file in `/Library/Managed Preferences` on a supported macOS device. Additionally this plist can be wrapped in a `.mobileconfig`.
 
-The plist must be pushed by an MDM tool in order to persist after reboot. Manually-placed files will be automatically deleted by the OS.
-
 ### Create `plist` file
 
 1. [Download](/cloudflare-one/static/documentation/connections/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
 
 2. Modify the file with your desired [deployment arguments](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
+
+3. (Optional) If you want to manually place the file in `/Library/Managed Preferences` (rather than use a management tool), convert the `plist` into binary format:
+
+  ```sh
+  $ plutil -convert binary1 com.cloudflare.warp.plist
+  ```
+
+The plist must be pushed by an MDM tool in order to persist after reboot. Manually-placed files will be automatically deleted by the OS.
 
 ### Create `mobileconfig` file
 
