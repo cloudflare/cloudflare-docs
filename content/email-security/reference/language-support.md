@@ -17,6 +17,10 @@ The Area 1 email dashboard is localized to several languages. To update your lan
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. At the bottom of the page, select the language icon.
 
+    <div class="medium-img">
+
     ![Select the language icon to toggle your dashboard between English and Japanese.](/email-security/static/language-switcher.png)
-    
+
+    </div>
+
 3. Select your preferred language.
