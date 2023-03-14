@@ -99,7 +99,7 @@ async function handlePost(request) {
     // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
 
-		// secret_key here is set using wrangler secrets
+		// `secret_key` here is set using Wrangler secrets
     formData.append('secret', secret_key);
     formData.append('response', token);
     formData.append('remoteip', ip);
