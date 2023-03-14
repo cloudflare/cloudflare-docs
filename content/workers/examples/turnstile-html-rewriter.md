@@ -96,7 +96,7 @@ async function handlePost(request) {
     const token = body.get('cf-turnstile-response');
     const ip = request.headers.get('CF-Connecting-IP');
 
-    // Validate the token by calling the "/siteverify" API.
+    // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
 
 		// secret_key here is set using wrangler secrets
