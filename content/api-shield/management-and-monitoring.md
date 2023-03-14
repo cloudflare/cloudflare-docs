@@ -123,7 +123,7 @@ Sensitive data comprises various personally identifiable information and financi
 
 API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/).
 
-Sensitive Data Detection is currently available in a closed beta to Enterprise customers on our Advanced application security plan. To enable the Sensitive Data Detection managed ruleset, contact your account management team.
+Sensitive Data Detection is currently available in beta to Enterprise customers on our Advanced application security plan.
 
 Once Sensitive Data Detection is enabled for your zone, API Shield queries firewall events from the WAF for the last seven days and places a notification icon on the Endpoint Management table row if there are any matched sensitive responses for your endpoint.
 
