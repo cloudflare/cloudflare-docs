@@ -144,17 +144,17 @@ These selectors depend on the `Content-Type` header being present in the request
 | ---------------- | ---------------------------------- |
 | Upload Mime Type | `http.upload.mime == "image/png\"` |
 
-### Download and Upload File Type
+### Downloaded and Uploaded File Type
 
-These selectors depend on the file signatures in the HTTP body.
+These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+
+| UI name              | API example |
+| -------------------- | ----------- |
+| Downloaded File Type |             |
 
 | UI name            | API example |
 | ------------------ | ----------- |
-| Download File Type |             |
-
-| UI name          | API example |
-| ---------------- | ----------- |
-| Upload File Type |             |
+| Uploaded File Type |             |
 
 ### DLP Profile
 
