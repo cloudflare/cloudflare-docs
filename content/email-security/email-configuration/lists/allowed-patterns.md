@@ -32,7 +32,7 @@ To create a new allowed pattern:
     
     - **Notes**: Provide additional notes about the allowed pattern.
 
-6. If you chose *Trusted Sender* or *Acceptable Sender* in the previous step, you will be able to choose whether to verify the sender. When the **Verify Sender** option is selected, the allow list entry will only be honored if it can be verified by an aligned passing authentication by any of DMARC, SPF, or DKIM email authentication protocols.
+6. If you chose *Trusted Sender* or *Acceptable Sender* in the previous step, you will be able to choose whether to verify the sender. When the **Verify Sender** option is selected, the allow list entry will only be honored if it aligns with a passing authentication by DMARC or SPF or DKIM.
 
 7. Select **Save**.
 
