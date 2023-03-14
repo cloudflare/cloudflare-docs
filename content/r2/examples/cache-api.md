@@ -1,9 +1,9 @@
 ---
-title: Store objects in Cloudflare's cache
+title: Use the Cache API
 pcx_content_type: how-to
 ---
 
-# Store objects in Cloudflare's cache
+# Use the Cache API
 
 Use the Cache API to store R2 objects in Cloudflare's cache
 
