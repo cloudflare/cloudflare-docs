@@ -1404,6 +1404,15 @@
           "biz": "No",
           "ent": "No",
           "ent_plus": "Yes"
+        },
+        "k_policies": {
+          "title": "Number of policies<br/>(positive blocking)",
+          "summary": "Enterprise with add-on",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 0,
+          "ent_plus": 3
         }
       }
     },

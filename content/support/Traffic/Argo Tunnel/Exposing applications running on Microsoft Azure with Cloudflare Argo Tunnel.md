@@ -36,23 +36,33 @@ ___
 
 SSH into the Cloudflare VM. A simple application called **example.py** is included in the VM for testing. The test application launches a Python Flask service that listens on localhost port 5000. To start the test application, type the _screen_ command at the command prompt. Then, start the application in the screen session by running:
 
-`python /usr/cloudflare/example.py`
+```sh
+$ python /usr/cloudflare/example.py
+```
 
 Exit the screen session with a keyboard shortcut _Ctrl_ + _a_ + _d._ To reattach the screen session, enter the following command:
 
-`screen -r`
+```sh
+$ screen -r
+```
 
 Also, to permanently end the screen session and related processes, type the following command within the screen session:
 
-`exit`
+```sh
+$ exit
+```
 
 The Azure Cloudflare image is preinstalled with the [**cloudflared** client for Argo Tunnel](/cloudflare-one/connections/connect-apps).  However, configuration is required to connect an application to the Cloudflare network. The first step is to run the following command within the Cloudflare VM:
 
-`cloudflared login`
+```sh
+$ cloudflared login
+```
 
 The command outputs a link that allows a domain to be authorized for use with Argo Tunnel. After the Cloudflare account is authorized, run the following command to configure Argo Tunnel with the information necessary to expose the Azure application:
 
-`cloudsetup`
+```sh
+$ cloudsetup
+```
 
 {{<Aside type="tip">}}
 Set the **origin IP** to *127.0.0.1* if the application is running on
@@ -63,7 +73,9 @@ When using the Cloudflare VM to expose an Azure resource on a different instance
 
 Check the status of the **cloudflared** service:
 
-`service cloudflared status`
+```sh
+$ service cloudflared status
+```
 
 At this point, the application should be live at the authorized Cloudflare domain and using the hostname supplied within the _cloudsetup_ utility.
 
@@ -73,7 +85,9 @@ ___
 
 1\. Stop the **cloudflared** tunnel service before changing the configuration of the Cloudflare Argo Tunnel VM:
 
-`service cloudflared stop`
+```sh
+$ service cloudflared stop
+```
 
 {{<Aside type="tip">}}
 If switching domains, first delete the certificate stored in
@@ -83,7 +97,9 @@ login*
 
 2\. Delete the **cloudflared** config:
 
-`sudo rm /etc/cloudflared/config.yml`
+```sh
+$ sudo rm /etc/cloudflared/config.yml
+```
 
 3\. Run _cloudsetup_ again to reconfigure subdomain info, origin IP, and port settings. The _cloudsetup_ utility automatically restarts the tunnel service.
 

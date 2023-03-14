@@ -12,7 +12,7 @@ title: Adding vendor-specific DNS records to Cloudflare
 
 This article requires prior knowledge of DNS record management via the Cloudflare dashboard.  To learn more, refer to Cloudflare's article on [managing DNS records](/dns/manage-dns-records/how-to/create-dns-records).
 
-**Google**
+### **Google**
 
 Add the following MX records:
 
@@ -57,7 +57,7 @@ loops when browsing to your site through Cloudflare, ensure **SSL** is
 set to *Full* in the **SSL/TLS** app of the Cloudflare dashboard.
 {{</Aside>}}
 
-**Amazon**
+### **Amazon**
 
 AWS customers must update their domain's nameservers to point to the Cloudflare nameservers listed in the **Overview** app of the Cloudflare dashboard:
 
@@ -113,7 +113,7 @@ root domain to point to an Elastic Load Balancer.
 2.  In the Cloudflare **DNS** app, replace **Domain name** with the ELB target: _<AWS hostname>.<region>._elb.amazonaws.com is the proper _CNAME_ target format (for example: _my-cool-cachepp-1344276401.eu-west-1._elb.amazonaws.com).
 3.  Reach out to AWS support to determine _AWS hostname_ or _region_.
 
-**Microsoft**
+### **Microsoft**
 
 {{<Aside type="warning">}}
 Add the DNS records that Microsoft utilizes for domain validation (such
@@ -139,7 +139,7 @@ For verification records, refer to Azure’s documentation on [creating domain 
 Add DNS records for Azure verification with a grey-cloud icon.
 {{</Aside>}}
 
-**Miscellaneous vendors**
+### **Miscellaneous vendors**
 
 You can configure Cloudflare to work with ClickFunnels.  The process requires updating your Cloudflare DNS settings.
 

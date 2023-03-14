@@ -8,6 +8,8 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
+{{<render file="gateway/_content-categories.md">}}
+
 {{<render file="gateway/_policies-optional.md">}}
 
 ## Enforce device posture
