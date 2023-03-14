@@ -31,9 +31,24 @@ We strongly recommend that you use an operating system still supported by the ve
 
 ---
 
-## Step 1 — Create a public DNS record
+## Step 1 — Choose a routing mechanism
 
-You need to create a public DNS record for your key server. If you are using Cloudflare, this record **cannot be proxied (orange clouded)**. As a security measure, you should hide the hostname of your key server.
+### Cloudflare Tunnel (recommended)
+
+Through an integration with [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/), you can send traffic to a key server through a secure channel and avoid exposing your key server to the public Internet.
+
+In these steps, enter the IP address of your key server in the [Connect a network](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/#3-connect-a-network) step.
+
+Once you create the tunnel and install `cloudflared` on your key server, use the Cloudflare API to [List tunnel routes](https://developers.cloudflare.com/api/operations/tunnel-route-list-tunnel-routes), saving the following values for a future step:
+
+- `"virtual_network_id"`
+- `"network"`
+
+### Public DNS record
+
+If you cannot use a Cloudflare Tunnel, you can also create a public DNS record for your key server. 
+
+This setup option is not ideal as the DNS record cannot be [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) and - as a result - will expose the origin IP address of your key server. As a security measure, you should hide the hostname of your key server.
 
 1.  Use `openssl rand -hex 24` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`.
 2.  Add this record via your DNS provider’s interface as an **A** or **AAAA** record pointing to the IP address of your Keyless SSL server.
@@ -41,7 +56,7 @@ You need to create a public DNS record for your key server. If you are using Clo
 
 ---
 
-## Step 2 — Upload “Keyless” SSL Certificates
+## Step 2 — Upload Keyless SSL Certificates
 
 Before your key servers can be configured, you must next upload the corresponding SSL certificates to Cloudflare’s edge. During TLS termination, Cloudflare will present these certificates to connecting browsers and then (for non-resumed sessions) communicate with the specified key server to complete the handshake.
 
@@ -49,18 +64,35 @@ Upload certificates to Cloudflare with only SANs that you wish to use with Cloud
 
 For each certificate you wish to use with Keyless SSL:
 
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+To create a Keyless certificate in the dashboard:
+
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your zone.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
-3.  Click **Upload Keyless SSL Certificate**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
+3.  Select **Upload Keyless SSL Certificate**.
 4.  Fill in the upload modal with the certificate and other details and click **Add**.
 
-| Label               | Description                                                                                                                                                                 | Example Values                                               |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| Key server label    | Any unique identifier for your key server                                                                                                                                   | “test-keyless”, “production-keyless-1”                       |
-| Key server hostname | The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier).                                                    | 11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com |
-| Key server port     | Set to 2407 unless you have changed this on the key server.                                                                                                                 | 2407                                                         |
-| SSL Certificate     | The valid X509v3 SSL certificate (in PEM form) for which you hold the private key.                                                                                          | (PEM bytes)                                                  |
-| Bundle method       | This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) for more details. | Compatible                                                   |
+| Label | Description | Example Values | 
+| --- | --- | --- |
+| Key server label | Any unique identifier for your key server | “test-keyless”, “production-keyless-1” |
+| Key server hostname | The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier). | 11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com |
+| Key server port | Set to 2407 unless you have changed this on the key server. | 2407 |
+| SSL Certificate | The valid X509v3 SSL certificate (in PEM form) for which you hold the private key. | (PEM bytes) |
+| Bundle method | This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) for more details. | Compatible |
+
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+
+To create a Keyless certificate with the API, send a [`POST`](https://developers.cloudflare.com/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request.
+
+{{</tab>}}
+{{</tabs>}}
+
+
+
+
 
 ---
 
