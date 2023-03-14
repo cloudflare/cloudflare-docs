@@ -60,8 +60,8 @@ Cache Reserve monthly operations and storage usage are viewable in the dashboard
 
 Cache Reserve charges based on the total volume of data stored, along with two classes of operations on that data:
 
-- [Class A operations](/r2/reference/pricing/#class-a-operations) which are more expensive and tend to mutate state.
-- [Class B operations](/r2/reference/pricing/#class-b-operations) which tend to read existing state.
+- [Class A operations](/r2/pricing/#class-a-operations) which are more expensive and tend to mutate state.
+- [Class B operations](/r2/pricing/#class-b-operations) which tend to read existing state.
 
 In most cases, a Cache Reserve miss will result in both one class A and one class B operation, and a Cache Reserve hit will result in one class B operation. Assets larger than 1 GB will incur more operations proportional to their size.
 
