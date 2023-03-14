@@ -143,7 +143,7 @@ These criteria are available for all Access application types, including [SaaS](
 | Authentication Method | Checks the [multifactor authentication](/cloudflare-one/policies/access/mfa-requirements/) method used by the user, if supported by the identity provider. |✅ | ❌  |
 | Identity provider group| Checks the user groups you configured with your identity provider (IdP). This selector only displays if you use AzureAD, Github, Google, or Okta as your IdP.  | ✅ | ❌ |
 | SAML Group | Checks a SAML attribute name / value pair. This selector only displays if you use a generic SAML identity provider. | ✅ | ❌ |
-| OIDC Claim | Checks an OIDC Claim name / value pair. This option only displays if you use a generic OIDC identity provider. | ✅ | ❌ |
+| OIDC Claim | Checks an OIDC claim name / value pair. This selector only displays if you use a generic OIDC identity provider. | ✅ | ❌ |
 | Device posture | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider. |✅ | ✅ |
 | Warp | Checks that the device is connected to WARP, including the consumer version. |✅ | ✅ |
 | Gateway | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/). |✅ | ✅ |
