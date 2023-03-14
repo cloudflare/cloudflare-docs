@@ -40,6 +40,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | Suite/Category | Product | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --- | --- | --- | --- | --- |
 | Application Performance | Caching/CDN | ✅ | ✅ | ✅ |
+| | Cache Reserve | ⚫️ | 🚧[^8] | 🚧[^1] | 
 | | DNS | ⚫️ | ⚫️ | 🚧[^1] | 
 | | Image Resizing | ✅ | ✅ | 🚧[^1] |
 | | Load Balancing | ✅ | ✅ | 🚧[^1] |
