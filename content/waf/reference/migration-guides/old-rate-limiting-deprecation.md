@@ -9,7 +9,7 @@ meta:
 
 # Rate limiting (previous version) deprecation notice
 
-**The [previous version of rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) is now deprecated.** If you had access to the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until DATE.
+**The [previous version of rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until DATE. After this date all remaining active rules will stop working.
 
 ![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/waf/static/reference/rate-limiting-both-versions.png)
 
@@ -45,10 +45,6 @@ Rate Limiting (new version)      | 1 | 2  | 5  | 100
     {{</table-wrap>}}
 
 For more details on the differences between old and new rate limiting rules, refer to [our blog post](https://blog.cloudflare.com/unmetered-ratelimiting/).
-
-{{<Aside type="note">}}
-If you believe you do not have the correct number of available rules in the new version, contact your account team.
-{{</Aside>}}
 
 ### Relevant changes in the dashboard
 
