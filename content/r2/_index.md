@@ -65,7 +65,7 @@ A suite of products tailored to your image-processing needs.
 
 {{<resource-group>}}
 
-{{<resource header="Pricing" href="/r2/reference/pricing" icon="price">}} Understand pricing for free and paid tier rates. {{</resource>}}
+{{<resource header="Pricing" href="/r2/pricing" icon="price">}} Understand pricing for free and paid tier rates. {{</resource>}}
 
 {{<resource header="Discord" href="https://discord.com/channels/595317990191398933/893253103695065128" icon="logo-Discord">}} Ask questions, show off what you are building, and discuss the platform with other developers. {{</resource>}}
 
