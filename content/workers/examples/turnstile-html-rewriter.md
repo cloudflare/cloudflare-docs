@@ -92,7 +92,7 @@ This is only half the implementation for Turnstile. The corresponding token that
 async function handlePost(request) {
     const body = await request.formData();
 
-    // Turnstile injects a token in "cf-turnstile-response".
+    // Turnstile injects a token in `cf-turnstile-response`.
     const token = body.get('cf-turnstile-response');
     const ip = request.headers.get('CF-Connecting-IP');
 
