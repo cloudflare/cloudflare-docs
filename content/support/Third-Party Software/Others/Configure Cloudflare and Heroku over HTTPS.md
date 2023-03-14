@@ -79,8 +79,8 @@ To ensure all traffic to your site is encrypted, Cloudflare lets you force an au
 
 You can then use a cURL command to verify that all requests are being forced over HTTPS.
 
-```
-╰─➤  curl -I -L example.com
+```sh
+$ curl -I -L example.com
 HTTP/1.1 301 Moved Permanently
 Date: Tue, 23 Jan 2018 23:17:44 GMT
 Connection: keep-alive

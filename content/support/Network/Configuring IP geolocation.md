@@ -36,15 +36,17 @@ Visitor traffic geolocation information can be captured in origin server logging
 ### Apache
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat %{cf-ipcountry}i cloudflare_custom</span></div></span></span></span></code></pre>{{</raw>}}
-
+```
+LogFormat %{cf-ipcountry}i cloudflare_custom
+```
 _More about_ [_Apache LogFormat_](https://httpd.apache.org/docs/2.4/logs.html)
 
 ### NGINX
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">log_format cloudflare_custom '&quot;$http_cf_ipcountry&quot;';</span></div></span></span></span></code></pre>{{</raw>}}
-
+```
+log_format cloudflare_custom '"$http_cf_ipcountry"';
+```
 _More about_ [_NGINX log\_format_](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)
 
 {{<Aside type="info">}}
@@ -62,32 +64,35 @@ Web applications can also capture and use IP geolocation information in their lo
 
 ### PHP
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$country_code = $_SERVER[&quot;HTTP_CF_IPCOUNTRY&quot;];</span></div></span></span></span></code></pre>{{</raw>}}
-
+```php
+$country_code = $_SERVER["HTTP_CF_IPCOUNTRY"];
+```
 ### Python Flask
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">country_code = request.headers.get('cf-ipcountry')</span></div></span></span></span></code></pre>{{</raw>}}
-
+```python
+country_code = request.headers.get('cf-ipcountry')
+```
 _Note that you'll need to import python flask request module_
 
 ### NodeJS
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">const country_code = headers['cf-ipcountry'];</span></div></span></span></span></code></pre>{{</raw>}}
+```js
+const country_code = headers['cf-ipcountry'];
+```
 
 _Note that you'll need to require http/https and instantiate the createServer() method_
 
 ### C# (.NET)
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">string country_code = HttpContext.Current.Request.Headers.Get(&quot;cf-ipcountry&quot;);</span></div></span></span></span></code></pre>{{</raw>}}
+```cs
+string country_code = HttpContext.Current.Request.Headers.Get("cf-ipcountry");
+```
 
 ### Perl
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$country_code = $ENV{&quot;HTTP_CF_IPCOUNTRY&quot;};</span></div></span></span></span></code></pre>{{</raw>}}
+```perl
+$country_code = $ENV{"HTTP_CF_IPCOUNTRY"};
+```
 
 ___
 

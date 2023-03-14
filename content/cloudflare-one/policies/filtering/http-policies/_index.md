@@ -37,6 +37,8 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 | ------------------ | -------- | ----------- | ------ |
 | Content Categories | in       | `Education` | Allow  |
 
+#### Untrusted certificates
+
 The **Untrusted certificate action** determines how to handle insecure requests.
 
 | Option       | Action                                                                                                               |
