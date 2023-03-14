@@ -24,32 +24,32 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
+      <td>2023-03-13</td>
+      <td>2023-03-20</td>
       <td>Block</td>
-      <td>100524_BETA</td>
-      <td>...9d787fc2</td>
-      <td>Java - Remote Code Execution - Beta</td>
-      <td>This detection will replace 100524 on Legacy WAF and ...f2cc4e84 on new WAF</td>
+      <td>100577</td>
+      <td>...a47c4be6</td>
+      <td>Apache Spark - Remote Code Execution - CVE:CVE-2022-33891</td>
+      <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
+      <td>2023-03-13</td>
+      <td>2023-03-20</td>
       <td>Block</td>
-      <td>100572</td>
-      <td>...30d612c4</td>
-      <td>Java - Remote Code Execution</td>
+      <td>100578</td>
+      <td>...54d00d2f</td>
+      <td>GLPI - Remote Code Execution - CVE:CVE-2022-35914</td>
       <td>N/A</td>
+    </tr>
     <tr>
-      <td>2023-02-27</td>
-      <td>2023-03-06</td>
+      <td>2023-03-13</td>
+      <td>2023-03-20</td>
       <td>Block</td>
-      <td>100570</td>
-      <td>...9497744a</td>
-      <td>FortiNAC - Remote Code Execution - CVE:CVE-2022-39952</td>
+      <td>100579</td>
+      <td>...fb4c6991</td>
+      <td>GitLab - Remote Code Execution - CVE:CVE-2021-22205</td>
       <td>N/A</td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
-

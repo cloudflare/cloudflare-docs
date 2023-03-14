@@ -16,6 +16,7 @@ The descriptions below detail the fields available for `network_analytics_logs`.
 | -- | -- | -- |
 | AttackCampaignID | Unique identifier of the attack campaign that this packet was a part of, if any. | string |
 | AttackID | Unique identifier of the mitigation that matched the packet, if any. | string |
+| AttackVector | Descriptive name of the type of attack that this packet was a part of, if any. Only for packets matching rules contained within the Cloudflare L3/4 managed ruleset. | string |
 | ColoCity | The city where the Cloudflare datacenter that received the packet is located. | string |
 | ColoCode | The Cloudflare datacenter that received the packet (nearest IATA airport code). | string |
 | ColoCountry | The country where the Cloudflare datacenter that received the packet is located (ISO 3166-1 alpha-2). | string |
@@ -66,7 +67,8 @@ The descriptions below detail the fields available for `network_analytics_logs`.
 | MitigationSystem | Which Cloudflare system sampled the packet. <br />Possible values are <em>dosd</em> \| <em>flowtrackd</em> \| <em>magic-firewall</em>. | string |
 | Outcome | The action that Cloudflare systems took on the packet. <br />Possible values are <em>pass</em> \| <em>drop</em>. | string |
 | ProtocolState | State of the packet in the context of the protocol, if any. <br />Possible values are <em>OPEN</em> \| <em>NEW</em> \| <em>CLOSING</em> \| <em>CLOSED</em>. | string |
-| RuleID | Unique identifier of the rule contained with the Cloudflare L3/4 managed ruleset that this packet matched, if any. | string |
+| RuleID | Unique identifier of the rule contained within the Cloudflare L3/4 managed ruleset that this packet matched, if any. | string |
+| RuleName | Human-readable name of the rule contained within the Cloudflare L3/4 managed ruleset that this packet matched, if any. | string |
 | RulesetID | Unique identifier of the Cloudflare L3/4 managed ruleset containing the rule that this packet matched, if any. <br />Possible values are <em>3b64149bfa6e4220bbbc2bd6db589552</em>. | string |
 | RulesetOverrideID | Unique identifier of the rule within the accounts root ddos_l4 phase ruleset which resulted in an override of the default sensitivity or action being applied/evaluated, if any. | string |
 | SampleInterval | The sample interval is the inverse of the sample rate. For example, a sample interval of 1000 means that this packet was randomly sampled from 1 in 1000 packets. Sample rates are dynamic and based on the volume of traffic. | int |

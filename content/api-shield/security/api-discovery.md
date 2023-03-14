@@ -29,8 +29,6 @@ API Discovery runs this process across all your authenticated endpoints, generat
 - `password_reset`
 - `logout`
 
-This process currently requires a session identifier, like an authorization token available as a request header. Once you have finished API Discovery, your APIs are ready for protection from [volumetric](/api-shield/security/volumetric-abuse-detection/) and [sequential](/api-shield/security/sequential-abuse-detection/) attacks.
-
 {{<render file="_blog-post.md">}}
 
 ### Machine Learning-based Discovery

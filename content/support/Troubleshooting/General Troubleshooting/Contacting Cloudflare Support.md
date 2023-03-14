@@ -16,6 +16,11 @@ Cloudflare Support _cannot_ perform the following actions:
 -   Provide sensitive account info over the phone
 -   Troubleshoot or answer questions about domains not associated with the Cloudflare account email address used to contact support
 
+{{<Aside type="warning">}}
+**Do not share** any sensitive information, such as passwords, credit
+card numbers, private keys, or API keys with Cloudflare.
+{{</Aside>}}
+
 Before notifying Cloudflare of an issue with your site, refer to the [Cloudflare Status Page](https://www.cloudflarestatus.com/). If reporting issues with your site, ensure to provide adequate details in the support ticket _(refer to_ [_Getting help with an issue_](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support#h_7b55d494-b84d-439b-8e60-e291a9fd3d16) _for more information)_.
 
 ___
@@ -23,9 +28,6 @@ ___
 ## Methods of contacting Cloudflare support
 
 As a Cloudflare customer, you can contact Cloudflare for support via the community portal or by opening a support ticket, live chat, or phone. Support options can vary depending on your plan.
-
-| -- | Enterprise | Business | Pro | Free |
-| [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes | Yes | Recommended | Recommended |
 
 |   | Enterprise  | Business | Pro | Free |
 |---|---|---|---|---|
@@ -83,7 +85,7 @@ To submit a support ticket, follow these steps:
 7.  Enter a detailed summary of the issue you’re experiencing.
 8.  Review the right-hand panel of the Portal for recommended resources and for troubleshooting guides resulting from diagnostics run against your domain.
 9.  If the provided resources did not solve your issue, click Add more details to submit a ticket\*\*
-10.  Complete the ticket submission fields as completely as possible with the following information. _(__**Please note**_ _that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review_ [_Gathering information for troubleshooting sites_](https://support.cloudflare.com/hc/articles/203118044) _and make sure you include all needed information.)_
+10.  Complete the ticket submission fields as completely as possible with the following information. _(__**Please note**__that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review_ [_Gathering information for troubleshooting sites_](https://support.cloudflare.com/hc/articles/203118044) _and make sure you include all needed information.)_
     -   A detailed description of the issue with the following information:
         -   Timestamp (UTC)
         -   ZoneName/ZoneID

@@ -10,7 +10,7 @@ Advanced mode allows you to develop your Pages Functions with a `_workers.js` fi
 
 In some cases, Pages Functions' built-in file path based routing and middleware system is not desirable for existing applications. You may have a Worker that is complex and difficult to splice up into Pages' file-based routing system. For these cases, Pages offers the ability to define a `_worker.js` file in the output directory of your Pages project.
 
-When using a `_worker.js` file, the entire `/functions` directory is ignored, including its routing and middleware characteristics. Instead, the `_worker.js` file is deployed as is and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker). If you have never used Module syntax, refer to the [JavaScript modules blog post](https://blog.cloudflare.com/workers-javascript-modules/) to learn more. Using Module syntax enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
+When using a `_worker.js` file, the entire `/functions` directory is ignored, including its routing and middleware characteristics. Instead, the `_worker.js` file is deployed and must be written using the [Module Worker syntax](/workers/runtime-apis/fetch-event/#syntax-module-worker). If you have never used Module syntax, refer to the [JavaScript modules blog post](https://blog.cloudflare.com/workers-javascript-modules/) to learn more. Using Module syntax enables JavaScript frameworks to generate a Worker as part of the Pages output directory contents.
 
 ## Set up a Function
 

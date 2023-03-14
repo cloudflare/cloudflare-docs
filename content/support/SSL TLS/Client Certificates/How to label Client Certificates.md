@@ -10,7 +10,7 @@ title: How to label Client Certificates
 
 **Applies to:** Free ✅ / Pro ✅ / Business ✅ / Enterprise ✅
 
-When [generating Client Certificates at Cloudflare](https://developers.cloudflare.com/ssl/client-certificates/create-a-client-certificate) for use with [API Shield™](https://developers.cloudflare.com/api-shield/products/mtls/configure) to protect your API or web application, it's hard to differentiate the generated certificates.
+When [generating Client Certificates at Cloudflare](/ssl/client-certificates/create-a-client-certificate) for use with [API Shield™](/api-shield/security/mtls/configure/) to protect your API or web application, it's hard to differentiate the generated certificates.
 
 ___
 

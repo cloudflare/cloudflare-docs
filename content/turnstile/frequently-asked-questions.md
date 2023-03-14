@@ -176,19 +176,7 @@ An HTML page rendered in a [WebView](https://github.com/react-native-webview/rea
 
 {{<faq-answer>}}
 
-Yes. Use the following sitekeys and secret keys for testing purposes:
-
-| Sitekey | Description |
-| --- | --- |
-| `1x00000000000000000000AA` | Always passes |
-| `2x00000000000000000000AB` | Always blocks |
-| `3x00000000000000000000FF` | Forces an interactive challenge |
-
-|Secret key | Description |
-| --- | --- |
-| `1x0000000000000000000000000000000AA` | Always passes |
-| `2x0000000000000000000000000000000AA` | Always fails | 
-| `3x0000000000000000000000000000000AA` | Yields a "token already spent" error | 
+You can find special sitekeys to be used for testing in the [testing](/turnstile/reference/testing/) section.
 
 {{</faq-answer>}}
 {{</faq-item>}}

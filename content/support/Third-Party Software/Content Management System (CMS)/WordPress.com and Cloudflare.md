@@ -73,6 +73,14 @@ Cloudflare's [Automatic Platform Optimization](https://www.cloudflare.com/automa
 
 ### **Requirements**
 
+{{<Aside type="warning">}}
+The [Automatic Platform Optimization
+(APO)](https://www.cloudflare.com/automatic-platform-optimization/wordpress/)
+feature requires that you be on a [Full
+Setup](/dns/zone-setups/full-setup/)
+using Cloudflare nameservers.
+{{</Aside>}}
+
 -   Cloudflare free plan + $5/month APO add-on or a Pro or Business plan subscription (includes APO)
 -   WordPress.com Business plan or above (requires plugins)
 

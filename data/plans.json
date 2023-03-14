@@ -129,6 +129,13 @@
           "pro": "2 minutes",
           "biz": "2 minutes",
           "ent": "30 seconds"
+        },
+        "default": {
+          "title": "Default Browser Cache TTL",
+          "free": "4 hours",
+          "pro": "4 hours",
+          "biz": "4 hours",
+          "ent": "4 hours"
         }
       }
     },
@@ -1397,6 +1404,15 @@
           "biz": "No",
           "ent": "No",
           "ent_plus": "Yes"
+        },
+        "k_policies": {
+          "title": "Number of policies<br/>(positive blocking)",
+          "summary": "Enterprise with add-on",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 0,
+          "ent_plus": 3
         }
       }
     },
@@ -1895,8 +1911,8 @@
           "free": 0,
           "pro": 0,
           "pro_plus": 1,
-          "biz": 1,
-          "ent": "1 (can purchase more)"
+          "biz": "1 (Modern)<br/>1 (Legacy)",
+          "ent": "1 (Modern) (can purchase more)<br/>1 (Legacy) (can purchase more)"
         }
       }
     },

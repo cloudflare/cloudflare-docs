@@ -10,7 +10,7 @@ title: Exposing applications running on Microsoft Azure with Cloudflare Argo Tun
 
 ## Overview
 
-Cloudflare Argo Tunnel can expose applications running on the Microsoft Azure platform. Refer to Cloudflare's [install & configure Argo Tunnel](https://developers.cloudflare.com/argo-tunnel/quickstart/) guide. Also, a prebuilt Cloudflare Linux image exists on the Azure Marketplace. To simplify the process of connecting Azure applications to Cloudflare’s network, deploy the prebuilt image to an Azure resource group.
+Cloudflare Argo Tunnel can expose applications running on the Microsoft Azure platform. Refer to Cloudflare's [install & configure Argo Tunnel](/cloudflare-one/connections/connect-apps/) guide. Also, a prebuilt Cloudflare Linux image exists on the Azure Marketplace. To simplify the process of connecting Azure applications to Cloudflare’s network, deploy the prebuilt image to an Azure resource group.
 
 Prerequisites include:
 
@@ -21,7 +21,7 @@ ___
 
 ## Installing the prebuilt Linux image
 
-The prebuilt Cloudflare Linux image resides on the [Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_azure?tab=Overview) or can be opened in the [Azure Portal](https://portal.azure.com/#create/cloudflare.cloudflare_azurecloudflare_azure).
+The prebuilt Cloudflare Linux image resides on the [Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_tunnel_vm?tab=Overview) or can be opened in the [Azure Portal](https://portal.azure.com/#create/cloudflare.cloudflare_azurecloudflare_azure).
 
 The Cloudflare virtual machine (VM) is customizable. However, we recommend the following:
 
@@ -46,13 +46,18 @@ Also, to permanently end the screen session and related processes, type the foll
 
 `exit`
 
-The Azure Cloudflare image is preinstalled with the [**cloudflared** client for Argo Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps).  However, configuration is required to connect an application to the Cloudflare network. The first step is to run the following command within the Cloudflare VM:
+The Azure Cloudflare image is preinstalled with the [**cloudflared** client for Argo Tunnel](/cloudflare-one/connections/connect-apps).  However, configuration is required to connect an application to the Cloudflare network. The first step is to run the following command within the Cloudflare VM:
 
 `cloudflared login`
 
 The command outputs a link that allows a domain to be authorized for use with Argo Tunnel. After the Cloudflare account is authorized, run the following command to configure Argo Tunnel with the information necessary to expose the Azure application:
 
 `cloudsetup`
+
+{{<Aside type="tip">}}
+Set the **origin IP** to *127.0.0.1* if the application is running on
+the Cloudflare VM instance.
+{{</Aside>}}
 
 When using the Cloudflare VM to expose an Azure resource on a different instance, the **origin IP** is the private virtual network IP of the resource running the exposed application. The _cloudsetup_ utility automatically starts **cloudflared** as a service within the instance.
 
@@ -70,6 +75,12 @@ ___
 
 `service cloudflared stop`
 
+{{<Aside type="tip">}}
+If switching domains, first delete the certificate stored in
+*\~/.cloudflared/* or to authorize a different domain, run: *cloudflared
+login*
+{{</Aside>}}
+
 2\. Delete the **cloudflared** config:
 
 `sudo rm /etc/cloudflared/config.yml`
@@ -81,4 +92,4 @@ ___
 ## Relevant resources
 
 -   [Add a domain to Cloudflare](https://support.cloudflare.com/hc/articles/201720164)
--   [Argo Tunnel Developer Documentation](https://developers.cloudflare.com/argo-tunnel/quickstart/)
+-   [Argo Tunnel Developer Documentation](/cloudflare-one/connections/connect-apps/)

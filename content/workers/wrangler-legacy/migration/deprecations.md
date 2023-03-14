@@ -127,14 +127,6 @@ The `wrangler subdomain` command is no longer available for creating a `workers.
 
 Create the `workers.dev` subdomain on your Workers dashboard.
 
-### generate
-
-The `wrangler generate` command is no longer available to initialize a Worker from a template repository.
-
-Initialize a basic Worker project via `wrangler init`, which provides a good starting point for most projects.
-
-Alternatively, try cloning the template repository and initializing it manually.
-
 ### route
 
 The `wrangler route` command is no longer available to configure a route for a Worker.

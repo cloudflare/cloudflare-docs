@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: concept
 title: DNS Zone transfers
 weight: 3
 meta:

@@ -13,6 +13,14 @@ title: Cloudflare Page Rules verstehen und konfigurieren (Tutorial für Page Rul
 
 Sie können eine Page Rule definieren, um eine oder mehrere Aktionen auszulösen, wenn ein bestimmtes URL-Muster übereinstimmt. Page Rules sind in der App  **Rules** in der Registerkarte **Page Rules** verfügbar.
 
+{{<Aside type="warning">}}
+Page Rules erfordern einen „[mit
+Proxy](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)"
+markierten DNS-Eintrag, damit die Page Rule funktioniert. Page Rules
+gelten nicht für Hostnamen, die nicht im DNS vorhanden sind oder nicht
+an Cloudflare weitergeleitet werden.
+{{</Aside>}}
+
 Wie viele Page Rules standardmäßig zulässig sind, hängt vom Domain-Plan ab, wie im Folgenden dargestellt.
 
 | **Tarif** | **Erlaubte Page Rules** |
@@ -64,6 +72,11 @@ Es ist wichtig, zwei grundlegende Verhaltensweisen von Page Rules zu verstehen:
 -   Nur die übereinstimmende Page Rule mit der höchsten Priorität wird bei einer Anfrage wirksam.
 -   Die Page Rules werden im Cloudflare-Dashboard in absteigender Reihenfolge priorisiert, wobei die Regel mit der höchsten Priorität ganz oben steht.
 
+{{<Aside type="tip">}}
+Cloudflare empfiehlt, Ihre Regeln von der spezifischsten zur
+allgemeinsten anzuordnen.
+{{</Aside>}}
+
 Bei einer Page Rule wird ein URL-Muster abgeglichen. Dabei gilt folgendes Format (zusammengesetzt aus fünf Segmenten): <scheme>://<hostname><:port>/<path>?<query\_string>
 
 Eine URL mit diesen Segmenten sieht beispielsweise so aus:
@@ -91,6 +104,21 @@ Die Schritte zum Erstellen einer Page Rule sind:
 8.  Klicken Sie zum Speichern auf eine der folgenden Optionen:
     -   **Als Entwurf speichern,** um die Regel zu speichern und deaktiviert zu lassen.
     -   **Speichern und bereitstellen**, um die Regel zu speichern und sofort zu aktivieren.
+
+{{<Aside type="note">}}
+**Hinweis:** Wir unterstützen keine Nicht-ASCII-Zeichen (z. B.
+Punycode/Unicode-Domains) in den Page Rules. Stattdessen könnten Sie die
+Zeichenfolge mit
+dem [Punycode-Converter](https://www.punycoder.com/ "Punycode-Konverter")
+als URL codieren. So wird es funktionieren.
+{{</Aside>}}
+
+{{<Aside type="tip">}}
+Unter den [Empfohlenen Page
+Rules](https://support.cloudflare.com/hc/de/articles/224509547 "Empfohlene Page Rules")
+finden Sie Ideen zu den verschiedenen Arten von Page Rules, die Sie
+erstellen können.
+{{</Aside>}}
 
 ___
 
@@ -157,6 +185,13 @@ und am Ende weiterleiten an:
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://example.com/images/cloud/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 Um ein literales _$_\-Zeichen in der Weiterleitungs-URL zu verwenden, setzen Sie einen Backslash (\\) davor: _\\$_.
+
+{{<Aside type="warning">}}
+Vermeiden Sie Weiterleitungen, bei der die Domain auf sich selbst als
+Ziel verweist. Dies kann zu einem Fehler durch Endlos-Weiterleitung
+führen, wodurch Ihre Website nicht mehr für Besucher bereitgestellt
+werden kann.
+{{</Aside>}}
 
 ___
 

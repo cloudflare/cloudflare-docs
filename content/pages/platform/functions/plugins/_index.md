@@ -55,17 +55,17 @@ filename: package.json
 ---
 {
   "name": "@cloudflare/static-form-interceptor",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "index.d.ts",
-  "files": ["index.js", "index.d.ts", "tsconfig.json"],
+  "files": ["dist", "index.d.ts", "tsconfig.json"],
   "scripts": {
-    "build": "npx wrangler pages functions build --plugin --outfile=index.js",
+    "build": "npx wrangler pages functions build --plugin --outdir=dist",
     "prepare": "npm run build"
   }
 }
 ```
 
-`index.js` will be the entrypoint to your Plugin. This is a generated file built by Wrangler with the `npm run build` command. Add `index.js` to your `.gitignore`.
+`dist/index.js` will be the entrypoint to your Plugin. This is a generated file built by Wrangler with the `npm run build` command. Add the `dist/` directory to your `.gitignore`.
 
 Next, create a `functions` directory and start coding your Plugin. The `functions` folder will be mounted at some route by the developer, so consider how you want to structure your files. Generally:
 
@@ -150,7 +150,7 @@ We are still working on creating a great testing experience for Pages Plugins au
 
 You can distribute your Plugin however you choose. Popular options include publishing on [npm](https://www.npmjs.com/), showcasing it in the #what-i-built or #pages-plugins channels in our [Developer Discord](https://discord.com/invite/cloudflaredev), and open-sourcing on [GitHub](https://github.com/).
 
-Make sure you are including the generated `index.js` and your typings `index.d.ts` as well as a `README.md` with instructions on how developers can use your Plugin.
+Make sure you are including the generated `dist/` directory, your typings `index.d.ts`, as well as a `README.md` with instructions on how developers can use your Plugin.
 
 ---
 
@@ -266,11 +266,11 @@ filename: package.json
 ---
 {
   "name": "@cloudflare/a-fictional-admin-plugin",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "index.d.ts",
-  "files": ["index.js", "index.d.ts", "tsconfig.json", "public"],
+  "files": ["dist", "index.d.ts", "tsconfig.json", "public"],
   "scripts": {
-    "build": "npx wrangler pages functions build --plugin --outfile=index.js",
+    "build": "npx wrangler pages functions build --plugin --outdir=dist",
     "prepare": "npm run build"
   }
 }

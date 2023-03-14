@@ -18,7 +18,7 @@ If you do not disable **DNSSEC** before changing your nameservers, you might e
 -   DNS query response status is _SERVFAIL_
 -   The domain remains in a _Pending_ status in the Cloudflare Overview app
 
-If you experience these issues, refer to [Configuring DNSSEC](https://developers.cloudflare.com/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](https://support.cloudflare.com/hc/articles/360021111972-Troubleshooting-DNSSEC).
+If you experience these issues, refer to [Configuring DNSSEC](/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](https://support.cloudflare.com/hc/articles/360021111972-Troubleshooting-DNSSEC).
 
 ___
 

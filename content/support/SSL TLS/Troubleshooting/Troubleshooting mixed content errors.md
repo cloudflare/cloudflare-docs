@@ -18,6 +18,13 @@ Normally, if your website loads all resources securely over HTTPS, visitors obse
 
 This indicates your site has a working SSL certificate and all resources loaded by the site are loaded over HTTPS. The green lock assures visitors that their connection is safe. One of the [symptoms of mixed content](https://support.cloudflare.com/hc/articles/200170476#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) is that different icons appear instead of the green lock icon.
 
+{{<Aside type="tip">}}
+Other causes of content rendering issues are [Rocket
+Loader](https://support.cloudflare.com/hc/articles/200168056) and
+[Auto-Minify](https://blog.cloudflare.com/an-all-new-and-improved-autominify/).
+Test disabling both features if you do not observe mixed content errors.
+{{</Aside>}}
+
 ___
 
 ## Symptoms of mixed content occurrence
@@ -57,7 +64,18 @@ There are two methods to resolve mixed content errors.
 
      _http://domain.com/path/to.file_
 
-2\. Depending on your Content Management System, check for plugins that automatically rewrite HTTP resources to HTTPS. Within the **SSL/TLS** app **Edge Certificates** tab, Cloudflare provides such a service via [Automatic HTTPS Rewrites](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+2\. Depending on your Content Management System, check for plugins that automatically rewrite HTTP resources to HTTPS. Within the **SSL/TLS** app **Edge Certificates** tab, Cloudflare provides such a service via [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
+
+{{<Aside type="note">}}
+Cloudflare recommends WordPress users to install the [Cloudflare
+WordPress plugin](https://wordpress.org/plugins/cloudflare/) and enable
+the *Automatic HTTPS rewrites* option within the plugin. Alternatively,
+Cloudflare recommends the [SSL insecure content
+fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/)
+or [Really Simple
+SSL](https://en-gb.wordpress.org/plugins/really-simple-ssl/) plugin to
+automatically replace the HTTP with HTTPS.
+{{</Aside>}}
 
 ___
 

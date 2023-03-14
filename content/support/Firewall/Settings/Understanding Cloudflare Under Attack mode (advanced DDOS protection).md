@@ -10,9 +10,23 @@ title: Understanding Cloudflare Under Attack mode (advanced DDOS protection)
 
 ## Overview
 
+{{<Aside type="note">}}
+The Under Attack mode requires your browser to support Javascript to
+display and pass the interstitial page, it is expected to observe impact
+on third party analytics tools.
+{{</Aside>}}
+
 Cloudflare **Under Attack Mode** performs additional security checks to help mitigate Layer 7 DDoS attacks. Validated users access your website and suspicious traffic is blocked. It is designed to be used as one of the last resorts when a zone is under attacked (and will temporarily pause access to your site and impact your site analytics).
 
 When enabled, visitors receive an interstitial page.
+
+{{<Aside type="tip">}}
+To preview what **I\'m Under Attack** mode looks like for your visitors,
+go to your [Custom
+pages](https://dash.cloudflare.com/?to=/:account/configurations/custom-pages).
+Then, next to **I\'m Under Attack Mode™ Challenge**, click **Custom
+Pages** \> **View default**.
+{{</Aside>}}
 
 The "_Checking your browser before accessing_..." challenge determines whether to block or allow a visitor within 5 seconds.  After passing the challenge, the visitor does not observe another challenge until the duration configured in **Challenge Passage**, in **Security** > **Settings**.
 

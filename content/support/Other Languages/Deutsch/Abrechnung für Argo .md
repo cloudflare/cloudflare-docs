@@ -15,7 +15,22 @@ Argo analysiert und optimiert Webtraffic-Routingentscheidungen, damit Ihre Domai
 
 Argo wird pro Domain abgerechnet. Ihnen wird also für jede Domain, bei der Argo eingesetzt wird, die Datenmenge berechnet (sowohl die Upload- als auch die Download-Bandbreite), die zwischen Cloudflare und Ihren Besuchern übertragen wird.
 
+{{<Aside type="note">}}
+Ihnen wird kein Web-Traffic in Rechnung gestellt, der mit einem
+DDoS-Angriff zusammenhängt oder durch Firewall-Regeln blockiert wird.
+{{</Aside>}}
+
 Argo ist nutzungsbasiert, die Höhe der Rechnung hängt also von der Nutzung im Vormonat ab. Ihre Rechnung für September umfasst also beispielsweise die Gebühren für die Argo-Nutzung im August.
+
+{{<Aside type="note">}}
+Um die Nutzung von Cloudflare-Add-ons oder -Abonnements zu überwachen,
+können Sie [E-Mail-Benachrichtigungen
+aktivieren](https://support.cloudflare.com/hc/en-us/articles/115004555148/#11aoHZtimmL8WRIrA1jmD0).
+Wenn diese Option aktiviert ist, erhalten Sie eine Benachrichtigung an
+die hinterlegte Rechnungs-E-Mail-Adresse, wenn Traffic, Abfragen,
+Anfragen oder angesehene Minuten die von Ihnen festgelegten Thresholds
+überschreiten.
+{{</Aside>}}
 
 ___
 

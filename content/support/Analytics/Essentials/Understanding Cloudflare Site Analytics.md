@@ -10,6 +10,14 @@ title: Understanding Cloudflare Site Analytics
 
 The Cloudflare dashboard (Site) **Analytics** app is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
+{{<Aside type="info">}}
+Read [Cloudflare Analytics: A quick
+overview](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: A quick overview")
+for general information about all of Cloudflare's analytics offerings.
+You can also understand the characteristics of the data that Cloudflare
+captures and processes.
+{{</Aside>}}
+
 ___
 
 ## View your website analytics
@@ -51,6 +59,11 @@ These metrics include legitimate user requests as well as crawlers and threats. 
 
 #### Pro, Business, or Enterprise plan
 
+{{<Aside type="note">}}
+Privacy-first Web Traffic Analytics are available on the Pro, Business,
+and Enterprise plans.
+{{</Aside>}}
+
 Analytics are based on Cloudflare’s edge logs, with no need for third party scripts or trackers. The Traffic tab features the following metrics:
 
 -   **Visits** - A visit is defined as a page view that originated from a different website, or direct link. Cloudflare checks where the HTTP referer does not match the hostname. One visit can consist of multiple page views. 
@@ -61,6 +74,11 @@ Analytics are based on Cloudflare’s edge logs, with no need for third party sc
 To receive more detailed metrics, **Add filter**. You can also filter each metric by **Referer**, **Host**, **Country**, **Path**, **Status code**, **Origin status code**, **Browser**, **Operating system**, or **Device type**. 
 
 To change the time period, use the dropdown menu on the right-hand side above the graph. You can also drag to zoom on the graph.
+
+{{<Aside type="note">}}
+To opt out of the new Web Traffic Analytics, click **Switch back to the
+old experience** on the left side of the page.
+{{</Aside>}}
 
 ### Security
 
@@ -93,11 +111,11 @@ This panel features metrics for Cloudflare Workers. To learn more, read [Cloudfl
 
 ### Logs
 
-The Logs tab is not a metrics feature. Instead, Customers in the Enterprise plan can enable the [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/) service. You can use Logpush to download and analyze data using any analytics tool of your choice. 
+The Logs tab is not a metrics feature. Instead, Customers in the Enterprise plan can enable the [Cloudflare Logs Logpush](/logs/about/) service. You can use Logpush to download and analyze data using any analytics tool of your choice. 
 
 ___
 
 ## Related resources
 
--   [Cloudflare Analytics: A quick overview](https://developers.cloudflare.com/analytics)
--   [The Cloudflare Analytics GraphQL API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: A quick overview](/analytics/)
+-   [The Cloudflare Analytics GraphQL API](/analytics/)

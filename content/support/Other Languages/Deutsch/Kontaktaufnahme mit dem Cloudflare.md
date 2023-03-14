@@ -131,4 +131,10 @@ Der Cloudflare-Support kann die folgenden Aktionen nicht durchführen:
 -   vertrauliche Kontoinformationen per Telefon bereitstellen oder
 -   Probleme beheben oder Fragen beantworten, wenn es um Domains geht, die nicht mit der E-Mail-Adresse des Cloudflare-Kontos verbunden sind, die zur Kontaktaufnahme mit dem Support verwendet wird.
 
+{{<Aside type="warning">}}
+Geben Sie keine sensiblen Informationen wie Passwörter,
+Kreditkartennummern, private Schlüssel oder API-Schlüssel an Cloudflare
+weiter.
+{{</Aside>}}
+
 Überprüfen Sie zuerst die [Cloudflare-Statusseite](https://www.cloudflarestatus.com/), bevor Sie Cloudflare auf ein Problem mit Ihrer Website aufmerksam machen. Wenn Sie Probleme mit Ihrer Website melden, ist es wichtig, die richtigen Informationen auf dem Support-Ticket anzugeben.
