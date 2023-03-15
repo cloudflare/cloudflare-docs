@@ -34,13 +34,13 @@ $ curl --request PATCH \
   --header 'X-Auth-Key: <key>' \
   --data '{
 	"origins": [
-        	{
-            	"name": "origin-1",
-            	"address": "10.0.0.1",
-            	"enabled": true,
-            	"weight": 1,
-            	"virtual_network_id": "a5624d4e-044a-4ff0-b3e1-e2465353d4b4"
-        	}
+		{
+			"name": "origin-1",
+			"address": "10.0.0.1",
+			"enabled": true,
+			"weight": 1,
+			"virtual_network_id": "a5624d4e-044a-4ff0-b3e1-e2465353d4b4"
+		}
 	]
 }'
 ```
