@@ -28,9 +28,9 @@ At the same time, this structure keeps your customers' data and settings separat
 
 ## Limitations
 
-Since non-Enterprise accounts can only have one Super administrator, your account will be the only Super administrator allowed on their account.
+* Since non-Enterprise accounts can only have one Super administrator, your account will be the only Super administrator allowed on their account. For more details, refer to [Super administrators](/fundamentals/account-and-billing/members/roles/#change-super-administrator).
 
-For more details, refer to [Super administrators](/fundamentals/account-and-billing/members/roles/#change-super-administrator).
+* Currently, zones associated with a Tenant account cannot migrate to the new [WAF Managed Rules](/waf/managed-rules/).
 
 [^1]: {{<render file="_account-definition.md">}}
 [^2]: {{<render file="_user-definition.md">}}
