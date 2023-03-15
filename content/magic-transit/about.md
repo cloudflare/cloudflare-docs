@@ -22,19 +22,27 @@ Magic Transit users have two options for their implementation: ingress traffic o
 flowchart LR
 accTitle: Magic Transit
 accDescr: Diagram showing how Magic Transit protects traffic on the customer's network.
-A(DDoS attack) --x B[DDoS protection + Network firewall]
-B[DDoS protection + Network firewall]-- Anycast <br> GRE tunnel ---C(Customer network)
-B[DDoS protection + Network firewall]-- Cloudflare <br> Network Internconnect ---C(Customer network)
-C(Customer network)-. "(Optional) Egress via <br> Direct Server Return" .-> D(User)
-D(User) --- B[DDoS protection + Network firewall]
-style A stroke: red
-style B stroke: orange
-style C stroke: blue
-linkStyle 0 stroke-width:2px,stroke:red
+
+A(DDoS <br> attack)
+B[("Cloudflare Global <br> Anycast Network <br> (DDoS protection + <br> Network firewall)")]
+C[Customer <br> network]
+D(User)
+
+A --x B
+B-- Anycast <br> GRE tunnel ---C
+B-- Cloudflare <br> Network Internconnect ---C
+C-. "(Optional) <br> Egress via <br> Direct Server Return" .-> D
+D --> B
+
+style A stroke: red,fill: red,color: white
+style B stroke: orange,fill: orange
+style C stroke: #ADD8E6,fill: #ADD8E6
+style D stroke: blue,fill: blue,color: white
+linkStyle 0 stroke-width:3px,stroke:red
 linkStyle 1 stroke-width:2px,stroke:orange
-linkStyle 2 stroke-width:2px,stroke:blue
+linkStyle 2 stroke-width:2px,stroke:#ADD8E6
 linkStyle 3 stroke-width:2px,stroke:gray
-linkStyle 4 stroke-width:2px,stroke:green
+linkStyle 4 stroke-width:3px,stroke:green
 ```
 
 {{<Aside type="note">}}
