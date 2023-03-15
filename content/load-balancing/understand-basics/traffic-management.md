@@ -20,7 +20,7 @@ Enable Virtual IP support by adding the `virtual_network_id` field to your API r
 
 {{<Aside type="note">}}
 
-Virtual IPs support is currently API only.
+Virtual IP support is currently API only.
 
 {{</Aside>}}
 
@@ -49,7 +49,7 @@ $ curl --request PATCH \
 
 Traffic steering decisions or failover relies on the health information of IPs and pools. Local Traffic Management supports health monitors on your virtual and private IPs.
 
-Before, you could only enter tunnel addresses in your load balancer and health check your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and health check them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs. 
+Before, you could only enter tunnel addresses in your load balancer and configure health checks your tunnels. Now, you have the ability to input your IPs directly as origins within your load balancer and set up health check for them instead of only the tunnels. You will be able to leverage existing health monitoring to your virtual and private IPs, along with the current functionality of public IPs. 
 
 ## Off-ramps
 
@@ -63,9 +63,9 @@ You can route requests from the Internet to your internal services on internal I
 
 **Customers want the ability to intelligently route traffic.**
 
-This will allow customers to benefit from failover for their private traffic and have the ability to health monitor these targets directly rather than load balancing to a tunnel and health monitoring the tunnel itself. 
+This will allow customers to benefit from failover for their private traffic and have the ability to monitor the health these targets directly rather than load balancing to a tunnel and monitoring the health of the tunnel itself. 
 
-You can input your private targets in the same manner as you do today with public IPs, only needing to specify a VNet which is already configured with your tunnels and can utilize all of our applicable steering methods. You can health monitor these targets directly rather than only the tunnel health and leverage simple steering that Tunnels offers today.
+You can input your private targets in the same manner as you do today with public IPs, only needing to specify a VNet which is already configured with your tunnels and can utilize all of our applicable steering methods. You can monitor the health of these targets directly rather than only the tunnel health and leverage simple steering that Tunnels offers today.
 
 ### Support
 
