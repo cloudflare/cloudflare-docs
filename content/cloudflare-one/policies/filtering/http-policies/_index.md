@@ -142,6 +142,18 @@ Use this selector to match against a domain and all subdomains — for example,
 | ------- | ----------------------------------------------- |
 | Domain  | `any(http.request.domains[*] == "example.com")` |
 
+### Download and Upload File Type
+
+These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+
+| UI name            | API example                                             |
+| ------------------ | ------------------------------------------------------- |
+| Download File Type | `http.download.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+
+| UI name          | API example                                           |
+| ---------------- | ----------------------------------------------------- |
+| Upload File Type | `http.upload.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+
 ### Download and Upload Mime Type
 
 These selectors depend on the `Content-Type` header being present in the request (for uploads) or response (for downloads).
