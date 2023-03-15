@@ -7,7 +7,7 @@ title: Deployments
 
 {{<Aside type="note">}}
 
-Deployments are currently in Public Beta. Report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in Public Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 
 {{</Aside>}}
 
@@ -43,11 +43,11 @@ More details about the `wrangler deployments list` and `wrangler deployments vie
 
 ### via the Cloudflare Dashboard
 
-Access Deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
+Access deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
 
 ### via the API
 
-Read more about accessing Deployment information via Cloudflare's REST API [here](/api/#worker-deployments-properties).
+Read more about accessing deployment information via Cloudflare's REST API [here](/api/#worker-deployments-properties).
 
 {{<Aside type="note">}}
 
