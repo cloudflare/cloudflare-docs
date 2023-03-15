@@ -342,7 +342,7 @@ curl -X PUT \
 <summary>Serve stale content</summary>
 <div>
 
-In this example, `serve_stale` is set to serve stale content while updating from the origin server.
+In this example, `serve_stale` is set to not serve stale content while updating from the origin server.
 
 ```json
 curl -X PUT \
