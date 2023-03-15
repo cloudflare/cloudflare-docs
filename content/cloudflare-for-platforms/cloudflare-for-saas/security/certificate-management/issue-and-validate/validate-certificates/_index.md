@@ -8,7 +8,7 @@ meta:
 
 # Validate certificates
 
-{{<render file="../../ssl/_partials/_dcv-definition.md">}}
+{{<render file="_dcv-definition.md" productFolder="ssl" >}}
 <br>
 
 Cloudflare offers the following methods for DCV:

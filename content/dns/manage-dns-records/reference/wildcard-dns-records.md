@@ -42,7 +42,7 @@ Customers on all plans can create and proxy wildcard DNS records.
 
 If you are using a [partial zone setup](/dns/zone-setups/partial-setup/) for your DNS, Cloudflare does not automatically provision SSL/TLS certificates for your wildcard record.
 
-{{<render file="../../ssl/_partials/_partial-zone-acm-dcv-wildcard.md">}}
+{{<render file="_partial-zone-acm-dcv-wildcard.md" productFolder="ssl" >}}
 
 ## Additional information
 

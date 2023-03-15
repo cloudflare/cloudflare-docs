@@ -511,14 +511,14 @@ html[is-site-page] .DocsContent {
         margin-top: 3em;
     }
     }
-    
+
     @media (min-width:768px) {
     [theme=dark] .ZTHeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
     }
-    
+
     @media (max-width:768px) {
         .ZTHeroImage {
             background-image: none;
@@ -595,8 +595,9 @@ html[is-site-page] .DocsContent {
 }
 
 .DocsMarkdown .HeroBlock img {
+    height: 25px;
     display: inline-flex;
-    margin-bottom: -6px;
+    margin-bottom: -5px;
 }
 
 [theme=dark] .DocsMarkdown .HeroBlock img {
@@ -650,7 +651,7 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #fff;
 }
 
-.QuadBlockGrid a {
+.QuadBlockGrid a, .ViewProducts a {
     color: inherit;
     text-decoration: none;
 }
@@ -664,6 +665,7 @@ html[is-site-page] .DocsContent {
 .RecommendedContentGrid {
     display: flex;
     gap: 2em;
+    flex-wrap: wrap;
 }
 
 .RecommendationTitle {
@@ -692,14 +694,14 @@ html[is-site-page] .DocsContent {
     padding: 1em;
     margin: 1em;
     height: 20em;
-    width: 45em;
+    width: 20%;
     border: 1px solid #b6b6b6;
     border-radius: 6px;
 }
 
 [theme=dark] .RecommendedContentWithCard {
     border: 1px solid var(--code-orange);
-}   
+}
 
 .RecommendedContentTitle {
     font-size: 1.3em;
@@ -707,25 +709,48 @@ html[is-site-page] .DocsContent {
 
 .RecommendedContentDescription {
     font-size: .85em;
-    width: 16em;
     align-self: flex-start;
 }
 
-@media (max-width:768px) {
+@media (max-width:1200px) {
     .RecommendedContentGrid {
         flex-direction: column;
         gap: .8em;
     }
 
     .RecommendedContentWithCard {
-        width: unset;
+        width: 75%;
         margin: 0;
         height: auto;
     }
 
     .RecommendedContentDescription {
         font-size: 1em;
+    }
+}
+
+@media (max-width:768px) {
+    .RecommendedContentGrid {
+        margin-bottom: .8em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .6em;
+    }
+
+    .RecommendedContentWithCard {
+        width: 100%;
+        height: unset;
+        margin: .6em .2em;
+    }
+
+    .RecommendedContentTitle {
+        font-size: 1.5em;
+    }
+
+    .RecommendedContentDescription {
         width: unset;
+        height: unset;
+        font-size: 1em;
     }
 }
 
@@ -772,18 +797,15 @@ html[is-site-page] .DocsContent {
     justify-content: space-between;
 }
 
-.TriBlock {    
+.TriBlock {
     border-left: 5px solid #F6821F;
+    border-radius: 6px;
     padding: .5em 1.8em;
-    height: 19em;
+    height: 22em;
+    width: 15em;
 }
 
-.TriBlock img {
-    height: 20px;
-    width: 20px;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
     .TriBlock {
         width: unset;
         margin-bottom: 20px;
@@ -813,9 +835,13 @@ html[is-site-page] .DocsContent {
 
 .TriBlock li {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 10px;
-    padding: 6px 0; 
+    padding: 6px 0;
+}
+
+.TriBlock img{
+    height: 25px;
 }
 
 .TriBlockHeader p {
@@ -959,7 +985,7 @@ html[is-site-page] .DocsContent {
 }
 
 [theme=dark] .ZeroTrustImage {
-    content: url('./zero-trust-light.svg');
+    content: url('./zero-trust-dark.svg');
 }
 
 .DeveloperPlatformImage {
@@ -969,7 +995,7 @@ html[is-site-page] .DocsContent {
 [theme=dark] .DeveloperPlatformImage {
     content: url('./developer-platform-dark.svg');
 }
-@media (max-width:768px) { 
+@media (max-width:768px) {
     .FeaturedContentSection {
         margin-top: 5em;
     }
@@ -988,12 +1014,12 @@ html[is-site-page] .DocsContent {
     .FeatureContentWithCard {
         width: 100%;
         height: unset;
-        margin: .6em .2em;   
+        margin: .6em .2em;
     }
 
     .FeatureContentWithImage {
         width: unset;
-        margin: .6em .2em;   
+        margin: .6em .2em;
     }
 
     .FeatureContentTitle {
@@ -1005,18 +1031,6 @@ html[is-site-page] .DocsContent {
         height: unset;
         font-size: 1em;
     }
-}
-
-.ViewProducts {
-    max-width: 100%;
-}
-
-.ViewProducts details {
-    background: #E2F5FA;
-}
-
-[theme=dark] .ViewProducts details {
-    background: #222629;
 }
 
 .StartHere {
@@ -5131,12 +5145,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   .DocsSearch--input:focus:-ms-input-placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   .DocsSearch--input:focus::placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
@@ -5146,12 +5160,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
   }
-  
+
   [theme="dark"] .DocsSearch--input:focus::placeholder {
     color: rgba(var(--color-rgb), .85);
     opacity: 1;
@@ -5474,8 +5488,8 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     }
 }
 
-.DocsFooter--content {
-    display: flex
+.DocsFooter--content div {
+    margin-bottom: 1em;
 }
 
 @media (max-width:414px) {
@@ -5773,4 +5787,58 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .slashPlaceholder {
       visibility: hidden;
+}
+
+.legalInformation {
+    max-width: var(--docs-max-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2.6rem var(--docs-content-gap) 3.5rem;
+    text-align: center;
+}
+
+.legalInformation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.legalInformation li {
+    display: inline-block;
+    padding: 0 0.5rem 1rem;
+}
+
+@media (min-width:900px) {
+    .legalInformation li {
+        padding-left: 0;
+    }
+
+    .legalInformation li + li:before {
+        content: "|";
+        padding-right: .5rem;
+    }
+
+    .legalInformation {
+        text-align: left;
+    }
+}
+
+/* Highly specific override rules to make the cookie prefs button stylistically consistent */
+html #ot-sdk-btn.ot-sdk-show-settings {
+    color: inherit;
+    border: none !important;
+    transition: none !important;
+    padding: 0 !important;
+    line-height: inherit !important;
+    font-size: inherit !important;
+
+    background-color: transparent !important;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+html #ot-sdk-btn.ot-sdk-show-settings:hover {
+    color: inherit;
 }

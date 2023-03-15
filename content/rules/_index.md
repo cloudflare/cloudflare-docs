@@ -49,10 +49,6 @@ Trigger certain actions when a request matches a URL pattern.
 
 ## Related products
 
-{{<related header="Firewall rules" href="/firewall/" product="firewall">}}
-Create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
-{{</related>}}
-
 {{<related header="Custom rules" href="/waf/custom-rules/" product="waf">}}
 Control incoming traffic by filtering requests to a zone. You can block or challenge incoming requests according to rules you define.
 {{</related>}}

@@ -1,6 +1,8 @@
 (function () {
   let $ = document.querySelector.bind(document);
   let element = $('#DocsSearch--input') || $('#SiteSearch--input');
+  let productGroup = $('meta[name="pcx_content_group"]')
+  let searchTab = '&t=Docs'
 
   addEventListener('keydown', ev => {
     let key = ev.which;
@@ -14,8 +16,10 @@
       let text = (element.value || '').trim();
 
       if (text.length > 0) {
-        redirect += '#q=' + encodeURIComponent(text);
-        // redirect += '&f:source=[Developer%20docs]';
+        redirect += '#q=' + encodeURIComponent(text) + searchTab;
+        if (productGroup) {
+          redirect += '&product_group=' + encodeURIComponent(productGroup.content);
+        }
       }
 
       return location.assign(redirect);

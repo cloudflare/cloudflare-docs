@@ -182,6 +182,9 @@ You now have everything you need to start deploying your site to Cloudflare Page
 
 ## Creating a GitHub repository
 
+<!-- TODO: check, do we need to specify all the various ssh + configs here?
+     (if not this should use the _create-github-repository partial instead) -->
+
 In a separate terminal window that is not within the pipenv shell session, verify that SSH key-based authentication is working:
 
 ```shell
@@ -247,6 +250,4 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Sphinx site on Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Sphinx">}}

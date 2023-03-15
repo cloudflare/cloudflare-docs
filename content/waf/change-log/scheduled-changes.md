@@ -24,33 +24,32 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-02-17</td>
-      <td>2023-02-27</td>
+      <td>2023-03-13</td>
+      <td>2023-03-20</td>
       <td>Block</td>
-      <td>100564</td>
-      <td>...5d38ed42</td>
-      <td>Oracle E-Business Suite - Remote Code Execution - CVE:CVE-2022-21587</td>
+      <td>100577</td>
+      <td>...a47c4be6</td>
+      <td>Apache Spark - Remote Code Execution - CVE:CVE-2022-33891</td>
       <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-02-17</td>
-      <td>2023-02-27</td>
+      <td>2023-03-13</td>
+      <td>2023-03-20</td>
       <td>Block</td>
-      <td>100566</td>
-      <td>...d7e78753</td>
-      <td>Ruby on Rails - Remote Code Execution</td>
+      <td>100578</td>
+      <td>...54d00d2f</td>
+      <td>GLPI - Remote Code Execution - CVE:CVE-2022-35914</td>
       <td>N/A</td>
     </tr>
     <tr>
-      <td>2023-02-17</td>
-      <td>2023-02-27</td>
+      <td>2023-03-13</td>
+      <td>2023-03-20</td>
       <td>Block</td>
-      <td>100568</td>
-      <td>...72612a5b</td>
-      <td>Cacti - Remote Code Execution - CVE:CVE-2022-46169</td>
+      <td>100579</td>
+      <td>...fb4c6991</td>
+      <td>GitLab - Remote Code Execution - CVE:CVE-2021-22205</td>
       <td>N/A</td>
     </tr>
   </tbody>
 </table>
 {{</table-wrap>}}
-

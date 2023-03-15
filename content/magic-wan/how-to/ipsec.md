@@ -39,7 +39,7 @@ Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec 
 
 ## 3. Set up static routes
 
-To set up your static routes, refer to [Configure static routes](/magic-wan/how-to/configure-static-routes/).
+To set up your static routes, refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/).
 
 ## Supported configuration parameters
 

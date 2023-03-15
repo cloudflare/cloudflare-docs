@@ -22,7 +22,7 @@ let REDIRECT_ERRORS: string[] = [];
 
 const ROOT = resolve(".");
 const PUBDIR = join(ROOT, "public");
-const LEARNING_PATH_DIR = join(ROOT, "assets/json");
+const LEARNING_PATH_DIR = join(ROOT, "data/learning-paths");
 const REDIRECT_FILE = join(ROOT, "content/_redirects");
 const VERBOSE = process.argv.includes("--verbose");
 const EXTERNALS = process.argv.includes("--externals");
@@ -33,10 +33,11 @@ async function walk(dir: string) {
   await Promise.all(
     files.map(async (name) => {
       let abs = join(dir, name);
-      if (name.endsWith(".html")) return task(abs);
-
-      let stats = await fs.stat(abs);
-      if (stats.isDirectory()) return walk(abs);
+      if (!abs.includes("/support/other-languages")) {
+        if (name.endsWith(".html")) return task(abs);
+        let stats = await fs.stat(abs);
+        if (stats.isDirectory()) return walk(abs);
+      }
     })
   );
 }
@@ -229,6 +230,10 @@ async function task(file: string) {
         });
       }
 
+      if (target && target.includes("/support/other-languages")) {
+        return;
+      }
+
       let exists: boolean;
       let external = false;
       let resolved = new URL(target, url);
@@ -306,9 +311,9 @@ try {
 try {
   await walkJsonFiles(LEARNING_PATH_DIR);
   if (!JSON_ERRORS && !JSON_WARNS) {
-    console.log("\n~> /assets/json files DONE~!\n\n");
+    console.log("\n~> /data/learning-paths/ files DONE~!\n\n");
   } else {
-    let msg = "\n~> /assets/json files DONE with:";
+    let msg = "\n~> /data/learning-paths/ files DONE with:";
     if (JSON_ERRORS > 0) {
       process.exitCode = 1;
       msg += "\n    - " + JSON_ERRORS.toLocaleString() + " error(s)";
