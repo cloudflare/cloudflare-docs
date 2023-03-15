@@ -81,7 +81,7 @@ ___
 
 By default, any changes or additions you make to your Cloudflare zone file will push out in 5 minutes or less. Your local DNS cache may take longer to update; as such, propagation everywhere might take longer than 5 minutes.
 
-This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
+This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
 
 ___
 
