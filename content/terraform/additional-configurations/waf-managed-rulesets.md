@@ -32,7 +32,7 @@ For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/man
 
 ## Deploy managed rulesets
 
-The following example deploys two managed rulesets to a zone using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
+The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
@@ -79,7 +79,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 * Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
 {{</Aside>}}
 
-The following example deploys two managed rulesets to an account using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
+The following example deploys two managed rulesets to the account with ID `<ACCOUNT_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
 
 ```tf
 resource "cloudflare_ruleset" "account_level_managed_waf" {
