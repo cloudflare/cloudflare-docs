@@ -14,7 +14,13 @@ You must have a Pages project set up on your local machine or deployed on the Cl
 
 ## Create a Function
 
-Create a `/functions` directory at the root of your Pages project. 
+To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project.
+
+{{<Aside type="note" header="Advanced mode">}}
+
+For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/platform/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_workers.js` file rather than the `/functions` directory.
+
+{{</Aside>}}
 
 Writing your Functions files in the `/functions` directory will automatically generate a Worker with custom functionality at predesignated routes.
 
