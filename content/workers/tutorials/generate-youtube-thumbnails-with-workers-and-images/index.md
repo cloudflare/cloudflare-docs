@@ -13,27 +13,29 @@ layout: single
 
 ## Overview
 
-The media continues to evolve everyday, we consume a lot of video content from different platforms and in a way the thumbnails used for displaying these videos prompts us to click and watch them, depending on how well they are designed, the catchy titles, call-to-actions and images used.
+In this tutorial, you will learn how to programmatically generate a custom YouTube thumbnail using Cloudlfare Workers and Cloudflare Image Resizing. You may want to generate a custom YouTube thumbnail to customize the thumbnail's design, call-to-actions and images used to encourage more viewers to watch your video.
 
-In this tutorial, you will learn how to programmatically generate a custom youtube thumbnail using Cloudlfare Workers and Cloudflare Image Resizing. This tutorial will help you understand how to work with [Images](/images/cloudflare-images/),[Image Resizing](/images/image-resizing/) and [Cloudflare Workers](/workers/).
+This tutorial will help you understand how to work with [Images](/images/cloudflare-images/),[Image Resizing](/images/image-resizing/) and [Cloudflare Workers](/workers/).
 
 ## Prerequisites
 
 To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers/wrangler/install-and-update/) installed on your machine.
 
-## Learning Goals
+## Learning goals
 
-- How to upload Images to Cloudflare with the Dashboard or API.
+In this tutorial, you will learn:
+
+- How to upload Images to Cloudflare with the Cloudflare dashboard or API.
 - How to set up a Worker project with Wrangler.
 - How to manipulate images with Image Resizing in your Worker.
 
-## Upload your Image
+## Upload your image
 
-For us to generate a custom thumbnail image, we first need to upload a background image to Cloudflare Images, this will serve as the image we use for transformations to generate the thumbnails.
+To generate a custom thumbnail image, you first need to upload a background image to Cloudflare Images. This will serve as the image you use for transformations to generate the thumbnails.
 
-Cloudflare Images allows you to store, resize, optimize and deliver images in a fast and secure manner. To get started, you can upload your images to the Cloudflare dashboard or use the Upload API to do the same.
+Cloudflare Images allows you to store, resize, optimize and deliver images in a fast and secure manner. To get started, upload your images to the [Cloudflare dashboard]() or use the [Upload API]().
 
-### Upload with the Dashboard
+### Upload with the dashboard
 
 1. Log in to your Cloudflare Dashboard, and go to the Images tab.
 2. Use the Quick upload tab to add your image, you can either drag and drop or click the section to choose a file from your local files.
@@ -60,9 +62,9 @@ $ curl --request POST \
 
 ```
 
-- `ACCOUNT_ID`: is the current user's account id which can be found in your account settings.
-- `API_TOKEN`: needs to be generated to scoping Images permission.
-- `PATH_TO_IMAGE`: indicate the url for the image you want to upload.
+- `ACCOUNT_ID`: The current user's account id which can be found in your account settings.
+- `API_TOKEN`: Needs to be generated to scoping Images permission.
+- `PATH_TO_IMAGE`: Indicates the URL for the image you want to upload.
 
 You will then receive a response similar to this:
 
