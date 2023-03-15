@@ -52,6 +52,10 @@ The default Cloudflare certificate is named **Cloudflare for Teams ECC Certifica
 
 ### Linux
 
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`.
+
+The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+
 ## Uninstall the certificate
 
-To remove the certificate from your device, refer to the instructions supplied by your operating system.
+To remove a certificate from your device, refer to the instructions supplied by your operating system.
