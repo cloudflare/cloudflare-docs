@@ -109,7 +109,11 @@ function parse(filename: string): string | void {
       }
     }
 
+    
+    
     if (PCX.has(author)) {
+      console.log(author)
+      console.log(...reviewers)
       const pcx_and_reviewers = new Set([...PCX, ...reviewers]);
       pcx_and_reviewers.delete(author); // no self-review
       console.log('~> request PCX team review');
