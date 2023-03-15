@@ -7,9 +7,37 @@ title: Tunnels & encapsulation
 
 Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec tunnels](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you [set up tunnel endpoints](/magic-transit/how-to/configure-tunnels/) on routers at your data center.
 
-This diagram illustrates the flow of traffic with Magic Transit.
+This diagram illustrates the flow of traffic with Magic Transit. Ingress traffic comes from the client machine side, and egress traffic from the origin router side.
 
-![Ingress traffic from client machine to Magic Transit to origin router and flow of egress traffic](/magic-transit/static/mt-gre-tunnel-flow.png)
+```mermaid
+flowchart BT
+subgraph 1
+c[Payload] & d[Protocol] & e[IP header]
+end
+
+subgraph 2
+g[Payload] & h[Protocol] & i[IP header] & j(GRE) & k(IP header)
+end
+
+subgraph 3
+n(IP header) & o(Protocol) & p(Payload)
+end
+
+b{{Client machine}} --> 1 --> f{{Magic Transit}}
+f{{Magic Transit}} --> 2 --> l{{Origin router}}
+l{{Origin router}} --> 3 --> b{{Client machine}}
+
+classDef darkgray fill:#5A5A5A,color:white
+classDef orange fill:orange,color:white
+classDef blue fill:#ADD8E6
+classDef grayorange stroke:orange,stroke-width:3px
+class b darkgray
+class f,j,k orange
+class l,n,o,p blue
+class g,h,i grayorange
+```
+
+
 
 {{<Aside type="note" header="Note">}}
 
