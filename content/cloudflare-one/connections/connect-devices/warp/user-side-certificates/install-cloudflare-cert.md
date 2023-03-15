@@ -1,7 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Install the Cloudflare certificate
-weight: 1
+title: Install certificate manually
+weight: 2
+meta:
+    description: Manually add the Cloudflare certificate to mobile devices and individual applications.
 ---
 
 # Install the Cloudflare certificate
@@ -12,7 +14,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-Installing the Cloudflare certificate allows you to apply [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to encrypted websites, display [custom block pages](/cloudflare-one/policies/filtering/configuring-block-page/), and more. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate by following the procedures below. These steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 

@@ -1,7 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Deploy a custom certificate
-weight: 2
+title: Deploy custom certificate
+weight: 3
+meta:
+    description: Configure WARP to use a custom root certificate instead of the Cloudflare certificate.
 ---
 
 # Deploy a custom certificate
