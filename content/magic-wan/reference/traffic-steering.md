@@ -69,6 +69,8 @@ When Magic WAN health checks determine that Tunnel 2 is unhealthy, that route is
 
 ####  Failover traffic flow: Scenario 1
 
+Customer router failure
+
 ```mermaid
 flowchart LR
 classDef red fill:#FF0000
@@ -85,6 +87,8 @@ C[Anycast IP] --> G[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o J{{Customer 
 When Magic WAN determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
 
 ####  Failover traffic flow: Scenario 2
+
+Intermediary ISP failure
 
 ```mermaid
 flowchart LR
