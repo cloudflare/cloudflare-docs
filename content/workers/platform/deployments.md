@@ -39,7 +39,7 @@ Changing triggers such as routes, custom domains, or cron triggers will not issu
 
 Wrangler allows you to view the 10 most recent deployments as well as bindings and metadata for a specific deployment.
 
-More details about the `wrangler deployments list` and `wrangler deployments view` commands can be found [here](/workers/wrangler/commands#deployments).
+More details about the `wrangler deployments list` and `wrangler deployments view` commands can be found in the [Wrangler commands documentation](/workers/wrangler/commands#deployments).
 
 ### via the Cloudflare Dashboard
 
