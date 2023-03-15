@@ -3,7 +3,7 @@ title: ERR_TOO_MANY_REDIRECTS
 pcx_content_type: troubleshooting
 weight: 2
 meta:
-    description: See how to troubleshoot ERR_TOO_MANY_REDIRECTS when using Cloudflare SSL/TLS.
+    description: Learn how to troubleshoot ERR_TOO_MANY_REDIRECTS when using Cloudflare SSL/TLS.
 ---
 
 # ERR_TOO_MANY_REDIRECTS

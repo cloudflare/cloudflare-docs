@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Renewal and expiration
 weight: 3
 meta:
-    description: See how renewal and expiration work when using Cloudflare Custom SSL certificates.
+    description: Learn how renewal and expiration work when using Cloudflare Custom SSL certificates.
 ---
 
 # Renewal and expiration
