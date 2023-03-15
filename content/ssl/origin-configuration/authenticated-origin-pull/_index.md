@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: concept
 title: Authenticated origin pull
 weight: 5
 ---

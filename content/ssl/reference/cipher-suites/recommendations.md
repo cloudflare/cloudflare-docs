@@ -1,6 +1,6 @@
 ---
 title: Recommendations
-pcx_content_type: configuration
+pcx_content_type: reference
 layout: list
 weight: 1
 meta:
