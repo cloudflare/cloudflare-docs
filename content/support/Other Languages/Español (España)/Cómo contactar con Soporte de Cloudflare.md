@@ -131,4 +131,9 @@ Soporte de Cloudflare no puede:
 -   Facilitar información de cuenta confidencial por teléfono.
 -   Resolver problemas o responder preguntas sobre dominios no asociados a una dirección de correo electrónico de cuenta de Cloudflare que se usa para contactar con el servicio de Soporte.
 
+{{<Aside type="warning">}}
+No compartas información confidencial, como contraseñas, números de
+tarjetas de crédito, claves privadas o claves API con Cloudflare.
+{{</Aside>}}
+
 Antes de notificar a Cloudflare un problema con tu sitio, consulta la [Página de estado de Cloudflare](https://www.cloudflarestatus.com/). Cuando tengas que informar sobre un problema en tu sitio, recuerda facilitar los detalles correspondientes en la incidencia.

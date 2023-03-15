@@ -15,8 +15,22 @@ Argo analiza y optimiza las decisiones de enrutamiento del tráfico web para aum
 
 Argo se cobra por dominio, por lo que se te facturará la cantidad de datos transferidos (tanto el ancho de banda de carga como el de descarga) entre Cloudflare y tus visitantes en cada dominio que utilice Argo.
 
+{{<Aside type="note">}}
+No se te cobrará por el tráfico web relacionado con un ataque DDoS ni
+por el tráfico bloqueado por las reglas de firewall.
+{{</Aside>}}
+
 Argo también se basa en el uso, por lo que cada factura refleja el uso del mes anterior. Por ejemplo, tu factura de septiembre incluirá los cargos por el uso de Argo en agosto.
 
+{{<Aside type="note">}}
+Para supervisar el uso de los complementos o suscripciones de
+Cloudflare, puedes [activar las notificaciones por correo
+electrónico](https://support.cloudflare.com/hc/en-us/articles/115004555148/#11aoHZtimmL8WRIrA1jmD0).
+Cuando estén activadas, recibirás una notificación en la dirección de
+correo electrónico de facturación registrada cuando el tráfico, las
+consultas, las solicitudes o los minutos observados superen el umbral
+deseado.
+{{</Aside>}}
 ___
 
 ## Detalles de facturación de Argo

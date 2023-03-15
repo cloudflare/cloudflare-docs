@@ -13,6 +13,11 @@ title: Cómo añadir varios sitios en Cloudflare mediante automatización
 
 Si deseas añadir simultáneamente varios sitios (más de 10) a Cloudflare, puedes hacerlo mediante la API de Cloudflare. Este enfoque puede ser útil si se cumplen las siguientes condiciones:
 
+{{<Aside type="note">}}
+Si intentas añadir más de 50 dominios a la vez, cualquier dominio
+adicional se bloqueará hasta que se procesen.
+{{</Aside>}}
+
 -   Tienes varios dominios que se asignan a un único dominio canónico, p. ej., dominios de diferentes países (.com.au, .co.uk, etc.) que deseas proteger con Cloudflare.
 -   Eres una agencia o un consultor de TI y gestionas varios dominios en nombre de tus clientes (nota: nuestro [Programa de socios](https://www.cloudflare.com/partners/) podría interesarte).
 -   Estás trasladando un conjunto de sitios existentes a Cloudflare.
@@ -22,6 +27,12 @@ Con la API, podrás añadir varios sitios de forma rápida y eficiente, especial
 ___
 
 ## Requisitos previos
+
+{{<Aside type="note">}}
+No puedes tener más sitios pendientes que sitios activos asociados con
+tu cuenta de Cloudflare. Recomendamos esperar hasta que los sitios
+pendientes se hayan procesado antes de añadir dominios adicionales.
+{{</Aside>}}
 
 Para añadir varios sitios en Cloudflare mediante automatización, necesitarás:
 

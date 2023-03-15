@@ -34,6 +34,11 @@ Eliminar el registro dc-###### solo es posible mediante uno de los siguientes m�
 
 `ejemplo.com MX mail.ejemplo.com``mail.ejemplo.com A 192.0.2.1``ejemplo.com A 203.0.113.1`
 
+{{<Aside type="warning">}}
+Si tu servidor de correo reside en la misma dirección IP que tu servidor
+web, tu registro MX expondrá tu dirección IP de origen.
+{{</Aside>}}
+
 ___
 
 ## ¿Por qué las consultas de DNS devuelven resultados incorrectos?
@@ -51,6 +56,12 @@ ___
 _No se encuentran registros A, AAAA o CNAME_ significa que la aplicación **DNS** de Cloudflare carece de registros apropiados para la resolución DNS.
 
 [Añade los registros DNS que faltan](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) a tu dominio.
+
+{{<Aside type="note">}}
+En general, los sitios tienen al menos un *registro A* que apunta a la
+dirección IP del servidor de origen, normalmente para el subdominio
+www y el dominio raíz.
+{{</Aside>}}
 
 ___
 

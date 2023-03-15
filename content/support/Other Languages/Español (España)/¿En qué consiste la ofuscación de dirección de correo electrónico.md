@@ -17,6 +17,13 @@ Los administradores web han creado formas inteligentes de protegerse escribiendo
 
 Para que la ofuscación de dirección de correo electrónico funcione en Cloudflare, una página debe tener un tipo MIME (Content-Type) de "texto/html" o "aplicación/xhtml+xml". 
 
+{{<Aside type="note">}}
+Todos los usuarios de los planes Pro, Business y Enterprise disponen de
+soporte por correo electrónico. Los usuarios de los planes Business y
+Enterprise también tienen acceso a soporte por chat. Si necesitas más
+ayuda, consulta [nuestros planes](https://www.cloudflare.com/plans/).
+{{</Aside>}}
+
 ___
 
 Cloudflare habilita la ofuscación de dirección de correo electrónico de manera automática al registrarse.
