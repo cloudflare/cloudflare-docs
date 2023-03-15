@@ -26,7 +26,7 @@ ___
 
 If you receive the following warning:
 
-`_This record is exposing your origin server’s IP address. To hide your origin IP address, and increase your server security, click on the grey cloud to change it to orange._`
+_`This record is exposing your origin server’s IP address. To hide your origin IP address, and increase your server security, click on the grey cloud to change it to orange.`_
 
 Cloudflare recommends orange-clouding the record so that any dig query against that record returns a Cloudflare IP address and your origin server IP address remains concealed from the public.
 
@@ -38,9 +38,9 @@ ___
 
 When you have a grey-clouded _A_, _AAAA_, _CNAME_, or _MX_ record pointing to the same origin server hosting your site, Cloudflare displays one of the following warnings:
 
-`_An A, AAAA, CNAME, or MX record is pointed to your origin server exposing your origin IP._`
+_`An A, AAAA, CNAME, or MX record is pointed to your origin server exposing your origin IP.`_
 
-`_This record is exposing your origin server’s IP address, potentially exposing it to denial of service._`
+_`This record is exposing your origin server’s IP address, potentially exposing it to denial of service.`_
 
 {{<Aside type="info">}}
 Cloudflare now supports proxying wildcard \'\*\' record for DNS

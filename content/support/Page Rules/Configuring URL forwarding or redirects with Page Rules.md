@@ -6,8 +6,6 @@ title: Configuring URL forwarding or redirects with Page Rules
 
 # Configuring URL forwarding or redirects with Page Rules
 
-
-
 ## Overview
 
 If you want to forward or redirect traffic to a different URL, you have the following options using Cloudflare:
@@ -53,22 +51,30 @@ use Cloudflare for DNS, Page Rules are not active.
 
 Imagine you want site visitors to easily reach your website for a variety of URL patterns.  For instance, the Page Rule URL patterns _\*www.example.com/products_ and _\*example.com/products_ match:
 
+```
+http://example.com/products
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> http://example.com/products</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> http://www.example.com/products</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> https://www.example.com/products</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> https://blog.example.com/products</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> https://www.blog.example.com/products</span></div></span></span></span></code></pre>{{</raw>}}
+http://www.example.com/products
 
+https://www.example.com/products
+
+https://blog.example.com/products
+
+https://www.blog.example.com/products
+```
 but do not match:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://www.example.com/blog/products (extra directory before the +)  </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">or</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://www.example.comproducts (no trailing slash)</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://www.example.com/blog/products (extra directory before the +)  
+or
+http://www.example.comproducts (no trailing slash)
+```
 
 Once you have created the pattern that matches what you want, click the **Forwarding** toggle. That exposes a field where you can enter the address I want requests forwarded to.
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://example.com/products</span></div></span></span></span></code></pre>{{</raw>}}
+```
+https://example.com/products
+```
 
 If I enter the address above in the forwarding box and click **Add Rule**, within a few seconds any requests that match the pattern I entered will automatically be forwarded with a 302 Redirect to the new URL.
 
@@ -78,48 +84,55 @@ ___
 
 If you use a basic redirect, such as forwarding the root domain to www.example.com, then you lose anything else in the URL.
 
-For example, you could set up the pattern:\\
+For example, you could set up the pattern:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com
+```
 
 And have it forward to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://www.example.com</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://www.example.com
+```
 
 However, if someone entered: example.com/some-particular-page.html They would be redirected to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com</span></div></span></span></span></code></pre>{{</raw>}}
+```
+www.example.com
+```
 
 Instead of:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com/some-particular-page.html</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+```
+www.example.com/some-particular-page.html
+```
 
 The solution is to use variables. Each wildcard corresponds to a variable when can be referenced in the forwarding address. The variables are represented by a $ followed by a number. To refer to the first wildcard you'd use $1, to refer to the second wildcard you'd use $2, and so on.
 
 To fix the forwarding from the root to www in the above example, you could use the same pattern:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/*</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com/*
+```
 
 You'd then set up the following URL for traffic to forward to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://www.example.com/$1</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://www.example.com/$1
+```
 
 In this case, if someone went to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/some-particular-page.html</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com/some-particular-page.html
+```
 
 They'd be redirected to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> http://www.example.com/some-particular-page.html</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://www.example.com/some-particular-page.html
+```
 
 ___
 
