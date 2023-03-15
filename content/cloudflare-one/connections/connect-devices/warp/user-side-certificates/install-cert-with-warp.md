@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Install certificate using WARP
 weight: 1
 meta:
-    description: Automatically deploy the Cloudflare certificate on desktop devices.
+    description: Automatically deploy a root certificate on desktop devices.
 ---
 
 # Install a certificate using the WARP client
