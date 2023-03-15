@@ -56,7 +56,6 @@ The following table lists sample values for various application performance and 
 | [API Shield](/api-shield/) | `API_SHIELD_ZONE` |
 | [Advanced certificate manager](/ssl/edge-certificates/advanced-certificate-manager/) | `ADVANCED_CERT_MANAGER_FREE`, `ADVANCED_CERT_MANAGER` |
 | [Argo smart routing](/argo-smart-routing/) | `PARTNERS_ZONE_ARGO`, `ARGO_ZONE_BASIC` |
-| [Bot Management](/bots/plans/bm-subscription/) | `BOT_ZONE_ENT`, `BOT_ZONE_ENT_PAYGO`, `BOT_ZONE_ENT_CONTRACT` |
 | [Ethereum gateway](/web3/ethereum-gateway/) | `WEB3_ETHEREUM_ENT`, `WEB3_ETHEREUM_ENT_CONTRACT`, `WEB3_ETHEREUM_ENT_PAYGO` |
 | [IPFS gateway](/web3/ipfs-gateway/) | `WEB3_IPFS_ENT`, `WEB3_IPFS_ENT_CONTRACT`, `WEB3_IPFS_ENT_PAYGO` |
 | [Load balancing](/load-balancing/) | `PARTNERS_LOAD_BALANCING`, `PARTNERS_LOAD_BALANCING_ENT`, `LOAD_BALANCING_BASIC_PLUS` |
