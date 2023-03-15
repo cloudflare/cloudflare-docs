@@ -36,6 +36,7 @@ class f,j,k orange
 class l,n,o,p blue
 class g,h,i grayorange
 ```
+
 {{<Aside type="note" header="Note">}}Egress packets are routed by your ISP interface, not Cloudflare.{{</Aside>}}
 
 ## Encapsulation
