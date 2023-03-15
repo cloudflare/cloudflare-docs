@@ -65,7 +65,7 @@ resource "cloudflare_ruleset" "zone_rl" {
 * Custom rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
 {{</Aside>}}
 
-This example defines a custom ruleset with a rate limiting rule in account with ID `<ACCOUNT_ID>` that blocks traffic for the `/api/` path exceeding the configured rate. The second `cloudflare_ruleset` resource defines an `execute` rule that deploys the custom ruleset for traffic addressed at `example.com`.
+This example defines a [custom ruleset](/ruleset-engine/custom-rulesets/) with a single rate limiting rule in account with ID `<ACCOUNT_ID>` that blocks traffic for the `/api/` path exceeding the configured rate. The second `cloudflare_ruleset` resource defines an `execute` rule that deploys the custom ruleset for traffic addressed at `example.com`.
 
 ```tf
 resource "cloudflare_ruleset" "account_rl" {
@@ -111,10 +111,6 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
   }
 }
 ```
-
-For more information on creating and deploying custom rulesets, refer to the following resources:
-* [Rulesets API: Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/)
-* [Rulesets API: Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/)
 
 </div>
 </details>
