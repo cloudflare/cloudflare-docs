@@ -144,6 +144,9 @@ The [`unhandledrejection`](https://developer.mozilla.org/en-US/docs/Web/API/Wind
 The [`rejectionhandled`](https://developer.mozilla.org/en-US/docs/Web/API/Window/rejectionhandled_event) event is emitted by the global scope when a JavaScript promise rejection is handled late (after a rejection handler is attached to the promise after an `unhandledrejection` event has already been emitted).
 
 ```js
+---
+header: worker.js
+---
 addEventListener('unhandledrejection', (event) => {
   console.log(event.promise);  // The promise that was rejected.
   console.log(event.reason);  // The value or Error with which the promise was rejected.
