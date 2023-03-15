@@ -22,10 +22,10 @@ The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top pr
 flowchart LR
 accTitle: Tunnels diagram
 accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
-A((User)) --> B[Cloudflare] --- C[Anycast IP]
-C[Anycast IP] --> D[/Tunnel 1 / priority 1/] --> G{{Customer network 1}}
-C[Anycast IP] --> E[/Tunnel 2 / priority 2/] --> H{{Customer network 2}}
-C[Anycast IP] --> F[/Tunnel 3 / priority 3/] --> I{{Customer network 3}}
+A((User)) --> B[Cloudflare] & C[Cloudflare] & D[Cloudflare]--- E[Anycast IP]
+E[Anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br> priority 2/] --> J{{Customer <br> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br> priority 3/] --> K{{Customer <br> network 3}}
 ```
 
 When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
@@ -57,10 +57,11 @@ This diagram illustrates how ECMP distributes traffic equally across two paths w
 flowchart LR
 accTitle: Tunnels diagram
 accDescr: This example has three tunnel routes, with traffic equally distributed across two paths.
-A((User)) --> B[Cloudflare] --- C[Anycast IP] --- D("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)")
-C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 50% of flows/] --> H{{Customer network 1}}
-C[Anycast IP] --> F[/Tunnel 2 / priority 2 <br> / 50% of flows/] --> I{{Customer network 2}}
-C[Anycast IP] --> G[/Tunnel 3 / priority 3 <br> / 0% of flows/] --> J{{Customer network 3}}
+D("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)")
+A((User)) --> B[Cloudflare] & x[Cloudflare] & z[Cloudflare] --- C[Anycast IP]
+C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 50% of flows/] --> H{{Customer <br> network 1}}
+C[Anycast IP] --> F[/Tunnel 2 / priority 2 <br> / 50% of flows/] --> I{{Customer <br> network 2}}
+C[Anycast IP] --> G[/Tunnel 3 / priority 3 <br> / 0% of flows/] --o J{{Customer <br> network 3}}
 ```
 
 When Magic WAN health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
@@ -74,10 +75,11 @@ classDef red fill:#FF0000
 classDef green fill:#00FF00
 accTitle: Tunnels diagram
 accDescr: This example has Tunnel 2 unhealthy, and all traffic prioritized to Tunnel 1.
-A((User)) --> B[Cloudflare] --- C[Anycast IP] --- D(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers)
-C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 100% of flows/]:::green --> H{{Customer network 1}}
-C[Anycast IP] --> F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --> I{{Customer network 2}}
-C[Anycast IP] --> G[/Tunnel 3 / priority 2 <br> / 0% of flows/] --> J{{Customer network 3}}
+D(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers)
+A((User)) --> B[Cloudflare] & x[Cloudflare] & z[Cloudflare] --- C[Anycast IP]
+C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 100% of flows/]:::green --> H{{Customer <br> network 1}}
+C[Anycast IP] --> F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x I{{Customer <br> network 2}}
+C[Anycast IP] --> G[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o J{{Customer <br> network 3}}
 ```
 
 When Magic WAN determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
@@ -90,10 +92,13 @@ classDef red fill:#FF0000
 classDef green fill:#00FF00
 accTitle: Tunnels diagram
 accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
-A((User)) --> B[Cloudflare] --- C[Anycast IP] --- D(Lower-priority tunnels <br> are used when higher-priority tunnels <br> are unhealthy)
-C[Anycast IP]  -- Intermediary <br> network issue -->  E[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/]:::red --> H{{Customer network 1}}
-C[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --> I{{Customer network 2}}
-C[Anycast IP] -->  G[/Tunnel 3 / priority 2 <br> / 100% of flows/]:::green --> J{{Customer network 3}}
+D(Lower-priority tunnels <br> are used when <br> higher-priority tunnels <br> are unhealthy)
+A((User)) --> B[Cloudflare] & x[Cloudflare] & z[Cloudflare] --- C[Anycast IP]
+C[Anycast IP]  -- Intermediary <br> network issue -->  E[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x H{{Customer <br> network 1}}
+C[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x I{{Customer <br> network 2}}
+C[Anycast IP] -->  G[/Tunnel 3 / priority 2 <br> / 100% of flows/]:::green --> J{{Customer <br> network 3}}
+linkStyle 6 color:red
+linkStyle 8 color:red
 ```
 
 When Magic WAN determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
