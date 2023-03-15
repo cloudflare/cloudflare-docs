@@ -27,7 +27,7 @@ If you need to differentiate client certificates for your clients on a "per orga
 For example, if you run the following command (with OpenSSL installed):
 
 ```sh
-openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr
+$ openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr
 ```
 
 You can then specify:
