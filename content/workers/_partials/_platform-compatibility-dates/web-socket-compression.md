@@ -10,7 +10,7 @@ experimental: true
 enable_flag: "web_socket_compression"
 ---
 
-The Workers runtime did not support WebSocket compression when the initial WebSocket implementation was released. Historically, the runtime has stripped or ignored the `Sec-WebSocket-Extensions` header -- but is now capable of fully complying with the WebSocket Compression RFC. Since many clients are likely sending `Sec-WebSocket-Extensions: permessage-deflate` to their Workers today (`new WebSocket(url)` automatically sets this in browsers), we've decided to maintain prior behavior if this flag is absent. It will likely be enabled by a compatibility date in the future.
+The Workers runtime did not support WebSocket compression when the initial WebSocket implementation was released. Historically, the runtime has stripped or ignored the `Sec-WebSocket-Extensions` header -- but is now capable of fully complying with the WebSocket Compression RFC. Since many clients are likely sending `Sec-WebSocket-Extensions: permessage-deflate` to their Workers today (`new WebSocket(url)` automatically sets this in browsers), we have decided to maintain prior behavior if this flag is absent. It will likely be enabled by a compatibility date in the future.
 
 If the flag is present, the Workers runtime is capable of using WebSocket Compression on both inbound and outbound WebSocket connections.
 
