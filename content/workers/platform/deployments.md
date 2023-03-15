@@ -47,7 +47,7 @@ Access deployments by logging into the [Cloudflare dashboard](https://dash.cloud
 
 ### via the API
 
-Read more about accessing deployment information via Cloudflare's REST API [here](/api/#worker-deployments-properties).
+To learn more about accessing deployment information via Cloudflare's REST API, refer to the [API documentation](/api/#worker-deployments-properties).
 
 {{<Aside type="note">}}
 
