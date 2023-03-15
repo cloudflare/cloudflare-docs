@@ -76,25 +76,21 @@ Use BGP to control the status of your prefix — advertised or withdrawn — fro
 To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
 
 ```mermaid
-flowchart LR
+flowchart TB
 accTitle: Border Gateway Control advertisements
 accDescr: Use BGP to control the status of your prefix.
-A(User)-- Ingress -->B[Cloudflare global <br> Anycast network] == Anycast GRE tunnel ==> C{{BGP}}
-B[Cloudflare global Anycast network]---D(BGP annoucement to Internet)
-C{{BGP}} --> E[(Routing configuration <br> endpoint #1)] --> B[Cloudflare global <br> Anycast network]
-C{{BGP}} --> F[(Routing configuration <br> endpoint #2)] --> B[Cloudflare global <br> Anycast network]
-C{{BGP}} --> G[(Routing configuration <br> endpoint #3)] --> B[Cloudflare global <br> Anycast network]
-C{{BGP}}-- "Egress  <br> (Direct Server Return)" -->A(User)
+c(BGP) --> d("Routing config endpoint #1") & e("Routing config endpoint #1") & f("Routing config endpoint #1") --> b(Clouflare global Anycast network)
+a(User)-- Ingress -->b(Clouflare global Anycast network) == Anycast <br> GRE tunnel ==> c(BGP)
+c(BGP)-- "Egress <br> (Direct Server Return)" -->a(User)
+b(Clouflare global Anycast network)-.->z(BPG announcement <br> to Internet)
+classDef orangefill fill:#f96
+classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
+classDef blue stroke:blue,stroke-width:3px
+linkStyle 6 stroke:green,stroke-width:3px
+class d,e,f orangefill
+class a,c blue
+class b orangestroke
 ```
-
-
-
-A(User)-- Ingress -->B[Cloudflare global <br> Anycast network] == Anycast GRE tunnel ==> C{{BGP}}
-B[Cloudflare global Anycast network]---D(BGP annoucement to Internet)
-C{{BGP}} --> E[(Routing configuration <br> endpoint #1)] --> B[Cloudflare global <br> Anycast network]
-C{{BGP}} --> F[(Routing configuration <br> endpoint #2)] --> B[Cloudflare global <br> Anycast network]
-C{{BGP}} --> G[(Routing configuration <br> endpoint #3)] --> B[Cloudflare global <br> Anycast network]
-C{{BGP}}-- "Egress  <br> (Direct Server Return)" -->A(User)
 
 To begin using BGP control, contact your account team with the following information:
 
