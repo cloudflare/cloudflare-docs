@@ -37,7 +37,7 @@ ___
 
 ## Where do I change my nameservers to point to Cloudflare?
 
-Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup).
+Make the change at your registrar, which may or may not be your hosting provider. If you don't know who your registrar is for the domain, you can find this by doing a [WHOis search](http://www.whois.net/). Follow the instructions in [change nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 By default, any changes or additions you make to your Cloudflare zone file will push out in 5 minutes or less. Your local DNS cache may take longer to update; as such, propagation everywhere might take longer than 5 minutes.
 
-This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
+This setting is controlled by the Time-to-Live (TTL) value on a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/). Proxied records update within 300 seconds (Auto), but the TTL for unproxied records can be customized.
 
 ___
 
