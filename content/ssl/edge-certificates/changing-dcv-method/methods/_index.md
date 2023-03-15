@@ -5,6 +5,7 @@ weight: 1
 layout: single
 meta:
   title: Methods — Domain Control Validation
+  description: See different methods to perform Domain Control Validation when using Cloudflare SSL/TLS
 ---
 
 # DCV Methods
