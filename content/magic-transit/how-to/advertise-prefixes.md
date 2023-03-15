@@ -79,10 +79,22 @@ To prevent unexpected behavior, you must use either BGP control or dynamic adver
 flowchart LR
 accTitle: Border Gateway Control advertisements
 accDescr: Use BGP to control the status of your prefix.
-
+A(User)-- Ingress -->B[Cloudflare global <br> Anycast network] == Anycast GRE tunnel ==> C{{BGP}}
+B[Cloudflare global Anycast network]---D(BGP annoucement to Internet)
+C{{BGP}} --> E[(Routing configuration <br> endpoint #1)] --> B[Cloudflare global <br> Anycast network]
+C{{BGP}} --> F[(Routing configuration <br> endpoint #2)] --> B[Cloudflare global <br> Anycast network]
+C{{BGP}} --> G[(Routing configuration <br> endpoint #3)] --> B[Cloudflare global <br> Anycast network]
+C{{BGP}}-- "Egress  <br> (Direct Server Return)" -->A(User)
 ```
 
-![Ingress traffic moving through Cloudflare network using BGP to control prefix status](/magic-transit/static/bgp-control-diagram.png)
+
+
+A(User)-- Ingress -->B[Cloudflare global <br> Anycast network] == Anycast GRE tunnel ==> C{{BGP}}
+B[Cloudflare global Anycast network]---D(BGP annoucement to Internet)
+C{{BGP}} --> E[(Routing configuration <br> endpoint #1)] --> B[Cloudflare global <br> Anycast network]
+C{{BGP}} --> F[(Routing configuration <br> endpoint #2)] --> B[Cloudflare global <br> Anycast network]
+C{{BGP}} --> G[(Routing configuration <br> endpoint #3)] --> B[Cloudflare global <br> Anycast network]
+C{{BGP}}-- "Egress  <br> (Direct Server Return)" -->A(User)
 
 To begin using BGP control, contact your account team with the following information:
 
