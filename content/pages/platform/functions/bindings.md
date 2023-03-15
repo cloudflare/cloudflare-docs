@@ -198,7 +198,7 @@ While developing locally, interact with a D1 database by adding `--d1=<BINDING_N
 {{<Aside type="note">}}
 By default, data in local development is not persisted. This means if you create a schema and/or insert data into a D1 table, the next time you start local dev, it will no longer exist.
   
-You can enable persistence with the --persist flag.
+You can enable persistence with the `--persist` flag.
 {{</Aside>}}
   
 Specifically:
