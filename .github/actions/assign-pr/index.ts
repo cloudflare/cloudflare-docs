@@ -166,6 +166,7 @@ function parse(filename: string): string | void {
         owner: repository.owner.login,
         pull_number: prnumber,
         reviewers: [...reviewers],
+        assignees: [...reviewers],
       });
     }
 
