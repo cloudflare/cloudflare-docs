@@ -166,6 +166,11 @@ function parse(filename: string): string | void {
         owner: repository.owner.login,
         pull_number: prnumber,
         reviewers: [...reviewers],
+      });
+      await client.rest.issues.addAssignees({
+        repo: repository.name,
+        owner: repository.owner.login,
+        issue_number: prnumber,
         assignees: [...reviewers],
       });
     }
