@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Manage advanced certificates
 weight: 1
 meta:
-    description: See how to create, delete and perform other operations to manage your Cloudflare Advanced SSL certificates.
+    description: Learn how to create, delete and perform other operations to manage your Cloudflare Advanced SSL certificates.
 ---
 
 # Manage advanced certificates
