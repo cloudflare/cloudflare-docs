@@ -1,10 +1,10 @@
 ---
-title: Using R2 with Mastodon
-summary: Learn how to configure Mastodon's object storage to use R2.
+title: Mastodon
 pcx_content_type: tutorial
-weight: 1001
 ---
+
 # Use R2 with Mastodon
+
 [Mastodon](https://joinmastodon.org/) is a popular [fediverse](https://en.wikipedia.org/wiki/Fediverse) software. This guide will explain how to configure R2 to be the object storage for a self hosted Mastodon instance, for either [a new instance](#setting-up-a-new-instance) or [an existing instance](#migration-to-r2).
 
 ## Set up a new instance
@@ -55,7 +55,7 @@ After configuration, you can run your instance. After the instance is running, u
 
 ## Migrate to R2
 
-If you already have an instance running, you can migrate the media files to R2 and benefit from [no egress cost](/r2/platform/pricing/).
+If you already have an instance running, you can migrate the media files to R2 and benefit from [no egress cost](/r2/pricing/).
 
 ### 1. Set up an R2 bucket and start file migration
 
@@ -79,6 +79,6 @@ Depending on your migration plan, you can verify if the bucket is accessible pub
 
 ### 4. Finalize migration
 
-Your instance may be still running during migration, and during migration, you likely have new media files created either through direct uploads or fetched from other federated instances. To upload only the newly created files, you can use a program like [`rclone`](/r2/examples/rclone/). Note that when re-running the sync program, all existing files will be checked using at least [Class B operations](/r2/platform/pricing/#class-b-operations).
+Your instance may be still running during migration, and during migration, you likely have new media files created either through direct uploads or fetched from other federated instances. To upload only the newly created files, you can use a program like [`rclone`](/r2/examples/rclone/). Note that when re-running the sync program, all existing files will be checked using at least [Class B operations](/r2/pricing/#class-b-operations).
 
 Once all the files are synced, you can restart your Mastodon instance with the new object storage configuration as mentioned in [step 3](#3-configure-r2-for-mastodon) of Set up a new instance.
