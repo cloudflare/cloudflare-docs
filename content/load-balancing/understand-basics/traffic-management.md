@@ -6,7 +6,7 @@ weight: 17
 
 # Local Traffic Management
 
-Local Traffic Management enables you to load balance traffic within a datacenter between your servers, eliminating the need for hardware appliances and allowing you to move infrastructure to the cloud to benefit from elastic scalability and reliability. Local Traffic Management has the ability to support virtual IPs, private IPs, and public IPs as origin values in a customer datacenter.
+Local Traffic Management enables you to load balance traffic within a data center between your servers, eliminating the need for hardware appliances and allowing you to move infrastructure to the cloud to benefit from elastic scalability and reliability. Local Traffic Management has the ability to support virtual IPs, private IPs, and public IPs as origin values in a customer data center.
 
 {{<Aside type="note">}}
 
@@ -14,9 +14,9 @@ Cloudflare does not currently support entering the same IP using a different VNe
 
 {{</Aside>}}
 
-### Via the API
+## Via the API
 
-Enable Virtual IP support by adding the `virtual_network_id` field to your API. Refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-create-pool) for more information.
+Enable Virtual IP support by adding the `virtual_network_id` field to your API requests. Refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-create-pool) for more information.
 
 {{<Aside type="note">}}
 
@@ -26,7 +26,7 @@ Virtual IPs support is currently API only.
 
 Example using cURL: 
 
-```sh
+```bash
 $ curl --request PATCH \
   --url https://api.cloudflare.com/client/v4/accounts/<account_id>/load_balancers/pools/<pool_id> \
   --header 'Content-Type: application/json' \
@@ -57,14 +57,15 @@ You can use off-ramps to create a direct and secure way to connect into your net
 
 ### Use cases
 
-**Any requests originating from the public internet and directed to a private/internal service address that is not publicly available or accessible.**
+**Any requests originating from the public Internet and directed to a private/internal service address that is not publicly available or accessible.**
 
-You can route requests from the internet to your internal services on internal IPs, such as accounting or production automation systems, using Cloudflare Tunnels.
+You can route requests from the Internet to your internal services on internal IPs, such as accounting or production automation systems, using Cloudflare Tunnels.
 
-**Customers want the ability to intelligently route traffic. This will allow them to benefit from failover for their private traffic and have the ability to health monitor these targets directly rather than load balancing to a tunnel and health monitoring the tunnel itself.**
+**Customers want the ability to intelligently route traffic.**
+
+This will allow customers to benefit from failover for their private traffic and have the ability to health monitor these targets directly rather than load balancing to a tunnel and health monitoring the tunnel itself. 
 
 You can input your private targets in the same manner as you do today with public IPs, only needing to specify a VNet which is already configured with your tunnels and can utilize all of our applicable steering methods. You can health monitor these targets directly rather than only the tunnel health and leverage simple steering that Tunnels offers today.
-
 
 ### Support
 
