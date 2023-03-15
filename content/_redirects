@@ -151,6 +151,9 @@
 /api/get-started/keys/ /fundamentals/api/get-started/keys/ 301
 /api/reference/limits/ /fundamentals/api/reference/limits 301
 
+# api-shield
+/api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
+
 # bots
 /bots/about/javascript-detections/ /bots/reference/javascript-detections/ 301
 /bots/about/plans/ /bots/plans/ 301

@@ -12,7 +12,7 @@ Sequence Analytics surfaces a subset of important API request sequences found in
 
 ## Process
 
-### Sequence Building
+### Sequence building
 
 A sequence is a time-ordered list of HTTP API requests made by a specific visitor as they browse a website, use a mobile app, or interact with a B2B partner via API. 
 
