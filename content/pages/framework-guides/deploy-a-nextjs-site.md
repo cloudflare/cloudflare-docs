@@ -180,7 +180,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In Next.js you can add server-side code via [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props). In such server side code you can then use access bindings set for your application by accessing them via `process.env`.
+In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props). Then access bindings set for your application by accessing them in your code via `process.env`.
 
 The following code block shows an example of accessing a KV namespace in Next.js.
 
