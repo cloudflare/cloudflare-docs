@@ -69,6 +69,16 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 }
 ```
 
+<details>
+<summary>Account-level example configuration</summary>
+<div>
+
+{{<Aside type="note" header="Before you start">}}
+* Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+
+* Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
+{{</Aside>}}
+
 The following example deploys two managed rulesets to an account using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
 
 ```tf
@@ -102,9 +112,10 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 }
 ```
 
-{{<Aside type="warning">}}
-Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
-{{</Aside>}}
+</div>
+</details>
+
+
 
 ## Configure skip rules
 
