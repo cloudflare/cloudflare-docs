@@ -192,7 +192,7 @@ highlight: [4, 5]
 // ...
 
 export async function getServerSideProps({ req }: GetServerSidePropsContext) => {
-  // the type KVNamespace comes from the @cloudflare/workers-types package
+  // the type `KVNamespace` comes from the @cloudflare/workers-types package
   const { MY_KV } = (process.env as { MY_KV: KVNamespace }));
 
   return {
