@@ -62,7 +62,7 @@ Perform a rollback via [Wrangler](/workers/platform/deployments/#via-wrangler-1)
 
 ### via Wrangler
 
-To perform a rollback via Wrangler, use the `wrangler rollback` command. Refer to [Wrangler `rollback` command documentation](/workers/wrangler/commands#rollback) for more information. TODO LIZ: THIS IS A BROKEN LINK NEEDS TO BE FIXED
+To perform a rollback via Wrangler, use the `wrangler rollback` command. Refer to [Wrangler `rollback` command documentation](/workers/wrangler/commands#rollback) for more information.
 
 ### via the Cloudflare Dashboard
 
