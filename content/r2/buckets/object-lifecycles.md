@@ -7,14 +7,12 @@ pcx_content_type: how to
 
 Object lifecycles affect how long objects uploaded to your bucket are kept.
 
-For example, you can create an object lifecycle rule to delete objects after 30 days, or you can set a rule to delete parts of multipart uploads.
-
-When you apply a rule to a bucket, the rule automatically applies to any new objects uploaded after the rule creation. For existing objects, the new rule may take a while to apply and will usually occur within 24 hours but can take longer based on the number of objects in the bucket.
+For example, you can create an object lifecycle rule to delete objects after 30 days, or you can set a rule to abort multipart uploads after 30 days.
 
 ## Behavior
 
 - Objects will typically be removed from a bucket within 24 hours of the `x-amz-expiration` value.
-- When a new lifecycle policy is applied, the new object's `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most buckets will be transitioned within 24 hours but may take longer depending on bucket size. While objects are being migrated, you may see Object Lifecycle Management apply rules from the previous configuration.
+- When a new lifecycle policy is applied, newly uploaded objects' `x-amz-expiration` value immediately reflects the expiration based on the new rules, but existing objects may experience a delay. Most objects will be transitioned within 24 hours but may take longer depending on the number of objects in the bucket. While objects are being migrated, you may see old applied rules from the previous policy.
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle policy to expire multipart uploads seven days after initiation.
 
@@ -28,7 +26,7 @@ Object lifecycles has a 1000 rule maximum.
 
 {{</Aside>}}
 
-Below is an example of configuring a lifecycle configuration with different sets of rules for different potential use cases. 
+Below is an example of configuring a lifecycle policy with different sets of rules for different potential use cases. 
 
 ```js
 ---
