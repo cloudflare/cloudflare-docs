@@ -175,7 +175,7 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 #### Errors
 
-`cache.match` returns a `504` error when the content is stale. 
+`cache.match` generates a `504` error response when the requested content is missing or expired. The Cache API does not expose this `504` directly to the Worker script, instead returning `undefined`. Nevertheless, the underlying `504` is still visible in Cloudflare Logs.
 
 You may see an influx of `504` responses with the `RequestSource` of `earlyHintsCache` in Cloudflare Logs when [Early Hints](/cache/about/early-hints/) is enabled. This behavior is expected and benign. Requests from `earlyHintsCache` are internal subrequests for cached Early Hints. These requests are not end user requests, nor do they go to your origin server. Their response status only indicates whether there are cached Early Hints for the request URI (`200` on cache hit, `504` on cache miss). These requests are already filtered out in other views, such as Cache Analytics. To filter out these requests or to filter requests by end users of your website only, refer to [Filter end users](/analytics/graphql-api/features/filtering/#filter-end-users).
 
