@@ -25,6 +25,20 @@ Las reglas administradas están disponibles en los planes Pro, Business y Enterp
 -   **Paquete: conjunto de reglas básicas de OWASP ModSecurity**
 -   **Reglas solicitadas por el cliente** 
 
+{{<Aside type="note">}}
+-   El nuevo WAF, anunciado en marzo de 2021, proporciona el [el
+    conjunto de reglas administradas gratuitas de
+    Cloudflare](https://developers.cloudflare.com/waf/managed-rulesets/)
+    a todos los clientes, incluidos los suscritos a un plan gratuito.
+    Consulta la [entrada del
+    blog](https://blog.cloudflare.com/waf-for-everyone/) para obtener
+    más detalles.
+-   El 4 de mayo de 2022, Cloudflare comenzó la fase 1 de la [migración
+    de WAF](https://support.cloudflare.com/hc/articles/5995821690637)
+    desde las reglas administradas del WAF a los nuevos conjuntos de
+    reglas administradas del WAF.
+{{</Aside>}}
+
 Revisa las amenazas bloqueadas a través de [Análisis de firewall](https://developers.cloudflare.com/waf/analytics/) **Registro de actividad** disponible en **Seguridad** > **Información general**.
 
 ### Consideraciones importantes
@@ -98,7 +112,12 @@ El **conjunto de reglas administradas de Cloudflare** contiene reglas de segurid
 
 **Cloudflare Specials** es un **Grupo** que ofrece seguridad firewall básica contra [ataques comunes](https://www.cloudflare.com/learning/security/what-is-web-application-security/).   
 
- 
+{{<Aside type="tip">}}
+Cloudflare recomienda que siempre mantengas habilitado **Cloudflare
+Specials**. Además, activa solo los grupos de reglas que correspondan a
+tu paquete tecnológico. Por ejemplo, si utilizas WordPress, activa el
+grupo **Cloudflare WordPress**.
+{{</Aside>}}
 
 Al visualizar un conjunto de reglas, Cloudflare muestra las acciones predeterminadas para cada regla enumerada en **modo predeterminado**. El **modo** disponible para reglas individuales dentro de un **conjunto de Reglas** **administradas** específico de Cloudflare es:
 
@@ -145,7 +164,22 @@ Para administrar los umbrales OWASP, establece el nivel de **sensibilidad** en _
 -   Ciertos sectores empresariales tienen más probabilidades de activar el WAF, y
 -   cargar archivos grandes. 
 
+{{<Aside type="tip">}}
+Con una *sensibilidad* **alta**, las cargas de archivos grandes activan
+el WAF.
+{{</Aside>}}
+
 Cloudflare recomienda configurar inicialmente la **sensibilidad** a _baja_ y revisar si hay falsos positivos antes de aumentar el valor de **sensibilidad**.
+
+{{<Aside type="note">}}
+El registro de actividad muestra el **ID de regla** *981176* (OWASP
+heredado) o *949110* ([nuevo
+OWASP](https://blog.cloudflare.com/new-cloudflare-waf/)) cuando una
+solicitud es bloqueada por OWASP. Además, algunas reglas OWASP incluidas
+en el registro de actividad no aparecen en la lista de reglas de
+**Paquete: conjunto de reglas básicas de OWASP ModSecurity** porque no
+se recomienda desactivarlas.
+{{</Aside>}}
 
 ___
 

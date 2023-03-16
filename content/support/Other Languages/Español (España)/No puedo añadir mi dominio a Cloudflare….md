@@ -13,6 +13,12 @@ title: No puedo añadir mi dominio a Cloudflare…
 
 Cloudflare no puede proporcionar una resolución de DNS autoritativo para un dominio cuando **DNSSEC** está habilitado en tu registrar de dominio. Puedes volver a habilitar **DNSSEC** después de que el dominio esté _Activo_ en Cloudflare, pero debes configurar **DNSSEC** mediante el uso de los [requisitos](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS) [DNSSEC](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS) de [Cloudflare.](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS)
 
+{{<Aside type="info">}}
+**DNSSEC** solo debe estar deshabilitado para los dominios con
+configuración Completo, donde los servidores de nombres de Cloudflare
+serán autoritativos.
+{{</Aside>}}
+
 Los síntomas posibles del **DNSSEC** habilitado en el registrar incluyen los siguientes:
 
 -   El DNS no se resuelve después de cambiarse a los servidores de nombres de Cloudflare.
@@ -34,6 +40,11 @@ Existen varios problemas de registro de dominio que evitarán que un dominio se 
 -   Puedes encontrar un error similar al siguiente:
 
 _No pudimos identificar mal.psl-ejemplo como un dominio registrado. Asegúrate de estar proporcionando el dominio raíz y no un subdominio (p. ej., ejemplo.com, no subdominio.ejemplo.com) (Código: 1099)_
+
+{{<Aside type="note">}}
+Puedes encontrar las instrucciones para actualizar Public Suffix List en
+<https://github.com/publicsuffix/list/wiki/Guidelines>
+{{</Aside>}}
 
 -   El dominio todavía no se registra por completo o los datos de registro no mencionan los servidores de nombre.
 
@@ -64,6 +75,11 @@ ___
 
 Cloudflare no permite que se añadan ciertos dominios, ya sea de manera permanente o temporal.  Mira las instrucciones a continuación para quitar cualquier tipo de prohibición.
 
+{{<Aside type="note">}}
+El equipo de asistencia de Cloudflare no puede expedir el vencimiento de
+la prohibición temporal.
+{{</Aside>}}
+
 ### Eliminación de una prohibición temporal
 
 Cuando Cloudflare observa demasiados intentos de añadir un dominio a Cloudflare, devuelve un error:
@@ -79,3 +95,9 @@ Presenta una solicitud ante el equipo de asistencia de Cloudflare si observas un
 
 -   _Error: Esta zona está prohibida y, por el momento, no puede añadirse a Cloudflare. Ponte en contacto con el equipo de asistencia de Cloudflare. (Código: 1097)_
 -   _Esta zona no puede añadirse a Cloudflare por el momento. Ponte en contacto con el equipo de asistencia de Cloudflare. (Código: 1093)_
+
+{{<Aside type="tip">}}
+Error (Código: 1093) o (Código: 1116) también puede significar que
+incluiste un subdominio (unhost.ejemplo.com) en lugar del dominio raíz
+(ejemplo.com) al añadir el dominio a Cloudflare.
+{{</Aside>}}
