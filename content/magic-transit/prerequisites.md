@@ -45,46 +45,12 @@ You can also use the Resource Public Key Infrastructure (RPKI) as an additional 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
 ```mermaid
-flowchart LR
-
-subgraph 1
-direction LR
-a["Protocol (20 bytes)"] & b["IP header (20 bytes)"]
-end
-
-subgraph 2
-direction LR
-c["Protocol (20 bytes)"] & c["IP header (20 bytes)"] & e["GRE header (4 bytes)"] & f["IP header (20 bytes)"]
-end
-
-subgraph 3
-direction LR
-g[IP] & h[Protocol]
-end
-
-subgraph 4
-direction LR
-i[Protocol] & j[IP]
-end
-
-subgraph 5
-direction LR
-k[Protocol] & l[IP] & m[GRE] & n[IP]
-end
-
-subgraph 6
-direction LR
-o{{SYN}}
-p{{ACK}}
-end
-
-o{{SYN}} --> r{{Client machine}} --> 1 --> s{{Magic Transit}} --> 2 --> t{{Origin router}}
-
-
-q{{SYN-ACK}} --> 3 --> 6
-
-
-p{{ACK}} --> r{{Client machine}} --> 4 --> s{{Magic Transit}} --> 5 --> t{{Origin router}}
+sequenceDiagram
+participant A as Client machine
+participant B as Cloudflare Magic Transit
+participant C as Origin router
+A->>B: MSS = 1460 <br> [Protocol <br> (20 bytes)] [IP header <br> (20 bytes)]
+B->>C: MSS = 1436 <br> [Protocol <br> (20 bytes)] [IP header <br> (20 bytes)] [GRE <br> (4 bytes)] [IP header <br> (20 bytes)]
 
 
 ```
