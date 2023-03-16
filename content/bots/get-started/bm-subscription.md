@@ -126,3 +126,7 @@ Some automated traffic is good! To allow good bots like Google or Bing, use the 
 ### Mobile traffic
 
 To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your firewall rules.
+
+### `Skip` action
+
+{{<render file="_flexible-sbfm.md">}}

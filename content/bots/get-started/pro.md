@@ -23,6 +23,8 @@ Super Bot Fight Mode is included in your Pro subscription. When enabled, the pro
 
 {{<render file="_disable-sbfm.md">}}
 
+{{<render file="_flexible-sbfm.md">}}
+
 ## Analytics
 
 ### Bot Report
