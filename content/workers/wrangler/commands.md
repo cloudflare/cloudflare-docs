@@ -1550,7 +1550,7 @@ $ wrangler whoami
 Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 {{</Aside>}}
 
-You can read more about deployments and how they work [here](/workers/platform/deployments).
+For more information about deployments and how they work, refer to [Deployments](/workers/platform/deployments).
 
 ### list
 Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
