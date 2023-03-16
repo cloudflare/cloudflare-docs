@@ -11,6 +11,9 @@ This diagram illustrates the flow of traffic with Magic Transit. Ingress traffic
 
 ```mermaid
 flowchart BT
+accTitle: Tunnels and encapsulation
+accDescr: This diagram shows the flow of traffic with Magic Transit.
+
 subgraph 1
 c[Payload] & d[Protocol] & e[IP header]
 end
