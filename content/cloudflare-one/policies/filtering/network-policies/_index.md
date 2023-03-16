@@ -122,6 +122,8 @@ The country of the user making the request.
 
 ### Source Internal IP
 
+{{<render file="gateway/_source-internal-ip.md" withParameters="network;;requests">}}
+
 ### Source Port
 
 {{<render file="gateway/_source-port.md">}}

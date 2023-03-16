@@ -258,6 +258,8 @@ Use this selector to apply DNS policies to a specific source IP address that que
 
 ### Source Internal IP
 
+{{<render file="gateway/_source-internal-ip.md" withParameters="DNS;;queries">}}
+
 ### Users
 
 {{<render file="gateway/_users.md">}}

@@ -214,6 +214,8 @@ The country of the user making the request.
 
 ### Source Internal IP
 
+{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;requests">}}
+
 ### URL
 
 | UI name | API example                                             |
