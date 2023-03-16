@@ -304,7 +304,9 @@ If the method fails with an uncaught exception, the exception will be thrown int
 
 ### WebSockets Hibernation API
 
-Durable Objects WebSockets support includes extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow WebSockets that are not actively handling messages to remain connected when the Durable Object is evicted from memory ("hibernation").
+Durable Objects WebSockets support includes extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow a Durable Object that is not currently running an event handler to be removed from memory while keeping its WebSockets connected ("hibernation").
+
+Hibernation does not persist WebSocket connections across [code updates](/workers/learning/using-durable-objects/#global-uniqueness). If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
 #### WebSocket extensions
 
@@ -328,7 +330,7 @@ Durable Objects WebSockets support includes extensions to the standard WebSocket
 
 #### `webSocketMessage` handler method
 
-The system calls the `webSocketMessage` method when an accepted WebSocket receives a message. The method is not called for WebSocket control frames; the system will respond to an incoming Ping automatically without interrupting hibernation. The method takes `(ws: WebSocket, message: String | ArrayBuffer)` as parameters. It does not return a result and can be `async`.
+The system calls the `webSocketMessage` method when an accepted WebSocket receives a message. The method is not called for WebSocket control frames; the system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation. The method takes `(ws: WebSocket, message: String | ArrayBuffer)` as parameters. It does not return a result and can be `async`.
 
 #### `webSocketClose` handler method
 
