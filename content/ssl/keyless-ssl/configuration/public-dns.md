@@ -67,7 +67,7 @@ To create a Keyless certificate with the API, send a [`POST`](https://developers
 
 ## Step 3 — Set up and activate key server
 
-{{<render file="_keyless-key-server-setup.md">}}
+{{<render file="_keyless-key-server-setup.md" withParameters="11aa40b4a5db06d4889e48e2f.example.com">}}
 
 ### Allow incoming connections from Cloudflare
 

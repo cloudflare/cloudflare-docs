@@ -50,6 +50,12 @@ To upload a Keyless certificate with the API, send a [`POST`](https://developers
 }
 ```
 
+{{<Aside type="note">}}
+
+When you receive the `network` value from the Tunnel route API, it will include a subnet mask, such as `10.0.0.1/32`. Remove the subnet mask and use the IP address (`10.0.0.1`).
+
+{{</Aside>}}
+
 ## Step 4 - Set up and activate key server
 
-{{<render file="_keyless-key-server-setup.md">}}
+{{<render file="_keyless-key-server-setup.md" withParameters="keyserver.keyless.example.com">}}

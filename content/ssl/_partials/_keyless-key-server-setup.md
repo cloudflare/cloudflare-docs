@@ -3,6 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
+inputParameters: param1
 ---
 
 Finally, you need to install the key server on your infrastructure, populate it with the SSL keys of the certificates you wish to use to terminate TLS at Cloudflare’s edge, and activate the key server so it can be mutually authenticated.
@@ -29,7 +30,7 @@ If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/r
 
 Add your Cloudflare account details to the configuration file located at `/etc/keyless/gokeyless.yaml`:
 
-1.  Set the hostname of the key server, for example, `11aa40b4a5db06d4889e48e2f.example.com`.
+1.  Set the hostname of the key server, for example, `$1`. This is also the value you entered when you uploaded your keyless certificate and is the hostname of your key server that holds the key for this certificate.
 2.  Set the Zone ID (found on **Overview** tab of the Cloudflare dashboard).
 3.  [Set the Origin CA API key](/fundamentals/api/get-started/ca-keys).
 
