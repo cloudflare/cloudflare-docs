@@ -243,7 +243,7 @@ export default {
         headers,
       });
     }
-    if (request.method === "PUT" || request.method == "POST") {
+    if (request.method === "PUT" || request.method === "POST") {
       const object = await env.MY_BUCKET.put(objectName, request.body, {
         httpMetadata: request.headers,
       });
