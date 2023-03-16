@@ -67,7 +67,9 @@ router
   .get('/api/posts/:id', Post)
   .get('*', () => new Response('Not found', { status: 404 }));
 
-export const handleRequest = request => router.handle(request);
+addEventListener("fetch", event => {
+    event.respondWith(router.handle(event.request))
+})
 ```
 
 The above routing configuration defines three routes: `/api/posts`, `/api/posts/:id`, and a wildcard route, which will be called if the incoming request does not match the first two routes.
