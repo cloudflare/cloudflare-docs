@@ -214,7 +214,11 @@ The country of the user making the request.
 
 ### Source Internal IP
 
-{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;requests">}}
+Use this selector to apply DNS policies to a specific internal IP address that queries arrive to Gateway from.
+
+| UI name   | API example                 |
+| --------- | --------------------------- |
+| Source IP | `DNS_ip == 192.168.86.0/27` |
 
 ### URL
 
