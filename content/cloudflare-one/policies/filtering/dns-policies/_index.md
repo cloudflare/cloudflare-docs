@@ -256,6 +256,8 @@ Use this selector to apply DNS policies to a specific source IP address that que
 | --------- | ---------------------------- |
 | Source IP | `dns.src_ip == 198.51.100.0` |
 
+### Source Internal IP
+
 ### Users
 
 {{<render file="gateway/_users.md">}}

@@ -212,6 +212,8 @@ The country of the user making the request.
 | --------- | ----------------------------- |
 | Source IP | `http.src.ip == "10.0.0.0/8"` |
 
+### Source Internal IP
+
 ### URL
 
 | UI name | API example                                             |
