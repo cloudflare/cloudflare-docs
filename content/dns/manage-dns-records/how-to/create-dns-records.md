@@ -6,13 +6,15 @@ weight: 1
 
 # Manage DNS records
 
-{{<render file="_import-scan-info.md">}}
+{{<render file="_dns-auto-scan-info.md">}}
 
 If you want more control over which DNS records are imported and how, use the [bulk imports](/dns/manage-dns-records/how-to/import-and-export/#import-records).
 
 {{<Aside type="note">}}
 
 If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
+
+If you are using the Cloudflare API, you can run the scan mentioned above with [Scan DNS Records enpoint](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-scan-dns-records). Make sure to review them after.
 
 {{</Aside>}}
 
