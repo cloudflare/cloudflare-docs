@@ -16,8 +16,6 @@ If you want more control over which DNS records are imported and how, use the [b
 
 If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
 
-If you are using the Cloudflare API, you can run the scan mentioned above with [Scan DNS Records enpoint](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-scan-dns-records). Make sure to review them after.
-
 {{</Aside>}}
 
 ## Create DNS records

@@ -8,9 +8,11 @@ _build:
 When you add a new domain to Cloudflare, Cloudflare automatically scans for common records and adds them to your account's **DNS** > **Records** page. 
 
 {{<Aside type="note">}}
-Cloudflare skips the scan in the following cases:
+The DNS records scan is not automatic in the following cases:
 
 - If you choose Enterprise plan and, instead of the **Quick Scan**, choose to upload a DNS file or add records manually.
 - If you add a zone via the [API operation](https://developers.cloudflare.com/api/operations/zones-post).
+
+You can run the scan via API with the [Scan DNS Records endpoint](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-scan-dns-records).
 
 {{</Aside>}}
