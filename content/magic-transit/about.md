@@ -24,11 +24,13 @@ accTitle: Magic Transit
 accDescr: Diagram showing how Magic Transit protects traffic on the customer's network.
 
 A(DDoS <br> attack)
-B[("Cloudflare Global <br> Anycast Network <br> (DDoS protection + <br> Network firewall)")]
+B[("Cloudflare global <br> Anycast network <br> (DDoS protection + <br> network firewall)")]
 C[Customer <br> network]
-D(User)
+D((User))
+E([BGP annoucement])
 
 A --x B
+E --- B
 B-- Anycast <br> GRE tunnel ---C
 B-- Cloudflare <br> Network Internconnect ---C
 C-. "(Optional) <br> Egress via <br> Direct Server Return" .-> D
