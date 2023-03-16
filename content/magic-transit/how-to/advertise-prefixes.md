@@ -76,21 +76,24 @@ Use BGP to control the status of your prefix — advertised or withdrawn — fro
 To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
 
 ```mermaid
-flowchart TB
+flowchart LR
 accTitle: Border Gateway Control advertisements
 accDescr: Use BGP to control the status of your prefix.
-c((BGP)) --- d("Routing config endpoint #1") & e("Routing config endpoint #1") & f("Routing config endpoint #1") --- b(Clouflare global Anycast network)
+
 a(User)-- Ingress -->b(Clouflare global Anycast network) == Anycast <br> GRE tunnel ==> c((BGP))
+b(Clouflare global Anycast network) --- d("Routing config endpoint #1") & e("Routing config endpoint #1") & f("Routing config endpoint #1") --- c((BGP))
 c((BGP))-- "Egress <br> (Direct Server Return)" -->a(User)
-b(Clouflare global Anycast network)-.->z(BPG announcement <br> to Internet)
+b(Clouflare global Anycast network)-.-z(BPG announcement <br> to Internet)
+
 classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
 classDef blue stroke:blue,stroke-width:3px
-linkStyle 6 stroke:green
-linkStyle 7 stroke-width:5px
+linkStyle 0 stroke:green
+linkStyle 1 stroke-width:5px
 class d,e,f orangestroke
 class a,c blue
 class b orangestroke
 ```
+<br />
 
 To begin using BGP control, contact your account team with the following information:
 
