@@ -15,7 +15,7 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 ## Start from the Cloudflare dashboard
 
-1. On your Account Home in the [Cloudflare dashboard](https://dash.cloudflare.com/), click on the **Zero Trust** icon.
+1. On your Account Home in the [Cloudflare dashboard](https://dash.cloudflare.com/), select the **Zero Trust** icon.
 
 2. On the onboarding screen, choose a [team name](/cloudflare-one/glossary/#team-name).
 
