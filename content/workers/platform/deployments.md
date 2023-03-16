@@ -33,7 +33,7 @@ Changing triggers such as routes, custom domains, or cron triggers will not issu
 
 {{</Aside>}}
 
-## Interacting with Deployments
+## Interacting with deployments
 
 ### via Wrangler
 
