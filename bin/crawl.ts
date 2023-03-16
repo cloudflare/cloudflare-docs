@@ -33,7 +33,11 @@ async function walk(dir: string) {
   await Promise.all(
     files.map(async (name) => {
       let abs = join(dir, name);
-      if (!abs.includes("/support/other-languages")) {
+      let supportOtherLangsPath = "/support/other-languages";
+      if (process.platform === "win32") {
+        supportOtherLangsPath = supportOtherLangsPath.replaceAll("/", "\\");
+      }
+      if (!abs.includes(supportOtherLangsPath)) {
         if (name.endsWith(".html")) return task(abs);
         let stats = await fs.stat(abs);
         if (stats.isDirectory()) return walk(abs);
