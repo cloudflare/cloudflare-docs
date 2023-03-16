@@ -81,6 +81,6 @@ Rollbacks will not be allowed if external resources have been deleted or modifie
 
 - A Durable Object migration has occurred between the active deployment and target deployment.
 - If the target deployment has a binding to an R2 bucket, KV namespace, or queue that no longer exists.
-- If the target deployment has a binding to a D1 database (this limitation will be removed in the future)
+- If the target deployment has a binding to a D1 database (this limitation will be removed in the future).
 
 Bound resources will not be changed during a rollback. This means if the structure of data has changed between the active deployment and target deployment, errors could occur using older bundled code with changed data.
