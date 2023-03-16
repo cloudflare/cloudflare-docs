@@ -33,6 +33,7 @@ A->>B: MSS = 1436 bytes <br> Protocol <br> IP
 B->>C: Protocol <br> IP <br> GRE <br> IP
 Note left of A: ACK
 ```
+<br />
 
 {{<render file="_maximum-segment-size.md" productFolder="magic-transit" withParameters="Magic WAN;;To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces).">}}
 

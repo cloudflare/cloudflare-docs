@@ -62,6 +62,7 @@ A->>B: MSS = 1436 bytes <br> Protocol <br> IP
 B->>C: Protocol <br> IP <br> GRE <br> IP
 Note left of A: ACK
 ```
+<br />
 
 {{<render file="_maximum-segment-size.md" withParameters="Magic Transit;;To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.">}}
 
