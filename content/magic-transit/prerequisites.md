@@ -59,8 +59,8 @@ B->>C: MSS = 1436 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes) <br> 
 C->>A: MSS = 1436 <br> IP <br> Protocol
 Note right of C: SYN-ACK
 A->>B: MSS = 1436 bytes <br> Protocol <br> IP
-B->>C: Protocol <br> IP <br> GRE <br> IP
 Note left of A: ACK
+B->>C: Protocol <br> IP <br> GRE <br> IP
 ```
 <br />
 
