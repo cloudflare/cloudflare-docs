@@ -48,6 +48,8 @@ To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.clou
 
 ```mermaid
 sequenceDiagram
+accTitle: Magic Transit
+accDescr: Maximum segment size
 participant A as Client machine
 participant B as Cloudflare Magic Transit
 participant C as Origin router
