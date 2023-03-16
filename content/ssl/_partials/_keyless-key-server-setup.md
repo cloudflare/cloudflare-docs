@@ -17,13 +17,13 @@ If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/r
 
 1.  Add the Cloudflare Package Repository as per https://pkg.cloudflare.com/.
 2.  Amazon Linux customers need to manually set the yum `$releasever` value:
-3.  Amazon Linux 1: `sudo sed -i 's/$releasever/6/' /etc/yum.repos.d/cloudflare.repo`
-4.  Amazon Linux 2: `sudo sed -i 's/$releasever/7/' /etc/yum.repos.d/cloudflare.repo`
-5.  Update your OS’ package listings, e.g., `apt-get update` or `yum makecache`.
-6.  Install the gokeyless server (min version used should be 1.5.3):
-7.  Debian/Ubuntu: `sudo apt-get install gokeyless`
-8.  RHEL/CentOS: `sudo yum install gokeyless`
-9.  Amazon Linux: `sudo yum install rsyslog shadow-utils && sudo yum install gokeyless`
+    - Amazon Linux 1: `sudo sed -i 's/$releasever/6/' /etc/yum.repos.d/cloudflare.repo`
+    - Amazon Linux 2: `sudo sed -i 's/$releasever/7/' /etc/yum.repos.d/cloudflare.repo`
+3.  Update your OS’ package listings, e.g., `apt-get update` or `yum makecache`.
+4.  Install the gokeyless server (min version used should be 1.5.3):
+    - Debian/Ubuntu: `sudo apt-get install gokeyless`
+    - RHEL/CentOS: `sudo yum install gokeyless`
+    - Amazon Linux: `sudo yum install rsyslog shadow-utils && sudo yum install gokeyless`
 
 ### Configure
 

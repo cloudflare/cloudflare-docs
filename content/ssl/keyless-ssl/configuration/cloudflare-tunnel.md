@@ -45,9 +45,9 @@ To upload a Keyless certificate with the API, send a [`POST`](https://developers
 
 ```json
 "tunnel": {
-      "vnet_id": "<VIRTUAL_NETWORK_ID>",
-      "private_ip": "<NETWORK>"
-  }
+  "vnet_id": "<VIRTUAL_NETWORK_ID>",
+  "private_ip": "<NETWORK>"
+}
 ```
 
 ## Step 4 - Set up and activate key server

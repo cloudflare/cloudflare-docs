@@ -21,7 +21,7 @@ This setup option is not ideal as the DNS record cannot be [proxied](/dns/manage
 ## Step 1 - Create public DNS record
 
 
-1.  Use `openssl rand -hex 24` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`.
+1.  Open a Terminal and run `openssl rand -hex 24` to generate a long, random hostname such as `11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com`.
 2.  Add this record via your DNS provider’s interface as an **A** or **AAAA** record pointing to the IP address of your Keyless SSL server.
 3.  Use this hostname as the server hostname during initialization of your Keyless SSL server.
 
@@ -42,14 +42,14 @@ As a security measure, you should hide the hostname of your key server.
 
 To create a Keyless certificate in the dashboard:
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your zone.
+1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone.
 2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  Select **Upload Keyless SSL Certificate**.
-4.  Fill in the upload modal with the certificate and other details and click **Add**.
+4.  Fill in the upload modal with the certificate and other details and select **Add**.
 
 | Label | Description | Example Values | 
 | --- | --- | --- |
-| Key server label | Any unique identifier for your key server | “test-keyless”, “production-keyless-1” |
+| Key server label | Any unique identifier for your key server. | “test-keyless”, “production-keyless-1” |
 | Key server hostname | The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier). | 11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com |
 | Key server port | Set to 2407 unless you have changed this on the key server. | 2407 |
 | SSL Certificate | The valid X509v3 SSL certificate (in PEM form) for which you hold the private key. | (PEM bytes) |
