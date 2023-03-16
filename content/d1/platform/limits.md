@@ -17,14 +17,9 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | -------------------------------------------------- | --------------------------------------- |
 | Databases                                          | 10 per account <sup>1</sup>             |
 | Database size                                      | 100 MB <sup>2</sup>                     |
-| Maximum database backups                           | No currently defined limit.             |
+| Maximum [database backups](/d1/learning/backups/)  | No currently defined limit.             |
 
 {{</table-wrap>}}
-
-Notes:
-
-* Backups run every hour automatically. Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
-* Backups do not contribute to your maximum database size, but will count as bytes stored in the future.
 
 {{<Aside type="note">}}
 
