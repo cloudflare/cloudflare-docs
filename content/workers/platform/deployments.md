@@ -13,7 +13,7 @@ Deployments are currently in Public Beta. Report deployments bugs to the [Wrangl
 
 Deployments are a log of static historical versions of your Worker. They track changes to the bundled code, bindings, compatibility date, and usage model associated with a Worker over time. They also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
 
-The latest deployment for a Worker is considered the "active deployment". You can view your latest 10 deployments [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`wrangler deployments list` command](#via-wrangler).
+The latest deployment for a Worker is considered the active deployment. You can view your latest 10 deployments [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`wrangler deployments list` command](#via-wrangler).
 
 {{<Aside type="note">}}
 
