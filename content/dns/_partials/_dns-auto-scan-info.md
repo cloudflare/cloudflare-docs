@@ -14,5 +14,3 @@ Cloudflare skips the scan in the following cases:
 - If you add a zone via the [API operation](https://developers.cloudflare.com/api/operations/zones-post).
 
 {{</Aside>}}
-
-This scan is not guaranteed to find all existing DNS records, so make sure that all DNS records are added in the Cloudflare **DNS** > **Records** page before [changing your nameservers](/dns/zone-setups/full-setup/setup/) to Cloudflare nameservers.
