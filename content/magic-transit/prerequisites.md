@@ -53,8 +53,8 @@ accDescr: Maximum segment size
 participant A as Client machine
 participant B as Cloudflare Magic Transit
 participant C as Origin router
-Note left of A: SYN
 A->>B: MSS = 1460 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes)
+Note left of A: SYN
 B->>C: MSS = 1436 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes) <br> GRE header (4 bytes) <br> IP header (20 bytes)
 C->>A: MSS = 1436 <br> IP <br> Protocol
 Note right of C: SYN-ACK
