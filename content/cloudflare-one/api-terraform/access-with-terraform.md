@@ -94,19 +94,19 @@ weight: 4
 
 After you've created an application, you can start creating policies and attaching them to applications:
 
-    ```tf
-    resource "cloudflare_access_policy" "cf_policy" {
-      application_id = cloudflare_access_application.cf_app.id
-      zone_id        = var.zone_id
-      name           = "Example Policy"
-      precedence     = "1"
-      decision       = "allow"
+``` tf
+   resource "cloudflare_access_policy" "cf_policy" {
+     application_id = cloudflare_access_application.cf_app.id
+     zone_id        = var.zone_id
+     name           = "Example Policy"
+     precedence     = "1"
+     decision       = "allow"
 
-      include {
-        email = ["test@example.com"]
-      }
-    }
-    ```
+     include {
+       email = ["test@example.com"]
+     }
+   }
+   ```
 
 To do so:
 
@@ -164,32 +164,32 @@ To do so:
 
 The example below shows how you can configure an identity provider and attach it to a policy:
 
-    ```tf
-    resource "cloudflare_access_identity_provider" "github_oauth" {
-      account_id = <CLOUDFLARE_ACCOUNT_ID>
-      name       = "GitHub OAuth"
-      type       = "github"
-      config {
-        client_id     = <GITHUB_CLIENT_ID>
-        client_secret = <GITHUB_CLIENT_SECRET>
-      }
-    }
+   ```tf
+   resource "cloudflare_access_identity_provider" "github_oauth" {
+     account_id = <CLOUDFLARE_ACCOUNT_ID>
+     name       = "GitHub OAuth"
+     type       = "github"
+     config {
+       client_id     = <GITHUB_CLIENT_ID>
+       client_secret = <GITHUB_CLIENT_SECRET>
+     }
+   }
 
-    resource "cloudflare_access_policy" "cf_policy" {
-      application_id = cloudflare_access_application.cf_app.id
-      zone_id        = var.zone_id
-      name           = "My Example Policy"
-      precedence     = "1"
-      decision       = "allow"
+   resource "cloudflare_access_policy" "cf_policy" {
+     application_id = cloudflare_access_application.cf_app.id
+     zone_id        = var.zone_id
+     name           = "My Example Policy"
+     precedence     = "1"
+     decision       = "allow"
 
-      include {
-        email = ["test@example.com"]
-        github {
-          name                 = "My GitHub Org"
-          identity_provider_id = cloudflare_access_identity_provider.github_oauth.id
-        }
-      }
-    }
-    ```
+     include {
+       email = ["test@example.com"]
+       github {
+         name                 = "My GitHub Org"
+         identity_provider_id = cloudflare_access_identity_provider.github_oauth.id
+       }
+     }
+   }
+   ```
 
 These are the basics to get up and running with Access and Terraform. Refer to our [API documentation](https://developers.cloudflare.com/api/) for other endpoints that can be managed via Terraform.
