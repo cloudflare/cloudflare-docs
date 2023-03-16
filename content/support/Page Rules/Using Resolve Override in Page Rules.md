@@ -51,6 +51,6 @@ To configure resolve override in Page Rules, do the following:
     -   **Setting:** _Host Header Override_ | **Value:** `examplebucket.s3.amazonaws.com`
 
 {{<Aside type="warning">}}
-Please not that the _Resolve Override_ Page Rule setting only allow to override the hostname, not the path!
-If you need to modifiy the path too, you'll need to either use a [Worker](https://developers.cloudflare.com/workers/runtime-apis/request/#requestinitcfproperties) or combine the Page Rule with a [Transform Rule](https://developers.cloudflare.com/rules/transform/url-rewrite/)
+Please note that the _Resolve Override_ Page Rule setting only allows override of the hostname, not the path!
+If you need to modify the path also, you'll need to either use a [Worker](https://developers.cloudflare.com/workers/runtime-apis/request/#requestinitcfproperties) or combine the Page Rule with a [Transform Rule](https://developers.cloudflare.com/rules/transform/url-rewrite/)
 {{</Aside>}}
