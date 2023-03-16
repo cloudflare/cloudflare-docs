@@ -66,10 +66,10 @@ Customer router failure
 
 ```mermaid
 flowchart LR
-classDef red fill:#FF0000
-classDef green fill:#00FF00
 accTitle: Tunnels diagram
 accDescr: This example has Tunnel 2 unhealthy, and all traffic prioritized to Tunnel 1.
+classDef red fill:#FF0000
+classDef green fill:#00FF00
 D(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers)
 A((User)) --> B[Cloudflare] & x[Cloudflare] & z[Cloudflare] --- C[Anycast IP]
 C[Anycast IP] --> E[/Tunnel 1 / priority 1 <br> / 100% of flows/]:::green --> H{{Customer <br> data center 1}}
@@ -85,10 +85,10 @@ Intermediary ISP failure
 
 ```mermaid
 flowchart LR
+accTitle: Tunnels diagram
+accDescr: This example has Tunnel 1 and 2 unhealthy, and all traffic prioritized to Tunnel 3.
 classDef red fill:#FF0000
 classDef green fill:#00FF00
-accTitle: Tunnels diagram
-accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 D(Lower-priority tunnels <br> are used when <br> higher-priority tunnels <br> are unhealthy)
 A((User)) --> B[Cloudflare] & x[Cloudflare] & z[Cloudflare] --- C[Anycast IP]
 C[Anycast IP]  -- Intermediary <br> network issue -->  E[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x H{{Customer <br> data center 1}}
