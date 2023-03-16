@@ -23,34 +23,35 @@ To follow this tutorial, make sure you have Node, Cargo, and [Wrangler](/workers
 
 ## Learning goals
 
-In this tutorial, you will learn:
+In this tutorial, you will learn how to:
 
-- How to upload Images to Cloudflare with the Cloudflare dashboard or API.
-- How to set up a Worker project with Wrangler.
-- How to manipulate images with Image Resizing in your Worker.
+- Upload Images to Cloudflare with the Cloudflare dashboard or API.
+- Set up a Worker project with Wrangler.
+- Manipulate images with Image Resizing in your Worker.
 
 ## Upload your image
 
 To generate a custom thumbnail image, you first need to upload a background image to Cloudflare Images. This will serve as the image you use for transformations to generate the thumbnails.
 
-Cloudflare Images allows you to store, resize, optimize and deliver images in a fast and secure manner. To get started, upload your images to the [Cloudflare dashboard]() or use the [Upload API]().
+Cloudflare Images allows you to store, resize, optimize and deliver images in a fast and secure manner. To get started, upload your images to the Cloudflare dashboard or use the Upload API.
 
 ### Upload with the dashboard
 
-1. Log in to your Cloudflare Dashboard, and go to the Images tab.
-2. Use the Quick upload tab to add your image, you can either drag and drop or click the section to choose a file from your local files.
+To upload an image using the Cloudflare dashboard:
 
-![](./media/images-upload.png)
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Images**.
+3. Use **Quick Upload** to either drag and drop an image or click to browse and choose a file from your local files.
 
-3. After the image is uploaded, you can view it using the generated URL.
+![Follow the instructions above to upload an image to the Cloudflare dashboard.](./media/images-upload.png)
 
-![](./media/image-delivery.png)
+4. After the image is uploaded, view it using the generated URL.
+
+![Follow the instructions above to generate a URL for your uploaded image.](./media/image-delivery.png)
 
 ### Upload with the API
 
-If you choose to use the [API](/images/cloudflare-images/upload-images/upload-via-url), you can upload your image with the **Upload via URL** API,
-
-Below is an example of how to upload an image:
+To upload your image with the [Upload via URL](/images/cloudflare-images/upload-images/upload-via-url/) API, refer to the example below:
 
 ```sh
 $ curl --request POST \
@@ -89,11 +90,11 @@ You will then receive a response similar to this:
 }
 ```
 
-Now that we've uploaded the image we'll be using it as a background for our thumbnail image.
+Now that you have uploaded your image, you will use it as the background image for your video's thumbnail.
 
-## Create a Worker to Transform text-to-image
+## Create a Worker to transform text to image
 
-The next phase of this tutorial is to create a worker that will enable you to transform text to image so this can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust). Go ahead and clone the repository and run it locally.
+After uploading your image, you will now create a Worker that will enable you to transform text to image. This can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust). Clone the repository and run it locally.
 
 ```sh
 $ npx wrangler generate worker-to-text worker-rust
@@ -103,7 +104,7 @@ In the `lib.rs` file, add the following code block:
 
 ```rs
 ---
-filename: lib.rs
+filename: src/lib.rs
 ---
 use worker::*;
 mod utils;
@@ -121,7 +122,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 }
 ```
 
-Next, we'll use [text-to-png](https://github.com/RookAndPawn/text-to-png), a Rust package for rendering text to png as a dependency:
+Next, use [text-to-png](https://github.com/RookAndPawn/text-to-png), a Rust package for rendering text to png as a dependency:
 
 ```toml
 ---
