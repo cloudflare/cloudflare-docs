@@ -79,15 +79,15 @@ To prevent unexpected behavior, you must use either BGP control or dynamic adver
 flowchart TB
 accTitle: Border Gateway Control advertisements
 accDescr: Use BGP to control the status of your prefix.
-c(BGP) --> d("Routing config endpoint #1") & e("Routing config endpoint #1") & f("Routing config endpoint #1") --> b(Clouflare global Anycast network)
-a(User)-- Ingress -->b(Clouflare global Anycast network) == Anycast <br> GRE tunnel ==> c(BGP)
-c(BGP)-- "Egress <br> (Direct Server Return)" -->a(User)
+c((BGP)) --- d("Routing config endpoint #1") & e("Routing config endpoint #1") & f("Routing config endpoint #1") --- b(Clouflare global Anycast network)
+a(User)-- Ingress -->b(Clouflare global Anycast network) == Anycast <br> GRE tunnel ==> c((BGP))
+c((BGP))-- "Egress <br> (Direct Server Return)" -->a(User)
 b(Clouflare global Anycast network)-.->z(BPG announcement <br> to Internet)
-classDef orangefill fill:#f96
 classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
 classDef blue stroke:blue,stroke-width:3px
-linkStyle 6 stroke:green,stroke-width:3px
-class d,e,f orangefill
+linkStyle 6 stroke:green
+linkStyle 7 stroke-width:5px
+class d,e,f orangestroke
 class a,c blue
 class b orangestroke
 ```
