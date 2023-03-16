@@ -17,7 +17,7 @@ The latest deployment for a Worker is considered the "active deployment". You ca
 
 {{<Aside type="note">}}
 
-Associated resources for a worker such as KV, R2, and Durable Objects are not tracked with deployments.
+Associated resources for a Worker such as [KV](/workers/wrangler/workers-kv/), [R2](/r2/), and [Durable Objects](/workers/learning/using-durable-objects/) are not tracked with deployments.
 
 {{</Aside>}}
 
