@@ -7,7 +7,7 @@ _build:
 
 To queue all visitors prior to a time-based offering, set up a pre-queue as part of a [waiting room event](/waiting-room/additional-options/create-events/#create-an-event-from-the-dashboard).
 
-To start queueing all new visitors without a schedule event:
+To start queueing all new visitors without a scheduled event:
 
 1.  Go to **Traffic** > **Waiting Room**.
 2.  On a waiting room:
