@@ -1547,7 +1547,7 @@ $ wrangler whoami
 ## deployments
 
 {{<Aside type="note">}}
-Deployments are currently in Public Beta and subcommands are currently in Beta. Please report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in Public Beta and subcommands are currently in Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 {{</Aside>}}
 
 You can read more about deployments and how they work [here](/workers/platform/deployments).
