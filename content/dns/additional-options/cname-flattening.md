@@ -6,7 +6,7 @@ weight: 4
 
 # CNAME flattening
 
-`CNAME` flattening speeds up `CNAME` resolution and allows you to use a `CNAME` record at your root/apex domain (`example.com`). 
+`CNAME` flattening speeds up `CNAME` resolution and allows you to use a `CNAME` record at your root/apex domain (`example.com`).
 
 {{<Aside type="note">}}
 
@@ -18,7 +18,7 @@ This functionality is also what allows you to use a [root custom domain](/pages/
 
 With `CNAME` flattening, Cloudflare finds the IP address that a `CNAME` points to. This process could involve a single lookup or multiple (if your `CNAME` points to another `CNAME`). Cloudflare then returns the final IP address instead of a CNAME record, helping DNS queries resolve up to 30% faster.
 
-For more details on the mechanics of CNAME flattening, refer to the [blog post](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/).
+For more details on the mechanics of CNAME flattening, refer to the [blog post](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/) and review the [CNAME flattening diagram](/dns/reference/cname-flattening-diagram/)
 
 ## Set up CNAME flattening
 

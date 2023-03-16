@@ -9,8 +9,18 @@ meta:
 
 # How CNAME flattening works
 
-For the purpose of this diagram:
-- `domain.test` is a zone in Cloudflare and has the following CNAME record.
+With `CNAME` flattening, Cloudflare returns an IP address instead of the target hostname that a `CNAME` record points to.
+This process supports a few features and delivers better performance and flexibility, as mentioned in the [CNAME flattening concept page](/dns/additional-options/cname-flattening/).
+
+Consider the diagram below to have an overview of the steps that may be involved in CNAME flattening. 
+
+{{<Aside type="note">}}
+Note that this is a simpler scenario. Cases where CNAME flattening is optional and/or the target hostname is not external to Cloudflare work differently.
+{{</Aside>}}
+
+## Example use case
+
+- `domain.test` is a zone in Cloudflare and has the following CNAME record:
 
 {{<example>}}
 | Type | Name | Content | TTL |
@@ -18,7 +28,7 @@ For the purpose of this diagram:
 | CNAME | `domain.test` | `external-origin.test` | 3600 |
 {{</example>}}
 
-- `external-origin.test` is a zone in a different DNS provider and has the following A record.
+- `external-origin.test` is a zone in a different DNS provider and has the following A record:
 
 {{<example>}}
 | Type | Name | Content | TTL |
@@ -26,7 +36,7 @@ For the purpose of this diagram:
 | A | `external-origin.test` | `192.0.2.1` | 7200 |
 {{</example>}}
 
-In order to respond to queries for `domain.test` directly with the IP address, Cloudflare processes as following: 
+In this case, the process to respond to queries for `domain.test` directly with the IP address can be represented by the following diagram:
 
 ```mermaid
 flowchart TD
@@ -43,7 +53,7 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
    C --- E{{Look up zone meta information}} --- F{{Look up record under found zone}} --> G["Answer: 
    domain.test 3600 CNAME external-origin.test
 
-   Means that domain.test is a CNAME at apex
+   This means that domain.test is a CNAME at the zone apex
    Forced CNAME flattening is enabled"] --- H{{Resolve external-origin.test}}
    K{{Append answer and override the name}} --> L["Answer: 
    domain.test 7200 IN A 192.0.2.1"] --- M{Proxy status}
@@ -59,3 +69,8 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
  end
  
 ```
+
+## Aspects to consider
+
+- If the CNAME record is proxied in Cloudflare, the answer is made up of a [Cloudflare IP](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to 300.
+- If the CNAME record in Cloudflare is not proxied, the flattened answer consists of the IP address from the external DNS provider and its TTL corresponds to the lower value between the external record and the Cloudflare CNAME record.
