@@ -53,7 +53,7 @@ To create a Keyless certificate in the dashboard:
 | Key server hostname | The hostname of your key server that holds the key for this certificate (such as the random hostname generated earlier). | 11aa40b4a5db06d4889e48e2f738950ddfa50b7349d09b5f.example.com |
 | Key server port | Set to 2407 unless you have changed this on the key server. | 2407 |
 | SSL Certificate | The valid X509v3 SSL certificate (in PEM form) for which you hold the private key. | (PEM bytes) |
-| Bundle method | This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/bundling-methodologies/) for more details. | Compatible |
+| Bundle method | This should almost always be **Compatible**. Refer to [Uploading Custom Certificates](/ssl/edge-certificates/custom-certificates/uploading/) for more details. | Compatible |
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
