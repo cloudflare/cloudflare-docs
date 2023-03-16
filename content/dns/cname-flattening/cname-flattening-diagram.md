@@ -1,16 +1,17 @@
 ---
 pcx_content_type: reference
-title: CNAME flattening diagram
-weight: 2
+title: Example diagram
+weight: 3
 layout: list
 meta:
+    title: CNAME flattening diagram
     description: Consider an example use case and the main steps involved in CNAME flattening.
 ---
 
 # How CNAME flattening works
 
 With `CNAME` flattening, Cloudflare returns an IP address instead of the target hostname that a `CNAME` record points to.
-This process supports a few features and delivers better performance and flexibility, as mentioned in the [CNAME flattening concept page](/dns/additional-options/cname-flattening/).
+This process supports a few features and delivers better performance and flexibility, as mentioned in the [CNAME flattening concept page](/dns/cname-flattening/).
 
 Consider the diagram below to have an overview of the steps that may be involved in CNAME flattening. 
 
@@ -72,5 +73,5 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
 
 ## Aspects to consider
 
-- If the CNAME record is proxied in Cloudflare, the answer is made up of a [Cloudflare IP](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to 300.
-- If the CNAME record in Cloudflare is not proxied, the flattened answer consists of the IP address from the external DNS provider and its TTL corresponds to the lower value between the external record and the Cloudflare CNAME record.
+- If the `CNAME` record is proxied in Cloudflare, the answer is made up of a [Cloudflare IP](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to 300.
+- If the `CNAME` record in Cloudflare is not proxied, the flattened answer consists of the IP address from the external DNS provider and its TTL corresponds to the lower value between the external record and the Cloudflare `CNAME` record.
