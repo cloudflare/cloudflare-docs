@@ -14,7 +14,7 @@ meta:
 
 | Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows | WARP with Gateway                                                                         | All plans                                                     |
+| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
 
 </div>
 </details>
@@ -68,7 +68,22 @@ Operating systems determine disk encryption in various ways. The following infor
 
 ### On Linux
 
-Disk encryption checks are not currently supported on Linux.
+List all hard drives on the system:
+
+```sh
+$ lsblk
+NAME                        MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINT
+nvme0n1                     259:0    0 476.9G  0 disk  
+├─nvme0n1p1                 259:1    0   512M  0 part  /boot/efi
+├─nvme0n1p2                 259:2    0   488M  0 part  /boot
+└─nvme0n1p3                 259:3    0   476G  0 part  
+  └─nvme0n1p3_crypt         253:0    0 475.9G  0 crypt 
+    ├─my--vg-root   253:1            0 474.9G  0 lvm   /
+    └─my--vg-swap_1 253:2            0   976M  0 lvm   [SWAP]
+```
+
+On Linux, encryption is reported per mounted partition, not physical drive. In the example above, the root and swap partitions are found within a `crypt` container and therefore considered encrypted.
+The posture check allows `/boot` and `/boot/efi` to remain unencrypted since they are read-only and will never contain sensitive data.
 
 ### On iOS, Android and ChromeOS
 
