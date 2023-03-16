@@ -135,6 +135,8 @@ If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can
 -   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 -   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 
+{{<render file="_flexible-sbfm.md">}}
+
 ___
 
 ## Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?

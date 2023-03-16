@@ -12,6 +12,18 @@ meta:
 
 # Cloudflare Workers documentation
 
+{{<Aside type="note" header="Help us improve our documentation">}}
+
+From March 15 to March 31st, 2023, the Cloudflare documentation team is running a survey to measure the effectiveness of Workers documentation.
+
+To contribute:
+1. Complete the [survey](https://bit.ly/3yI79vQ) (total time: 1 minute).
+2. Share the survey with your community on [Twitter](https://twitter.com/CloudflareDev/status/1636087413381406722?s=20). 
+
+Thank you for your support.
+
+{{</Aside>}}
+
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
 Cloudflare Workers runs on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/workers/platform/pricing/).
@@ -69,11 +81,11 @@ export default {
 
 ## Related resources
 
-- [How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers
-- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans
-- [HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker
-- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day)
-- [Storage objects guide](/workers/platform/storage-objects/) - Learn which storage object is best for your project.
+- [How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers.
+- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans.
+- [HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker.
+- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day).
+- [Storage options guide](/workers/platform/storage-objects/) - Learn which storage option is best for your project.
 
 ---
 

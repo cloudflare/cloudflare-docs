@@ -1,6 +1,6 @@
 ---
 title: Cipher suites
-pcx_content_type: navigation
+pcx_content_type: concept
 weight: 1
 ---
 

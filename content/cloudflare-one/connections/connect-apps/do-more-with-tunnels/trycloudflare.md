@@ -15,13 +15,7 @@ Developers can use the TryCloudflare tool to experiment with Cloudflare Tunnel w
 1.  Run the following terminal command to start a free tunnel.
 
 ```sh
-$ cloudflared tunnel
-```
-
-The command above will default to port 8080; you can specify an alternate port with the --url flag.
-
-```sh
-$ cloudflared tunnel --url http://localhost:7000
+$ cloudflared tunnel --url http://localhost:8080
 ```
 
 `cloudflared` will generate a random subdomain when connecting to the Cloudflare network and print it in the terminal for you to use and share. The output will serve traffic from the server on your local machine to the public internet, using Cloudflare's Argo Smart Routing, at a public URL.

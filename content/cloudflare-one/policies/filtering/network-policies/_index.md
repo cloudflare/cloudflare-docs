@@ -38,6 +38,16 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 | Destination IP | In       | `92.100.02.102` | Allow  |
 | Email          | In       | `*@example.com` |        |
 
+### Audit SSH
+
+Policies with Audit SSH actions allow administrators to log SSH commands matching SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
+
+| Selector       | Operator | Value          | Action    |
+| -------------- | -------- | -------------- | --------- |
+| Destination IP | In       | `203.0.113.83` | Audit SSH |
+
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
+
 ### Block
 
 Policies with Block actions block network traffic from reaching certain IPs or ports. For example, the following configuration blocks all traffic directed to port 443:

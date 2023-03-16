@@ -61,10 +61,10 @@ Cloudflare currently offers limited support for advanced redirects. More support
 | Redirects (301, 302, 303, 307, 308) | Yes     | `/home / 301`                                                   | 302 is used as the default status code.                                                            |
 | Rewrites (other status codes)       | No      | `/blog/* /blog/404.html 404`                                    |                                                                                                   |
 | Splats                              | Yes     | `/blog/* /blog/:splat`                                          | Refer to [Splats](#splats).                                                                             |
-| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders).                                                                |
+| Placeholders                        | Yes     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | See [Placeholders](#placeholders)                                                                 |
 | Query Parameters                    | No      | `/shop id=:id /blog/:id 301`                                    |                                                                                                   |
 | Force                               | Yes     | `/pagethatexists /otherpage`                                    | Redirects are always followed, regardless of whether or not an asset matches the incoming request. |
-| Proxying                            | Yes     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).                                                                   |
+| Proxying                            | No      | `/blog/* https://blog.my.domain/:splat 200`                     |                                                                                                   |
 | Domain-level redirects              | No      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                                                                                   |
 | Redirect by country or language     | No      | `/ /us 302 Country=us`                                          |                                                                                                   |
 | Redirect by cookie                  | No      | `/\* /preview/:splat 302 Cookie=preview`                        |                                                                                                   |
@@ -86,28 +86,6 @@ The matched value can be used in the redirect location with `:splat`.
 A placeholder can be defined with `:placeholder_name`. A colon indicates the start of a placeholder, and the name that follows may be composed of alphanumeric characters and underscores, `:\w+`. A placeholder with any given name can only be used once in the URL. Placeholders match all characters apart from the delimiter, which: when part of the host, is a period or a forward-slash; and when part of the path, is a forward-slash.
 
 Similarly, the matched value can be used in the redirect location with `:placeholder_name`.
-
-#### Proxying
-
-Proxying will only support relative URLs on your site. You cannot proxy external domains.
-
-Only the first redirect in your will apply. For example, in the following example, a request to `/a` will render `/b`, and a request to `/b` will render `/c`, but `/a` will not render `/c`.
-
-```
-/a /b 200
-/b /c 200
-```
-
-{{<Aside heading="Proxying's impact on SEO">}}
-Be aware that proxying pages can have an adverse effect on search engine optimization (SEO). Search engines often penalize websites that serve duplicate content. Consider adding a `Link` HTTP header which informs search engines of the canonical source of content.
-
-For example, if you have added `/about/faq/* /about/faqs 200` to your `_redirects` file, you may want to add the following to your `_headers` file:
-
-```txt
-/about/faq/*
-  Link: </about/faqs>; rel="canonical"
-```
-{{</Aside>}}
 
 ## Related resources
 

@@ -53,6 +53,7 @@ The following table lists sample values for various application performance and 
 
 | Feature | Subscription IDs |
 | --- | --- |
+| [API Shield](/api-shield/) | `API_SHIELD_ZONE` |
 | [Advanced certificate manager](/ssl/edge-certificates/advanced-certificate-manager/) | `ADVANCED_CERT_MANAGER_FREE`, `ADVANCED_CERT_MANAGER` |
 | [Argo smart routing](/argo-smart-routing/) | `PARTNERS_ZONE_ARGO`, `ARGO_ZONE_BASIC` |
 | [Ethereum gateway](/web3/ethereum-gateway/) | `WEB3_ETHEREUM_ENT`, `WEB3_ETHEREUM_ENT_CONTRACT`, `WEB3_ETHEREUM_ENT_PAYGO` |
@@ -60,7 +61,16 @@ The following table lists sample values for various application performance and 
 | [Load balancing](/load-balancing/) | `PARTNERS_LOAD_BALANCING`, `PARTNERS_LOAD_BALANCING_ENT`, `LOAD_BALANCING_BASIC_PLUS` |
 | [Rate limiting](/waf/rate-limiting-rules/) | `PARTNERS_RATE_LIMITING` |
 | [Spectrum](/spectrum/) | `PARTNERS_SPECTRUM` |
-| [Waiting Room](/waiting-room/) | `WAITING_ROOMS_BASIC` |
+| [Waiting Room](/waiting-room/) | `WAITING_ROOMS_BASIC`, `WAITING_ROOMS_ADV` |
+
+### Network services
+
+The following table lists sample values for various network services subscriptions.
+
+| Feature | Subscription IDs |
+| --- | --- |
+| [Magic Firewall](/magic-firewall/) | `MAGIC_FIREWALL_BASIC`, `MAGIC_FIREWALL_ADVANCED` |
+| [Magic WAN](/magic-wan/) | `MAGIC_WAN` |
 
 ## Getting new subscriptions
 

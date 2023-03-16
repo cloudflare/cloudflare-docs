@@ -163,7 +163,7 @@ wizard](http://curl.haxx.se/dlwiz/).
 Run the following command to send a standard HTTP GET request to your website (replace _www.example.com_ with your domain and host name):
 
 ```
-curl -svo /dev/null http://www.example.com/
+$ curl -svo /dev/null http://www.example.com/
 ```
 
 This example cURL command returns output detailing the HTTP response and request headers but discards the page body output. cURL output confirms the HTTP response and whether Cloudflare is currently proxying traffic for the site.
@@ -179,7 +179,7 @@ Expand the sections below for tips on troubleshooting HTTP errors, performance, 
 When troubleshooting HTTP errors in responses from Cloudflare, test whether your origin caused the errors by sending requests directly to your origin web server. To troubleshoot HTTP errors, run a cURL directly to your origin web server IP address (bypassing Cloudflare’s proxy):
 
 ```
-curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
+$ curl -svo /dev/null http://example.com --connect-to ::203.0.113.34
 ```
 
 {{<Aside type="tip">}}
@@ -237,8 +237,8 @@ Cloudflare's Help Center.
 
 The following cURL command shows the SSL certificate served by Cloudflare during an HTTPS request (replace _www.example.com_ with your domain and host name):
 
-```
-curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
+```sh
+$ curl -svo /dev/null https://www.example.com/ 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
 ```
 
 {{<Aside type="tip">}}
@@ -248,8 +248,8 @@ parses the TLS handshake and certificate information.
 
 To display the origin certificate (assuming one is installed), replace _203.0.113.34_ below with the actual IP address of your origin web server and replace _www.example.com_ with your domain and host name:
 
-```
-curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
+```sh
+$ curl -svo /dev/null https://www.example.com --connect-to ::203.0.113.34 2>&1 | egrep -v "^{.*$|^}.*$|^* http.*$"
 ```
 
 #### Testing TLS Versions
@@ -288,14 +288,14 @@ Review the instructions below for running traceroute on different operating sys
 
 4\. At the command line prompt, type: For IPv4 -
 
-```
-> tracert www.example.com
+```sh
+$ tracert www.example.com
 ```
 
 For IPv6 -
 
-```
-> tracert -6 www.example.com
+```sh
+$ tracert -6 www.example.com
 ```
 
 5\. Press **Enter**.
@@ -308,14 +308,14 @@ For IPv6 -
 
 For IPv4 -
 
-```
-> traceroute www.example.com
+```sh
+$ traceroute www.example.com
 ```
 
 For IPv6 -
 
-```
-> traceroute -6 www.example.com
+```sh
+$ traceroute -6 www.example.com
 ```
 
 3\. You can copy the results to save in a file or paste in another program.
@@ -360,11 +360,15 @@ Like traceroute, MTR can use ICMP or UDP for outgoing packets but relies on ICMP
 
 Generally, we'd use MTR as the following:
 
-`mtr -rw <dest_hostname> e.g.: mtr -rw one.one.one.one`
+```sh
+mtr -rw <dest_hostname> e.g.: mtr -rw one.one.one.one
+```
 
 or with destination IP:
 
-`mtr -rw <dest_IP> e.g.: mtr -rw 1.1.1.1`
+```sh
+mtr -rw <dest_IP> e.g.: mtr -rw 1.1.1.1
+```
 
 Please refer to this documentation, which explains more about analysing MTR: [How to read MTR](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/).[](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-mtr/)
 
