@@ -6,7 +6,7 @@ weight: 4
 
 # Manage user seats
 
-Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to the Zero Trust dashboard through any authentication event.
+Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to Zero Trust through any authentication event.
 
 The amount of user seats available in your Zero Trust account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing seats from your account in the [Zero Trust FAQ](/cloudflare-one/faq/teams-getting-started-faq/#how-do-i-change-my-subscription-plan).
 
@@ -14,7 +14,7 @@ The amount of user seats available in your Zero Trust account depends on the amo
 
 For Access, this is any Cloudflare Access authentication event, like a login to the [App Launcher](/cloudflare-one/applications/app-launcher/) or an application. For Gateway, this means any Cloudflare WARP authentication event, like enrolling a device to your ZT organization.
 
-If either one of these events occurs, that user’s identity is added as an Active user to the Zero Trust dashboard and consumes one seat.
+If either one of these events occurs, that user’s identity is added as an Active user to Zero Trust and consumes one seat.
 
 The user then continues to occupy and consume a single seat regardless of the number of applications accessed or login events. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
 

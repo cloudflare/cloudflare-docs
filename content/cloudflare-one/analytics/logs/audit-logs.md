@@ -100,7 +100,7 @@ Identity-based authentication logs contain the following fields:
 
 ### Non-identity authentication
 
-To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available on the Zero Trust dashboard.
+To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available on Zero Trust.
 
 ### Log retention
 

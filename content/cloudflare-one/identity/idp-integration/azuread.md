@@ -38,7 +38,7 @@ To retrieve those values:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your [team name](/cloudflare-one/glossary/#team-name) in the Zero Trust dashboard under **Settings** > **General**.
+   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **General**.
 
    ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
 
@@ -110,7 +110,7 @@ The Azure AD integration supports the [System for Cross-domain Identity Manageme
 
 To synchronize users and groups between Access and Azure:
 
-### 1. Enable SCIM on the Zero Trust dashboard
+### 1. Enable SCIM on Zero Trust
 
 {{<render file="_enable-scim-on-dashboard.md">}}
 
@@ -134,9 +134,9 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 7. For **Provisioning Mode**, choose _Automatic_.
 
-8. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from the Zero Trust dashboard.
+8. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
 
-9. In the **Secret Token** field, enter the **SCIM Secret** obtained from the Zero Trust dashboard.
+9. In the **Secret Token** field, enter the **SCIM Secret** obtained from Zero Trust.
 
 10. Select **Test Connection** to ensure that the credentials were entered correctly.
 
@@ -172,7 +172,7 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 4. In the **Value** field, enter the `Object Id` for the Azure group.
 
-   ![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+   ![Entering an Azure group ID on Zero Trust](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
 
 ### Nested groups
 

@@ -87,7 +87,7 @@ This section covers policy configurations for common SaaS applications.
 
 Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
 
-You can achieve this by implementing two HTTP policies targeting the same domain or application group in the Zero Trust dashboard.
+You can achieve this by implementing two HTTP policies targeting the same domain or application group in Zero Trust.
 
 ### Example: Implementing a custom request header for a domain
 

@@ -21,7 +21,7 @@ You can then use these lists in Gateway policies to block, allow, isolate or exc
 **This walkthrough covers how to:**
 
 - Upload a CSV of hostnames into a list
-- Manage the list in the Zero Trust dashboard
+- Manage the list in Zero Trust
 - Use the list in a Gateway policy
 
 **Time to complete:**

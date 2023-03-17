@@ -28,11 +28,11 @@ To filter HTTP requests from a device:
 1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
 2. Under **Gateway logging**, enable activity logging for all HTTP logs.
 3. On your WARP-enabled device, open a browser and visit any website.
-4. In the Zero Trust dashboard, navigate to **Logs** > **Gateway** > **HTTP**. Before building HTTP policies, make sure you see HTTP queries from the email associated with your device.
+4. In Zero Trust, navigate to **Logs** > **Gateway** > **HTTP**. Before building HTTP policies, make sure you see HTTP queries from the email associated with your device.
 
 ## 3. Add recommended policies
 
-To create a new HTTP policy, navigate to **Gateway** > **Firewall Policies** > **HTTP** in the Zero Trust dashboard.
+To create a new HTTP policy, navigate to **Gateway** > **Firewall Policies** > **HTTP** in Zero Trust.
 We recommend adding the following policies:
 
 ### Bypass inspection for incompatible applications

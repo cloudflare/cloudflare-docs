@@ -12,7 +12,7 @@ This section covers a few common use cases with the API and Terraform to manage 
 
 ## Set dashboard to read-only
 
-Super Administrators can lock all settings as read-only in the Zero Trust dashboard. Read-only mode ensures that all updates for the account are made through the API or Terraform.
+Super Administrators can lock all settings as read-only in Zero Trust. Read-only mode ensures that all updates for the account are made through the API or Terraform.
 
 To enable read-only mode:
 

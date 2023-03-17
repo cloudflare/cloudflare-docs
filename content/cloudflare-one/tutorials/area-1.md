@@ -19,7 +19,7 @@ title: Integrate Cloudflare Area 1 with Access for SaaS
 - Admin access to your Area 1 account
 - Your user's email in Area 1 matches their email in Zero Trust.
 
-## 1. Add Area 1 to the Zero Trust dashboard
+## 1. Add Area 1 to Zero Trust
 
 1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
@@ -64,9 +64,9 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 5. Get your Metadata XML file:
 
-   1. In the Zero Trust dashboard, copy the **SSO Endpoint** for your application.
+   1. In Zero Trust, copy the **SSO Endpoint** for your application.
 
-      ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+      ![Copy SSO settings for a SaaS application from Zero Trust](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
 
    2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
 
@@ -78,6 +78,6 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 
 7. Select **Update Settings**.
 
-8. In the Zero Trust dashboard, select **Done**.
+8. In Zero Trust, select **Done**.
 
 Your application will appear on the **Applications** page. If you added the application to your App Launcher, you can test the integration by going to `<your-team-name>.cloudflareaccess.com`.

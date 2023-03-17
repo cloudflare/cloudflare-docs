@@ -35,8 +35,8 @@ To filter traffic from private networks, refer to the [Cloudflare Tunnel guide](
    1. Open the WARP client settings.
    2. Navigate to **Preferences** > **General**.
    3. Note the **Public IP**.
-5. In the Zero Trust dashboard, navigate to **Logs** > **Gateway** > **Network**. Before building Network policies, make sure you see Network logs from the Source IP assigned to your device.
+5. In Zero Trust, navigate to **Logs** > **Gateway** > **Network**. Before building Network policies, make sure you see Network logs from the Source IP assigned to your device.
 
 ## 3. Add policies
 
-To create a new network policy, navigate to **Gateway** > **Firewall Policies** > **Network** in the Zero Trust dashboard. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.
+To create a new network policy, navigate to **Gateway** > **Firewall Policies** > **Network** in Zero Trust. Refer to our list of [common network policies](/cloudflare-one/policies/filtering/network-policies/common-policies) for policies you may want to create.

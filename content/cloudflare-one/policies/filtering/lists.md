@@ -25,7 +25,7 @@ If you would like to test how this feature works, here is a [sample CSV file](/c
 - Trailing whitespaces are not allowed.
 - CRLF (Windows) and LF (Unix) line endings are valid.
 
-To upload the list to the Zero Trust dashboard:
+To upload the list to Zero Trust:
 
 1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **My Team** > **Lists**.
 2. Select **Upload CSV**.

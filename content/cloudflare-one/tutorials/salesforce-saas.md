@@ -63,7 +63,7 @@ Admin access to a Salesforce account
     - **Identity Provider Certificate**: upload the `.crt` certificate file you’ve created in the previous step.
     - **EntityID**: `https://[YOUR_SFDC_DOMAIN].my.salesforce.com`
     - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
-    - **Identity Provider Login URL**: This is the SSO endpoint provided in the Zero Trust dashboard for that application.
+    - **Identity Provider Login URL**: This is the SSO endpoint provided in Zero Trust for that application.
 1.  Click **Save**.
 1.  From the navigation panel on the left, click **Domain Management** > **My Domain** and select your domain.
 1.  At the bottom, find **Authentication Configuration**. Click **Edit** and select your Authentication Service you created.

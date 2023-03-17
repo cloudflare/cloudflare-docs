@@ -10,7 +10,7 @@ Each client supports the following set of parameters as part of their deployment
 
 {{<Aside type="note">}}
 
-Most of the parameters listed below are also configurable in the Zero Trust Dashboard under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your `mdm.xml` or `com.cloudflare.warp.plist` files).
+Most of the parameters listed below are also configurable in Zero Trust under **Settings** > **Devices**. In the event of conflicting settings, the WARP client will always give precedence to settings on the local device (for example, in your `mdm.xml` or `com.cloudflare.warp.plist` files).
 
 {{</Aside>}}
 
@@ -51,7 +51,7 @@ Allows you to choose the operational mode of the client.
 - `1dot1` &mdash; Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh). All other traffic is handled by your device's default mechanisms.
 - `warp` &mdash; (default) All traffic sent through [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
 
-New service modes such as **Proxy only** are not supported as a value and must be configured in the Zero Trust dashboard.
+New service modes such as **Proxy only** are not supported as a value and must be configured in Zero Trust.
 
 ### `onboarding`
 
@@ -147,7 +147,7 @@ The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will 
 Requires WARP version 2022.10.0.0 or later.
 {{</Aside>}}
 
-Overrides the [IP address and UDP port](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge.  If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
+Overrides the [IP address and UDP port](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge. If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
 This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all WARP traffic to a new IP.
 

@@ -29,7 +29,7 @@ Refer to [our IdP setup instructions](/cloudflare-one/identity/idp-integration/a
 
 {{<Aside type="note">}}
 
-- When you configure the IdP in the Zero Trust dashboard, be sure to select **Enable group membership change reauthentication**.
+- When you configure the IdP in Zero Trust, be sure to select **Enable group membership change reauthentication**.
 - Save the **Application (client) ID**, **Directory (tenant) ID**, and **Client secret** as you will need them again in a later step.
   {{</Aside>}}
 

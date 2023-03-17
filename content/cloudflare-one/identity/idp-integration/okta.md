@@ -49,7 +49,7 @@ Okta provides cloud software that helps companies manage and secure user authent
     - **Client secret**: Enter your Okta Client secret.
     - **Okta account URL**: Enter your Okta domain, for example `https://<your-domain>.okta.com`.
 
-14. (Optional) Create an Okta API token and enter it in the Zero Trust dashboard (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
+14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
 15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
@@ -72,7 +72,7 @@ The Okta OIDC integration supports the [System for Cross-domain Identity Managem
 
 To synchronize users and groups between Access and Okta:
 
-### 1. Enable SCIM on the Zero Trust dashboard
+### 1. Enable SCIM on Zero Trust
 
 {{<render file="_enable-scim-on-dashboard.md">}}
 
@@ -94,9 +94,9 @@ To synchronize users and groups between Access and Okta:
 
 8. Select **Enable API integration**.
 
-9. In the **Base URL** field, enter the **SCIM Endpoint** obtained from the Zero Trust dashboard.
+9. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
 
-10. In the **API Token** field, enter the **SCIM Secret** obtained from the Zero Trust dashboard.
+10. In the **API Token** field, enter the **SCIM Secret** obtained from Zero Trust.
 
     ![Enter SCIM values into Okta](/cloudflare-one/static/documentation/identity/okta/enter-scim-values.png)
 

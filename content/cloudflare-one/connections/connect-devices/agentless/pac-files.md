@@ -20,7 +20,7 @@ Install the [Cloudflare certificate](/cloudflare-one/connections/connect-devices
 
 ## 1. Generate a proxy endpoint
 
-You can generate a proxy endpoint on the Zero Trust dashboard or through the Cloudflare API.
+You can generate a proxy endpoint on Zero Trust or through the Cloudflare API.
 
 {{<Aside type ="warning">}}
 All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.

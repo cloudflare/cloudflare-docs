@@ -9,7 +9,7 @@ layout: single
 
 Cloudflare Access allows you to add an additional authentication layer to your SaaS applications. When you integrate a SaaS application with Access, users log in using your existing identity providers and are only granted access if they pass your Access policies.
 
-This page provides generic instructions for setting up a SaaS application on the Zero Trust dashboard.
+This page provides generic instructions for setting up a SaaS application on Zero Trust.
 
 ## 1. Get SaaS application URLs
 
@@ -66,7 +66,7 @@ Finally, you will need to configure your SaaS application to require users to lo
    - **Access Entity ID or Issuer**
    - **Public key**
 
-   ![Copy SSO settings for a SaaS application from the Zero Trust dashboard](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
+   ![Copy SSO settings for a SaaS application from Zero Trust](/cloudflare-one/static/documentation/applications/saas-sso-endpoint.png)
 
    You can either manually enter this data into your SaaS application or upload the application's metadata XML file. The metadata is available at the URL: `<your-SSO-endpoint>/saml-metadata`
 

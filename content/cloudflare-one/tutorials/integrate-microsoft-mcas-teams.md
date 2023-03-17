@@ -60,9 +60,9 @@ If you would like to get a list of all of the MCAS allowed applications, you can
 $ curl -v "https://<MCAS API URL>/api/discovery_block_scripts/?format=120&type=allowed" -H "Authorization: Token <API token>"
 ```
 
-## Adding a hostname list in the Zero Trust Dashboard
+## Adding a hostname list in Zero Trust
 
-1.  In the Zero Trust Dashboard, navigate to **My Team** > **Lists**
+1.  In Zero Trust, navigate to **My Team** > **Lists**
 1.  Click on **Upload CSV**. Even though the hostname list is not really in CSV format, it will work with no issues.
 1.  Add a name for the list, specify "Hostnames" as the list type, and give it a description.
 1.  Drag and drop your MCAS output file created via the API call, or you can click **Select a file**.

@@ -7,7 +7,7 @@ layout: single
 
 # Set up a tunnel through the dashboard
 
-Follow this step-by-step guide to get your first tunnel up and running using the Zero Trust dashboard.
+Follow this step-by-step guide to get your first tunnel up and running using Zero Trust.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ Before you start, make sure you:
 
 5. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
 
-6. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
+6. Once the command has finished running, your connector will appear on Zero Trust.
 
    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
 

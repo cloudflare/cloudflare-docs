@@ -6,7 +6,7 @@ weight: 1
 
 # Generic SAML 2.0
 
-Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods on the Zero Trust Dashboard, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
+Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods on Zero Trust, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
 ## Prerequisites
 
@@ -32,7 +32,7 @@ The typical setup requirements are:
 
 If your identity provider supports metadata file configuration, use the endpoint: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
 
-## 2. Add a SAML identity provider to the Zero Trust Dashboard
+## 2. Add a SAML identity provider to Zero Trust
 
 1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Login methods**.
 2. Select **Add new** and select **SAML**.

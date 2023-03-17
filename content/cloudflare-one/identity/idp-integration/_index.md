@@ -17,7 +17,7 @@ Cloudflare Zero Trust supports social identity providers that do not require adm
 
 {{</Aside>}}
 
-## Set up IdPs on the Zero Trust dashboard
+## Set up IdPs on Zero Trust
 
 1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
 
@@ -35,7 +35,7 @@ Each identity provider will have different required fields for you to fill in. I
 
 Your IdP will now be listed in the **Login methods** card.
 
-## Test IdPs on the Zero Trust dashboard
+## Test IdPs on Zero Trust
 
 To test if an IdP is correctly configured, navigate to **Settings** > **Authentication**. Next, click **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 

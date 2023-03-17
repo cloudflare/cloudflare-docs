@@ -57,7 +57,7 @@ displaying this page:
 
 ![Access request prompt page displayed after logging in with cloudflared.](/cloudflare-one/static/documentation/applications/non-http/access-screen.png)
 
-To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in the Zero Trust dashboard. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
+To avoid seeing this page every time you authenticate through `cloudflared`, navigate to the application page of the Access section in Zero Trust. Click **Edit** and select the Settings tab. In the `cloudflared settings` card, toggle `Enable automatic cloudflared authentication` to on.
 
 ![The toggle to enable automatic connection is set to on.](/cloudflare-one/static/documentation/applications/non-http/cloudflared-app-settings.png)
 

@@ -72,7 +72,7 @@ To set up SAML with Okta as your identity provider:
 
 17. (Recommended) Under **SAML attributes**, enter `email` and `name`. The `name` attribute is required if you want to use Okta groups.
 
-![Adding optional SAML attributes in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-6.png)
+![Adding optional SAML attributes in Zero Trust](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-6.png)
 
 18. Click **Save**.
 

@@ -26,7 +26,7 @@ Before integrating a device posture check in a Gateway or Access policy, you sho
 3. Scroll down to **WARP client posture checks** and **Service provider posture checks**.
 4. Select a result to review details. You will see the value returned from the device, as well as the value required to pass the check.
 
-![Device posture results in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
+![Device posture results in Zero Trust](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
 
 ## 3. Build a device posture policy
 

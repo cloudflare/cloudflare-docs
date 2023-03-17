@@ -29,7 +29,7 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
    3. Select **Import**.
    4. **Save** the configuration.
 
-7. In the **Configuration** tab, select **Download metadata** and save the XML metadata file. This file will be used in a later step to add PingOne to the Zero Trust Dashboard.
+7. In the **Configuration** tab, select **Download metadata** and save the XML metadata file. This file will be used in a later step to add PingOne to Zero Trust.
 8. In the **Attribute Mappings** tab, add the following required attributes (case sensitive) and select **Save**.
 
    | Application attribute | Outgoing value |

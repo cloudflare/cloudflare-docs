@@ -116,7 +116,7 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
 ## View SSH Logs
 
-1. On the Zero Trust dashboard, navigate to **Logs** > **Gateway** > **SSH**.
+1. On Zero Trust, navigate to **Logs** > **Gateway** > **SSH**.
 
 2. If you enabled the **SSH Command Logging** feature, you can **Download** a session's command log.
 

@@ -11,7 +11,7 @@ This tutorial covers how to configure Cloudflare Access as a single sign-on prov
 
 **Time to complete:** 15 minutes
 
-## 1. Create an application on the Zero Trust Dashboard
+## 1. Create an application on Zero Trust
 
 1. Log in to the [Zero Trust dashboard](https://one.dash.cloudflare.com/) and navigate to **Access** > **Applications**.
 
@@ -51,7 +51,7 @@ When you put your Google Workspace behind Access, users will not be able to log 
 3. Select **Third-party SSO profile for your organization**.
 4. Enable **Set up SSO with third-party identity provider**.
 5. Fill in the following information:
-   - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from the Zero Trust dashboard.
+   - **Sign-in page URL**: Copy and then paste your **SSO endpoint** from Zero Trust.
    - **Sign-out page URL**: `https://<team-name>.cloudflareaccess.com/cdn-cgi/access/logout`, where `<team-name>` is your Zero Trust [team name](/cloudflare-one/glossary/#team-name).
    - **Verification certificate**: Upload the certificate file containing your public key.
 6. (Optional) Enable **Use a domain specific issuer**. If you select this option, Google will send an issuer specific to your Google Workspace domain (`google.com/a/<your_domain.com>` instead of the standard `google.com`).

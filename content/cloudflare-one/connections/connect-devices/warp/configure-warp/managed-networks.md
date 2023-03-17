@@ -76,7 +76,7 @@ The output will look something like:
 SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
-## 3. Add managed network to the Zero Trust dashboard
+## 3. Add managed network to Zero Trust
 
 1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Network locations** and select **Add new**.
