@@ -72,6 +72,15 @@
     }
   }
 
+  .emptyState a {
+    text-decoration: underline;
+  }
+
+  .emptyState {
+    font-size: 1.5em;
+    padding-left: 2.5em
+  }
+
 </style>
 
 <div class="QuadBlockGrid">
@@ -115,6 +124,7 @@
   </div>
   </div>
   {{- end -}}
+  <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="/search/">full search</a>.</p>
 </div>
 </div>
 
@@ -140,13 +150,13 @@
     }
 
     var productAreas = document.getElementsByClassName("ProductGridSection")
+    var visibleSections = false;
+
     for (section of productAreas) {
-      console.log(section)
       var visibleLinks = false;
       var links = section.getElementsByClassName("ProductGrid--link")
       for (link of links) {
         if (link.style.display !== "none") {
-          console.log(link)
           visibleLinks = true
         }
       }
@@ -154,7 +164,18 @@
         section.style.display = "none";
       } else {
         section.style.display = "";
+        visibleSections = true
       }
     }
+
+    var emptyStateMessage = document.getElementById("emptyState")
+    if (!visibleSections) {
+      emptyStateMessage.style.display = "";
+      emptyStateMessage.children[0].style.display = "";
+      emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + query.toLowerCase() + "&t=Docs" )
+    } else {
+      emptyStateMessage.style.display = "none";
+    }
+
   }
 </script>

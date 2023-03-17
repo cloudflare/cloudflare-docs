@@ -16,7 +16,7 @@ Also known as domain name, a domain is the string of text that identifies a spec
 
 ## Registrar
 
-Before you can start using the Cloudflare DNS service you must first have a domain. This is achieved by using a service called registrar. As explained in our [Learning Center](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/), a registrar handles the reservation of domain names as well as the assignment of IP addresses for those domains.
+Before you can start using the Cloudflare DNS service, you must first have a domain. This is achieved by using a service called registrar. As explained in our [Learning Center](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/), a registrar handles the reservation of domain names as well as the assignment of IP addresses for those domains.
 
 Cloudflare offers at-cost domain registration through [Cloudflare Registrar](/registrar/).
 

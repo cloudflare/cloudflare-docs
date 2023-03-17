@@ -18,6 +18,18 @@ Para acceder a Network Analytics sigue los siguientes pasos:
 
 La vista de **Network Analytics** de Cloudflare proporciona visibilidad casi en tiempo real de los patrones de tráfico de las capas de red y de transporte, así como de los ataques DDoS. Network Analytics visualiza datos a nivel de paquete y de bits. Son los mismos datos disponibles a través de la [API de GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/).
 
+{{<Aside type="note">}}
+-   Si necesitas información sobre el nuevo panel de control de Network
+    Analytics v2 (NAv2), disponible en versión beta, consulta
+    [Cloudflare Network
+    Analytics](https://developers.cloudflare.com/analytics/network-analytics/)
+    en la documentación para desarrolladores.
+-   También hay una nueva versión de la API GraphQL de Network
+    Analytics. Si todavía estás utilizando NAv1, deberías migrar a NAv2.
+    Para ello, consulta la [guía de
+    migración](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{</Aside>}}
+
 ![Panel de Analytics que muestra el resumen de paquetes por tipo](/support/static/na-main-dashboard.png)
 
 La herramienta Network Analytics acelera la elaboración de informes y la investigación del tráfico malicioso. Puedes filtrar los datos por los siguientes parámetros:
@@ -48,6 +60,12 @@ Para acceder a la vista de **Network Analytics**, sigue estos pasos:
 1.  Inicia sesión en tu cuenta de Cloudflare.
 2.  Si tienes acceso a varias cuentas, selecciona una cuenta que tenga acceso a Magic Transit o Spectrum.
 3.  En la página de **Inicio** de la cuenta, haz clic en **Network Analytics**.
+
+{{<Aside type="note">}}
+Las direcciones IP de origen se almacenan durante 30 días. Los periodos
+de informe de más de 30 días no incluyen datos de las direcciones IP de
+origen.
+{{</Aside>}}
 
 ___
 
@@ -118,6 +136,10 @@ Para filtrar en función del tipo de datos asociados con una de las estadística
 En este ejemplo, al hacer clic en el botón **Filtrar** se reduce el alcance de la vista a solo el tráfico asociado con la acción _Permitir_.
 
 ### Crear una regla de firewall mágico a partir de los filtros aplicados
+
+{{<Aside type="note">}}
+Esta función sólo está disponible para los usuarios de Magic Transit.
+{{</Aside>}}
 
 Puedes crear una regla [Magic Firewall](https://developers.cloudflare.com/magic-firewall) que bloquee todo el tráfico que coincida con los filtros seleccionados en Network Analytics. Los filtros admitidos actualmente son:
 
@@ -435,6 +457,12 @@ Puedes elegir entre estas opciones:
 -   IP de origen
 -   Puerto de origen
 -   Marca de TCP
+
+{{<Aside type="note">}}
+Los datos para el ASN (aviso de envío por adelantado) de origen, IP de
+origen, puerto de origen y marca de TCP solo están disponibles durante
+las últimas 24 horas.
+{{</Aside>}}
 
 ### Compartir los filtros de Network Analytics 
 

@@ -10,7 +10,7 @@ layout: single
 The Security Analytics dashboard displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
 {{<Aside type="note">}}
-Gradually available to Enterprise customers on Core and Advanced bundles.
+Gradually available to customers on Enterprise and Business plans. To get access today, contact your account team.
 {{</Aside>}}
 
 In the dashboard you can visualize which traffic is being mitigated by Cloudflare, review several security-related statistics about incoming requests (such as [bot score](/bots/concepts/bot-score/), [attack scores](/waf/about/waf-attack-score/), and [uploaded content scanning](/waf/about/content-scanning/) results), and check which requests are reaching the origin server or being handled directly by Cloudflare.
@@ -28,8 +28,12 @@ If you need to modify existing security-related rules you already configured, co
 
 To use Security Analytics:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Analytics**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+
+2. Go to the account or zone dashboard:
+
+    - For the zone dashboard, select your domain and go to **Security** > **Analytics**.
+    - For the account dashboard, go to **Security Center** > **Security Analytics**.
 
 ![The Security Analytics dashboard displaying the HTTP requests chart for the past 24 hours.](/waf/static/security-analytics/security-analytics-dashboard.png)
 

@@ -11,6 +11,11 @@ title: Facturación para el Load Balancing
 
 ## Precios de Load Balancing de Cloudflare
 
+{{<Aside type="warning">}}
+Los clientes con acceso a la China network no deben usar Load Balancer o
+se producirán errores HTTP 530.
+{{</Aside>}}
+
 Las suscripciones de Load Balancing de Cloudflare cuestan entre 5 $ y 50 $ al mes, según las opciones de suscripción seleccionadas.
 
 Puedes configurar el Load Balancing para que se ajuste a tus requisitos específicos en función del número de servidores de origen, la frecuencia de health checks, el número de regiones verificadas y el enrutamiento geográfico.

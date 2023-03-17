@@ -66,4 +66,10 @@ Pero no coincidiría con:   
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://www.ejemplo.com/sam/index.php  [sam no contiene «b»]</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Las Page Rules se aplican por orden de aparición en la lista. Si desea
+cambiar la posición de una Page Rule, puede moverla con el icono de la
+parte izquierda.
+{{</Aside>}}
+
 Para acceder a un tutorial completo de Page Rule, [visite este artículo.](https://support.cloudflare.com/entries/22576178-Is-there-a-tutorial-for-PageRules-)

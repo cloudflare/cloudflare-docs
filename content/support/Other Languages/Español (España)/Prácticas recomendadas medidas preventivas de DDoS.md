@@ -36,6 +36,11 @@ Para ver las IP reales detrás de un ataque, [restaura las IP originales de los
 
 Cloudflare oculta las direcciones IP de tu servidor de origen para el tráfico que redirijas mediante proxy a Cloudflare. Como precaución de seguridad adicional, te recomendamos que contactes con tu proveedor de alojamiento y solicites nuevas IP de servidor de origen.
 
+{{<Aside type="note">}}
+Esta tarea puede suponer algún cargo, así que habla con tu proveedor de
+alojamiento en función del riesgo de ataque a tu sitio.
+{{</Aside>}}
+
 ### Utiliza Rate Limiting para prevenir ataques de fuerza bruta y DDoS de capa 7
 
 Para frustrar ataques disfrazados de solicitudes HTTP normales, Rate Limiting permite a los administradores de sitios web especificar umbrales específicos en la carga que esperan que reciba su servidor web. Con un simple clic, configura rate limiting básico para que [proteja tus páginas de inicio de sesión de ataques de fuerza bruta](https://support.cloudflare.com/hc/articles/115001635128#3UWQC5PrVScHgEGRMobRMm).
