@@ -72,6 +72,22 @@ The following are the properties on the `context` object which are passed throug
 
       Holds the values from [dynamic routing](https://developers.cloudflare.com/pages/platform/functions/routing/#dynamic-routes).
 
+      In the following example, you have a dynamic path that is `/users/[user].js`. When you visit the site on `/users/nevi` the `params` object would look like:
+
+      ```sh
+      {
+        user: "nevi"
+      }
+      ```
+
+      This allows you fetch the dynamic value from the path:
+
+      ```sh
+      new Response(`Hello ${context.params.user}`);
+      ```
+
+      Which would return `"Hello nevi"`.
+
   - `data` [{{<type>}}Data{{</type>}}](#data)
   
 {{</definitions>}}
