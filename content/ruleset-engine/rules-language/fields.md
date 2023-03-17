@@ -460,7 +460,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_ip">
         <td><code>cf.edge.server_ip</code><br />{{<type>}}IP Address{{</type>}}</td>
         <td>
-          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          <p>Represents the global network's IP address to which the HTTP request has resolved to.
           </p>
           <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
           </p>
@@ -469,7 +469,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_port">
         <td><code>cf.edge.server_port</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
-          <p>Represents the port number at which Cloudflare's network received the request.
+          <p>Represents the port number at which Cloudflare's global network received the request.
           </p>
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
         </td>
