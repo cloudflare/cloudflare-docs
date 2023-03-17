@@ -82,8 +82,7 @@ nvme0n1                     259:0    0 476.9G  0 disk
     └─my--vg-swap_1 253:2            0   976M  0 lvm   [SWAP]
 ```
 
-On Linux, encryption is reported per mounted partition, not physical drive. In the example above, the root and swap partitions are found within a `crypt` container and therefore considered encrypted.
-The posture check allows `/boot` and `/boot/efi` to remain unencrypted since they are read-only and will never contain sensitive data.
+On Linux, encryption is reported per mounted partition, not physical drive. In the example above, the root and swap partitions are considered encrypted because they are located within a `crypt` container. The `/boot` and `/boot/efi` partitions remain unencrypted.
 
 ### On iOS, Android and ChromeOS
 
