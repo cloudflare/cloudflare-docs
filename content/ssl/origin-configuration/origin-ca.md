@@ -3,7 +3,7 @@ title: Origin CA certificates
 pcx_content_type: how-to
 weight: 4
 meta:
-  description: Origin Certificate Authority (CA) certificates allow you to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
+  description: Origin Certificate Authority (CA) certificates allow you to encrypt traffic between Cloudflare and your origin web server, and reduce origin bandwidth consumption.
 ---
 
 # Origin CA certificates
