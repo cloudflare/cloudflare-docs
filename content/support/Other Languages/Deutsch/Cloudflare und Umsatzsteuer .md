@@ -15,6 +15,17 @@ Cloudflare zieht entsprechend den Steuergesetzen in Russland oder in bestimmten 
 
 Um unerwünschte Gebühren zu vermeiden, achten Sie darauf, dass die Rechnungsadresse und die Zahlungsmethode bei Ihrem Cloudflare-Konto korrekt sind.
 
+{{<Aside type="note">}}
+Cloudflare-Kunden, die an einem Sponsoring-Programm teilnehmen (z. B.
+[Project
+Athenian](https://support.cloudflare.com/hc/articles/360032879131),
+[Project
+Galileo](https://support.cloudflare.com/hc/articles/202312014-Project-Galileo),
+[Cloudflare for
+Campaigns](https://support.cloudflare.com/hc/articles/360038570912)),
+wird keine Umsatzsteuer berechnet.
+{{</Aside>}}
+
 ___
 
 ## Umsatzsteuer in US-Bundesstaaten
@@ -40,6 +51,10 @@ Ausländische E-Services-Anbieter sind gesetzlich verpflichtet, Steuern auf die 
 
 [Aktualisieren Sie Ihre Abrechnungsdaten](https://support.cloudflare.com/hc/articles/200170236/#12345682) und geben Sie Ihre russische Umsatzsteuer-ID an, damit sie in Ihren Cloudflare-Rechnungen erscheint.
 
+{{<Aside type="note">}}
+Es gibt keine Steuerbefreiung für russische Kunden.
+{{</Aside>}}
+
 ___
 
 ## Steuern in Singapur
@@ -59,6 +74,11 @@ ___
 ## Kanada
 
 Alle **NICHT-GST-registrierten** Kunden, die sich in Kanada befinden, sind gesetzlich verpflichtet, Steuern zu zahlen
+
+{{<Aside type="note">}}
+Jeder, der eine GST-ID vorlegt, ist befreit, es bestehen keine weiteren
+Ausnahmen
+{{</Aside>}}
 
 ___
 

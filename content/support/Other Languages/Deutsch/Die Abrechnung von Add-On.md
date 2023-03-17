@@ -13,6 +13,10 @@ Bei einigen Cloudflare-Abonnements und -Diensten hängen die Gebühren davon ab,
 
 Wenn Ihr Abrechnungstermin beispielsweise der 15. März ist und Sie am 1. März im Dashboard Cloudflare Workers aktivieren, enthält Ihre Rechnung am 15. März die Gebühren für Rate Limiting vom 1.–15. März. Die nächste Rechnung am 15. April enthält dann die Gebühren für die Nutzung von Rate Limiting vom 16. März bis zum 15. April.
 
+{{<Aside type="note">}}
+Die Preisstruktur ist je nach genutztem Dienst unterschiedlich.
+{{</Aside>}}
+
 Auf den produktspezifischen Seiten finden Sie Genaueres über die Preisgestaltung und die Gebühren:
 
 -   [Argo](https://support.cloudflare.com/hc/en-us/articles/115000224192)

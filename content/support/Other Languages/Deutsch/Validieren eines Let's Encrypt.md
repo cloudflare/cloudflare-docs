@@ -86,3 +86,9 @@ Kurz bevor das Zertifikat abläuft, können Sie es mit dem `letsencrypt renew`\-
 -   Auf diese URL sind keine Umleitungen angewendet. 
 
 Alternativ dazu können Sie die oben aufgeführten Schritte auch wiederholen, um sich einfach ein neues Zertifikat ausstellen zu lassen.
+
+{{<Aside type="note">}}
+Zum gegenwärtigen Zeitpunkt wird die DNS-Validierungsmethode vom
+offiziellen Client noch nicht unterstützt. Es gibt jedoch Tools von
+Drittanbietern, die diese Methode einsetzen.
+{{</Aside>}}

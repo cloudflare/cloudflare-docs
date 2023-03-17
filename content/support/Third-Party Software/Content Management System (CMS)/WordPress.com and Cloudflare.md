@@ -77,7 +77,7 @@ Cloudflare's [Automatic Platform Optimization](https://www.cloudflare.com/automa
 The [Automatic Platform Optimization
 (APO)](https://www.cloudflare.com/automatic-platform-optimization/wordpress/)
 feature requires that you be on a [Full
-Setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/)
+Setup](/dns/zone-setups/full-setup/)
 using Cloudflare nameservers.
 {{</Aside>}}
 
@@ -112,8 +112,8 @@ ___
 
 In a terminal, use the following cURL. The header `'accept: text/html'` is important
 
-```
-% curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
+```sh
+$ curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 | grep 'cf-cache-status\|cf-edge\|cf-apo-via'
 < cf-cache-status: HIT
 < cf-apo-via: cache
 < cf-edge-cache: cache,platform=wordpress

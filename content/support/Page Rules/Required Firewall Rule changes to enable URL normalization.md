@@ -54,5 +54,5 @@ ___
 
 ## Related resources
 
--   [URL normalization](https://developers.cloudflare.com/rules/normalization) (Developers Documentation)
+-   [URL normalization](/rules/normalization) (Developers Documentation)
 -   [Dynamic URL Rewriting at the edge with Cloudflare](https://blog.cloudflare.com/introducing-transform-rules-with-url-rewriting-at-the-edge) (Cloudflare Blog)

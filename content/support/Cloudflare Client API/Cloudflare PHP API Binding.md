@@ -56,7 +56,9 @@ ___
 Here is a simple example of using the API
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">getUserID() . PHP_EOL;</span></div></span></span></span></code></pre>{{</raw>}}
+```php
+getUserID() . PHP_EOL;
+```
 
 Running this simple script via terminal yields the following output:
 
@@ -68,8 +70,11 @@ ___
 
 Here is a simple script to list all the zones on an account, using the following code:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">listZones()-&gt;result as $zone) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    echo $zone-&gt;name.' ('.$zone-&gt;plan-&gt;name.')'.PHP_EOL;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
+```php
+listZones()->result as $zone) {
+    echo $zone->name.' ('.$zone->plan->name.')'.PHP_EOL;
+}
+```
 
 Running this via the command line yields the following output:
 
@@ -81,9 +86,13 @@ ___
 
 Here's another example which utilises the cache purge endpoint to clear the entire cache on every website in our account (note that you can purge individual files using the cache using the cachePurge method instead of cachePurgeEverything):
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">listZones()-&gt;result as $zone) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    echo &quot;Cache purge for &quot; . $zone-&gt;name . &quot;: &quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    echo $zones-&gt;cachePurgeEverything($zone-&gt;id) == true ? &quot;successful&quot; : &quot;failed&quot;;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    echo PHP_EOL;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
+```php
+listZones()->result as $zone) {
+    echo "Cache purge for " . $zone->name . ": ";
+    echo $zones->cachePurgeEverything($zone->id) == true ? "successful" : "failed";
+    echo PHP_EOL;
+}
+```
 
 Here is the output of running this script via the command line:
 
@@ -95,12 +104,17 @@ ___
 
 The SDK can also be used for programatically adding Page Rules to a Cloudflare Zone, here's a simple example of adding a Cache Bypass rule:
 
+```php
+getZoneID("junade.com");
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">getZoneID(&quot;junade.com&quot;);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$pageRulesTarget = new \Cloudflare\API\Configurations\PageRulesTargets('https://junade.com/noCache/*');</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$pageRulesConfig = new \Cloudflare\API\Configurations\PageRulesActions();</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$pageRulesConfig-&gt;setCacheLevel('bypass');</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$pageRules = new \Cloudflare\API\Endpoints\PageRules($adapter);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$pageRules-&gt;createPageRule($zoneID, $pageRulesTarget, $pageRulesConfig, true, 6);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span></span></span></code></pre>{{</raw>}}
+$pageRulesTarget = new \Cloudflare\API\Configurations\PageRulesTargets('https://junade.com/noCache/*');
+
+$pageRulesConfig = new \Cloudflare\API\Configurations\PageRulesActions();
+$pageRulesConfig->setCacheLevel('bypass');
+
+$pageRules = new \Cloudflare\API\Endpoints\PageRules($adapter);
+$pageRules->createPageRule($zoneID, $pageRulesTarget, $pageRulesConfig, true, 6);
+```
 
 We are able to easily get the ID of a given zone using the getZoneID method in the Zones endpoint class, this helper method makes it easier to get the zone ID from the zone name.
 
@@ -112,15 +126,25 @@ ___
 
 The SDK can also be used for programatically adding records, here's an example of adding an example DNS record:
 
+```php
+getZoneID("junade.com");
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">getZoneID(&quot;junade.com&quot;);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$dns = new \Cloudflare\API\Endpoints\DNS($adapter);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">if ($dns-&gt;addRecord($zoneID, &quot;A&quot;, 'example', '8.8.8.8', 0, true) === true) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    echo &quot;DNS record created.&quot;. PHP_EOL;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
+$dns = new \Cloudflare\API\Endpoints\DNS($adapter);
+if ($dns->addRecord($zoneID, "A", 'example', '8.8.8.8', 0, true) === true) {
+    echo "DNS record created.". PHP_EOL;
+}
+```
 
 Further, we can also delete, list and view details of DNS records through this SDK. For example; let's create a simple script to list the type and name of every DNS record on our zone:
 
+```php
+getZoneID("icyapril.com");
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">getZoneID(&quot;icyapril.com&quot;);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
-</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$dns = new \Cloudflare\API\Endpoints\DNS($adapter);</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">foreach ($dns-&gt;listRecords($zoneID)-&gt;result as $record) {</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    echo $record-&gt;type.&quot; &quot;.$record-&gt;name.PHP_EOL;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span></span></span></code></pre>{{</raw>}}
+$dns = new \Cloudflare\API\Endpoints\DNS($adapter);
+foreach ($dns->listRecords($zoneID)->result as $record) {
+    echo $record->type." ".$record->name.PHP_EOL;
+}
+```
 
 Here's the example when I run this script against one of my zones:
 

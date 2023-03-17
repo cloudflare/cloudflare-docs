@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170036-What-does-Server-Side-Excludes-SSE-do-
-title: What does Server Side Excludes (SSE) do
+title: What does Server Side Excludes (SSE) do?
 ---
 
 # What does Server Side Excludes (SSE) do?

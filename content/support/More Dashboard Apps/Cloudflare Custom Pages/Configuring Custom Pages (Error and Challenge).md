@@ -31,8 +31,14 @@ Before adding a custom error page to your Cloudflare account, you will need to d
 
 You can use the following custom error template to start building your page:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;head&gt;&lt;/head&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> &lt;body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   ::[REPLACE WITH CUSTOM ERROR TOKEN NAME]::</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> &lt;/body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/html&gt;</span></div></span></span></span></code></pre>{{</raw>}}
+```html
+<html>
+<head></head>
+ <body>
+   ::[REPLACE WITH CUSTOM ERROR TOKEN NAME]::
+ </body>
+</html>
+```
 
 {{<Aside type="warning">}}
 Your custom error page must include a custom error token and cannot
@@ -46,8 +52,19 @@ When published, any additional scripts, images, or stylesheets increase the size
 
 Here is sample code for a 5XX custom error page without styling: 
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;!DOCTYPE html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;html&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> &lt;head&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">   &lt;meta charset=&quot;utf-8&quot;&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">    &lt;title&gt;5XX Level Errors page&lt;/title&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/head&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  &lt;h1&gt; 5XX Level Errors &lt;/h1&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">  &lt;h2&gt;::CLOUDFLARE_ERROR_500S_BOX::&lt;/h2&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/body&gt;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">&lt;/html&gt;</span></div></span></span></span></code></pre>{{</raw>}}
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="utf-8">
+    <title>5XX Level Errors page</title>
+</head>
+<body>
+  <h1> 5XX Level Errors </h1>
+  <h2>::CLOUDFLARE_ERROR_500S_BOX::</h2>
+</body>
+</html>
+```
 
 ___
 
@@ -71,8 +88,8 @@ Only one page-specific custom error token can be used per page.
 | **Token** | **Available to** |
 | --- | --- |
 | ::GEO:: | IP/Country Block |
-| ::CAPTCHA\_BOX:: | Legacy CAPTCHA Challenge<br/>Country Challenge (CAPTCHA Challenge)<br/>Managed Challenge |
-| ::IM\_UNDER\_ATTACK\_BOX:: | I'm Under Attack Mode (Interstitial Page)<br/>JS Challenge |
+| ::CAPTCHA\_BOX:: | Legacy CAPTCHA Challenge<br/>Country Challenge (CAPTCHA Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
+| ::IM\_UNDER\_ATTACK\_BOX:: | JS Challenge |
 | ::CLOUDFLARE\_ERROR\_500S\_BOX:: | 5XX Errors |
 | ::CLOUDFLARE\_ERROR\_1000S\_BOX:: | 1XXX Errors |
 | ::ALWAYS\_ONLINE\_NO\_COPY\_BOX:: | Always Online |
@@ -136,7 +153,7 @@ ___
 
 If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](https://developers.cloudflare.com/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
 
 ### 1xxx errors
 
@@ -160,7 +177,7 @@ ___
 
 ## Related Resources
 
--   [Cloudflare Firewall Rules](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
+-   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
 -   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)

@@ -19,7 +19,7 @@ If you are following the _best practices for MX records on Cloudflare_ mention
 
 ### Are DNS records missing?
 
-Contact your mail administrator to confirm the DNS records for your domain are correct. Refer to our guide on [managing DNS records in Cloudflare](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) if you need assistance to add or edit DNS records.
+Contact your mail administrator to confirm the DNS records for your domain are correct. Refer to our guide on [managing DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records) if you need assistance to add or edit DNS records.
 
 {{<Aside type="note">}}
 Cloudflare support is unable to modify DNS records within your account.
@@ -27,13 +27,13 @@ Cloudflare support is unable to modify DNS records within your account.
 
 ### Do you have CNAME Flattening enabled?
 
-When set to [Flatten all CNAMEs](https://developers.cloudflare.com/dns/additional-options/cname-flattening) in your Cloudflare DNS settings, queries to all CNAME records will flatten to an A record; no CNAME records will be returned.
+When set to [Flatten all CNAMEs](/dns/additional-options/cname-flattening) in your Cloudflare DNS settings, queries to all CNAME records will flatten to an A record; no CNAME records will be returned.
 
 Also, if CNAME records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when **_Flatten all CNAMEs_** is enabled. Changing to _**Flatten at the root**_ should fix any issues with your CNAME records not being returned.
 
 ### Is Cloudflare Spectrum enabled on your account?
 
-Cloudflare does not proxy traffic on port 25 (SMTP) unless [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/reference/configuration-options#smtp) is enabled and configured to proxy email traffic across Cloudflare. If you do not have Spectrum enabled, then no email traffic (SMTP) will actually pass through Cloudflare, and we will simply resolve the DNS. This also means that any DNS record used to send email traffic must be grey-clouded to bypass the Cloudflare network. Check [Identifying subdomains compatible with Cloudflare's proxy](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records) for more details.
+Cloudflare does not proxy traffic on port 25 (SMTP) unless [Cloudflare Spectrum](/spectrum/reference/configuration-options#smtp) is enabled and configured to proxy email traffic across Cloudflare. If you do not have Spectrum enabled, then no email traffic (SMTP) will actually pass through Cloudflare, and we will simply resolve the DNS. This also means that any DNS record used to send email traffic must be grey-clouded to bypass the Cloudflare network. Check [Identifying subdomains compatible with Cloudflare's proxy](/dns/manage-dns-records/reference/proxied-dns-records) for more details.
 
 ### Contact your mail provider for assistance.
 

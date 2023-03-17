@@ -23,7 +23,7 @@ Please review the product-specific pages for details on pricing and charges:
 -   [Load Balancing](https://support.cloudflare.com/hc/en-us/articles/115005254367)
 -   [Cloudflare Rate Limiting](https://support.cloudflare.com/hc/en-us/articles/115000272247)
 -   [Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360016450871)
--   [Cloudflare Workers and Workers KV](https://developers.cloudflare.com/workers/about/pricing/)
+-   [Cloudflare Workers and Workers KV](/workers/platform/pricing/)
 
 ___
 
@@ -42,4 +42,4 @@ usage and billing may vary. Your monthly invoice is the most reliable
 source for billing information.
 {{</Aside>}}
 
-For help creating usage-based billing alerts, refer to our [Notifications documentation](https://developers.cloudflare.com/fundamentals/notifications/create-notifications/). For the _Event Type_ of your notification, you would select **Usage-Based Billing**.
+For help creating usage-based billing alerts, refer to our [Notifications documentation](/fundamentals/notifications/create-notifications/). For the _Event Type_ of your notification, you would select **Usage-Based Billing**.

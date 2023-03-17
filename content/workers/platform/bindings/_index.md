@@ -41,7 +41,7 @@ Durable Object bindings for communication between a Worker and a Durable Object.
 
 R2 bucket bindings for communication between a Worker and an R2 bucket.
 
-* Learn more about [R2 bucket bindings](/r2/data-access/workers-api/workers-api-reference/#create-a-binding).
+* Learn more about [R2 bucket bindings](/r2/api/workers/workers-api-reference/#create-a-binding).
 * Configure R2 bucket bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#r2-buckets).
 
 ### Queue bindings

@@ -75,6 +75,11 @@ mit einer _Umleitungs-URL_ von
 
 leitet Anfragen für die Root-Domain von _example.com_ unter Beibehaltung des URL-Verzeichnisses auf die Subdomain _www.example.com_ um.
 
+{{<Aside type="note">}}
+Die Aktion *Immer HTTPS verwenden* wird nur angezeigt, wenn in Ihrer
+Zone ein Cloudflare-SSL-Zertifikat aktiv ist.
+{{</Aside>}}
+
 Erzwingen von HTTPS löst keine Probleme mit [gemischtem Inhalt](https://support.cloudflare.com/hc/en-us/articles/200170476-How-do-I-fix-the-SSL-Mixed-Content-Error-Message-), da Browser das Protokoll der enthaltenen Ressourcen überprüfen, bevor Sie eine Anfrage senden. Sie müssen nur relative Links oder HTTPS-Links auf Seiten verwenden, die Sie nach HTTPS zwingen. Cloudflare kann einige Links mit gemischtem Inhalt automatisch mit unserer Funktionalität [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/en-us/articles/227227647-How-do-I-use-Automatic-HTTPS-Rewrites-) auflösen.
 
 ___
@@ -82,6 +87,12 @@ ___
 ### Funktioniert SSL auch bei Hosting-Partnern?
 
 Für alle neuen Cloudflare-Domains, die über einen Hosting-Partner über CNAME- und Full DNS-Integrationen hinzugefügt wurden, ist ein kostenloses universelles SSL-Zertifikat verfügbar.
+
+{{<Aside type="note">}}
+Bei Domains, die vor dem 9. Dezember 2016 zu Cloudflare hinzugefügt
+wurden, muss der Hosting-Partner die Domain löschen und erneut zu
+Cloudflare hinzufügen, um das SSL-Zertifikat bereitzustellen.
+{{</Aside>}}
 
 Stellen Sie über Cloudflare einen Proxy für eine Unterdomain bereit, um das Free Universal SSL-Zertifikat bereitzustellen.
 

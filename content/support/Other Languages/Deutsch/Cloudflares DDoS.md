@@ -61,6 +61,12 @@ Häufige Anzeichen dafür, dass Sie einem DDoS-Angriff ausgesetzt sind, sind:
 -   Es gibt unerwartete Spitzen in den Diagrammen für **Anfragen über Cloudflare** oder **Bandbreite** in Ihrer Cloudflare-**Analytics**\-App.
 -   Es gibt seltsame Anfragen in den Protokollen Ihres Ursprungswebservers, die nicht dem normalen Besucherverhalten entsprechen.
 
+{{<Aside type="note">}}
+Wenn Sie gerade einem DDoS-Angriff ausgesetzt sind, lesen Sie unseren
+Leitfaden zur [Reaktion auf einen
+DDoS-Angriff](https://support.cloudflare.com/hc/de/articles/200170196-I-am-under-DDoS-attack-what-do-I-do-).
+{{</Aside>}}
+
 ___
 
 ## Greift Cloudflare mich an?
@@ -71,6 +77,17 @@ Es gibt zwei häufige Szenarien, bei denen es fälschlicherweise so wirkt, als s
 -   Der Angreifer fälscht die IPs von Cloudflare. Cloudflare sendet [Traffic nur über ein paar bestimmte Ports an Ihren Ursprungswebserver](https://support.cloudflare.com/hc/articles/200169156), es sei denn, Sie verwenden [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started/).
 
 Da Cloudflare ein Reverse-Proxy ist, beobachtet Ihr Hosting-Provider im Idealfall den Angriffs-Traffic, der sich von [Cloudflare-IP-Adressen](https://www.cloudflare.com/ips/) aus verbindet. Wenn Sie dagegen Verbindungen von IP-Adressen sehen, die nicht zu Cloudflare gehören, erfolgt der Angriff direkt auf Ihren Ursprungswebserver. Cloudflare kann keine direkten Angriffe auf die IP-Adresse Ihres Ursprungsservers stoppen, da dieser Traffic das Netzwerk von Cloudflare umgeht.
+
+{{<Aside type="tip">}}
+Wenn ein Angreifer direkt auf Ihren Ursprungs-Webserver abzielt, fordern
+Sie Ihren Hosting-Provider auf, Ihre Ursprungs-IPs zu ändern, und
+aktualisieren Sie die IP-Informationen in Ihrer Cloudflare **DNS**-App.
+Stellen Sie sicher, dass alle möglichen DNS-Einträge mit einer
+orangefarbenen Wolke markiert sind und dass Ihre Nameserver weiterhin
+auf Cloudflare verweisen (es sei denn, Sie verwenden ein
+[CNAME-Setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup)),
+bevor Sie Ihre Ursprungs-IP ändern.
+{{</Aside>}}
 
 ___
 

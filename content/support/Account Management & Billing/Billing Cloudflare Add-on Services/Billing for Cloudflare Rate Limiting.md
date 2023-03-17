@@ -20,7 +20,7 @@ which is billed based on usage.\
 To benefit from **unmetered rate limiting** (new version), rewrite your
 current rules in the new version of the feature. For more information,
 refer to [Rate limiting
-rules](https://developers.cloudflare.com/waf/rate-limiting-rules/) in
+rules](/waf/rate-limiting-rules/) in
 the developer documentation.
 {{</Aside>}}
 
