@@ -10,6 +10,7 @@ rss: file
 
 - The ListParts API has been implemented and is available for use.
 - HTTP2 is now enabled by default for new custom domains linked to R2 buckets.
+- Object Lifecycles are now available for use.
 - Bug fix: Requests to public buckets will now return the `Content-Encoding` header for gzip files when `Accept-Encoding: gzip` is used
 
 ## 2023-01-27
