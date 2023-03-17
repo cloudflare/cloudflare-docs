@@ -8,7 +8,7 @@ weight: 1
 
 ## Network layer
 
-Network-layer phases apply to packets received in the Cloudflare global network.
+Network-layer phases apply to packets received on the Cloudflare global network.
 
 {{<table-wrap>}}
 
@@ -21,7 +21,7 @@ Phase name      | Used in product/feature
 
 ## Application layer
 
-Application-layer phases apply to requests received in the Cloudflare global network.
+Application-layer phases apply to requests received on the Cloudflare global network.
 
 ### Request phases
 
