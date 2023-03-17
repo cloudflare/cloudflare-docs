@@ -23,6 +23,6 @@ You can expand an individual row to view details about the request. To see the d
 
 {{<beta heading="h2">}}Report false positives{{</beta>}}
 
-To report a DLP false positive, select a log, then select **Report DLP false positive** under **DLP details**.
+To report a DLP false positive, select a log, then select **Report DLP false positive** under **DLP details**. The information to be sent to Cloudflare will appear. Select **Send report**.
 
 Cloudflare will not respond directly to your report, but reporting false positives helps us improve our products. If you require technical assistance, reach out to [support](https://dash.cloudflare.com/?to=/:account/support).
