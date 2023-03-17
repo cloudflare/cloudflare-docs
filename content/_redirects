@@ -542,6 +542,7 @@
 /r2/platform/s3-compatibility/extensions/ /r2/api/s3/extensions/ 301
 /r2/runtime-apis/ /r2/api/workers/workers-api-reference/ 301
 /r2/data-access/ /r2/api/ 301
+/r2/data-access/public-buckets/ /r2/buckets/public-buckets/ 301
 /r2/data-access/workers-api/ /r2/api/workers/ 301
 /r2/data-access/workers-api/workers-api-usage/ /r2/api/workers/workers-api-usage/ 301
 /r2/data-access/workers-api/workers-multipart-usage/ /r2/api/workers/workers-multipart-usage/ 301
