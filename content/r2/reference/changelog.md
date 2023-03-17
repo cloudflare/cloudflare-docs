@@ -6,6 +6,13 @@ rss: file
 
 # Changelog
 
+## 2023-03-16
+
+- The ListParts API has been implemented and is available for use.
+- HTTP2 is now enabled by default for new custom domains linked to R2 buckets.
+- Object Lifecycles are now available for use.
+- Bug fix: Requests to public buckets will now return the `Content-Encoding` header for gzip files when `Accept-Encoding: gzip` is used
+
 ## 2023-01-27
 
 - R2 authentication tokens created via the R2 token page are now scoped to a single account by default.
