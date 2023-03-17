@@ -31,7 +31,44 @@ Magic Transit [encapsulates IP packets](https://www.cloudflare.com/learning/netw
 
 In the diagram below, Magic Transit encapsulates packets at the Cloudflare global network and transmits them to a customer’s — Acme for example — tunnel endpoint router.
 
-![Flow of packet encapsulation at Cloudflare's global network to user's tunnel endpoint router](/magic-transit/static/magic-transit-anycast-1.png)
+```mermaid
+flowchart LR
+
+a(User)
+e(Cloudflare server)
+
+subgraph 1
+b("IP (203.0.113.100) | <br> TCP (SYN)")
+end
+
+subgraph 2
+c("IP (198.51.100.1 | GRE) <br> IP (203.0.113.100) | TCP (SYN)")
+end
+
+subgraph 3
+d("IP (203.0.113.100) | <br> TCP (SYN)")
+end
+
+subgraph 4
+direction TB
+f("Acme router <br> (198.51.100.1)")
+g("FTP server <br> (203.0.113.100)")
+end
+
+a --> e
+e== GRE <br> tunnel ==>f
+f --> g
+a --- 1
+e --- 2
+4 --- 3
+
+classDef purplefill stroke:purple,stroke-width:3px
+classDef orange stroke:orange, stroke-width:3px
+class c purplefill
+class e orange
+linkStyle 1 stroke:purple
+
+```
 
 {{<Aside type="note" header="Note">}}
 
