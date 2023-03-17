@@ -5,11 +5,21 @@ title: Limits
 
 # Limits
 
-While D1 is in Alpha, there are some limits to be aware of prior to begin testing.
+{{<Aside type="note" heading="D1 is currently in alpha">}}
 
-* **Database size**: You can have a max database size of 100 MB. There are no limitations on rows and columns as long as your database falls within the size limitation.
-* **Databases per account**: Create up to 10 D1 databases on a single account. If you need more, reach out to the team.
-* **Backups**: Backups run every hour automatically. Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
+Many of these limits will increase during D1's [public alpha](/workers/platform/betas/). Join the [`#d1-open-alpha`](https://discord.gg/rrZXVVcKQF) channel in the Cloudflare Developer Discord to keep up to date with changes.
+
+{{</Aside>}}
+
+{{<table-wrap>}}
+
+| Feature                                            | Limit                                   |
+| -------------------------------------------------- | --------------------------------------- |
+| Databases                                          | 10 per account <sup>1</sup>             |
+| Database size                                      | 100 MB <sup>2</sup>                     |
+| Maximum [database backups](/d1/learning/backups/)  | No currently defined limit.             |
+
+{{</table-wrap>}}
 
 {{<Aside type="note">}}
 
@@ -18,3 +28,6 @@ If you would like to explore other storage solutions for your application, Cloud
 Refer to the [Storage options guide](/workers/platform/storage-objects/) to review which storage option is right for your use case.
 
 {{</Aside>}}
+
+* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team.
+* <sup>2</sup> This is an alpha-only limit, and we intend to increase this as D1 moves towards General Availability (GA).
