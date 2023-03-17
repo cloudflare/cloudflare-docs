@@ -7,13 +7,13 @@ title: Deployments
 
 {{<Aside type="note">}}
 
-Deployments are currently in Public Beta. Report Deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
+Deployments are currently in Public Beta. Report deployments bugs to the [Wrangler team](https://github.com/cloudflare/wrangler2/issues/new/choose).
 
 {{</Aside>}}
 
 Deployments are a log of static historical versions of your Worker. They track changes to the bundled code, bindings, compatibility date, and usage model associated with a Worker over time. They also keep metadata associated with the deployment including the user, deploy source, timestamp, and other useful information to understand and audit who or what is making changes to your Worker.
 
-The latest deployment for a Worker is considered the "active deployment". You can view your latest 10 deployments [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`wrangler deployments` command](#via-wrangler).
+The latest deployment for a Worker is considered the "active deployment". You can view your latest 10 deployments [via the Cloudflare dashboard](#via-the-cloudflare-dashboard) or the [`wrangler deployments list` command](#via-wrangler).
 
 {{<Aside type="note">}}
 
@@ -23,7 +23,7 @@ Associated resources for a worker such as KV, R2, and Durable Objects are not tr
 
 ## Creating a new deployment
 
-New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. These can be done via the Cloudflare dashboard, [Workers API](/api), or [`wrangler publish` command](/workers/wrangler/commands#publish).
+New deployments are created whenever an upload, binding change (including environment variables and secrets), usage model change, or [rollback](#rollbacks) is made. Create a new deployment via the Cloudflare dashboard, [Workers API](/api), or Wrangler (with [`wrangler publish` command](/workers/wrangler/commands#publish) or [`wrangler rollback` command](/workers/wrangler/commands#rollback)) .
 
 Notably, this does not include changes to bound resources. For example, if two Workers (Worker A and Worker B) are bound via a service binding, changing the code of a Worker B will not trigger a new deployment on Worker A. Changes to the service binding on Worker A will also not trigger a new deployment for Worker B.
 
@@ -37,17 +37,17 @@ Changing triggers such as routes, custom domains, or cron triggers will not issu
 
 ### via Wrangler
 
-Wrangler allows you to view the 10 most recent deployments as well as source code, bindings and runtime information about a specific deployment.
+Wrangler allows you to view the 10 most recent deployments as well as bindings and metadata for a specific deployment.
 
-More details about the `wrangler deployments` and `wrangler deployments view` command can be found [here](/workers/wrangler/commands#deployments).
+More details about the `wrangler deployments list` and `wrangler deployments view` commands can be found in the [Wrangler commands documentation](/workers/wrangler/commands#deployments).
 
 ### via the Cloudflare Dashboard
 
-Access Deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page will now indicate information about the most recently deployed and currently active deployment.
+Access deployments by logging into the [Cloudflare dashboard](https://dash.cloudflare.com) > **Account Home** > **Workers** > selecting your Worker project > **Deployments**. Deployments includes information about previous deployments, and your Worker’s detail page displays information about the most recently deployed and currently active deployment.
 
 ### via the API
 
-Read more about accessing Deployment information via Cloudflare's REST API [here](/api/#worker-deployments-properties).
+To learn more about accessing deployment information via Cloudflare's REST API, refer to the [API documentation](/api/#worker-deployments-properties).
 
 {{<Aside type="note">}}
 
@@ -58,13 +58,11 @@ Deployments are in active development. To give feedback, request a [live chat](h
 ## Rollbacks
 Rollbacks are a way to quickly deploy an older deployment to the Cloudflare global network. This could be useful if a breaking change or unintended publish is made to a production Worker.
 
-Perform a rollback via:
-1. [Wrangler](/workers/platform/deployments/#via-wrangler-1).
-2. The [Cloudflare dashboard](/workers/platform/deployments/#via-the-cloudflare-dashboard-1).
+Perform a rollback via [Wrangler](/workers/platform/deployments/#via-wrangler-1) or the [Cloudflare dashboard](/workers/platform/deployments/#via-the-cloudflare-dashboard-1).
 
 ### via Wrangler
 
-To perform a rollback via Wrangler, use the `wrangler deployments rollback` command. Refer to [Wrangler `rollback` command documentation](/workers/wrangler/commands#rollback) for more information.
+To perform a rollback via Wrangler, use the `wrangler rollback` command. Refer to [Wrangler `rollback` command documentation](/workers/wrangler/commands#rollback) for more information.
 
 ### via the Cloudflare Dashboard
 
