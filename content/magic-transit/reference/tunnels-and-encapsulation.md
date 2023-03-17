@@ -33,6 +33,8 @@ In the diagram below, Magic Transit encapsulates packets at the Cloudflare globa
 
 ```mermaid
 flowchart LR
+accTitle: Tunnels and encapsulation
+accDescr: How Magic Transit encapsulates IP packets destined for your network.
 
 a(User)
 e(Cloudflare server)
