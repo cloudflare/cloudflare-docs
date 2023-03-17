@@ -29,10 +29,10 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
-- [`types`](#types) - Generate types from bindings and module rules in configuration.
-- [`deployments`](#deployments) - Retrieve details for the 10 most recent deployments.
 - [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
+- [`types`](#types) - Generate types from bindings and module rules in configuration.
+
 
 {{<Aside type="note">}}
 
