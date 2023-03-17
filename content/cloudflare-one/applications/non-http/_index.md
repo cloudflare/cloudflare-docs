@@ -9,11 +9,11 @@ layout: single
 
 You can connect applications to Cloudflare Zero Trust over a number of different protocols.
 
-*   [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/)
-*   [Connect through Access over RDP](/cloudflare-one/connections/connect-apps/use_cases/rdp/)
-*   [Connect through Access over SSH](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
-*   [Connect through Access using kubectl](/cloudflare-one/tutorials/kubectl/)
-*   [Connect through Access over SMB](/cloudflare-one/connections/connect-apps/use_cases/smb/)
+- [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/)
+- [Connect through Access over RDP](/cloudflare-one/connections/connect-apps/use_cases/rdp/)
+- [Connect through Access over SSH](/cloudflare-one/connections/connect-apps/use_cases/ssh/)
+- [Connect through Access using kubectl](/cloudflare-one/tutorials/kubectl/)
+- [Connect through Access over SMB](/cloudflare-one/connections/connect-apps/use_cases/smb/)
 
 ## Rendering in the browser
 
@@ -27,7 +27,7 @@ Cloudflare can render certain non-web applications in your browser without the n
 
 To enable browser rendering:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Access** > **Applications**.
+1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Locate the SSH or VNC application you created when [connecting the server to Cloudflare](/cloudflare-one/connections/connect-apps/use_cases/ssh/). Select **Configure**.
 3. In the **Policies** tab, ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
 4. In the **Settings** tab, scroll down to **Browser rendering**.
@@ -45,10 +45,10 @@ This should only be enabled if a [service token](/cloudflare-one/identity/servic
 
 {{<table-wrap>}}
 
-| Before you start |
-| ------------------- |
+| Before you start                                                             |
+| ---------------------------------------------------------------------------- |
 | Ensure you have an automated service relying on `cloudflared` authentication |
-| Ensure you have an active IdP session when logging in through `cloudflared` |
+| Ensure you have an active IdP session when logging in through `cloudflared`  |
 
 {{</table-wrap>}}
 

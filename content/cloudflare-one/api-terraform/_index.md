@@ -16,7 +16,7 @@ Super Administrators can lock all settings as read-only in the Zero Trust dashbo
 
 To enable read-only mode:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **General**.
+1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **General**.
 2. Enable **API/Terraform read-only mode**.
 
 All users, regardless of [user permissions](/cloudflare-one/cloudflare-teams-roles-permissions/), will be prevented from making configuration changes through the UI.

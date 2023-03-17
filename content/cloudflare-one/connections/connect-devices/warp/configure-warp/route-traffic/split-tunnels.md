@@ -20,14 +20,14 @@ Also, changing between Include and Exclude modes will immediately delete your ex
 
 ## Set up Split Tunnels
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client**.
+1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
 
 3. Under **Split Tunnels**, choose a Split Tunnel mode:
 
-    - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
-    - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies.
+   - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
+   - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies.
 
 4. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
@@ -64,11 +64,11 @@ Domain-based split tunneling has a few ramifications you should be aware of befo
 ### Valid domains
 
 {{<table-wrap>}}
-| Split tunnel domain | Matches        | Does not match |
+| Split tunnel domain | Matches | Does not match |
 | ------------------- | -------------- | --------------- |
-| `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
+| `example.com` | exact match of `example.com` | subdomains such as `www.example.com` |
 | `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
-| `*.example.com`    | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
+| `*.example.com` | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
 {{</table-wrap>}}
 
 ### Cloudflare Zero Trust domains

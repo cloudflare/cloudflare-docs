@@ -34,13 +34,13 @@ To retrieve those values:
 
 7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
 
-    You can find your [team name](/cloudflare-one/glossary/#team-name) in the Zero Trust dashboard under **Settings** > **General**.
+   You can find your [team name](/cloudflare-one/glossary/#team-name) in the Zero Trust dashboard under **Settings** > **General**.
 
-    ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
+   ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
 
 8. Select **Register**.
 
@@ -68,14 +68,14 @@ To retrieve those values:
 
 4. Select **Delegated permissions** and enable the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
 
-    - `email`
-    - `offline_access`
-    - `openid`
-    - `profile`
-    - `User.Read`
-    - `Directory.Read.All`
-    - `GroupMember.Read.All`
-    
+   - `email`
+   - `offline_access`
+   - `openid`
+   - `profile`
+   - `User.Read`
+   - `Directory.Read.All`
+   - `GroupMember.Read.All`
+
 {{<Aside type="note">}}
 More narrow permissions may be used, however this is the set of permissions that are tested and supported by Cloudflare.
 {{</Aside>}}
@@ -84,11 +84,11 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. Select **Grant admin consent**.
 
-    ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
+   ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
 
 ### 3. Add Azure AD as an identity provider
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 
@@ -166,13 +166,13 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
-    ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
+   ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
 
 3. If building an Access policy, choose the _Azure Groups_ selector. If building a Gateway policy, choose the _User Group IDs_ selector.
 
- 4. In the **Value** field, enter the `Object Id` for the Azure group.
+4. In the **Value** field, enter the `Object Id` for the Azure group.
 
-    ![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+   ![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
 
 ### Nested groups
 

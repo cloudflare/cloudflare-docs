@@ -13,12 +13,12 @@ Follow this step-by-step guide to get your first tunnel up and running using the
 
 Before you start, make sure you:
 
-* [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
-* [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
+- [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
+- [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
 
 ## 1. Create a tunnel
 
-1. Log in to the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and go to **Access** > **Tunnels**. 
+1. Log in to the [Zero Trust dashboard](https://one.dash.cloudflare.com) and go to **Access** > **Tunnels**.
 
 2. Select **Create a tunnel**.
 
@@ -30,7 +30,7 @@ Before you start, make sure you:
 
 6. Once the command has finished running, your connector will appear on the Zero Trust dashboard.
 
-    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
+   ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
 
 7. Select **Next**.
 
@@ -63,7 +63,7 @@ After saving the tunnel, you will be redirected to the **Tunnels** page. Look fo
 ![Tunnel appearing in the Tunnels table](/cloudflare-one/static/documentation/connections/connect-apps/tunnel-table.png)
 
 {{<Aside type="note" header="Troubleshooting">}}
- 
+
 If you run into issues during the remote setup process, refer to the [Tunnel FAQ](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-i-troubleshoot-a-tunnel-that-was-configured-from-the-zero-trust-dashboard) for troubleshooting tips.
- 
+
 {{</Aside>}}

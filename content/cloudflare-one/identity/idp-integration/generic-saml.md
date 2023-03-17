@@ -13,7 +13,7 @@ Cloudflare Zero Trust integrates with any identity provider that supports SAML 2
 Minimum requirements for identity providers:
 
 - The IdP must conform to SAML 2.0.
-- The IdP must provide a **Single sign-on URL**, an **Entity ID  or Issuer URL**, and a **Signing certificate**.
+- The IdP must provide a **Single sign-on URL**, an **Entity ID or Issuer URL**, and a **Signing certificate**.
 - The IdP must include the signing public key in the SAML response.
 
 ## 1. Create an application in your identity provider
@@ -34,7 +34,7 @@ If your identity provider supports metadata file configuration, use the endpoint
 
 ## 2. Add a SAML identity provider to the Zero Trust Dashboard
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Authentication** > **Login methods**.
+1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Login methods**.
 2. Select **Add new** and select **SAML**.
 3. Choose a descriptive name for your identity provider.
 4. Enter the **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing certificate** obtained from your identity provider.

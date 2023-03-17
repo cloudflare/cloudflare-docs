@@ -9,7 +9,7 @@ layout: single
 
 Cloudflare Zero Trust allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
 
-Adding an identity provider as a login method requires configuration both on the [Zero Trust dashboard](https://dash.teams.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
+Adding an identity provider as a login method requires configuration both on the [Zero Trust dashboard](https://one.dash.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 
 {{<Aside>}}
 
@@ -19,7 +19,7 @@ Cloudflare Zero Trust supports social identity providers that do not require adm
 
 ## Set up IdPs on the Zero Trust dashboard
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Authentication**.
+1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
 
 2. In the **Login methods** card, click **Add new**.
 
