@@ -8,7 +8,7 @@ meta:
 
 # Security Events — Free plan
 
-Security Events is available at **Security** > **Events**.
+Security Events is available for your zone in **Security** > **Events**.
 
 ## Adjusting displayed data
 
