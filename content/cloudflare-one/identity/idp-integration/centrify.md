@@ -57,7 +57,7 @@ These steps help you set up Centrify as your identity provider:
 
 1.  Select the roles to grant access to your application.
 
-1.  On Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

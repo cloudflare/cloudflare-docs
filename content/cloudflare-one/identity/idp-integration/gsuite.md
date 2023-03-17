@@ -66,7 +66,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 15. Enable the **Trust internal, domain-owned apps** option. This setting is disabled by default and must be enabled for Cloudflare Access to work correctly.
 
-16. On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+16. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
 17. Under **Login methods**, select **Add new** and choose **Google Workspace**.
 

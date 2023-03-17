@@ -38,7 +38,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
     ![Finding your Client credentials and Okta domain in Okta](/cloudflare-one/static/documentation/identity/okta/okta-3.png)
 
-11. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+11. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 12. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
 
@@ -72,7 +72,7 @@ The Okta OIDC integration supports the [System for Cross-domain Identity Managem
 
 To synchronize users and groups between Access and Okta:
 
-### 1. Enable SCIM on Zero Trust
+### 1. Enable SCIM in Zero Trust
 
 {{<render file="_enable-scim-on-dashboard.md">}}
 

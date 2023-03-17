@@ -77,7 +77,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Under the **Account** tab, click **Login with Cloudflare Zero Trust**.
 
-1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on Zero Trust under **Settings > General**.
+1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it in Zero Trust under **Settings > General**.
 
 1.  The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to `Teams` mode. You can click the gear to toggle between DNS filtering or full proxy. In this use case, you must toggle to `Gateway with WARP`. These settings can be configured globally for an organization through a device management platform.
 

@@ -25,7 +25,7 @@ Admin access to a Salesforce account
 
 ## Set up Salesforce as a SaaS application in Cloudflare Zero Trust
 
-1.  On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
 1.  Select the SaaS application type.
 1.  Next, select _Salesforce_ from the **Application** drop-down menu.
 1.  Fill the remaining fields as follows:

@@ -28,7 +28,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
    You can find these values on your identity provider’s **OIDC discovery endpoint**. Some providers call this the “well-known URL”.
 
-4. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+4. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 5. Under **Login methods**, click **Add new**.
 

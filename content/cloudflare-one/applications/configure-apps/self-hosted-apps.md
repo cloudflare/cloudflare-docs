@@ -25,7 +25,7 @@ Make sure you create [Access policies](/cloudflare-one/policies/access/) before 
 
 ## 1. Add your application
 
-1.  On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Access > Applications**.
 
 1.  Click **Add an application**.
 

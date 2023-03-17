@@ -65,7 +65,7 @@ $ cat /etc/ssh/sshd_config
 
 ## 7. Create an Audit SSH policy
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Gateway** > **Firewall Policies**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **Firewall Policies**.
 
 2. In the **Network** tab, create a new network policy.
 
@@ -108,7 +108,7 @@ If you enabled **SSH Command Logging** in an [Audit SSH policy](#7-create-an-aud
 
    This command outputs two files, an `sshkey.pub` public key and a matching `sshkey` private key.
 
-3. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
+3. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
 
 4. In the **SSH encryption public key** field, paste the contents of `sshkey.pub` and click **Save**. Note that this a different public key from the `ca.pub` file you used to configure the origin server.
 
@@ -116,7 +116,7 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
 ## View SSH Logs
 
-1. On Zero Trust, navigate to **Logs** > **Gateway** > **SSH**.
+1. In Zero Trust, navigate to **Logs** > **Gateway** > **SSH**.
 
 2. If you enabled the **SSH Command Logging** feature, you can **Download** a session's command log.
 

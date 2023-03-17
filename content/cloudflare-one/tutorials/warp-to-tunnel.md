@@ -118,7 +118,7 @@ Users can now connect over this private network by [enrolling their devices into
 
 You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
 
-On Zero Trust, select your account and go to **Settings** > **Authentication**. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
+In Zero Trust, select your account and go to **Settings** > **Authentication**. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
 
 ## Determine which devices can enroll
 
@@ -162,7 +162,7 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 3. Under the **Account** tab, select **Login with Cloudflare Zero Trust**.
 
-4. Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on Zero Trust under **Settings** > **General**.
+4. Input your [team name](/cloudflare-one/glossary/#team-name). You can find it in Zero Trust under **Settings** > **General**.
 
 The user will be prompted to login with the identity provider configured in Cloudflare Access. Once authenticated, the client will update to Teams mode. You can select the gear to toggle between DNS filtering or full proxy. In this use case, you must select _Gateway with WARP_. These settings can be configured globally for an organization through a device management platform.
 

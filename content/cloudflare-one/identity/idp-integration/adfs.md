@@ -161,7 +161,7 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 
 To enable Cloudflare Zero Trust to accept the claims and assertions sent from ADFS, follow these steps:
 
-1.  On Zero Trust, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

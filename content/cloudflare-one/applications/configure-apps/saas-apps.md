@@ -9,7 +9,7 @@ layout: single
 
 Cloudflare Access allows you to add an additional authentication layer to your SaaS applications. When you integrate a SaaS application with Access, users log in using your existing identity providers and are only granted access if they pass your Access policies.
 
-This page provides generic instructions for setting up a SaaS application on Zero Trust.
+This page provides generic instructions for setting up a SaaS application in Zero Trust.
 
 ## 1. Get SaaS application URLs
 

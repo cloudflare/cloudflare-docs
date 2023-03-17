@@ -39,7 +39,7 @@ The PingFederate® offering from PingIdentity provides SSO identity management. 
 
     This file shares several fields with Cloudflare Access so you do not have to input this data.
 
-9.  On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
+9.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings > Authentication**.
 
 10. Under **Login methods**, click **Add new**.
 

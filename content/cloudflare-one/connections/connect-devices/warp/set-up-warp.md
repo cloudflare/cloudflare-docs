@@ -22,7 +22,7 @@ As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), 
 
 ### 2. Set up a login method.
 
-Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
+Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) in Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
 ### 3. Next, define device enrollment permissions.
 
@@ -54,7 +54,7 @@ As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), 
 
 ### 2. Set up a login method.
 
-Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
+Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) in Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
 ### 3. Next, define device enrollment permissions.
 

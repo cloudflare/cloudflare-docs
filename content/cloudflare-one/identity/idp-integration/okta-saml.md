@@ -57,7 +57,7 @@ To set up SAML with Okta as your identity provider:
 
 ![Retrieving SAML provider information in Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-5.png)
 
-13. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+13. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 14. Click **Add new** under **Login Methods**, and select _SAML_.
 

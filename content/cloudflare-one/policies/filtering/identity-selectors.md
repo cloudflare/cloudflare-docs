@@ -106,7 +106,7 @@ The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azurea
 
 If your IdP is not listed above, here is how you can determine which Gateway selector to use:
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Access** > **Access Groups**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Access Groups**.
 2. Select **Add a Group**.
 3. In the **Include** dropdown, select your IdP group. A text field will appear and prompt for either group names, group IDs, or SAML attributes. You can use this field as the **Selector** when creating a [Gateway firewall policy](/cloudflare-one/policies/filtering/initial-setup/).
 

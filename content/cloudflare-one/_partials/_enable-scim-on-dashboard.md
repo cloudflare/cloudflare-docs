@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 2. Locate the IdP you want to synchronize and select **Edit**.
 

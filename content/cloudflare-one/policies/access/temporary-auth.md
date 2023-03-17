@@ -10,7 +10,7 @@ With Cloudflare Access, you can require that users obtain approval before they c
 
 ## Set up temporary authentication
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Choose an application and select **Edit**.
 3. Choose the **Allow** policy you want to configure and select **Edit**.
 4. Under **Additional settings**, turn on [**Purpose justification**](/cloudflare-one/policies/access/require-purpose-justification/).

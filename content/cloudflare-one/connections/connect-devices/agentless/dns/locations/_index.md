@@ -11,7 +11,7 @@ DNS locations are usually physical entities like offices, homes, retail stores, 
 
 To add a DNS location to Gateway:
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **DNS Locations**.
 
 2. Select **Add a DNS location**.
 
@@ -48,7 +48,7 @@ If you think someone else is wrongfully using this IPv4 address, [let us know](h
 
 7. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 
-   ![DNS resolver setup instructions on Zero Trust](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
+   ![DNS resolver setup instructions in Zero Trust](/cloudflare-one/static/documentation/policies/location-setup-instructions.png)
 
 8. Select **Done**. Your location will appear under **Gateway** > **DNS Locations**.
 

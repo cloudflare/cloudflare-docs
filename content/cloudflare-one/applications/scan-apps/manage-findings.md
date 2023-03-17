@@ -9,7 +9,7 @@ meta:
 
 # Manage security findings
 
-Findings are security issues detected within SaaS applications that involve users, data at rest, and other configuration settings. With Cloudflare CASB, you can review a comprehensive list of findings on Zero Trust and immediately start taking action on the issues found.
+Findings are security issues detected within SaaS applications that involve users, data at rest, and other configuration settings. With Cloudflare CASB, you can review a comprehensive list of findings in Zero Trust and immediately start taking action on the issues found.
 
 ## Prerequisites
 

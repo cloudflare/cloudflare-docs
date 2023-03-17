@@ -88,7 +88,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 ### 3. Add Azure AD as an identity provider
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 
@@ -110,7 +110,7 @@ The Azure AD integration supports the [System for Cross-domain Identity Manageme
 
 To synchronize users and groups between Access and Azure:
 
-### 1. Enable SCIM on Zero Trust
+### 1. Enable SCIM in Zero Trust
 
 {{<render file="_enable-scim-on-dashboard.md">}}
 
@@ -172,7 +172,7 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 4. In the **Value** field, enter the `Object Id` for the Azure group.
 
-   ![Entering an Azure group ID on Zero Trust](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+   ![Entering an Azure group ID in Zero Trust](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
 
 ### Nested groups
 

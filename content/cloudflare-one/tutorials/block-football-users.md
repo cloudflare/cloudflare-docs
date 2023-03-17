@@ -97,7 +97,7 @@ Next, toggle **TLS decryption** to _Enabled_. This will tell Cloudflare to begin
 
 1.  Under the **Account** tab, click **Login with Cloudflare Zero Trust**.
 
-1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on Zero Trust under **Settings > General**.
+1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it in Zero Trust under **Settings > General**.
 
     ![Team name used to configure the WARP app on a desktop device.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 

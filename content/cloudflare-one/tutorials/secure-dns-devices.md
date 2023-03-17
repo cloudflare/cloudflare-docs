@@ -29,7 +29,7 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats.
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Firewall Policies** > **DNS**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Firewall Policies** > **DNS**.
 2. On the DNS tab, select **Create a policy**.
 3. Assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.
 

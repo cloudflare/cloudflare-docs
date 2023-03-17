@@ -23,7 +23,7 @@ Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/
 
 By default, Gateway logs all events, including DNS queries and HTTP requests that are allowed and not a risk. You can choose to disable logs or only log blocked requests. To customize what type of events are recorded, log in to your [Zero Trust dashboard](https://one.dash.cloudflare.com/) and go to **Settings** > **Network**. Under **Activity Logging**, indicate your DNS, Network, and HTTP log preferences.
 
-These settings will only apply to logs displayed on Zero Trust. Logpush data is unaffected.
+These settings will only apply to logs displayed in Zero Trust. Logpush data is unaffected.
 
 ## DNS logs
 

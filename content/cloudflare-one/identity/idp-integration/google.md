@@ -39,7 +39,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Suite as 
 
 9. Google will present the OAuth Client ID and Secret values. The secret field functions like a password and should not be shared. Copy both values.
 
-10. On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+10. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
 11. Under **Login methods**, select **Add new**. Choose **Google** on the next page.
 

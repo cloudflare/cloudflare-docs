@@ -28,7 +28,7 @@ Before you start, make sure you:
 
 5. Next, you will need to install `cloudflared` and run it. To do so, check that the environment under **Choose an environment** reflects the operating system on your machine, then copy the command in the box below and paste it into a terminal window. Run the command.
 
-6. Once the command has finished running, your connector will appear on Zero Trust.
+6. Once the command has finished running, your connector will appear in Zero Trust.
 
    ![Connector appearing in the UI after cloudflared has run](/cloudflare-one/static/documentation/connections/connect-apps/connector.png)
 
