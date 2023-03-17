@@ -4,7 +4,16 @@
 {{- range readDir "./data/" -}}
 {{- if in .Name ".yml" -}}
 {{- $productName :=  replace .Name ".yml" "" -}}
-{{ $dataArray = $dataArray | append (index $.Site.Data $productName) }}
+{{- $dataArray = $dataArray | append (index $.Site.Data $productName) -}}
+{{- end -}}
+{{- end -}}
+
+{{- range .Site.Pages  -}}
+{{- $relpermalink := .RelPermalink -}}
+{{- with index .Params "product_grid"  -}}
+{{- $dataArray = $dataArray | append (dict "product" 
+(dict "group" .group "title" .title  "show" (default false .show) "url" 
+$relpermalink "wrap" (default false .wrap))) -}}
 {{- end -}}
 {{- end -}}
 
@@ -16,6 +25,8 @@
 {{- end -}}
 {{- end -}}
 {{- $availableOptions = $availableOptions | uniq | sort -}}
+
+{{- $dataArray = $dataArray | uniq | sort -}}
 
 <style>
   .QuadBlockGrid {
