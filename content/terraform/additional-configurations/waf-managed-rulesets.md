@@ -115,8 +115,6 @@ resource "cloudflare_ruleset" "account_level_managed_waf" {
 </div>
 </details>
 
-
-
 ## Configure skip rules
 
 The following example adds two [skip rules](/waf/managed-rules/waf-exceptions/) (or WAF exceptions) for the Cloudflare Managed Ruleset:

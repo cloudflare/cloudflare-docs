@@ -115,8 +115,6 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 </div>
 </details>
 
-
-
 ## Create an advanced rate limiting rule
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` with:
