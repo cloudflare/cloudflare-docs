@@ -104,8 +104,6 @@ By default, all messages in the batch will be acknowledged as soon as all of the
 2. If the `queue` function returned a promise, the promise has resolved.
 3. Any promises passed to `waitUntil()` have resolved.
 
-If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
-
 ```ts
 export default {
   async queue(
@@ -131,6 +129,20 @@ addEventListener('queue', (event) => {
 ```
 
 In service worker syntax, `event` provides the same fields and methods as `MessageBatch`, as defined below, in addition to [`waitUntil()`](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil).
+  
+#### Using ctx.waitUntil()
+  
+Using [`ctx.waitUntil()`](/workers/runtime-apis/fetch-event/#waituntil) extends the lifetime of the "queue" event handler. It accepts a Promise-based task which the Workers runtime will execute before the handler terminates but without blocking the response.
+  
+{{<Aside type="warn">}}
+  
+We do not generally recommend using `ctx.waitUntil()` to process message batches directly, as any failure within the context of `waitUntil` can't be caught by your own code.
+  
+Instead, process messages directly in the `queue` handler and use `ctx.waitUntil()` for logging or metrics related tasks. 
+  
+{{</Aside>}}
+
+If the `queue` function throws, or the promise returned by it or any of the promises passed to `waitUntil()` were rejected, then the entire batch will be considered a failure and will be retried according to the consumer's retry settings.
 
 ### `MessageBatch`
 
