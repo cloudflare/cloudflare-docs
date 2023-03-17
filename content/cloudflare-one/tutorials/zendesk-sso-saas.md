@@ -26,7 +26,7 @@ For this tutorial, you will need:
 
 1. Navigate to your Zendesk administrator dashboard, typically available at `<yourdomain>.zendesk.com/admin/security/sso`.
 
-2. In a separate tab or window, open the [Zero Trust Dashboard](https://one.dash.cloudflare.com), select your account, and go to **Access** > **Applications**.
+2. In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com), select your account, and go to **Access** > **Applications**.
 
 3. Select **Add an application**, then choose _SaaS_.
 

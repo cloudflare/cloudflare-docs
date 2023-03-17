@@ -53,7 +53,7 @@ To set up SAML with Okta as your identity provider:
 
 ![Assigning individuals and groups to Okta application](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-4.png)
 
-12. To retrieve the SAML provider information, navigate to the **Sign On** and click **View Setup Instructions**. A new page will open showing the **Identity Provider Single Sign-on URL**, **Identity Provider Issuer**, and **X.509 Certificate**. Save this information for configuring your Zero Trust dashboard.
+12. To retrieve the SAML provider information, navigate to the **Sign On** and click **View Setup Instructions**. A new page will open showing the **Identity Provider Single Sign-on URL**, **Identity Provider Issuer**, and **X.509 Certificate**. Save this information for configuring your Zero Trust settings.
 
 ![Retrieving SAML provider information in Okta](/cloudflare-one/static/documentation/identity/okta-saml/okta-saml-5.png)
 

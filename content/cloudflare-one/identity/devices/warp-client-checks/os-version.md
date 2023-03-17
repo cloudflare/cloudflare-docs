@@ -21,7 +21,7 @@ The OS Version device posture attribute checks whether the version of a deviceâ€
 
 ## Enable the OS version check
 
-1. In the [Zero Trust Dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **WARP client checks** and select **Add new**.
 3. Select **OS version**.
 4. Configure the **Operating system**, **Operator**, and **Value** fields to specify the OS version you want devices to match.

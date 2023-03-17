@@ -46,7 +46,7 @@ To ensure the values have been entered correctly, select **Test**.
 
 ## 3. Configure the posture check
 
-1. In the [Zero Trust Dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
 1. Select **Add new**.
 1. Select the Workspace ONE provider.
 1. Configure the _Compliance status_ check.

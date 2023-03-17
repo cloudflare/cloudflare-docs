@@ -24,7 +24,7 @@ Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog
 
 ## Configure the App Launcher
 
-1. On the [Zero Trust Dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
 2. Under **App Launcher**, select **Manage**.
 

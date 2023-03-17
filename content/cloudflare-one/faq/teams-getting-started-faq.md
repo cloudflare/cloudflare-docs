@@ -46,7 +46,7 @@ If you change your team name, you need to update your organization’s identity 
 
 {{<faq-answer>}}
 
-To make changes to your subscription, visit the Billing section under Account on the [Zero Trust Dashboard](https://one.dash.cloudflare.com/). You can change or cancel your subscription at any time. Just remember - if you downgrade your plan during a billing cycle, your downgraded pricing will apply in the next billing cycle. If you upgrade during a billing cycle, you will be billed for the upgraded plan at the moment you select it.
+To make changes to your subscription, visit the Billing section under Account in [Zero Trust](https://one.dash.cloudflare.com/). You can change or cancel your subscription at any time. Just remember - if you downgrade your plan during a billing cycle, your downgraded pricing will apply in the next billing cycle. If you upgrade during a billing cycle, you will be billed for the upgraded plan at the moment you select it.
 
 {{</faq-answer>}}
 {{</faq-item>}}

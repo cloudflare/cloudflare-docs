@@ -23,7 +23,7 @@ The Domain Joined device posture attribute ensures that a user is a member of a 
 
 ## Enable the Domain Joined check
 
-1. In the [Zero Trust Dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 1. Scroll down to **WARP client checks** and select **Add new**.
 1. Select **Domain Joined**.
 1. Enter a descriptive name for the check.

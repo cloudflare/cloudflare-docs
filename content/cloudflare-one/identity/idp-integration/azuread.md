@@ -162,7 +162,7 @@ The Gateway policy builder does not currently show group names from the SCIM int
 
 You can create Access and Gateway policies for groups that are not synchronized with SCIM. Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
 
-1. Make sure you enable **Support groups** as you set up Azure AD on your Zero Trust dashboard.
+1. Make sure you enable **Support groups** as you set up Azure AD in Zero Trust.
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 

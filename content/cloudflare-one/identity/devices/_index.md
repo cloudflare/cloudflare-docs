@@ -21,7 +21,7 @@ Setup instructions vary depending on the device posture attribute. Refer to the 
 
 Before integrating a device posture check in a Gateway or Access policy, you should verify that the Pass/Fail result from the device matches your expectations.
 
-1. In the [Zero Trust Dashboard](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
 2. Find the device running the posture check and select **View**.
 3. Scroll down to **WARP client posture checks** and **Service provider posture checks**.
 4. Select a result to review details. You will see the value returned from the device, as well as the value required to pass the check.

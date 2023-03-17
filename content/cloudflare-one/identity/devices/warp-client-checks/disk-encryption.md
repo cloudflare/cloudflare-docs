@@ -23,7 +23,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 
 ## Enable the disk encryption check
 
-1. In the [Zero Trust Dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 1. Scroll down to **WARP client checks** and select **Add new**.
 1. Select **Disk Encryption**.
 1. Enter a descriptive name for the check.

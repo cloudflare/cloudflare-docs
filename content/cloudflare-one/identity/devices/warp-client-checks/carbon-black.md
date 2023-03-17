@@ -25,7 +25,7 @@ Before you start, make sure Carbon Black installed on your machine.
 
 ## Configure the Carbon Black check
 
-1. In the [Zero Trust Dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
 1. Scroll down to **WARP client checks** and select **Add new**.
 

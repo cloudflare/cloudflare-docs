@@ -21,7 +21,7 @@ The Application Check device posture attribute checks that a specific applicatio
 
 ## Configure an application check
 
-1.  In the [Zero Trust Dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
 2.  Scroll down to **WARP client checks** and select **Add new**.
 

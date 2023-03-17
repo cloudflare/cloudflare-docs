@@ -15,13 +15,13 @@ Gateway logs will only show the public Source IP address. Private IP addresses a
 
 Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/policies/filtering/network-policies/ssh-logging/) for sessions proxied by Gateway.
 
-To view Gateway activity logs, log in to your [Zero Trust dashboard](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway**. Select an individual row to investigate the event in more detail.
+To view Gateway activity logs, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway**. Select an individual row to investigate the event in more detail.
 
 Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/analytics/logs/logpush/).
 
 ## Selective logging
 
-By default, Gateway logs all events, including DNS queries and HTTP requests that are allowed and not a risk. You can choose to disable logs or only log blocked requests. To customize what type of events are recorded, log in to your [Zero Trust dashboard](https://one.dash.cloudflare.com/) and go to **Settings** > **Network**. Under **Activity Logging**, indicate your DNS, Network, and HTTP log preferences.
+By default, Gateway logs all events, including DNS queries and HTTP requests that are allowed and not a risk. You can choose to disable logs or only log blocked requests. To customize what type of events are recorded, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Settings** > **Network**. Under **Activity Logging**, indicate your DNS, Network, and HTTP log preferences.
 
 These settings will only apply to logs displayed in Zero Trust. Logpush data is unaffected.
 
