@@ -38,7 +38,7 @@ To remedy a false positive:
 
 4. Copy the rule name.
 
-5. Navigate to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you have exhausted the number of overrides you can create, edit an existing override to adjust rule configuration.
+5. Navigate to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
 
 6. Select **Browse rules** and paste the rule name in the search field.
 
