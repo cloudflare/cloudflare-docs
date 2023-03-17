@@ -36,18 +36,18 @@ DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP pol
 2. Select **Create a policy**.
 3. [Build an HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
-    | Policy name |
-    | ---- |
-    | Only allow SSN uploads to Workday |
+   | Policy name                       |
+   | --------------------------------- |
+   | Only allow SSN uploads to Workday |
 
-    | Selector | Operator | Value |
-    | - | - | - |
-    | DLP Profiles | in | `U.S. Social Security Numbers` |
-    | Application  | not in | `Workday` |
+   | Selector     | Operator | Value                          |
+   | ------------ | -------- | ------------------------------ |
+   | DLP Profiles | in       | `U.S. Social Security Numbers` |
+   | Application  | not in   | `Workday`                      |
 
-    |Action|
-    |------|
-    |Block |
+   | Action |
+   | ------ |
+   | Block  |
 
 4. Select **Create policy**.
 
@@ -61,6 +61,6 @@ You can test your DLP policy on any device connected to your Zero Trust organiza
 2. Enter a text message or upload a file containing the sensitive data.
 3. Select **Submit** to send the request.
 
-If the data matches your DLP policy, you will see the request in your [DLP logs](/cloudflare-one/policies/data-loss-prevention/dlp-logs/).
+If the data matches your DLP policy, you will see the request in your [DLP logs](/cloudflare-one/policies/data-loss-prevention/dlp-logs/). If DLP detects a false positive, you can [report it to Cloudflare](/cloudflare-one/policies/data-loss-prevention/dlp-logs/#report-false-positives).
 
 Different sites will send requests in different ways. For example, some sites will split a file upload into multiple requests. Therefore, even if the policy works on `dlptest.com`, it is not guaranteed to work the same way on another site or application. To fine-tune your DLP policy, refer to our [configuration tips](/cloudflare-one/policies/data-loss-prevention/configuration-guides/).
