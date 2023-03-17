@@ -69,7 +69,6 @@ classDef orange stroke:orange, stroke-width:3px
 class c purplefill
 class e orange
 linkStyle 1 stroke:purple
-
 ```
 
 {{<Aside type="note" header="Note">}}
@@ -93,6 +92,38 @@ This works because the GRE protocol is stateless—each packet is processed inde
 Cloudflare’s Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
 
 ![Multiple servers in data center preparing packets to send through Anycast tunnel](/magic-transit/static/magic-transit-anycast-2.png)
+
+```mermaid
+flowchart LR
+accTitle: Anycast tunnel
+accDescr: Multiple servers in data center preparing packets to send through Anycast tunnel.
+
+a(User)
+
+subgraph 1
+direction LR
+b(Cloudflare global network server)
+c(Cloudflare global network server)
+d(Cloudflare global network server)
+e(Cloudflare global network server)
+f(Cloudflare global network server)
+g(Cloudflare global network server)
+h(Cloudflare global network server)
+end
+
+subgraph 2
+i("Acme router <br> 198.51.100.1")
+j("FTP server <br> (203.0.113.100)")
+end
+
+a --> 1== Cloudflare Anycast GRE <br> single endpoint ==>i --> j
+```
+
+
+
+
+
+
 
 ## Network Analytics
 
