@@ -28,5 +28,3 @@ DMARC Management (beta) is available to all Cloudflare customers with [Cloudflar
 {{<related header="Area 1 Email Security" href="/email-security/" product="email-security">}}
 Stop phishing attacks with Area 1 cloud-native email security service.
 {{</related>}}
- 
----
