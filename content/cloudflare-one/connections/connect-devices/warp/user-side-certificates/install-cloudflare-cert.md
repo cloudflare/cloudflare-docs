@@ -61,7 +61,7 @@ You will need to install the root certificate in the **Keychain Access** applica
 | Local Items | Cached iCloud passwords |
 | System      | All users on the system |
 
-Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System keychain affects all users who have access to that machine.
+Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System Keychain affects all users who have access to that machine.
 
 To install the certificate in **Keychain Access**:
 
