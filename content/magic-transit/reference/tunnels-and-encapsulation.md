@@ -10,34 +10,17 @@ Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.
 This diagram illustrates the flow of traffic with Magic Transit. Ingress traffic comes from the client machine side, and egress traffic from the origin router side.
 
 ```mermaid
-flowchart BT
+sequenceDiagram
 accTitle: Tunnels and encapsulation
 accDescr: This diagram shows the flow of traffic with Magic Transit.
-
-subgraph 1
-c[Payload] & d[Protocol] & e[IP header]
-end
-
-subgraph 2
-g[Payload] & h[Protocol] & i[IP header] & j(GRE) & k(IP header)
-end
-
-subgraph 3
-n(IP header) & o(Protocol) & p(Payload)
-end
-
-b{{Client machine}} --> 1 --> f{{Magic Transit}}
-f{{Magic Transit}} --> 2 --> l{{Origin router}}
-l{{Origin router}} --> 3 --> b{{Client machine}}
-
-classDef darkgray fill:#5A5A5A,color:white
-classDef orange fill:orange,color:white
-classDef blue fill:#ADD8E6
-classDef grayorange stroke:orange,stroke-width:3px
-class b darkgray
-class f,j,k orange
-class l,n,o,p blue
-class g,h,i grayorange
+participant A as Client machine
+participant B as Cloudflare Magic Transit
+participant C as Origin router
+A->>B: Payload <br> Protocol <br> IP header
+Note left of A: Ingress <br> traffic
+B->>C: Payload <br> Protocol <br> IP header <br> GRE <br> IP header
+C->>A: IP header <br> Protocol <br> Payload
+Note right of C: Egress <br> traffic
 ```
 
 {{<Aside type="note" header="Note">}}Egress packets are routed by your ISP interface, not Cloudflare.{{</Aside>}}
