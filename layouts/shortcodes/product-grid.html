@@ -168,7 +168,7 @@
     if (!visibleSections) {
       emptyStateMessage.style.display = "";
       emptyStateMessage.children[0].style.display = "";
-      emptyStateMessage.children[0].setAttribute('href', "/search/?q=" + query.toLowerCase())
+      emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + query.toLowerCase() + "&t=Docs" )
     } else {
       emptyStateMessage.style.display = "none";
     }
