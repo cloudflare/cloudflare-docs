@@ -18,7 +18,7 @@ Findings are security issues detected within SaaS applications that involve user
 
 ## View findings
 
-1. Open the [Zero Trust dashboard](https://one.dash.cloudflare.com) and go to **CASB** > **Findings**.
+1. Open [Zero Trust](https://one.dash.cloudflare.com) and go to **CASB** > **Findings**.
 
    You will see the findings detected across all integrations.
 
@@ -43,7 +43,7 @@ Cloudflare CASB labels each finding with one of the following severity levels:
 
 You can change the severity level for a finding at any time, in case the default assignment does not suit your environment:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. Locate the finding you want to modify and select **View**.
 3. In the severity level drop-down menu, choose your desired setting (_Critical_, _High_, _Medium_, or _Low_).
 
@@ -59,7 +59,7 @@ Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/filtering
 
 To create a Gateway policy directly from a CASB finding:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. Locate the finding you want to modify and select **View**.
 3. Find the instance you want to block and select its three-dot menu.
 4. Select **Block with Gateway HTTP policy**. A new browser tab will open with a pre-filled HTTP policy.
@@ -77,7 +77,7 @@ After reviewing your findings, you may decide that certain findings are not appl
 
 ### Hide a finding
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. In the **Active** tab, select the checkboxes for the findings you want to hide.
 3. Select **Ignore**.
 
@@ -85,7 +85,7 @@ The findings will be moved from **Active** to **Ignored**. CASB will continue to
 
 ### Hide an instance of a finding
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Findings**.
 2. In the **Active** tab, locate the finding you want to modify and select **View**.
 3. Under **Instances**, select the **Active** tab and locate the instance you want to hide.
 4. Select the three-dot menu, then select **Hide**.

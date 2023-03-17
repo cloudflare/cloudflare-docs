@@ -78,7 +78,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 ## 3. Add managed network to Zero Trust
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Network locations** and select **Add new**.
 3. Name your network location.
 4. In **Host and Port**, enter the private IP address and port number of the TLS endpoint (for example, `192.168.185.198:4443`).

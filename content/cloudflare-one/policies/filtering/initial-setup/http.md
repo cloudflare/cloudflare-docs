@@ -18,14 +18,14 @@ To filter HTTP requests from a device:
 2. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 3. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
 4. Enable the Gateway proxy:
-   1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
+   1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
    2. Enable **Proxy** for TCP.
    3. (Optional) Enable **Proxy** for UDP. All port 443 UDP traffic will be inspected by Gateway.
    4. Enable **TLS decryption**.
 
 ## 2. Verify device connectivity
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
 2. Under **Gateway logging**, enable activity logging for all HTTP logs.
 3. On your WARP-enabled device, open a browser and visit any website.
 4. In Zero Trust, navigate to **Logs** > **Gateway** > **HTTP**. Before building HTTP policies, make sure you see HTTP queries from the email associated with your device.

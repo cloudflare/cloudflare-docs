@@ -65,7 +65,7 @@ In keeping with the example scenario, the list of static routes should match the
 
 ## Cloudflare Gateway configuration
 
-After setting up the Anycast GRE and static routes, configure your Cloudflare Gateway policies from the [Zero Trust dashboard](https://one.dash.cloudflare.com/). To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
+After setting up the Anycast GRE and static routes, configure your Cloudflare Gateway policies from [Zero Trust](https://one.dash.cloudflare.com/). To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
 
 The Cloudflare Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
 

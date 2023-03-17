@@ -45,7 +45,7 @@ We suggest naming the IdP integration after the target application, for example 
 
 To enforce your Conditional Access policies on a Cloudflare Access application:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Create a new [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/).
 

@@ -24,7 +24,7 @@ Cloudflare Gateway can log the following types of PII:
 
 Enabling this setting means Cloudflare Gateway will log activity without storing any employee PII. Changes to this setting will not change PII storage of any previous logs. This means if Exclude PII is enabled and then disabled, there will be no PII data for logs captured while Exclude PII was enabled. The PII data will be unavailable to all roles within your Zero Trust organization, including the Super Admin.
 
-To enable or disable this setting, log in to the [Zero Trust dashboard](https://one.dash.cloudflare.com/) and go to **Settings** > **Network** > **Exclude PII**.
+To enable or disable this setting, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Settings** > **Network** > **Exclude PII**.
 
 ## Redact PII
 

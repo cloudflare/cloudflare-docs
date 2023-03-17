@@ -41,7 +41,7 @@ mTLS is checked on a per host basis. Access sets a flag for when a client certif
 
 {{</Aside>}}
 
-To enforce mTLS authentication from the [Zero Trust dashboard](https://one.dash.cloudflare.com):
+To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com):
 
 1. Go to **Access** > **Service Auth** > **Mutual TLS**.
 2. Select **Add mTLS Certificate**.

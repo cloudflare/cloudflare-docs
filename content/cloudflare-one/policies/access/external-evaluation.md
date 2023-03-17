@@ -105,7 +105,7 @@ Other key formats (such as DSA) are not supported at this time.
 
 ### 4. Create an External Evaluation rule
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), navigate to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Access** > **Applications**.
 
 2. Find the application for which you want to apply the External Evaluation rule and select **Edit**.
 

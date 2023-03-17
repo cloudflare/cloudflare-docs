@@ -36,7 +36,7 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 2. Verify device connectivity
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Network**.
 2. Under **Gateway logging**, enable activity logging for all DNS logs.
 3. On your WARP-enabled device, open a browser and visit any website.
 4. In Zero Trust, navigate to **Logs** > **Gateway** > **DNS**. Before building DNS policies, make sure you see DNS queries from the email associated with your device.

@@ -6,7 +6,7 @@ weight: 6
 
 # Zero Trust logs
 
-The Logs section of the [Zero Trust dashboard](https://one.dash.cloudflare.com/) allows you to take a look at analytics on your network traffic.
+The Logs section of [Zero Trust](https://one.dash.cloudflare.com/) allows you to take a look at analytics on your network traffic.
 
 {{<directory-listing>}}
 

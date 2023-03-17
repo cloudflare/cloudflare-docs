@@ -21,7 +21,7 @@ title: Integrate Cloudflare Area 1 with Access for SaaS
 
 ## 1. Add Area 1 to Zero Trust
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application**.
 

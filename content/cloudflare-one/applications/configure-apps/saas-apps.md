@@ -20,7 +20,7 @@ Obtain the following URLs from your SaaS application account:
 
 ## 2. Add your application to Access
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Select **Add an application**.
 

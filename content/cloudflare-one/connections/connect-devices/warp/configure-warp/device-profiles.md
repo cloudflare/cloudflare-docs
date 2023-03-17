@@ -11,7 +11,7 @@ A device profile defines WARP client settings for a specific set of devices in y
 
 ## Create a new profile
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Profile settings** card, select **Create profile**.
 3. Enter any name for the profile.
 4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/filtering/network-policies/#operators), and [Values](/cloudflare-one/policies/filtering/network-policies/#value).

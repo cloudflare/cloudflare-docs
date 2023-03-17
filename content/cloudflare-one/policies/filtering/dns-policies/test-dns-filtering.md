@@ -72,7 +72,7 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
 
 1. Obtain your DNS location's DOH subdomain:
 
-   1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
+   1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
    2. Select the DNS location you are testing.
    3. Note the value of **DNS over HTTPS**.
 

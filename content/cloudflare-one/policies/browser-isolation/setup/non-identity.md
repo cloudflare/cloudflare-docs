@@ -19,6 +19,6 @@ If you want to apply Isolate policies based on user identity, you will need to e
    - Configure your browser to forward traffic to a Gateway proxy endpoint with [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/).
    - Connect your enterprise site router to Gateway with the [Anycast GRE or IPsec tunnel on-ramp to Magic WAN](/magic-wan/tutorials/secure-web-gateway/).
 3. Enable non-identity browser isolation:
-   1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **Browser Isolation**.
+   1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Browser Isolation**.
    2. Turn on **Non-identity on-ramp support**.
 4. Build a non-identity [HTTP policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) to isolate websites in a remote browser.

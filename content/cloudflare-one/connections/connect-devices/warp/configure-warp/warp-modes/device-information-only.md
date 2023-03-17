@@ -19,7 +19,7 @@ To set up Device Information Only mode:
        --data '{"enabled": true}'
    ```
 
-2. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
 3. In the **Profile settings** card, choose a [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and select **Configure**.
 

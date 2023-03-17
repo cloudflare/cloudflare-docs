@@ -18,7 +18,7 @@ With Cloudflare's [Logpush](/logs/about/) service, you can configure the automat
 
 To enable Logpush for Zero Trust logs:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), navigate to **Logs** > **Logpush**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Logs** > **Logpush**.
 2. Select **Connect a service**.
 3. Enter a **Job name**.
 4. From the drop-down menu, choose the [dataset](#zero-trust-datasets) to export.

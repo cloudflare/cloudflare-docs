@@ -29,7 +29,7 @@ Cloudflare Zero Trust allows you to build Zero Trust rules based on device UUIDs
 
 To create rules based on device UUIDs, you first need to create a [Gateway List](/cloudflare-one/policies/filtering/lists/) of UUIDs.
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 
 2. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
 
@@ -47,7 +47,7 @@ Hyphens are automatically stripped from UUIDs. For example, the posture check wi
 
 ## 3. Enable the posture check
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
 2. Scroll down to **WARP client checks** and select **Add new**.
 

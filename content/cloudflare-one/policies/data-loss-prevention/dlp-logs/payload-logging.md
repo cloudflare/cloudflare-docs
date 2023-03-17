@@ -14,7 +14,7 @@ Follow [these instructions](/waf/managed-rules/payload-logging/command-line/gene
 
 ## 2. Upload the public key to Cloudflare
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 
 2. In the **DLP Payload Encryption public key** field, paste your public key.
 

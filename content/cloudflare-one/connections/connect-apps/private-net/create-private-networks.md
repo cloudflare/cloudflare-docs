@@ -25,7 +25,7 @@ This guide covers how to:
 
 ## Enable the WARP-to-WARP configuration
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy**.
 3. Enable **Warp-to-Warp**.
 4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels), ensure that traffic to `100.64/10` is going through WARP:

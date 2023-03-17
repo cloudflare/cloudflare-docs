@@ -26,11 +26,11 @@ When you revoke a user, this action will terminate active sessions, but will not
 
 ## Check number of Active Users
 
-You can check for the number of active users in the [Zero Trust dashboard](https://one.dash.cloudflare.com) home.
+You can check for the number of active users in [Zero Trust](https://one.dash.cloudflare.com) home.
 
 ## Remove a user
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **My Team** > **Users**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **My Team** > **Users**.
 2. Select the checkbox next to an active user.
 3. Select **Action** > **Remove users**.
 
@@ -42,7 +42,7 @@ Cloudflare Zero Trust can automatically remove any user who does not log in to a
 
 To enable automatic removal of inactive users:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **Account**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Account**.
 2. Scroll down to **User Seat Expiration** and click **Edit**.
 3. Select an inactivity time from the dropdown menu.
 4. Click **Save**.

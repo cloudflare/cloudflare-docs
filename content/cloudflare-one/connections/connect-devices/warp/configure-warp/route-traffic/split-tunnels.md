@@ -20,7 +20,7 @@ Also, changing between Include and Exclude modes will immediately delete your ex
 
 ## Set up Split Tunnels
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
 

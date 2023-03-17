@@ -10,7 +10,7 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 ## Enable TLS decryption
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
 2. Scroll down to **Firewall**.
 3. Turn on **TLS decryption**.
 4. (Optional) Select [**Enable only cipher suites and TLS versions compliant with FIPS 140-2**](#fips-compliance).

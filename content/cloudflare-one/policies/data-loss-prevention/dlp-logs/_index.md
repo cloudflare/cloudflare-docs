@@ -13,7 +13,7 @@ Logs are enabled by default for both allowed and blocked requests. To change you
 
 ## View DLP logs
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Logs** > **Gateway** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Gateway** > **HTTP**.
 2. Select **Filter**.
 3. Choose an item under one of the following filters:
    - **DLP Profiles** shows the requests which matched a specific DLP profile.

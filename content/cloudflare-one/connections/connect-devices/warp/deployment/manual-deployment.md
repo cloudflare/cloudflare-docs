@@ -16,7 +16,7 @@ If you plan to direct your users to manually download and configure the WARP cli
 
 To specify which users in your organization can enroll new devices:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Device enrollment** card, select **Manage**.
 3. In the **Rules** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can enroll or revoke devices.
 4. In the **Authentication** tab, select the [identity providers](/cloudflare-one/identity/idp-integration/) users can authenticate with.

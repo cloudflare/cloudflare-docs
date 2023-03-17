@@ -99,7 +99,7 @@ You can run an automated script on your origin server to validate incoming reque
 
 ### Get your AUD tag
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
 2. Select **Configure** for your application.
 3. On the **Overview** tab, copy the **Application Audience (AUD) Tag**.
 

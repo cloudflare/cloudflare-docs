@@ -14,7 +14,7 @@ You can add additional domains to the Local Domain Fallback list and specify a D
 
 To view the domains subject to Local Domain Fallback:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
 

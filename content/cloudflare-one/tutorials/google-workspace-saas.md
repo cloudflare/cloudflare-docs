@@ -13,7 +13,7 @@ This tutorial covers how to configure Cloudflare Access as a single sign-on prov
 
 ## 1. Create an application in Zero Trust
 
-1. Log in to the [Zero Trust dashboard](https://one.dash.cloudflare.com/) and navigate to **Access** > **Applications**.
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) and navigate to **Access** > **Applications**.
 
 2. Select **SaaS application**.
 

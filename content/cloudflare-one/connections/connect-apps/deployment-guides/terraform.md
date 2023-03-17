@@ -297,7 +297,7 @@ Once the configuration files are created, they can be deployed.
    $ terraform apply
    ```
 
-It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel, Access application, and Access policy in the **Access** section of the [Zero Trust dashboard](https://one.dash.cloudflare.com). The new DNS records are available in the [Cloudflare dashboard](https://dash.cloudflare.com).
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel, Access application, and Access policy in the **Access** section of [Zero Trust](https://one.dash.cloudflare.com). The new DNS records are available in the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 {{<Aside type="note">}}
 If you need to roll back the configuration, run `terraform destroy` to delete everything created through Terraform. Both `terraform apply` and `terraform destroy` prompt for user input before applying the changes. To run without requiring user input, you can add the `-auto-approve` flag to the command.

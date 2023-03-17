@@ -34,7 +34,7 @@ The integration does not currently support Safari.
 
 1. Configure your Tanium deployment using the [step-by-step documentation](https://docs.tanium.com/endpoint_identity/endpoint_identity/userguide.html) provided. You will need the public key to integrate your Tanium deployment with Cloudflare Access.
 
-2. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), navigate to **Settings** > **WARP Client**.
+2. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **WARP Client**.
 
 3. Scroll down to **WARP client checks** and select **Add new**.
 
