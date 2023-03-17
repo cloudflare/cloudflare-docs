@@ -16,7 +16,13 @@ Logs are enabled by default for both allowed and blocked requests. To change you
 1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Logs** > **Gateway** > **HTTP**.
 2. Select **Filter**.
 3. Choose an item under one of the following filters:
-    * **DLP Profiles** shows the requests which matched a specific DLP profile.
-    * **Policy** shows the requests which matched a specific DLP policy.
+   - **DLP Profiles** shows the requests which matched a specific DLP profile.
+   - **Policy** shows the requests which matched a specific DLP policy.
 
 You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/).
+
+{{<beta heading="h2">}}Report false positives{{</beta>}}
+
+To report a DLP false positive, select a log, then select **Report DLP false positive** under DLP details.
+
+Cloudflare will not response to the report, but reporting false positives helps us improve. If you require technical assistance, reach out to [support](https://dash.cloudflare.com/?to=/:account/support).
