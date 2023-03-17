@@ -8,11 +8,11 @@ meta:
 
 # Install a certificate using the WARP client
 
-The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. Installing a certificate allows you to apply HTTP policies to encrypted websites, display custom block pages, and more. The certificate is required if you enabled [TLS decryption](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) — otherwise, users will lose access to all HTTPS traffic.
+The WARP client can automatically install the Cloudflare certificate (or a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/)) on devices enrolled in your Zero Trust organization. The certificate is required if you want to [apply HTTP policies to encrypted websites](/cloudflare-one/policies/filtering/http-policies/tls-decryption/), display custom block pages, and more.
 
 ## Supported platforms
 
-This feature is available on desktop clients (Windows, macOS, and Linux). On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
+This feature is available on Windows, macOS, and Linux. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
 ## Install the certificate via WARP
 
@@ -29,8 +29,8 @@ This feature is available on desktop clients (Windows, macOS, and Linux). On mob
 
 If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the System Keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate. If you later modify or remove the custom certificate, WARP will automatically update the certificate on the device.
 
-{{<Aside type="note">}}
-You will still need to manually [add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to individual applications.
+{{<Aside type="note" header="Important">}}
+WARP only installs the system certificate — it does not install the certificate on individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
 {{</Aside>}}
 
 ## View the certificate
@@ -58,4 +58,6 @@ The default Cloudflare certificate is named **Cloudflare for Teams ECC Certifica
 
 ## Uninstall the certificate
 
-To remove a certificate from your device, refer to the instructions supplied by your operating system.
+If the certificate was installed by the WARP client, it is automatically removed when you disable **Install CA to system certificate store** or [uninstall WARP](/cloudflare-one/connections/connect-devices/warp/remove-warp/).
+
+To manually remove the certificate, refer to the instructions supplied by your operating system.
