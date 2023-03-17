@@ -32,13 +32,13 @@ $ npx wrangler pages dev -- <COMMAND>
 
 ### HTTPS support
 
-If you want to serve your local development server over HTTPS with a self-signed certificate, you can pass the `--local-protocol=https` argument to `npx wrangler pages dev`:
+To serve your local development server over HTTPS with a self-signed certificate, pass the `--local-protocol=https` argument to `npx wrangler pages dev`:
 
 ```sh
 $ npx wrangler pages dev --local-protocol=https <DIRECTORY-OF-ASSETS>
 ```
 
-If you're using `npx wrangler pages dev` with a command (`-- <COMMAND>`), you must match the protocol of whatever server is spun up by that command. If using HTTPS, you must additionally specify the certificate path to Node.js to allow Wrangler to accept responses from the command's server. You can do this by specifying the [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/all.html#all_cli_node_extra_ca_certsfile) environment variable:
+If you are using `npx wrangler pages dev` with a command (`-- <COMMAND>`), you must match the protocol of whatever server is spun up by that command. If using HTTPS, you must additionally specify the certificate path to Node.js to allow Wrangler to accept responses from the command's server. You can do this by specifying the [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/all.html#all_cli_node_extra_ca_certsfile) environment variable:
 
 ```sh
 $ NODE_EXTRA_CA_CERTS=<PATH_TO_CERTIFICATE> npx wrangler pages dev --local-protocol=https -- <COMMAND>
