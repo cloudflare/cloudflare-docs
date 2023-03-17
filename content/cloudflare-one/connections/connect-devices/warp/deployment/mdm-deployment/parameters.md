@@ -111,10 +111,6 @@ When the WARP client is deployed via MDM, the in-app **Send Feedback** button is
 
 ### `override_api_endpoint`
 
-{{<Aside type="note">}}
-Requires WARP version 2022.10.0.0 or later.
-{{</Aside>}}
-
 Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#client-orchestration-api) used by the WARP client to communicate with the client orchestration API. If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
 This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all API traffic to a new IP.
@@ -127,10 +123,6 @@ The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will 
 
 ### `override_doh_endpoint`
 
-{{<Aside type="note">}}
-Requires WARP version 2022.10.0.0 or later.
-{{</Aside>}}
-
 Overrides the [IP address](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip) used by the WARP client to resolve DNS queries via DNS over HTTPS (DoH). If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 
 This functionality is intended for use with a Cloudflare China local network partner or any other third-party network partner that can maintain the integrity of network traffic. Most IT admins should not set this setting as it will redirect all DoH traffic to a new IP.
@@ -142,10 +134,6 @@ This functionality is intended for use with a Cloudflare China local network par
 The string must be a valid IPv4 or IPv6 address, otherwise the WARP client will fail to parse the entire MDM file.
 
 ### `override_warp_endpoint`
-
-{{<Aside type="note">}}
-Requires WARP version 2022.10.0.0 or later.
-{{</Aside>}}
 
 Overrides the [IP address and UDP port](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip) used by the WARP client to send traffic to Cloudflare's edge.  If you set this parameter, be sure to update your organization's firewall to ensure the new IP is allowed through.
 

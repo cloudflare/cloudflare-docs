@@ -50,6 +50,7 @@ header: Configure the lifecycle policy for a bucket
 await client
   .putBucketLifecycleConfiguration({
     LifecycleConfiguration: {
+      Bucket: "testBucket",
       Rules: [
         // Example: deleting objects on a specific date
         // Delete 2019 documents in 2024
