@@ -34,7 +34,7 @@ In the diagram below, Magic Transit encapsulates packets at the Cloudflare globa
 ```mermaid
 flowchart LR
 accTitle: Tunnels and encapsulation
-accDescr: How Magic Transit encapsulates IP packets destined for your network.
+accDescr: Flow of packet encapsulation at Cloudflare's global network to user's tunnel endpoint router.
 
 a(User)
 e(Cloudflare server)
@@ -91,8 +91,6 @@ This works because the GRE protocol is stateless—each packet is processed inde
 
 Cloudflare’s Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
 
-![Multiple servers in data center preparing packets to send through Anycast tunnel](/magic-transit/static/magic-transit-anycast-2.png)
-
 ```mermaid
 flowchart LR
 accTitle: Anycast tunnel
@@ -118,12 +116,6 @@ end
 
 a --> 1== Cloudflare Anycast GRE <br> single endpoint ==>i --> j
 ```
-
-
-
-
-
-
 
 ## Network Analytics
 
