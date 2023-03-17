@@ -7,7 +7,7 @@ title: Limits
 
 {{<Aside type="note" heading="D1 is currently in alpha">}}
 
-Many of these limits will increase during D1's [public alpha](/workers/platform/betas/). Join the [`#d1-open-alpha`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
+Many of these limits will increase during D1's [public alpha](/workers/platform/betas/). Join the [`#d1-open-alpha`](https://discord.gg/rrZXVVcKQF) channel in the Cloudflare Developer Discord to keep up to date with changes.
 
 {{</Aside>}}
 
