@@ -74,7 +74,7 @@ The following are the properties on the `context` object which are passed throug
 
       In the following example, you have a dynamic path that is `/users/[user].js`. When you visit the site on `/users/nevi` the `params` object would look like:
 
-      ```sh
+      ```js
       {
         user: "nevi"
       }
@@ -82,8 +82,10 @@ The following are the properties on the `context` object which are passed throug
 
       This allows you fetch the dynamic value from the path:
 
-      ```sh
-      new Response(`Hello ${context.params.user}`);
+      ```js
+      export function onRequest(context) {
+        return new Response(`Hello ${context.params.user}`);
+      }
       ```
 
       Which would return `"Hello nevi"`.
