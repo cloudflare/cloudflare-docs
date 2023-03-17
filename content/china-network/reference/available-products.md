@@ -27,7 +27,7 @@ The following products and features are available on the Cloudflare China Networ
 
 | Product | Feature | Description |
 |---|---|---|
-| [Workers](/workers/) | Serverless computing | A serverless execution environment running on Cloudflare’s edge network. |
+| [Workers](/workers/) | Serverless computing | A serverless execution environment running on Cloudflare’s global network. |
 
 ## Network services
 
