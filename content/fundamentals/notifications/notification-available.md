@@ -37,7 +37,7 @@ Purchase of Access.
 
 **What should you do if you receive one?**
 
-Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflare.com/) under **Configuration** > **Service Auth**.
+Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.com/) under **Configuration** > **Service Auth**.
 
 </div>
 </details>
@@ -352,11 +352,11 @@ Multiple filters available:
 
 - Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
 - Customers can also choose the trigger that fires the notification. Available options are:
-  - *Health status trigger*:
+  - _Health status trigger_:
     - Becomes unhealthy or healthy
     - Becomes unhealthy
     - Becomes healthy
-  - *Event source trigger*:
+  - _Event source trigger_:
     - Health status changes in either pool or origin
     - Health status changes in pool
     - Health status changes in origin
@@ -382,7 +382,6 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 This is for any customer who uses Logpush and wants to monitor their job health.
 
-
 **Other options / filters**
 
 - Notification Name
@@ -398,7 +397,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
 </div>
 </details>

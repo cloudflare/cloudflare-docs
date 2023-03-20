@@ -30,7 +30,7 @@ Cloudflare Access provides optional security settings that can be added to the b
 
 To enable these settings:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
 2. Locate the application you would like to configure and select **Edit**.
 

@@ -11,17 +11,18 @@ meta:
 This is a high-level, step-by-step walkthrough on how to get started with WARP in your organization. From downloading the client to sending the first queries to Cloudflare's edge, here is a guide on how to do it for the first time.
 
 ## Gateway with WARP (default)
+
 This mode enables our complete suite of [device security features](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes).
 
 ### 1. Create a Cloudflare Zero Trust account.
 
-The Cloudflare Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
+The [Cloudflare Zero Trust home](https://one.dash.cloudflare.com/) will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
 
 As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), you will be asked to create a [team name](/cloudflare-one/glossary/#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
 ### 2. Set up a login method.
 
-Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust Dashboard. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
+Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) in Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
 ### 3. Next, define device enrollment permissions.
 
@@ -47,13 +48,13 @@ This mode is best suited for organizations that only want to apply DNS filtering
 
 ### 1. Create a Cloudflare Zero Trust account.
 
-The Zero Trust dashboard will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
+Zero Trust will be your go-to place to check device connectivity data, as well as create Secure Web Gateway and Zero Trust policies for your organization.
 
 As you complete the [Cloudflare Zero Trust onboarding](/cloudflare-one/setup/), you will be asked to create a [team name](/cloudflare-one/glossary/#team-name) for your organization. You will need the team name when you deploy the WARP client on your devices; it will allow your users to connect to your organization's Cloudflare Zero Trust instance.
 
 ### 2. Set up a login method.
 
-Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust dashboard. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
+Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) in Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
 ### 3. Next, define device enrollment permissions.
 

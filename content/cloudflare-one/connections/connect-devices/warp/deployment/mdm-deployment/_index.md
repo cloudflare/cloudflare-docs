@@ -13,7 +13,7 @@ This page provides generic instructions for an automated deployment. If you want
 
 {{<Aside type="warning">}}
 
-Settings you specify in a local policy file and deploy with your management software will overrule any settings you configure in the Zero Trust Dashboard.
+Settings you specify in a local policy file and deploy with your management software will overrule any settings you configure in Zero Trust.
 
 {{</Aside>}}
 
@@ -66,9 +66,9 @@ To use an embedded browser:
 
 1. Download and install WebView2 by following the instructions [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/#download-section).
 2. Add a registry key with the following command:
-    ```txt
-    REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
-    ```
+   ```txt
+   REG ADD HKLM\SOFTWARE\Cloudflare\CloudflareWARP /f /v UseWebView2 /t REG_SZ /d y
+   ```
 
 The WARP client will now launch WebView2 when the user is registering their device with Zero Trust.
 
@@ -84,9 +84,9 @@ The Cloudflare WARP macOS client allows for an automated install via tools like 
 
 3. (Optional) If you want to manually place the file in `/Library/Managed Preferences` (rather than use a management tool), convert the `plist` into binary format:
 
-  ```sh
-  $ plutil -convert binary1 com.cloudflare.warp.plist
-  ```
+```sh
+$ plutil -convert binary1 com.cloudflare.warp.plist
+```
 
 The plist must be pushed by an MDM tool in order to persist after reboot. Manually-placed files will be automatically deleted by the OS.
 
@@ -123,9 +123,9 @@ To proceed with the installation, here is an example of the XML code you will ne
 <dict>
     <key>organization</key>
     <string>yourorganization</string>
-    <key>auto_connect</key> 
+    <key>auto_connect</key>
     <integer>1</integer>
-    <key>switch_locked</key> 
+    <key>switch_locked</key>
     <false />
     <key>service_mode</key>
     <string>warp</string>

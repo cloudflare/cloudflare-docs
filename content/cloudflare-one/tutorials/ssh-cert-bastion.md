@@ -41,7 +41,7 @@ Replacing long-lived API keys with short-lived certificates offers the following
 
 First, build a Zero Trust policy to enforce rules whenever any user attempts to connect to the resources being protected. Building the Zero Trust policy first ensures that resources are not connected to Cloudflare for a period of time before a Zero Trust policy can be added.
 
-In the Zero Trust dashboard, open the `Applications` page of the `Access` section. Select the "Self-hosted" option.
+In Zero Trust, open the `Applications` page of the `Access` section. Select the "Self-hosted" option.
 
 Name the application using a subdomain of a domain active in your Cloudflare account. This will be the host that users configure in their SSH configuration file to reach the protected resources.
 
@@ -67,7 +67,7 @@ $ cloudflared tunnel create ssh-pool
 
 You can now configure your Tunnel. The example configuration file below uses the UUID value of the Tunnel, adds the path to the credentials file, and sets an optional logging location.
 
-In the `ingress` section, input the hostname of the application created in the Zero Trust dashboard. Placing the service in bastion mode will allow any connections that reach `cloudflared` to connect onward to resources available to `cloudflared`, similar to a jump host.
+In the `ingress` section, input the hostname of the application created in Zero Trust. Placing the service in bastion mode will allow any connections that reach `cloudflared` to connect onward to resources available to `cloudflared`, similar to a jump host.
 
 ![Bastion](/cloudflare-one/static/zero-trust-security/ssh-slc/bastion-mode.png)
 
@@ -112,7 +112,7 @@ Users will now be able to authenticate through Cloudflare Access and connect ove
 
 ## Deploy short-lived certificates
 
-You can extend the Zero Trust security model by replacing long-lived SSH keys with short-lived certificates provided by Cloudflare Access. To do so, navigate to the Zero Trust dashboard and open the **Service Authentication** page. Select the **SSH** tab.
+You can extend the Zero Trust security model by replacing long-lived SSH keys with short-lived certificates provided by Cloudflare Access. To do so, navigate to Zero Trust and open the **Service Authentication** page. Select the **SSH** tab.
 
 In the **Application** dropdown, select the application created previously and click **Generate certificate**. Cloudflare Access will display the public key and an audience tag for the generated certificate.
 
