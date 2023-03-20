@@ -72,7 +72,7 @@ ___
 
 When designing your custom error page, you must include one page-specific custom error token.  Each custom error token provides diagnostic information that appears on the error page. 
 
-To display a custom page for each error, create a separate page per error. For example, to create a custom error page for both **IP/Country Block** and **Legacy Captcha Challenge**, you must design and publish two separate pages. 
+To display a custom page for each error, create a separate page per error. For example, to create a custom error page for both **IP/Country Block** and **Interactive Challenge**, you must design and publish two separate pages. 
 
 The following tables list each custom error token grouped by the applicable custom error page.
 
@@ -88,7 +88,7 @@ Only one page-specific custom error token can be used per page.
 | **Token** | **Available to** |
 | --- | --- |
 | ::GEO:: | IP/Country Block |
-| ::CAPTCHA\_BOX:: | Legacy CAPTCHA Challenge<br/>Country Challenge (CAPTCHA Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
+| ::CAPTCHA\_BOX:: | Interactive Challenge<br/>Country Challenge (CAPTCHA Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
 | ::IM\_UNDER\_ATTACK\_BOX:: | JS Challenge |
 | ::CLOUDFLARE\_ERROR\_500S\_BOX:: | 5XX Errors |
 | ::CLOUDFLARE\_ERROR\_1000S\_BOX:: | 1XXX Errors |

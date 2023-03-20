@@ -13,7 +13,7 @@ meta:
 
 {{<plan type="enterprise">}}
 
-Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
+Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks. 
 
 ---
  

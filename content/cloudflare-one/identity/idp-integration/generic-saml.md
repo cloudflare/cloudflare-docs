@@ -6,14 +6,14 @@ weight: 1
 
 # Generic SAML 2.0
 
-Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods on the Zero Trust Dashboard, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
+Cloudflare Zero Trust integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Zero Trust, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
 
 ## Prerequisites
 
 Minimum requirements for identity providers:
 
 - The IdP must conform to SAML 2.0.
-- The IdP must provide a **Single sign-on URL**, an **Entity ID  or Issuer URL**, and a **Signing certificate**.
+- The IdP must provide a **Single sign-on URL**, an **Entity ID or Issuer URL**, and a **Signing certificate**.
 - The IdP must include the signing public key in the SAML response.
 
 ## 1. Create an application in your identity provider
@@ -32,9 +32,9 @@ The typical setup requirements are:
 
 If your identity provider supports metadata file configuration, use the endpoint: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata` to download and generate an XML file. Upload this XML file to the identity provider.
 
-## 2. Add a SAML identity provider to the Zero Trust Dashboard
+## 2. Add a SAML identity provider to Zero Trust
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Authentication** > **Login methods**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Login methods**.
 2. Select **Add new** and select **SAML**.
 3. Choose a descriptive name for your identity provider.
 4. Enter the **Single Sign on URL**, **IdP Entity ID or Issuer URL**, and **Signing certificate** obtained from your identity provider.

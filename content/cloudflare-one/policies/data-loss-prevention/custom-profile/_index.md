@@ -15,7 +15,7 @@ You can add both custom and existing detection entries to a custom DLP profile. 
 
 To define a custom profile:
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Gateway** > **DLP Profiles**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **DLP Profiles**.
 2. Select **Create Profile**.
 3. Enter a name and optional description for the profile.
 4. Add custom or existing detection entries.

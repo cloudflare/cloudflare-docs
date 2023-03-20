@@ -33,7 +33,7 @@ The action that will be performed for requests that match specific rules of Clou
   - API value: `"managed_challenge"`.
   - [Managed Challenges](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 
-- **Legacy CAPTCHA**
+- **Interactive Challenge**
 
   - API value: `"challenge"`.
   - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.

@@ -14,13 +14,13 @@ To remedy a false positive:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 
-2. Navigate to the analytics dashboard and apply filters to the displayed data.
+2. Go to the analytics dashboard and apply filters to the displayed data.
 
     <details><summary>For WAF/CDN customers</summary><div>
 
     1\. Select the zone that is experiencing DDoS attack false positives.
 
-    2\. Navigate to **Security** > **Events**.
+    2\. Go to **Security** > **Events**.
 
     3\. Select **Add filter** and filter by `Service equals HTTP DDoS`.
 
@@ -38,7 +38,7 @@ To remedy a false positive:
 
 4. Copy the rule name.
 
-5. Navigate to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
+5. Go to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
 
 6. Select **Browse rules** and paste the rule name in the search field.
 
