@@ -59,6 +59,8 @@ set to *Full* in the **SSL/TLS** app of the Cloudflare dashboard.
 
 ### **Amazon**
 
+#### Amazon Route53
+
 AWS customers must update their domain's nameservers to point to the Cloudflare nameservers listed in the **Overview** app of the Cloudflare dashboard:
 
 1.  Log into AWS.
@@ -73,6 +75,9 @@ AWS customers must update their domain's nameservers to point to the Cloudflare 
 -   Click **Registered domains**.
 -   Select the domain to update with Cloudflare's nameservers.
 -   Click **Add or edit name servers**.
+
+
+#### Amazon S3 bucket
 
 Consult Amazon’s documentation on how to [c](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html)[reate an Amazon S3 bucket](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html).
 
@@ -102,6 +107,8 @@ The above TXT record content is an example. Use the correct content
 provided by Amazon SES.
 {{</Aside>}}
 
+#### Amazon ELB configuration
+
 Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon.
 
 {{<Aside type="note">}}
@@ -112,6 +119,8 @@ root domain to point to an Elastic Load Balancer.
 1.  Add a _CNAME record_ to Cloudflare for the hostname; for example: _elb_
 2.  In the Cloudflare **DNS** app, replace **Domain name** with the ELB target: _<AWS hostname>.<region>._elb.amazonaws.com is the proper _CNAME_ target format (for example: _my-cool-cachepp-1344276401.eu-west-1._elb.amazonaws.com).
 3.  Reach out to AWS support to determine _AWS hostname_ or _region_.
+  
+  
 
 ### **Microsoft**
 
