@@ -186,6 +186,9 @@ You can combine the functionalities mentioned above into one script and use vari
 {{<tab label="js/esm" default="true">}}
 
 ```js
+---
+filename: 
+---
 export default {
   async fetch(request) {
 
