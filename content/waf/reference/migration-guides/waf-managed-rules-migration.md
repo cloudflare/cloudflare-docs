@@ -8,7 +8,7 @@ weight: 1
 
 {{<Aside type="warning" header="Important">}}
 
-Currently, WAF migration is not ready for zones of [Tenant](/tenant) accounts.
+Currently, WAF migration is not available for zones of [Tenant](/tenant) accounts.
 
 {{</Aside>}}
 
