@@ -6,7 +6,7 @@ weight: 6
 
 # TLS decryption
 
-Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks. When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with the Cloudflare, or a [custom](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/), certificate.
+Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks. When you enable TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
 
 ## Enable TLS decryption
 
