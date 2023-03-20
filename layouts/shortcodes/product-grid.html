@@ -4,29 +4,33 @@
 {{- range readDir "./data/" -}}
 {{- if in .Name ".yml" -}}
 {{- $productName :=  replace .Name ".yml" "" -}}
-{{- $dataArray = $dataArray | append (index $.Site.Data $productName) -}}
+{{- $productData := index $.Site.Data $productName -}}
+{{- with index $productData "product" -}}
+{{- $dataArray = $dataArray | append 
+(dict "group" .group "title" .title  "show" (default true .show) "url" 
+.url "wrap" (default false .wrap)) -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
 {{- range .Site.Pages  -}}
 {{- $relpermalink := .RelPermalink -}}
 {{- with index .Params "product_grid"  -}}
-{{- $dataArray = $dataArray | append (dict "product" 
-(dict "group" .group "title" .title  "show" (default false .show) "url" 
-$relpermalink "wrap" (default false .wrap))) -}}
+{{- $dataArray = $dataArray | append (dict "group" .group "title" .title 
+ "show" (default false .show) "url" $relpermalink "wrap" (default false .wrap)) -}}
 {{- end -}}
 {{- end -}}
 
-{{- range $index, $item := $dataArray -}}
-{{- with index (index $item "product") "group" -}}
-{{- if ne (index (index $item "product") "show") false -}}
+{{- range $dataArray -}}
+{{- with .group -}}
+
 {{ $availableOptions = $availableOptions | append . }}
 {{- end -}}
 {{- end -}}
-{{- end -}}
+
 {{- $availableOptions = $availableOptions | uniq | sort -}}
 
-{{- $dataArray = $dataArray | uniq | sort -}}
+{{- $dataArray = sort $dataArray ".title" -}}
 
 <style>
   .QuadBlockGrid {
@@ -120,15 +124,14 @@ $relpermalink "wrap" (default false .wrap))) -}}
     </h2>
   <div class="ProductGrid--content">
     {{- range $dataArray -}} 
-      {{- if and (eq $currentOption .product.group) (ne .product.show false) -}}
-        {{- $product := .product -}} 
-        {{- $wrap := default false $product.wrap -}}
+      {{- if and (eq $currentOption .group) (ne .show false) -}}
+        {{- $wrap := default false .wrap -}}
         <a
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
-          href="{{ $product.url }}"
+          href="{{ .url }}"
         >
-          <span>{{ $product.title }}</span>
+          <span>{{ .title }}</span>
         </a>
         {{- end -}}
       {{- end -}}
