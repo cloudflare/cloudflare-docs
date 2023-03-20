@@ -9,7 +9,6 @@ product_grid:
   show: true
   title: Access
   group: Cloudflare One
-
 ---
 
 # Access policies
