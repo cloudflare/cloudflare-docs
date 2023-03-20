@@ -25,7 +25,6 @@ Analytics Engine is designed for use with Cloudflare Workers. If you already use
   env.USAGE_INDEXED_BY_CUSTOMER_ID.writeDataPoint({
     "indexes": [customer_id],
     "blobs": {
-      customer_id,
       request_endpoint
     }
   });
@@ -41,21 +40,21 @@ Look at customer usage over all endpoints:
 
 ```sql
 SELECT
-  blob1 AS customer_id,
+  index1 AS customer_id,
   sum(_sample_interval) AS count
 FROM
   usage_indexed_by_customer_id
 GROUP BY customer_id
 ```
 
-If run in Grafana, this query returns a graph showing an accurate estimation of the usage of each customer. The `sum(_sample_interval)` accounts for the sampling - see other Analytics Engine documentation. This query gives you an answer to "which customers are most active?"
+If run in Grafana, this query returns a graph summarising the usage of each customer. The `sum(_sample_interval)` accounts for the sampling - see other Analytics Engine documentation. This query gives you an answer to "which customers are most active?"
 
 The example `writeDataPoint` call above writes an endpoint name. If you do that, you can break down customer activity by endpoint:
 
 ```sql
 SELECT
-  blob1 AS customer_id,
-  blob2 AS request_endpoint,
+  index1 AS customer_id,
+  blob1 AS request_endpoint,
   sum(_sample_interval) AS count
 FROM
   usage_indexed_by_customer_id
@@ -66,6 +65,39 @@ This can give you insights into what endpoints different customers are using. Th
 
 ## Billing customers
 
-Billing customers based on Analytics Engine data means that bills are a (reliable) approximation of usage, rather than being exact. Because Analytics Engine samples, you can only approximate customer usage. This is actually a feature: as Analytics Engine makes it cheap to capture customer usage, you are able to cheaply bill on how much customer usage really costs, rather than having to charge a flat fee and struggling for cheap insights into customer's actual usage.
+Analytics Engine can be used to bill customers based on a reliable approximation of usage. In order to get the best approximation, when generating bills we suggest executing one query per customer. This can result in less sampling than querying multiple customers at once.
 
-To bill customers, you will want to take the usage queries above and make a backend system run those queries and calculate the customer charge based on the data returned.
+```sql
+SELECT
+  index1 AS customer_id,
+  blob1 AS request_endpoint,
+  sum(_sample_interval) AS usage_count
+FROM
+  usage_indexed_by_customer_id
+WHERE
+  customer_id = 'substitute_customer_id_here'
+  AND timestamp >= '2023-03-01 00:00:00'
+  AND timestamp < '2023-04-01 00:00:00'
+GROUP BY customer_id, request_endpoint
+```
+
+Running this query once for each customer at the end of each month could give you the data to produce a bill. This is just an example: most likely you'll want to adjust this example to how you want to bill.
+
+When producing a bill, most likely you will also want to provide the daily costs. The following query breaks down usage by day:
+
+```sql
+SELECT
+  index1 AS customer_id,
+  toStartOfInterval(timestamp, INTERVAL '1' DAY) AS date,
+  blob1 AS request_endpoint,
+  sum(_sample_interval) AS request_count
+FROM
+  usage_indexed_by_customer_id
+WHERE
+  customer_id = 'x'
+  AND timestamp >= '2023-03-01 00:00:00'
+  AND timestamp < '2023-04-01 00:00:00'
+GROUP BY customer_id, date, request_endpoint
+```
+
+You will want to take the usage queries above, adapt them for how you charge customers, and make a backend system run those queries and calculate the customer charges based on the data returned.
