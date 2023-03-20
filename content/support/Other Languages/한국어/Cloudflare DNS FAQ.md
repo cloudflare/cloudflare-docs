@@ -113,7 +113,7 @@ ___
 
 ## Cloudflare는 도메인 마스킹을 제공합니까?
 
-아닙니다. Cloudflare는 도메인 마스킹이나 DNS 리디렉션 서비스를 제공하지 않습니다(호스팅 공급자가 제공할 수 있음).그러나 [대량 리디렉션](https://developers.cloudflare.com/rules/bulk-redirects/) 을 통한 URL 전달은 제공합니다.
+아닙니다. Cloudflare는 도메인 마스킹이나 DNS 리디렉션 서비스를 제공하지 않습니다(호스팅 공급자가 제공할 수 있음).그러나 [대량 리디렉션](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/) 을 통한 URL 전달은 제공합니다.
 
 ___
 

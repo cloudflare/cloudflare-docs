@@ -8,9 +8,9 @@ import * as workers from "data/learning-paths/workers.json";
 
 let learning_paths = [
   get_started,
-  workers,
-  bot_management,
   load_balancing,
+  bot_management,
+  workers,
   replace_vpn,
   optimize_site_speed,
   application_security,

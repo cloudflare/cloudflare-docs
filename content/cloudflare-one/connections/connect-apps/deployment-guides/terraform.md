@@ -2,11 +2,13 @@
 pcx_content_type: how-to
 title: Terraform
 weight: 7
+meta:
+  description: Learn how to deploy a Cloudflare Tunnel using Terraform and our lightweight server-side daemon, cloudflared.
 ---
 
 # Deploy Tunnels with Terraform
 
-[Terraform](https://www.terraform.io/) is an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax.  When creating a Terraform configuration file, you define the final state of the configuration rather than the step-by-step procedure. This allows you to easily deploy, modify, and manage your Tunnels alongside your other infrastructure.
+[Terraform](https://www.terraform.io/) is an infrastructure as code software tool that allows you to deploy services from different providers using a standardized configuration syntax. When creating a Terraform configuration file, you define the final state of the configuration rather than the step-by-step procedure. This allows you to easily deploy, modify, and manage your Tunnels alongside your other infrastructure.
 
 In this guide, you will use Terraform to deploy:
   - A Google Cloud Project (GCP) virtual machine that runs a simple HTTP test server
@@ -259,7 +261,7 @@ The following script will install `cloudflared`, create a permissions and config
       - hostname: "*"
         service: hello-world
     EOF
-    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudfared.
+    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudflared.
     sudo cloudflared service install
     # The credentials file does not get copied over so we do that manually.
     sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/

@@ -5,6 +5,7 @@ layout: single
 weight: 5
 meta:
   title: Domain Control Validation (DCV) — SSL/TLS
+  description: Learn when and how to perform Domain Control Validation when using Cloudflare SSL/TLS.
 ---
 
 # Domain Control Validation (DCV) — SSL/TLS

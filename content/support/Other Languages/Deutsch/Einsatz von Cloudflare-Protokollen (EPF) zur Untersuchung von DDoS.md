@@ -31,6 +31,12 @@ Stellen Sie die folgenden Informationen zusammen:
 4.  Startzeit (Beispielformat: 1529171100)
 5.  Endzeit (Beispielformat: 1529171100)
 
+{{<Aside type="tip">}}
+Für die Zwecke dieses Tutorials können Sie die folgende Website
+benutzen, um Zeiten in Unix-Zeit zu konvertieren:
+<https://www.epochconverter.com/>
+{{</Aside>}}
+
 ___
 
 ## Schritt 2: Herunterladen und Speichern der Protokolle
@@ -166,3 +172,9 @@ Aktion 3**: Zählen URI-spezifischer „nur HTTP 200“-Antworten nach IP-Adress
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">~$ cat els-200-URI-1-Top-IP.txt</span></div></span></span></span></code></pre>{{</raw>}}
 
 Sie können 200-HTTP-Antworten sowohl nach Anfrage-URI als auch nach den IPs eingrenzen, die diese URIs anfragen. Sie könnten die Protokolle auch anders herum sortieren, indem Sie die Protokolleinträge nach den obersten IP-Adressen eingrenzen und dann sehen, welcher URI nach IP-Adresse am meisten angefragt wird.
+
+{{<Aside type="note">}}
+Beachten Sie: Nur weil Sie eine große Anzahl von Anfragen von einem
+einzigen User-Agent oder IP sehen, bedeutet das nicht, dass der
+Anfragende böswillig ist. 
+{{</Aside>}}

@@ -20,3 +20,8 @@ Um zu bestätigen, ob die Cloudflare-IPs, die Ihrer Domain zugeordnet sind, in C
 3\. Eine DNS-Auflösungsantwort für die Domain von einem Standort in China.  Dafür können Sie ein Tool wie [DNS Checker](https://dnschecker.org/) verwenden.
 
 4\. Die Art des Inhalts Ihrer Website.  China zensiert manche Inhalte wie Pornographie, Spiele und bestimmte Arten politischer Diskussionen.
+
+{{<Aside type="note">}}
+Der Cloudflare-Support kann nur bestätigen, ob eine Domain von China
+blockiert wird und hat keinen Einfluss auf die Freigabe.
+{{</Aside>}}

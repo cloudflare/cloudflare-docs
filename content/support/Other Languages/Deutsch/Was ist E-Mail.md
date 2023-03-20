@@ -17,6 +17,14 @@ Web-Administratoren haben clevere Schutzmechanismen dazu entwickelt, indem sie e
 
 Damit die Verschleierung der E-Mail-Adresse in Cloudflare funktioniert, muss eine Seite den MIME-Typ (Content-Type) „text/html“ oder „application/xhtml+xml“ haben. 
 
+{{<Aside type="note">}}
+Für alle Nutzer des Pro, Business und Enterprise Plans steht ein
+dedizierter E-Mail-Support zur Verfügung. Nutzer der Business und
+Enterprise Pläne können außerdem den Chat-Support nutzen. Wenn Sie
+zusätzliche Unterstützung benötigen, werfen Sie einen Blick auf [unsere
+Pläne](https://www.cloudflare.com/plans/).
+{{</Aside>}}
+
 ___
 
 ## Prüfung der E-Mail-Adressverschleierung

@@ -38,6 +38,12 @@ ___
 
 Follow the instructions below to enable gRPC:
 
+{{<Aside type="note">}}
+[Orange-cloud the
+domain](https://support.cloudflare.com/hc/articles/200169626) that hosts
+your gRPC endpoint.
+{{</Aside>}}
+
 1.  Log in to your Cloudflare account.
 2.  Select the appropriate domain.
 3.  Click the **Network** app.

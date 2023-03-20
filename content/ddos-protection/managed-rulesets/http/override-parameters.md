@@ -33,7 +33,7 @@ The action that will be performed for requests that match specific rules of Clou
   - API value: `"managed_challenge"`.
   - [Managed Challenges](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 
-- **Legacy CAPTCHA**
+- **Interactive Challenge**
 
   - API value: `"challenge"`.
   - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
@@ -41,7 +41,7 @@ The action that will be performed for requests that match specific rules of Clou
 - **Log**
 
     - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+    - Only available on Enterprise plans with the Advanced DDoS Protection subscription. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 {{<Aside type="note">}}
 

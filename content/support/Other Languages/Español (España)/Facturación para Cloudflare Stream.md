@@ -83,6 +83,11 @@ Para ver tus minutos de Stream vistos, 
 4.  En la navegación izquierda, haz clic en **Uso facturable**. Verás un gráfico que muestra tu tráfico diario actual.
 5.  Elige **Mes anterior** en el menú desplegable sobre el gráfico y haz clic en **Mes hasta la fecha** para ver el uso de tu mes anterior. ![argo_billing_subcriptions_previous_month.png](/support/static/stream_billing_subcriptions_previous_month.png)
 
+{{<Aside type="note">}}
+En un futuro próximo, Cloudflare planea incluir almacenamiento total en
+el panel de control de Cloudflare.
+{{</Aside>}}
+
 ___
 
 -   [Plataforma de video Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)

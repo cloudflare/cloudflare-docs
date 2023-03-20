@@ -14,13 +14,38 @@ title: Absicherung des Nutzerzugriffs mit Zwei-Faktor-Authentifizierung (2FA)
 
 Durch Zwei-Faktor-Authentifizierung (2FA) können Kontoinhaber eine zusätzliche Sicherheitsebene bei der Anmeldung für Cloudflare-Konten schaffen. Dieser zusätzliche Authentifizierungsschritt bedeutet, dass Sie einerseits etwas angeben müssen, das Sie wissen (etwa ein Cloudflare-Passwort) und andererseits etwas, das Sie haben (etwa einen Authentifizierungscode von einem Mobilgerät). 
 
+{{<Aside type="note">}}
+Cloudflare-Nutzerkonten, die für die Verwendung von Single Sign-On (SSO)
+konfiguriert sind, können keine 2FA konfigurieren.
+{{</Aside>}}
+
 Damit Sie auf jeden Fall sicheren Zugang zu Ihrem Konto bekommen, auch wenn Ihr Mobilgerät gerade nicht greifbar ist (z. B. wenn Sie sich ein neues Smartphone angeschafft haben), bietet Cloudflare auch Backup-Codes zum Herunterladen an. 
 
+{{<Aside type="tip">}}
+Wenn Sie die Backup-Codes heruntergeladen haben, sollten Sie sie an
+einem sicheren Ort aufbewahren.
+{{</Aside>}}
+
 Nur Superadministratoren können 2FA bei Cloudflare-Konten aktivieren. Als Kontoinhaber wird Ihnen automatisch die Rolle des Superadministrators zugewiesen. Nach der Aktivierung von 2FA müssen alle Mitglieder des Cloudflare-Kontos 2FA auf ihren Mobilgeräten konfigurieren.
+
+{{<Aside type="note">}}
+Bei Free-, Pro- und Business-Kunden kann es nur einen Superadministrator
+geben. Enterprise-Kunden können mehrere Superadministratoren haben und
+[weitere Mitgliederrollen
+zuweisen](https://support.cloudflare.com/hc/articles/205065067).
+{{</Aside>}}
 
 ___
 
 ## Zwei-Faktor-Authentifizierung für Ihr Cloudflare-Konto aktivieren
+
+{{<Aside type="warning">}}
+Superadministratoren können die **2FA-Erzwingung** aktivieren, sodass
+alle Mitglieder 2FA aktivieren müssen. Sollten Sie kein
+Superadministrator sein, werden Sie zur Aktivierung von 2FA gezwungen,
+bevor Sie die Einladung annehmen, einem Cloudflare-Konto als Mitglied
+beizutreten.
+{{</Aside>}}
 
 So aktivieren Sie die Zwei-Faktor-Authentifizierung für Ihr Cloudflare-Konto:
 
@@ -90,6 +115,11 @@ So deaktivieren Sie 2FA für Ihr Cloudflare-Konto:
 ___
 
 ## Verlorenen Zugang zu Zwei-Faktor-Authentifizierung bei Cloudflare wiederherstellen
+
+{{<Aside type="warning">}}
+Sicherheitsschlüssel können nur mit Browsern verwendet werden, die das
+WebAuthn-Protokoll unterstützen.
+{{</Aside>}}
 
 Die häufigsten Probleme im Zusammenhang mit 2FA entstehen, wenn man keinen Zugang zu einem Mobilgerät oder Authentifizierungscode mehr hat. In den meisten Fällen können Sie das Problem dadurch lösen, dass Sie einen Backup-Code benutzen oder in der Dokumentation Ihrer bevorzugten Authentifizierungs-App nachschlagen.
 

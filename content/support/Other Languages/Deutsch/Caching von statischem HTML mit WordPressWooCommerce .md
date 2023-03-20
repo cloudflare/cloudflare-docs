@@ -11,6 +11,14 @@ title: Caching von statischem HTML mit WordPressWooCommerce
 
 ## Überblick
 
+{{<Aside type="note">}}
+Kunden aller Cloudflare-Tarife können das Caching von HTML-Dateien
+konfigurieren. Jedoch können Business- und Enterprise-Kunden das
+HTML-Caching umgehen, wenn ein Cookie gesendet wird, indem Sie die
+Einstellung *Bypass Cache on Cookie* mit Cloudflare **Page Rules**
+vornehmen.** **
+{{</Aside>}}
+
 Dadurch kann statisches HTML an unserem Edge zwischengespeichert werden, ohne dass es von Anfrage zu Anfrage neu erstellt werden muss. 
 
 Cloudflare-Kunden mit Enterprise Plan können _Custom Cache Keys_ verwenden, um ihre Performance weiter zu verbessern. Wenden Sie sich an den für Sie zuständigen Customer Success Manager, um weitere Informationen zu erhalten.

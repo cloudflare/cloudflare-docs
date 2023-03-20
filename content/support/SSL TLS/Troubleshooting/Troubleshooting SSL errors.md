@@ -40,6 +40,11 @@ Otherwise, if SSL errors occur when using a newer browser, review these common S
 -   [OCSP response error](https://support.cloudflare.com/hc/en-us/articles/200170566#h_51354cf8-de93-4894-85e6-f0f7453d766d)
 -   [SSL expired or SSL mismatch errors](https://support.cloudflare.com/hc/en-us/articles/200170566#h_c1a6e78e-150d-4db6-89ab-eec7cb1ab03f)
 
+{{<Aside type="note">}}
+To avoid SSL errors with the Cloudflare dashboard when using Kaspersky
+Antivirus, allow dash.cloudflare.com in Kaspersky.
+{{</Aside>}}
+
 ___
 
 ## Redirect loop errors or HTTP 525 or 526 errors
@@ -50,7 +55,7 @@ Visitors observe [redirect loop errors](https://support.cloudflare.com/hc/artic
 
 For redirect loops, refer to our guide on [troubleshooting redirect loop errors](https://support.cloudflare.com/hc/articles/115000219871).
 
-To resolve HTTP [525](https://support.cloudflare.com/hc/articles/115003011431#525error) or [526](https://support.cloudflare.com/hc/articles/115003011431#526error) errors, follow the guidance in [SSL encryption modes](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+To resolve HTTP [525](https://support.cloudflare.com/hc/articles/115003011431#525error) or [526](https://support.cloudflare.com/hc/articles/115003011431#526error) errors, follow the guidance in [SSL encryption modes](/ssl/origin-configuration/ssl-modes).
 
 .
 
@@ -58,12 +63,12 @@ ___
 
 ## Only some of your subdomains return SSL errors
 
-**Symptom** [Cloudflare Universal SSL](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) and only cover the root-level domain (_example.com_) and one level of subdomains (_\*.example.com_). If visitors to your domain observe errors accessing a second level of subdomains in their browser (such as _dev.www.example.com_) but not the first level of subdomains (such as _www.example.com_), resolve the issue using one of the following methods below.
+**Symptom** [Cloudflare Universal SSL](/ssl/edge-certificates/universal-ssl) and only cover the root-level domain (_example.com_) and one level of subdomains (_\*.example.com_). If visitors to your domain observe errors accessing a second level of subdomains in their browser (such as _dev.www.example.com_) but not the first level of subdomains (such as _www.example.com_), resolve the issue using one of the following methods below.
 
 **Resolution**
 
--   Ensure the domain is at least on a Business plan and upload a [Custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates) that covers _dev.www.example.com_
--   purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager) that covers _dev.www.example.com_
+-   Ensure the domain is at least on a Business plan and upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) that covers _dev.www.example.com_
+-   purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager) that covers _dev.www.example.com_
 -   if you have a valid certificate for the second level subdomains at your origin web server, click the orange cloud icon beside the _dev.www_ hostname in the Cloudflare **DNS** app for _example.com_.
 
 ___
@@ -72,17 +77,30 @@ ___
 
 **Symptom**
 
-All active Cloudflare domains are provided a [Universal SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl). If you observe SSL errors and do not have a certificate of **Type** _Universal_ within the **Edge Certificates** tab of the Cloudflare **SSL/TLS** app for your domain, the Universal SSL certificate has not yet provisioned.
+All active Cloudflare domains are provided a [Universal SSL certificate](/ssl/edge-certificates/universal-ssl). If you observe SSL errors and do not have a certificate of **Type** _Universal_ within the **Edge Certificates** tab of the Cloudflare **SSL/TLS** app for your domain, the Universal SSL certificate has not yet provisioned.
+
+{{<Aside type="note">}}
+Cloudflare SSL certificates only apply for traffic proxied through
+Cloudflare. If SSL errors only occur for hostnames not proxied to
+Cloudflare, proxy those hostnames through Cloudflare:
+
+-   For domains on Full DNS setups, click the grey cloud icon icon
+    beside the DNS hostname in your Cloudflare DNS app until the icon
+    becomes an orange cloud.
+-   For domains on CNAME setups, review our guide on [adding DNS records
+    to a CNAME
+    setup](/dns/zone-setups/partial-setup).
+{{</Aside>}}
 
 Our SSL vendors verify each SSL certificate request before Cloudflare can issue a certificate for a domain name. This process may take anywhere from 15 minutes to 24 hours. Our SSL certificate vendors sometimes flag a domain name for additional review.
 
 **Resolution**
 
-If your domain is on a [partial setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup): Confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records) to provision certificates for your domain. If [Universal SSL](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) is disabled on your domain under the **Disable Universal SSL** section of the **Edge Certificates** tab in Cloudflare **SSL/TLS** app:
+If your domain is on a [partial setup](/dns/zone-setups/partial-setup): Confirm whether you have CAA DNS records enabled at your current hosting provider. If so, ensure you [specify the Certificate Authorities that Cloudflare uses](/ssl/edge-certificates/custom-certificates/caa-records) to provision certificates for your domain. If [Universal SSL](/ssl/edge-certificates/universal-ssl) is disabled on your domain under the **Disable Universal SSL** section of the **Edge Certificates** tab in Cloudflare **SSL/TLS** app:
 
 -   enable Universal SSL
--   purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager)
--   upload a [Custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates) to Cloudflare
+-   purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager)
+-   upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates) to Cloudflare
 
 If your Cloudflare SSL certificate is not issued within 24 hours of Cloudflare domain activation:
 
@@ -112,7 +130,7 @@ ___
 
 **Resolution**
 
-For more details, refer to [ERR\_SSL\_VERSION\_OR\_CIPHER\_MISMATCH](https://developers.cloudflare.com/ssl/troubleshooting/version-cipher-mismatch/).
+For more details, refer to [ERR\_SSL\_VERSION\_OR\_CIPHER\_MISMATCH](/ssl/troubleshooting/version-cipher-mismatch/).
 
 ___
 
@@ -124,7 +142,7 @@ The HSTS headers (`Strict-Transport-Security` and `X-Content-Type-Options`) in t
 
 **Resolution**
 
-You may have configured [HTTP Response Header Modification Rules](https://developers.cloudflare.com/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
+You may have configured [HTTP Response Header Modification Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
 
 1.  Go to **Rules** > **Transform Rules**.
 2.  Under **HTTP Response Header Modification**, check the existing rules for a rule that is setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).

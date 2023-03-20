@@ -39,9 +39,3 @@ Many hacks are due to brute force attacks on login pages. Review services like�
 #### Backup your site
 
 If your site becomes hacked, avoid losing valid content by using a service like [CodeGuard](https://www.cloudflare.com/apps/codeguard) to restore your site from a backup.
-
-___
-
-## Related resources
-
--   [Google’s Help for Hacked Sites](http://www.google.com/webmasters/hacked/)

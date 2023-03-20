@@ -12,6 +12,14 @@ title: Understanding and configuring Cloudflare Page Rules (Page Rules Tutorial)
 
 You can define a page rule to trigger one or more actions whenever a certain URL pattern is matched. Page Rules are available in the **Rules** app, in the **Page Rules** tab.
 
+{{<Aside type="warning">}}
+Page Rules require a
+\"[proxied](/dns/manage-dns-records/reference/proxied-dns-records)\"
+DNS record for your page rule to work. Page Rules won\'t apply to
+hostnames that don\'t exist in DNS or aren\'t being directed to
+Cloudflare.
+{{</Aside>}}
+
 The default number of allowed page rules depends on the domain plan as shown below.
 
 {{<feature-table id="rules.page_rules">}}
@@ -27,12 +35,18 @@ It is important to understand two basic Page Rules behaviors:
 -   Only the highest priority matching page rule takes effect on a request.
 -   Page rules are prioritized in descending order in the Cloudflare dashboard, with the highest priority rule at the top.
 
+{{<Aside type="tip">}}
+Cloudflare recommends ordering your rules from most specific to least
+specific.
+{{</Aside>}}
+
 A page rule matches a URL pattern based on the following format (comprised of five segments): <scheme>://<hostname><:port>/<path>?<query\_string>
 
 An example URL with these four segments looks like:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://www.example.com:443/image.png?parameter1=value1</span></div></span></span></span></code></pre>{{</raw>}}
+```
+https://www.example.com:443/image.png?parameter1=value1
+```
 
 The _scheme_ and _port_ segments are optional. If omitted, _scheme_ matches both _http://_ and _https://_ protocols. If no _port_ is specified, the rule will match all ports.
 
@@ -55,6 +69,19 @@ The steps to create a page rule are:
     -   **Save as Draft** to save the rule and leave it disabled.
     -   **Save and Deploy** to save the rule and enable it immediately.
 
+{{<Aside type="note">}}
+**Note:** We do not support non-ASCII characters (e.g. punycode/unicode
+domain) in Page Rules. Instead, you could URL-encode the string using
+[Punycode converter](https://www.punycoder.com/ "Punycode converter"),
+for example, and this will work.
+{{</Aside>}}
+
+{{<Aside type="tip">}}
+Consult [Recommended Page Rules to
+Consider](https://support.cloudflare.com/hc/en-us/articles/224509547 "Recommended Page Rules to Consider")
+for ideas about the types of page rules you can create.
+{{</Aside>}}
+
 ___
 
 ## Edit a page rule
@@ -76,13 +103,17 @@ ___
 
 You can use the asterisk (\*) in any URL segment to match certain patterns. For example,
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/t*st</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com/t*st
+```
 
 Would match:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/test</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/toast</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/trust</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com/test
+example.com/toast
+example.com/trust
+```
 
 _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/foo\*_ does.
 
@@ -101,25 +132,35 @@ This is specifically useful with the _Forwarding URL_ setting. For example:
 
 You could forward:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://*.example.com/*</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://*.example.com/*
+```
 
 to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://example.com/images/$1/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://example.com/images/$1/$2.jpg
+```
 
 This rule would match:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://cloud.example.com/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://cloud.example.com/flare.jpg
+```
 
 which ends up being forwarded to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://example.com/images/cloud/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://example.com/images/cloud/flare.jpg
+```
 
 To use a literal _$_ character in the forwarding URL, escape it by adding a backslash (\\) in front: _\\$_.
+
+{{<Aside type="warning">}}
+Avoid creating a redirect where the domain points to itself as the
+destination. This can cause an infinite redirect error and your site
+cannot be served to visitors.
+{{</Aside>}}
 
 ___
 
@@ -134,16 +175,16 @@ Below is the full list of settings available, presented in the order that they a
 
 | **Setting** | **Description** | **Plans** |
 | --- | --- | --- |
-| Always Use HTTPS |  Turn on or off the **[Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https)** feature of the **Edge Certificates** tab in the **Cloudflare SSL/TLS** app. If enabled, any _http://_ URL is converted to _https://_ through a 301 redirect.<br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
+| Always Use HTTPS |  Turn on or off the **[Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https)** feature of the **Edge Certificates** tab in the **Cloudflare SSL/TLS** app. If enabled, any _http://_ URL is converted to _https://_ through a 301 redirect.<br/>If this option does not appear, you do not have an active **Edge Certificate**. | All |
 | Auto Minify | Indicate which file extensions to minify automatically. [Learn more](https://support.cloudflare.com/hc/articles/200168196). | All |
-| Automatic HTTPS Rewrites | Turn on or off the **Cloudflare Automatic HTTPS Rewrites** feature of the **Edge Certificates** tab in **Cloudflare SSL/TLS** app. [Learn more](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/automatic-https-rewrites). | All |
-| Browser Cache TTL | Control how long resources cached by client browsers remain valid. The Cloudflare UI and API both prohibit setting **Browser Cache TTL** to _0_ for non-Enterprise domains. [Learn more](https://developers.cloudflare.com/cache/about/edge-browser-cache-ttl). | All |
+| Automatic HTTPS Rewrites | Turn on or off the **Cloudflare Automatic HTTPS Rewrites** feature of the **Edge Certificates** tab in **Cloudflare SSL/TLS** app. [Learn more](/ssl/edge-certificates/additional-options/automatic-https-rewrites). | All |
+| Browser Cache TTL | Control how long resources cached by client browsers remain valid. The Cloudflare UI and API both prohibit setting **Browser Cache TTL** to _0_ for non-Enterprise domains. [Learn more](/cache/about/edge-browser-cache-ttl). | All |
 | Browser Integrity Check | Inspect the visitor's browser for headers commonly associated with spammers and certain bots. [Learn more](https://support.cloudflare.com/hc/articles/200170086). | All |
 | Bypass Cache on Cookie | Bypass Cache and fetch resources from the origin server if a regular expression matches against a cookie name present in the request.<br/>If you add both this setting and the _Cache On Cookie_ setting to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_.<br/>_Refer to the Additional details below to learn about limited regular expression support._ | Business and Enterprise |
-| Cache By Device Type | Separate cached content based on the visitor’s device type. [Learn more.](https://developers.cloudflare.com/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only) | Enterprise |
-| Cache Deception Armor | Protect from web cache deception attacks while still allowing static assets to be cached. This setting verifies that the URL's extension matches the returned _Content-Type_. [Learn more.](https://developers.cloudflare.com/cache/about/cache-deception-armor)| All |
-| Cache Key | Also referred to as _Custom Cache Key_.<br/>Control specifically what variables to include when deciding which resources to cache. This allows customers to determine what to cache based on something other than just the URL. [Learn more](https://developers.cloudflare.com/cache/about/cache-keys). | Enterprise |
-| Cache Level | Apply custom caching based on the option selected:<br/>**Bypass** \- Cloudflare does not cache.<br/>**No Query String** - Delivers resources from cache when there is no query string.<br/>**Ignore Query String** \- Delivers the same resource to everyone independent of the query string.<br/>**Standard -** Caches all static content that has a query string.<br/>**Cache Everything** \-  Treats all content as static and caches all file types beyond the [Cloudflare default cached content](https://developers.cloudflare.com/cache/about/default-cache-behavior#default-cached-file-extensions).  Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > _0_, **Cache Everything** removes cookies from the origin web server response. | All |
+| Cache By Device Type | Separate cached content based on the visitor’s device type. [Learn more.](/cache/how-to/create-page-rules#cache-by-device-type-enterprise-only) | Enterprise |
+| Cache Deception Armor | Protect from web cache deception attacks while still allowing static assets to be cached. This setting verifies that the URL's extension matches the returned _Content-Type_. [Learn more.](/cache/about/cache-deception-armor)| All |
+| Cache Key | Also referred to as _Custom Cache Key_.<br/>Control specifically what variables to include when deciding which resources to cache. This allows customers to determine what to cache based on something other than just the URL. [Learn more](/cache/about/cache-keys). | Enterprise |
+| Cache Level | Apply custom caching based on the option selected:<br/>**Bypass** \- Cloudflare does not cache.<br/>**No Query String** - Delivers resources from cache when there is no query string.<br/>**Ignore Query String** \- Delivers the same resource to everyone independent of the query string.<br/>**Standard -** Caches all static content that has a query string.<br/>**Cache Everything** \-  Treats all content as static and caches all file types beyond the [Cloudflare default cached content](/cache/about/default-cache-behavior#default-cached-file-extensions).  Respects cache headers from the origin web server unless **Edge Cache TTL** is also set in the Page Rule. When combined with an **Edge Cache TTL** > _0_, **Cache Everything** removes cookies from the origin web server response. | All |
 | Cache on Cookie | Apply the _Cache Everything_ option (_Cache Level_ setting) based on a regular expression match against a cookie name.<br/>If you add both this setting and _Bypass Cache on Cookie_ to the same page rule, _Cache On Cookie_ takes precedence over _Bypass Cache on Cookie_. |  Business and above |
 | Cache TTL by Status Code | Enterprise customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as stale or discarded from cache. Status codes are returned by a resource’s origin.   Setting cache TTL based on response status overrides the default cache behavior (standard caching) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a Cache Level of Cache Everything using a Page Rule . Setting no-store Cache-Control or a low TTL (using max-age/s-maxage) increases requests to origin web servers and decreases performance. [Learn more](https://support.cloudflare.com/hc/en-us/articles/360043842472-Configuring-cache-TTL-by-status-code). | Enterprise |
 | Disable Apps | Turn off all active **Cloudflare Apps**. | All |
@@ -156,10 +197,10 @@ Below is the full list of settings available, presented in the order that they a
 | Host Header Override | Apply a specific host header. [Learn more](https://support.cloudflare.com/hc/articles/206652947). | Enterprise |
 | IP Geolocation Header | Cloudflare adds a _CF-IPCountry_ HTTP header containing the country code that corresponds to the visitor. | All |
 | Mirage | Turn on or off **Cloudflare Mirage** of the Cloudflare **Speed** app. [Learn more](https://support.cloudflare.com/hc/articles/200403554). | Pro and above |
-| Opportunistic Encryption | Turn on or off the **Cloudflare Opportunistic Encryption** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/opportunistic-encryption). | All |
-| Origin Cache Control | [Origin Cache Control](https://developers.cloudflare.com/cache/about/cache-control) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
+| Opportunistic Encryption | Turn on or off the **Cloudflare Opportunistic Encryption** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](/ssl/edge-certificates/additional-options/opportunistic-encryption). | All |
+| Origin Cache Control | [Origin Cache Control](/cache/about/cache-control) is enabled by default for Free, Pro, and Business domains and disabled by default for Enterprise domains. |  All |
 | Origin Error Page Pass-thru | Turn on or off Cloudflare error pages generated from issues sent from the origin server. If enabled, this setting triggers error pages issued by the origin. | Enterprise |
-| Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](https://developers.cloudflare.com/images/polish). | Pro and above |
+| Polish | Apply options from the **Polish** feature of the Cloudflare **Speed** app. [Learn more](/images/polish). | Pro and above |
 | Query String Sort | Turn on or off the reordering of query strings. When query strings have the same structure, caching improves. [Learn more](https://support.cloudflare.com/hc/articles/206776797). | Enterprise |
 | Resolve Override | Change the origin address to the value specified in this setting. [Learn more](https://support.cloudflare.com/hc/articles/206190798). | Enterprise |
 | Respect Strong ETags | Turn on or off byte-for-byte equivalency checks between the Cloudflare cache and the origin server. [Learn more](https://support.cloudflare.com/hc/articles/218505467). | Enterprise |
@@ -167,7 +208,7 @@ Below is the full list of settings available, presented in the order that they a
 | Rocket Loader | Turn on or off **Cloudflare Rocket Loader** in the Cloudflare **Speed** app**.** [Learn more](https://support.cloudflare.com/hc/articles/200168056). | All |
 | Security Level | Control options for the **Security Level** feature from the **Security** app. [Learn more](https://support.cloudflare.com/hc/articles/200170056). | All |
 | Server Side Excludes | Turn on or off the **Server Side Excludes** feature of the Cloudflare **Scrape Shield** app. [Learn more](https://support.cloudflare.com/hc/articles/200170036). |  All |
-| SSL | Control options for the **SSL** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes). | All |
+| SSL | Control options for the **SSL** feature of the **Edge Certificates** tab in the Cloudflare **SSL/TLS** app. [Learn more](/ssl/origin-configuration/ssl-modes). | All |
 | True Client IP Header | Turn on or off the **True-Client-IP Header** feature of the Cloudflare **Network** app. [Learn more](https://support.cloudflare.com/hc/articles/206776727). | Enterprise |
 | Web Application Firewall (previous version) | Turn on or off **WAF managed rules** as defined in **Security** > **WAF** > **Managed rules**. [Learn more](https://support.cloudflare.com/hc/articles/200172016).<br/>You cannot enable or disable individual WAF managed rules via page rules. | Pro and above |
 
@@ -229,12 +270,12 @@ Note that `example.com/some-path/cloudflare.com` will be saved _without_ a final
 
 If you specify a port in the **If the URL matches** field of a Page Rule, it must be one of the following:
 
--   One of the HTTP/HTTPS ports [compatible with Cloudflare’s proxy](https://developers.cloudflare.com/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
--   A custom port of a [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/) HTTPS application.
+-   One of the HTTP/HTTPS ports [compatible with Cloudflare’s proxy](/fundamentals/get-started/reference/network-ports/#network-ports-compatible-with-cloudflares-proxy).
+-   A custom port of a [Cloudflare Spectrum](/spectrum/) HTTPS application.
 
 ### Using Page Rules with Workers
 
-If the URL of the current request matches both a Page Rule and a [Workers custom route](https://developers.cloudflare.com/workers/platform/routes), some Pages Rules settings will not be applied. For details on using Page Rules with Workers, refer to [Workers: Page Rules](https://developers.cloudflare.com/workers/platform/workers-with-page-rules/) in the developers documentation.
+If the URL of the current request matches both a Page Rule and a [Workers custom route](/workers/platform/triggers/routes/), some Pages Rules settings will not be applied. For details on using Page Rules with Workers, refer to [Workers: Page Rules](/workers/platform/workers-with-page-rules/) in the developers documentation.
 
 ___
 

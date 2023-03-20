@@ -33,7 +33,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   <tbody>
     <tr>
       <td>
-        <strong>Legacy CAPTCHA</strong><br />
+        <strong>Interactive Challenge</strong><br />
         <br />
         API value:<br />
         <code>challenge</code>

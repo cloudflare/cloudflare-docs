@@ -1,10 +1,12 @@
 ---
 pcx_content_type: concept
-title: Custom origin trust store
+title: Custom Origin Trust Store
 layout: single
+meta:
+    description: Custom Origin Trust Store allows you to upload certificate authorities (CAs) that Cloudflare will use to authenticate connections to your origin server.
 ---
 
-# Custom origin trust store
+# Custom Origin Trust Store
 
 By default, Cloudflare's edge network maintains a list of publicly trusted certificate authorities. This means that when using [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/), Cloudflare will only trust origin server certificates issued by a CA in this trust store.
 

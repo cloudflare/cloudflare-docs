@@ -12,7 +12,7 @@ meta:
 This method is only available for Enterprise zones.
 {{</Aside>}}
 
-Connections to the origin will always be made using SSL/TLS, regardless of the scheme requested by the visitor.
+When you set your encryption mode to **Strict (SSL-Only Origin Pull)**, connections to the origin will always be made using SSL/TLS, regardless of the scheme requested by the visitor.
 
 The certificate presented by the origin will be validated the same as with [Full (strict) mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 

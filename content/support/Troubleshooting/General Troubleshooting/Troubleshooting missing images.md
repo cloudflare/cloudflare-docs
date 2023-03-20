@@ -18,6 +18,10 @@ If images are missing from your website, perform the following steps while retes
     -   Disable **Rocket Loader** in the **Speed app** > **Optimization**. Scroll down until you find **Rocket Loader**.
     -   Disable **Mirage** in the **Speed app** > **Optimization**. Scroll down until you find **Mirage**.
 
+{{<Aside type="info">}}
+**Mirage** is only available for domains on a paid Cloudflare plan.
+{{</Aside>}}
+
 -   [Inform Cloudflare support](https://support.cloudflare.com/hc/articles/200172476) of the issue and request assistance.
 
 ___
