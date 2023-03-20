@@ -261,7 +261,7 @@ The following script will install `cloudflared`, create a permissions and config
       - hostname: "*"
         service: hello-world
     EOF
-    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudfared.
+    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudflared.
     sudo cloudflared service install
     # The credentials file does not get copied over so we do that manually.
     sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/

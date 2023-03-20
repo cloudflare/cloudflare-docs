@@ -1,12 +1,9 @@
 ---
-pcx_content_type: troubleshooting
-source: https://support.cloudflare.com/hc/en-us/articles/4407016052493-Load-Balancing-FAQs
-title: Load Balancing FAQs
+pcx_content_type: faq
+title: FAQs
 ---
 
-# Load Balancing FAQs
-
-
+# Frequently Asked Questions
 
 ## Overview
 
@@ -71,7 +68,7 @@ ___
 
 [Cloudflare Load Balancing](/load-balancing/) helps monitor origin server health and — based on that and other information — route incoming requests accordingly. Individual origin servers have monitors attached, which issue health checks at regular intervals.
 
-[Cloudflare Health Checks](https://support.cloudflare.com/hc/articles/4404867308429) are identical to monitors within a load balancer, but only meant for probing server health (and not distributing traffic).
+[Cloudflare Health Checks](/health-checks/) are identical to monitors within a load balancer, but only meant for probing server health (and not distributing traffic).
 
 ___
 
