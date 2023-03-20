@@ -80,18 +80,6 @@ To visualize and discover potential issues with DNSSEC:
 3.  If DNSViz has never analyzed the site before, click the **Analyze** button that appears.
 4.  If the site has been analyzed by DNSViz before, click the **Update Now** button that appears.
 
-### Example without DNSSEC
-
-Below is an example of a working domain without DNSSEC as diagrammed by dnsviz.net:
-
-![Working domain without DNSSEC](/support/static/troubleshoot_dnssec-example_no_dnssec.png)
-
-### Example with correct DNSSEC
-
-Below is an example of a domain with functioning DNSSEC records between the TLD nameservers and the authoritative nameservers for _cloudflare.com:_
-
-![Domain with functioning DNSSEC records](/support/static/troubleshoot_dnssec-example_correct_dnssec.png)
-
 ### Example with missing or incorrect RRSIG record on authoritative nameserver
 
 Below is an example of how dnsviz.net will display incorrect delegation when no valid DNSKEY records are provided by the authoritative nameserver to match the DS record published by the TLD nameserver: 

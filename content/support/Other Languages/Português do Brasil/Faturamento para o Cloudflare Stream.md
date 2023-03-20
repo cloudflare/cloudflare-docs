@@ -92,8 +92,6 @@ Para visualizar os minutos assistidos com o Stream:
 4.  Na navegação à esquerda, clique em **Uso a pagar**. Você verá um gráfico que exibe seu tráfego diário atual.
 5.  Escolha **Mês anterior** no menu suspenso acima do gráfico e clique em **Mês até agora** para visualizar o uso do mês anterior.
 
-![](/support/static/hc-import-stream_billing_subcriptions_previous_month.png)
-
 ___
 
 -   [Plataforma de vídeo Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)
