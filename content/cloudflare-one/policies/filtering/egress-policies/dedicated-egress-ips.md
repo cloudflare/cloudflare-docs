@@ -62,11 +62,11 @@ To verify that the IP geolocation has updated on MaxMind, go to [MaxMind GeoIP](
 
 ### Egress location
 
-| Destination IP | Proxied by Cloudflare | Physical egress location                   | IP geolocation              |
-| -------------- | --------------------- | ------------------------------------------ | --------------------------- |
-| IPv4           | No                    | Egresses colo with the dedicated egress IP | Matches dedicated egress IP |
-| IPv6           | No                    | Egresses locally connected colo            | Matches dedicated egress IP |
-| IPv4 or IPv6   | Yes                   | Egresses locally connected colo            | Matches dedicated egress IP |
+| Destination IP | Proxied by Cloudflare | Physical egress location                          | IP geolocation              |
+| -------------- | --------------------- | ------------------------------------------------- | --------------------------- |
+| IPv4 or IPv6   | Yes                   | Egresses closest data center                      | Matches dedicated egress IP |
+| IPv4           | No                    | Egresses data center with the dedicated egress IP | Matches dedicated egress IP |
+| IPv6           | No                    | Egresses closest data center                      | Matches dedicated egress IP |
 
 #### IPv4
 
