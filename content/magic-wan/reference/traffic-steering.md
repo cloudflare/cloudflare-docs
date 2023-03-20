@@ -76,8 +76,8 @@ end
 
 Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/GRE Tunnel 1 / priority 1 <br> / 50% of flows/] --> I{{Customer <br> network 1}}
-E[Anycast IP] --> G[/GRE Tunnel 2 / priority 1 <br> / 50% of flows/] --> J{{Customer <br> network 2}}
+E[Anycast IP] --> F[/"GRE Tunnel 1 / priority 1 <br> / ~50% of flows"/] --> I{{Customer <br> network 1}}
+E[Anycast IP] --> G[/"GRE Tunnel 2 / priority 1 <br> / ~50% of flows"/] --> J{{Customer <br> network 2}}
 E[Anycast IP] --> H[/GRE Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> network 3}}
 ```
 <br />
@@ -103,7 +103,7 @@ end
 
 Z(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers) --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/Tunnel 1 / priority 1 <br> / 100% of flows/]:::green --> I{{Customer <br> network 1}}
+E[Anycast IP] --> F[/"Tunnel 1 / priority 1 <br> / ~100% of flows"/]:::green --> I{{Customer <br> network 1}}
 E[Anycast IP] --> G[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x J{{Customer <br> network 2}}
 E[Anycast IP] --> H[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> network 3}}
 classDef red fill:#FF0000
