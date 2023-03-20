@@ -2,6 +2,10 @@
 pcx_content_type: overview
 title: Cloudflare for SaaS
 weight: 6
+product_grid:
+  show: true
+  title: Cloudflare for SaaS
+  group: Cloudflare essentials
 ---
 
 # Cloudflare for SaaS
