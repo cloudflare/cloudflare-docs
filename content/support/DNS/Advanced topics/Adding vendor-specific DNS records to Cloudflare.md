@@ -258,11 +258,8 @@ After ensuring that your domain nameservers are set to Cloudflare, 
 2.  Click the appropriate Cloudflare account for the domain where you will add records.
 3.  Ensure the proper domain is selected.
 4.  Click the **DNS** app.
-5.  Ensure that all four (4) A records and the www CNAME from Squarespace are mark _Proxied_ (as shown below).
-6.  Ensure that the 'verify.squarespace.com' CNAME record is marked _DNS Only_ (as shown below).
-
-![screenshot of the cloudflarecontent.com DNS records from Squarespace
-](/support/static/dns_ui_update_squarespace_records.png)
+5.  Ensure that all four (4) A records and the `www` CNAME from Squarespace are mark _Proxied_.
+6.  Ensure that the `verify.squarespace.com` CNAME record is marked _DNS Only_.
 
 {{<Aside type="warning">}}
 Squarespace's console may indicate issues (as pictured below in red
@@ -273,8 +270,7 @@ configuration as described below.
 
 If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**. 
 
-![Old URL: https://support.cloudflare.com/hc/article_attachments/360039675171/squarespace_dns_settings.png
-Article IDs: 360020991331 | Adding vendor-specific DNS records to Cloudflare
+![Adding vendor-specific DNS records to Cloudflare
 ](/support/static/hc-import-squarespace_dns_settings.png)
 
 Now that your traffic is being sent through Cloudflare, Squarespace and your site's visitors will see Cloudflare IP addresses. This causes Squarespace console to assume your site is misconfigured as Cloudflare IPs are returned instead of Squarespace assigned addresses. As long as you've configured Cloudflare DNS appropriately (above steps 1-6), your Squarespace site should now be working through Cloudflare.
