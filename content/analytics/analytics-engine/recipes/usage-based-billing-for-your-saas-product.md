@@ -66,6 +66,6 @@ This can give you insights into what endpoints different customers are using. Th
 
 ## Billing customers
 
-Billing customers based on Analytics Engine data means that bills are a (reliable) approximation of usage, rather than being exact. Because Analytics Engine samples, you can only approximate customer usage. This is actually a feature: because Analytics Engine makes it cheap to capture customer usage, you're able to cheaply bill on how much customer usage really costs, rather than having to charge a flat fee and struggling for cheap insights into customer's actual usage.
+Billing customers based on Analytics Engine data means that bills are a (reliable) approximation of usage, rather than being exact. Because Analytics Engine samples, you can only approximate customer usage. This is actually a feature: as Analytics Engine makes it cheap to capture customer usage, you are able to cheaply bill on how much customer usage really costs, rather than having to charge a flat fee and struggling for cheap insights into customer's actual usage.
 
 To bill customers, you will want to take the usage queries above and make a backend system run those queries and calculate the customer charge based on the data returned.
