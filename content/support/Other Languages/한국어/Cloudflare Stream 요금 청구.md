@@ -85,9 +85,6 @@ Stream 시청 시간 보기 
 4.  왼쪽 탐색 모음에서 **청구 대상 사용량**을 클릭하세요. 현재 일일 트래픽을 보여주는 그래프가 표시됩니다.
 5.  그래프 위의 드롭다운에서 **이전 달**을 선택하고 **현재까지 사용량**을 클릭하여 이전 달의 사용량을 보세요.
 
-![
-](/support/static/hc-import-stream_billing_subcriptions_previous_month.png)
-
 ___
 
 -   [Cloudflare Stream 동영상 플랫폼](https://support.cloudflare.com/hc/ko/articles/360017801091)
