@@ -20,6 +20,6 @@ You can find the CSR of a rule by going to its corresponding dashboard page:
 
 {{<Aside type="warning" header="Important">}}
 
-For customers on a Free plan, any rules configured with the _Legacy CAPTCHA_ action now use Managed Challenges. For more information, refer to [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/).
+For customers on a Free plan, any rules configured with the _Interactive Challenge_ action now use Managed Challenges. For more information, refer to [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/).
 
 {{</Aside>}}

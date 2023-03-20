@@ -40,7 +40,7 @@ The WAF can perform one of the following actions when it detects exposed credent
 *   *Block* — Blocks HTTP requests containing exposed credentials.
 *   *JS Challenge* — Presents a Cloudflare JavaScript CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
 *   *Log* — Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare logs. Recommended for validating a rule before committing to a more severe action.
-*   *Legacy CAPTCHA* — Presents a CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
+*   *Interactive Challenge* — Presents a CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
 
 The default action for the rules in the Exposed Credentials Check Managed Ruleset is *Exposed-Credential-Check Header* (named `rewrite` in the API).
 
