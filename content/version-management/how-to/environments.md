@@ -20,7 +20,6 @@ During the open beta, you can only interact with applications and versions using
 ## Create environment
 
 {{<render file="_enable-default-creation.md">}}
-<br/>
 
 {{<render file="_create-environment-situation.md">}}
 <br/>
