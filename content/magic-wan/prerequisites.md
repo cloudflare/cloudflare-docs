@@ -27,7 +27,7 @@ participant C as Origin router
 A->>B: MSS = 1460 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes)
 Note left of A: SYN
 B->>C: MSS = 1436 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes) <br> GRE header (4 bytes) <br> IP header (20 bytes)
-C->>A: MSS = 1436 <br> IP <br> Protocol
+C->>A: MSS = 1436 bytes <br> IP <br> Protocol
 Note right of C: SYN-ACK
 A->>B: MSS = 1436 bytes <br> Protocol <br> IP
 Note left of A: ACK
