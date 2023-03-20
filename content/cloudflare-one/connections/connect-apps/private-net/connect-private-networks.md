@@ -25,14 +25,16 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 ## 2. (Recommended) Filter network traffic with Gateway
 
-By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway to inspect your network traffic and either block or allow access based on user identity.
+By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway to inspect your network traffic and either block or allow access based on user identity and device posture.
 
 ### Enable the Gateway proxy
 
-1. In the Zero Trust dashboard, go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
 2. Enable **Proxy** for TCP.
+3. (Recommended) Select **UDP** to proxy traffic to internal DNS resolvers.
+4. (Recommended) Select **ICMP** to enable diagnostic tools such as `ping` and `traceroute`.
 
-This will tell Cloudflare to begin proxying traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#route-private-network-ips-through-gateway).
+Cloudflare will now proxy traffic from enrolled devices, except for the traffic excluded in your [split tunnel settings](#route-private-network-ips-through-gateway).
 
 ### Route private network IPs through Gateway
 
@@ -46,8 +48,9 @@ To configure Split Tunnels for private network access:
 2. If you are using **Include** mode, add your network's IP/CIDR range to the list.
 3. If you are using **Exclude** mode:
    1. Delete your network's IP/CIDR range from the list.
-   2. Re-add IP/CDIR ranges that are not used by your private network. For example, if your network uses the default AWS range of `172.31.0.0.0/16`, delete the default entry `172.16.0.0/12`.
-   and add `172.16.0.0/13`, `172.24.0.0/14`, `172.28.0.0/15`, and `172.30.0.0/16`.
+   2. Re-add IP/CDIR ranges that are not used by your private network.
+
+For example, if your network uses the default AWS range of `172.31.0.0/16`, delete the default entry `172.16.0.0/12` and re-add `172.16.0.0/13`, `172.24.0.0/14`, `172.28.0.0/15`, and `172.30.0.0/16`. This ensures that that only traffic to `172.31.0.0/16` is sent to Gateway.
 
 ### Create Zero Trust policies
 
