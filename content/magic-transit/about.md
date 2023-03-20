@@ -27,7 +27,7 @@ A(DDoS <br> attack)
 B[("Cloudflare global <br> Anycast network <br> (DDoS protection + <br> network firewall)")]
 C[Customer <br> network]
 D((User))
-E([BGP annoucement])
+E([BGP <br> annoucement])
 
 A --x B
 E --- B
