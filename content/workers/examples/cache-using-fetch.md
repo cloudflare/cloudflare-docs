@@ -178,7 +178,7 @@ This option is a version of the `cacheTtl` feature which chooses a TTL based on 
 
 ## Cache based on file extensions and using arrays to pass through variables
 
-You can combine the functionalities mentioned above into one script and use variables instead so that it can be repurposed for other use cases. In this case, it can be done for a media streaming platform.
+You can combine the functionalities mentioned above into one Worker script and use variables instead so that it can be repurposed for other use cases. In the below example, this can be done for a media streaming platform.
 
 {{</content-column>}}
 
