@@ -268,7 +268,9 @@ that Squarespace is compatible with Cloudflare when using a
 configuration as described below.
 {{</Aside>}}
 
-If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**. 
+If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
+
+![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings-test-2.png)
 
 Now that your traffic is being sent through Cloudflare, Squarespace and your site's visitors will see Cloudflare IP addresses. This causes Squarespace console to assume your site is misconfigured as Cloudflare IPs are returned instead of Squarespace assigned addresses. As long as you've configured Cloudflare DNS appropriately (above steps 1-6), your Squarespace site should now be working through Cloudflare.
 
@@ -279,7 +281,10 @@ Tumblr's systems are not compatible with Cloudflare's proxy services and
 Tumblr customers cannot use Cloudflare\'s SSL services.
 {{</Aside>}}
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  A  66.6.44.4</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com  CNAME  domains.tumblr.com</span></div></span></span></span></code></pre>{{</raw>}}
+```txt
+example.com  A  66.6.44.4
+www.example.com  CNAME  domains.tumblr.com
+```
 
 {{<Aside type="warning">}}
 Disable Cloudflare's proxying for any DNS record related to Tumblr.
