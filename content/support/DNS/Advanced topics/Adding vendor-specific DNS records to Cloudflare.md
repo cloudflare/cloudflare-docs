@@ -270,11 +270,7 @@ configuration as described below.
 
 If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
 
-![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings-test.png)
-
 ![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings-test-2.png)
-
-![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings.png)
 
 Now that your traffic is being sent through Cloudflare, Squarespace and your site's visitors will see Cloudflare IP addresses. This causes Squarespace console to assume your site is misconfigured as Cloudflare IPs are returned instead of Squarespace assigned addresses. As long as you've configured Cloudflare DNS appropriately (above steps 1-6), your Squarespace site should now be working through Cloudflare.
 
