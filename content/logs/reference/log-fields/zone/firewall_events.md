@@ -32,6 +32,7 @@ The descriptions below detail the fields available for `firewall_events`.
 | ClientRequestScheme | The URL scheme requested by the visitor. | string |
 | ClientRequestUserAgent | Visitor's user-agent string. | string |
 | Datetime | The date and time the event occurred at the edge. | int or string |
+| Description | The description of the rule triggered by this request. | string |
 | EdgeColoCode | The airport code of the Cloudflare datacenter that served this request. | string |
 | EdgeResponseStatus | HTTP response status code returned to browser. | int |
 | Kind | The kind of event, currently only possible values are: <em>firewall</em>. | string |
