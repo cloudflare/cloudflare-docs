@@ -10,7 +10,7 @@ meta:
 
 Many Cloudflare customers run software-as-a-service products with multiple customers. A big concern for such companies is understanding the cost of each customer, and understanding customer behaviour more widely.
 
-Keeping data on every web request used by a customer can be expensive, as can attributing page views to customers. At Cloudflare we've solved this problem with the same in-house technologies now available to you through Analytics Engine.
+Keeping data on every web request used by a customer can be expensive, as can attributing page views to customers. At Cloudflare we have solved this problem with the same in-house technologies now available to you through Analytics Engine.
 
 ## Recording data on usage
 
