@@ -81,9 +81,9 @@ accTitle: Border Gateway Control advertisements
 accDescr: Use BGP to control the status of your prefix.
 
 a(User)-- Ingress -->b(Clouflare global Anycast network) == Anycast <br> GRE tunnel ==> c((BGP))
+b(Clouflare global Anycast network)-.-z(BPG announcement <br> to Internet)
 b(Clouflare global Anycast network) --- d("Routing config endpoint #1") & e("Routing config endpoint #1") & f("Routing config endpoint #1") --- c((BGP))
 c((BGP))-- "Egress <br> (Direct Server Return)" -->a(User)
-b(Clouflare global Anycast network)-.-z(BPG announcement <br> to Internet)
 
 classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
 classDef blue stroke:blue,stroke-width:3px
