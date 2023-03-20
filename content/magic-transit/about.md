@@ -32,7 +32,7 @@ E([BGP <br> annoucement])
 A --x B
 E --- B
 B-- Anycast <br> GRE tunnel ---C
-B-- Cloudflare <br> Network Internconnect ---C
+B-- Cloudflare <br> Network Interconnect ---C
 C-. "(Optional) <br> Egress via <br> Direct Server Return" .-> D
 D --> B
 
