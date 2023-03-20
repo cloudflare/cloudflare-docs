@@ -28,6 +28,7 @@ E[Anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> data cent
 E[Anycast IP] --> G[/Tunnel 2 / <br> priority 1/] --> J{{Customer <br> data center 2}}
 E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2/] --> K{{Customer <br> data center 3}}
 ```
+<br />
 
 When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
 
@@ -69,10 +70,11 @@ end
 
 Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/GRE Tunnel 1 / priority 1 <br> / 50% of flows/] --> I{{Customer <br> data center 1}}
-E[Anycast IP] --> G[/GRE Tunnel 2 / priority 1 <br> / 50% of flows/] --> J{{Customer <br> data center 2}}
+E[Anycast IP] --> F[/"GRE Tunnel 1 / priority 1 <br> / ~50% of flows"/] --> I{{Customer <br> data center 1}}
+E[Anycast IP] --> G[/"GRE Tunnel 2 / priority 1 <br> / ~50% of flows"/] --> J{{Customer <br> data center 2}}
 E[Anycast IP] --> H[/GRE Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> data center 3}}
 ```
+<br />
 
 When Magic Transit health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
 
@@ -94,12 +96,13 @@ end
 
 Z(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers) --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/Tunnel 1 / priority 1 <br> / 100% of flows/]:::green --> I{{Customer <br> data center 1}}
+E[Anycast IP] --> F[/"Tunnel 1 / priority 1 <br> / ~100% of flows"/]:::green --> I{{Customer <br> data center 1}}
 E[Anycast IP] --> G[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center 2}}
 E[Anycast IP] --> H[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> data center 3}}
 classDef red fill:#FF0000
 classDef green fill:#00FF00
 ```
+<br />
 
 When Magic Transit determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
 
@@ -129,6 +132,7 @@ classDef green fill:#00FF00
 linkStyle 6 color:red
 linkStyle 8 color:red
 ```
+<br />
 
 When Magic Transit determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
 
