@@ -66,7 +66,7 @@ Alternatively, if you are using the API, define an override at the ruleset level
 
 ### 2. Review flagged traffic
 
-1. Navigate to your [analytics dashboard](/ddos-protection/reference/analytics/) (the exact dashboard depends on your Cloudflare services).
+1. Go to your [analytics dashboard](/ddos-protection/reference/analytics/) (the exact dashboard depends on your Cloudflare services).
 1. Apply one or more filters, if required, and identify any rules that would have blocked legitimate traffic if _Log_ mode were disabled. Take note of the rule IDs.
 
 ### 3. Customize managed ruleset rules

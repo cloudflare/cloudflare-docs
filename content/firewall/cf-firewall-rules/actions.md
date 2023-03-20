@@ -116,7 +116,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>3</td>
       </tr>
       <tr>
-        <td><strong>Legacy CAPTCHA</strong><br/>
+        <td><strong>Interactive Challenge</strong><br/>
           <br/>
           API value:<br/>
           <code class="InlineCode">challenge</code>
@@ -210,7 +210,7 @@ For reference information on rule actions available for Cloudflare products powe
 
 ## Notes about challenge actions
 
-When you configure a firewall rule with one of the challenge actions — _Managed Challenge_, _JS Challenge_, or _Legacy CAPTCHA_ — and a request matches the rule, one of two things can happen:
+When you configure a firewall rule with one of the challenge actions — _Managed Challenge_, _JS Challenge_, or _Interactive Challenge_ — and a request matches the rule, one of two things can happen:
 
 * The request is blocked if the visitor fails the challenge
 * The request is allowed if the visitor passes the challenge

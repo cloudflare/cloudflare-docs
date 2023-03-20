@@ -110,7 +110,7 @@ From your terminal, run the following command to install Sphinx:
 
 You should see output similar to the following:
 
-```ba
+```bash
 Installing sphinx...
 Adding sphinx to Pipfile's [packages]...
 ✔ Installation Succeeded

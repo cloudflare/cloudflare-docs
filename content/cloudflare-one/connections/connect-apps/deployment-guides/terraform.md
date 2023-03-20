@@ -205,73 +205,73 @@ The following script will install `cloudflared`, create a permissions and config
 
 2. Open the file in a text editor and copy and paste the following bash script:
 
-   ```bash
-   ---
-   filename: install-tunnel.tftpl
-   ---
-   # Script to install Cloudflare Tunnel and Docker resources
+    ```bash
+    ---
+    filename: install-tunnel.tftpl
+    ---
+    # Script to install Cloudflare Tunnel and Docker resources
 
-   # Docker configuration
-   cd /tmp
-   sudo apt-get install software-properties-common
-   # Retrieving the docker repository for this OS
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-   # The OS is updated and docker is installed
-   sudo apt update -y && sudo apt upgrade -y
-   sudo apt install docker docker-compose -y
-   # Add the HTTPBin application and run it on localhost:8080.
-   cat > /tmp/docker-compose.yml << "EOF"
-   version: '3'
-   services:
-     httpbin:
-       image: kennethreitz/httpbin
-       restart: always
-       container_name: httpbin
-       ports:
-         - 8080:80
-   EOF
+    # Docker configuration
+    cd /tmp
+    sudo apt-get install software-properties-common
+    # Retrieving the docker repository for this OS
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    # The OS is updated and docker is installed
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt install docker docker-compose -y
+    # Add the HTTPBin application and run it on localhost:8080.
+    cat > /tmp/docker-compose.yml << "EOF"
+    version: '3'
+    services:
+      httpbin:
+        image: kennethreitz/httpbin
+        restart: always
+        container_name: httpbin
+        ports:
+          - 8080:80
+    EOF
 
-   # cloudflared configuration
-   cd ~
-   # Retrieve the cloudflared Linux package
-   wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-   sudo dpkg -i cloudflared-linux-amd64.deb
-   # Create a local user directory to temporarily hold the tunnel configuration.
-   mkdir ~/.cloudflared
-   touch ~/.cloudflared/cert.json
-   touch ~/.cloudflared/config.yml
-   # Populate the tunnel credentials file.
-   cat > ~/.cloudflared/cert.json << "EOF"
-   {
-       "AccountTag"   : "${account}",
-       "TunnelID"     : "${tunnel_id}",
-       "TunnelName"   : "${tunnel_name}",
-       "TunnelSecret" : "${secret}"
-   }
-   EOF
-   # Define the ingress rules the tunnel will use.
-   cat > ~/.cloudflared/config.yml << "EOF"
-   tunnel: ${tunnel_id}
-   credentials-file: /etc/cloudflared/cert.json
-   logfile: /var/log/cloudflared.log
-   loglevel: info
+    # cloudflared configuration
+    cd ~
+    # Retrieve the cloudflared Linux package
+    wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+    sudo dpkg -i cloudflared-linux-amd64.deb
+    # Create a local user directory to temporarily hold the tunnel configuration.
+    mkdir ~/.cloudflared
+    touch ~/.cloudflared/cert.json
+    touch ~/.cloudflared/config.yml
+    # Populate the tunnel credentials file.
+    cat > ~/.cloudflared/cert.json << "EOF"
+    {
+        "AccountTag"   : "${account}",
+        "TunnelID"     : "${tunnel_id}",
+        "TunnelName"   : "${tunnel_name}",
+        "TunnelSecret" : "${secret}"
+    }
+    EOF
+    # Define the ingress rules the tunnel will use.
+    cat > ~/.cloudflared/config.yml << "EOF"
+    tunnel: ${tunnel_id}
+    credentials-file: /etc/cloudflared/cert.json
+    logfile: /var/log/cloudflared.log
+    loglevel: info
 
-   ingress:
+    ingress:
 
-     - hostname: http_app.${web_zone}
-       service: http://localhost:8080
-     - hostname: "*"
-       service: hello-world
-   EOF
-   # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudfared.
-   sudo cloudflared service install
-   # The credentials file does not get copied over so we do that manually.
-   sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/
-   # Start HTTPBin and start the tunnel
-   cd /tmp
-   sudo docker-compose up -d && sudo systemctl start cloudflared
-   ```
+      - hostname: http_app.${web_zone}
+        service: http://localhost:8080
+      - hostname: "*"
+        service: hello-world
+    EOF
+    # Install the tunnel as a systemd service. This automatically copies cert.json to /etc/cloudflared.
+    sudo cloudflared service install
+    # The credentials file does not get copied over so we do that manually.
+    sudo cp -via ~/.cloudflared/cert.json /etc/cloudflared/
+    # Start HTTPBin and start the tunnel
+    cd /tmp
+    sudo docker-compose up -d && sudo systemctl start cloudflared
+    ```
 
 ## 6. Deploy Terraform
 
