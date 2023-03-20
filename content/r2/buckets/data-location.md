@@ -53,3 +53,13 @@ The following hint locations are supported:
 ### Current limitations
 
 Location Hints are only honored the first time a bucket with a given name is created. If you delete and recreate a bucket with the same name, the original bucket’s location will be used.
+
+## Add location from the Cloudflare dashboard
+
+You can choose to automatically create your bucket in the closest available region based on your location or choose a specific location from the list.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
+2. Select **Create bucket**.
+3. Enter a name for the bucket.
+4. Under **Location**, leave *None* selected to automatically use the region closest to your bucket or select a region from the list.
+5. Select **Create bucket**.
