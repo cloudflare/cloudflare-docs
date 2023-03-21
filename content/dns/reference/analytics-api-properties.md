@@ -63,18 +63,7 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 ### Filter operators
 
-{{<table-wrap>}}
-
-| Operator | Name                     | Example                | Description                                                            | URL Encoded |
-|----------|--------------------------|------------------------|------------------------------------------------------------------|-------------|
-| `==`       | Equals                   | `queryName==example.com` | Return results where query name is exactly `example.com`.            | `%3D%3D`      |
-| `!=`       | Does not equal           | `responseCode!=NOERROR`  | Return results where response code is different from `NOERROR`.    | `!%3D`        |
-| `>`        | Greater than             | `dimension>1000`        | Return results where a dimension is greater than `1000`.             | `%3E`         |
-| `<`        | Less than                | `dimension<1000`        | Return results where a dimension is less than `1000`.              | `%3C`         |
-| `>=`       | Greater than or equal to | `dimension>=1000`        | Return results where a dimension is greater than or equal to `1000`. | `%3E%3D`      |
-| `<=`       | Less than or equal to    | `dimension<=1000`        | Return results where a dimension is less than or equal to `1000`.  | `%3C%3D`      |
-
-{{</table-wrap>}}
+{{<render file="_api-filter-operators.md" productFolder="fundamentals" withParameters="queryName;;example.com;;responseCode;;NOERROR">}}
 
 ### Combining filters
 
