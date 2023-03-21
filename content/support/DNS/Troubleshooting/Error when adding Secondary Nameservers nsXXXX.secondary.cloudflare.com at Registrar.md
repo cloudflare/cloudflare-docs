@@ -10,7 +10,7 @@ title: Error when adding Secondary Nameservers nsXXXX.secondary.cloudflare.com a
 
 ## Problem Description
 
-When trying to configure a namerserver as part of the Secondary DNS offering from Cloudflare (_nsXXXX.secondary.cloudflare.com_), an error is thrown.
+When trying to configure a namerserver as part of the Secondary DNS offering from Cloudflare (`nsXXXX.secondary.cloudflare.com`), an error is thrown.
 
 Upon contacting the Registrar, their services confirm that the nameservers from Cloudflare cannot be added at this time.
 
