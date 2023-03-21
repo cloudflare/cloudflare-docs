@@ -34,17 +34,6 @@ jobs:
         run: pnpm run crawl
         if: success()
 
-jobs:
-  check-links:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install dependencies
-      run: npm install -g markdown-link-check
-    - name: Check for broken internal jump links
-      run: |
-        markdown-link-check '**/*.md' --config '{ "ignorePatterns": ["^https?://", "^mailto:", "^#", "^javascript:"] }'
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest
