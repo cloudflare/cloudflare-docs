@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
-title: Firewall fields
+title: Security fields
 weight: 124
 ---
 
-# Firewall fields
+# Security fields
 
-The Firewall fields contain rules to block requests that contain specific types of content.
+The Security fields contain rules to block requests that contain specific types of content.
 
-## FirewallMatchesActions
+## SecurityActions
 
 {{<table-wrap>}}
 
@@ -35,7 +35,7 @@ The Firewall fields contain rules to block requests that contain specific types 
 
 {{</table-wrap>}}
 
-## FirewallMatchesSources
+## SecuritySources
 
 {{<table-wrap>}}
 
