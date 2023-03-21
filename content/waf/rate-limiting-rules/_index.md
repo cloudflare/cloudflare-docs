@@ -74,7 +74,7 @@ Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
-For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](https://support.cloudflare.com/hc/articles/115001635128#rate-limiting-allowances-per-plan).
+For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](/support/firewall/tools/configuring-cloudflare-rate-limiting/#rate-limiting-allowances-per-plan).
 
 ## Next steps
 
