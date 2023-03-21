@@ -30,8 +30,8 @@ You can choose to automatically create your bucket in the closest available regi
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
 2. Select **Create bucket**.
 3. Enter a name for the bucket.
-4. Under **Location**, leave *None* selected to automatically use the region closest to your bucket or select a region from the list.
-5. Select **Create bucket**.
+4. Under **Location**, leave *None* selected for automatic selection or choose a region from the list.
+5. Select **Create bucket** to complete the bucket creation process.
 
 ### Set hints via the S3 API
 
