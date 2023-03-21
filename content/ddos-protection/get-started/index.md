@@ -61,7 +61,7 @@ Do the following in the Cloudflare dashboard:
 
 Alternatively, if you are using the API, define an override at the ruleset level to set the action of all managed ruleset rules to `log` by following these instructions:
 
-- [Configure an override for the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-http-ddos-attack-protection/)
+- [Configure an override for the HTTP DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-the-http-ddos-attack-protection-managed-ruleset)
 - [Configure an override for the Network-layer DDoS Attack Protection managed ruleset](/ddos-protection/managed-rulesets/network/configure-api/#configure-an-override-for-the-network-layer-ddos-attack-protection-managed-ruleset)
 
 ### 2. Review flagged traffic
