@@ -52,7 +52,8 @@ If you are not using a framework, leave the **Build command** field blank.
 | mdBook                       | `mdbook build`                       | `book`                      |
 | Mkdocs                       | `mkdocs build`                       | `site`                      |
 | Next.js (Static HTML Export) | `next build && next export`          | `out`                       |
-| Nuxt.js                      | `nuxt generate`                      | `dist`                      |
+| Nuxt 2                       | `nuxt generate`                      | `dist`                      |
+| Nuxt 3+                      | `nuxt build`                         | `dist`                      |  
 | Pelican                      | `pelican content [-s settings.py]`   | `output`                    |
 | Quasar                       | `quasar build`                       | `dist/spa`                  |
 | React (create-react-app)     | `npm run build`                      | `build`                     |
