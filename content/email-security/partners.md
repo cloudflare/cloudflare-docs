@@ -44,9 +44,72 @@ Your newly created account should show up in the list. If not, refresh the page.
 
 You can create users at both the parent and child account level. Users created at parent level will have access to all its child accounts. Users created at child level will only have access to the assigned child Account. Child accounts can limit or disable delegated access from the parent. If you modify the Delegated Access controls, make sure you create an admin account in the child first.
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
+### Create a user at parent account level
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a parent account.
 2. Go to **Settings** (the gear icon).
 3. In **Users and Actions** > **Users and Permissions** select **Add user**.
 4. Fill the information required, such as email address and name.
 5. In **Permission**, select the appropriate permissions for the account.
 6. Select **Send invitation** to email the user and create their credentials to log in to the Area 1 dashboard.
+
+### Create a user at child account level
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a child account.
+2. Go to **Settings** (the gear icon).
+3. In **Users and Actions** > **Users and Permissions** select **Add user**.
+4. Fill the information required, such as email address and name.
+5. In **Permission**, select the appropriate permissions for the account.
+6. Select **Send invitation** to email the user and create their credentials to log in to the Area 1 dashboard.
+
+### Permissions and delegated permissions
+
+You can delegate the following account permissions for users of parent accounts:
+
+- **Read-only**: Can enter child accounts but is prevented from making any changes to settings, regardless of the customer account settings.
+- **Read-write**: Can enter child accounts and make changes on behalf of the customer.
+
+### Control parent access
+
+Child accounts can set the level of access parent accounts have:
+
+- **No external account access**: Prevents all access from the parent account (including Area 1).
+- **Allow external account view-only access** (Default): Allows a parent user to view the customer's portal, including settings.
+- **Allow external account admin access**: Allows a parent user to administer the customer account on their behalf. By selecting this option, the customer is acknowledging consent for outside administration of their account.
+
+To manage permissions:
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a child account.
+2. Select **Settings** (the gear icon).
+3. Go to **Delegated Accounts** > **Manage Permissions**, and choose one of the permissions.
+
+## Escalation contacts
+
+You should add escalation contacts so Area 1 can send notifications regarding detection events and critical service related issues. Area 1 highly recommends that contacts have both phone and email contacts.
+
+To set up escalation contacts:
+
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a child account.
+2. Select **Settings** (the gear icon).
+3. Go to **Subscriptions** > **Escalation Contacts**.
+4. Select **Add Contact** and fill out the name, email and phone fields.
+5. Chose the type of event for which you would like to receive updates for.
+6. Select **Save**.
+
+## Status alerts
+
+Subscribe to incident status alerts [from Area 1](https://status.area1security.com/).
+
+## Domains setup (inline/API)
+
+Refer to the [setup options](/email-security/deployment/) for Area 1 to learn about the best way of deploying Area 1 in your organization. You can choose between two main setup architectures: inline and API.
+
+With an [inline deployment](/email-security/deployment/inline/), Area 1 evaluates email messages before they reach a user’s inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Area 1 after they have already reached a user’s inbox.
+
+## Classification actions
+
+Area 1 recommends that you quarantine `Malicious` and `SPAM` dispositions. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), or [Area 1](/email-security/email-configuration/domains-and-routing/domains/)
+
+## Message retraction
+
+You can configure message retraction to take post-delivery actions against suspicious email messages. You can retract messages manually or automatically. Refer to [Retract settings](/email-configuration/retract-settings/) for more information.
