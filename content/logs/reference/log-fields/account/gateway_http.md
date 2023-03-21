@@ -31,7 +31,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | FileInfo | Information about files detected within the HTTP request. | object |
 | HTTPHost | Content of the host header in the HTTP request. | string |
 | HTTPMethod | HTTP request method. | string |
-| HTTPStatusCode | HTTP status code gateway returned to the user. 0 if nothing was returned(e.g client disconnected) | int |
+| HTTPStatusCode | HTTP status code gateway returned to the user. Zero if nothing was returned (for example, client disconnected). | int |
 | HTTPVersion | Version name for the HTTP request. | string |
 | InternalSourceIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | IsIsolated | If the requested was isolated with Cloudflare Browser Isolation or not. | bool |
