@@ -25,6 +25,10 @@ When creating a DNS policy, you can select as many security risk categories and 
 If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
 {{</Aside>}}
 
+{{<Aside type="warning">}}
+DNS policies will not filter traffic for users using alternative VPNs, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure DNS policies apply to all users, we recommend enforcing a restriction on VPNs.
+{{</Aside>}}
+
 ## Actions
 
 Just like actions in HTTP policies, actions in DNS policies allow you to choose what to do with a given set of elements. You can assign one action per policy.
