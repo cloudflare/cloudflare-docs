@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-          with:
-            fetch-depth: 1
+        with:
+          fetch-depth: 1
       - name: Install dependencies
         run: npm install -g markdown-link-check
       - name: Check for broken internal jump links
