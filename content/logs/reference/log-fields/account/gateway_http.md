@@ -42,7 +42,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | SourceIP | Source ip of the request. | string |
 | SourcePort | Source port of the request. | string |
 | URL | HTTP request URL. | string |
-| UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (e.g. expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>error</em> \| <em>passThrough</em>. | string |
+| UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (for example, expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>error</em> \| <em>passThrough</em>. | string |
 | UploadedFileNames | List of files uploaded in the HTTP request. | array[string] |
 | UserAgent | Contents of the user agent header in the HTTP request. | string |
 | UserID | User identity where the HTTP request originated from. | string |
