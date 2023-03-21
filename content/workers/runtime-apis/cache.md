@@ -175,7 +175,9 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 #### Errors
 
-`cache.match` returns a `504` error when the content is stale.
+`cache.match` generates a `504` error response when the requested content is missing or expired. The Cache API does not expose this `504` directly to the Worker script, instead returning `undefined`. Nevertheless, the underlying `504` is still visible in Cloudflare Logs.
+
+If you use Cloudflare Logs, you may see these `504` responses with the `RequestSource` of `edgeWorkerCacheAPI`. Again, these are expected if the cached asset was missing or expired. Note that `edgeWorkerCacheAPI` requests are already filtered out in other views, such as Cache Analytics. To filter out these requests or to filter requests by end users of your website only, refer to [Filter end users](/analytics/graphql-api/features/filtering/#filter-end-users).
 
 ### `Delete`
 

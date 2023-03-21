@@ -31,7 +31,7 @@ In this mode, the Cloudflare WARP client runs on user devices and proxies all In
 
 ## Build a hostname policy
 
-To begin, navigate to the `Gateway` section of the Zero Trust dashboard and click on `Policies`. Select the `HTTP tab`. By default, Cloudflare Gateway create a rule that [skips inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for applications that break when traffic is decrypted. You can remove this rule, but it will likely cause certain applications to break for end users.
+To begin, navigate to the `Gateway` section of Zero Trust and click on `Policies`. Select the `HTTP tab`. By default, Cloudflare Gateway create a rule that [skips inspection](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for applications that break when traffic is decrypted. You can remove this rule, but it will likely cause certain applications to break for end users.
 
 Click **Create a policy** to add a new HTTP policy. Give the policy a name and description.
 
@@ -73,7 +73,7 @@ Once saved, the policy should now appear in your policy list. You can click the 
 
 The HTTP filtering policy created will apply to any HTTP requests sent from configured locations or enrolled devices. You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Zero Trust dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
+Navigate to the `Settings` section of Zero Trust and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
 
 ## Determine which devices can enroll
 
@@ -85,7 +85,7 @@ Next, build a rule to decide which devices can enroll in your account.
 
 1.  Click **Add a rule**.
 
-1. Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
+1.  Determine who is allowed to enroll by using criteria including Access groups, groups from your identity provider, email domain, or named users. This example allows any user with a `@cloudflare.com` account to enroll.
 
     ![Example of enrollment settings enabling all Cloudflare users to have access.](/cloudflare-one/static/secure-web-gateway/block-football/allow-cf-users.png)
 
@@ -100,7 +100,7 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 To download the Cloudflare certificate:
 
 - Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
-- Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+- Find the certificate in Zero Trust, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -118,7 +118,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
-1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it in Zero Trust under **Settings > General**.
 
     ![Team name used to configure the WARP app on a desktop device.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 
@@ -130,4 +130,4 @@ The user will be prompted to login with the identity provider configured in Clou
 
 When users visit that section of Reddit (and any page within it), they will receive a block page. Any attempt to reach ESPN will also be blocked.
 
-You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of the Zero Trust dashboard. Filter for `Block` as the decision type.
+You can review the blog event in the HTTP logs. Navigate to the `Gateway` page in the `Logs` section of Zero Trust. Filter for `Block` as the decision type.

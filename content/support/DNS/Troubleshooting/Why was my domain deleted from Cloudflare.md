@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/221327488-Why-was-my-domain-deleted-from-Cloudflare-
-title: Why was my domain deleted from Cloudflare
+title: Why was my domain deleted from Cloudflare?
 ---
 
 # Why was my domain deleted from Cloudflare?
@@ -66,16 +66,21 @@ Cloudflare CNAME setup.
 
 1\. Use command-line or third-party tools to confirm if Cloudflare's nameservers are configured:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig +trace NS something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">dig NS something.anotherdomain.com @8.8.8.8</span></div></span></span></span></code></pre>{{</raw>}}
+```sh
+$ dig NS something.anotherdomain.com
+$ dig +trace NS something.anotherdomain.com
+$ dig NS something.anotherdomain.com @8.8.8.8
+```
 
 The +trace option outputs detailed information when the DNS response fails. This information can be useful when troubleshooting the issue with your DNS provider.
 
 The @8.8.8.8 option returns results from Google's public DNS resolver. The results will confirm whether public resolvers receive a DNS response.
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">nslookup -type=ns something.anotherdomain.com</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">nslookup -type=ns something.anotherdomain.com 8.8.8.8</span></div></span></span></span></code></pre>{{</raw>}}
-
+```sh
+$ nslookup -type=ns something.anotherdomain.com
+$ nslookup -type=ns something.anotherdomain.com 8.8.8.8
+```
 Some online services, such as [whatsmydns.net](https://www.whatsmydns.net/), check for DNS resolution worldwide.  
 
 -   Ensure Cloudflare’s two nameservers are the only nameservers returned in the query results.

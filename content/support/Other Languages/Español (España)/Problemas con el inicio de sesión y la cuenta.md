@@ -25,6 +25,11 @@ Si has olvidado la dirección de correo electrónico asociada con tu solicitud:
 
 3\. Cloudflare enviará un correo electrónico a la dirección asociada a tu nombre de dominio. Si no lo recibes en 20 minutos, comprueba tu carpeta de correo no deseado. El mensaje se enviará desde `no-reply@cloudflare.com` o `noreply@notify.cloudflare.com`.
 
+{{<Aside type="note">}}
+Este proceso no afecta a tu cuenta ni comparte tu dirección de correo
+electrónico con nadie.
+{{</Aside>}}
+
 Si sigues sin poder acceder a la dirección de correo electrónico asociada a tu cuenta de Cloudflare, necesitas [migrar tu dominio a otra cuenta](https://support.cloudflare.com/hc/articles/204615358).
 
 Para prevenir el secuestro de cuentas, Cloudflare necesita que hagas lo siguiente:
@@ -43,6 +48,20 @@ Si olvidas la contraseña de tu cuenta:
 
 4\. Selecciona el enlace para restablecer la contraseña. Este enlace expirará en dos horas.
 
+{{<Aside type="tip">}}
+Cloudflare recomienda el uso de contraseñas seguras. Los requisitos
+mínimos son:
+
+-   La contraseña debe tener al menos 8 caracteres.
+-   La contraseña debe tener un dígito.
+-   La contraseña debe tener un carácter especial.
+{{</Aside>}}
+
+{{<Aside type="note">}}
+Si sigues sin poder acceder a tu cuenta, busca ayuda en la [Comunidad de
+Cloudflare](https://community.cloudflare.com/t/i-cannot-login-to-my-account/27823).
+{{</Aside>}}
+
 ___
 
 ## ¿Problemas con la autenticación en dos fases?
@@ -53,6 +72,12 @@ Es posible que pierdas el acceso a un dispositivo móvil, clave de seguridad o c
 
 Por lo general, puedes resolver estos problemas utilizando un código de respaldo o recuperando un código de respaldo de tu aplicación de autenticación que elijas.
 
+{{<Aside type="tip">}}
+La documentación de Google describe cómo [transferir códigos de Google
+Authenticator de un dispositivo Android a
+otro](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DAndroid&hl=en&oco=0).
+{{</Aside>}}
+
 Al configurar 2FA, te solicitamos que guardaras tus códigos de respaldo en una ubicación segura. Para restaurar el acceso perdido con un código de respaldo de Cloudflare:
 
 1\. Recupera el código de respaldo de donde lo almacenaste.
@@ -60,6 +85,10 @@ Al configurar 2FA, te solicitamos que guardaras tus códigos de respaldo en una 
 2\. Ve a la página de inicio de sesión de Cloudflare.
 
 3\. Introduce el código de respaldo en la pantalla de inicio de sesión, luego haz clic en **Iniciar sesión**.
+
+{{<Aside type="note">}}
+Cuando usas un código de respaldo, queda inválido.
+{{</Aside>}}
 
 #### **Desactivar la autentificación en dos fases (2FA)**
 
@@ -126,6 +155,12 @@ Para cambiar la dirección de correo electrónico asociada a tu cuenta de Cloudf
 
 5\. Cambia tu contraseña y selecciona **Guardar**.
 
+{{<Aside type="note">}}
+Para mayor seguridad de la cuenta, considera la posibilidad de cambiar
+tus [claves y tokens de
+API](https://support.cloudflare.com/hc/articles/200167836).
+{{</Aside>}}
+
 ___
 
 ## Cómo proteger una cuenta en riesgo
@@ -143,6 +178,11 @@ Tienes varias opciones para iniciar sesión en el [panel de control de Cloudflar
 -   **Iniciar sesión con Apple**:
     -   _Mismo correo electrónico de la cuenta de Cloudflare que el Id. de Apple_: puedes iniciar sesión con tu correo electrónico y contraseña o iniciar sesión con Apple.
     -   _Cuenta de Cloudflare diferente como Id. de Apple_: crearás una nueva cuenta de Cloudflare si inicias sesión con Apple. Si quieres iniciar sesión en una cuenta existente, [cambia tu dirección de correo electrónico](https://support.cloudflare.com/hc/es-es/articles/203471284-Problemas-con-el-inicio-de-sesi%C3%B3n-y-la-cuenta#12345679) para que coincida con la que usas para tu Id. de Apple.
+
+{{<Aside type="note">}}
+Si inicias sesión en tu cuenta de usuario de Cloudflare con inicio de
+sesión único (SSO), no podrás iniciar sesión con Apple.
+{{</Aside>}}
 
 ___
 

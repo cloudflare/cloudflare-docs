@@ -46,13 +46,13 @@ It is ideal for projects that require:
 * Storage for files which are infrequently accessed.
 * Large object storage (for example, gigabytes or more per object).
 * Strong consistency per object.
-* Asset storage for websites (refer to [caching guide](https://developers.cloudflare.com/r2/data-access/public-buckets/#caching))
+* Asset storage for websites (refer to [caching guide](/r2/buckets/public-buckets//#caching))
 
 To get started with R2:
 
 * Read the [Get started guide](/r2/get-started/).
-* Learn about R2 [Limits](/r2/platform/limits/).
-* Review the [R2 Workers API](/r2/data-access/workers-api/workers-api-reference/).
+* Learn about R2 [Limits](/r2/reference/limits/).
+* Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
 
 ## Durable Objects
@@ -136,7 +136,7 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Maximum metadata per key                      | 1,024 bytes  | 2,048 bytes  | N/A                  |
 | Maximum size per value                        | 25 MiB       | 5 TiB        | 128 KiB per value    |
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
-| Cached                                        | Always       | Programatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/data-access/public-buckets) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
+| Cached                                        | Always       | Programatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
 | TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/learning/using-durable-objects/#alarms-in-durable-objects) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 150 requests/second per DO<sup>3</sup> |

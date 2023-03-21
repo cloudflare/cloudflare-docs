@@ -47,14 +47,14 @@ Download **all** fields from Cloudflare Logs, save to els.txt:
 
 Template:
 
-```
-curl -sv -o els.txt -H "X-Auth-Email: email" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received?start=starttime&end=endtime&fields=(curl -s -H "X-Auth-Email: email" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
+```sh
+$ curl -sv -o els.txt -H "X-Auth-Email: email" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received?start=starttime&end=endtime&fields=(curl -s -H "X-Auth-Email: email" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
 Example (with values):
 
-```
-curl -sv -o els.txt -H "X-Auth-Email: monkey@bannana.com" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/5b5f0xxxcbfbaxxxxxx0416d22f7b/logs/received?start=1529171100&end=1529171100&fields=(curl -s -H "X-Auth-Email: monkey@bannana.com" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
+```sh
+$ curl -sv -o els.txt -H "X-Auth-Email: monkey@bannana.com" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/5b5f0xxxcbfbaxxxxxx0416d22f7b/logs/received?start=1529171100&end=1529171100&fields=(curl -s -H "X-Auth-Email: monkey@bannana.com" -H "X-Auth-Key: api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received/fields" | jq '. | to_entries[] | .key' -r | paste -sd "," -)"
 ```
 
 ### Option 2: Download specific fields
@@ -65,14 +65,14 @@ This command will include only the following fields in the logs you requested: 
 
 Refer to the full list of Cloudflare Logs fields [here](https://support.cloudflare.com/hc/en-us/articles/216672448-Enterprise-Log-Share-Logpull-REST-API).  Template:
 
-```
-curl -sv -o els.txt-H "X-Auth-Email:email" -H "X-Auth-Key:api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received?start=starttime&end=endtime&fields=CacheCacheStatus,CacheResponseBytes,CacheResponseStatus,CacheTieredFill,ClientASN”
+```sh
+$ curl -sv -o els.txt-H "X-Auth-Email:email" -H "X-Auth-Key:api key" "https://api.cloudflare.com/client/v4/zones/zone id/logs/received?start=starttime&end=endtime&fields=CacheCacheStatus,CacheResponseBytes,CacheResponseStatus,CacheTieredFill,ClientASN”
 ```
 
 Example (with values):
 
-```
-curl -sv -o els.txt-H "X-Auth-Email:monkey@bannana.com" -H "X-Auth-Key:api key" "https://api.cloudflare.com/client/v4/zones/xx5x0xxxc45baxxxxxx0x6d23fxx/logs/received?start=1529171100&end=1529171100&fields=CacheCacheStatus,CacheResponseBytes,CacheResponseStatus,CacheTieredFill,ClientASN”
+```sh
+$ curl -sv -o els.txt-H "X-Auth-Email:monkey@bannana.com" -H "X-Auth-Key:api key" "https://api.cloudflare.com/client/v4/zones/xx5x0xxxc45baxxxxxx0x6d23fxx/logs/received?start=1529171100&end=1529171100&fields=CacheCacheStatus,CacheResponseBytes,CacheResponseStatus,CacheTieredFill,ClientASN”
 ```
 
 ___
@@ -83,14 +83,14 @@ Sort the logs by field value and output them to a file.
 
 -   Sort by HTTP 200 response, output to file called els-200.txt
 
-```
-~$ cat els.txt| grep ":200," > els-200.txt
+```sh
+$ cat els.txt| grep ":200," > els-200.txt
 ```
 
 -   Sort by HTTP 525 response, output to file called els-525.txt
 
-```
-~$ cat els.txt| grep ":525," > els-525.txt
+```sh
+$ cat els.txt| grep ":525," > els-525.txt
 ```
 
 ### Where does the field value ":525," come from?
@@ -102,20 +102,20 @@ The pattern _:525,_ (colon, status code, comma) is unique to the _EdgeRespons
 
 The output files (els-200.txt and els-525.txt) are not very readable as-is. In order to view them in a more readable format, use jq in the following command:
 
-```
-~$ cat els-525.txt | jq '.'
+```sh
+$ cat els-525.txt | jq '.'
 ```
 
 ### Count the requests by field and output them to a file
 
 In this example, we count requests by SSL protocol version, which is denoted by the _ClientSSLProtocol_ field in Cloudflare Logs (note the period before the field name below).
 
-```
-~$ jq -r .ClientSSLProtocol els-200.txt |sort -n |uniq -c |sort -n > ClientSSLProtocol.txt
+```sh
+$ jq -r .ClientSSLProtocol els-200.txt |sort -n |uniq -c |sort -n > ClientSSLProtocol.txt
 ```
 
-```
-~$ cat ClientSSLProtocol.txt
+```sh
+$ cat ClientSSLProtocol.txt
 ```
 
 ### Example Output:
@@ -141,8 +141,8 @@ Often, you’ll need to sort by many fields to analyze and identify the source o
 
 **How to**:
 
-```
-~$ cat els.txt | grep ":200," > els-200.txt
+```sh
+$ cat els.txt | grep ":200," > els-200.txt
 ```
 
 **Action 2**: Sort your "HTTP 200 only" logs by URI, output to els-200-URI.txt.
@@ -151,12 +151,12 @@ Often, you’ll need to sort by many fields to analyze and identify the source o
 
 Find the top URIs:
 
-```
-~$ jq -r .ClientRequestURI els-200.txt |sort -n |uniq -c |sort -n > els-200-top-URIs.txt
+```sh
+$ jq -r .ClientRequestURI els-200.txt |sort -n |uniq -c |sort -n > els-200-top-URIs.txt
 ```
 
-```
-~$ cat els-200-top-URIs.txt
+```sh
+$ cat els-200-top-URIs.txt
 ```
 
 Pick a URI from this list and output log entries with that URI to their own file. To do this, replace _/ClientRequestURI/path/to/something/_ in the command below with the URI of your choosing:
@@ -171,14 +171,14 @@ Pick a URI from this list and output log entries with that URI to their own file
 
 **How to:**
 
-```
-~$ jq -r .ClientIP els-200-URI-1.txt |sort -n |uniq -c |sort -n > els-200-URI-1-Top-IP.txt
+```sh
+$ jq -r .ClientIP els-200-URI-1.txt |sort -n |uniq -c |sort -n > els-200-URI-1-Top-IP.txt
 ```
 
 **Output the contents of the file:**
 
-```
-~$ cat els-200-URI-1-Top-IP.txt
+```sh
+$ cat els-200-URI-1-Top-IP.txt
 ```
 
 You can narrow down 200 HTTP responses by both the request URI and the IPs which are requesting those URIs. You could also sort the logs the other way round, narrowing down the log entries by top IP addresses and then seeing which URI is requested the most by IP address.

@@ -9,7 +9,13 @@ When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a se
 
 This process - known as [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) - moves authentication to the protocol of TLS, rather than managing it in application code. Connections from unauthorized clients are rejected during the TLS handshake instead.
 
-To present a client certificate when communicating with a service, you can create and use a [binding](/workers/platform/bindings) to a certificate for use in your Worker project.
+To present a client certificate when communicating with a service, create a [mTLS certificate binding](/workers/platform/bindings/#mtls-certificate-bindings) in your Worker project's `wrangler.toml` file. This will allow your Worker to present a client certificate to a service on your behalf.
+
+{{<Aside type="warning">}}
+
+Currently, mTLS for Workers is not supported for domains [proxied](/dns/manage-dns-records/reference/proxied-dns-records/) by Cloudflare.
+
+{{</Aside>}}
 
 First, upload a certificate and its private key to your account using the [`wrangler mtls-certificate`](/workers/wrangler/commands/#mtls-certificate) command:
 
@@ -17,7 +23,7 @@ First, upload a certificate and its private key to your account using the [`wran
 $ wrangler mtls-certificate upload --cert cert.pem --key key.pem --name my-client-cert
 ```
 
-Then, update your Worker project's `wrangler.toml` file to create a binding to the certificate:
+Then, update your Worker project's `wrangler.toml` file to create an mTLS certificate binding:
 
 ```toml
 ---

@@ -39,13 +39,31 @@ Revisa las siguientes recomendaciones para prevenir los errores de rastreo:
 
 -   No bloquear las direcciones IP del rastreador de Google mediante las **Reglas del Firewall** o las **Reglas de Acceso de IP** en la aplicación del **Firewall** de Cloudflare.
 
+{{<Aside type="tip">}}
+Confirmar que la dirección IP corresponda a Google. Para ello, consultar
+la documentación de Google en [verificación de direcciones IP de
+googlebot](https://support.google.com/webmasters/bin/answer.py?answer=80553).
+{{</Aside>}}
+
 -   No bloquear Estados Unidos mediante las **Reglas del Firewall** o las **Reglas de Acceso de IP** en la aplicación del **Firewall**de Cloudflare.
 -   No bloquear los agentes-usuarios de [Google](https://support.google.com/webmasters/answer/1061943) o [Bing](https://www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0) en la configuración de tu servidor, .htaccess, [robots.txt](http://support.google.com/webmasters/bin/answer.py?answer=35303) o la aplicación web.
+
+{{<Aside type="tip">}}
+Google utiliza una [variedad de
+agentes-usuarios](https://support.google.com/webmasters/answer/1061943)
+para rastrear tu sitio web. Puedes [probar tus archivos robots.txt a
+través de
+Google](https://support.google.com/webmasters/answer/6062598?hl=en).
+{{</Aside>}}
 
 -   No permitas el rastreo de archivos en el directorio /cdn-cgi/. Cloudflare utiliza esta ruta de forma interna y Google encuentra errores al rastrearla. Anular los rastreos de cdn-cgi mediante archivos robots.txt:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Anular: /cdn-cgi/</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="note">}}
+Los errores de cdn-cgi no afectan los posicionamientos del sitio.
+{{</Aside>}}
 
 -   Verifica que tus archivos [robots.txt admitan el rastreador de AdSense](http://support.google.com/webmasters/bin/answer.py?hl=en&answer=1061943).
 -   [Restablece las direcciones IP original del visitante](https://support.cloudflare.com/hc/articles/200170916) en tus registros de servidor.

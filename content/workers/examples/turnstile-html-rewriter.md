@@ -98,16 +98,28 @@ async function handlePost(request) {
     const ip = request.headers.get('CF-Connecting-IP');
     // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
+
+    // Turnstile injects a token in `cf-turnstile-response`.
+    const token = body.get('cf-turnstile-response');
+    const ip = request.headers.get('CF-Connecting-IP');
+
+    // Validate the token by calling the `/siteverify` API.
+    let formData = new FormData();
+
 		// `secret_key` here is set using Wrangler secrets
     formData.append('secret', secret_key);
     formData.append('response', token);
     formData.append('remoteip', ip);
+
 	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
     const result = await fetch(url, {
         body: formData,
         method: 'POST',
     });
     const outcome = await result.json();
+
+    const outcome = await result.json();
+
     if (!outcome.success) {
         return new Response('The provided Turnstile token was not valid!', { status: 401 });
     }
@@ -115,10 +127,12 @@ async function handlePost(request) {
     // Validate login, redirect user, etc.
 	return await fetch(request)
 }
+
 export default {
 	async fetch(request, env) {
 		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
+
 		if (request.method === 'POST') {
 			return handlePost(request)
 		}
@@ -128,6 +142,11 @@ export default {
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {
+
+			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
+			.on('head', {
+				element(element) {
+
 					// In this case, you are using `append` to add a new script to the `head` element
 					element.append(`<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`, { html: true });
 				},

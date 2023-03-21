@@ -1,6 +1,10 @@
 ---
 pcx_content_type: configuration
 title: Durable Objects
+product_grid:
+  show: true
+  title: Durable Objects
+  group: Developer platform
 ---
 
 # Durable Objects

@@ -12,11 +12,11 @@ This page defines and articulates key concepts that are relevant to the Cloudfla
 
 ## Domain
 
-Also known as domain name, it is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query takes place and the domain name is mapped to the actual IP address where the website is hosted.
+Also known as domain name, a domain is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query takes place and the domain name is mapped to the actual IP address where the website is hosted.
 
 ## Registrar
 
-Before you can start using the Cloudflare DNS service you must first have a domain. This is achieved by using a service called registrar. As explained in our [Learning Center](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/), a registrar handles the reservation of domain names as well as the assignment of IP addresses for those domains.
+Before you can start using the Cloudflare DNS service, you must first have a domain. This is achieved by using a service called registrar. As explained in our [Learning Center](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/), a registrar handles the reservation of domain names as well as the assignment of IP addresses for those domains.
 
 Cloudflare offers at-cost domain registration through [Cloudflare Registrar](/registrar/).
 

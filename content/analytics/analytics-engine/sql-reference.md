@@ -279,7 +279,7 @@ Data is returned with a separate JSON object per row. Rows are newline separated
 
 Data is returned with newline separated rows. Columns are separated with tabs. There is no header.
 
-```TSV
+```txt
 column 1 value  column 2 value
 column 1 value  column 2 value
 ...

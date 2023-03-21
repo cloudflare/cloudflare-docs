@@ -56,7 +56,7 @@ In the following example, the GraphQL query fetches a `datetime`, `action`, and
 client request HTTP host as `host` field of 2 WAF events from zone-scoped
 `firewallEventsAdaptive` dataset.
 
-```code
+```graphql
 ---
 header: A GraphQL query
 ---
@@ -139,7 +139,7 @@ response would be delayed until all dataset queries got their results. If any
 fails during the execution, the entire query will be terminated, and the error
 will be returned.
 
-```code
+```graphql
 ---
 header: A sample query for two datasets in a one go
 ---

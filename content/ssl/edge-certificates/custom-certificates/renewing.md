@@ -1,10 +1,14 @@
 ---
 pcx_content_type: reference
-title: Renewing
+title: Renewal and expiration
 weight: 3
+meta:
+    description: Learn how renewal and expiration work when using Cloudflare Custom SSL certificates.
 ---
 
-# Renewing
+# Renewal and expiration
+
+## Renew custom certificates
 
 Uploaded Certificates cannot be renewed by Cloudflare. You must ensure that you replace an expiring certificate before it expires, otherwise your visitors may not be able to connect.
 
