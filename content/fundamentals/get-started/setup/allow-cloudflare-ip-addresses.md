@@ -10,6 +10,8 @@ Because of [how Cloudflare works](/fundamentals/get-started/concepts/how-cloudfl
 
 This setup can cause issues if your origin server blocks or rate limits connections from Cloudflare IP addresses. Because all visitor traffic will appear to come from Cloudflare IP addresses, blocking these IPs — even accidentally — will prevent visitor traffic from reaching your application.
 
+For [Magic Transit](/magic-transit/) customers, Cloudflare routes the traffic instead of proxying it. Once Cloudflare starts advertising your IP prefixes, it will accept IP packets destined for your network, process them, and then output these packets to your origin infrastructure.
+
 ## Review external tools
 
 To avoid blocking Cloudflare IP addresses unintentionally, review your external tools to check that:

@@ -14,20 +14,20 @@ Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are
 
 {{</Aside>}}
 
-You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
+You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, review and test all changes immediately after making every change.
 
 Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Be sure to make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes.
 
 ## Set up Split Tunnels
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 
 2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to view or modify and select **Configure**.
 
 3. Under **Split Tunnels**, choose a Split Tunnel mode:
 
-    - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
-    - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies.
+   - **(default) Exclude IPs and domains** — All traffic will be sent to Cloudflare Gateway except for the IPs and domains you specify.
+   - **Include IPs and Domains** — Only traffic destined to the IP address or domains you specify will be sent to Cloudflare Gateway. All other traffic will bypass Gateway and will no longer be filtered by your network or HTTP policies.
 
 4. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
@@ -64,11 +64,11 @@ Domain-based split tunneling has a few ramifications you should be aware of befo
 ### Valid domains
 
 {{<table-wrap>}}
-| Split tunnel domain | Matches        | Does not match |
+| Split tunnel domain | Matches | Does not match |
 | ------------------- | -------------- | --------------- |
-| `example.com`       | exact match of `example.com` | subdomains such as `www.example.com` |
+| `example.com` | exact match of `example.com` | subdomains such as `www.example.com` |
 | `example.example.com` | exact match of `example.example.com` | `example.com` or subdomains such as `www.example.example.com` |
-| `*.example.com`    | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
+| `*.example.com` | subdomains such as `www.example.com` and `sub2.sub1.example.com` | `example.com` |
 {{</table-wrap>}}
 
 ### Cloudflare Zero Trust domains
@@ -82,14 +82,14 @@ Many Cloudflare Zero Trust services rely on traffic going through WARP, such as 
 
 ## Remove an item from Split Tunnels
 
+{{<Aside type="warning">}}
+Removing default Split Tunnel entries may cause users to lose Internet connectivity or block access to local resources.
+{{</Aside>}}
+
 1. [Navigate](#set-up-split-tunnels) to the Split Tunnels page.
 2. Find the IP address or hostname in the list and select **Delete**.
 
-{{<Aside type="note">}}
-
 If you need to revert to the default Split Tunnels entries, delete all entries from the list. Once the list is empty, the page will re-populate with the default values.
-
-{{</Aside>}}
 
 ## Important platform differences
 

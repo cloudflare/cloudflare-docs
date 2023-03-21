@@ -2,6 +2,10 @@
 pcx_content_type: overview
 title: Cloudflare for SaaS
 weight: 6
+product_grid:
+  show: true
+  title: Cloudflare for SaaS
+  group: Cloudflare essentials
 ---
 
 # Cloudflare for SaaS
@@ -54,6 +58,8 @@ This allows you to support apex domains even if your customers are using a DNS p
 ## Availability
 
 Cloudflare for SaaS is bundled with non-Enterprise plans and available as an add-on for Enterprise plans. For more details, refer to [Plans](/cloudflare-for-platforms/cloudflare-for-saas/plans/).
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Next steps
 

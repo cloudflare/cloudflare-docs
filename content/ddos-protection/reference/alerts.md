@@ -17,6 +17,8 @@ Each notification email includes the following information:
 * Attack type
 * Maximum rate of attack
 * Attack target
+* Rule that matched the attack (ID and description)
+* Rule override, if any
 
 Notifications for HTTP DDoS alerts delivered through webhook or PagerDuty will also include the target hostname.
 
@@ -88,6 +90,8 @@ Advanced DDoS attack alerts support additional configuration, allowing you to fi
     * The minimum megabits-per-second rate that will trigger the alert.
     * The protocols for which you wish to receive notifications (all protocols by default).
 
+You will also receive alerts for rules with a _Log_ action, containing information on what triggered the alert.
+
 ## Availability
 
 The available alerts depend on your Cloudflare plan and subscribed services:
@@ -108,7 +112,7 @@ The following image shows an example notification delivered via email:
 
 ![Example notification email of a DDoS attack](/ddos-protection/static/ddos-notification-example.png)
 
-To investigate a possibly ongoing attack, select **View Dashboard**.
+To investigate a possibly ongoing attack, select **View Dashboard**. To go to the rule details in the Cloudflare dashboard, select **View Rule**.
 
 ## Final remarks
 

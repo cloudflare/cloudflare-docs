@@ -39,7 +39,7 @@ Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec 
 
 ## 3. Set up static routes
 
-To set up your static routes, refer to [Configure static routes](/magic-wan/how-to/configure-static-routes/).
+To set up your static routes, refer to [Configure static routes](/magic-wan/get-started/configure-static-routes/).
 
 ## Supported configuration parameters
 
@@ -70,6 +70,7 @@ Below you will find the configuration parameters Magic WAN supports for the diff
   - AES-CBC with 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication):
+  {{<Aside type="note">}}When using AES-GCM-16, either with 128-bit or 256-bit key lengths, Authentication is not required.{{</Aside>}}
   - SHA2-256
   - SHA-1
 

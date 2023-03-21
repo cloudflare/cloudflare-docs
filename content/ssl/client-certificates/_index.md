@@ -2,11 +2,13 @@
 pcx_content_type: concept
 title: Client certificates
 weight: 4
+meta:
+    description: Use Cloudflare public key infrastructure (PKI) to create client certificates and enforce mutual Transport Layer Security (mTLS) encryption.
 ---
 
 # Client certificates
 
-Use Cloudflare public key infrastructure (PKI) to create client certificates. You can use these certificates with Cloudflare [API Shield™](/api-shield/) or [Cloudflare Workers](/workers/runtime-apis/mtls/) to enforce mutual Transport Layer security (mTLS) encryption.
+Use Cloudflare public key infrastructure (PKI) to create client certificates. Use these certificates with Cloudflare [API Shield™](/api-shield/) or [Cloudflare Workers](/workers/runtime-apis/mtls/) to enforce mutual Transport Layer Security (mTLS) encryption.
 
 ## API Shield
 

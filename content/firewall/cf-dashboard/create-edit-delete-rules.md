@@ -10,17 +10,13 @@ A firewall rule has two main attributes: an **expression** and an **action**.
 
 When an incoming HTTP request matches a firewall rule expression, Cloudflare performs the specified action. For more information, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Actions](/firewall/cf-firewall-rules/actions/).
 
-{{<Aside type="warning" header="Important">}}
-
 Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters). This limit applies whether you use the visual Expression Builder or edit your expression manually in the Expression Editor.
-
-{{</Aside>}}
 
 ## Create a firewall rule
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Navigate to **Security** > **WAF** > **Firewall rules**.
+2. Go to **Security** > **WAF** > **Firewall rules**.
 
 3. Select **Create a firewall rule**.
 

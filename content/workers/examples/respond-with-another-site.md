@@ -11,46 +11,49 @@ weight: 12
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
 export default {
-	async fetch(request) {
-		async function MethodNotAllowed(request) {
-			return new Response(`Method ${request.method} not allowed.`, {
-				status: 405,
-				headers: {
-					Allow: 'GET',
-				},
-			});
-		}
-		// Only GET requests work with this proxy.
-		if (request.method !== 'GET') return MethodNotAllowed(request);
-		return fetch(`https://example.com`);
+  async fetch(request) {
+    async function MethodNotAllowed(request) {
+      return new Response(`Method ${request.method} not allowed.`, {
+        status: 405,
+        headers: {
+          Allow: "GET",
+        },
+      });
+    }
+    // Only GET requests work with this proxy.
+    if (request.method !== "GET") return MethodNotAllowed(request);
+    return fetch(`https://example.com`);
   },
 };
 ```
-{{</tab>}}
-{{<tab label="js/sw">}}
 
-```js
-addEventListener('fetch', function (event) {
-  event.respondWith(handleRequest(event.request));
-});
-async function handleRequest(request) {
-  // Only GET requests work with this proxy.
-  if (request.method !== 'GET') return MethodNotAllowed(request);
-  return fetch(`https://example.com`);
-}
-function MethodNotAllowed(request) {
-  return new Response(`Method ${request.method} not allowed.`, {
-    status: 405,
-    headers: {
-      Allow: 'GET',
-    },
-  });
-}
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```ts
+const handler: ExportedHandler = {
+  async fetch(request) {
+    async function MethodNotAllowed(request) {
+      return new Response(`Method ${request.method} not allowed.`, {
+        status: 405,
+        headers: {
+          Allow: "GET",
+        },
+      });
+    }
+    // Only GET requests work with this proxy.
+    if (request.method !== "GET") return MethodNotAllowed(request);
+    return fetch(`https://example.com`);
+  },
+};
+
+export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

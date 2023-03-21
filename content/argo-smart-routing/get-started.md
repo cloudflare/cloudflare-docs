@@ -2,6 +2,8 @@
 title: Get started
 pcx_content_type: get-started
 weight: 2
+meta:
+    description: Learn how to enable Argo Smart Routing in the Cloudflare dashboard.
 ---
 
 # Get started with Argo Smart Routing
@@ -32,11 +34,11 @@ You will need to already have a [billing profile](/fundamentals/account-and-bill
 {{</tab>}}
 {{</tabs>}}
 
-{{<Aside type="note">}}
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
-If you are an Enterprise user, you can add the Argo permission to your account by contacting your Account Executive or Customer Success Manager.
+## Usage-based notifications
 
-{{</Aside>}}
+{{<render file="_ubb-recommendation.md" productFolder="fundamentals">}}
 
 ## Enable Argo Tiered Cache
 

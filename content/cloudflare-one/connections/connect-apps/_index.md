@@ -3,6 +3,10 @@ pcx_content_type: concept
 title: Cloudflare Tunnel
 weight: 1
 layout: single
+product_grid:
+  show: true
+  title: Cloudflare Tunnel
+  group: Cloudflare One
 ---
 
 # Cloudflare Tunnel

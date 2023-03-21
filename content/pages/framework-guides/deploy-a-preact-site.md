@@ -21,23 +21,7 @@ $ cd your-project-name
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Creating a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-# Setup the local repository
-$ git init
-$ git remote add origin https://github.com/yourgithubusername/githubrepo
-$ git branch -M main
-
-# Commit all initial files
-$ git add -A
-$ git commit -m "initial commit"
-
-# Send commit to new GitHub repo
-$ git push -u origin main
-```
+{{<render file="_create-github-repository.md">}}
 
 ## Deploying with Cloudflare Pages
 
@@ -81,6 +65,4 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 {{</Aside>}}
 
-## Learn more
-
-By completing this guide, you have successfully deployed your Preact site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Preact">}}

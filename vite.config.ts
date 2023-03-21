@@ -99,6 +99,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./components", import.meta.url)),
+      data: fileURLToPath(new URL("./data", import.meta.url)),
     },
   },
   build: {

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Manage advanced certificates
 weight: 1
+meta:
+    description: Learn how to create, delete and perform other operations to manage your Cloudflare Advanced SSL certificates.
 ---
 
 # Manage advanced certificates
@@ -83,6 +85,7 @@ For more details, refer to [Disable cipher suites](/ssl/reference/cipher-suites/
 ## Perform domain control validation (DCV)
 
 {{<render file="_dcv-definition.md">}}
+<br/>
 
 Normally, you only need to update DCV if you have your application on a partial setup (Cloudflare does not run your authoritative nameservers).
 

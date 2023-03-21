@@ -3,7 +3,7 @@ pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 4
 meta:
-    description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
+  description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -35,10 +35,6 @@ To install the Cloudflare root certificate, follow the steps found [here](/cloud
 
 ## I see error 526 when browsing to a website.
 
-<div class="medium-img">
-  <img alt="Example of a Gateway 526 error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
-</div>
-
 Gateway presents an **HTTP Response Code: 526** error page in the following cases:
 
 - **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
@@ -49,19 +45,27 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
   - The common name on the certificate does not match the URL you are trying to reach.
   - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
-- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins that only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
 
-  If you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance), Gateway will only connect if the origin supports [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Redirect all HTTPS requests to HTTP.
 
 If none of the above scenarios apply, contact Cloudflare support with the following information:
-  - Operating System (Windows 10, macOS 10.x, iOS 14.x)
-  - Web browser (Chrome, Firefox, Safari, Edge)
-  - URL of the request
-  - Screenshot or copy/paste of the content from the error page
+
+- Operating System (Windows 10, macOS 10.x, iOS 14.x)
+- Web browser (Chrome, Firefox, Safari, Edge)
+- URL of the request
+- Screenshot or copy/paste of the content from the error page
 
 ## I see error 504 when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), or contact your account team to revert all devices to preferring IPv4.
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-domain) or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+
+| Selector          | Operator | Value         | Action |
+| ----------------- | -------- | ------------- | ------ |
+| Host              | is       | `example.com` | Block  |
+| Query Record Type | is       | `AAAA`        |        |
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -85,7 +89,7 @@ A browser isolation session is a connection from your local browser to a remote 
 
 ## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to Zero Trust. For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 

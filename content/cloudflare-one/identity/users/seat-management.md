@@ -6,7 +6,7 @@ weight: 4
 
 # Manage user seats
 
-Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to the Zero Trust dashboard through any authentication event. 
+Cloudflare Zero Trust subscriptions consist of seats that active users in your account consume. Active users are added to Zero Trust through any authentication event.
 
 The amount of user seats available in your Zero Trust account depends on the amount of users you purchase. If you want to increase the number of seats available, you will have to purchase more users. Learn more about adding and removing seats from your account in the [Zero Trust FAQ](/cloudflare-one/faq/teams-getting-started-faq/#how-do-i-change-my-subscription-plan).
 
@@ -14,7 +14,7 @@ The amount of user seats available in your Zero Trust account depends on the amo
 
 For Access, this is any Cloudflare Access authentication event, like a login to the [App Launcher](/cloudflare-one/applications/app-launcher/) or an application. For Gateway, this means any Cloudflare WARP authentication event, like enrolling a device to your ZT organization.
 
-If either one of these events occurs, that user’s identity is added as an Active user to the Zero Trust dashboard and consumes one seat.
+If either one of these events occurs, that user’s identity is added as an Active user to Zero Trust and consumes one seat.
 
 The user then continues to occupy and consume a single seat regardless of the number of applications accessed or login events. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
 
@@ -22,15 +22,15 @@ A user who authenticates will hold their seat until you [remove the user](#remov
 
 ## Revoke vs remove a user
 
-When you revoke a user, this action will terminate active sessions, but will not remove the user’s consumption of an active seat. On the other hand, when you remove a user, this action will revoke their session and remove that user registry, freeing up one seat from your account. 
+When you revoke a user, this action will terminate active sessions, but will not remove the user’s consumption of an active seat. On the other hand, when you remove a user, this action will revoke their session and remove that user registry, freeing up one seat from your account.
 
 ## Check number of Active Users
 
-You can check for the number of active users in the [Zero Trust dashboard](https://dash.teams.cloudflare.com) home.
+You can check for the number of active users in [Zero Trust](https://one.dash.cloudflare.com) home.
 
 ## Remove a user
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **My Team** > **Users**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **My Team** > **Users**.
 2. Select the checkbox next to an active user.
 3. Select **Action** > **Remove users**.
 
@@ -42,7 +42,7 @@ Cloudflare Zero Trust can automatically remove any user who does not log in to a
 
 To enable automatic removal of inactive users:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Account**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Account**.
 2. Scroll down to **User Seat Expiration** and click **Edit**.
 3. Select an inactivity time from the dropdown menu.
 4. Click **Save**.

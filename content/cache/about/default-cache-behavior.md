@@ -11,7 +11,7 @@ Cloudflare respects the origin web server’s cache headers in the following ord
 
 - Cloudflare **does not** cache the resource when:
   - The `Cache-Control` header is set to `private`, `no-store`, `no-cache`, or `max-age=0`.
-  - The `Set-Cookie` header exists.
+  - The [`Set-Cookie` header](/cache/best-practices/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) exists.
 - Cloudflare **does** cache the resource when:
   - The `Cache-Control` header is set to `public` and `max-age` is greater than 0. Note that Cloudflare does cache the resource even if there is no `Cache-Control` header based on [status codes](/cache/how-to/configure-cache-status-code/#edge-ttl). 
   - The `Expires` header is set to a future date.
@@ -61,7 +61,7 @@ Cloudflare cacheable file limits:
 
 ## Cloudflare cache responses
 
-The output of the `CF-Cache-Status header` shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
+The output of the `CF-Cache-Status` header shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
 {{<table-wrap>}}
 <table>

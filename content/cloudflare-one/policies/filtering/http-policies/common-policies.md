@@ -8,15 +8,17 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
+{{<render file="gateway/_content-categories.md">}}
+
 {{<render file="gateway/_policies-optional.md">}}
 
 ## Enforce device posture
 
 Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
 
-| Selector                     | Operator  | Value                | Action |
-| ---------------------------- | ----------| ---------------------| ------ |
-| Passed Device Posture Checks | in        | `Minimum OS version` | Allow |
+| Selector                     | Operator | Value                | Action |
+| ---------------------------- | -------- | -------------------- | ------ |
+| Passed Device Posture Checks | in       | `Minimum OS version` | Allow  |
 
 ## Enforce session duration
 
@@ -30,8 +32,17 @@ If you are using the [Browser Isolation add-on](/cloudflare-one/policies/browser
 
 When accessing origin servers with certificates not signed by a public certificate authority, you must bypass TLS decryption.
 
-| Selector | Operator | Value           | Action         |
-| ---------| ---------| ----------------| -------------- |
-| Domain   | in       | `internal.site.com`  | Do Not Inspect |
+| Selector | Operator | Value               | Action         |
+| -------- | -------- | ------------------- | -------------- |
+| Domain   | in       | `internal.site.com` | Do Not Inspect |
+
+## Block file types
+
+Block the upload or download of files based on their type.
+
+| Selector           | Operator | Value                                 | Action |
+| ------------------ | -------- | ------------------------------------- | ------ |
+| Upload File Type   | in       | Microsoft Office Word Document (docx) | Block  |
+| Download File Type | in       | PDF (pdf)                             | Block  |
 
 Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.

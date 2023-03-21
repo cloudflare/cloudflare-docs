@@ -93,7 +93,7 @@ $ wrangler init [NAME] [-y / --yes] [--from-dash]
 
 ## generate
 
-Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
 
 ```sh
 $ wrangler generate [name] [template]
@@ -104,7 +104,7 @@ $ wrangler generate [name] [template]
 - `name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}} {{<prop-meta>}}(default: name of working directory){{</prop-meta>}}
   - The name of the Workers project. This is both the directory name and `name` property in the generated `wrangler.toml` [configuration](/workers/wrangler/configuration/) file.
 - `template` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on [cloudflare/templates](https://github.com/cloudflare/templates) repository.
+  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
 
 {{</definitions>}}
 
@@ -682,6 +682,8 @@ Exactly one of `VALUE` or `--path` is required.
   - The lifetime (in number of seconds) that the key-value pair should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
 - `--expiration` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
+- `--metadata` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Any (escaped) JSON serialized arbitrary object to a maximum of 1024 bytes.
 
 {{</definitions>}}
 
@@ -910,7 +912,9 @@ Here is the full schema for key-value entries uploaded via the bulk API:
 - `key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The UTF-8 encoded string to be stored, up to 10 MB in length.
+  - The UTF-8 encoded string to be stored, up to 25 MB in length.
+- `metadata` {{<type>}}object{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+  - Any arbitrary object (must serialize to JSON) to a maximum of 1024 bytes.
 - `expiration` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
 - `expiration_ttl` {{<type>}}number{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -986,7 +990,7 @@ Success!
 Interact with buckets in an R2 store.
 
 {{<Aside type="note">}}
-The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+The `r2 bucket` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
 {{</Aside>}}
 
 ### `create`
@@ -1034,7 +1038,7 @@ $ wrangler r2 bucket list
 Interact with R2 objects.
 
 {{<Aside type="note">}}
-The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/data-access/workers-api/workers-api-reference).
+The `r2 object` commands allow you to manage application data in the Cloudflare network to be accessed from Workers using [the R2 API](/r2/api/workers/workers-api-reference/).
 {{</Aside>}}
 
 ### `get`
@@ -1328,6 +1332,10 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
   - Bind variable/secret (KEY=VALUE).
 - `--kv` {{<type>}}string[]{{</type>}}
   - KV namespace to bind.
+- `--r2` {{<type>}}string[]{{</type>}}
+  - [R2 bucket](/pages/platform/functions/bindings/#interact-with-your-r2-buckets-locally) to bind.
+- `--d1` {{<type>}}string[]{{</type>}}
+  - [D1 database](/pages/platform/functions/bindings/#interact-with-your-d1-databases-locally) to bind.
 - `--do` {{<type>}}string[]{{</type>}}
   - Durable Object to bind (NAME=CLASS).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
@@ -1542,13 +1550,13 @@ $ wrangler deployments
 Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
 Created on: 2022-11-11T15:49:08.117218Z
 Author: example@cloudflare.com
-Trigger: Upload from Wrangler 🤠
+Source: Upload from Wrangler 🤠
 Rollback from: MOCK-DEPLOYMENT-ID-2222
 
 Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
 Created on: 2022-11-11T15:51:20.79936Z
 Author: example@cloudflare.com
-Trigger: Upload from Wrangler 🤠
+Source: Upload from Wrangler 🤠
 Rollback from: MOCK-DEPLOYMENT-ID-2222
 🟩 Active
 
@@ -1585,6 +1593,8 @@ $ wrangler dispatch-namespace get <NAME>
 
   - The name of the dispatch namespace to get details about.
 
+{{</definitions>}}
+
 ### create
 
 Create a dispatch namespace.
@@ -1598,6 +1608,8 @@ $ wrangler dispatch-namespace create <NAME>
 - `NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The name of the dispatch namespace to create.
+
+{{</definitions>}}
 
 ### delete
 
@@ -1616,6 +1628,8 @@ You must delete all user Workers in the dispatch namespace before it can be dele
 
   - The name of the dispatch namespace to delete.
 
+{{</definitions>}}
+
 ### rename
 
 Rename a dispatch namespace.
@@ -1633,6 +1647,8 @@ $ wrangler dispatch-namespace get <OLD-NAME> <NEW-NAME>
 - `NEW NAME` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
   - The new name of the dispatch namespace.
+
+{{</definitions>}}
 
 ---
 ## `mtls-certificate`

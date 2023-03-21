@@ -39,7 +39,7 @@ Each site's private network has an on-ramp to Cloudflare's Anycast network using
 ## Add Anycast GRE or IPsec tunnel
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**. 
+2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
 3. In the **Tunnels** tab, select **Create**.
 4. Select **GRE tunnel** or **IPsec tunnel** > **Next**.
 5. Fill out the information for the Anycast GRE or IPsec tunnel.
@@ -65,7 +65,7 @@ In keeping with the example scenario, the list of static routes should match the
 
 ## Cloudflare Gateway configuration
 
-After setting up the Anycast GRE and static routes, configure your Cloudflare Gateway policies from the [Zero Trust dashboard](https://dash.teams.cloudflare.com/). To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
+After setting up the Anycast GRE and static routes, configure your Cloudflare Gateway policies from [Zero Trust](https://one.dash.cloudflare.com/). To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
 
 The Cloudflare Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
 

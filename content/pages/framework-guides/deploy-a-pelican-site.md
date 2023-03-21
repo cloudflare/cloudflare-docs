@@ -31,21 +31,7 @@ This is the directory name that you will set in the build command.
 
 {{<render file="_tutorials-before-you-start.md">}}
 
-## Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). When creating your repository, do not select to add a README file, `.gitignore` template or a license as these selections will cause the push to GitHub to fail.
-
-In your terminal, `cd` into your new Pelican project directory and run:
-
-```sh
-$ git init
-$ git add -A
-$ git commit -m "<YOUR_COMMIT_MESSAGE>"
-$ git remote add origin <YOUR_NEW_GITHUB_REPOSITORY_URL>
-$ git push -u origin main
-```
-
-You have successfully created a GitHub repository and pushed your Pelican project to that repository.
+{{<render file="_create-github-repository.md">}}
 
 ## Deploy with Cloudflare Pages
 
@@ -73,6 +59,4 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 Every time you commit new code to your Pelican site, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/platform/preview-deployments/) on new pull requests and be able to preview how changes look to your site before deploying them to production.
 
-## Related resources
-
-By completing this guide, you have successfully deployed your Pelican site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+{{<render file="_learn-more.md" withParameters="Pelican">}}

@@ -39,6 +39,14 @@ Kysely is a type-safe and autocompletion-friendly typescript SQL query builder. 
 * [Kysely GitHub](https://github.com/koskimas/kysely)
 * [D1 adapter](https://github.com/aidenwallis/kysely-d1)
 
+### Drizzle ORM
+
+Drizzle ORM is a TypeScript ORM for SQL databases designed with maximum type safety in mind. It also comes with an automatic migrations generation tool. Drizzle automatically generates your D1 schema based on types you define in TypeScript, and exposes an API that allows you to query your database directly.
+
+* [GitHub](https://github.com/drizzle-team/drizzle-orm)
+* [D1 example](https://github.com/drizzle-team/drizzle-orm/tree/main/examples/cloudflare-d1)
+* [SQLite API surface](https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-orm/src/sqlite-core/README.md)
+
 ## Feedback
 
 To report a bug or file feature requests for these community projects, create an issue directly on the project's repository. 

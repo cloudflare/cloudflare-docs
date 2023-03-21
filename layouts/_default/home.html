@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-site-page is-docs-page>
   <head>
+    {{- partial "onetrust" -}}
     {{- partial "head.meta" (dict "Context" . "Product" "home") -}}
 
     <link rel="stylesheet preconnect" href="/home.css" />
     {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
     <!-- <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script> -->
     {{- partial "script" (dict "src" "home.ts" "defer" true) -}}
-    
+
   </head>
   <body>
     <div class="DocsPage">
@@ -46,7 +47,7 @@
           {{- partial "topbar.search" . -}}
           {{- end -}}
           <div class="SiteHeader--nav">
-            <a class="SiteHeader--nav-link" href="/products/"><span>Product Directory</span></a>
+            <a class="SiteHeader--nav-link" href="/products/"><span>Product directory</span></a>
             <a class="SiteHeader--nav-link" href="/learning-paths/"><span>Learning paths</span></a>
             <a class="SiteHeader--nav-link" href="/tutorials/"><span>Tutorials</span></a>
             <a class="SiteHeader--nav-link" href="https://www.cloudflarestatus.com/"><span>Status</span></a>
