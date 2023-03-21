@@ -1,7 +1,11 @@
 ---
-pcx_content_type: overview
+pcx_content_type: concept
 title: Keyless SSL
 weight: 6
+product_grid:
+  show: true
+  title: Keyless SSL
+  group: Security
 ---
 
 # Keyless SSL

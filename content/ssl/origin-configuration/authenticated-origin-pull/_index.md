@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Authenticated origin pull
 weight: 5
+meta:
+    description: Authenticated origin pulls help ensure requests to your origin server come from the Cloudflare network.
 ---
 
 # Authenticated origin pull

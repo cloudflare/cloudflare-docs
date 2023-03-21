@@ -146,7 +146,7 @@ To set both top-level configurations and origin-specific configurations, you can
 - [disableChunkedEncoding](#disablechunkedencoding)
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
-- [proxyType](#proxyyype)
+- [proxyType](#proxytype)
 
 ### access
 

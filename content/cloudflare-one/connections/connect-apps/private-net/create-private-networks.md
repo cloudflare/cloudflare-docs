@@ -10,7 +10,7 @@ With Cloudflare Zero Trust, you can create a private network between any two or 
 
 Users in your organization can reach these services by enrolling into your organization's Zero Trust account. Once enrolled, each device is assigned a virtual IP address in the `100.64/10` range which will allow users or systems to address these devices directly. Administrators will then be able to build Zero Trust policies to determine who within your organization can reach those virtual IPs.
 
-This guide covers how to: 
+This guide covers how to:
 
 - Enable WARP-to-WARP connectivity to establish a virtual network between your devices
 - Manage Split Tunnel preferences for the WARP client to determine what traffic should be routed to the Cloudflare global network
@@ -25,20 +25,21 @@ This guide covers how to:
 
 ## Enable the WARP-to-WARP configuration
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy**.
 3. Enable **Warp-to-Warp**.
 4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels), ensure that traffic to `100.64/10` is going through WARP:
-  - If using **Exclude** mode, remove `100.64/10` from your list. 
-  - If using **Include** mode, add `100.64/10` to your list.
 
-This will instruct WARP to begin proxying any traffic destined for a `100.64/10` IP address to Cloudflare for routing and policy enforcement. 
+- If using **Exclude** mode, remove `100.64/10` from your list.
+- If using **Include** mode, add `100.64/10` to your list.
+
+This will instruct WARP to begin proxying any traffic destined for a `100.64/10` IP address to Cloudflare for routing and policy enforcement.
 
 ## Connect via WARP
 
 Once enrolled, your users and services will be able to connect to the virtual IPs configured for TCP, UDP, or ICMP-based traffic.
 
-Optionally, you can create [Gateway network policies](/cloudflare-one/policies/filtering/network-policies/) by blocking the `100.64/10` IP space and creating [identity-based rules](/cloudflare-one/policies/filtering/identity-selectors/) around the virtual IPs you wish to allow users to access. 
+Optionally, you can create [Gateway network policies](/cloudflare-one/policies/filtering/network-policies/) by blocking the `100.64/10` IP space and creating [identity-based rules](/cloudflare-one/policies/filtering/identity-selectors/) around the virtual IPs you wish to allow users to access.
 
 ## Availability
 

@@ -34,13 +34,13 @@ To retrieve those values:
 
 7. Under **Redirect URI**, select the _Web_ platform and enter the following URL:
 
-    ```txt
-    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-    ```
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```
 
-    You can find your [team name](/cloudflare-one/glossary/#team-name) in the Zero Trust dashboard under **Settings** > **General**.
+   You can find your [team name](/cloudflare-one/glossary/#team-name) in Zero Trust under **Settings** > **General**.
 
-    ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
+   ![Registering an application in Azure](/cloudflare-one/static/documentation/identity/azure/name-app.png)
 
 8. Select **Register**.
 
@@ -68,14 +68,14 @@ To retrieve those values:
 
 4. Select **Delegated permissions** and enable the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
 
-    - `email`
-    - `offline_access`
-    - `openid`
-    - `profile`
-    - `User.Read`
-    - `Directory.Read.All`
-    - `GroupMember.Read.All`
-    
+   - `email`
+   - `offline_access`
+   - `openid`
+   - `profile`
+   - `User.Read`
+   - `Directory.Read.All`
+   - `GroupMember.Read.All`
+
 {{<Aside type="note">}}
 More narrow permissions may be used, however this is the set of permissions that are tested and supported by Cloudflare.
 {{</Aside>}}
@@ -84,11 +84,11 @@ More narrow permissions may be used, however this is the set of permissions that
 
 6. Select **Grant admin consent**.
 
-    ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
+   ![Configured permissions list in Azure](/cloudflare-one/static/documentation/identity/azure/configured-perms.png)
 
 ### 3. Add Azure AD as an identity provider
 
-1. On the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings** > **Authentication**.
 
 2. Under **Login methods**, select **Add new**.
 
@@ -110,9 +110,9 @@ The Azure AD integration supports the [System for Cross-domain Identity Manageme
 
 To synchronize users and groups between Access and Azure:
 
-### 1. Enable SCIM on the Zero Trust dashboard
+### 1. Enable SCIM in Zero Trust
 
-{{<render file="_enable-scim-on-dashboard.md">}}
+{{<render file="_enable-scim-on-dashboard.md" withParameters="**Support groups** and **Enable SCIM**">}}
 
 ### 2. Configure SCIM in Azure
 
@@ -134,9 +134,9 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 7. For **Provisioning Mode**, choose _Automatic_.
 
-8. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from the Zero Trust dashboard.
+8. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
 
-9. In the **Secret Token** field, enter the **SCIM Secret** obtained from the Zero Trust dashboard.
+9. In the **Secret Token** field, enter the **SCIM Secret** obtained from Zero Trust.
 
 10. Select **Test Connection** to ensure that the credentials were entered correctly.
 
@@ -162,17 +162,17 @@ The Gateway policy builder does not currently show group names from the SCIM int
 
 You can create Access and Gateway policies for groups that are not synchronized with SCIM. Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
 
-1. Make sure you enable **Support groups** as you set up Azure AD on your Zero Trust dashboard.
+1. Make sure you enable **Support groups** as you set up Azure AD in Zero Trust.
 
 2. On your Azure dashboard, note the `Object Id` for the Azure group. In the example below, the group named Admins has an ID of `61503835-b6fe-4630-af88-de551dd59a2`.
 
-    ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
+   ![Viewing the Azure group ID on the Azure dashboard](/cloudflare-one/static/documentation/identity/azure/object-id.png)
 
 3. If building an Access policy, choose the _Azure Groups_ selector. If building a Gateway policy, choose the _User Group IDs_ selector.
 
- 4. In the **Value** field, enter the `Object Id` for the Azure group.
+4. In the **Value** field, enter the `Object Id` for the Azure group.
 
-    ![Entering an Azure group ID on the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
+   ![Entering an Azure group ID in Zero Trust](/cloudflare-one/static/documentation/identity/azure/configure-group-n.png)
 
 ### Nested groups
 

@@ -92,8 +92,6 @@ Cloudflare Streamの視聴分数を確認するには、次の手順に従いま
 4.  左のナビゲーションウィンドウで、**「課金可能な使用量（Billable Usage）」**をクリックします。 現在の日次トラフィックを示すグラフが表示されます。
 5.  グラフの上にあるドロップダウンから**「前月（Previous month）」**を選択し、**「過去1か月間（Month to date）」**をクリックして前月の使用量を確認します。
 
-![](/support/static/hc-import-stream_billing_subcriptions_previous_month.png)
-
 ___
 
 -   [Cloudflare Streamの動画プラットフォーム](https://support.cloudflare.com/hc/en-us/articles/360017801091)

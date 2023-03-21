@@ -60,7 +60,7 @@ To set up SAML with Centrify as your identity provider:
 
 1.  Select the **Manual Configuration** option.
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

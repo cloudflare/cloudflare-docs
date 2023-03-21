@@ -24,30 +24,12 @@ rss: file
   </thead>
   <tbody>
     <tr>
-      <td>2023-03-13</td>
-      <td>2023-03-20</td>
-      <td>Block</td>
-      <td>100577</td>
-      <td>...a47c4be6</td>
-      <td>Apache Spark - Remote Code Execution - CVE:CVE-2022-33891</td>
       <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-03-13</td>
-      <td>2023-03-20</td>
-      <td>Block</td>
-      <td>100578</td>
-      <td>...54d00d2f</td>
-      <td>GLPI - Remote Code Execution - CVE:CVE-2022-35914</td>
       <td>N/A</td>
-    </tr>
-    <tr>
-      <td>2023-03-13</td>
-      <td>2023-03-20</td>
-      <td>Block</td>
-      <td>100579</td>
-      <td>...fb4c6991</td>
-      <td>GitLab - Remote Code Execution - CVE:CVE-2021-22205</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <td>N/A</td>
       <td>N/A</td>
     </tr>
   </tbody>

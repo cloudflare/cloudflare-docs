@@ -8,7 +8,7 @@ meta:
 
 # Define WAF exceptions in the dashboard
 
-## 1. Navigate to the zone or account dashboard page
+## 1. Go to the zone or account dashboard page
 
 To define a WAF exception at the zone level:
 

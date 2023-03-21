@@ -47,7 +47,7 @@ Currently, **Managed Challenge** actions are available in the following security
 
 {{<Aside type="note">}}
 
-For domains on Free plan, any firewall rules set to **Legacy CAPTCHA** have become intelligent **Managed Challenge**. As a free customer, you cannot opt out of Managed Challenges.
+For domains on Free plan, any firewall rules set to **Interactive Challenge** have become intelligent **Managed Challenge**. As a free customer, you cannot opt out of Managed Challenges.
 
 {{</Aside>}}
 
@@ -57,9 +57,9 @@ With a JS challenge, Cloudflare presents challenge page that requires no interac
 
 The visitor will have to wait until their browser finishes processing the JavaScript, which should be less than five seconds.
 
-### Legacy CAPTCHA challenge
+### Interactive Challenge
 
-CAPTCHA challenges require a visitor to interact with a visual image, usually identifying specific letters or characteristics of the image. Cloudflare does not recommend using Legacy CAPTCHAs.
+CAPTCHA challenges require a visitor to interact with a visual image, usually identifying specific letters or characteristics of the image. Cloudflare does not recommend using Interactive Challenges.
 
 For more details about CAPTCHAs in general, refer to [How CAPTCHAs work](https://www.cloudflare.com/learning/bots/how-captchas-work/).
 

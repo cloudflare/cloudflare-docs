@@ -13,6 +13,12 @@ title: Solución de problemas de pagos fallidos
 
 A continuación, se detallan los motivos más comunes por las que las transacciones son rechazadas cuando Cloudflare intentas procesar tu pago. Si tu pago no tiene éxito durante Cinco (5) días, tu cuenta bajará de categoría automáticamente a un Plan Free. 
 
+{{<Aside type="note">}}
+Bajar la categoría a un Plan Free no suspende tu sitio web. Sin embargo,
+perderás cualquier suscripción o servicio complementario con el plan
+Pro, Business o Enterprise Plan.
+{{</Aside>}}
+
 Después de actualizar tu método de pago, te sugerimos que [actualices manualmente tu tipo de plan](https://support.cloudflare.com/hc/en-us/articles/360033922371) y servicios complementarios mediante el panel de control de Cloudflare.
 
 ___
@@ -28,6 +34,11 @@ Contacta a tu banco para verificar cualquier restricción que impida que Cloudfl
 ### Es necesario actualizar tu información de facturación
 
 La información de facturación que Cloudflare tiene en archivo es inexacta o está incompleta. Además, la tarjeta de crédito registrada podría haber expirado.
+
+{{<Aside type="note">}}
+Es posible que no se acepten las tarjetas de regalo y de prepago para el
+pago ya que no están asociadas con una dirección de facturación.
+{{</Aside>}}
 
 Para asegurarte de que toda la información de facturación sea actual y precisa, consulta la sección [Actualización de la información de facturación de Cloudflare](https://support.cloudflare.com/hc/en-us/articles/200170236-How-do-I-update-my-billing-information-)
 

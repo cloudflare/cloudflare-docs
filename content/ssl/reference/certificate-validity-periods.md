@@ -4,6 +4,7 @@ pcx_content_type: reference
 weight: 8
 meta:
   title: Certificate validity periods
+  description: Review information about available validity periods for your Cloudflare Advanced Certificates.
 ---
 
 # Certificate validity periods

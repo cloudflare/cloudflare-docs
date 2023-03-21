@@ -21,6 +21,16 @@ Normalmente, si tu sitio web carga todos los recursos de manera segura en HTTPS,
 
 Esto indica que tu sitio tiene un certificado SSL en funcionamiento y todos los recursos cargados por el sitio se cargan a través de HTTPS. El candado verde garantiza a los visitantes que su conexión es segura. Uno de los [indicadores del contenido mixto](https://support.cloudflare.com/hc/es-es/articles/200170476-Soluci%C3%B3n-de-errores-de-contenido-mixto#h_a6c5a05b-baba-4f88-a75c-d61f206366ed) es que aparecen iconos diferentes en lugar del icono de candado verde.
 
+{{<Aside type="tip">}}
+Otros motivos de los problemas de representación del contenido
+son [[Rocket
+Loader]{style="font-weight: 400;"}](https://support.cloudflare.com/hc/en-us/articles/200168056-What-does-Rocket-Loader-do-)[
+y
+]{style="font-weight: 400;"}[[Auto-Minify]{style="font-weight: 400;"}](https://blog.cloudflare.com/an-all-new-and-improved-autominify/)[. 
+Prueba deshabilitar ambas funciones si no ves errores de contenido
+mixto.]{style="font-weight: 400;"}
+{{</Aside>}}
+
 ___
 
 ## Indicadores de la aparición de contenido mixto
@@ -52,6 +62,19 @@ Hay dos métodos para solucionar los errores de contenido mixto.
      ```http://domain.com/path/to.file```
 
 2\. Según tu sistema de administración de contenido, revisa los complementos que reescriben automáticamente los recursos HTTP a HTTPS. Dentro de la aplicación **SSL/TLS**, Cloudflare proporciona tal sistema a través de [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/articles/227227647).
+
+{{<Aside type="note">}}
+Cloudflare recomienda a los usuarios de WordPress que instalen el
+[complemento de WordPress de
+Cloudflare](https://wordpress.org/plugins/cloudflare/) y habiliten la
+opción *Automatic HTTPS Rewrites* dentro del complemento. Como
+alternativa, Cloudflare recomienda los complementos [SSL insecure
+content
+fixer](https://en-gb.wordpress.org/plugins/ssl-insecure-content-fixer/) o
+[Really Simple
+SSL](https://en-gb.wordpress.org/plugins/really-simple-ssl/) para
+reemplazar automáticamente el HTTP con HTTPS.
+{{</Aside>}}
 
 ___
 

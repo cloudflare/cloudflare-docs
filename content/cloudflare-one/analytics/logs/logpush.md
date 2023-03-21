@@ -18,7 +18,7 @@ With Cloudflare's [Logpush](/logs/about/) service, you can configure the automat
 
 To enable Logpush for Zero Trust logs:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com/), navigate to **Logs** > **Logpush**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), navigate to **Logs** > **Logpush**.
 2. Select **Connect a service**.
 3. Enter a **Job name**.
 4. From the drop-down menu, choose the [dataset](#zero-trust-datasets) to export.
@@ -26,7 +26,7 @@ To enable Logpush for Zero Trust logs:
 6. In **Advanced settings**, choose the timestamp format you prefer, and whether you want to enable logs sampling.
 7. Select **Next**.
 8. Select the service you want to export your logs to.
-9. Follow the service-specific instructions on the Zero Trust dashboard to validate your destination.
+9. Follow the service-specific instructions in Zero Trust to validate your destination.
 
 The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
 
@@ -36,11 +36,11 @@ You can configure multiple destinations and add additional fields to your logs b
 
 Refer to the Logpush documentation for a list of available fields.
 
-| Dataset | Description |
-| -------- | ----------- |
-| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/) | [DNS queries inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs) |
-| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/) | [HTTP requests inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#http-logs) |
-| [Gateway Network](/logs/reference/log-fields/account/gateway_network/) | [Network packets inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#network-logs) |
-| [Audit Logs](/logs/reference/log-fields/account/audit_logs/) | [Authentication events through Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs) |
+| Dataset                                                                | Description                                                                                                                |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)         | [DNS queries inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs)                       |
+| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)       | [HTTP requests inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#http-logs)                    |
+| [Gateway Network](/logs/reference/log-fields/account/gateway_network/) | [Network packets inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#network-logs)               |
+| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)           | [Authentication events through Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs)    |
 | [Access Requests](/logs/reference/log-fields/account/access_requests/) | [HTTP requests to sites protected by Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) |
-| [CASB Findings](/logs/reference/log-fields/account/casb_findings/) | [Security issues detected by Cloudflare CASB](/cloudflare-one/applications/scan-apps/manage-findings/) |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)     | [Security issues detected by Cloudflare CASB](/cloudflare-one/applications/scan-apps/manage-findings/)                     |

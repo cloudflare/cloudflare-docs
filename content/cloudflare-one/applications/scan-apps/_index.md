@@ -3,6 +3,10 @@ pcx_content_type: how-to
 title: Scan SaaS applications
 layout: single
 weight: 5
+product_grid:
+  show: true
+  title: CASB
+  group: Cloudflare One
 ---
 
 # Scan SaaS applications
@@ -21,7 +25,7 @@ Before you can integrate a SaaS application with CASB, your SaaS account must me
 
 ## Add an integration
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **CASB** > **Integrations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Select **Add integration**.
 3. Browse the available SaaS integrations and select the application you would like to add.
 4. Follow the step-by-step integration instructions in the UI.
@@ -31,7 +35,7 @@ After the first scan, CASB will automatically scan your application on a frequen
 
 ## Pause an integration
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **CASB** > **Integrations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Identify the integration for which you would like to pause and select **Manage**.
 3. To stop scanning the application, select **Pause**.
 
@@ -45,6 +49,6 @@ When you delete an integration, all keys and OAuth data will be deleted. This me
 
 {{</Aside>}}
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **CASB** > **Integrations**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Identify the integration for which you would like to delete and select **Manage**.
 3. Select **Delete**.

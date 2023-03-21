@@ -21,11 +21,11 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 
 1. Create a local certificate:
 
-    ```sh
-    $ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
-    ```
+   ```sh
+   $ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+   ```
 
-    The command will output a PEM certificate and key. Store these files in a secure place.
+   The command will output a PEM certificate and key. Store these files in a secure place.
 
 {{<Aside type="note">}}
 The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
@@ -33,34 +33,34 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 
 2. Run a simple HTTPS server to host the certificate:
 
-    1. Create a Python 3 script called `myserver.py`:
+   1. Create a Python 3 script called `myserver.py`:
 
-        ```txt
-        ---
-        filename: myserver.py
-        ---
-        import ssl, http.server
+      ```txt
+      ---
+      filename: myserver.py
+      ---
+      import ssl, http.server
 
-        class BasicHandler(http.server.BaseHTTPRequestHandler):
-            def do_GET(self):
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write(b'OK')
-                return
+      class BasicHandler(http.server.BaseHTTPRequestHandler):
+          def do_GET(self):
+              self.send_response(200)
+              self.send_header('Content-type', 'text/html')
+              self.end_headers()
+              self.wfile.write(b'OK')
+              return
 
-        server = http.server.HTTPServer(('0.0.0.0', 4443), BasicHandler)
-        sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-        sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
-        server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
-        server.serve_forever()
-        ```
+      server = http.server.HTTPServer(('0.0.0.0', 4443), BasicHandler)
+      sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+      sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
+      server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
+      server.serve_forever()
+      ```
 
-    2. Run the script:
+   2. Run the script:
 
-        ```sh
-        $ python3 myserver.py
-        ```
+      ```sh
+      $ python3 myserver.py
+      ```
 
 ## 2. Extract the SHA-256 fingerprint
 
@@ -76,14 +76,14 @@ The output will look something like:
 SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
-## 3. Add managed network to the Zero Trust dashboard
+## 3. Add managed network to Zero Trust
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Network locations** and select **Add new**.
 3. Name your network location.
 4. In **Host and Port**, enter the private IP address and port number of the TLS endpoint (for example, `192.168.185.198:4443`).
 
-    The [example TLS endpoint](#create-a-new-tls-endpoint) created above would use the IP of the device running the Python script and the port configured for the HTTPS server.
+   The [example TLS endpoint](#create-a-new-tls-endpoint) created above would use the IP of the device running the Python script and the port configured for the HTTPS server.
 
 5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate.
 
@@ -96,4 +96,4 @@ Managed networks are now enabled. Every time a device in your organization conne
 
 {{<Aside type="note">}}
 The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
- {{</Aside>}}
+{{</Aside>}}
