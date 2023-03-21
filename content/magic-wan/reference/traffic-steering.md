@@ -77,7 +77,7 @@ end
 Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
 E[Anycast IP] --> F[/"Tunnel 1 / priority 1 <br> / ~50% of flows"/] --> I{{Customer <br> network 1}}
-E[Anycast IP] --> G[/nel 2 / priority 1 <br> / ~50% of flows"/] --> J{{Customer <br> network 2}}
+E[Anycast IP] --> G[/"Tunnel 2 / priority 1 <br> / ~50% of flows"/] --> J{{Customer <br> network 2}}
 E[Anycast IP] --> H[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> network 3}}
 ```
 <br />
