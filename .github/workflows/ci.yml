@@ -20,6 +20,10 @@ jobs:
         with:
           hugo-version: '0.92.0'
           extended: true
+      
+      - uses: untitaker/hyperlink@0.1.27
+        with:
+          args: public/ --sources content/ --check-anchors
 
       - name: (env) pnpm
         run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
