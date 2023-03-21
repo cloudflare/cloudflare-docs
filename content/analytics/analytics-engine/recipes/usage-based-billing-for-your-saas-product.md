@@ -21,12 +21,10 @@ Analytics Engine is designed for use with Cloudflare Workers. If you already use
 
   // This examples assumes you give a unique ID to each of your SaaS customers, and the Worker has
   // assigned it to the variable named `customer_id`
-  // This example also assumes you have set `request_endpoint` to  id available to your worker
+  const { pathname } = new URL(request.url);
   env.USAGE_INDEXED_BY_CUSTOMER_ID.writeDataPoint({
     "indexes": [customer_id],
-    "blobs": {
-      request_endpoint
-    }
+    "blobs": [pathname]
   });
 ```
 
