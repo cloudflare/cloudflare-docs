@@ -10,7 +10,7 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
+{{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
 
 ```js
@@ -19,12 +19,12 @@ export default {
     const requestUrl = new URL(request.url);
     const params = requestUrl.searchParams;
     const tags =
-      params && params.has('tags') ? params.get('tags').split(',') : [];
+      params && params.has("tags") ? params.get("tags").split(",") : [];
     const url =
-      params && params.has('uri') ? JSON.parse(params.get('uri')) : '';
+      params && params.has("uri") ? JSON.parse(params.get("uri")) : "";
     if (!url) {
       const errorObject = {
-        error: 'URL cannot be empty',
+        error: "URL cannot be empty",
       };
       return new Response(JSON.stringify(errorObject), { status: 400 });
     }
@@ -35,8 +35,53 @@ export default {
     };
     return fetch(url, init)
       .then((result) => {
-        const cacheStatus = result.headers.get('cf-cache-status');
-        const lastModified = result.headers.get('last-modified');
+        const cacheStatus = result.headers.get("cf-cache-status");
+        const lastModified = result.headers.get("last-modified");
+        const response = {
+          cache: cacheStatus,
+          lastModified: lastModified,
+        };
+        return new Response(JSON.stringify(response), {
+          status: result.status,
+        });
+      })
+      .catch((err) => {
+        const errorObject = {
+          error: err.message,
+        };
+        return new Response(JSON.stringify(errorObject), { status: 500 });
+      });
+  },
+};
+```
+
+{{</tab>}}
+{{<tab label="ts/esm">}}
+
+```ts
+const handler: ExportedHandler = {
+  async fetch(request) {
+    const requestUrl = new URL(request.url);
+    const params = requestUrl.searchParams;
+    const tags =
+      params && params.has("tags") ? params.get("tags").split(",") : [];
+    const url =
+      params && params.has("uri") ? JSON.parse(params.get("uri")) : "";
+    if (!url) {
+      const errorObject = {
+        error: "URL cannot be empty",
+      };
+      return new Response(JSON.stringify(errorObject), { status: 400 });
+    }
+    const init = {
+      cf: {
+        cacheTags: tags,
+      },
+    };
+    return fetch(url, init)
+      .then((result) => {
+        const cacheStatus = result.headers.get("cf-cache-status");
+        const lastModified = result.headers.get("last-modified");
         const response = {
           cache: cacheStatus,
           lastModified: lastModified,
@@ -54,63 +99,8 @@ export default {
   },
 };
 
+export default handler;
 ```
-{{</tab>}}
-{{<tab label="js/sw">}}
-```js
-addEventListener("fetch", (event) => {
-  event.respondWith(
-    handleRequest(event.request).catch(
-      (err) => new Response(err.stack, { status: 500 })
-    )
-  );
-});
 
-
-async function handleRequest(request) {
-  const requestUrl = new URL(request.url);
-  const params = requestUrl.searchParams;
-  const tags = params && params.has('tags') 
-    ? params.get('tags').split(',')
-    : [];
-  
-  const url = params && params.has('uri')
-    ? JSON.parse(params.get('uri'))
-    : '';
-  
-  if (!url) {
-    const errorObject = {
-      error: "URL cannot be empty"
-    }
-    return new Response(JSON.stringify(errorObject), { status: 400 })
-  }
-
-  
-  const init = {
-    cf: {
-      cacheTags: tags
-    }
-  }
-    
-  return fetch(url, init)
-    .then((result) => {
-      const cacheStatus = result.headers.get('cf-cache-status');
-      const lastModified = result.headers.get('last-modified');
-
-      const response = {
-        cache: cacheStatus,
-        lastModified: lastModified
-      };
-      return new Response(JSON.stringify(response), { status: result.status })
-    })
-    .catch((err) => {
-      const errorObject = {
-        error: err.message
-      };
-
-      return new Response(JSON.stringify(errorObject), { status: 500 })
-    });
-}
-```
 {{</tab>}}
 {{</tabs>}}
