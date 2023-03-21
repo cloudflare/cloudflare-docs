@@ -78,25 +78,21 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 ### Combining filters
 
-Combine filters using `OR` and `AND` boolean logic. `AND` takes precedence over `OR` in all expressions.
+{{<render file="_api-combine-filters.md" productFolder="fundamentals">}}
 
-The `OR` operator is defined using a comma `,` or the `OR` keyword surrounded by whitespace.
 
 <details>
-<summary>Examples</summary>
+<summary>Examples using OR</summary>
 <div>
 
 - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
-
 - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
   
 </div>
 </details>
 
-The `AND` operator is defined using a semicolon `;` or the `AND` keyword surrounded by whitespace.
-
 <details>
-<summary>Examples</summary>
+<summary>Examples using AND</summary>
 <div>
   
 - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
@@ -104,9 +100,3 @@ The `AND` operator is defined using a semicolon `;` or the `AND` keyword surroun
 
 </div>
 </details>
-
-{{<Aside type="note">}}
-
-Note that the semicolon is a reserved character in URLs ([RFC 1738](https://www.rfc-editor.org/rfc/rfc1738)) and should be percent-encoded as `%3B`.
-
-{{</Aside>}}
