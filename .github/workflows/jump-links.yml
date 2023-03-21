@@ -1,13 +1,16 @@
-name: Check Markdown jump links
+name: Check for broken internal jump links
 
-on: push
+on:
+  pull_request:
+    branches:
+      - production
 
 jobs:
-  markdown-link-check:
+  check-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install -g markdown-link-check
       - name: Check for broken internal jump links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          "args": "--config '{"httpStatusCodes": [200], "cache": true, "ignorePatterns": ["^https?://", "^mailto:", "^#", "^javascript:"]}'"
+        run: |
+          markdown-link-check 'content/**/*.md' --config '{ "ignorePatterns": ["^https?://", "^mailto:", "^#", "^javascript:"] }'
