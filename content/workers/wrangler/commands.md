@@ -1556,39 +1556,7 @@ For more information about deployments and how they work, refer to [Deployments]
 Retrieve details for the 10 most recent deployments. Details include `Deployment ID`, `Created on`, `Author`, `Source`, and an indication of which deployment is `Active`. Where applicable, details also include rollback information and a `Message` if one was provided on rollback.
 
 ```sh
-<<<<<<< HEAD
-$ wrangler deployments
-
-Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-Created on: 2022-11-11T15:49:08.117218Z
-Author: example@cloudflare.com
-Source: Upload from Wrangler 🤠
-Rollback from: MOCK-DEPLOYMENT-ID-2222
-
-Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
-Created on: 2022-11-11T15:51:20.79936Z
-Author: example@cloudflare.com
-Source: Upload from Wrangler 🤠
-Rollback from: MOCK-DEPLOYMENT-ID-2222
-🟩 Active
-
-||||||| parent of 66165d17c ([Wrangler] Update deployment and rollback docs for new command structure (#7994))
-$ wrangler deployments
-
-Deployment ID: y565f193-a6b9-4c7f-91ae-4b4e6d98ftbf
-Created on: 2022-11-11T15:49:08.117218Z
-Author: example@cloudflare.com
-Source: Dashboard
-
-Deployment ID: e81fe980-7622-6e1d-740b-1457de3e07e2
-Created on: 2022-11-11T15:51:20.79936Z
-Author: example@cloudflare.com
-Source: Wrangler
-🟩 Active
-
-=======
 $ wrangler deployments list
->>>>>>> 66165d17c ([Wrangler] Update deployment and rollback docs for new command structure (#7994))
 ```
 
 {{<definitions>}}
@@ -1683,10 +1651,6 @@ $ wrangler rollback [DEPLOYMENT_ID]
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 {{</definitions>}}
-
-```sh
-$ wrangler rollback e81fe980-7622-6e1d-740b-1457de3e07e2 --message "Example message"
-```
 
 Example output:
 ```sh
