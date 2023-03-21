@@ -56,9 +56,18 @@ The most common places we see interference with WARP from VPNs are:
         Added; Interface: 8; Destination: 10.133.27.205/32; Next hop: 100.64.0.2;
     ```
     This indicates that a third-party VPN is fighting WARP for control over the routing table.
-- **Control of DNS:** In `daemon.log`, you will see a large number of DNS changes followed by a `...<insert log message>..` warning. For example,
+
+- **Control of DNS:** In `daemon.log`, you will see a large number of DNS changes followed by this warning:
+
     ```txt
-    [<insert fight for DNS control>]
+    2022-06-24T20:30:48.905Z  WARN main_loop: warp::warp_service: Reinforcing DNS settings. Is something else fighting us?
+    ```
+
+    The daemon may also note that some other process has already bound to the UDP and TCP sockets:
+
+    ```txt
+    2022-06-27T19:00:59.944Z  WARN warp::warp: Unable to bind local UDP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
+    2022-06-27T19:00:59.944Z  WARN warp::warp: Unable to bind local TCP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
     ```
 
 To confirm that the VPN is the source of the issue, temporarily uninstall (not disable or disconnect) the VPN.
