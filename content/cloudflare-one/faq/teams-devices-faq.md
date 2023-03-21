@@ -10,6 +10,10 @@ meta:
 
 # Devices
 
+## Why does my Windows device appear to switch from WiFi to Ethernet when I enable WARP?
+
+As the WARP client has replaced WinDivert with WinTun architecture, all Windows machines using WinTun will show as being connected using a virtual adapter. Windows, by default, shows virtual adapter connections with a wired Ethernet connection icon, even if the device is connected over wireless. This is by design and should have no impact on connectivity.
+
 ## Why is my device not connecting to a closer Cloudflare data center?
 
 As our [Network Map](https://www.cloudflare.com/en-gb/network/) shows, we have locations all over the globe. However, in the Advanced Connection stats of our application, you may notice that the data center (colo) you are connecting to isn't necessarily the one physically closest to your location. This can be due to a number of reasons:

@@ -110,7 +110,7 @@ From your terminal, run the following command to install Sphinx:
 
 You should see output similar to the following:
 
-```ba
+```bash
 Installing sphinx...
 Adding sphinx to Pipfile's [packages]...
 ✔ Installation Succeeded
@@ -181,6 +181,9 @@ You now have everything you need to start deploying your site to Cloudflare Page
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Creating a GitHub repository
+
+<!-- TODO: check, do we need to specify all the various ssh + configs here?
+     (if not this should use the _create-github-repository partial instead) -->
 
 In a separate terminal window that is not within the pipenv shell session, verify that SSH key-based authentication is working:
 

@@ -7,15 +7,23 @@ title: Tunnels & encapsulation
 
 Magic Transit uses [Generic Routing Encapsulation (GRE)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/) and [IPsec tunnels](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) to transmit packets from Cloudflare’s global network to your origin network. Cloudflare sets up tunnel endpoints on global network servers inside your network namespace, and you [set up tunnel endpoints](/magic-transit/how-to/configure-tunnels/) on routers at your data center.
 
-This diagram illustrates the flow of traffic with Magic Transit.
+This diagram illustrates the flow of traffic with Magic Transit. Ingress traffic comes from the client machine side, and egress traffic from the origin router side.
 
-![Ingress traffic from client machine to Magic Transit to origin router and flow of egress traffic](/magic-transit/static/mt-gre-tunnel-flow.png)
+```mermaid
+sequenceDiagram
+accTitle: Tunnels and encapsulation
+accDescr: This diagram shows the flow of traffic with Magic Transit.
+participant A as Client machine
+participant B as Cloudflare Magic Transit
+participant C as Origin router
+A->>B: Payload <br> Protocol <br> IP header
+Note left of A: Ingress <br> traffic
+B->>C: Payload <br> Protocol <br> IP header <br> GRE <br> IP header
+C->>A: IP header <br> Protocol <br> Payload
+Note right of C: Egress <br> traffic
+```
 
-{{<Aside type="note" header="Note">}}
-
-Egress packets are routed by your ISP interface, not Cloudflare.
-
-{{</Aside>}}
+{{<Aside type="note" header="Note">}}Egress packets are routed by your ISP interface, not Cloudflare.{{</Aside>}}
 
 ## Encapsulation
 
@@ -23,7 +31,45 @@ Magic Transit [encapsulates IP packets](https://www.cloudflare.com/learning/netw
 
 In the diagram below, Magic Transit encapsulates packets at the Cloudflare global network and transmits them to a customer’s — Acme for example — tunnel endpoint router.
 
-![Flow of packet encapsulation at Cloudflare's global network to user's tunnel endpoint router](/magic-transit/static/magic-transit-anycast-1.png)
+```mermaid
+flowchart LR
+accTitle: Tunnels and encapsulation
+accDescr: Flow of packet encapsulation at Cloudflare's global network to user's tunnel endpoint router.
+
+a(User)
+e(Cloudflare server)
+
+subgraph 1
+b("IP (203.0.113.100) | <br> TCP (SYN)")
+end
+
+subgraph 2
+c("IP (198.51.100.1 | GRE) <br> IP (203.0.113.100) | TCP (SYN)")
+end
+
+subgraph 3
+d("IP (203.0.113.100) | <br> TCP (SYN)")
+end
+
+subgraph 4
+direction TB
+f("Acme router <br> (198.51.100.1)")
+g("FTP server <br> (203.0.113.100)")
+end
+
+a --> e
+e== GRE <br> tunnel ==>f
+f --> g
+a --- 1
+e --- 2
+4 --- 3
+
+classDef purplefill stroke:purple,stroke-width:3px
+classDef orange stroke:orange, stroke-width:3px
+class c purplefill
+class e orange
+linkStyle 1 stroke:purple
+```
 
 {{<Aside type="note" header="Note">}}
 
@@ -45,7 +91,31 @@ This works because the GRE protocol is stateless—each packet is processed inde
 
 Cloudflare’s Anycast architecture provides a conduit to your tunnel for every server in every data center on Cloudflare’s global network as shown in the image below.
 
-![Multiple servers in data center preparing packets to send through Anycast tunnel](/magic-transit/static/magic-transit-anycast-2.png)
+```mermaid
+flowchart LR
+accTitle: Anycast tunnel
+accDescr: Multiple servers in data center preparing packets to send through Anycast tunnel.
+
+a(User)
+
+subgraph 1
+direction LR
+b(Cloudflare global network server)
+c(Cloudflare global network server)
+d(Cloudflare global network server)
+e(Cloudflare global network server)
+f(Cloudflare global network server)
+g(Cloudflare global network server)
+h(Cloudflare global network server)
+end
+
+subgraph 2
+i("Acme router <br> 198.51.100.1")
+j("FTP server <br> (203.0.113.100)")
+end
+
+a --> 1== Cloudflare Anycast GRE <br> single endpoint ==>i --> j
+```
 
 ## Network Analytics
 

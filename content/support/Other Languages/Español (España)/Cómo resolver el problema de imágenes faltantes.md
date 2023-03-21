@@ -18,6 +18,11 @@ Si faltan imágenes de tu sitio web, sigue estos pasos mientras vuelves a probar
 -   Desactivar**Rocket Loader** a través de la aplicación **Speed** del panel de control de Cloudflare.
 -   Desactivar **Mirage** a través de la aplicación **Speed** del panel de control de Cloudflare.
 
+{{<Aside type="info">}}
+**Mirage** solo está disponible para los dominios que tienen un plan
+pago de Cloudflare.
+{{</Aside>}}
+
 -   [Informa](https://support.cloudflare.com/hc/articles/200172476) el problema a asistencia de Cloudflare y si se resuelve mediante la desactivación de **Rocket Loader** o **Mirage**.
 
 ___

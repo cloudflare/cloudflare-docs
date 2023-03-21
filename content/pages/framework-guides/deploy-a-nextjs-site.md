@@ -46,8 +46,8 @@ export const config = {
   runtime: 'edge',
 }
 
-export default async function (req) {
-  return Response.json({ name: 'John Doe' })
+export default async function handler(req) {
+  return new Response(JSON.stringify({ name: 'John Doe' }))
 }
 ```
 
@@ -66,8 +66,8 @@ export const config = {
   runtime: 'edge',
 }
 
-export default async function (req: NextRequest) {
-  return Response.json({ name: 'John Doe' })
+export default async function handler(req: NextRequest) {
+  return new Response(JSON.stringify({ name: 'John Doe' }))
 }
 ```
 
@@ -103,15 +103,7 @@ module.exports = nextConfig
 
 Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.
 
-### Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin <YOUR_GITHUB_REPO_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ### Deploy with Cloudflare Pages
 
@@ -139,10 +131,6 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 
 {{</Aside>}}
 
-Finally, you must add two compatibility flags to your project to enable using the Streams API which Next.js relies on. In your Pages project, go to **Settings** > **Functions** and **Compatibility flags**. For both production and preview, enter the following two flags: `streams_enable_constructors` and `transformstream_enable_standard_constructor`.
-
-These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `@cloudflare/next-on-pages`, your project dependencies, and building your site before deploying it.
 
 ## Create a new static project
@@ -157,15 +145,7 @@ $ yarn create next-app --example with-static-export my-app
 
 After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
 
-### Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin <YOUR_GITHUB_REPO_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ### Deploy with Cloudflare Pages
 

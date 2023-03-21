@@ -79,6 +79,20 @@ ___
 
 Alle aktiven Cloudflare-Domains erhalten ein universelles [SSL-Zertifikat](https://support.cloudflare.com/hc/articles/204151138). Wenn Sie SSL-Fehler beobachten und kein Zertifikat des **Typs** _Universal_ im Abschnitt **Edge-Zertifikate** der Cloudflare-App **SSL/TLS** für Ihre Domain haben, dann wurde das universelle SSL-Zertifikat noch nicht bereitgestellt.
 
+{{<Aside type="note">}}
+Cloudflare-SSL-Zertifikate gelten nur für Datenverkehr, der über
+Cloudflare übertragen wird. Wenn SSL-Fehler nur für Hostnamen auftreten,
+die nicht an Cloudflare weitergeleitet werden, geben Sie diese Hostnamen
+über Cloudflare weiter:
+
+-   Klicken Sie für Domains mit vollständigen DNS-Setups in Ihrer
+    Cloudflare-App **DNS** auf das graue Wolkensymbol neben dem
+    DNS-Hostnamen, bis das Symbol zu einer orangefarbenen Wolke wird.
+-   Informationen zu Domains in CNAME-Setups finden Sie in unserem
+    Handbuch zum [Hinzufügen von DNS-Einträgen zu einem
+    CNAME-Setup](https://support.cloudflare.com/hc/articles/360020615111#h_836723523521544131668686).
+{{</Aside>}}
+
 Unsere SSL-Anbieter überprüfen jede SSL-Zertifikatanfrage, bevor Cloudflare ein Zertifikat für einen Domainnamen ausstellen kann. Dieser Vorgang kann zwischen 15 Minuten und 24 Stunden dauern. Unsere SSL-Zertifikatanbieter kennzeichnen manchmal einen Domainnamen zur weiteren Überprüfung.
 
 **Lösung**
@@ -101,6 +115,14 @@ Wenn Ihr Cloudflare-SSL-Zertifikat nicht innerhalb von 24 Stunden nach Aktivieru
     -   einen Screenshot der festgestellten Fehler.
 
 Wenn Sie Cloudflare vorübergehend anhalten, wird der HTTPS-Verkehr von Ihrem Ursprungswebserver ordnungsgemäß bereitgestellt, während das Supportteam das Problem untersucht.
+
+{{<Aside type="tip">}}
+Befindet sich Ihre Domain in einem [CNAME-Setup
+(teilweise)](https://support.cloudflare.com/hc/articles/360020348832),
+lesen Sie unseren Leitfaden zur [Bereitstellung von Cloudflare Universal
+SSL in einem
+CNAME-Setup](https://support.cloudflare.com/hc/articles/360020615111#h_989980109291544055191509).
+{{</Aside>}}
 
 ___
 

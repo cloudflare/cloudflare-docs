@@ -39,6 +39,12 @@ ___
 
 Zur Aktivierung von gRPC gehen Sie so vor:
 
+{{<Aside type="note">}}
+Aktivieren Sie die [orangefarbene Wolke bei der
+Domain](https://support.cloudflare.com/hc/articles/200169626), auf der
+Ihr gRPC-Endpunkt gehostet wird.
+{{</Aside>}}
+
 1.  Melden Sie sich bei Ihrem Cloudflare-Konto an.
 2.  Wählen Sie die entsprechende Domain.
 3.  Klicken Sie auf die **Netzwerk**\-App.

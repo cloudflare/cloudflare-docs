@@ -69,6 +69,14 @@ Below, we provide links to articles with specific instructions on implementing t
 
 3\. Save and deploy your new rule
 
+{{<Aside type="tip">}}
+As an alternative to *Edge Cache TTL* (third bullet point in item 2
+above), you could use the\* Origin Cache Control\* setting if you
+believe the cache-control headers set in your origin server are
+appropriate. *Learn more about [Origin Cache
+Control](https://support.cloudflare.com/hc/en-us/articles/115003206852 "Understanding Origin Cache-Control").*
+{{</Aside>}}
+
 To learn more about the technique described, consult:
 
 -   [Caching Anonymous Page Views](https://blog.cloudflare.com/caching-anonymous-page-views/)

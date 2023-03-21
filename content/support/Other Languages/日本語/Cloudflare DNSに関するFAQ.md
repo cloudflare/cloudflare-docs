@@ -113,7 +113,7 @@ ___
 
 ## Cloudflareはドメインマスキングを提供しますか？
 
-CloudflareはドメインマスキングやDNSリダイレクトサービスを提供していません（ホスティングプロバイダーが提供している場合があります）。ただし、 [Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/) を使って、URL転送を行うことは可能です。
+CloudflareはドメインマスキングやDNSリダイレクトサービスを提供していません（ホスティングプロバイダーが提供している場合があります）。ただし、 [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/) を使って、URL転送を行うことは可能です。
 
 ___
 

@@ -12,11 +12,11 @@ Ensure your site is fully prepared for possible DDoS attacks via the recommendat
 
 ### Handle a false positive
 
-Refer to our guide on [DDoS false positive](https://developers.cloudflare.com/ddos-protection/managed-rulesets/adjust-rules/false-positive/) for further details.
+Refer to our guide on [DDoS false positive](/ddos-protection/managed-rulesets/adjust-rules/false-positive/) for further details.
 
 ### Handle a false negative or an incomplete mitigation
 
-Refer to our guide on [DDoS false negative](https://developers.cloudflare.com/ddos-protection/managed-rulesets/adjust-rules/false-negative/) for further details.
+Refer to our guide on [DDoS false negative](/ddos-protection/managed-rulesets/adjust-rules/false-negative/) for further details.
 
 ### Proxy your DNS records to Cloudflare
 
@@ -25,7 +25,7 @@ Attackers attempt to identify your origin IP address to directly attack your ori
 Set your DNS records for maximum protection via the following steps:
 
 1.  [Enable the Cloudflare proxy (orange-cloud)](https://support.cloudflare.com/hc/articles/200169626)
-2.  Remove DNS records used for FTP or SSH and instead use your origin IP to directly perform FTP or SSH requests. Alternatively, proxy FTP and SSH via [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/get-started).
+2.  Remove DNS records used for FTP or SSH and instead use your origin IP to directly perform FTP or SSH requests. Alternatively, proxy FTP and SSH via [Cloudflare Spectrum](/spectrum/get-started).
 3.  [Grey-cloud A, AAAA, or CNAME records corresponding to your mail server](https://support.cloudflare.com/hc/articles/200168876)
 4.  Remove wildcard records within Free, Pro, or Business domains because they expose your origin IP address. [Cloudflare only protects wildcard records for domains on Enterprise plans](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries).
 
@@ -43,6 +43,11 @@ To review the real IPs behind an attack, [restore the original visitor IPs](htt
 
 Cloudflare hides your origin server IP addresses for traffic you proxy to Cloudflare. As an extra security precaution, we recommend contacting your hosting provider and requesting new origin server IPs.
 
+{{<Aside type="note">}}
+This task may incur a charge, so discuss with your hosting provider
+based on the risk of attack to your site.
+{{</Aside>}}
+
 ### Use Rate Limiting to prevent brute force and Layer 7 DDoS attacks
 
 To thwart attacks disguised as normal HTTP requests, Rate Limiting allows website administrators to specify fine-grained thresholds on the load they expect their web server to receive. With one simple click, setup basic rate limiting to [protect your login pages from brute force attacks](https://support.cloudflare.com/hc/articles/115001993248).
@@ -53,7 +58,7 @@ ___
 
 ## Related resources
 
--   [Cloudflare DDoS Protection Developers Guide](https://developers.cloudflare.com/ddos-protection/)
+-   [Cloudflare DDoS Protection Developers Guide](/ddos-protection/)
 -   [Understanding Cloudflare DDOS protection](https://support.cloudflare.com/hc/articles/200172676)
 -   [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196)
 -   [What is a DDoS attack?](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/)

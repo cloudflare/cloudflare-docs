@@ -2,6 +2,11 @@
 title: Cloudflare Web Analytics
 pcx_content_type: reference
 weight: 2
+product_grid:
+  show: true
+  title: Cloudflare Web Analytics
+  group: Performance
+  wrap: true
 ---
 
 # Cloudflare Web Analytics

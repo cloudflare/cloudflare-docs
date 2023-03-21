@@ -1,7 +1,7 @@
 {
     "path": "/learning-paths/application-security/",
     "title": "Secure your application",
-    "priority": 2,
+    "priority": 6,
     "description": "Learn more about the tools Cloudflare offers to protect your website against malicious traffic and bad actors.",
     "products": [
       "Cloudflare Essentials",
@@ -39,7 +39,7 @@
             "link_title": "What is a bot?"
           },
           {
-            "url_path": "/page-shield/about/",
+            "url_path": "/page-shield/how-it-works/",
             "link_title": "What are supply-chain attacks?"
           },
           {

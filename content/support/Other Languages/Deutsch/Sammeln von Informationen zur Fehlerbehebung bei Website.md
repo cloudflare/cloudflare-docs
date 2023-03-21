@@ -13,11 +13,24 @@ title: Sammeln von Informationen zur Fehlerbehebung bei Website-Problemen
 
 Es ist wichtig, zur Diagnose eines Problems so viele Informationen wie möglich zu sammeln und [dem Cloudflare-Support angemessene Details zu liefern](https://support.cloudflare.com/hc/articles/200172476#h_7b55d494-b84d-439b-8e60-e291a9fd3d16). In diesem Artikel wird erklärt, wie Sie Informationen zur Fehlerbehebung sammeln, die vom Cloudflare-Support häufig verlangt werden.
 
+{{<Aside type="note">}}
+Aus Gründen der Sicherheit und der Haftung kann der Cloudflare-Support
+keine Konfigurationsänderungen im Auftrag von Kunden vornehmen.
+{{</Aside>}}
+
 ___
 
 ## Erstellen einer HAR-Datei
 
 In einem HTTP-Archiv (HAR) werden alle Web-Browser-Anfragen gespeichert, einschließlich der Anfrage- und Antwort-Header, des Inhalts und der Seitenladedauer.
+
+{{<Aside type="warning">}}
+Eine HAR-Datei kann vertrauliche Informationen wie Passwörter,
+Zahlungsinformationen und private Schlüssel enthalten. Beseitigen Sie
+sensible Informationen aus einer HAR-Datei manuell mit einem
+Text-Editor, bevor Sie die Datei dem Cloudflare-Support zur Verfügung
+stellen.
+{{</Aside>}}
 
 Gegenwärtig können nur Chrome und Firefox standardmäßig auf das HAR-Feature zugreifen. Andere Browser erfordern entweder eine Erweiterung oder können keine HAR-Datei erstellen. Befolgen Sie bei der Installation einer Browser-Erweiterung die Anweisungen des Anbieters der Erweiterung.
 
@@ -81,6 +94,11 @@ cURL ist ein Befehlszeilentool zum Senden von HTTP/HTTPS-Anfragen und ist nützl
 -   Vergleich von Server-/Proxyantworten
 -   SSL-Zertifikaten
 
+{{<Aside type="note">}}
+cURL ist standardmäßig nicht in Windows installiert und erfordert einen
+[Installationsassistenten](http://curl.haxx.se/dlwiz/).
+{{</Aside>}}
+
 Führen Sie den folgenden Befehl aus, um eine Standard-HTTP-GET-Anfrage an Ihre Website zu senden (ersetzen Sie _www.example.com_ durch Ihren Domain- und Hostnamen):
 
 
@@ -91,6 +109,11 @@ Bei diesem cURL-Befehlsbeispiel wird eine Ausgabe mit den HTTP-Antwort- und Anfr
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">CF-Ray: 5097b5640cad8c56-LAX</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+In den [cURL-Befehlsoptionen](https://curl.haxx.se/docs/manpage.html)
+finden Sie Informationen zu weiteren Funktionalitäten.
+{{</Aside>}}
+
 Erweitern Sie die nachstehenden Abschnitte für Tipps zur Fehlerbehebung bei HTTP-Fehlern, Performance, Caching und SSL/TLS-Zertifikaten:
 
 Bei der Behebung von HTTP-Fehlern in Antworten von Cloudflare sollten Sie prüfen, ob Ihr Ursprung die Fehler durch direktes Senden von Anfragen an Ihren Ursprungswebserver verursacht hat. Zur Behebung von HTTP-Fehlern sollten Sie eine cURL direkt an die IP-Adresse Ihres Ursprungswebservers senden (unter Umgehung von Cloudflares Proxy):
@@ -98,10 +121,25 @@ Bei der Behebung von HTTP-Fehlern in Antworten von Cloudflare sollten Sie prüfe
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -svo /dev/null --Header &quot;Host: example.com&quot; http://203.0.113.34/</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="tip">}}
+Wenn Sie mehrere Ursprungswebserver haben, sollten Sie jeden einzelnen
+testen, um sicherzugehen, dass es keine Unterschiede bei den Antworten
+gibt. Wenn Sie das Problem bei direkter Verbindung mit Ihrem
+Ursprungswebserver bemerken, wenden Sie sich für Hilfe bitte an Ihren
+Hosting-Provider.
+{{</Aside>}}
+
 Wenn Sie zum Beispiel bei Datenverkehr, der über den Cloudflare-Proxy weitergeleitet wird, einen [HTTP-520-Fehler](https://support.cloudflare.com/hc/articles/115003011431#520error) erhalten, sollten Sie eine cURL zum Ursprungswebserver ausführen, um zu überprüfen, ob leere Antworten gesendet werden:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -svo /dev/null --resolve www.example.com:80:203.0.113.34 http://www.example.com/* Added www.example.com:80:203.0.113.34 to DNS cache* Hostname www.example.com was found in DNS cache* Trying 203.0.113.34...* Connected to www.example.com (127.0.0.1) port 80 (#0)&gt; GET / HTTP/1.1&gt; Host: www.example.com&gt; User-Agent: curl/7.43.0&gt; Accept: */*&gt;* Empty reply from server</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="tip">}}
+Benutzen Sie beim Testen von HTTPS das Flag *\--insecure*, um die
+Überprüfung des von Ihrem Ursprungswebserver vorgelegten SSL-Zertifikats
+zu überspringen, soweit Sie kein gültiges Zertifikat haben, das von
+einer echten Zertifizierungsstelle installiert wurde.
+{{</Aside>}}
 
 cURL misst die Latenz oder Performance-Verschlechterung für HTTP/HTTPS-Anfragen über die cURL-Optionen [_\-w_ oder _\--write-out_](https://curl.haxx.se/docs/manpage.html#-w). Beim unten stehenden cURL-Beispiel werden mehrere Performance-Vektoren bei der Anfragen-Transaktion gemessen, z. B. Dauer von TLS-Handshakes, DNS-Lookup, Umleitungen, Übertragungen usw.:
 
@@ -109,6 +147,13 @@ cURL misst die Latenz oder Performance-Verschlechterung für HTTP/HTTPS-Anfragen
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -svo /dev/null https://example.com/ -w &quot;\nContent Type: %{content_type} \\nHTTP Code: %{http_code} \\nHTTP Connect:%{http_connect} \\nNumber Connects: %{num_connects} \\nNumber Redirects: %{num_redirects} \\nRedirect URL: %{redirect_url} \\nSize Download: %{size_download} \\nSize Upload: %{size_upload} \\nSSL Verify: %{ssl_verify_result} \\nTime Handshake: %{time_appconnect} \\nTime Connect: %{time_connect} \\nName Lookup Time: %{time_namelookup} \\nTime Pretransfer: %{time_pretransfer} \\nTime Redirect: %{time_redirect} \\nTime Start Transfer: %{time_starttransfer} \\nTime Total: %{time_total} \\nEffective URL: %{url_effective}\n&quot; 2&gt;&amp;1</span></div></span></span></span></code></pre>{{</raw>}}
 
 [Eine Erklärung zu dieser Timing-Ausgabe](https://blog.cloudflare.com/a-question-of-timing/) finden Sie im Cloudflare-Blog.
+
+{{<Aside type="tip">}}
+Wie das vorhergehende Beispiel zeigt, lassen sich sauberere Ergebnisse
+erzielen, wenn eine neue Zeile mit **\\n** vor jeder Variablen
+gekennzeichnet wird. Andernfalls werden alle Metriken zusammen in einer
+einzigen Zeile dargestellt.
+{{</Aside>}}
 
 cURL hilft, die HTTP-Antwort-Header zu überprüfen, von denen das Zwischenspeichern beeinflusst wird. Insbesondere sollten Sie bei der Behandlung von Problemen mit Cloudflare-Caching mehrere HTTP-Header überprüfen:
 
@@ -118,12 +163,23 @@ cURL hilft, die HTTP-Antwort-Header zu überprüfen, von denen das Zwischenspeic
 -   Last-Modified
 -   S-Maxage
 
+{{<Aside type="note">}}
+Näheres zu [Cloudflares
+Cachingverhalten](https://support.cloudflare.com/hc/articles/202775670)
+finden Sie im Cloudflare Hilfe-Center.
+{{</Aside>}}
+
 #### Überprüfung von Zertifikaten mit cURL
 
 Der folgende cURL-Befehl zeigt das SSL-Zertifikat, das von Cloudflare während einer HTTPS-Anfrage vorgelegt wird (ersetzen Sie _www.example.com_ durch Ihren Domain- und Hostnamen):
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">curl -svo /dev/null https://www.example.com/ 2&gt;&amp;1 | egrep -v &quot;^{.*$|^}.*$|^\* http.*$&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="tip">}}
+2*\>&1 \| egrep -v \"\^{.\*\$\|\^}.\*\$\|\^\\\* http.\*\$\" *bereinigt
+und analysiert die Informationen zu TLS-Handshake und Zertifikat.
+{{</Aside>}}
 
 Überprüfen Sie das Ursprungszertifikat (falls installiert) und ersetzen Sie _203.0.113.34_ durch die tatsächliche IP-Adresse Ihres Ursprungswebservers und _www.example.com_ durch Ihren Domain- und Hostnamen:
 
@@ -145,16 +201,35 @@ ___
 
 Deaktivieren Sie Cloudflare vorübergehend, um Datenverkehr direkt an Ihren Ursprungswebserver anstatt an Cloudflares Reverse-Proxy zu senden. Für gestoppte Domains sind keine Cloudflare-Services wie SSL oder WAF aktiviert.  Als Alternative zum globalen Stopp von Cloudflare können die Datensätze, die Datenverkehr in Ihrer Cloudflare-**DNS**\-App empfangen, mit einer [grauen Wolke](https://support.cloudflare.com/hc/articles/200169626) markiert werden.
 
+{{<Aside type="tip">}}
+Bei der Behandlung von Problemen beim Caching kann als Alternative zum
+Stoppen von Cloudflare der
+[Entwicklungsmodus](https://support.cloudflare.com/hc/articles/200168246)
+verwendet werden, bei dem nur Cloudflares Cache umgangen wird.
+{{</Aside>}}
+
 So deaktivieren Sie Cloudflare vorübergehend:
 
 1.  Navigieren Sie im Cloudflare Dashboard zur Registerkarte **Übersicht**.
 2.  Klicken Sie auf **Cloudflare auf der Website aussetzen** unten rechts auf der Seite unter **Erweiterte Aktionen**.
+
+{{<Aside type="note">}}
+Es dauert maximal 5 Minuten, um Cloudflare anzuhalten, und diese
+Vorgehensweise sollte der Änderung Ihrer Nameserver vorgezogen werden,
+weil die Änderung der Nameserver Propagierungsverzögerungen von mehreren
+Stunden bewirken kann.
+{{</Aside>}}
 
 ___
 
 ## Ausführung eines Traceroute
 
 Traceroute ist ein Netzwerk-Diagnosetool, das die Routing-Latenz von Paketen in einem Netzwerk misst. Die meisten Betriebssysteme unterstützen den _Traceroute_\-Befehl. Wenn Sie Konnektivitätsprobleme mit Ihrer über den Cloudflare-Proxy geleiteten Website haben und den [Cloudflare-Support um Hilfe bitten](https://support.cloudflare.com/hc/articles/200172476), ist es wichtig, dass Sie dabei die Ausgabe einer Traceroute-Ausführung vorlegen.
+
+{{<Aside type="tip">}}
+Timeouts sind für Ping-Ergebnisse möglich, weil Cloudflare Ping-Anfragen
+begrenzt.
+{{</Aside>}}
 
 Nachfolgend finden Sie die Anweisungen zur Ausführung von Traceroute auf verschiedenen Betriebssystemen. Ersetzen Sie in den Beispielen _www.example.com_ durch Ihren Domain- und Hostnamen:
 

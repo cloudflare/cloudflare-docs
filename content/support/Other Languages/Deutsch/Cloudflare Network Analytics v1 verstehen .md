@@ -18,6 +18,17 @@ Um die Network-Analytics-Ansicht aufzurufen, brauchen Sie:
 
 Die Cloudflare-Ansicht **Network Analytics** bietet nahezu in Echtzeit Einblick in Traffic-Muster der Netzwerk- und Transport-Ebene sowie DDoS-Angriffe. Mit Network Analytics werden Daten auf Paket- und Bitebene visualisiert – dieselben Daten, die über die [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/) verfügbar sind.
 
+{{<Aside type="note">}}
+-   Hinweise zum neuen Network Analytics v2 (NAv2) Dashboard, das in der
+    Beta-Version verfügbar ist, finden Sie unter [Cloudflare Network
+    Analytics](https://developers.cloudflare.com/analytics/network-analytics/)
+    in der Entwicklerdokumentation.
+-   Es gibt auch eine neue Version der Network Analytics GraphQL API.
+    Wenn Sie noch NAv1 verwenden, sollten Sie von NAv1 auf NAv2
+    migrieren. Befolgen Sie dazu die
+    [Migrationsanleitung](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{</Aside>}}
+
 ![Analytics-Bereich mit Zusammenfassung der Pakete pro Typ](/support/static/na-main-dashboard.png)
 
 Mit Network Analytics wird böswilliger Traffic schneller gemeldet und untersucht. Sie können Daten nach diesen Parametern filtern:
@@ -48,6 +59,11 @@ So rufen Sie die Ansicht **Network Analytics** auf:
 1.  Melden Sie sich bei Ihrem Cloudflare-Konto an.
 2.  Wenn Sie mehrere Konten haben, wählen Sie ein Konto, das Zugriff auf Magic Transit oder Spectrum hat.
 3.  Klicken Sie auf der **Startseite** des Kontos auf **Network Analytics**.
+
+{{<Aside type="note">}}
+Quell-IPs werden 30 Tage lang gespeichert. Berichtzeiträume, die älter
+als 30 Tage sind, enthalten keine Quell-IP-Daten.
+{{</Aside>}}
 
 ___
 
@@ -118,6 +134,10 @@ Um auf der Grundlage des Datentyps zu filtern, der mit einer der Network Analyti
 In diesem Beispiel wird durch Klicken auf die Schaltfläche **Filter** der Bereich der Ansicht auf den Traffic eingegrenzt, der mit der Aktion _Genehmigen_ (Allow) verbunden ist.
 
 ### Eine Magic Firewall-Regel aus den angewendeten Filtern erstellen
+
+{{<Aside type="note">}}
+Dieses Feature ist nur für Magic Transit-Nutzer verfügbar.
+{{</Aside>}}
 
 Sie können eine [Magic Firewall](https://developers.cloudflare.com/magic-firewall)\-Regel erstellen, die den gesamten Traffic blockiert, der mit den ausgewählten Filtern in Network Analytics übereinstimmt. Die derzeit unterstützten Filter sind:
 
@@ -435,6 +455,11 @@ Sie können aus folgenden Optionen wählen:
 -   Quell-IP
 -   Quell-Port
 -   TCP-Flag
+
+{{<Aside type="note">}}
+Die Daten für Quell-ASN, Quell-IP, Quell-Port und TCP-Flag sind nur für
+die letzten 24 Stunden verfügbar.
+{{</Aside>}}
 
 ### Netzwerkanalyse-Filter teilen 
 

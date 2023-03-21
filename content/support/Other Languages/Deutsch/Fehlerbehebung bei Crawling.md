@@ -39,13 +39,31 @@ Gehen Sie die folgenden Empfehlungen zur Verhinderung von Crawler-Fehlern durch:
 
 -   Blockieren Sie IP-Adressen von Google-Crawlern nicht mit **Firewall Rules** oder **IP Access Rules** innerhalb von Cloudflares **Firewall**\-App.
 
+{{<Aside type="tip">}}
+Bestätigen Sie, dass eine IP-Adresse zu Google gehört, indem Sie Googles
+Dokumentation zur [Überprüfung von
+Googlebot-IP-Adressen](https://support.google.com/webmasters/bin/answer.py?answer=80553)
+konsultieren.
+{{</Aside>}}
+
 -   Blockieren Sie die USA nicht mit **Firewall Rules** oder **IP Access Rules** innerhalb von Cloudflares **Firewall**\-App.
 -   Blockieren Sie User-Agents von [Google](https://support.google.com/webmasters/answer/1061943) oder [Bing](https://www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0) nicht in .htaccess, Ihrer Serverkonfiguration, [robots.txt](http://support.google.com/webmasters/bin/answer.py?answer=35303) oder der Web-Applikation.
+
+{{<Aside type="tip">}}
+Google setzt zum Crawling Ihrer Website [unterschiedliche
+User-Agents](https://support.google.com/webmasters/answer/1061943) ein.
+Sie können [Ihre robots.txt über Google
+testen](https://support.google.com/webmasters/answer/6062598?hl=en).
+{{</Aside>}}
 
 -   Lassen Sie kein Crawling von Dateien im /cdn-cgi/-Verzeichnis zu. Dieser Pfad wird intern von Cloudflare verwendet, und Google stößt bei seinem Crawling auf Fehler. Lassen Sie kein Crawling von cdn-cgi über robots.txt zu:
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">Disallow: /cdn-cgi/</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="note">}}
+Fehler für cdn-cgi wirken sich nicht auf Website-Rangfolgen aus.
+{{</Aside>}}
 
 -   Stellen Sie sicher, dass Ihre [robot.txt-Datei den AdSense-Crawler zulässt](http://support.google.com/webmasters/bin/answer.py?hl=en&answer=1061943).
 -   [Stellen Sie die ursprünglichen Besucher-IP-Adressen](https://support.cloudflare.com/hc/articles/200170916) in Ihren Server-Protokollen wieder her.

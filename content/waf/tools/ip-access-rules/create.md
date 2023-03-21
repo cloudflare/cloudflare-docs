@@ -13,7 +13,7 @@ You can create IP Access rules in the Cloudflare dashboard or via API.
 ## Using the dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Navigate to **Security** > **WAF** > **Tools**.
+2. Go to **Security** > **WAF** > **Tools**.
 3. Under **IP Access Rules**, enter the following details:
 
     1. For **Value**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [Parameters](/waf/tools/ip-access-rules/parameters/).

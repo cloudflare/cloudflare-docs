@@ -34,7 +34,7 @@ To retrieve those values:
 
 ### 2. Add CrowdStrike as a service provider
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Device posture providers** and select **Add new**.
 3. Select **CrowdStrike**.
 4. Enter any name for the provider. This name will be used throughout the dashboard to reference this connection.
@@ -48,7 +48,7 @@ To ensure the values have been entered correctly, select **Test**.
 
 ### 3. Configure the posture check
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
 2. Select **Add new**.
 3. Select the CrowdStrike provider.
 4. Configure a [device posture check](#crowdstrike-device-posture-attributes) and enter any name.
@@ -60,9 +60,9 @@ Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks)
 
 Device posture data is gathered from the [CrowdStrike Zero Trust Assessment APIs](https://falcon.us-2.crowdstrike.com/documentation/156/zero-trust-assessment-apis).
 
-| Selector      | Description          | Value    |
-| ------------- | ---------------------|----------|
-| OS            | OS signal score      | `1` to `100` |
-| Overall       | Overall ZTA score    | `1` to `100` |
-| Sensor config | Sensor signal score  | `1` to `100` |
-| Version       | ZTA score version    | `2.1.0`      |
+| Selector      | Description         | Value        |
+| ------------- | ------------------- | ------------ |
+| OS            | OS signal score     | `1` to `100` |
+| Overall       | Overall ZTA score   | `1` to `100` |
+| Sensor config | Sensor signal score | `1` to `100` |
+| Version       | ZTA score version   | `2.1.0`      |

@@ -16,7 +16,7 @@ Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
-2. Navigate to **Security** > **WAF** > **Firewall rules**.
+2. Go to **Security** > **WAF** > **Firewall rules**.
 
 3. Select **Create a firewall rule**.
 

@@ -30,4 +30,4 @@ ___
 
 More details about Custom Certificates can be found here:
 
-[https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates)
+[/ssl/edge-certificates/custom-certificates](/ssl/edge-certificates/custom-certificates)

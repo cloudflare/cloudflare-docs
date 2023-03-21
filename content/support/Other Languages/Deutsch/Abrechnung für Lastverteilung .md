@@ -11,6 +11,11 @@ title: Abrechnung für Lastverteilung
 
 ## Preise für Cloudflare-Lastverteilung
 
+{{<Aside type="warning">}}
+Kunden mit Zugriff auf das China-Netzwerk sollten den Load Balancer
+nicht verwenden, da sonst „HTTP 530"-Fehler auftreten.
+{{</Aside>}}
+
 Die Abonnements für Cloudflare-Lastverteilung sind ab 5–50 USD pro Monat erhältlich, je nach den ausgewählten Abonnementoptionen.
 
 Sie können die Lastverteilung entsprechend Ihren spezifischen Anforderungen konfigurieren, basierend auf der Anzahl der Ursprungsserver, der Häufigkeit der Statusprüfung, der Anzahl der überprüften Regionen und dem Geo-Routing.

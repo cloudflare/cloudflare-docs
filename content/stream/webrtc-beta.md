@@ -120,7 +120,7 @@ Beyond the [example WHIP client](https://github.com/cloudflare/workers-sdk/blob/
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
-- [Larix Broadcaster for iOS](https://softvelum.com/larix/ios/) (free app)
+- [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
 
 ### WHEP
 

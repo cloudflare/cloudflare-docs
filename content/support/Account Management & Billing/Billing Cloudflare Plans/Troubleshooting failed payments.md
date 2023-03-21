@@ -12,6 +12,13 @@ If payment for a new Cloudflare plan or add-on/subscription fails, you may need 
 
 If payment for a recurring charge for a Cloudflare plan or add-on/subscription is unsuccessful after five (5) days, your account is automatically downgraded to a Free plan. Downgrading to a Free plan does not suspend your website, but you will lose any subscriptions or add-on services associated with the Pro, Business, or Enterprise plan.
 
+{{<Aside type="warning">}}
+The five-day grace period for failed payments on recurring Cloudflare
+charges includes weekends and holidays. For example, if your payment
+fails on a Monday, your account will automatically downgrade to a Free
+plan without additional add-ons or subscriptions the following Friday.
+{{</Aside>}}
+
 After confirming your payment method information, we suggest [manually updating your plan type](https://support.cloudflare.com/hc/en-us/articles/360033922371) and subscriptions using the Cloudflare dashboard.
 
 ___
@@ -47,6 +54,11 @@ Contact your bank to check for any restriction that would prevent Cloudflare fro
 ### Incorrect billing information
 
 The billing information that Cloudflare has on file is inaccurate or incomplete. Also, the credit card on file might have expired.
+
+{{<Aside type="note">}}
+Gift cards and pre-payment cards may not be accepted for payment as they
+are not associated with a billing address.
+{{</Aside>}}
 
 To ensure all billing information is current and accurate, refer to [Updating your Cloudflare billing information](https://support.cloudflare.com/hc/en-us/articles/200170236-How-do-I-update-my-billing-information-).
 

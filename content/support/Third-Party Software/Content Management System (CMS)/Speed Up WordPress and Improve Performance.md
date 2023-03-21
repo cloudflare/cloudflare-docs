@@ -16,6 +16,13 @@ Cloudflare's CDN services can help cache your content across our giant global n
 
 Cloudflare's "[Bypass Cache on Cookie](https://support.cloudflare.com/hc/en-us/articles/236166048)" functionality allows non-logged-in pages to be fully cached by Cloudflare. This means your server can save time and resources by not having to regenerate pages where the HTML is effectively static, whilst not interfering with dynamic behaviour - as soon as a user logs-in to the WordPress dashboard or adds something to their WooCommerce, the Edge cache is bypassed.
 
+{{<Aside type="info">}}
+This feature is available to Business and Enterprise users. Instructions
+on configuring this can be found in the article: [Caching Static HTML
+with
+WordPress/WooCommerce](https://support.cloudflare.com/hc/articles/236166048).
+{{</Aside>}}
+
 ### Optimise Images
 
 Images can be incredibly costly to page load times; fortunately, Cloudflare can dramatically help improve image load times. You can find these features in the Cloudflare dashboard, in the **Speed** **app** > **Optimization**.

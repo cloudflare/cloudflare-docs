@@ -23,7 +23,7 @@ ___
 
 ## Add IP geolocation information
 
-The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](https://developers.cloudflare.com/rules/transform/managed-transforms/reference/). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
+The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
 
 Besides using the Managed Transform, you can also enable the **IP Geolocation** feature in the [Cloudflare dashboard](https://dash.cloudflare.com/) (**Network** app), which will only add a request header for the visitor's country.
 
@@ -36,16 +36,25 @@ Visitor traffic geolocation information can be captured in origin server logging
 ### Apache
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">LogFormat %{cf-ipcountry}i cloudflare_custom</span></div></span></span></span></code></pre>{{</raw>}}
-
+```
+LogFormat %{cf-ipcountry}i cloudflare_custom
+```
 _More about_ [_Apache LogFormat_](https://httpd.apache.org/docs/2.4/logs.html)
 
 ### NGINX
 
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">log_format cloudflare_custom '&quot;$http_cf_ipcountry&quot;';</span></div></span></span></span></code></pre>{{</raw>}}
-
+```
+log_format cloudflare_custom '"$http_cf_ipcountry"';
+```
 _More about_ [_NGINX log\_format_](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)
+
+{{<Aside type="info">}}
+The above configuration examples will **only** capture the CF-IPCountry
+information. Alternatively, server administrators often append the log
+variable cf-ipcountry to their existing log configuration with other
+Cloudflare headers like cf-ray, cf-connecting-ip, and cf-visitor.
+{{</Aside>}}
 
 ___
 
@@ -55,32 +64,35 @@ Web applications can also capture and use IP geolocation information in their lo
 
 ### PHP
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$country_code = $_SERVER[&quot;HTTP_CF_IPCOUNTRY&quot;];</span></div></span></span></span></code></pre>{{</raw>}}
-
+```php
+$country_code = $_SERVER["HTTP_CF_IPCOUNTRY"];
+```
 ### Python Flask
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">country_code = request.headers.get('cf-ipcountry')</span></div></span></span></span></code></pre>{{</raw>}}
-
+```python
+country_code = request.headers.get('cf-ipcountry')
+```
 _Note that you'll need to import python flask request module_
 
 ### NodeJS
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">const country_code = headers['cf-ipcountry'];</span></div></span></span></span></code></pre>{{</raw>}}
+```js
+const country_code = headers['cf-ipcountry'];
+```
 
 _Note that you'll need to require http/https and instantiate the createServer() method_
 
 ### C# (.NET)
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">string country_code = HttpContext.Current.Request.Headers.Get(&quot;cf-ipcountry&quot;);</span></div></span></span></span></code></pre>{{</raw>}}
+```cs
+string country_code = HttpContext.Current.Request.Headers.Get("cf-ipcountry");
+```
 
 ### Perl
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$country_code = $ENV{&quot;HTTP_CF_IPCOUNTRY&quot;};</span></div></span></span></span></code></pre>{{</raw>}}
+```perl
+$country_code = $ENV{"HTTP_CF_IPCOUNTRY"};
+```
 
 ___
 
@@ -99,8 +111,8 @@ ___
 
 ## Related resources
 
--   [HTTP request headers](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/)
+-   [HTTP request headers](/fundamentals/get-started/reference/http-request-headers/)
+-   [Managed Transforms](/rules/transform/managed-transforms/)
 -   [Apache Log Files Format](https://httpd.apache.org/docs/2.4/logs.html)
 -   [Configuring NGINX Logging](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)
 -   [NodeJS Anatomy of an HTTP Transaction](https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/)

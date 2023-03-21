@@ -14,7 +14,9 @@ Maintenances will be published on the status page using a _calendar_ that is upd
 
 During these maintenance windows, customers may experience a slight increase in latency to the edge location which is under maintenance.
 
+{{<Aside type="tip">}}
 All dates in the calendar are in UTC Timezone.
+{{</Aside>}}
 
 ### Maintenance Calendar links
 

@@ -10,6 +10,12 @@ title: Troubleshooting issues with Cloudflare Apps
 
 ## Overview
 
+{{<Aside type="warning">}}
+When using Workers and Cloudflare Apps together they are \"pipelined.\"
+The Cloudflare App will execute first, and when it fetches \"origin\",
+the users Worker script will run directly after.
+{{</Aside>}}
+
 If you have trouble with an App installed from Cloudflare Apps onto your site:
 
 1.  Verify that the app is placing itself in the location you expect on the page. You might have to scroll the page or choose a new location to find it.

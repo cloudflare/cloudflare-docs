@@ -52,4 +52,4 @@ Cloudflare dashboard의 **DNS** 앱을 통해 DNS 레코드를 관리하지만 �
 
 ### 미확인 IP 주소
 
-드물지만, URL을 요청하는 클라이언트의 DNS 확인자가 DNS 레코드의 유효한 IP 주소를 확인하지 못할 수도 있습니다. 잠시 기다린 후 페이지를 다시 로드하여 문제가 사라졌는지 확인하세요.이 문제는 Cloudflare와 관련이 없지만, [Cloudflare의 DNS 확인자](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/)를 사용하면 도움이 될 수 있습니다.호스팅 공급자에게 현재 DNS 확인자에 대한 추가 도움을 요청하세요.
+드물지만, URL을 요청하는 클라이언트의 DNS 확인자가 DNS 레코드의 유효한 IP 주소를 확인하지 못할 수도 있습니다. 잠시 기다린 후 페이지를 다시 로드하여 문제가 사라졌는지 확인하세요.이 문제는 Cloudflare와 관련이 없지만, [Cloudflare의 DNS 확인자](https://developers.cloudflare.com/1.1.1.1/setup/)를 사용하면 도움이 될 수 있습니다.호스팅 공급자에게 현재 DNS 확인자에 대한 추가 도움을 요청하세요.

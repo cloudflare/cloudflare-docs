@@ -13,13 +13,34 @@ title: Cómo solucionar errores 5XX de Cloudflare
 
 Para solucionar los problemas de la mayoría de los errores 5XX, el plan de acción correcto es contactar primero con el proveedor de alojamiento o administrador del sitio para resolver problemas o recopilar datos.
 
+{{<Aside type="note">}}
+El equipo de soporte de Cloudflare solo brinda asistencia al propietario
+del dominio. Si eres un visitante del sitio, notifica el problema al
+propietario del sitio.
+{{</Aside>}}
+
 ### Detalles del error que se deben proporcionar al proveedor de alojamiento
 
 1.  Código y mensaje de error 5XX específicos
 2.  Hora y zona horaria donde ocurrió el error 5XX
 3.  La URL que dio como resultado el error HTTP 5XX (por ejemplo: `https://www.ejemplo.com/images/icons/image1.png`)
 
+{{<Aside type="note">}}
+La causa del error no siempre se encuentra en los registros de errores
+del servidor de origen. Comprueba los registros de todos los
+equilibradores de carga, cachés, proxies o firewalls entre Cloudflare y
+el servidor web de origen.
+{{</Aside>}}
+
 Dentro de la descripción de cada error se indican los detalles adicionales que debes proporcionar a tu proveedor de alojamiento o al administrador del sitio. [Las páginas de errores personalizados](https://support.cloudflare.com/hc/articles/200172706)  de Cloudflare cambian la apariencia de las páginas de errores predeterminados que se analizan en este artículo.
+
+{{<Aside type="note">}}
+Todos los usuarios de los planes Pro, Business y Enterprise disponen de
+soporte por correo electrónico. Los usuarios de los planes Business y
+Enterprise también tienen acceso a soporte a través de chat. Si
+necesitas más ayuda, consulta [nuestros
+planes](https://www.cloudflare.com/plans/).
+{{</Aside>}}
 
 ___
 
@@ -51,6 +72,13 @@ Sin embargo, si el error 500 contiene “cloudflare” o “cloudflare-nginx” 
 1.  Tu nombre de dominio
 2.  El horario y la zona horaria en que ocurrió el error 500
 3.  El resultado de _www.ejemplo.com/cdn-cgi/trace_ desde el navegador donde se observó el error 503 (sustituye _www.ejemplo.com_ por tu dominio y nombre de servidor reales)
+
+{{<Aside type="note">}}
+Si observas páginas vacías o en blanco cuando visitas tu sitio web,
+confirma si el problema ocurre cuando [detienes temporalmente
+Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753)
+y ponte en contacto con tu proveedor de alojamiento para obtener ayuda.
+{{</Aside>}}
 
 ___
 
@@ -119,6 +147,14 @@ El error 520 ocurre cuando el servidor de origen devuelve una respuesta vacía, 
 
 **Solución**
 
+{{<Aside type="note">}}
+Una solución rápida mientras se investigan más a fondo los errores 520
+es configurar el registro como
+[DNS-solo](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+en la aplicación Cloudflare **DNS** o bien [detener temporalmente
+Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753).
+{{</Aside>}}
+
 [Ponte en contacto con tu proveedor de alojamiento o administrador del sitio](https://support.cloudflare.com/hc/es-es/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_cf28c038-16c1-4841-a85f-f905240aaebe) y solicita un análisis de los registros de error de tu servidor web de origen para detectar fallos y comprobar las siguientes causas frecuentes:
 
 -   Fallo en la aplicación del servidor web de origen
@@ -127,6 +163,11 @@ El error 520 ocurre cuando el servidor de origen devuelve una respuesta vacía, 
 -   Una respuesta vacía del servidor web de origen que no tiene código de estado HTTP o cuerpo de la respuesta
 -   Faltan encabezados de respuesta o el servidor web de origen no devuelve las [respuestas adecuadas para el error HTTP](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
     -   `upstream cerró prematuramente la conexión mientras leía el encabezado de la respuesta de upstream` es un error común que podemos notar en nuestros registros. Esto indica que el servidor web de origen tenía problemas que hicieron que Cloudflare generara errores 520.
+
+{{<Aside type="note">}}
+Prevalecen los errores 520 con ciertas aplicaciones PHP que producen la
+caída del servidor web de origen.
+{{</Aside>}}
 
 Si continúan los errores 520 después de ponerte en contacto con tu proveedor de alojamiento o administrador del sitio, proporciona la siguiente información a [Soporte de Cloudflare](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -168,6 +209,12 @@ El error 522 ocurre cuando se agota el tiempo de espera de Cloudflare al intenta
 1.  Antes de que se establezca una conexión, el servidor web de origen no devuelve SYN+ACK a Cloudflare dentro de los 15 segundos posteriores al envío de SYN por parte de Cloudflare.
 2.  Después de que se establezca una conexión, el servidor web de origen no confirma (ACK) la solicitud de recurso de Cloudflare en 90 segundos.
 
+{{<Aside type="note">}}
+Se produce un [error HTTP 524](#524error) si el servidor web de origen
+confirma (*ACK*) la solicitud de recursos una vez establecida la
+conexión, pero no envía una respuesta a tiempo.
+{{</Aside>}}
+
 **Solución**
 
 [Ponte en contacto con tu proveedor de alojamiento](https://support.cloudflare.com/hc/es-es/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_cf28c038-16c1-4841-a85f-f905240aaebe) para verificar las siguientes causas comunes en tu servidor web de origen:
@@ -196,6 +243,13 @@ El error 523 se produce cuando Cloudflare no puede contactar con su servidor web
 -   Confirma que la dirección IP de origen correcta se encuentre en la lista de los registros A o AAAA en tu aplicación DNS de Cloudflare.
 -   Soluciona los problemas de enrutamiento de Internet entre tu origen y Cloudflare, o con el origen en sí.
 
+{{<Aside type="note">}}
+Si tu proveedor de alojamiento cambia con frecuencia la dirección IP de
+tu servidor web de origen, consulta la documentación de Cloudflare en
+[actualizaciones de DNS
+dinámicas](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
+{{</Aside>}}
+
 Si nada de lo anterior permite una solución, solicita la siguiente información a tu proveedor de alojamiento o administrador del sitio:
 
 -   Un [MTR o traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) de tu servidor web de origen a una [dirección IP de Cloudflare](http://www.cloudflare.com/ips) que se conecta frecuentemente a tu servidor web de origen antes de que ocurra el problema. Identifica una dirección IP de conexión de Cloudflare de los registros del servidor web de origen.
@@ -219,6 +273,17 @@ Estas son las opciones que sugerimos para solucionar este problema:
     -   Un proceso de larga duración en tu servidor web de origen.
     -   Un servidor web de origen sobrecargado.
 
+{{<Aside type="note">}}
+Registrar el tiempo de respuesta de la solicitud en tu servidor web de
+origen ayuda a identificar la causa de la ralentización de los recursos.
+Ponte en contacto con tu proveedor de alojamiento o administrador del
+sitio para obtener asistencia en la adaptación de formatos de registro o
+en la búsqueda de documentación de registro relacionada para tu marca de
+servidor web como
+[Apache](http://httpd.apache.org/docs/current/mod/mod_log_config.html) o
+[Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
+{{</Aside>}}
+
 -   Los clientes Enterprise pueden aumentar el tiempo de espera 524 hasta 6 000 segundos utilizando el punto final de la API [proxy\_read\_timeout](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting).
 -   Si ejecutas con regularidad solicitudes HTTP que tardan más de 100 segundos en finalizar (por ejemplo, exportaciones de grandes volúmenes de datos), traslada esos procesos a un subdominio sin proxy (con nube gris) en la aplicación  **DNS** de Cloudflare.
 -   Si el error 524 ocurre en un dominio que utiliza Railgun de Cloudflare, asegúrate de que _lan.timeout_ se haya establecido por encima de los 30 segundos y reinicia el servicio de railgun.
@@ -241,6 +306,16 @@ Los errores 525 indican que el protocolo de enlace SSL entre Cloudflare y el ser
 -   Sin soporte [SNI](https://support.cloudflare.com/hc/articles/360026016272)
 -   Las [suites de cifrado](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) aceptadas por Cloudflare no coinciden con las suites de cifrado admitidas por el servidor web de origen
 
+{{<Aside type="tip">}}
+Si ocurren errores 525 de manera intermitente, analiza los registros de
+error del servidor web de origen para determinar la causa. Configura
+Apache para [log mod\_ssl
+errors](https://cwiki.apache.org/confluence/display/HTTPD/DebuggingSSLProblems#Enable_SSL_logging).
+Además, nginx incluye errores SSL en su registros de error estándar,
+pero posiblemente requiera un [mayor nivel de
+registro](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
+{{</Aside>}}
+
 **Controles adicionales**
 
 -   Comprueba si tienes un certificado instalado en tu servidor de origen. Puedes consultar [este artículo](https://support.cloudflare.com/hc/es-es/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) para obtener más detalles sobre cómo realizar algunas pruebas. En caso de que no tengas ningún certificado, puedes crear e instalar el [certificado CA de origen de Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) gratuito. Utiliza los certificados CA de origen para cifrar el tráfico entre Cloudflare y tu servidor web de origen.
@@ -257,6 +332,13 @@ El error 526 ocurre cuando estas dos condiciones son auténticas:
 2.  [_SSL_)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **Completo (Estricto)** está configurado en la pestaña **Información general** de tu aplicación **SSL/TLS** de Cloudflare.
 
 **Solución**
+
+{{<Aside type="tip">}}
+Para una posible solución rápida, configura **SSL** en el modo
+*Completo*  en lugar de *Completo (Estricto)* en la pestaña
+**Información general** de la aplicación **SSL/TLS** de Cloudflare para
+el dominio.
+{{</Aside>}}
 
 solicita a tu administrador de servidor o proveedor de alojamiento que analice los certificados SSL del servidor web de origen y verifique que:
 
@@ -279,6 +361,12 @@ Un error 527 indica una conexión interrumpida entre Cloudflare y tu [servidor R
 
 -   Interferencia del firewall
 -   Incidentes de red o pérdida de paquetes entre el servidor Railgun y Cloudflare
+
+{{<Aside type="note">}}
+Para obtener más detalles que permitan solucionar los problemas,
+[aumenta el registro de
+Railgun](https://support.cloudflare.com/hc/articles/218444227).
+{{</Aside>}}
 
 Entre las causas habituales de los errores 527 se incluyen:
 
@@ -346,6 +434,12 @@ Si ocurren errores TLS/SSL, verifica lo siguiente en el servidor web de origen y
 -   El servidor web de origen presente un certificado SSL
 -   El SAN o nombre común del certificado SSL del servidor web de origen contenga el nombre de servidor solicitado
 -   **SSL** está configurado como [Completo  o Completo (Estricto)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) en la pestaña **Información general** de la aplicación Cloudflare **SSL/TLS** 
+
+{{<Aside type="tip">}}
+Si el certificado SSL de tu servidor web de origen está autofirmado,
+[configura *validate.cert=0* en
+*railgun.conf*](https://support.cloudflare.com/hc/articles/219336007).
+{{</Aside>}}
 
 ___
 

@@ -46,6 +46,10 @@ Identify and address API vulnerabilities using API Shield.
 Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflare's Autonomous Edge.
 {{</related>}}
 
+{{<related header="Turnstile" href="/turnstile/" product="turnstile">}}
+Use Cloudflare's smart CAPTCHA alternative to run less intrusive challenges.
+{{</related>}}
+
 {{<related header="WAF" href="/waf/" product="waf">}}
 Get automatic protection from vulnerabilities and the flexibility to create custom rules.
 {{</related>}}
