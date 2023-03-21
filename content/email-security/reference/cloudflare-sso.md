@@ -15,4 +15,4 @@ You can use your Cloudflare account as the single sign-on (SSO) authentication s
 3. Select **Allow** to allow Area 1 to make changes to your Cloudflare account. You will be redirected to Area 1 dashboard.
 4. Enter your Area 1's email address to log in.
 
-You can now use Cloudflare as a single sign-on authentication scheme to log in to Area 1. The next time you access the Area 1 dashboard, just select **Sign in with Cloudflare** to log in.
+You can now use your Cloudflare account as a single sign-on authentication scheme to log in to Area 1. The next time you access the Area 1 dashboard, just select **Sign in with Cloudflare** to log in.
