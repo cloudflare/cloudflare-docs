@@ -22,12 +22,12 @@ In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troub
 
 - Happy Eyeball checks failing:
     ```txt
-    2022-03-23T23:01:22.469Z ERROR main_loop: warp::warp::happy_eyeballs: Happy eyeballs error Custom { kind: NotConnected, error: "All Happy Eyeballs checks failed" }
+    ERROR main_loop: warp::warp::happy_eyeballs: Happy eyeballs error Custom { kind: NotConnected, error: "All Happy Eyeballs checks failed" }
     ```
 - Many other checks timing out:
     ```txt
-    2022-03-29T14:49:38.439Z ERROR warp::warp::connectivity_check: DNS check failed error=ResolveError { kind: Timeout }
-    2022-03-29T14:49:38.439Z  WARN warp::warp::connectivity_check: Tunnel trace failed request::Error { kind: Request, url: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("connectivity.cloudflareclient.com")), port: None, path: "/cdn-cgi/trace", query: None, fragment: None }, source: TimedOut }
+    ERROR warp::warp::connectivity_check: DNS check failed error=ResolveError { kind: Timeout }
+    WARN warp::warp::connectivity_check: Tunnel trace failed request::Error { kind: Request, url: Url { scheme: "https", cannot_be_a_base: false, username: "", password: None, host: Some(Domain("connectivity.cloudflareclient.com")), port: None, path: "/cdn-cgi/trace", query: None, fragment: None }, source: TimedOut }
     ```
 
 Here are the most common reasons why this issue occurs:
@@ -46,13 +46,13 @@ The most common places we see interference with WARP from VPNs are:
 
 - **Control of traffic routing:** In `daemon.log`, you will see a large number of routing table changes. For example,
     ```txt
-    [2021-08-12T15:38:52Z DEBUG warp::warp_service] Routes changed:
+    DEBUG warp::warp_service: Routes changed:
         Added; Interface: 8; Destination: 10.133.27.201/32; Next hop: 100.64.0.2; 
         Added; Interface: 8; Destination: 10.133.27.202/32; Next hop: 100.64.0.2; 
-    [2021-08-12T15:38:53Z DEBUG warp::warp_service] Routes changed:
+    DEBUG warp::warp_service: Routes changed:
         Added; Interface: 8; Destination: 10.133.27.203/32; Next hop: 100.64.0.2; 
         Added; Interface: 8; Destination: 10.133.27.204/32; Next hop: 100.64.0.2; 
-    [2021-08-12T15:38:54Z DEBUG warp::warp_service] Routes changed:
+    DEBUG warp::warp_service: Routes changed:
         Added; Interface: 8; Destination: 10.133.27.205/32; Next hop: 100.64.0.2;
     ```
     This indicates that a third-party VPN is fighting WARP for control over the routing table.
@@ -60,14 +60,14 @@ The most common places we see interference with WARP from VPNs are:
 - **Control of DNS:** In `daemon.log`, you will see a large number of DNS changes followed by this warning:
 
     ```txt
-    2022-06-24T20:30:48.905Z  WARN main_loop: warp::warp_service: Reinforcing DNS settings. Is something else fighting us?
+    WARN main_loop: warp::warp_service: Reinforcing DNS settings. Is something else fighting us?
     ```
 
     The daemon may also note that some other process has already bound to the UDP and TCP sockets:
 
     ```txt
-    2022-06-27T19:00:59.944Z  WARN warp::warp: Unable to bind local UDP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
-    2022-06-27T19:00:59.944Z  WARN warp::warp: Unable to bind local TCP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
+    WARN warp::warp: Unable to bind local UDP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
+    WARN warp::warp: Unable to bind local TCP socket error=Os { code: 48, kind: AddrInUse, message: "Address already in use" } sockaddr=127.0.2.2:53
     ```
 
 To confirm that the VPN is the source of the issue, temporarily uninstall (not disable or disconnect) the VPN.
@@ -91,7 +91,7 @@ If you suspect your country may be blocking WARP traffic, contact your ISP to ve
 WARP cannot parse `resolv.conf` files which contain an invalid hostname. In `daemon.log`, you will see an `unrecognized char` warning:
 
 ```txt
-2022-06-30T12:58:02.618Z  WARN main_loop: warp::warp_service: Tunnel connection experienced error error=Custom { kind: Other, error: ProtoError { kind: Msg("unrecognized char:  ") } }
+WARN main_loop: warp::warp_service: Tunnel connection experienced error error=Custom { kind: Other, error: ProtoError { kind: Msg("unrecognized char:  ") } }
 ```
 
 #### Solution
