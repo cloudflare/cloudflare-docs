@@ -32,7 +32,7 @@ SaaS customer activity often follows an exponential pattern: one customer may do
 
 ## Viewing usage
 
-You can start viewing customer data either using Grafana (for visualisations) or as JSON (for your own tools.) Other areas of the Analytics Engine documentation explain this in-depth.
+You can start viewing customer data either using Grafana (for visualisations) or as JSON (for your own tools). Other areas of the Analytics Engine documentation explain this in-depth.
 
 Look at customer usage over all endpoints:
 
