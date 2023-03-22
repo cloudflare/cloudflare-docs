@@ -39,7 +39,7 @@ If you received an alert for a potentially malicious script:
 
 If you received an alert for a potentially malicious connection:
 
-1. Navigate to the page on your website where the connection that triggered the alert is being made. Open a browser and navigate to one of the URLs specified in the **Page URLs** field (shown in the connection details dialog box).
+1. Go to the page on your website where the connection that triggered the alert is being made. Open a browser and go to one of the URLs specified in the **Page URLs** field (shown in the connection details dialog box).
 
 2. Open the browser's developer tools to confirm that the connection is being made. You can check this in the developer tools' **Network** tab, searching for the target hostname of the connection.
 
