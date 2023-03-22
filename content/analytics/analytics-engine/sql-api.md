@@ -120,7 +120,7 @@ Next run a second query, using the timestamp of the final row in the `WHERE` cla
 SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
 ```
 
-You'll get the next 1000 older rows:
+You will get the next 1000 older rows:
 
 ```json
 {
