@@ -93,4 +93,4 @@ When observing a Cloudflare Challenge page, a visitor could:
 - Successfully pass the challenge to visit the website. Cookies and JavaScript support are required in browser settings to pass the challenge.
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
-- Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (e.g. images).
+- Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).
