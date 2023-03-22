@@ -8,13 +8,13 @@ title: Purchasing Additional Page Rules
 
 
 
-### If I run out of Page Rules, can I buy more?
+## If I run out of Page Rules, can I buy more?
 
 Yes. Refer to the [Plans](https://www.cloudflare.com/plans/) page for information about pricing.
 
 If you need more Page Rules as an Enterprise customer, contact Sales.
 
-### How do I buy additional Page Rules (Free, Pro, or Business Plans)?
+## How do I buy additional Page Rules (Free, Pro, or Business Plans)?
 
 1. Go to the [Rules tab](http://dash.cloudflare.com/?to=/:account/:zone/rules).
 
@@ -24,7 +24,7 @@ If you need more Page Rules as an Enterprise customer, contact Sales.
 
 4. Add or confirm your payment information. To change your current payment method, go to [billing settings](http://dash.cloudflare.com/?to=/:account/billing).
 
-How do I cancel my Page Rules purchase?
+## How do I cancel my Page Rules purchase?
 
 To cancel a purchase:
 
@@ -36,11 +36,11 @@ To cancel a purchase:
 
 4. Finish the updates to your subscription.
 
-### When I change plans will I keep my add-on subscriptions?
+## When I change plans will I keep my add-on subscriptions?
 
 When you change plans, you will keep your Page Rules add-on subscription.
 
-### What happens if I cancel Page Rules halfway through my billing cycle?
+## What happens if I cancel Page Rules halfway through my billing cycle?
 
 You will be billed for and have access to your additional Page Rules until the end of your current billing cycle.
 

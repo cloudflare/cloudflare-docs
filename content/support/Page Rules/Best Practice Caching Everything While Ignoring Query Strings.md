@@ -10,7 +10,7 @@ title: Best Practice Caching Everything While Ignoring Query Strings
 
 ## Use case
 
-There might be times when you wish to cache content resources that are not in the [list of file extensions that Cloudflare caches by default](/cache/about/default-cache-behavior), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (form.html) associated with the following URLs is cached in the Cloudflare edge network:
+There might be times when you wish to cache content resources that are not in the [list of file extensions that Cloudflare caches by default](/cache/about/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (form.html) associated with the following URLs is cached in the Cloudflare edge network:
 
 `https://www.example.com/support/form.html?param1=abc&param2=def`
 
@@ -26,11 +26,11 @@ By default, Cloudflare Page Rules does not allow creating a rule that combines t
 
 Currently, you can pick just one **Cache Level** setting per page rule. As such, for the options discussed in this use case, you could only pick either _Cache Everything_ or _Ignore Query String_.
 
-The _Cache Everything_ setting forces Cloudflare to consider all content that matches the page rule URL pattern as potentially cacheable. Whether we actually store the asset and for how long is determined by the **Cache-Control** headers returned with responses from the origin server. Learn more about [Origin Cache Control](/cache/about/cache-control).
+The _Cache Everything_ setting forces Cloudflare to consider all content that matches the page rule URL pattern as potentially cacheable. Whether we actually store the asset and for how long is determined by the **Cache-Control** headers returned with responses from the origin server. Learn more about [Origin Cache Control](/cache/about/cache-control/).
 
 _Ignore Query String_ modifies the cache key used at the Cloudflare edge to improve cache hit rates by reducing the number of unnecessary variations of an object that could be stored. It does so by storing and serving the same object from the edge regardless of any query string key value pairs appearing in the request path.
 
-If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/about/cache-keys). You can request your cache keys from your Cloudflare Solutions Engineer.
+If you’re an Enterprise customer, you can get around these limitations by using Cloudflare [Custom Cache Keys](/cache/about/cache-keys/). You can request your cache keys from your Cloudflare Solutions Engineer.
 
 ___
 
@@ -54,23 +54,23 @@ Here is an example Worker:
 
 ```js
 addEventListener('fetch', event => {
-     event.respondWith(fetchAndApply(event.request))
+    event.respondWith(fetchAndApply(event.request))
 })
 
 async function fetchAndApply(request) {
-     let url = new URL(request.url)
+    let url = new URL(request.url)
 
-     // Only use the path for the cache key, removing query strings
-     // e.g. https://www.example.com/some-form.html
-     let cacheKey = `${url.protocol}//${url.hostname}${url.pathname}`
+    // Only use the path for the cache key, removing query strings
+    // e.g. https://www.example.com/some-form.html
+    let cacheKey = `${url.protocol}//${url.hostname}${url.pathname}`
 
-     // Force response to be cached for 1 month
-     return fetch(url, {
-          cf: {
+    // Force response to be cached for 1 month
+    return fetch(url, {
+        cf: {
             cacheTtl: 2419200,
             cacheKey: cacheKey
-          }
-     })
+        }
+    })
 }
 ```
 
@@ -83,5 +83,5 @@ ___
 ## Related resources
 
 -   [Understanding and Configuring Cloudflare Page Rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)
--   [Using Custom Cache Keys](/cache/about/cache-keys)
--   [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache)
+-   [Using Custom Cache Keys](/cache/about/cache-keys/)
+-   [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache/)

@@ -26,7 +26,7 @@ ___
 
 To configure resolve override in Page Rules, do the following:
 
-1. [Create a DNS record](/dns/manage-dns-records/how-to/create-dns-records#h_60566325041543261564371) (either CNAME or A record) for your domain.
+1. [Create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) (either CNAME or A record) for your domain.
 
 -   This example shows a CNAME setup using `domain.s3.amazonaws.com`.
     -   **Type:** CNAME
