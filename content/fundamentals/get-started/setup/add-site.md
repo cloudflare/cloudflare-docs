@@ -22,6 +22,8 @@ If you do not already own a domain name and plan to use Cloudflare for your [aut
 
 Using Cloudflare Registrar simplifies your setup process by automatically using Cloudflare for authoritative DNS.
 
+{{<render file="_disable_dnssec.md" productFolder="dns" >}}
+
 ## Step 1 — Add site in Cloudflare
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
@@ -56,7 +58,7 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
 {{<render file="_nameserver-preamble.md" productFolder="dns" >}}
 <br/>
 
-Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar.
+Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/zone-setups/full-setup/setup/#update-your-nameservers) at your registrar. Make sure DNSSEC **is disabled** at this point.
 
 {{<render file="_minimize-downtime-tip.md" productFolder="dns" >}}
 
