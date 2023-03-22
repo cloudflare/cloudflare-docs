@@ -18,4 +18,4 @@ An IP Access rule can perform one of the following actions:
 
 * **JavaScript Challenge**: Presents the [I'm Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076) interstitial page to visitors. The visitor or client must support JavaScript. Useful for blocking DDoS attacks with minimal impact to legitimate visitors.
 
-* **Interactive Challenge**: Requires the visitor to complete a CAPTCHA before visiting your site. Prevents bots from accessing the site.
+* **Interactive Challenge**: Requires the visitor to complete an interactive challenge before visiting your site. Prevents bots from accessing the site.
