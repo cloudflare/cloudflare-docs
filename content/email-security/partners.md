@@ -16,12 +16,12 @@ Start by creating parent and child accounts.
 
 Parent accounts are treated as containers with no services provisioned. User accounts created at the parent level will allow them to access any child account. 
 
-{{<Aside type="note">}}This is only required for administrators that manage multiple accounts. For ex: MSSP managing multiple customer accounts.{{</Aside>}}
+{{<Aside type="note">}}This is only required for administrators that manage multiple accounts. For example, Managed Security Service Providers (MSSP) managing multiple customer accounts.{{</Aside>}}
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. In **Delegated Accounts**, select **Create New Customer**.
-4. **Customer Name** is the name used for the parent account, and could be the name of a sub-team or other useful one, like `Area 1 Security - Parent` or `Area 1 Security - Customers`.
+4. Fill out the **Customer Name**. This is the name used for the parent account, and could be the name of a sub-team or other useful name, like `Area 1 Security - Parent` or `Area 1 Security - Customers`.
 5. In **Account Type**, select _Parent_.
 6. For the **Admin User Information** fields, fill out with the information for the person who will be performing administrative duties for this account.
 7. Select **Save**.
@@ -34,10 +34,13 @@ Your newly created account should show up in the list. If not, refresh the page.
 2. Go to **Settings** (the gear icon).
 3. In **Delegated Accounts**, select the parent account where you want to create a child account.
 4. Select **Create New customer**.
-5. For **Customer Name**, fill out the name for the child account.
+5. For **Customer Name**, enter the name for the child account.
 6. In the **Account Type**, select _Advantage_.
-7. For the **Admin User Information** fields, fill out with the information for the person who will be performing administrative duties for this account.
-8. Scroll down to the **Email Traffic Related Information** section, and enter the appropriate information. Pay close attention to correctly identify and mention the **Number of email users** — that is, the total number of users protected by the service.
+7. For the **Admin User Information** fields, enter the information for the person who will be performing administrative duties for this account.
+8. Scroll down to the **Email Traffic Related Information** section.
+9. Enter your email domain in **Primary Email Domain**.
+10. The number to enter in **Looback Hops** will depend on the place Area 1 is in the chain of events and depends on your configuration. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information on this.
+11. For **Daily Email Volume** and **Number of Email Users** make sure you enter the appropriate values for your organization.
 9. Select **Save**.
 
 ## Create users and assign permissions
