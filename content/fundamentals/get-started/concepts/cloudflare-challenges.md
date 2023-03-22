@@ -86,7 +86,7 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 ## Resolve a Interactive Challenge
 
-If a visitor encounters an interactive challenge, Cloudflare employees cannot remove that challenge. Only the website owner can configure their Cloudflare settings to stop the interactive challenge to be presented.
+If a visitor encounters a challenge, Cloudflare employees cannot remove that challenge. Only the website owner can configure their Cloudflare settings to stop the challenge being presented.
 
 When observing a Cloudflare Challenge page page, a visitor could:
 
