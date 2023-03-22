@@ -23,8 +23,11 @@ To use Regional Services, you need to first create a DNS record in the dashboard
     - European Union
     - India
     - Japan
-    - United States
+    - United States of America
     - FedRAMP Compliant
+    - ISO 27001 Certified European Union
+    - Germany
+    - Singapore
 
 ## Configure Regional Services via API
 

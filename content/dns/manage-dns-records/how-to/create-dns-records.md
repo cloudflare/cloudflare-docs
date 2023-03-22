@@ -6,9 +6,11 @@ weight: 1
 
 # Manage DNS records
 
-{{<render file="_import-scan-info.md">}}
+{{<render file="_dns-auto-scan-info.md">}}
 
-If you want more control over which DNS records are imported and how, use the [bulk imports](/dns/manage-dns-records/how-to/import-and-export/#import-records).
+{{<render file="_dns-scan-procedure.md">}}
+
+If you want more control over which DNS records are imported and how, [import a zone file](/dns/manage-dns-records/how-to/import-and-export/#import-records).
 
 {{<Aside type="note">}}
 

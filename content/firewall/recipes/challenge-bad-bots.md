@@ -25,10 +25,10 @@ These examples use:
 
 For best results:
 
-- Use [Bot Analytics](/learning-paths/bot-management/#enable-bot-management-for-enterprise) to learn about your traffic before applying rules
+- Use [Bot Analytics](/learning-paths/modules/security/bot-management-setup/review-analytics/?learning_path=bot-management) to learn about your traffic before applying rules
 - Start small and increase your bot threshold over time
 
-Your rules may also vary based on the [nature of your site](/learning-paths/bot-management/#step-4--create-additional-firewall-rules) and your tolerance for false positives.
+Your rules may also vary based on the [nature of your site](/learning-paths/modules/security/bot-management-setup/expand-rules/?learning_path=bot-management) and your tolerance for false positives.
 
 ### Protect browser endpoints
 

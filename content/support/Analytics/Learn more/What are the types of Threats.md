@@ -28,9 +28,9 @@ Cloudflare's Browser Integrity Check looks for common HTTP headers abused most c
 
 ### Human challenged:
 
-Visitors were presented with a CAPTCHA challenge page and failed to pass.
+Visitors were presented with an interactive challenge page and failed to pass.
 
-_Note: A CAPTCHA page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly, the request is blocked._
+_Note: An interactive challenge page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly or not answered in a timely fashion, the request is blocked._
 
 ### Browser challenge:
 
@@ -68,17 +68,17 @@ A /24 IP range that was blocked based on the user configuration set within the F
 
 [Learn more about blocking IPs using the Firewall app here.](https://support.cloudflare.com/hc/en-us/articles/217074967-How-do-I-control-access-to-my-site-)
 
-### New CAPTCHA (user):
+### New Challenge (user):
 
 Challenge based on user configurations set for visitor’s IP in either WAF managed rules or firewall rules, configured in **Security** > **WAF**.
 
 [Learn more about challenging visitors using the WAF here.](https://support.cloudflare.com/hc/articles/200170136)
 
-### Captcha error:
+### Challenge error:
 
 Requests made by a bot that failed to pass the challenge.
 
-_Note: A CAPTCHA page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly, the request is blocked._
+_Note: An interactive challenge page is a difficult to read word or set of numbers that only a human can translate. If entered incorrectly or not answered in a timely fashion, the request is blocked._
 
 ### Bot Request:
 

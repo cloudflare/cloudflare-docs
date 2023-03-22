@@ -45,6 +45,6 @@ ___
 
 ## Related resources
 
--   [Understanding Cloudflare Captchas, Managed Challenge, and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136)
+-   [Cloudflare challenges](/fundamentals/get-started/concepts/cloudflare-challenges/)
 -   [Understanding Cloudflare Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076)
 -   [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196)
