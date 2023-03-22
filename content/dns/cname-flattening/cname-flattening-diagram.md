@@ -21,7 +21,7 @@ Note that this is a simpler scenario. Cases where CNAME flattening is optional a
 
 ## Example use case
 
-- `domain.test` is a zone in Cloudflare and has the following CNAME record:
+- `domain.test` is a zone on Cloudflare and has the following CNAME record:
 
 {{<example>}}
 | Type | Name | Content | TTL |
@@ -29,7 +29,7 @@ Note that this is a simpler scenario. Cases where CNAME flattening is optional a
 | CNAME | `domain.test` | `external-origin.test` | 3600 |
 {{</example>}}
 
-- `external-origin.test` is a zone in a different DNS provider and has the following A record:
+- `external-origin.test` is a zone on a different DNS provider and has the following A record:
 
 {{<example>}}
 | Type | Name | Content | TTL |
@@ -51,14 +51,15 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
   direction TB
    C["Question: 
    domain.test IN A"] 
-   C --- E{{Look up zone meta information}} --- F{{Look up record under found zone}} --> G["Answer: 
+   C --- E{{Look up record}} --> G["Answer: 
    domain.test 3600 CNAME external-origin.test
 
    This means that domain.test is a CNAME at the zone apex
    Forced CNAME flattening is enabled"] --- H{{Resolve external-origin.test}}
-   K{{Append answer and override the name}} --> L["Answer: 
+   K{{Append answer with overwritten query name}} --> L["Answer: 
    domain.test 7200 IN A 192.0.2.1"] --- M{Proxy status}
    M --Proxied--> O["Answer: 
+   domain.test 300 IN A {$Cloudflare IP}
    domain.test 300 IN A {$Cloudflare IP}"] --> B
    M --DNS only--> N["Answer:
    domain.test 3600 IN A 192.0.2.1"] --> B
@@ -73,5 +74,5 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
 
 ## Aspects to consider
 
-- If the `CNAME` record is proxied in Cloudflare, the answer is made up of a [Cloudflare IP](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to 300.
+- If the `CNAME` record is proxied in Cloudflare, the answer is made up of multiple [Cloudflare IPs](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to 300.
 - If the `CNAME` record in Cloudflare is not proxied, the flattened answer consists of the IP address from the external DNS provider and its TTL corresponds to the lower value between the external record and the Cloudflare `CNAME` record.
