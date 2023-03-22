@@ -256,7 +256,7 @@ async function handleRequest(request) {
 // Instantiate new URL to make it mutable
 const newRequest = new URL(request.url)
 
-// Set const to be used in the array later on
+// Set `const` to be used in the array later on
 const customCacheKey = `${newRequest.hostname}${newRequest.pathname}`
 const queryCacheKey = `${newRequest.hostname}${newRequest.pathname}${newRequest.search}`
 
