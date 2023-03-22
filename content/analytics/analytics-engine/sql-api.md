@@ -94,7 +94,7 @@ Traditionally, the SQL `OFFSET` feature has been used for pagination, but we do 
 
 An example might be when you want to retrieve all of your data from a dataset: `SELECT * FROM your_dataset`. If you only have a few thousand rows then that query should execute fine, but if you have millions of rows then it is likely to fail. Instead you can break down the query into multiple sequential queries.
 
-First run your desired query, adding `ORDER BY timestamp DESC` and our recommended `LIMIT` of 1000:
+First, run your desired query, adding `ORDER BY timestamp DESC` and our recommended `LIMIT` of 1000:
 
 ```sql
 SELECT * FROM your_dataset ORDER BY timestamp DESC LIMIT 1000
