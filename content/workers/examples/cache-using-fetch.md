@@ -187,7 +187,7 @@ You can combine the functionalities mentioned above into one Worker script and u
 
 ```js
 ---
-filename: 
+filename: index.js
 ---
 export default {
   async fetch(request) {
