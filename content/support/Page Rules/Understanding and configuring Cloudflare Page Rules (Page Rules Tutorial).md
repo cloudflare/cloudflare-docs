@@ -285,4 +285,4 @@ ___
 -   [What subdomains are appropriate for orange/grey clouds?](/dns/manage-dns-records/reference/proxied-dns-records/#limitations)
 -   [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache)
 -   [How do I cache static HTML?](/cache/best-practices/customize-cache)
--   [Offline error message when updating or accessing the admin section of my content management system](support/third-party-software/content-management-system-cms/improving-web-security-for-content-management-systems-like-wordpress/)
+-   [Offline error message when updating or accessing the admin section of my content management system](/support/third-party-software/content-management-system-cms/improving-web-security-for-content-management-systems-like-wordpress/)
