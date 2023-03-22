@@ -31,7 +31,9 @@ The descriptions below detail the fields available for `gateway_http`.
 | FileInfo | Information about files detected within the HTTP request. | object |
 | HTTPHost | Content of the host header in the HTTP request. | string |
 | HTTPMethod | HTTP request method. | string |
+| HTTPStatusCode | HTTP status code gateway returned to the user. Zero if nothing was returned (for example, client disconnected). | int |
 | HTTPVersion | Version name for the HTTP request. | string |
+| InternalSourceIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | IsIsolated | If the requested was isolated with Cloudflare Browser Isolation or not. | bool |
 | PolicyID | The gateway policy UUID applied to the request, if any. | string |
 | PolicyName | The name of the gateway policy applied to the request, if any. | string |
@@ -40,7 +42,7 @@ The descriptions below detail the fields available for `gateway_http`.
 | SourceIP | Source ip of the request. | string |
 | SourcePort | Source port of the request. | string |
 | URL | HTTP request URL. | string |
-| UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (e.g. expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>passThrough</em>. | string |
+| UntrustedCertificateAction | Action taken when an untrusted origin certificate error occurs (for example, expired certificate, mismatched common name, invalid certificate chain, signed by non-public CA). One of <em>none</em> \| <em>block</em> \| <em>error</em> \| <em>passThrough</em>. | string |
 | UploadedFileNames | List of files uploaded in the HTTP request. | array[string] |
 | UserAgent | Contents of the user agent header in the HTTP request. | string |
 | UserID | User identity where the HTTP request originated from. | string |
