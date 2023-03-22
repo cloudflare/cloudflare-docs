@@ -92,7 +92,7 @@ When you have a lot of data stored, the SQL API may not be able to retrieve all 
 
 Traditionally, the SQL `OFFSET` feature has been used for pagination, but we do not support it because it is inefficient with big datasets. Instead you can use the timestamp of each row as a cursor.
 
-An example is where you want to retrieve all of your data from a dataset: `SELECT * FROM your_dataset`. If you only have a few thousand rows then that query should execute fine, but if you have millions of rows then it is likely to fail. Instead you can break down the query into multiple sequential queries.
+An example might be when you want to retrieve all of your data from a dataset: `SELECT * FROM your_dataset`. If you only have a few thousand rows then that query should execute fine, but if you have millions of rows then it is likely to fail. Instead you can break down the query into multiple sequential queries.
 
 First run your desired query, adding `ORDER BY timestamp DESC` and our recommended `LIMIT` of 1000:
 
