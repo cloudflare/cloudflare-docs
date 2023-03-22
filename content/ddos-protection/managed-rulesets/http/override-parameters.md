@@ -36,7 +36,7 @@ The action that will be performed for requests that match specific rules of Clou
 - **Interactive Challenge**
 
   - API value: `"challenge"`.
-  - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
+  - Presents an interactive challenge to the clients making HTTP requests that match a rule expression.
 
 - **Log**
 
