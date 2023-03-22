@@ -96,6 +96,6 @@ Do the following in the Cloudflare dashboard:
 3. In **Ruleset configuration** > **Ruleset action**, select _Default_.
 4. Select **Save**.
 
-Alternatively, if you are using the API, [remove the override](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-http-ddos-attack-protection) you previously configured at the ruleset level. Ensure that you only remove the ruleset override and not any of the rule overrides you may have configured in [Step 3](#3-customize-managed-ruleset-rules).
+Alternatively, if you are using the API, [remove the override](/ddos-protection/managed-rulesets/http/configure-api/#configure-an-override-for-the-http-ddos-attack-protection-managed-ruleset) you previously configured at the ruleset level. Ensure that you only remove the ruleset override and not any of the rule overrides you may have configured in [Step 3](#3-customize-managed-ruleset-rules).
 
 Repeat the procedure (via dashboard or API) for all DDoS Attack Protection managed rulesets.
