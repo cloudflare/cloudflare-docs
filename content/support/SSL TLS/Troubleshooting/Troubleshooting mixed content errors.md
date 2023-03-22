@@ -62,7 +62,7 @@ There are two methods to resolve mixed content errors.
 //domain.com/path/to.file
 ```
 
-unstead of
+instead of
 
 ```
 http://domain.com/path/to.file

@@ -46,4 +46,4 @@ change the position of a Page Rule, you can drag it up or down using the
 icon on the left hand side.
 {{</Aside>}}
 
-For a full Page Rule tutorial, [visit this article.](https://support.cloudflare.com/hc/articles/218411427)
+For a full Page Rule tutorial, [visit this article.](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/)

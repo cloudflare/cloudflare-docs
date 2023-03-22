@@ -46,7 +46,7 @@ Before enabling URL normalization, we recommend that you review the affected Fir
 
 You should enable URL normalization (in **Rules** \> **Settings**) once you have updated the affected Firewall Rules.
 
-A Cloudflare user must have the [Firewall role](https://support.cloudflare.com/hc/articles/205065067#12345682) or one of the Administrator roles to access URL normalization settings in the dashboard.
+A Cloudflare user must have the [Firewall role](/fundamentals/account-and-billing/members/roles/) or one of the Administrator roles to access URL normalization settings in the dashboard.
 
 For more information, check the Cloudflare Developers Portal or create a post on Cloudflare Community.
 
