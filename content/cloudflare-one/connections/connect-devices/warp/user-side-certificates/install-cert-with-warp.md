@@ -14,26 +14,21 @@ The WARP client can automatically install the Cloudflare certificate (or a [cust
 
 This feature is available on Windows, macOS, and Linux. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
-## Install the certificate via WARP
-
-### Prerequisites
-
-- WARP client is [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/) on a [supported device](#supported-platforms).
-- Device is [enrolled](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) in your Zero Trust organization.
-
-### Enable certificate installation
+## Install the certificate using WARP
 
 1. (Optional) [Upload](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/) a custom root certificate to Cloudflare.
-2. In the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
 3. Enable **Install CA to system certificate store**.
+4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
+5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) in your Zero Trust organization.
 
-If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the System Keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate. If you later modify or remove the custom certificate, WARP will automatically update the certificate on the device.
+If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the System Keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
 
 {{<Aside type="note" header="Important">}}
 WARP only installs the system certificate — it does not install the certificate on individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
 {{</Aside>}}
 
-## View the certificate
+## View the installed certificate
 
 ### Windows
 
