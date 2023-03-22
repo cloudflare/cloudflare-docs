@@ -74,7 +74,7 @@ asyncfunction fetchAndApply(request) {
 }
 ```
 
-This Worker tells Cloudflare to intercept every HTTP request matching the route it is applied to, store the scheme (in this example, _https_), the hostname (_www.example.com_), the path (_/some-form.html_) but not the query strings (if any) as the cache key. The _Edge Cache TTL_ is set to 2,419,200 seconds and enforces the same logic as Cache Everything.
+This Worker tells Cloudflare to intercept every HTTP request matching the route it is applied to, store the scheme (in this example, `https`), the hostname (`www.example.com`), the path (`/some-form.html`) but not the query strings (if any) as the cache key. The _Edge Cache TTL_ is set to 2,419,200 seconds and enforces the same logic as Cache Everything.
 
 In order to apply the custom cache key to specific paths or file extensions, it may be necessary to add additional logic to the Worker or apply the code to multiple different Worker routes. Refer to the Worker [documentation](/workers/) for further details or contact your Solutions Engineer.
 
