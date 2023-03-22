@@ -27,16 +27,14 @@ To set up Delegated DCV:
 1. Order a [custom certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) for your zone. You can choose any **Certificate validation method**.
 2. On **SSL/TLS** > **Custom Hostnames**, go to **DCV Delegation for Custom Hostnames**.
 3. Copy the hostname value.
-4. At your authoritative DNS provider, create a `CNAME` record:
+4. For each hostname, the domain owner needs to place a `CNAME` record at their authoritative DNS. In this example, the SaaS zone is `example.com`.
     ```txt
     _acme-challenge.example.com CNAME example.com.<COPIED_HOSTNAME>.
     ```
-5. Once this is complete, Cloudflare will place two TXT DCV records - one for `example.com` and one for `*.example.com` - at the `example.com.<COPIED_HOSTNAME>` hostname.
-6. When your customer's certificates are up for renewal, manually fetch the DCV tokens and share them with your customers.
 
-One SaaS zone will have the same UUID value for all custom hostnames. 
+Once this is complete, Cloudflare will place two TXT DCV records - one for `example.com` and one for `*.example.com` - at the `example.com.<COPIED_HOSTNAME>` hostname. The CNAME record will need to stay in place in order to allow Cloudflare to continue placing the records for the renewals.
 
-The CNAME record will need to stay in place in order to allow Cloudflare to continue placing the records for the renewals. 
+If desired, you could also manually fetch the DCV tokens and share them with your customers.
 
 ## Moved domains
 
