@@ -54,7 +54,7 @@ If you do not find the script being loaded or the connection being made, this co
 
 In this case, in addition to the steps indicated below, the best approach is:
 
-* From a safe virtual environment - use online search tools and search for the given resource. Review results and resource metadata, for example domain registration details;
+* From a safe virtual environment, use online search tools and search for the given resource. Review results and resource metadata, for example domain registration details;
 * If in doubt, scan the application codebase for the resource and if found, clarify the purpose.
 
 ## Step 3 - Check the script reputation
