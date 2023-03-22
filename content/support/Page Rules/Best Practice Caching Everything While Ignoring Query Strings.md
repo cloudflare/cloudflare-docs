@@ -57,7 +57,7 @@ addEventListener('fetch', event => {
      event.respondWith(fetchAndApply(event.request))
 })
 
-asyncfunction fetchAndApply(request) {
+async function fetchAndApply(request) {
      let url = new URL(request.url)
 
      // Only use the path for the cache key, removing query strings
