@@ -12,7 +12,7 @@ title: Understanding Cloudflare Tor support and Onion Routing
 
 Due to the behavior of some individuals using the Tor network (spammers, distributors of malware, attackers, etc.), the IP addresses of Tor exit nodes may earn a bad reputation, elevating their Cloudflare threat score.
 
-Our [basic protection level](https://support.cloudflare.com/hc/articles/200170056) issues interactive challenges to visitors whose IP address has a high threat score, depending on the level chosen by the Cloudflare customer. The choices for security range from Essentially Off to I'm Under Attack. The default level is Medium.
+Our [basic protection level](https://support.cloudflare.com/hc/articles/200170056) issues challenges to visitors whose IP address has a high threat score, depending on the level chosen by the Cloudflare customer. The choices for security range from Essentially Off to I'm Under Attack. The default level is Medium.
 
 Cloudflare assigns the two-letter code _T1_ for Tor.  There's no geographical country associated with these IPs, but this approach lets Cloudflare customers override the default Cloudflare threat score to define the experience for their Tor visitors.  Cloudflare updates its list of Tor exit node IP addresses every hour.
 
