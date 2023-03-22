@@ -88,7 +88,7 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 If a visitor encounters a challenge, Cloudflare employees cannot remove that challenge. Only the website owner can configure their Cloudflare settings to stop the challenge being presented.
 
-When observing a Cloudflare Challenge page page, a visitor could:
+When observing a Cloudflare Challenge page, a visitor could:
 
 - Successfully pass the challenge to visit the website. Cookies and JavaScript support are required in browser settings to pass the challenge.
 - Request the website owner to allow their IP address.
