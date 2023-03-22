@@ -10,9 +10,9 @@ meta:
 
 If you receive a Page Shield alert, sometimes you need to perform some manual investigation to confirm the nature of the script. Use the guidance provided in this page as a starting point for your investigation.
 
-## Step 1: Understand what triggered the alert
+## Step 1 - Understand what triggered the alert
 
-Start by identifying the [detection system](/page-shield/about/malicious-script-detection/) that triggered the alert. A link is provided in the alert that will send you directly to the Page Shield dashboard to the relevant resource that needs reviewing. Alternatively, do the following:
+Start by identifying the [detection system](/page-shield/how-it-works/malicious-script-detection/) that triggered the alert. A link is provided in the alert that will send you directly to the Page Shield dashboard to the relevant resource that needs reviewing. Alternatively, do the following:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield**.
@@ -29,7 +29,7 @@ The details page will specify which detection system triggered the alert. Check 
 
 Different detection mechanisms may consider the script malicious at the same time. This increases the likelihood of the detection not being a false positive.
 
-## Step 2: Find the page where the resource was detected
+## Step 2 - Find the page where the resource was detected
 
 If you received an alert for a potentially malicious script:
 
@@ -57,19 +57,21 @@ In this case, in addition to the steps indicated below, the best approach is:
 * From a safe virtual environment - use online search tools and search for the given resource. Review results and resource metadata, for example domain registration details;
 * If in doubt, scan the application codebase for the resource and if found, clarify the purpose.
 
-## Step 3: Check the script reputation
+## Step 3 - Check the script reputation
 
 If Page Shield considers the resource’s domain a "malicious domain", it is likely that the domain does not have a good reputation. The domain may be known for hosting malware or for being used for phishing attacks. Usually, reviewing the domain/hostname is sufficient to understand why you received the alert. You can use external tools like Cloudflare’s [Security Center](/security-center/) Investigate platform to help with this validation.
 
 If Cloudflare's internal systems classified the script as containing "malicious code", external tools may not confirm the detection you got from Page Shield, since the machine learning (ML) model being used is Cloudflare-specific technology. However, you can re-run Page Shield’s ML model against the script source code, by using Cloudflare’s [Security Center](/security-center/) Analyze tool to confirm the match.
 
-## Step 4: (Optional) Analyze the script content
+## Step 4 (optional) - Analyze the script content
 
 You could use a virtual machine to perform some of the following analysis:
 
 1. Open the script URL and get the script source code. If the script is obfuscated or encoded, this could be a sign that the script is malicious.
 2. Scan the script source code for any hostnames or IP addresses.
 3. For each hostname or IP address you identified, use Cloudflare's Security Center Investigate platform to look up threat information and/or search online for potential Indicators of Compromise.
+
+---
 
 ## Conclusion
 
