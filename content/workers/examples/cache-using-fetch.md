@@ -244,6 +244,9 @@ export default {
 {{<tab label="js/sw">}}
 
 ```js
+---
+filename: index.js
+---
 addEventListener('fetch', event => {
     return event.respondWith(handleRequest(event.request));
 })
