@@ -37,7 +37,10 @@ Additionally, Cloudflare requires your `root domain` to be one level below a val
     {{</Aside>}}
     
 4. Select your plan level. For more details on features and pricing, refer to [our Plans page](https://www.cloudflare.com/plans/#compare-features).
-5. Cloudflare will then automatically scan for your DNS records.
+5. Review your DNS records.
+
+    {{<render file="_dns-auto-scan-info.md" productFolder="dns" >}}
+
     1. {{<render file="_dns-scan-procedure.md" productFolder="dns" >}}
 
         {{<render file="_dns-nxdomain-warning.md" productFolder="dns" >}}
