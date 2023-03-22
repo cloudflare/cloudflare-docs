@@ -10,7 +10,7 @@ meta:
 
 Delegated DCV allows zones with [partial DNS setups](/dns/zone-setups/partial-setup/) - meaning authoritative DNS is not provided by Cloudflare - to delegate the DCV process to Cloudflare.
 
-DCV Delegation requires customers to place a one-time record that allows Cloudflare to auto-renew all future certificate orders, so that there’s no manual intervention from the customer at the time of the renewal.
+DCV Delegation requires you to place a one-time record that allows Cloudflare to auto-renew all future certificate orders, so that there’s no manual intervention at the time of the renewal.
 
 ## When to use
 
@@ -30,12 +30,25 @@ To set up Delegated DCV:
 3. Copy the hostname value.
 4. At your authoritative DNS provider, create a `CNAME` record:
     ```txt
-    _acme-challenge.<COPIED_HOSTNAME> CNAME <COPIED_HOSTNAME>.
+    _acme-challenge.example.com CNAME example.com.<COPIED_HOSTNAME>.
     ```
 
 Once this is complete, Cloudflare will add TXT DCV tokens for every hostname on the Advanced certificate, as long as the zone is [active](/dns/zone-setups/reference/domain-status/) on Cloudflare.
 
 Because DCV happens regularly, do not remove this `CNAME` record at your authoritative DNS provider. Otherwise, Cloudflare will not be able to perform DCV on your behalf and your certificate will not be issued.
+
+### Additional hostnames
+
+If your certificate covers wildcard hostnames, any subdomains are covered by the single `CNAME` record added for your zone apex.
+
+However, if your certificate covers subdomains specified by their name, you will need to add multiple `CNAME` records to your authoritative DNS provider.
+
+For example, a certificate covering `example.com`, `*.example.com`, and `sub.example.com` would require the following records.
+
+```txt
+_acme-challenge.example.com CNAME .example.com.<COPIED_HOSTNAME>.
+_acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_HOSTNAME>.
+```
 
 ## Moved domains
 
