@@ -125,7 +125,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 -   _Default - takes the default action listed under_ _**Default mode**_ _when viewing a specific rule._
 -   _Disable -_ turns off the specific rule within the group**.**
 -   _Block_ - the request is discarded. 
--   _Interactive Challenge_ - the visitor receives an challenge page that requires interaction.
+-   _Interactive Challenge_ - the visitor receives a challenge page that requires interaction.
 -   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 Cloudflare’s [WAF changelog](/waf/change-log/scheduled-changes/) allows customers to monitor ongoing changes to the **Cloudflare Managed Ruleset.**
