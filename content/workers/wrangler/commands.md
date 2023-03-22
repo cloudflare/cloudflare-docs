@@ -1605,7 +1605,7 @@ $ wrangler deployments view [DEPLOYMENT_ID]
 
 {{<definitions>}}
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - the ID of the deployment you wish to view.
+  - The ID of the deployment you wish to view.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Perform on a specific Worker script rather than inheriting from `wrangler.toml`.
 {{</definitions>}}
@@ -1647,7 +1647,7 @@ $ wrangler rollback [DEPLOYMENT_ID]
 
 {{<definitions>}}
 - `DEPLOYMENT_ID` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
-  - the ID of the deployment you wish to view.
+  - The ID of the deployment you wish to view.
 - `--message` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
   - Add message for rollback. Accepts empty string. When specified, interactive prompts for rollback confirmation and message are skipped.
 {{</definitions>}}
