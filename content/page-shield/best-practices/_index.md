@@ -1,7 +1,7 @@
 ---
 title: Best practices
 pcx_content_type: navigation
-weight: 5
+weight: 6
 meta:
   description: Best practices for using Page Shield.
 ---
