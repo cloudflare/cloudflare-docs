@@ -3,7 +3,6 @@ pcx_content_type: reference
 type: overview
 title: CSP HTTP header format
 weight: 4
-layout: list
 ---
 
 # CSP HTTP header format
@@ -19,6 +18,10 @@ If you [configured the CSP reporting endpoint](/page-shield/reference/settings/#
 ```txt
 content-security-policy-report-only: script-src 'none'; connect-src 'none'; report-uri <YOUR_HOSTNAME>/cdn-cgi/script_monitor/report?<QUERY_STRING>
 ```
+
+{{<Aside type="note">}}
+Configuring [log policies](/page-shield/policies/) will add other report-only directives.
+{{</Aside>}}
 
 ## Related resources
 

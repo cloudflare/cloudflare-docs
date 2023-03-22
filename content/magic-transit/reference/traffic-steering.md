@@ -11,7 +11,24 @@ Magic Transit steers traffic along tunnel routes based on priorities you define 
 
 The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
 
-![Three tunnel routes with Tunnels 1 and 2 with the same top priority](/magic-transit/static/mt-traffic-steering-ecmp-baseline.png)
+```mermaid
+flowchart LR
+accTitle: Tunnels diagram
+accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 have top priority and Tunnel 3 is secondary.
+
+subgraph Cloudflare
+direction LR
+B[Cloudflare]
+C[Cloudflare]
+D[Cloudflare]
+end
+
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> data center 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br> priority 1/] --> J{{Customer <br> data center 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2/] --> K{{Customer <br> data center 3}}
+```
+<br />
 
 When there are multiple routes with equal priority and different next-hops, Cloudflare uses equal-cost multi-path (ECMP) routing. An example of multiple routes with equal priority would be Tunnel 1 and Tunnel 2.
 
@@ -37,42 +54,85 @@ As a result, ECMP provides load balancing across tunnels with the same priority.
 
 This diagram illustrates how ECMP distributes traffic equally across 2 paths with the same priority.
 
-<details>
-<summary>
-  Normal traffic flow
-</summary>
-  <div class="special-class" markdown="1">
+#### Normal traffic flow
 
-![Traffic flow to Tunnels 1 and 2 using ECMP](/magic-transit/static/mt-traffic-steering-ecmp-normal.png)
+```mermaid
+flowchart LR
+accTitle: Tunnels diagram
+accDescr: This example has three tunnel routes, with traffic equally distributed across two paths.
 
-</div>
-</details>
+subgraph Cloudflare
+direction LR
+B[Cloudflare]
+C[Cloudflare]
+D[Cloudflare]
+end
+
+Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/"GRE Tunnel 1 / priority 1 <br> / ~50% of flows"/] --> I{{Customer <br> data center 1}}
+E[Anycast IP] --> G[/"GRE Tunnel 2 / priority 1 <br> / ~50% of flows"/] --> J{{Customer <br> data center 2}}
+E[Anycast IP] --> H[/GRE Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> data center 3}}
+```
+<br />
 
 When Magic Transit health checks determine that Tunnel 2 is unhealthy, that route is dynamically de-prioritized, leaving Tunnel 1 the sole top-priority route. As a result, traffic is steered away from Tunnel 2, and all traffic flows to Tunnel 1:
 
-<details>
-<summary>
-  Failover traffic flow: Scenario 1
-</summary>
-  <div class="special-class" markdown="1">
+####  Failover traffic flow: Scenario 1
 
-![All traffic flowing to Tunnel 1 because of unhealthy Tunnel 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-1.png)
+Customer router failure
 
-</div>
-</details>
+```mermaid
+flowchart LR
+accTitle: Tunnels diagram
+accDescr: This example has Tunnel 2 unhealthy, and all traffic prioritized to Tunnel 1.
+
+subgraph Cloudflare
+direction LR
+B[Cloudflare]
+C[Cloudflare]
+D[Cloudflare]
+end
+
+Z(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers) --- Cloudflare
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP] --> F[/"Tunnel 1 / priority 1 <br> / ~100% of flows"/]:::green --> I{{Customer <br> data center 1}}
+E[Anycast IP] --> G[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center 2}}
+E[Anycast IP] --> H[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> data center 3}}
+classDef red fill:#FF0000
+classDef green fill:#00FF00
+```
+<br />
 
 When Magic Transit determines that Tunnel 1 is unhealthy as well, that route is also de-prioritized, leaving Tunnel 3 as the top priority route. In that case, all traffic flows to Tunnel 3.
 
-<details>
-<summary>
-  Failover traffic flow: Scenario 2
-</summary>
-  <div class="special-class" markdown="1">
+####  Failover traffic flow: Scenario 2
 
-![All traffic flowing to Tunnel 3 because of unhealthy Tunnels 1 and 2](/magic-transit/static/mt-traffic-steering-ecmp-failure-2.png)
+Intermediary ISP failure
 
-</div>
-</details>
+```mermaid
+flowchart LR
+accTitle: Tunnels diagram
+accDescr: This example has Tunnel 1 and 2 unhealthy, and all traffic prioritized to Tunnel 3.
+
+subgraph Cloudflare
+direction LR
+B[Cloudflare]
+C[Cloudflare]
+D[Cloudflare]
+end
+
+Z(Lower-priority tunnels <br> are used when <br> higher-priority tunnels <br> are unhealthy) --- Cloudflare
+A((User)) --> Cloudflare --- E[Anycast IP]
+E[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x I{{Customer <br> data center 1}}
+E[Anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x J{{Customer <br> data center 2}}
+E[Anycast IP] -->  H[/Tunnel 3 / priority 2 <br> / 100% of flows/]:::green --> K{{Customer <br> data center 3}}
+classDef red fill:#FF0000
+classDef green fill:#00FF00
+linkStyle 6 color:red
+linkStyle 8 color:red
+```
+<br />
 
 When Magic Transit determines that Tunnels 1 and 2 are healthy again, it re-prioritizes those routes, and traffic flow returns to normal.
 

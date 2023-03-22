@@ -35,7 +35,7 @@ ___
 
 5\. Enter the **Name/Description.**
 
-6\. Select an applicable **Action** of either _Block_, _Legacy CAPTCHA_, _Managed Challenge_, or _JS challenge_.
+6\. Select an applicable **Action** of either _Block_, _Interactive Challenge_, _Managed Challenge_, or _JS challenge_.
 
 7\. Enter the **User Agent**.  For example, to block the _Bad Bot_ web spider:
 

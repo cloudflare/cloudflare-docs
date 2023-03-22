@@ -33,7 +33,7 @@ In this example, a Cloudflare Gateway DNS filtering rule has been applied to all
 
 ![Policies](/cloudflare-one/static/secure-web-gateway/review-gateway-block/block-social.png)
 
-Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categorized by Cloudflare as social media networks. You can review each block in the Zero Trust dashboard.
+Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categorized by Cloudflare as social media networks. You can review each block in Zero Trust.
 
 1. Navigate to the **Logs** section of the sidebar and choose **Gateway**.
 
@@ -42,7 +42,6 @@ Once deployed, Cloudflare Gateway will begin to block DNS queries to sites categ
 ![Blocked](/cloudflare-one/static/secure-web-gateway/review-gateway-block/blocked.png)
 
 3. Expand the record to identify more information about the event, including user identity if you have deployed the [Zero Trust agent](/cloudflare-one/connections/connect-devices/).
-
 
 ## Review block reason
 

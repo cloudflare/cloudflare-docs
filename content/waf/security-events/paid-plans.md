@@ -8,7 +8,9 @@ meta:
 
 # Security Events — Paid plans
 
-Security Events is available at **Security** > **Events**.
+Security Events is available for your zone in **Security** > **Events**.
+
+Additionally, Enterprise customers have access to the account-level dashboard in Account Home > **Security Center** > **Security Events**.
 
 ## Adjusting displayed data
 

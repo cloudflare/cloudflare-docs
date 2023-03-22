@@ -75,6 +75,11 @@ con un _Reenvío de URL_ de
 
 volverá a dirigir las solicitudes para el dominio raíz _ejemplo.com_ al subdominio _www.ejemplo.com_, todo ello mientras preserva el directorio de URL.
 
+{{<Aside type="note">}}
+La acción *Usar siempre HTTPS* solo aparecerá si tu zona tiene un
+certificado SSL de Cloudflare activo.
+{{</Aside>}}
+
 Forzar HTTPS no resuelve problemas con [contenido mixto](https://support.cloudflare.com/hc/en-us/articles/200170476-How-do-I-fix-the-SSL-Mixed-Content-Error-Message-), ya que los navegadores verifican el protocolo de los recursos incluidos antes de realizar una solicitud. Deberás utilizar únicamente enlaces relativos o enlaces HTTPS en las páginas que fuerza a HTTPS. Cloudflare puede solucionar automáticamente algunos enlaces de contenido mixto mediante nuestra funcionalidad [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/en-us/articles/227227647-How-do-I-use-Automatic-HTTPS-Rewrites-).
 
 ___
@@ -82,6 +87,12 @@ ___
 ### ¿Cómo funciona SSL para socios de alojamiento?
 
 Está disponible un certificado Universal SSL para todos los dominios nuevos de Cloudflare añadidos por un socio de alojamiento a través de integraciones CNAME y DNS completo.
+
+{{<Aside type="note">}}
+Para los dominios añadidos antes del 9 de diciembre del 2016, el socio
+de alojamiento debe eliminar y volver a añadir el dominio a Cloudflare
+para proporcionar el certificado SSL.
+{{</Aside>}}
 
 Redirige mediante proxy a través de Cloudflare para proporcionar el certificado Universal SSL gratuito.
 

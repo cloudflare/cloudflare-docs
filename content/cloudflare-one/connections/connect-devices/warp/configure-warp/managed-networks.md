@@ -7,19 +7,25 @@ layout: single
 
 # Add a managed network
 
-Cloudflare WARP allows you to selectively apply WARP client settings if the device is connected to a secure network location such as an office. To determine network location, the WARP client detects a TLS endpoint on your network and validates its certificate against an uploaded SHA-256 fingerprint. The TLS certificate can be hosted by any device on your network.
+Cloudflare WARP allows you to selectively apply WARP client settings if the device is connected to a secure network location such as an office.
 
-## Create a TLS endpoint
+## 1. Choose a TLS endpoint
 
-If your network already has a host serving a TLS certificate, skip ahead to [add the network on the Zero Trust dashboard](#add-managed-network-on-the-zero-trust-dashboard). Otherwise, follow these instructions to generate a new TLS endpoint:
+A TLS endpoint is a host on your network that serves a TLS certificate. The TLS endpoint acts like a network location beacon — when a device connects to a network, WARP detects the TLS endpoint and validates its certificate against an uploaded SHA-256 fingerprint.
+
+The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. One option is to choose a host that is physically in the office which remote users do not need to access, such as a printer.
+
+### Create a new TLS endpoint
+
+If you do not already have a TLS endpoint on your network, you can set one up as follows:
 
 1. Create a local certificate:
 
-    ```sh
-    $ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
-    ```
+   ```sh
+   $ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+   ```
 
-    The command will output a PEM certificate and key. Store these files in a secure place.
+   The command will output a PEM certificate and key. Store these files in a secure place.
 
 {{<Aside type="note">}}
 The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
@@ -27,36 +33,36 @@ The WARP client requires certificates to include `CN` and `subjectAltName` metad
 
 2. Run a simple HTTPS server to host the certificate:
 
-    1. Create a Python 3 script called `myserver.py`:
+   1. Create a Python 3 script called `myserver.py`:
 
-        ```txt
-        ---
-        filename: myserver.py
-        ---
-        import ssl, http.server
+      ```txt
+      ---
+      filename: myserver.py
+      ---
+      import ssl, http.server
 
-        class BasicHandler(http.server.BaseHTTPRequestHandler):
-            def do_GET(self):
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write(b'OK')
-                return
+      class BasicHandler(http.server.BaseHTTPRequestHandler):
+          def do_GET(self):
+              self.send_response(200)
+              self.send_header('Content-type', 'text/html')
+              self.end_headers()
+              self.wfile.write(b'OK')
+              return
 
-        server = http.server.HTTPServer(('0.0.0.0', 4443), BasicHandler)
-        sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-        sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
-        server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
-        server.serve_forever()
-        ```
+      server = http.server.HTTPServer(('0.0.0.0', 4443), BasicHandler)
+      sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+      sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
+      server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
+      server.serve_forever()
+      ```
 
-    2. Run the script:
+   2. Run the script:
 
-        ```sh
-        $ python3 myserver.py
-        ```
+      ```sh
+      $ python3 myserver.py
+      ```
 
-## Extract the SHA-256 fingerprint
+## 2. Extract the SHA-256 fingerprint
 
 To obtain the SHA-256 fingerprint of a certificate:
 
@@ -70,21 +76,24 @@ The output will look something like:
 SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
-## Add managed network to the Zero Trust dashboard
+## 3. Add managed network to Zero Trust
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **Network locations** and select **Add new**.
 3. Name your network location.
 4. In **Host and Port**, enter the private IP address and port number of the TLS endpoint (for example, `192.168.185.198:4443`).
 
-    The [example TLS endpoint](#create-a-tls-endpoint) created above would use the IP of the device running the Python script and the port configured for the HTTPS server.
+   The [example TLS endpoint](#create-a-new-tls-endpoint) created above would use the IP of the device running the Python script and the port configured for the HTTPS server.
 
-5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#extract-the-sha-256-fingerprint) of the TLS certificate.
+5. In **TLS Cert SHA-256**, enter the [SHA-256 fingerprint](#2-extract-the-sha-256-fingerprint) of the TLS certificate.
 
-You can now create a [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) for devices on this network. In the rule builder, the network name will appear when you choose the _Managed network_ selector.
+## 4. Configure device profiles
 
-Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will determine its network location and apply the corresponding settings profile.
+1. [Create a settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) for devices on this network. In the rule builder, the network name will appear when you choose the _Managed network_ selector.
+2. For all device profiles, add a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the TLS endpoint's IP address. This blocks remote users from accessing the TLS endpoint through the WARP tunnel.
+
+Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will determine its network location and apply the corresponding settings profile.
 
 {{<Aside type="note">}}
 The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
- {{</Aside>}}
+{{</Aside>}}

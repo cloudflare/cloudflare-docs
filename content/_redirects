@@ -151,6 +151,9 @@
 /api/get-started/keys/ /fundamentals/api/get-started/keys/ 301
 /api/reference/limits/ /fundamentals/api/reference/limits 301
 
+# api-shield
+/api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
+
 # bots
 /bots/about/javascript-detections/ /bots/reference/javascript-detections/ 301
 /bots/about/plans/ /bots/plans/ 301
@@ -332,6 +335,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
+/support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 
 # logs
 /logs/get-started/logpush-configuration-api/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
@@ -353,6 +357,7 @@
 /logs/reference/logpush-api-configuration/custom-fields/ /logs/reference/custom-fields/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-python/ /logs/tutorials/examples/example-logpush-python/ 301
+/logs/reference/firewall-fields/ /logs/reference/security-fields/ 301
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
@@ -416,8 +421,16 @@
 /partners/tenant/ /tenant/ 301
 
 # page-shield
-/page-shield/script-monitor/use-dashboard/ /page-shield/use-dashboard/monitor-scripts/ 301
+/page-shield/script-monitor/use-dashboard/ /page-shield/detection/monitor-connections-scripts/ 301
 /page-shield/use-dashboard/configure-reporting-endpoint/ /page-shield/reference/settings/#csp-reporting-endpoint 301
+/page-shield/about/ /page-shield/how-it-works/ 301
+/page-shield/about/malicious-script-detection/ /page-shield/how-it-works/malicious-script-detection/ 301
+/page-shield/use-dashboard/ /page-shield/detection/ 301
+/page-shield/use-dashboard/configure-alerts/ /page-shield/detection/configure-alerts/ 301
+/page-shield/use-dashboard/monitor-connections/ /page-shield/detection/monitor-connections-scripts/ 301
+/page-shield/use-dashboard/monitor-scripts/ /page-shield/detection/monitor-connections-scripts/ 301
+/page-shield/use-dashboard/review-changed-scripts/ /page-shield/detection/review-changed-scripts/ 301
+/page-shield/use-dashboard/review-malicious-scripts/ /page-shield/detection/review-malicious-scripts/ 301
 
 # queues
 /queues/configuration/ /queues/platform/configuration/ 301
@@ -525,11 +538,44 @@
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
 
 # r2
-/r2/platform/s3-compatibility/ /r2/data-access/s3-api/ 301
-/r2/platform/s3-compatibility/api/ /r2/data-access/s3-api/api/ 301
-/r2/platform/s3-compatibility/tokens/ /r2/data-access/s3-api/tokens/ 301
-/r2/platform/s3-compatibility/extensions/ /r2/data-access/s3-api/extensions/ 301
-/r2/runtime-apis/ /r2/data-access/workers-api/workers-api-reference/ 301
+/r2/platform/s3-compatibility/ /r2/api/s3/api/ 301
+/r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
+/r2/platform/s3-compatibility/tokens/ /r2/api/s3/tokens/ 301
+/r2/platform/s3-compatibility/extensions/ /r2/api/s3/extensions/ 301
+/r2/runtime-apis/ /r2/api/workers/workers-api-reference/ 301
+/r2/data-access/ /r2/api/ 301
+/r2/data-access/public-buckets/ /r2/buckets/public-buckets/ 301
+/r2/data-access/workers-api/ /r2/api/workers/ 301
+/r2/data-access/workers-api/workers-api-usage/ /r2/api/workers/workers-api-usage/ 301
+/r2/data-access/workers-api/workers-multipart-usage/ /r2/api/workers/workers-multipart-usage/ 301
+/r2/data-access/workers-api/workers-api-reference/ /r2/api/workers/workers-api-reference/ 301
+/r2/examples/demo-worker/ /r2/api/workers/demo-worker/ 301
+/r2/data-access/s3-api/ /r2/api/s3/ 301
+/r2/data-access/s3-api/api/ /r2/api/s3/api/ 301
+/r2/data-access/s3-api/extensions/ /r2/api/s3/extensions/ 301
+/r2/data-access/s3-api/tokens/ /r2/api/s3/tokens/ 301
+/r2/data-access/s3-api/presigned-urls/ /r2/api/s3/presigned-urls/ 301
+/r2/buckets/presigned-urls/ /r2/api/s3/presigned-urls/ 301
+/r2/data-access/wrangler-cli/ /r2/buckets/create-buckets/ 301
+/r2/data-migration/ /r2/r2-migrator/ 301
+/r2/data-migration/r2-migrator/ /r2/r2-migrator/ 301
+/r2/learning/consistency/ /r2/reference/consistency/ 301
+/r2/learning/data-security/ /r2/reference/data-security/ 301
+/r2/learning/cors/ /r2/buckets/cors/ 301
+/r2/learning/unicode-interoperability/ /r2/reference/unicode-interoperability/ 301
+/r2/learning/data-location/ /r2/buckets/data-location/ 301
+/r2/platform/pricing/ /r2/pricing/ 301
+/r2/platform/limits/ /r2/reference/limits/ 301
+/r2/platform/changelog/ /r2/reference/changelog/ 301
+/r2/examples/aws-cli/ /r2/examples/aws/aws-cli/ 301
+/r2/examples/aws-sdk-go/ /r2/examples/aws/aws-sdk-go/ 301
+/r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js/ 301
+/r2/examples/aws-sdk-js-v3/ /r2/examples/aws/aws-sdk-js-v3/ 301
+/r2/examples/aws-sdk-net/ /r2/examples/aws/aws-sdk-net/ 301
+/r2/examples/aws-sdk-php/ /r2/examples/aws/aws-sdk-php/ 301
+/r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
+/r2/examples/aws4fetch/ /r2/examples/aws/aws4fetch/ 301
+/r2/examples/boto3/ /r2/examples/aws/boto3/ 301
 
 # tenant_redirects
 /tenant/get-started/prerequisites/ /tenant/get-started/ 301
@@ -737,7 +783,7 @@
 /workers/writing-workers/ /workers/get-started/guide/ 301
 /workers/writing-workers/debugging-tips/ /workers/learning/debugging-workers/ 301
 /workers/writing-workers/resource-limits/ /workers/platform/limits/ 301
-/workers/runtime-apis/r2/ /r2/data-access/workers-api/workers-api-reference/ 301
+/workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
 /workers/get-started/storage-objects/ /workers/platform/storage-objects 301

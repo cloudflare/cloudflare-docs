@@ -36,6 +36,13 @@ Asegúrate de tener los registros DNS necesarios en la aplicación **DNS** del p
 -   El dominio raíz (por ejemplo, _ejemplo.com_)
 -   Cualquier subdominio existente (por ejemplo, _www.ejemplo.com, blog.ejemplo.com_, etc.)
 
+{{<Aside type="tip">}}
+Si tienes una [configuración de zona
+parcial](https://developers.cloudflare.com/dns/zone-setups/partial-setup),
+asegúrate de que tus registros DNS también existan en tus servidores de
+nombres autoritativos.
+{{</Aside>}}
+
 Obtén más información sobre la configuración de los  [registros DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) A y CNAME.
 
 ### No se ha desactivado DNSSEC antes de añadir el dominio a Cloudflare

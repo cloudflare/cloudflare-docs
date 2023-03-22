@@ -63,40 +63,25 @@ Filters use the form `dimension operator expression`, where each part correspond
 
 ### Filter operators
 
-{{<table-wrap>}}
-
-| Operator | Name                     | Example                | Description                                                            | URL Encoded |
-|----------|--------------------------|------------------------|------------------------------------------------------------------|-------------|
-| `==`       | Equals                   | `queryName==example.com` | Return results where query name is exactly `example.com`.            | `%3D%3D`      |
-| `!=`       | Does not equal           | `responseCode!=NOERROR`  | Return results where response code is different from `NOERROR`.    | `!%3D`        |
-| `>`        | Greater than             | `dimension>1000`        | Return results where a dimension is greater than `1000`.             | `%3E`         |
-| `<`        | Less than                | `dimension<1000`        | Return results where a dimension is less than `1000`.              | `%3C`         |
-| `>=`       | Greater than or equal to | `dimension>=1000`        | Return results where a dimension is greater than or equal to `1000`. | `%3E%3D`      |
-| `<=`       | Less than or equal to    | `dimension<=1000`        | Return results where a dimension is less than or equal to `1000`.  | `%3C%3D`      |
-
-{{</table-wrap>}}
+{{<render file="_api-filter-operators.md" productFolder="fundamentals" withParameters="queryName;;example.com;;responseCode;;NOERROR">}}
 
 ### Combining filters
 
-Combine filters using `OR` and `AND` boolean logic. `AND` takes precedence over `OR` in all expressions.
+{{<render file="_api-combine-filters.md" productFolder="fundamentals">}}
 
-The `OR` operator is defined using a comma `,` or the `OR` keyword surrounded by whitespace.
 
 <details>
-<summary>Examples</summary>
+<summary>Examples using OR</summary>
 <div>
 
 - `responseCode==NOERROR,responseCode==NXDOMAIN` indicates that response code is either `NOERROR` or `NXDOMAIN`.
-
 - `coloName==SJC OR coloName==LAX` indicates queries in either `SJC` or `LAX`.
   
 </div>
 </details>
 
-The `AND` operator is defined using a semicolon `;` or the `AND` keyword surrounded by whitespace.
-
 <details>
-<summary>Examples</summary>
+<summary>Examples using AND</summary>
 <div>
   
 - `responseCode==NOERROR;queryType==AAAA` indicates that response code is `NOERROR` and query type is `AAAA`.
@@ -104,9 +89,3 @@ The `AND` operator is defined using a semicolon `;` or the `AND` keyword surroun
 
 </div>
 </details>
-
-{{<Aside type="note">}}
-
-Note that the semicolon is a reserved character in URLs ([RFC 1738](https://www.rfc-editor.org/rfc/rfc1738)) and should be percent-encoded as `%3B`.
-
-{{</Aside>}}

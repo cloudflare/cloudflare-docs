@@ -49,9 +49,10 @@ Go to the [Kubernetes Engine](https://console.cloud.google.com/kubernetes?_ga=2
 
 Set default configuration values by running the following commands:
 
-`_gcloud config set project PROJECT_ID_`
-
-`_gcloud config set compute/zone us-west1-a_`
+```sh
+$ gcloud config set project PROJECT_ID_
+$ gcloud config set compute/zone us-west1-a
+```
 
 ### Step 1: Create a container cluster
 
@@ -59,11 +60,15 @@ Create a container cluster to run the container image. A cluster consists of a p
 
 Run the following command to create a three-node cluster (my cluster name is “camilia-cluster”)
 
-`_gcloud container clusters create camilia-cluster --num-nodes=3_`
+```
+$ gcloud container clusters create camilia-cluster --num-nodes=3
+```
 
 It may take several minutes for the cluster to be created. Once the command has completed, run the following command and see the cluster’s three worker VM instances:
 
-`_gcloud compute instances list_`
+```sh
+$ gcloud compute instances list
+```
 
 ### Step 2: Deploy application
 
@@ -71,11 +76,15 @@ Once your Kubernetes Engine cluster is setup, you can use Kubernetes to deploy a
 
 You can create, for example, a simple nginx docker container by using the following command (“camilia-nginx” is name for my deployment):
 
-`_kubectl run camilia-nginx --image=nginx --port 80_`
+```sh
+$ kubectl run camilia-nginx --image=nginx --port 80
+```
 
 To see the Pod created by the deployment, run:
 
-`_kubectl get pods_`
+```sh
+kubectl get pods
+```
 
 ### Step 3: Expose your application to the Internet
 
@@ -92,11 +101,15 @@ Option 2 is the recommended method for load balancing and offers more features. 
 
 To make the camilia-nginx deployment reachable within your container cluster you need to create a service resource:
 
-`_kubectl expose deployment camilia-nginx --target-port=80 --type=NodePort_`
+```sh
+$ kubectl expose deployment camilia-nginx --target-port=80 --type=NodePort
+```
 
 To verify the service was created and a node port was allocated run:
 
-`_kubectl get service camilia-nginx_`
+```sh
+$ kubectl get service camilia-nginx
+```
 
 ### Step 3.2 Create an Ingress resource
 
@@ -110,17 +123,23 @@ _apiVersion: v1_ _kind: Service_ _metadata:_ _name: camilia-nginx_ _annotations:
 
 Create the yaml file by wrapping the content above using this command:
 
-`_echo_` `‘...``_[your_yaml_text_here]’>basic-ingress.yaml_`
+```sh
+$ echo '... [your_yaml_text_here]' > basic-ingress.yaml
+```
 
 Then run:
 
-`_kubectl apply -f basic-ingress.yaml_`
+```sh
+$ kubectl apply -f basic-ingress.yaml
+```
 
 The Ingress controller running in your cluster is responsible for creating an HTTP(S) Load Balancer to route all external HTTP traffic to the service camilia-nginx. In environments other than GCE/Google Kubernetes Engine, you need to deploy a controller as a pod.
 
 Find out the external IP address of the load balancer serving your application by running:
 
-`_kubectl get ingress basic-ingress_`
+```sh
+$ kubectl get ingress basic-ingress
+```
 
 This External IP (In my example, 35.227.204.26) is used for setting up pools with Cloudflare Load Balancer.
 
@@ -130,11 +149,15 @@ By default, Kubernetes Engine allocates ephemeral external IP addresses for HTTP
 
 To add two additional replicas to your Deployment (so, total number is three), run the following command:
 
-`_kubectl scale deployment camilia-nginx --replicas=3_`
+```sh
+$ kubectl scale deployment camilia-nginx --replicas=3
+```
 
 You can see the new replicas running on your cluster by running the following commands: _kubectl get deployment camilia-nginx_
 
-`_kubectl get pods_`
+```sh
+$ kubectl get pods
+```
 
 HTTPS(S) Load Balancer you provisioned in the previous step will start routing traffic to these new replicas automatically.
 
@@ -162,13 +185,19 @@ By using AWS CLI we need two resources created on AWS before we can create Kuber
 
 Let’s **create a S3 bucket**. I used the following name “camilia-k8s-state”:
 
-`_aws s3api create-bucket --bucket camilia-k8s-state --region us-east-1_`
+```sh
+$ aws s3api create-bucket --bucket camilia-k8s-state --region us-east-1
+```
 
 You can export KOPS\_STATE\_STORE=s3://bucket-name and then kops will use this location by default:
 
-`_export KOPS_STATE_STORE=s3://camilia-k8s-state_`
+```sh
+$ export KOPS_STATE_STORE=s3://camilia-k8s-state
+```
 
-Now let’s **create a route 53 domain** for the cluster. Kops uses DNS for discovery, both inside the cluster and so that you can reach the kubernetes API server from clients. It should be a valid DNS name. A Route53 hosted zone can serve subdomains. My hosted zone is “_k8saws.usualwebsite.com_”. `_aws route53 create-hosted-zone --name k8saws.usualwebsite.com --caller-reference 1_`
+Now let’s **create a route 53 domain** for the cluster. Kops uses DNS for discovery, both inside the cluster and so that you can reach the kubernetes API server from clients. It should be a valid DNS name. A Route53 hosted zone can serve subdomains. My hosted zone is “_k8saws.usualwebsite.com_”. ```sh
+$ aws route53 create-hosted-zone --name k8saws.usualwebsite.com --caller-reference 1
+```
 
 It will automatically create four name server (NS) records. You must then set up your NS records in the parent domain, so that records in the domain will resolve.
 
@@ -176,13 +205,17 @@ As Authoritative DNS for my domain usualwebsite.com I am using Cloudflare DNS. J
 
 To check if your records were added correctly run the following command:
 
-`_dig ns k8saws.usualwebsite.com_`
+```sh
+$ dig ns k8saws.usualwebsite.com
+```
 
 ### Step 2: Creating the cluster
 
 Run “kops create cluster” to create your cluster configuration:
 
-`_kops create cluster --zones us-east-1a k8saws.usualwebsite.com_`
+```sh
+$ kops create cluster --zones us-east-1a k8saws.usualwebsite.com
+```
 
 kops will create the configuration for your cluster and save it on S3.
 
@@ -190,23 +223,31 @@ kops will create the configuration for your cluster and save it on S3.
 
 Finally run the following command to create your cluster in AWS:
 
-`_kops update cluster k8saws.usualwebsite.com --yes_`
+```sh
+$ kops update cluster k8saws.usualwebsite.com --yes
+```
 
 That takes a few seconds to run, but then your cluster will likely take a few minutes to actually be ready. Let's login to AWS console to see created EC2 instances. kops created for us one parent node and two children. This is the default config for kops. You can change it by setting --node-count parameter.
 
 For more information about the cluster run:
 
-`_kubectl cluster-info_`
+```sh
+$ kubectl cluster-info
+```
 
 To check nodes:
 
-`_kubectl get nodes_`
+```sh
+$ kubectl get nodes
+```
 
 ### Step 3: Deploying application
 
 After you created a Kubernetes Engine cluster, you use Kubernetes to deploy applications to the cluster. You can create, for example, a simple nginx docker container by using the following command (“camilia-nginx” is name for my deployment):
 
-`_kubectl run camilia-nginx --image=nginx --port=80_`
+```sh
+$ kubectl run camilia-nginx --image=nginx --port=80
+```
 
 A pod was created and scheduled to one of the children nodes. To check created pod run the following command:
 
@@ -218,13 +259,19 @@ By default, the containers you run on Kubernetes Engine are not accessible from 
 
 To expose your application to traffic from the Internet run the following command:
 
-`_kubectl expose deployment camilia-nginx --type=LoadBalancer --name aws-http-lb_`
+```sh
+$ kubectl expose deployment camilia-nginx --type=LoadBalancer --name aws-http-lb
+```
 
 For checking external IP that was provisioned for the application run the following command:
 
-`_kubectl get services_`
+```sh
+$ kubectl get services
+```
 
-`_kubectl describe service aws-http-lb_`
+```sh
+$ kubectl describe service aws-http-lb
+```
 
 The External IP address (in my example a2a0848d7d49611e7bfe20206b4bee2f-1914840563.us-east-1.elb.amazonaws.com) is used for setting up pools with Cloudflare Load Balancer.
 
@@ -232,11 +279,15 @@ The External IP address (in my example a2a0848d7d49611e7bfe20206b4bee2f-19148405
 
 It’s very easy to scale applications with Kubernetes. Just run the following command:
 
-`_kubectl scale --replicas=3 deployment/camilia-nginx_`
+```sh
+$ kubectl scale --replicas=3 deployment/camilia-nginx
+```
 
 It created 2 more pods, making sure that are 3 identical instances of our applications running. You can check it with the following command:
 
-`_kubectl get pods_`
+```sh
+$ kubectl get pods
+```
 
 All threes pods are running under AWS Elastic Load Balancer.
 
@@ -246,13 +297,21 @@ We have our applications deployed on both clouds. Now we can set up Cloudflare L
 
 Delete the Service: 
 
-`_kubectl delete service camilia-nginx_` Delete the container cluster: 
+```sh
+$ kubectl delete service camilia-nginx
+```
 
-`_gcloud container clusters delete camilia-cluster_`
+Delete the container cluster: 
+
+```sh
+$ gcloud container clusters delete camilia-cluster
+```
 
 Delete the Ingress: 
 
-`_kubectl delete ingress basic-ingress_` 
+```sh
+$ kubectl delete ingress basic-ingress
+``` 
 
 ___
 

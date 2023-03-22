@@ -31,9 +31,21 @@ Los **registros de auditoría** de Cloudflare cuentan con información sobre l
 6.  Observa la **Fecha**, la **Dirección IP del usuario** y el **Usuario** que eliminó el dominio.
 7.  Si **Dirección IP del usuario** es _127.0.0.1_ o no contiene datos, los sistemas de Cloudflare han realizado automáticamente la eliminación. Ve al paso 2 
 
+{{<Aside type="note">}}
+*Eliminar* es una **Acción**  que indica la eliminación del dominio,
+pero también suele utilizarse para la eliminación de otras
+configuraciones de la cuenta. Por lo tanto, asegúrate de
+que Recurso indique *Zona* .
+{{</Aside>}}
+
 ___
 
 ## Paso 2: revisa si el registro de dominios especifica los servidores de nombres de Cloudflare
+
+{{<Aside type="tip">}}
+No es necesario revisar el registro de dominio para los dominios que
+utilizan una configuración de CNAME de Cloudflare.
+{{</Aside>}}
 
 1\. Usa la aplicación “whois” de la línea de comandos que se proporciona con tu sistema operativo o un sitio web, como [whois.icann.org](https://whois.icann.org/en) o [www.whois.net](https://www.whois.net/).
 
@@ -48,6 +60,11 @@ ___
 ___
 
 ## Paso 3: revisa si la resolución de dominios usa los servidores de nombres de Cloudflare
+
+{{<Aside type="tip">}}
+No es necesario revisar el registro de dominio para los dominios que
+utilizan una configuración de CNAME de Cloudflare.
+{{</Aside>}}
 
 1\. Usa herramientas de línea de comandos o de terceros para confirmar la configuración de los servidores de nombres de Cloudflare:
 
@@ -73,11 +90,22 @@ Algunos servicios en línea, como [whatsmydns.net](https://www.whatsmydns.net/),
 
 3\. Si el servidor de nombres y los datos del registro de dominios son correctos, ponte en contacto con el proveedor de dominios para confirmar que ha habido problemas de propagación de DNS últimamente.
 
+{{<Aside type="note">}}
+Algunos registradores proporcionan más de dos servidores de nombres. Sin
+embargo, usa solo los dos proporcionados en la aplicación DNS de tu
+cuenta de Cloudflare.
+{{</Aside>}}
+
 ___
 
 ## Recupera un dominio eliminado
 
 Recupera un dominio eliminado a través del enlace**\+ Añadir sitio** ubicado en la parte derecha de la barra de navegación superior del panel de control de Cloudflare.El dominio debe añadirse como un dominio nuevo.
+
+{{<Aside type="warning">}}
+El equipo de asistencia de Cloudflare no puede restablecer el DNS o la
+configuración de los dominios eliminados.
+{{</Aside>}}
 
 ___
 

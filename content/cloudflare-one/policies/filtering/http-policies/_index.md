@@ -37,6 +37,16 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 | ------------------ | -------- | ----------- | ------ |
 | Content Categories | in       | `Education` | Allow  |
 
+#### Untrusted certificates
+
+The **Untrusted certificate action** determines how to handle insecure requests.
+
+| Option       | Action                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------------ |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                 |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust. |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream.                            |
+
 ### Block
 
 The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
@@ -58,7 +68,7 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 {{<Aside type="warning" header="Warning">}}
 
-When a Do Not Inspect rule is created for a given hostname, application, or app type, no traffic will be inspected.
+When a Do Not Inspect policy is created for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
 {{</Aside>}}
 
@@ -131,6 +141,18 @@ Use this selector to match against a domain and all subdomains — for example,
 | UI name | API example                                     |
 | ------- | ----------------------------------------------- |
 | Domain  | `any(http.request.domains[*] == "example.com")` |
+
+### Download and Upload File Type
+
+These selectors will scan file signatures in the HTTP body. Supported file types include Microsoft Office documents, PDF files, and ZIP files.
+
+| UI name            | API example                                             |
+| ------------------ | ------------------------------------------------------- |
+| Download File Type | `http.download.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
+
+| UI name          | API example                                           |
+| ---------------- | ----------------------------------------------------- |
+| Upload File Type | `http.upload.file.type in {\"PDF\" \"ZIP\" \"XLXS\"}` |
 
 ### Download and Upload Mime Type
 

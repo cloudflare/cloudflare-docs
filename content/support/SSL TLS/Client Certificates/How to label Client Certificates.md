@@ -26,23 +26,21 @@ If you need to differentiate client certificates for your clients on a "per orga
 
 For example, if you run the following command (with OpenSSL installed):
 
-`openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr`
+```sh
+$ openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr
+```
 
 You can then specify:
 
-`Country Name (2 letter code) []:`
-
-`State or Province Name (full name) []:`
-
-`Locality Name (eg, city) []:`
-
-`Organization Name (eg, company) []:`
-
-`Organizational Unit Name (eg, section) []:`
-
-`Common Name (eg, fully qualified host name) []:`
-
-`Email Address []:`
+```
+Country Name (2 letter code) []:
+State or Province Name (full name) []:
+Locality Name (eg, city) []:
+Organization Name (eg, company) []:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, fully qualified host name) []:
+Email Address []:
+```
 
 Probably, adding Country Name and Organization Name will be enough, but you can provide as much info as you need or want.
 
