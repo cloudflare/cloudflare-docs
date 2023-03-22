@@ -61,7 +61,7 @@ The steps to create a page rule are:
 1.  Log in to the Cloudflare dashboard.
 2.  Select the domain where you want to add the page rule.
 3.  Click the **Rules** app.
-4.  In the **Page Rules** tab**,** click **Create Page Rule**. The _Create Page Rule for <your domain>_ dialog opens.
+4.  In the **Page Rules** tab, click **Create Page Rule**. The _Create Page Rule for <your domain>_ page opens.
 5.  Under **If the URL matches**, enter the URL or URL pattern that should match the rule. [_Learn more about wildcard matching_](#referencing-wildcard-matches)
 6.  Next, under **Then the settings are:** click **+ Add a Setting** and select the desired setting from the dropdown. You can include more than one setting per rule. Learn more about settings in the [summary below](#summary-of-page-rules-settings).
 7.  In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
