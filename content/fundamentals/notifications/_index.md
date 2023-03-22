@@ -4,6 +4,10 @@ pcx_content_type: overview
 title: Cloudflare Notifications
 weight: 6
 layout: list
+product_grid:
+  show: true
+  title: Notifications
+  group: Cloudflare essentials
 ---
 
 {{<content-column>}}

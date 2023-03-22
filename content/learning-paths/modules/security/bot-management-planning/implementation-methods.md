@@ -53,7 +53,7 @@ You might want to do the following based on bot information in Cloudflare Worker
 - Serve alternative content based on score (avoid serving ads to bots with a low score).
 - Require additional authentication (for example, token authentication for requests with low score).
 - Notify users of low-score logins.
-- Check for combinations based on Bot Score and Clearance Cookie (show which bots passed Captcha, or which humans got low scores).
+- Check for combinations based on Bot Score and Clearance Cookie (show which bots passed challenges, or which humans got low scores).
 
 For examples that could be useful in building these actions, refer to [Workers Examples](/workers/examples/).
 

@@ -124,10 +124,10 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              This option is not recommended. Instead, choose <strong>Managed Challenge (Recommended)</strong>, which issues CAPTCHAs only when necessary.
+              This option is not recommended. Instead, choose <strong>Managed Challenge (Recommended)</strong>, which issues interactive challenges to visitors only when necessary.
             </li>
             <li>
-              The client that made the request must pass a CAPTCHA challenge.
+              The client that made the request must pass an interactive challenge.
             </li>
             <li>
               If successful, Cloudflare accepts the matched request; otherwise,
@@ -147,7 +147,7 @@ For reference information on rule actions available for Cloudflare products powe
         <td>
           <ul>
             <li>
-              Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet.
+              Helps reduce the lifetimes of human time spent solving interactive challenges across the Internet.
             </li>
             <li>
               Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge from the following actions based on specific criteria:
@@ -156,10 +156,7 @@ For reference information on rule actions available for Cloudflare products powe
                   Show a non-interactive challenge page (similar to the current JS Challenge).
                 </li>
                 <li>
-                  Show a custom interactive challenge (such as click a button).
-                </li>
-                <li>
-                  Show a CAPTCHA challenge.
+                  Show an interactive challenge (such as requiring the visitor to click a button or to perform a task).
                 </li>
               </ul>
             </li>

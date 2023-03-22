@@ -42,7 +42,7 @@ To set up Yandex for Cloudflare Access:
 
 1.  Copy the **ID** and **Password**.
 
-1.  On the Zero Trust dashboard, navigate to **Settings > Authentication**.
+1.  In Zero Trust, navigate to **Settings > Authentication**.
 
 1.  Under **Login methods**, click **Add new**.
 

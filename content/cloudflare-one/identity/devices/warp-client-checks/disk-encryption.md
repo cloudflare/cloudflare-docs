@@ -23,7 +23,7 @@ The Disk Encryption device posture attribute ensures that disks are encrypted on
 
 ## Enable the disk encryption check
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 1. Scroll down to **WARP client checks** and select **Add new**.
 1. Select **Disk Encryption**.
 1. Enter a descriptive name for the check.
@@ -42,23 +42,23 @@ Operating systems determine disk encryption in various ways. The following infor
 1. Open a terminal window.
 1. Run the `/usr/sbin/system_profiler SPStorageDataType` command to return a list of drivers on the system and note the value of **Mount Point**.
 
-    ```sh
-    $ /usr/sbin/system_profiler SPStorageDataType
-    Storage:
+   ```sh
+   $ /usr/sbin/system_profiler SPStorageDataType
+   Storage:
 
-        Data:
+       Data:
 
-          Free: 428.52 GB (428,519,702,528 bytes)
-          Capacity: 494.38 GB (494,384,795,648 bytes)
-          Mount Point: /System/Volumes/Data
-    ```
+         Free: 428.52 GB (428,519,702,528 bytes)
+         Capacity: 494.38 GB (494,384,795,648 bytes)
+         Mount Point: /System/Volumes/Data
+   ```
 
 1. Run the `diskutil info` command for a specific **Mount Point** and look for the value returned for **FileVault**. It must show **Yes** for the disk to be considered encrypted.
 
-    ```sh
-    $ diskutil info /System/Volumes/Data | grep FileVault
-      FileVault:                 Yes
-    ```
+   ```sh
+   $ diskutil info /System/Volumes/Data | grep FileVault
+     FileVault:                 Yes
+   ```
 
 ### On Windows
 

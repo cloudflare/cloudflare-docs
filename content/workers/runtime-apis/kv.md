@@ -1,6 +1,10 @@
 ---
 pcx_content_type: configuration
 title: KV
+product_grid:
+  show: true
+  title: KV
+  group: Developer platform
 ---
 
 # KV

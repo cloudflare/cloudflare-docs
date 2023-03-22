@@ -20,7 +20,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 ## Create the Access for SaaS application
 
-1.  On the Zero Trust Dashboard, go to **Access** > **Applications**.
+1.  In Zero Trust, go to **Access** > **Applications**.
 
 1.  Select **Add an Application**.
 

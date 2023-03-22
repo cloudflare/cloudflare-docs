@@ -37,7 +37,7 @@ rss: file
 * Functions billing is now available.
   * You can [view details here](/pages/platform/functions/pricing).
 * The [Unbound usage model](/workers/platform/limits/#unbound-usage-model) is now available for Functions.
-* [Secrets](/pages/platform/functions/bindings/#secrets) are now avaible.
+* [Secrets](/pages/platform/functions/bindings/#secrets) are now available.
 * Functions tailing is now available.
   * You can tail within the dash here: https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/functions.
   * Or with Wrangler - `wrangler pages deployment tail`.

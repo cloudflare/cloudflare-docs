@@ -2,6 +2,11 @@
 pcx_content_type: overview
 title: Workers Analytics Engine (beta)
 weight: 1
+product_grid:
+  show: true
+  title: Workers Analytics Engine
+  group: Developer platform
+  wrap: true
 ---
 
 {{<beta>}} Workers Analytics Engine {{</beta>}}

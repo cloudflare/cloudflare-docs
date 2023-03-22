@@ -48,7 +48,7 @@ The following concepts are used below in the reviewed field descriptions:
   * `block`
   * `js_challenge`
   * `managed_challenge`
-  * `challenge` (_Legacy CAPTCHA_)
+  * `challenge` (_Interactive Challenge_)
 
 For more information on these actions, refer to the [Actions](/ruleset-engine/rules-language/actions/) reference in the Rules language documentation.
 

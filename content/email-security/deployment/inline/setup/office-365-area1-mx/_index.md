@@ -179,7 +179,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 2. Go to **Email** > **Admin Quarantine**.
 
-3. Locate the message you want to manage, and select the `...` icon next to it. Thill will let you preview, download, or release the quarantined message.
+3. Locate the message you want to manage, and select the `...` icon next to it. This will let you preview, download, or release the quarantined message.
 
     <div class="large-img">
 

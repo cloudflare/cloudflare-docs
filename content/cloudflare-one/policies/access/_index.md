@@ -5,6 +5,10 @@ layout: single
 weight: 2
 meta:
   title: Access policies
+product_grid:
+  show: true
+  title: Access
+  group: Cloudflare One
 ---
 
 # Access policies

@@ -22,7 +22,7 @@ Network Analytics v2 requires the following:
 
 ## Get Network Analytics data via API
 
-Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the available [Network Analytics v2 nodes](/analytics/graphql-api/features/data-sets/#available-datasets).
+Use the [GraphQL Analytics API](/analytics/graphql-api/) to query data using the available [Network Analytics v2 nodes](/analytics/graphql-api/features/data-sets/).
 
 ## Send Network Analytics logs to a third-party service
 

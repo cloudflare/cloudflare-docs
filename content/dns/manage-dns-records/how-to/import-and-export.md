@@ -6,10 +6,7 @@ weight: 2
 
 # Import and export records
 
-{{<render file="_import-scan-info.md">}}
-<br/>
-
-If you want more control over which DNS records are imported and how, use the bulk import functionality.
+Use import and export to have more control over your DNS records and make processes like migrating a domain or bulk editing [record comments](/dns/manage-dns-records/reference/record-attributes/) easier.
 
 ## Import records
 
