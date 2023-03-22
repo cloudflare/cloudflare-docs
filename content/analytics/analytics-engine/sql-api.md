@@ -114,7 +114,7 @@ The response will include up to 1000 rows. Since the rows are ordered by descend
 }
 ```
 
-Next run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
+Next, run a second query, using the timestamp of the final row in the `WHERE` clause of the next query:
 
 ```sql
 SELECT * FROM your_dataset WHERE timestamp < toDateTime("2022-10-10 13:56:48") ORDER BY timestamp DESC LIMIT 1000
