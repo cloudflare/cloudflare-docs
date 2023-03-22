@@ -1,12 +1,12 @@
 ---
-title: Handling an alert
+title: Handle an alert
 pcx_content_type: best-practices
 weight: 2
 meta:
-  title: Handling a Page Shield alert
+  title: Handle a Page Shield alert
 ---
 
-# Handling a Page Shield alert
+# Handle a Page Shield alert
 
 If you receive a Page Shield alert, sometimes you need to perform some manual investigation to confirm the nature of the script. Use the guidance provided in this page as a starting point for your investigation.
 
