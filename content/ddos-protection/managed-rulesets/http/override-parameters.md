@@ -12,9 +12,8 @@ Configure the HTTP DDoS Attack Protection managed ruleset to change the action a
 
 The available parameters are the following:
 
-- [Ruleset parameters](#ruleset-parameters)
-  - [Action](#action)
-  - [Sensitivity Level](#sensitivity-level)
+- [Action](#action)
+- [Sensitivity Level](#sensitivity-level)
 
 ## Action
 
