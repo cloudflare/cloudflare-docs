@@ -6,16 +6,7 @@ weight: 7
 
 # File check
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
-
-</div>
-</details>
+{{<render file="posture/_available-for-warp-with-gateway.md">}}
 
 The File Check device posture attribute checks for the presence of a file on a device. You can create multiple file checks for each operating system you need to run it on, or if you need to check for multiple files.
 

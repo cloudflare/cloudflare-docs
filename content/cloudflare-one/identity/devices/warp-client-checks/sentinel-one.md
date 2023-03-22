@@ -6,16 +6,7 @@ weight: 11
 
 # SentinelOne
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | Minimum WARP version required    | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | WARP with Gateway                                                                         | macOS: 1.4.27, Windows: 1.4.25.0 | All plans                                                     |
-
-</div>
-</details>
+{{<render file="posture/_available-for-warp-with-gateway.md">}}
 
 Cloudflare Zero Trust can check if [SentinelOne](https://www.sentinelone.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
