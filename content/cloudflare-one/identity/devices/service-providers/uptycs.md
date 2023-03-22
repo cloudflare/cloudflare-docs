@@ -32,14 +32,12 @@ To obtain these values:
 1. Select a polling frequency for how often Cloudflare Zero Trust should query Uptycs for information.
 1. Select **Save**.
 
-To ensure the values have been entered correctly, select **Test**.
+{{<render file="/posture/_test-posture-provider.md">}}
 
 ## 3. Configure the posture check
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client** > **Service provider checks**.
-1. Select **Add new**.
-1. Select the Uptycs provider.
-1. Configure the _Score_ device posture check.
-1. Select **Save**.
+{{<render file="posture/_configure-posture-check.md" withParameters="Uptycs">}}
 
-Next, [verify](/cloudflare-one/identity/devices/#2-verify-device-posture-checks) that the service provider posture check is returning the expected results.
+## Device posture attributes
+
+The Uptycs posture check reads the Zero Trust score from the Uptycs agent. Uptycs dynamically assigns the score by assessing the device against a series of compliance checks and user-driven security information.
