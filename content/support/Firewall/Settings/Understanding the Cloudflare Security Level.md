@@ -45,6 +45,6 @@ ___
 
 ## Related resources
 
--   [Understanding Cloudflare Interactive Challenge, Managed Challenge, and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136)
+-   [Understanding Cloudflare Challenges and Challenge Passage](https://support.cloudflare.com/hc/articles/200170136)
 -   [Understanding Cloudflare Under Attack Mode](https://support.cloudflare.com/hc/articles/200170076)
 -   [Responding to DDoS attacks](https://support.cloudflare.com/hc/articles/200170196)
