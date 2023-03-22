@@ -8,4 +8,6 @@ meta:
 
 # Best practices
 
+Review the topics below for best practices related to Page Shield:
+
 {{<directory-listing>}}
