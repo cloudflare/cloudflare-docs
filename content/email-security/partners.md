@@ -74,7 +74,7 @@ Area 1 recommends that you quarantine `Malicious` and `SPAM` dispositions. You c
 
 ## Message retraction
 
-You can configure message retraction to take post-delivery actions against suspicious email messages. You can retract messages manually or automatically. Refer to [Retract settings](/email-configuration/retract-settings/) for more information.
+You can configure message retraction to take post-delivery actions against suspicious email messages. You can retract messages manually or automatically. Refer to [Retract settings](/email-security/email-configuration/retract-settings/) for more information.
 
 ## TLS enforcement for domains
 
