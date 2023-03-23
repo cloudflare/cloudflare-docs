@@ -245,7 +245,7 @@ export default {
 
 ```js
 ---
-filename: index.js
+header: index.js
 ---
 addEventListener('fetch', event => {
     return event.respondWith(handleRequest(event.request));
