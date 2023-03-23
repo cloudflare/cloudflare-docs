@@ -13,20 +13,20 @@ meta:
 With `CNAME` flattening, Cloudflare returns an IP address instead of the target hostname that a `CNAME` record points to.
 This process supports a few features and delivers better performance and flexibility, as mentioned in the [CNAME flattening concept page](/dns/cname-flattening/).
 
-Consider the diagram below to have an overview of the steps that may be involved in CNAME flattening. 
+Consider the diagram below to have an overview of the steps that may be involved in `CNAME` flattening. 
 
 {{<Aside type="note">}}
-Note that this is a simpler scenario. Cases where CNAME flattening is optional and/or the target hostname is not external to Cloudflare work differently.
+Note that this is a simpler scenario. Cases where `CNAME` flattening is optional and/or the target hostname is not external to Cloudflare work differently.
 {{</Aside>}}
 
 ## Example use case
 
-- `domain.test` is a zone on Cloudflare and has the following CNAME record:
+- `domain.test` is a zone on Cloudflare and has the following `CNAME` record:
 
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | --- |
-| CNAME | `domain.test` | `external-origin.test` | 3600 |
+| `CNAME` | `domain.test` | `external-origin.test` | `3600` |
 {{</example>}}
 
 - `external-origin.test` is a zone on a different DNS provider and has the following A record:
@@ -34,7 +34,7 @@ Note that this is a simpler scenario. Cases where CNAME flattening is optional a
 {{<example>}}
 | Type | Name | Content | TTL |
 | --- | --- | --- | ---|
-| A | `external-origin.test` | `192.0.2.1` | 7200 |
+| `A` | `external-origin.test` | `192.0.2.1` | `7200` |
 {{</example>}}
 
 In this case, the process to respond to queries for `domain.test` directly with the IP address can be represented by the following diagram:
@@ -76,5 +76,5 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
 
 ## Aspects to consider
 
-- If the `CNAME` record is proxied in Cloudflare, the answer is made up of multiple [Cloudflare IPs](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to 300.
+- If the `CNAME` record is proxied in Cloudflare, the answer is made up of multiple [Cloudflare IPs](https://www.cloudflare.com/ips/) and its Time to Live (TTL) is set to `300`.
 - If the `CNAME` record in Cloudflare is not proxied, the flattened answer consists of the IP address from the external DNS provider and its TTL corresponds to the lower value between the external record and the Cloudflare `CNAME` record.
