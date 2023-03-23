@@ -117,3 +117,8 @@ Yes. Right now there is a soft limit of ten sites per account, but that can be a
 
 [manual setup]: /analytics/web-analytics/getting-started/#sites-not-proxied-through-cloudflare
 [automatic setup]: /analytics/web-analytics/getting-started/#sites-proxied-through-cloudflare
+
+### When does the beacon send metrics to the `/cdn-cgi/rum/` endpoint?
+
+For traditional websites, not Single Page Applications (SPAs), the Web Analytics beacon reports to the `/cdn-cgi/rum/` endpoint when the page has finished loading (load event) and when the user leaves the page. For Single Page Applications, additional metrics are sent for every route change to capture the page load event.
+
