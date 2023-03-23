@@ -1667,7 +1667,6 @@ span.Tooltip---root {
   color: var(--background-color);
   background: var(--color);
   opacity: 0;
-  transition: opacity 0.25s ease;
   border-radius: 0.25em;
   z-index: 10;
   -webkit-user-select: none;
@@ -1692,30 +1691,11 @@ span.Tooltip---root {
 .Tooltip[position="bottom"],
 .Tooltip[position="top"] {
   left: 50%;
-  -webkit-transform: translate3d(-50%, 0, 0);
-  transform: translate3d(-50%, 0, 0);
 }
 
 .Tooltip[position="bottom"] {
   top: 100%;
   margin-top: var(--gap);
-}
-
-.Tooltip[position="left"] {
-  right: 100%;
-  margin-right: var(--gap);
-}
-
-.Tooltip[position="left"],
-.Tooltip[position="right"] {
-  top: 50%;
-  -webkit-transform: translate3d(0, -50%, 0);
-  transform: translate3d(0, -50%, 0);
-}
-
-.Tooltip[position="right"] {
-  left: 100%;
-  margin-left: var(--gap);
 }
 
 .Tooltip[position="top-start"] {
