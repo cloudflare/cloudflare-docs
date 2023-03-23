@@ -3556,11 +3556,6 @@ html[is-docs-page] body {
     max-width: calc(100% - 3em)
 }
 
-.DocsSidebar--cloudflare-logo-link,
-.DocsSidebar--docs-title-logo-link {
-    transition: opacity .2s ease, color .2s ease
-}
-
 .DocsSidebar--cloudflare-logo-link:hover,
 .DocsSidebar--docs-title-logo-link:hover {
     opacity: .75;
@@ -5348,7 +5343,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     align-items: center;
     padding-left: var(--content-indent);
     padding-right: var(--content-indent);
-    transition: opacity .2s ease, color .2s ease
 }
 
 @media (hover:hover) {
@@ -5397,7 +5391,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     align-items: center;
     padding-left: var(--content-indent);
     padding-right: var(--content-indent);
-    transition: opacity .2s ease, color .2s ease
 }
 
 @media (hover:hover) {
