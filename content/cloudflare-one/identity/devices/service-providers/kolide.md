@@ -39,7 +39,7 @@ Device posture with Kolide requires the Kolide agent and the Cloudflare WARP cli
 
 ## Device posture attributes
 
-Device posture data is gathered from the Kolide Zero Trust Assessment APIs.
+Device posture data is gathered from the [Kolide K2 API](https://kolidek2.readme.io/docs).
 
 | Selector      | Description         | Value        |
 | ------------- | ------------------- | ------------ |
