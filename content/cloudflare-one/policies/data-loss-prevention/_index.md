@@ -2,6 +2,10 @@
 pcx_content_type: concept
 title: Data Loss Prevention
 weight: 5
+product_grid:
+  show: true
+  title: Data Loss Prevention
+  group: Cloudflare One
 ---
 
 # Data Loss Prevention

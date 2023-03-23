@@ -89,7 +89,7 @@ A browser isolation session is a connection from your local browser to a remote 
 
 ## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard. For the integration to work, you will need to configure your identity provider to add the public key.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to Zero Trust. For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
@@ -129,9 +129,9 @@ Those three components are bundled into a single PEM file that is downloaded one
 
 The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
-## Firefox shows network protocol violation when using the WARP client
+## Firefox shows a network protocol violation when I use the WARP client
 
-You may have to disable the DNS over HTTPs setting in Firefox. To do so, navigate to Firefox Preferences, scroll down to **Network Settings**, and uncheck **Enable DNS over HTTPS > OK**.
+If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
 ## `cloudflared access` shows an error `websocket: bad handshake`
 

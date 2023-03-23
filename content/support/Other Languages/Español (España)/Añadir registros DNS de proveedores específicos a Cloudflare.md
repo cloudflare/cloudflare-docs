@@ -26,7 +26,17 @@ Añade los siguientes registros MX:
 
 Una vez añadidos, los registros DNS tienen una apariencia similar a lo siguiente en la aplicación **DNS** de Cloudflare:
 
+{{<Aside type="note">}}
+Revisa los [últimos registros MX solicitados por Google
+App](https://support.google.com/a/answer/174125?hl%3Den).
+{{</Aside>}}
+
 [Prueba la configuración de correo electrónico de Google Apps](https://toolbox.googleapps.com/apps/checkmx/check).
+
+{{<Aside type="warning">}}
+Para evitar algún comportamiento inesperado, no uses *registros MX* que
+no sean de Google.
+{{</Aside>}}
 
 Añade un _registro CNAME_ para Google App Engine al DNS de Cloudflare.
 
@@ -35,7 +45,20 @@ Por ejemplo, si el dominio es _www.ejemplo.com_, el _registro CNAME_ es similar
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www CNAME  ghs.googlehosted.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Confirma el valor del *registro CNAME* que Google solicita para el
+dominio.
+{{</Aside>}}
+
 Para configurar un redireccionamiento para un dominio de Google Apps, consulta la [guía de reenvío de URL de Google](https://support.google.com/a/answer/53340?hl=en).
+
+{{<Aside type="warning">}}
+Google ejecuta HTTPS en sus servicios. Si encuentras errores sobre
+bucles de redireccionamiento cuando navegas en tu sitio a través de
+Cloudflare, asegúrate de que el **SSL** está configurado en
+*Completo* en la aplicación **SSL/TLS** del panel de control de
+Cloudflare.
+{{</Aside>}}
 
 **Amazon**
 
@@ -64,6 +87,11 @@ Añade un _registro CNAME_ para el bucket de AWS en el DNS de Cloudflare. Por e
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">archivos  CNAME  archivos.ejemplo.com.s3.amazonaws.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+Amazon requiere que el CNAME coincida con el nombre del bucket, como en
+el ejemplo anterior.
+{{</Aside>}}
+
 Consulta la documentación de Amazon sobre [SES y la configuración de verificación](http://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html).
 
 Encuentra los registros de verificación _TXT_ y _CNAME_ proporcionados por Amazon.
@@ -73,7 +101,18 @@ Añade los registros al DNS de Cloudflare.  Por ejemplo, si el dominio de Cloud
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ejemplo.com  TXT  &quot;fmxqxT/icOYx4aA/bEUrDPMeax9/s3frblS+niixmqk=&quot;verificationstring._domainkey.ejemplo.com  CNAME  verificationstring.dkim.amazonses.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="warning">}}
+El contenido del registro TXT anterior es un ejemplo. Usa el contenido
+correcto proporcionado por Amazon SES.
+{{</Aside>}}
+
 Consulta el [contenido de ayuda de Amazon ELB](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) para obtener orientación sobre la configuración de ELB en Amazon.
+
+{{<Aside type="note">}}
+La característica **CNAME Flattening** de Cloudflare habilita un
+registro CNAME en el dominio raíz para dirigirse a un Load Balancer
+elástico.
+{{</Aside>}}
 
 1.  Añade un _registro CNAME_ a Cloudflare por el nombre de host, por ejemplo: _elb_.
 2.  En la aplicación **DNS** de Cloudflare, reemplaza **Nombre de dominio** con el destino ELB:  
@@ -93,7 +132,17 @@ Por ejemplo, si el dominio es _ejemplo.com_, el formato del registro es similar 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ejemplo.com  A  203.0.113.1www.ejemplo.com  CNAME  ejemplo.azurewebsites.net</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Reemplaza *203.0.113.1* con la verdadera dirección IP del sitio de
+Azure.
+{{</Aside>}}
+
 Para obtener información sobre registros de verificación, consulta la documentación de Azure sobre [creación de registros de verificación de dominio](https://docs.microsoft.com/en-us/office365/admin/dns/create-dns-records-for-azure-dns-zones?view=o365-worldwide#add-a-txt-record-for-verification).
+
+{{<Aside type="warning">}}
+Añade registros DNS para la verificación Azure con un icono de nube
+gris.
+{{</Aside>}}
 
 **Proveedores diversos**
 
@@ -103,6 +152,14 @@ En los siguientes artículos de ClickFunnels, se resume la mejor forma de config
 
 -   [Añadir un subdominio de Cloudflare](https://help.clickfunnels.com/hc/en-us/articles/360005906774-Adding-A-Cloudflare-Subdomain-)
 -   [Registro CNAME de Cloudflare](https://help.clickfunnels.com/hc/en-us/articles/360005906094-Cloudflare-CNAME-Record)
+
+{{<Aside type="note">}}
+Consulta la [documentación sobre MX de
+Zoho](https://www.zoho.com/mail/help/adminconsole/configure-email-delivery.html) y
+la [documentación sobre
+SPF](https://www.zoho.com/mail/help/adminconsole/spf-configuration.html) antes
+de añadir los registros DNS a Cloudflare.
+{{</Aside>}}
 
 Mira los ejemplos a continuación para añadir los registros DNS de Zoho adecuados a Cloudflare. En todos los ejemplos, reemplaza _ejemplo.com_ con el nombre de dominio verdadero:
 
@@ -126,6 +183,11 @@ Mira los ejemplos a continuación para añadir los registros DNS de Zoho adecuad
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">zb******** CNAME  business.zoho.com</span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+El registro zb es único para cada dominio. Añade el código de
+verificación de zb único proporcionado por Zoho.
+{{</Aside>}}
+
 En general, los registros DNS son similares a los que se mencionan a continuación. Reemplaza _ejemplo.com_ con el nombre de dominio verdadero:
 
 
@@ -138,6 +200,11 @@ En general, los registros DNS son similares a los que se mencionan a continuaci�
   
 
 -   Consulta la documentación de Cloudflare sobre [Gestión de registros DNS](https://support.cloudflare.com/hc/en-us/articles/360019093151) para obtener detalles sobre cómo añadir los registros.
+
+{{<Aside type="warning">}}
+Añade los registros DNS que Microsoft utiliza para la validación de
+dominio (tales como *autodiscover*) con un icono de nube gris.
+{{</Aside>}}
 
 Consulta la documentación de Ning sobre [Dominios personalizados y entradas DNS](http://www.ning.com/help/?p%3D2870).
 

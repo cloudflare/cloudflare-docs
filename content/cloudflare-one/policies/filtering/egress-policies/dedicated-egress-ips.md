@@ -18,7 +18,7 @@ Dedicated egress IPs are static IP addresses that can be used to allowlist traff
 To start routing traffic through dedicated egress IPs:
 
 1. Contact your account team to obtain a dedicated egress IP.
-2. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Network**.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 3. Enable **Proxy** for TCP.
 4. (Optional) Select **UDP**. This will allow HTTP/3 traffic to egress with your dedicated IPs.
 

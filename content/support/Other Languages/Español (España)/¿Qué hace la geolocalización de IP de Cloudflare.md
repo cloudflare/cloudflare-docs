@@ -25,3 +25,8 @@ Una vez activada, Cloudflare añade un encabezado denominado «CF-IPCountry» a 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$country_code = $ENV{&quot;HTTP_CF_IPCOUNTRY&quot;}; # para acceder en Perl</span></div></span></span></span></code></pre>{{</raw>}}
 
 Cloudflare incluye esta información para direcciones IPv4 e IPv6. Actualmente, la información de IPv4 es bastante completa, pero esperamos que los datos de IPv6 mejoren rápidamente.
+
+{{<Aside type="info">}}
+*XX*implica que no existe ningún dato para el país. T1 es un código de
+país no estándar que se utiliza para la red Tor.
+{{</Aside>}}

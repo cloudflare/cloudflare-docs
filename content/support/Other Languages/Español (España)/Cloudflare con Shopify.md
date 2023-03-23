@@ -43,6 +43,11 @@ Cuando se utiliza con O2O, determinadas funciones de Cloudflare pueden interrump
     -   [Workers](https://developers.cloudflare.com/workers/): Al igual que las reglas de página, Workers puede interrumpir el flujo de tráfico a tu sitio web, reduciendo de esta manera los ingresos. Escribe Workers con cuidado. Es recomendable excluir el subdominio utilizado con Shopify de la ruta de Workers.
     -   [Registros DNS CAA](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records): Shopify usa Let's Encrypt para emitir certificados SSL/TLS para dominios de comercio electrónico. Si añades algún registro DNS CAA, debes seleccionar Let's Encrypt como autoridad de certificación (CA), de lo contrario las conexiones HTTPS pueden fallar.
 
+{{<Aside type="note">}}
+Cloudflare no puede solucionar ningún problema de configuración con las
+funciones anteriores para O2O.
+{{</Aside>}}
+
 ___
 
 ## ¿Necesitas más ayuda?

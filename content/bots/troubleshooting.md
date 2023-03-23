@@ -44,7 +44,7 @@ ___
 
 Supervised machine learning takes certain variables (X) like gender and age and predicts another variable (Y) like income.
 
-In Bot Management and Super Bot Fight Mode, the X variables are request features, while the Y variable represents the probability of solving a Captcha based on X values.
+In Bot Management and Super Bot Fight Mode, the X variables are request features, while the Y variable represents the probability of solving a challenge based on X values.
 
 Cloudflare uses data from millions of requests and re-train the system on a periodic basis. You can learn about this data from your own request logs such as Cloudflare Logpull and Logpush as well as the Firewall API.
 
@@ -105,7 +105,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 
 -   RayIDs
 -   IP addresses
--   Firewall Rule IDs, rule expression, CAPTCHA solve rates
+-   Firewall Rule IDs, rule expression, Challenge solve rates
 -   Common user-agents among false positives
 -   Common ASNs among false positives
 -   Screenshots of strange activity from the firewall, such as a huge spike in challenged traffic on the graph
@@ -134,6 +134,8 @@ If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can
 -   For **Free** plans, toggle the **Bot Fight Mode** option to **Off**
 -   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 -   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+
+{{<render file="_flexible-sbfm.md">}}
 
 ___
 

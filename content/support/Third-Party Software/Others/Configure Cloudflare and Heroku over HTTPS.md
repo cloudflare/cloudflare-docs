@@ -44,8 +44,8 @@ ___
 
 The easiest way to confirm that Cloudflare is working for your domain is to issue a cURL command.
 
-```
-╰─➤  curl -I www.example.com
+```sh
+$  curl -I www.example.com
 HTTP/1.1 200 OK
 Date: Tue, 23 Jan 2018 18:51:30 GMT
 Content-Type: text/html; charset=UTF-8

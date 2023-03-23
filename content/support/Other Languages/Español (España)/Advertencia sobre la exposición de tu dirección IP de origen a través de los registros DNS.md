@@ -43,6 +43,12 @@ _`Un registro A, AAA, CNAME o MX se dirige a tu servidor de origen y expone tu I
 
 _`Este registro expone la dirección IP de tu servidor de origen, lo que puede dejarla vulnerable ante la denegación de servicio.`_
 
+{{<Aside type="info">}}
+Cloudflare ahora admite el redirecconamiento mediante proxy del registro
+\'\*\' comodín para la gestión de DNS en todos los planes de clientes.
+Antes solo se ofrecía a los planes Enterprise.
+{{</Aside>}}
+
 Una consulta _dig_ en estos registros revela la dirección IP de tu servidor de origen. Esta información facilita a los posibles atacantes dirigirse directamente a tu servidor de origen.
 
 Sin embargo, hay momentos en los que algunos de tus registros DNS necesitan permanecer en la nube gris. Por ejemplo:

@@ -36,4 +36,13 @@ When accessing origin servers with certificates not signed by a public certifica
 | -------- | -------- | ------------------- | -------------- |
 | Domain   | in       | `internal.site.com` | Do Not Inspect |
 
+## Block file types
+
+Block the upload or download of files based on their type.
+
+| Selector           | Operator | Value                                 | Action |
+| ------------------ | -------- | ------------------------------------- | ------ |
+| Upload File Type   | in       | Microsoft Office Word Document (docx) | Block  |
+| Download File Type | in       | PDF (pdf)                             | Block  |
+
 Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.

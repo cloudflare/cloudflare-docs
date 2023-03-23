@@ -334,6 +334,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
+/support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 
 # logs
 /logs/get-started/logpush-configuration-api/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
@@ -355,6 +356,7 @@
 /logs/reference/logpush-api-configuration/custom-fields/ /logs/reference/custom-fields/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-python/ /logs/tutorials/examples/example-logpush-python/ 301
+/logs/reference/firewall-fields/ /logs/reference/security-fields/ 301
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
@@ -541,6 +543,7 @@
 /r2/platform/s3-compatibility/extensions/ /r2/api/s3/extensions/ 301
 /r2/runtime-apis/ /r2/api/workers/workers-api-reference/ 301
 /r2/data-access/ /r2/api/ 301
+/r2/data-access/public-buckets/ /r2/buckets/public-buckets/ 301
 /r2/data-access/workers-api/ /r2/api/workers/ 301
 /r2/data-access/workers-api/workers-api-usage/ /r2/api/workers/workers-api-usage/ 301
 /r2/data-access/workers-api/workers-multipart-usage/ /r2/api/workers/workers-multipart-usage/ 301

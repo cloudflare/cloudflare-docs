@@ -7,7 +7,7 @@ title: Known issues
 
 Here are some known bugs and issues with Cloudflare Pages:
 
-## Builds and deployment 
+## Builds and deployment
 
 - GitHub and GitLab are currently the only supported platforms for automatic CI/CD builds. [Direct uploads](/pages/platform/direct-upload/) allow you to integrate your own build platform or upload from your local computer.
 
@@ -19,7 +19,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
 
-## Git configuration 
+## Git configuration
 
 - After you have selected a GitHub/GitLab repository for your Pages application, it cannot be changed. Delete your Pages project and create a new one pointing at a different repository if you need to update it.
 
@@ -35,9 +35,9 @@ Here are some known bugs and issues with Cloudflare Pages:
 ## Custom Domains
 
 - It is currently not possible to add a custom domain with
-    
-    - a wildcard, for example, `*.domain.com`.
-    - a Worker already routed on that domain.
+
+  - a wildcard, for example, `*.domain.com`.
+  - a Worker already routed on that domain.
 
 - It is currently not possible to add a custom domain with a Cloudflare Access policy already enabled on that domain.
 
@@ -54,7 +54,6 @@ Here are some known bugs and issues with Cloudflare Pages:
 - `passThroughOnException()` is not currently available for Advanced Mode Pages Functions (Pages Functions which use an `_worker.js` file).
 
 - `passThroughOnException()` is not currently as resilient as it is in Workers. We currently wrap Pages Functions code in a `try`/`catch` block and fallback to calling `env.ASSETS.fetch()`. This means that any critical failures (such as exceeding CPU time or exceeding memory) may still throw an error.
-
 
 ## Enabling Access on your `*.pages.dev` domain
 
@@ -75,8 +74,8 @@ At this step, your `*.pages.dev` domain has been secured behind Access. To resec
 
 If you have a custom domain and protected your `*.pages.dev` domain behind Access, you must:
 
-10. Select **Add an application** > **Self hosted** in the Cloudflare Zero Trust dashboard.
-11. Input an **Application name** and select your custom domain from the *Domain* dropdown menu.
+10. Select **Add an application** > **Self hosted** in [Cloudflare Zero Trust](https://one.dash.cloudflare.com/).
+11. Input an **Application name** and select your custom domain from the _Domain_ dropdown menu.
 12. Select **Next** and configure your access rules to define who can reach the Access authentication page.
 13. Select **Add application**.
 

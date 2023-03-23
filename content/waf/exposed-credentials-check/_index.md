@@ -2,6 +2,11 @@
 pcx_content_type: concept
 title: Automated exposed credentials check
 weight: 9
+product_grid:
+  show: true
+  title: Exposed credentials check
+  group: Security
+  wrap: true
 ---
 
 # Automated exposed credentials check
@@ -33,9 +38,9 @@ The WAF can perform one of the following actions when it detects exposed credent
 *   *Exposed-Credential-Check Header* — Adds a new HTTP header to HTTP requests with exposed credentials. Your application at the origin can then force a password reset, start a two-factor authentication process, or perform any other action. The name of the added HTTP header is `Exposed-Credential-Check` and its value is `1`.
 *   *Managed Challenge* — Helps reduce the lifetimes of human time spent solving CAPTCHAs across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 *   *Block* — Blocks HTTP requests containing exposed credentials.
-*   *JS Challenge* — Presents a Cloudflare JavaScript CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
+*   *JS Challenge* — Presents a non-interactive challenge to the clients making HTTP requests with exposed credentials.
 *   *Log* — Only available on Enterprise plans. Logs requests with exposed credentials in the Cloudflare logs. Recommended for validating a rule before committing to a more severe action.
-*   *Legacy CAPTCHA* — Presents a CAPTCHA challenge to the clients making HTTP requests with exposed credentials.
+*   *Interactive Challenge* — Presents an interactive challenge to the clients making HTTP requests with exposed credentials.
 
 The default action for the rules in the Exposed Credentials Check Managed Ruleset is *Exposed-Credential-Check Header* (named `rewrite` in the API).
 

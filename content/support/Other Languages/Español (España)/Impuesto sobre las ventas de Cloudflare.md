@@ -15,6 +15,17 @@ Para cumplir con las leyes fiscales de Rusia y de algunos estados de Estados Uni
 
 Para evitar cargos no deseados, asegúrate de que tu dirección de facturación y método de pago son correctos en tu cuenta de Cloudflare.
 
+{{<Aside type="note">}}
+A los clientes de Cloudflare que participan en un programa de patrocinio
+(p.ej., [proyecto
+Athenian](https://support.cloudflare.com/hc/articles/360032879131),
+[proyecto
+Galileo](https://support.cloudflare.com/hc/articles/202312014-Project-Galileo),
+[Cloudflare for
+Campaigns](https://support.cloudflare.com/hc/articles/360038570912)) no
+se les cobra el impuesto de venta.
+{{</Aside>}}
+
 ___
 
 ## Impuesto estatal sobre las ventas en Estados Unidos
@@ -40,6 +51,10 @@ Los proveedores extranjeros de servicios electrónicos están obligados por ley 
 
 [Actualiza tu información de facturación](https://support.cloudflare.com/hc/articles/200170236/#12345682) con tu número de IVA ruso para incluirlo en tus facturas de Cloudflare.
 
+{{<Aside type="note">}}
+No hay exención fiscal para los clientes rusos.
+{{</Aside>}}
+
 ___
 
 ## Impuestos de Singapur
@@ -59,6 +74,11 @@ ___
 ## Canadá
 
 Todos los clientes **registrados como NO GST** (impuesto sobre bienes y servicios) ubicados en Canadá están obligados por ley a pagar impuestos.
+
+{{<Aside type="note">}}
+Cualquier persona que proporcione una identificación GST estará exenta,
+no hay otras excepciones.
+{{</Aside>}}
 
 ___
 
