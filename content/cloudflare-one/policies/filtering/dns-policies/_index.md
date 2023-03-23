@@ -26,7 +26,7 @@ If you are using the legacy DNS policy builder, we recommend migrating your rule
 {{</Aside>}}
 
 {{<Aside type="warning">}}
-Gateway will not properly filter traffic for users with VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your users, we recommend restricting software that may interfere with Gateway.
+Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
 {{</Aside>}}
 
 ## Actions
