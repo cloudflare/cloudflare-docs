@@ -49,4 +49,6 @@ To retrieve those values:
 
 ## Device posture attributes
 
-The Tanium posture check reads the `totalScore` of the device from Tanium's EndpointRisk assessment. For more information, refer to the [Tanium documentation for EndpointRisk](https://developer.tanium.com/site/global/apis/graphql/spectaql/index.gsp#definition-EndpointRisk).
+| Selector      | Description         |
+| ------------- | ------------------- |
+| Total score   | `totalScore` of the device from [Tanium's EndpointRisk assessment](https://developer.tanium.com/site/global/apis/graphql/spectaql/index.gsp#definition-EndpointRisk)|

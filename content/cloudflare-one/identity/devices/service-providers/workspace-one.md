@@ -51,4 +51,4 @@ To retrieve those values:
 
 ## Device posture attributes
 
- Workspace ONE posture checks work with the [Compliance flags](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_Managing_Devices/GUID-CompliancePolicies.html) in Workspace ONE. All compliance tests must pass for the device to be considered compliant.
+Workspace ONE posture checks work with the [Compliance flags](https://docs.vmware.com/en/VMware-Workspace-ONE-UEM/services/UEM_Managing_Devices/GUID-CompliancePolicies.html) in Workspace ONE. All compliance tests must pass for the device to be considered compliant.

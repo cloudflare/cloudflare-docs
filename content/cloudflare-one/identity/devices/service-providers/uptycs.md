@@ -42,4 +42,6 @@ To obtain these values:
 
 ## Device posture attributes
 
-The Uptycs posture check reads the Zero Trust score from the Uptycs agent. Uptycs dynamically assigns the score by assessing the device against a series of compliance checks and user-driven security information.
+| Selector      | Description         |
+| ------------- | ------------------- |
+| Score         | Zero Trust score assigned to the device by Uptycs|
