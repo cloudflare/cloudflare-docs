@@ -22,6 +22,22 @@ Deprecated API:
 Replacement:
 Cloudflare Tunnel API
 
+## Account Billing Profile, User Billing Profile, and User Billing History
+
+**End of life Date: June 6, 2023**
+
+Cloudflare will no longer continue to support these endpoints due to a system transition and low endpoint usage. There is no replacement for these endpoints. As an alternative, please log in to your Cloudflare account to view your:
+
+- [Invoices & Billing Email](https://dash.cloudflare.com/?to=/:account/billing)
+- [Billing subscriptions](https://dash.cloudflare.com/?to=/:account/billing/subscriptions) 
+- [Billing profile payment info](https://dash.cloudflare.com/?to=/:account/billing/payment-info)
+ 
+Deprecated API:
+
+- GET `accounts/{account_identifier}/billing/profile`
+- GET `user/billing/profile`
+- GET `user/billing/history`
+
 ## Transfer-Encoding and Content-Length headers 
 **End of life date: March 31, 2023**
 
