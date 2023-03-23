@@ -270,7 +270,7 @@ const cacheAssets = [
     {asset: 'manifest', key: customCacheKey, regex: /^.*\.(m3u8|mpd)/, info: 0, ok: 3, redirects: 2, clientError: 1, serverError: 0 }
 ]
 
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find use the `regex` to match on file extensions for caching
+// the `.find` method is used to find elements in an array (`cacheAssets`), in this case, `regex`, which can passed to the .`match` method to match on file extensions to cache, since they are many media types in the array. If you want to add more types, update the array. Refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find for more information.
 const { asset, regex, ...cache } = cacheAssets.find( ({regex}) => newRequest.pathname.match(regex)) ?? {}
 
 const newResponse = await fetch(request,
