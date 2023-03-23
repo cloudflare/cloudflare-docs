@@ -15,7 +15,7 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 
 {{</Aside>}}
 
-For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
+For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#single-file-purge--assets-cached-by-a-worker).
 
 ## Purge by single-file (by URL)
 
@@ -35,7 +35,7 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
   - `X-Rewrite-URL`
   - `Forwarded`
 
-You can purge objects with these characteristics using an API call ([Purge files by URL](https://api.cloudflare.com/#zone-purge-files-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
+You can purge objects with these characteristics using an API call ([Purge files by URL](https://developers.cloudflare.com/api/operations/zone-purge#purge-cached-content-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
 {{<Aside type="warning" header="Warning">}}
 

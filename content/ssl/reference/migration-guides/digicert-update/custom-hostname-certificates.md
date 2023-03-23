@@ -61,7 +61,7 @@ To find wildcard custom hostnames specifically that are using DigiCert certifica
 
 #### Update values
 
-You should update the following values using the [dashboard](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-dashboard-1) or the [API](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-api-1):
+You should [update](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) the following values:
 
 - **Certificate Authority**: When you update this value, it will immediately reissue the certificate. Cloudflare will continue serving the previous certificate until the new one is validated. If the certificate was previously using DigiCert and you do not update this value, Cloudflare will choose the issuing CA upon renewal.
     - *Dashboard*: Update the value for **SSL certificate authority** to either be **Let's Encrypt** or **Google Trust Services**.
