@@ -114,7 +114,7 @@ Use this selector to block domains (and optionally, [IP addresses](/cloudflare-o
 | Content Categories | `any(dns.content_category[*] in {1})` |
 
 {{<Aside>}}
-Using the Content Categories selector will display an additional option under **Configure policy settings** called **Filter traffic by resolved IP category**. Enabling this option will result in filtering of the resolved IP by the matched category as well. We recommend you leave this option disabled, as many domains use reverse proxies which can match multiple categories.
+Using this selector with an Allow or Block action will reveal the option to [Filter by resolved IP category](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category) under **Configure policy settings**.
 {{</Aside>}}
 
 ### DNS CNAME Record
