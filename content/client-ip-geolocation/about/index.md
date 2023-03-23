@@ -44,6 +44,6 @@ Jane connects to Cloudflare’s edge using a secure tunnel. Cloudflare operates 
 
 A naive geolocation implementation would provide unacceptably inaccurate information. It would have Jane geolocated to Minneapolis, which is in a totally different state — Minnesota instead of Montana — and Designated Marketing Area — Glendive, MT, the [country’s smallest DMA](https://mediatracks.com/resources/nielsen-dma-rankings-2020/), instead of Minneapolis, MN — from her true location. From a content distribution perspective, this level of geolocation is **not acceptable**.
 
-Instead, Cloudflare uses its [own geolocation mapping](#how-it-works-detailed) to provide much more accurate information. Cloudflare’s edge would geolocate Jane’s client IP (`108.59.112.0`) to Glendive and select an egress IP address of `a.b.c.d` from its list of available egress IP addresses based on this geolocation result.
+Instead, Cloudflare uses its [own geolocation mapping](#technical-explanation) to provide much more accurate information. Cloudflare’s edge would geolocate Jane’s client IP (`108.59.112.0`) to Glendive and select an egress IP address of `a.b.c.d` from its list of available egress IP addresses based on this geolocation result.
 
 Jane attempts to watch live television via an over-the-top (OTT) video provider. The video provider’s origin sees a connection from `a.b.c.d`. A geolocation lookup on `a.b.c.d` returns Glendale, MT, and Jane is able to access the linear video content because the OTT provider is able to geolocate the VPN traffic to the true client location.
