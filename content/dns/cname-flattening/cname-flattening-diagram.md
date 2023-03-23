@@ -42,34 +42,36 @@ In this case, the process to respond to queries for `domain.test` directly with 
 ```mermaid
 flowchart TD
 accTitle: CNAME flattening diagram
-accDescr: Diagram of CNAME flattening process when there is a request for a domain in Cloudflare and the zone has a CNAME record at root that points to an external A record.
- subgraph X [" "]
-  direction TB
+accDescr: Diagram of CNAME flattening process when there is a request for a domain in Cloudflare and the zone has a CNAME record at apex that points to an external A record.
   A((User)) <--query for domain.test--> B[[Resolvers]] --> C
- end
+  C["Question: 
+  <code>domain.test IN A</code>"]
+ 
  subgraph Y[Cloudflare DNS]
-  direction TB
-   C["Question: 
-   domain.test IN A"] 
-   C --- E{{Look up record}} --> G["Answer: 
-   domain.test 3600 CNAME external-origin.test
+ direction RL
+  D{{Look up record}} --> G["Answer:
+  <code>domain.test 3600 CNAME external-origin.test</code>
 
-   This means that domain.test is a CNAME at the zone apex
-   Forced CNAME flattening is enabled"] --- H{{Resolve external-origin.test}}
-   K{{Append answer with overwritten query name}} --> L["Answer: 
-   domain.test 7200 IN A 192.0.2.1"] --- M{Proxy status}
-   M --Proxied--> O["Answer: 
-   domain.test 300 IN A {$Cloudflare IP}
-   domain.test 300 IN A {$Cloudflare IP}"] --> B
-   M --DNS only--> N["Answer:
-   domain.test 3600 IN A 192.0.2.1"] --> B
- end
- subgraph Z ["External DNS provider"]
-  direction RL
-    H --- J["Answer: 
-   external-origin.test 7200 IN A 192.0.2.1"] --- K
+  This means that domain.test is a CNAME at the zone apex
+  Forced CNAME flattening is enabled"] --- H{{Resolve external-origin.test}}
+  K{{Append answer with overwritten query name}} --> L["Answer:
+  <code>domain.test 7200 IN A 192.0.2.1</code>"] --- M{Proxy status}
+  M --Proxied--> O["Answer:
+  <code>domain.test 300 IN A {$Cloudflare IP}</code>
+  <code>domain.test 300 IN A {$Cloudflare IP}</code>"]
+  M --DNS only--> N["Answer:
+  <code>domain.test 3600 IN A 192.0.2.1</code>"]
  end
  
+ subgraph Z [External DNS provider]
+  J["Answer:
+  <code>external-origin.test 7200 IN A 192.0.2.1</code>"]
+ end
+ 
+ C --> D
+ H --- J --- K
+ O --> B
+ N --> B
 ```
 
 ## Aspects to consider
