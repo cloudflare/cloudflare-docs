@@ -18,7 +18,7 @@ Cloudflare Rules allows you to make adjustments to requests and responses, confi
 ## Products
 
 {{<feature header="Transform Rules" href="/rules/transform/">}}
-Adjust the URI path, query string, and HTTP headers of requests and responses at the edge.
+Adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.
 {{</feature>}}
 
 {{<feature header="URL normalization" href="/rules/normalization/" cta="Configure URL normalization">}}

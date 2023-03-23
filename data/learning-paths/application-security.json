@@ -178,7 +178,7 @@
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/200170056",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge'>Managed Challenge</a> page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
             "url_path": "/fundamentals/security/challenge-passage/",

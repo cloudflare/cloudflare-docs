@@ -47,6 +47,19 @@ This example enabled the specific flag `formdata_parser_supports_files`, which i
 
 Most developers will not need to use `compatibility_flags`; instead, Cloudflare recommends only specifying `compatibility_date`. `compatibility_flags` can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
 
+### Node.js compatibility flag
+
+A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the `nodejs_compat` compatibility flag to your `wrangler.toml`:
+
+```toml
+---
+header: wrangler.toml
+---
+compatibility_flags = [ "nodejs_compat" ]
+```
+
+As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
+
 ## Change history
 
 Newest changes are listed first.

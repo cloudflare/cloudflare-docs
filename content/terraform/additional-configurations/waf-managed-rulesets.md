@@ -32,14 +32,14 @@ For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/man
 
 ## Deploy managed rulesets
 
-The following example deploys two managed rulesets to a zone using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
+The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
   zone_id     = "<ZONE_ID>"
   name        = "Managed WAF entry point ruleset"
-  description = ""
+  description = "Zone-level WAF Managed Rules config"
   kind        = "zone"
   phase       = "http_request_firewall_managed"
 
@@ -68,6 +68,52 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   }
 }
 ```
+
+<details>
+<summary>Account-level example configuration</summary>
+<div>
+
+{{<Aside type="note" header="Before you start">}}
+* Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+
+* Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
+{{</Aside>}}
+
+The following example deploys two managed rulesets to the account with ID `<ACCOUNT_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
+
+```tf
+resource "cloudflare_ruleset" "account_level_managed_waf" {
+  account_id  = "<ACCOUNT_ID>"
+  name        = "Managed WAF entry point ruleset"
+  description = "Account-level WAF Managed Rules config"
+  kind        = "root"
+  phase       = "http_request_firewall_managed"
+
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+    }
+    expression = "http.host in {\"api.example.com\" \"store.example.com\"} and cf.zone.plan eq \"ENT\""
+    description = "Execute Cloudflare Managed Ruleset on my account-level phase entry point ruleset"
+    enabled = true
+  }
+  # Execute Cloudflare OWASP Core Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "4814384a9e5d4991b9815dcfc25d2f1f"
+    }
+    expression = "http.host in {\"api.example.com\" \"store.example.com\"} and cf.zone.plan eq \"ENT\""
+    description = "Execute Cloudflare OWASP Core Ruleset on my account-level phase entry point ruleset"
+    enabled = true
+  }
+}
+```
+
+</div>
+</details>
 
 ## Configure skip rules
 

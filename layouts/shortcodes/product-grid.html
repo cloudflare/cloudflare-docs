@@ -4,18 +4,33 @@
 {{- range readDir "./data/" -}}
 {{- if in .Name ".yml" -}}
 {{- $productName :=  replace .Name ".yml" "" -}}
-{{ $dataArray = $dataArray | append (index $.Site.Data $productName) }}
+{{- $productData := index $.Site.Data $productName -}}
+{{- with index $productData "product" -}}
+{{- $dataArray = $dataArray | append 
+(dict "group" .group "title" .title  "show" (default true .show) "url" 
+.url "wrap" (default false .wrap)) -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
-{{- range $index, $item := $dataArray -}}
-{{- with index (index $item "product") "group" -}}
-{{- if ne (index (index $item "product") "show") false -}}
+{{- range .Site.Pages  -}}
+{{- $relpermalink := .RelPermalink -}}
+{{- with index .Params "product_grid"  -}}
+{{- $dataArray = $dataArray | append (dict "group" .group "title" .title 
+ "show" (default false .show) "url" $relpermalink "wrap" (default false .wrap)) -}}
+{{- end -}}
+{{- end -}}
+
+{{- range $dataArray -}}
+{{- with .group -}}
+
 {{ $availableOptions = $availableOptions | append . }}
 {{- end -}}
 {{- end -}}
-{{- end -}}
+
 {{- $availableOptions = $availableOptions | uniq | sort -}}
+
+{{- $dataArray = sort $dataArray ".title" -}}
 
 <style>
   .QuadBlockGrid {
@@ -46,6 +61,10 @@
     border-bottom: 1px solid gray;
   }
 
+  .ProductGrid--link {
+    border-left: 5px solid #F6821F;
+  }
+
   @media screen and (min-width: 600px) {
     .ProductGrid--content {
       --n: 2;
@@ -66,6 +85,15 @@
     .ProductGrid--content {
       --n: 4;
     }
+  }
+
+  .emptyState a {
+    text-decoration: underline;
+  }
+
+  .emptyState {
+    font-size: 1.5em;
+    padding-left: 2.5em
   }
 
 </style>
@@ -96,22 +124,21 @@
     </h2>
   <div class="ProductGrid--content">
     {{- range $dataArray -}} 
-      {{- if and (eq $currentOption .product.group) (ne .product.show false) -}}
-        {{- $product := .product -}} 
-        {{- $wrap := default false $product.wrap -}}
+      {{- if and (eq $currentOption .group) (ne .show false) -}}
+        {{- $wrap := default false .wrap -}}
         <a
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
-          href="{{ $product.url }}"
+          href="{{ .url }}"
         >
-          <div>{{ safeHTML .logo }}</div>
-          <span>{{ $product.title }}</span>
+          <span>{{ .title }}</span>
         </a>
         {{- end -}}
       {{- end -}}
   </div>
   </div>
   {{- end -}}
+  <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="/search/">full search</a>.</p>
 </div>
 </div>
 
@@ -137,13 +164,13 @@
     }
 
     var productAreas = document.getElementsByClassName("ProductGridSection")
+    var visibleSections = false;
+
     for (section of productAreas) {
-      console.log(section)
       var visibleLinks = false;
       var links = section.getElementsByClassName("ProductGrid--link")
       for (link of links) {
         if (link.style.display !== "none") {
-          console.log(link)
           visibleLinks = true
         }
       }
@@ -151,7 +178,18 @@
         section.style.display = "none";
       } else {
         section.style.display = "";
+        visibleSections = true
       }
     }
+
+    var emptyStateMessage = document.getElementById("emptyState")
+    if (!visibleSections) {
+      emptyStateMessage.style.display = "";
+      emptyStateMessage.children[0].style.display = "";
+      emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + query.toLowerCase() + "&t=Docs" )
+    } else {
+      emptyStateMessage.style.display = "none";
+    }
+
   }
 </script>

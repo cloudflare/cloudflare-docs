@@ -29,7 +29,6 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 - A non-interactive challenge page (similar to the current [JS Challenge](#js-challenge)).
 - A custom interactive challenge (such as click a button).
 - Private Access Tokens (using recent Apple operating systems).
-- A CAPTCHA challenge.
 
 #### Available products
 
@@ -45,31 +44,23 @@ Currently, **Managed Challenge** actions are available in the following security
 - [Firewall rules](/firewall/)
 - [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
 
-{{<Aside type="note">}}
-
-For domains on Free plan, any firewall rules set to **Legacy CAPTCHA** have become intelligent **Managed Challenge**. As a free customer, you cannot opt out of Managed Challenges.
-
-{{</Aside>}}
-
 ### JS challenge
 
 With a JS challenge, Cloudflare presents challenge page that requires no interaction from a visitor, but rather JavaScript processing by their browser.
 
 The visitor will have to wait until their browser finishes processing the JavaScript, which should be less than five seconds.
 
-### Legacy CAPTCHA challenge
+### Interactive Challenge
 
-CAPTCHA challenges require a visitor to interact with a visual image, usually identifying specific letters or characteristics of the image. Cloudflare does not recommend using Legacy CAPTCHAs.
+Interactive challenges require a visitor to interact with the challenge page, presenting the visitor with an interactive challenge to solve. Cloudflare does not recommend using Interactive Challenges.
 
-For more details about CAPTCHAs in general, refer to [How CAPTCHAs work](https://www.cloudflare.com/learning/bots/how-captchas-work/).
-
-For more on why Cloudflare does not recommend using CAPTCHAs, refer to our [blog](https://blog.cloudflare.com/end-cloudflare-captcha/).
+For more on why Cloudflare does not recommend using Interactive Challenge, in favor of Managed Challenge, refer to our [blog](https://blog.cloudflare.com/end-cloudflare-captcha/).
 
 ---
 
 ## Browser support
 
-When your application sends a challenge, your visitors either receive a non-interactive challenge page or a CAPTCHA.
+When your application sends a challenge, your visitors either receive a non-interactive or an interactive challenge page.
 
 ### Common issues
 
@@ -87,13 +78,13 @@ If your visitors encounter issues using a major browser besides Internet Explore
 
 ---
 
-## Resolve a CAPTCHA
+## Resolve a challenge
 
-If a visitor encounters a CAPTCHA, Cloudflare employees cannot remove that Captcha. Only the website owner can configure their Cloudflare settings to stop the CAPTCHA.
+If a visitor encounters a challenge, Cloudflare employees cannot remove that challenge. Only the website owner can configure their Cloudflare settings to stop the challenge being presented.
 
-When observing a Cloudflare Captcha page, a visitor could:
+When observing a Cloudflare Challenge page, a visitor could:
 
-- Successfully pass the Captcha to visit the website. Cookies and JavaScript support are required in browser settings to pass the captcha.
+- Successfully pass the challenge to visit the website. Cookies and JavaScript support are required in browser settings to pass the challenge.
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
-- Check their antivirus or firewall service to make sure it is not blocking access to the CAPTCHA image.
+- Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).

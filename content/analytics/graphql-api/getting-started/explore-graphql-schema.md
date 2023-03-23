@@ -35,7 +35,7 @@ The **Documentation Explorer** opens and displays a list of available objects:
 
 Objects in the **Documentation Explorer** use this syntax:
 
-```code
+```txt
   object-name: object-type-definition
 ```
 

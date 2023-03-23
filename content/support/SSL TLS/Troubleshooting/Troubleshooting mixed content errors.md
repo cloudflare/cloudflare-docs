@@ -58,11 +58,15 @@ There are two methods to resolve mixed content errors.
 
 1\. Load all resources via your HTML source without specifying the HTTP or HTTPS protocols. For example:
 
-     _//domain.com/path/to.file_
+```
+//domain.com/path/to.file
+```
 
-     instead of
+unstead of
 
-     _http://domain.com/path/to.file_
+```
+http://domain.com/path/to.file
+```
 
 2\. Depending on your Content Management System, check for plugins that automatically rewrite HTTP resources to HTTPS. Within the **SSL/TLS** app **Edge Certificates** tab, Cloudflare provides such a service via [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites).
 

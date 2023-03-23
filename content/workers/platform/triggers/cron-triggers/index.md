@@ -72,7 +72,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
   - 6PM on the last Friday of the month
 
-- `23 59 LW * *`
+- `59 23 LW * *`
   - 11:59PM on the last weekday of the month
 
 {{</definitions>}}

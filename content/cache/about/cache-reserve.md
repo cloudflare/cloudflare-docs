@@ -1,6 +1,10 @@
 ---
 title: Cache Reserve (beta)
 pcx_content_type: concept
+product_grid:
+  show: true
+  title: Cache Reserve
+  group: Performance
 ---
 
 {{<beta>}} Cache Reserve {{</beta>}}
@@ -43,10 +47,10 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
+- Cache Reserve file limits are the same as [R2 limits](/r2/reference/limits/). Note that [CDN cache limits](/cache/about/default-cache-behavior/#customization-options-and-limitations) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
 - Vary for Images is currently not compatible with Cache Reserve.
-- Requests to [R2 public buckets linked to a zone's domain](/r2/data-access/public-buckets/) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
+- Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets//) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
 
 ## Usage
 
@@ -60,8 +64,8 @@ Cache Reserve monthly operations and storage usage are viewable in the dashboard
 
 Cache Reserve charges based on the total volume of data stored, along with two classes of operations on that data:
 
-- [Class A operations](/r2/platform/pricing/#class-a-operations) which are more expensive and tend to mutate state.
-- [Class B operations](/r2/platform/pricing/#class-b-operations) which tend to read existing state.
+- [Class A operations](/r2/pricing/#class-a-operations) which are more expensive and tend to mutate state.
+- [Class B operations](/r2/pricing/#class-b-operations) which tend to read existing state.
 
 In most cases, a Cache Reserve miss will result in both one class A and one class B operation, and a Cache Reserve hit will result in one class B operation. Assets larger than 1 GB will incur more operations proportional to their size.
 

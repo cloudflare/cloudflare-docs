@@ -61,6 +61,12 @@ Las señales frecuentes de que estás bajo ataque DDoS incluyen:
 -   Hay picos inesperados en el gráfico de **solicitudes a través de Cloudflare** o **ancho de banda** en tu aplicación **Analytics** de Cloudflare.
 -   Hay solicitudes extrañas en los registros de tu servidor web de origen que no coinciden con el comportamiento normal de los visitantes.
 
+{{<Aside type="note">}}
+Si estás siendo blanco de un ataque DDoS, consulta nuestra guía sobre
+[cómo responder a un ataque
+DDoS](https://support.cloudflare.com/hc/es-es/articles/200170196-I-am-under-DDoS-attack-what-do-I-do-).
+{{</Aside>}}
+
 ___
 
 ## ¿Me está atacando Cloudflare?
@@ -71,6 +77,15 @@ Hay dos escenarios comunes en los que se percibe de manera falsa que Cloudflare 
 -   El atacante está falsificando las IP de Cloudflare. Cloudflare solo envía tráfico a tu servidor web de origen a través de unos puertos específicos, a menos que utilices Cloudflare Spectrum.
 
 Lo ideal, ya que Cloudflare es un proxy inverso, es que tu proveedor de hospedaje observe el tráfico de ataque que se conecta desde las [direcciones IP de Cloudflare](https://www.cloudflare.com/ips/). En cambio, si ves conexiones de direcciones IP que no pertenecen a Cloudflare, el ataque se dirige contra tu servidor web de origen. Cloudflare no puede detener los ataques directamente a tu dirección IP de origen porque el tráfico omite la red de Cloudflare.
+
+{{<Aside type="tip">}}
+Si un atacante apunta directamente a tu servidor web de origen, solicita
+a tu proveedor de hospedaje que cambie tus IP de origen y actualiza la
+información de IP en tu aplicación **DNS** de Cloudflare. Confirma que
+todos los registros DNS posibles sean de nube naranja y que tus
+servidores de nombre sigan apuntando a Cloudflare (a no ser que uses una
+configuración de CNAME) antes de cambiar tu IP de origen.
+{{</Aside>}}
 
 ___
 

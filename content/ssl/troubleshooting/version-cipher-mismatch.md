@@ -2,6 +2,9 @@
 title: ERR_SSL_VERSION_OR_CIPHER_MISMATCH
 pcx_content_type: troubleshooting
 weight: 1
+meta:
+    title: Fix VERSION_OR_CIPHER_MISMATCH
+    description: Learn how to troubleshoot ERR_SSL_VERSION_OR_CIPHER_MISMATCH when using Cloudflare SSL/TLS.
 ---
 
 # ERR_SSL_VERSION_OR_CIPHER_MISMATCH

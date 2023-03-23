@@ -639,9 +639,31 @@ SECRET_KEY=value
 
 ## Node compatibility
 
-You can add experimental Node compatibility to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+If you depend on Node.js APIs, either directly in your own code or via a library you depend on, you can either use a subset of Node.js APIs available directly in the Workers runtime, or add polyfills for a subset of node.js APIs to your own code.
 
-It is not possible to polyfill all Node APIs or behaviours, but it is possible to polyfill some of them. APIs such as `fs` cannot be replicated as Workers has no concept of a filesystem.
+### Use runtime APIs directly
+
+A [growing subset of Node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
+
+```toml
+---
+header: wrangler.toml
+---
+compatibility_flags = [ "nodejs_compat" ]
+```
+
+### Add polyfills using Wrangler
+
+Add polyfills for subset of Node.js APIs to your Worker by adding the `node_compat` key to your `wrangler.toml` or by passing the `--node-compat` flag to `wrangler`.
+
+```toml
+---
+header: wrangler.toml
+---
+node_compat = true
+```
+
+It is not possible to polyfill all Node APIs or behaviors, but it is possible to polyfill some of them.
 
 This is currently powered by `@esbuild-plugins/node-globals-polyfill` which in itself is powered by [rollup-plugin-node-polyfills](https://github.com/ionic-team/rollup-plugin-node-polyfills/).
 

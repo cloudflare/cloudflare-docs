@@ -15,21 +15,19 @@ Welcome to Cloudflare Zero Trust. This guide covers the main steps you need to t
 
 ## Start from the Cloudflare dashboard
 
-1. On your Account Home in the [Cloudflare dashboard](https://dash.cloudflare.com/), click on the **Zero Trust** icon.
+1. On your Account Home in the [Cloudflare dashboard](https://dash.cloudflare.com/), select the **Zero Trust** icon.
 
 2. On the onboarding screen, choose a [team name](/cloudflare-one/glossary/#team-name).
 
 3. Complete your onboarding by selecting a subscription plan and entering your payment details. If you chose the **Zero Trust Free plan**, please note this step is still needed, but you will not be charged.
 
-4. Welcome to the Zero Trust dashboard! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
-
-    ![Cloudflare Zero Trust dashboard home](/cloudflare-one/static/documentation/quickstart/quickstart-page.png)
+4. Welcome to Zero Trust! Your account has been created. You can now explore a list of one-click actions we have designed to help you kickstart your experience with Cloudflare Zero Trust.
 
 ## Install the WARP client on your devices
 
 If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next steps you need to take:
 
-1. **Set up a login method.** Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) on the Zero Trust Dashboard. This is the login method your users will utilize when authenticating to add a new device to your Zero Trust setup.
+1. **Set up a login method.** Configure [One-time PIN](/cloudflare-one/identity/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/identity/idp-integration/) in Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Zero Trust setup.
 
 2. **Next, define [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions)**. Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 

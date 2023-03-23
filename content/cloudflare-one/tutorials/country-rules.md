@@ -23,7 +23,7 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 ## Create an approved country list
 
-Navigate to the `Groups` page in the `My Teams` section of the Zero Trust dashboard. Click `Add a Group`.
+Navigate to the `Groups` page in the `My Teams` section of Zero Trust. Click `Add a Group`.
 
 Groups contain criteria that you can reuse in [Access policies](/cloudflare-one/policies/access/). Additionally, groups can allow you to nest certain operators inside of rules in the [Access policy](/cloudflare-one/policies/access/).
 
@@ -35,7 +35,7 @@ Click `Add a Group`. In the next page, select `Country` from the `Include` dropd
 
 You can now build [Access policies](/cloudflare-one/policies/access/) that will require at least one country in the approved countries list. You can build these policies for SaaS or self-hosted applications. This example will add the requirement to an existing application, but you can also add it when creating a new application.
 
-1.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+1.  Navigate to the `Applications` page in the `Access` section of Zero Trust.
 1.  Choose an application and click `Edit`.
 1.  Select the existing rule and click `Edit`.
 1.  Click `+ Add require`.

@@ -26,12 +26,6 @@ This Tenant structure gives your account streamlined administrative access to cu
 
 At the same time, this structure keeps your customers' data and settings separate from each other.
 
-## Limitations
-
-Since non-Enterprise accounts can only have one Super administrator, your account will be the only Super administrator allowed on their account.
-
-For more details, refer to [Super administrators](/fundamentals/account-and-billing/members/roles/#change-super-administrator).
-
 [^1]: {{<render file="_account-definition.md">}}
 [^2]: {{<render file="_user-definition.md">}}
 [^3]: {{<render file="_resource-definition.md">}}

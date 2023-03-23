@@ -50,7 +50,7 @@ Next, modify the existing rule order by dragging each rule into the desired orde
 
 The HTTP filtering policy created will apply to any HTTP requests sent from configured locations or enrolled devices. You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
+Navigate to the `Settings` section of Zero Trust and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
 
 ## Determine which devices can enroll
 
@@ -75,7 +75,7 @@ To inspect traffic, Cloudflare Gateway requires that a [certificate be installed
 To download the Cloudflare certificate:
 
 - Follow the link provided in [these instructions](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
-- Find the certificate in the Zero Trust Dashboard, by navigating to **Settings > Devices > Certificates**.
+- Find the certificate in Zero Trust, by navigating to **Settings > Devices > Certificates**.
 
 ## Enable the Cloudflare proxy
 
@@ -93,7 +93,7 @@ Next, enable TLS decryption. This will tell Cloudflare to begin decrypting traff
 
 1.  Under the **Account** tab, click **Login with Cloudflare for Teams**.
 
-1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it on the Zero Trust Dashboard under **Settings > General**.
+1.  Input your [team name](/cloudflare-one/glossary/#team-name). You can find it in Zero Trust under **Settings > General**.
 
     ![Team name used to configure the WARP app on a desktop device.](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/org-name.png)
 

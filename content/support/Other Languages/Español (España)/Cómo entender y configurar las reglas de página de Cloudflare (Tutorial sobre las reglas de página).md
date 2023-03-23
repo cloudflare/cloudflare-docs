@@ -13,6 +13,15 @@ title: Cómo entender y configurar las reglas de página de Cloudflare (Tutorial
 
 Puedes definir una regla de página para activar una o más acciones siempre que coincida un determinado patrón de URL. Las reglas de página están disponibles en la aplicación **Reglas**, en la pestaña **Reglas de página**. 
 
+{{<Aside type="warning">}}
+Las reglas de página requieren un registro DNS \"[redireccionado
+mediante
+proxy](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)\"
+para que funcione la regla de tu página. Las reglas de página no se
+aplicarán a los nombres de servidor que no existan en el DNS o que no se
+dirijan a Cloudflare.
+{{</Aside>}}
+
 El número predeterminado de reglas de página permitidas depende del plan de dominio como se muestra a continuación.
 
 | **Plan** | **Reglas de página permitidas** |
@@ -64,6 +73,11 @@ Es importante comprender dos comportamientos básicos de las reglas de página:
 -   Solo la regla de página de coincidencia de prioridad más alta surte efecto en una solicitud.
 -   Las reglas de página se priorizan en orden descendente en el panel de control de Cloudflare. La regla de mayor prioridad estará en la parte superior.
 
+{{<Aside type="tip">}}
+Te recomendamos que ordenes las reglas por prioridad, de las más
+específicas a las menos específicas.
+{{</Aside>}}
+
 Una regla de página coincide con un patrón de URL basado en el siguiente formato (compuesto por cinco segmentos): <scheme>://<hostname><:port>/<path>?<query\_string>
 
 Un ejemplo de URL con estos cuatro segmentos se parece a:
@@ -91,6 +105,20 @@ Los pasos para crear una regla de página son:
 8.  Para guardar, haz clic en una de las siguientes opciones:
     -   **Guardar como borrador** para guardar la regla y dejarla desactivada.
     -   **Guardar e implementar** para guardar la regla y activarla inmediatamente.
+
+{{<Aside type="note">}}
+**Nota:** No admitimos caracteres no ASCII (p.ej. punycode/dominio
+unicode) en reglas de página. En su lugar, puedes codificar la cadena de
+URL utilizando, por ejemplo, [Punycode
+converter](https://www.punycoder.com/ "Convertidor de Punycode") y
+funcionará.
+{{</Aside>}}
+
+{{<Aside type="tip">}}
+Consulta la sección [reglas de página recomendadas a tener en
+cuenta](https://support.cloudflare.com/hc/es-es/articles/224509547 "Reglas de página recomendadas que se han de tener en cuenta")
+si necesitas ideas sobre los tipos de reglas de página que puedes crear.
+{{</Aside>}}
 
 ___
 
@@ -157,6 +185,12 @@ que termina siendo reenviado a:
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">/support/static/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
 
 Para usar un carácter literal _$_ en la URL de reenvío, sortéalo añadiendo una barra invertida (\\) delante: _\\$_.
+
+{{<Aside type="warning">}}
+Evita crear un redireccionamiento en el que el dominio apunte a sí mismo
+como destino. Esto podría ocasionar un error de redireccionamiento
+infinito y tu sitio no se podría servir a los visitantes.
+{{</Aside>}}
 
 ___
 
