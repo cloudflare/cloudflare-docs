@@ -7,7 +7,7 @@ title: assert
 
 {{<render file="nodejs-compat-howto.md">}}
 
-The assert module in Node.js provides a number of useful assertions that are useful when building tests.
+The `assert` module in Node.js provides a number of useful assertions that are useful when building tests.
 
 ```js
 import {
@@ -31,7 +31,7 @@ await doesNotReject(async () => { throw new Error('boom') }); // fails! throws A
 ```
 
 {{<Aside type="note">}}
-In the Workers implementation of assert, all assertions run in what Node.js calls the "strict assertion mode", which means that non-strict methods behave like their corresponding strict methods. For example, `deepEqual()` will behave like `deepStrictEqual()`.
+In the Workers implementation of `assert`, all assertions run in, what Node.js calls, the strict assertion mode. In strict assertion mode, non-strict methods behave like their corresponding strict methods. For example, `deepEqual()` will behave like `deepStrictEqual()`.
 {{</Aside>}}
 
-For more, refer to the [Node.js documentation for assert](https://nodejs.org/dist/latest-v19.x/docs/api/assert.html)].
+Refer to the [Node.js documentation for `assert`](https://nodejs.org/dist/latest-v19.x/docs/api/assert.html) for more information.

@@ -7,7 +7,7 @@ title: EventEmitter
 
 {{<render file="nodejs-compat-howto.md">}}
 
-An EventEmitter is an object that emits named events that cause listeners to be called.
+An `EventEmitter` is an object that emits named events that cause listeners to be called.
 
 ```js
 import { EventEmitter } from 'node:events';
@@ -20,7 +20,7 @@ emitter.on('hello', (...args) => {
 emitter.emit('hello', 1, 2, 3);
 ```
 
-The implementation in the Workers runtime fully supports the entire Node.js EventEmitter API, including the `captureRejections` option that allows improved handling of async functions as event handlers:
+The implementation in the Workers runtime fully supports the entire Node.js `EventEmitter` API. This includes the `captureRejections` option that allows improved handling of async functions as event handlers:
 
 ```js
 const emitter = new EventEmitter({ captureRejections: true });
@@ -32,4 +32,4 @@ emitter.on('error', (err) => {
 });
 ```
 
-For more, refer to the [Node.js documentation for EventEmitter](https://nodejs.org/api/events.html#class-eventemitter)].
+Refer to the [Node.js documentation for `EventEmitter`](https://nodejs.org/api/events.html#class-eventemitter) for more information.

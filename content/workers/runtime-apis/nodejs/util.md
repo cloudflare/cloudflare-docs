@@ -7,11 +7,11 @@ title: util
 
 {{<render file="nodejs-compat-howto.md">}}
 
-## Promisify/Callbackify
+## promisify/callbackify
 
-The promisify and callbackify APIs in Node.js provide a means of bridging between a Promise-based programming model and a callback-based model.
+The `promisify` and `callbackify` APIs in Node.js provide a means of bridging between a Promise-based programming model and a callback-based model.
 
-The promisify method allows taking a Node.js-style callback function and converting it into a Promise-returning async function:
+The `promisify` method allows taking a Node.js-style callback function and converting it into a Promise-returning async function:
 
 ```js
 import { promisify } from 'node:util';
@@ -29,7 +29,7 @@ const promisifiedFoo = promisify(foo);
 await promisifiedFoo(args);
 ```
 
-Similarly, callbackify converts a Promise-returning async function into a Node.js-style callback function:
+Similarly to `promisify`, `callbackify` converts a Promise-returning async function into a Node.js-style callback function:
 
 ```js
 import { callbackify } from 'node:util';
@@ -45,13 +45,13 @@ callbackifiedFoo(args, (err, value) => {
 });
 ```
 
-Together these utilities make it easy to properly handle all of the the challenges that come with with properly bridging between callbacks and promises.
+`callbackify` and `promisify` make it easy to handle all of the the challenges that come with bridging between callbacks and promises.
 
-For more, refer to the Node.js documentation for [callbackify](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utilcallbackifyoriginal) and [promisify](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utilpromisifyoriginal).
+Refer to the [Node.js documentation for `callbackify`](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utilcallbackifyoriginal) and [Node.js documentation for `promisify`](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utilpromisifyoriginal) for more information.
 
 ## util.types
 
-The util.types API provides a reliable and generally more efficient way of checking that values are instances of various built-in types.
+The `util.types` API provides a reliable and efficient way of checking that values are instances of various built-in types.
 
 ```js
 import { types } from 'node:util';
@@ -73,4 +73,4 @@ types.isAsyncFunction(async function foo() {});  // Returns true
 The Workers implementation currently does not provide implementations of the `util.types.isExternal()`, `util.types.isProxy()`, `util.types.isKeyObject()`, or `util.type.isWebAssemblyCompiledModule()` APIs.
 {{</Aside>}}
 
-For more about `util.types`, refer to the [Node.js documentation for util](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utiltypes)].
+For more about `util.types`, refer to the [Node.js documentation for util](https://nodejs.org/dist/latest-v19.x/docs/api/util.html#utiltypes).

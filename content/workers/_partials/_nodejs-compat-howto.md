@@ -6,5 +6,5 @@ _build:
 ---
 
 {{<Aside type="note">}}
-To use node.js APIs in your Worker, add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`.
+To use Node.js APIs in your Worker, add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`.
 {{</Aside>}}
