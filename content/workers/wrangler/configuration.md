@@ -643,7 +643,7 @@ If you depend on node.js APIs, either directly in your own code or via a library
 
 ### Use runtime APIs directly
 
-A [growing subset](/workers/runtime-apis/nodejs) of node.js APIs are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` compatibility flag](/workers/platform/compatibility-dates/#nodejs-compat) to your `wrangler.toml`:
+A [growing subset of node.js APIs](/workers/runtime-apis/nodejs/) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code. To enable these APIs in your Worker, add the [`nodejs_compat` ](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
 
 ```toml
 ---
