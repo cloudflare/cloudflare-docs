@@ -85,7 +85,7 @@ The **Setup section** allows you to configure a few advanced settings for your a
 
 1.  Configure [Cross-Origin Resource Sharing (CORS) settings](/cloudflare-one/identity/authorization-cookie/cors/).
 
-1.  Configure **cookie settings**. For more information, you can read about [session management here](/cloudflare-one/identity/users/session-management/#browser-cookies-configuration-options).
+1.  Configure **cookie settings**. For more information, read about [session management](/cloudflare-one/identity/users/session-management/).
 
 1.  Configure **`cloudflared` settings**. For more information, read more about [automatic `cloudflared` authentication](/cloudflare-one/applications/non-http/#automatic-cloudflared-authentication).
 

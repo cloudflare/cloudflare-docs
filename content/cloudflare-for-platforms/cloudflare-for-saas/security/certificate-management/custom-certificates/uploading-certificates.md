@@ -14,7 +14,7 @@ For use cases and limitations, refer to [custom certificates](/cloudflare-for-pl
 
 ### With the dashboard
 
-To upload a custom certificate in the dashboard, follow the steps for [issuing new certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-dashboard), but change the **Certificate type** to **Custom certificate**.
+To upload a custom certificate in the dashboard, follow the steps for [issuing new certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/), but change the **Certificate type** to **Custom certificate**.
 
 For more details on bundle method, refer to [Bundle Methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/)
 

@@ -8,7 +8,7 @@ weight: 2
 
 The Zero Trust Shadow IT Discovery page gives you visibility over which SaaS applications your end users are visiting. This information enables you to create the appropriate Zero Trust or Secure Web Gateway policies in Cloudflare Zero Trust, so that you can have control over the security of your users and data.
 
-On the Shadow IT Discovery page, you can gather information on the [application status](#application-status) and [application type](#application-type) of the applications visited by your users. You can also change an application's status according to your organization's preferences. The page also gives you an overview of metrics such as who your top connected users are, how many applications have been accessed, or how many application logins have failed over a certain period of time.
+On the Shadow IT Discovery page, you can gather information on the [application status](#application-status) and [application type](/cloudflare-one/policies/filtering/application-app-types/#app-types) of the applications visited by your users. You can also change an application's status according to your organization's preferences. The page also gives you an overview of metrics such as who your top connected users are, how many applications have been accessed, or how many application logins have failed over a certain period of time.
 
 Shadow IT Discovery can be found under **Analytics > Access**.
 

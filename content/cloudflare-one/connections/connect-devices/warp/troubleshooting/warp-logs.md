@@ -59,7 +59,7 @@ The `warp-debugging-info-<date>-<time>.zip` archive contains the following files
 | `daemon.log`       | Detailed log of all actions performed by the WARP client, including all communication between the device and Cloudflare's global network.  **Note:** This is the most useful debug log. |
 | `daemon_dns.log`   | Contains detailed DNS logs if **Log DNS queries** was enabled on WARP. |
 | `date.txt`         | Date and time (UTC) when you ran the `warp-diag` command.|
-| `dns-check.txt`    | Verifies that the WARP DNS servers are set as system default. For [operating modes](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) where DNS filtering is enabled, this file contains the IPs of the local WARP DNS proxy (`127.0.2.2:0`, `127.0.2.3:0`, `[fd01:db8:1111::2]:0`, and `[fd01:db8:1111::3]:0`).|
+| `dns-check.txt`    | Verifies that the WARP DNS servers are set as system default. For [operating modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) where DNS filtering is enabled, this file contains the IPs of the local WARP DNS proxy (`127.0.2.2:0`, `127.0.2.3:0`, `[fd01:db8:1111::2]:0`, and `[fd01:db8:1111::3]:0`).|
 | `dns_stats.log`    | Statistics on the DNS queries received and resolved by WARP, generated every two minutes. |
 | `etc-hosts.txt`    | Static DNS config of device. |
 | `gui-launcher.log` | macOS console log showing application launch|

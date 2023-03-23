@@ -12,7 +12,7 @@ You can use [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/) to co
 
 Tunnels are [persistent objects](https://blog.cloudflare.com/argo-tunnels-that-live-forever/) that, once created, do not need to be recreated each time. The connections inside of a Tunnel are ephemeral; your service can restart or be taken offline without deleting and recreating the Tunnel or associated DNS entries.
 
-You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/cloudflare-one/tutorials/multi-origin/) or [multiple protocols simultaneously](/cloudflare-one/tutorials/gitlab/). Doing so requires the use of a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels), which Cloudflare recommends in most use cases. However, if you want to quickly spin up a new Tunnel, you can also use a single command to create, run, and route traffic to a Tunnel.
+You can create and configure Cloudflare Tunnel connections to [support multiple HTTP origins](/cloudflare-one/tutorials/multi-origin/) or [multiple protocols simultaneously](/cloudflare-one/tutorials/gitlab/). Doing so requires the use of a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/), which Cloudflare recommends in most use cases. However, if you want to quickly spin up a new Tunnel, you can also use a single command to create, run, and route traffic to a Tunnel.
 
 {{<Aside>}}
 

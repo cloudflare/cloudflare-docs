@@ -26,7 +26,7 @@ To log in to Cloudflare Zero Trust, go to [Zero Trust](https://one.dash.cloudfla
 
 Configure an IdP following [our detailed instructions](/cloudflare-one/identity/idp-integration/).
 
-Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/identity/idp-integration/#test-idps-on-the-teams-dashboard).
+Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust).
 
 ### Step 3 — Contact your account team
 

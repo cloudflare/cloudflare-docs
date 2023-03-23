@@ -41,4 +41,4 @@ Top Actions refer to the custom labels you created for your widgets.
 
 ## GraphQL
 
-You can use the `turnstileAdaptiveGroups` [dataset in GraphQL](/analytics/graphql-api/features/data-sets/#available-datasets) to get Turnstile widget analytics.
+You can use the `turnstileAdaptiveGroups` [dataset in GraphQL](/analytics/graphql-api/features/data-sets/) to get Turnstile widget analytics.

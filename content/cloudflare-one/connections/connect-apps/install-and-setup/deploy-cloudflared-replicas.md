@@ -25,7 +25,7 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 
 To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it as multiple different processes.
 
-1. To create and configure a tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup).
+1. To create and configure a tunnel, complete Steps 1 through 5 in the [CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/).
 
 2. Next, run your newly created tunnel.
 

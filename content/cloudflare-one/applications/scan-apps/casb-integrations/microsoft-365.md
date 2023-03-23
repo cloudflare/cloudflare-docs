@@ -35,7 +35,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-The Microsoft 365 integration currently scans for the following findings or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/#severity-levels).
+The Microsoft 365 integration currently scans for the following findings or security risks. Findings are grouped by category and then ordered by [severity level](/cloudflare-one/applications/scan-apps/manage-findings/#severity-levels).
 
 ### User account settings
 
