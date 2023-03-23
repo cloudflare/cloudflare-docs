@@ -134,7 +134,7 @@ The output of the `CF-Cache-Status` header shows whether or not a resource is ca
       </td>
       <td colspan="5" rowspan="1">
         The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by
-        either an <code>If-Modified-Since</code> header or an <code>If-None-Match header</code>.
+        either an <code>If-Modified-Since</code> header or an <code>If-None-Match</code> header.
       </td>
     </tr>
     <tr>
