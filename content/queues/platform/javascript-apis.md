@@ -136,7 +136,7 @@ Using [`ctx.waitUntil()`](/workers/runtime-apis/fetch-event/#waituntil) extends 
   
 {{<Aside type="warn">}}
   
-We do not generally recommend using `ctx.waitUntil()` to process message batches directly, as any failure within the context of `waitUntil` can't be caught by your own code.
+We do not generally recommend using `ctx.waitUntil()` to process message batches directly, as any failure within the context of `waitUntil` cannot be caught by your own code.
   
 Instead, process messages directly in the `queue` handler and use `ctx.waitUntil()` for logging or metrics related tasks. 
   
