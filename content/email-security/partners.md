@@ -20,11 +20,9 @@ Parent accounts are treated as containers with no services provisioned. User acc
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. In **Delegated Accounts**, select **Create New Customer**.
-4. Fill out the **Customer Name**. This is the name used for the parent account, and could be the name of a sub-team or other useful name, like `Area 1 Security - Parent` or `Area 1 Security - Customers`.
-5. In **Account Type**, select _Parent_.
-6. For the **Admin User Information** fields, fill out with the information for the person who will be performing administrative duties for this account.
-7. Select **Save**.
+3. In **Delegated Accounts** > **Accounts** select **Create new customer**.
+4. Enter their information, and make sure you select _Parent_ in **Account Type**.
+5. Select **Save**.
 
 Your newly created account should show up in the list. If not, refresh the page.
 
@@ -32,63 +30,28 @@ Your newly created account should show up in the list. If not, refresh the page.
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. In **Delegated Accounts**, select the parent account where you want to create a child account.
+3. In **Delegated Accounts** > **Accounts** select the parent account where you want to create a child account.
 4. Select **Create New customer**.
-5. For **Customer Name**, enter the name for the child account.
-6. In the **Account Type**, select _Advantage_.
-7. For the **Admin User Information** fields, enter the information for the person who will be performing administrative duties for this account.
-8. Scroll down to the **Email Traffic Related Information** section.
-9. Enter your email domain in **Primary Email Domain**.
-10. The number to enter in **Looback Hops** will depend on the place Area 1 is in the chain of events and depends on your configuration. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information on this.
-11. For **Daily Email Volume** and **Number of Email Users** make sure you enter the appropriate values for your organization.
-9. Select **Save**.
+5. Enter their information, and make sure you select _Advantage_ in **Account Type**.
+6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Looback Hops** will depend on your email configuration and where Area 1 is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
+7. For **Daily Email Volume** and **Number of Email Users** make sure you enter the appropriate values for your organization.
+8. Select **Save**.
 
 ## Create users and assign permissions
 
-You can create users at both the parent and child account level. Users created at parent level will have access to all its child accounts. Users created at child level will only have access to the assigned child Account. Child accounts can limit or disable delegated access from the parent. If you modify the Delegated Access controls, make sure you create an admin account in the child first.
+You can create users at both the parent and child account level. Users created at parent level will have access to all its child accounts. Users created at child level will only have access to the assigned child account.
 
-### Create a user at parent account level
+Child accounts can [limit or disable](/email-security/account-setup/manage-parent-permissions/) the level of access allowed from their parent account.
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a parent account.
-2. Go to **Settings** (the gear icon).
-3. In **Users and Actions** > **Users and Permissions** select **Add user**.
-4. Fill the information required, such as email address and name.
-5. In **Permission**, select the appropriate permissions for the account.
-6. Select **Send invitation** to email the user and create their credentials to log in to the Area 1 dashboard.
+If you modify the Delegated Access controls, make sure you create an administrator account in the child first.
 
-### Create a user at child account level
+To create an account at parent level or child level:
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a child account.
-2. Go to **Settings** (the gear icon).
-3. In **Users and Actions** > **Users and Permissions** select **Add user**.
-4. Fill the information required, such as email address and name.
-5. In **Permission**, select the appropriate permissions for the account.
-6. Select **Send invitation** to email the user and create their credentials to log in to the Area 1 dashboard.
-
-### Permissions and delegated permissions
-
-You can delegate the following account permissions for users of parent accounts:
-
-- **Read-only**: Can enter child accounts but is prevented from making any changes to settings, regardless of the customer account settings.
-- **Read-write**: Can enter child accounts and make changes on behalf of the customer.
-
-Child accounts can set the level of access parent accounts have:
-
-- **No external account access**: Prevents all access from the parent account (including Area 1).
-- **Allow external account view-only access** (Default): Allows a parent user to view the customer's portal, including settings.
-- **Allow external account admin access**: Allows a parent user to administer the customer account on their behalf. By selecting this option, the customer is acknowledging consent for outside administration of their account.
-
-To manage permissions:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a child account.
-2. Select **Settings** (the gear icon).
-3. Go to **Delegated Accounts** > **Manage Permissions**, and choose one of the permissions.
-
-Refer to [Permissions](/email-security/account-setup/permissions/) for detailed information on this subject.
+{{<render file="_add-user.md" withParameters="with a parent account or child account depending on what you are trying to create">}}
 
 ## Escalation contacts
 
-You should add escalation contacts so Area 1 can send notifications regarding detection events and critical service related issues. Area 1 highly recommends that contacts have both phone and email contacts.
+You should add escalation contacts so Area 1 can send notifications regarding detection events and critical service related issues. Area 1 highly recommends that these contacts have both phone and email contacts.
 
 Refer to [Escalation contacts](https://developers.cloudflare.com/email-security/account-setup/escalation-contacts/) for more information.
 
@@ -98,13 +61,16 @@ Subscribe to incident status alerts [from Area 1](https://status.area1security.c
 
 ## Domains setup (inline/API)
 
-Refer to the [setup options](/email-security/deployment/) for Area 1 to learn about the best way of deploying Area 1 in your organization. You can choose between two main setup architectures: inline and API.
+Refer to the [setup options](/email-security/deployment/) for Area 1 to learn about the best way of deploying Area 1 in your organization. You can choose between two main setup architectures: 
+
+- Inline deployment
+- API deployment
 
 With an [inline deployment](/email-security/deployment/inline/), Area 1 evaluates email messages before they reach a user’s inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Area 1 after they have already reached a user’s inbox.
 
 ## Classification actions
 
-Area 1 recommends that you quarantine `Malicious` and `SPAM` dispositions. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), or [Area 1](/email-security/email-configuration/domains-and-routing/domains/)
+Area 1 recommends that you quarantine `Malicious` and `SPAM` dispositions. You can configure this directly in [Office 365](/email-security/deployment/inline/setup/office-365-area1-mx/) and [Gsuite](/email-security/deployment/inline/setup/gsuite-area1-mx/), as well as [Area 1](/email-security/email-configuration/domains-and-routing/domains/).
 
 ## Message retraction
 
