@@ -1691,11 +1691,30 @@ span.Tooltip---root {
 .Tooltip[position="bottom"],
 .Tooltip[position="top"] {
   left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
 }
 
 .Tooltip[position="bottom"] {
   top: 100%;
   margin-top: var(--gap);
+}
+
+.Tooltip[position="left"] {
+  right: 100%;
+  margin-right: var(--gap);
+}
+
+.Tooltip[position="left"],
+.Tooltip[position="right"] {
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+
+.Tooltip[position="right"] {
+  left: 100%;
+  margin-left: var(--gap);
 }
 
 .Tooltip[position="top-start"] {
@@ -1720,6 +1739,34 @@ span.Tooltip---root {
   top: 100%;
   margin-top: var(--gap);
   right: 0;
+}
+
+.SkipNavLink {
+  position: absolute;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+}
+
+.SkipNavLink:focus {
+  padding: 0.5em 1em;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+  background: var(--background-color);
+  width: auto;
+  height: auto;
+  clip: auto;
+  z-index: 100;
+  outline: none;
+  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
 }
 
 .TagsFilter {
