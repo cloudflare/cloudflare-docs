@@ -20,17 +20,17 @@ Parent accounts are treated as containers with no services provisioned. User acc
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. In **Delegated Accounts** > **Accounts** select **Create new customer**.
+3. In **Delegated Accounts** > **Accounts**, select **Create new customer**.
 4. Enter their information, and make sure you select _Parent_ in **Account Type**.
 5. Select **Save**.
 
 Your newly created account should show up in the list. If not, refresh the page.
 
-### Create a child account.
+### Create a child account
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
-3. In **Delegated Accounts** > **Accounts** select the parent account where you want to create a child account.
+3. In **Delegated Accounts** > **Accounts**, select the parent account where you want to create a child account.
 4. Select **Create New customer**.
 5. Enter their information, and make sure you select _Advantage_ in **Account Type**.
 6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Looback Hops** will depend on your email configuration and where Area 1 is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
