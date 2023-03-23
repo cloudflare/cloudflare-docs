@@ -72,8 +72,6 @@ You can delegate the following account permissions for users of parent accounts:
 - **Read-only**: Can enter child accounts but is prevented from making any changes to settings, regardless of the customer account settings.
 - **Read-write**: Can enter child accounts and make changes on behalf of the customer.
 
-### Control parent access
-
 Child accounts can set the level of access parent accounts have:
 
 - **No external account access**: Prevents all access from the parent account (including Area 1).
@@ -86,18 +84,13 @@ To manage permissions:
 2. Select **Settings** (the gear icon).
 3. Go to **Delegated Accounts** > **Manage Permissions**, and choose one of the permissions.
 
+Refer to [Permissions](/email-security/account-setup/permissions/) for detailed information on this subject.
+
 ## Escalation contacts
 
 You should add escalation contacts so Area 1 can send notifications regarding detection events and critical service related issues. Area 1 highly recommends that contacts have both phone and email contacts.
 
-To set up escalation contacts:
-
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/) with a child account.
-2. Select **Settings** (the gear icon).
-3. Go to **Subscriptions** > **Escalation Contacts**.
-4. Select **Add Contact** and fill out the name, email and phone fields.
-5. Chose the type of event for which you would like to receive updates for.
-6. Select **Save**.
+Refer to [Escalation contacts](https://developers.cloudflare.com/email-security/account-setup/escalation-contacts/) for more information.
 
 ## Status alerts
 
@@ -116,3 +109,27 @@ Area 1 recommends that you quarantine `Malicious` and `SPAM` dispositions. You c
 ## Message retraction
 
 You can configure message retraction to take post-delivery actions against suspicious email messages. You can retract messages manually or automatically. Refer to [Retract settings](/email-configuration/retract-settings/) for more information.
+
+## TLS enforcement for domains
+
+To add additional TLS requirements for emails coming from certain domains, you can enforce higher levels of SSL/TLS inspection. Refer to [Partner Domains TLS](/email-security/email-configuration/domains-and-routing/partner-domains-tls/) for more information.
+
+## Reports
+
+You can subscribe to [daily and weekly email reports](https://horizon.area1security.com/settings/subscriptions/email-subscriptions), as well as [SIEM events](https://horizon.area1security.com/settings/email/routing/webhooks). For SIEM events, you will need to [configure your SIEM tool](/email-security/reporting/siem-integration/) into Area 1 first.
+
+## Whitelisting and blocklisting senders
+
+If you need to whitelist of blocklist senders, refer to [Allow and block lists](/email-security/email-configuration/lists/).
+
+## Submitting false positives and false negatives
+
+There are several ways of dealing with missed phish or messages flagged as such that are not. Refer to [Phish submissions](/email-security/email-configuration/phish-submissions/) to learn more.
+
+## Best practices
+
+Refer to the following pages to learn more:
+
+1. [Business Email compromise (BEC)](/email-security/email-configuration/enhanced-detections/business-email-compromise/)
+2. [Text add-ons](/email-security/email-configuration/email-policies/text-addons/)
+3. [Search and reports](/email-security/reporting/)
