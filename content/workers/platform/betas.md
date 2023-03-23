@@ -13,8 +13,8 @@ These are the current alphas and betas relevant to the Cloudflare Workers platfo
 
 | Product                       | Public Alpha  | Private Beta | Public Beta | More Info                                                                  |
 |:---                           |    :----:     |    :----:    |    :----:   | -----------                                                                |
-| Email Workers                 |               | ✅           |              |[Blog](https://blog.cloudflare.com/announcing-route-to-workers/)            |
-| D1 Database                   | ✅            |             |              |[Blog](https://blog.cloudflare.com/introducing-d1/)                         |
+| Email Workers                 |               |            | ✅            |[Docs](/email-routing/email-workers/)            |
+| D1 Database                   | ✅            |             |              |[Docs](/d1)                         |
 | Green Compute                 |               |              |  ✅          |[Blog](https://blog.cloudflare.com/earth-day-2022-green-compute-open-beta/) |
 | Pub/Sub                       |               | ✅           |              |[Docs](/pub-sub)                                                            |
 | Queues                        |               |              |  ✅          |[Docs](/queues)                                                             |

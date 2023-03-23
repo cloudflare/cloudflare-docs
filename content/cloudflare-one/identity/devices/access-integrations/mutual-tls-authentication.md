@@ -17,12 +17,6 @@ weight: 3
 </div>
 </details>
 
-{{<Aside type="warning">}}
-
-Adding mTLS to your application using your own certificate authority (CA) is only available on the Cloudflare enterprise plan.
-
-{{</Aside>}}
-
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
@@ -43,34 +37,35 @@ mTLS is checked on a per host basis. Access sets a flag for when a client certif
 
 To enforce mTLS authentication from [Zero Trust](https://one.dash.cloudflare.com):
 
-1. Go to **Access** > **Service Auth** > **Mutual TLS**.
-2. Select **Add mTLS Certificate**.
-3. Give the Root CA any name.
-4. Paste the content of the `ca.pem` file into the **Certificate content** field.
-5. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
+1. Contact your account team to enable mTLS on your account.
+2. Go to **Access** > **Service Auth** > **Mutual TLS**.
+3. Select **Add mTLS Certificate**.
+4. Give the Root CA any name.
+5. Paste the content of the `ca.pem` file into the **Certificate content** field.
+6. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
    These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
 
-6. Select **Save**.
+7. Select **Save**.
 
    If your zone is using an intermediate certificate in addition to the root certificate, upload the entire chain.
 
-7. Next, go to **Access** > **Applications**.
+8. Next, go to **Access** > **Applications**.
 
-8. Find the application you would like to enforce mTLS on and select **Edit**. The application must be included in the **Associated hostnames** list from Step 5.
+9. Find the application you would like to enforce mTLS on and select **Edit**. The application must be included in the **Associated hostnames** list from Step 5.
 
-9. Create a new (or amend an existing) [Access policy](/cloudflare-one/policies/access/).
+10. Create a new (or amend an existing) [Access policy](/cloudflare-one/policies/access/).
 
    If this is for a client who does not need to log in through an IdP, set the policy **Action** to _Service Auth_.
 
-10. Add an mTLS authentication rule using the following selectors:
+11. Add an mTLS authentication rule using the following selectors:
 
     | Selector              | Description                                                                               |
     | --------------------- | ----------------------------------------------------------------------------------------- |
     | **Common Name**       | Only client certificates with a specific common name will be allowed to proceed.          |
     | **Valid Certificate** | Any client certificate that can authenticate with the Root CA will be allowed to proceed. |
 
-11. Save the policy.
+12. Save the policy.
 
 {{<Aside type="warning">}}
 
@@ -221,19 +216,19 @@ Returning to the terminal, generate a client certificate that will authenticate 
 
 The instructions here cover usage with a computer running macOS.
 
-1.  In the same working directory, run the following command to add the client certificate into the macOS Keychain.
+1. In the same working directory, run the following command to add the client certificate into the macOS Keychain.
 
-        {{<Aside type="warning" header="Important">}}
+  {{<Aside type="warning" header="Important">}}
 
-    The command adds the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
-    {{</Aside>}}
+  The command adds the client certificate to the trusted store on your device. Only proceed if you are comfortable doing so and intend to keep these testing certificates safeguarded.
+  {{</Aside>}}
 
-        ```sh
-        $ open client.pem
-        $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
-        ```
+  ```sh
+  $ open client.pem
+  $ security import client-key.pem -k ~/Library/Keychains/login.keychain-db
+  ```
 
-2.  Select the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in **My Certificates**.
+2. Select the certificate in the Keychain list to set the certificate to trusted. Confirm that the certificate is listed in **My Certificates**.
 
 ### Create a CRL
 

@@ -18,21 +18,11 @@ For details on each method available for DCV, refer to the following resources:
 
 {{<directory-listing>}}
 
----
+{{<Aside type="note">}}
 
-### DCV - Full zones
+For guidance on when you need to perform DCV, refer to [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/).
 
-For full zones[^1], the only required action is to confirm the your nameservers are still [pointing to Cloudflare](https://support.cloudflare.com/hc/articles/4426809598605).
-
-{{<render file="_full-zone-acm-dcv.md">}}
-
-### DCV - Partial zones
-
-For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
-
-{{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
-
-{{<render file="_partial-zone-acm-dcv-wildcard.md">}}
+{{</Aside>}}
 
 ---
 

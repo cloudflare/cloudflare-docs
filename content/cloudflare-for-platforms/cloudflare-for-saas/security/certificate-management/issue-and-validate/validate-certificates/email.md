@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Email
-weight: 4
+weight: 5
 meta:
     title: Email domain control validation (DCV)
 ---

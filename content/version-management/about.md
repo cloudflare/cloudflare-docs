@@ -58,7 +58,7 @@ To send traffic to specific environments, send requests to that environment that
 {{<render file="_version-definition.md">}}
 <br/>
 
-When you first [enable](/version-management/how-to/enable/) version management, Cloudflare will automatically create **Version 1** of your zone, which duplicates all existing zone settings. Within each version, you can [update](/version-management/how-to/versions/#change-settings-in-a-version) settings as needed. These settings are saved automatically.
+{{<render file="_enable-default-creation.md">}}
 
 When your version is ready, you would then test and promote it through various environments until it reaches **Production** (or whatever your final environment is).
 

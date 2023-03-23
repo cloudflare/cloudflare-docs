@@ -20,7 +20,7 @@ You can configure the following settings of the Cloudflare OWASP Core Ruleset in
 
 *   **Set the paranoia level.** The available levels are *PL1*, *PL2*, *PL3*, and *PL4* (default).
 *   **Define the score threshold.** The available thresholds are: *Low* (60 and higher), *Medium* (40 and higher – default), or *High* (25 and higher).
-*   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Legacy CAPTCHA*.
+*   **Set the action to perform.** The action is executed when the calculated threat score is greater than the score threshold. The available actions are: *Block* (default), *Managed Challenge*, *JS Challenge*, *Log*, and *Interactive Challenge*.
 *   **Disable specific rules or rules with specific tags.**
 *   **Customize the filter expression.** With a custom expression, the Cloudflare OWASP Core Ruleset applies only to a subset of the incoming requests.
 *   **Configure [payload logging](/waf/managed-rules/payload-logging/configure/)**.
