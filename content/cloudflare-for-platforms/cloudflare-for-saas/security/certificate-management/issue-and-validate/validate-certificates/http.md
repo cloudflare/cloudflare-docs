@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: HTTP
-weight: 2
+weight: 3
 meta:
     title: HTTP domain control validation (DCV)
 ---

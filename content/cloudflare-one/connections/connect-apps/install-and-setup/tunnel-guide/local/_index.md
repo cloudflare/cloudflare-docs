@@ -117,7 +117,7 @@ $ cloudflared tunnel login
 Running this command will:
 
 - Open a browser window and prompt you to log in to your Cloudflare account. After logging in to your account, select your hostname.
-- Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
+- Generate an account certificate, the [cert.pem file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem), in the [default `cloudflared` directory](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#default-cloudflared-directory).
 
 ## 3. Create a tunnel and give it a name
 

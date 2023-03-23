@@ -44,12 +44,6 @@ Currently, **Managed Challenge** actions are available in the following security
 - [Firewall rules](/firewall/)
 - [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)
 
-{{<Aside type="note">}}
-
-For domains on Free plan, any firewall rules set to **Interactive Challenge** have become intelligent **Managed Challenge**. As a free customer, you cannot opt out of Managed Challenges.
-
-{{</Aside>}}
-
 ### JS challenge
 
 With a JS challenge, Cloudflare presents challenge page that requires no interaction from a visitor, but rather JavaScript processing by their browser.
