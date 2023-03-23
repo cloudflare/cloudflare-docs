@@ -5,6 +5,8 @@ title: util
 
 # util
 
+{{<render file="nodejs-compat-howto.md">}}
+
 ## Promisify/Callbackify
 
 The promisify and callbackify APIs in Node.js provide a means of bridging between a Promise-based programming model and a callback-based model.
@@ -67,7 +69,7 @@ types.isAsyncFunction(function foo() {});  // Returns false
 types.isAsyncFunction(async function foo() {});  // Returns true
 // .. and so on
 ```
-{{<Aside type="note">}}
+{{<Aside type="warning">}}
 The Workers implementation currently does not provide implementations of the `util.types.isExternal()`, `util.types.isProxy()`, `util.types.isKeyObject()`, or `util.type.isWebAssemblyCompiledModule()` APIs.
 {{</Aside>}}
 

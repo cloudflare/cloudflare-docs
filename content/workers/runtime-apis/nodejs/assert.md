@@ -5,6 +5,8 @@ title: assert
 
 # assert
 
+{{<render file="nodejs-compat-howto.md">}}
+
 The assert module in Node.js provides a number of useful assertions that are useful when building tests.
 
 ```js
