@@ -40,13 +40,12 @@ Note that this is a simpler scenario. Cases where `CNAME` flattening is optional
 In this case, the process to respond to queries for `domain.test` directly with the IP address can be represented by the following diagram:
 
 ```mermaid
-flowchart TD
+flowchart BT
 accTitle: CNAME flattening diagram
 accDescr: Diagram of CNAME flattening process when there is a request for a domain in Cloudflare and the zone has a CNAME record at apex that points to an external A record.
   A((User)) <--query for <code>domain.test</code>--> B[[Resolvers]] --> C
   C["Question: 
   <code>domain.test IN A</code>"]
- 
  subgraph Y[Cloudflare DNS]
  direction RL
   D{{Look up record}} --> G["Answer:
