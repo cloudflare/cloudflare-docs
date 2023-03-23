@@ -1722,34 +1722,6 @@ span.Tooltip---root {
   right: 0;
 }
 
-.SkipNavLink {
-  position: absolute;
-  overflow: hidden;
-  color: inherit;
-  text-decoration: none;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-}
-
-.SkipNavLink:focus {
-  padding: 0.5em 1em;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  -webkit-transform: translate3d(-50%, 0, 0);
-  transform: translate3d(-50%, 0, 0);
-  background: var(--background-color);
-  width: auto;
-  height: auto;
-  clip: auto;
-  z-index: 100;
-  outline: none;
-  box-shadow: 0 0 0 var(--focus-size) var(--focus-color);
-}
-
 .TagsFilter {
   display: flex;
   flex-wrap: wrap;
