@@ -132,7 +132,7 @@ In service worker syntax, `event` provides the same fields and methods as `Messa
   
 #### Using ctx.waitUntil()
   
-Using [`ctx.waitUntil()`](/workers/runtime-apis/fetch-event/#waituntil) extends the lifetime of the "queue" event handler. It accepts a Promise-based task which the Workers runtime will execute before the handler terminates and blocks the response. This means that this `queue()` handler instance will not process the next batch until the task within `ctx.waitUntil()` resolves or rejects.
+Using [`ctx.waitUntil()`](/workers/runtime-apis/fetch-event/#waituntil) extends the lifetime of the [`queue()`](/queues/platform/javascript-apis/#consumer) event handler. It accepts a Promise-based task which the Workers runtime will execute before the handler terminates and blocks the response. This means that this `queue()` handler instance will not process the next batch until the task within `ctx.waitUntil()` resolves or rejects.
   
 {{<Aside type="warn">}}
   
