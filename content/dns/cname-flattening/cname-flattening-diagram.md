@@ -43,7 +43,7 @@ In this case, the process to respond to queries for `domain.test` directly with 
 flowchart BT
 accTitle: CNAME flattening diagram
 accDescr: Diagram of CNAME flattening process when there is a request for a domain in Cloudflare and the zone has a CNAME record at apex that points to an external A record.
-  A((User)) <--query for <code>domain.test</code>--> B[[Resolvers]] --> C
+  A((User)) <--query for <code>domain.test</code>--> B[Resolver] --> C
   C["Question: 
   <code>domain.test IN A</code>"]
  subgraph Y[Cloudflare DNS]
@@ -56,8 +56,8 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
   K{{Append answer with overwritten query name}} --> L["Answer:
   <code>domain.test 7200 IN A 192.0.2.1</code>"] --- M{Proxy status}
   M --Proxied--> O["Answer:
-  <code>domain.test 300 IN A {$Cloudflare IP}</code>
-  <code>domain.test 300 IN A {$Cloudflare IP}</code>"]
+  <code>domain.test 300 IN A {$Cloudflare IP 1}</code>
+  <code>domain.test 300 IN A {$Cloudflare IP 2}</code>"]
   M --DNS only--> N["Answer:
   <code>domain.test 3600 IN A 192.0.2.1</code>"]
  end
