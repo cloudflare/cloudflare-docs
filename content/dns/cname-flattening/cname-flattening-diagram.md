@@ -51,8 +51,8 @@ accDescr: Diagram of CNAME flattening process when there is a request for a doma
   D{{Look up record}} --> G["Answer:
   <code>domain.test 3600 CNAME external-origin.test</code>
 
-  This means that <code>domain.test</code> is a <code>CNAME</code> at the zone apex
-  Forced <code>CNAME</code> flattening is enabled"] --- H{{Resolve <code>external-origin.test</code>}}
+  This means that <code>domain.test</code> is a <code>CNAME</code> at the zone apex.
+  Forced <code>CNAME</code> flattening is enabled."] --- H{{Resolve <code>external-origin.test</code>}}
   K{{Append answer with overwritten query name}} --> L["Answer:
   <code>domain.test 7200 IN A 192.0.2.1</code>"] --- M{Proxy status}
   M --Proxied--> O["Answer:
