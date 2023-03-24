@@ -61,7 +61,7 @@ The **Hide Originating IP Address** option in [Tool Settings](/zaraz/get-started
 
 With the **Anonymize Originating IP Address** available in the [Add field](/zaraz/get-started/additional-fields/) option, Cloudflare sends the visitor’s IP address to Google as is, and passes the [`aip` parameter](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#aip) to GA. This asks GA to anonymize the data.
 
-### I set up Event Reporting (enhanced measurements) for Google Analytics, but it only reports Page View, Session Start, and First Visit. All other events, such as scroll and outbound, are missing.
+#### I set up Event Reporting (enhanced measurements) for Google Analytics, but it only reports Page View, Session Start, and First Visit. All other events, such as scroll and outbound, are missing.
 
 This is not a bug. Zaraz does not offer all the automatic events the normal GA4 JavaScript snippets offer out of the box. You will need to build [triggers](/zaraz/get-started/create-trigger/) and [actions](/zaraz/get-started/create-actions/) to capture those events. Refer to [Get started](/zaraz/get-started/) to learn more about how Zaraz works.
 
