@@ -43,7 +43,7 @@ If you received an alert for a potentially malicious connection:
 
 2. Open the browser's developer tools to confirm that the connection is being made. You can check this in the developer tools' **Network** tab, searching for the target hostname of the connection.
 
-If you find the script or connection, this means the script is being loaded (or the connection is being established) for all website visitors — proceed to [step 3](#step-3-check-the-script-reputation).
+If you find the script or connection, this means the script is being loaded (or the connection is being established) for all website visitors — proceed to [step 3](#step-3---check-the-script-reputation).
 
 If you do not find the script being loaded or the connection being made, this could mean one of the following:
 
