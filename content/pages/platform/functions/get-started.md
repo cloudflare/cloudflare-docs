@@ -41,6 +41,12 @@ This Function will run on the `/helloworld` route and returns `"Hello, world!"`.
 
 Refer to [Routing](/pages/platform/functions/routing/) for more information on route customization.
 
+### Runtime Features
+
+Workers runtime features such as Node.js compatibility can be enabled by configuring Pages Functions settings such as [compatibility date and compatibility flag](/workers/platform/compatibility-dates/). These can be configured for local development [in Wrangler](/workers/wrangler/commands/#dev-1) and in the dashboard. 
+
+Additionally, you can use other Cloudflare products from within your Pages project by [configuring bindings](/pages/platform/functions/bindings/). 
+
 ## Deploy your Function
 
 After you have set up your Function, deploy your Pages project. Deploy your project by:
