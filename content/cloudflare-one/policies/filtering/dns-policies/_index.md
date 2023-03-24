@@ -256,14 +256,6 @@ Use this selector to apply DNS policies to a specific source IP address that que
 | --------- | ---------------------------- |
 | Source IP | `dns.src_ip == 198.51.100.0` |
 
-### Source Internal IP
-
-Use this selector to apply DNS policies to a specific private IP address on a user's local network that queries arrive to Gateway from.
-
-| UI name            | API example                     |
-| ------------------ | ------------------------------- |
-| Source Internal IP | `dns.src.ip == 192.168.86.0/27` |
-
 ### Users
 
 {{<render file="gateway/_users.md">}}
