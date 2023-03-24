@@ -893,7 +893,7 @@ html[is-site-page] .DocsContent {
     max-width: var(--docs-max-page-width);
     margin-left: auto;
     margin-right: auto;
-    gap: 6em;
+    gap: 4.5em;
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
 }
 
