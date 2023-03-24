@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Logpush integration
-weight: 7
+weight: 8
 ---
 
 # Cloudflare Logpush integration
@@ -38,9 +38,10 @@ Refer to the Logpush documentation for a list of available fields.
 
 | Dataset                                                                | Description                                                                                                                |
 | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)         | [DNS queries inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs)                       |
-| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)       | [HTTP requests inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#http-logs)                    |
-| [Gateway Network](/logs/reference/log-fields/account/gateway_network/) | [Network packets inspected by Cloudflare Gateway](/cloudflare-one/analytics/logs/gateway-logs/#network-logs)               |
-| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)           | [Authentication events through Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs)    |
-| [Access Requests](/logs/reference/log-fields/account/access_requests/) | [HTTP requests to sites protected by Cloudflare Access](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) |
-| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)     | [Security issues detected by Cloudflare CASB](/cloudflare-one/applications/scan-apps/manage-findings/)                     |
+| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)         | [DNS queries](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs) inspected by Cloudflare Gateway                   |
+| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)       | [HTTP requests](/cloudflare-one/analytics/logs/gateway-logs/#http-logs)   inspected by Cloudflare Gateway                  |
+| [Gateway Network](/logs/reference/log-fields/account/gateway_network/) | [Network packets](/cloudflare-one/analytics/logs/gateway-logs/#network-logs)   inspected by Cloudflare Gateway             |
+| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)           | [Authentication events](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs) through Cloudflare Access  |
+| [Access Requests](/logs/reference/log-fields/account/access_requests/) | [HTTP requests](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) to sites protected by Cloudflare Access |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)     | [Security issues](/cloudflare-one/applications/scan-apps/manage-findings/)  detected by Cloudflare CASB                    |
+| Device posture logs | [Device posture status](/cloudflare-one/analytics/logs/posture-logs.md) from the WARP client |
