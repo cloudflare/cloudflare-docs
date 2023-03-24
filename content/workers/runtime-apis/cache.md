@@ -9,15 +9,13 @@ title: Cache
 
 The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows fine grained control of reading and writing from the [Cloudflare edge network](https://www.cloudflare.com/network/) cache.
 
-The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. 
+The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
 {{<Aside type="warning" header="Tiered caching">}}
 
 The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interacting-with-the-cloudflare-cache).
 
 {{</Aside>}}
-
-A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
 However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/learning/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
 
@@ -206,7 +204,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 
 {{<Aside type="warning" header="Global purges">}}
 
-`cache.delete` operation only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/learning/how-the-cache-works/#purging-assets-stored-with-the-cache-api).
+The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/learning/how-the-cache-works/#purging-assets-stored-with-the-cache-api).
 
 {{</Aside>}}
 
