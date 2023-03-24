@@ -107,15 +107,11 @@ Use this selector to match against the IP address of the authoritative name serv
 
 ### Content Categories
 
-Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
+Use this selector to block domains belonging to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories). When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category).
 
 | UI name            | API example                           |
 | ------------------ | ------------------------------------- |
 | Content Categories | `any(dns.content_category[*] in {1})` |
-
-{{<Aside>}}
-Using this selector with an Allow or Block action will reveal the option to [Filter by resolved IP category](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category) under **Configure policy settings**.
-{{</Aside>}}
 
 ### DNS CNAME Record
 
