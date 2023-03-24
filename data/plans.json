@@ -434,7 +434,7 @@
     "link": "/dns/",
     "cname_flattening": {
       "title": "CNAME Flattening",
-      "link": "/dns/additional-options/cname-flattening/",
+      "link": "/dns/cname-flattening/",
       "properties": {
         "availability": {
           "title": "Availability",

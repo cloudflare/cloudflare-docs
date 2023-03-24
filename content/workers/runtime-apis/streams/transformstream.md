@@ -29,9 +29,9 @@ let { readable, writable } = new TransformStream();
 
 {{<definitions>}}
 
-- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
@@ -60,9 +60,9 @@ let { readable, writable } = new IdentityTransformStream();
 
 {{<definitions>}}
 
-- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
@@ -90,9 +90,9 @@ let { readable, writable } = new FixedLengthStream(1000);
 
 {{<definitions>}}
 
-- `readable` {{<type-link href="#readablestream">}}ReadableStream{{</type-link>}}
+- `readable` {{<type-link href="/workers/runtime-apis/streams/readablestream/">}}ReadableStream{{</type-link>}}
   - An instance of a `ReadableStream`.
-- `writable` {{<type-link href="#writablestream">}}WritableStream{{</type-link>}}
+- `writable` {{<type-link href="/workers/runtime-apis/streams/writablestream/">}}WritableStream{{</type-link>}}
   - An instance of a `WritableStream`.
 
 {{</definitions>}}

@@ -71,3 +71,5 @@ A suite of products tailored to your image-processing needs.
 
 {{<resource header="Twitter" href="https://twitter.com/cloudflaredev" icon="twitter">}} Learn about product announcements, new tutorials, and what is new in Cloudflare Workers. {{</resource>}}
 
+{{</resource-group>}}
+

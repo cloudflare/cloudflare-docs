@@ -1,5 +1,5 @@
 ---
-pcx content type: concept
+pcx_content_type: how_to
 title: Migrating custom hostnames
 weight: 2
 ---
