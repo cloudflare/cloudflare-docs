@@ -96,13 +96,15 @@ Now that you have uploaded your image, you will use it as the background image f
 
 After uploading your image, create a Worker that will enable you to transform text to image. This image can be used as an overlay on the background image you uploaded. Use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust). 
 
-Clone the repository and run it locally:
+Create a new Worker project called `worker-to-text` using the `worker-rust` template:
 
 ```sh
 $ npx wrangler generate worker-to-text worker-rust
 ```
 
-In the `lib.rs` file, add the following code block:
+You will now make a few changes to the files in your project directory. 
+
+1. In the `lib.rs` file, add the following code block:
 
 ```rs
 ---
@@ -124,17 +126,13 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 }
 ```
 
-Next, use [text-to-png](https://github.com/RookAndPawn/text-to-png), a Rust package for rendering text to png as a dependency:
+2. Update the `Cargo.toml` file in your `worker-to-text` project directory to use [text-to-png](https://github.com/RookAndPawn/text-to-png), a Rust package for rendering text to PNG. Add the package as a dependency by running:
 
-```toml
----
-filename: Cargo.toml
----
-[dependencies]
-text-to-png = "0.2.0"
+```sh
+$ cargo add text-to-png@0.2.0
 ```
 
-Import it into the `lib.rs` as:
+3. Import the `text_to_png` library into your `worker-to-text` project's `lib.rs` file.
 
 
 ```rs
@@ -159,7 +157,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 }
 ```
 
-Next, create a `handle-slash` function that will activate the image transformation based on the text passed to the URL as a query parameter.
+4. Update `lib.rs` to create a `handle-slash` function that will activate the image transformation based on the text passed to the URL as a query parameter.
 
 ```rs
 ---
@@ -185,7 +183,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 async fn handle_slash(text: String) -> Result<Response> {}
 ```
 
-In this function, call the `TextRenderer` by assigning it to a renderer value, specifying that you want to use a custom font. Then, use the `render_text_to_png_data` method to transform the text into image format.
+5. In the `handle-slash` function, call the `TextRenderer` by assigning it to a renderer value, specifying that you want to use a custom font. Then, use the `render_text_to_png_data` method to transform the text into image format. In this example, the custom font (`Inter-Bold.ttf`) is located in an `/assets` folder at the root of the project which will be used for generating the thumbnail. You must update this portion of the code to point to your custom font file.
 
 ```rs
 ---
@@ -216,7 +214,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-Next, rewrite the Router function to call `handle_slash` when a query is passed in the URL, otherwise return the `"Hello Worker!"` as the response.
+6. Rewrite the `Router` function to call `handle_slash` when a query is passed in the URL, otherwise return the `"Hello Worker!"` as the response.
 
 ```rs
 ---
@@ -253,7 +251,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-In the following code block, you are setting the headers to `content-type: 'image/png'` so the text displayed on the browser is a PNG image.
+7. In your `lib.rs` file, set the headers to `content-type: image/png` so that the response is correctly rendered as a PNG image.
 
 ```rs
 ---
@@ -346,7 +344,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-Start a local server for developing your Worker by running:
+After you have finished updating your project, start a local server for developing your Worker by running:
 
 ```sh
 $ wrangler dev
@@ -360,13 +358,24 @@ Adding a query parameter with custom text, you should receive:
 
 ![Follow the instructions above to receive an output image](./media/build-serverles.png)
 
-Finally, run the `wrangler publish` command to publish the Worker.
+To publish your Worker, open your `wrangler.toml` file and update the `name` key with your project's name.
+
+```toml
+---
+filename: wrangler.toml
+---
+
+name = "worker-to-text"
+
+```
+
+Then run the `wrangler publish` command to publish your Worker.
 
 ```sh
 $ wrangler publish
 ```
 
-A custom domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
+A `.workers.dev` domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
 
 ## Create a Worker to display the original image
 
