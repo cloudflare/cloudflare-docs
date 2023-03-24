@@ -6,7 +6,7 @@ weight: 1
 
 # Supported ORMs
 
-While you can access your D1 data by querying the [D1 client API](/client-api/) directly, you can also use the following ORMs to interface with D1 more easily in your application logic. 
+While you can access your D1 data by querying the [D1 client API](/d1/platform/client-api/) directly, you can also use the following ORMs to interface with D1 more easily in your application logic. 
 
 {{<Aside type="note">}}
 Note: these ORMs are not maintained by the Cloudflare D1 team. They are managed and updated by the project authors.
