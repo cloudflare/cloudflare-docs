@@ -7,6 +7,14 @@ rss: file
 
 # Changelog
 
+## 2023-03-21
+
+### Limits for downloadable MP4s for live recordings
+
+Previously, generating a download for a live recording exceeding four hours resulted in failure.
+
+To fix the issue, now video downloads are only available for live recordings under four hours. Live recordings exceeding four hours can still be played but cannot be downloaded. 
+
 ## 2023-01-04
 
 ### Earlier detection (and rejection) of non-video uploads
