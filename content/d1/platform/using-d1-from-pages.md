@@ -1,6 +1,6 @@
 ---
 title: Using D1 from Pages
-weight: 3
+weight: 9
 pcx_content_type: concept
 ---
 

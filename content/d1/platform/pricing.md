@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Pricing
+weight: 7
 ---
 
 # Pricing

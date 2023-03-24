@@ -1,6 +1,7 @@
 ---
 title: Migrations
 pcx_content_type: concept
+weight: 5
 ---
 
 # Migrations

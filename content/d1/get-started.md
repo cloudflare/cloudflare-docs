@@ -8,6 +8,8 @@ pcx_content_type: get-started
 
 This guide will instruct you through setting up and deploying your first database with D1. This guide assumes you already have a Cloudflare account.
 
+This guide will walk you through setting up D1 using the Wrangler CLI to best set you up for continuous deployment. However, you may also get started with D1 in the UI by navigating to the **Cloudflare Dashboard > Select "Workers" in the Sidebar > Select D1**
+
 ## 1. Install and authenticate Wrangler
 
 You will use [Wrangler](/workers/wrangler/install-and-update/), a command-line tool for building Cloudflare Workers, to access D1.
@@ -186,5 +188,6 @@ By finishing this guide, you have created a D1 database, a Worker to access that
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
+- [Use D1 to build a comments API](d1/tutorials/build-a-comments-api/)
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
 - [D1 client API](/d1/platform/client-api/)
