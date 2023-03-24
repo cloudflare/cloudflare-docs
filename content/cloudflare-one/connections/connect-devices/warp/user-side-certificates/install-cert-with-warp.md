@@ -26,6 +26,7 @@ If a custom certificate is not provided, WARP will install the default [Cloudfla
 
 {{<Aside type="note" header="Important">}}
 WARP only installs the system certificate — it does not install the certificate on individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
+
 {{</Aside>}}
 
 ## View the installed certificate

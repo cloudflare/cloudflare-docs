@@ -14,7 +14,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate by following the procedures below. These steps will need to be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate. You will need to add the certificate to both the [system keychain](#add-the-certificate-to-your-system) and to [individual application stores](#add-the-certificate-to-applications). These steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 
@@ -309,6 +309,10 @@ nixOS does not use the system certificate store for self updating and instead re
 Some packages, development tools, and other applications provide options to trust root certificates that will allow for the traffic inspection features of Gateway to work without breaking the application.
 
 All of the applications below first require downloading the Cloudflare certificate with the instructions above. On Mac, the default path is `/Library/Keychains/System.keychain Cloudflare_CA.crt`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
+
+{{<Aside type="note">}}
+Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
+{{</Aside>}}
 
 ### Firefox
 
