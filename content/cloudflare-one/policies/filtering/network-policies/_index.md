@@ -122,11 +122,7 @@ The country of the user making the request.
 
 ### Source Internal IP
 
-Use this selector to apply network policies to a specific private IP address on a user's local network that requests arrive to Gateway from.
-
-| UI name            | API example                     |
-| ------------------ | ------------------------------- |
-| Source Internal IP | `net.src.ip == 192.168.86.0/27` |
+{{<render file="gateway/_source-internal-ip.md" withParameters="network;;net">}}
 
 ### Source Port
 
