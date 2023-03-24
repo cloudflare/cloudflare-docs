@@ -27,7 +27,7 @@ ___
 
 ## Yandex bot unexpectedly blocked by the WAF managed rule with id 100203
 
-Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will occasionally be blocked by Cloudflare WAF managed rule with id 100203, as the IP list of Yandex bots has not yet synced with Yandex's most recent changes.
+Since Yandex updates their bots very frequently, you may see more false positives while these changes are propagated. New and recently updated bots will occasionally be blocked by Cloudflare WAF managed rule with id 100203, as the IP list of Yandex bots has not yet synced with Yandex's most recent changes.
 
 **Workarounds:**
 
