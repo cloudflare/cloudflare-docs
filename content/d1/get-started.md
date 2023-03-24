@@ -188,6 +188,6 @@ By finishing this guide, you have created a D1 database, a Worker to access that
 
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.gg/cloudflaredev).
 
-- [Use D1 to build a comments API](d1/tutorials/build-a-comments-api/)
+- [Use D1 to build a comments API](/d1/tutorials/build-a-comments-api/)
 - [Supported Wrangler commands for D1](/workers/wrangler/commands/#d1)
 - [D1 client API](/d1/platform/client-api/)
