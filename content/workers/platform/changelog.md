@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-03-24
+
+- Fixed a bug that prevented the "Administrator Read-Only" and "Workers Tail Read" roles from successfully tailing workers.
+
 ## 2023-03-09
 
 - No externally-visible changes
