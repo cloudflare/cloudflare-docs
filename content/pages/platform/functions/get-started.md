@@ -45,7 +45,7 @@ Refer to [Routing](/pages/platform/functions/routing/) for more information on r
 
 Workers runtime features, including compatibility with a subset of Node.js APIs, setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/). With Pages Functions, you can configure these by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. (Project Settings > Functions > Compatibility Flags)
 
-Additionally, you can use other Cloudflare products from within your Pages project by [configuring bindings](/pages/platform/functions/bindings/). 
+Additionally, you can use other Cloudflare products from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/). 
 
 ## Deploy your Function
 
