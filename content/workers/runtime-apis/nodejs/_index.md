@@ -14,4 +14,6 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
+If you are using [Pages Functions](/pages/platform/functions/), you can set compatibility flags using the [Pages specific CLI commands](/workers/wrangler/commands/#dev-1) or set them in the dashboard (Project Settings > Functions > Compatibility Flags)
+
 {{<directory-listing>}}
