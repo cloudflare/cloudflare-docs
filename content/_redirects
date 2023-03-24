@@ -194,7 +194,7 @@
 /d1/migrations/ /d1/platform/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
 /d1/wrangler-commands/ /d1/platform/wrangler-commands/ 301
-/d1/learning/using-d1-from-pages platform/using-d1-from-pages 301
+/d1/learning/using-d1-from-pages /d1/platform/using-d1-from-pages 301
 /d1/learning/importing-data /d1/platform/importing-data 301
 /d1/learning/backups.md /d1/platform/backups 301
 /d1/platform/community-projects /d1/ecosystem/ 301
