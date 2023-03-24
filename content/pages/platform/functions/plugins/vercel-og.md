@@ -1,7 +1,6 @@
 ---
-pcx_content_type: concept
+pcx_content_type: reference
 title: vercel/og
-weight: 1
 ---
 
 # `@vercel/og` Pages Plugin
@@ -67,7 +66,7 @@ The Plugin takes an object with six properties:
 
 You can use this Plugin's API to generate arbitrary images, not just as middleware.
 
-For example:
+For example, the below code will generate an image saying "Hello, world!" which is available at `/greet`.
 
 ```typescript
 ---
