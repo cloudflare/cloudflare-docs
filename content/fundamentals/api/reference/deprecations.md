@@ -24,9 +24,9 @@ Cloudflare Tunnel API
 
 ## Account Billing Profile, User Billing Profile, and User Billing History
 
-**End of life Date: June 6, 2023**
+**End of life date: June 6, 2023**
 
-Cloudflare will no longer continue to support these endpoints due to a system transition and low endpoint usage. There is no replacement for these endpoints. As an alternative, please log in to your Cloudflare account to view your:
+There is no API replacement for these endpoints. As an alternative, please log in to your Cloudflare account to view your:
 
 - [Invoices & Billing Email](https://dash.cloudflare.com/?to=/:account/billing)
 - [Billing subscriptions](https://dash.cloudflare.com/?to=/:account/billing/subscriptions) 
