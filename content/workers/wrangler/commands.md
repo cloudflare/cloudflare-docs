@@ -1342,6 +1342,10 @@ $ wrangler pages dev [<DIRECTORY>] [OPTIONS] [-- <COMMAND..>]
   - Durable Object to bind (NAME=CLASS).
 - `--live-reload` {{<type>}}boolean{{</type>}} {{<prop-meta>}}(default: false){{</prop-meta>}}
   - Auto reload HTML pages when change is detected.
+- `--compatibility-flag` {{<type>}}string[]{{</type>}}
+  - Runtime compatibility flags to apply. 
+- `--compatibility-date` {{<type>}}string{{</type>}}
+  - Runtime compatibility date to apply. 
 
 {{</definitions>}}
 
