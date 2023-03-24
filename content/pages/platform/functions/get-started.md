@@ -43,7 +43,7 @@ Refer to [Routing](/pages/platform/functions/routing/) for more information on r
 
 ### Runtime Features
 
-Workers runtime features such as Node.js compatibility can be enabled by configuring Pages Functions settings such as [compatibility date and compatibility flag](/workers/platform/compatibility-dates/). These can be configured for local development [in Wrangler](/workers/wrangler/commands/#dev-1) and in the dashboard. 
+Workers runtime features, including compatibility with a subset of Node.js APIs, setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/). With Pages Functions, you can configure these by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. (Project Settings > Functions > Compatibility Flags)
 
 Additionally, you can use other Cloudflare products from within your Pages project by [configuring bindings](/pages/platform/functions/bindings/). 
 
