@@ -257,7 +257,7 @@ async function handleEvent(event) {
 
 Your i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
 
-To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id). Set this ID at the top part of your project’s `wrangler.toml` file:
+To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/). Set this ID at the top part of your project’s `wrangler.toml` file:
 
 ```toml
 ---

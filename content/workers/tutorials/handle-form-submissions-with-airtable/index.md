@@ -135,7 +135,7 @@ If you have chosen to work with the [sample codebase on GitHub](https://github.c
 
 {{</Aside>}}
 
-In the `wrangler.toml` file of your project's directory, add your Cloudflare account ID. [Refer to the Get started guide](/workers/get-started/guide#7-configure-your-project-for-deployment) to find your Cloudflare account ID.
+In the `wrangler.toml` file of your project's directory, add your Cloudflare account ID. [Refer to the Get started guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) to find your Cloudflare account ID.
 
 ```toml
 ---
