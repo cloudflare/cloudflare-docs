@@ -83,7 +83,7 @@ To submit a support ticket, follow these steps:
 7.  Enter a detailed summary of the issue you’re experiencing.
 8.  Review the right-hand panel of the Portal for recommended resources and for troubleshooting guides resulting from diagnostics run against your domain.
 9.  If the provided resources did not solve your issue, click Add more details to submit a ticket\*\*
-10.  Complete the ticket submission fields as completely as possible with the following information. _(**Please note** that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review [Gathering information for troubleshooting sites](https://support.cloudflare.com/hc/articles/203118044) and make sure you include all needed information.)_
+10.  Complete the ticket submission fields as completely as possible with the following information. _(**Please note** that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) and make sure you include all needed information.)_
     -   A detailed description of the issue with the following information:
         -   Timestamp (UTC)
         -   ZoneName/ZoneID
