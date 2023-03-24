@@ -94,7 +94,9 @@ Now that you have uploaded your image, you will use it as the background image f
 
 ## Create a Worker to transform text to image
 
-After uploading your image, you will now create a Worker that will enable you to transform text to image. This can be used as an overlay on the background image we uploaded. We will use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust). Clone the repository and run it locally.
+After uploading your image, create a Worker that will enable you to transform text to image. This image can be used as an overlay on the background image you uploaded. Use the [rustwasm-worker-template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-rust). 
+
+Clone the repository and run it locally:
 
 ```sh
 $ npx wrangler generate worker-to-text worker-rust
@@ -157,7 +159,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 }
 ```
 
-Next, we'll create a `handle-slash` function that'll activate the image transformation based on the text passed to the URL as a query parameter.
+Next, create a `handle-slash` function that will activate the image transformation based on the text passed to the URL as a query parameter.
 
 ```rs
 ---
@@ -183,7 +185,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
 async fn handle_slash(text: String) -> Result<Response> {}
 ```
 
-In this function, we'll call the `TextRenderer` by assigning it to a renderer value, specifying that we want to use a custom font. Following that, we'll use the `render_text_to_png_data` method to transform the text into image format.
+In this function, call the `TextRenderer` by assigning it to a renderer value, specifying that you want to use a custom font. Then, use the `render_text_to_png_data` method to transform the text into image format.
 
 ```rs
 ---
@@ -214,7 +216,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-Next, We'll rewrite the Router function to call the `handle_slash` when a query is passed in the url, otherwise return the 'Hello Worker!' as the response.
+Next, rewrite the Router function to call `handle_slash` when a query is passed in the URL, otherwise return the `"Hello Worker!"` as the response.
 
 ```rs
 ---
@@ -251,7 +253,7 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-Here, we're setting the headers to `content-type: 'image/png'` so the text displayed on the browser is a png image.
+In the following code block, you are setting the headers to `content-type: 'image/png'` so the text displayed on the browser is a PNG image.
 
 ```rs
 ---
@@ -344,35 +346,37 @@ async fn handle_slash(text: String) -> Result<Response> {
 }
 ```
 
-Let's run the code with the command:
+Start a local server for developing your Worker by running:
 
 ```sh
 $ wrangler dev
 ```
 
-This should spin up a localhost instance with the image displayed:
+This should spin up a `localhost` instance with the image displayed:
 
-![](./media/hello-worker.png)
+![Run `wrangler dev` to start a local server for your Worker](./media/hello-worker.png)
 
-Adding a query parameter with custom text we get:
+Adding a query parameter with custom text, you should receive:
 
-![](./media/build-serverles.png)
+![Follow the instructions above to receive an output image](./media/build-serverles.png)
 
-Run the wrangler publish command to publish the worker so we get a custom domain generated. We'll use it in the main thumbnail image.
+Finally, run the `wrangler publish` command to publish the Worker.
 
 ```sh
 $ wrangler publish
 ```
 
-## Create a Worker to Display the Original Image
+A custom domain will be generated for your Worker after running `wrangler publish`. You will use this domain in the main thumbnail image.
 
-Let's create another worker that'll do the job of serving the image we uploaded to Images.
+## Create a Worker to display the original image
+
+Create a Worker to serve the image you uploaded to Images by running:
 
 ```sh
 $ wrangler init thumbnail-image
 ```
 
-This will create a new worker javascript project. In the index.js file, add the following code block:
+This will create a new Worker JavaScript project. In the index.js file, add the following code block:
 
 ```js
 ---
