@@ -1667,7 +1667,6 @@ span.Tooltip---root {
   color: var(--background-color);
   background: var(--color);
   opacity: 0;
-  transition: opacity 0.25s ease;
   border-radius: 0.25em;
   z-index: 10;
   -webkit-user-select: none;
@@ -2539,11 +2538,6 @@ html[is-docs-page] body {
   max-width: calc(100% - 3em);
 }
 
-.DocsSidebar--cloudflare-logo-link,
-.DocsSidebar--docs-title-logo-link {
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-
 .DocsSidebar--cloudflare-logo-link:hover,
 .DocsSidebar--docs-title-logo-link:hover {
   opacity: 0.75;
@@ -3029,7 +3023,6 @@ html[is-docs-page] body {
     padding-top: 0;
     padding-left: 0;
     will-change: opacity;
-    transition: opacity 0.3s ease;
   }
 
   [is-mobile-sidebar-open] .DocsBody {
@@ -3159,11 +3152,6 @@ html[is-docs-page] body {
 .DocsContent {
   padding: 2.6rem var(--docs-content-gap) 3.5rem;
   min-height: calc(100vh - 12.5em);
-  transition: padding 150ms ease-in-out;
-  transition-property: padding;
-  transition-duration: 150ms;
-  transition-timing-function: ease-in-out;
-  transition-delay: 0s;
 }
 
 .DocsContent[page-type="document"] {
@@ -4456,7 +4444,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   align-items: center;
   padding-left: var(--content-indent);
   padding-right: var(--content-indent);
-  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 @media (hover: hover) {
@@ -4506,7 +4493,6 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   align-items: center;
   padding-left: var(--content-indent);
   padding-right: var(--content-indent);
-  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 @media (hover: hover) {
