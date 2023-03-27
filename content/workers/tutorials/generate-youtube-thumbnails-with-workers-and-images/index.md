@@ -1,5 +1,5 @@
 ---
-updated: 2022-08-17
+updated: 2023-03-27
 difficulty: Intermediate
 content_type: 📝 Tutorial
 pcx_content_type: tutorial
@@ -42,12 +42,7 @@ To upload an image using the Cloudflare dashboard:
 1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Images**.
 3. Use **Quick Upload** to either drag and drop an image or click to browse and choose a file from your local files.
-
-![Follow the instructions above to upload an image to the Cloudflare dashboard.](./media/images-upload.png)
-
 4. After the image is uploaded, view it using the generated URL.
-
-![Follow the instructions above to generate a URL for your uploaded image.](./media/image-delivery.png)
 
 ### Upload with the API
 
@@ -358,7 +353,7 @@ Adding a query parameter with custom text, you should receive:
 
 ![Follow the instructions above to receive an output image](./media/build-serverles.png)
 
-To publish your Worker, open your `wrangler.toml` file and update the `name` key with your project's name.
+To publish your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
 
 ```toml
 ---
@@ -385,7 +380,7 @@ Create a Worker to serve the image you uploaded to Images by running:
 $ wrangler init thumbnail-image
 ```
 
-This will create a new Worker JavaScript project. In the index.js file, add the following code block:
+This will create a new Worker project named `thumbnail-image`. In the `src/index.js` file, add the following code block:
 
 ```js
 ---
@@ -405,15 +400,13 @@ export default {
 }
 ```
 
-Where the `env.CLOUDFLARE_ACCOUNT_HASH` is your Cloudflare Account Id and the `env.IMAGE_ID` is the image id you got from the Cloudflare's dashboard.
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/cloudflare-images/api-request/).
 
-![](./media/dashboard.png)
+Run your Worker and go to the `/original-image` route to review your image.
 
-When you run your worker, and navigate to the `/original-image` route, you should see the image displayed.
+## Add custom text on your image
 
-## Write a function to dynamically add custom text on Image
-
-In this part of the tutorial, we'll use the [image resizing service](/images/image-resizing/) to draw custom text as an overlay on the image. Let's start by displaying the resulting image on a different route. I'll call the new route - **thumbnail**.
+You will now use [Cloudflare Image Resizing](/images/image-resizing/), with the `fetch` method, to add your dynamic text image as an overlay on top of your background image. Start by displaying the resulting image on a different route. Call the new route `/thumbnail`.
 
 
 ```js
@@ -438,7 +431,7 @@ export default {
 }
 ```
 
-Next, we'll use the fetch method to apply the changes on top of the image. The overlay options are nested in options.cf.image.
+Next, use the `fetch` method to apply the Image Resizing changes on top of the background image. The overlay options are nested in `options.cf.image`.
 
 ```js
 ---
@@ -469,19 +462,17 @@ export default {
 }
 ```
 
-The **`imageURL`** is the URL of the image you want to use as a background and where you have the `cf.image` object, there you can specify the options you want to apply to the image.
+The `imageURL` is the URL of the image you want to use as a background image. In the `cf.image` object, specify the options you want to apply to the background image.
 
-{{<Aside type="note" header="Note">}}
+{{<Aside type="note">}}
 
-At the time of this writing, **Cloudflare Image Resizing** doesn't allow resizing images in a worker that is stored in Cloudflare Images. So instead of using the image we served on the `/original-image` route, we'll use the same image from a different source.
+At time of publication, Cloudflare Image Resizing does not allow resizing images in a Worker that is stored in Cloudflare Images. Instead of using the image you served on the `/original-image` route, you will use the same image from a different source.
 
 {{</Aside>}}
 
-We'll use GitHub as the source for the background image, add the image you want to use as the background in an assets directory and push your changes to GitHub. Copy the url version of the image upload, you'll get this when you click on the image file and check the remote url option.
+Add your background image to an assets directory on GitHub and push your changes to GitHub. Copy the URL of the image upload by performing a left click on the image and selecting the **Copy Remote File Url** option.
 
-![](./media/remote-url-git.png)
-
-Now, replace the imageURL with the URL in your clipboard.
+Replace the `imageURL` value with the copied remote URL.
 
 
 ```js
@@ -499,7 +490,7 @@ if (url.pathname === '/thumbnail') {
 }
 ```
 
-Next, we'll add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/image-resizing/draw-overlays/#draw-options) option to add overlay text using the deployed URL of our **`text-to-image`** Worker.
+Next, add overlay options in the image object. Resize the image to the preferred width and height for YouTube thumbnails and use the [draw](/images/image-resizing/draw-overlays/#draw-options) option to add overlay text using the deployed URL of your `text-to-image` Worker.
 
 ```js
 ---
@@ -521,21 +512,34 @@ fetch(imageURL, {
 });
 ```
 
-Image Resizing can only be tested when you deploy your worker, so we'll go ahead and run the command:
+Image Resizing can only be tested when you deploy your Worker. 
+
+To deploy your Worker, open your `wrangler.toml` file and update the `name` key with your project's name. Below is an example with this tutorial's project name:
+
+```toml
+---
+filename: wrangler.toml
+---
+
+name = "thumbnail-image"
+
+```
+
+Deploy your Worker by running:
 
 ```sh
 $ wrangler publish
 ```
 
-The command deploys your worker and returns a custom .dev domain. We'll head over to the domain and navigate to the `/thumbnail` route.
+The command deploys your Worker to custom `workers.dev` subdomain. Go to your `.workers.dev` subdomain and go to the `/thumbnail` route.
 
-You should see the resized image with the text hello workers!
+You should see the resized image with the text `Hello Workers!`.
 
-![](./media/thumbnail.png)
+![Follow the steps above to generate your resized image.](./media/thumbnail.png)
 
-This is great!, but we also want the text applied to be dynamic meaning we can change it to any text and it'll update the image shown.
+You will now make text applied dynamic. Making your text dynamic will allow you change the text and have it update on the image automatically.
 
-To add dynamic text, we'll append any text attached to the `/thumbnail` url using query parameters and pass it down to the text-to-image worker url as a parameter.
+To add dynamic text, append any text attached to the `/thumbnail` URL using query parameters and pass it down to the `text-to-image` Worker URL as a parameter.
 
 
 ```js
@@ -562,20 +566,15 @@ for (const title of url.searchParams.values()) {
 }
 ```
 
-This will always return the text you pass as a query string in the generated image. Here's an example, [the following url](https://socialcard.cdnuptime.com/thumbnail?Getting%20Started%20With%20Cloudflare%20Images) will generate this image:
+This will always return the text you pass as a query string in the generated image. This example URL, https://socialcard.cdnuptime.com/thumbnail?Getting%20Started%20With%20Cloudflare%20Images, will generate the following image:
 
-![](./media/thumbnail2.png)
+![An example thumbnail.](./media/thumbnail2.png)
 
-There you go! You've successfully made a custom youtube thumbnail generator for yourself.
+By completing this tutorial, you have successfully made a custom YouTube thumbnail generator.
 
-## Taking it one step forward: Service for anyone to use
-
-This is a very useful tool for anyone creating content on YouTube, you can use this as a one-time service for generating the thumbnails you add to the videos you upload. It's very flexible as you can change the background anytime you want and add more custom text if you want to. Feel free to take this tutorial, play around with it and see how you can use it for your specific use case.
-
-## Related Resources
+## Related resources
 
 In this tutorial, you learned how to use Cloudflare Workers and Cloudflare Image Resizing to generate custom YouTube thumbnails. To learn more about Cloudflare Workers and Image resizing, refer to the following resources:
 
-- [Cloudflare Workers Documentation](/workers/)
 - [Draw overlay and watermarks](/images/image-resizing/draw-overlays/)
-- [Resize Image with a Worker](/images/image-resizing/resize-with-workers/)
+- [Resize an image with a Worker](/images/image-resizing/resize-with-workers/)
