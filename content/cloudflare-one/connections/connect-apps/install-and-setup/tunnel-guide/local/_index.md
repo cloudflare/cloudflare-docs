@@ -217,5 +217,5 @@ Cloudflare Tunnel can install itself as a system service on Linux and Windows an
 Your tunnel configuration is complete! If you want to get information on the tunnel you just created, you can run:
 
 ```sh
-$ cloudflared tunnel info
+$ cloudflared tunnel info <UUID or NAME>
 ```
