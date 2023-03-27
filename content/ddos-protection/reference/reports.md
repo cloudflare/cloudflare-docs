@@ -8,9 +8,13 @@ meta:
 
 # DDoS reports
 
-To download an ad-hoc DDoS report, generate a PDF report file by selecting **Print report** in your [analytics dashboard](/ddos-protection/reference/analytics/). WAF/CDN customers can download a monthly report by navigating to Account Home > **Security Center**, selecting **Security Reports**, and downloading the desired monthly report.
+To download an ad-hoc DDoS report, generate a PDF report file by selecting **Print report** in your [analytics dashboard](/ddos-protection/reference/analytics/). WAF/CDN customers can download a monthly report in Account Home > **Security Center**, by selecting **Security Reports** and downloading the desired monthly report.
 
 Additionally, if you are a Magic Transit or Spectrum BYOIP customer, you will receive weekly DDoS reports by email with a snapshot of the DDoS attacks that Cloudflare detected and mitigated in the previous week.
+
+{{<Aside type="note">}}
+Currently, Magic Transit customers with leased IPs will not receive weekly network DDoS reports.
+{{</Aside>}}
 
 ## Weekly DDoS reports
 
