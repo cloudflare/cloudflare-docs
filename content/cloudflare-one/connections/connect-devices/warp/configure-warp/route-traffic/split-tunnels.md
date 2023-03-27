@@ -31,7 +31,7 @@ Also, changing between Include and Exclude modes will immediately delete your ex
 
 4. If you want to add or remove items from your Split Tunnels configuration, select **Manage**.
 
-On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected.
+On this page, you will find a list of the IPs and domains Cloudflare Zero Trust excludes or includes, depending on the mode you have selected. For optimal performance, we recommend limiting this list to ≤ 200 entries.
 
 ## Add an IP address
 
