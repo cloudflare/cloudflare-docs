@@ -30,14 +30,17 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
 
-      - uses: untitaker/hyperlink@0.1.27
-        with:
-          args: public/ --sources content/ --check-anchors
-
       - name: Broken Links
         run: pnpm run crawl
         if: success()
 
+      - name: Broken header links
+        uses: untitaker/hyperlink@0.1.27
+        with:
+          args: public/ --sources content/ --check-anchors
+        if: success()
+
+      
   # lint:
   #   name: Lint
   #   runs-on: ubuntu-latest
