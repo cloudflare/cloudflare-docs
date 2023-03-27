@@ -1,1 +1,1 @@
-[]
+[{"kind": "PLANNED", "rule_id": "...cedf44f8", "rule_ref": "UR0020", "description": "HTTP requests with non-standard HTTP methods.", "comments": "Action will be \"block\".", "previous_action": null, "new_action": "log", "announcement_date": "2023-03-24", "release_date": "2023-04-03"}]
