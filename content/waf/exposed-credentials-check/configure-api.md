@@ -53,6 +53,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
   "rules": [
     {
       "action": "log",
+      "description": "Exposed credential check on login.php page",
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
       "exposed_credential_check": {
         "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
@@ -82,6 +83,7 @@ highlight: [14,15,16,17]
         "id": "<CUSTOM_RULE_ID>",
         "version": "1",
         "action": "log",
+        "description": "Exposed credential check on login.php page",
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\"",
         "exposed_credential_check": {
           "username_expression": "url_decode(http.request.body.form[\"username\"][0])",
@@ -127,6 +129,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/rulesets" \
           }
         }
       },
+      "description": "Exposed credential check on login endpoint with JSON body",
       "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
       "exposed_credential_check": {
         "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
@@ -168,6 +171,7 @@ highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
             }
           }
         },
+        "description": "Exposed credential check on login endpoint with JSON body",
         "expression": "http.request.method == \"POST\" && http.request.uri == \"/login.php\" && any(http.request.headers[\"content-type\"][*] == \"application/json\")",
         "exposed_credential_check": {
           "username_expression": "lookup_json_string(http.request.body.raw, \"username\")",
