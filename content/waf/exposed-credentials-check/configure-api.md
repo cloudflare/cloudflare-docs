@@ -191,4 +191,6 @@ highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
 }
 ```
 
-After creating a custom ruleset, deploy it to a phase so that it executes. Refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/) for more information.
+## Next steps
+
+After creating a custom ruleset, deploy it to the `http_request_firewall_custom` phase at the account level so that it executes. You will need the ruleset ID to deploy the custom ruleset. For more information, refer to [Deploy a custom ruleset](/ruleset-engine/custom-rulesets/deploy-custom-ruleset/).
