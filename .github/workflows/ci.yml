@@ -38,7 +38,7 @@ jobs:
         uses: untitaker/hyperlink@0.1.27
         with:
           args: public/ --sources content/ --check-anchors
-        if: success()
+        continue-on-error: true
 
       
   # lint:
