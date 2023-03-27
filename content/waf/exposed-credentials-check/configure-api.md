@@ -14,9 +14,7 @@ Configure exposed credentials checks using the [Rulesets API](/ruleset-engine/ru
 ## Create a custom rule checking for exposed credentials
 
 {{<Aside type="note">}}
-
-This feature is only available to customers on an Enterprise plan.
-
+This feature requires account-level WAF, which is a paid add-on for Enterprise customers.
 {{</Aside>}}
 
 You can create rules that check for exposed credentials using the [Rulesets API](/ruleset-engine/rulesets-api/). Include these rules in a custom ruleset, which you must create at the account level, and then deploy the custom ruleset to a phase.
