@@ -31,7 +31,11 @@ You want the most secure configuration available for your origin, you are an Ent
 
 The setup is generally the same as [**Full (strict)** mode](/ssl/origin-configuration/ssl-modes/full-strict/), but you select **Strict (SSL-Only Origin Pull)** for your encryption mode.
 
-You may also want to enable [Authenticated origin pulls](/ssl/origin-configuration/authenticated-origin-pull/) to further increase the security by having your origin also validate a certificate sent by Cloudflare.
+{{<Aside type="note">}}
+
+In addition to **Strict (SSL-Only Origin Pull)** encryption, you can also set up [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) to ensure all requests to your origin are evaluated before receiving a response.
+
+{{</Aside>}}
 
 ## Limitations
 
