@@ -6,7 +6,7 @@ weight: 2
 
 # Configure static routes
 
-Magic Transit uses a static configuration to route your traffic through [Anycast tunnels](/magic-transit/about/tunnels-and-encapsulation/) from Cloudflare’s global network to your data centers.
+Magic Transit uses a static configuration to route your traffic through [Anycast tunnels](/magic-transit/reference/tunnels-and-encapsulation/) from Cloudflare’s global network to your data centers.
 
 You must assign a route priority to each Anycast tunnel–subnet pair in your GRE configuration using the following guidelines:
 
@@ -30,7 +30,7 @@ You can also create and edit static routes using [Magic Transit Static Routes AP
 | TUNNEL_4_ATL       | `103.21.245.0/24`  | 100           |
 </details>
 
-For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steering](/magic-transit/about/traffic-steering/).
+For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steering](/magic-transit/reference/traffic-steering/).
 
 ## Map route prefixes smaller than /24
 

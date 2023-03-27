@@ -20,7 +20,7 @@ Why should you install the plugin?
 
 If you receive a lot of comments or spam on your blog, you may mistakenly believe that Cloudflare is spamming you. Some other Drupal plugins or extensions may also rely on the original visitor IP for the  services to work properly and reduce false alerts.
 
-Note: You don’t need to worry about this if you activated through a certified Cloudflare [certified Cloudflare Hosting partner](https://www.cloudflare.com/hosting-partners), since they already [restore visitor IPs](https://support.cloudflare.com/hc/articles/200170786) by default.
+Note: You don’t need to worry about this if you activated through a certified Cloudflare [certified Cloudflare Hosting partner](https://www.cloudflare.com/partners/technology-partners/), since they already [restore visitor IPs](https://support.cloudflare.com/hc/articles/200170786) by default.
 
 **Step #2**
 

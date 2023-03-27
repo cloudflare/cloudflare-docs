@@ -3,6 +3,10 @@ pcx_content_type: overview
 title: Geo Key Manager
 weight: 5
 layout: single
+product_grid:
+  show: true
+  title: Geo Key Manager
+  group: Security
 ---
 
 {{<beta>}} Geo Key Manager {{</beta>}}

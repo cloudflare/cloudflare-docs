@@ -31,9 +31,21 @@ Die Cloudflare-**Prüfprotokolle** enthalten Informationen zum Löschen von Doma
 6.  Beachten Sie das **Datum**, die **Benutzer-IP-Adresse** und den **Benutzer**, der die Domain gelöscht hat.
 7.  Wenn die **Benutzer-IP-Adresse**_127.0.0.1_ lautet oder keine Daten enthält, wurde die Löschung automatisch von den Systemen von Cloudflare durchgeführt: Weiter zu Schritt 2 
 
+{{<Aside type="note">}}
+*Löschen* ist eine **Aktion** , die das Löschen von Domains
+kennzeichnet, aber häufig auch zum Löschen anderer Kontoeinstellungen
+verwendet wird. Stellen Sie daher sicher, dass die **Ressource** die
+*Zone* enthält.
+{{</Aside>}}
+
 ___
 
 ## Schritt 2 Überprüfen Sie, ob bei der Domain-Registrierung Cloudflare-Nameserver aufgelistet sind
+
+{{<Aside type="tip">}}
+Domain-Registrierungen für Domains, die ein Cloudflare-CNAME-Setup
+verwenden, müssen nicht geprüft werden.
+{{</Aside>}}
 
 1\. Verwenden Sie entweder die mit Ihrem Betriebssystem gelieferte kommandozeilenbasierte „whois“-Anwendung oder eine Website wie [whois.icann.org](https://whois.icann.org/en) oder [www.whois.net](https://www.whois.net/).
 
@@ -48,6 +60,11 @@ ___
 ___
 
 ## Schritt 3 Überprüfen Sie, ob die Domainauflösung Cloudflare-Nameserver verwendet
+
+{{<Aside type="tip">}}
+Domain-Registrierungen für Domains, die ein Cloudflare-CNAME-Setup
+verwenden, müssen nicht geprüft werden.
+{{</Aside>}}
 
 1\. Verwenden Sie Befehlszeilentools oder Tools von Drittanbietern, um zu überprüfen, ob die Nameserver von Cloudflare konfiguriert sind:
 
@@ -73,11 +90,22 @@ Einige Online-Dienste (wie zum Beispiel [whatsmydns.net](https://www.whatsmydns.
 
 3\. Wenn die Registrierungsdaten für Nameserver und Domain korrekt sind, wenden Sie sich an Ihren Domain-Provider, um zu überprüfen, ob kürzlich Probleme mit der DNS-Weitergabe aufgetreten sind.
 
+{{<Aside type="note">}}
+Einige Registrare stellen mehr als zwei Nameserver bereit. Verwenden Sie
+jedoch nur die beiden in der DNS-App Ihres Cloudflare-Kontos
+bereitgestellten.
+{{</Aside>}}
+
 ___
 
 ## Wiederherstellung einer gelöschten Domain
 
 Stellen Sie eine gelöschte Domain über den Link **\+ Site hinzufügen** rechts in der oberen Navigationsleiste im Cloudflare-Dashboard wieder her.Die Domain muss wie eine neue Domain hinzugefügt werden.
+
+{{<Aside type="warning">}}
+Der Cloudflare-Support kann DNS oder Einstellungen für gelöschte Domains
+nicht wiederherstellen.
+{{</Aside>}}
 
 ___
 

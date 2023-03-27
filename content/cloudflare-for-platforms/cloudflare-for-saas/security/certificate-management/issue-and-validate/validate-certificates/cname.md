@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: CNAME
-weight: 3
+weight: 4
 meta:
     title: CNAME domain control validation (DCV)
 ---

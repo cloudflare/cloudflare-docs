@@ -148,7 +148,7 @@ You can also use environment variables to authenticate, or `wrangler login` to a
 
 ## publish
 
-Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) for more information.
+Publish your Worker to Cloudflare. Several keys in your `wrangler.toml` file determine whether you are publishing to a `*.workers.dev` subdomain or a custom domain. However, custom domains must be proxied (orange-clouded) through Cloudflare. Refer to the [Get started guide](/workers/platform/triggers/custom-domains/) for more information.
 
 ```sh
 $ wrangler publish [--env $ENVIRONMENT_NAME]
@@ -990,7 +990,7 @@ The schema below is the full schema for key-value entries uploaded via the bulk 
 
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The UTF-8 encoded string to be stored, up to 10 MB in length.
+  - The UTF-8 encoded string to be stored, up to 25 MB in length.
 
 - `expiration` {{<type>}}int{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -1064,7 +1064,8 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
   - The key’s name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid.
 
 - `value` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - The UTF-8 encoded string to be stored, up to 10 MB in length.
+
+  - This field must be specified for deserialization purposes, but is unused because the provided keys are being deleted, not written.
 
 {{</definitions>}}
 

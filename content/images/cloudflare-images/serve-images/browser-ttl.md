@@ -30,7 +30,7 @@ curl --request PATCH 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_TAG
 -d @config.json
 config.json:
 {
-    "browser_tll": 31536000
+    "browser_ttl": 31536000
 }
 ```
 
@@ -53,7 +53,7 @@ variant.json:
     "id":"avatar",
     "options": {
        "width":100,
-       "browser_tll": 86400
+       "browser_ttl": 86400
     },
 }
 ```

@@ -3,6 +3,10 @@ pcx_content_type: concept
 title: Rate limiting rules
 weight: 6
 layout: list
+product_grid:
+  show: true
+  title: Rate limiting
+  group: Security
 ---
 
 # Rate limiting rules
@@ -56,8 +60,8 @@ Available fields<br/>in rule expression | Path, [Verified Bot](/ruleset-engine/r
 Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>2</sup>, JSON body field<sup>3</sup>, Body<sup>3</sup>
 Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
 Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
-Maximum sampling period | 10 seconds | 60 seconds | 10 minutes | 1 hour | 1 hour
-Maximum timeout period | 10 seconds | 1 hour | 1 day | 1 day | 1 day
+Counting periods | 10 s | 10 s, 1 min | 10 s, 1 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h
+Timeout periods | 10 s | 10 s, 1 min, 1 h | 10 s, 1 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h, 1 day
 Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{</table-wrap>}}
@@ -68,11 +72,9 @@ Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{<content-column>}}
 
-{{<Aside type="note">}}
-For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](https://support.cloudflare.com/hc/articles/115001635128#4gd3s4xzV2xOE4CUbRIEAo) in the Support KB.
-{{</Aside>}}
-
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
+For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](/support/firewall/tools/configuring-cloudflare-rate-limiting/#rate-limiting-allowances-per-plan).
 
 ## Next steps
 

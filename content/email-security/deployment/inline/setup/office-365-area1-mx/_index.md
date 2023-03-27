@@ -179,7 +179,7 @@ Quarantining messages is a per domain configuration. To modify which domains wil
 
 2. Go to **Email** > **Admin Quarantine**.
 
-3. Locate the message you want to manage, and select the `...` icon next to it. Thill will let you preview, download, or release the quarantined message.
+3. Locate the message you want to manage, and select the `...` icon next to it. This will let you preview, download, or release the quarantined message.
 
     <div class="large-img">
 
@@ -194,7 +194,7 @@ There may be scenarios where use of the Office 365 (O365) email quarantine or a 
 | Disposition <div style="width: 100px"> | Action |
 -------------- | -----------------------
 | `MALICIOUS`  | Should always be quarantined. If the user requires notification, they should require administrator approval to release messages. Users should never have the ability to self remediate `MALICIOUS` emails without approval from an administrator. Emails should be body and subject tagged. |
-| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged, and delivered to the user’s inbox or junk mail folder. Advantage customers should use [`URL defang`](/email-security/email-configuration/email-policies/link-actions/) with this disposition, while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation-beta). |
+| `SUSPICIOUS` | Should not be quarantined. Emails should be body and subject tagged, and delivered to the user’s inbox or junk mail folder. Advantage customers should use [`URL defang`](/email-security/email-configuration/email-policies/link-actions/) with this disposition, while all Enterprise customers should always enable [Email Link Isolation](/email-security/email-configuration/email-policies/link-actions/#email-link-isolation). |
 | `SPAM`       | Should always be quarantined. If the user requires notification, they may or may not require administrator approval to release emails. Emails should be subject tagged. |
 | `BULK`       | Should not be quarantined. Emails should be subject tagged and delivered to the inbox or junk mail folder. |
 | `SPOOF`      | If `SPOOF` detections are clean and well managed [in the Allow List](/email-security/email-configuration/lists/), emails should always be quarantined. If the `SPOOF` detections are not clean, they should have the same treatment as `SPAM` dispositions if you have [Enhanced Detections](/email-security/email-configuration/enhanced-detections/) configured. If not, `SPOOF` detections should be treated as `BULK`. Emails should be body and subject tagged. |

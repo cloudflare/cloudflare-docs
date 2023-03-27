@@ -1,6 +1,10 @@
 ---
 pcx_content_type: configuration
 title: Durable Objects
+product_grid:
+  show: true
+  title: Durable Objects
+  group: Developer platform
 ---
 
 # Durable Objects
@@ -119,7 +123,7 @@ export class Example {
 
 A Durable Object may be evicted from memory any time, causing a loss of all transient (in-memory) state. To persistently store state your Durable Object might need in the future, use the Transactional Storage API.
 
-A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 30 seconds of inactivity.
+A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 10 seconds of inactivity.
 
 ### Transactional storage API
 

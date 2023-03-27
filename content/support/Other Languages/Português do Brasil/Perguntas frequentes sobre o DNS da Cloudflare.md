@@ -115,7 +115,7 @@ ___
 
 ## A Cloudflare oferece mascaramento de domínio?
 
-Não. A Cloudflare não oferece serviços de mascaramento de domínio ou redirecionamento de DNS (talvez seu provedor de hospedagem ofereça). No entanto, oferecemos encaminhamento de URLs através de [Bulk Redirects](https://developers.cloudflare.com/rules/bulk-redirects/).
+Não. A Cloudflare não oferece serviços de mascaramento de domínio ou redirecionamento de DNS (talvez seu provedor de hospedagem ofereça). No entanto, oferecemos encaminhamento de URLs através de [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/).
 
 ___
 

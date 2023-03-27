@@ -36,6 +36,12 @@ Um die tatsächlichen IPs hinter einem Angriff anzuzeigen, müssen Sie [die ursp
 
 Cloudflare verbirgt die IP-Adressen Ihres Ursprungsservers für den Traffic, für den Sie Cloudflare als Proxy verwenden. Als zusätzliche Sicherheitsmaßnahme empfehlen wir, dass Sie sich an Ihren Hosting-Provider wenden und neue Ursprungsserver-IPs anfordern.
 
+{{<Aside type="note">}}
+Für diese Maßnahme kann eine Gebühr anfallen, weshalb Sie dies auf
+Grundlage des Risikos eines Angriffs auf Ihre Website mit Ihrem
+Hosting-Provider besprechen sollten.
+{{</Aside>}}
+
 ### Verwenden Sie Rate Limiting, um Brute-Force- und Layer-7-DDoS-Angriffe zu verhindern
 
 Um als normale HTTP-Anfragen getarnte Angriffe zu vereiteln, können Website-Administratoren mit Rate Limiting fein abgestimmte Schwellenwerte für die Last festlegen, die sie für ihren Webserver erwarten. Richten Sie mit einem einfachen Klick ein grundlegendes Rate Limiting ein, um [Ihre Anmeldeseiten vor Brute-Force-Angriffen zu schützen](https://support.cloudflare.com/hc/articles/115001635128#3UWQC5PrVScHgEGRMobRMm).

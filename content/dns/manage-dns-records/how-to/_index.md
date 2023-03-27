@@ -4,6 +4,7 @@ pcx_content_type: navigation
 weight: 10
 meta:
   title: Manage DNS records
+  description: Learn how to use Cloudflare DNS to manage your DNS records.
 ---
 
 # Manage DNS records

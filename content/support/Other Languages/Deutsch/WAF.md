@@ -25,6 +25,18 @@ Die verwalteten Regeln sind für Pro, Business und Enterprise Pläne für alle [
 -   **Paket: OWASP ModSecurity Core Rule Set**
 -   **Customer Requested Rules** 
 
+{{<Aside type="note">}}
+-   Die neue WAF, die im März 2021 vorgestellt wurde, bietet das
+    [Cloudflare Free Managed
+    Ruleset](https://developers.cloudflare.com/waf/managed-rulesets/)
+    für alle Kunden, auch für Kunden mit einem Free-Plan. Einzelheiten
+    finden Sie im [entsprechenden
+    Blogbeitrag](https://blog.cloudflare.com/waf-for-everyone/).
+-   Am 4. Mai 2022 begann Cloudflare die Phase 1 der
+    [WAF-Migration](https://support.cloudflare.com/hc/articles/5995821690637)
+    von WAF-verwalteten Regeln zu dem neuen WAF-verwalteten Regelsatz.
+{{</Aside>}}
+
 Überprüfen Sie die blockierten Bedrohungen über das **Aktivitätsprotokoll** der [Firewall Analytics](https://developers.cloudflare.com/waf/analytics/), Sie finden es unter **Sicherheit** > **Übersicht**.
 
 ### Wichtige Faktoren
@@ -97,7 +109,12 @@ Der **von Cloudflare verwaltete Regelsatz** enthält von Cloudflare geschriebene
 
 **Cloudflare Specials** ist eine **Gruppe**, die zentrale Firewall-Sicherheit gegen [gängige Angriffe](https://www.cloudflare.com/learning/security/what-is-web-application-security/) bietet.   
 
- 
+{{<Aside type="tip">}}
+Cloudflare empfiehlt, die **Cloudflare Specials** immer aktiviert zu
+lassen. Aktivieren Sie außerdem nur Regelgruppen, die Ihrem
+Technologie-Stack entsprechen. Wenn Sie zum Beispiel WordPress
+verwenden, aktivieren Sie die Gruppe **Cloudflare WordPress** .
+{{</Aside>}}
 
 Bei der Anzeige eines Regelsatzes zeigt Cloudflare Standardaktionen für jede Regel an, aufgeführt unter **Standardmodus**. Folgende **Modi** sind für einzelne Regeln innerhalb eines bestimmten von **Cloudflare** **verwalteten Regelsatzes** verfügbar:
 
@@ -144,7 +161,22 @@ Zur Verwaltung des OWASP-Thresholds, setzen Sie die **Empfindlichkeit** unter _P
 -   bestimmte Branchen, die mit höherer Wahrscheinlichkeit die WAF auslösen, sowie
 -   große Datei-Uploads. 
 
+{{<Aside type="tip">}}
+Bei einer *hohen* **Sensitivität** wird die WAF durch große
+Datei-Uploads ausgelöst.
+{{</Aside>}}
+
 Cloudflare empfiehlt, die **Sensitivität** zunächst auf _Niedrig_ einzustellen und auf falsch-positive Ergebnisse zu überprüfen und die **Sensitivität** erst dann weiter zu erhöhen.
+
+{{<Aside type="note">}}
+Im Aktivitätsprotokoll wird **Regel-ID** *981176* (altes OWASP) oder
+*949110* ([neues
+OWASP](https://blog.cloudflare.com/new-cloudflare-waf/)) angezeigt, wenn
+eine Anfrage durch OWASP blockiert wird. Außerdem sind einige
+OWASP-Regeln, die im Aktivitätsprotokoll aufgeführt sind, nicht in der
+Liste der Regeln unter **Paket: OWASP ModSecurity Core Rule Set**
+enthalten, da die Deaktivierung dieser Regeln nicht empfohlen wird.
+{{</Aside>}}
 
 ___
 

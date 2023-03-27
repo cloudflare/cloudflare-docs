@@ -7,7 +7,7 @@ layout: single
 
 # Transform Rules
 
-Transform Rules allow you to adjust the URI path, query string, and HTTP headers of requests and responses at the edge.
+Transform Rules allow you to adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.
 
 There are several types of Transform Rules:
 

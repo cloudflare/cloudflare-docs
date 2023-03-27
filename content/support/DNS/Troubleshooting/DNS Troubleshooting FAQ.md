@@ -33,6 +33,11 @@ Removing the dc-###### record is only possible via one of these methods:
 
 `example.com MX mail.example.com` `mail.example.com A 192.0.2.1` `example.com A 203.0.113.1`
 
+{{<Aside type="warning">}}
+If your mail server resides on the same IP as your web server, your MX
+record will expose your origin IP address.
+{{</Aside>}}
+
 ___
 
 ## Why are DNS queries returning incorrect results?
@@ -49,7 +54,12 @@ ___
 
 _No A, AAAA or CNAME record found_ means the Cloudflare **DNS** app lacks proper records for DNS resolution.
 
-[Add the missing DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) to your domain.
+[Add the missing DNS records](/dns/manage-dns-records/how-to/create-dns-records) to your domain.
+
+{{<Aside type="note">}}
+Sites generally have at least an *A record* that points to the origin
+server IP address, typically for the www subdomain and the root domain.
+{{</Aside>}}
 
 ___
 

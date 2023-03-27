@@ -60,7 +60,7 @@ Cloudflare will create the Tunnel with that name and generate an ID and credenti
 
 ## Configure `cloudflared`
 
-You can now [configure](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#configure-tunnels/) `cloudflared` to route traffic to both applications for one or many hostnames using [ingress rules](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/).
+You can now [configure](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide//) `cloudflared` to route traffic to both applications for one or many hostnames using [ingress rules](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/ingress/).
 
 By default, `cloudflared` expects the configuration file at a specific location: `~/.cloudflared/config.yml`. You can modify this location if you want. For this example, we'll keep the default. Create or edit your configuration file using a text editor.
 

@@ -26,7 +26,7 @@ ___
 
 Enabling O2O is only available on the Cloudflare Enterprise plan.
 
-To enable O2O on your account, you need to [configure a CNAME DNS record](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) that points your Hostname to the domain **shops.mybigcommerce.com**. Set **Proxy status** to **Proxied**.
+To enable O2O on your account, you need to [configure a CNAME DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) that points your Hostname to the domain **shops.mybigcommerce.com**. Set **Proxy status** to **Proxied**.
 
 ___
 
@@ -46,7 +46,7 @@ Incorrectly configured [Page Rules](https://support.cloudflare.com/hc/en-us/arti
 
 ### **Workers**
 
-Similar to Page Rules, [Workers](https://developers.cloudflare.com/workers/) may interfere with the flow of traffic to your website.  Write Workers with caution. It is advisable to exclude the subdomain used with BigCommerce from the Worker route.
+Similar to Page Rules, [Workers](/workers/) may interfere with the flow of traffic to your website.  Write Workers with caution. It is advisable to exclude the subdomain used with BigCommerce from the Worker route.
 
 ### **Argo Smart Routing**
 
@@ -54,7 +54,7 @@ Similar to Page Rules, [Workers](https://developers.cloudflare.com/workers/) may
 
 ### **Load Balancing**
 
-[Load Balancing](https://developers.cloudflare.com/load-balancing/) is not compatible with O2O for customers.
+[Load Balancing](/load-balancing/) is not compatible with O2O for customers.
 
 ___
 

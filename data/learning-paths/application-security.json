@@ -1,7 +1,7 @@
 {
     "path": "/learning-paths/application-security/",
     "title": "Secure your application",
-    "priority": 2,
+    "priority": 6,
     "description": "Learn more about the tools Cloudflare offers to protect your website against malicious traffic and bad actors.",
     "products": [
       "Cloudflare Essentials",
@@ -39,7 +39,7 @@
             "link_title": "What is a bot?"
           },
           {
-            "url_path": "/page-shield/about/",
+            "url_path": "/page-shield/how-it-works/",
             "link_title": "What are supply-chain attacks?"
           },
           {
@@ -178,7 +178,7 @@
             "external_link": true,
             "url_path": "https://support.cloudflare.com/hc/articles/200170056",
             "link_title": "Customize security level",
-            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge'>Managed Challenge</a> page."
+            "additional_description": "Use the IP reputation of a visitor to determine whether to present a <a href='/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended'>Managed Challenge</a> page."
           },
           {
             "url_path": "/fundamentals/security/challenge-passage/",

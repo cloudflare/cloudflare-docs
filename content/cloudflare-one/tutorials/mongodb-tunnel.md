@@ -31,7 +31,7 @@ You can build a rule in Cloudflare Access to control who can connect to your Mon
 
 1.  Follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-2.  Navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+2.  Navigate to the `Applications` page in the `Access` section of Zero Trust.
 
 3.  Click **Add an application** and choose `Self-hosted`.
 
@@ -73,8 +73,8 @@ spec:
       containers:
         - name: mongodb-standalone
           image: mongo
-          command: ['mongod']
-          args: ['--config=/config/mongod.conf']
+          command: ["mongod"]
+          args: ["--config=/config/mongod.conf"]
           ports:
             - containerPort: 27017
               protocol: TCP
@@ -91,7 +91,7 @@ spec:
               mountPath: /socket
         - name: ssh-proxy
           image: ubuntu:20.04
-          command: ['/scripts/entrypoint.sh']
+          command: ["/scripts/entrypoint.sh"]
           ports:
             - containerPort: 22
               protocol: TCP
@@ -218,7 +218,7 @@ You can now use `cloudflared` to control Cloudflare Tunnel connections in your C
 
 ### Create a Tunnel
 
-You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#set-up-a-tunnel-locally-cli-setup) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
+You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/) that will connect `cloudflared` to Cloudflare's edge. You'll configure the details of that Tunnel in the next step.
 
 Run the following command to create a Tunnel. You can replace `mongodb` with any name that you choose. This command requires the `cert.pem` file.
 
@@ -267,8 +267,8 @@ spec:
         - name: dashboard-tunnel
           # Image from https://hub.docker.com/r/cloudflare/cloudflared
           image: cloudflare/cloudflared:2020.11.11
-          command: ['cloudflared', 'tunnel']
-          args: ['--config', '/etc/tunnel/config.yaml', 'run']
+          command: ["cloudflared", "tunnel"]
+          args: ["--config", "/etc/tunnel/config.yaml", "run"]
           ports:
             - containerPort: 5000
           livenessProbe:

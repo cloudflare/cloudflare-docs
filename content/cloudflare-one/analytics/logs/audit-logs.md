@@ -10,8 +10,8 @@ meta:
 
 Cloudflare Access generates two types of audit logs:
 
-*   **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
-*   **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
+- **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
+- **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
 
 ## Authentication audit logs
 
@@ -20,7 +20,6 @@ Cloudflare Access logs an authentication event whenever a user or service attemp
 [Identity-based authentication](#identity-based-authentication) refers to login attempts that matched on user email, IdP group, SAML group, or OIDC claim.
 
 [Non-identity authentication](#non-identity-authentication) refers to login attempts that matched a non-identity policy such as IP address, device posture, country, valid certificate, or service token.
-
 
 {{<Aside type="note">}}
 
@@ -35,7 +34,7 @@ Authentication audit logs do not capture actions the user takes once they have a
 
 To view logs for identity-based authentication events:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to  **Logs** > **Access**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Logs** > **Access**.
 2. Expand a row to view details such as the login method, the IP address of the user, and more.
 3. If a login attempt was blocked, select **View** for information about why Access denied the user access.
 
@@ -85,25 +84,26 @@ header: Response
 
 Identity-based authentication logs contain the following fields:
 
-| Field | Description |
-|-------|-------------|
-| **user\_email** |  The email address of the authenticating user. |
-| **ip\_address** |  The IP address of the authenticating user. |
-| **app\_uid** | The unique identifier for the protected application. |
-| **app\_domain** |  The URL of the protected application. |
-| **action** | The event that occurred, such as a login attempt. |
-| **allowed** | The result of the authentication event. |
-| **created\_at** | The event timestamp. |
-| **connection**  | The IdP used to authenticate. |
-| **country** | The country associated with the user’s IP address. |
-| **ray\_id** | A unique identifier for every request through Cloudflare. |
-| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
+| Field          | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| **user_email** | The email address of the authenticating user.             |
+| **ip_address** | The IP address of the authenticating user.                |
+| **app_uid**    | The unique identifier for the protected application.      |
+| **app_domain** | The URL of the protected application.                     |
+| **action**     | The event that occurred, such as a login attempt.         |
+| **allowed**    | The result of the authentication event.                   |
+| **created_at** | The event timestamp.                                      |
+| **connection** | The IdP used to authenticate.                             |
+| **country**    | The country associated with the user’s IP address.        |
+| **ray_id**     | A unique identifier for every request through Cloudflare. |
+| **app_type**   | The type specifies if the app is self-hosted or SaaS.     |
 
 ### Non-identity authentication
 
-To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available on the Zero Trust dashboard. 
+To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available in Zero Trust.
 
 ### Log retention
+
 Block policy decisions are retained for a week. Authentication logs are retained for six months.
 
 ## Per-request audit Logs

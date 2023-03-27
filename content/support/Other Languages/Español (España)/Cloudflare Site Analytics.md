@@ -13,6 +13,14 @@ title: Cloudflare Site Analytics
 
 La aplicación (Site) **Analytics** del panel de control de Cloudflare es un componente importante de la línea general de productos de Cloudflare Analytics. En concreto, esta aplicación te da acceso a una amplia variedad de métricas, recabadas a nivel de sitio web o de dominio.
 
+{{<Aside type="info">}}
+Consulta [Cloudflare Analytics: vista
+rápida](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: vista rápida")
+que incluye información general sobre toda la oferta de análisis de
+Cloudflare. También podrás conocer las características de los datos que
+capturamos y procesamos.
+{{</Aside>}}
+
 ___
 
 ## Acceder a los análisis de tu sitio web
@@ -54,6 +62,11 @@ Estas métricas incluyen las peticiones legítimas de los usuarios, así como lo
 
 #### Planes Pro, Business o Enterprise
 
+{{<Aside type="note">}}
+Los planes Pro, Business y Enterprise incluyen la nueva herramienta de
+Análisis de tráfico web que priorizan la privacidad.
+{{</Aside>}}
+
 Los análisis se basan en los registros perimetrales de Cloudflare, sin necesidad de scripts ni rastreadores de terceros. La pestaña Tráfico presenta las siguientes métricas:
 
 -   **Visitas**: una visita se define como una vista de página que procede de un sitio web diferente o un enlace directo. Cloudflare comprueba si el referente HTTP no coincide con el nombre del servidor. Una visita puede consistir en varias vistas de página. 
@@ -64,6 +77,12 @@ Los análisis se basan en los registros perimetrales de Cloudflare, sin necesida
 Para ver métricas más detalladas, haz clic en **Añadir filtro**. También puedes filtrar cada métrica por **referente**, **servidor**, **país**, **ruta**, **código de estado**, **código de estado de origen**, **navegador**, **sistema operativo** o **tipo de dispositivo**. 
 
 Para cambiar el periodo de tiempo, usa el menú desplegable que aparece en el lado derecho sobre el gráfico. También puedes arrastrar para hacer zoom en el gráfico.
+
+{{<Aside type="note">}}
+Para desactivar la nueva herramienta de Análisis de tráfico web, haz
+clic en **Cambiar el interruptor para volver a la experiencia anterior**
+en el lado izquierdo de la página.
+{{</Aside>}}
 
 ### Seguridad
 

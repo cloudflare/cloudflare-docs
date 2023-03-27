@@ -18,13 +18,13 @@ Railgun can especially help in the following situations:
 -   Your web hosts charge a lot by the GB for bandwidth. (i.e. you would like to minimise the amount you spend on that).
 -   You have a website with a lot of dynamic content, such as a very active blog or news source.
 
-Unlike other Cloudflare features, it does require a program to be installed on or near the origin web server. The system requirements of Railgun can be found [here](https://developers.cloudflare.com/railgun/user-guide/requirements/). Full instructions for installing and configuring Railgun can be found [here](https://developers.cloudflare.com/railgun/user-guide/set-up). If you are the customer of an Optimized Partner of Cloudflare, you do not need to install Railgun. Your hosts will have done that for you.
+Unlike other Cloudflare features, it does require a program to be installed on or near the origin web server. The system requirements of Railgun can be found [here](/railgun/user-guide/requirements/). Full instructions for installing and configuring Railgun can be found [here](/railgun/user-guide/set-up). If you are the customer of an Optimized Partner of Cloudflare, you do not need to install Railgun. Your hosts will have done that for you.
 
 ___
 
 ## How do I enable Railgun?
 
-You can enable [Railgun](https://www.cloudflare.com/railgun) by following the directions [here](https://developers.cloudflare.com/railgun/user-guide/administration#enabling-railgun).
+You can enable [Railgun](https://www.cloudflare.com/railgun) by following the directions [here](/railgun/user-guide/administration#enabling-railgun).
 
 Railgun is available to Business customers as well as through our Optimized Partners.
 
@@ -83,6 +83,12 @@ ___
 The presence of `stream` in place of a compression ratio indicates that the response from the origin was greater than the value set in the `stream.size` parameter within the `railgun.conf` file (default value is 250000 bytes).
 
 This status results in the request not being compressed and served in a streaming fashion.
+
+{{<Aside type="note">}}
+Please refer to our [Reading and Interpreting the \'Cf-Railgun\'
+Header](https://support.cloudflare.com/hc/en-us/articles/202963724-Reading-and-Interpreting-the-Cf-Railgun-Header)
+article for additional technical information on the Cf-Railgun header.
+{{</Aside>}}
 
 ### Troubleshooting
 
@@ -238,7 +244,7 @@ When starting the Railgun service for the first time, you may see the following
 
 There are two possible causes for this error:
 
--   The [railgun.conf](https://developers.cloudflare.com/railgun/user-guide/set-up/configuration-activation/) file does not have the proper public IP (`activation.public_ip` or `activation.railgun_host` in recent versions of Railgun) and/or the activation token (`activation.token)` configured.
+-   The [railgun.conf](/railgun/user-guide/set-up/configuration-activation/) file does not have the proper public IP (`activation.public_ip` or `activation.railgun_host` in recent versions of Railgun) and/or the activation token (`activation.token)` configured.
 -   There's a chance the Railgun created for the domain [in your account](https://www.cloudflare.com/a/account/railgun) was not created properly. Delete it, create a new one, and try again.
 
 If the issue persists after trying both of these steps, please contact support.

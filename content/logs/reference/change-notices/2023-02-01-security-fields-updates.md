@@ -48,7 +48,7 @@ The following concepts are used below in the reviewed field descriptions:
   * `block`
   * `js_challenge`
   * `managed_challenge`
-  * `challenge` (_Legacy CAPTCHA_)
+  * `challenge` (_Interactive Challenge_)
 
 For more information on these actions, refer to the [Actions](/ruleset-engine/rules-language/actions/) reference in the Rules language documentation.
 
@@ -70,7 +70,7 @@ New field name | Type | Description | Old field name<br>(removed on Aug 1, 2023)
 `SecurityRuleDescription`	| String | Rule description of the security rule that triggered a terminating action, if any. | `WAFRuleMessage`
 `SecurityAction` | String | Rule action of the security rule that triggered a terminating action, if any. | `WAFAction`
 `SecurityRuleIDs` | String Array | Array of security rule IDs that matched the request. | `FirewallMatchesRuleIDs`
-`SecurityActions` | String Array | Array of actions that Cloudflare security products performed on this request. | `FirewallMatchesActions`
+`SecurityActions` | String Array | Array of actions that Cloudflare security products performed on the request. | `FirewallMatchesActions`
 `SecuritySources` | String Array | Array of Cloudflare security products that matched the request. | `FirewallMatchesSources`
 
 {{</table-wrap>}}
@@ -82,8 +82,8 @@ The following fields are now deprecated and they will be removed from the HTTP R
 Deprecated field name | Notes
 ----------------------|----------------------------------------------------------------------
 `WAFProfile`          | Used in the previous version of WAF managed rules (now deprecated).
-`EdgeRateLimitAction` | Used in the previous version of rate limiting rules (now deprecated).
-`EdgeRateLimitID`     | Used in the previous version of rate limiting rules (now deprecated).
+`EdgeRateLimitAction` | Used in the previous version of rate limiting rules.
+`EdgeRateLimitID`     | Used in the previous version of rate limiting rules.
 `SecurityLevel`       | N/A
 
 {{</table-wrap>}}
@@ -96,8 +96,8 @@ The following fields will be added to the [Firewall Events](/logs/reference/log-
 
 Field name    | Type   | Description
 --------------|--------|--------------------------------------------
-`Description` | String | Rule description for this event.
-`Ref`         | String | User-defined rule reference for this event.
+`Description` | String | The description of the rule triggered by the request.
+`Ref`         | String | The user-defined identifier for the rule triggered by the request.
 
 {{</table-wrap>}}
 
@@ -120,7 +120,7 @@ Cloudflare will also add the following field to the `firewallEventsAdaptive`, `f
 
 Field name    | Type   | Description
 --------------|--------|-----------------------------
-`description` | String | Rule description for this event.
+`description` | String | The description of the rule triggered by the request.
 
 {{</table-wrap>}}
 

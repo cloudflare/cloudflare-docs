@@ -41,7 +41,7 @@ Durable Object bindings for communication between a Worker and a Durable Object.
 
 R2 bucket bindings for communication between a Worker and an R2 bucket.
 
-* Learn more about [R2 bucket bindings](/r2/data-access/workers-api/workers-api-reference/#create-a-binding).
+* Learn more about [R2 bucket bindings](/r2/api/workers/workers-api-reference/#create-a-binding).
 * Configure R2 bucket bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#r2-buckets).
 
 ### Queue bindings
@@ -54,7 +54,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-* Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dynamic-dispatch-worker).
+* Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/).
 
 ### mTLS certificate bindings
 

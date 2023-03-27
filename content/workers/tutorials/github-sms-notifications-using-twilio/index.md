@@ -55,7 +55,7 @@ To start, configure a GitHub webhook to post to your Worker when there is an upd
 
 1.  Go to your Github repository's **Settings** > **Webhooks** > **Add webhook**.
 
-2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/workers/get-started/guide/#6-preview-your-project) file and then [running `wrangler publish` in your command line](/workers/get-started/guide/#8-publish-your-project) to generate a live URL for your Worker.
+2.  Set the Payload URL to the `/webhook` path on your Worker URL. You can find your worker URL by populating [your account id in the `wrangler.toml`](/workers/wrangler/configuration/#zone-id-route) file and then [running `wrangler publish` in your command line](/workers/wrangler/commands/#publish) to generate a live URL for your Worker.
 
 3.  In the **Content type** dropdown, select _application/json_.
 

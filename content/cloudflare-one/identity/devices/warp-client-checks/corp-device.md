@@ -6,16 +6,7 @@ weight: 3
 
 # Device serial numbers
 
-<details>
-<summary>Feature availability</summary>
-<div>
-
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| macOS, Windows, Linux | WARP with Gateway                                                                         | All plans                                                     |
-
-</div>
-</details>
+{{<render file="posture/_available-for-warp-with-gateway.md">}}
 
 Cloudflare Zero Trust allows you to build Zero Trust rules based on device serial numbers. You can create these rules so that access to applications is granted only to users connecting from company devices.
 
@@ -23,7 +14,7 @@ Cloudflare Zero Trust allows you to build Zero Trust rules based on device seria
 
 To create rules based on device serial numbers, you first need to create a [Gateway List](/cloudflare-one/policies/filtering/lists/) of numbers.
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **My Team** > **Lists**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 
 1. Select **Create manual list** or **Upload CSV**. For larger teams, we recommend uploading a CSV or using Cloudflare's [API endpoint](https://developers.cloudflare.com/api/operations/zero-trust-lists-list-zero-trust-lists).
 
@@ -44,28 +35,28 @@ You can now create an [Access policy](/cloudflare-one/policies/access/) or a Gat
 1. Open a terminal window.
 1. Use the `system_profiler` command to check for the value of `SPHardwareDataType` and retrieve the serial number.
 
-    ```txt
-    system_profiler SPHardwareDataType | grep 'Serial Number'
-    ```
+   ```txt
+   system_profiler SPHardwareDataType | grep 'Serial Number'
+   ```
 
 ### Windows
 
 1. Open a Powershell window.
 1. Use the `Get-CimInstance` command to get the SerialNumber property of the `Win32_BIOS` class.
 
-    ```txt
-    Get-CimInstance Win32_BIOS
-    ```
+   ```txt
+   Get-CimInstance Win32_BIOS
+   ```
 
 ### Linux
 
 1. Open a Terminal Window
 1. Use the `dmidecode` command to get the version property `system-serial-number`.
 
-    ```txt
-    sudo dmidecode -s system-serial-number
-    ```
+   ```txt
+   sudo dmidecode -s system-serial-number
+   ```
 
 ### iOS, Android and ChromeOS
 
-Serial number checks are not supported on mobile devices. You can identify mobile devices by a [unique client ID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid)  instead of by serial number.
+Serial number checks are not supported on mobile devices. You can identify mobile devices by a [unique client ID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid) instead of by serial number.

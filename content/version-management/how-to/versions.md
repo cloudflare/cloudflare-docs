@@ -20,7 +20,6 @@ During the open beta, you can only interact with environments and versions using
 ## Create version
 
 {{<render file="_enable-default-creation.md">}}
-<br/>
 
 If you need to test out different implementations of configurations at the same time or multiple types of changes, create a new version of your zone.
 
@@ -36,8 +35,13 @@ To create a new version:
 
 ## Change settings in a version
 
+Your zone settings are split up into two areas: **Global Settings** and different versions.
+-   Global settings control the non-versionable settings of a zone and - when changed - automatically apply to all versions of your zone.
+- Version settings update the versionable settings of your zone and are:
+    - Editable when not applied to a [read-only environment](/version-management/reference/read-only-environments/).
+    - Applied when [associated with an environment](/version-management/how-to/environments/#change-environment-version).
+
 {{<render file="_edit-version.md">}}
-<br/>
 
 {{<Aside type="note">}}
 

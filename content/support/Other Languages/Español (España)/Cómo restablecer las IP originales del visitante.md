@@ -11,6 +11,17 @@ title: Cómo restablecer las IP originales del visitante
 
 ## Información general
 
+{{<Aside type="warning">}}
+Cloudflare ya no actualizará ni proveerá asistencia técnica para
+*mod\_cloudflare* a partir de las versiones **Debian 9** y **Ubuntu
+18.04 LTS** del sistema operativo Linux. Ahora recomendamos
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+para los clientes que utilizan servidores web Apache. Los clientes que
+estén interesados en compilar el paquete *mod\_cloudflare* , pueden
+[descargar el código base](https://github.com/cloudflare/mod_cloudflare)
+de GitHub.
+{{</Aside>}}
+
 Cuando el [tráfico de tu sitio web se enruta a través de la red de Cloudflare](https://support.cloudflare.com/hc/articles/205177068), actuamos como un proxy inverso. Esto permite a Cloudflare acelerar el tiempo de carga de página enrutando los paquetes de manera más eficiente y almacenando en caché los recursos estáticos (imágenes, JavaScript, CSS, etc.). Como resultado, al responder las solicitudes y registrarlas, tu servidor de origen devuelve una [dirección IP de Cloudflare](https://www.cloudflare.com/ips/).
 
 Por ejemplo, si instalas aplicaciones que dependen de la dirección IP entrante del visitante original, se registra por defecto una dirección IP de Cloudflare. La dirección IP original del visitante aparece en un encabezado HTTP añadido denominado [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Siguiendo nuestras [instrucciones del servidor web](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), puedes registrar la dirección IP original del visitante en tu servidor de origen. Si este encabezado HTTP no está disponible cuando las solicitudes llegan a tu servidor de origen, comprueba tu configuración de [Reglas de transformación](https://developers.cloudflare.com/rules/transform/) y [Transformaciones administradas](https://developers.cloudflare.com/rules/transform/managed-transforms/).
@@ -80,9 +91,26 @@ actualiza _LogFormat_ como se muestra a continuación:
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">sudo systemctl restart apache2</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
 
+{{<Aside type="note">}}
+Para obtener más información sobre *mod\_remoteip* , consulta la
+[documentación de
+Apache](https://httpd.apache.org/docs/2.4/mod/mod_remoteip.html "Módulo mod_remoteip de Apache").
+{{</Aside>}}
+
 ___
 
 ## mod\_cloudflare
+
+{{<Aside type="warning">}}
+Cloudflare ya no actualizará ni proveerá asistencia técnica para
+*mod\_cloudflare* a partir de las versiones **Debian 9** y **Ubuntu
+18.04 LTS** del sistema operativo Linux. Ahora recomendamos
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+para los clientes que utilizan servidores web Apache. Los clientes que
+estén interesados en compilar el paquete *mod\_cloudflare* , pueden
+[descargar el código base](https://github.com/cloudflare/mod_cloudflare)
+de GitHub.
+{{</Aside>}}
 
 Hay dos métodos para instalar mod\_cloudflare: descargando la extensión de Apache de Github o añadiendo código a tu servidor web de origen.
 
@@ -120,11 +148,28 @@ Mod\_cloudflare se instala modificando [el archivo de configuración de nginx](
 
 Para eliminar _mod\_cloudflare_ debes marcar como comentario o eliminar esta línea y luego reiniciar nginx. _mod\_cloudflare_ debería desaparecer_._
 
+{{<Aside type="note">}}
+Para eliminar *mod\_cloudflare* de otros tipos de servidores web,
+consulta la documentación de tu servidor web para ver cómo eliminar
+módulos.
+{{</Aside>}}
+
 ___
 
 ## Instrucciones del servidor web
 
 Consulta a continuación las instrucciones sobre cómo configurar tu servidor web para que registre las direcciones IP originales de los visitantes en función del tipo de servidor web:
+
+{{<Aside type="warning">}}
+Cloudflare ya no actualizará ni proveerá asistencia técnica para
+*mod\_cloudflare* a partir de las versiones **Debian 9** y **Ubuntu
+18.04 LTS** del sistema operativo Linux. Ahora recomendamos
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+para los clientes que utilizan servidores web Apache. Los clientes que
+estén interesados en compilar el paquete *mod\_cloudflare* , pueden
+[descargar el código base](https://github.com/cloudflare/mod_cloudflare)
+de GitHub.
+{{</Aside>}}
 
 1.  Verifica que esté instalado:
     -   Red Hat/Fedora`sudo yum install httpd-devel libtool git`
@@ -152,7 +197,25 @@ Utiliza el [módulo NGINX `ngx_http_realip_module`](http://nginx.org/en/docs/htt
 
 Esta lista de prefijos debe actualizarse periódicamente. Publicamos la lista completa en [Direcciones IP de Cloudflare](https://www.cloudflare.com/ips).
 
+{{<Aside type="note">}}
+Para incluir las direcciones IP originales de los visitantes en tus
+registros, añade las
+variables \$http\_cf\_connecting\_ip y \$http\_x\_forwarded\_for i en la
+directiva log\_format.
+{{</Aside>}}
+
 Consulta también: [Cloudflare y NGINX](https://danielmiessler.com/blog/getting-real-ip-addresses-using-cloudflare-nginx-and-varnish/).
+
+{{<Aside type="warning">}}
+Cloudflare ya no actualizará ni proveerá asistencia técnica para
+*mod\_cloudflare* a partir de las versiones **Debian 9** y **Ubuntu
+18.04 LTS** del sistema operativo Linux. Ahora recomendamos
+[*mod\_remoteip*](https://support.cloudflare.com/hc/articles/200170786#C5XWe97z77b3XZV)
+para los clientes que utilizan servidores web Apache. Los clientes que
+estén interesados en compilar el paquete *mod\_cloudflare* , pueden
+[descargar el código base](https://github.com/cloudflare/mod_cloudflare)
+de GitHub.
+{{</Aside>}}
 
 1.  Ejecuta el siguiente script para instalar mod\_cloudflare como parte de EasyApache: `bash <(curl -s https://raw.githubusercontent.com/cloudflare/mod_cloudflare/master/EasyApache/installer.sh)`
 2.  Tras la instalación, deberás volver a compilar tu Apache con el nuevo complemento de mod\_cloudflare.
@@ -172,6 +235,15 @@ Para que Lighttpd reescriba de manera automática la dirección lP del servidor 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">$HTTP[&quot;remoteip&quot;] == &quot;192.2.0.1 (dirección IP de ejemplo)&quot;</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">{</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">extforward.forwarder = ( &quot;all&quot; =&gt; &quot;trust&quot; )</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">extforward.headers = (&quot;CF-Connecting-IP&quot;)</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">}</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">(repite este paso para todas las direcciones IP de Cloudflare que aparecen en [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/))</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">
 </span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="tip">}}
+Si tu origen se conecta a Internet con IPv6, **\$HTTP\[\"remoteip\"\]**
+, que es necesario para hacer coincidir los rangos de direcciones IP
+remotas, no funciona cuando IPv6 está activado. El método anterior no
+funcionará al intentar la redirección de los rangos de direcciones IP.
+Añade las siguientes líneas a lighttpd.conf como solución alternativa:
+`extforward.forwarder = ( "all" => "trust" ) extforward.headers = ("CF-Connecting-IP")`
+{{</Aside>}}
 
 1.  Ve a tu consola de administración web LiteSpeed.
 2.  Activa la opción "Use Client IP in Header in Configuration".

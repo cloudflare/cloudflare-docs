@@ -35,7 +35,13 @@ Ensure that you have the necessary DNS records in the **DNS** app of your Clou
 -   The root domain (e.g., _example.com_)
 -   Any existing subdomains (e.g., _www.example.com, blog.example.com_, etc.)
 
-Learn more about setting up A and CNAME [DNS records](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records).
+{{<Aside type="tip">}}
+If you have a [partial zone
+setup](/dns/zone-setups/partial-setup),
+ensure your DNS records also exist in your authoritative nameservers.
+{{</Aside>}}
+
+Learn more about setting up A and CNAME [DNS records](/dns/manage-dns-records/how-to/create-dns-records).
 
 ### DNSSEC wasn't disabled before the domain was added to Cloudflare
 
@@ -47,4 +53,4 @@ If you manage DNS records via the **DNS** app in Cloudflare's Dashboard and yo
 
 ### Unresolved IP address
 
-In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.  Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](https://developers.cloudflare.com/1.1.1.1/setting-up-1.1.1.1/) may help. Contact your hosting provider for additional help with your current DNS resolver.
+In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.  Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help. Contact your hosting provider for additional help with your current DNS resolver.

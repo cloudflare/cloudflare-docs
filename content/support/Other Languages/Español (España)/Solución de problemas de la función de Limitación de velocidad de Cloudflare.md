@@ -25,6 +25,13 @@ Además, hay algunos errores comunes que impiden configurar la función de **lim
 -   _Ratelimit.api.not\_entitled_: los clientes Enterprise deben ponerse en contacto con su equipo de cuenta de Cloudflare antes de añadir reglas.
 -   Puedes consultar otros errores en la [documentación de la API](https://api.cloudflare.com/#rate-limits-for-a-zone-errors). Si no estás seguro de un error en particular, [ponte en contacto con Soporte de Cloudflare](https://support.cloudflare.com/hc/articles/200172476) facilitándoles la solicitud de API fallida una vez hayas ocultado tu clave de API.
 
+{{<Aside type="info">}}
+El parámetro **origen\_tráfico** solo puede establecerse en los planes
+Enterprise. La configuración **origen\_tráfico** = *falso* para una
+regla en un dominio de plan gratuito, Pro o Enterprise se convierte
+automáticamente en **origen\_tráfico** = *verdadero*.
+{{</Aside>}}
+
 ___
 
 ## Limitaciones

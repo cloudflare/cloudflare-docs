@@ -9,24 +9,28 @@ layout: single
 
 With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on additional signals from the WARP client or from third-party endpoint security providers. When device posture checks are configured, users can only connect to a protected application or network resource if they have a managed or healthy device.
 
+## Prerequisites
+
+The WARP client must be [deployed](/cloudflare-one/connections/connect-devices/warp/deployment/) in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
+
 ## 1. Enable device posture checks
 
 Setup instructions vary depending on the device posture attribute. Refer to the links below to view the setup guide for your provider.
 
-* [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the Cloudflare WARP client.
-* [Service-to-service checks](/cloudflare-one/identity/devices/service-providers/) are performed by third-party device posture providers.
-* [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are only configurable for Access applications. These attributes cannot be used in Gateway policies.
+- [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the Cloudflare WARP client.
+- [Service-to-service checks](/cloudflare-one/identity/devices/service-providers/) are performed by third-party device posture providers.
+- [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are only configurable for Access applications. These attributes cannot be used in Gateway policies.
 
 ## 2. Verify device posture checks
 
 Before integrating a device posture check in a Gateway or Access policy, you should verify that the Pass/Fail result from the device matches your expectations.
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **My Team** > **Devices**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
 2. Find the device running the posture check and select **View**.
 3. Scroll down to **WARP client posture checks** and **Service provider posture checks**.
 4. Select a result to review details. You will see the value returned from the device, as well as the value required to pass the check.
 
-![Device posture results in the Zero Trust dashboard](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
+![Device posture results in Zero Trust](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
 
 ## 3. Build a device posture policy
 
@@ -36,9 +40,9 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 [WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
-* The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
-* `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
-* The application protected by the Access or Gateway policy.
+- The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
+- `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
+- The application protected by the Access or Gateway policy.
 
 ## Policy enforcement rate
 

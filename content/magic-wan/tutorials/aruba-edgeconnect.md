@@ -96,7 +96,7 @@ We use Aruba Orchestrator’s Business Intent Overlays to create intuitive polic
 </summary>
  <div class="special-class" markdown="1">
 
-Cloudflare’s [tunnel health checks](/magic-transit/about/probe-construction/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare’s [tunnel health checks](/magic-transit/reference/probe-construction/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -120,7 +120,7 @@ The service name used to send traffic through the tunnel created in the next ste
 </summary>
  <div class="special-class" markdown="1">
 
-Cloudflare’s [tunnel health checks](/magic-transit/about/probe-construction/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare’s [tunnel health checks](/magic-transit/reference/probe-construction/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -266,7 +266,7 @@ header: Response
 
 **Create an IPSec tunnel on EdgeConnect**
 
-You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in the [previous step](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies-1). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
+You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in [configure overlay policy](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
 
 ![Modify Passthrough Tunnel dialog with General values](/magic-wan/static/general-modify-passthrough.png)
 

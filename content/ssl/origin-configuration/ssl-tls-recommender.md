@@ -6,7 +6,7 @@ weight: 4
 
 # SSL/TLS Recommender
 
-The **SSL/TLS Recommender** helps you choose which [Encryption mode](/ssl/origin-configuration/ssl-modes/) is best for your application.
+The SSL/TLS Recommender helps you choose which [Encryption mode](/ssl/origin-configuration/ssl-modes/) is best for your application.
 
 {{<Aside type="note">}}
 

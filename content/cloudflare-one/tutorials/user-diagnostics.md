@@ -24,11 +24,11 @@ Cloudflare Access provides a user-facing portal, the [App Launcher](https://blog
 
 ## Configure the App Launcher
 
-1. On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 
 2. Under **App Launcher**, select **Manage**.
 
-    The App Launcher works like other Access policies - you can define who is able to reach the App Launcher. When users visit the App Launcher, Cloudflare Access will display only the applications they have permission to reach.
+   The App Launcher works like other Access policies - you can define who is able to reach the App Launcher. When users visit the App Launcher, Cloudflare Access will display only the applications they have permission to reach.
 
 3. To define who is able to use the App Launcher, select **Add a rule**.
 
