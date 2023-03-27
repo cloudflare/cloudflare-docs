@@ -69,7 +69,7 @@ The response returns the created ruleset. Note the presence of the `exposed_cred
 
 ```json
 ---
-highlight: [14,15,16,17]
+highlight: [15,16,17,18]
 ---
 {
   "result": {
@@ -149,7 +149,7 @@ The response returns the created ruleset. Note the presence of the following ele
 
 ```json
 ---
-highlight: [12,13,14,15,16,17,18,19,20,22,23,24,25]
+highlight: [12,13,14,15,16,17,18,19,20,23,24,25,26]
 ---
 {
   "result": {
