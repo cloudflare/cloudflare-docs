@@ -52,13 +52,13 @@ To better understand the example, take a look at the following diagram:
 flowchart TD
 accTitle: Single file purge  assets cached by a worker
 accDescr: This diagram is meant to help choose how to purge a file.
-A("You have a Worker script that runs on https://example.com/hello and this Worker makes a `fetch` request to https://notexample.com/hello.") --> B(Is notexample.com an active zone on Cloudflare?)
-    B -- Yes --> C(Is https://notexample.com/ proxied through Cloudflare?)
-    B -- No  --> D(Purge https://notexample.com/hello from the original example.com zone.)
-    C -- Yes --> E(Do you own notexample.com?)
-    C -- No --> F(Purge https://notexample.com/hello from the original example.com zone.)
-    E -- Yes --> G(Purge https://notexample.com/hello from the notexample.com zone.)
-    E -- No --> H(Sorry, you can not purge the asset. Only the owner of notexample.com can purge it.)
+A("You have a Worker script that runs on <code>https://example.com/hello</code> <br> and this Worker makes a <code>fetch</code> request to <code>https://notexample.com/hello</code>.") --> B(Is <code>notexample.com</code> <br> an active zone on Cloudflare?)
+    B -- Yes --> C(Is <code>https://notexample.com/</code> <br> proxied through Cloudflare?)
+    B -- No  --> D(Purge <code>https://notexample.com/hello</code> <br> from the original <code>example.com</code> zone.)
+    C -- Yes --> E(Do you own <br> <code>notexample.com</code>?)
+    C -- No --> F(Purge <code>https://notexample.com/hello</code> <br> from the original <code>example.com</code> zone.)
+    E -- Yes --> G(Purge <code>https://notexample.com/hello</code> <br> from the <code>notexample.com</code> zone.)
+    E -- No --> H(Sorry, you can not purge the asset. <br> Only the owner of <code>notexample.com</code> can purge it.)
 ```
 
 ### Purging assets stored with the Cache API
