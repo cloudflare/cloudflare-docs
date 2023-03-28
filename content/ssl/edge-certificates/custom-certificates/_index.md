@@ -10,7 +10,7 @@ layout: single
 {{<render file="_custom-certificates-definition.md">}}
 <br/>
 
-Unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for custom certificates.
+Unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for custom certificates.
 When you use custom certificates, the following actions should be considered and accomplished by you:
 - [Upload the certificate](uploading/).
 - [Renew the certificate](/ssl/edge-certificates/custom-certificates/renewing/).
@@ -24,13 +24,13 @@ If your custom certificate does not cover all of your first-level hostnames, you
 
 As part of the custom certificate process, you can leverage Cloudflare to generate your [Certificate Signing Request (CSR)](/ssl/edge-certificates/additional-options/certificate-signing-requests/). This additional option means that Cloudflare will safely generate and store the private key associated with the CSR.
 
+## Geo Key Manager (private key restriction)
+
+By default, Cloudflare encrypts and securely distributes private keys to all Cloudflare data centers, where they can be used for local SSL/TLS termination. If you want to restrict where your private keys may be used, use [Geo Key Manager](/ssl/edge-certificates/geokey-manager/).
+
 ## Keyless SSL
 
 If you want to upload a custom certificate but retain your private key on your own infrastructure, consider using [Keyless SSL](/ssl/keyless-ssl/).
-
-## Geo Key Manager (private key restriction)
-
-By default, private keys will be encrypted and securely distributed to each data center, where they can be utilized for local SSL/TLS termination. To restrict where these keys may be used, use [Geo Key Manager](/ssl/edge-certificates/geokey-manager/).
 
 ## Certificate packs
 
