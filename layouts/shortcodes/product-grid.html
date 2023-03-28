@@ -96,6 +96,138 @@
     padding-left: 2.5em
   }
 
+.filter-popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 1000;
+  display: none;
+}
+
+.filter-popup.active {
+  display: block;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  color: black;
+}
+
+.filter-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.filter-body {
+  padding: 10px;
+}
+
+.filter-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.clear-button {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.apply-button {
+  background-color: #007dbc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.FilterButtonContainer {
+  max-width: var(--docs-max-page-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding: .01rem var(--docs-content-gap) .2rem;
+    text-align: center;
+}
+
+.filter-button {
+  width: 100%;
+  height: 3em;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .filter-popup {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    background-color: transparent;
+    border: none;
+  }
+
+  .filter-button, .close-button, .apply-button {
+    visibility: hidden;
+  }
+
+  .filter-header {
+    justify-content: flex-start;
+    border-bottom: none;
+    padding: 0 15px;
+    color: black;
+  }
+
+  .close-button {
+    margin-left: auto;
+  }
+
+  .filter-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+  }
+
+  .filter-footer {
+    justify-content: flex-end;
+    padding: 0 10px;
+    border-top: none;
+  }
+
+  .clear-button {
+    margin-right: 10px;
+  }
+
+  .apply-button {
+    margin-left: 10px;
+  }
+}
+
+
 </style>
 
 <div class="QuadBlockGrid">
@@ -103,12 +235,34 @@
     class="ProductGrid--filter"
     type="text"
     id="search"
-    onkeyup="filterProducts()"
+    onkeyup="filterProductsByText()"
     placeholder="Search products..."
   />
   </div>
 
 <div class="ProductGrid">
+  <div class="FilterButtonContainer">
+  <button id="filter-button" class="filter-button" onclick="toggleVisibility('filter-popup')">Filter Products</button>
+  </div>
+  <div class="filter-popup" id="filter-popup">
+    <br/>
+    <br/>
+    <div class="filter-header">
+      <h2>Filter</h2>
+      <button class="close-button" onclick="toggleVisibility('filter-popup')">Close</button>
+    </div>
+    <div class="filter-body">
+      <ul>
+        {{- range $availableOptions -}}
+        <li>{{- . -}}</li>
+        {{- end -}}
+      </ul>
+    </div>
+    <div class="filter-footer">
+      <button class="clear-button">Clear All</button>
+      <button class="apply-button" onclick="toggleVisibility('filter-popup')">Apply</button>
+    </div>
+  </div>
   <div id="ProductGrid--range">
   {{- range $availableOptions -}}
   {{- $currentOption := . }}
@@ -143,7 +297,7 @@
 </div>
 
 <script>
-  function filterProducts() {
+  function filterProductsByText() {
     // Search input and items
     var input = document.getElementById("search"); // User input
     var query = input.value.toUpperCase(); // Make input non-case sensitive
@@ -192,4 +346,13 @@
     }
 
   }
+
+function toggleVisibility(id) {
+  const element = document.getElementById(id);
+  if (element.style.display === 'block') {
+    element.style.display = 'none';
+  } else {
+    element.style.display = 'block';
+  }
+}
 </script>
