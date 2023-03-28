@@ -1482,7 +1482,7 @@
     },
     "x_user_agent_rules": {
       "title": "User Agent Blocking",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
+      "link": "/waf/tools/user-agent-blocking/",
       "properties": {
         "availability": {
           "title": "Availability",

@@ -146,8 +146,7 @@
             "additional_description": "Block, challenge, or allow requests based on IP address, IP range, country, or ASN."
           },
           {
-            "external_link": true,
-            "url_path": "https://support.cloudflare.com/hc/articles/115001856951",
+            "url_path": "/waf/tools/user-agent-blocking/",
             "link_title": "User Agent Blocking Rules",
             "additional_description": "Block or challenge specific requests based on the associated user agent value."
           },
