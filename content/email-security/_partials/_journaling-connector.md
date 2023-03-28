@@ -84,7 +84,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
 
-2. Navigate to **Data lifecycle management** > **Exchange (legacy)**.
+2. Go to **Data lifecycle management** > **Exchange (legacy)**.
 
 3. Select **Settings** (the gear icon).
 
@@ -125,7 +125,7 @@ After creating the distribution lists based on regions for your users, configure
 
 1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
 
-2. Navigate to **Data lifecycle management** > **Exchange (legacy)**.
+2. Go to **Data lifecycle management** > **Exchange (legacy)**.
 
 3. Select **Settings** (the gear icon).
 
