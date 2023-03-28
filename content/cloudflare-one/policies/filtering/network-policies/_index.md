@@ -116,13 +116,13 @@ The continent of the user making the request.
 The country of the user making the request.
 {{<render file="gateway/_source-country.md" withParameters="net.src">}}
 
-### Source IP
-
-{{<render file="gateway/_source-ip-net.md">}}
-
 ### Source Internal IP
 
 {{<render file="gateway/_source-internal-ip.md" withParameters="network;;net">}}
+
+### Source IP
+
+{{<render file="gateway/_source-ip-net.md">}}
 
 ### Source Port
 
