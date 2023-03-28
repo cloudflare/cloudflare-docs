@@ -54,7 +54,7 @@ You will need to manually create an app for Area 1 in Okta.
 
 10. Okta should display the app you have just created. If not, go to **Applications** > **Applications**, and select it.
 
-11. In the **Sign On** tab, navigate to **View SAML setup instructions** and select it to retrieve the SAML provider information.
+11. In the **Sign On** tab, go to **View SAML setup instructions** and select it to retrieve the SAML provider information.
 
     ![Find the View SAML setup instructions button](/email-security/static/sso/okta/step11-saml-instructions.png)
 

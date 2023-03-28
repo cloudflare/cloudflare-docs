@@ -108,7 +108,7 @@ In this example, the logo for Area 1 has been updated.
 
 2. Select **All Apps**. 
 
-3. Navigate to **Settings** > **SSO**.
+3. Go to **Settings** > **SSO**.
 
 4. Locate the Area 1 Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Area 1. 
 

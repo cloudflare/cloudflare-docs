@@ -29,7 +29,7 @@ When Area 1 is deployed as the MX record for Google Workspace, the Inbound gatew
 
 1. Go to the [Google Administrative Console](https://admin.google.com/).
 
-2. Navigate to **Apps** > **Google Workspace** > **Gmail**.
+2. Go to **Apps** > **Google Workspace** > **Gmail**.
 
     ![Access Gmail](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step2-gmail.png)
 
@@ -106,7 +106,7 @@ When you are finished entering these details, select **SAVE**.
 
     ![Access the compliance configuration](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step1-compliance.png)
 
-2. Navigate to the **Content compliance** area and select **CONFIGURE** to open the configuration dialog pop-up.
+2. Go to the **Content compliance** area and select **CONFIGURE** to open the configuration dialog pop-up.
 
     ![Select the configure button](/email-security/static/deployment/inline-setup/gsuite-area1-mx/step2-configure.png)
 
@@ -175,7 +175,7 @@ After 36 hours, the MX record DNS update will have sufficiently propagated acros
 
 2. Select **Spam, Phishing, and Malware**.
 
-3. Navigate to **Inbound Gateway configuration** and select **Configure**.
+3. Go to **Inbound Gateway configuration** and select **Configure**.
 
 4. Enable **Reject all mail not from gateway IPs** and select **Save**.
 
@@ -189,7 +189,7 @@ Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where t
 
 2. Select **Spam, Phishing, and Malware**.
 
-3. Navigate to **Inbound Gateway configuration** and select **Configure**.
+3. Go to **Inbound Gateway configuration** and select **Configure**.
 
 4. In the **Message Tagging** section, select **Message is considered spam if the following header regexp matches**.
 

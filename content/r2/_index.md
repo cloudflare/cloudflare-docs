@@ -13,9 +13,9 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 You can use R2 for multiple scenarios, including but not limited to:
 
-- Storage for podcast episodes
 - Storage for cloud-native applications
 - Cloud storage for web content
+- Storage for podcast episodes
 - Data lakes (analytics and big data)
 - Cloud storage output for large batch processes, such as machine learning model artifacts or data sets
   

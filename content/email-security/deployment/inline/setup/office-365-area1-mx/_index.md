@@ -133,7 +133,7 @@ Now that the inbound connector has been configured, you will need to enable the 
 
 1. Go to [Security Admin console](https://security.microsoft.com/homepage) > **Email & collaboration** > **Policy & Rules**.
 
-2. Navigate to **Threat policies** > **Rules**, and select **Enhanced filtering**.
+2. Go to **Threat policies** > **Rules**, and select **Enhanced filtering**.
 
     <div class="large-img">
 
