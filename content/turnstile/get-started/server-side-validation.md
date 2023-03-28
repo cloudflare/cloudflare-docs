@@ -84,7 +84,7 @@ Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo
 
 {{<Aside type="note">}}
 
-Remote IP helps prevent some abuses by ensuring that the current visitor is the one who received the token.
+Remote IP helps prevent abuses by ensuring that the current visitor is the one who received the token.
 
 {{</Aside>}}
 
