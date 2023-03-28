@@ -15,7 +15,7 @@ With Access policies, you can require users to open self-hosted applications in 
 
 ## Enable Browser Isolation
 
-1. In [Zero Trust](one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Choose a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-apps/) and select **Configure**.
 3. Choose an [Allow policy](/cloudflare-one/policies/access/) and select **Configure**.
 4. Under **Additional settings**, turn on **Isolate application**.
