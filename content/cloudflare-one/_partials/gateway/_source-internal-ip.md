@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1;;param2
+inputParameters: policyType;;APIprefix
 ---
 
 Use this selector to apply $1 policies to a private IP address, assigned by a user's local network, that requests arrive to Gateway from.
