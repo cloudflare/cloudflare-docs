@@ -224,6 +224,10 @@ The continent of the user making the request.
 The country of the user making the request.
 {{<render file="gateway/_source-country.md" withParameters="http.src_ip">}}
 
+### Source Internal IP
+
+{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;http">}}
+
 ### Source IP
 
 | UI name   | API example                   |
