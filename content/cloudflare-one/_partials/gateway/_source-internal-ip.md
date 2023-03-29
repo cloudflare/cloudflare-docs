@@ -6,7 +6,7 @@ _build:
 inputParameters: policyType;;APIprefix
 ---
 
-Use this selector to apply $1 policies to a private IP address, assigned by a user's local network, that requests arrive to Gateway from.
+Use this selector to apply $1 policies to a private IP address, assigned by a user's local network, that requests arrive to Gateway from. This selector will only apply to users connected through a [Magic GRE or IPSec tunnel](/cloudflare-one/policies/browser-isolation/setup/non-identity/).
 
 | UI name            | API example                                   |
 | ------------------ | --------------------------------------------- |
