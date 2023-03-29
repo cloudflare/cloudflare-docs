@@ -39,19 +39,13 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 #### Untrusted certificates
 
-{{<Aside type="note">}}
-
-To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
-
-{{</Aside>}}
-
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------ |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                 |
-| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust. |
-| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream.                            |
+| Option       | Action                                                                                                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                          |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                          |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). |
 
 ### Block
 
