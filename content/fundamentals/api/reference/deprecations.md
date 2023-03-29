@@ -109,7 +109,7 @@ Replacement:
 GraphQL Analytics API
 
 ## Organizations
-**End of life date: February 4, 2020**
+**End of life date - February 4, 2020**
 
 This endpoint and its related APIs are deprecated in favor of the `/accounts` equivalent API, which has a broader range of features and is backwards compatible with the `/organizations` API.
 
