@@ -17,9 +17,11 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 | Connection | Mode | Description |
 | ---------------------|-----------|--------------|
 | [Gateway with WARP](/cloudflare-one/policies/filtering/initial-setup/http/) | In-line | Apply identity-based HTTP policies to traffic proxied through the WARP client. |
+| [Access](/cloudflare-one/policies/access/isolate-application/) | In-line | Apply identity-based HTTP policies to Access applications that are rendered in a remote browser. |
 | [Gateway proxy endpoint](/cloudflare-one/policies/browser-isolation/setup/non-identity/) | In-line | Apply non-identity HTTP policies to traffic forwarded to a proxy endpoint. |
 | [Magic WAN](/cloudflare-one/policies/browser-isolation/setup/non-identity/) | In-line | Apply non-identity HTTP policies to traffic connected through a GRE or IPsec tunnel. |
 | [Clientless remote browser](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) | Prefixed URL | Render web pages in a remote browser when users go to `https://<your-team-name>.cloudflareaccess.com/browser/<URL>`.|
+
 {{</table-wrap>}}
 
 ## 2. Build an Isolation policy
