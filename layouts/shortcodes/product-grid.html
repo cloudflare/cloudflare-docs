@@ -52,37 +52,16 @@
 }
 
 .ProductGrid--content {
-  --n: 1;
-  display: grid;
-  grid-template-columns: repeat(var(--n), 1fr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 5px;
   padding-bottom: 3em;
 }
 
 .ProductGrid--link {
   border-left: 5px solid #F6821F;
-}
-
-@media screen and (min-width: 910px) {
-  .ProductGrid--content {
-    --n: 2;
-  }
-}
-
-@media screen and (min-width: 1175px) {
-  .QuadBlockGrid {
-    flex-direction: row;
-  }
-
-  .ProductGrid--content {
-    --n: 3;
-  }
-}
-
-@media screen and (min-width: 1500px) {
-  .ProductGrid--content {
-    --n: 4;
-  }
+  width: 75%;
 }
 
 .emptyState a {
@@ -208,19 +187,24 @@
   .filter-popup {
     display: flex;
     flex-direction: row;
-    position: static;
+    position:relative;
     background-color: transparent;
     border: none;
     margin-top: -3em;
+    width: 35%;
     z-index: 200;
-  }
-
-  .emptyState {
-    padding-left: 2em;
   }
 
   [theme="dark"] .filter-popup {
     background-color: transparent;
+  }
+
+  .ProductGrid--content {
+    width: 65%;
+  }
+
+  .emptyState {
+    padding-left: 2em;
   }
 
   .filter-button, .close-button, .apply-button {
@@ -228,8 +212,7 @@
   }
 
   .FilterButtonContainer {
-    flex-basis: 100%;
-    height: 0px;
+    display: none;
   }
 
   .filter-header {
@@ -263,7 +246,7 @@
     margin-bottom: .75em;
     background-color: var(--orange);
     color: #fff;
-    width: 100%;
+    width: 7em;
     height: 2em;
     border-radius: 4px;
   }
@@ -285,12 +268,52 @@
   }
 
   .ProductGrid {
+    width: 100%;
     display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
+    wrap: nowrap;
+  }
+}
+
+@media (min-width: 1000px) {
+  .filter-popup {
+    width: 25%
+  }
+  .ProductGrid--content {
+    width: 75%;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: baseline;
   }
+  .ProductGrid--link {
+    width: 45%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .ProductGrid--content {
+    justify-content: space-between;
+  }
+
+  .ProductGrid--link {
+    width: 30%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .filter-popup {
+    width: 20%
+  }
+
+  .ProductGrid--content {
+    width: 80%;
+  }
+
+  .ProductGrid--link {
+    width: 24%;
+  }
+
 }
 
 .ProductCheckboxItem {
@@ -346,7 +369,6 @@
     </div>
   </div>
 </div>
-  <div id="ProductGrid--range">
   <div class="ProductGrid--content" id="ProductGrid--content">
     {{- range $dataArray -}} 
       {{- if (ne .show false) -}}
@@ -365,9 +387,6 @@
   </div>
   <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="/search/">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
   </div>
-  
-</div>
-</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -438,7 +457,7 @@ function filterList() {
     productGridContent.style.display = "none";
   } else {
     emptyStateMessage.style.display = "none";
-    productGridContent.style.display = "grid";
+    productGridContent.style.display = "flex";
   }
 }
 
