@@ -73,7 +73,7 @@ Under **Security**, you can block traffic via the following methods:
 [**Firewall rules**](/firewall/cf-firewall-rules/) have limits but are more flexible and allow matching upon a wider variety of [fields](/ruleset-engine/rules-language/fields/) and [expressions](/ruleset-engine/rules-language/expressions/) than **IP Access Rules**.
 {{</Aside>}}
 
--   [**Zone Lockdown**](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-) \- Recommended to allow only trusted IP addresses or ranges to a portion of your site.
+-   [**Zone Lockdown**](/waf/tools/zone-lockdown/) \- Recommended to allow only trusted IP addresses or ranges to a portion of your site.
 -   [**User Agent Blocking**](/waf/tools/user-agent-blocking/) \- Recommended for blocking suspicious [User-Agent headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for your entire domain.
 
 {{<Aside type="note">}}

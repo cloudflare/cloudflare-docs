@@ -59,7 +59,7 @@ O aplicativo **Firewall** da Cloudflare facilita o bloqueio de tráfego por me
 -   [**Access Rules para IP**](/waf/tools/ip-access-rules/)  — recomendado para bloquear vários endereços IP, faixas de IP /16 ou /24 ou Números do Sistema Autônomo (ASNs). 
 -   [**Firewall Rules**](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)  — recomendado para bloquear um país, qualquer faixa de IPs válidos ou padrões de ataque mais complexos.
 
--   [**Zone Lockdown**](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-)  — recomendado para permitir apenas endereços IP ou faixas de IP confiáveis para uma parte do seu site.
+-   [**Zone Lockdown**](/waf/tools/zone-lockdown/)  — recomendado para permitir apenas endereços IP ou faixas de IP confiáveis para uma parte do seu site.
 -   [**User Agent Blocking**](/waf/tools/user-agent-blocking/)  — recomendado para bloquear [cabeçalhos de User Agents](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) suspeitos em todo o seu domínio.
 
 Para decidir qual país ou quais IPs bloquear ou desafiar, verifique seus arquivos de log. Entre em contato com seu provedor de hospedagem para ajudar a identificar:

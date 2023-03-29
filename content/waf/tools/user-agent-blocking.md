@@ -7,17 +7,15 @@ source: https://support.cloudflare.com/hc/en-us/articles/115001856951-Understand
 
 # Cloudflare User Agent Blocking
 
-User Agent Blocking (UA) rules block specific browser or web application [`User-Agent` request headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). UA rules apply to the entire domain instead of individual subdomains.
+User Agent Blocking rules block specific browser or web application [`User-Agent` request headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). User Agent Blocking rules apply to the entire domain instead of individual subdomains.
 
-User Agent Blocking rules are applied after [Zone Lockdown rules](https://support.cloudflare.com/hc/articles/115001595131). If you allow an IP address via Zone Lockdown, it will skip any UA rules.
+User Agent Blocking rules are applied after [Zone Lockdown rules](/waf/tools/zone-lockdown/). If you allow an IP address via Zone Lockdown, it will skip any User Agent Blocking rules.
 
 ## Availability
 
-Cloudflare User Agent Blocking is available on all plans. The number of available User Agent Blocking rules depends on your Cloudflare plan.
+Cloudflare User Agent Blocking is available on all plans. The number of available User Agent Blocking rules depends on your Cloudflare plan.
 
 {{<feature-table id="security.x_user_agent_rules">}}
-
----
 
 ## Create a User Agent Blocking rule
 
@@ -40,4 +38,4 @@ ___
 ## Related resources
 
 - [Secure your application](/learning-paths/application-security/)
-- [Cloudflare Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131)
+- [Cloudflare Zone Lockdown](/waf/tools/zone-lockdown/)
