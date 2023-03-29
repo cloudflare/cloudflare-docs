@@ -19,17 +19,17 @@ Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/
 
 | Field             | Description |
 |-------------------|-------------|
-| **Name**          | Name of the device  |
-| **Serial number** | Serial number of the device            |
-| **Manufacturer**  | Manufacturer of the device            |
-| **Model**         | Model of the device  |
+| **Name**          | Name of the device.  |
+| **Serial number** | Serial number of the device.           |
+| **Manufacturer**  | Manufacturer of the device.            |
+| **Model**         | Model of the device.  |
 
 ### User details
 
 | Field       | Description |
 |-------------|-------------|
-| **Email**   | Email used to register the device with Zero Trust            |
-| **User ID** | UUID of the user who registered the device           |
+| **Email**   | Email used to register the device with Zero Trust.            |
+| **User ID** | UUID of the user who registered the device.           |
 
 ### Posture details
 
