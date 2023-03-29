@@ -279,25 +279,26 @@
 
 @media (min-width: 1000px) {
   .filter-popup {
-    width: 25%
+    width: 30%
   }
   .ProductGrid--content {
-    width: 75%;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
   }
   .ProductGrid--link {
-    width: 45%;
+    width: 100%;
   }
 }
 
 @media (min-width: 1200px) {
-  .ProductGrid--content {
-    justify-content: space-between;
+  .filter-popup {
+    width: 25%
   }
-
-  .ProductGrid--link {
-    width: 30%;
+  .ProductGrid--content {
+    width: 70%;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -305,15 +306,10 @@
   .filter-popup {
     width: 20%
   }
-
   .ProductGrid--content {
     width: 80%;
+    grid-template-columns: repeat(4, 1fr);
   }
-
-  .ProductGrid--link {
-    width: 24%;
-  }
-
 }
 
 .ProductCheckboxItem {
