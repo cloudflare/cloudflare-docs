@@ -12,11 +12,11 @@ Only available to Enterprise customers on the Standard or Premium Success Plans.
 
 {{</Aside>}}
 
-By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice.
+By adding a Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
 
 ## Prerequisites
 
-Every user that wants to login with Dashboard SSO will need to exist as a member in your Cloudflare account and IdP. To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/account-and-billing/members/).
+All users in your email domain must exist as a member in your Cloudflare account and IdP.  To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/account-and-billing/members/).
 
 ## 1. Set up an IdP
 
