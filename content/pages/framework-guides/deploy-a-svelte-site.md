@@ -109,7 +109,7 @@ To solve this issue, provide a `CF_PAGES` variable to SvelteKit so that the adap
 
 - [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static)
   Only produces client-side static assets (no server-side rendering) and is compatible with Cloudflare Pages.
-  Review the [official SvelteKit documentation](https://kit.svelte.dev/docs/adapter-static) for instructions on how to set up the adapter. Keep in mind that if you decide to use this adapter, the build directory, instead of `.svelte-kit/cloudflare`, becomes `.build`. You must also configure your Cloudflare Pages application's build directory accordingly.
+  Review the [official SvelteKit documentation](https://kit.svelte.dev/docs/adapter-static) for instructions on how to set up the adapter. Keep in mind that if you decide to use this adapter, the build directory, instead of `.svelte-kit/cloudflare`, becomes `build`. You must also configure your Cloudflare Pages application's build directory accordingly.
 
 {{</Aside>}}
 
