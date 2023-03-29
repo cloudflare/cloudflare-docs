@@ -23,14 +23,7 @@ Setup instructions vary depending on the device posture attribute. Refer to the 
 
 ## 2. Verify device posture checks
 
-Before integrating a device posture check in a Gateway or Access policy, you should verify that the Pass/Fail result from the device matches your expectations.
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
-2. Find the device running the posture check and select **View**.
-3. Scroll down to **WARP client posture checks** and **Service provider posture checks**.
-4. Select a result to review details. You will see the value returned from the device, as well as the value required to pass the check.
-
-![Device posture results in Zero Trust](/cloudflare-one/static/documentation/identity/devices/device-posture-dash-result.png)
+Before integrating a device posture check in a Gateway or Access policy, go to **Logs** > **Posture** and verify that the Pass/Fail results match your expectations.
 
 ## 3. Build a device posture policy
 
@@ -38,7 +31,7 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 ## 4. Ensure traffic is going through WARP
 
-[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [Service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to properly lookup posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
+[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
 - The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 - `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
