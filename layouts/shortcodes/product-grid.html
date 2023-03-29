@@ -208,10 +208,15 @@
 @media (min-width: 768px) {
   .filter-popup {
     display: flex;
+    flex-direction: row;
     position: static;
     background-color: transparent;
     border: none;
     margin-top: -3em;
+  }
+
+  .emptyState {
+    padding-left: 2em;
   }
 
   [theme="dark"] .filter-popup {
@@ -255,6 +260,16 @@
 
   .clear-button {
     margin-right: 10px;
+    margin-bottom: .75em;
+    background-color: var(--orange);
+    color: #fff;
+    width: 100%;
+    height: 2em;
+    border-radius: 4px;
+  }
+
+  [theme="dark"] .clear-button {
+    color: black;
   }
 
   .apply-button {
@@ -332,7 +347,7 @@
   </div>
 </div>
   <div id="ProductGrid--range">
-  <div class="ProductGrid--content">
+  <div class="ProductGrid--content" id="ProductGrid--content">
     {{- range $dataArray -}} 
       {{- if (ne .show false) -}}
         {{- $wrap := default false .wrap -}}
@@ -346,9 +361,11 @@
         </a>
         {{- end -}}
       {{- end -}}
-  </div>
+      
   </div>
   <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="/search/">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
+  </div>
+  
 </div>
 </div>
 
@@ -413,12 +430,15 @@ function filterList() {
 				}
         // Trigger empty state message 
         var emptyStateMessage = document.getElementById("emptyState")
+        var productGridContent = document.getElementById("ProductGrid--content")
         if (!visibleItems) {
           emptyStateMessage.style.display = "";
           emptyStateMessage.children[0].style.display = "";
           emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + searchTerm.toLowerCase() + "&t=Docs" )
+          productGridContent.style.display = "none";
         } else {
           emptyStateMessage.style.display = "none";
+          productGridContent.style.display = "grid";
         }
 			}
 
