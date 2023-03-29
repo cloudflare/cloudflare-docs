@@ -33,7 +33,7 @@ View HTTP request logs instantly in the Cloudflare dashboard or the CLI.
 
 {{<feature header="Logpull" href="/logs/logpull/">}}
 
-Use Logpull if you only want to have access to HTTP request logs. The data from Logpull and Logpush is exactly the same.
+Use Logpull if you only want to have access to HTTP request logs. The data from Logpull and Logpush is almost the same, but with some differences in terms of log fields available to Logpull. Refer to [HTTP Requests log fields](/logs/reference/log-fields/zone/http_requests/).
 
 {{</feature>}}
 
