@@ -44,7 +44,7 @@ mode = "smart"
 
 The  `cf-placement header` checks whether a request has been routed with Smart Placement. For example:
 
-* ``cf-placement: remote-LHR` indicates that the request was routed using Smart Placement to a Cloudflare data center near London. 
+* `cf-placement: remote-LHR` indicates that the request was routed using Smart Placement to a Cloudflare data center near London. 
 * `cf-placement: local-EWR` indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received.
 
 {{<Aside type="note" header="Database Connectors and Socket Workers">}}
