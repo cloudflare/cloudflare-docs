@@ -13,5 +13,5 @@ DMARC Management allows you to review how emails sent on your behalf have fared 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Email** > **DMARC Management**.
 3. The graph shows you the volume of emails during a certain period of time. Select the dropdown to select a period of time up to 30 days. 
-4. Moving your mouse through the graph gives you details for a particular day. Select **View more** for a list of all the third party sources that send emails on behalf of your domain. 
-5. Select one source to open a window with more details.
+4. Moving your mouse through the graph gives you details for a particular day. Select **View reports** for a list of DMARC reports by date.
+5. Select one of the dates shown to open a window with more details.
