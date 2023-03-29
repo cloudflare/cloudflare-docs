@@ -58,9 +58,9 @@ Use the following resources for help with server configuration:
 
 ---
 
-## Step 3 - Configure application
+## Step 3 - Review your application
 
-After you have configured your client and server, you should review your application to make sure you are only sending intended data.
+After you have configured your client and server, review your application to make sure you are only sending intended data to Cloudflare:
 
 - Applications should scrub identifying user data from requests forwarded through the Privacy Gateway. This includes, for example, names, email addresses, phone numbers, etc.
 - Applications should encourage users to disable crash reporting when using Privacy Gateway. Crash reports can contain sensitive user information and data, including email addresses.
