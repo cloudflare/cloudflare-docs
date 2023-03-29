@@ -39,6 +39,12 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 #### Untrusted certificates
 
+{{<Aside type="note">}}
+
+To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+
+{{</Aside>}}
+
 The **Untrusted certificate action** determines how to handle insecure requests.
 
 | Option       | Action                                                                                                 |
