@@ -4,6 +4,10 @@ title: Secure Web Gateway
 weight: 1
 meta:
   title: Gateway policies
+product_grid:
+  show: true
+  title: Gateway
+  group: Cloudflare One
 ---
 
 # Gateway policies
