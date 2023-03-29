@@ -33,66 +33,66 @@
 {{- $dataArray = sort $dataArray ".title" -}}
 
 <style>
-  .QuadBlockGrid {
-    max-width: var(--docs-max-page-width);
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2.6rem var(--docs-content-gap) 3.5rem;
-    text-align: center;
-  }
-  .QuadBlock {
-    display: inline-block;
-    padding: 0 0.5rem 1rem;
-  }
+.QuadBlockGrid {
+  max-width: var(--docs-max-page-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2.6rem var(--docs-content-gap) 3.5rem;
+  text-align: center;
+}
+.QuadBlock {
+  display: inline-block;
+  padding: 0 0.5rem 1rem;
+}
 
-  .ProductGrid--filter {
-    width: 100%;
-    height: 3em;
-    padding: 1em;
+.ProductGrid--filter {
+  width: 100%;
+  height: 3em;
+  padding: 1em;
+}
+
+.ProductGrid--content {
+  --n: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+  gap: 5px;
+  padding-bottom: 3em;
+}
+
+.ProductGrid--link {
+  border-left: 5px solid #F6821F;
+}
+
+@media screen and (min-width: 910px) {
+  .ProductGrid--content {
+    --n: 2;
+  }
+}
+
+@media screen and (min-width: 1175px) {
+  .QuadBlockGrid {
+    flex-direction: row;
   }
 
   .ProductGrid--content {
-    --n: 1;
-    display: grid;
-    grid-template-columns: repeat(var(--n), 1fr);
-    gap: 5px;
-    padding-bottom: 3em;
+    --n: 3;
   }
+}
 
-  .ProductGrid--link {
-    border-left: 5px solid #F6821F;
+@media screen and (min-width: 1450px) {
+  .ProductGrid--content {
+    --n: 4;
   }
+}
 
-  @media screen and (min-width: 910px) {
-    .ProductGrid--content {
-      --n: 2;
-    }
-  }
+.emptyState a {
+  text-decoration: underline;
+}
 
-  @media screen and (min-width: 1175px) {
-    .QuadBlockGrid {
-      flex-direction: row;
-    }
-
-    .ProductGrid--content {
-      --n: 3;
-    }
-  }
-
-  @media screen and (min-width: 1450px) {
-    .ProductGrid--content {
-      --n: 4;
-    }
-  }
-
-  .emptyState a {
-    text-decoration: underline;
-  }
-
-  .emptyState {
-    font-size: 1.5em;
-    padding-left: 2.5em
-  }
+.emptyState {
+  font-size: 1.5em;
+  padding-left: 2.5em
+}
 
 .filter-popup {
   position: fixed;
@@ -163,10 +163,10 @@
 
 .FilterButtonContainer {
   max-width: var(--docs-max-page-width);
-    margin-left: auto;
-    margin-right: auto;
-    padding: .01rem var(--docs-content-gap) .2rem;
-    text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: .01rem var(--docs-content-gap) .2rem;
+  text-align: center;
 }
 
 .filter-button {
