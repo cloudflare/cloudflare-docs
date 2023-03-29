@@ -69,12 +69,12 @@ For reference information on rule actions available for Cloudflare products powe
             <li>
               <p>Matching requests exempt from evaluation by a user-defined list containing one or more of the following Cloudflare security features:</p>
               <ul>
-                <li><a href="https://support.cloudflare.com/hc/articles/115001856951">User Agent Blocking</a></li>
+                <li><a href="/waf/tools/user-agent-blocking/">User Agent Blocking</a></li>
                 <li><a href="https://support.cloudflare.com/hc/articles/200170086">Browser Integrity Check</a></li>
                 <li><a href="https://support.cloudflare.com/hc/articles/200170026">Hotlink Protection</a></li>
                 <li><a href="https://support.cloudflare.com/hc/articles/200170056">Security Level (IP Reputation)</a></li>
                 <li><a href="https://support.cloudflare.com/hc/articles/115001635128">Rate Limiting (previous version)</a></li>
-                <li><a href="https://support.cloudflare.com/hc/articles/115001595131">Zone Lockdown</a></li>
+                <li><a href="/waf/tools/zone-lockdown/">Zone Lockdown</a></li>
                 <li><a href="https://support.cloudflare.com/hc/articles/200172016">WAF managed rules (previous version)</a></li>
               </ul>
               <p><strong>Notes:</strong></p>

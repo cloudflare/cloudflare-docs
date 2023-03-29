@@ -173,11 +173,7 @@ ___
 A Cloudflare customer blocked traffic from your client or browser.
 
 {{<Aside type="note">}}
-Error 1006 also occurs in the Cloudflare **Workers** app under the
-**Preview** tab when a customer uses **[Zone
-Lockdown](https://support.cloudflare.com/hc/articles/115001595131)** or
-any other Cloudflare security feature to block the Google Cloud Platform
-IPs that the **Preview** tab relies upon.
+Error 1006 also occurs in the Cloudflare **Workers** app under the **Preview** tab when a customer uses **[Zone Lockdown](/waf/tools/zone-lockdown/)** or any other Cloudflare security feature to block the Google Cloud Platform IPs that the **Preview** tab relies upon.
 {{</Aside>}}
 
 ### Resolution

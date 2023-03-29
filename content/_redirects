@@ -905,7 +905,12 @@
 /support/other-languages/한국어/waf-관리형-규칙으로부터-waf-managed-rulesets로의-마이그레이션/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/other-languages/日本語/wafマネージドルールからwafマネージドルールセットに移行する/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/other-languages/简体中文/从-waf-托管规则迁移到-waf-托管规则集/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
-
+# - KB: https://support.cloudflare.com/hc/*/articles/115001856951
+/support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
+/support/other-languages/简体中文/如何使用-cloudflare-阻止恶意用户代理/ /waf/tools/user-agent-blocking/ 301
+# - KB: https://support.cloudflare.com/hc/*/articles/115001595131
+/support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
+/support/other-languages/简体中文/如何在-cloudflare-对一个-url-限制访问-/ /waf/tools/zone-lockdown/ 301
 
 ### DYNAMIC REDIRECTS ###
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301

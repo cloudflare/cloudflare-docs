@@ -434,7 +434,7 @@ Cookie 上的缓存
 -   [速率限制（旧版）](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [服务器端排除](https://support.cloudflare.com/hc/articles/200170036)
--   [URL（区域）锁定](https://support.cloudflare.com/hc/articles/115001595131)
+-   [URL（区域）锁定](/waf/tools/zone-lockdown/)
 -   [WAF 托管规则（旧版）](https://support.cloudflare.com/hc/articles/200172016)
 
  | 
