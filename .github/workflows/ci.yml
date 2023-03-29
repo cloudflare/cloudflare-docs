@@ -9,6 +9,9 @@ jobs:
   compile:
     name: Compiles
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout@v3
     steps:
       - uses: actions/checkout@v3
         with:
@@ -39,7 +42,13 @@ jobs:
         with:
           args: public/ --sources content/ --check-anchors
         continue-on-error: true
-
+      
+      - name: Deploy to BYOP
+        env: 
+          CLOUDFLARE_ACCOUNT_ID: byop
+          CLOUDFLARE_API_BASE_URL: https://api.byop.dev
+          CLOUDFLARE_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx wrangler pages publish public
       
   # lint:
   #   name: Lint
