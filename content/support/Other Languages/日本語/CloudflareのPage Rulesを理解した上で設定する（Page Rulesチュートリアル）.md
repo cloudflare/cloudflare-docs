@@ -434,7 +434,7 @@ Offにする：
 -   [レート制限（旧バージョン）](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [サーバー側の除外](https://support.cloudflare.com/hc/articles/200170036)
--   [URL（ゾーン）のロックダウン](https://support.cloudflare.com/hc/articles/115001595131)
+-   [URL（ゾーン）のロックダウン](/waf/tools/zone-lockdown/)
 -   [WAFマネージドルール（旧バージョン）](https://support.cloudflare.com/hc/articles/200172016)
 
  | 

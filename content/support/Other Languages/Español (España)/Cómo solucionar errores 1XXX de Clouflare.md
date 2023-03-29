@@ -151,13 +151,7 @@ ___
 Un cliente de Cloudflare bloqueó el tráfico de tu cliente o navegador.
 
 {{<Aside type="note">}}
-El error 1006 también se origina en la aplicación **Workers** de
-Cloudflare en la pestaña **Vista previa** cuando un cliente usa
-**[Bloqueo de
-zona](https://support.cloudflare.com/hc/articles/115001595131)** u otra
-función de seguridad de Cloudflare para bloquear las direcciones IP de
-la plataforma de Google Cloud de la que depende la pestaña **Vista
-previa**.
+El error 1006 también se origina en la aplicación **Workers** de Cloudflare en la pestaña **Vista previa** cuando un cliente usa **[Bloqueo de zona](/waf/tools/zone-lockdown/)** u otra función de seguridad de Cloudflare para bloquear las direcciones IP de la plataforma de Google Cloud de la que depende la pestaña **Vista previa**.
 {{</Aside>}}
 
 ### Solución

@@ -432,7 +432,7 @@ Désactive :
 -   [Limitation de débit (version précédente)](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036)
--   [URL (Zone) Lockdown](https://support.cloudflare.com/hc/articles/115001595131)
+-   [URL (Zone) Lockdown](/waf/tools/zone-lockdown/)
 -   [Règles gérées du pare-feu WAF (version précédente)](https://support.cloudflare.com/hc/articles/200172016)
 
  | 
