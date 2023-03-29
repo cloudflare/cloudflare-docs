@@ -151,7 +151,6 @@
             "additional_description": "Block or challenge specific requests based on the associated user agent value."
           },
           {
-            "external_link": true,
             "url_path": "/waf/tools/zone-lockdown/",
             "link_title": "Zone Lockdown rules",
             "additional_description": "For customers on a <strong>Pro</strong> plan or higher, specify a list of IP addresses, CIDR ranges, or networks that are allowed to access a particular domain, subdomain, or URL."
