@@ -64,13 +64,13 @@
     border-left: 5px solid #F6821F;
   }
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 910px) {
     .ProductGrid--content {
       --n: 2;
     }
   }
 
-  @media screen and (min-width: 978px) {
+  @media screen and (min-width: 1175px) {
     .QuadBlockGrid {
       flex-direction: row;
     }
@@ -80,7 +80,7 @@
     }
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1450px) {
     .ProductGrid--content {
       --n: 4;
     }
@@ -106,6 +106,10 @@
   display: none;
 }
 
+[theme="dark"] .filter-popup {
+  background-color: var(--code-block-background-color);
+}
+
 .filter-popup.active {
   display: block;
 }
@@ -115,7 +119,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  color: black;
 }
 
 .filter-header h2 {
@@ -126,7 +129,6 @@
 .close-button {
   background: none;
   border: none;
-  color: #333;
   font-size: 18px;
   cursor: pointer;
 }
@@ -146,13 +148,12 @@
 .clear-button {
   background: none;
   border: none;
-  color: #333;
   font-size: 16px;
   cursor: pointer;
 }
 
 .apply-button {
-  background-color: #007dbc;
+  background-color: var(--orange);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -170,26 +171,60 @@
 }
 
 .filter-button {
+  background-color: var(--orange);
+  color: #fff;
   width: 100%;
   height: 3em;
-  padding: 1em;
   margin-bottom: 3em;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.CheckboxLabel {
+  font-size: 1.1em;
+}
+
+.FilterLegend {
+  font-size: 1.2em;
+}
+
+[theme="dark"] .filter-header, [theme="dark"] .clear-button, 
+[theme="dark"] .close-button, [theme="dark"] .CheckboxLabel {
+  color: var(--gray-7);
+}
+
+[theme="dark"] .apply-button, [theme="dark"] .filter-button {
+  color: black;
+}
+
+.DesktopContainer {
+  margin-top: 3em;
 }
 
 @media (min-width: 768px) {
   .filter-popup {
     display: flex;
-    flex-direction: column;
     position: static;
     background-color: transparent;
     border: none;
+    margin-top: -3em;
+  }
+
+  [theme="dark"] .filter-popup {
+    background-color: transparent;
   }
 
   .filter-button, .close-button, .apply-button {
     visibility: hidden;
+  }
+
+  .FilterButtonContainer {
+    flex-basis: 100%;
+    height: 0px;
   }
 
   .filter-header {
@@ -225,10 +260,22 @@
   .apply-button {
     margin-left: 10px;
   }
-}
 
-.CheckboxLabel {
-  color: black;
+  .DesktopContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content:space-around;
+    align-items: flex-start;
+    padding-right: 2em;
+  }
+
+  .ProductGrid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+  }
 }
 
 .ProductCheckboxItem {
@@ -260,15 +307,15 @@
   <button id="filter-button" class="filter-button" onclick="toggleVisibility('filter-popup')">Filter Products</button>
   </div>
   <div class="filter-popup" id="filter-popup">
-    <br/>
-    <br/>
+    <div class="DesktopContainer">
+      <div class="FilterContainer">
     <div class="filter-header">
-      <h2>Filter</h2>
+      <h2>Filters</h2>
       <button class="close-button" onclick="toggleVisibility('filter-popup')">Close</button>
     </div>
     <div class="filter-body">
       <fieldset>
-        <legend>Product Group</legend>
+        <legend class="FilterLegend">Product Group</legend>
         {{- range $availableOptions -}}
         <div>
           <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="{{- . -}}">
@@ -277,11 +324,13 @@
         {{- end -}}
     </fieldset>
     </div>
+  </div>
     <div class="filter-footer">
-      <button class="clear-button" onclick="resetFilters()">Clear All</button>
+      <button class="clear-button" onclick="resetFilters()">Clear filters</button>
       <button class="apply-button" onclick="toggleVisibility('filter-popup')">Apply</button>
     </div>
   </div>
+</div>
   <div id="ProductGrid--range">
   <div class="ProductGrid--content">
     {{- range $dataArray -}} 
