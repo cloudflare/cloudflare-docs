@@ -37,7 +37,7 @@ Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/
 |---------------------|-------------|
 | **Name**            | Name of the [device posture check](/cloudflare-one/identity/devices). |
 | **Type**            | Type of [WARP client check](/cloudflare-one/identity/devices/warp-client-checks/) or [service provider check](/cloudflare-one/identity/devices/service-providers/).      |
-| **Rule ID**         | UUID of the device posture check            |
+| **Rule ID**         | UUID of the device posture check.           |
 | **Conditions met**  | Whether the device passed or failed the posture check criteria. Evaluates to `true` if the **Received values** match the **Expected values**.      |
 | **Expected values** | Values required to pass the device posture check.       |
 | **Received values** | Posture check values detected by the WARP client.  |
