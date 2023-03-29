@@ -1215,6 +1215,20 @@
         }
       }
     },
+    "security_analytics": {
+      "title": "Security Analytics",
+      "link": "/waf/security-analytics/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "x_firewall_rules": {
       "title": "Firewall rules",
       "link": "/firewall/",
