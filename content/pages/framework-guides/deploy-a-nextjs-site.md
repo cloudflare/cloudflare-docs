@@ -101,6 +101,12 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
+{{<Aside type="note">}}
+
+The Vercel team (the creators of the Next.js framework) advices to set the runtime for each separate route instead of doing it globally, so that's what we advice as well.
+
+{{</Aside>}}
+
 Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.
 
 {{<render file="_create-github-repository_no_init.md">}}
@@ -123,7 +129,9 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v14 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater (version `18` is not yet supported, see this [pages build image discussion](https://github.com/cloudflare/pages-build-image/discussions/1])).
+
+5. Next.js may also require access to the Node.js AsyncLocalStorage API (if you choose to use their experimental [App Router](https://beta.nextjs.org/docs/getting-started)),so in order to make sure that your Next.js application runs correctly from the project settings page go to **Functions** > **Compatibility Flags** and add the `nodejs_compat` for both the production and preview and make sure that the Compatibility Date for both production and preview is set to at least 2022-11-30.
 
 {{<Aside type="note" header="Note">}}
 
@@ -180,7 +188,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
 
-In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props). Then access bindings set for your application by accessing them in your code via `process.env`.
+To use bindings in your Next.js server side code (which includes [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props) function) access bindings set for your application by obtaining them in your code via `process.env`.
 
 The following code block shows an example of accessing a KV namespace in Next.js.
 
