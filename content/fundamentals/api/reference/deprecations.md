@@ -108,20 +108,6 @@ Deprecated API:
 Replacement:
 GraphQL Analytics API
 
-## Zone settings - __cfduid
-**End of life date: May 10, 2021**
-
-The `__cfduid` cookie was set on Cloudflare HTTP responses and used for providing critical performance and security services on behalf of our customers. For more information on why we transitioned away from this cookie, refer to [Deprecating the `__cfduid` cookie](https://blog.cloudflare.com/deprecating-cfduid-cookie/).
-
-Cloudflare permanently stopped adding a `Set-Cookie` header on all HTTP responses on May 10, 2021. The last `__cfduid` cookies expired 30 days after that.
-
-## `cf-request-id`
-**End of life date: July 1, 2021**
-
-In mid-2020, Cloudflare introduced `cf-request-id`, an experimental HTTP header. This header was present on requests sent to origins and returned in responses to eyeballs (users). After careful evaluation, we decided to remove the `cf-request-id` header.
-
-If you require an identifier for requests, Cloudflare recommends using the CF-RAY header.
-
 ## Organizations
 **End of life date: February 4, 2020**
 
