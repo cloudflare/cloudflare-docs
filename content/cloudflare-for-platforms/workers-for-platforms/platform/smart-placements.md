@@ -53,6 +53,6 @@ If you are connecting to a database through Workers, complete the [Database Conn
 
 {{</Aside>}}
 
-## Give feedback on Smart Placements
+## Give feedback on Smart Placement
 
-Smart Placement is in beta. To share your thoughts and experience with Smart Placement, email Tanushree Sharma (email: tanushree@cloudflare.com, discord: tanushree#3489) with feedback.
+Smart Placement is in beta. To share your thoughts and experience with Smart Placement, join the [Cloudflare Developer Discord](https://discord.gg/cloudflaredev).
