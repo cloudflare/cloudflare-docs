@@ -8,8 +8,6 @@ weight: 3
 
 {{<render file="_send-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration//#email-bindings):">}}
 
-
-
 ```toml
 send_email = [
     {type = "send_email", name = "<NAME_FOR_BINDING>", destination_address = "<YOUR_EMAIL>@example.com"},
