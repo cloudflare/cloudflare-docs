@@ -57,7 +57,7 @@ To solve this issue, we recommend using [Cloudflare Zero Trust](/cloudflare-one/
 
 ## DNS-only records
 
-When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being gray-clouded — DNS queries for these will resolve to the record's normal IP address. 
+When an `A`, `AAAA`, or `CNAME` record is **DNS-only** — also known as being grey-clouded — DNS queries for these will resolve to the record's normal IP address. 
 
 {{<render file="_mix-proxied-and-unproxied.md">}}
 
