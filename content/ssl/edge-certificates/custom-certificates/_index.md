@@ -12,9 +12,9 @@ layout: single
 
 Unlike [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/), Cloudflare does not manage issuance and renewal for custom certificates.
 When you use custom certificates, the following actions should be considered and accomplished by you:
-- [Upload the certificate](uploading/).
-- [Renew the certificate](/ssl/edge-certificates/custom-certificates/renewing/).
-- Observe the certificate expiration date to avoid downtime.
+- [Upload the certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate).
+- [Update the certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-a-certificate).
+- [Observe the certificate expiration date to avoid downtime](/ssl/edge-certificates/custom-certificates/renewing/).
 
  {{<Aside type="note">}}
 If your custom certificate does not cover all of your first-level hostnames, you can enable [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/) to cover them.
