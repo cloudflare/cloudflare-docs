@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Before deploying custom certificates to Cloudflare's global network edge, Cloudflare automatically groups the certificates into certificate packs.
+Before deploying custom certificates to Cloudflare's global network, Cloudflare automatically groups the certificates into certificate packs.
 
 A certificate pack is a group of certificates that share the same set of hostnames — for example, `example.com` and `*.example.com` — but use different signature algorithms.
 

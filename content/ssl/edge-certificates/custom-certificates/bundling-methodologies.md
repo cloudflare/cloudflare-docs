@@ -6,7 +6,7 @@ weight: 4
 
 # Bundle methodologies
 
-When an SSL certificate is deployed to Cloudflare's global network edge, it may be augmented with intermediate and root certificates to assist the user agent in finding a chain to a publicly trusted root. 
+When an SSL certificate is deployed to Cloudflare's global network, it may be augmented with intermediate and root certificates to assist the user agent in finding a chain to a publicly trusted root. 
 
 You can control the mechanics of how certificates are bundled by specifying a bundling methodology.
 
