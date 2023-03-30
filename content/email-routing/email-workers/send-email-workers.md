@@ -8,7 +8,7 @@ weight: 3
 
 You can send an email from your Worker to a verified address. This is useful for when you want to know about certain types of events being triggered, for example.
 
-Before you can bind an email address to your Worker, you need to [enable Email Routing](/email-routing/get-started/) and have at least one [verified email address](/email-routing/setup/email-routing-addresses/#destination-addresses). Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration//#email-bindings):
+Before you can bind an email address to your Worker, you need to [enable Email Routing](/email-routing/get-started/) and have at least one [verified email address](/email-routing/setup/email-routing-addresses/#destination-addresses). Then, create a new [binding](/workers/platform/bindings/) in the [`wrangler.toml` file](/workers/wrangler/configuration//#email-bindings):
 
 ```toml
 send_email = [
