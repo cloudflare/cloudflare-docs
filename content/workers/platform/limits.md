@@ -15,8 +15,8 @@ title: Limits
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
 | [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
-| [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
-| [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
+| [Worker size](#worker-size)                                                     | 1 MB      | 10 MB      |
+| [Worker startup time](#worker-startup-time)                                     | 200 ms    | 400 ms    |
 | [Number of Workers](#number-of-workers)                                         | 100       | 500       |
 | [Number of Cron Triggers<br/>per Worker](#number-of-schedules)                  | 3         | 3         |
 | [Number of Cron Triggers<br/>per account](#number-of-schedules-account)         | 5         | 250       |
