@@ -40,13 +40,6 @@ Smart Placement is enabled on a per-Worker level. To enable Smart Placement:
 
 3. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
 
-## `cf-placement` header
-
-The  `cf-placement header` checks whether a request has been routed with Smart Placement. For example:
-
-* `cf-placement: remote-LHR` indicates that the request was routed using Smart Placement to a Cloudflare data center near London. 
-* `cf-placement: local-EWR` indicates that the request was not routed using Smart Placement and the Worker was invoked in a data center closest to where the request was received.
-
 {{<Aside type="note" header="Database Connectors and Socket Workers">}}
 
 If you are connecting to a database through Workers, complete the [Database Connectors and Socket Workers sign-up form](https://www.cloudflare.com/database-connectors-early-access/) and share what you are building. We are working on outbound support for TCP connections and, eventually, adding native ways to connect to databases using Workers. Your use cases will help guide the services that we add support for.
