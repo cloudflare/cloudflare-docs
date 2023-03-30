@@ -407,6 +407,20 @@ function filterList() {
   // Get all checked checkboxes
   let visibleItems = false;
   let checkedValues = [];
+  let numCheckboxes = 0;
+  for (let j = 0; j < checkboxes.length; j++) {
+    if (checkboxes[j].checked) {
+      checkedValues.push(checkboxes[j].id);
+      numCheckboxes++;
+    }
+  }
+  let filterButton = document.getElementById('filter-button');
+  if (numCheckboxes === 0) {
+    filterButton.innerText = "Filter Products";
+  } else {
+    let suffix = numCheckboxes > 1 ? 's' : '';
+    filterButton.innerText = `Filter Products (${numCheckboxes} group${suffix})`;
+  }
   for (let j = 0; j < checkboxes.length; j++) {
     if (checkboxes[j].checked) {
       checkedValues.push(checkboxes[j].id);
