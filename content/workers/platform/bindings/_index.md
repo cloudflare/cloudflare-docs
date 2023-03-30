@@ -62,3 +62,10 @@ mTLS certificate bindings enable Worker subrequests to present a client certific
 
 * Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
 * Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).
+
+### Email bindings
+
+Email bindings allow you to send emails from your Worker. This is useful for when you want to know about certain types of events being triggered, for example.
+
+- Learn more about [email bindings](/email-routing/email-workers/send-email-workers/).
+- Configure email bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings).
