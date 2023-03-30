@@ -53,6 +53,10 @@ When you disable a load balancer, requests to a specific hostname depend on your
 
 In both cases, disabling your load balancer prevents traffic from going to any associated origin or fallback pools.
 
+If you have already an existing `A, AAAA, or CNAME` be aware that the change take some time to propagate, accordingly with the [Time to Live (TTL)](https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/). It may take longer than 5 minutes for you to actually experience record changes, as your local DNS cache may take longer to update.
+
+
+
 ## SSL/TLS coverage
 
 Due to internal limitations, Cloudflare [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) do not cover load balancing hostnames by default. This behavior will be corrected in the future.
