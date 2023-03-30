@@ -6,16 +6,19 @@ weight: 2
 
 # Manage custom certificates
 
+This page lists Cloudflare requirements for custom certificates and explains how to upload and update these certificates using Cloudflare dashboard or API.
+
 ## Certificate requirements
 
-Certificates are parsed and checked for validity before being accepted. Each certificate uploaded must:
+Before accepting custom certificates, Cloudflare parses them and checks for validity. 
+Each custom certificate you upload must:
 
-- Be encoded in PEM format (PEM, PKCS#7, or PKCS#12), see [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
+- Be encoded in PEM format (PEM, PKCS#7, or PKCS#12). See [Converting Using OpenSSL](https://www.sslshopper.com/article-most-common-openssl-commands.html) for conversion examples.
 - Not have a [key file password](/ssl/edge-certificates/custom-certificates/remove-file-key-password/).
 - Not be expiring in less than 14 days from time of upload.
-- Have a subject alternative name (SAN) matching at least one hostname in the zone where it’s being uploaded.
-- Use a private key greater than or equal to a minimum length (currently 2048 bit for RSA and 225 bit for ECDSA).
-- Be publicly trusted by a major browser, unless the `User Defined` bundling method is used.
+- Have a subject alternative name (SAN) matching at least one hostname in the zone where it is being uploaded.
+- Use a private key greater than or equal to a minimum length. Currently, 2048 bit for RSA and 225 bit for ECDSA.
+- Be publicly trusted by a major browser. This does not apply for certificates that specify `User Defined` as their [bundling methodology](/ssl/edge-certificates/custom-certificates/bundling-methodologies/).
 - Be one of the following certificate types:
 
   - Unified Communications Certificates (UCC)
