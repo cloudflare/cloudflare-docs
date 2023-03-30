@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M5.96
 product:
   title: Security Center
   url: /security-center/
-  group: Security
+  group: Application security
 
 meta:
   title: Cloudflare Security Center docs

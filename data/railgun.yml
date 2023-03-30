@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M36.8
 product:
   title: Railgun
   url: /railgun/
-  group: Performance
+  group: Application performance
 
 meta:
   title: Cloudflare Railgun docs

@@ -5,7 +5,7 @@ weight: 9
 product_grid:
   show: true
   title: Exposed credentials check
-  group: Security
+  group: Application security
   wrap: true
 ---
 

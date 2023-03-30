@@ -6,7 +6,7 @@ layout: list
 product_grid:
   show: true
   title: Rate limiting
-  group: Security
+  group: Application security
 ---
 
 # Rate limiting rules
