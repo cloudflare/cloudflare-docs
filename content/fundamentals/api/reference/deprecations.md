@@ -6,7 +6,7 @@ weight: 22
 
 # API v4 deprecations
 
-Cloudflare occassionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
+Cloudflare occasionally makes updates to our APIs that result in behavior changes or deprecations. When this happens, we will communicate when the API will no longer be available and whether there will be a replacement.
 
 ## Argo Tunnel
 **End of life Date: February 4, 2024**
