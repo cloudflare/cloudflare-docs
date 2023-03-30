@@ -6,7 +6,7 @@ weight: 3
 
 # <beta>Send emails from Workers</beta>
 
-{{<render file="_send-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration//#email-bindings):">}}
+{{<render file="_send-emails-workers-intro.md" withParameters="Then, create a new binding in the [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings):">}}
 
 ```toml
 send_email = [
