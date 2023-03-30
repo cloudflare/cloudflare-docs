@@ -4,7 +4,7 @@ pcx_content_type: concept
 product_grid:
   show: true
   title: Cache Reserve
-  group: Performance
+  group: Application performance
 ---
 
 {{<beta>}} Cache Reserve {{</beta>}}

@@ -5,7 +5,7 @@ weight: 2
 product_grid:
   show: true
   title: Cloudflare Web Analytics
-  group: Performance
+  group: Application performance
   wrap: true
 ---
 

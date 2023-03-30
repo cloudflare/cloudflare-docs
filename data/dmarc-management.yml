@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="m52.8
 product:
   title: DMARC Management
   url: /dmarc-management/
-  group: Security
+  group: Application security
  
 meta:
   title: Cloudflare DMARC Management docs
