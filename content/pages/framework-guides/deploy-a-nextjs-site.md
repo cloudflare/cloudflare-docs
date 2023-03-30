@@ -131,7 +131,7 @@ Deploy your site to Pages:
 
 4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater (version `18` is not yet supported, see this [pages build image discussion](https://github.com/cloudflare/pages-build-image/discussions/1])).
 
-5. Next.js may also require access to [Node.js' AsyncLocalStorage API](https://nodejs.org/api/async_context.html#class-asynclocalstorage) (if you choose to use their experimental [App Router](https://beta.nextjs.org/docs/getting-started)),so in order to make sure that your Next.js application runs correctly from the project settings page go to **Functions** > **Compatibility Flags** and add the `nodejs_compat` for both the production and preview and make sure that the Compatibility Date for both production and preview is set to at least 2022-11-30.
+5. Next.js may also require access to [Node.js' AsyncLocalStorage API](https://nodejs.org/api/async_context.html#class-asynclocalstorage) (if you choose to use their experimental [App Router](https://beta.nextjs.org/docs/getting-started)),so in order to make sure that your Next.js application runs correctly from the project settings page go to **Functions** > **Compatibility Flags** and add the `nodejs_compat` flag for both the production and preview and make sure that the Compatibility Date for both production and preview is set to at least 2022-11-30.
 
 {{<Aside type="note" header="Note">}}
 
