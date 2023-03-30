@@ -12,7 +12,7 @@ Before installing and setting up the WARP Client, ensure that your device meets 
 
 |               | Windows    | macOS            | Linux                                                                                      | iOS     | Android |
 | ------------- | ---------- | ---------------- | ------------------------------------------------------------------------------------------ | ------- | ------------ |
-| OS version    | Windows 8+ | Mojave+ (10.14+) | CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Debian 9, Debian 10, Debian 11 | iOS 11+ | Android 5.0+ |
+| OS version    | Windows 8+ | Mojave+ (10.14+) | CentOS 8, RHEL 8, Ubuntu 16.04, Ubuntu 18.04, Ubuntu 20.04, Ubuntu 22.04, Debian 9, Debian 10, Debian 11 | iOS 11+ | Android 5.0+ |
 | OS type       | 64-bit     | Intel & M1       | 64-bit                                                                                     | -       | -            |
 | Storage space | 184 MB     | 75 MB            | 75 MB                                                                                      | -       | -            |
 | RAM           | 3 MB       | 35 MB            | 35 MB                                                                                      | -       | -            |
