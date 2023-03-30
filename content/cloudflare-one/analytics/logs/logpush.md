@@ -45,4 +45,4 @@ Refer to the Logpush documentation for a list of available fields.
 | [Access Requests](/logs/reference/log-fields/account/access_requests/)          | [HTTP requests](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) to sites protected by Cloudflare Access |
 | [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | [Security issues](/cloudflare-one/applications/scan-apps/manage-findings/) detected by Cloudflare CASB                     |
 | Device Posture                                                                  | [Device posture status](/cloudflare-one/analytics/logs/posture-logs) from the WARP client                                  |
-| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network sessions in Cloudflare Gateway, searchable with [GraphQL](/analytics/graphql-api/)                                 |
+| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network sessions through Cloudflare Gateway, searchable with [GraphQL](/analytics/graphql-api/)                            |
