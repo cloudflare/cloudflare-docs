@@ -55,8 +55,9 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
-if using [module workers](https://developers.cloudflare.com/workers/learning/migrating-to-module-workers/) then you will need to add your environment variables explicity.
-```js
+If using [module Workers](/workers/learning/migrating-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the below example:
+
+```ts
 export interface Env {
   API_TOKEN: string;
 }
