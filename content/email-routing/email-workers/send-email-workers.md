@@ -24,15 +24,7 @@ Sending email from Workers has three types of bindings:
 - **`destination_address`**: When you define the `destination_address` attribute, you create a targeted binding. This means you can only send emails to the chosen email address. For example, `{type = "send_email", name = "<NAME_FOR_BINDING>", destination_address = "<YOUR_EMAIL>@example.com"}`. <br> For this particular binding, when you call the `send_email` function you can pass `null` or `undefined` to your Worker and it will assume the email address specified in the binding.
 - **`allowed_destination_addresses`**: When you specify this attribute, you create an allowlist, and can send emails to any email address on the list.
 
-You can add one or more types of bindings to your `wrangler.toml` file. However, each attribute must be on its own line:
-
-```toml
-send_email = [
-    {type = "send_email", name = "<NAME_FOR_BINDING1>"},
-   	{type = "send_email", name = "<NAME_FOR_BINDING2>", destination_address = "<YOUR_EMAIL>@example.com"},
-   	{type = "send_email", name = "<NAME_FOR_BINDING3>", allowed_destination_addresses = ["<YOUR_EMAIL>@example.com", "<YOUR_EMAIL2>@example.com"]},
-]
-```
+{{<render file="_types-bindings.md">}}
 
 ## Example Worker
 

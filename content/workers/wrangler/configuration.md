@@ -552,18 +552,7 @@ Before you can bind an email address to your Worker, you need to [enable Email R
 
 {{</definitions>}}
 
-You can add one or more types of bindings to your `wrangler.toml` file.  However, each attribute must be on its own line:
-
-```toml
----
-header: wrangler.toml
----
-send_email = [
-  {type = "send_email", name = "SEB"},
- 	{type = "send_email", name = "SEB_TARGET", destination_address = "<YOUR_EMAIL>@example.com"},
-  {type = "send_email", name = "SEB_ALLOWLIST", allowed_destination_addresses = ["<YOUR_EMAIL>@example.com", "<YOUR_EMAIL2>@example.com"]},
-]
-```
+{{<render file="_types-bindings.md" productFolder="/email-routing/">}}
 
 ## Bundling
 
