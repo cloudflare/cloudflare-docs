@@ -103,7 +103,7 @@ module.exports = nextConfig
 
 {{<Aside type="note">}}
 
-The Vercel team (the creators of the Next.js framework) advices to set the runtime for each separate route instead of doing it globally, so that's what we advice as well.
+The Vercel team (the creators of the Next.js framework) advises to set the runtime for each separate route instead of doing it globally, so that's what we advise as well.
 
 {{</Aside>}}
 
