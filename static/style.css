@@ -5316,8 +5316,13 @@ pre {
 }
 
 .littlefoot__content p {
-  font-size: 1.05em;
-  font-weight: 120;
+  font-size: 1em;
+  font-weight: 350;
+  font-family: var(--font-family);
+  font-size: var(--html-font-size);
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  color: var(--color);
 }
 
 [theme="dark"] .littlefoot__content {
