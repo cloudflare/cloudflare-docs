@@ -144,7 +144,7 @@ For more guidance, refer to [Create a CAA record](/ssl/edge-certificates/custom-
 
 ---
 
-## Update a certificate
+## Update a custom certificate
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
