@@ -22,7 +22,7 @@ ___
 
 ## I’m a website operator and my content was redirected for Terms of Service violations
 
-If you are on a Free, Pro, or Business Plan and your application appears to be serving videos or a disproportionate amount of large files without using the appropriate paid service as described below, Cloudflare may redirect your content or take other actions to protect quality of service. . When this happens, you will receive an email notification regarding Cloudflare’s actions and your options.
+If you are on a Free, Pro, or Business Plan and your application appears to be serving videos or a disproportionate amount of large files without using the appropriate paid service as described below, Cloudflare may redirect your content or take other actions to protect quality of service. When this happens, you will receive an email notification regarding Cloudflare’s actions and your options.
 
 ## Options for web admins to remove redirects 
 
