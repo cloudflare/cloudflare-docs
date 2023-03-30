@@ -28,4 +28,4 @@ Modern consists of attempts to make the chain as efficient as possible, often by
 
 ### User-defined
 
-User-defined allows you to paste your own certificate chain and present that bundle to clients. You must specify any intermediates you wish to use, followed by the leaf. If you are using a self-signed certificate (not recommended), you must use this mode.
+User-defined allows you to paste **your own certificate chain** and present that bundle to clients. You must specify any intermediates you wish to use, followed by the leaf. If you are using a self-signed certificate (not recommended), you must use this mode.
