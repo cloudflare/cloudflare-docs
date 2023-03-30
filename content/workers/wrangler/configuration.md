@@ -552,7 +552,7 @@ Before you can bind an email address to your Worker, you need to [enable Email R
 
 {{</definitions>}}
 
-You can add one or more types of bindings to your wrangler.toml file. For example:
+You can add one or more types of bindings to your `wrangler.toml` file.  However, each attribute must be on its own line:
 
 ```toml
 ---
