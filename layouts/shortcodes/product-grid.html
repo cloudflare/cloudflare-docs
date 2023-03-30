@@ -52,16 +52,16 @@
 }
 
 .ProductGrid--content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 5px;
   padding-bottom: 3em;
+  justify-items: center;
 }
 
 .ProductGrid--link {
   border-left: 5px solid #F6821F;
-  width: 75%;
+  width: 80%;
 }
 
 .emptyState a {
@@ -201,6 +201,11 @@
 
   .ProductGrid--content {
     width: 65%;
+    margin-left: 1em;
+  }
+
+  .ProductGrid--link {
+    width: 90%;
   }
 
   .emptyState {
@@ -283,12 +288,7 @@
   }
   .ProductGrid--content {
     width: 70%;
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 5px;
-  }
-  .ProductGrid--link {
-    width: 100%;
   }
 }
 
@@ -323,6 +323,10 @@
   outline: none;
   transition: all .2s;
   cursor: pointer;
+}
+
+fieldset {
+  border-radius: 6px;
 }
 
 </style>
@@ -387,42 +391,42 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Listen for changes on all checkboxes
-    var checkboxes = document.getElementsByClassName("ProductCheckboxItem");
-    for (var i = 0; i < checkboxes.length; i++) {
+    let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
+    for (let i = 0; i < checkboxes.length; i++) {
       checkboxes[i].addEventListener('change', filterList);
     }
     
     // Listen for input on the search box
-    var searchBox = document.getElementById('search');
+    let searchBox = document.getElementById('search');
     searchBox.addEventListener('input', filterList);
   });
 
 function filterList() {
-  var checkboxes = document.getElementsByClassName("ProductCheckboxItem");
-  var searchBox = document.getElementById('search');
+  let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
+  let searchBox = document.getElementById('search');
   // Get all checked checkboxes
-  var visibleItems = false;
-  var checkedValues = [];
-  for (var j = 0; j < checkboxes.length; j++) {
+  let visibleItems = false;
+  let checkedValues = [];
+  for (let j = 0; j < checkboxes.length; j++) {
     if (checkboxes[j].checked) {
       checkedValues.push(checkboxes[j].id);
     }
   }
   
   // Get the value of the search box
-  var searchTerm = searchBox.value.toLowerCase();
-  var listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
+  let searchTerm = searchBox.value.toLowerCase();
+  let listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
 
   // If no checkboxes are checked and the search box is empty, show all list items
   if (checkedValues.length === 0 && searchTerm === '') {
-    for (var k = 0; k < listItems.length; k++) {
+    for (let k = 0; k < listItems.length; k++) {
       listItems[k].style.display = '';
       visibleItems = true;
     }
   } else if (checkedValues.length === 0 && searchTerm !== '') {
   // If no checkboxes are checked and the search box is not empty, filter based on search
-    for (var k = 0; k < listItems.length; k++) {
-      var searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
+    for (let k = 0; k < listItems.length; k++) {
+      let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
       if (searchMatch) {
           listItems[k].style.display = '';
           visibleItems = true;
@@ -432,9 +436,9 @@ function filterList() {
     }
   } else {
     // Otherwise, hide all list items and show only the ones with matching data attributes and search terms
-    for (var k = 0; k < listItems.length; k++) {
-      var categoryMatch = (checkedValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-      var searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
+    for (let k = 0; k < listItems.length; k++) {
+      let categoryMatch = (checkedValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
+      let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
       if (categoryMatch && searchMatch) {
         listItems[k].style.display = '';
         visibleItems = true;
@@ -444,12 +448,13 @@ function filterList() {
     }
   }
   // Trigger empty state message 
-  var emptyStateMessage = document.getElementById("emptyState")
-  var productGridContent = document.getElementById("ProductGrid--content")
+  let emptyStateMessage = document.getElementById("emptyState")
+  let productGridContent = document.getElementById("ProductGrid--content")
   if (!visibleItems) {
     emptyStateMessage.style.display = "";
     emptyStateMessage.children[0].style.display = "";
-    emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + searchTerm.toLowerCase() + "&t=Docs" )
+    emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + 
+    searchTerm.toLowerCase() + "&t=Docs" );
     productGridContent.style.display = "none";
   } else {
     emptyStateMessage.style.display = "none";
@@ -458,24 +463,33 @@ function filterList() {
 }
 
 function resetFilters() {
-  var searchBox = document.getElementById('search');
+  let searchBox = document.getElementById('search');
   searchBox.value = '';
-  var checkboxes = document.getElementsByClassName("ProductCheckboxItem");
-  for (var j = 0; j < checkboxes.length; j++) {
+  let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
+  for (let j = 0; j < checkboxes.length; j++) {
       if (checkboxes[j].checked) {
         checkboxes[j].checked = false;
     }
   }
-  filterList()
+  filterList();
+  hideElement('filter-popup');
 }
    
 
 function toggleVisibility(id) {
   const element = document.getElementById(id);
   if (element.style.display === 'block') {
-    element.style.display = 'none';
+    element.style.display = '';
   } else {
     element.style.display = 'block';
   }
 }
+
+function hideElement(id) {
+  const element = document.getElementById(id);
+  if (element.style.display === 'block') {
+    element.style.display = '';
+  }
+}
+
 </script>
