@@ -1,5 +1,3 @@
-import redirects from "./redirects"
-
 const apiBase = "https://cloudflare-api-docs-frontend.pages.dev"
 
 const rewriteStaticAssets = {
@@ -27,15 +25,7 @@ export const onRequestGet: PagesFunction<{}> = async ({ request }) => {
 
   const url = new URL(request.url)
 
-  let subpath = url.pathname.replace(apiPath, "")
-  // Local Pages dev server doesn't appear to force trailing slash, this is a workaround
-  if(subpath.slice(-1) !== "/") {
-    subpath = `${subpath}/`
-  }
-  if(subpath in redirects) {
-    url.pathname = redirects[subpath]
-    return Response.redirect(url.toString(), 301)
-  }
+  const subpath = url.pathname.replace(apiPath, "")
   const proxyUrl = `${apiBase}/${subpath}`
   const proxyResponse = await fetch(proxyUrl)
 
