@@ -536,9 +536,8 @@ mTLS certificate bindings can then be used at runtime to communicate with secure
 
 ### Email bindings
 
-Email bindings allow you to send emails from your Worker. This is useful for when you want to know about certain types of events being triggered, for example.
+{{<render file="_send-emails-workers-intro.md" productFolder="/email-routing/" withParameters="Then, assign an array to the object `send_email` with the type of email binding you need.">}}
 
-Before you can bind an email address to your Worker, you need to [enable Email Routing](/email-routing/get-started/) and have at least one [verified email address](/email-routing/setup/email-routing-addresses/#destination-addresses). Then, assign an array to the object `send_email` with the type of email binding you need.
 
 {{<definitions>}}
 
