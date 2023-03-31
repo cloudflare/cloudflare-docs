@@ -1,5 +1,5 @@
 ---
-title: Send emails from Workers
+title: Send emails from Workers (beta)
 pcx_content_type: how-to
 weight: 3
 ---
