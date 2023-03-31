@@ -17,7 +17,24 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 ### Setting up Zaraz
 
-#### Zaraz does not appear to be working. Is there a way to check where the problem is?
+#### Zaraz does not appear to be working.
+
+If you're experiencing issues with Zaraz, there could be multiple reasons behind it. First, it's important to verify that the Zaraz script is loading properly on your website.
+
+To check if the script is loading correctly, follow these steps:
+
+1. Open your website in a web browser.
+2. Open your browser's Developer Tools.
+3. In the Console, type `zaraz`.
+4. If you see an error message saying `zaraz is not defined`, it means that Zaraz failed to load.
+
+If Zaraz is not loading, please verify the following:
+
+- The domain running Zaraz [is proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/).
+- Auto Injection is enabled in your [Zaraz Settings](/zaraz/reference/settings/#auto-inject-script).
+- Your website's HTML is valid and includes `<head>` and `</head>` tags.
+
+#### I'm seeing some data discrepancies. Is there a way to check what data reaches Zaraz?
 
 Yes. You can use the metrics in [Zaraz Monitoring](/zaraz/monitoring/) to help you find where in the workflow the problem occurred.
 
