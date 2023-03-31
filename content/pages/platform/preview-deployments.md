@@ -44,7 +44,7 @@ Note that this will only protect your preview deployments (for example, `373f31e
 
 {{<Aside note="warning">}}
 
-If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enabling-access) for instructions.
+If you want to enable Access for your `*.pages.dev` domain and your custom domain along with your preview deployments, review [Known issues](/pages/platform/known-issues/#enabling-access-on-your-pagesdev-domain) for instructions.
 
 {{</Aside>}}
 

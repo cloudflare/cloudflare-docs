@@ -63,7 +63,7 @@ The `action` attribute determines where the form data is sent. You will update t
 
 {{<Aside type="note">}}
 
-Refer to the [HTML Forms tutorial](/pages/tutorials/forms/#Overview) on how to build an HTML form.
+Refer to the [HTML Forms tutorial](/pages/tutorials/forms/) on how to build an HTML form.
 
 {{</Aside>}}
 

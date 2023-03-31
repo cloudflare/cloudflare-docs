@@ -44,7 +44,7 @@ Input the TLD you need to block. If you need to block `.fail` remove the leading
 
 {{<Aside type="note">}}
 
-For more information on how policies work with regular expressions, refer to [Network policy values](/cloudflare-one/policies/filtering/network-policies/#valuees)
+For more information on how policies work with regular expressions, refer to [Network policy values](/cloudflare-one/policies/filtering/network-policies/#value)
 
 {{</Aside>}}
 
