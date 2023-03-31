@@ -60,7 +60,7 @@ Once your monitor is created, you need to attach it to an origin pool:
 
 **Attach the monitor to a pool**
 
-Once your monitor is created, save its `id` property. Include this value in the `monitor` parameter when [creating your pool](/load-balancing/how-to/create-pool/#via-the-api).
+Once your monitor is created, save its `id` property. Include this value in the `monitor` parameter when [creating your pool](/load-balancing/how-to/create-pool/#create-a-pool).
  
 {{</tab>}}
 {{</tabs>}}

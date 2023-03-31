@@ -597,7 +597,7 @@ Authenticated Origin Pull.
 
 **What should you do if you receive one?**
 
-Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/#per-hostname--customer-certificates).
+Upload a renewed certificate to use for [hostname-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 </div>
 </details>

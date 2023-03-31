@@ -26,4 +26,4 @@ The PingOne® cloud platform from PingIdentity provides SSO identity management.
 14. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 15. Select **Save**.
 
-You can now [test your connection](/cloudflare-one/identity/idp-integration/#test-idps-on-the-zero-trust-dashboard) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.
+You can now [test your connection](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method.

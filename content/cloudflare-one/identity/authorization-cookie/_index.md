@@ -25,7 +25,7 @@ Cloudflare Access provides optional security settings that can be added to the b
 
 - [SameSite](#samesite-attribute)
 - [HttpOnly flag](#httponly)
-- [Binding cookie](#enable-binding-cookie)
+- [Binding cookie](#binding-cookie)
 - [Cookie path](#cookie-path-attribute)
 
 To enable these settings:

@@ -76,7 +76,7 @@ Because IdPs expose user groups in different formats, reference the list below t
 | -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#using-azuread-groups) for an Azure group.
+The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
 
 ### GitHub
 

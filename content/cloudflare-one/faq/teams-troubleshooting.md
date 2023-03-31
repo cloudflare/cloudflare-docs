@@ -26,7 +26,7 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/#list-of-cors-settings).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
@@ -103,8 +103,8 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel)).
+1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 
@@ -145,7 +145,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
-- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/users/session-management/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
+- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
 ## Connections are timing out after 270 seconds
 
