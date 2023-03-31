@@ -43,7 +43,7 @@ For more details, refer to [What is a TLS handshake?](https://www.cloudflare.com
 ### Comparison diagrams
 
 Without Authenticated Origin Pulls, Cloudflare performs standard TLS handshakes between a client device and Cloudflare and Cloudflare and your origin.
-This is true even if you have [Full](/ssl/origin-configuration/ssl-modes/full/) or [Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) encryption modes enabled.
+This is true even if you have [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) encryption modes enabled.
 
 ```mermaid
     flowchart TD

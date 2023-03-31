@@ -29,4 +29,4 @@ If you want your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Infor
 
 ## Limitations
 
-Authenticated Origin Pulls is not compatible with [Railgun](/railgun/) does not apply when your [**SSL/TLS encryption mode**](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
+Authenticated Origin Pulls is not compatible with [Railgun](/railgun/) does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.

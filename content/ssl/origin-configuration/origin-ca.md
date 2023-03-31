@@ -65,7 +65,7 @@ To add an Origin CA certificate to your origin web server
 
   {{<Aside type="note">}}If you do not see your server in the list above, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
-3.  (required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
+3.  (Required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
 4.  Enable SSL and port 443 at your origin web server.
 
 ### 3. Change SSL/TLS mode
@@ -77,11 +77,11 @@ If all your origin hosts are protected by Origin CA certificates or publicly tru
 1.  Go to **SSL/TLS**.
 2.  For **SSL/TLS encryption mode**, select **Full (strict)**.
 
-If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](https://support.cloudflare.com/hc/articles/218411427).
+If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
-### 4. (required for some) Add Cloudflare Origin CA root certificates
+### 4. (Required for some) Add Cloudflare Origin CA root certificates
 
-Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click a link below to download either an RSA and ECC version of the Cloudflare Origin CA root certificate:
+Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click the following links to download either an ECC or an RSA version of the Cloudflare Origin CA root certificate:
 
 - [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
 - [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
@@ -90,7 +90,7 @@ Some origin web servers require upload of the Cloudflare Origin CA root certific
 
 If you misplace your key material or do not want a certificate to be trusted, you may want to revoke your certificate. You cannot undo this process.
 
-To prevent visitors from seeing warnings about an insecure certificate, you may want to set your [SSL/TLS encryption](/ssl/origin-configuration/ssl-modes/) to **Full** or **Flexible** before revoking your certificate. Do this globally via the **SSL/TLS** app or for a specific hostname via a **Page Rule**.
+To prevent visitors from seeing warnings about an insecure certificate, you may want to set your [SSL/TLS encryption](/ssl/origin-configuration/ssl-modes/) to **Full** or **Flexible** before revoking your certificate. Do this globally via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls) or for a specific hostname via a [Page Rule](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 To revoke a certificate:
 
@@ -110,7 +110,7 @@ Wildcards may only cover one level, but can be used multiple times on the same c
 
 ### Expiration
 
-By default, newly generated certificates are valid for 15 years. If you wish to generate shorter-lived certificates (for example, as short as 7 days), use the [API](#api-calls).
+By default, newly generated certificates are valid for 15 years. If you wish to generate shorter-lived certificates (for example, as short as seven days), use the [API](#api-calls).
 
 ## API calls
 

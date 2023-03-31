@@ -12,7 +12,7 @@ When you enable Authenticated Origin Pulls for a zone, all proxied traffic to yo
 
 ## Before you begin
 
-Make sure your zone is using an [**SSL/TLS encryption mode**](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
+Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
 
 ## 1. Upload certificate to origin
 
@@ -20,7 +20,7 @@ First, upload a certificate to your origin.
 
 To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin.
 
-To use a custom certificate, upload a custom certificate to Cloudflare following [these instructions](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api), but use the [`origin_tls_client_auth` endpoint](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
+To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
 
 ## 2. Configure origin to accept client certs
 
