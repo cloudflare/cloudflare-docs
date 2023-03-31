@@ -806,6 +806,7 @@
 
 # cloudflare-one / zero-trust
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
+/cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/analytics/access/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
 /cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
