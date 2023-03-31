@@ -60,10 +60,12 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 | Account Settings Edit                                        | Grants write access to Account resources, account membership, and account level features.             |
 | Account WAF Read                                             | Grants read access to Account WAF.                                                                    |
 | Account WAF Edit                                             | Grants write access to Account WAF.                                                                   |
-| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
-| Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | Billing Read                                                 | Grants read access to billing profile, subscriptions, and access to fetch invoices and entitlements.  |
 | Billing Edit                                                 | Grants write access to billing profile, subscriptions, and access to fetch invoices and entitlements. |
+| Cloudflare Pages Read                                        | Grants access to view Cloudflare Pages projects.                                                      |
+| Cloudflare Pages Edit                                        | Grants access to create, edit and delete Cloudflare Pages projects.                                   |
+| Cloudflare Tunnel Read                                       | Grants access to view Cloudflare Tunnels.                                                             |
+| Cloudflare Tunnel Edit                                       | Grants access to create and delete Cloudflare Tunnels.                                                |
 | DDoS Protection Read                                         | Grants read access to DDoS protection.                                                                |
 | DDoS Protection Edit                                         | Grants write access to DDoS protection.                                                               |
 | DNS Firewall Read                                            | Grants read access to DNS Firewall.                                                                   |

@@ -4,6 +4,7 @@ pcx_content_type: changelog
 title: Scheduled changes
 weight: 2
 layout: list
+rss: file
 ---
 
 # Scheduled changes

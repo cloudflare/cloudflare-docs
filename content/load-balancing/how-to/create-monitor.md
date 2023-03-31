@@ -2,11 +2,14 @@
 pcx_content_type: how-to
 title: Manage monitors
 weight: 3
+meta:
+    description: Learn how to set up and maintain monitors for your load balancer.
 ---
 
 # Manage monitors
 
 {{<render file="_monitor-definition.md">}}
+<br/>
 
 For more details about monitors, refer to [Monitors](/load-balancing/understand-basics/monitors/).
 

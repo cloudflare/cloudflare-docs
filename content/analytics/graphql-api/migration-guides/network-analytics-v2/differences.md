@@ -18,9 +18,9 @@ On the other hand, Network Analytics v2 (NAv2) uses [Adaptive Bit Rate (ABR)](/a
 
 Network Analytics v2 provides more accurate data due to the better sample rate and [Edge Sample Enrichment](/analytics/network-analytics/understand/concepts/#edge-sample-enrichment). NAv1 samples 1/8,192 packets (that is, one in every 8,192 packets), while NAv2 sample rates vary depending on the mitigation service. For example:
 
-* The sample rate for `dosd` is 1/10,000 packets.
+* The sample rate for `dosd` changes dynamically from 1/100 to 1/10,000 packets based on the volume of packets.
 * The sample rate for Magic Firewall events changes dynamically from 1/100 to 1/1,000,000 packets based on the number of packets.
-* The sample rate for `flowtrackd` changes dynamically from 1/100 to 1/10,000 packets based on the volume of packets.
+* The sample rate for `flowtrackd` is 1/10,000 packets.
 
 The NAv2 data pipeline is also more resilient compared to NAv1. NAv1 uses Core Sample Enrichment, where raw packet samples are sent from all of Cloudflare's edge data centers to the Core data centers. In the Core data centers, the packet samples are cross-referenced with additional databases and infused with the associated customer account ID, attack ID, attack type, and other metadata. Then, the packet samples are inserted into storage. One of the main shortcomings of this method is the potential congestion of samples when cross-referencing information, which could, in rare cases, cause temporary data lag.
 

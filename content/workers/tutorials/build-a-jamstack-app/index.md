@@ -9,6 +9,8 @@ layout: single
 
 # Build a todo list JAMstack application
 
+{{<render file="_tutorials-wrangler-v1-warning.md">}}
+
 {{<render file="_tutorials-before-you-start.md">}}
 
 ## Overview
@@ -38,7 +40,7 @@ $ wrangler init todos
 $ cd todos
 ```
 
-Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates/).
+Wrangler templates are Git repositories. You can create your own templates or use one from the [Template Gallery](/workers/examples/).
 
 Wrangler’s default template includes support for building and deploying JavaScript-based projects, including Webpack support. Inside of your new `todos` directory, `index.js` represents the entry point to your Cloudflare Workers application.
 

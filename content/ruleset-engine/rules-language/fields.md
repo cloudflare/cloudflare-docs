@@ -409,6 +409,16 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+     <tr id="field-cf-bot_management-static_resource">
+        <td><p><code>cf.bot_management.static_resource</code><br />{{<type>}}Boolean{{</type>}}</p>
+        </td>
+        <td>
+          <p>Indicates whether static resources should be when you create a rule using <code>cf.bot_management.score</code>.
+          </p>
+          <p>For more details, refer to <a href="/bots/reference/static-resources/">Static resource protection</a>.
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-bot_management-ja3_hash">
         <td><p><code>cf.bot_management.ja3_hash</code><br />{{<type>}}String{{</type>}}</p>
         </td>
@@ -429,6 +439,18 @@ The Cloudflare Rules language supports these dynamic fields:
           </p>
         </td>
     </tr>
+   <tr id="field-cf-bot_management-detection_ids">
+        <td><p><code>cf.bot_management.detection_ids</code><br />{{<type>}}Array&lt;Number>{{</type>}}</p>
+        </td>
+        <td>
+          <p>List of IDs that correlate to the Bot Management heuristic detections made on a request (you can have multiple heuristic detections on the same request). Use this field to explicitly match a specific heuristic or to exclude a heuristic in a rule.
+          </p>
+          <p>Example:
+          <br />
+          <code class="InlineCode">any(cf.bot_management.detection_ids[*] eq 33554817)</code>
+          </p>
+        </td>
+    </tr>
     <tr id="field-cf-client-bot">
         <td><code>cf.client.bot</code><br />{{<type>}}Boolean{{</type>}}</td>
         <td>
@@ -438,7 +460,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_ip">
         <td><code>cf.edge.server_ip</code><br />{{<type>}}IP Address{{</type>}}</td>
         <td>
-          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          <p>Represents the global network's IP address to which the HTTP request has resolved to.
           </p>
           <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
           </p>
@@ -447,7 +469,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_port">
         <td><code>cf.edge.server_port</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
-          <p>Represents the port number at which Cloudflare's network received the request.
+          <p>Represents the port number at which the Cloudflare global network received the request.
           </p>
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
         </td>
@@ -519,6 +541,13 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><code>cf.waf.score.rce</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
           <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-class">
+        <td><code>cf.waf.score.class</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>The attack score class of the current request, based on the WAF attack score.<br/>Can have one of the following values: <code>attack</code>, <code>likely_attack</code>, <code>likely_clean</code>, <code>clean</code>.
           </p>
         </td>
     </tr>

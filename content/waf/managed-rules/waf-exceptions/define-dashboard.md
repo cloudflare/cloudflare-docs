@@ -2,11 +2,13 @@
 pcx_content_type: how-to
 title: Define WAF exceptions in the dashboard
 weight: 2
+meta:
+    description: Use the Cloudflare dashboard to define exceptions that skip the execution of WAF managed rulesets or specific ruleset rules.
 ---
 
 # Define WAF exceptions in the dashboard
 
-## 1. Navigate to the zone or account dashboard page
+## 1. Go to the zone or account dashboard page
 
 To define a WAF exception at the zone level:
 
@@ -17,7 +19,7 @@ To define a WAF exception at the zone level:
 To define a WAF exception at the account level (Enterprise plans only):
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Go to **Application Security** > **WAF** > **Managed rulesets**.
+2. Go to Account Home > **WAF** > **Managed rulesets**.
 3. Select **Deploy** > **Deploy managed exception**.
 
 ## 2. Create the WAF exception

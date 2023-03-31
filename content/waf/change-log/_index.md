@@ -4,6 +4,7 @@ pcx_content_type: concept
 weight: 20
 meta:
   title: Changelog for managed rulesets
+rss: folder
 ---
 
 # Changelog for managed rulesets
@@ -17,5 +18,3 @@ Cloudflare is very proactive in responding to new vulnerabilities, which may nee
 If you do notice a new or updated rule generating an increased volume of security events, you can disable or change the rule from its _Default_ action. Once you change a rule to use an action other than the default one, Cloudflare will not be able to override the rule action.
 
 <p>{{<button type="primary" href="/waf/change-log/scheduled-changes/">}}View scheduled changes{{</button>}}</p>
-
-<!-- TODO: add back RSS feed (was `/waf/change-log/index.xml` before) -->

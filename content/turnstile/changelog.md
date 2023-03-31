@@ -2,10 +2,30 @@
 pcx_content_type: changelog
 title: Changelog
 weight: 10
+rss: file
 ---
 
 # Changelog
 
+## 2023-03-06
+
+- Added [`[execution]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) and [`[appearance]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget).
+
+## 2023-02-15
+
+- Added the [`[turnstile.ready]`](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget) callback.
+
+## 2023-02-01
+
+- Added the [`[data-]language`](/turnstile/get-started/client-side-rendering/#configurations) parameter.
+
+## 2022-12-12
+
+- [`POST /siteverify`](/turnstile/get-started/server-side-validation/) supports JSON requests now.
+
+## 2022-11-11
+
+- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior.
 
 ## 2022-10-28
 
@@ -25,7 +45,3 @@ weight: 10
 ## 2022-10-11
 
 - Added [`turnstile.remove`](/turnstile/get-started/client-side-rendering/#remove-a-widget)
-
-## 2022-11-11
-
-- Added [`retry` and `retry-interval`](/turnstile/get-started/client-side-rendering/#configurations) for controlling retry behavior.

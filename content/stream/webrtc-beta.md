@@ -55,7 +55,7 @@ Every live input has a unique URL that one creator can be stream to. This URL sh
 
 Copy the URL from the `webRTC` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs).
 
-Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/whip.html#L13), which you can [run in your web browser on Stackblitz](https://workers.new/stream/webrtc-whip):
+Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whip.html#L13), which you can [run in your web browser on Stackblitz](https://workers.new/stream/webrtc-whip):
 
 ```javascript
 ---
@@ -65,7 +65,7 @@ highlight: [4]
 // Add a <video> element to the HTML page this code runs in:
 // <video id="input-video" autoplay muted></video>
 
-import WHIPClient from "./WHIPClient.js"; // an example WHIP client, see https://github.com/cloudflare/templates/tree/main/stream/webrtc/src/WHIPClient.ts
+import WHIPClient from "./WHIPClient.js"; // an example WHIP client, see https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHIPClient.ts
 
 const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTC URL from your live input here
 const videoElement = document.getElementById("input-video");
@@ -80,7 +80,7 @@ You can also use this URL with any client that supports the [WebRTC-HTTP ingesti
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
 
-Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/whep.html#L13), which you [can run in your browser on Stackblitz](https://workers.new/stream/webrtc-whep).
+Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whep.html#L13), which you [can run in your browser on Stackblitz](https://workers.new/stream/webrtc-whep).
 
 ```javascript
 ---
@@ -90,7 +90,7 @@ highlight: [4]
 // Add a <video> element to the HTML page this code runs in:
 // <video id="output-video" autoplay muted></video>
 
-import WHEPClient from "./WHEPClient.js"; // an example WHEP client, see https://github.com/cloudflare/templates/tree/main/stream/webrtc/src/WHEPClient.ts
+import WHEPClient from "./WHEPClient.js"; // an example WHEP client, see https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHEPClient.ts
 
 const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTCPlayback URL from your live input here
 const videoElement = document.getElementById("output-video");
@@ -113,15 +113,16 @@ If you are building a native app, the example code above can run within a [WkWeb
 
 ## Supported WHIP and WHEP clients
 
-Beyond the [example WHIP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHIPClient.ts) and [example WHEP client](https://github.com/cloudflare/templates/blob/main/stream/webrtc/src/WHEPClient.ts) used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+Beyond the [example WHIP client](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHIPClient.ts) and [example WHEP client](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHEPClient.ts) used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
-#### WHIP
+### WHIP
 
 - [@eyevinn/whip-web-client](https://www.npmjs.com/package/@eyevinn/whip-web-client) (Typescript)
 - [whip-go](https://github.com/ggarber/whip-go) (Go)
 - [gst-plugins-rs](https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs) (Gstreamer plugins, written in Rust)
+- [Larix Broadcaster](https://softvelum.com/larix/) (free apps for iOS and Android with WebRTC based on Pion, SDK available)
 
-#### WHEP
+### WHEP
 
 - [@eyevinn/webrtc-player](https://www.npmjs.com/package/@eyevinn/webrtc-player) (Typescript)
 - [@eyevinn/wrtc-egress](https://www.npmjs.com/package/@eyevinn/wrtc-egress) (Typescript)
@@ -133,9 +134,10 @@ As more WHIP and WHEP clients are published, we are committed to supporting them
 
 - [VP9](https://developers.google.com/media/vp9) (recommended for highest quality)
 - [VP8](https://en.wikipedia.org/wiki/VP8)
-- [h264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) (coming soon) (Constrained Baseline Profile Level 3.1, referred to as `42e01f` in the SDP offer's `profile-level-id` parameter.)
+- [h264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) (Constrained Baseline Profile Level 3.1, referred to as `42e01f` in the SDP offer's `profile-level-id` parameter.)
 
 ## Conformance with WHIP and WHEP specifications
+
 
 Cloudflare Stream fully supports all aspects of the [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-06.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) specifications, including:
 

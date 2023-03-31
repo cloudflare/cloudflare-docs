@@ -4,7 +4,6 @@ pcx_content_type: how-to
 weight: 2
 meta:
   title: Configure WAF Managed Rules with Terraform
-layout: list
 ---
 
 # Configure WAF Managed Rules
@@ -17,33 +16,30 @@ This page provides examples of deploying and configuring WAF Managed Rules in yo
 * [Configure overrides](#configure-overrides)
 * [Configure the OWASP paranoia level, score threshold, and action](#configure-the-owasp-paranoia-level-score-threshold-and-action)
 
-For more information on WAF Managed Rules, refer to [Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
+For more information on WAF Managed Rules, refer to [WAF Managed Rules](/waf/managed-rules/) in the Cloudflare WAF documentation. For more information on deploying and configuring rulesets using the Rulesets API, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/) in the Ruleset Engine documentation.
 
 ## Before you start
 
-### Delete any existing rulesets before using Terraform
-
-{{<render file="_delete-existing-rulesets.md">}}
-
 ### Obtain the necessary account, zone, and managed ruleset IDs
 
-The Terraform configurations provided in this page need the zone ID (or account ID) of the zone/account where you will deploy managed rulesets.
+{{<render file="_find-ids-managed-rulesets.md">}}
 
-* To retrieve the list of accounts you have access to, including their IDs, use the [List accounts](https://developers.cloudflare.com/api/operations/accounts-list-accounts) API operation.
-* To retrieve the list of zones you have access to, including their IDs, use the [List zones](https://developers.cloudflare.com/api/operations/zone-list-zones) API operation.
+### Import or delete existing rulesets
 
-The deployment of managed rulesets via Terraform requires that you use the ruleset IDs. To find the IDs of WAF's managed rulesets, use the [List account rulesets](https://developers.cloudflare.com/api/operations/account-rulesets-list-account-rulesets) API operation. The response will include the description and IDs of the existing managed rulesets.
+{{<render file="_import-delete-existing-rulesets.md">}}
+
+---
 
 ## Deploy managed rulesets
 
-The following example deploys two managed rulesets to a zone using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
+The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
   zone_id     = "<ZONE_ID>"
   name        = "Managed WAF entry point ruleset"
-  description = ""
+  description = "Zone-level WAF Managed Rules config"
   kind        = "zone"
   phase       = "http_request_firewall_managed"
 
@@ -72,6 +68,52 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
   }
 }
 ```
+
+<details>
+<summary>Account-level example configuration</summary>
+<div>
+
+{{<Aside type="note" header="Before you start">}}
+* Account-level WAF configuration requires an Enterprise plan with a paid add-on.
+
+* Managed rulesets deployed at the account level will only apply to incoming traffic of zones on an Enterprise plan. The expression of your `execute` rule must end with `and cf.zone.plan eq "ENT"`.
+{{</Aside>}}
+
+The following example deploys two managed rulesets to the account with ID `<ACCOUNT_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
+
+```tf
+resource "cloudflare_ruleset" "account_level_managed_waf" {
+  account_id  = "<ACCOUNT_ID>"
+  name        = "Managed WAF entry point ruleset"
+  description = "Account-level WAF Managed Rules config"
+  kind        = "root"
+  phase       = "http_request_firewall_managed"
+
+  # Execute Cloudflare Managed Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "efb7b8c949ac4650a09736fc376e9aee"
+    }
+    expression = "http.host in {\"api.example.com\" \"store.example.com\"} and cf.zone.plan eq \"ENT\""
+    description = "Execute Cloudflare Managed Ruleset on my account-level phase entry point ruleset"
+    enabled = true
+  }
+  # Execute Cloudflare OWASP Core Ruleset
+  rules {
+    action = "execute"
+    action_parameters {
+      id = "4814384a9e5d4991b9815dcfc25d2f1f"
+    }
+    expression = "http.host in {\"api.example.com\" \"store.example.com\"} and cf.zone.plan eq \"ENT\""
+    description = "Execute Cloudflare OWASP Core Ruleset on my account-level phase entry point ruleset"
+    enabled = true
+  }
+}
+```
+
+</div>
+</details>
 
 ## Configure skip rules
 

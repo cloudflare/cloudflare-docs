@@ -12,7 +12,7 @@ meta:
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All systems       | WARP with Gateway                                                                         | All plans                                                     |
 
@@ -23,7 +23,7 @@ With Require Gateway, you can allow access to your applications only to devices 
 
 ## 1. Enable the Gateway check
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. Scroll down to **WARP client checks** and select **Add new**.
 3. Select **Gateway**.
 4. Select **Save**.
@@ -32,7 +32,7 @@ You are now ready to start requiring Gateway for your Access applications.
 
 ## 2. Add the check to an Access policy
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Access > Applications**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access > Applications**.
 
 2. Locate the application for which you want to require Gateway.
 

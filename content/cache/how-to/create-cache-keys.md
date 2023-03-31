@@ -9,12 +9,12 @@ A [Cache Key](/cache/about/cache-keys/) is an identifier that Cloudflare uses fo
 
 1.  Log in to your Cloudflare account.
 2.  Select the domain that requires changes to the Cache Key Template.
-3.  Click the **Rules** > **Page Rules**.
-4.  Click **Create Page Rule**.
+3.  Select **Rules** > **Page Rules**.
+4.  Select **Create Page Rule**.
 5.  Under **If the URL matches**, enter the URL to match.
 6.  Under **Then the settings are**, choose **Custom Cache Key** from the dropdown.
-7.  Click the appropriate _Query String_ setting.
-8.  (Optional) Click Advanced and enter appropriate settings for:
+7.  Select the appropriate _Query String_ setting.
+8.  (Optional) Select **Advanced** and enter appropriate settings for:
     - `Headers`
     - `Cookie`
     - `Host`

@@ -12,7 +12,7 @@ You can install `cloudflared` as a system service on Linux.
 
 ## Prerequisites
 
-Before you install Cloudflare Tunnel as a service on Linux, follow Steps 1 through 4 of the [Tunnel CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#set-up-a-tunnel-locally-cli-setup). At this point you should have a named tunnel and a `config.yml` file in your `.cloudflared` directory.
+Before you install Cloudflare Tunnel as a service on Linux, follow Steps 1 through 4 of the [Tunnel CLI setup guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/). At this point you should have a named tunnel and a `config.yml` file in your `.cloudflared` directory.
 
 ## 1. Configure `cloudflared` as a service
 

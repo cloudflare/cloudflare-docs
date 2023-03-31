@@ -1,6 +1,6 @@
 ---
 title: Get started
-pcx_content_type: overview
+pcx_content_type: get-started
 weight: 2
 ---
 
@@ -12,22 +12,21 @@ If you are an Enterprise customer and would like to use Magic Network Monitoring
 
 ## 1. Verify NetFlow or SFlow capabilities
 
-Verify your routers are capable of exporting NetFlow or sFlow to an IP address on Cloudflare’s network.
+Verify your routers are capable of exporting NetFlow or sFlow to an IP address on Cloudflare’s network. Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
 
-Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive. 
-
-Magic Network Monitoring supports NetFlow v5, NetFlow v9, IPFIX, and sFlow.
+Refer to [Supported routers](/magic-network-monitoring/routers/supported-routers) to view a list of supported routers. The list is not exhaustive.
 
 ## 2. Register your router with Cloudflare
 
 When you register your router with Cloudflare, your router links your NetFlow or sFlow data to your Cloudflare account.
 
-1. From the [Cloudflare dashboard](https://dash.cloudflare.com/login), select **Magic Network Monitoring**.
-2. On the **Magic Network Monitoring** page, select **Configure Magic Network Monitoring**.
-3. Select the **Configure routers** tab.
-3. Under **IP Address**, enter your router's public IP address.
-4. Under **Default router sampling rate**, enter a value for the sampling rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
-5. Select **Next**.
+1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+2. Go to **Analytics & Logs** > **Magic Monitoring**.
+3. In **Magic Network Monitoring Analytics**, select **Configure Magic Network Monitoring**.
+4. Select the **Configure routers** tab.
+5. Under **IP Address**, enter your router's public IP address.
+6. Under **Default router sampling rate**, enter a value for the sampling rate. The value should match the sampling rate of your NetFlow or sFlow configuration.
+7. Select **Next**.
 
 ## 3. Configure your router 
 
@@ -50,6 +49,8 @@ Refer to **Router status description** to confirm whether data is successfully b
 
 When you are done with router configuration, select **Finish onboarding**.
 
-5. Create rules
+{{<Aside type="note">}}This will only be visible during the onboarding process. When you are finished onboarding, this page will no longer be visible.{{</Aside>}}
+
+## 5. Create rules
 
 Create rules to analyze data for a specific set of destinations or to implement thresholds. Refer to [Rules](/magic-network-monitoring/rules/) for more information.

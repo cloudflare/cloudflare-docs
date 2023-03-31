@@ -5,7 +5,7 @@ type: example
 summary: How to manage Pub/Sub with Wrangler, the Cloudflare CLI.
 ---
 
-## What is Wrangler?
+# What is Wrangler?
 
 Wrangler is a command-line tool for building and managing Cloudflare's Developer Platform, including [Cloudflare Workers](https://workers.cloudflare.com/), [R2 Storage](/r2/) and [Cloudflare Pub/Sub](/pub-sub/).
 
@@ -71,7 +71,7 @@ Commands:
 
 The available `wrangler pubsub broker` sub-commands include:
 
-```bash
+```sh
 $ wrangler pubsub broker --help
 
 Interact with your Pub/Sub Brokers
@@ -131,4 +131,4 @@ $ wrangler pubsub broker revoke BROKER_NAME --namespace=NAMESPACE_NAME --jti=JTI
 
 ## Filing Bugs
 
-If you've found a bug with one of the `wrangler pubsub [...]` commands, please [file a bug on GitHub](https://github.com/cloudflare/wrangler2/issues/new/choose), and include the version of `wrangler` you're using with `wrangler --version`.
+If you've found a bug with one of the `wrangler pubsub [...]` commands, please [file a bug on GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose), and include the version of `wrangler` you're using with `wrangler --version`.

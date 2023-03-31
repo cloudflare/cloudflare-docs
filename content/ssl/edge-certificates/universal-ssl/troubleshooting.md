@@ -1,9 +1,10 @@
 ---
 title: Troubleshooting
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 weight: 6
 meta:
   title: Troubleshooting Universal SSL
+  description: Review how to troubleshoot issues when using Cloudflare Universal SSL certificate. 
 ---
 
 # Troubleshooting Universal SSL

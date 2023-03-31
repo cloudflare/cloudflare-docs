@@ -3,6 +3,8 @@ title: Analytics
 pcx_content_type: how-to
 weight: 8
 layout: single
+meta:
+    description: Use Turnstile analytics to view the number of challenges issued, the challenge solve rate, and the metrics of issued challenges.
 ---
 
 # Turnstile Analytics
@@ -39,4 +41,4 @@ Top Actions refer to the custom labels you created for your widgets.
 
 ## GraphQL
 
-You can use the `turnstileAdaptiveGroups` [dataset in GraphQL](/analytics/graphql-api/features/data-sets/#available-datasets) to get Turnstile widget analytics.
+You can use the `turnstileAdaptiveGroups` [dataset in GraphQL](/analytics/graphql-api/features/data-sets/) to get Turnstile widget analytics.

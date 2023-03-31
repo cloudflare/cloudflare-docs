@@ -13,6 +13,8 @@ Prior to mid-2020, Logpush sent logs once every five minutes (referred to as Log
 ## Availability
 
 {{<feature-table id="analytics.logpush">}}
+  
+In addition, [Workers Trace Events Logpush](https://developers.cloudflare.com/workers/platform/logpush/) is available on the [Workers Paid](https://developers.cloudflare.com/workers/platform/pricing/) plan.
 
 ## Next steps
 

@@ -5,7 +5,7 @@ title: External Services
 
 # External Services
 
-Many external services provide libraries and SDKs to interact with their APIs. While many Node-compatible libraries work on Workers right out of the box, some, which implement `fs`, `http/net`, or access the browser `window` don't directly translate to the Workers runtime, which is v8-based. 
+Many external services provide libraries and SDKs to interact with their APIs. While many Node-compatible libraries work on Workers right out of the box, some, which implement `fs`, `http/net`, or access the browser `window` do not directly translate to the Workers runtime, which is v8-based. 
 
 For a list of working packages, refer to [Works on Workers](https://workers.cloudflare.com/works).
 
@@ -19,7 +19,7 @@ For a list of working packages, refer to [Works on Workers](https://workers.clou
     allowFullScreen></iframe>
 
 {{<Aside type="note">}}
-Don't see an integration listed, or have an integration to submit? [Please let us know](https://forms.gle/iaUqLWE8aezSEhgd6) or [submit a package directly](https://airtable.com/shrtvoM4QfEr48ZoQ).
+If you do not see an integration listed or have an integration to add, complete and submit the [Cloudflare Developer Platform Integration form](https://forms.gle/iaUqLWE8aezSEhgd6) or [submit a package directly through Airtable](https://airtable.com/shrtvoM4QfEr48ZoQ).
 {{</Aside>}}
 
 ## Authentication
@@ -37,5 +37,7 @@ const secretValue = env.SECRET_NAME;
 ```
 
 Then use the secret value to authenticate with the external service. For example, if the external service requires an API key for authentication, include the secret in your library's configuration.
+
+For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
 
 Use [Custom Domains](/workers/platform/triggers/custom-domains/) when communicating with external APIs, which treat your Worker as your core application.

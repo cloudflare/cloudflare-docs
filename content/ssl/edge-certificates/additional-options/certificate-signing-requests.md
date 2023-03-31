@@ -6,10 +6,7 @@ weight: 11
 
 # Certificate Signing Requests (CSRs)
 
-{{<render file="_csr-definition.md">}}
-<br/>
-
-A CSR contains information about your domain: your organization name and address, the common name (domain name), and Subject Alternative Names (SANs).
+{{<render file="_csr-definition.md">}} 
 
 ## Availability
 

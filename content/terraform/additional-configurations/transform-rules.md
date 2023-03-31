@@ -4,21 +4,32 @@ pcx_content_type: how-to
 weight: 6
 meta:
   title: Configure Transform Rules with Terraform
-layout: list
 ---
 
 # Configure Transform Rules
 
 This page provides examples of creating Transform Rules in a zone using Terraform. The examples cover the following scenarios:
 
-* [Create a URL Rewrite Rule](#create-a-url-rewrite-rule)
+* [Create a Rewrite URL Rule](#create-a-rewrite-url-rule)
 * [Create an HTTP Request Header Modification Rule](#create-an-http-request-header-modification-rule)
 
 For more information on Transform Rules, refer to [Transform Rules](/rules/transform/).
 
-## Create a URL Rewrite Rule
+## Before you start
 
-The following example creates a URL Rewrite Rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
+### Obtain the necessary account or zone IDs
+
+{{<render file="_find-ids.md">}}
+
+### Import or delete existing rulesets
+
+{{<render file="_import-delete-existing-rulesets.md">}}
+
+---
+
+## Create a Rewrite URL Rule
+
+The following example creates a Rewrite URL Rule that rewrites requests for `example.com/old-folder` to `example.com/new-folder`:
 
 ```tf
 resource "cloudflare_ruleset" "transform_url_rewrite" {
@@ -37,13 +48,13 @@ resource "cloudflare_ruleset" "transform_url_rewrite" {
       }
     }
     expression = "(http.host eq \"example.com\" and http.request.uri.path eq \"/old-folder\")"
-    description = "Example URL Rewrite Rule"
+    description = "Example Rewrite URL Rule"
     enabled = true
   }
 }
 ```
 
-For more information on rewriting URLs, refer to [URL Rewrite Rules](/rules/transform/url-rewrite/).
+For more information on rewriting URLs, refer to [Rewrite URL Rules](/rules/transform/url-rewrite/).
 
 ## Create an HTTP Request Header Modification Rule
 

@@ -2,14 +2,16 @@
 pcx_content_type: reference
 title: Access audit logs
 weight: 6
+meta:
+  description: Use Access audit logs to review authentication events and HTTP requests to protected URI paths.
 ---
 
 # Access audit logs
 
 Cloudflare Access generates two types of audit logs:
 
-*   **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
-*   **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
+- **[Authentication audit logs](#authentication-audit-logs)** maintain a record of authentication events.
+- **[Per-request audit logs](#per-request-audit-logs)** record HTTP requests to protected URI paths.
 
 ## Authentication audit logs
 
@@ -18,7 +20,6 @@ Cloudflare Access logs an authentication event whenever a user or service attemp
 [Identity-based authentication](#identity-based-authentication) refers to login attempts that matched on user email, IdP group, SAML group, or OIDC claim.
 
 [Non-identity authentication](#non-identity-authentication) refers to login attempts that matched a non-identity policy such as IP address, device posture, country, valid certificate, or service token.
-
 
 {{<Aside type="note">}}
 
@@ -33,7 +34,7 @@ Authentication audit logs do not capture actions the user takes once they have a
 
 To view logs for identity-based authentication events:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), navigate to  **Logs** > **Access**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Logs** > **Access**.
 2. Expand a row to view details such as the login method, the IP address of the user, and more.
 3. If a login attempt was blocked, select **View** for information about why Access denied the user access.
 
@@ -83,40 +84,39 @@ header: Response
 
 Identity-based authentication logs contain the following fields:
 
-| Field | Description |
-|-------|-------------|
-| **user\_email** |  The email address of the authenticating user. |
-| **ip\_address** |  The IP address of the authenticating user. |
-| **app\_uid** | The unique identifier for the protected application. |
-| **add\_domain** |  The URL of the protected application. |
-| **action** | The event that occurred, such as a login attempt. |
-| **allowed** | The result of the authentication event. |
-| **created\_at** | The event timestamp. |
-| **connection**  | The IdP used to authenticate. |
-| **country** | The country associated with the user’s IP address. |
-| **ray\_id** | A unique identifier for every request through Cloudflare. |
-| **app\_type** | The type specifies if the app is self-hosted or SaaS. |
+| Field          | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| **user_email** | The email address of the authenticating user.             |
+| **ip_address** | The IP address of the authenticating user.                |
+| **app_uid**    | The unique identifier for the protected application.      |
+| **app_domain** | The URL of the protected application.                     |
+| **action**     | The event that occurred, such as a login attempt.         |
+| **allowed**    | The result of the authentication event.                   |
+| **created_at** | The event timestamp.                                      |
+| **connection** | The IdP used to authenticate.                             |
+| **country**    | The country associated with the user’s IP address.        |
+| **ray_id**     | A unique identifier for every request through Cloudflare. |
+| **app_type**   | The type specifies if the app is self-hosted or SaaS.     |
 
 ### Non-identity authentication
 
-To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available on the Zero Trust dashboard. 
+To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available in Zero Trust.
 
 ### Log retention
+
 Block policy decisions are retained for a week. Authentication logs are retained for six months.
 
 ## Per-request audit Logs
 
 Users who have authenticated through Access have access to authorized URL paths for the duration of their session. Cloudflare provides several ways to audit these requests.
 
-### Cloudflare logging
+### Using Cloudflare Logs
 
-Enterprise customers have access to detailed logs of HTTP requests, on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare dashboard or API (for more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/)).
+Enterprise customers have access to detailed logs of HTTP requests on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare dashboard or API. For more information about Cloudflare HTTP logging, refer to [Cloudflare Logs](/logs/).
 
 Once a member of your team authenticates to reach a resource behind Access, Cloudflare generates a token for that user that contains their SSO identity. The token is structured as a [JSON Web Token (JWT)](/cloudflare-one/glossary/#json-web-token). Cloudflare relies on an RSA Signature with SHA-256, or RS256, an asymmetric algorithm, to perform that signature. Cloudflare also makes the public key available, so that you can validate their authenticity, as well.
 
-When a user requests a given URL, Access appends the user identity from that token as a request header, which we then log as the request passes through our network. Your team can collect these logs in your preferred third-party Security information and event management (SIEM) software or storage destination by using the [Cloudflare Logpush](/logs/about/) platform.
-
-Cloudflare Logpush can be used to gather and send specific request headers from the requests made to sites behind Access. Once enabled, you can then configure the destination where Cloudflare should send these logs. When enabled with the Access user identity field, the logs will export to your systems as JSON similar to the logs below.
+When a user requests a given URL, Access appends the user identity from that token as a request header, which we then log as the request passes through our network. Your team can collect these logs in your preferred third-party Security information and event management (SIEM) software or storage destination by using [Cloudflare Logpush](/cloudflare-one/analytics/logs/logpush/). When enabled with the Access user identity field, the logs will export to your systems as JSON similar to the logs below.
 
 ```json
 {
@@ -152,13 +152,3 @@ Cloudflare Logpush can be used to gather and send specific request headers from 
 In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Custom fields](/logs/reference/custom-fields/) for instructions.
 
 Keep in mind that Access does not log all interactions. For example, per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/panel`, but the logs can only identify user interactions that result in a new HTTP request.
-
-### Cloudflare logpush integration
-
-Access integrates with the Cloudflare Logpush API, so you can export per-request audit logs to third-party Security Information and Event Management (SIEM) tools.
-
-Cloudflare Logpush pushes Enterprise customers' HTTP request logs, including Access user identity, to a cloud storage provider every five minutes.
-
-For instructions on setting up Logpush, refer to [Enable destinations](/logs/get-started/enable-destinations/).
-
-For more on exporting per-request Access logs, refer to [API configuration](/logs/get-started/api-configuration/).

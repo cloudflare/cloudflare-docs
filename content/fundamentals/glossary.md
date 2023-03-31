@@ -6,7 +6,7 @@ weight: 10
 
 # Glossary
 
-See definitions for Cloudflare terms.
+Review the definitions for terms used across Cloudflare.
 
 ## account
 

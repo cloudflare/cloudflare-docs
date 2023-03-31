@@ -5,14 +5,6 @@ title: Environments
 
 # Environments
 
-{{<Aside type="note">}}
-
-We recommend using [Deployments](/workers/platform/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
-
-We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
-
-{{</Aside>}}
-
 ## Background
 
 Environments are different contexts that your code runs in. The Workers platform allows you to create and manage different environments. Through environments, you can deploy the same project to multiple places under multiple names.
@@ -34,8 +26,6 @@ The layout of an example `[env.dev]` environment is displayed below:
 filename: wrangler.toml
 ---
 name = "your-worker"
-type = "javascript"
-account_id = "your-account-id"
 
 [env.dev]
 name = "your-worker-dev"
@@ -57,13 +47,10 @@ The `workers_dev` key is missing from this example, but because a route is speci
 ---
 filename: wrangler.toml
 ---
-type = "webpack"
 name = "my-worker"
-account_id = "12345678901234567890"
 
 # These fields specify that the Worker
 # will deploy to a custom domain
-zone_id = "09876543210987654321"
 route = "example.com/*"
 ```
 
@@ -71,8 +58,9 @@ To deploy this Worker, run the `wrangler publish` command in your terminal:
 
 ```sh
 ~/my-worker $ wrangler publish
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to example.com/*
+Uploaded my-worker
+Published my-worker
+  example.com/*
 ```
 
 #### Publishing to \*.workers.dev
@@ -85,13 +73,10 @@ This `wrangler.toml` file has no environments defined and will publish `my-worke
 ---
 filename: wrangler.toml
 ---
-type = "webpack"
 name = "my-worker"
-account_id = "12345678901234567890"
 
-# this field specifies that the worker
+# By not specifying any routes, the Worker
 # should be deployed to *.workers.dev
-workers_dev = true
 ```
 
 This example will publish to your `*.workers.dev` subdomain because `workers_dev` has been set to `true`.
@@ -100,8 +85,9 @@ Run `wrangler publish` as normal to deploy your Worker:
 
 ```sh
 ~/my-worker $ wrangler publish
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to https://my-worker.<your-subdomain>.workers.dev
+Uploaded my-worker
+Published my-worker
+  https://my-worker.<your-subdomain>.workers.dev
 ```
 
 ### Introducing environments
@@ -110,16 +96,13 @@ Environments enable you to write and deploy projects to multiple places.
 
 You can define an environment by specifying an `[env.name]` block with its own values in your `wrangler.toml` file. Values within this block may override top-level configuration values with the same key.
 
-The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/wrangler/cli-wrangler/configuration/#keys) for each environment.
+The `wrangler.toml` file below adds two environments, `[env.staging]` and `[env.production]`, to the `wrangler.toml` file. If you are deploying to a custom domain, you must provide a [`route` or `routes` key](/workers/wrangler/configuration/) for each environment.
 
 ```toml
 ---
 filename: wrangler.toml
 ---
-type = "webpack"
 name = "my-worker-dev"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
 route = "dev.example.com/*"
 vars = { ENVIRONMENT = "dev" }
 
@@ -143,23 +126,26 @@ With this configuration, Wrangler will behave in the following manner:
 
 ```sh
 ~/my-worker $ wrangler publish
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to dev.example.com/*
+Uploaded my-worker-dev
+Published my-worker-dev
+  dev.example.com/*
 ```
 
 ```sh
 ~/my-worker $ wrangler publish --env staging
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to staging.example.com/*
+Uploaded my-worker-staging
+Published my-worker-staging
+  staging.example.com/*
 ```
 
 ```sh
 ~/my-worker $ wrangler publish --env production
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to example.com/*
+Uploaded my-worker
+Published my-worker
+  example.com/*
 ```
 
-Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/cli-wrangler/configuration/#vars) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/platform/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
 
 With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
@@ -180,9 +166,6 @@ In order to deploy your code to your `*.workers.dev` subdomain, include `workers
 filename: wrangler.toml
 ---
 name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
 route = "example.com/*"
 
 [env.staging]
@@ -193,14 +176,16 @@ With this configuration, Wrangler will behave in the following manner:
 
 ```sh
 ~/my-worker $ wrangler publish
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to example.com/*
+Uploaded my-worker
+Published my-worker
+  example.com/*
 ```
 
 ```sh
 ~/my-worker $ wrangler publish --env staging
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to https://my-worker-staging.<your-subdomain>.workers.dev
+Uploaded my-worker
+Published my-worker
+  https://my-worker-staging.<your-subdomain>.workers.dev
 ```
 
 ### workers.dev as a first-class target
@@ -212,9 +197,6 @@ If you want to connect multiple environments to your `*.workers.dev` subdomain, 
 filename: wrangler.toml
 ---
 name = "my-worker-dev"
-type = "webpack"
-account_id = "12345678901234567890"
-workers_dev = true
 
 [env.production]
 name = "my-worker"
@@ -227,142 +209,27 @@ With this configuration, deploy each environment by attaching a `--env` or `-e` 
 
 ```sh
 ~/my-worker $ wrangler publish
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to https://my-worker-dev.<your-subdomain>.workers.dev
+Uploaded my-worker-dev
+Published my-worker-dev
+  https://my-worker-dev.<your-subdomain>.workers.dev
 ```
 
 ```sh
 ~/my-worker $ wrangler publish --env staging
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to https://my-worker-staging.<your-subdomain>.workers.dev
+Uploaded my-worker-staging
+Published my-worker-staging
+  https://my-worker-staging.<your-subdomain>.workers.dev
 ```
 
 ```sh
 ~/my-worker $ wrangler publish --env production
-✨  Built successfully, built project size is 523 bytes.
-✨  Successfully published your script to https://my-worker.<your-subdomain>.workers.dev
+Uploaded my-worker
+Published my-worker
+  https://my-worker.<your-subdomain>.workers.dev
 ```
-
----
 
 {{<Aside type="note">}}
 
 When you create a Service or Environment, Cloudflare automatically registers an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your Services and Environments that they do not contain sensitive information i.e `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
-
-{{</Aside>}}
-
-## Custom webpack configurations
-
-You can specify different webpack configurations for different environments.
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker-dev"
-type = "webpack"
-account_id = "12345678901234567890"
-workers_dev = true
-webpack_config = "webpack.dev.js"
-
-[env.production]
-name = "my-worker"
-webpack_config = "webpack.config.js"
-
-[env.staging]
-name = "my-worker-staging"
-```
-
-Your default `wrangler build`, `wrangler preview`, and `wrangler publish` commands will all build with `webpack.dev.js`. Any commands tied to the staging environment will also use this configuration; for example, `wrangler build -e staging`, `wrangler preview -e staging`, and `wrangler publish -e staging`.
-
-The build commands `wrangler build -e production`, `wrangler preview -e production`, and `wrangler publish -e production` would all use your `webpack.config.js` file.
-
----
-
-## Invalid configurations
-
-### Multiple types
-
-You cannot specify multiple `type` values. The `type` must be specified at the top level of your `wrangler.toml` file.
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
-route = "example.com/*"
-workers_dev = true
-
-[env.staging]
-type = "rust"
-```
-
-With this configuration, no errors will be thrown. However, only `type = "webpack"` will be used, even in an `--env staging` setting.
-
-### Same name for multiple environments
-
-You cannot specify multiple environments with the same name. If this were allowed, publishing each environment would overwrite your previously deployed Worker, and the behavior would not be clear.
-
-```toml
----
-filename: wrangler.toml
----
-name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
-route = "example.com/*"
-
-[env.staging]
-name = "my-worker"
-workers_dev = true
-```
-
-```sh
-~/my-worker $ wrangler publish
-Error: ⚠️  Each name in your `wrangler.toml` must be unique, this name is duplicated: my-worker
-```
-
-```sh
-~/my-worker $ wrangler publish --env staging
-Error: ⚠️  Each name in your `wrangler.toml` must be unique, this name is duplicated: my-worker
-```
-
-### Defining workers_dev and route
-
-```toml
-name = "my-worker"
-type = "webpack"
-account_id = "12345678901234567890"
-zone_id = "09876543210987654321"
-route = "example.com/*"
-workers_dev = true
-
-[env.staging]
-workers_dev = true
-route = "staging.example.com/*"
-```
-
-Wrangler will fail to deploy when both `workers_dev = true` and `route` (or `routes`) are defined. If you are trying to deploy to a `*.workers.dev` domain, remove the `route` or `routes` value.
-
-```sh
-~/my-worker $ wrangler publish
-Error: ⚠️  Your environment should only include `workers_dev` or `route`. If you are trying to publish to workers.dev, remove `route` from your wrangler.toml, if you are trying to publish to your own domain, remove `workers_dev`.
-```
-
-```sh
-~/my-worker $ wrangler publish --env staging
-Error: ⚠️  Your environment should only include `workers_dev` or `route`. If you are trying to publish to workers.dev, remove `route` from your wrangler.toml, if you are trying to publish to your own domain, remove `workers_dev`.
-```
-
-
-{{<Aside type="note">}}
-
-We recommend using [Deployments](/workers/platform/deployments) in place of Environments. Deployments give you a powerful audit log of changes to your application, and will soon include integrated rollbacks and automated deployment.
-
-We have temporarily disabled the creation of [Service Environments](/workers/learning/using-services/#service-environments) while we are improving this feature. Environments made using Wrangler, as described below, are still supported.
 
 {{</Aside>}}

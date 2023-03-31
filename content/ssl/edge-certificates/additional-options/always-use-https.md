@@ -6,8 +6,7 @@ weight: 15
 
 # Always Use HTTPS
 
-{{<render file="_always-use-https-definition.md">}}
-<br/>
+Always Use HTTPS redirects all `http` requests to `https` for all subdomains and hosts in your application.
 
 Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 
@@ -27,6 +26,12 @@ To enable **Always Use HTTPS** in the dashboard:
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
 2.  Navigate to **SSL/TLS** > **Edge Certificates**.
 3.  For **Always Use HTTPS**, switch the toggle to **On**.
+
+{{<Aside type="note">}}
+
+When you set your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) to **Off**, you will not have an option for **Always Use HTTPS** visible in your Cloudflare dashboard.
+
+{{</Aside>}}
 
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

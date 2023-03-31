@@ -15,12 +15,15 @@ To enable this feature, download and deploy the [WARP client](/cloudflare-one/co
 
 With Cloudflare Zero Trust, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare Zero Trust [integrates with your identity provider](/cloudflare-one/identity/idp-integration/), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they access that resource from.
 
-A network policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field.
+A network policy consists of an **Action** as well as a logical expression that determines the scope of the action. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
 
 - [Actions](#actions)
 - [Selectors](#selectors)
-- [Operators](#operators)
+- [Comparison operators](#comparison-operators)
 - [Value](#value)
+- [Logical operators](#logical-operators)
+
+{{<render file="gateway/_response.md" withParameters="query;;_Source IP_;;_Resolved IP_">}}
 
 ## Actions
 
@@ -34,6 +37,16 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 | -------------- | -------- | --------------- | ------ |
 | Destination IP | In       | `92.100.02.102` | Allow  |
 | Email          | In       | `*@example.com` |        |
+
+### Audit SSH
+
+Policies with Audit SSH actions allow administrators to log SSH commands matching SSH traffic over port 22. For example, the following configuration logs SSH commands sent to a given IP address:
+
+| Selector       | Operator | Value          | Action    |
+| -------------- | -------- | -------------- | --------- |
+| Destination IP | In       | `203.0.113.83` | Audit SSH |
+
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](ssh-logging/).
 
 ### Block
 
@@ -59,68 +72,31 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Application
 
-You can apply Network policies to a growing list of popular web applications. Refer to the [Application and app types](/cloudflare-one/policies/filtering/application-app-types) page for more information.
-
-| UI name | API example |
-| -- | -- |
-| Application | `any(app.ids[*] in {505}` |
+{{<render file="gateway/_application.md" withParameters="network">}}
 
 ### Destination Continent
 
-The continent that the request is destined for. Geolocation is determined from the target IP address. To specify a continent, enter its two-letter code into the **Value** field:
-
-- AF – Africa
-- AN – Antarctica
-- AS – Asia
-- EU – Europe
-- NA – North America
-- OC – Oceania
-- SA – South America
-- T1 – Tor network
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Destination Continent IP Geolocation | `net.dst.geo.continent == "EU"` |
+{{<render file="gateway/_destination-continent.md" withParameters="net.dst">}}
 
 ### Destination Country
 
-The country that the request is destined for. Geolocation is determined from the target IP address. To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Destination Country IP Geolocation | `net.dst.geo.country == "RU"` |
+{{<render file="gateway/_destination-country.md" withParameters="net.dst">}}
 
 ### Destination IP
 
-The IP address of the request’s target.
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Destination IP | `net.dst.ip == "10.0.0.0/8"` |
+{{<render file="gateway/_destination-ip.md">}}
 
 ### Destination Port
 
-The port number of the request’s target.
-
-| UI name          | API example              |
-| ---------------- | ------------------------ |
-| Destination Port | `net.dst.port == "2222"` |
+{{<render file="gateway/_destination-port.md">}}
 
 ### Device Posture
 
-With the Device Posture selector, admins can use signals from end-user devices to secure access to their internal and external resources. For example, a security admin can choose to limit all access to internal applications based on whether specific software is installed on a device, and/or if the device or software are configured in a particular way.
-
-| UI name        | API example                                                                                                                                                             |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Passed Device Posture Check | `any(device_posture.checks.failed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})`, `any(device_posture.checks.passed[*] in {"1308749e-fcfb-4ebc-b051-fe022b632644"})"` |
+{{<render file="gateway/_device-posture.md">}}
 
 ### Protocol
 
-The protocol used to send the packet.
-
-| UI name  | API example             |
-| -------- | ----------------------- |
-| Protocol | `net.protocol == "tcp"` |
+{{<render file="gateway/_protocol.md">}}
 
 {{<Aside type="note">}}
 
@@ -128,70 +104,51 @@ To enable Gateway filtering on TCP and UDP, navigate to **Settings** > **Network
 
 {{</Aside>}}
 
+### Proxy Endpoint
+
+{{<render file="gateway/_proxy-endpoint.md">}}
+
 ### SNI
 
-The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
-
-| UI name | API example                         |
-| ------- | ----------------------------------- |
-| SNI     | `net.sni.host == "www.example.com"` |
+{{<render file="gateway/_sni.md">}}
 
 ### SNI Domain
 
-The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
-
-| UI name    | API example                       |
-| ---------- | --------------------------------- |
-| SNI Domain | `net.sni.domains == "example.com"` |
+{{<render file="gateway/_sni-domain.md">}}
 
 ### Source Continent
 
-The continent of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a continent, enter its two-letter code into the **Value** field:
-
-- AF – Africa
-- AN – Antarctica
-- AS – Asia
-- EU – Europe
-- NA – North America
-- OC – Oceania
-- SA – South America
-- T1 – Tor network
-
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Continent IP Geolocation | `net.src.geo.continent == "North America"` |
+The continent of the user making the request.
+{{<render file="gateway/_source-continent.md" withParameters="net.src">}}
 
 ### Source Country
 
-The country of the user making the request. Geolocation is determined from the device's public IP address (typically assigned by the user's ISP). To specify a country, enter its [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) in the **Value** field.
+The country of the user making the request.
+{{<render file="gateway/_source-country.md" withParameters="net.src">}}
 
-| UI name        | API example                  |
-| -------------- | ---------------------------- |
-| Source Country IP Geolocation | `net.src.geo.country == "RU"` |
+### Source Internal IP
+
+{{<render file="gateway/_source-internal-ip.md" withParameters="network;;net">}}
 
 ### Source IP
 
-The IP address of the user making the request.
-
-| UI name   | API example                  |
-| --------- | ---------------------------- |
-| Source IP | `net.src.ip == "10.0.0.0/8"` |
+{{<render file="gateway/_source-ip-net.md">}}
 
 ### Source Port
 
-The source port of the user making the request.
-
-| UI name     | API example              |
-| ----------- | ------------------------ |
-| Source Port | `net.src.port == "2222"` |
+{{<render file="gateway/_source-port.md">}}
 
 ### Users
 
-The **User**, **User Group**, and **SAML Attributes** selectors require Gateway with WARP mode to be enabled in the Zero Trust WARP client, and the user to be enrolled in the organization via the WARP client. For more information on identity-based selectors, refer to the [Identity-based policies](/cloudflare-one/policies/filtering/identity-selectors/) page.
+{{<render file="gateway/_users.md">}}
 
-## Operators
+### Virtual Network
 
-{{<render file="_policies-operators.md">}}
+{{<render file="gateway/_virtual-network.md">}}
+
+## Comparison operators
+
+{{<render file="gateway/_comparison-operators.md">}}
 
 {{<Aside type="note">}}
 
@@ -201,4 +158,8 @@ The _In_ operator allows you to specify IP addresses or networks using CIDR nota
 
 ## Value
 
-{{<render file="_policies-value.md">}}
+{{<render file="gateway/_value.md">}}
+
+## Logical operators
+
+{{<render file="gateway/_logical-operators.md" withParameters="**Identity** or **Device Posture**">}}

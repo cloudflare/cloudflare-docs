@@ -20,7 +20,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
 ## Create the Access for SaaS application
 
-1.  On the Zero Trust Dashboard, go to **Access** > **Applications**.
+1.  In Zero Trust, go to **Access** > **Applications**.
 
 1.  Select **Add an Application**.
 
@@ -36,7 +36,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 
     - Ensure you are collecting SAML attributes from your IdP:
 
-    ![DocuSign SAML Attributes](/cloudflare-one/static/zero-trust-security/docusign/saml-attributes.png)
+    ![List of DocuSign SAML Attributes](/cloudflare-one/static/zero-trust-security/docusign/saml-attributes.png)
 
 1.  These IdP SAML values can then be mapped to the following DocuSign SAML attributes:
 
@@ -58,7 +58,7 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Set the file extension to `.crt` and save.
     {{</Aside>}}
 
-## Configure your DocuSign SSO instance
+## Configure your DocuSign SSO instance
 
 1.  Ensure you have a domain claimed in Zendesk.
 
@@ -81,8 +81,6 @@ This guide covers how to protect your DocuSign account with Access for SaaS.
 1.  Go back to the Identity Provider's screen and select **Actions** > **Endpoints**. Copy and save the following:
     - Service Provider Issuer URL.
     - Service Provider Assertion Consumer Service URL.
-
-![DocuSign SAML 2.0 Endpoints](/cloudflare-one/static/zero-trust-security/docusign/saml-endpoints.png)
 
 ## Finalize your Cloudflare configuration
 

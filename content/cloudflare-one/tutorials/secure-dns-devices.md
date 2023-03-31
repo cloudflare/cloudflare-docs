@@ -27,11 +27,10 @@ You can use Cloudflare Gateway and the Cloudflare WARP client application to fil
 
 ## Create a DNS filtering policy
 
-You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats. 
+You can [build a policy](/cloudflare-one/policies/filtering/dns-policies/) that will filter DNS queries for known malicious hostnames and other types of threats.
 
-1. Navigate to the **Policies** page. 
-2. On the DNS tab, click **Create a DNS policy**.
-
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Firewall Policies** > **DNS**.
+2. On the DNS tab, select **Create a policy**.
 3. Assign the policy a name and add an optional description. Next, build an expression to determine what is blocked.
 
 In this example, the policy will block any hostnames that Cloudflare's data intelligence platform identifies as containing security risks like malware or phishing campaigns. You can click `All security risks` to include all options or check individual types of threats in the dropdown.
@@ -48,7 +47,7 @@ The policy will block security threats for any DNS location or device in your Ze
 
 The DNS filtering policy created will apply to any DNS queries sent from configured DNS locations or enrolled devices. You can begin to [enroll devices](/cloudflare-one/connections/connect-devices/warp/deployment/) by determining which users are allowed to enroll.
 
-Navigate to the `Settings` section of the Zero Trust Dashboard and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
+Navigate to the `Settings` section of Zero Trust and select `Authentication`. Cloudflare Zero Trust will automatically create a "One-time PIN" option which will rely on your user's emails. You can begin using the one-time PIN option immediately or you can also integrate your corporate [identity provider](/cloudflare-one/identity/idp-integration/).
 
 ## Determine which devices can enroll
 

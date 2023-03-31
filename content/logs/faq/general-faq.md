@@ -2,6 +2,8 @@
 pcx_content_type: faq
 tittle: General FAQ
 weight: 1
+meta:
+    description: Review frequently asked questions about Cloudflare Logs.
 ---
 
 [❮ Back to FAQ](/logs/faq/)

@@ -19,7 +19,7 @@ Cloudflare will start collecting [performance data](/api-shield/management-and-m
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Add your endpoints [manually](#add-endpoints-manually) or from [API Discovery](#add-endpoints-from-api-discovery).
+3. Add your endpoints [manually](#add-endpoints-manually), from [Schema Validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
 
 ## Add endpoints from API Discovery
 
@@ -32,9 +32,24 @@ There are two ways to add API endpoints from Discovery.
 3. Select **Add endpoints**.
 
 ### Add from the Discovery Tab
+
 1. From Endpoint Management, select the **Discovery** tab.
 2. Select the discovered endpoints you would like to add.
 3. Select **Save selected endpoints**.
+
+## Add endpoints from Schema Validation
+
+1. Add a schema by [configuring Schema Validation](/api-shield/security/schema-validation/configure/).
+2. On **Review schema endpoints**, save new endpoints to endpoint management by checking the box.
+3. Select **Save as draft** or **Save and Deploy**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published.
+
+API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
+
+{{<Aside type="Note">}}
+
+If you deselect **Save new endpoints to endpoint management**, the endpoints will not be added.
+
+{{</Aside>}}
 
 ## Add endpoints manually
 
@@ -102,3 +117,16 @@ Customers viewing analytics have the ability to toggle detailed metrics view bet
 
 You can interact with Endpoint Management through the Cloudflare API. Refer to [Endpoint Management’s API documentation](https://developers.cloudflare.com/api/operations/api-shield-endpoint-management-retrieve-api-discovery-results-for-a-zone) for more information.
 
+## Sensitive Data Detection
+
+Sensitive data comprises various personally identifiable information and financial data. Cloudflare created this ruleset to address common data loss threats, and the WAF can search for this data in HTTP response bodies from your origin.
+
+API Shield will alert users to the presence of sensitive data in the response body of API endpoints listed in Endpoint Management if the zone is also subscribed to the [Sensitive Data Detection managed ruleset](/waf/managed-rules/).
+
+Sensitive Data Detection is currently available in beta to Enterprise customers on our Advanced application security plan.
+
+Once Sensitive Data Detection is enabled for your zone, API Shield queries firewall events from the WAF for the last seven days and places a notification icon on the Endpoint Management table row if there are any matched sensitive responses for your endpoint.
+
+API Shield displays the types of sensitive data found if you expand the Endpoint Management table row to view further details. Select **Explore Events** to view the matched events in Security Events.
+
+After Sensitive Data Detection is enabled for your zone, you can [browse the Sensitive Data Detection ruleset](https://dash.cloudflare.com/?to=/:account/:zone/security/data/ruleset/e22d83c647c64a3eae91b71b499d988e/rules). The link will not work if Sensitive Data Detection is not enabled.

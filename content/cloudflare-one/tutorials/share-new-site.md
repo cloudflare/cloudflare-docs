@@ -108,7 +108,7 @@ When you create the DNS record, any visitor will be able to view that new site. 
 
 Before you build the rule, you'll need to follow [these instructions](/cloudflare-one/setup/) to set up Cloudflare Access in your account.
 
-1.  Once enabled, navigate to the `Applications` page in the Zero Trust dashboard.
+1.  Once enabled, navigate to the `Applications` page in Zero Trust.
 
 1.  Click **Add an application**.
 

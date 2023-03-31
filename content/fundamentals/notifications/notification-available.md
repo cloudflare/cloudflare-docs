@@ -37,7 +37,7 @@ Purchase of Access.
 
 **What should you do if you receive one?**
 
-Refresh your service token in the [Teams dashboard](https://dash.teams.cloudflare.com/) under **Configuration** > **Service Auth**.
+Refresh your service token in the [Teams dashboard](https://one.dash.cloudflare.com/) under **Configuration** > **Service Auth**.
 
 </div>
 </details>
@@ -284,7 +284,7 @@ Purchase of Magic Transit and/or BYOIP (Enterprise plans).
 
 **Who is it for?**
 
-Customers who want to be warned about changes to server health as determined by [health checks](https://support.cloudflare.com/hc/articles/4404867308429).
+Customers who want to be warned about changes to server health as determined by [health checks](/health-checks/).
 
 **Other options / filters**
 
@@ -302,7 +302,7 @@ Pro plans or higher.
 
 **What should you do if you receive one?**
 
-Review your [health check analytics](https://support.cloudflare.com/hc/articles/4404867308429#analytics).
+Review your [health check analytics](/health-checks/health-checks-analytics/#common-error-codes).
 
 </div>
 </details>
@@ -352,11 +352,11 @@ Multiple filters available:
 
 - Customers can search for and add pools from their list of pools, as well as **Include future pools** (if all pools are selected).
 - Customers can also choose the trigger that fires the notification. Available options are:
-  - *Health status trigger*:
+  - _Health status trigger_:
     - Becomes unhealthy or healthy
     - Becomes unhealthy
     - Becomes healthy
-  - *Event source trigger*:
+  - _Event source trigger_:
     - Health status changes in either pool or origin
     - Health status changes in pool
     - Health status changes in origin
@@ -382,7 +382,6 @@ Evaluate [load balancing analytics](/load-balancing/reference/load-balancing-ana
 
 This is for any customer who uses Logpush and wants to monitor their job health.
 
-
 **Other options / filters**
 
 - Notification Name
@@ -398,7 +397,7 @@ Enterprise plans.
 
 **What should you do if you receive one?**
 
-In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working.  You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
+In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).
 
 </div>
 </details>
@@ -918,6 +917,54 @@ Business and Enterprise plans.
 **What should you do if you receive one?**
 
 Review the information in [Security Events](/waf/security-events/paid-plans/) to identify any possible attack or misconfiguration.
+
+</div>
+</details>
+
+## Tunnel
+
+<details>
+<summary>Tunnel Creation or Deletion Event</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to receive a notification when Cloudflare Tunnels are created or deleted in their account.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+No direct call to action.
+
+</div>
+</details>
+
+<details>
+<summary>Tunnel Health Alert</summary>
+<div>
+
+**Who is it for?**
+
+Customers who want to be warned about [changes in health status](/cloudflare-one/connections/connect-apps/tunnel-monitoring/notifications/) for their Cloudflare Tunnels.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All Cloudflare Zero Trust plans.
+
+**What should you do if you receive one?**
+
+Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/).
 
 </div>
 </details>

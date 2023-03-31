@@ -24,7 +24,7 @@ You can use Cloudflare Gateway to block DNS queries a entire top level domain (T
 
 ## Build a policy to block by TLD
 
-Visit the Zero Trust dashboard. Open the `Policies` page in the Gateway section and select the `DNS` tab.
+Visit Zero Trust. Open the `Policies` page in the Gateway section and select the `DNS` tab.
 
 Click **Create a policy**. In the policy builder, name the policy and optionally provide a description.
 
@@ -40,8 +40,6 @@ Choose `Block` as the action. Optionally, enable the block page to present a blo
 
 Finish the policy by clicking **Create policy**.
 
-![Block Action](/cloudflare-one/static/secure-web-gateway/block-tld/block-action.png)
-
 Input the TLD you need to block. If you need to block `.fail` remove the leading `.` and only input `fail`. Click **Add to policy** and save the policy.
 
 {{<Aside type="note">}}
@@ -52,10 +50,6 @@ For more information on how policies work with regular expressions, refer to [Ca
 
 ## Review logs
 
-You can test your policy by attempting to visit a domain with the blocked TLD. To review logs of the block, navigate to the `Logs` section of the Zero Trust dashboard, select `Gateway`, and choose the `DNS` tab.
-
-![Logs](/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-start.png)
+You can test your policy by attempting to visit a domain with the blocked TLD. To review logs of the block, navigate to the `Logs` section of Zero Trust, select `Gateway`, and choose the `DNS` tab.
 
 You can filter for events by policy. Select the name of the policy in the `Policy` drop down menu.
-
-![Logs](/cloudflare-one/static/secure-web-gateway/block-tld/review-logs-filter.png)

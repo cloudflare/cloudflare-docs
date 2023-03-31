@@ -7,14 +7,14 @@ weight: 2
 # Monitors
 
 {{<render file="_monitor-definition.md">}}
-
+<br/>
 {{<render file="_health-check-diagram.md">}}
 
 Health checks that result in a status change for an origin server are recorded as events in the Load Balancing event logs.
 
 {{<Aside type="note">}}
 
-Health checks associated with load balancers are different from **Standalone health checks**. For more details about Standalone health checks, refer to our [Support documentation](https://support.cloudflare.com/hc/articles/4404867308429).
+Health checks associated with load balancers are different from [**Standalone health checks**](/health-checks/).
 
 {{</Aside>}}
 
@@ -40,23 +40,7 @@ When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#att
 
 ### Configurations
 
-**All Data Centers**
-
-Health check probes are sent from every single data center in Cloudflare’s network to the origins within the associated pool. This allows probes to hit each origin during intervals set by the customer. 
-
-**All Regions**
-
-Three health check probes per region are sent to each origin in the associated pool. There are a total of 13 regions, resulting in 39 probes.
-
-**Regional**
-
-Three health check probes are sent from each specified region within the pool configuration.
-
-### Increased origin strain
-
-Because of how Cloudflare checks health from [multiple regions](#health-check-regions), adding multiple regions — or choosing to check health from **All Data Centers** — can send a lot of traffic to your origin.
-
-The same problem can occur when setting low values for a monitor's **Interval**.
+{{<render file="_monitor-health-check-regions-options.md">}}
 
 ---
 

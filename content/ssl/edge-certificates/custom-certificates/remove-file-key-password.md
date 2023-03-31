@@ -16,7 +16,7 @@ The process for removing the password depends on your operating system. The foll
 
 1.  Open a command console.
 
-2.  Navigate to the directory containing the `example.com.key` file.
+2.  Go to the directory containing the `example.com.key` file.
 
 3.  Copy the original key.
 

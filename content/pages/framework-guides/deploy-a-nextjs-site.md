@@ -43,24 +43,16 @@ filename: pages/api/hello.js
 // Next.js Edge API Routes: https://nextjs.org/docs/api-routes/edge-api-routes
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
-export default async function (req) {
-  return new Response(
-    JSON.stringify({ name: 'John Doe' }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+export default async function handler(req) {
+  return new Response(JSON.stringify({ name: 'John Doe' }))
 }
 ```
 
 {{</tab>}}
-{{<tab label="ts" default="true">}}
+{{<tab label="ts">}}
 
 ```ts
 ---
@@ -71,62 +63,47 @@ filename: pages/api/hello.ts
 import type { NextRequest } from 'next/server'
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
-export default async function (req: NextRequest) {
-  return new Response(
-    JSON.stringify({ name: 'John Doe' }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+export default async function handler(req: NextRequest) {
+  return new Response(JSON.stringify({ name: 'John Doe' }))
 }
 ```
 
 {{</tab>}}
 {{</tabs>}}
 
-Next, you must configure the rest of the project to use the Edge Runtime. This can be done globally by adding the following to your `next.config.js` file:
+Next, you must configure the rest of the project to use the Edge Runtime.
 
-```diff
+You can opt in on individual pages by exporting the following from each page:
+
+```js
+export const config = {
+  runtime: "edge",
+};
+```
+
+Or configure the whole application to use the Edge Runtime by setting the runtime globally:
+
+```js
 ---
 filename: next.config.js
 ---
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-+  experimental: {
-+    runtime: 'experimental-edge',
-+  },
   reactStrictMode: true,
-  swcMinify: true,
+  experimental: {
+    runtime: 'edge',
+  }
 }
 
 module.exports = nextConfig
 ```
 
-Or you can opt in on individual pages by exporting the following from each page:
-
-```js
-export const config = {
-  runtime: "experimental-edge",
-};
-```
-
 Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs/advanced-features/react-18/switchable-runtime) for more information.
 
-### Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin <YOUR_GITHUB_REPO_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ### Deploy with Cloudflare Pages
 
@@ -154,10 +131,6 @@ The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of yo
 
 {{</Aside>}}
 
-Finally, you must add two compatibility flags to your project to enable using the Streams API which Next.js relies on. In your Pages project, go to **Settings** > **Functions** and **Compatibility flags**. For both production and preview, enter the following two flags: `streams_enable_constructors` and `transformstream_enable_standard_constructor`.
-
-These flags are scheduled to graduate on the 2022-11-30 compatibility date and should no longer be necessary to manually add after November 30, 2022.
-
 After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `@cloudflare/next-on-pages`, your project dependencies, and building your site before deploying it.
 
 ## Create a new static project
@@ -172,15 +145,7 @@ $ yarn create next-app --example with-static-export my-app
 
 After creating your project, a new `my-app` directory will be generated using the official [`with-static-export`](https://github.com/vercel/next.js/tree/canary/examples/with-static-export) example as a template.
 
-### Create a GitHub repository
-
-Create a new GitHub repository by visiting [repo.new](https://repo.new). After creating a new repository, prepare and push your local application to GitHub by running the following commands in your terminal:
-
-```sh
-$ git remote add origin <YOUR_GITHUB_REPO_URL>
-$ git branch -M main
-$ git push -u origin main
-```
+{{<render file="_create-github-repository_no_init.md">}}
 
 ### Deploy with Cloudflare Pages
 
@@ -211,6 +176,29 @@ Every time you commit new code to your Next.js site, Cloudflare Pages will autom
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-## Learn more
+## Use bindings in your Next.js application
 
-By completing this guide, you have successfully deployed your Next.js site to Cloudflare Pages. To get started with other frameworks, [refer to the list of Framework guides](/pages/framework-guides/).
+A [binding](/pages/platform/functions/bindings/) allows your application to interact with Cloudflare developer products, such as [KV](https://developers.cloudflare.com/workers/learning/how-kv-works/), [Durable Object](/workers/learning/using-durable-objects/), [R2](/r2/), and [D1](https://blog.cloudflare.com/introducing-d1/).
+
+In Next.js, add server-side code via [API Routes](https://nextjs.org/docs/api-routes/introduction) and [getServerSideProps](https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props). Then access bindings set for your application by accessing them in your code via `process.env`.
+
+The following code block shows an example of accessing a KV namespace in Next.js.
+
+```typescript
+---
+filename: src/index.tsx
+highlight: [4, 5]
+---
+// ...
+
+export async function getServerSideProps({ req }: GetServerSidePropsContext) => {
+  // the type `KVNamespace` comes from the @cloudflare/workers-types package
+  const { MY_KV } = (process.env as { MY_KV: KVNamespace }));
+
+  return {
+    // ...
+  };
+};
+```
+
+{{<render file="_learn-more.md" withParameters="Next.js">}}

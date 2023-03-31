@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
 title: CNAME
-weight: 3
+weight: 4
 meta:
     title: CNAME domain control validation (DCV)
 ---
 
 # CNAME domain control validation (DCV)
 
-{{<render file="../../ssl/_partials/_dcv-cname-definition.md">}}
+{{<render file="_dcv-cname-definition.md" productFolder="ssl" >}}
 <br>
 
 {{<Aside type="warning">}}

@@ -1,12 +1,11 @@
 ---
-title: Configure `rclone` for R2
-summary: Example of how to configure `rclone` to use R2.
+title: rclone
 pcx_content_type: configuration
-weight: 1001
-layout: example
 ---
 
-{{<render file="_keys.md">}}
+# Configure `rclone` for R2
+
+{{<render file="_keys.md">}}<br>
 
 With [`rclone`](https://rclone.org/install/) installed, you may run [`rclone config`](https://rclone.org/s3/) to configure a new S3 storage provider. You will be prompted with a series of questions for the new provider details.
 
@@ -37,8 +36,8 @@ filename: ~/.config/rclone/rclone.conf
 [r2demo]
 type = s3
 provider = Cloudflare
-access_key_id = abc123 # Your access_key_id
-secret_access_key = xyz456 # Your access_key_secret
+access_key_id = abc123
+secret_access_key = xyz456
 endpoint = https://<accountid>.r2.cloudflarestorage.com
 acl = private
 ```
@@ -67,17 +66,30 @@ $ rclone tree r2demo:my-bucket-name
 ## Upload and retrieve objects
 
 The [rclone copy](https://rclone.org/commands/rclone_copy/) command can be used to upload objects to an R2 bucket and vice versa - this allows you to upload files up to the 5 TB maximum object size that R2 supports.
-  
+
 ```sh
 # Upload dog.txt to the user-uploads bucket
-$ rclone copy dog.txt r2demo:user-uploads/dog.txt
+$ rclone copy dog.txt r2demo:user-uploads/
 $ rclone tree r2demo:user-uploads
 # /
 # ├── foobar.png
 # └── dog.txt
 
 # Download dog.txt from the user-uploads bucket
-$ rclone copy r2demo:user-uploads/dog.txt dog.txt
+$ rclone copy r2demo:user-uploads/dog.txt .
+```
+
+### A note about multipart upload part sizes
+
+For multipart uploads, part sizes can significantly affect the number of Class A operations that are used, which can alter how much you end up being charged.
+Every part upload counts as a separate operation, so larger part sizes will use fewer operations, but might be costly to retry if the upload fails. Also consider that a multipart upload is always going to consume at least 3 times as many operations as a single `PutObject`, because it will include at least one `CreateMultipartUpload`, `UploadPart` & `CompleteMultipartUpload` operations.
+
+Balancing part size depends heavily on your use-case, but these factors can help you minimize your bill, so they are worth thinking about.
+
+You can configure rclone's multipart upload part size using the `--s3-chunk-size` CLI argument. Note that you might also have to adjust the `--s3-upload-cutoff` argument to ensure that rclone is using multipart uploads. Both of these can be set in your configuration file as well. Generally, `--s3-upload-cutoff` will be no less than `--s3-chunk-size`.
+
+```sh
+$ rclone copy long-video.mp4 r2demo:user-uploads/ --s3-upload-cutoff=100M --s3-chunk-size=100M
 ```
 
 ## Generate presigned URLs

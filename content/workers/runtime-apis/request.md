@@ -108,7 +108,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheEverything` {{<type>}}boolean{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/en-us/articles/200172266). Defaults to `false`.
+    *    Treats all content as static and caches all [file types](/cache/about/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](https://support.cloudflare.com/hc/articles/200172266). Defaults to `false`.
         This option applies to `GET` and `HEAD` request methods only.
 
 *   `cacheKey` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
@@ -221,7 +221,7 @@ All plans have access to:
 
 *   `botManagement` {{<type>}}Object | null{{</type>}}
 
-    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, and `ja3Hash`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables) for more details.
+    *   Only set when using Cloudflare Bot Management. Object with the following properties: `score`, `verifiedBot`, `staticResource`, `ja3Hash`, and `detectionIds`. Refer to [Bot Management Variables](/bots/reference/bot-management-variables/) for more details.
 
 *   `clientAcceptEncoding` {{<type>}}string | null{{</type>}}
 
@@ -352,7 +352,7 @@ addEventListener("fetch", event => {
 
 ### When passing a promise to fetch event `.respondWith()`
 
-If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#methods) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
+If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
 
 ```js
 addEventListener("fetch", event => {

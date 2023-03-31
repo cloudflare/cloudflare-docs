@@ -19,3 +19,7 @@ For information on how billing is calculated, refer to [Billing for Spectrum](ht
 ## Next steps
 
 <p>{{<button type="primary" href="/spectrum/get-started/">}}Get started{{</button>}}</p>
+
+## Related products
+
+* [Cloudflare DDoS Protection](/ddos-protection/) — Secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.

@@ -57,10 +57,10 @@ You can also [purchase additional rules](https://www.cloudflare.com/features-pag
 
 1.  Log in to your Cloudflare dashboard.
 2.  Select the domain where you want to add the page rule.
-3.  Click **Rules**.
-4.  In the **Page Rules** tab, click **Create Page Rule**. The **Create Page Rul**e for `<your domain>` dialog opens.
+3.  Select **Rules**.
+4.  In the **Page Rules** tab, select **Create Page Rule**. The **Create Page Rul**e for `<your domain>` dialog opens.
 5.  Under **If the URL matches**, enter the URL or URL pattern that should match the rule. Learn more about wildcard matching
-6.  Under **Then the settings are**, click **Add a Setting**.
+6.  Under **Then the settings are**, select **Add a Setting**.
 7.  Select an option from the dropdown. You can include more than one setting per rule. Learn more about settings in the summary below.
 8.  From the **Order** dropdown, specify the desired order: **First**, **Last**, or **Custom**.
 9.  Choose a save option:
@@ -78,19 +78,19 @@ We do not support non-ASCII characters (e.g. punycode/unicode domain) in Page Ru
 
 1.  Log in to your Cloudflare dashboard.
 2.  Select the domain where you want to edit your page rule.
-3.  Click **Rules**.
+3.  Select **Rules**.
 4.  In the **Page Rules** tab, locate the rule to edit.
 5.  Proceed to make the necessary changes, as follows:
-    - To enable or disable a rule, click the **On/Off** toggle.
-    - To modify the URL pattern, settings, or order, click the **Edit** button (wrench icon). In the dialog, enter the information you want to change.
+    - To enable or disable a rule, switch the toggle **On/Off**.
+    - To modify the URL pattern, settings, or order, select the **Edit** button (wrench icon). In the dialog, enter the information you want to change.
 
 ## Delete a rule
 
 1.  Log in to your Cloudflare dashboard.
 2.  Select the domain where you want to edit your page rule.
-3.  Click **Rules**.
+3.  Select **Rules**.
 4.  In the **Page Rules** tab, locate the rule to edit.
-5.  Click the **Delete** button (wrench icon) and confirm the deletion when prompted.
+5.  Select the **Delete** button (wrench icon) and confirm the deletion when prompted.
 
 ## Cache by device type (Enterprise only)
 
@@ -103,11 +103,11 @@ Enterprise domains can cache content by device type to target visitors with cont
 1.  Log in to your Cloudflare account.
 2.  Select the appropriate domain.
 3.  Select **Rules** > **Page Rules**.
-4.  Click **Create Page Rule**.
+4.  Select **Create Page Rule**.
 5.  Enter the URL to cache by device type.
 6.  Choose the **Cache By Device Type** setting.
 7.  Select **On**.
-8.  Click **Save and Deploy**.
+8.  Select **Save and Deploy**.
 
 Once enabled, Cloudflare sends a `CF-Device-Type` HTTP header to your origin with a value of either `mobile`, `tablet`, or `desktop` for every request to specify the visitor’s device type. If your origin responds with the appropriate content for that device type, Cloudflare only caches the resource for that specific device type.
 
@@ -125,12 +125,12 @@ Do not use **Cache Everything** for admin sections of your website or for pages 
 
 1.  Log in to your Cloudflare account.
 2.  Choose the appropriate domain.
-3.  Click **Rules** > Page **Rules**.
-4.  Click **Create Page Rule**.
+3.  Select **Rules** > Page **Rules**.
+4.  Select **Create Page Rule**.
 5.  Under **If the URL matches**, create a URL pattern to differentiate your website’s static versus dynamic content.
 6.  Under **Then the settings are**, choose **Cache Level**.
 7.  For **Select Cache Level**, choose the **Cache Everything** submenu setting.
-8.  Click **Save and Deploy**.
+8.  Select **Save and Deploy**.
 9.  Verify your resources are cached by checking the [cache response returned by Cloudflare](/cache/about/default-cache-behavior/#cloudflare-cache-responses).
 
 Cloudflare caches XML responses when using Cache Everything. By default, jquery's getScript explicitly bypasses cache by appending a timestamp query string [unless the behavior is disabled](http://api.jquery.com/jQuery.getScript/). For further details on how to adjust Cloudflare’s behavior for query strings, refer to our article on [Caching Levels](/cache/how-to/set-caching-levels/).

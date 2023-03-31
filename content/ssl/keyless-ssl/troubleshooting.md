@@ -1,9 +1,10 @@
 ---
 title: Troubleshooting
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 weight: 6
 meta:
   title: Troubleshooting Keyless SSL
+  description: Review how to troubleshoot issues when using Cloudflare Keyless SSL.
 ---
 
 # Troubleshooting Keyless SSL

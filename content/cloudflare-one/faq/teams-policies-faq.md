@@ -2,6 +2,8 @@
 pcx_content_type: faq
 title: Policies
 weight: 5
+meta:
+    description: Review frequently asked questions about policies in Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)

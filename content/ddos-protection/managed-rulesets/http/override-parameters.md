@@ -31,17 +31,17 @@ The action that will be performed for requests that match specific rules of Clou
 - **Managed Challenge**
 
   - API value: `"managed_challenge"`.
-  - [Managed Challenges](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
+  - [Managed Challenges](/fundamentals/get-started/concepts/cloudflare-challenges/#managed-challenge-recommended) help reduce the lifetimes of human time spent solving Captchas across the Internet. Depending on the characteristics of a request, Cloudflare will dynamically choose the appropriate type of challenge based on specific criteria.
 
-- **Legacy CAPTCHA**
+- **Interactive Challenge**
 
   - API value: `"challenge"`.
-  - Presents a CAPTCHA challenge to the clients making HTTP requests that match a rule expression.
+  - Presents an interactive challenge to the clients making HTTP requests that match a rule expression.
 
 - **Log**
 
     - API value: `"log"`.
-    - Only available on Enterprise plans. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
+    - Only available on Enterprise plans with the Advanced DDoS Protection subscription. Logs requests that match the expression of a rule detecting HTTP DDoS attacks. Recommended for validating a rule before committing to a more severe action.
 
 {{<Aside type="note">}}
 
@@ -73,19 +73,4 @@ However, you can use the _Log_ action in the global ruleset configuration. In th
 
 ## Sensitivity Level
 
-API property name: `"sensitivity_level"`.
-
-Defines how sensitive a rule is. Affects the thresholds used to determine if an attack should be mitigated. A higher sensitivity level means having a lower threshold, while a lower sensitivity level means having a higher threshold.
-
-The available sensitivity levels are:
-
-| UI value          | API value   |
-| ----------------- | ----------- |
-| _High_            | `"default"` |
-| _Medium_          | `"medium"`  |
-| _Low_             | `"low"`     |
-| _Essentially Off_ | `"eoff"`    |
-
-You cannot increase the sensitivity level beyond _High_ (`"default"`).
-
-In most cases, when you select the _Essentially Off_ sensitivity level the rule will not trigger for any of the selected actions, including _Log_. However, if the attack is extremely large, Cloudflare's protection systems will still trigger the rule's mitigation action to protect Cloudflare's network.
+{{<render file="managed-rulesets/_sensitivity-level-reference.md">}}

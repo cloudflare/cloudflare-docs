@@ -19,3 +19,7 @@ When you [make edits](/dns/manage-dns-records/how-to/create-dns-records/) to Clo
 ## Availability
 
 Outgoing zone transfers are available to Enterprise customers who are currently using Cloudflare as their [authoritative DNS provider](/dns/zone-setups/full-setup/). For more details on activation and pricing, contact your account team.
+
+## Notes
+
+If you use [Cloudflare Load Balancing](/load-balancing/), only proxied Load Balancer DNS records will be transferred.

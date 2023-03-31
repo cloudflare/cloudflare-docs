@@ -37,8 +37,8 @@ For the purpose of this tutorial, the integration will refer to a scenario with 
 
 There are 2 branch offices each with distinct subnets.
 
-- The east branch office has a 10.3.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
-- The west branch office has a 10.30.0.0/16 network with an EdgeConnect terminating the Anycast GRE tunnel.
+- The east branch office has a `10.3.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
+- The west branch office has a `10.30.0.0/16` network with an EdgeConnect terminating the Anycast GRE tunnel.
 
 ![Table of branch subnet information](/magic-wan/static/branch-subnets.png)
 
@@ -62,11 +62,9 @@ The Deployment screenshot displays several different IP addresses and interfaces
 
 For the purpose of this tutorial, the integration will refer to a scenario with two branch offices, each with distinct subnets.
 
-The central branch office has a 10.22.0.0/24 network with an EdgeConnect terminating the
-Anycast IPSec tunnel. 
+The central branch office has a `10.22.0.0/24` network with an EdgeConnect terminating the Anycast IPSec tunnel. 
 
-The west branch office has a 10.77.0.0/24 network with an EdgeConnect terminating the
-Anycast IPSec tunnel.
+The west branch office has a `10.77.0.0/24` network with an EdgeConnect terminating the Anycast IPSec tunnel.
 
 ![IPsec tunnel values for east and west branches](/magic-wan/static/central-west-branch-ipsec.png)
 
@@ -98,7 +96,7 @@ We use Aruba Orchestrator’s Business Intent Overlays to create intuitive polic
 </summary>
  <div class="special-class" markdown="1">
 
-Cloudflare’s [tunnel health checks](/magic-transit/about/probe-construction/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare’s [tunnel health checks](/magic-transit/reference/probe-construction/) are ping reply packets encapsulated in GRE packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -122,7 +120,7 @@ The service name used to send traffic through the tunnel created in the next ste
 </summary>
  <div class="special-class" markdown="1">
 
-Cloudflare’s [tunnel health checks](/magic-transit/about/probe-construction/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
+Cloudflare’s [tunnel health checks](/magic-transit/reference/probe-construction/) are ping reply packets encapsulated in IPsec packets. The source IP is the Edgeconnect WAN interface used to establish a tunnel, and the destination IP is Cloudflare servers. These packets need to be sent directly from the WAN interface and not through the established tunnels.
 
 To create the overlay policy:
 
@@ -268,7 +266,7 @@ header: Response
 
 **Create an IPSec tunnel on EdgeConnect**
 
-You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in the [previous step](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies-1). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
+You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in [configure overlay policy](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
 
 ![Modify Passthrough Tunnel dialog with General values](/magic-wan/static/general-modify-passthrough.png)
 
@@ -292,13 +290,13 @@ You can create a tunnel after the Business Intent Overlay policies have been def
 
 1. Define static routes on the Cloudflare dashboard for the LAN subnet(s) attached to the EdgeConnect appliance. Use the private IP pair for the EdgeConnect tunnel endpoint. 
 
-    In the example below, the traffic to subnet 10.3.0.0/16 attached to the **east_branch** EdgeConnect appliance has a next hop of 10.40.8.10.
+    In the example below, the traffic to subnet `10.3.0.0/16` attached to the **east_branch** EdgeConnect appliance has a next hop of `10.40.8.10`.
 
 ![Static route information for each branch](/magic-wan/static/static-routes-cf.png)
 
 2. Define static routes on the Orchestrator so Cloudflare can route traffic between sites. 
 
-    In the example below, we create a route for the subnet 10.30.0.0/24 on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
+    In the example below, we create a route for the subnet `10.30.0.0/24` on the **west_branch** to be routed via the established GRE tunnel between the EdgeConnect appliance and Cloudflare.
 
 ![Static route information for each branch](/magic-wan/static/static-routes-edgeconnect.png)
 </div>
@@ -346,13 +344,13 @@ To validate east-west traffic flow, perform a traceroute as shown in the example
 
 ![Traceroute example for verifying east-west traffic](/magic-wan/static/validate-traceroute.png)
 
-The example shows a client in GCP East (10.3.0.3), which can ping the private IP of a client in GCP West (10.30.0.4). 
+The example shows a client in GCP East (`10.3.0.3`), which can ping the private IP of a client in GCP West (`10.30.0.4`). 
 
-The traceroute shows the path going from the client (10.3.0.3) <br>
-→ to the GCP East lan0 IP on the EdgeConnect (10.3.0.2) <br>
-→ to the Cloudflare private GRE endpoint IP (10.4.8.11) <br>
-→ to the GCP West lan0 IP on the West EdgeConnect (10.30.0.3) <br>
-→ to the GCP West client (10.30.0.4). 
+The traceroute shows the path going from the client (`10.3.0.3`) <br>
+→ to the GCP East lan0 IP on the EdgeConnect (`10.3.0.2`) <br>
+→ to the Cloudflare private GRE endpoint IP (`10.4.8.11`) <br>
+→ to the GCP West lan0 IP on the West EdgeConnect (`10.30.0.3`) <br>
+→ to the GCP West client (`10.30.0.4`). 
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 </div>
@@ -380,13 +378,13 @@ To validate east-west traffic flow, perform a traceroute as shown in the example
 
 ![Traceroute example for IPsec validation](/magic-wan/static/traceroute-ipsec.png)
 
-The example shows a client in GCP Central (10.22.0.9), which can ping the private IP of a client in GCP West (10.77.0.10).
+The example shows a client in GCP Central (`10.22.0.9`), which can ping the private IP of a client in GCP West (`10.77.0.10`).
 
-The traceroute shows the path going from the client (10.22.0.9) <br>
-→ to the GCP Central lan0 IP on the EdgeConnect (10.22.0.2) <br>
-→ to the Cloudflare private IPSec endpoint IP (192.168.10.11) <br>
-→ to the GCP West EdgeConnect private IPSec endpoint IP (192.168.15.10) <br>
-→ to the GCP West client (10.77.0.10).
+The traceroute shows the path going from the client (`10.22.0.9`) <br>
+→ to the GCP Central lan0 IP on the EdgeConnect (`10.22.0.2`) <br>
+→ to the Cloudflare private IPSec endpoint IP (`192.168.10.11`) <br>
+→ to the GCP West EdgeConnect private IPSec endpoint IP (`192.168.15.10`) <br>
+→ to the GCP West client (`10.77.0.10`).
 
 This validates the east-west traffic flow through Cloudflare Magic WAN.
 </div>
@@ -394,6 +392,6 @@ This validates the east-west traffic flow through Cloudflare Magic WAN.
 
 ## 6. Cloudflare policies
 
-At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's edge, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays. 
+At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's global network, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays. 
 
 To begin filtering traffic and gathering analytics, refer to the [Magic Firewall documentation](/magic-firewall/) to learn how to create filters for east-west inter-branch traffic and the [Secure Web Gateway documentation](/cloudflare-one/policies/filtering/) to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.

@@ -4,12 +4,13 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 49"><path d="m18.6
 product:
   title: D1
   url: /d1/
+  group: Developer platform
 
 meta:
   title: Cloudflare D1 docs
   description: Documentation for Cloudflare D1, a SQL database.
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/workers

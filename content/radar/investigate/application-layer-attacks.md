@@ -9,14 +9,14 @@ weight: 3
 While in [HTTP requests](/radar/investigate/http-requests) you can examine all kinds of web requests, in application layer attacks you have access only to mitigated HTTP requests. These requests can be mitigated by one of several Cloudflare products, like [WAF](/waf/), [Cloudflare DDoS Protection](/ddos-protection/), [Cloudflare bot solutions](/bots/) and others.
 
 {{<Aside type="note" header="Mitigated traffic">}}
-Mitigated traffic is any HTTP request from an end-user that has a terminating action applied by the Cloudflare platform. These include actions like `BLOCK` or `CHALLENGE` in captchas or JavaScript based challenges.
+Mitigated traffic is any HTTP request from an end-user that has a terminating action applied by the Cloudflare platform. These include actions like `BLOCK` or [challenges](/fundamentals/get-started/concepts/cloudflare-challenges/).
 {{</Aside>}}
 
 Since we are examining attacks, we can inspect both sides of an attack — both the source location and the target location of the attack. For the source of the attack Cloudflare uses the location the attack is coming from associated with the IP (note that the human orchestrator of the attack may be in a different location than the computer the attack is originating from). For the target location of the attacks, Cloudflare uses the billing location associated with the zone under attack.
 
 This ability to filter by both sides of the attack is only available in the `top locations` endpoints. Unless otherwise specified, other endpoints are filtered by source location, like the origin location of the attack.
 
-The magnitute of the attack  is defined by the total number of mitigated requests, unless otherwise specified.
+The magnitude of the attack is defined by the total number of mitigated requests, unless otherwise specified.
 
 Like in [HTTP requests](/radar/investigate/http-requests), these endpoints can be split into the ability to fetch a timeseries, a single value summarizing the entire date range, and a list of top locations.
 

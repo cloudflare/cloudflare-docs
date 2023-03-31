@@ -2,6 +2,8 @@
 title: Origin CA certificates
 pcx_content_type: how-to
 weight: 4
+meta:
+  description: Origin Certificate Authority (CA) certificates allow you to encrypt traffic between Cloudflare and your origin web server, and reduce origin bandwidth consumption.
 ---
 
 # Origin CA certificates
@@ -112,7 +114,7 @@ By default, newly generated certificates are valid for 15 years. If you wish to 
 
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls.
+To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys).
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |

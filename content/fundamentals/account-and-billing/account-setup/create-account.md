@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: Create account
 weight: 1
+meta:
+    description: Learn how to create a new Cloudflare account.
 ---
 
 # Create a Cloudflare account

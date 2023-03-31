@@ -19,10 +19,10 @@ API calls for delegations can be found at [Prefix Delegations](https://developer
 
 ## Dashboard for prefix delegations
 
-1.  From **Account Home**, click **IP Prefixes**.
-2.  Click **Edit** to modify a prefix. **Edit IP Prefixes** displays.
-3.  At the bottom of the page, click **Add Delegation**. Other accounts your user is a part of will auto-load when you create the delegation.
-4.  When you are done, click **Save**.
+1.  Go to Account Home > **IP Addresses** > **IP Prefixes**.
+2.  Select **Edit** to modify a prefix. **Edit IP Prefixes** displays.
+3.  At the bottom of the page, select **Add Delegation**. Other accounts your user is a part of will auto-load when you create the delegation.
+4.  When you are done, select **Save**.
 
 {{<Aside>}}
 

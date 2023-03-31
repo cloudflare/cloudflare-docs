@@ -13,7 +13,7 @@ title: Limits
 | ------------------------------------------------------------------------------- | --------- | --------- |
 | [Subrequests](#subrequests)                                                     | 50/request| 50/request (Bundled),<br> 1000/request (Unbound)|
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections) | 6         | 6         |
-| [Environment variables](#environment-variables)                                 | 64/Worker | 64/Worker |
+| [Environment variables](#environment-variables)                                 | 64/Worker | 128/Worker |
 | [Environment variable<br/>size](#environment-variables)                         | 5 KB      | 5 KB      |
 | [Worker size](#worker-size)                                                     | 1 MB      | 5 MB      |
 | [Worker startup time](#worker-startup-time)                                     | 200 ms    | 200 ms    |
@@ -121,6 +121,8 @@ Refer to [KV pricing](/workers/platform/pricing/#workers-kv) to review the speci
 
 ## Durable Objects limits
 
+Durable Objects are only available on the Workers Paid plan.
+
 {{<table-wrap>}}
 
 | Feature                                    | Limit                                          |
@@ -184,13 +186,14 @@ Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to
 
 ## CPU runtime
 
-Most Workers requests consume less than a millisecond. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
+Most Workers requests consume less than a millisecond of CPU time. It is rare to find normally operating Workers that exceed the CPU time limit. CPU time is capped at various limits depending on your plan, usage model, and Worker type.
 
 * A Worker may consume up to **10 milliseconds** on the Free plan.
-* A Worker or [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **50 milliseconds** with the Bundled usage model on the Paid Plan.
-* A Worker may consume up to **30 seconds** with the Unbound usage model on the Paid Plan.
-* A [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
-* A [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
+* A Worker or [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may consume up to **50 milliseconds** of CPU time with the Bundled usage model on the Paid Plan.
+* A Worker may run for up to **30 seconds** with the Unbound usage model on the Paid Plan.
+* A [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may run for up to **30 seconds** with the Unbound usage model on the Paid Plan, when the schedule interval is less than 1 hour.
+* A [Scheduled Worker](/workers/platform/triggers/cron-triggers/) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, when the schedule interval is greater than 1 hour.
+* A [Queue consumer Worker](/queues/platform/javascript-apis/#consumer) may run for up to **15 minutes** with the Unbound usage model on the Paid Plan, per invocation.
 
 There is no limit on the real runtime for a Worker. As long as the client that sent the request remains connected, the Worker can continue processing, making subrequests, and setting timeouts on behalf of that request. When the client disconnects, all tasks associated with that client request are canceled. You can use [`event.waitUntil()`](/workers/runtime-apis/fetch-event/) to delay cancellation for another 30 seconds or until the promise passed to `waitUntil()` completes.
 
@@ -233,6 +236,8 @@ While handling a request, each Worker is allowed to have up to six connections o
 - the `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/).
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/workers/runtime-apis/kv/).
 - `put()`, `match()`, and `delete()` methods of [Cache objects](/workers/runtime-apis/cache/).
+- `list()`, `get()`, `put()`, `delete()`, and `head()` methods of [R2](/r2/).
+- `send()` and `sendBatch()`, methods of [Queues](/queues/).
 
 Once a Worker has six connections open, it can still attempt to open additional connections. However, these attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed. Since earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
 
@@ -248,7 +253,7 @@ Simultaneous Open Connections are measured from the top-level request, meaning a
 
 ## Environment variables
 
-The maximum number of environment variables (secret and text combined) for a Worker is 64 variables.
+The maximum number of environment variables (secret and text combined) for a Worker is 128 variables on the Paid plan, and 64 variables on the Free plan.
 There is no limit to the number of environment variables per account.
 
 Each environment variable has a size limitation of 5 KB.
@@ -270,6 +275,10 @@ Unless otherwise negotiated as a part of an enterprise level contract, all paid 
 App Workers do not count towards this limit.
 
 {{</Aside>}}
+
+## Number of routes per zone
+
+Each zone has a limit of 1,000 [routes](/workers/platform/triggers/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 ---
 

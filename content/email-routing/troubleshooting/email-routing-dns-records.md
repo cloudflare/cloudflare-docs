@@ -1,12 +1,12 @@
 ---
 title: DNS records
-pcx_content_type: how-to
+pcx_content_type: troubleshooting
 weight: 1
 meta:
     title: Troubleshooting misconfigured DNS records
 ---
 
-## Troubleshooting misconfigured DNS records
+# Troubleshooting misconfigured DNS records
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email** > **Email Routing** > **Settings**. Email Routing will show you the status of your DNS records, such as `Missing`.

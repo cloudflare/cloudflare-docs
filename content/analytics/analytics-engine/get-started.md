@@ -42,7 +42,7 @@ analytics_engine_datasets = [
 ]
 ```
 
-## 3. Write data from the Workers Runtime API
+## 3. Write data from your Worker
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
 
@@ -73,7 +73,7 @@ The GraphQL API powers our dashboard and is better suited for building interacti
 
 SQL API is better suited for writing ad hoc queries and integrating with external tools like Grafana. At this time, the SQL API only supports the `SELECT` statement and a limited subset of SQL functionality.
 
-The SQL API is available as an HTTP endpoint at `/v4/$accountTag/analytics_engine/sql` using the `POST` and `GET` method. You need to include an `Authorization: Bearer _____` token where the underscores should be replaced with a Cloudflare [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
+The SQL API is available as an HTTP endpoint at `https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql` using the `POST` and `GET` method. You need to include an `Authorization: Bearer _____` token where the underscores should be replaced with a Cloudflare [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
 
 ### Example of querying data with the SQL API
 
@@ -84,7 +84,7 @@ Here is how we represent that as SQL. We are using a custom averaging function t
 ```sql
 SELECT 
   blob1 AS city,
-  SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity
+  SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity
 FROM WEATHER 
 WHERE double1 > 0 
 GROUP BY city 
@@ -95,7 +95,7 @@ LIMIT 10
 You can then perform the query using any HTTP client. Here is an example of doing it using cURL:
 
 ```curl
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer YOUR_API_TOKEN" -d "SELECT blob1 AS city, SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity FROM WEATHER WHERE double1 > 0 GROUP BY city ORDER BY avg_humidity DESC LIMIT 10"
 ```
 
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when developers will be able to name blobs and doubles in their binding, these names will also be available via the SQL API.
@@ -110,7 +110,7 @@ Workers Analytics Engine is optimized for powering time series analytics that ca
 SELECT
   intDiv(toUInt32(timestamp), 300) * 300 AS t, 
   blob1 AS city, 
-  SUM(_sample_interval * double1) / SUM(_sample_interval) AS avg_humidity
+  SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity
 FROM WEATHER
 WHERE
   timestamp >= NOW() - INTERVAL '1' DAY
