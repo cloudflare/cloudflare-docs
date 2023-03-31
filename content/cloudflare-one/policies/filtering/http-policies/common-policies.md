@@ -54,4 +54,13 @@ Blocks file downloads from Google Drive. You can also [Block file uploads to Goo
 | Application      | in            | Google Drive               | Block  | And      |
 | URL Path & Query | matches regex | `.*(e=download\|export).*` | Block  |          |
 
+## Block Gmail downloads
+
+Blocks files downloads from Gmail.
+
+| Selector         | Operator | Value                                   | Action | Operator |
+| ---------------- | -------- | --------------------------------------- | ------ | -------- |
+| Host             | is       | `mail-attachment.googleusercontent.com` | Block  | And      |
+| URL Path & Query | is       | `/attachment/u/0`                       | Block  |          |
+
 Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
