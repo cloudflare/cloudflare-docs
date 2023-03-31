@@ -42,7 +42,7 @@ You can view a list of all discovered SaaS applications and mark them as approve
 3. Select a specific application to view details.
 4. Assign a new [approval status](#approval-status) according to your organization's preferences.
 
-The application's status will now be updated across charts and visualizations on the **SaaS** tab.
+The application's status will now be updated across charts and visualizations on the **SaaS** tab. You can block unapproved applications by creating a [Gateway policy](/cloudflare-one/policies/filtering/).
 
 ## Private network origins
 
@@ -78,18 +78,18 @@ You can view a list of all discovered origins and mark them as approved or unapp
 3. Select a specific origin to view details.
 4. Assign a new [approval status](#approval-status) according to your organization's preferences.
 
-The origin's status will now be updated across charts and visualizations on the **Private Network** tab.
+The origin's status will now be updated across charts and visualizations on the **Private Network** tab. You can block unapproved origins by creating a [Gateway policy](/cloudflare-one/policies/filtering/).
 
 ## Approval status
 
-Within Shadow IT Discovery, applications are labeled according to their status. The default status for a discovered application is **Unreviewed**.  Your organization can determine the status of each application and change the status at any time.
+Within Shadow IT Discovery, applications are labeled according to their status. The default status for a discovered application is **Unreviewed**.  Your organization can determine the status of each application and change their status at any time.
 
 {{<table-wrap>}}
 
 | Status         | Description   |
 | -------------- | ------------- |
 | Approved  | Applications that have been marked as sanctioned by your organization.                                 |
-| Unapproved | Applications that have been marked as unsanctioned by your organization.                               |
+| Unapproved | Applications that have been marked as unsanctioned by your organization. To block the application, create a [Secure Web Gateway policy](/cloudflare-one/policies/filtering/). |
 | In review  | Applications in the process of being reviewed by your organization.                                    |
 | Unreviewed | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
 
