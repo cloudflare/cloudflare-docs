@@ -127,7 +127,7 @@ Deploy your site to Pages:
 
 {{<Aside type="note" header="Note">}}
 
-The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/#advanced-mode). The `--experimental-minify` argument attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](https://developers.cloudflare.com/workers/platform/limits/#worker-size). If you notice any bugs in this feature, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
+The `@cloudflare/next-on-pages` CLI transforms the Edge Runtime components of your project into a `_worker.js` file which is deployed with [Pages Functions](/pages/platform/functions/advanced-mode/). The `--experimental-minify` argument attempts to deduplicate code that would otherwise result in your project quickly hitting the [script size limit](https://developers.cloudflare.com/workers/platform/limits/#worker-size). If you notice any bugs in this feature, please let us know by filing a [GitHub issue](https://github.com/cloudflare/next-on-pages/issues/).
 
 {{</Aside>}}
 
