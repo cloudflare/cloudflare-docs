@@ -28,12 +28,9 @@ export const onRequestGet: PagesFunction<{}> = async ({ request }) => {
   const url = new URL(request.url)
 
   let subpath = url.pathname.replace(apiPath, "")
-  // Local Pages dev server doesn't appear to force trailing slash, this is a workaround
-  if(subpath.slice(-1) !== "/") {
-    subpath = `${subpath}/`
-  }
-  if(subpath in redirects) {
-    url.pathname = redirects[subpath]
+  let normalizedSubpath = subpath.slice(-1) === "/" ? subpath.substring(0, subpath.length - 1) : subpath;
+  if(normalizedSubpath in redirects) {
+    url.pathname = redirects[normalizedSubpath]
     return Response.redirect(url.toString(), 301)
   }
   const proxyUrl = `${apiBase}/${subpath}`
