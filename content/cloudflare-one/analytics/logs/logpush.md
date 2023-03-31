@@ -36,12 +36,13 @@ You can configure multiple destinations and add additional fields to your logs b
 
 Refer to the Logpush documentation for a list of available fields.
 
-| Dataset                                                                | Description                                                                                                                |
-| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)         | [DNS queries](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs) inspected by Cloudflare Gateway                   |
-| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)       | [HTTP requests](/cloudflare-one/analytics/logs/gateway-logs/#http-logs)   inspected by Cloudflare Gateway                  |
-| [Gateway Network](/logs/reference/log-fields/account/gateway_network/) | [Network packets](/cloudflare-one/analytics/logs/gateway-logs/#network-logs)   inspected by Cloudflare Gateway             |
-| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)           | [Authentication events](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs) through Cloudflare Access  |
-| [Access Requests](/logs/reference/log-fields/account/access_requests/) | [HTTP requests](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) to sites protected by Cloudflare Access |
-| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)     | [Security issues](/cloudflare-one/applications/scan-apps/manage-findings/)  detected by Cloudflare CASB                    |
-| Device Posture  | [Device posture status](/cloudflare-one/analytics/logs/posture-logs) from the WARP client |
+| Dataset                                                                         | Description                                                                                                                |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| [Gateway DNS](/logs/reference/log-fields/account/gateway_dns/)                  | [DNS queries](/cloudflare-one/analytics/logs/gateway-logs/#dns-logs) inspected by Cloudflare Gateway                       |
+| [Gateway HTTP](/logs/reference/log-fields/account/gateway_http/)                | [HTTP requests](/cloudflare-one/analytics/logs/gateway-logs/#http-logs) inspected by Cloudflare Gateway                    |
+| [Gateway Network](/logs/reference/log-fields/account/gateway_network/)          | [Network packets](/cloudflare-one/analytics/logs/gateway-logs/#network-logs) inspected by Cloudflare Gateway               |
+| [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                    | [Authentication events](/cloudflare-one/analytics/logs/audit-logs/#authentication-audit-logs) through Cloudflare Access    |
+| [Access Requests](/logs/reference/log-fields/account/access_requests/)          | [HTTP requests](/cloudflare-one/analytics/logs/audit-logs/#per-request-audit-logs) to sites protected by Cloudflare Access |
+| [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | [Security issues](/cloudflare-one/applications/scan-apps/manage-findings/) detected by Cloudflare CASB                     |
+| Device Posture                                                                  | [Device posture status](/cloudflare-one/analytics/logs/posture-logs) from the WARP client                                  |
+| [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway                                                             |
