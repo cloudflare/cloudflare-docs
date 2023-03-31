@@ -73,7 +73,7 @@ Once decompressed, the integration package includes:
 
 **Note:** If your Graylog cluster is running in a VPC, you may need to add the _AWSLambdaVPCAccessExecutionRole_ managed role to allow the Lambda function to route traffic to the VPC.
 
-4.  Once you've created the Lambda function, upload the function code **_graylog-s3-lambda.jar_** downloaded in [Task 1](#task1).  Specify the following method for the Handler: _org.graylog.integrations.s3.GraylogS3Function::handleRequest_.
+4.  Once you've created the Lambda function, upload the function code **_graylog-s3-lambda.jar_** downloaded in [Task 1](#task-1---preparation).  Specify the following method for the Handler: _org.graylog.integrations.s3.GraylogS3Function::handleRequest_.
 
 5.  Specify at least the following required environment variables to configure the Lambda function for your Graylog cluster:
 
@@ -89,7 +89,7 @@ Once decompressed, the integration package includes:
 
       **Note:** More configuration variables are available to fine-tune the function configuration in the Graylog Lambda S3 [README](https://github.com/Graylog2/graylog-s3-lambda/blob/master/README.md#step-2-specify-configuration) file.
 
-6.  Create an AWS S3 Trigger for the Lambda function so that the function can process each Cloudflare log field that is written. Specify the same S3 bucket from [Task 1](#task1) and choose the _All object create events_ option. Any other desired file filters can be applied here.
+6.  Create an AWS S3 Trigger for the Lambda function so that the function can process each Cloudflare log field that is written. Specify the same S3 bucket from [Task 1](#task-1---preparation) and choose the _All object create events_ option. Any other desired file filters can be applied here.
     ![Add trigger dialog with an example AWS S3 Trigger](/fundamentals/static/images/graylog/screenshots/aws-s3-add-trigger.png)
 
 7.  If your Graylog cluster is located within a VPC, you will need to [configure your Lambda function to access resources in a VPC](https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html). You may also need to create a [VPC endpoint for the AWS S3 service](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html#create-vpc-endpoint). This allows the Lambda function to access S3 directly when running in a VPC.
@@ -112,14 +112,14 @@ Cloudflare dashboards.
 
 The following components install with the content pack:
 
-- Cloudflare dashboards ([Task 4](#task4)).
+- Cloudflare dashboards ([Task 4](#task-4---view-the-cloudflare-dashboards)).
 - A Cloudflare GELF (TCP) input that allows Graylog to receive Cloudflare logs.
 - A Cloudflare message [stream](https://docs.graylog.org/en/3.1/pages/streams.html).
 - [Pipeline](https://docs.graylog.org/en/3.1/pages/pipelines/pipelines.html) rules that help to process and parse Cloudflare log fields.
 
 To import the content pack:
 
-1.  Locate the _cloudflare-logpush-content-pack.json_ file that you downloaded and extracted in [Task 1](#task1).
+1.  Locate the _cloudflare-logpush-content-pack.json_ file that you downloaded and extracted in [Task 1](#task-1---preparation).
 
 2.  In Graylog, go to **System** > **Content Packs** and click **Upload** in the top right. Once uploaded, the Cloudflare Logpush content pack will appear in the list of uploaded content packs.
     ![Uploading Graylog content packs](/fundamentals/static/images/graylog/screenshots/graylog-content-packs.png)
@@ -130,7 +130,7 @@ To import the content pack:
 4.  In the **Install** dialog, enter an optional install comment, and verify that the correct values are entered for all configuration parameters.
 
     - A path is required for the MaxMind™️ database, available at <https://dev.maxmind.com/geoip/>.
-    - A path is also required for the _Threat Lookup_ CSV file, extracted in [Task 1](#task1).
+    - A path is also required for the _Threat Lookup_ CSV file, extracted in [Task 1](#task-1---preparation).
 
     ![Adding an install comment and configuring parameters in Install Dialog screen](/fundamentals/static/images/graylog/screenshots/graylog-content-pack-install.png)
 
@@ -192,7 +192,7 @@ Use this dashboard to detect and mitigate bad bots so that you can prevent crede
 
 {{<Aside type="note" header="Note">}}
 
-To get bot requests identified correctly, use only one firewall rule, configured with the action _Legacy CAPTCHA_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
+To get bot requests identified correctly, use only one firewall rule, configured with the action _Interactive Challenge_. To learn more, refer to the [Cloudflare Firewall Rules documentation](/firewall/cf-firewall-rules/).
 
 {{</Aside>}}
 

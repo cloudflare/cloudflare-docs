@@ -430,7 +430,7 @@ Cloudflare **Speed** 앱의 **Railgun** 기능을 끕니다.
 -   [속도 제한(이전 버전)](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [서버 측 제외](https://support.cloudflare.com/hc/articles/200170036)
--   [URL(영역) 잠금](https://support.cloudflare.com/hc/articles/115001595131)
+-   [URL(영역) 잠금](/waf/tools/zone-lockdown/)
 -   [WAF 관리형 규칙(이전 버전)](https://support.cloudflare.com/hc/articles/200172016)
 
  | 

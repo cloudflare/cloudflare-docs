@@ -2,6 +2,10 @@
 pcx_content_type: concept
 title: Browser Isolation
 weight: 5
+product_grid:
+  show: true
+  title: Browser Isolation
+  group: Cloudflare One
 ---
 
 # Browser Isolation

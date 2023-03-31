@@ -11,6 +11,12 @@ The [Cache API](https://developer.mozilla.org/en-US/docs/Web/API/Cache) allows f
 
 The Cache API is available globally but the contents of the cache do not replicate outside of the originating data center. A `GET /users` response can be cached in the originating data center, but will not exist in another data center unless it has been explicitly created.
 
+{{<Aside type="warning" header="Tiered caching">}}
+
+The `cache.put` method is not compatible with tiered caching. Refer to [Cache API](/workers/learning/how-the-cache-works/#cache-api) for more information. To perform tiered caching, use the [fetch API](/workers/learning/how-the-cache-works/#interacting-with-the-cloudflare-cache).
+
+{{</Aside>}}
+
 However, any Cache API operations in the Cloudflare Workers dashboard editor, [Playground](/workers/learning/playground/) previews, and any `*.workers.dev` deployments will have no impact. For Workers fronted by [Cloudflare Access](https://www.cloudflare.com/teams/access/), the Cache API is not currently available. Only Workers deployed to custom domains have access to functional `cache` operations.
 
 {{<Aside type="note">}}
@@ -175,7 +181,9 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
 #### Errors
 
-`cache.match` returns a `504` error when the content is stale.
+`cache.match` generates a `504` error response when the requested content is missing or expired. The Cache API does not expose this `504` directly to the Worker script, instead returning `undefined`. Nevertheless, the underlying `504` is still visible in Cloudflare Logs.
+
+If you use Cloudflare Logs, you may see these `504` responses with the `RequestSource` of `edgeWorkerCacheAPI`. Again, these are expected if the cached asset was missing or expired. Note that `edgeWorkerCacheAPI` requests are already filtered out in other views, such as Cache Analytics. To filter out these requests or to filter requests by end users of your website only, refer to [Filter end users](/analytics/graphql-api/features/filtering/#filter-end-users).
 
 ### `Delete`
 
@@ -194,6 +202,12 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
 - `true`: The response was cached but is now deleted
 - `false`: The response was not in the cache at the time of deletion.
 
+{{<Aside type="warning" header="Global purges">}}
+
+The `cache.delete` method only purges content of the cache in the data center that the Worker was invoked. For global purges, refer to [Purging assets stored with the Cache API](/workers/learning/how-the-cache-works/#purging-assets-stored-with-the-cache-api).
+
+{{</Aside>}}
+
 #### Parameters
 
 {{<definitions>}}
@@ -203,7 +217,7 @@ Deletes the `Response` object from the cache and returns a `Promise` for a Boole
   - The string or [`Request`](/workers/runtime-apis/request/) object used as the lookup key. Strings are interpreted as the URL for a new `Request` object.
 
 - `options` {{<type>}}object{{</type>}}
-  - Can contain one possible property: `ignoreMethod` (Boolean) Consider the request method a GET regardless of its actual value.
+  - Can contain one possible property: `ignoreMethod` (Boolean). Consider the request method a GET regardless of its actual value.
 
 {{</definitions>}}
 

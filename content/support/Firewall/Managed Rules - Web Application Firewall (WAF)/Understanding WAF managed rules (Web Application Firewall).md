@@ -125,7 +125,7 @@ When viewing a ruleset, Cloudflare shows default actions for each rule listed un
 -   _Default - takes the default action listed under_ _**Default mode**_ _when viewing a specific rule._
 -   _Disable -_ turns off the specific rule within the group**.**
 -   _Block_ - the request is discarded. 
--   _Legacy CAPTCHA_ - the visitor receives a CAPTCHA challenge page.
+-   _Interactive Challenge_ - the visitor receives a challenge page that requires interaction.
 -   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 Cloudflare’s [WAF changelog](/waf/change-log/scheduled-changes/) allows customers to monitor ongoing changes to the **Cloudflare Managed Ruleset.**
@@ -139,7 +139,7 @@ ___
 **Package: OWASP ModSecurity Core Rule Set** assigns a score to each request based on how many OWASP rules trigger. Some OWASP rules have a higher sensitivity score than others. After OWASP evaluates a request, Cloudflare compares the final score to the **Sensitivity** configured for the domain.  If the score exceeds the **Sensitivity**, the request is actioned based on the **Action** configured within **Package: OWASP ModSecurity Core Rule Set**:
 
 -   _Block_ - the request is discarded.
--   _Challenge_ - the visitor receives a CAPTCHA challenge page.
+-   _Challenge_ - the visitor receives an interactive challenge page.
 -   _Simulate_ - the request is allowed through but is logged in the [**Activity log**](/waf/security-events/paid-plans#activity-log).
 
 The sensitivity score required to trigger the WAF for a specific **Sensitivity** is as follows:

@@ -6,7 +6,7 @@ weight: 6
 
 # Identity-based policies
 
-With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes).
+With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
 
 ## Identity-based selectors
 
@@ -76,7 +76,7 @@ Because IdPs expose user groups in different formats, reference the list below t
 | -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#using-azuread-groups) for an Azure group.
+The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azuread/#azure-groups-in-zero-trust-policies) for an Azure group.
 
 ### GitHub
 
@@ -106,7 +106,7 @@ The **Value** is the [Object Id](/cloudflare-one/identity/idp-integration/azurea
 
 If your IdP is not listed above, here is how you can determine which Gateway selector to use:
 
-1. On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), go to **Access** > **Access Groups**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Access Groups**.
 2. Select **Add a Group**.
 3. In the **Include** dropdown, select your IdP group. A text field will appear and prompt for either group names, group IDs, or SAML attributes. You can use this field as the **Selector** when creating a [Gateway firewall policy](/cloudflare-one/policies/filtering/initial-setup/).
 

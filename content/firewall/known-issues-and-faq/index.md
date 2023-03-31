@@ -54,7 +54,7 @@ _Threat Score_ as configured by **Security Level** is based on:
 - _Low_ - for scores greater than 24
 - _Essentially off_ - for scores greater than 49
 
-Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify a CAPTCHA vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
+Enabling a high threat score for sensitive areas, like comment form pages or login forms, can add an effective level of protection. Integrating _Threat Score_ with firewall rules is advantageous because you can specify an Interactive Challenge vs. a JS Challenge, or even a block. You can also exclude IP addresses using _and not_ logic.
 
 ### How do I create an exception to exclude certain requests from being blocked or challenged?
 
@@ -214,7 +214,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
 #### Caution about potentially blocking bots
 
-When you create a firewall rule with a _Block_, _Legacy CAPTCHA_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+When you create a firewall rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
 
 Refer to [How do I create an exception to exclude certain requests from being blocked or challenged?](#how-do-i-create-an-exception-to-exclude-certain-requests-from-being-blocked-or-challenged).
 
@@ -228,7 +228,7 @@ If you need to submit a friendly bot to be verified, use [our online form](https
 
 ### Do the Challenge actions support content types other than HTML (for example, AJAX or XHR requests)?
 
-No. The Managed Challenge, Legacy CAPTCHA and JS Challenge actions only support requests that trigger a page refresh.
+No. The Managed Challenge, Interactive Challenge, and JS Challenge actions only support requests that trigger a page refresh.
 
 Challenges presented to users display an intermediate page where they must prove they are not a bot. This concept does not work over XHR or AJAX, such as in Single Page Applications (SPA), since visitors do not trigger a new page load.
 
@@ -253,13 +253,12 @@ There are multiple reasons for this:
 - Users give up on a challenge.
 - Users try to solve a challenge but cannot provide an answer.
 - Users keep refreshing the challenge, but never submit an answer.
-- Users keep retrying hCaptcha (CAPTCHA failures in hCaptcha are not registered as failed and represent interim failures).
 - Cloudflare receives a malformed challenge answer.
 
 ### Why do I have matches for a firewall rule that was not supposed to match the request?
 
 Make sure you are looking at the correct request.
 
-Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a CAPTCHA.
+Only requests that triggered a challenge will match the request parameters of the rule. Subsequent requests with a `[js]challengeSolved` or `[js]challengeFailed` action may not match the parameters of the rule — for example, the bot score may have changed because the user solved a challenge.
 
-The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Legacy CAPTCHA_ or _JS Challenge_ and now that challenge was answered."
+The "solved" and "failed" actions are informative actions about a previous request that matched a rule. These actions state that "previously a rule had matched a request with the action set to _Interactive Challenge_ or _JS Challenge_ and now that challenge was answered."

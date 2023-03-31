@@ -24,7 +24,7 @@ To create a new custom rule:
 
 2. Select the **Websites** tab and choose the site for which you want to create a rule.
 
-3. Navigate to **Security** > **WAF** > **Custom rules**.
+3. Go to **Security** > **WAF** > **Custom rules**.
 
 4. Select **Create rule**.
 

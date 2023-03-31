@@ -83,7 +83,7 @@ A binding is defined in the `wrangler.toml` file of your Worker project's direct
 
 {{</Aside>}}
 
-Create a Worker using a [template](/workers/get-started/quickstarts/#templates). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project.
+Create a Worker using a [template](/workers/examples/). Wrangler templates are git repositories that are designed to be a starting point for building a new Cloudflare Workers project.
 
 ```sh
 $ wrangler init <YOUR_WORKER_NAME>
@@ -91,7 +91,7 @@ $ wrangler init <YOUR_WORKER_NAME>
 
 Next, find your newly generated `wrangler.toml` file in your project's directory and update `account_id` with your Cloudflare Account ID.
 
-Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/get-started/guide/#6-preview-your-project).
+Find your Account ID by logging in to the Cloudflare dashboard > **Overview** > move down to **API** > and select **Click to copy** to copy your **Account ID**. Or run the `wrangler whoami` command [to copy your Account ID](/workers/wrangler/commands/#whoami).
 
 ```toml
 name = "<YOUR_WORKER_NAME>"

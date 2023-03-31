@@ -13,6 +13,7 @@ layout: example
 
 {{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
+
 ```js
 export default {
   async fetch(req) {
@@ -26,11 +27,13 @@ export default {
         "content-type": "application/json;charset=UTF-8",
       },
     });
-  }
-}
+  },
+};
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```ts
 const handler: ExportedHandler = {
   async fetch(req) {
@@ -44,10 +47,11 @@ const handler: ExportedHandler = {
         "content-type": "application/json;charset=UTF-8",
       },
     });
-  }
+  },
 };
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

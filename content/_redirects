@@ -114,6 +114,7 @@
 /email-security/static/Deployment_and_Configuration_Guide_for_Splunk_Cloud_HTTP_Event_Collector.pdf /email-security/reporting/siem-integration/splunk-integration-guide/ 301
 /email-security/static/Deployment_and_Configuration_Guide_for_Sumologic_Collector.pdf /email-security/reporting/siem-integration/sumo-logic-integration-guide/ 301
 /email-security/static/API_Documentation_1.30.0.pdf /email-security/static/api_documentation_1.34.pdf 301
+/email-security/static/MSSP_Onboarding_Deployment_Guide.pdf /email-security/partners/ 301
 
 # argo-tunnel
 /argo-tunnel/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
@@ -130,26 +131,7 @@
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-apps/install-and-setup/ 301
 
 # api
-/api/v4docs/ /fundamentals/api/how-to/make-api-calls/ 301
-/api/tokens/ /fundamentals/api/get-started/ 301
-/api/tokens/create/ /fundamentals/api/get-started/create-token/ 301
-/api/tokens/create/template/ /fundamentals/api/reference/template/ 301
-/api/tokens/create/permissions/ /fundamentals/api/reference/permissions/ 301
-/api/tokens/advanced/ /fundamentals/api/how-to/ 301
-/api/tokens/advanced/restrictions/ /fundamentals/api/how-to/restrict-tokens/ 301
-/api/tokens/advanced/api/ /fundamentals/api/how-to/create-via-api/ 301
-/api/keys/ /fundamentals/api/get-started/keys/ 301
-/api/limits/ /fundamentals/api/reference/limits/ 301
-/api/how-to/make-api-calls/ /fundamentals/api/how-to/make-api-calls/ 301
-/api/get-started/ /fundamentals/api/get-started/ 301
-/api/get-started/create-token/ /fundamentals/api/get-started/create-token/ 301
-/api/reference/template/ /fundamentals/api/reference/template/ 301
-/api/reference/permissions/ /fundamentals/api/reference/permissions/ 301
-/api/how-to/ /fundamentals/api/how-to/ 301
-/api/how-to/restrict-tokens/ /fundamentals/api/how-to/restrict-tokens/ 301
-/api/how-to/create-via-api/ /fundamentals/api/how-to/create-via-api/ 301
-/api/get-started/keys/ /fundamentals/api/get-started/keys/ 301
-/api/reference/limits/ /fundamentals/api/reference/limits 301
+# moved to functions/api/redirects.ts
 
 # api-shield
 /api-shield/security/sequential-abuse-detection/ /api-shield/security/sequence-analytics/ 301
@@ -203,6 +185,7 @@
 
 # dns
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -334,6 +317,7 @@
 /load-balancing/understand-basics/load-balancing-rules/ /load-balancing/additional-options/load-balancing-rules/ 301
 /load-balancing/understand-basics/traffic-steering/pool-level-steering/ /load-balancing/understand-basics/traffic-steering/steering-policies/ 301
 /load-balancing/understand-basics/weighted-load-balancing/ /load-balancing/reference/common-configurations/ 301
+/support/traffic/load-balancing/load-balancing-faqs/ /load-balancing/troubleshooting/load-balancing-faq/ 301
 
 # logs
 /logs/get-started/logpush-configuration-api/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
@@ -355,6 +339,7 @@
 /logs/reference/logpush-api-configuration/custom-fields/ /logs/reference/custom-fields/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 /logs/reference/logpush-api-configuration/examples/example-logpush-python/ /logs/tutorials/examples/example-logpush-python/ 301
+/logs/reference/firewall-fields/ /logs/reference/security-fields/ 301
 
 # magic-firewall
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
@@ -541,6 +526,7 @@
 /r2/platform/s3-compatibility/extensions/ /r2/api/s3/extensions/ 301
 /r2/runtime-apis/ /r2/api/workers/workers-api-reference/ 301
 /r2/data-access/ /r2/api/ 301
+/r2/data-access/public-buckets/ /r2/buckets/public-buckets/ 301
 /r2/data-access/workers-api/ /r2/api/workers/ 301
 /r2/data-access/workers-api/workers-api-usage/ /r2/api/workers/workers-api-usage/ 301
 /r2/data-access/workers-api/workers-multipart-usage/ /r2/api/workers/workers-multipart-usage/ 301
@@ -801,6 +787,7 @@
 
 # cloudflare-one / zero-trust
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
+/cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/analytics/access/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
 /cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
@@ -900,7 +887,12 @@
 /support/other-languages/한국어/waf-관리형-규칙으로부터-waf-managed-rulesets로의-마이그레이션/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/other-languages/日本語/wafマネージドルールからwafマネージドルールセットに移行する/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/other-languages/简体中文/从-waf-托管规则迁移到-waf-托管规则集/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
-
+# - KB: https://support.cloudflare.com/hc/*/articles/115001856951
+/support/firewall/tools/understanding-cloudflare-user-agent-blocking/ /waf/tools/user-agent-blocking/ 301
+/support/other-languages/简体中文/如何使用-cloudflare-阻止恶意用户代理/ /waf/tools/user-agent-blocking/ 301
+# - KB: https://support.cloudflare.com/hc/*/articles/115001595131
+/support/firewall/tools/understanding-cloudflare-zone-lockdown/ /waf/tools/zone-lockdown/ 301
+/support/other-languages/简体中文/如何在-cloudflare-对一个-url-限制访问-/ /waf/tools/zone-lockdown/ 301
 
 ### DYNAMIC REDIRECTS ###
 /access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301

@@ -189,4 +189,4 @@ $ curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< H
 < HTTP/1.1 503 Service Temporarily Unavailable
 ```
 
-The call works as expected. In the first case, the Cloudflare edge responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare edge initially responds with a `503`, which is consistent with the "I Am Under Attack" mode.
+The call works as expected. In the first case, the Cloudflare global network responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare global network initially responds with a `503`, which is consistent with the "I Am Under Attack" mode.

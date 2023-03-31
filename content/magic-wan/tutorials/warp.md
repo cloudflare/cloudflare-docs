@@ -11,7 +11,7 @@ Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WAR
 
 ## Prerequisites
 
-Before you can begin using WARP as an on-ramp to Magic WAN, you must: 
+Before you can begin using WARP as an on-ramp to Magic WAN, you must:
 
 - Set up your [Zero Trust account](/cloudflare-one/setup/#start-from-the-cloudflare-dashboard).
 - Contact your account team to enable the integration between WARP and Magic WAN.
@@ -32,7 +32,7 @@ You must log out and log back in with at least one WARP device to ensure the con
 
 ## 3. Configure Split Tunnels
 
-[Configure Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) from your Zero Trust dashboard to only include traffic from the private IP addresses you want to acceess.
+[Configure Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) from your Zero Trust account to only include traffic from the private IP addresses you want to acceess.
 
 Optionally, you can configure Split Tunnels to include IP ranges or domains you want to use for connecting to public IP addresses. If you choose to use this option, destination ports `1023` and lower are supported.
 
@@ -56,6 +56,6 @@ ip route add 100.96.0.0/12 dev gre1
 
 {{<Aside type="note" header="Note">}}
 
-After set up, **HTTP** and **Network** logs in Gateway will show the virtual CGNAT as the device **Source IP**.  DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare's public-facing resolver.
+After set up, **HTTP** and **Network** logs in Gateway will show the virtual CGNAT as the device **Source IP**. DNS logs will continue to show the original WARP device IP because DNS traffic is sent over the public Internet to Cloudflare's public-facing resolver.
 
 {{</Aside>}}

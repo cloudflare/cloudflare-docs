@@ -34,14 +34,14 @@ You could restrict the Cipher Suites used for TLS using our [Advanced Certifica
 
 Here is an example value (list of cipher suites) which you can use to replace <cipher\_suites> in the commands below:
 
-```
+```json
 ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-ECDSA-CHACHA20-POLY1305","ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-CHACHA20-POLY1305","ECDHE-ECDSA-AES256-GCM-SHA384","ECDHE-RSA-AES256-GCM-SHA384"]
 ```
 
 Run the command to do the API call with the appropriate <zone\_id>, <auth\_email>, <auth\_key>, and <cipher\_suites>:
 
-```
-$ curl -X PATCH \
+```bash
+curl -X PATCH \
   "https://api.cloudflare.com/client/v4/zones/<zone_id>/settings/ciphers" \
   -H "X-Auth-Email: <auth_email>" \
   -H "X-Auth-Key: <auth_key>" \
@@ -51,8 +51,8 @@ $ curl -X PATCH \
 
 If you choose to use a token, you will not need <auth\_email> nor <auth\_key>. You would instead need <api\_token> and the command will look like this:
 
-```
-$ curl -X PATCH \
+```bash
+curl -X PATCH \
   "https://api.cloudflare.com/client/v4/zones/<zone_id>/settings/ciphers" \
   -H "Authorization: Bearer <api_token>" \
   -H "Content-Type: application/json" \
@@ -61,7 +61,7 @@ $ curl -X PATCH \
 
 To revert to the default Cipher Suites, you can send an empty array as the value, like:
 
-```
+```bash
   --data '{"value": []}'
 ```
 

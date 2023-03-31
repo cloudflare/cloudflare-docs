@@ -66,9 +66,9 @@ The number of allowed Rate Limiting rules depends on the domain’s plan:
 response headers | Actions | Action Duration | Request Period |
 | --- | --- | --- | --- | --- | --- |
 | Free | 1 | 1 | Block | 1 minute or 1 hour | 10 seconds or 1 minute |
-| Pro | 10 | 1 | Block, Legacy CAPTCHA, JS Challenge, Managed Challenge, or Log | 1 minute or 1 hour | 10 seconds or 1 minute |
-| Business | 15 | 10 | Block, Legacy CAPTCHA, JS Challenge, Managed Challenge, or Log | 1 minute, 1 hour, or 24 hours | 10 seconds, 1 minute, or 10 minutes |
-| Enterprise | 100 | 10 | Block, Legacy CAPTCHA, JS Challenge, Managed Challenge, or Log | Any duration entered between 10 seconds and 86400 seconds (24 hours) | Any value entered between 10 seconds and 3600 seconds (1 hour). |
+| Pro | 10 | 1 | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | 1 minute or 1 hour | 10 seconds or 1 minute |
+| Business | 15 | 10 | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | 1 minute, 1 hour, or 24 hours | 10 seconds, 1 minute, or 10 minutes |
+| Enterprise | 100 | 10 | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | Any duration entered between 10 seconds and 86400 seconds (24 hours) | Any value entered between 10 seconds and 3600 seconds (1 hour). |
 
 Cloudflare Rate Limiting supports multiple levels of configuration control depending on the domain’s Cloudflare plan.  The table below maps out what you can do based on your plan:
 
@@ -131,7 +131,7 @@ Rule mitigations consist of:
 Rate limit actions are based on the domain plan as mentioned above in **Rate Limiting allowances per plan**:
 
 -   **Block** **\-** Cloudflare issues an HTTP 429 error when the threshold is exceeded.
--   **Legacy CAPTCHA** **\-** Visitor must pass a captcha Challenge.  If passed, Cloudflare allows the request.
+-   **Interactive Challenge** **\-** Visitor must pass an Interactive Challenge.  If passed, Cloudflare allows the request.
 -   **JS Challenge** **\-** Visitor must pass a Cloudflare Javascript Challenge. If passed, Cloudflare allows the request.
 -   **Log -** Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 

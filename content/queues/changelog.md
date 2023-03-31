@@ -7,6 +7,12 @@ rss: file
 
 # Changelog
 
+## 2023-03-28
+
+### Consumer concurrency (enabled)
+
+Queue consumers will now [automatically scale up](/queues/learning/consumer-concurrency/) based on the number of messages being written to the queue. To control or limit concurrency, you can explicitly define a [`max_concurrency`](/queues/platform/configuration/#consumer) for your consumer.
+
 ## 2023-03-15
 
 ### Consumer concurrency (upcoming)

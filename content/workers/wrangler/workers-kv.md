@@ -155,5 +155,5 @@ $ wrangler kv:key get --binding "MY_KV" --env=production "<KEY>"
 ## Related resources
 
 * [Environments](/workers/platform/environments/)
-* [`kv` command documentation](/workers/wrangler/commands#kv)
+* [`kv` command documentation](/workers/runtime-apis/kv/)
 * [`wrangler.toml` configuration documentation](/workers/wrangler/configuration)

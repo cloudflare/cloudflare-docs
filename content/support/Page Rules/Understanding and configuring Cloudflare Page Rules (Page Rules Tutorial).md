@@ -44,8 +44,9 @@ A page rule matches a URL pattern based on the following format (comprised of fi
 
 An example URL with these four segments looks like:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">https://www.example.com:443/image.png?parameter1=value1</span></div></span></span></span></code></pre>{{</raw>}}
+```
+https://www.example.com:443/image.png?parameter1=value1
+```
 
 The _scheme_ and _port_ segments are optional. If omitted, _scheme_ matches both _http://_ and _https://_ protocols. If no _port_ is specified, the rule will match all ports.
 
@@ -102,13 +103,17 @@ ___
 
 You can use the asterisk (\*) in any URL segment to match certain patterns. For example,
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/t*st</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com/t*st
+```
 
 Would match:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/test</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/toast</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com/trust</span></div></span></span></span></code></pre>{{</raw>}}
+```
+example.com/test
+example.com/toast
+example.com/trust
+```
 
 _example.com/foo/\*_ does not match example.com/foo.  However, _example.com/foo\*_ does.
 
@@ -127,23 +132,27 @@ This is specifically useful with the _Forwarding URL_ setting. For example:
 
 You could forward:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://*.example.com/*</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://*.example.com/*
+```
 
 to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://example.com/images/$1/$2.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://example.com/images/$1/$2.jpg
+```
 
 This rule would match:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://cloud.example.com/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://cloud.example.com/flare.jpg
+```
 
 which ends up being forwarded to:
 
-
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">http://example.com/images/cloud/flare.jpg</span></div></span></span></span></code></pre>{{</raw>}}
+```
+http://example.com/images/cloud/flare.jpg
+```
 
 To use a literal _$_ character in the forwarding URL, escape it by adding a backslash (\\) in front: _\\$_.
 
@@ -181,8 +190,8 @@ Below is the full list of settings available, presented in the order that they a
 | Disable Apps | Turn off all active **Cloudflare Apps**. | All |
 | Disable Performance | Turn off [Auto Minify](https://support.cloudflare.com/hc/articles/200168196), [Rocket Loader](https://support.cloudflare.com/hc/articles/200168056), [Mirage](https://support.cloudflare.com/hc/articles/200403554), and [Polish](https://support.cloudflare.com/hc/articles/360000607372)| All|
 | Disable Railgun | Turn off the **Railgun** feature of the Cloudflare **Speed** app | Business and above |
-| Disable Security| Turn off [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016), [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128), [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036), [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036), [URL (Zone) Lockdown](https://support.cloudflare.com/hc/articles/115001595131), and [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016) | All |
-| Edge Cache TTL | Specify how long to cache a resource in the Cloudflare edge network. _Edge Cache TTL_ isn't visible in response headers. | All |
+| Disable Security| Turn off [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016), [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128), [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036), [Server Side Excludes](https://support.cloudflare.com/hc/articles/200170036), [URL (Zone) Lockdown](/waf/tools/zone-lockdown/), and [WAF managed rules (previous version)](https://support.cloudflare.com/hc/articles/200172016) | All |
+| Edge Cache TTL | Specify how long to cache a resource in the Cloudflare global network. _Edge Cache TTL_ isn't visible in response headers. | All |
 | Email Obfuscation | Turn on or off the **Cloudflare Email Obfuscation** feature of the **Cloudflare Scrape Shield** app. [Learn more.](https://support.cloudflare.com/hc/articles/200170016) | All |
 | Forwarding URL | Redirects one URL to another using an _HTTP 301/302 redirect_. _Refer to [Understand wildcard matching and referencing above](https://support.cloudflare.com/hc/articles/218411427#h_6N5SySNYCjYUUnCKnC1Ea6)._ | All |
 | Host Header Override | Apply a specific host header. [Learn more](https://support.cloudflare.com/hc/articles/206652947). | Enterprise |

@@ -27,7 +27,7 @@ Cloudflare support is unable to modify DNS records within your account.
 
 ### Do you have CNAME Flattening enabled?
 
-When set to [Flatten all CNAMEs](/dns/additional-options/cname-flattening) in your Cloudflare DNS settings, queries to all CNAME records will flatten to an A record; no CNAME records will be returned.
+When set to [Flatten all CNAMEs](/dns/cname-flattening/set-up-cname-flattening/) in your Cloudflare DNS settings, queries to all CNAME records will flatten to an A record; no CNAME records will be returned.
 
 Also, if CNAME records are not returned by the queried nameserver (sometimes nameservers will return TXT records), this may result in nothing being returned when **_Flatten all CNAMEs_** is enabled. Changing to _**Flatten at the root**_ should fix any issues with your CNAME records not being returned.
 

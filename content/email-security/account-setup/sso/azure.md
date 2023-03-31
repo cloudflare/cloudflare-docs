@@ -108,7 +108,7 @@ In this example, the logo for Area 1 has been updated.
 
 2. Select **All Apps**. 
 
-3. Navigate to **Settings** > **SSO**.
+3. Go to **Settings** > **SSO**.
 
 4. Locate the Area 1 Horizon application (or whichever name you gave your application), and select it to initiate your SSO login with Area 1. 
 
@@ -124,4 +124,4 @@ If you have trouble connecting your Azure account to Area 1, make sure that:
 - The SAML SSO Domain is set correctly in the Area 1 dashboard (refer to step 6 in [Configure Area 1 to connect to Azure](#2-configure-area-1-to-connect-to-azure)).
 - The name ID identifier is set to **Email Address**.
 
-If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).

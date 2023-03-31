@@ -5,6 +5,10 @@ layout: single
 weight: 2
 meta:
   title: Access policies
+product_grid:
+  show: true
+  title: Access
+  group: Cloudflare One
 ---
 
 # Access policies
@@ -14,7 +18,7 @@ Cloudflare Access determines who can reach your application by applying the Acce
 An Access policy consists of an **Action** as well as rules which determine the scope of the action. To build a rule, you need to choose a **Rule type**, **Selector**, and a **Value** for the selector.
 
 - [Actions](#actions)
-- [Rule types](#rules)
+- [Rule types](#rule-types)
 - [Selectors](#selectors)
 
 ## Actions

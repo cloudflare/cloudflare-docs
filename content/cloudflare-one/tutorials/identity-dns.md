@@ -30,7 +30,7 @@ To apply these types of rules, you will need to deploy Cloudflare's agent on the
 
 ## Allow a team to reach social media
 
-Navigate to the Gateway section of the Zero Trust Dashboard and open the `Policies` page. Select the `DNS` tab; if you see two `DNS` tabs, select the one marked `NEW`. Click **Create a DNS policy** to get started.
+Navigate to the Gateway section of Zero Trust and open the `Policies` page. Select the `DNS` tab; if you see two `DNS` tabs, select the one marked `NEW`. Click **Create a DNS policy** to get started.
 
 This first rule will allow users of your marketing team to reach social media. Select **DNS Content Categories** and choose **Social Media** from the options.
 
