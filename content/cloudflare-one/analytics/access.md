@@ -15,8 +15,8 @@ Shadow IT Discovery is located in [Zero Trust](https://one.dash.cloudflare.com) 
 To see an overview of SaaS applications your users have visited, go to **Analytics** > **Access** > **SaaS**. This tab displays the following information:
 
 - **Unique application users**: Chart showing the number of different users who accessed SaaS applications over time.
-- **Top approved applications**: SaaS applications marked as [**Approved**](#approval-status) which saw the greatest number of unique visitors.
-- **Top unapproved applications**: SaaS applications marked as [**Unapproved**](#approval-status) which saw the greatest number of unique visitors.
+- **Top approved applications**: SaaS applications marked as [**Approved**](#approval-status) which had the greatest number of unique visitors.
+- **Top unapproved applications**: SaaS applications marked as [**Unapproved**](#approval-status) which had the greatest number of unique visitors.
 - **Zero Trust**: Metrics for your Access applications including the total number of accessed applications, failed logins, and connected users over the selected time period.
 - **Logins**: Chart showing the number of logins for an individual Access application over time.
 - **Top applications accessed**: Access applications with the greatest number of logins.
@@ -49,8 +49,8 @@ The application's status will now be updated across charts and visualizations on
 To see an overview of the private network origins your users have visited, go to **Analytics** > **Access** > **Private Network**. This tab displays the following information:
 
 - **Unique origin users**: Chart showing the number of different users accessing your private network over time.
-- **Top approved origins**: Origins marked as [**Approved**](#approval-status) which saw the greatest number of unique visitors.
-- **Top unapproved origins**: Origins marked as [**Unapproved**](#approval-status) which saw the greatest number of unique visitors.
+- **Top approved origins**: Origins marked as [**Approved**](#approval-status) which had the greatest number of unique visitors.
+- **Top unapproved origins**: Origins marked as [**Unapproved**](#approval-status) which had the greatest number of unique visitors.
 - **Zero Trust**: Metrics for your Access applications including the total number of accessed applications, failed logins, and connected users over the selected time period.
 - **Logins**: Chart showing the number of logins for an individual Access application over time.
 - **Top applications accessed**: Access applications with the greatest number of logins.
