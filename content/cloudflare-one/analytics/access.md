@@ -84,12 +84,16 @@ The origin's status will now be updated across charts and visualizations on the 
 
 Within Shadow IT Discovery, applications are labeled according to their status. The default status for a discovered application is **Unreviewed**.  Your organization can determine the status of each application and change their status at any time.
 
+{{<Aside type="note">}}
+Approval status does not impact a user's ability to access the application. Users are allowed or blocked according to your Access and Gateway policies.
+{{</Aside>}}
+
 {{<table-wrap>}}
 
 | Status         | Description   |
 | -------------- | ------------- |
 | Approved  | Applications that have been marked as sanctioned by your organization.                                 |
-| Unapproved | Applications that have been marked as unsanctioned by your organization. To block the application, create a [Secure Web Gateway policy](/cloudflare-one/policies/filtering/). |
+| Unapproved | Applications that have been marked as unsanctioned by your organization. |
 | In review  | Applications in the process of being reviewed by your organization.                                    |
 | Unreviewed | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
 
