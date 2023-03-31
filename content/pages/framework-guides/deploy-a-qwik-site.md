@@ -28,7 +28,7 @@ $ cd qwik-app
 $ npm run qwik add cloudflare-pages
 ```
 
-Note that as part of the `cloudflare-pages` adaptor installation, a `functions/[[path]].ts` file will be created. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/#path-segments) to learn more.
+Note that as part of the `cloudflare-pages` adaptor installation, a `functions/[[path]].ts` file will be created. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs. Refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
 
 After selecting your server option, change the directory to your project and render your project by running the following command:
 

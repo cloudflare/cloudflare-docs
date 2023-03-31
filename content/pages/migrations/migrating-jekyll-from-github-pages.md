@@ -141,7 +141,7 @@ If you are using a [custom domain with GitHub Pages](https://docs.github.com/en/
 
 Note that it may take some time for DNS caches to expire and for this change to be reflected, depending on the DNS TTL (time-to-live) value you set when you originally created the record.
 
-Refer to the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) section of the Get started guide for a list of detailed steps.
+Refer to the [adding a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) section of the Get started guide for a list of detailed steps.
 
 ## What's next?
 

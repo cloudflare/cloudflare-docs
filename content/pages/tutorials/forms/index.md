@@ -201,7 +201,7 @@ The HTML form is complete and ready for deployment. When the user submits this f
 
 Cloudflare Pages offers a [Functions](/pages/platform/functions/) feature, which allows you to define and deploy Workers for dynamic behaviors.
 
-Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/#functions-routing) documentation for more information.
+Functions are linked to the `functions` directory and conveniently construct URL request handlers in relation to the `functions` file structure. For example, the `functions/about.js` file will map to the `/about` URL and `functions/hello/[name].js` will handle the `/hello/:name` URL pattern, where `:name` is any matching URL segment. Refer to the [Functions routing](/pages/platform/functions/routing/) documentation for more information.
 
 To define a handler for `/api/submit`, you must create a `functions/api/submit.js` file. This means that your `functions` and `public` directories should be siblings, with a total project structure similar to the following:
 

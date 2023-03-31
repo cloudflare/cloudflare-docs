@@ -26,13 +26,13 @@ To begin:
 
 ## Add middleware logic
 
-Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/#adding-middleware). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
+Pages Functions have utility functions that can reuse chunks of logic which are executed before and/or after route handlers. These are called [middleware](/pages/platform/functions/middleware/). Following this guide, middleware will allow you to intercept requests to your Pages project before they reach your site.
 
 In your `/functions` directory, create a `_middleware.js` file. 
 
 {{<Aside type="Note">}}
 
-When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/#middleware-routing).
+When you create your `_middleware.js` file at the base of your `/functions` folder, the middleware will run for all routes on your project. Learn more about [middleware routing](/pages/platform/functions/middleware/).
 
 {{</Aside>}}
 
