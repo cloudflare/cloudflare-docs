@@ -21,7 +21,7 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 - Azure AD Premium P2 license
 - [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
 - [Gateway HTTP filtering](/cloudflare-one/policies/filtering/initial-setup/http/) enabled on your devices
-- (Recommended) [`wrangler`](/workers/get-started/guide/#1-install-wrangler-workers-cli) installation
+- (Recommended) [`wrangler`](/workers/wrangler/install-and-update/) installation
 
 ## 1. Set up Azure AD as an identity provider
 
