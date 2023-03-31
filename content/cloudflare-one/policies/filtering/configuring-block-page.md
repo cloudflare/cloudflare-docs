@@ -12,7 +12,7 @@ Configuring a custom block page in Zero Trust helps avoid this confusion. Your b
 
 ## Prerequisites
 
-In order to display the block page, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) installed. Enterprise users can also deploy [their own root CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+In order to display the block page, your devices must have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
 
 ## Enable the block page for HTTP policies
 
