@@ -14,8 +14,8 @@ With Cloudflare Zero Trust, you can create lists of URLs, hostnames, or other en
 
 You can create a list by:
 
-- [Uploading a list of entries](#creating-a-list-from-a-csv-file)
-- [Manually creating a list of entries](#creating-a-manual-list)
+- [Uploading a list of entries](#create-a-list-from-a-csv-file)
+- [Manually creating a list of entries](#create-a-manual-list)
 
 ## Create a list from a CSV file
 

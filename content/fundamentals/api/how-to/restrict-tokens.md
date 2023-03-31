@@ -9,7 +9,7 @@ weight: 13
 API tokens can be restricted at runtime in two ways:
 
 - [Client IP address range filtering](#client-ip-address-range-filtering)
-- [Time To Live (TTL) constraints](#time-to-live)
+- [Time To Live (TTL) constraints](#time-to-live-ttl-constraints)
 
 ## Client IP address range filtering
 

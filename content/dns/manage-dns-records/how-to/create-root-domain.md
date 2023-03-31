@@ -22,7 +22,7 @@ To do this, you would create a corresponding [`A`, `AAAA`, or `CNAME` record](/d
 
 Once you create a domain, you may want to route that traffic to other places.
 
-For more guidance, refer to [Redirect domain to subdomain](/fundamentals/get-started/basic-tasks/manage-subdomains/#redirect-root-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/get-started/basic-tasks/manage-domains/#redirect-one-domain-to-another).
+For more guidance, refer to [Redirect domain to subdomain](/fundamentals/get-started/basic-tasks/manage-subdomains/#redirect-root-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/get-started/basic-tasks/manage-domains/redirect-domain/).
 
 ## Get free SSL certificates
 

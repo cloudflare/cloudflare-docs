@@ -48,7 +48,7 @@ Allows you to choose the operational mode of the client.
 
 **Value:**
 
-- `1dot1` &mdash; Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh). All other traffic is handled by your device's default mechanisms.
+- `1dot1` &mdash; Gateway enforcement of DNS policies only through [DoH](/cloudflare-one/glossary/#doh-subdomain). All other traffic is handled by your device's default mechanisms.
 - `warp` &mdash; (default) All traffic sent through [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway) via our encrypted tunnel. This mode is required for features such as HTTP policies, Browser Isolation, identity-based rules, and device posture.
 
 New service modes such as **Proxy only** are not supported as a value and must be configured in Zero Trust.

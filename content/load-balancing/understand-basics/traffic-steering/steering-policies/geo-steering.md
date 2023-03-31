@@ -71,7 +71,7 @@ Currently, China is not supported for Geo steering.{{</Aside>}}
 
 When [creating or editing a load balancer](/load-balancing/how-to/create-load-balancer/):
 
-1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#via-the-dashboard) until you reach the **Traffic Steering** step.
+1. Follow the [create a load balancer procedure](/load-balancing/how-to/create-load-balancer/#create-a-load-balancer) until you reach the **Traffic Steering** step.
 2. Click **Geo Steering**.
 3. For **Country**, select a country and click **Add Region**.
 4. Click **Edit**.
