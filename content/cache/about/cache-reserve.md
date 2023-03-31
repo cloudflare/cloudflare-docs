@@ -23,7 +23,7 @@ Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below
 
 ## Enable Cache Reserve
 
-You can enable Cache Reserve from the dashboard or [via API](https://api.cloudflare.com/#zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
+You can enable Cache Reserve from the dashboard or [via API](https://developers.cloudflare.com/api/operations/zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
 
 To enable Cache Reserve through the dashboard:
 

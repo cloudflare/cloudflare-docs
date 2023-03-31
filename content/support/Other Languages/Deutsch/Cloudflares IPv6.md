@@ -33,7 +33,7 @@ Domains in Enterprise Plans können die IPv6 Compatibility im Cloudflare-Dashboa
 {{<Aside type="tip">}}
 Kunden mit Domains in den Free, Pro und Business Plans müssen die **IPv6
 Compatibility** über die
-[Cloudflare-API](https://api.cloudflare.com/#zone-settings-change-ipv6-setting)
+[Cloudflare-API](https://developers.cloudflare.com/api/operations/zone-settings-change-i-pv6-setting)
 aktualisieren.
 {{</Aside>}}
 

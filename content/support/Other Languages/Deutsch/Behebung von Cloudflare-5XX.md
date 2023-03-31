@@ -286,7 +286,7 @@ oder
 [Nginx](http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format).
 {{</Aside>}}
 
--   Enterprise-Kunden können den Timeout für Fehler 524 auf bis zu 6000 Sekunden erhöhen, indem der [Proxy-Lese-Timeout-API-Endpunkt](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting) verwendet wird.
+-   Enterprise-Kunden können den Timeout für Fehler 524 auf bis zu 6000 Sekunden erhöhen, indem der [Proxy-Lese-Timeout-API-Endpunkt](https://developers.cloudflare.com/api/operations/zone-settings-change-proxy_read_timeout-setting) verwendet wird.
 -   Wenn Sie regelmäßig HTTP-Anfragen ausführen, die länger als 100 Sekunden dauern (z. B. umfangreiche Datenexporte), sollten Sie diese Prozesse in der Cloudflare-**DNS**\-App hinter eine Subdomain ohne Proxy (mit grauer Wolke) verschieben.
 -   Wenn Fehler 524 bei einer Domain auftritt, die Cloudflare-Railgun verwendet, vergewissern Sie sich, dass _lan.timeout_ höher eingestellt ist als der Standardwert von 30 Sekunden, und starten Sie dann den Railgun-Dienst neu.
 

@@ -239,7 +239,7 @@ ___
     -   원본 웹 서버에서 오랫동안 실행되는 프로세스
     -   원본 웹 서버의 과부하
 
--   Enterprise 요금제 고객은 [proxy\_read\_timeout API 엔트포인트](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting)를 이용해 524 오류의 제한 시간을 6000초까지 늘릴 수 있습니다.
+-   Enterprise 요금제 고객은 [proxy\_read\_timeout API 엔트포인트](https://developers.cloudflare.com/api/operations/zone-settings-change-proxy_read_timeout-setting)를 이용해 524 오류의 제한 시간을 6000초까지 늘릴 수 있습니다.
 -   데이터를 대규모로 내보내는 작업처럼, 완료하는 데 100초 이상이 걸리는 HTTP 요청을 자주 실행하는 경우, 이러한 프로세스를, Cloudflare **DNS** 앱에서 프록시 역할을 하지 않는 하위 도메인 뒤로 이동하세요.
 -   Cloudflare Railgun을 사용하는 도메인에 524 오류가 발생할 경우, _lan.timeout_을 기본값인 30초보다 높게 설정한 후 Railgun 서비스를 재시작하세요.
 
