@@ -316,13 +316,13 @@ Hibernation does not persist WebSocket connections across [code updates](/worker
 
 #### `state` methods for WebSockets
 
-- {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}){{</code>}}
+- {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}
 
-  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's webSocketMessage() handler, and webSocketClose() will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its send() and close() methods can be used to send messages, but its addEventListener() method won't ever receive any events as they'll be delivered to the DurableObject instead. `tags` are string tags which can be used to look up the WebSocket with getWebSockets().
+  - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's webSocketMessage() handler, and webSocketClose() will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its send() and close() methods can be used to send messages, but its addEventListener() method won't ever receive any events as they'll be delivered to the DurableObject instead. `tags` are optional string tags which can be used to look up the WebSocket with getWebSockets().
 
-- {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}){{</code>}} {{<type>}}Array\<WebSocket>{{</type>}}
+- {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Array\<WebSocket>{{</type>}}
 
-  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list.
+  - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
 - {{<code>}}state.setEventTimeout(timeoutMs{{<param-type>}}number{{</param-type>}}){{</code>}}
 
@@ -334,7 +334,7 @@ The system calls the `webSocketMessage` method when an accepted WebSocket receiv
 
 #### `webSocketClose` handler method
 
-The system calls the `webSocketClose` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string)` as parameters. It does not return a result and can be `async`.
+The system calls the `webSocketClose` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string, wasClean: boolean)` as parameters. `wasClean` is true if the connection closed cleanly, false otherwise. The method does not return a result and can be `async`.
 
 #### `webSocketError` handler method
 
