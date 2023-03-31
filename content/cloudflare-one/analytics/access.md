@@ -61,13 +61,13 @@ To see an overview of the private network origins your users have visited, go to
 You can view a list of all discovered origins and mark them as approved or unapproved. To review a private network origin:
 
 1. Go to **Analytics** > **Access** > **Private Network**.
-2. In the **Unique origin users** chart, select **Review all**. The discovered origins that appear on this page are defined by unique combinations of IP address, port, protocol, and virtual network.
+2. In the **Unique origin users** chart, select **Review all**. The discovered origins that appear on this page are defined by unique combinations of IP address, port, and protocol.
 
 {{<table-wrap>}}
 | Field       | Description |
 | ------------| ----------- |
 | IP address | Origin's internal IP address in your private network.   |
-| Port       | Port used to connect ot the origin.          |
+| Port       | Port used to connect to the origin.          |
 | Protocol   | Protocol used to connect to the origin. |
 | Hostname   | Hostname used to access the origin.           |
 | Status     | Origin's [approval status](#application-status)    |
