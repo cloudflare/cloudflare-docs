@@ -1,51 +1,89 @@
 ---
-pcx_content_type: concept
+pcx_content_type: reference
 title: Shadow IT Discovery
 weight: 2
 ---
 
 # Shadow IT Discovery
 
-The Shadow IT Discovery page provides visibility into the SaaS applications and private network applications your end users are visiting. This information enables you to create identity and device-driven Zero Trust policies, so that you can have control over the security of your users and data.
+The Shadow IT Discovery page provides visibility into the SaaS applications and private network origins your end users are visiting. This information enables you to create identity and device-driven Zero Trust policies to secure your users and data.
 
-To view Shadow IT Discovery, go to **Analytics > Access**. You will see information on what applications are accessed and who accessed them. The page also displays metrics such as who your top connected users are, how many applications have been accessed, and how many application logins have failed over a certain period of time.
+Shadow IT Discovery is located in [Zero Trust](https://one.dash.cloudflare.com) under **Analytics > Access**.
 
 ## SaaS applications
 
-To see an in-depth breakdown of SaaS applications your users have visited, go to **Access** > **Analytics** > **SaaS** and select **Review all**.
+To see an overview of SaaS applications your users have visited, go to **Analytics** > **Access** > **SaaS**. This tab displays the following information:
+
+- **Unique application users**: Chart showing the number of different users who accessed SaaS applications over time.
+- **Top approved applications**: SaaS applications marked as [**Approved**](#approval-status) which saw the greatest number of unique visitors.
+- **Top unapproved applications**: SaaS applications marked as [**Unapproved**](#approval-status) which saw the greatest number of unique visitors.
+- **Zero Trust**: Metrics for your Access applications including the total number of accessed applications, failed logins, and connected users over the selected time period.
+- **Logins**: Chart showing the number of logins for an individual Access application over time.
+- **Top applications accessed**: Access applications with the greatest number of logins.
+- **Top connected users**: Users who logged in to the greatest number of Access applications.
+
+### Review discovered applications
+
+You can view a list of all discovered SaaS applications and mark them as approved or unapproved. To review an application:
+
+1. Go to **Analytics** > **Access** > **SaaS**.
+2. In the **Unique application users** chart, select **Review all**. The table displays the following fields:
 
 {{<table-wrap>}}
 | Field       | Description |
 | ------------| ----------- |
 | Application | SaaS application's name and logo.   |
 | Application type |[Application type](/cloudflare-one/policies/filtering/application-app-types/#app-types) assigned by Cloudflare Zero Trust. |
-| Status | Application's [review status](#application-status). |
+| Status | Application's [approval status](#application-status). |
 | Secured | Whether the application is currently secured behind Cloudflare Access. |
-| Users  |  Number of users who have connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
+| Users  |  Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
 {{</table-wrap>}}
 
-## Private network applications
+3. Select a specific application to view details.
+4. Assign a new [approval status](#approval-status) according to your organization's preferences.
 
-To see an in-depth breakdown of private network applications your users have visited, go to **Access** > **Analytics** > **Private Network** and select **Review all**. The discovered applications that appear on this page are defined by unique combinations of the origin's IP address, port, protocol, and virtual network.
+The application's status will now be updated across charts and visualizations on the **SaaS** tab.
 
-![Private Newtork Report](/cloudflare-one/static/documentation/private-net-discovery/private-network-report.png)
+## Private network origins
+
+To see an overview of the private network origins your users have visited, go to **Analytics** > **Access** > **Private Network**. This tab displays the following information:
+
+- **Unique origin users**: Chart showing the number of different users accessing your private network over time.
+- **Top approved origins**: Origins marked as [**Approved**](#approval-status) which saw the greatest number of unique visitors.
+- **Top unapproved origins**: Origins marked as [**Unapproved**](#approval-status) which saw the greatest number of unique visitors.
+- **Zero Trust**: Metrics for your Access applications including the total number of accessed applications, failed logins, and connected users over the selected time period.
+- **Logins**: Chart showing the number of logins for an individual Access application over time.
+- **Top applications accessed**: Access applications with the greatest number of logins.
+- **Top connected users**: Users who logged in to the greatest number of Access applications.
+
+### Review discovered origins
+
+You can view a list of all discovered origins and mark them as approved or unapproved. To review a private network origin:
+
+1. Go to **Analytics** > **Access** > **Private Network**.
+2. In the **Unique origin users** chart, select **Review all**. The discovered origins that appear on this page are defined by unique combinations of IP address, port, protocol, and virtual network.
 
 {{<table-wrap>}}
 | Field       | Description |
 | ------------| ----------- |
-| IP address | Origin's IP address in your private network.   |
-| Port       | Port that the origin uses.           |
-| Protocol   | Protocol used to connect to the TCP or UDP. |
-| Hostname   | Hostname used to access the application.           |
+| IP address | Origin's internal IP address in your private network.   |
+| Port       | Port used to connect ot the origin.          |
+| Protocol   | Protocol used to connect to the origin. |
+| Hostname   | Hostname used to access the origin.           |
 | Access     | Whether the origin is currently assigned to an Access application and if so which one.           |
-| Status     | Application's [review status](#application-status).        |
-| Users      | Number of users who have connected to the application over the period of time specified on the Shadow IT Discovery overview page.            |
+| Status     | Origin's [approval status](#application-status)    |
+| Users      | Number of users who connected to the origin over the period of time specified on the Shadow IT Discovery overview page.  |
 
 {{</table-wrap>}}
 
-## Application status
+3. Select a specific origin to view details.
+4. Assign a new [approval status](#approval-status) according to your organization's preferences.
 
-Within Shadow IT Discovery, applications are labeled according to their status. The default status for discovered origins is **Unreviewed**. Your organization can determine the status of each application, and decide to change it at any point in time.
+The origin's status will now be updated across charts and visualizations on the **Private Network** tab.
+
+## Approval status
+
+Within Shadow IT Discovery, applications are labeled according to their status. The default status for a discovered application is **Unreviewed**.  Your organization can determine the status of each application and change the status at any time.
 
 {{<table-wrap>}}
 
@@ -57,15 +95,3 @@ Within Shadow IT Discovery, applications are labeled according to their status. 
 | Unreviewed | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
 
 {{</table-wrap>}}
-
-### Change an application's status
-
-You may need to update an application's status based on your organization's preferences. To change an application's status:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics** > **Access**.
-2. Select either **Private Network** or **SaaS** depending on the type of application.
-3. In the **Unique application users** card, select **Review all**.
-4. Select the checkbox for the application you want to update.
-5. Select **Action** and choose a new status.
-
-The application's status will now be updated across charts and visualizations within Shadow IT Discovery.
