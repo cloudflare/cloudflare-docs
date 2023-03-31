@@ -8,7 +8,7 @@ meta:
 
 # Zone-level authenticated origin pulls
 
-When you enable authenticated origin pulls for a zone, all proxied traffic to your zone is authenticated at the origin web server.
+When you enable Authenticated Origin Pulls for a zone, all proxied traffic to your zone is authenticated at the origin web server.
 
 ## Before you begin
 
@@ -56,9 +56,9 @@ ssl_verify_client on;
 
 </details>
 
-## 3. Enable authenticated origin pulls (globally)
+## 3. Enable Authenticated Origin Pulls (globally)
 
-Then, enable authenticated origin pulls as an option for your Cloudflare zone.
+Then, enable Authenticated Origin Pulls as an option for your Cloudflare zone.
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
@@ -77,6 +77,6 @@ To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH
 {{</tab>}}
 {{</tabs>}}
 
-##  4. Enable authenticated origin pulls for zone
+##  4. Enable Authenticated Origin Pulls for zone
 
 Finally, use the Cloudflare API to send a [`PUT`](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable or disable zone-level authenticated origin pulls.
