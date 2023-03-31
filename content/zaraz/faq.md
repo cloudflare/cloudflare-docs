@@ -19,7 +19,7 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 #### Zaraz does not appear to be working.
 
-If you're experiencing issues with Zaraz, there could be multiple reasons behind it. First, it's important to verify that the Zaraz script is loading properly on your website.
+If you are experiencing issues with Zaraz, there could be multiple reasons behind it. First, it's important to verify that the Zaraz script is loading properly on your website.
 
 To check if the script is loading correctly, follow these steps:
 

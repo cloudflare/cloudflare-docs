@@ -18,12 +18,12 @@ Worker Variables are only available for accounts on a [Workers Paid plan](/worke
 
 ## Creating a Worker
 
-To use a Worker Variable, you first need to create a new Cloudflare Worker. You can do this through the Cloudflare dashboard or by using [Wrangler](https://developers.cloudflare.com/workers/get-started/guide/).
+To use a Worker Variable, you first need to create a new Cloudflare Worker. You can do this through the Cloudflare dashboard or by using [Wrangler](/workers/get-started/guide/).
 
 To create a new worker in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers**, and click on **Create a Service**.
+2. Go to **Workers** and select **Create a Service**.
 2. Give a name to your service and choose the **HTTP Handler** as your starter template.
 3. Click **Create Service**, and then **Quick Edit**.
 
@@ -31,7 +31,7 @@ You have now created a basic Worker that responds with "Hello world." If you use
 
 Zaraz forwards the Zaraz Context object to your Worker as a JSON payload with a POST request. You can access any property like this:
 
-```
+```js
 const { system, client } = request.json()
 
 /* System parameters */
@@ -43,7 +43,6 @@ system.device.language // Browser preferred language
 /* Zaraz Track values */
 client.value // value from `zaraz.track("foo", {value: "bar"})`
 client.products[0].name // name of the first product in an ecommerce call
-
 ```
 
 See below for more complete examples of different use cases. To see the documentation for the Zaraz Context object, click [here](/zaraz/reference/context/).
@@ -76,7 +75,7 @@ To use your Worker Variable:
 
 ### Calculates the sum of all products in the cart
 
-Assuming we're sending a list of products in a cart, like this:
+Assuming we are sending a list of products in a cart, like this:
 ```js
 zaraz.ecommerce("Cart Viewed", {
   products: [
@@ -142,7 +141,6 @@ zaraz.track("user_logged_in", { email: "user@example.com" });
 You can access this property and encrypt it like this:
 
 ```js
-
 async function digestMessage(message) {
   const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
   const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
@@ -163,5 +161,4 @@ export default {
     return new Response(await digestMessage(text));
   },
 };
-
 ```

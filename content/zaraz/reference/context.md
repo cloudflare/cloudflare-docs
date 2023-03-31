@@ -19,7 +19,7 @@ System properties, which are automatically collected by Zaraz, provide insights 
 | `system.page.query` | Object | Key-Value object containing all query parameters in the current URL. |
 | `system.page.title` | String | Current page title. |
 | `system.page.url` | URL | [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) Object containing information about the current URL |
- `system.page.referrer` | String | Current page referrer from `document.referrer`. |
+| `system.page.referrer` | String | Current page referrer from `document.referrer`. |
 | `system.page.encoding` | String | Current page character encoding from `document.characterSet`. |
 | `system.cookies` | Object | Key-Value object containg all present cookies. |
 | `system.device.ip` | String | Visitor incoming IP address. |
