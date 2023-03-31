@@ -70,7 +70,6 @@ You can view a list of all discovered origins and mark them as approved or unapp
 | Port       | Port used to connect ot the origin.          |
 | Protocol   | Protocol used to connect to the origin. |
 | Hostname   | Hostname used to access the origin.           |
-| Access     | Whether the origin is currently assigned to an Access application and if so which one.           |
 | Status     | Origin's [approval status](#application-status)    |
 | Users      | Number of users who connected to the origin over the period of time specified on the Shadow IT Discovery overview page.  |
 
