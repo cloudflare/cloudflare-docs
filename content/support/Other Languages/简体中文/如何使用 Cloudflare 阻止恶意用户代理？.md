@@ -25,7 +25,7 @@ UA 规则可以应用以下操作：阻止、质询（即 CAPTCHA）、js\_chall
 
 ![Screenshot_from_2018-03-21_11-23-43.png](/support/static/Screenshot_from_2018-03-21_11-23-43.png)
 
-您还可以使用我们的[客户端 API 创建规则。](https://api.cloudflare.com/#user-agent-blocking-rules-create-a-useragent-rule)
+您还可以使用我们的[客户端 API 创建规则。](https://developers.cloudflare.com/api/operations/user-agent-blocking-rules-create-a-user-agent-blocking-rule)
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain"> $ curl -XPOST -H &quot;X-Auth-Email: $MYEMAIL&quot; -H &quot;X-Auth-Key: $MYAPIKEY&quot; -H &quot;Content-Type: application/json&quot; https://api.cloudflare.com/client/v4/zones/$MYZONETAG/firewall/ua_rules</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">

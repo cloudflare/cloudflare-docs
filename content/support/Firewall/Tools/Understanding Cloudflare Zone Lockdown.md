@@ -19,7 +19,7 @@ The maximum amount of rules allowed per account is based on plan type:
 -   **Business**: 10
 -   **Enterprise**: 200
 
-Configure **Zone Lockdown** rules in **Security** > **WAF** > **Tools**. Alternatively, [configure **Zone Lockdown** via the API](https://api.cloudflare.com/#zone-lockdown-create-lockdown-rule). The example below demonstrates using **Zone Lockdown** to restrict access to users connecting from your company’s headquarters and branch offices:
+Configure **Zone Lockdown** rules in **Security** > **WAF** > **Tools**. Alternatively, [configure **Zone Lockdown** via the API](https://developers.cloudflare.com/api/operations/zone-lockdown-create-a-zone-lockdown-rule). The example below demonstrates using **Zone Lockdown** to restrict access to users connecting from your company’s headquarters and branch offices:
 
 ![Configuring a Zone Lockdown rule that restricts access to users connecting from the company’s headquarters and branch offices](/support/static/create_a_zone_lockdown_rule.png)
 
