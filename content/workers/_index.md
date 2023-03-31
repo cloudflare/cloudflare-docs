@@ -12,9 +12,9 @@ meta:
 
 # Cloudflare Workers documentation
 
-{{<Aside type="note" header="Help us improve our documentation">}}
+{{<Aside type="warning" header="Help us improve our documentation">}}
 
-From March 15 to March 31st, 2023, the Cloudflare documentation team is running a survey to measure the effectiveness of Workers documentation.
+From March 15 to June 15, 2023, the Cloudflare documentation team is running a survey to measure the effectiveness of Workers documentation.
 
 To contribute:
 1. Complete the [survey](https://bit.ly/3yI79vQ) (total time: 1 minute).
