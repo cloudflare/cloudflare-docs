@@ -131,7 +131,7 @@ Rule mitigations consist of:
 Rate limit actions are based on the domain plan as mentioned above in **Rate Limiting allowances per plan**:
 
 -   **Block** **\-** Cloudflare issues an HTTP 429 error when the threshold is exceeded.
--   **Interactive Challenge** **\-** Visitor must pass a captcha Challenge.  If passed, Cloudflare allows the request.
+-   **Interactive Challenge** **\-** Visitor must pass an Interactive Challenge.  If passed, Cloudflare allows the request.
 -   **JS Challenge** **\-** Visitor must pass a Cloudflare Javascript Challenge. If passed, Cloudflare allows the request.
 -   **Log -** Requests are logged in [Cloudflare Logs](/logs/). This helps test rules before applying to production.
 

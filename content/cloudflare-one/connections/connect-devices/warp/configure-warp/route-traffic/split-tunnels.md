@@ -14,7 +14,7 @@ Split Tunnel configuration only impacts the flow of IP traffic. DNS requests are
 
 {{</Aside>}}
 
-You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, please review and test all changes immediately after making every change.
+You can add or remove items from the Split Tunnels list at any time, but note that changes made to your Split Tunnel configuration are immediately propagated to clients. Because this setting controls what Gateway has visibility on at the network level, review and test all changes immediately after making every change.
 
 Also, changing between Include and Exclude modes will immediately delete your existing Split Tunnel configuration. Be sure to make a copy of any IP addresses or domains in your existing configuration, as they will be reverted to the default upon switching modes.
 
@@ -82,14 +82,14 @@ Many Cloudflare Zero Trust services rely on traffic going through WARP, such as 
 
 ## Remove an item from Split Tunnels
 
+{{<Aside type="warning">}}
+Removing default Split Tunnel entries may cause users to lose Internet connectivity or block access to local resources.
+{{</Aside>}}
+
 1. [Navigate](#set-up-split-tunnels) to the Split Tunnels page.
 2. Find the IP address or hostname in the list and select **Delete**.
 
-{{<Aside type="note">}}
-
 If you need to revert to the default Split Tunnels entries, delete all entries from the list. Once the list is empty, the page will re-populate with the default values.
-
-{{</Aside>}}
 
 ## Important platform differences
 

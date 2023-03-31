@@ -11,6 +11,12 @@ Customers using reCAPTCHA today can switch seamlessly to Cloudflare Turnstile. F
 
 To complete the migration, you must obtain the [sitekey and secret key](/turnstile/get-started/#sitekey-and-secret-key).
 
+{{<Aside type= "Note">}}
+
+Turnstile migration is currently compatible up to reCAPTCHA v2.
+
+{{</Aside>}}
+
 ## Client-side integration 
 
 1. Update the client-side integration by inserting the Turnstile script snippet in your HTML's `<head>` element:

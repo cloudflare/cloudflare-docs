@@ -5,7 +5,7 @@ weight: 8
 product_grid:
   show: true
   title: Speed
-  group: Performance
+  group: Application performance
 ---
 
 # Speed

@@ -22,6 +22,7 @@ The descriptions below detail the fields available for `gateway_network`.
 | DeviceID | UUID of the device where the network session originated from. | string |
 | DeviceName | The name of the device where the HTTP request originated from (for example, 'Laptop MB810'). | string |
 | Email | Email associated with the user identity where the network sesion originated from. | string |
+| InternalSourceIP | Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel on-ramp. | string |
 | OverrideIP | Overriden IP of the network session, if any. | string |
 | OverridePort | Overriden port of the network session, if any. | int |
 | PolicyID | Identifier of the policy/rule that was applied, if any. | string |

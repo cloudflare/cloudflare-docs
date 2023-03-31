@@ -104,13 +104,15 @@ Make sure **HTTP traffic filtering** is enabled. This lets Cloudflare proxy your
 
 {{</Aside>}}
 
-Users can reach this private service by logging in to their Zero Trust account and the WARP agent.
+Users can reach this private service by logging in to their Zero Trust account and the WARP client.
 
-By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP agent and to the Tunnel.
+By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP client and to the Tunnel.
 
 1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
 
-2. In the list of Split Tunnels entries, choose the range being used for this private connection and delete it.
+2. In the list of Split Tunnels entries, choose the range being used for this private connection and delete it. For example, if your network uses the default AWS range of `172.31.0.0/16`, delete `172.16.0.0/12`.
+
+3. Re-add IP/CIDR ranges that are not explicitly used by your private network. For the AWS example above, you would add new entries for `172.16.0.0/13`, `172.24.0.0/14`, `172.28.0.0/15`, and `172.30.0.0/16`.
 
 ## Integrate your identity provider
 

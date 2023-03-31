@@ -39,13 +39,19 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 #### Untrusted certificates
 
+{{<Aside type="note">}}
+
+To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/).
+
+{{</Aside>}}
+
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------ |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                 |
-| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust. |
-| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream.                            |
+| Option       | Action                                                                                                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                          |
+| Block        | Display [block page](/cloudflare-one/policies/filtering/configuring-block-page/) as set in Zero Trust.                                                                                                                          |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom CA certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/custom-certificate/). |
 
 ### Block
 
@@ -68,7 +74,7 @@ For more information on this action, refer to the documentation on [Browser Isol
 
 {{<Aside type="warning" header="Warning">}}
 
-When a Do Not Inspect rule is created for a given hostname, application, or app type, no traffic will be inspected.
+When a Do Not Inspect policy is created for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 
 {{</Aside>}}
 
@@ -217,6 +223,10 @@ The continent of the user making the request.
 
 The country of the user making the request.
 {{<render file="gateway/_source-country.md" withParameters="http.src_ip">}}
+
+### Source Internal IP
+
+{{<render file="gateway/_source-internal-ip.md" withParameters="HTTP;;http">}}
 
 ### Source IP
 

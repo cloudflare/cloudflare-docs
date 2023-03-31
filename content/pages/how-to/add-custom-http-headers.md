@@ -86,7 +86,7 @@ route = "FILL-IN-YOUR-WEBSITE.com/*"
 zone_id = "FILL-IN-YOUR-ZONE-ID"
 ```
 
-If you do not know how to find your Account ID and Zone ID, refer to [our guide](/workers/get-started/guide/#7-configure-your-project-for-deployment).
+If you do not know how to find your Account ID and Zone ID, refer to [our guide](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/).
 
 Once you have configured your `wrangler.toml`, run `wrangler publish` in your terminal to deploy your Worker:
 

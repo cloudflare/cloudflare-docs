@@ -13,6 +13,12 @@ On **January 23, 2023**, Cloudflare will stop using DigiCert as an issuing certi
 
 On **January 31, 2023**, Cloudflare will stop using DigiCert as the CA for custom hostname certificate renewals. This will not affect existing custom hostname certificates, but only certificate renewals.
 
+{{<Aside type="note">}}
+
+Though Cloudflare has paused the deadlines associated with DigiCert certificates, this will resume in the near future and - as such - affected customers should prepare their infrastructure for the switch.
+
+{{</Aside>}}
+
 ## Summary of changes
 
 This table provides a summary of the differences between DigiCert and our other CAs.
@@ -28,7 +34,7 @@ This table provides a summary of the differences between DigiCert and our other 
 
 ## Domain Control Validation (DCV) updates
 
-CNAME and Email DCV will be deprecated on **January 23, 2023**, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#http) or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#txt) DCV.
+CNAME and Email DCV will be deprecated on **January 23, 2023**, requiring customers to use either [HTTP](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/), [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/), or [TXT](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/) DCV.
 
 Also, the maximum validity period for certificates will be decreased from 1 year to 90 days. This means that certificates will be renewed - and require DCV - more frequently.
 
@@ -39,7 +45,7 @@ Also, the maximum validity period for certificates will be decreased from 1 year
 If your system integrates with the SSL for SaaS API to [create custom hostnames](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname), you will need to update:
 
 - The value sent in the `"certificate_authority"` field under the SSL object. Your integration should either use Google Trust Services (`"google"`) or Let's Encrypt (`"lets_encrypt"`).
-- The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#http) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#txt-record).
+- The value sent in the `"method"` field under the SSL object. Your integration should either use [`"http"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/) (only available for [non-wildcard hostnames](#non-wildcard-hostnames)) or [`"txt"`](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 
 ### Before January 31, 2023
 
@@ -55,7 +61,7 @@ To find wildcard custom hostnames specifically that are using DigiCert certifica
 
 #### Update values
 
-You should update the following values using the [dashboard](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-dashboard-1) or the [API](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/#via-the-api-1):
+You should [update](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) the following values:
 
 - **Certificate Authority**: When you update this value, it will immediately reissue the certificate. Cloudflare will continue serving the previous certificate until the new one is validated. If the certificate was previously using DigiCert and you do not update this value, Cloudflare will choose the issuing CA upon renewal.
     - *Dashboard*: Update the value for **SSL certificate authority** to either be **Let's Encrypt** or **Google Trust Services**.

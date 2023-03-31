@@ -296,4 +296,4 @@ ___
 ## Related resources
 
 -   [Managing Cloudflare DNS records](/dns/manage-dns-records/how-to/create-dns-records)
--   [CNAME Flattening](/dns/additional-options/cname-flattening)
+-   [CNAME Flattening](/dns/cname-flattening/)

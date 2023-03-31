@@ -15,7 +15,7 @@ WAF attack score allows you to identify these attack variations and their malici
 To maximize protection, Cloudflare recommends that you use both Managed Rules and WAF attack score.
 
 {{<Aside type="note">}}
-This feature is only available on Enterprise plans.
+This feature is available to Enterprise customers. Business plans have access to a single field (WAF Attack Score Class).
 {{</Aside>}}
 
 ## Available scores
@@ -23,24 +23,36 @@ This feature is only available on Enterprise plans.
 The Cloudflare WAF provides the following attack scores:
 
 {{<table-wrap>}}
-Score                 | Attack vector               | Field
-----------------------|-----------------------------|--------------------------------------------------------------------------------------
-WAF Attack Score      | N/A (global score)          | [`cf.waf.score`](/ruleset-engine/rules-language/fields/#field-cf-waf-score)
-WAF SQLi Attack Score | SQL injection (SQLi)        | [`cf.waf.score.sqli`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-sqli)
-WAF XSS Attack Score  | Cross-site scripting (XSS)  | [`cf.waf.score.xss`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-xss)
-WAF RCE Attack Score  | Remote Code Execution (RCE) | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-rce)
+Score                 | Minimum plan required |  Attack vector   | Field
+----------------------|-----------------------|------------------|------
+WAF Attack Score      | Enterprise | N/A (global score)          | [`cf.waf.score`](/ruleset-engine/rules-language/fields/#field-cf-waf-score)
+WAF SQLi Attack Score | Enterprise | SQL injection (SQLi)        | [`cf.waf.score.sqli`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-sqli)
+WAF XSS Attack Score  | Enterprise | Cross-site scripting (XSS)  | [`cf.waf.score.xss`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-xss)
+WAF RCE Attack Score  | Enterprise | Remote Code Execution (RCE) | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-rce)
+WAF Attack Score Class | Business  | N/A (global classification) | [`cf.waf.score.class`](/ruleset-engine/rules-language/fields/#field-cf-waf-score-class)
+
 {{</table-wrap>}}
 
-You can use the fields for these scores in expressions of [custom rules](/waf/custom-rules/) and [firewall rules](/waf/firewall-rules/), where:
+You can use the above fields in expressions of [custom rules](/waf/custom-rules/), [firewall rules](/waf/firewall-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+
+The score fields vary between `1` and `100`, where:
 
 * A score of `1` indicates that the request is almost certainly malicious.
 * A score of `99` indicates that the request is likely clean.
+* A score of `100` indicates that the Cloudflare WAF did not score the request.
 
 The available scores are independent of each other. Namely, the WAF Attack Score is not a sum of the other scores.
 
-{{<Aside type="note">}}
-Requests that the Cloudflare WAF did not score will have a score of `100`.
-{{</Aside>}}
+The WAF Attack Score Class field can have one of the following values, depending on the calculated request attack score:
+
+Dashboard label | Field value | Description
+---|---|---
+_Attack_ | `attack` | Attack score between `1` and `20`.
+_Likely attack_ | `likely_attack` | Attack score between `21` and `50`.
+_Likely clean_ | `likely_clean` | Attack score between `50` and `80`.
+_Clean_ | `clean` | Attack score between `81` and `99`.
+
+Requests with an attack score of `100` will have a class of _Unscored_ in the Cloudflare dashboard, but you cannot this class value in rule expressions.
 
 ---
 
@@ -48,13 +60,17 @@ Requests that the Cloudflare WAF did not score will have a score of `100`.
 
 ### 1. Create a custom rule or firewall rule
 
-Create a [WAF custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) that logs all requests with a WAF Attack Score below 40 (recommended initial threshold).
+If you are an Enterprise customer:
 
-For example, set the rule expression to `cf.waf.score lt 40` and the rule action to _Log_.
+* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) that logs all requests with a WAF Attack Score below 40 (recommended initial threshold). For example, set the rule expression to `cf.waf.score lt 40` and the rule action to _Log_.
+
+If you are a Business customer:
+
+* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) that logs all requests with a WAF Attack Score Class of `Attack`. For example, set the rule expression to `cf.waf.score.class eq "Attack"` and the rule action to _Log_.
 
 ### 2. Monitor domain traffic
 
-Monitor the rule you created, especially in the first few days, to make sure you entered an appropriate threshold for your traffic. Update the threshold if required.
+Monitor the rule you created, especially in the first few days, to make sure you entered an appropriate threshold (or class) for your traffic. Update the rule if required.
 
 ### 3. Update the rule action
 

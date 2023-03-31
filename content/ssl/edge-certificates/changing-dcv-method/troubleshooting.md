@@ -16,7 +16,7 @@ If these issues occur while using HTTP DCV, review the following settings:
 
   - Block requests from the United States
   - Block requests from the issuing Certificate Authority's IP addresses
-  - Enable CAPTCHAs on the validation URL
+  - Enable interactive challenge on the validation URL
 
 - **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](https://support.cloudflare.com/hc/articles/200170076) and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
 
