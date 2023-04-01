@@ -114,7 +114,7 @@ Zaraz exposes all cookies automatically under the `system.cookies` object, so th
 export default {
   async fetch(request, env) {
     // Parse the Zaraz Context object
-    const { system, client } = request.json();
+    const { system, client } = await request.json();
 
     // Get an array of all prices
     const cookieValue = system.cookies["login-cookie"];
