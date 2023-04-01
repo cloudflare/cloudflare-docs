@@ -138,7 +138,7 @@ Assuming you're sending a value that your want to hash, for example, an email ad
 zaraz.track("user_logged_in", { email: "user@example.com" });
 ```
 
-You can access this property and encrypt it like this:
+You can access this property and hash it like this:
 
 ```js
 async function digestMessage(message) {
