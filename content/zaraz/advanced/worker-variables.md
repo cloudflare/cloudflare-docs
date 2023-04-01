@@ -116,7 +116,7 @@ export default {
     // Parse the Zaraz Context object
     const { system, client } = await request.json();
 
-    // Get an array of all prices
+    // Get the value of the cookie "login-cookie"
     const cookieValue = system.cookies["login-cookie"];
 
     const userId = await fetch("https://example.com/api/getUserIdFromCookie", {
