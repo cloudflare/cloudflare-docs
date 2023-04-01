@@ -32,7 +32,7 @@ You have now created a basic Worker that responds with "Hello world." If you use
 Zaraz forwards the Zaraz Context object to your Worker as a JSON payload with a POST request. You can access any property like this:
 
 ```js
-const { system, client } = request.json()
+const { system, client } = await request.json()
 
 /* System parameters */
 system.page.url.href // URL of the current page
