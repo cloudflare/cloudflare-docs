@@ -154,7 +154,7 @@ async function digestMessage(message) {
 export default {
   async fetch(request, env) {
     // Parse the Zaraz Context object
-    const { system, client } = request.json();
+    const { system, client } = await request.json();
 
     const { email } = client;
 
