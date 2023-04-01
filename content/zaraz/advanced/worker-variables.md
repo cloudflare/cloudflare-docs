@@ -27,7 +27,7 @@ To create a new worker in the Cloudflare dashboard:
 2. Give a name to your service and choose the **HTTP Handler** as your starter template.
 3. Click **Create Service**, and then **Quick Edit**.
 
-You have now created a basic Worker that responds with "Hello world." If you use this Worker as a Variable, your Variable will always output "Hello world." To make this Worker useful, you will need to use information coming from Zaraz, which is known as the Zaraz Context.
+You have now created a basic Worker that responds with "Hello world." If you use this Worker as a Variable, your Variable will always output "Hello world." The response body coming from your Worker will be the value of your Worker Variable. To make this Worker useful, you will usually want to use information coming from Zaraz, which is known as the Zaraz Context.
 
 Zaraz forwards the Zaraz Context object to your Worker as a JSON payload with a POST request. You can access any property like this:
 
