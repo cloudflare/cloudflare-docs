@@ -92,7 +92,7 @@ Calculating the sum can be done like this:
 export default {
   async fetch(request, env) {
     // Parse the Zaraz Context object
-    const { system, client } = request.json();
+    const { system, client } = await request.json();
 
     // Get an array of all prices
     const productsPrices = client.products.map((p) => p.price);
