@@ -75,4 +75,4 @@ Parameter         | Value
 `origin` > `port` | `8081`
 `origin` > `host` | `example.net`
 
-If you also configured a destination port in rule #2, that value would override the `8081` destination port defined in #rule 1.
+If you also configured a destination port in rule #2, that value would override the `8081` destination port defined in rule #1.
