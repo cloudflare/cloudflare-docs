@@ -35,24 +35,27 @@
         _super.call(this, element, CustomSearchbox.ID, bindings);
         this.type = 'CustomSearchBox';
         coveo.Component.bindComponentToElement(element, this);
+        console.log('reached')
         this.element = element;
         this.options = coveo.ComponentOptions.initComponentOptions(element, CustomSearchbox, options);
         this.bindings = bindings;
+         console.log('reached')
         this.element.addEventListener('keyup', (e) => this.handleKeyUp(e));
+       
       }
       CustomSearchbox.prototype.handleKeyUp = function(e) {
-        if (this.options.searchAsYouType) {
-          this.executeNewQuery();
-        } else if (e.key == 'Enter') {
-          this.executeNewQuery();
-        }
-      }
+    if (this.options.searchAsYouType) {
+      this.executeNewQuery();
+    } else if (e.key == 'Enter') {
+      this.executeNewQuery();
+    }
+  }
       CustomSearchbox.prototype.executeNewQuery = function() {
         this.bindings.queryStateModel.set('q', this.element.value);
-        //this.bindings.usageAnalytics.logSearchEvent({
-        //  name: 'submitSearchbox',
-        //  type: 'CustomSearchbox'
-        //});
+        this.bindings.usageAnalytics.logSearchEvent({
+          name: 'submitSearchbox',
+          type: 'CustomSearchbox'
+        });
         this.bindings.queryController.executeQuery();
       }
       CustomSearchbox.options = {
@@ -63,7 +66,8 @@
     })(coveo.Component);
 
     coveo.SearchEndpoint.configureCloudV2Endpoint(org, token);
-    coveo.initSearchbox($('.CoveoSearchInterface'), "/search")
+    coveo.initSearchbox(element, "/search/");
+    
 
     addEventListener('keydown', ev => {
       if (ev.target === element) return;
