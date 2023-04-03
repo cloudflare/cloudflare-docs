@@ -29,18 +29,18 @@ To create an Origin CA certificate in the dashboard:
 1.  Log in to the Cloudflare dashboard and select an account.
 2.  Choose a domain.
 3.  Go to **SSL/TLS** > **Origin Server**.
-4.  Click **Create Certificate**.
+4.  Select **Create Certificate**.
 5.  Choose either:
     - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECDSA.
     - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
 6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
 7.  Choose the [expiration date](#expiration).
-8.  Click **Next**.
+8.  Select **Next**.
 9.  Choose the **Key Format**:
     - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
     - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
 10. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
-11. Click **OK**.
+11. Select **OK**.
 
 {{<Aside type="note">}}For details about working with certificates programmatically, refer to [API calls](#api-calls).{{</Aside>}}
 
@@ -81,7 +81,7 @@ If you have origin hosts that are not protected by certificates, set the **SSL/T
 
 ### 4. (Required for some) Add Cloudflare Origin CA root certificates
 
-Some origin web servers require upload of the Cloudflare Origin CA root certificate. Click the following links to download either an ECC or an RSA version of the Cloudflare Origin CA root certificate:
+Some origin web servers require upload of the Cloudflare Origin CA root certificate. Use the following links to download either an ECC or an RSA version of the Cloudflare Origin CA root certificate:
 
 - [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
 - [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
@@ -98,7 +98,7 @@ To revoke a certificate:
 2.  Choose a domain.
 3.  Go to **SSL/TLS** > **Origin Server**.
 4.  In **Origin Certificates**, choose a certificate.
-5.  Click **Revoke**.
+5.  Select **Revoke**.
 
 ## Additional details
 

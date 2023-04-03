@@ -51,14 +51,14 @@ To adjust your TLS 1.3 settings with the API, send a [`PATCH`](https://developer
 
 1.  In the address bar, enter `chrome://flags` and press **Enter**.
 2.  Scroll to locate the **TLS 1.3 Early Data** entry, and set it to _Enabled_. A message saying that the change will take effect the next time you relaunch Chrome will appear.
-3.  Click **RELAUNCH NOW** to restart Chrome.
+3.  Select **RELAUNCH NOW** to restart Chrome.
 
 After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 
 1.  Open Chrome **Developer Tools**.
-2.  Click the **Security** tab.
+2.  Select the **Security** tab.
 3.  Reload the page (Command-R in macOS, Ctrl-R in Windows).
-4.  Click on the site under **Main origin**.
+4.  Select the site under **Main origin**.
 5.  Under **Connection**, confirm that the protocol is **TLS 1.3**.
 
 </div>
@@ -68,13 +68,13 @@ After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 <summary>Firefox</summary>
 <div>
 
-1.  In the address bar, enter `about:config` and click to accept the warranty warning.
+1.  In the address bar, enter `about:config` and select to accept the warranty warning.
 2.  Search for `security.tls.version.max` and change the value from `3` (the default) to `4`.
 
 After enabling TLS 1.3, visit a site with TLS 1.3 enabled over HTTPS. Then:
 
-1.  Click the lock icon in the address bar.
-2.  Click on **Connection secure** > **More information**.
+1.  Select the lock icon in the address bar.
+2.  Select **Connection secure** > **More information**.
 3.  Under **Technical Details**, verify that the TLS version is TLS 1.3.
 
 </div>
