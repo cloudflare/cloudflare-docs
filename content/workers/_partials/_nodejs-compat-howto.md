@@ -5,6 +5,8 @@ _build:
   list: never
 ---
 
-{{<Aside type="note">}}
-To use Node.js APIs in your Worker, add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`.
+{{<Aside type="warning">}}
+
+To use Node.js APIs in your Worker, add the [`nodejs_compat` compatibility flag](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml` file.
+
 {{</Aside>}}
