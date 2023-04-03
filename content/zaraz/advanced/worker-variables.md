@@ -63,7 +63,7 @@ Now that your Worker Variable is configured, you can use it in your actions and 
 
 To use your Worker Variable:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **Tools configuration** > **Tools**.
 2. Click **Edit** next to a tool that you have already configured.
 3. Select an action or add a new one.
