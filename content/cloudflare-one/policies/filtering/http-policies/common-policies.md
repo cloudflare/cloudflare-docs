@@ -47,7 +47,7 @@ Block the upload or download of files based on their type.
 
 ## Block Google Drive downloads
 
-Blocks file downloads from Google Drive. You can also [Block file uploads to Google Drive](/cloudflare-one/tutorials/block-uploads/).
+Block file downloads from Google Drive. You can also [Block file uploads to Google Drive](/cloudflare-one/tutorials/block-uploads/).
 
 | Selector         | Operator      | Value                      | Action | Operator |
 | ---------------- | ------------- | -------------------------- | ------ | -------- |
@@ -56,7 +56,7 @@ Blocks file downloads from Google Drive. You can also [Block file uploads to Goo
 
 ## Block Gmail downloads
 
-Blocks files downloads from Gmail.
+Block file downloads from Gmail.
 
 | Selector         | Operator | Value                                   | Action | Operator |
 | ---------------- | -------- | --------------------------------------- | ------ | -------- |
