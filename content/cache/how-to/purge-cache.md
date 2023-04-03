@@ -112,7 +112,7 @@ When your content reaches our edge network, Cloudflare:
 
 {{<Aside type="note" header="API">}}
 
-You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge). You can use up to 30 cache-tags in one API call and make up to 30,000 purge API calls in a 24-hour period.
+You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
 
 {{</Aside>}}
 
