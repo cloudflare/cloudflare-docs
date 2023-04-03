@@ -68,6 +68,11 @@ Resetting your Zaraz configuration will erase all of your configuration settings
 
 E-commerce tracking needs to be enabled in [the Zaraz Settings page](/zaraz/reference/settings/#e-commerce-tracking) before you can start using the E-commerce Web API.
 
+
+#### How to trigger pageviews manually on a Single Page Application (SPA)?
+
+Zaraz comes with built-in [Single Page Application (SPA) support](/zaraz/reference/settings/#single-page-application-support) that automatically sends pageview events when navigating through the pages of your SPA. However, if you have advanced use cases, you might want to build your own system to trigger pageviews. In such cases, you can use the internal SPA pageview event by calling `zaraz.track("__zarazSPA")`.
+
 ---
 
 ## Tools
