@@ -58,9 +58,7 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-{{<Aside type="warning">}}
-In local development, you must use [`wrangler dev --experimental-local`](https://developers.cloudflare.com/workers/wrangler/commands/#dev) instead of `wrangler dev --local`, when using the `nodejs_compat` compatibility flag. This is a temporary limitation. [`--experimental-local` will soon become the default](https://blog.cloudflare.com/miniflare-and-workerd/) for local development in Wrangler.
-{{</Aside>}}
+{{<render file="_nodejs-compat-local-dev.md">}}
 
 As additional Node.js APIs are added, they will be made available under the `nodejs_compat` compatibility flag. Unlike most other compatibility flags, we do not expect the `nodejs_compat` to become active by default at a future date.
 
