@@ -18,7 +18,7 @@ Below is a generic guide to successfully set up an identity provider based SAML.
     | | |
     |---------------------------------|----------------------------------------------------|
     | **Single sign on URL**          | `https://horizon.area1security.com/api/users/saml` |
-    | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com/api/users/saml` |
+    | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com` |
     | **Name ID format**              | _Email Address_                                      |
     | **Application username**        | _Email_                                              |
     | **Response**                    | _Signed_                                             |
