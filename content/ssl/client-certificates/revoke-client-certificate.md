@@ -9,7 +9,7 @@ weight: 6
 You can revoke a client certificate you previously generated.
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2.  Navigate to **SSL** > **Client Certificates**.
+2.  Go to **SSL** > **Client Certificates**.
 3.  Click the certificate you want to revoke.
 4.  Click **Revoke** and confirm the operation.
 

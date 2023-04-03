@@ -20,7 +20,7 @@ Once you order a certificate, you can review the [certificate's status](/ssl/ref
 To create a new advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  Click **Order Advanced Certificate**.
 4.  If Cloudflare does not have your billing information, you will need to enter that information.
 5.  Enter the following information:
