@@ -69,12 +69,10 @@ For example, if you configure the following two [Origin Rules](/rules/origin-rul
 
 The merged configuration for the `route` action would be the following:
 
-```json
-"action_parameters": {
-  "host_header": "example.net",
-  "origin": {
-    "port": 8081,
-    "host": "example.net"
-  }
-}
-```
+Parameter         | Value
+------------------|--------------
+`host_header`     | `example.net`
+`origin` > `port` | `8081`
+`origin` > `host` | `example.net`
+
+If you also configured a destination port in rule #2, that value would override the `8081` destination port defined in #rule 1.
