@@ -207,7 +207,7 @@ var options = {
     Authorization: 'Bearer <API_TOKEN>',
   },
   chunkSize: 50 * 1024 * 1024, // Required a minimum chunk size of 5MB, here we use 50MB.
-  resume: true,
+  retryDelays: [0, 3000, 5000, 10000, 20000], // Indicates to tus-js-client the delays after which it will retry if the upload fails
   metadata: {
     filename: 'test.mp4',
     filetype: 'video/mp4',
