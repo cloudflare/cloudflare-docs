@@ -54,6 +54,14 @@ Yes. Refer to [Page Shield](/page-shield/) for more information related to this 
 
 To prevent Zaraz from loading on specific pages, refer to [Load Zaraz selectively](/zaraz/advanced/load-selectively/).
 
+#### How can I remove my Zaraz configuration?
+
+Resetting your Zaraz configuration will erase all of your configuration settings, including any tools, triggers, and variables you've set up. This action will disable Zaraz immediately. If you want to start over with a clean slate, you can always reset your configuration.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Zaraz** > **Settings** > **Advanced**.
+3. Click "Reset" and follow the instructions.
+
 ### Zaraz Web API
 
 #### Using the `zaraz.ecommerce()` method returns an undefined error.
