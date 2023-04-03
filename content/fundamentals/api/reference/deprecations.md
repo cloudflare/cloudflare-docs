@@ -78,24 +78,6 @@ POST accounts/:account_identifier/images/v1/direct_upload
 Replacement:
 POST accounts/:account_identifier/images/v2/direct_upload
 
-
-## DNS Firewall Analytics - virtual_dns
-**End of life date: July 1, 2022**
-
-Replace `virtual_dns` in DNS Firewall Analytics routes with `dns_firewall`.
-
-
-## DNS Firewall - virtual_dns
-**End of life date: July 1, 2022**
-
-Replace `virtual_dns` in DNS Firewall routes with `dns_firewall`.
-
-The following changes were made in the new routes:
-
-- `virtual_dns_ips` has been renamed to `dns_firewall_ips`.
-- A disabled ratelimit is now represented by `null` instead of `0`.
-- The `PATCH` method must be used instead of `PUT` to update clusters.
-
 ## Zone Analytics API
 **End of life date: March 1, 2021**
 
