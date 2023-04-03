@@ -26,7 +26,7 @@ Then, enable Authenticated Origin Pulls as an option for your Cloudflare zone.
 To enable **Authenticated Origin Pulls** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **SSL/TLS** > **Origin Server**.
+2.  Go to **SSL/TLS** > **Origin Server**.
 3.  For **Authenticated Origin Pulls**, switch the toggle to **On**.
 
 {{</tab>}}

@@ -32,7 +32,7 @@ For security reasons, this feature will run on URLs pointing to `localhost` if t
 To enable **Automatic HTTPS Rewrites** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  For **Automatic HTTPS Rewrites**, switch the toggle to **On**.
  
 {{</tab>}}
