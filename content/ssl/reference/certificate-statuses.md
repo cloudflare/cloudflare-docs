@@ -60,6 +60,6 @@ For more details on certificate validation, refer to [Domain Control Validation]
 
 ### SSL for SaaS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostnames Details endpoint](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by using the [Custom Hostname Details endpoint](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
 
 For more details on certificate validation, refer to [Issue and validate certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).
