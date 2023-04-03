@@ -23,7 +23,7 @@ Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below
 
 ## Enable Cache Reserve
 
-You can enable Cache Reserve from the dashboard or [via API](https://developers.cloudflare.com/api/operations/zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
+You can enable Cache Reserve from the dashboard or [via API](/api/operations/zone-cache-settings-change-cache-reserve-setting). In both situations, you need a paid Cache Reserve Plan.
 
 To enable Cache Reserve through the dashboard:
 
@@ -41,7 +41,7 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
 
-- Be cacheable, according to Cloudflare's standard [cacheability factors](https://developers.cloudflare.com/cache),
+- Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
 - Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/about/cache-rules/)),
 - Have a Content-Length response header.
 

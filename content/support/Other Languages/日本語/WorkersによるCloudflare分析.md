@@ -9,7 +9,7 @@ title: WorkersによるCloudflare分析
 
 ## WorkersによるCloudflare分析
 
-Cloudflare Workersを使うと、150以上のCloudflareデータセンターからJavaScriptが実行できるようになります。Workersの詳細は[こちら](https://developers.cloudflare.com/workers/about/)をご覧ください！
+Cloudflare Workersを使うと、150以上のCloudflareデータセンターからJavaScriptが実行できるようになります。Workersの詳細は[こちら](/workers/about/)をご覧ください！
 
 ___
 

@@ -62,7 +62,7 @@ ___
 
 _Aucun enregistrement A, AAAA ou CNAME trouvé_ signifie que l’application **DNS** de Cloudflare n’a pas les enregistrements appropriés pour la résolution DNS.
 
-[Ajoutez les enregistrements DNS manquants](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) à votre domaine.
+[Ajoutez les enregistrements DNS manquants](/dns/manage-dns-records/how-to/create-dns-records) à votre domaine.
 
 ___
 

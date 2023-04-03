@@ -95,4 +95,4 @@ Para visualizar os minutos assistidos com o Stream:
 ___
 
 -   [Plataforma de vídeo Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Documentação para desenvolvedores do Cloudflare Stream](https://developers.cloudflare.com/stream/getting-started/)
+-   [Documentação para desenvolvedores do Cloudflare Stream](/stream/getting-started/)

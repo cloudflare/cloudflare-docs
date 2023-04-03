@@ -36,7 +36,7 @@ When you set your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Always Use HTTPS** with the API, send a [`PATCH`](/api/operations/zone-settings-change-always-use-https-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}

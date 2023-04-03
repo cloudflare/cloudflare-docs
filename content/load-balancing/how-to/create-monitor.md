@@ -85,7 +85,7 @@ To edit a monitor in the dashboard:
 
 When you edit a monitor with the API, your request type depends on how much you want to edit.
  
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-patch-monitor) request. For broader changes, use a [PUT](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-update-monitor) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/operations/account-load-balancer-monitors-patch-monitor) request. For broader changes, use a [PUT](/api/operations/account-load-balancer-monitors-update-monitor) request.
  
 {{</tab>}}
 {{</tabs>}}
@@ -106,7 +106,7 @@ To delete a monitor in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To delete a monitor using the API, send a [DELETE](https://developers.cloudflare.com/api/operations/account-load-balancer-monitors-delete-monitor) request.
+To delete a monitor using the API, send a [DELETE](/api/operations/account-load-balancer-monitors-delete-monitor) request.
  
 {{</tab>}}
 {{</tabs>}}

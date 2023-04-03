@@ -11,7 +11,7 @@ meta:
 In order to enable automatic mitigation of [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/):
 
 1. Set up [DNS Firewall](/dns/dns-firewall/setup/).
-2. Send a [`PATCH` request](https://developers.cloudflare.com/api/operations/dns-firewall-update-dns-firewall-cluster) to update your DNS Firewall cluster.
+2. Send a [`PATCH` request](/api/operations/dns-firewall-update-dns-firewall-cluster) to update your DNS Firewall cluster.
 
    ```sh
    curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/dns_firewall/<CLUSTER_TAG>" \

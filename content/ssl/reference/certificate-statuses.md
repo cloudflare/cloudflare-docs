@@ -54,12 +54,12 @@ When you use [client certificates](/ssl/client-certificates/), those client cert
 
 ### SSL/TLS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](https://developers.cloudflare.com/api/operations/certificate-packs-get-certificate-pack).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Edge Certificates** or by [using the API](/api/operations/certificate-packs-get-certificate-pack).
 
 For more details on certificate validation, refer to [Changing DCV method](/ssl/edge-certificates/changing-dcv-method/).
 
 ### SSL for SaaS
 
-Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
+Monitor a certificate's status in the dashboard at **SSL/TLS** > **Custom Hostnames** or by [using the API](/api/operations/custom-hostname-for-a-zone-custom-hostname-details).
 
 For more details on certificate validation, refer to [Changing DCV method](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/).

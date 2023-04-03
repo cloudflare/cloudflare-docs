@@ -10,7 +10,7 @@ The global rate limit for Cloudflare's API is 1200 requests per five minutes. If
 
 Some specific API calls have their own limits and are documented separately, such as the following:
 
-- [Cache Purge APIs](https://developers.cloudflare.com/api/operations/zone-purge)
+- [Cache Purge APIs](/api/operations/zone-purge)
 - [GraphQL APIs](/analytics/graphql-api/limits/)
 
 Enterprise customers may [contact Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476) to raise the limit of a higher value if needed.

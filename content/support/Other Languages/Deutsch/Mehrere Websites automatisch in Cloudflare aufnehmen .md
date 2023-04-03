@@ -22,7 +22,7 @@ alle weiteren Domains blockiert, bis sie verarbeitet wurden.
 -   Wenn Sie eine Agentur oder IT-Beratung sind und im Auftrag Ihrer Kunden mehrere Domains verwalten. (Hinweis: Sie sollten unser [Cloudflare-Partnerprogramm](https://www.cloudflare.com/partners/) in Betracht ziehen!)
 -   Wenn Sie eine vorhandene Gruppe von Websites auf Cloudflare verschieben.
 
-Mit der API können Sie schnell und effizient mehrere Sites hinzufügen, insbesondere wenn Sie bereits damit vertraut sind, [Ihre Nameserver zu ändern](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup) oder [einen DNS-Eintrag hinzuzufügen.](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)
+Mit der API können Sie schnell und effizient mehrere Sites hinzufügen, insbesondere wenn Sie bereits damit vertraut sind, [Ihre Nameserver zu ändern](/dns/zone-setups/full-setup/setup) oder [einen DNS-Eintrag hinzuzufügen.](/dns/manage-dns-records/how-to/create-dns-records)
 
 ___
 

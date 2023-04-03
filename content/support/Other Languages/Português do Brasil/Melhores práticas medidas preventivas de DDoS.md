@@ -24,7 +24,7 @@ Os invasores tentam identificar seu endereço IP de origem para atacar diretamen
 Configure seus registros DNS para proteção máxima seguindo o passo a passo abaixo:
 
 1.  [Ative o proxy da Cloudflare (nuvem laranja)](https://support.cloudflare.com/hc/articles/200169626)
-2.  Exclua os registros DNS usados para FTP ou SSH e use o IP de origem para executar diretamente solicitações de FTP ou SSH. Se preferir, redirecione o FTP e o SSH via proxy com o [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/getting-started/).
+2.  Exclua os registros DNS usados para FTP ou SSH e use o IP de origem para executar diretamente solicitações de FTP ou SSH. Se preferir, redirecione o FTP e o SSH via proxy com o [Cloudflare Spectrum](/spectrum/getting-started/).
 3.  [Registros de nuvem cinza A, AAAA ou CNAME correspondentes ao seu servidor de correio](https://support.cloudflare.com/hc/articles/200168876)
 4.  Remova os registros curinga nos domínios Grátis, Pro ou Business, porque eles expõem seu endereço IP de origem. [O Cloudflare protege apenas registros curinga para domínios dos planos Enterprise](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries).
 

@@ -167,7 +167,7 @@ ___
 
 ## Ein kompromittiertes Konto wieder sicher machen
 
-Wenn Sie verdächtige Aktivitäten innerhalb Ihres Cloudflare-Kontos bemerken, sollten Sie Ihr Konto mit [diesen Schritten](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/) absichern.
+Wenn Sie verdächtige Aktivitäten innerhalb Ihres Cloudflare-Kontos bemerken, sollten Sie Ihr Konto mit [diesen Schritten](/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/) absichern.
 
 ___
 
@@ -176,7 +176,7 @@ ___
 Sie können sich auf dem [Cloudflare-Dashboard](https://dash.cloudflare.com/login) auf verschiedene Arten anmelden:
 
 -   **E-Mail und Passwort**: Geben Sie zur Anmeldung Ihre E-Mail Adresse und Ihr Passwort ein.
--   **Single Sign On (SSO):** Geben Sie Ihre E-Mail-Adresse ein (vorausgesetzt, Ihr Administrator hat [SSO als Anmeldeoption konfiguriert](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
+-   **Single Sign On (SSO):** Geben Sie Ihre E-Mail-Adresse ein (vorausgesetzt, Ihr Administrator hat [SSO als Anmeldeoption konfiguriert](/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
 -   **Mit Apple anmelden**:
     -   _E-Mail-Adresse des Cloudflare-Kontos ist auch die Apple-ID:_: Sie können sich entweder mit Ihrer E-Mail-Adresse und Ihrem Passwort oder mit Apple anmelden.
     -   _E-Mail-Adresse des Cloudflare-Kontos ist nicht die Apple-ID_: Es wird ein neues Cloudflare-Konto erstellt, wenn Sie sich mit Apple anmelden. Wenn Sie sich bei einem bestehenden Konto anmelden möchten, [ändern Sie Ihre E-Mail-Adresse](https://support.cloudflare.com/hc/de/articles/203471284-Probleme-mit-der-Anmeldung-und-dem-Konto#12345679) so, dass sie mit der Adresse Ihrer Apple-ID übereinstimmt.

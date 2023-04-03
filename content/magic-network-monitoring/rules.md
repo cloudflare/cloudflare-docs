@@ -45,7 +45,7 @@ Follow the previous steps to [create](#create-rules) or [edit](#edit-or-delete-r
 
 ## Enable per-prefix thresholds with the API
 
-You can also use the [Magic Network Monitoring API](https://developers.cloudflare.com/api/operations/magic-network-monitoring-rules-list-rules) to configure custom thresholds for specific prefixes.
+You can also use the [Magic Network Monitoring API](/api/operations/magic-network-monitoring-rules-list-rules) to configure custom thresholds for specific prefixes.
 
 The system uses the concept of rules, and each rule consists of a group of prefixes. All prefixes inside a rule are evaluated as a whole, and you should set up a rule if you want the prefixes' aggregated traffic to trigger an alert or advertisement. For thresholds on singular prefixes or IPs, you can create an individual rule with one prefix and the desired threshold.
 
@@ -73,4 +73,4 @@ For more granular thresholds, create a more focused rule as shown below.
        ]
 ```
 
-Refer to the [Magic Network Monitoring API documentation](https://developers.cloudflare.com/api/operations/magic-network-monitoring-rules-list-rules) for more information.
+Refer to the [Magic Network Monitoring API documentation](/api/operations/magic-network-monitoring-rules-list-rules) for more information.
