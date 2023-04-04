@@ -48,9 +48,13 @@ The default Cloudflare certificate is named **Cloudflare for Teams ECC Certifica
 
 ### Linux
 
-On Linux, the certificate is stored in `/usr/local/share/ca-certificates`.
+On Linux, the certificate is stored in `/usr/local/share/ca-certificates`. The default Cloudflare certificate is named `Cloudflare_CA.crt`.
 
-The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+If you do not see the certificate, run the following command to update the system store:
+
+```sh
+$ update-ca-certificates
+```
 
 ## Uninstall the certificate
 
