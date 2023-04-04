@@ -205,7 +205,7 @@ If the response is a redirect and the redirect mode is set to `follow` (see belo
 
 ### `IncomingRequestCfProperties`
 
-In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s edge.
+In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s global network.
 
 All plans have access to:
 
