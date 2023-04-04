@@ -184,7 +184,7 @@ async function testREDIRECTS(file: string) {
       const result = line.match(destinationURLRegex);
       if (result !== null) {
         const match = result[1];
-        if (result[1].startsWith('/api/')) {
+        if (match.startsWith('/api/')) {
           return;
         } else {
           let local = join(PUBDIR, match);
