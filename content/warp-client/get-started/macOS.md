@@ -8,11 +8,11 @@ meta:
 
 # macOS desktop client
 
-1. Download Cloudflare WARP for macOS from [Microsoft Appcenter](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release) or [1.1.1.1](https://1.1.1.1/).
-3. Navigate to your predefined download folder and open the `.pkg` file.
-4. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
-5. Select **Next** and **Accept** Cloudflare's privacy policy.
-6. Turn on the toggle to enable WARP.
+1. Download Cloudflare WARP for macOS from [Microsoft App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-macos-1/distribution_groups/release) or [1.1.1.1](https://1.1.1.1/).
+2. Go to your predefined download folder and open the `.pkg` file.
+3. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
+4. Select **Next** and **Accept** Cloudflare's privacy policy.
+5. Turn on the toggle to enable WARP.
 
 WARP is now running and protecting your Internet connection.
 
