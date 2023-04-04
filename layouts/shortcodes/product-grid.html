@@ -451,14 +451,17 @@ function filterList() {
     }
   } else {
     // Otherwise, hide all list items and show only the ones with matching data attributes and search terms
+
     let groupIdValues = []
     for (let checkbox of checkedGroups) {
-        groupIdValues.push(checkbox.id);
-      }
+      groupIdValues.push(checkbox.id);
+    }
+
     let matchIdValues = []
     for (let checkbox of checkedPreview) {
         matchIdValues.push(checkbox.id);
-      }
+    }
+
     for (let k = 0; k < listItems.length; k++) {
       let groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
       let previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
