@@ -21,11 +21,11 @@ To view an overview of all enrolled devices, go to **DEX** > **Analytics**. You 
 | Connecting   | WARP is pending connection, but is actively trying to establish a connection to the Cloudflare global network. |
 {{</table-wrap>}}
 
-- **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the devices.
+- **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
 - **Colo**: Percentage of devices connected to a given Cloudflare data center.
-- **Platform**: Operating system of the devices.
-- **Major Version**: WARP client version installed on the devices.
-- **Device Status Over Time**: Device connectivity over the selected time period.
-- **Connection Methods Over Time**: WARP mode used by the devices over the selected time period.
+- **Platform**: Operating system of the device.
+- **Major Version**: WARP client version installed on the device.
+- **Device Status Over Time**: WARP client connection status over the selected time period.
+- **Connection Methods Over Time**: WARP mode used by the device over the selected time period.
 
 You can view this data on a per-device level by going to **My Team** > **Devices**. The **DEX** tab will show real-time and historical connectivity metrics for the selected device.
