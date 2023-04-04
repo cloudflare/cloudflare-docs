@@ -52,7 +52,7 @@ You can also [write key-value pairs from the command line with Wrangler](/worker
 
 Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
-Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. Refer to [How KV works](/workers/learning/how-kv-works/) for more information on this topic.
+Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. Refer to [How KV works](/workers/learning/how-kv-works/) for more information on this topic.
 
 #### Writing data in bulk
 
@@ -183,7 +183,7 @@ The `get` options object also accepts a `cacheTtl` parameter:
 NAMESPACE.get(key, { cacheTtl: 3600 });
 ```
 
-The `cacheTtl` parameter must be an integer that is greater than or equal to `60`, which is the default. It defines the length of time in seconds that a KV result is cached in the edge location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other edge locations will not be visible until the cached value expires.
+The `cacheTtl` parameter must be an integer that is greater than or equal to `60`, which is the default. It defines the length of time in seconds that a KV result is cached in the global network location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
 
 The effective Cache TTL of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to `60` seconds.
 
