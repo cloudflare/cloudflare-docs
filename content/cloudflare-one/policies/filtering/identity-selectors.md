@@ -8,16 +8,14 @@ weight: 6
 
 With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/).
 
-Gateway checks identity when a user logs in or re-authenticates. To check your users' identities at regular intervals, you can [enforce a WARP client session duration](/cloudflare-one/policies/filtering/enforce-sessions/).
+## Gateway identity checks
 
-{{<Aside type="note">}}
+Gateway checks identity when a user logs in or re-authenticates. To check your users' identities and require re-authentication at regular intervals, you can [enforce a WARP client session duration](/cloudflare-one/policies/filtering/enforce-sessions/).
 
-Gateway retrieves a user's IdP data at the time of login. Therefore, if you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
+If you add or remove a user from a group in your IdP, Gateway will not detect these changes until the user re-authenticates to your Zero Trust instance. There are two ways a user can re-authenticate:
 
 - Log out from an Access-protected application and log back in.
 - In their WARP client settings, select **Preferences** > **Account** > **Re-Authenticate Session**. This will open a browser window and prompt the user to log in.
-
-{{</Aside>}}
 
 ## Identity-based selectors
 
