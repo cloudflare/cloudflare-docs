@@ -1,86 +1,87 @@
 {{/* @see :: data/<Product>.yml */}}
-{{- $DATA := (index .Context.Site.Data .Product) -}}
-{{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
-{{- $metaTruncateLength := 150 -}}
-{{- $title := "" -}}
+  {{- $DATA := (index .Context.Site.Data .Product) -}}
+  {{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
+  {{- $metaTruncateLength := 150 -}}
+  {{- $title := "" -}}
 
-<!-- Pull the product group -->
+  <!-- Pull the product group -->
 
-{{- $productGroup := "" -}}
-{{- with $DATA.product.group -}}
-{{- $productGroup = . -}}
-{{- end -}}
+  {{- $productGroup := "" -}}
+  {{- with $DATA.product.group -}}
+  {{- $productGroup = . -}}
+  {{- end -}}
 
-<!-- Choose the preview image based on the product group -->
-{{- $imagePlaceholder := "/cf-twitter-card.png" | absURL -}}
-{{- $imageDict := dict 
-  "Cloudflare essentials" "/core-services-preview.png" 
-  "Cloudflare One" "/zt-preview.png" 
-  "Developer platform" "/dev-products-preview.png" 
-  "Network services" "/core-services-preview.png" 
-  "Performance" "/core-services-preview.png" 
-  "Security" "/core-services-preview.png" 
+  <!-- Choose the preview image based on the product group -->
+  {{- $imagePlaceholder := "/cf-twitter-card.png" | absURL -}}
+  {{- $imageDict := dict
+  "Cloudflare essentials" "/core-services-preview.png"
+  "Cloudflare One" "/zt-preview.png"
+  "Developer platform" "/dev-products-preview.png"
+  "Network services" "/core-services-preview.png"
+  "Performance" "/core-services-preview.png"
+  "Security" "/core-services-preview.png"
   -}}
 
-{{- range $key, $value := $imageDict -}}
+  {{- range $key, $value := $imageDict -}}
   {{- if eq $key $productGroup -}}
-    {{- $imagePlaceholder = $value | absURL -}}
+  {{- $imagePlaceholder = $value | absURL -}}
   {{- end -}}
-{{- end -}}
+  {{- end -}}
 
-{{- $pt := default .Context.Title .Context.Params.meta.title -}}
-{{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
-{{- $title = print .Context.Title " | Training" -}}
+  {{- $pt := default .Context.Title .Context.Params.meta.title -}}
+  {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
+  {{- $title = print .Context.Title " | Training" -}}
 
-{{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
+  {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
 
-{{- else -}}
-{{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
-{{- end -}}
-{{- $description := (partial "seo-meta-description.html" (dict "meta" $META "content" .Context.Content "params" .Context.Params "truncate" $metaTruncateLength "plainify" true )) -}}
+  {{- else -}}
+  {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}
+  {{- end -}}
+  {{- $description := (partial "seo-meta-description.html" (dict "meta" $META "content" .Context.Content "params"
+  .Context.Params "truncate" $metaTruncateLength "plainify" true )) -}}
 
-{{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
-{{- $contentPath :=  replaceRE `\/$` "" .Context.RelPermalink -}}
-{{- $folderPlaceholder := "" -}}
-{{ $rssFeed := "" }}
+  {{- $rssPath := "https://github.com/cloudflare/cloudflare-docs/commits/production/content" -}}
+  {{- $contentPath := replaceRE `\/$` "" .Context.RelPermalink -}}
+  {{- $folderPlaceholder := "" -}}
+  {{ $rssFeed := "" }}
 
-{{- if (in $.Context.RelPermalink "/learning-paths/modules/") -}}
-<meta name="robots" content="noindex">
-{{- end -}}
+  {{- if (in $.Context.RelPermalink "/learning-paths/modules/") -}}
+  <meta name="robots" content="noindex">
+  {{- end -}}
 
-<meta charset="utf-8">
-<title>{{ $title }}</title>
-<meta http-equiv="cleartype" content="on"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8">
+  <title>{{ $title }}</title>
+  <meta http-equiv="cleartype" content="on" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="application-name" content="{{ $title }}"/>
-<meta name="msapplication-tap-highlight" content="no"/>
-<meta name="apple-mobile-web-app-title" content="{{ $title }}"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="theme-color" content="#f38020"/>
+  <meta name="application-name" content="{{ $title }}" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="apple-mobile-web-app-title" content="{{ $title }}" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f38020" />
 
-<meta name="description" content="{{ $description }}" />
+  <meta name="description" content="{{ $description }}" />
 
-<meta property="og:image" content="{{ $imagePlaceholder }}"/>
-<meta property="og:title" content="{{ $title }}"/>
-<meta property="og:description" content="{{ $description }}"/>
-<meta property="og:type" content="website"/>
+  <meta property="og:image" content="{{ $imagePlaceholder }}" />
+  <meta property="og:title" content="{{ $title }}" />
+  <meta property="og:description" content="{{ $description }}" />
+  <meta property="og:type" content="website" />
 
-<meta name="twitter:title" content="{{ $title }}"/>
-<meta name="twitter:image" content="{{ $imagePlaceholder }}"/>
-<meta name="twitter:description" content="{{ $description }}"/>
-<meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="{{ $title }}" />
+  <meta name="twitter:image" content="{{ $imagePlaceholder }}" />
+  <meta name="twitter:description" content="{{ $description }}" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-{{- with .Context.Params.pcx_content_type -}}
-<meta name="pcx_content_type" content= "{{ . }}" />
-{{- end -}}
-{{- if ne $productGroup "" -}}
-<meta name="pcx_content_group" content= "{{$productGroup}}" />
-{{- end -}}
-{{ with $.Context.Params.rss -}}
+  {{- with .Context.Params.pcx_content_type -}}
+  <meta name="pcx_content_type" content="{{ . }}" />
+  {{- end -}}
+  {{- if ne $productGroup "" -}}
+  <meta name="pcx_content_group" content="{{$productGroup}}" />
+  {{- end -}}
+  {{ with $.Context.Params.rss -}}
 
   {{ if eq . "folder" }}
 
@@ -95,74 +96,52 @@
   {{ if or (eq . "folder") (eq . "file") }}
 
   {{ $rssFeed = printf "%s%s%s" $rssPath $contentPath $folderPlaceholder }}
-  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
-  
+  {{ printf `
+  <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` $rssFeed $pt | safeHTML }}
+
   {{ else }}
 
-  {{ printf `<link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
+  {{ printf `
+  <link rel="alternate" type="application/rss+xml" href="%s" title="%s - RSS Feed" />` . $pt | safeHTML }}
 
   {{ end }}
 
 
-{{ end }}
-<link rel="icon" href="/favicon-32x32.png"/>
-<link rel="canonical" href="{{ .Context.Permalink }}"/>
-<link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
-<link rel="manifest" href="/manifest.webmanifest"/>
+  {{ end }}
+  <link rel="icon" href="/favicon-32x32.png" />
+  <link rel="canonical" href="{{ .Context.Permalink }}" />
+  <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 
-<link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png"/>
-<link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png"/>
-<link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png"/>
-<link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png"/>
-<link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png"/>
-<link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
-<link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
-<link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
-{{- $coveo := index $.Context.Site.Params "coveo" -}}
-{{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
-  <link rel="stylesheet preconnect" href="/search-coveo.css"/>
-  <link rel="stylesheet preconnect" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
-  <script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
+  <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.js"
+    integrity="sha512-PjI+WVy3+EZgAxjHNRx7NbRVD91/H4YfeSkXG38zCVFtWv+lj/wjnqohcwHr/qwajVVeRw+/MeojPsXGEK0BOg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  {{/* modified "script" partial */}}
   {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $script := (resources.Get "search-coveo.ts") | js.Build $opts -}}
+  {{- $script := (resources.Get "search.ts") | js.Build $opts -}}
 
   {{- if hugo.IsProduction -}}
-    {{- $script = $script | minify | fingerprint "md5" -}}
+  {{- $script = $script | minify | fingerprint "md5" -}}
   {{- end -}}
 
-  <script
-    src="{{ $script.RelPermalink }}" defer
-    data-token="{{ $coveo.token }}"
-    data-org="{{ $coveo.org }}"
-  ></script>
-{{- else if (and $coveo (eq $.Context.RelPermalink "/tutorials/")) -}}
-{{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
-<link rel="stylesheet preconnect" href="/tutorial-coveo.css"/>
-<link rel="stylesheet preconnect" href="https://static.cloud.coveo.com/searchui/v2.10093/4/css/CoveoFullSearch.min.css" integrity="sha512-KxEGMZiFvOW8ftwCreuUAE7vA7oMaV8dohgb5rHClHOg4BEq0bleZKy7B75KCdNtGbj0I+Jjy5z6i+mJ9g+yIA==" crossorigin="anonymous" />
-<script defer async class="coveo-script" src="https://static.cloud.coveo.com/searchui/v2.10093/4/js/CoveoJsSearch.Lazy.min.js" integrity="sha512-wq21KRc/kpKncWYC+LRC5D1mw0ZIs7EJE4V3I3w6paHXKUsnRy2tP1DF9UjEyV23lY3lzOZH0VhXBauMF7Rikw==" crossorigin="anonymous"></script>
+  <script src="{{ $script.RelPermalink }}" defer data-filters="{{ $DATA.algolia.filters }}"
+    data-index="{{ $DATA.algolia.index }}" data-key="{{ $DATA.algolia.apikey }}"></script>
 
-{{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-{{- $script := (resources.Get "tutorial-coveo.ts") | js.Build $opts -}}
-
-{{- if hugo.IsProduction -}}
-  {{- $script = $script | minify | fingerprint "md5" -}}
-{{- end -}}
-
-<script
-  src="{{ $script.RelPermalink }}" defer
-  data-token="{{ $coveo.tutorial_token }}"
-  data-org="{{ $coveo.org }}"
-></script>
-{{- else if $coveo -}}
-  {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
-{{- end -}}
-
-{{- if (in $.Context.RelPermalink "/learning-paths/") -}}
-<link rel="stylesheet preconnect" href="/learning-paths.css"/>
-{{- end -}}
+  {{- if (in $.Context.RelPermalink "/learning-paths/") -}}
+  <link rel="stylesheet preconnect" href="/learning-paths.css" />
+  {{- end -}}
 
 
-{{ if eq $.Context.RelPermalink "/plans/" }}
-<link rel="stylesheet preconnect" href="/plans.css"/>
-{{- end -}}
+  {{ if eq $.Context.RelPermalink "/plans/" }}
+  <link rel="stylesheet preconnect" href="/plans.css" />
+  {{- end -}}

@@ -95,6 +95,177 @@
     z-index: 3
 }
 
+.DocsSearch .algolia-autocomplete {
+    --dropdown-text-indent: var(--text-indent);
+    --suggestion-item-vertical-padding: 0.5em;
+    display: block !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    width: var(--docs-body-width) !important;
+    z-index: 1 !important;
+    background: var(--background-color);
+    --box-shadow: 0 3rem 6rem -1.2rem rgba(var(--shadow-color-rgb), 0.25),
+        0 3rem 6rem -3rem rgba(var(--shadow-color-rgb), 0.3);
+    --backdrop-box-shadow-alpha: 0.07;
+    --backdrop-box-shadow: 0 0 0 999em rgba(var(--shadow-color-rgb), var(--backdrop-box-shadow-alpha));
+    box-shadow: var(--box-shadow), var(--backdrop-box-shadow);
+    border-radius: 0 0 0.5em 0.5em;
+    will-change: opacity;
+    transition: opacity 0.15s ease;
+}
+
+[theme="dark"] .DocsSearch .algolia-autocomplete {
+    --dark-theme-shadow-offset: 1px;
+    --dropdown-text-indent: calc(var(--text-indent) - var(--dark-theme-shadow-offset));
+    --box-shadow: 0 0 0 1px rgb(var(--shadow-color-rgb), 0.3),
+        0 0.3em 2em rgb(var(--shadow-color-rgb), 0.3);
+    --backdrop-box-shadow-alpha: 0.3;
+    background: var(--gray-0);
+    margin-left: var(--dark-theme-shadow-offset);
+}
+
+.DocsSearch .algolia-autocomplete:not([data-expanded="true"]),
+.DocsSearch .algolia-autocomplete[style*="display: none"] {
+    opacity: 0;
+    --backdrop-box-shadow: none;
+    pointer-events: none;
+}
+
+@supports ((-webkit-backdrop-filter: blur(1em)) or (backdrop-filter: blur(1em))) {
+    .DocsSearch .algolia-autocomplete {
+        background: rgba(var(--background-color-rgb), 0.8);
+        -webkit-backdrop-filter: saturate(200%) blur(1.25em);
+        backdrop-filter: saturate(200%) blur(1.25em);
+    }
+
+    [theme="dark"] .DocsSearch .algolia-autocomplete {
+        background: rgba(var(--gray-0-rgb), 0.8);
+    }
+
+    @media not all and (min-resolution: 0.001dpcm) {
+        @media {
+            .DocsSearch .algolia-autocomplete {
+                background: rgba(var(--background-color-rgb), 1);
+            }
+        }
+    }
+}
+
+.DocsSearch .algolia-autocomplete [class|="ds-dataset"]> :first-child {
+    position: relative;
+    --padding-top: calc(var(--docs-header-height) + 0.66rem);
+    padding: var(--padding-top) var(--dropdown-text-indent) 0;
+}
+
+.DocsSearch .algolia-autocomplete [class|="ds-dataset"]> :first-child:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--docs-header-height);
+    margin-top: -1px;
+    height: 1px;
+    background: rgba(var(--color-rgb), 0.07);
+}
+
+[theme="dark"] .DocsSearch .algolia-autocomplete [class|="ds-dataset"]> :first-child:before {
+    margin-top: 0;
+    background: rgba(var(--color-rgb), 0.07);
+    box-shadow: 0 -1px rgba(var(--shadow-color-rgb), 0.2),
+        0 calc(var(--docs-header-height) * -1) rgba(var(--shadow-color-rgb), 0.1);
+}
+
+.DocsSearch .ds-suggestion {
+    display: block;
+    --horizontal-padding: 1em;
+    padding: var(--suggestion-item-vertical-padding) var(--horizontal-padding);
+    margin: 0 calc(var(--horizontal-padding) * -1);
+    border-radius: 0.25em;
+}
+
+.DocsSearch .ds-suggestion.ds-cursor {
+    background: rgba(var(--gray-5-rgb), 0.2);
+}
+
+[theme="dark"] .DocsSearch .ds-suggestion.ds-cursor {
+    background: rgba(var(--gray-6-rgb), 0.15);
+}
+
+.DocsSearch a.algolia-docsearch-suggestion {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.DocsSearch .algolia-docsearch-suggestion--text {
+    font-size: 0.9em;
+    color: rgba(var(--color-rgb), 0.8);
+}
+
+.DocsSearch .algolia-docsearch-suggestion--highlight {
+    --highlight-opacity: 0.2;
+    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+    color: var(--color);
+}
+
+[theme="dark"] .DocsSearch .algolia-docsearch-suggestion--highlight {
+    --highlight-opacity: 0.4;
+}
+
+.DocsSearch .algolia-docsearch-suggestion--no-results {
+    padding-top: var(--suggestion-item-vertical-padding);
+    margin-bottom: 1em;
+}
+
+.DocsSearch .algolia-docsearch-suggestion--no-results .algolia-docsearch-suggestion--text {
+    padding-top: var(--suggestion-item-vertical-padding);
+    font-size: 1em;
+}
+
+.DocsSearch .algolia-docsearch-suggestion--no-results b {
+    font-weight: inherit;
+}
+
+.DocsSearch .algolia-docsearch-footer {
+    margin-top: 0.5rem;
+    padding: 0 var(--dropdown-text-indent) 2rem;
+    font-size: 0.7em;
+    opacity: 0.5;
+}
+
+.DocsSearch .algolia-docsearch-footer--logo {
+    color: inherit;
+}
+
+.DocsSearch .algolia-docsearch-suggestion--category-header-lvl0:empty:before {
+    content: "Document";
+}
+
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--subcategory-column,
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--subcategory-inline,
+.DocsSearch .algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--subcategory-column,
+.DocsSearch .algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--subcategory-inline,
+.DocsSearch .algolia-docsearch-suggestion__main .algolia-docsearch-suggestion--title {
+    display: none;
+}
+
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--category-header,
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--content,
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--title,
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--wrapper {
+    display: inline;
+}
+
+.DocsSearch .algolia-docsearch-suggestion:not(.algolia-docsearch-suggestion__main) .algolia-docsearch-suggestion--content:not(.algolia-docsearch-suggestion--no-results):before {
+    content: "\203A";
+    opacity: 0.15;
+    padding: 0 0.333em;
+    display: inline-block;
+    -webkit-transform: scale3d(1.5, 1.2, 1);
+    transform: scale3d(1.5, 1.2, 1);
+}
+
 .SiteSearch--input-wrapper:focus-within .SiteSearch--input-icon {
     color: var(--orange);
     opacity: 1
@@ -417,6 +588,7 @@ html[is-site-page] .DocsContent {
     .ProductGrid--outer {
         padding: 0 1rem
     }
+
     .ProductGrid {
         font: 18px
     }
@@ -433,21 +605,21 @@ html[is-site-page] .DocsContent {
 }
 
 @media (min-width:768px) {
-.HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
-    background-repeat: no-repeat;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 0 0px .5px white inset;
-    margin-top: 3em;
-}
+    .HeroImage {
+        background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
+        background-repeat: no-repeat;
+        margin: 0 auto;
+        position: relative;
+        box-shadow: 0 0 0px .5px white inset;
+        margin-top: 3em;
+    }
 }
 
 @media (min-width:768px) {
-[theme=dark] .HeroImage {
-    background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
-    box-shadow: 0 0 0px .5px #1d1f20 inset;
-}
+    [theme=dark] .HeroImage {
+        background-image: url("/Dev-Docs-Header-Illustration-Dark-Mode.svg");
+        box-shadow: 0 0 0px .5px #1d1f20 inset;
+    }
 }
 
 @media (max-width:768px) {
@@ -465,20 +637,20 @@ html[is-site-page] .DocsContent {
         box-shadow: 0 0 0px .5px white inset;
         margin-top: 3em;
     }
-    }
+}
 
-    @media (min-width:768px) {
+@media (min-width:768px) {
     [theme=dark] .ZTHeroImage {
         background-image: url("/Dev-Docs-Header-Illustration-Light-Mode.svg");
         box-shadow: 0 0 0px .5px #1d1f20 inset;
     }
-    }
+}
 
-    @media (max-width:768px) {
-        .ZTHeroImage {
-            background-image: none;
-        }
+@media (max-width:768px) {
+    .ZTHeroImage {
+        background-image: none;
     }
+}
 
 .HeroBlockGrid {
     padding: 40px 0;
@@ -606,7 +778,8 @@ html[is-site-page] .DocsContent {
     border-bottom-color: #fff;
 }
 
-.QuadBlockGrid a, .ViewProducts a {
+.QuadBlockGrid a,
+.ViewProducts a {
     color: inherit;
     text-decoration: none;
 }
@@ -795,7 +968,7 @@ html[is-site-page] .DocsContent {
     padding: 6px 0;
 }
 
-.TriBlock img{
+.TriBlock img {
     height: 25px;
 }
 
@@ -852,7 +1025,8 @@ html[is-site-page] .DocsContent {
     padding: 2.6rem var(--docs-content-gap) 3.5rem;
 }
 
-.SiteFooterItem ul, a {
+.SiteFooterItem ul,
+a {
     text-decoration: none;
     list-style: none;
     padding: 0;
@@ -883,57 +1057,57 @@ html[is-site-page] .DocsContent {
     }
 }
 
- .FeaturedContentSection {
+.FeaturedContentSection {
     margin-top: 2em;
- }
+}
 
- .FeatureContentGrid {
+.FeatureContentGrid {
     display: flex;
     gap: 2em;
     align-items: flex-end;
     margin-bottom: 3em;
- }
+}
 
- .FeaturedContentBlock {
+.FeaturedContentBlock {
     padding-top: 80px;
- }
+}
 
- .FeatureContentWithImage {
+.FeatureContentWithImage {
     margin: 0 30px;
- }
+}
 
- .FeatureContentWithCard {
+.FeatureContentWithCard {
     padding: 1em;
     margin: 1em;
     height: 20em;
     width: 30em;
     border: 1px solid #c8c6c6;
     border-radius: 6px;
- }
+}
 
- .FeatureContentDescription {
+.FeatureContentDescription {
     font-size: .85em;
     width: 16em;
     align-self: flex-start;
- }
+}
 
- .FeatureContentTitle {
-     font-size: 1.3em;
- }
+.FeatureContentTitle {
+    font-size: 1.3em;
+}
 
-  .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+.FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
     text-decoration: none;
     color: #0051C3;
     background: inherit;
     border-bottom-color: #0051C3;
-  }
+}
 
-  [theme=dark] .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
-      text-decoration: none;
-      color: var(--code-orange);
-      background: inherit;
-      border-bottom-color: var(--code-orange);
-  }
+[theme=dark] .FeatureContentWithCard .DocsMarkdown--link .DocsMarkdown--link-content {
+    text-decoration: none;
+    color: var(--code-orange);
+    background: inherit;
+    border-bottom-color: var(--code-orange);
+}
 
 .ZeroTrustImage {
     content: url('./zero-trust-light.svg');
@@ -950,6 +1124,7 @@ html[is-site-page] .DocsContent {
 [theme=dark] .DeveloperPlatformImage {
     content: url('./developer-platform-dark.svg');
 }
+
 @media (max-width:768px) {
     .FeaturedContentSection {
         margin-top: 5em;
@@ -1001,11 +1176,11 @@ html[is-site-page] .DocsContent {
 }
 
 .leading {
-font-size: 2.5em;
-padding: 1em 0;
-line-height: 20px;
-font-weight: 400;
-color: #313131;
+    font-size: 2.5em;
+    padding: 1em 0;
+    line-height: 20px;
+    font-weight: 400;
+    color: #313131;
 }
 
 [theme=dark] .leading {
@@ -3024,6 +3199,60 @@ code .DocsMarkdown--prop-meta {
     max-width: 100%
 }
 
+.DocsMarkdown blockquote {
+    position: relative;
+    margin: 1.5em 0
+}
+
+.DocsMarkdown blockquote>p {
+    font-style: italic
+}
+
+.DocsMarkdown blockquote>p>em {
+    font-style: normal
+}
+
+.DocsMarkdown blockquote cite {
+    font-weight: 700;
+    font-style: normal;
+    font-size: .9em
+}
+
+.DocsMarkdown blockquote cite:before {
+    content: "\2014   "
+}
+
+.DocsMarkdown blockquote:after {
+    position: absolute;
+    content: "";
+    top: 1.5em;
+    bottom: 0;
+    left: -1rem;
+    width: 2px;
+    background: rgba(var(--color-rgb), .2)
+}
+
+@media (max-width:768px) {
+    .DocsMarkdown blockquote {
+        margin-left: 1rem
+    }
+}
+
+.DocsMarkdown blockquote:before {
+    quotes: "\201C" "\201D";
+    content: open-quote;
+    position: absolute;
+    top: .05em;
+    left: -.8em;
+    display: inline-block;
+    font-family: Arial;
+    font-weight: 700;
+    font-size: 2em;
+    line-height: 1;
+    height: .5em;
+    width: .7em
+}
+
 .DocsMarkdown--aside {
     font-size: .9em;
     margin: 1.5em 0;
@@ -3520,40 +3749,40 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 @media (min-width: 769px) {
-.DocsSearch--input-wrapper:focus-within {
-    --highlight-opacity: 0.2;
-    background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
-  }
+    .DocsSearch--input-wrapper:focus-within {
+        --highlight-opacity: 0.2;
+        background-color: rgba(var(--orange-rgb), var(--highlight-opacity));
+    }
 
-  .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
+    .DocsSearch--input:focus::-webkit-input-placeholder {
+        color: rgba(var(--color-rgb), .85);
+        opacity: 1;
+    }
 
-  .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
+    .DocsSearch--input:focus:-ms-input-placeholder {
+        color: rgba(var(--color-rgb), .85);
+        opacity: 1;
+    }
 
-  .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
+    .DocsSearch--input:focus::placeholder {
+        color: rgba(var(--color-rgb), .85);
+        opacity: 1;
+    }
 
-  [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
+    [theme="dark"] .DocsSearch--input:focus::-webkit-input-placeholder {
+        color: rgba(var(--color-rgb), .85);
+        opacity: 1;
+    }
 
-  [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
+    [theme="dark"] .DocsSearch--input:focus:-ms-input-placeholder {
+        color: rgba(var(--color-rgb), .85);
+        opacity: 1;
+    }
 
-  [theme="dark"] .DocsSearch--input:focus::placeholder {
-    color: rgba(var(--color-rgb), .85);
-    opacity: 1;
-  }
+    [theme="dark"] .DocsSearch--input:focus::placeholder {
+        color: rgba(var(--color-rgb), .85);
+        opacity: 1;
+    }
 }
 
 .DocsSearch--input {
@@ -3886,7 +4115,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .slashPlaceholder {
-      visibility: hidden;
+    visibility: hidden;
 }
 
 .legalInformation {
@@ -3915,7 +4144,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
         padding-left: 0;
     }
 
-    .legalInformation li + li:before {
+    .legalInformation li+li:before {
         content: "|";
         padding-right: .5rem;
     }
