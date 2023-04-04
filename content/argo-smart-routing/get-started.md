@@ -27,7 +27,7 @@ To enable [Argo Smart Routing](https://dash.cloudflare.com/?to=/:account/:zone/t
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable Argo Smart Routing with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/argo-smart-routing-patch-argo-smart-routing-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable Argo Smart Routing with the API, send a [`PATCH`](/api/operations/argo-smart-routing-patch-argo-smart-routing-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 You will need to already have a [billing profile](/fundamentals/account-and-billing/account-setup/create-billing-profile/) on your account to enable Argo Smart Routing.
 
