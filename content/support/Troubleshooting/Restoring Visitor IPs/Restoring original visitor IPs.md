@@ -255,7 +255,7 @@ extforward.headers = ("CF-Connecting-IP")
 ```
 
 {{<Aside type="tip">}}
-If your origin connects to the internet with IPv6,
+If your origin connects to the Internet with IPv6,
 **\$HTTP\[\"remoteip\"\]**, which is required for matching the remote IP
 ranges does not work when IPv6 is enabled. Using the above method will
 not work when trying to forward IP ranges. Add the following lines to

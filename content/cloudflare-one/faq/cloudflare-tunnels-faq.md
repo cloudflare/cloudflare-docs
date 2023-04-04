@@ -60,7 +60,7 @@ You can still use Tunnel with Partial Setup. You will need to create a new DNS r
 
 {{<faq-answer>}}
 
-Tunnel can expose web applications to the internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:
+Tunnel can expose web applications to the Internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:
 
 ```sh
 $ netcat -zv [your-server’s-ip-address] 80
