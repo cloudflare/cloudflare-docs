@@ -532,7 +532,7 @@ export class Counter {
 
 [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler tail`](/workers/wrangler/commands/#tail) are both available to help you debug your Durable Objects.
 
-The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's network edge, letting you test your Durable Objects code in the Workers environment as you write it.
+The `wrangler dev` command opens up a tunnel from your local development environment to Cloudflare's global network, letting you test your Durable Objects code in the Workers environment as you write it.
 
 `wrangler tail` displays a live feed of console and exception logs for each request served by your script, including both normal Worker requests and Durable Object requests. After doing a `wrangler publish`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 

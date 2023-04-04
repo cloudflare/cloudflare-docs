@@ -26,7 +26,7 @@ Thank you for your support.
 
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
-Cloudflare Workers runs on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/workers/platform/pricing/).
+Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/workers/platform/pricing/).
 
 Learn more about [how Workers works](/workers/learning/how-workers-works/).
 
