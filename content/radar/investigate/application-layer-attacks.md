@@ -16,7 +16,7 @@ Since we are examining attacks, we can inspect both sides of an attack — both 
 
 This ability to filter by both sides of the attack is only available in the `top locations` endpoints. Unless otherwise specified, other endpoints are filtered by source location, like the origin location of the attack.
 
-The magnitute of the attack  is defined by the total number of mitigated requests, unless otherwise specified.
+The magnitude of the attack is defined by the total number of mitigated requests, unless otherwise specified.
 
 Like in [HTTP requests](/radar/investigate/http-requests), these endpoints can be split into the ability to fetch a timeseries, a single value summarizing the entire date range, and a list of top locations.
 

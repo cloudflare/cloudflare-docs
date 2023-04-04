@@ -5,7 +5,7 @@ weight: 9
 product_grid:
   show: true
   title: DNS Firewall
-  group: Security
+  group: Application security
 ---
 
 # DNS Firewall

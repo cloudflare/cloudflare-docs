@@ -7,9 +7,9 @@ title: AsyncLocalStorage
 
 ## Background
 
-Cloudflare Workers provides an implemenation of a subset of the Node.js [AsyncLocalStorage](https://nodejs.org/dist/latest-v18.x/docs/api/async_context.html#class-asynclocalstorage) API for creating in-memory stores that remain coherent through asynchronous operations.
+{{<render file="_nodejs-compat-howto.md">}}
 
-Availability of the `AsyncLocalStorage` API is enabled using the `nodejs_compat` compatibility flag. Once enabled, the API can be accessed using `import * from 'node:async_hooks'`.
+Cloudflare Workers provides an implemenation of a subset of the Node.js [AsyncLocalStorage](https://nodejs.org/dist/latest-v18.x/docs/api/async_context.html#class-asynclocalstorage) API for creating in-memory stores that remain coherent through asynchronous operations.
 
 ## Constructor
 

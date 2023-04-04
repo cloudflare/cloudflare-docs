@@ -124,7 +124,7 @@ To delete your Pages project:
 
 {{<Aside type="warning">}}
 
-For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](#deleting-a-custom-domain) for instructions.
+For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](/pages/platform/custom-domains/#delete-a-custom-domain) for instructions.
 
 For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
 

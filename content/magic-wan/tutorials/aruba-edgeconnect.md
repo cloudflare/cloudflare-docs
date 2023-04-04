@@ -266,7 +266,7 @@ header: Response
 
 **Create an IPSec tunnel on EdgeConnect**
 
-You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in the [previous step](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies-1). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
+You can create a tunnel after the Business Intent Overlay policies have been defined. Use the correct policy or service created in [configure overlay policy](/magic-wan/tutorials/aruba-edgeconnect/#2-configure-overlay-policies). The local IP is the local WAN interface of the EdgeConnect device, and the remote IP is the Cloudflare public IP assigned as the tunnel endpoint.
 
 ![Modify Passthrough Tunnel dialog with General values](/magic-wan/static/general-modify-passthrough.png)
 

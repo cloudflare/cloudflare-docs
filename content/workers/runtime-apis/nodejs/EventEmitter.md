@@ -5,7 +5,7 @@ title: EventEmitter
 
 # EventEmitter
 
-{{<render file="nodejs-compat-howto.md">}}
+{{<render file="_nodejs-compat-howto.md">}}
 
 An `EventEmitter` is an object that emits named events that cause listeners to be called.
 

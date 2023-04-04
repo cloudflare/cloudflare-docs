@@ -35,7 +35,7 @@ Depending on the characteristics of a request, Cloudflare will choose an appropr
 Currently, **Managed Challenge** actions are available in the following security products:
 
 - [IP Access Rules](/waf/tools/ip-access-rules/)
-- [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951)
+- [User Agent Blocking](/waf/tools/user-agent-blocking/)
 - [Rate Limiting (previous version)](https://support.cloudflare.com/hc/articles/115001635128)
 - [Custom rules](/waf/custom-rules/)
 - [WAF Managed Rules](/waf/managed-rules/)

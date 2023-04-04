@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-03-24
+
+- Fixed a bug in Wrangler tail and and live logs on the dashboard that prevented the Administrator Read-Only and Workers Tail Read roles from successfully tailing Workers.
+
 ## 2023-03-09
 
 - No externally-visible changes

@@ -434,7 +434,7 @@
     "link": "/dns/",
     "cname_flattening": {
       "title": "CNAME Flattening",
-      "link": "/dns/additional-options/cname-flattening/",
+      "link": "/dns/cname-flattening/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1215,6 +1215,20 @@
         }
       }
     },
+    "security_analytics": {
+      "title": "Security Analytics",
+      "link": "/waf/security-analytics/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
     "x_firewall_rules": {
       "title": "Firewall rules",
       "link": "/firewall/",
@@ -1482,7 +1496,7 @@
     },
     "x_user_agent_rules": {
       "title": "User Agent Blocking",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
+      "link": "/waf/tools/user-agent-blocking/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1505,11 +1519,11 @@
     },
     "x_zone_lockdown_rules": {
       "title": "Zone Lockdown",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001595131",
+      "link": "/waf/tools/zone-lockdown/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
+          "summary": "Available on all paid plans",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",

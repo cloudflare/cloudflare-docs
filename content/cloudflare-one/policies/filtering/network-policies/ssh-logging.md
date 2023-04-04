@@ -120,7 +120,7 @@ All proxied SSH commands are immediately encrypted using this public key. The ma
 
 2. If you enabled the **SSH Command Logging** feature, you can **Download** a session's command log.
 
-3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#configure-ssh-command-logging):
+3. To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). The following example uses the private key generated in [Configure SSH Command Logging](#optional-configure-ssh-command-logging):
 
    ```sh
    $ ./ssh-log-cli decrypt -i sshlog -k sshkey

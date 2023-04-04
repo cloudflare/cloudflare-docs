@@ -34,7 +34,7 @@ For step-by-step guidance, refer to [Create monitors](/load-balancing/how-to/cre
 
 ## Health check regions
 
-When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#attach-the-monitor-to-a-pool), you can select multiple regions to increase reporting accuracy.
+When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can select multiple regions to increase reporting accuracy.
 
 {{<render file="_health-check-regions.md">}}
 

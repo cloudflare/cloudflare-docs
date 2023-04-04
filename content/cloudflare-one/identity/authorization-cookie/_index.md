@@ -7,11 +7,11 @@ layout: single
 
 # Cloudflare authorization cookie
 
-When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF-Authorization` cookie. If a request does not include the cookie, Access will block the request.
+When you protect a site with Cloudflare Access, Cloudflare checks every HTTP request bound for that site to ensure that the request has a valid `CF_Authorization` cookie. If a request does not include the cookie, Access will block the request.
 
 ## Access JWTs
 
-The `CF-Authorization` cookie contains the user's identity in the form of a JSON Web Token (JWT).Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
+The `CF_Authorization` cookie contains the user's identity in the form of a JSON Web Token (JWT).Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
 
 Two tokens are generated:
 
@@ -25,7 +25,7 @@ Cloudflare Access provides optional security settings that can be added to the b
 
 - [SameSite](#samesite-attribute)
 - [HttpOnly flag](#httponly)
-- [Binding cookie](#enable-binding-cookie)
+- [Binding cookie](#binding-cookie)
 - [Cookie path](#cookie-path-attribute)
 
 To enable these settings:
@@ -77,11 +77,11 @@ Do not use the Binding Cookie for non-browser based Access applications that rel
 
 ### Cookie Path Attribute
 
-The Cookie Path Attribute adds the application's path URL to the `CF-Authorization` cookie. When enabled, a user who logs in to `example.com/path1` must re-authenticate to access `example.com/path2`. When disabled, the CF-Authorization cookie is only scoped to the domain and subdomain.
+The Cookie Path Attribute adds the application's path URL to the `CF_Authorization` cookie. When enabled, a user who logs in to `example.com/path1` must re-authenticate to access `example.com/path2`. When disabled, the `CF_Authorization` cookie is only scoped to the domain and subdomain.
 
 ## Allow cross-site cookies in Firefox
 
-By default, Firefox Private Browsing mode blocks all cross-site cookies including the `CF-Authorization` cookie. For XHR requests to work in private windows, you will need to exempt your site and [team domain](/cloudflare-one/glossary/#team-domain) from the browser's tracking protection system.
+By default, Firefox Private Browsing mode blocks all cross-site cookies including the `CF_Authorization` cookie. For XHR requests to work in private windows, you will need to exempt your site and [team domain](/cloudflare-one/glossary/#team-domain) from the browser's tracking protection system.
 
 To enable cross-site cookies in Firefox:
 

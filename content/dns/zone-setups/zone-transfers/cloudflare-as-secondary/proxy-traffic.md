@@ -40,7 +40,7 @@ To set up Secondary DNS override for specific `A`, `AAAA`, or `CNAME` records, s
 
 ## `CNAME` record on the zone apex
 
-You can also add a `CNAME` record on the zone apex (supported through [CNAME Flattening](/dns/additional-options/cname-flattening/)) and either proxy that record or keep it on DNS Only.
+You can also add a `CNAME` record on the zone apex (supported through [CNAME Flattening](/dns/cname-flattening/)) and either proxy that record or keep it on DNS Only.
 
 Once you create a `CNAME` record at the apex, existing `A` or `AAAA` records on the zone apex will be deactivated. You can view those deactivated records by clicking **View Inactive Records**. To re-activate the `A` or `AAAA` records at the root, remove the `CNAME` record.
 

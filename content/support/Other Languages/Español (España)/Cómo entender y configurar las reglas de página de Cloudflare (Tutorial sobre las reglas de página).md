@@ -452,7 +452,7 @@ Desactiva:
 -   [Limitación de velocidad (versión anterior)](https://support.cloudflare.com/hc/articles/115001635128)
 -   [ScrapeShield](https://support.cloudflare.com/hc/articles/200171036)
 -   [Exclusiones del lado del servidor](https://support.cloudflare.com/hc/articles/200170036)
--   [Bloqueo de URL (zona)](https://support.cloudflare.com/hc/articles/115001595131)
+-   [Bloqueo de URL (zona)](/waf/tools/zone-lockdown/)
 -   [Reglas administradas del WAF (versión anterior)](https://support.cloudflare.com/hc/articles/200172016)
 
  | 

@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/200170196--Reaktion-auf-DDoS-Angriffe
-title: Reaktion auf DDoS-Angriffe 
+title: Reaktion auf DDoS-Angriffe
 ---
 
-# Reaktion auf DDoS-Angriffe 
+# Reaktion auf DDoS-Angriffe
 
 
 
@@ -76,10 +76,10 @@ ___
 
 Cloudflares **Firewall**\-App erleichtert das Blockieren von Datenverkehr anhand der folgenden Methoden:
 
-**[IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)** werden empfohlen, um mehrere IP-Adressen, /16- oder /24-IP-Bereiche oder AS-Nummern (ASNs) zu blockieren.   
-**[Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)** werden empfohlen, um ein Land, einen gültigen IP-Bereich oder komplexere Angriffsmuster zu blockieren.  
-**[Zone Lockdown](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-)** wird empfohlen, um nur vertrauenswürdige IP-Adressen oder -Bereiche auf einen Teil Ihrer Website zu lassen.  
-**[User Agent Blocking](https://support.cloudflare.com/hc/en-us/articles/115001856951-How-do-I-block-malicious-User-Agents-with-Cloudflare-)** wird empfohlen, um verdächtige [User-Agent-Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) für Ihre gesamte Domain zu blockieren.
+**[IP Access Rules](/waf/tools/ip-access-rules/)** werden empfohlen, um mehrere IP-Adressen, /16- oder /24-IP-Bereiche oder AS-Nummern (ASNs) zu blockieren. 
+**[Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/)** werden empfohlen, um ein Land, einen gültigen IP-Bereich oder komplexere Angriffsmuster zu blockieren.
+**[Zone Lockdown](/waf/tools/zone-lockdown/)** wird empfohlen, um nur vertrauenswürdige IP-Adressen oder -Bereiche auf einen Teil Ihrer Website zu lassen.
+**[User Agent Blocking](/waf/tools/user-agent-blocking/)** wird empfohlen, um verdächtige [User-Agent-Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) für Ihre gesamte Domain zu blockieren.
 
 {{<Aside type="tip">}}
 [**Firewall Rules** haben

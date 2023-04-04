@@ -534,6 +534,24 @@ mtls_certificates = [
 
 mTLS certificate bindings can then be used at runtime to communicate with secured origins via their [`fetch` method](/workers/runtime-apis/mtls).
 
+### Email bindings
+
+{{<render file="_send-emails-workers-intro.md" productFolder="/email-routing/" withParameters="Then, assign an array to the object `send_email` with the type of email binding you need.">}}
+
+
+{{<definitions>}}
+
+- `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
+
+  - Defines that you are creating bindings for sending emails from your Worker.
+
+- `attribute` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
+
+  - Defines the type of binding. Refer to [Types of bindings](/email-routing/email-workers/send-email-workers/#types-of-bindings) for more information.
+
+{{</definitions>}}
+
+{{<render file="_types-bindings.md" productFolder="/email-routing/">}}
 
 ## Bundling
 

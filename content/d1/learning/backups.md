@@ -57,7 +57,7 @@ Larger databases, especially those that are several megabytes (MB) in size with 
 
 ## Downloading a backup locally
 
-To download a backup locally, call `wrangler d1 backup <DATABASE_NAME> <BACKUP_ID>`. Use `wrangler d1 backup list <DATABASE_NAME>` to list the available backups, including their IDs, for a given D1 database.
+To download a backup locally, call `wrangler d1 backup download <DATABASE_NAME> <BACKUP_ID>`. Use `wrangler d1 backup list <DATABASE_NAME>` to list the available backups, including their IDs, for a given D1 database.
 
 For example, to download a specific backup for a database named `example-db`:
 

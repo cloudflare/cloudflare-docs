@@ -16,7 +16,7 @@ Cloudflare does not currently support entering the same IP using a different VNe
 
 ## Via the API
 
-Enable Virtual IP support by adding the `virtual_network_id` field to your API requests. Refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-create-pool) for more information.
+You can [set up your Tunnels and Tunnel routes](/cloudflare-one/connections/connect-apps/private-net/tunnel-virtual-networks/) to create a `virtual_network_id` value to use in the Load Balancing API call. Enable Virtual IP support by adding the `virtual_network_id` field to your API requests. Refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-create-pool) for more information.
 
 {{<Aside type="note">}}
 

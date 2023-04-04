@@ -151,11 +151,7 @@ ___
 Ein Cloudflare-Kunde hat den Traffic von Ihrem Client oder Browser blockiert.
 
 {{<Aside type="note">}}
-Fehler 1006 tritt auch in der Cloudflare-**Workers**-App unter der
-**Vorschau**-Registerkarte auf, wenn ein Kunde **[Zone
-Lockdown](https://support.cloudflare.com/hc/articles/115001595131)**
-oder ein anderes Cloudflare-Sicherheitsmerkmal verwendet, um die IPs der
-Google-Cloud-Plattform zu blockieren, von denen die
+Fehler 1006 tritt auch in der Cloudflare-**Workers**-App unter der **Vorschau**-Registerkarte auf, wenn ein Kunde **[Zone Lockdown](/waf/tools/zone-lockdown/)** oder ein anderes Cloudflare-Sicherheitsmerkmal verwendet, um die IPs der Google-Cloud-Plattform zu blockieren, von denen die
 **Vorschau**-Registerkarte abhängt.
 {{</Aside>}}
 

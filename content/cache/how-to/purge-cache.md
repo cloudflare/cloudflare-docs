@@ -15,7 +15,7 @@ Purge requests appear in Cloudflare Logs and are identified by the PURGE method 
 
 {{</Aside>}}
 
-For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#using-workers-to-purge).
+For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [​​Using Workers to purge](/workers/learning/how-the-cache-works/#single-file-purge--assets-cached-by-a-worker).
 
 ## Purge by single-file (by URL)
 
@@ -35,7 +35,7 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
   - `X-Rewrite-URL`
   - `Forwarded`
 
-You can purge objects with these characteristics using an API call ([Purge files by URL](https://api.cloudflare.com/#zone-purge-files-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
+You can purge objects with these characteristics using an API call ([Purge files by URL](https://developers.cloudflare.com/api/operations/zone-purge#purge-cached-content-by-url)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -112,7 +112,7 @@ When your content reaches our edge network, Cloudflare:
 
 {{<Aside type="note" header="API">}}
 
-You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge). You can use up to 30 cache-tags in one API call and make up to 30,000 purge API calls in a 24-hour period.
+You can purge using cache-tags via the Cloudflare API. For more information, refer to the [API documentation](https://developers.cloudflare.com/api/operations/zone-purge). You can purge up to 30 cache-tags per API call and up to 250,000 cache-tags per a 24-hour period.
 
 {{</Aside>}}
 

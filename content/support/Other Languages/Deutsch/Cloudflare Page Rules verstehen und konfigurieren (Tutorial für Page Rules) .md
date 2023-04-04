@@ -453,10 +453,10 @@ Deaktivierung von:
 -   [Durchsatzbegrenzung (ältere Version)](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [Serverseitige Ausschlüsse](https://support.cloudflare.com/hc/articles/200170036)
--   [URL (Zone) Lockdown](https://support.cloudflare.com/hc/articles/115001595131)
+-   [URL (Zone) Lockdown](/waf/tools/zone-lockdown/)
 -   [WAF-verwaltete Regeln (ältere Version)](https://support.cloudflare.com/hc/articles/200172016)
 
- | 
+ |
 
 -   Alle
 

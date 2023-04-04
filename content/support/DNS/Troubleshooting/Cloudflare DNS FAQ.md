@@ -196,7 +196,7 @@ ___
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
-This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk using the API: https://api.cloudflare.com/#dns-records-for-a-zone-delete-dns-record . Or you can also delete your domain from the Cloudflare Dashboard, then delete the wildcard record from your authoritative DNS, and then re-add the domain again
+This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk using the API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record. Or you can also delete your domain from the Cloudflare Dashboard, then delete the wildcard record from your authoritative DNS, and then re-add the domain again
 
 ___
 

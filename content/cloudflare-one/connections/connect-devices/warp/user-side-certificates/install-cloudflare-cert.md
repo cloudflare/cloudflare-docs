@@ -111,7 +111,9 @@ $ echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 
 ### iOS
 
-1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
+iOS only allows the Safari browser to open and install certificates.
+
+1. Open Safari and [download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
 
 ![iOS popup message asking for permission to download certificate](/cloudflare-one/static/documentation/connections/ios_cert_download.PNG)
 

@@ -5,7 +5,7 @@ weight: 6
 product_grid:
   show: true
   title: Keyless SSL
-  group: Security
+  group: Application security
 ---
 
 # Keyless SSL

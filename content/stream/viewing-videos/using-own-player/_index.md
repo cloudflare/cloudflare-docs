@@ -2,6 +2,7 @@
 title: Use your own player
 weight: 1
 layout: single
+pcx_content_type: how-to
 ---
 
 # Use your own player
@@ -79,7 +80,7 @@ SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will nee
 
 {{<render file="_srt-supported-modes.md">}}
 
-We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
+We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
 
 ### Examples
 

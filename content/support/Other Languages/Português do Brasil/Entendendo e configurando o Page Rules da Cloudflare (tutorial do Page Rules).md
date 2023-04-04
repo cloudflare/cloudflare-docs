@@ -432,7 +432,7 @@ Desligar:
 -   [Rate Limiting (versão anterior)](https://support.cloudflare.com/hc/articles/115001635128)
 -   [Scrape Shield](https://support.cloudflare.com/hc/articles/200171036)
 -   [Exclusão pelo servidor](https://support.cloudflare.com/hc/articles/200170036)
--   [Bloqueio de URL (zona)](https://support.cloudflare.com/hc/articles/115001595131)
+-   [Bloqueio de URL (zona)](/waf/tools/zone-lockdown/)
 -   [Regras gerenciadas do WAF (versão anterior)](https://support.cloudflare.com/hc/articles/200172016)
 
  | 
