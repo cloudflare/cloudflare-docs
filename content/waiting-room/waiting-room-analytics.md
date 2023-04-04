@@ -16,7 +16,7 @@ Using Waiting Room Analytics, you can:
 
 {{<Aside type="note">}}
 
-Waiting Room Analytics is available to all Business and Enterprise plans.
+Waiting Room Analytics in the Waiting Room dashboard will be rolled out gradually and available to all Business and Enterprise plans by the end of May, 2023. Waiting Room Analytics via GraphQL is available now to all Business and Enterprise plans.
 
 {{</Aside>}}
 
@@ -101,7 +101,7 @@ The New users per minute chart shows how many new users per minute passed throug
 
 ## ​​GraphQL Analytics
 
-You can query your Waiting Room analytics data via GraphQL API. Waiting Room analytics provides real-time visibility into your Waiting Room, allowing you to visualize the traffic to your application and how it is managed respecting the configured limits.
+You can query your Waiting Room analytics data via GraphQL API. Waiting Room analytics provides near real-time visibility into your Waiting Room, allowing you to visualize the traffic to your application and how it is managed respecting the configured limits.
 
 Here are some query examples to get started:
 
