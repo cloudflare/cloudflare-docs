@@ -5,13 +5,17 @@ title: Routes
 
 # Routes
 
-## Background
+Routes allow users to map a URL pattern to a Worker. This enables Workers to run in front of [custom comains](/workers/platform/triggers/custom-domains/) or their own external application servers. Customers must manually create DNS records and certificates for routes to invoke over HTTP(S).
 
-Routes allow users to map a URL pattern to a Worker script to enable Workers to run in front of [Custom Domains](/workers/platform/triggers/custom-domains/) or their own external application servers. Customers must manually create DNS records and certificates for Routes to invoke over HTTP(S).
+Routes are comprised of:
 
-## Customize your routes
+- Route URL (refer to [Matching Behavior](#matching-behavior)).
+- Worker script to execute on matching requests.
+- Failure mode for rate-limited accounts on the Free plan (refer to [daily request limits](/workers/platform/limits/#request-limits)).
 
-For zones proxied on Cloudflare, route patterns decide what (if any) script is matched based on the URL of that request. Requests are routed through a Workers script when the URL matches a route pattern assigned to that script. To add a Route, you must have:
+## Routes with custom domains
+
+Requests are routed through a Worker when the URL matches a route pattern assigned to that Worker. To add a route on a custom domain, you must have:
 
 1. An active Cloudflare zone.
 2. A valid proxied (orange-clouded) DNS record.
@@ -20,13 +24,7 @@ For zones proxied on Cloudflare, route patterns decide what (if any) script is m
 
 Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
 
-Cloudflare Site routes are comprised of:
-
-- Route URL (refer to [Matching Behavior](#matching-behavior))
-- Worker script to execute on matching requests
-- Failure mode for rate-limited accounts on the Free plan (refer to [daily request limits](/workers/platform/limits/#request-limits))
-
-The Routes REST API documentation can be found [in the Workers API docs](https://developers.cloudflare.com/api/operations/worker-routes-list-routes).
+The Routes REST API documentation can be found [in the Workers API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes).
 
 If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
 
@@ -38,7 +36,7 @@ Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is config
 
 To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Your subdomain**. The `name` field in your Worker configuration is used as the preview subdomain for the deployed script, (for example, `my-worker.<YOUR_SUBDOMAIN>.workers.dev.`).
 
-### Matching Behavior
+### Matching behavior
 
 Route patterns look like this:
 
