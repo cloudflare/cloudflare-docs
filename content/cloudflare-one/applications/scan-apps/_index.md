@@ -3,10 +3,6 @@ pcx_content_type: how-to
 title: Scan SaaS applications
 layout: single
 weight: 5
-product_grid:
-  show: true
-  title: CASB
-  group: Cloudflare One
 ---
 
 # Scan SaaS applications

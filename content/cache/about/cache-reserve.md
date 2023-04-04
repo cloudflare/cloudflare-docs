@@ -1,10 +1,6 @@
 ---
 title: Cache Reserve (beta)
 pcx_content_type: concept
-product_grid:
-  show: true
-  title: Cache Reserve
-  group: Application performance
 ---
 
 {{<beta>}} Cache Reserve {{</beta>}}

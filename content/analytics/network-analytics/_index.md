@@ -4,10 +4,6 @@ pcx_content_type: overview
 weight: 3
 meta:
   title: Cloudflare Network Analytics v2
-product_grid:
-  show: true
-  title: Network Analytics
-  group: Network services
 ---
 
 # Cloudflare Network Analytics

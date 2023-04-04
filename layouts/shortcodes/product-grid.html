@@ -13,14 +13,6 @@
 {{- end -}}
 {{- end -}}
 
-{{- range .Site.Pages  -}}
-{{- $relpermalink := .RelPermalink -}}
-{{- with index .Params "product_grid"  -}}
-{{- $dataArray = $dataArray | append (dict "group" .group "title" .title 
- "show" (default false .show) "url" $relpermalink "wrap" (default false .wrap)) -}}
-{{- end -}}
-{{- end -}}
-
 {{- range $dataArray -}}
 {{- with .group -}}
 

@@ -1,0 +1,7 @@
+name: Rate limiting
+
+product:
+  title: Rate limiting
+  group: Application security
+  url: /waf/rate-limiting-rules/
+  grid_placeholder: true
