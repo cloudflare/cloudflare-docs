@@ -432,56 +432,43 @@ function filterList() {
   let searchTerm = searchBox.value.toLowerCase();
   let listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
 
-  // If no checkboxes are checked and the search box is empty, show all list items
-  if (numCheckboxes === 0 && searchTerm === '') {
-    for (let k = 0; k < listItems.length; k++) {
+  // Filter based on supplied values
+  let groupIdValues = []
+  for (let checkbox of checkedGroups) {
+    groupIdValues.push(checkbox.id);
+  }
+  let matchIdValues = []
+  for (let checkbox of checkedPreview) {
+      matchIdValues.push(checkbox.id);
+  }
+
+  for (let k = 0; k < listItems.length; k++) {
+    let groupMatch;
+    let previewMatch;
+    let searchMatch;
+    if (groupIdValues.length > 0) {
+      groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
+    } else {
+      groupMatch = true
+    }
+
+    if (matchIdValues.length > 0) {
+      previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
+    } else {
+      previewMatch = true
+    }
+
+    if (searchTerm !== '') {
+      searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
+    } else {
+      searchMatch = true
+    }
+    
+    if (groupMatch && searchMatch && previewMatch) {
       listItems[k].style.display = '';
       visibleItems = true;
-    }
-  } else if (numCheckboxes === 0 && searchTerm !== '') {
-  // If no checkboxes are checked and the search box is not empty, filter based on search
-    for (let k = 0; k < listItems.length; k++) {
-      let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-      if (searchMatch) {
-          listItems[k].style.display = '';
-          visibleItems = true;
-        } else {
-          listItems[k].style.display = 'none';
-        }
-    }
-  } else {
-    // Otherwise, hide all list items and show only the ones with matching data attributes and search terms
-    let groupIdValues = []
-    for (let checkbox of checkedGroups) {
-      groupIdValues.push(checkbox.id);
-    }
-    let matchIdValues = []
-    for (let checkbox of checkedPreview) {
-        matchIdValues.push(checkbox.id);
-    }
-
-    for (let k = 0; k < listItems.length; k++) {
-      let groupMatch;
-      let previewMatch;
-      if (groupIdValues.length > 0) {
-        groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-      } else {
-        groupMatch = true
-      }
-
-      if (matchIdValues.length > 0) {
-        previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
-      } else {
-        previewMatch = true
-      }
-      
-      let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-      if (groupMatch && searchMatch && previewMatch) {
-        listItems[k].style.display = '';
-        visibleItems = true;
-      } else {
-        listItems[k].style.display = 'none';
-      }
+    } else {
+      listItems[k].style.display = 'none';
     }
   }
   // Trigger empty state message 
