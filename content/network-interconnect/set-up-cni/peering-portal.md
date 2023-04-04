@@ -19,7 +19,7 @@ You must first [create PeeringDB portal account](https://www.peeringdb.com/regis
 
 1. [Log in](https://www.peeringdb.com/account/login/?next=/register) to your account.
 2. Ensure your email address is affiliated with the ASN you want to request access for.
-Select the **OIDC PeeringDB** and follow the log in process.
+3. Select the **OIDC PeeringDB** and follow the log in process.
 
 If you receive a message stating your account has not been affiliated with an organization, you will need to request affiliation.
 
