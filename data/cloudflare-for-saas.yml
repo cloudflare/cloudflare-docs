@@ -5,3 +5,7 @@ product:
   group: Cloudflare essentials
   url: /cloudflare-for-platforms/cloudflare-for-saas/
   grid_placeholder: true
+  preview_tryout: true
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames

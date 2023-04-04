@@ -5,6 +5,7 @@ product:
   title: Stream
   url: /stream/
   group: Developer platform
+  preview_tryout: true
 
 meta:
   title: Cloudflare Stream docs

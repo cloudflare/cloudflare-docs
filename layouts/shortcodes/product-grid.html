@@ -8,7 +8,7 @@
 {{- with index $productData "product" -}}
 {{- $dataArray = $dataArray | append 
 (dict "group" .group "title" .title  "show" (default true .show) "url" 
-.url "wrap" (default false .wrap)) -}}
+.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) ) -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -316,7 +316,16 @@
 }
 
 fieldset {
-  border-radius: 6px;
+  border: 0;
+}
+
+span a img {
+  display: inline-block;
+   vertical-align: middle;
+}
+
+[theme="dark"] span a img {
+  filter: invert(100%) sepia(0%) saturate(4588%) hue-rotate(160deg) brightness(108%) contrast(101%);
 }
 
 </style>
@@ -346,11 +355,20 @@ fieldset {
         <legend class="FilterLegend">Product Group</legend>
         {{- range $availableOptions -}}
         <div>
-          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="{{- . -}}">
+          <input class="ProductCheckboxItem" type="checkbox" id="{{- . -}}" name="product-group">
           <label class="CheckboxLabel" for="{{- . -}}">{{- . -}}</label>
         </div>
         {{- end -}}
     </fieldset>
+    <fieldset>
+      <legend class="FilterLegend">Preview available
+        <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details"></a></span>
+      </legend>
+      <div>
+        <input class="ProductCheckboxItem" type="checkbox" id="true" name="preview-available">
+        <label class="CheckboxLabel" for="true">True</label>
+      </div>
+  </fieldset>
     </div>
   </div>
     <div class="filter-footer">
@@ -368,6 +386,7 @@ fieldset {
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
           data-product-group="{{ .group }}"
+          data-preview-tryout="{{ .preview_tryout }}"
         >
           <span>{{ .title }}</span>
         </a>
@@ -392,29 +411,21 @@ fieldset {
   });
 
 function filterList() {
-  let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
+  let checkedGroups = document.querySelectorAll('input[name="product-group"]:checked')
+  let checkedPreview = document.querySelectorAll('input[name="preview-available"]:checked')
+  let numCheckboxes = checkedGroups.length + checkedPreview.length;
   let searchBox = document.getElementById('search');
+  
   // Get all checked checkboxes
   let visibleItems = false;
   let checkedValues = [];
-  let numCheckboxes = 0;
-  for (let j = 0; j < checkboxes.length; j++) {
-    if (checkboxes[j].checked) {
-      checkedValues.push(checkboxes[j].id);
-      numCheckboxes++;
-    }
-  }
+  
   let filterButton = document.getElementById('filter-button');
   if (numCheckboxes === 0) {
     filterButton.innerText = "Filter Products";
   } else {
     let suffix = numCheckboxes > 1 ? 's' : '';
-    filterButton.innerText = `Filter Products (${numCheckboxes} group${suffix})`;
-  }
-  for (let j = 0; j < checkboxes.length; j++) {
-    if (checkboxes[j].checked) {
-      checkedValues.push(checkboxes[j].id);
-    }
+    filterButton.innerText = `Filter Products (${numCheckboxes} filter${suffix} applied)`;
   }
   
   // Get the value of the search box
@@ -422,12 +433,12 @@ function filterList() {
   let listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
 
   // If no checkboxes are checked and the search box is empty, show all list items
-  if (checkedValues.length === 0 && searchTerm === '') {
+  if (numCheckboxes === 0 && searchTerm === '') {
     for (let k = 0; k < listItems.length; k++) {
       listItems[k].style.display = '';
       visibleItems = true;
     }
-  } else if (checkedValues.length === 0 && searchTerm !== '') {
+  } else if (numCheckboxes === 0 && searchTerm !== '') {
   // If no checkboxes are checked and the search box is not empty, filter based on search
     for (let k = 0; k < listItems.length; k++) {
       let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
@@ -440,10 +451,19 @@ function filterList() {
     }
   } else {
     // Otherwise, hide all list items and show only the ones with matching data attributes and search terms
+    let groupIdValues = []
+    for (let checkbox of checkedGroups) {
+        groupIdValues.push(checkbox.id);
+      }
+    let matchIdValues = []
+    for (let checkbox of checkedPreview) {
+        matchIdValues.push(checkbox.id);
+      }
     for (let k = 0; k < listItems.length; k++) {
-      let categoryMatch = (checkedValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
+      let groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
+      let previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
       let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-      if (categoryMatch && searchMatch) {
+      if (groupMatch && searchMatch && previewMatch) {
         listItems[k].style.display = '';
         visibleItems = true;
       } else {

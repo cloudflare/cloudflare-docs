@@ -5,3 +5,7 @@ product:
   group: Application security
   url: /waf/rate-limiting-rules/
   grid_placeholder: true
+  preview_tryout: true
+
+resources:
+  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf/rate-limiting-rules

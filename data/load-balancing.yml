@@ -5,6 +5,7 @@ product:
   title: Load Balancing
   url: /load-balancing/
   group: Application performance
+  preview_tryout: true
 
 meta:
   title: Cloudflare Load Balancing docs
