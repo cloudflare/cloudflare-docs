@@ -361,7 +361,7 @@ span a img {
         {{- end -}}
     </fieldset>
     <fieldset>
-      <legend class="FilterLegend">Preview available
+      <legend class="FilterLegend">Enterprise preview
         <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details"></a></span>
       </legend>
       <div>
@@ -451,20 +451,30 @@ function filterList() {
     }
   } else {
     // Otherwise, hide all list items and show only the ones with matching data attributes and search terms
-
     let groupIdValues = []
     for (let checkbox of checkedGroups) {
       groupIdValues.push(checkbox.id);
     }
-
     let matchIdValues = []
     for (let checkbox of checkedPreview) {
         matchIdValues.push(checkbox.id);
     }
 
     for (let k = 0; k < listItems.length; k++) {
-      let groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-      let previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
+      let groupMatch;
+      let previewMatch;
+      if (groupIdValues.length > 0) {
+        groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
+      } else {
+        groupMatch = true
+      }
+
+      if (matchIdValues.length > 0) {
+        previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
+      } else {
+        previewMatch = true
+      }
+      
       let searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
       if (groupMatch && searchMatch && previewMatch) {
         listItems[k].style.display = '';
