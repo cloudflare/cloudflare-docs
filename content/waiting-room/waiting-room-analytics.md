@@ -32,7 +32,7 @@ To access your waiting room’s analytics in the dashboard:
 
 ## Event Analytics
 
-If your waiting room has a completed scheduled event, you can quickly access the event’s analytics by expanding the row for the waiting room you are interested in and selecting on the event time. The link will open the waiting room’s analytics set to the time period inclusive of the pre-queueing time period through the end of the event.
+If your waiting room has a completed scheduled event, you can quickly access the event’s analytics by expanding the row for the waiting room you are interested in and selecting the event time. The link opens the analytics view for that waiting room, including information from the pre-queueing period to the end of the event.
 
 To save this event information, you can either select **Download data** or **Print report**. If you delete the event, the time period link will no longer appear in your dashboard. If you edit the timing of the event, the time period link will update as well.
 
@@ -172,8 +172,8 @@ header: Request
 ---
 {
   viewer {
-    zones(filter: {zoneTag: "e5fa460577e211b4b17fb43f975c9e30"}) {
-      waitingRoomAnalyticsAdaptiveGroups(limit: 10, filter: {datetime_geq: "2023-03-15T04:00:00Z", datetime_leq: "2023-03-15T04:45:00Z", waitingRoomId: "66eb02f164940469bc838de0575ef248"}, orderBy: [datetimeFifteenMinutes_ASC]) {
+    zones(filter: {zoneTag: "example-zone"}) {
+      waitingRoomAnalyticsAdaptiveGroups(limit: 10, filter: {datetime_geq: "2023-03-15T04:00:00Z", datetime_leq: "2023-03-15T04:45:00Z", waitingRoomId: "example-waiting-room-id"}, orderBy: [datetimeFifteenMinutes_ASC]) {
         avg {
           totalActiveUsers
           newUsersPerMinute
@@ -245,8 +245,8 @@ header: Request
 ---
 {
   viewer {
-    zones(filter: {zoneTag: "e5fa460577e211b4b17fb43f975c9e30"}) {
-      waitingRoomAnalyticsAdaptiveGroups(limit: 10, filter: {datetime_geq: "2023-03-15T04:00:00Z", datetime_leq: "2023-03-15T04:45:00Z", waitingRoomId: "66eb02f164940469bc838de0575ef248"}, orderBy: [datetimeHour_ASC]) {
+    zones(filter: {zoneTag: "example-zone"}) {
+      waitingRoomAnalyticsAdaptiveGroups(limit: 10, filter: {datetime_geq: "2023-03-15T04:00:00Z", datetime_leq: "2023-03-15T04:45:00Z", waitingRoomId: "example-waiting-room-id"}, orderBy: [datetimeHour_ASC]) {
         avgWeighted {
           timeOnOriginP50
           totalTimeWaitedP90
