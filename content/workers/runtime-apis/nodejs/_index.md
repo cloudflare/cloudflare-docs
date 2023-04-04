@@ -18,6 +18,8 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
+{{<render file="_nodejs-compat-local-dev.md">}}
+
 ## Pages Functions
 
 If you are using [Pages Functions](/pages/platform/functions/), set compatibility flags using the [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1). To set Pages compatibility flags in the Cloudflare dashboard:
