@@ -20,15 +20,15 @@ Once you order a certificate, you can review the [certificate's status](/ssl/ref
 To create a new advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
-3.  Click **Order Advanced Certificate**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
+3.  Select **Order Advanced Certificate**.
 4.  If Cloudflare does not have your billing information, you will need to enter that information.
 5.  Enter the following information:
     - Certificate Authority
     - Certificate Hostnames
     - Validation method
     - Certificate Validity Period
-6.  Click **Save**.
+6.  Select **Save**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
@@ -55,8 +55,8 @@ To delete an advanced certificate in the dashboard:
 
 1.  Log in to your Cloudflare account and select a domain.
 2.  Select **SSL/TLS** > **Edge Certificates**.
-3.  Click a certificate.
-4.  Click **Delete Certificate**.
+3.  Select a certificate.
+4.  Select **Delete Certificate**.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

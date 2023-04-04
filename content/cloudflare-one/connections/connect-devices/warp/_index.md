@@ -7,7 +7,7 @@ meta:
   title: About Cloudflare WARP
 product_grid:
   show: true
-  title: WARP client
+  title: Zero Trust WARP Client
   group: Cloudflare One
   wrap: true
 ---

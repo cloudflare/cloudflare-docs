@@ -51,7 +51,7 @@ The update process will create an equivalent configuration for the following set
 
 The update process will not migrate specific settings at the rule or group level of the OWASP ModSecurity Core Rule Set, available in WAF managed rules.
 
-The OWASP version supporting WAF managed rules and WAF Managed Rules is quite different, and there is no direct equivalence between rules in the two versions. You will need to configure specific OWASP rules again in the Cloudflare OWASP Core Ruleset, available in WAF Managed Rules. For more information on configuring this Managed Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) in the developer documentation.
+The OWASP version supporting WAF managed rules and WAF Managed Rules is quite different, and there is no direct equivalence between rules in the two versions. You will need to configure specific OWASP rules again in the Cloudflare OWASP Core Ruleset, available in WAF Managed Rules. For more information on configuring this Managed Ruleset, refer to [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/).
 
 ### Configurations that will prevent you from updating
 
@@ -376,7 +376,7 @@ For more information, refer to the following resources:
 
 ### Configuring the new WAF Managed Rules using Terraform
 
-You can use Terraform to configure WAF Managed Rules. For configuration examples, refer to [Configure WAF Managed Rules](/terraform/additional-configurations/waf-managed-rulesets/) in the developer documentation.
+You can use Terraform to configure WAF Managed Rules. For configuration examples, refer to [Configure WAF Managed Rules](/terraform/additional-configurations/waf-managed-rulesets/).
 
 ___
 
