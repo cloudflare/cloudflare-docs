@@ -228,6 +228,30 @@ Published my-worker
   https://my-worker.<your-subdomain>.workers.dev
 ```
 
+### Bindings and Environments
+
+Bindings are defined per environment and are not shared between environments.  Below is an example of a service binding for a dev and production environment:
+
+```toml
+---
+filename: wrangler.toml
+---
+name = "my-worker-dev"
+
+[[ services ]]
+binding = "SERVICE_WORKER"
+service = "service-worker"
+environment = "dev"
+
+[env.production]
+name = "my-worker"
+
+[[ env.production.services ]]
+binding = "SERVICE_WORKER"
+service = "service-worker"
+environment = "production"
+```
+
 {{<Aside type="note">}}
 
 When you create a Service or Environment, Cloudflare automatically registers an SSL certification for it. SSL certifications are discoverable and a matter of public record. Be careful when naming your Services and Environments that they do not contain sensitive information i.e `migrating-service-from-company1-to-company2` or `company1-acquisition-load-test`.
