@@ -16,9 +16,7 @@ Privacy Gateway implementation consists of three main parts:
 
 ## Before you begin
 
-Privacy Gateway is compatible with most - but not all - Cloudflare products.
-
-If your application uses other Cloudflare services, review [Product compatibility](/privacy-gateway/reference/product-compatibility/) to make sure your application will continue to interact with Cloudflare as expected.
+Privacy Gateway is currently in closed beta. If you’re interested, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
 
 ---
 
@@ -68,7 +66,7 @@ After you have configured your client and server, review your application to mak
 
 ---
 
-## Step 4 - Configure relay requests
+## Step 4 - Relay requests through Cloudflare
 
 Before sending any requests, you need to first set up your account with Cloudflare. That requires [contacting us](https://www.cloudflare.com/lp/privacy-edge/) and providing the URL of your application gateway server.
 

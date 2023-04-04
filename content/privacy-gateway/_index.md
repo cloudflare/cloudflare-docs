@@ -11,7 +11,7 @@ weight: 1
 Implements the Oblivious HTTP IETF standard to improve client privacy.
 {{</description>}}
 
-{{<plan type="all">}}
+{{<plan type="enterprise">}}
 
 [Privacy Gateway](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/) is a managed gateway service deployed on Cloudflare’s edge network that implements the [Oblivious HTTP IETF](https://www.ietf.org/archive/id/draft-thomson-http-oblivious-01.html) standard to improve client privacy when connecting to an application backend.
 
@@ -27,16 +27,10 @@ Privacy Gateway is currently in closed beta – available to select privacy-orie
 
 ## Features
 
-{{<feature header="Make your first API request" href="/radar/get-started/first-request/" cta="Make your first API request">}}
-Start learning how to use Radar's API by making your first request.
+{{<feature header="Get started" href="/privacy-gateway/get-started/" cta="Get started">}}
+Learn how to set up Privacy Gateway for your application.
 {{</feature>}}
 
-{{<feature header="Compare data" href="/radar/get-started/making-comparisons/" cta="Compare data">}}
-What to know before making comparisons between locations, [autonomous systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/) and more.
+{{<feature header="About" href="/privacy-gateway/about/" cta="Learn more">}}
+Learn about the different parties and data shared in Privacy Gateway.
 {{</feature>}}
-
---- 
-
-## Limitations
-
-End users should be aware that Cloudflare cannot ensure that websites and services will not send identifying user data from requests forwarded through the Privacy Gateway. This includes - for example - names, email addresses, and phone numbers. 

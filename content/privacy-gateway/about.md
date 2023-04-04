@@ -6,8 +6,6 @@ weight: 2
 
 # About
 
-Privacy Gateway improves the privacy of end-users reaching an application by [proxying HTTP requests](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) through our network. We take this seriously and will do everything we can to protect the privacy of user’s data relayed through this service.
-
 There are three main parties involved in Privacy Gateway:
 
 - **Cloudflare**: Operators of the Privacy Gateway Proxy service.
