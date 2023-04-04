@@ -68,7 +68,7 @@ rss: file
 ## 2022-09-08
 
 * Support `_routes.json`.
-  * Documentation [available here](/pages/platform/functions/routing/#function-invocation-routes).
+  * Documentation [available here](/pages/platform/functions/routing/#functions-invocation-routes).
 
 ## 2022-08-25
 

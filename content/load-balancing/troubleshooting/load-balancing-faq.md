@@ -22,7 +22,7 @@ This issue may be caused by a combination of two issues.
 
 ### Multiple health check regions
 
-When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor#attach-the-monitor-to-a-pool), you can specify the **Health Check Regions** that Cloudflare uses to monitor your origin health.
+When you [attach a monitor to a pool](/load-balancing/how-to/create-monitor/#create-a-monitor), you can specify the **Health Check Regions** that Cloudflare uses to monitor your origin health.
 
 If you select multiple regions or choose **All Data Centers (Enterprise Only)**, you may [dramatically increase traffic](/load-balancing/understand-basics/health-details#how-an-origin-becomes-unhealthy) to that pool and its associated origins. Each region sends individual health checks from 3 data centers. Using **All Data Centers** sends individual health checks from all existing Cloudflare data centers.
 
@@ -41,7 +41,7 @@ To learn more about how origins and pools become unhealthy, refer to [Origin and
 If you know that your origin server is healthy but load balancing is reporting it as unhealthy, check the following settings on the [origin's monitor](/load-balancing/understand-basics/monitors):
 
 -   Perform a `curl` request against the configured endpoint. Make sure the response you are seeing matches your settings for the monitor.
--   Ensure your firewall or web server does not block or rate limit [our health checks](/load-balancing/understand-basics/monitors#important-notes) and accepts requests from [Cloudflare IP addresses](https://www.cloudflare.com/ips).
+-   Ensure your firewall or web server does not block or rate limit [our health checks](/fundamentals/get-started/reference/cloudflare-site-crawling/#specific-products) and accepts requests from [Cloudflare IP addresses](https://www.cloudflare.com/ips).
 -   If you are looking for a specific value in the **Response Body**, make sure that value is relatively static and within the first 10 KB of the HTML page.
 -   If your origin responds with a `301` or `302` status code, make sure **Follow Redirects** is selected.
 -   Try increasing the **Timeout** value.

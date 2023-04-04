@@ -212,7 +212,7 @@ Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`ww
 | -------------- | ------------------------------------------ |
 | Security Risks | `any(http.request.uri.category[*] in {1})` |
 
-For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories-1).
+For more information, refer to our list of [security categories](/cloudflare-one/policies/filtering/domain-categories/#security-categories).
 
 ### Source Continent
 

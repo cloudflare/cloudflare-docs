@@ -6,7 +6,7 @@ layout: single
 product_grid:
   show: true
   title: Geo Key Manager
-  group: Security
+  group: Application security
 ---
 
 {{<beta>}} Geo Key Manager {{</beta>}}

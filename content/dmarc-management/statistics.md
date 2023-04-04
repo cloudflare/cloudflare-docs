@@ -8,7 +8,7 @@ meta:
 
 # Review DMARC statistics
 
-DMARC Management allows you to review how emails sent on your behalf have fared regarding security policies such as DMARC, SFP, and DKIM.
+DMARC Management (beta) allows you to review how emails sent on your behalf have fared regarding security policies such as DMARC, SFP, and DKIM.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Email** > **DMARC Management**.

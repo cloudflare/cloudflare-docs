@@ -41,11 +41,18 @@ This Function will run on the `/helloworld` route and returns `"Hello, world!"`.
 
 Refer to [Routing](/pages/platform/functions/routing/) for more information on route customization.
 
-### Runtime Features
+### Runtime features
 
-Workers runtime features, including compatibility with a subset of Node.js APIs, setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/). With Pages Functions, you can configure these by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. (Project Settings > Functions > Compatibility Flags)
+Workers runtime features, including compatibility with a subset of Node.js APIs and setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/) are configurable on Pages Functions. 
 
-Additionally, you can use other Cloudflare products from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/). 
+Set these configurations by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. To set Pages compatibility flags in the Cloudflare dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Pages** and select your Pages project.
+3. Select **Settings** > **Functions** > **Compatibility Flags**.
+4. Configure your Production and Preview compatiblity flags as needed.
+
+Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) and [R2](/r2/) from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/). 
 
 ## Deploy your Function
 

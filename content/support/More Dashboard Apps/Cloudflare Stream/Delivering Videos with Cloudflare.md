@@ -22,12 +22,11 @@ ___
 
 ## I’m a website operator and my content was redirected for Terms of Service violations
 
-If you are on a Free, Pro, or Business Plan and serving videos or a disproportionate amount of non-HTML content — such as software binaries or large volumes of images — in violation of [Section 2.8 of the Self-Serve Subscription Agreement](https://www.cloudflare.com/terms/), Cloudflare may redirect your content to replacement videos and images. When this happens, you will receive an email notification with information about the zone violating the TOS. Please don’t try to evade the redirect; this may limit your ability to use Cloudflare at all in the future.
+If you are on a Free, Pro, or Business Plan and your application appears to be serving videos or a disproportionate amount of large files without using the appropriate paid service as described below, Cloudflare may redirect your content or take other actions to protect quality of service. When this happens, you will receive an email notification regarding Cloudflare’s actions and your options.
 
 ## Options for web admins to remove redirects 
 
 -   **Serve redirected content from a grey-clouded sub-domain**
-    -   Section 2.8 of Cloudflare’s Self-Serve Terms of Service (TOS) prohibits users from serving a disproportionate amount of non-html content, such as images and video, without a paid plan that includes those services. Restrictions set forth in Section 2.8 of the TOS do not apply to content served from grey-clouded (non-proxied) sub-domains. 
 
 -   **Serve redirected content from a paid service as outlined below**
 
@@ -46,25 +45,6 @@ To get started with Stream, visit **Stream** from your Dashboard or [sign up](ht
 [Stream Delivery](https://www.cloudflare.com/products/stream-delivery/) offers caching and delivery of video content through Cloudflare data centers around the globe. This CDN feature is only available on the Cloudflare Enterprise Plan. Please [contact sales](https://www.cloudflare.com/products/stream-delivery/#) if you’d like to explore this option.
 
 ___
-
-## I’m a website visitor, and the site I’m trying to access displays a message referencing Cloudflare Terms of Service instead of the content I expect
-
-This scenario can occur if the operator of the website is in violation of [Section 2.8 of the Self-Serve Subscription Agreement (TOS)](https://www.cloudflare.com/terms/), and has not purchased an appropriate paid product to deliver the content you’re trying to access.
-
-We’ve provided the website operator with information regarding the violation and how they can appropriately use Cloudflare services to deliver the content you are requesting. Unfortunately, until the website operator takes remedial action (like purchasing products authorized to deliver video content with Cloudflare’s network), we cannot remove these restrictions.
-
-Things you can do in the meantime:
-
-1.  Tell the website operator to respect the rules that allow us to provide low cost services in the first place.
-2.  Learn more about the things Cloudflare does to help build a better Internet, like [Project Galileo](https://www.cloudflare.com/galileo/), [The Athenian Project](https://www.cloudflare.com/athenian/), and [Project Fair Shot](https://www.cloudflare.com/fair-shot/).
-
-Install [1.1.1.1](https://1.1.1.1/) to get a more private, secure Internet experience.
-
-___
-
-## I’m a website operator and I am concerned about violating the Terms of Service
-
-Free, Pro, and Business Plans serving videos or a disproportionate amount of non-HTML content can be in violation of [Section 2.8 of the Self-Serve Subscription Agreement (TOS)](https://www.cloudflare.com/terms/). To serve video or a large amount of non-HTML content, we recommend using one of the paid options outlined above. 
 
 ## Getting information on the content you are delivering
 

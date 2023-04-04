@@ -24,7 +24,7 @@ To redirect traffic for all subdomains and hosts in your application, you can en
 To enable **Always Use HTTPS** in the dashboard:
 
 1.  Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2.  Navigate to **SSL/TLS** > **Edge Certificates**.
+2.  Go to **SSL/TLS** > **Edge Certificates**.
 3.  For **Always Use HTTPS**, switch the toggle to **On**.
 
 {{<Aside type="note">}}
