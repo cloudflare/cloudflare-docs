@@ -69,7 +69,7 @@ $ wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
 🌀 Done!
 ```
 
-The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](/learning/importing-data/) to D1.
+The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](/d1/learning/importing-data/) to D1.
 
 ## Restoring a backup
 
