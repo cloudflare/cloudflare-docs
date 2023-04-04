@@ -8,7 +8,7 @@ meta:
 
 # Cloudflare Network Interconnect Setup
 
-Cloudflare Network Interconnect setup requires a few steps: onboarding, configuring the cross-connection, configuring the Cloudflare Border Gateway Protocol (BGP), and go live. The entire process from onboarding to go live typically takes 10-15 days.
+Setup requires a few steps: onboarding, configuring the cross-connection, configuring the Cloudflare Border Gateway Protocol (BGP), and go live. The entire process from onboarding to go live typically takes 10-15 days.
 
 ## Onboarding
 
