@@ -49,20 +49,16 @@ Cloudflare can send logs to a Hosted Collector with **HTTP Logs & Metrics** as t
 
 To enable Logpush to Sumo Logic:
 
-1.  Configure a Hosted Collector. Refer to [instructions from Sumo Logic](https://help.sumologic.com/03Send-Data/Hosted-Collectors/Configure-a-Hosted-Collector).
+1.  Configure a Hosted Collector. Refer to [instructions from Sumo Logic](https://help.sumologic.com/docs/send-data/hosted-collectors/configure-hosted-collector/).
 
-2.  Configure an HTTP Logs & Metrics Source. Refer to [instructions from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/HTTP-Source). The last step indicates how to get the HTTP Source Address (URL).
+2.  Configure an HTTP Logs & Metrics Source. Refer to [instructions from Sumo Logic](https://help.sumologic.com/docs/send-data/hosted-collectors/http-source/). The last step indicates how to get the HTTP Source Address (URL).
 
 3.  Provide the HTTP Source Address (URL) when prompted by the Logpush API or UI.
 
-{{<Aside type="note" header="Note">}}
-Logpush will stop working if you regenerate the HTTP Source Address (URL). Refer to [generate a new URL for an HTTP Source from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/02Sources-for-Hosted-Collectors/HTTP-Source/zGenerate-a-new-URL-for-an-HTTP-Source). To use the new URL, you will have to get a new ownership challenge and update the destination for your job.
-{{</Aside>}}
+{{<Aside type="note" header="Notes">}}
+* Logpush will stop working if you regenerate the HTTP Source Address (URL). Refer to [generate a new URL for an HTTP Source from Sumo Logic](https://help.sumologic.com/docs/send-data/hosted-collectors/http-source/generate-new-url/). To use the new URL, you will have to get a new ownership challenge and update the destination for your job.
 
-{{<Aside type="info" header="Info">}}
-Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/docs/manage/ingestion-volume/log-ingestion/).
-{{</Aside>}}
+* Sumo Logic may impose throttling and caps on your log ingestion to prevent your account from using **On-Demand Capacity**. Refer to [manage ingestion](https://help.sumologic.com/docs/manage/ingestion-volume/log-ingestion/).
 
-{{<Aside type="note" header="Note">}}
-To analyze and visualize Cloudflare Logs using the Cloudflare App for Sumo Logic, follow the steps in the [Sumo Logic Analytics integration page](/fundamentals/data-products/analytics-integrations/sumo-logic/).
+* To analyze and visualize Cloudflare Logs using the Cloudflare App for Sumo Logic, follow the steps in the [Sumo Logic Analytics integration page](/fundamentals/data-products/analytics-integrations/sumo-logic/).
 {{</Aside>}}
