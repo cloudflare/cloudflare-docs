@@ -34,12 +34,10 @@ async function walk(dir: string) {
     files.map(async (name) => {
       let abs = join(dir, name);
       let supportOtherLangsPath = "/support/other-languages";
-      let apiDocLinks = "/api/";
       if (process.platform === "win32") {
         supportOtherLangsPath = supportOtherLangsPath.replaceAll("/", "\\");
-        apiDocLinks = apiDocLinks.replaceAll("/", "\\");
       }
-      if (!abs.includes(supportOtherLangsPath) && !abs.includes(apiDocLinks)) {
+      if (!abs.includes(supportOtherLangsPath)) {
         if (name.endsWith(".html")) return task(abs);
         let stats = await fs.stat(abs);
         if (stats.isDirectory()) return walk(abs);
@@ -237,6 +235,8 @@ async function task(file: string) {
       }
 
       if (target && target.includes("/support/other-languages")) {
+        return;
+      } else if (target && target.startsWith("/api")) {
         return;
       }
 
