@@ -63,7 +63,7 @@ ___
 -   An external domain that is not on using Cloudflare has a CNAME record to a domain active on Cloudflare
 -   The target of the DNS CNAME record does not resolve.
 -   A CNAME record in your Cloudflare DNS app requires resolution via a DNS provider that is currently offline.
--   [Always Online](/cache/about/always-online) is enabled for a [Custom Hostname (SSL for SaaS](/ssl/ssl-for-saas)) domain.
+-   [Always Online](/cache/about/always-online) is enabled for a [Custom Hostname (Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) domain.
 
 ### Resolution
 
@@ -71,7 +71,7 @@ A non-Cloudflare domain cannot CNAME to a Cloudflare domain unless the non-Cloud
 
 Attempting to directly access DNS records used for [Cloudflare CNAME setups](/dns/zone-setups/partial-setup) also causes error 1001 (For example: _www.example.com.cdn.cloudflare.net_).
 
-Disable [Always Online](/cache/how-to/enable-always-online) if using [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas).
+Disable [Always Online](/cache/how-to/enable-always-online) if using [Custom Hostname (Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/)) domain.
 
 ___
 
@@ -155,7 +155,7 @@ If you are not the website owner, provide the website owner with a screenshot of
 If you are the website owner:
 
 1.  Retrieve a screenshot of the 1005 error from your customer
-2.  Search the [**Security Events log**](/waf/analytics) (available at **Security** \> **Events**) for the **RayID**, or client IP Address from the visitor’s 1005 error message.
+2.  Search the [**Security Events log**](/waf/security-events/) (available at **Security** \> **Events**) for the **RayID**, or client IP Address from the visitor’s 1005 error message.
 
 {{<Aside type="note">}}
 Convert the UTC timestamp of the 1005 error to your local timezone when
@@ -274,15 +274,15 @@ By default, Cloudflare prohibits a DNS _CNAME record_ between domains in diffe
 
 {{<Aside type="warning">}}
 [Cloudflare Apps](https://www.cloudflare.com/apps/) are not currently
-supported by [SSL for
-SaaS](/ssl/ssl-for-saas/), therefore
+supported by [Cloudflare for
+SaaS](/cloudflare-for-platforms/cloudflare-for-saas/), therefore
 any app using a domain configured on our SaaS solution may produce 1014
 errors.
 {{</Aside>}}
 
 ### Resolution
 
-To allow CNAME record resolution to a domain in a different Cloudflare account, the domain owner of the CNAME target must use [Cloudflare for SaaS](https://www.cloudflare.com/saas/); more specially our [SSL for SaaS](/ssl/ssl-for-saas/) solution.
+To allow CNAME record resolution to a domain in a different Cloudflare account, the domain owner of the CNAME target must use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
 
 ___
 
@@ -327,7 +327,7 @@ Common causes for Error 1016 are:
 -   A missing DNS _A record_ that mentions origin IP address.
 -   A _CNAME record_ in the Cloudflare DNS points to an unresolvable external domain.
 -   The origin host names (CNAMEs) in your Cloudflare [Load Balancer](/load-balancing/) default, region, and fallback pools are unresolvable. Use a fallback pool configured with an origin IP as a backup in case all other pools are unavailable.
--   When creating a Spectrum app with a CNAME origin, you need first to create a CNAME on the Cloudflare DNS side that points to the origin. Please see [Spectrum CNAME origins](/spectrum/how-to/cname-origins) for more details
+-   When creating a Spectrum app with a CNAME origin, you need first to create a CNAME on the Cloudflare DNS side that points to the origin. Please see [Spectrum CNAME origins](/spectrum/get-started/#create-a-spectrum-application-using-a-cname-record) for more details
 
 ### Resolution
 
@@ -384,7 +384,7 @@ If you are not the website owner, provide the website owner with a screenshot of
 If you are the website owner:
 
 1.  Retrieve a screenshot of the 1020 error from your customer
-2.  Search the [**Security Events log**](/waf/analytics) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
+2.  Search the [**Security Events log**](/waf/security-events/) (available at **Security** \> **Events**) for the **RayID** or client IP Address from the visitor’s 1020 error message.
 
 {{<Aside type="note">}}
 Convert the UTC timestamp of the 1005 error to your local timezone when
@@ -511,7 +511,7 @@ You are trying to modify an HTTP header that HTTP Request Header Modification Ru
 
 ### Resolution
 
-Make sure you are not trying to modify one of the [reserved HTTP request headers](/rules/transform#http-request-header-modification-rules).
+Make sure you are not trying to modify one of the [reserved HTTP request headers](/rules/transform/request-header-modification/#important-remarks).
 
 ___
 
@@ -524,7 +524,7 @@ The added/modified header value is too long or it contains characters that are n
 ### Resolution
 
 -   Use a shorter value or expression to define the header value.
--   Remove the characters that are not allowed. See [Format of HTTP request header names and values](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) in Developer Docs for more information on the allowed characters.
+-   Remove the characters that are not allowed. See [Format of HTTP request header names and values](/rules/transform/request-header-modification/reference/header-format/) in Developer Docs for more information on the allowed characters.
 
 ___
 
