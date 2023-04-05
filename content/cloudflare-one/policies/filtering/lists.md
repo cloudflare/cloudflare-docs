@@ -12,6 +12,8 @@ Your lists can include up to 1,000 entries for Standard plans and 5,000 for Ente
 
 With Cloudflare Zero Trust, you can create lists of URLs, hostnames, or other entries to reference when creating [Gateway policies](/cloudflare-one/policies/filtering/) or [Access policies](/cloudflare-one/policies/access/). This allows you to quickly create rules that match and take actions against several items at once.
 
+Lists with duplicate entries will return an error. Because hostnames are converted to [Punycode](https://www.rfc-editor.org/rfc/rfc3492.txt), multiple list entries that will convert to the same URL will not work. For example, including `www.españa.com` and `www.xn--espaa-rta.com` will count as duplicates because they both convert to `www.xn--espaa-rta.com`.
+
 You can create a list by:
 
 - [Uploading a list of entries](#create-a-list-from-a-csv-file)
