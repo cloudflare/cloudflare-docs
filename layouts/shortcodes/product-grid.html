@@ -362,7 +362,7 @@ span a img {
     </fieldset>
     <fieldset>
       <legend class="FilterLegend">Enterprise preview
-        <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details"></a></span>
+        <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
         <input class="ProductCheckboxItem" type="checkbox" id="true" name="preview-available">
@@ -411,8 +411,8 @@ span a img {
   });
 
 function filterList() {
-  let checkedGroups = document.querySelectorAll('input[name="product-group"]:checked')
-  let checkedPreview = document.querySelectorAll('input[name="preview-available"]:checked')
+  let checkedGroups = document.querySelectorAll('input[name="product-group"]:checked');
+  let checkedPreview = document.querySelectorAll('input[name="preview-available"]:checked');
   let numCheckboxes = checkedGroups.length + checkedPreview.length;
   let searchBox = document.getElementById('search');
   
@@ -433,11 +433,11 @@ function filterList() {
   let listItems = document.querySelectorAll('a[class="ProductGrid--link"]');
 
   // Filter based on supplied values
-  let groupIdValues = []
+  let groupIdValues = [];
   for (let checkbox of checkedGroups) {
     groupIdValues.push(checkbox.id);
   }
-  let matchIdValues = []
+  let matchIdValues = [];
   for (let checkbox of checkedPreview) {
       matchIdValues.push(checkbox.id);
   }
@@ -449,19 +449,19 @@ function filterList() {
     if (groupIdValues.length > 0) {
       groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
     } else {
-      groupMatch = true
+      groupMatch = true;
     }
 
     if (matchIdValues.length > 0) {
       previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
     } else {
-      previewMatch = true
+      previewMatch = true;
     }
 
     if (searchTerm !== '') {
       searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
     } else {
-      searchMatch = true
+      searchMatch = true;
     }
     
     if (groupMatch && searchMatch && previewMatch) {
