@@ -30,8 +30,7 @@ header: wrangler.toml
 compatibility_flags = [ "nodejs_compat" ]
 ```
 
-<!-- Add once https://github.com/cloudflare/cloudflare-docs/pull/8322 is merged -->
-<!-- {{<render file="_nodejs-compat-local-dev.md">}} -->
+{{<render file="_nodejs-compat-local-dev.md">}}
 
 ## How to enable with Pages Functions
 

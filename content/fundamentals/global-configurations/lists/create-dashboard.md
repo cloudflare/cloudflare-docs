@@ -37,6 +37,10 @@ To create a list, follow these steps:
 
 4. To [add items using a CSV file](#add-items-using-a-csv-file), select **Upload CSV**.
 
+{{<Aside type="note" header="Notes">}}
+{{<render file="_lists-import-notes.md">}}
+{{</Aside>}}
+
 ### Add items to a list manually
 
 1. In the **Add items to list** page, enter values for the different fields (the exact fields depend on the list type).
@@ -61,9 +65,3 @@ To add items to a list by uploading a CSV file:
     - To add extra items manually, enter the information in the text inputs.
 
 4. Select **Add to list**.
-
-{{<Aside type="note" header="Notes">}}
-
-{{<render file="_lists-csv-notes.md">}}
-
-{{</Aside>}}

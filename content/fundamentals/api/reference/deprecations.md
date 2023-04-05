@@ -38,6 +38,13 @@ Deprecated API:
 - GET `user/billing/profile`
 - GET `user/billing/history`
 
+## Load Balancing - notification_email
+**End of life date: April 3, 2023**
+
+This field is deprecated and has been moved to [Cloudflare centralized notification service](/fundamentals/notifications/). 
+
+`notification_email` is the email address to send health status notifications to. This can be an individual mailbox or a mailing list. Multiple emails can be supplied as a comma delimited list.
+
 ## Transfer-Encoding and Content-Length headers 
 **End of life date: March 31, 2023**
 
@@ -77,24 +84,6 @@ POST accounts/:account_identifier/images/v1/direct_upload
 
 Replacement:
 POST accounts/:account_identifier/images/v2/direct_upload
-
-
-## DNS Firewall Analytics - virtual_dns
-**End of life date: July 1, 2022**
-
-Replace `virtual_dns` in DNS Firewall Analytics routes with `dns_firewall`.
-
-
-## DNS Firewall - virtual_dns
-**End of life date: July 1, 2022**
-
-Replace `virtual_dns` in DNS Firewall routes with `dns_firewall`.
-
-The following changes were made in the new routes:
-
-- `virtual_dns_ips` has been renamed to `dns_firewall_ips`.
-- A disabled ratelimit is now represented by `null` instead of `0`.
-- The `PATCH` method must be used instead of `PUT` to update clusters.
 
 ## Zone Analytics API
 **End of life date: March 1, 2021**
