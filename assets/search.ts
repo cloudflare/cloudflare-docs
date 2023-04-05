@@ -4,84 +4,85 @@
 
   let dataset = tag && tag.dataset;
   // let { index, key, filters } = dataset || {};
-  const index = "developers-cloudflare"
-  const key = "b23088ab4d346409f9d3ece6606344c3"
+  const index = "developers-cloudflare2"
+  const key = "92ece5213bea0489b4a5a4c21c7e916c"
   const filters = []
 
   function loaded() {
-    console.log('configuring')
     let element = $('#DocsSearch--input') || $('#SiteSearch--input');
 
-    let algolia = window.docsearch({
-      indexName: index,
-      apiKey: key,
+    window.docsearch({
+      indexName: 'developers-cloudflare2',
+      appId: '8MU1G3QO9P',
+      apiKey: '045e8dbec8c137a52f0f56e196d7abe0',
+      container: '.DocsSearch',
+      debug: true,
+
       // algoliaOptions: {
       //   facetFilters: filters || '',
       // },
 
-      inputSelector: '#' + element.id,
+      // autocompleteOptions: {
+      //   // https://github.com/algolia/autocomplete.js#global-options
+      //   autoselect: true,
+      //   openOnFocus: true,
+      //   clearOnSelected: false,
+      //   tabAutocomplete: false,
 
-      autocompleteOptions: {
-        // https://github.com/algolia/autocomplete.js#global-options
-        autoselect: true,
-        openOnFocus: true,
-        clearOnSelected: false,
-        tabAutocomplete: false,
+      //   appendTo: '.' + element.parentNode.className,
+      //   hint: false,
 
-        appendTo: '.' + element.parentNode.className,
-        hint: false,
+      //   autoselectOnBlur: matchMedia('(pointer: course)').matches,
+      // },
 
-        autoselectOnBlur: matchMedia('(pointer: course)').matches,
-      },
+      // // https://docsearch.algolia.com/docs/behavior
+      // handleSelected(input, event, suggestion, datasetNumber, context) {
+      //   let ctx = new URL(suggestion.url);
 
-      // https://docsearch.algolia.com/docs/behavior
-      handleSelected(input, event, suggestion, datasetNumber, context) {
-        let ctx = new URL(suggestion.url);
+      //   algolia.input.autocomplete.setVal('');
+      //   algolia.input[0].blur();
 
-        algolia.input.autocomplete.setVal('');
-        algolia.input[0].blur();
+      //   // no scroll if is H1 tag
+      //   if (suggestion.isLvl0) ctx.hash = '';
 
-        // no scroll if is H1 tag
-        if (suggestion.isLvl0) ctx.hash = '';
+      //   // redirect to new path
+      //   return location.assign(ctx.pathname + ctx.search + ctx.hash);
+      // },
 
-        // redirect to new path
-        return location.assign(ctx.pathname + ctx.search + ctx.hash);
-      },
-
-      transformData(hits) {
+      transformItems(items) {
         // Remove empty results
-        for (let len = hits.length; len-- > 0;) {
-          let info = hits[len].hierarchy;
+        for (let len = items.length; len-- > 0;) {
+          let info = items[len].hierarchy;
           if (!info.lvl0 && !info.lvl1) {
-            hits.splice(len, 1);
+            items.splice(len, 1);
           }
         }
       },
     });
 
-    let input = algolia.input[0];
-    let wrapper = algolia.autocomplete.autocomplete.getWrapper();
+    // let input = algolia.input[0];
+    // let wrapper = algolia.autocomplete.autocomplete.getWrapper();
 
-    algolia.autocomplete.on('autocomplete:shown', () => {
-      wrapper.setAttribute('data-expanded', true);
-    });
+    // algolia.autocomplete.on('autocomplete:shown', () => {
+    //   wrapper.setAttribute('data-expanded', true);
+    // });
 
-    algolia.autocomplete.on('autocomplete:closed', () => {
-      wrapper.setAttribute('data-expanded', false);
-    });
+    // algolia.autocomplete.on('autocomplete:closed', () => {
+    //   wrapper.setAttribute('data-expanded', false);
+    // });
 
-    addEventListener('keydown', ev => {
-      if (ev.target === input) return;
+    // addEventListener('keydown', ev => {
+    //   if (ev.target === input) return;
 
-      let key = ev.which;
+    //   let key = ev.which;
 
-      // is '/' or SHIFT+'s'
-      if (key === 191 || (ev.shiftKey && key === 83)) {
-        ev.preventDefault();
-        window.scrollTo(0, 0);
-        input.focus();
-      }
-    });
+    //   // is '/' or SHIFT+'s'
+    //   if (key === 191 || (ev.shiftKey && key === 83)) {
+    //     ev.preventDefault();
+    //     window.scrollTo(0, 0);
+    //     input.focus();
+    //   }
+    // });
   }
 
   // init
