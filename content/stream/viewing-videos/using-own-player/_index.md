@@ -44,7 +44,7 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 
 ### API
 
-Refer to the [Stream video details API documentation](https://developers.cloudflare.com/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
+Refer to the [Stream video details API documentation](/api/operations/stream-videos-video-details) to learn how to fetch the manifest URLs using the Cloudflare API.
 
 ## Customize manifests by specifying available client bandwidth
 
@@ -80,7 +80,7 @@ SRT and RTMPS playback is built into [ffmpeg](https://ffmpeg.org/). You will nee
 
 {{<render file="_srt-supported-modes.md">}}
 
-We recommend using [ffmpeg-kit](https://github.com/tanersener/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
+We recommend using [ffmpeg-kit](https://github.com/arthenica/ffmpeg-kit) as a cross-platform wrapper for ffmpeg.
 
 ### Examples
 

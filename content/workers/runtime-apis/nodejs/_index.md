@@ -5,7 +5,11 @@ title: Node.js compatibility
 
 # Node.js compatibility
 
-The following APIs from Node.js are available directly in the Workers runtime. To enable these APIs in your Worker, add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
+The following APIs from Node.js are available directly in the Workers runtime.
+
+{{<directory-listing>}}
+
+To enable these APIs in your Worker, add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) compatibility flag to your `wrangler.toml`:
 
 ```toml
 ---
@@ -13,6 +17,8 @@ header: wrangler.toml
 ---
 compatibility_flags = [ "nodejs_compat" ]
 ```
+
+{{<render file="_nodejs-compat-local-dev.md">}}
 
 ## Pages Functions
 
@@ -22,5 +28,3 @@ If you are using [Pages Functions](/pages/platform/functions/), set compatibilit
 2. Select **Pages** and select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Configure your Production and Preview compatiblity flags as needed.
-
-{{<directory-listing>}}

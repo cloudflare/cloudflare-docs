@@ -147,7 +147,7 @@ A protocol, or technical standard, for using a desktop computer remotely. RDP wa
 
 _Security Assertion Markup Language_
 
-A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#SSO)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.
+A standardized way to tell external applications and services that a user is who they say they are. SAML makes single sign-on ([SSO](#sso)) technology possible by providing a way to authenticate a user once and then communicate that authentication to multiple applications.
 
 ## SASE
 
@@ -197,7 +197,7 @@ The customizable portion of your [team domain](#team-domain). You can view your 
 | --------------------------------------- | ---------------- |
 | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
 
-To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name).
+To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name).
 
 ## Terraform
 

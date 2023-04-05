@@ -32,7 +32,7 @@ To import a zone file using the dashboard:
 
 #### Using the API
 
-To import records using the API, send a [POST request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted file](#format-your-zone-file).
+To import records using the API, send a [POST request](/api/operations/dns-records-for-a-zone-import-dns-records) with a properly [formatted file](#format-your-zone-file).
 
 ---
 
@@ -51,7 +51,7 @@ To export records using the dashboard:
 
 ### Using the API
 
-To export records using the API, send a [GET request](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-export-dns-records).
+To export records using the API, send a [GET request](/api/operations/dns-records-for-a-zone-export-dns-records).
 
 ---
 

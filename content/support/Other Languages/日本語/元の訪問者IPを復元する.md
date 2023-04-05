@@ -26,7 +26,7 @@ ___
 
  [WebサイトトラフィックがCloudflreネットワークを介してルーティングしている](https://support.cloudflare.com/hc/articles/205177068)時、当社はリバースプロキシとして機能します。これにより、パケットをより効率的にルーティングし、静的リソース（画像、JavaScript、CSSなど）のキャッシングして、Cloudflareはページ読み込み時間をスピードアップさせられます。その結果として、リクエストに応答してそれをログし、オリジナルサーバーが [Cloudflare IP アドレス](https://www.cloudflare.com/ips/)を返します。
 
-例えば、元の訪問者の受信IPアドレスに依存するアプリケーションをインストールする場合、CloudflareのIPアドレスがデフォルトでログに記録されます。元の訪問者のIPアドレスは、[_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986) というHTTPヘッダを付加して表示されます。[Webサーバーの説明書](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq) に従えば、オリジンサーバーで元の訪問者のIPアドレスを記録することができます。リクエストがオリジンサーバーに到達したときにこのHTTPヘッダーが利用できない場合は、[Transform Rules](https://developers.cloudflare.com/rules/transform/)と[Managed Transforms](https://developers.cloudflare.com/rules/transform/managed-transforms/) の設定を確認してください。
+例えば、元の訪問者の受信IPアドレスに依存するアプリケーションをインストールする場合、CloudflareのIPアドレスがデフォルトでログに記録されます。元の訪問者のIPアドレスは、[_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986) というHTTPヘッダを付加して表示されます。[Webサーバーの説明書](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq) に従えば、オリジンサーバーで元の訪問者のIPアドレスを記録することができます。リクエストがオリジンサーバーに到達したときにこのHTTPヘッダーが利用できない場合は、[Transform Rules](/rules/transform/)と[Managed Transforms](/rules/transform/managed-transforms/) の設定を確認してください。
 
 次の図は、Cloudflareを利用する場合と利用しない場合のIPアドレス処理の違いを示しています。
 
@@ -320,5 +320,5 @@ ___
 
 ## 関連リソース
 
--   [HTTPリクエストヘッダー](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [ルールの変更](https://developers.cloudflare.com/rules/transform/)
+-   [HTTPリクエストヘッダー](/fundamentals/get-started/http-request-headers)
+-   [ルールの変更](/rules/transform/)

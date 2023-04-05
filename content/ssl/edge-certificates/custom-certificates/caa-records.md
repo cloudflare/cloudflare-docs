@@ -40,18 +40,18 @@ To add a CAA record in the dashboard,
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
 2.  Go to **DNS** > **Records**.
-3.  Click **Add record**.
+3.  Select **Add record**.
 4.  For **Type**, select **CAA**.
 5.  For **Name**, type your domain.
 6.  Choose a **Tag**, which specifies the behavior associated with the record.
 7.  For **CA domain name**, enter the CA name.
-8.  Click **Save**.
+8.  Select **Save**.
 9.  Repeat for each CA associated with your domain.
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To create a CAA record via the API, use this [POST endpoint](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-create-dns-record).
+To create a CAA record via the API, use this [POST endpoint](/api/operations/dns-records-for-a-zone-create-dns-record).
  
 {{</tab>}}
 {{</tabs>}}

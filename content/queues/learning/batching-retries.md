@@ -8,7 +8,7 @@ weight: 3
 
 ## Batching
 
-When configuring a [consumer Worker](https://developers.cloudflare.com/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
+When configuring a [consumer Worker](/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
 
 Batching can:
 
@@ -84,7 +84,7 @@ When a message is failed to be delivered, the default behaviour is to retry deli
 
 {{<Aside type="note">}}
 
-Each retry counts as an additional read operation per [Queues pricing](https://developers.cloudflare.com/queues/pricing).
+Each retry counts as an additional read operation per [Queues pricing](/queues/platform/pricing/).
 
 {{</Aside>}}
 

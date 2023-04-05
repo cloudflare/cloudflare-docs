@@ -40,7 +40,7 @@ Assurez-vous d’avoir les enregistrements **DNS** nécessaires dans l’applica
 -   Le domaine racine (par exemple, _exemple.com)_
 -   Tous les sous-domaines existants (par exemple, _www.exemple.com, blog.exemple.com_ , etc.)
 
-Plus d’informations sur la configuration des [enregistrements DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) A et CNAME.
+Plus d’informations sur la configuration des [enregistrements DNS](/dns/manage-dns-records/how-to/create-dns-records) A et CNAME.
 
 ### DNSSEC n’était pas désactivé avant que le domaine soit ajouté à Cloudflare
 
@@ -52,4 +52,4 @@ Si vous gérez les enregistrements **DNS** via l’application DNS du tableau de
 
 ### Adresse IP non résolue
 
-Dans certains cas, le résolveur DNS du client demandant l’URL peut ne pas parvenir à résoudre un enregistrement DNS vers une adresse IP valide. Rechargez la page après un court instant pour voir si le problème disparaît.Ce problème n’est pas lié à Cloudflare, mais l’utilisation du [résolveur DNS de Cloudflare](https://developers.cloudflare.com/1.1.1.1/setup/) peut aider.Contactez votre fournisseur d’hébergement pour une assistante supplémentaire avec votre résolveur DNS actuel.
+Dans certains cas, le résolveur DNS du client demandant l’URL peut ne pas parvenir à résoudre un enregistrement DNS vers une adresse IP valide. Rechargez la page après un court instant pour voir si le problème disparaît.Ce problème n’est pas lié à Cloudflare, mais l’utilisation du [résolveur DNS de Cloudflare](/1.1.1.1/setup/) peut aider.Contactez votre fournisseur d’hébergement pour une assistante supplémentaire avec votre résolveur DNS actuel.

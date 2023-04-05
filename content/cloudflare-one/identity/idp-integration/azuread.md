@@ -102,7 +102,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 7. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration/#test-idps-on-the-zero-trust-dashboard) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 ## Synchronize users and groups
 
@@ -153,10 +153,6 @@ To check which users and groups were synchronized, select **View provisioning lo
 When [SCIM synchronization is enabled](#synchronize-users-and-groups), the Azure group names will appear in the **Values** dropdown when you choose the _Azure Groups_ selector.
 
 ![Azure group names displayed in the Access policy builder](/cloudflare-one/static/documentation/identity/azure/azure-scim-groups.png)
-
-{{<Aside type="note">}}
-The Gateway policy builder does not currently show group names from the SCIM integration. To use an Azure group in a Gateway policy, you still need to [manually enter](#manual-entry) the group's `Object Id`.
-{{</Aside>}}
 
 ### Manual entry
 

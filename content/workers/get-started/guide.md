@@ -46,7 +46,7 @@ $ cd my-project
 
 In your project directory, `wrangler init` has generated the following files:
 
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
+1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
 2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
 4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://www.npmjs.com/package/@cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
@@ -107,7 +107,7 @@ To experiment with more premade Workers, refer to [Workers Examples](/workers/ex
 
 ## 4. Publish your project
 
-With your project configured, you can now publish your Worker, to a `*.workers.dev` subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+With your project configured, you can now publish your Worker, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 ---

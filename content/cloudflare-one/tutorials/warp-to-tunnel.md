@@ -94,7 +94,7 @@ You can now [create a Tunnel](/cloudflare-one/connections/connect-apps/install-a
    $ cloudflared tunnel run grafana
    ```
 
-This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/#create-route-and-configure-the-tunnel) for long-lived connections.
+This example runs it from the command-line but we recommend running `cloudflared` [as a service](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/) for long-lived connections.
 
 ## Route private IP ranges through WARP
 
@@ -148,9 +148,9 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ## (Optional) Enable HTTPS inspection
 
-1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.
+1. [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your devices.
 
-   Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
+    Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through the WARP client, use an MDM tool, or install it manually.
 
 2. Go to **Settings** > **Network** and enable **TLS decryption**.
 

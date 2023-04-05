@@ -12,10 +12,6 @@ Below, you will find information on devices, software, and configurations that a
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) for a list of supported operating systems.
 
-## Windows Subsystem for Linux 2
-
-The WARP client does not run on Windows Subsystem for Linux 2 (WSL2). To use WARP, fall back to Windows Subsystem for Linux 1 (WSL1).
-
 ## Multi-user support on Windows
 
 The WARP client does not support multiple users on a single Windows device. WARP uses hard-coded global paths to store settings and keys and does not save information on a per-user basis. Therefore, after one user logs into WARP, their settings will apply to all traffic from the device.

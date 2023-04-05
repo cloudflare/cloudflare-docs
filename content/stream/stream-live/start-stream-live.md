@@ -64,7 +64,7 @@ header: Response
 
 #### Optional API parameters
 
-[API Reference Docs for `/live_inputs`](https://developers.cloudflare.com/api/operations/stream-live-inputs-create-a-live-input)
+[API Reference Docs for `/live_inputs`](/api/operations/stream-live-inputs-create-a-live-input)
 
 {{<definitions>}}
 

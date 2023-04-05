@@ -55,7 +55,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 16. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration/#test-idps-on-the-zero-trust-dashboard) that your connection is working, select **Test**.
+To [test](/cloudflare-one/identity/idp-integration#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 {{<Aside type="note">}}
 
