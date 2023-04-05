@@ -5,6 +5,7 @@ product:
   title: Web3
   url: /web3/
   group: Cloudflare essentials
+  preview_tryout: true
 
 meta:
   title: Cloudflare Web3 docs

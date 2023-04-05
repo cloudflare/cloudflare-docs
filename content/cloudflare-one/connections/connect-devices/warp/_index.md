@@ -5,11 +5,6 @@ weight: 1
 layout: single
 meta:
   title: About Cloudflare WARP
-product_grid:
-  show: true
-  title: Zero Trust WARP Client
-  group: Cloudflare One
-  wrap: true
 ---
 
 # About Cloudflare WARP

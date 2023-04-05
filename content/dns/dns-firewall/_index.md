@@ -2,10 +2,6 @@
 pcx_content_type: overview
 title: DNS Firewall
 weight: 9
-product_grid:
-  show: true
-  title: DNS Firewall
-  group: Application security
 ---
 
 # DNS Firewall

@@ -3,10 +3,6 @@ pcx_content_type: concept
 title: Rate limiting rules
 weight: 6
 layout: list
-product_grid:
-  show: true
-  title: Rate limiting
-  group: Application security
 ---
 
 # Rate limiting rules
