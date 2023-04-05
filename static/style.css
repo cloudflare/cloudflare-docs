@@ -1631,12 +1631,21 @@ code.InlineCode-is-nowrap,
   margin-right: .8em;
 }
 
+#MobileSearch {
+  background: var(--background-color);
+  border-radius: 5px;
+}
+
+#MobileSearch:hover {
+  background: rgba(var(--gray-6-rgb), .7);
+}
+
 [theme="dark"] #MobileSearch {
   background: none;
 }
 
 [theme="dark"] #MobileSearch:hover {
-  background: var(--background-color);
+  background: rgba(var(--gray-2-rgb), .7)
 }
 
 @media (min-width: 768px) {
