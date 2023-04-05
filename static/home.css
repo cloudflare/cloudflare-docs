@@ -5156,6 +5156,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: var(--color);
 }
 
+[theme=dark] .DocSearch-Title {
+    color: rgb(var(--background-color-rgb));
+}
+
 .DocSearch-Button,
 .DocSearch-Button:hover {
     transition: background-color 0.3s ease;
