@@ -4,4 +4,5 @@ product:
   title: Workers Analytics Engine
   url: /analytics/analytics-engine/
   group: Developer platform
+  additional_group: Analytics
   grid_placeholder: true

@@ -8,7 +8,8 @@
 {{- with index $productData "product" -}}
 {{- $dataArray = $dataArray | append 
 (dict "group" .group "title" .title  "show" (default true .show) "url" 
-.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) ) -}}
+.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
+"additional_group" (default "" .additional_group)) -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -16,7 +17,11 @@
 {{- range $dataArray -}}
 {{- with .group -}}
 
-{{ $availableOptions = $availableOptions | append . }}
+{{- $availableOptions = $availableOptions | append . -}}
+{{- end -}}
+{{- if (ne .additional_group "" ) -}}
+
+{{- $availableOptions = $availableOptions | append .additional_group -}}
 {{- end -}}
 {{- end -}}
 
@@ -385,8 +390,8 @@ span a img {
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
-          data-product-group="{{ .group }}"
-          data-preview-tryout="{{ .preview_tryout }}"
+          data-product-group="{{- .group -}}|{{- .additional_group -}} "
+          data-preview-tryout="{{- .preview_tryout -}}"
         >
           <span>{{ .title }}</span>
         </a>
@@ -443,21 +448,11 @@ function filterList() {
   }
 
   for (let k = 0; k < listItems.length; k++) {
-    let groupMatch = true;
-    let previewMatch = true;
-    let searchMatch = true;
+    let groupTags = listItems[k].getAttribute('data-product-group').split("|").filter(x => x !== '');
+    let groupMatch = groupIdValues.length === 0 || groupTags.some(tag => groupIdValues.includes(tag));
 
-    if (groupIdValues.length > 0) {
-      groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-    } 
-
-    if (matchIdValues.length > 0) {
-      previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
-    }
-
-    if (searchTerm !== '') {
-      searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-    }
+    let previewMatch = matchIdValues.length === 0 || matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0;
+    let searchMatch = searchTerm === '' || listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0;
     
     if (groupMatch && searchMatch && previewMatch) {
       listItems[k].style.display = '';
