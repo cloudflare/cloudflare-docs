@@ -16,7 +16,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 - {{<code>}}addEventListener(type, listener){{</code>}} {{<type>}}void{{</type>}}
 
-  - If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/workers/runtime-apis/fetch-event/#methods), the runtime delivers the event to the next registered listener.
+  - If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith), the runtime delivers the event to the next registered listener.
   - A `"fetch"` listener, `"scheduled"` listener, and `"queue"` listener can be registered in the same script.
   - A script can have only one `"scheduled"` listener.
 
@@ -60,7 +60,7 @@ addEventListener('scheduled', event => {
 
 ### Queue Listener
 
-A Queue listener acts as [a consumer for one or more queues](https://developers.cloudflare.com/queues/platform/javascript-apis/#consumer).
+A Queue listener acts as [a consumer for one or more queues](/queues/platform/javascript-apis/#consumer).
 
 ```js
 addEventListener("queue", (event) => {

@@ -21,7 +21,7 @@ Not all SaaS applications support tenant control. Examples of common application
 
 This is a walkthrough of how to add custom headers for Microsoft 365. The procedure is the same for other SaaS applications, except for the values you will add for **Custom Header Name**. Values for **Custom Header Value** are specific to your organization; consult the documentation for your SaaS application for more information on where to find them.
 
-1.  On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Gateway** > **Firewall Policies** > **HTTP**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Gateway** > **Firewall Policies** > **HTTP**.
 
 1.  Create a policy with the following values:
 
@@ -87,7 +87,7 @@ This section covers policy configurations for common SaaS applications.
 
 Browser Isolation may be configured to send custom request headers. This is useful for implementing Tenant Control for SaaS applications or sending arbitrary custom request headers to Isolated websites.
 
-You can achieve this by implementing two HTTP policies targeting the same domain or application group in the Zero Trust dashboard.
+You can achieve this by implementing two HTTP policies targeting the same domain or application group in Zero Trust.
 
 ### Example: Implementing a custom request header for a domain
 

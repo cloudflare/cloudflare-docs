@@ -4,13 +4,13 @@ logo: <svg width="64" height="65" viewBox="0 0 64 65" fill="none" xmlns="http://
 product:
   title: Radar
   url: /radar/
-  group: Consumer products
+  group: Consumer services
 
 meta:
   title: Cloudflare Radar docs
   description: Investigate Internet usage around the world using Cloudflare's data.
   author: '@CloudflareRadar'
-  image: /cf-twitter-card.png
+  
 
 resources:
   community: https://community.cloudflare.com/tag/cloudflareradar

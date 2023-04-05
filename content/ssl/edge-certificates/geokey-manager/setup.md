@@ -24,7 +24,7 @@ Using the `policy` field, customers can define policies containing allow and blo
 
 To use Geo Key Manager v2 with the API, generally, follow the steps to [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api).
 
-When sending the [`POST`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `policy` parameter to define policies containing allow and block lists of countries or regions where the private key should be stored.
+When sending the [`POST`](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `policy` parameter to define policies containing allow and block lists of countries or regions where the private key should be stored.
 
 {{<Aside type="note">}}
 
@@ -97,7 +97,7 @@ To use Geo Key Manager in the dashboard:
 
 To use Geo Key Manager with the API, generally, follow the steps to [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#using-the-api).
 
-When sending the [`POST`](https://developers.cloudflare.com/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `geo_restrictions` parameter set to one of the following options:
+When sending the [`POST`](/api/operations/custom-ssl-for-a-zone-create-ssl-configuration) request, include the `geo_restrictions` parameter set to one of the following options:
 
 - `us`
 - `eu`

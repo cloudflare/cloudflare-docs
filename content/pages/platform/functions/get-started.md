@@ -1,5 +1,5 @@
 ---
-pcx-content-type: get-started
+pcx_content_type: get-started
 title: Get started
 weight: 1
 ---
@@ -14,7 +14,13 @@ You must have a Pages project set up on your local machine or deployed on the Cl
 
 ## Create a Function
 
-Create a `/functions` directory at the root of your Pages project. 
+To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project.
+
+{{<Aside type="note" header="Advanced mode">}}
+
+For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/platform/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_workers.js` file rather than the `/functions` directory.
+
+{{</Aside>}}
 
 Writing your Functions files in the `/functions` directory will automatically generate a Worker with custom functionality at predesignated routes.
 
@@ -34,6 +40,19 @@ In the above example code, the `onRequest` handler takes a request [`context`](/
 This Function will run on the `/helloworld` route and returns `"Hello, world!"`. The reason this Function is available on this route is because the file is named `helloworld.js`. Similarly, if this file was called `howdyworld.js`, this function would run on `/howdyworld`.
 
 Refer to [Routing](/pages/platform/functions/routing/) for more information on route customization.
+
+### Runtime features
+
+Workers runtime features, including compatibility with a subset of Node.js APIs and setting a [compatibility date or compatibility flag](/workers/platform/compatibility-dates/) are configurable on Pages Functions. 
+
+Set these configurations by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. To set Pages compatibility flags in the Cloudflare dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Pages** and select your Pages project.
+3. Select **Settings** > **Functions** > **Compatibility Flags**.
+4. Configure your Production and Preview compatiblity flags as needed.
+
+Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) and [R2](/r2/) from within your Pages project by configuring [bindings](/pages/platform/functions/bindings/). 
 
 ## Deploy your Function
 

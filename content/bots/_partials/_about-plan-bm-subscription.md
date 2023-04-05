@@ -31,7 +31,7 @@ _build:
     </tr>
     <tr>
       <td><b>Actions</b></td>
-      <td>Customer chooses from several options, including block, CAPTCHA challenge, and JS challenge</td>
+      <td>Customer chooses from several options, including block and various challenges</td>
     </tr>
     <tr>
       <td><b>Analytics</b></td>

@@ -18,7 +18,7 @@ Below is a generic guide to successfully set up an identity provider based SAML.
     | | |
     |---------------------------------|----------------------------------------------------|
     | **Single sign on URL**          | `https://horizon.area1security.com/api/users/saml` |
-    | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com/api/users/saml` |
+    | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com` |
     | **Name ID format**              | _Email Address_                                      |
     | **Application username**        | _Email_                                              |
     | **Response**                    | _Signed_                                             |
@@ -64,4 +64,4 @@ If you have trouble connecting your SAML provider to Area 1, make sure that:
 - You are using the SHA-1 algorithm.
 - Your encryption is set to 2048 bits.
 
-If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](https://support.cloudflare.com/hc/articles/200172476).
+If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/).

@@ -6,7 +6,7 @@ weight: 16
 
 # Remove WARP
 
-To uninstall the WARP client and the Cloudflare certificate from your device:
+The following procedures will uninstall the WARP client from your device. If you used the WARP client to deploy a root certificate, the certificate will also be removed.
 
 ## Windows
 
@@ -15,22 +15,18 @@ To uninstall the WARP client and the Cloudflare certificate from your device:
 3. Select **App & Features**.
 4. Scroll to find the Cloudflare WARP application and select **Uninstall**.
 
-WARP is now removed from your device.
-
 ## macOS
 
 We include an uninstall script as part of the macOS package that you originally used.
 
 1. To find and run the uninstall script, run the following commands:
 
-    ```sh
-    cd /Applications/Cloudflare\ WARP.app/Contents/Resources
-    ./uninstall.sh
-    ```
+```sh
+$ cd /Applications/Cloudflare\ WARP.app/Contents/Resources
+$ ./uninstall.sh
+```
 
 2. If prompted, enter your admin credentials to proceed with the uninstall.
-
-WARP is now removed from your device.
 
 {{<Aside type="note">}}
 
@@ -58,4 +54,6 @@ $ sudo apt remove cloudflare-warp
 2. Select and hold the application tile, and then select **Remove App**.
 3. Select **Delete App**.
 
-WARP is now removed from your device.
+{{<Aside type="note">}}
+If you [manually deployed the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/), remember to manually delete the certificate from the device.
+{{</Aside>}}

@@ -4,9 +4,16 @@ pcx_content_type: reference
 weight: 8
 meta:
   title: Certificate validity periods
+  description: Review information about available validity periods for your Cloudflare Advanced Certificates.
 ---
 
 # Certificate validity periods
+
+## Universal SSL
+
+{{<render file="_universal-ssl-validity.md">}}
+
+## Advanced certificates
 
 When you order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can select the following values for the **Certificate validity period**:
 
@@ -19,7 +26,7 @@ When you order an [advanced certificate](/ssl/edge-certificates/advanced-certifi
 
 {{<Aside type="note">}}
 
-For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](https://developers.cloudflare.com/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack).
+For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack).
 
 {{</Aside>}}
 

@@ -129,6 +129,13 @@
           "pro": "2 minutes",
           "biz": "2 minutes",
           "ent": "30 seconds"
+        },
+        "default": {
+          "title": "Default Browser Cache TTL",
+          "free": "4 hours",
+          "pro": "4 hours",
+          "biz": "4 hours",
+          "ent": "4 hours"
         }
       }
     },
@@ -427,7 +434,7 @@
     "link": "/dns/",
     "cname_flattening": {
       "title": "CNAME Flattening",
-      "link": "/dns/additional-options/cname-flattening/",
+      "link": "/dns/cname-flattening/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1159,7 +1166,7 @@
         }
       }
     },
-    "firewall_analytics": {
+    "security_events": {
       "title": "Security Events",
       "link": "/waf/security-events/",
       "properties": {
@@ -1177,6 +1184,13 @@
           "pro": "All",
           "biz": "All",
           "ent": "All"
+        },
+        "dashboard_show_account": {
+          "title": "Account-level dashboard",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
         },
         "historical_data": {
           "title": "Historical time",
@@ -1201,7 +1215,21 @@
         }
       }
     },
-    "firewall_rules": {
+    "security_analytics": {
+      "title": "Security Analytics",
+      "link": "/waf/security-analytics/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "x_firewall_rules": {
       "title": "Firewall rules",
       "link": "/firewall/",
       "properties": {
@@ -1230,7 +1258,7 @@
           "biz": "All except Log",
           "ent": "All"
         },
-        "regex_support": {
+        "z_regex_support": {
           "title": "Regex support",
           "free": "No",
           "pro": "No",
@@ -1239,7 +1267,7 @@
         }
       }
     },
-    "ip_access_rules": {
+    "x_ip_access_rules": {
       "title": "IP Access Rules",
       "link": "/waf/tools/ip-access-rules/",
       "properties": {
@@ -1267,9 +1295,9 @@
         }
       }
     },
-    "managed_rules": {
-      "title": "Managed rules",
-      "link": "/firewall/",
+    "waf_a_managed_rules": {
+      "title": "WAF Managed Rules",
+      "link": "/waf/managed-rules/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1288,24 +1316,29 @@
           "ent": "Yes"
         },
         "managed_rulesets": {
-          "title": "WAF Managed Rules",
+          "title": "Other WAF managed rulesets",
           "summary": "Available on paid plans",
           "link": "/waf/managed-rules/",
           "free": "No",
           "pro": "Yes",
           "biz": "Yes",
           "ent": "Yes"
-        },
-        "custom_rules": {
-          "title": "Custom rules",
-          "link": "/waf/custom-rules/",
+        }
+      }
+    },
+    "waf_b_custom_rules": {
+      "title": "WAF custom rules",
+      "link": "/waf/custom-rules/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
           "summary": "Enterprise-only",
           "free": "No",
           "pro": "No",
           "biz": "No",
           "ent": "Certain Enterprise plans"
         },
-        "custom_rulesets": {
+        "z_custom_rulesets": {
           "title": "Custom rulesets",
           "link": "/waf/custom-rulesets/",
           "summary": "Enterprise with add-on",
@@ -1392,12 +1425,22 @@
           "biz": "No",
           "ent": "No",
           "ent_plus": "Yes"
+        },
+        "k_policies": {
+          "title": "Number of policies<br/>(positive blocking)",
+          "summary": "Enterprise with add-on",
+          "free": 0,
+          "pro": 0,
+          "biz": 0,
+          "ent": 0,
+          "ent_plus": 3
         }
       }
     },
     "rate_limiting": {
-      "title": "Rate Limiting Rules (new version)",
+      "title": "Rate limiting rules (new version)",
       "link": "/waf/rate-limiting-rules/",
+      "ent_plus": "Enterprise with add-on",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1413,13 +1456,14 @@
           "pro": 2,
           "biz": 5,
           "ent": 5,
+          "ent_plus": 100,
           "waf_essential": 100,
           "advanced": 100
         }
       }
     },
     "rate_limiting_previous": {
-      "title": "Rate Limiting Rules (previous version)",
+      "title": "Rate limiting rules (previous version)",
       "link": "https://support.cloudflare.com/hc/articles/115001635128",
       "properties": {
         "availability": {
@@ -1450,9 +1494,9 @@
         }
       }
     },
-    "user_agent_rules": {
+    "x_user_agent_rules": {
       "title": "User Agent Blocking",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
+      "link": "/waf/tools/user-agent-blocking/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1473,13 +1517,13 @@
         }
       }
     },
-    "zone_lockdown_rules": {
+    "x_zone_lockdown_rules": {
       "title": "Zone Lockdown",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001595131",
+      "link": "/waf/tools/zone-lockdown/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
+          "summary": "Available on all paid plans",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",
@@ -1888,8 +1932,8 @@
           "free": 0,
           "pro": 0,
           "pro_plus": 1,
-          "biz": 1,
-          "ent": "1 (can purchase more)"
+          "biz": "1 (Modern)<br/>1 (Legacy)",
+          "ent": "1 (Modern) (can purchase more)<br/>1 (Legacy) (can purchase more)"
         }
       }
     },

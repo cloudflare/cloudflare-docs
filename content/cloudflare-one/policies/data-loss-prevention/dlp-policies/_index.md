@@ -25,22 +25,22 @@ DLP scans will not start until you [create a DLP policy](#2-create-a-dlp-policy)
 
 DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP policy](/cloudflare-one/policies/filtering/http-policies/). To start logging or blocking traffic, create a policy for DLP:
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**.
 2. Select **Create a policy**.
 3. Build an [HTTP policy](/cloudflare-one/policies/filtering/http-policies/) using the [DLP Profile](/cloudflare-one/policies/filtering/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
-    | Policy name |
-    | ---- |
-    | Only allow SSN uploads to Workday |
+   | Policy name                       |
+   | --------------------------------- |
+   | Only allow SSN uploads to Workday |
 
-    | Selector | Operator | Value |
-    | - | - | - |
-    | DLP Profiles | in | `U.S. Social Security Numbers` |
-    | Application  | not in | `Workday` |
+   | Selector     | Operator | Value                          |
+   | ------------ | -------- | ------------------------------ |
+   | DLP Profiles | in       | `U.S. Social Security Numbers` |
+   | Application  | not in   | `Workday`                      |
 
-    |Action|
-    |------|
-    |Block |
+   | Action |
+   | ------ |
+   | Block  |
 
 4. Select **Create policy**.
 
@@ -67,3 +67,11 @@ Different sites will send requests in different ways. For example, some sites wi
     * **Policy** shows the requests which matched a specific DLP policy.
 
 You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure payload logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/).
+
+{{<beta heading="h3">}}Report false positives{{</beta>}}
+
+1. Select the log you want to report.
+2. Select **Report DLP false positive** under **DLP details**.
+3. The information to be sent to Cloudflare will appear. To confirm your report, select **Send report**.
+
+Cloudflare will not respond directly to your report, but reporting false positives helps us improve our products. If you require technical assistance, reach out to [support](https://dash.cloudflare.com/?to=/:account/support).

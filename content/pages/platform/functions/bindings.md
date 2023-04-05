@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: how-to
 title: Bindings
 weight: 7
 ---
@@ -193,7 +193,20 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your D1 databases locally
 
-While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command. For example, if your database is bound to `NORTHWIND_DB`, access this database in local dev by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`. Interact with this binding by `using context.env` (for example, `context.env.NORTHWIND_DB`).
+While developing locally, interact with a D1 database by adding `--d1=<BINDING_NAME>` to your run command.
+  
+{{<Aside type="note">}}
+By default, data in local development is not persisted. This means if you create a schema and/or insert data into a D1 table, the next time you start local development, it will no longer exist.
+  
+You can enable persistence with the `--persist` flag.
+{{</Aside>}}
+  
+Specifically:
+  
+* If your database is bound to `NORTHWIND_DB`, access this database in local development by running `npx wrangler pages dev <OUTPUT_DIR> --d1=NORTHWIND_DB`.
+* Interact with this binding by using `context.env` - for example, `context.env.NORTHWIND_DB`
+
+Refer to the [D1 client API documentation](/d1/platform/client-api/) for the API methods available on your D1 binding.
 
 ## Service bindings
 

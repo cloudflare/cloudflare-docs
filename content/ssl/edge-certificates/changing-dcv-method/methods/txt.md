@@ -1,7 +1,7 @@
 ---
 title: TXT
 pcx_content_type: how-to
-weight: 1
+weight: 2
 meta:
   title: TXT method — Domain Control Validation — SSL/TLS
 ---
@@ -9,23 +9,13 @@ meta:
 # TXT DCV method
 
 {{<render file="_txt-validation-definition.md">}}
+<br/>
 
 ---
 
-## Zone setups
+## When to use
 
-### Full zones
-
-{{<render file="_full-zone-acm-dcv.md">}}
-<br/>
-
-### Partial zones
-
-For partial zones[^2], the process depends on whether the certificate uses a wildcard hostname.
-
-{{<render file="_partial-zone-acm-dcv-nonwildcard.md">}}
-
-{{<render file="_partial-zone-acm-dcv-wildcard.md">}}
+Generally, you need to perform TXT-based DCV when your certificate [requires DCV](/ssl/edge-certificates/changing-dcv-method/) and you cannot perform [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
 
 ---
 
@@ -53,11 +43,15 @@ For partial zones[^2], the process depends on whether the certificate uses a wil
 {{</tab>}}
 {{</tabs>}}
 
-You will need to add all of the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
-
 ### Update DNS records
 
-At your authoritative DNS provider, create a TXT record named the `txt_name` and containing the `txt_value`. Once this TXT record is in place, validation and certificate issuance will automatically complete.
+At your authoritative DNS provider, create a TXT record named the `txt_name` and containing the `txt_value`. 
+
+Repeat this process for all the DCV records returned in the `validation_records` field to your Authoritative DNS provider.
+
+If one or more of the hostnames on the certificate fail to validate, the certificate will not be issued or renewed.
+
+This means that a wildcard certificate covering `example.com` and `*.example.com` will require two DCV tokens to be placed at the authoritative DNS provider. Similarly, a certificate with five hostnames in the SAN (including a wildcard) will require five DCV tokens to be placed at the authoritative DNS provider.
 
 ### Complete DCV
 

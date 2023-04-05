@@ -5,6 +5,7 @@ product:
   title: Workers
   url: /workers/
   group: Developer platform
+  preview_tryout: true
 
 meta:
   title: Cloudflare Workers docs
@@ -12,7 +13,7 @@ meta:
     environment that allows you to create entirely new applications or augment
     existing ones without configuring or maintaining infrastructure.
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/developers/workers/40

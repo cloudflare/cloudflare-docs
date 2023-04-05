@@ -119,7 +119,7 @@ export class Example {
 
 A Durable Object may be evicted from memory any time, causing a loss of all transient (in-memory) state. To persistently store state your Durable Object might need in the future, use the Transactional Storage API.
 
-A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 30 seconds of inactivity.
+A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 10 seconds of inactivity.
 
 ### Transactional storage API
 
@@ -506,7 +506,7 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be
 
 ## Listing Durable Objects
 
-The Cloudflare REST API supports retrieving a [list of Durable Objects](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
+The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 
 ## Related resources
 

@@ -19,7 +19,7 @@ You will learn:
 
 Other features you will learn about:
 
-- [Custom Domain Delivery](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains): How to serve Cloudflare Images from your own domain name.
+- [Custom Domain Delivery](/images/cloudflare-images/serve-images/serve-images-custom-domains/): How to serve Cloudflare Images from your own domain name.
 - [Custom IDs](/images/cloudflare-images/upload-images/custom-id/): How to store and serve your images under their own, SEO friendly Unicode name and path.
 - [Flexible Image transformation](/images/cloudflare-images/transform/flexible-variants/): How to use transformation parameters in the delivery URL to transform an image on the fly.
 - Adaptive Optimized Format Delivery: How Cloudflare Images delivers image formats optimized to every browser, including WebP and AVIF.
@@ -149,7 +149,7 @@ If you need Cloudflare Images API credentials, refer to [Obtain Cloudflare Image
 
 ## Step 2: Use Cloudflare Images on default delivery domain
 
-Now that your website images [have been imported](#migrate-images-to-cloudflare-images), they are already accessible on Cloudflare Images. Zero setup required!
+Now that your website images [have been imported](#step-1---migrate-images-to-cloudflare-images), they are already accessible on Cloudflare Images. Zero setup required!
 
 For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` is served on the URL `https://imagedelivery.net/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 
@@ -224,7 +224,7 @@ This happens because the browser used (Google Chrome in the screenshot) supports
 
 In [step 2](#step-2-use-cloudflare-images-on-default-delivery-domain), you learned how Cloudflare Images serves images on its default delivery domain.
 
-However, Cloudflare Images can also serve images from [custom domains](/images/cloudflare-images/serve-images/#serving-images-from-custom-domains), no setup required — as long as the domain name is proxied by Cloudflare.
+However, Cloudflare Images can also serve images from [custom domains](/images/cloudflare-images/serve-images/serve-images-custom-domains/), no setup required — as long as the domain name is proxied by Cloudflare.
 
 For instance, our original image `cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg` can be served from the URL `https://imagejam.net/cdn-cgi/imagedelivery/-oMiRxTrr3JCvTMIzx4GvA/cakes/aditya-joshi--DUN-_bTO2Q-unsplash-ツ.jpg/public`.
 

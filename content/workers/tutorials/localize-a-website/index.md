@@ -15,7 +15,7 @@ layout: single
 
 ## Overview
 
-The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML at the Cloudflare edge. This gives developers the ability to efficiently and transparently customize their Workers applications.
+The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML on the Cloudflare global network. This gives developers the ability to efficiently and transparently customize their Workers applications.
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
@@ -32,7 +32,7 @@ If you would like to deploy your own version of the site, you can find the sourc
 Create a new project by cloning the [Workers Sites](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites) template on GitHub and pass `i18n-example` as the project name.
 
 ```sh
-~/ $ git clone https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-sites i18n-example
+~/ $ npx wrangler generate i18n-example worker-sites
 ~/ $ cd i18n-example
 ~/i18n-example $
 ```
@@ -257,7 +257,7 @@ async function handleEvent(event) {
 
 Your i18n tool built on Cloudflare Workers is complete and it is time to deploy it to your domain.
 
-To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/workers/get-started/guide/#6a-obtaining-your-account-id-and-zone-id). Set this ID at the top part of your project’s `wrangler.toml` file:
+To deploy your `*.workers.dev` subdomain, you need to configure the `wrangler.toml` configuration file in your project. First, add your Cloudflare [account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/). Set this ID at the top part of your project’s `wrangler.toml` file:
 
 ```toml
 ---

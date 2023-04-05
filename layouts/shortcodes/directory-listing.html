@@ -1,4 +1,5 @@
-{{- $current := .Page.RelPermalink -}}
+{{- $current := default .Page.RelPermalink (.Get "folderDirectory") -}}
+{{- $section := index (split $current "/") 1 }}
 {{- $len := len (split $current "/") -}}
 
 {{- $showDescriptions := default false (.Get "showDescriptions") -}}
@@ -6,7 +7,7 @@
 {{- $link := "" }}
 
 <ul>
-{{- range (where .Site.Pages "Section" .Page.Section).ByWeight -}}
+{{- range (where .Site.Pages "Section" $section).ByWeight -}}
   {{- $x := .RelPermalink -}}
   {{- $self := eq $x $current -}}
   {{- $delta := sub (len (split $x "/")) $len -}}

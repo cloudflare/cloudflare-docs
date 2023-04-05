@@ -148,7 +148,7 @@ function slugify(stringInput: string | undefined): string {
           </p>
         </div>
         <div v-if="element.description" v-html="element.description"></div>
-        <details v-if="element.pages">
+        <details v-if="element.pages" class="pathDetails">
           <summary v-if="element.type === 'module'">
             Contains {{ element.pages.length }} units
           </summary>

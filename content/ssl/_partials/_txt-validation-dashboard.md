@@ -7,7 +7,7 @@ _build:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Choose your account and domain.
-3. Navigate to **SSL/TLS** > **Edge Certificates**.
+3. Go to **SSL/TLS** > **Edge Certificates**.
 4. Select a certificate.
 5. Copy the values for **Certificate validation TXT name** and **Certificate validation TXT value**.
 

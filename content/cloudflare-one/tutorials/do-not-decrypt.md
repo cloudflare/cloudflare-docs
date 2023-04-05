@@ -27,7 +27,7 @@ Certain client applications, such as Zoom or Apple services, rely on certificate
 
 ## Build the policy
 
-1. In the [Zero Trust dashboard](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**. Select **Add a policy**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall Policies** > **HTTP**. Select **Add a policy**.
 
 2. Name the policy and, optionally, provide a description.
 

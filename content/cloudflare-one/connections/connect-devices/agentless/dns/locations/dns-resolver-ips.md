@@ -42,7 +42,7 @@ If you are on the Enterprise plan, you can request a dedicated DNS resolver IPv4
 
 Gateway uses the public source IPv4 address of your network to identify your DNS location, apply policies and log DNS requests. Unless you have purchased a [dedicated IPv4 resolver IP](#dns-resolver-ip), you must provide source IP addresses for the IPv4 traffic you want to filter with DNS policies. Otherwise, Gateway will not be able to attribute the traffic to your account.
 
-When creating a DNS location, the Zero Trust dashboard automatically identifies the source IP address of the network you are on.
+When creating a DNS location, Zero Trust automatically identifies the source IP address of the network you are on.
 
 If you are on the Enterprise plan, you have the option of manually entering one or more source IP addresses of your choice. This enables you to create Gateway DNS locations even if you are not connecting from any of those networks' IP addresses.
 
@@ -60,9 +60,9 @@ Each DNS location in Cloudflare Zero Trust has a unique DoH subdomain (previousl
 
 In the example below, the DoH subdomain is: `65y9p2vm1u`.
 
-| DNS over HTTPS hostname | DoH subdomain |
-| --- | --- |
-| `https://65y9p2vm1u.cloudflare-gateway.com/dns-query` | `65y9p2vm1u` |
+| DNS over HTTPS hostname                               | DoH subdomain |
+| ----------------------------------------------------- | ------------- |
+| `https://65y9p2vm1u.cloudflare-gateway.com/dns-query` | `65y9p2vm1u`  |
 
 ## Send specific queries to Gateway
 

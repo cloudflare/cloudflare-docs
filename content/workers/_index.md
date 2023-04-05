@@ -14,7 +14,7 @@ meta:
 
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.
 
-Cloudflare Workers runs on Cloudflare’s global [cloud network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/workers/platform/pricing/).
+Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [free and paid plans](/workers/platform/pricing/).
 
 Learn more about [how Workers works](/workers/learning/how-workers-works/).
 
@@ -24,6 +24,8 @@ Learn more about [how Workers works](/workers/learning/how-workers-works/).
 {{<button type="secondary" href="/workers/platform/betas">}}Explore betas{{</button>}}
 {{<button type="secondary" href="/workers/platform/storage-objects">}}Storage options guide{{</button>}}
 {{</button-group>}}
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ---
 
@@ -69,11 +71,11 @@ export default {
 
 ## Related resources
 
-- [How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers
-- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans
-- [HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker
-- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day)
-- [Storage objects guide](/workers/platform/storage-objects/) - Learn which storage object is best for your project.
+- [How Workers works](/workers/learning/how-workers-works/) – Learn how Cloudflare’s global network powers Workers.
+- [Pricing](/workers/platform/pricing/) – Learn about the Free and Bundled plans.
+- [HTMLRewriter](/workers/runtime-apis/html-rewriter/) – Parse and transform HTML from inside a Worker.
+- [Limits](/workers/platform/limits/) – Learn about plan limits (Free plans get 100,000 req/day).
+- [Storage options guide](/workers/platform/storage-objects/) - Learn which storage option is best for your project.
 
 ---
 

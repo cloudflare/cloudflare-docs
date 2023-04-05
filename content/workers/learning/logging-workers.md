@@ -127,6 +127,12 @@ Note that:
 - Logs from any [Durable Objects](/workers/learning/using-durable-objects/) your Worker is using will show up in the dashboard.
 - A maximum of 10 clients can view a Worker's logs at one time. This can be a combination of either dashboard sessions or `wrangler tail` calls.
 
+## Push logs to storage
+
+[Workers Logpush](/workers/platform/logpush/) allows you to send Workers Trace Event Logs to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions.
+
+Refer to the [Workers Logpush documentation](/workers/platform/logpush/) to learn how to create and configure Logpush jobs.
+
 ---
 
 ## Identifying and handling errors and exceptions
@@ -213,7 +219,7 @@ function postLog(data) {
 
 ### Go to origin on error
 
-By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#methods), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
+By using [`event.passThroughOnException`](/workers/runtime-apis/fetch-event/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}

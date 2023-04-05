@@ -4,15 +4,16 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M42 8
 product:
   title: Cloudflare Image Optimization
   url: /images/
-  wrap: true
   group: Developer platform
+  wrap: true
+  preview_tryout: true
 
 meta:
   title: Cloudflare Image Optimization docs
   description: Choose between Cloudflare Images and Cloudflare Image Resizing, two
     products tailored to your different needs.
   author: '@cloudflare'
-  image: /dev-products-preview.png
+  
 
 resources:
   community: https://community.cloudflare.com/c/developers/images

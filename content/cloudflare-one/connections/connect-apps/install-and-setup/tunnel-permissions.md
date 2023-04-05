@@ -10,7 +10,7 @@ weight: 3
 
 Cloudflare Tunnel requires two files:
 
-- An [account certificate](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#cert-pem) (the `cert.pem`)
+- An [account certificate](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#certpem) (the `cert.pem`)
 - A tunnel [credentials file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#credentials-file) (`<TUNNEL-UUID>.json`) for each tunnel
 
 The account certificate (`cert.pem`) gives power to manage Tunnels to the admin of the account for which it is issued. As an admin, make sure you are intentional about the locations and machines you store this certificate on, as this certificate allows users to create and manage any number of tunnels for that account.

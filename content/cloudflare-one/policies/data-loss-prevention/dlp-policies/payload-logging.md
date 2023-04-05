@@ -14,7 +14,7 @@ Follow [these instructions](/waf/managed-rules/payload-logging/command-line/gene
 
 ## 2. Upload the public key to Cloudflare
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **Network**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 
 2. In the **DLP Payload Encryption public key** field, paste your public key.
 
@@ -30,7 +30,7 @@ You can enable payload logging for any Allow or Block HTTP policy that uses the 
 
 1. Go to **Gateway** > **Firewall Policies** > **HTTP**.
 
-2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/#2-create-a-dlp-policy).
+2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/setup/#2-create-a-dlp-policy).
 
 3. In the policy builder, scroll down to **Configure policy settings** and enable **Log the payload of matched rules**.
 
@@ -46,9 +46,9 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 
 3. Select **Decrypt Payload Log**.
 
-4. Enter your private key and select **Decrypt**. 
+4. Enter your private key and select **Decrypt**.
 
-You will see the [ID of the matched DLP Profile](https://developers.cloudflare.com/api/operations/dlp-profiles-list-all-profiles) followed by the decrypted payload.
+You will see the [ID of the matched DLP Profile](/api/operations/dlp-profiles-list-all-profiles) followed by the decrypted payload.
 
 {{<Aside type="note">}}
 Neither the key nor the decrypted payload will be stored by Cloudflare.

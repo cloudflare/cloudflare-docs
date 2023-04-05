@@ -21,7 +21,7 @@ To create a new rate limiting rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
+2. Go to **Security** > **WAF** > **Rate limiting rules**.
 
 3. Select **Create rule**.
 

@@ -23,7 +23,7 @@ Before you build the rule, you'll need to follow [these instructions](/cloudflar
 
 ## Create a default group
 
-Navigate to the `Groups` page in the `My Teams` section of the Zero Trust dashboard.
+In Zero Trust, go to **Access** > **Access Groups**.
 
 Groups contain criteria that you can reuse in your [Access policies](/cloudflare-one/policies/access/). Additionally, groups allow you to nest certain operators within rules in the Access policy.
 
@@ -37,7 +37,7 @@ The page will tag the default group as `Default`. You can quickly see the rule c
 
 ## Use a default group
 
-You can now use this group in any new or existing application. To add to a new application, navigate to the `Applications` page in the `Access` section of the Zero Trust dashboard.
+You can now use this group in any new or existing application. To add to a new application, navigate to the `Applications` page in the `Access` section of Zero Trust.
 
 1.  Click **Add an application**.
 
