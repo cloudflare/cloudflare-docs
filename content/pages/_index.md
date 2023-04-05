@@ -19,7 +19,7 @@ Get started deploying your first site using our **Get started** guide below, or 
 {{<button-group>}}
   {{<button type="primary" href="/pages/get-started/">}}Get started{{</button>}}
   {{<button type="secondary" href="/pages/framework-guides/">}}See the framework guides{{</button>}}
-  {{<button type="secondary" href="https://pages.dev">}}Your Cloudflare Pages dashboard{{</button>}}
+  {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/pages">}}Your Cloudflare Pages dashboard{{</button>}}
 {{</button-group>}}
 
 ## Popular pages
