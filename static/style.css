@@ -4398,10 +4398,27 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin-left: var(--docs-content-gap);
 }
 
-.DocSearch-Screen-Icon svg {
+[theme="dark"] .DocSearch-Container {
+  background: var(--background-color);
+}
+
+.DocSearch-Search-Icon {
+  height: auto;
+  width: auto;
+}
+
+.DocSearch-Search-Icon,
+.DocSearch-Logo svg {
   height: auto;
   width: auto;
   margin: 0 auto;
+}
+
+/* hide docssearch on mobile */
+@media (max-width:768px) {
+  .DocsSearch {
+    display: none;
+  }
 }
 
 /* dark */

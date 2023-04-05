@@ -5137,10 +5137,36 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     justify-content: center;
 }
 
+[theme="dark"] .DocSearch-Container {
+    background: rgba(var(--background-color-rgb), .7);
+}
+
+.DocSearch-Reset {
+    color: rgb(var(--gray-0-rgb));
+}
+
+.DocSearch-Search-Icon,
+.DocSearch-Container svg,
+.DocSearch-Logo svg {
+    height: auto;
+    width: auto;
+}
+
 .DocSearch-Screen-Icon svg {
     height: auto;
     width: auto;
     margin: 0 auto;
+}
+
+/* hide docssearch on mobile */
+@media (max-width:768px) {
+    .DocsSearch {
+        display: none;
+    }
+}
+
+.DocsSearch-Modal {
+    top: 48px;
 }
 
 /* dark */
