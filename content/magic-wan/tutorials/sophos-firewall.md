@@ -155,3 +155,126 @@ To redirect traffic, add a static or a SD-WAN route.
 Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-based route. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare_MWAN example from above).
 
 ![Go to static routes to add an XFRM interface-based route](/magic-wan/static/sophos-firewall/static-route.png)
+
+#### SD-WAN route 
+
+1. Go to **Configure** > **Routing** > **Gateways** to create a custom gateway on the XFRM interface. The interface will be automatically created when you set up a tunnel interface based on IPsec (such as the Cloudflare_MWAN example from above).
+
+![Go to Gateways to add an XFRM interface-based route](/magic-wan/static/sophos-firewall/1-sd-wan-gateway.png)
+
+2. In **Configure** > **Routing** > **SD-WAN routes**, select **Add** to add the desired networks and services in the route to redirect traffic to Cloudflare. Enter a descriptive name for your connection, and pay attention to the **Incoming interface**, **Source networks** and **Primary gateway options**.
+
+![Go to SD-WAN to add the desired networks and services in the route.](/magic-wan/static/sophos-firewall/2-sd-wan-routes.png)
+
+### GRE
+
+Add a GRE or SD-WAN route or both.
+
+#### GRE route
+
+Add the route on the CLI.
+
+1. Sign in to the CLI. 
+2. Enter **4** to choose **Device console**, and enter the following command to create the tunnel:
+
+```bash
+system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
+```
+
+![Add the route on the CLI.](/magic-wan/static/sophos-firewall/gre-route-cli.png)
+
+#### SD-WAN route 
+
+1. Add a custom gateway on GRE with the peer IP address (from the `/31` subnet you chose earlier) as the Gateway IP address, and disable **Health check**.
+
+![Add a custom gateway on GRE.](/magic-wan/static/sophos-firewall/sd-wan-1-gre.png)
+
+2. Add an SD-WAN route, with the desired networks and services in the route to redirect traffic to Cloudflare.
+
+![Add an SD-WAN route.](/magic-wan/static/sophos-firewall/2-sd-wan-routes.png)
+
+## Verify tunnel status on Cloudflare dashboard
+
+You can check if your tunnels are healthy on the Cloudflare dashboard. 
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and choose your account. 
+2. Go to **Magic WAN** > **Tunnel health**, and select **View**.
+
+This dashboard shows the global view of tunnel health as measured from all Cloudflare locations. If the tunnels are healthy on your side, you will see the majority of servers reporting an **up** status. It is normal for a subset of these locations to show tunnel status as degraded or unhealthy, since the Internet is not homogenous and intermediary path issues between Cloudflare and your network can cause interruptions for specific paths.
+
+To make Cloudflare health checks work:
+
+1. The ICMP probe  packet from Cloudflare must be the type ICMP request, with anycast source IP. For example:
+
+```bash
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/gre_tunnels/<tunnel_identifier> \
+  --header 'Content-Type: application/json' \
+  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
+  --data '{
+    "health_check": {
+        "enabled":true,
+        "target":"172.64.240.252",
+        "type":"request",
+        "rate":"mid"
+    }
+}'
+```
+
+2. ICMP reply from SFOS should go back via the same tunnel on which the probe packets are received. You will need to create an additional SD-WAN policy route.
+
+<div class="large-img">
+
+![Configure an SD-WAN route so the ICMP reply goes back to Cloudflare via the same tunnel.](/magic-wan/static/sophos-firewall/2-icmp-probe-reply.png)
+
+</div>
+
+Packet flow will look like the following:
+
+```sh
+$ tcpdump -nn proto 1 
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode 
+listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes 
+
+13:09:55.500453 xfrm1, IN: IP 172.70.51.31 > 172.64.240.252: ICMP echo request, id 33504, seq 0, length 64 
+13:09:55.500480 xfrm1, OUT: IP 172.64.240.252 > 172.70.51.31: ICMP echo reply, id 33504, seq 0, length 64 
+
+13:09:55.504669 xfrm1, IN: IP 172.71.29.66 > 172.64.240.252: ICMP echo request, id 60828, seq 0, length 64 
+13:09:55.504695 xfrm1, OUT: IP 172.64.240.252 > 172.71.29.66: ICMP echo reply, id 60828, seq 0, length 64
+```
+
+## Verification of tunnel status on Sophos Firewall dashboard
+
+### IPsec
+
+When the tunnel is working, its **Status** will be green.
+
+<div class="large-img">
+
+![If the tunnel is working, it will show up with a green status.](/magic-wan/static/sophos-firewall/2b-ipsec-tunnel.png)
+
+</div>
+
+The corresponding XFRM interface will also show a **Connected** status.
+
+![The XFRM interface will also show a connected status.](/magic-wan/static/sophos-firewall/1-sd-wan-gateway.png)
+
+### GRE
+
+Access the CLI to check the status of a GRE tunnel. When the tunnel is working, its Status will show up as **Enabled**.
+
+![The GRE tunnel will show a status of Enabled when working.](/magic-wan/static/sophos-firewall/gre-status-enabled.png)
+
+![The GRE tunnel will show a status of Enabled when working.](/magic-wan/static/sophos-firewall/gre-status-enabled-b.png)
+
+## Troubleshooting
+
+If a tunnel shows a connected status at both ends, but is not established:
+
+- Check if the IPsec profile configuration is correct.
+- Make sure the corresponding tunnel interfaces are up.
+- Make sure routing configuration and route precedence are correctly set on SFOS. 
+- Make sure a static back route is added on Cloudflare.
+- Make sure you have added a firewall rule for the specific zone and host or service in SFOS. GRE and IPsec belong to the VPN zone.
+- Perform `tcpdump` to check if packets are going through the VPN or GRE tunnel as expected.
+- Perform a packet capture on Cloudflare to see if traffic is reaching the Cloudflare platform.
