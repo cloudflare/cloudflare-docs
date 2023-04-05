@@ -15,7 +15,7 @@ This tutorial will show you how to use Magic WAN with the following versions of 
     - SFOS  Version 19.0 MR2-Build 472
     - SFOS  Version 19.5.0 GA-Build 197
 
-You can connect through Generic Routing Encapsulation (GRE) or IPsec tunnels to Magic WAN. Below there are instructions on how to achieve this through both types of connections.
+You can connect through Generic Routing Encapsulation (GRE) or IPsec tunnels to Magic WAN.
 
 ## IPsec connection
 
@@ -38,14 +38,11 @@ The following instructions show how to setup an IPSec connection on your Sophos 
     - **Key life**: _3600_
     - **Encryption**: _AES256_
     - **Authentication**: _SHA2 256_
-6. In **Dead Peer Detection**, select **Dead Peer Detection** and make sure you have _Re-initiate_ selected in **When peer unreachable**.
-7. Select Save.
-
-<div class="large-img">
+6. Enable **Dead Peer Detection**.
+7. In **When peer unreachable**, select _Re-initiate_.
+8. Select **Save**.
 
 ![Start by setting up an IPsec profile.](/magic-wan/static/sophos-firewall/1-ipsec-profile.png)
-
-</div>
 
 ### 2. Create IPsec connection tunnel
 
@@ -62,19 +59,11 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
 5. In **Gateway settings**, make sure you have the following settings:
     - **Gateway address**: Enter your Cloudflare Anycast IP address provided by Cloudflare.
 
-<div class="large-img">
-
 ![Configure an IPsec tunnel.](/magic-wan/static/sophos-firewall/2-ipsec-tunnel.png)
-
-</div>
 
 After setting up your IPsec tunnel, it will show up on the IPsec connections list with an **Active** status.
 
-<div class="large-img">
-
 ![The IPsec tunnel should show up on the IPsec connections list.](/magic-wan/static/sophos-firewall/2b-ipsec-tunnel.png)
-
-</div>
 
 ### 3. Assign the XFRM interface address
 
@@ -133,7 +122,7 @@ Start by configuring a GRE tunnel between SFOS and the Cloudflare Anycast IP add
 
 ### 2. Add a GRE or SD-WAN route to redirect traffic through the GRE tunnel
 
-The detailed information on how to add a GRE or SD-WAN route to redirect traffic through the GRE tunnel, is in the following section (Traffic redirection mechanism on Sophos Firewall).
+The detailed information on how to add a GRE or SD-WAN route to redirect traffic through the GRE tunnel, is in the next section ([Traffic redirection mechanism on Sophos Firewall](#traffic-redirection-mechanism-on-sophos-firewall)).
 
 ### 3. Add a firewall rule for LAN/DMZ to VPN
 
@@ -223,11 +212,7 @@ curl --request PUT \
 
 2. ICMP reply from SFOS should go back via the same tunnel on which the probe packets are received. You will need to create an additional SD-WAN policy route.
 
-<div class="large-img">
-
 ![Configure an SD-WAN route so the ICMP reply goes back to Cloudflare via the same tunnel.](/magic-wan/static/sophos-firewall/2-icmp-probe-reply.png)
-
-</div>
 
 Packet flow will look like the following:
 
@@ -249,11 +234,7 @@ listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 byt
 
 When the tunnel is working, its **Status** will be green.
 
-<div class="large-img">
-
 ![If the tunnel is working, it will show up with a green status.](/magic-wan/static/sophos-firewall/2b-ipsec-tunnel.png)
-
-</div>
 
 The corresponding XFRM interface will also show a **Connected** status.
 
