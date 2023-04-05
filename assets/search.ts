@@ -15,7 +15,7 @@
       indexName: 'developers-cloudflare2',
       appId: '8MU1G3QO9P',
       apiKey: '045e8dbec8c137a52f0f56e196d7abe0',
-      container: '.DocsSearch',
+      container: '#algolia',
       debug: true,
 
       // algoliaOptions: {
@@ -83,6 +83,14 @@
     //     input.focus();
     //   }
     // });
+
+    // instantiate mobile search button
+    let button = $('#MobileSearch')
+    if (button) {
+      button.addEventListener('click', () => {
+        document.querySelector(".DocSearch.DocSearch-Button").click()
+      });
+    }
   }
 
   // init

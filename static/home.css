@@ -2765,6 +2765,33 @@ html {
     top: -.5em
 }
 
+.DocsToolbar--theme-toggle {
+    display: flex;
+}
+
+#MobileSearch {
+    border: none;
+    cursor: pointer;
+    height: 28px;
+    width: 28px;
+    margin-right: .8em;
+}
+
+/* hide when not on mobile */
+@media (min-width: 768px) {
+    #MobileSearch {
+        display: none;
+    }
+}
+
+[theme="dark"] #MobileSearch {
+    background: none;
+}
+
+[theme="dark"] #MobileSearch:hover {
+    background: var(--background-color);
+}
+
 .Superscript,
 .Tooltip---root {
     position: relative
@@ -5137,6 +5164,14 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     justify-content: center;
 }
 
+#algolia {
+    width: 100%;
+}
+
+.DocSearch-Container {
+    z-index: 999;
+}
+
 [theme="dark"] .DocSearch-Container {
     background: rgba(var(--background-color-rgb), .7);
 }
@@ -5160,7 +5195,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 /* hide docssearch on mobile */
 @media (max-width:768px) {
-    .DocsSearch {
+    #algolia {
         display: none;
     }
 }
@@ -5193,6 +5228,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 
 .DocSearch-Button {
     border: 1px solid rgba(0, 0, 0, 0.2);
+    width: 95%;
 }
 
 [theme=dark] .DocSearch-Button {
@@ -5211,7 +5247,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 .DocSearch-Button {
-    margin: 0 16px 0 16px;
+    margin: 0 48px 0 16px;
 }
 
 .DocsMobileHeader {

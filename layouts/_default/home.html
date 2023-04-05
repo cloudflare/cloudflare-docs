@@ -57,6 +57,16 @@
             href="https://dash.cloudflare.com/?to=/:account/support"><span>Support</span></a>
         </div>
         <div class="SiteHeader--theme-toggle">
+          <button id="MobileSearch" onclick='document.querySelector(".DocSearch.DocSearch-Button").click()'>
+            <svg viewBox="0 0 16 16" fill="currentColor" role="img" aria-labelledby="title-9701125841014673"
+              xmlns="http://www.w3.org/2000/svg">
+              <title id="title-9701125841014673">Search icon (depiction of a magnifying glass)</title>
+              <path
+                d="M11.999 10.585l3.458 3.458a1 1 0 01-1.414 1.414L10.585 12a6.5 6.5 0 111.414-1.414zM6.75 11.5a4.75 4.75 0 100-9.5 4.75 4.75 0 000 9.5z">
+              </path>
+            </svg>
+          </button>
+
           {{- partialCached "topbar.theme" . -}}
         </div>
       </div>
