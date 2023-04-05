@@ -9,6 +9,12 @@ meta:
 
 # Certificate validity periods
 
+## Universal SSL
+
+{{<render file="_universal-ssl-validity.md">}}
+
+## Advanced certificates
+
 When you order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can select the following values for the **Certificate validity period**:
 
 | Certificate validity period | Auto renewal period | Notes |
