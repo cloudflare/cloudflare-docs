@@ -443,25 +443,20 @@ function filterList() {
   }
 
   for (let k = 0; k < listItems.length; k++) {
-    let groupMatch;
-    let previewMatch;
-    let searchMatch;
+    let groupMatch = true;
+    let previewMatch = true;
+    let searchMatch = true;
+
     if (groupIdValues.length > 0) {
       groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-    } else {
-      groupMatch = true;
-    }
+    } 
 
     if (matchIdValues.length > 0) {
       previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
-    } else {
-      previewMatch = true;
     }
 
     if (searchTerm !== '') {
       searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-    } else {
-      searchMatch = true;
     }
     
     if (groupMatch && searchMatch && previewMatch) {

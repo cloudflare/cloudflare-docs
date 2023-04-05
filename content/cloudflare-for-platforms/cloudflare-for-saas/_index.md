@@ -10,6 +10,8 @@ weight: 6
 
 As a SaaS provider, you may want to support subdomains under your own zone in addition to letting your customers use their own domain names with your services. For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. Cloudflare for SaaS allows you to increase security, performance, and reliability of your customers' domains.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Benefits
 
 When you use Cloudflare for SaaS, it helps you to:
@@ -54,8 +56,6 @@ This allows you to support apex domains even if your customers are using a DNS p
 ## Availability
 
 Cloudflare for SaaS is bundled with non-Enterprise plans and available as an add-on for Enterprise plans. For more details, refer to [Plans](/cloudflare-for-platforms/cloudflare-for-saas/plans/).
-
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Next steps
 

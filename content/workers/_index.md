@@ -37,6 +37,8 @@ Learn more about [how Workers works](/workers/learning/how-workers-works/).
 {{<button type="secondary" href="/workers/platform/storage-objects">}}Storage options guide{{</button>}}
 {{</button-group>}}
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ---
 
 ## Installing the Workers CLI

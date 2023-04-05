@@ -10,6 +10,8 @@ meta:
 
 Cloudflare Waiting Room protects websites by queueing site visitors when a website experiences unmanageable surges in legitimate traffic that may otherwise bring an application down.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Benefits
 
 Waiting Room protects **your origin server** by preventing surges in legitimate traffic that may overload your origin.
