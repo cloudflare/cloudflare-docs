@@ -20,17 +20,14 @@ You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-los
 
 ## Build a custom profile
 
-1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **DLP** > **DLP Profiles**.
-2. Select **Create Profile**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DLP** > **DLP Profiles**.
+2. Select **Create profile**.
 3. Enter a name and optional description for the profile.
-4. Select **Add detection entry** and give it a name.
-5. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by 2 digits.
+4. Add custom or existing detection entries.
 
-    - Regexes are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
-    - Detected text patterns are limited to 1024 bytes in length.
-    - Regexes with `+` are not supported as they are prone to exceeding the length limit. For example `a+` can detect an infinite number of a's. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
-6. Select **Done** to save the detection entry.
-7. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
-8. Select **Save profile**.
+    {{<render file="_dlp-entries.md">}}
+
+5. (Optional) Configure [**Advanced settings**](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
+6. Select **Save profile**.
 
 You can now use this profile in a [DLP policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/applications/scan-apps/casb-dlp/).
