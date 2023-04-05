@@ -28,7 +28,7 @@ Operations against R2 buckets and objects adhere to the following consistency gu
 | Metadata: Update an object's metadata             | Strongly consistent: readers will immediately see the updated metadata globally
 | Deletion: Delete an object                        | Strongly consistent: reads to that object will immediately return a "does not exist" error
 | Object listing: List the objects in a bucket      | Strongly consistent: the list operation will list all objects at that point in time                    |
-| IAM: Adding/removing R2 Storage permissions       | Eventually consistent: A [new or updated API key](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/) may take up to a minute to have permissions reflected globally
+| IAM: Adding/removing R2 Storage permissions       | Eventually consistent: A [new or updated API key](/fundamentals/api/get-started/create-token/) may take up to a minute to have permissions reflected globally
 
 {{</table-wrap>}}
 
@@ -42,7 +42,7 @@ Additional notes:
 
 {{<Aside type="note">}}
 
-By default, Cloudflare's cache will cache common, cacheable status codes automatically [per our cache documentation](https://developers.cloudflare.com/cache/how-to/configure-cache-status-code/#edge-ttl).
+By default, Cloudflare's cache will cache common, cacheable status codes automatically [per our cache documentation](/cache/how-to/configure-cache-status-code/#edge-ttl).
 
 {{</Aside>}}
 

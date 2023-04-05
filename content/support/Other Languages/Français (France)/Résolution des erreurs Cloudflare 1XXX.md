@@ -82,15 +82,15 @@ ___
 -   Un domaine externe qui n'utilise pas Cloudflare comporte un enregistrement CNAME renvoyant vers un domaine actif sur Cloudflare.
 -   La cible de l'enregistrement DNS CNAME n'est pas résolue.
 -   Un enregistrement CNAME dans votre application Cloudflare DNS nécessite une résolution via un fournisseur DNS actuellement hors ligne.
--   L'option [Always Online](https://developers.cloudflare.com/cache/about/always-online) (Toujours en ligne) est activée pour un domaine [Custom Hostnames (SSL for SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas)).
+-   L'option [Always Online](/cache/about/always-online) (Toujours en ligne) est activée pour un domaine [Custom Hostnames (SSL for SaaS](/ssl/ssl-for-saas)).
 
 ### Résolution
 
 Un domaine hors de Cloudflare ne peut pas comporter un enregistrement CNAME renvoyant vers un domaine Cloudflare, sauf si le domaine hors de Cloudflare a été ajouté à un compte Cloudflare.
 
-Toute tentative d'accéder directement aux enregistrements DNS utilisés dans les [configurations CNAME de Cloudflare](https://developers.cloudflare.com/dns/zone-setups/partial-setup) entraîne également une erreur 1001 (exemple : _www.exemple.com.cdn.cloudflare.net_).
+Toute tentative d'accéder directement aux enregistrements DNS utilisés dans les [configurations CNAME de Cloudflare](/dns/zone-setups/partial-setup) entraîne également une erreur 1001 (exemple : _www.exemple.com.cdn.cloudflare.net_).
 
-Désactivez [Always Online](https://developers.cloudflare.com/cache/how-to/enable-always-online) (Toujours en ligne) si vous utilisez [Custom Hostnames (SSL for SaaS)](https://developers.cloudflare.com/ssl/ssl-for-saas).
+Désactivez [Always Online](/cache/how-to/enable-always-online) (Toujours en ligne) si vous utilisez [Custom Hostnames (SSL for SaaS)](/ssl/ssl-for-saas).
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 ### Cause courante
 
-Le nom d'hôte envoyé par le client ou le navigateur via [Server Name Indication](https://developers.cloudflare.com/fundamentals/glossary#server-name-indication-sni) (SNI) ne correspond pas à l'en-tête de l’hôte de la requête.
+Le nom d'hôte envoyé par le client ou le navigateur via [Server Name Indication](/fundamentals/glossary#server-name-indication-sni) (SNI) ne correspond pas à l'en-tête de l’hôte de la requête.
 
 ### Résolution
 
@@ -250,7 +250,7 @@ Par défaut, Cloudflare interdit l'_enregistrement DNS CNAME_ entre les domaines
 
 ### Résolution
 
-Pour permettre la résolution d'un enregistrement CNAME vers un domaine compris au sein d'un autre compte Cloudflare, le propriétaire du domaine du CNAME cible doit utiliser [Cloudflare pour SaaS](https://www.cloudflare.com/saas/), et plus spécifiquement notre solution [SSL pour SaaS](https://developers.cloudflare.com/ssl/ssl-for-saas/).
+Pour permettre la résolution d'un enregistrement CNAME vers un domaine compris au sein d'un autre compte Cloudflare, le propriétaire du domaine du CNAME cible doit utiliser [Cloudflare pour SaaS](https://www.cloudflare.com/saas/), et plus spécifiquement notre solution [SSL pour SaaS](/ssl/ssl-for-saas/).
 
 ___
 
@@ -278,8 +278,8 @@ Les causes courantes de l’erreur 1016 sont les suivantes :
 
 -   Un _enregistrement DNS A_ manquant mentionne l'adresse IP du point d'origine.
 -   Un _enregistrement CNAME_ compris au sein du DNS de Cloudflare renvoie vers un domaine externe impossible à résoudre.
--   Les noms d’hôte d’origine (CNAME) de vos pools Cloudflare [Load Balancing](https://developers.cloudflare.com/load-balancing/) par défaut, régional et de secours ne peuvent pas être résolus. Utilisez un pool de secours configuré avec une adresse IP de serveur d'origine qui vous servira de pool de secours au cas où tous les autres pools seraient indisponibles.
--   Lorsque vous créez une application Spectrum avec un CNAME en tant que point d'origine, vous devez d'abord créer un CNAME renvoyant vers l'origine du côté du DNS de Cloudflare. Veuillez consulter l'article [Enregistrements CNAME en tant qu'origine dans Spectrum](https://developers.cloudflare.com/spectrum/how-to/cname-origins) pour plus de détails.
+-   Les noms d’hôte d’origine (CNAME) de vos pools Cloudflare [Load Balancing](/load-balancing/) par défaut, régional et de secours ne peuvent pas être résolus. Utilisez un pool de secours configuré avec une adresse IP de serveur d'origine qui vous servira de pool de secours au cas où tous les autres pools seraient indisponibles.
+-   Lorsque vous créez une application Spectrum avec un CNAME en tant que point d'origine, vous devez d'abord créer un CNAME renvoyant vers l'origine du côté du DNS de Cloudflare. Veuillez consulter l'article [Enregistrements CNAME en tant qu'origine dans Spectrum](/spectrum/how-to/cname-origins) pour plus de détails.
 
 ### Résolution
 
@@ -332,7 +332,7 @@ Si vous n'êtes pas le propriétaire du site web, joignez une capture d'écran d
 Si vous êtes le propriétaire du site :
 
 1.  Procurez-vous une capture d'écran de l'erreur 1020 auprès de votre client
-2.  Dans le journal des [**Événements du pare-feu**](https://developers.cloudflare.com/waf/analytics) situé dans l'onglet **Vue d'ensemble** de votre application **Pare-feu** Cloudflare, recherchez le **RayID** ou l'adresse IP du client figurant dans le message d'erreur 1020 du visiteur.
+2.  Dans le journal des [**Événements du pare-feu**](/waf/analytics) situé dans l'onglet **Vue d'ensemble** de votre application **Pare-feu** Cloudflare, recherchez le **RayID** ou l'adresse IP du client figurant dans le message d'erreur 1020 du visiteur.
 
 3. Déterminez la cause du blocage et mettez à jour la **règle de pare-feu** ou autorisez l'adresse IP du visiteur dans les [**IP Access Rules**](https://support.cloudflare.com/hc/articles/217074967) (Règles d'accès en fonction de l'adresse IP).
 
@@ -359,7 +359,7 @@ ___
 
 ### Cause courante
 
-Une requête n'est pas traitée parce que le domaine a atteint les [limites de l'offre pour Cloudflare Workers](https://developers.cloudflare.com/workers/platform/limits).
+Une requête n'est pas traitée parce que le domaine a atteint les [limites de l'offre pour Cloudflare Workers](/workers/platform/limits).
 
 ### Résolution :
 
@@ -376,7 +376,7 @@ Vous avez demandé une page d'un site web (`tunnel.example.com`) figurant sur le
 ### Résolution
 
 -   **Si vous êtes un visiteur de ce site web** : veuillez réessayer dans quelques minutes.
--   **Si vous êtes le propriétaire de ce site web** : assurez-vous que _cloudflared_ est en cours d'exécution et qu'il peut atteindre le réseau. Vous devrez peut-être activer [Load Balancing](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) pour votre tunnel.
+-   **Si vous êtes le propriétaire de ce site web** : assurez-vous que _cloudflared_ est en cours d'exécution et qu'il peut atteindre le réseau. Vous devrez peut-être activer [Load Balancing](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb) pour votre tunnel.
 
 ___
 
@@ -450,7 +450,7 @@ Vous essayez de modifier un en-tête HTTP que les règles de modification des en
 
 ### Résolution
 
-Vérifiez que vous n'êtes pas en train d'essayer de modifier l'un des [en-têtes de requête HTTP réservés](https://developers.cloudflare.com/rules/transform#http-request-header-modification-rules).
+Vérifiez que vous n'êtes pas en train d'essayer de modifier l'un des [en-têtes de requête HTTP réservés](/rules/transform#http-request-header-modification-rules).
 
 ___
 
@@ -463,7 +463,7 @@ La valeur d'en-tête ajoutée/modifiée est vide, trop longue ou contient des ca
 ### Résolution
 
 -   Définissez la valeur de l'en-tête au moyen d'une valeur ou d'une expression plus courte.
--   Supprimez les caractères interdits. Consultez la rubrique [Format des noms et valeurs des en-têtes de requête HTTP](https://developers.cloudflare.com/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) dans la documentation destinée aux développeurs pour savoir quels sont les caractères autorisés.
+-   Supprimez les caractères interdits. Consultez la rubrique [Format des noms et valeurs des en-têtes de requête HTTP](/rules/transform/create-header-modification-rule#format-of-http-request-header-names-and-values) dans la documentation destinée aux développeurs pour savoir quels sont les caractères autorisés.
 
 ___
 
@@ -483,7 +483,7 @@ ___
 
 ### Cause courante
 
-Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](https://developers.cloudflare.com/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
+Un script Cloudflare Workers dépasse une [limite de temps d'utilisation du processeur](/workers/learning/debugging-workers#identifying-and-handling-errors-and-exceptions). Le temps d'utilisation du processeur est le temps d'exécution du code (par exemple, boucles, analyse JSON, etc.). Le temps consacré aux requêtes réseau (obtention, réponse) n’est pas pris en compte dans la durée d'utilisation du processeur.
 
 ### Résolution
 

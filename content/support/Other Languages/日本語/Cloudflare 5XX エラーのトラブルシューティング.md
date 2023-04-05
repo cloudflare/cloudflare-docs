@@ -176,7 +176,7 @@ Cloudflareからの接続をオリジンWebサーバーが拒否した時に、�
 -   オリジンWebサーバーのエラーログを確認して、Webサーバーアプリケーションがクラッシュしているか、停止しているか確認する
 -   [Cloudflare IPアドレス](https://www.cloudflare.com/ips)がブロックされていない、またはレート制限されていないことを確認する
 -   オリジンWebサーバーのファイアウォールまたはその他のセキュリティソフトウェアですべての[Cloudflare IP範囲](https://www.cloudflare.com/ips)を許可する
--   **SSL/TLS モード** を **Full** または**Full (Strict**) に設定したかと、[Cloudflareオリジン証明書](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)をインストール済みであることを確認する
+-   **SSL/TLS モード** を **Full** または**Full (Strict**) に設定したかと、[Cloudflareオリジン証明書](/ssl/origin-configuration/origin-ca)をインストール済みであることを確認する
 -   [Cloudflareコミュニティ](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461) で追加のトラブルシューティングに関する情報を見つける
 
 ___
@@ -198,7 +198,7 @@ CloudflareがオリジンWebサーバーとの接続中にタイムアウトし�
 -   Cloudflare **DNS**アプリのオリジンIPアドレスが、現在ホスティングプロバイダーがオリジンWebサーバーにプロビジョニングしているIPアドレスと一致していません。
 -   オリジンWebサーバーでパケットがドロップされています。
 
-[Cloudflare Pages](https://developers.cloudflare.com/pages/)をご利用の場合、カスタムドメインが設定され、CNAMEレコードがカスタム ページドメインを指していることを確認してください。カスタム ページドメインの設定方法に関する説明は[こちら](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain)。
+[Cloudflare Pages](/pages/)をご利用の場合、カスタムドメインが設定され、CNAMEレコードがカスタム ページドメインを指していることを確認してください。カスタム ページドメインの設定方法に関する説明は[こちら](/pages/getting-started#adding-a-custom-domain)。
 
 上記が全て解決策につながらない場合は、[Cloudflareサポートに連絡する](https://support.cloudflare.com/hc/articles/200172476)前に、ホスティングプロバイダーかサイト管理者から次の情報を取得してください：
 
@@ -250,7 +250,7 @@ ___
 525エラーはCloudflareとオリジンWebサーバー間のSSLハンドシェイクが失敗したことを示します。エラー525は、二つの条件がそろった時に発生します:
 
 1.  CloudflareとオリジナルWebサーバー間の[SSLハンドシェイク](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)に失敗する、そして
-2.  Cloudflare **SSL/TLS** アプリの「**概要**」タブで、[_Full_ または _Full (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) **SSL** が設定されている。
+2.  Cloudflare **SSL/TLS** アプリの「**概要**」タブで、[_Full_ または _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL** が設定されている。
 
 **解決方法**
 
@@ -259,12 +259,12 @@ ___
 -   有効なSSL証明書がインストールされていない
 -   ポート443（または他のカスタムセキュアポート）が開いていない
 -   [SNI](https://support.cloudflare.com/hc/articles/360026016272) サポートがない
--   Cloudflareで受け入れられている [暗号スイート](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) がオリジンWebサーバーでサポートされている暗号スイートと一致しない
+-   Cloudflareで受け入れられている [暗号スイート](/ssl/ssl-tls/cipher-suites) がオリジンWebサーバーでサポートされている暗号スイートと一致しない
 
 **追加のチェック**
 
--   オリジンサーバーに証明書がインストールされているかを確認します。[こちらの記事](https://support.cloudflare.com/hc/ja/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)に、いくつかのテストを実行する方法に関する詳細が記載されています。証明書をお持ちでない方は、無料の[CloudflareオリジンCA証明書](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)を作成およびインストールできます。オリジンCA証明書を使うと、CloudflareとオリジンWebサーバー間のトラフィックを暗号化できます。
--   サーバーで使用されている[暗号スイーツを調べて](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)、Cloudflareがサポートするものと一致することを確認します。
+-   オリジンサーバーに証明書がインストールされているかを確認します。[こちらの記事](https://support.cloudflare.com/hc/ja/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)に、いくつかのテストを実行する方法に関する詳細が記載されています。証明書をお持ちでない方は、無料の[CloudflareオリジンCA証明書](/ssl/origin-configuration/origin-ca)を作成およびインストールできます。オリジンCA証明書を使うと、CloudflareとオリジンWebサーバー間のトラフィックを暗号化できます。
+-   サーバーで使用されている[暗号スイーツを調べて](/ssl/ssl-tls/cipher-suites)、Cloudflareがサポートするものと一致することを確認します。
 -   525と表示するタイムスタンプからサーバーのエラーログをチェックし、SSLハンドシェイク中に接続が再設定される原因となるエラーがあるか確認します。
 
 ___
@@ -274,7 +274,7 @@ ___
 エラー 526は、次の二つの条件がそろった時に発生します：
 
 1.  オリジンWebサーバーでCloudflareがSSL証明書を検証できない、そして
-2.  Cloudflare **SSL/TLS** アプリの「**概要**」タブで、[_Full SSL (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) または **SSL** が設定されている。
+2.  Cloudflare **SSL/TLS** アプリの「**概要**」タブで、[_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes#full-strict) または **SSL** が設定されている。
 
 **解決方法**
 
@@ -289,7 +289,7 @@ ___
 
 ![SSL証明書にエラーがないことを示す画面](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-オリジンサーバーが自己署名の証明書を使用している場合は、ドメインを_Full SSL (strict)_の代わりに_Full_ _SSL_を使うように設定します。[ご自分のオリジンに合わせて推奨されるSSL設定](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)を参照してください。
+オリジンサーバーが自己署名の証明書を使用している場合は、ドメインを_Full SSL (strict)_の代わりに_Full_ _SSL_を使うように設定します。[ご自分のオリジンに合わせて推奨されるSSL設定](/ssl/origin-configuration/ssl-modes)を参照してください。
 
 ___
 
@@ -365,7 +365,7 @@ TLS/SSLエラーが発生した場合、オリジンWebサーバーをチェッ�
 -   ポート443が開いているか
 -   オリジンWebサーバーでSSL証明書が提示されているか
 -   オリジンWebサーバーのSSL証明書に記載されるSANまたはコモンネームがリクエストされたまたは標的となるホーム名に含まれているか
--   Cloudflare **SSL/TLS** アプリの「**概要**」タブで、**SSL** が [Full またはFull (Strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) に設定されているか
+-   Cloudflare **SSL/TLS** アプリの「**概要**」タブで、**SSL** が [Full またはFull (Strict)](/ssl/origin-configuration/ssl-modes) に設定されているか
 
 ___
 

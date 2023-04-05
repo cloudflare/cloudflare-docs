@@ -118,10 +118,10 @@ To automate processes involving Origin CA certificates, use the following API ca
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
-| [List certificates](https://developers.cloudflare.com/api/operations/origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
-| [Create certificate](https://developers.cloudflare.com/api/operations/origin-ca-create-certificate) | `POST` | `certificates` |
-| [Get certificate](https://developers.cloudflare.com/api/operations/origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
-| [Revoke certificate](https://developers.cloudflare.com/api/operations/origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
+| [List certificates](/api/operations/origin-ca-list-certificates) | `GET` | `certificates?zone_id=<<ZONE_ID>>` |
+| [Create certificate](/api/operations/origin-ca-create-certificate) | `POST` | `certificates` |
+| [Get certificate](/api/operations/origin-ca-get-certificate) | `GET` | `certificates/<<ID>>` |
+| [Revoke certificate](/api/operations/origin-ca-revoke-certificate) | `DELETE` | `certificates/<<ID>>` |
 
 ## Troubleshooting
 

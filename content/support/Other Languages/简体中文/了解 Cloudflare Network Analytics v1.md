@@ -29,9 +29,9 @@ ___
 访问 Network Analytics 具有以下要求：
 
 -   Cloudflare Enterprise 计划
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) 或 [Spectrum](https://developers.cloudflare.com/spectrum/)。
+-   Cloudflare [Magic Transit](/magic-transit/) 或 [Spectrum](/spectrum/)。
 
-Cloudflare **Network Analytics** 视图提供对网络层和传输层流量模式及 DDoS 攻击的近实时洞察能力。Network Analytics 可视化呈现数据包和位级别的数据，与通过 [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/) 提供的数据相同。
+Cloudflare **Network Analytics** 视图提供对网络层和传输层流量模式及 DDoS 攻击的近实时洞察能力。Network Analytics 可视化呈现数据包和位级别的数据，与通过 [GraphQL Analytics API](/analytics/graphql-api/) 提供的数据相同。
 
 ![分析面板显示每个类型的数据包摘要](/support/static/na-main-dashboard.png)
 
@@ -132,7 +132,7 @@ ___
 
 ### 从应用的筛选器中创建 Magic Firewall 规则
 
-您可以创建一个 [Magic Firewall](https://developers.cloudflare.com/magic-firewall) 规则，以阻止与 Network Analytics 中选定的筛选器匹配的所有流量。目前支持的筛选器有：
+您可以创建一个 [Magic Firewall](/magic-firewall) 规则，以阻止与 Network Analytics 中选定的筛选器匹配的所有流量。目前支持的筛选器有：
 
 -   目的地 IP
 -   协议
@@ -461,7 +461,7 @@ ___
 
 ## 查看活动日志
 
-Network Analytics **活动日志**显示当前选定时间范围内最多 500 个日志事件，每个时间范围视图中每页显示 10 个结果。（[GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/) 没有此限制。）
+Network Analytics **活动日志**显示当前选定时间范围内最多 500 个日志事件，每个时间范围视图中每页显示 10 个结果。（[GraphQL Analytics API](/analytics/graphql-api/) 没有此限制。）
 
 要显示事件详情，请点击与事件关联的扩展小部件。
 
@@ -518,9 +518,9 @@ ___
 
 ## 相关资源
 
--   [Cloudflare Network Analytics v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [从 Network Analytics v1 迁移至 Network Analytics v2](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflare Network Analytics v2](/analytics/network-analytics/)
+-   [从 Network Analytics v1 迁移至 Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [Cloudflare GraphQL API](/analytics/graphql-api/)
 -   [Cloudflare Analytics：快速概览](https://support.cloudflare.com/hc/articles/360037684111)
 -   [IANA 端口号和服务名称](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -645,7 +645,7 @@ _**\*\*notOlderThan**_ _限制查询可以搜索的记录时间范围。它指�
 -   攻击日志中会存储开始和结束时间戳，最小、最大和平均数据速率的数据包和比特数统计信息，以及总数、攻击类型和采取的操作。
 -   来源 IP 地址被视为个人个识别信息。因此，Cloudflare 仅将它们存储 30 天。30 天后，来源 IP 地址会被丢弃，并且日志将先汇总为 1 小时分组，然后汇总为 1 天分组。1 小时汇总将存储 6 个月，1 天汇总则存储 1 年。
 
-如需有关查询和访问日志数据的更多信息，请参考 [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/limits)。
+如需有关查询和访问日志数据的更多信息，请参考 [GraphQL Analytics API](/analytics/graphql-api/limits)。
 
 ### 为什么 Network Analytics 表示目的地 IP 的状态是“不可用”？
 

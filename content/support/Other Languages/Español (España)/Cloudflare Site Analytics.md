@@ -115,11 +115,11 @@ Este panel muestra las métricas de Cloudflare Workers. Para saber más, consult
 
 ### Registros
 
-La pestaña Registros no es una función de métricas. En su lugar, los clientes del plan Enterprise pueden habilitar el servicio [Logpush de Cloudflare](https://developers.cloudflare.com/logs/about/). Puedes usar Logpush para descargar y analizar datos utilizando cualquier herramienta de análisis de tu elección.
+La pestaña Registros no es una función de métricas. En su lugar, los clientes del plan Enterprise pueden habilitar el servicio [Logpush de Cloudflare](/logs/about/). Puedes usar Logpush para descargar y analizar datos utilizando cualquier herramienta de análisis de tu elección.
 
 ___
 
 ## Recursos relacionados
 
--   [Cloudflare Analytics: vista rápida](https://developers.cloudflare.com/analytics)
--   [Cloudflare GraphQL Analytics API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: vista rápida](/analytics)
+-   [Cloudflare GraphQL Analytics API](/analytics/)

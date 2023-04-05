@@ -34,11 +34,11 @@ The `id` of each backup allows you to download or restore a specific backup.
 
 ## Manually back up a database
 
-Creating a manual backup of your database before making large schema changes, manually inserting or deleting data, or otherwise modifying a database you are actively using is a good practice to get into. D1 allows you to make a backup of a database at any time, and stores the backup on your behalf. You should also consider [using migrations](https://developers.cloudflare.com/d1/platform/migrations/) to simplify changes to an existing database.
+Creating a manual backup of your database before making large schema changes, manually inserting or deleting data, or otherwise modifying a database you are actively using is a good practice to get into. D1 allows you to make a backup of a database at any time, and stores the backup on your behalf. You should also consider [using migrations](/d1/platform/migrations/) to simplify changes to an existing database.
 
 To back up a D1 database, you must have:
 
-1. The Cloudflare [Wrangler CLI installed](https://developers.cloudflare.com/workers/wrangler/install-and-update/)
+1. The Cloudflare [Wrangler CLI installed](/workers/wrangler/install-and-update/)
 2. An existing D1 database you want to back up.
 
 For example, to create a manual backup of a D1 database named `example-db`, call `d1 backup create`.
@@ -69,7 +69,7 @@ $ wrangler d1 backup download example-db 123a81a2-ab91-4c2e-8ebc-64d69633faf1
 🌀 Done!
 ```
 
-The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](https://developers.cloudflare.com//learning/importing-data/) to D1.
+The database backup will be download to the current working directory in native SQLite3 format. To import a local database, read [the documentation on importing data](/d1/learning/importing-data/) to D1.
 
 ## Restoring a backup
 

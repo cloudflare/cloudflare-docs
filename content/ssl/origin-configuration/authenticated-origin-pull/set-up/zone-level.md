@@ -20,7 +20,7 @@ First, upload a certificate to your origin.
 
 To use a Cloudflare certificate (which uses a specific CA), [download the .PEM file](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin.
 
-To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
+To use a custom certificate, follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/operations/zone-level-authenticated-origin-pulls-upload-certificate). Then, upload the certificate to your origin.
 
 ## 2. Configure origin to accept client certs
 
@@ -72,11 +72,11 @@ To enable **Authenticated Origin Pulls** in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+To enable or disable **Authenticated Origin Pulls** with the API, send a [`PATCH`](/api/operations/zone-settings-change-tls-client-auth-setting) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
 
 {{</tab>}}
 {{</tabs>}}
 
 ##  4. Enable Authenticated Origin Pulls for zone
 
-Finally, use the Cloudflare API to send a [`PUT`](https://developers.cloudflare.com/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable or disable zone-level authenticated origin pulls.
+Finally, use the Cloudflare API to send a [`PUT`](/api/operations/zone-level-authenticated-origin-pulls-set-enablement-for-zone) request to enable or disable zone-level authenticated origin pulls.

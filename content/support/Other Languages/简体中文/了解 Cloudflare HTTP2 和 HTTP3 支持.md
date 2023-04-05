@@ -40,7 +40,7 @@ ___
 
 HTTP/3 可实现快速、可靠和安全的连接。默认情况下，HTTP/3 使用 Google 开发的名为 QUIC 的协议对互联网传输进行加密。可通过 Cloudflare **Network** 应用启用 HTTP/3。
 
-如需更多信息，请查阅我们的 [HTTP/3 开发人员文档](https://developers.cloudflare.com/http3/)。
+如需更多信息，请查阅我们的 [HTTP/3 开发人员文档](/http3/)。
 
 ___
 
