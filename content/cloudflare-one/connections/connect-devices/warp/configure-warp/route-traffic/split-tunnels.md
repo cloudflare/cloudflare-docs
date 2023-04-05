@@ -86,7 +86,7 @@ Use Split Tunnels when you need to bypass Gateway entirely for a site. Common sc
 Do not exclude a site from Split Tunnels if you want to see the traffic in your Gateway logs. In particular, we do not recommend using Split Tunnels to:
 
 - Solve connectivity issues with a specific website. For configuration guidance, refer to our [troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#cannot-connect-to-a-specific-app-or-website).
-- Solve performance issues with a specific website. Since [20% of the Internet](https://blog.cloudflare.com/application-security/) runs on Cloudflare, it is usually faster to send traffic through us. If you are encountering a performance-related issue, it is best to first explore your Gateway policies or reach out to Support.
+- Solve performance issues with a specific website. Since Cloudflare operates within 50 milliseconds of 95% of the Internet-connected population, it is usually faster to send traffic through us. If you are encountering a performance-related issue, it is best to first explore your Gateway policies or reach out to Support.
 
 ## Cloudflare Zero Trust domains
 
