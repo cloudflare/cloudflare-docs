@@ -135,7 +135,7 @@ Create a firewall rule with the criteria and security policies from your company
 
 ## Traffic redirection mechanism on Sophos Firewall
 
-To redirect traffic, add a static or a SD-WAN route.
+To redirect traffic, you can add a static or an SD-WAN route.
 
 ### IPsec
 
@@ -178,7 +178,7 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ![Add a custom gateway on GRE.](/magic-wan/static/sophos-firewall/sd-wan-1-gre.png)
 
-2. Add an SD-WAN route, with the desired networks and services in the route to redirect traffic to Cloudflare.
+2. Add an SD-WAN route with the desired networks and services in the route to redirect traffic to Cloudflare.
 
 ![Add an SD-WAN route.](/magic-wan/static/sophos-firewall/2-sd-wan-routes.png)
 
@@ -228,7 +228,7 @@ listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 byt
 13:09:55.504695 xfrm1, OUT: IP 172.64.240.252 > 172.71.29.66: ICMP echo reply, id 60828, seq 0, length 64
 ```
 
-## Verification of tunnel status on Sophos Firewall dashboard
+## Verify tunnel status on Sophos Firewall dashboard
 
 ### IPsec
 
@@ -242,7 +242,7 @@ The corresponding XFRM interface will also show a **Connected** status.
 
 ### GRE
 
-Access the CLI to check the status of a GRE tunnel. When the tunnel is working, its Status will show up as **Enabled**.
+Access the CLI and type `system gre tunnel show` to check the status of a GRE tunnel. When the tunnel is working, its Status will show up as **Enabled**.
 
 ![The GRE tunnel will show a status of Enabled when working.](/magic-wan/static/sophos-firewall/gre-status-enabled.png)
 
