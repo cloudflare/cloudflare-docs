@@ -6,7 +6,9 @@ weight: 5
 
 # HTTP/3 inspection
 
-Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. To enable HTTP/3 inspection, go to **Settings** > **Network** and enable **Proxy** for UDP.
+Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. Inspecting HTTP/3 inspection requires traffic to proxied over UDP.
+
+To enable HTTP/3 inspection, go to **Settings** > **Network**, enable **Proxy**, and select **UDP**.
 
 ## Browser limitations
 
