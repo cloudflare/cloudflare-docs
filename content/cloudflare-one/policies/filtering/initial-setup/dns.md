@@ -10,6 +10,8 @@ meta:
 
 Secure Web Gateway allows you to inspect DNS traffic and control which websites users can visit.
 
+[Cloudflare Tenant](/tenant/) partners can set up DNS policies through their managed service provider (MSP).
+
 ## 1. Connect to Gateway
 
 ### Connect devices
@@ -18,7 +20,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your device.
 2. In the WARP client Settings, log in to your organization’s [Zero Trust instance](/cloudflare-one/glossary/#team-name).
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device .
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/filtering/configuring-block-page/), [install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your device.
 
 ### Connect DNS locations
 
