@@ -53,7 +53,7 @@ When you disable a load balancer, requests to a specific hostname depend on your
 
 In both cases, disabling your load balancer prevents traffic from going to any associated origin or fallback pools.
 
-If you have already an existing `A, AAAA, or CNAME` be aware that the change take some time to propagate, accordingly with the [Time to Live (TTL)](https://developers.cloudflare.com/dns/manage-dns-records/reference/ttl/). It may take longer than 5 minutes for you to actually experience record changes, as your local DNS cache may take longer to update.
+If you already have an existing `A`, `AAAA`, or `CNAME` record, be aware that the change may take some time to propagate due to [Time to Live (TTL)](/dns/manage-dns-records/reference/ttl/) and any record changes is affected, as your local DNS cache may take longer to update.
 
 
 
