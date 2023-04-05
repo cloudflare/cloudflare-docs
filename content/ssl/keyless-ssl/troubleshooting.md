@@ -86,7 +86,9 @@ However, the key server is open source so you may attempt to build and deploy a 
 
 ## Key server multi-domain support
 
-You can use the same key server for multiple domains you however will need to add the hostname and the Zone ID of the new domain to the `gokeyless.yaml` file
+You can use the same key server for multiple domains.
+
+ However, if you do, you will need to add the hostname and the Zone ID of the new domain to the `gokeyless.yaml` file.
 
 ## Additional questions
 
