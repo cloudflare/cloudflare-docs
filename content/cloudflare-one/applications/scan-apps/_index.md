@@ -32,10 +32,10 @@ After the first scan, CASB will automatically scan your application on a frequen
 ## Pause an integration
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
-2. Identify the integration for which you would like to pause and select **Manage**.
-3. To stop scanning the application, select **Pause**.
+2. Find the integration you would like to pause and select **Manage**.
+3. To stop scanning the application, turn off **Scan findings**.
 
-You can resume application scanning at any time by selecting **Resume**.
+You can resume application scanning at any time by turning on **Scan findings**.
 
 ## Delete an integration
 
@@ -46,5 +46,5 @@ When you delete an integration, all keys and OAuth data will be deleted. This me
 {{</Aside>}}
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
-2. Identify the integration for which you would like to delete and select **Manage**.
+2. Find the integration you would like to delete and select **Manage**.
 3. Select **Delete**.
