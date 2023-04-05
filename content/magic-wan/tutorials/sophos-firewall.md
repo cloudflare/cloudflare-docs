@@ -197,7 +197,7 @@ To make Cloudflare health checks work:
 
 ```bash
 curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/gre_tunnels/<tunnel_identifier> \
+  --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/ipsec_tunnels/<tunnel_identifier> \
   --header 'Content-Type: application/json' \
   --header 'X-Auth-Email: <YOUR_EMAIL> ' \
   --data '{
