@@ -49,7 +49,7 @@ curl -X POST \
     "location_strategy": {
       "prefer_ecs": "always",
       "mode": "resolver_ip"
-    }
+    },
     "random_steering": {
       "pool_weights": {
         "de90f38ced07c2e2f4df50b1f61d4194": 0.3,
