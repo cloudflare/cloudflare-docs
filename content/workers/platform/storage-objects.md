@@ -84,7 +84,7 @@ D1 is currently in [public (open) alpha](https://developers.cloudflare.com/worke
 
 {{</Aside>}}
 
-Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+Built on SQLite, D1 is Cloudflare’s first [serverless, queryable relational database](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
 
