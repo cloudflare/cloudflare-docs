@@ -21,6 +21,8 @@ Build serverless applications and deploy instantly across the globe for exceptio
 Cloudflare Workers provides a [serverless](https://www.cloudflare.com/learning/serverless/what-is-serverless/) execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure. 
 
 Cloudflare Workers runs on [Cloudflare’s global network](https://www.cloudflare.com/learning/serverless/glossary/what-is-edge-computing/) in over 200 cities around the world, offering both [Free and Paid plans](/workers/platform/pricing/).
+
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
  
 ---
 
