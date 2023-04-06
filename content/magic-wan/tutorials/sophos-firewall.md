@@ -13,7 +13,7 @@ This tutorial will show you how to use Magic WAN with the following versions of 
 
 - **Sophos software versions tested:**
     - SFOS  Version 19.0 MR2-Build 472
-    - SFOS  Version 19.5.0 GA-Build 197
+    - SFOS  Version 19.5.1 MR1-Build 278
 
 You can connect through Generic Routing Encapsulation (GRE) or IPsec tunnels to Magic WAN.
 
@@ -88,7 +88,7 @@ You will have to disable IPsec Anti-Replay on your Sophos Firewall. Changing the
 
 Below are instruction on how to achieve this on SFOS version 19 and SFOS version 19.5:
 
-#### SFOS version 19.0 MR2-Build 472
+#### SFOS 19.0 MR2-Build 472 or 19.5 MR1-Build278 or later versions: 
 
 1. Sign in to the CLI.
 2. Enter **4** to choose **Device console**, and enter the following command:
@@ -99,7 +99,7 @@ Below are instruction on how to achieve this on SFOS version 19 and SFOS version
 
     ![Access the CLI to disable anti-replay](/magic-wan/static/sophos-firewall/5-sfos-19.png)
 
-#### SFOS version 19.5.0 GA-Build 197 or any other SFOS version
+#### Older SFOS versions
 
 Contact Sophos support.
 
@@ -193,7 +193,7 @@ This dashboard shows the global view of tunnel health as measured from all Cloud
 
 To make Cloudflare health checks work:
 
-1. The ICMP probe  packet from Cloudflare must be the type ICMP request, with anycast source IP. For example:
+1. The ICMP probe packet from Cloudflare must be the type ICMP request, with anycast source IP. In the following example, we have used `172.64.240.252` as a target example:
 
 ```bash
 curl --request PUT \
@@ -256,6 +256,6 @@ If a tunnel shows a connected status at both ends, but is not established:
 - Make sure the corresponding tunnel interfaces are up.
 - Make sure routing configuration and route precedence are correctly set on SFOS. 
 - Make sure a static back route is added on Cloudflare.
-- Make sure you have added a firewall rule for the specific zone and host or service in SFOS. GRE and IPsec belong to the VPN zone.
+- Firewall rules for specific zones and host or service must be added in SFOS. GRE and IPsec belong to the VPN zone.
 - Perform `tcpdump` to check if packets are going through the VPN or GRE tunnel as expected.
 - Perform a packet capture on Cloudflare to see if traffic is reaching the Cloudflare platform.
