@@ -5,7 +5,7 @@ product:
   title: Analytics
   url: /analytics/
   group: Cloudflare essentials
-  additional_group: Analytics
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Analytics docs

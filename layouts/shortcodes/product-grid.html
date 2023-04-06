@@ -6,10 +6,18 @@
 {{- $productName :=  replace .Name ".yml" "" -}}
 {{- $productData := index $.Site.Data $productName -}}
 {{- with index $productData "product" -}}
+
+{{- $additional_groups := slice -}}
+{{- with .additional_groups -}}
+{{- range . -}}
+{{- $additional_groups = $additional_groups | append . -}}
+{{- end -}}
+{{- end -}}
+
 {{- $dataArray = $dataArray | append 
 (dict "group" .group "title" .title  "show" (default true .show) "url" 
 .url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
-"additional_group" (default "" .additional_group)) -}}
+"additional_groups" (default ("") ($additional_groups))) -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -19,9 +27,13 @@
 
 {{- $availableOptions = $availableOptions | append . -}}
 {{- end -}}
-{{- if (ne .additional_group "" ) -}}
+{{- if ne .additional_groups "" -}}
 
-{{- $availableOptions = $availableOptions | append .additional_group -}}
+{{- range .additional_groups -}}
+
+{{- $availableOptions = $availableOptions | append . -}}
+
+{{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -390,7 +402,8 @@ span a img {
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
-          data-product-group="{{- .group -}}|{{- .additional_group -}} "
+          data-product-group="{{- .group -}}{{- if ne .additional_groups "" -}}
+          {{- range .additional_groups -}}|{{.}}{{- end -}}{{- end -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
         >
           <span>{{ .title }}</span>

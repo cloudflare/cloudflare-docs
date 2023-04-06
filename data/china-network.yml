@@ -5,7 +5,7 @@ product:
   title: China Network
   url: /china-network/
   group: Application performance
-  additional_group: Application security
+  additional_groups: [Application security]
 
 meta:
   title: Cloudflare China Network docs

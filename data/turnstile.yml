@@ -4,7 +4,7 @@ product:
   title: Turnstile
   url: /turnstile/
   group: Application security
-  additional_group: Developer platform
+  additional_groups: [Developer platform]
 
 meta:
   title: Cloudflare Turnstile docs

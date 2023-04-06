@@ -3,7 +3,7 @@ name: Cloudflare Web Analytics
 product:
   title: Cloudflare Web Analytics
   group: Application performance
-  additional_group: Analytics
+  additional_groups: [Analytics, Developer platform]
   wrap: true
   url: /analytics/web-analytics/
   grid_placeholder: true

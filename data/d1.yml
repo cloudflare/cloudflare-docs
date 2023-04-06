@@ -5,7 +5,7 @@ product:
   title: D1
   url: /d1/
   group: Developer platform
-  additional_group: Storage
+  additional_groups: [Storage]
 
 meta:
   title: Cloudflare D1 docs

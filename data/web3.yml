@@ -5,7 +5,7 @@ product:
   title: Web3
   url: /web3/
   group: Application performance
-  additional_group: Application security
+  additional_groups: [Application security]
   preview_tryout: true
 
 meta:
