@@ -178,7 +178,9 @@ This option is a version of the `cacheTtl` feature which chooses a TTL based on 
 
 ## Customize cache behavior based on request file type
 
-You can combine the functionalities mentioned above into one Worker script and use variables instead so that it can be repurposed for other use cases. In the below example, this can be done for a media streaming platform.
+Using custom cache keys and overrides based on response code, you can write a Worker that sets the TTL based on the response status code from origin, and request file type.
+
+The following example demonstrates how you might use this to cache requests for streaming media assets:
 
 {{</content-column>}}
 
