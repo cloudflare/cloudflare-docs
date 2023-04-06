@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
 weight: 7
-title: Load balancing with DNS records
+title: Round-robin DNS
 ---
 
-# Load balancing with DNS records
+# Round-robin DNS
 
 To randomly distribute traffic across multiple servers, set up multiple DNS `A` or `AAAA` records for the same hostname.
 
