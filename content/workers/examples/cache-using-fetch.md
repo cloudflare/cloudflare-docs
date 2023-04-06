@@ -176,7 +176,7 @@ This option is a version of the `cacheTtl` feature which chooses a TTL based on 
 
 {{<content-column>}}
 
-## Cache based on file extensions and using arrays to pass through variables
+## Customize cache behavior based on request file type
 
 You can combine the functionalities mentioned above into one Worker script and use variables instead so that it can be repurposed for other use cases. In the below example, this can be done for a media streaming platform.
 
