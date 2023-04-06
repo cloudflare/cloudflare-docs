@@ -93,5 +93,5 @@ ___
 ## 관련 자료
 
 -   [보조 이름 서버](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-)(Enterprise 요금제의 기능)
--   [CNAME 설정](https://developers.cloudflare.com/dns/zone-setups/partial-setup)(Business 및 Enterprise 요금제의 기능)
--   [이름 서버를 Cloudflare로 변경하는 방법](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [CNAME 설정](/dns/zone-setups/partial-setup)(Business 및 Enterprise 요금제의 기능)
+-   [이름 서버를 Cloudflare로 변경하는 방법](/dns/zone-setups/full-setup/setup)

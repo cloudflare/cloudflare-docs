@@ -387,7 +387,7 @@ html[is-site-page] .DocsContent {
 
 .ProductGrid--link span {
     white-space: nowrap;
-    font-weight: 300;
+    font-weight: 450;
     line-height: 1.25
 }
 
@@ -410,7 +410,7 @@ html[is-site-page] .DocsContent {
 }
 
 [theme=dark] .ProductGrid--link span {
-    font-weight: 300
+    font-weight: 450
 }
 
 @media (max-width:1280px) {

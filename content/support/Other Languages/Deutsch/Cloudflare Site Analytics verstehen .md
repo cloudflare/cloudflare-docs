@@ -115,11 +115,11 @@ Dieser Bereich enthält Metriken für Cloudflare Workers. Weitere Informationen 
 
 ### Protokolle
 
-Die Registerkarte „Protokolle“ ist kein Feature der Metriken. Aber Kunden des Enterprise Plans können den Dienst [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/) aktivieren. Mit Logpush können Sie Daten herunterladen und mit einem Analysetool Ihrer Wahl analysieren.
+Die Registerkarte „Protokolle“ ist kein Feature der Metriken. Aber Kunden des Enterprise Plans können den Dienst [Cloudflare Logs Logpush](/logs/about/) aktivieren. Mit Logpush können Sie Daten herunterladen und mit einem Analysetool Ihrer Wahl analysieren.
 
 ___
 
 ## Verwandte Ressourcen
 
--   [Cloudflare Analytics: Ein kurzer Überblick](https://developers.cloudflare.com/analytics)
--   [Die GraphQL-API der Cloudflare Analytics](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: Ein kurzer Überblick](/analytics)
+-   [Die GraphQL-API der Cloudflare Analytics](/analytics/)

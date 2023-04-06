@@ -39,7 +39,7 @@ Cloudflare User Agent Blocking is available on all plans. The number of availabl
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
 
-Issue a `POST` request for the [Create a User Agent Blocking rule](https://developers.cloudflare.com/api/operations/user-agent-blocking-rules-create-a-user-agent-blocking-rule) operation.
+Issue a `POST` request for the [Create a User Agent Blocking rule](/api/operations/user-agent-blocking-rules-create-a-user-agent-blocking-rule) operation.
 
 For example:
 

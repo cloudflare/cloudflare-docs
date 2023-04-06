@@ -8,7 +8,7 @@ meta:
 
 # Analytics API properties
 
-This page describes API properties that you can use in [API requests for DNS analytics](https://developers.cloudflare.com/api/operations/dns-analytics-table).
+This page describes API properties that you can use in [API requests for DNS analytics](/api/operations/dns-analytics-table).
 
 ## Metrics
 

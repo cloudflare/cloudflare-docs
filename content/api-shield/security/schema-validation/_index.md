@@ -32,8 +32,13 @@ Currently, API Shield cannot validate some features of API schemas, including th
 
 Regular expression support is a paid add-on in the Enterprise plan.
 
-## Body Inspection
+## Body inspection
+
 API Shield has the ability to identify body specifications in uploaded schemas and validate the data of incoming API requests.
+
+The supported content-type format is `application/json`. The code must validate that no other content media ranges are uploaded. 
+
+`/`, `application/*`, and `application/json` media-ranges are valid. We will also only accept the `charset` parameter with a static value of `utf-8`.
 
 {{<Aside type="note" header="Note:">}}
 

@@ -103,7 +103,7 @@ Workers Logpush is only available on the Workers Paid plan.
 
 ## Queues
 
-Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](https://developers.cloudflare.com/queues/platform/pricing/).
+Queues are only available on the Workers Paid plan. To learn more about Queues pricing, refer to [Queues Pricing](/queues/platform/pricing/).
 
 ## Durable Objects
 
@@ -189,7 +189,7 @@ Requests that hit the [Durable Objects in-memory cache](/workers/learning/using-
 
 Service bindings cost the same as any normal Worker. Each invocation is charged as if it is a request from the Internet with one important difference. You will be charged a single billable duration across all Workers triggered by a single incoming request.
 
-For more information on how service bindings work, refer to [About Service bindings](https://developers.cloudflare.com/workers/platform/bindings/about-service-bindings/).
+For more information on how service bindings work, refer to [About Service bindings](/workers/platform/bindings/about-service-bindings/).
 
 ## Fine Print
 

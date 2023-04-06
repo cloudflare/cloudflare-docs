@@ -29,9 +29,9 @@ ___
 ネットワーク分析にアクセスするには、次が必要になります。
 
 -   CloudflareのEnterprise プラン
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) または[Spectrum](https://developers.cloudflare.com/spectrum/)
+-   Cloudflare [Magic Transit](/magic-transit/) または[Spectrum](/spectrum/)
 
-Cloudflareの**ネットワーク分析**ビューでは、ネットワーク層とトランスポート層におけるトラフィックパターンとDDoS攻撃についてほぼリアルタイムの可視性を実現します。ネットワーク分析では、パケットとビットレベルのデータ、[GraphQL API分析](https://developers.cloudflare.com/analytics/graphql-api/)を介して利用できるのと同じデータを視覚化します。
+Cloudflareの**ネットワーク分析**ビューでは、ネットワーク層とトランスポート層におけるトラフィックパターンとDDoS攻撃についてほぼリアルタイムの可視性を実現します。ネットワーク分析では、パケットとビットレベルのデータ、[GraphQL API分析](/analytics/graphql-api/)を介して利用できるのと同じデータを視覚化します。
 
 ![分析パネルではタイプ別にパケットのサマリーを表示](/support/static/na-main-dashboard.png)
 
@@ -134,7 +134,7 @@ ___
 
 ### 適用されたフィルターからMagic Firewallルールを作成する
 
-ネットワーク分析で選択したフィルターと一致するトラフィックをすべてブロックする[Magic Firewall](https://developers.cloudflare.com/magic-firewall)ルールを作成できます。現在サポートされているフィルターは次のとおりです。
+ネットワーク分析で選択したフィルターと一致するトラフィックをすべてブロックする[Magic Firewall](/magic-firewall)ルールを作成できます。現在サポートされているフィルターは次のとおりです。
 
 -   送信先IP
 -   プロトコル
@@ -463,7 +463,7 @@ ___
 
 ## アクテビティログを表示する
 
-ネットワーク分析の**アクティビティログ**は、現在選択されている時間枠で最大500件のログを表示します。結果は、時間枠ビューごとに1ページあたり10件ずつ表示されます。（[GraphQL API分析](https://developers.cloudflare.com/analytics/graphql-api/)には、この制限がありません。） 
+ネットワーク分析の**アクティビティログ**は、現在選択されている時間枠で最大500件のログを表示します。結果は、時間枠ビューごとに1ページあたり10件ずつ表示されます。（[GraphQL API分析](/analytics/graphql-api/)には、この制限がありません。） 
 
 イベントの詳細を表示するには、イベントに関連する拡張ウィジェットをクリックします。
 
@@ -520,9 +520,9 @@ ___
 
 ## 関連リソース
 
--   [Cloudflareネットワーク分析 v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [ネットワーク分析 v1 からネットワーク分析 v2 への移行](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [CloudflareのGraphQL API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflareネットワーク分析 v2](/analytics/network-analytics/)
+-   [ネットワーク分析 v1 からネットワーク分析 v2 への移行](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [CloudflareのGraphQL API](/analytics/graphql-api/)
 -   [Cloudflareの分析：簡単な概要](https://support.cloudflare.com/hc/articles/360037684111)
 -   [IANAポート番号とサービス名](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -647,7 +647,7 @@ _**\*\*notOlderThan**__は、クエリがレコードでさかのぼって検索
 -   攻撃ログには、開始タイムスタンプと終了タイムスタンプ、パケット/ビット統計の最小値、最大値、平均値、合計値、攻撃タイプ、実行されたアクションが保存されます。
 -   ソースIP アドレスは、個人を特定できる情報と見なされます。そのため、Cloudflareは、30日間しか保存しません。30日を過ぎると、ソースIP アドレスは破棄され、ログが1時間グループ、それから1日グループにロールアップされます。1時間ロールアップは、6か月間保存されます。1日ロールアップは、1年間保存されます。
 
-クエリとログデータへのアクセスに関する詳細については、[GraphQL分析API](https://developers.cloudflare.com/analytics/graphql-api/limits)をご参照ください。
+クエリとログデータへのアクセスに関する詳細については、[GraphQL分析API](/analytics/graphql-api/limits)をご参照ください。
 
 ### ネットワーク分析が、宛先IPを「利用不可」と表示する理由は？
 

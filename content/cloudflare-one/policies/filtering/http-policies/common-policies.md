@@ -45,4 +45,22 @@ Block the upload or download of files based on their type.
 | Upload File Type   | in       | Microsoft Office Word Document (docx) | Block  |
 | Download File Type | in       | PDF (pdf)                             | Block  |
 
+## Block Google Drive downloads
+
+Block file downloads from Google Drive. You can also [Block file uploads to Google Drive](/cloudflare-one/tutorials/block-uploads/).
+
+| Selector         | Operator      | Value                      | Action | Operator |
+| ---------------- | ------------- | -------------------------- | ------ | -------- |
+| Application      | in            | Google Drive               | Block  | And      |
+| URL Path & Query | matches regex | `.*(e=download\|export).*` | Block  |          |
+
+## Block Gmail downloads
+
+Block file downloads from Gmail.
+
+| Selector         | Operator | Value                                   | Action | Operator |
+| ---------------- | -------- | --------------------------------------- | ------ | -------- |
+| Host             | is       | `mail-attachment.googleusercontent.com` | Block  | And      |
+| URL Path & Query | is       | `/attachment/u/0`                       | Block  |          |
+
 Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.

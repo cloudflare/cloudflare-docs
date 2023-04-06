@@ -14,8 +14,8 @@ The table below gives general recommendations for sampling rates depending on yo
 
 | Traffic Volume | Recommendation |
 |----------------|----------------|
-| Low            | 1 in 500 packets<br> 1 in 100 - 1,000 pages is an appropriate range|
-| Medium         | 1 in 1,000 - 2,000 packets |
-| High           | 1 in 2,000 - 4,000 packets |
+| Low            | Between 1 in 100 packets - 1 in 500 packets |
+| Medium         | Between 1 in 1,000 - 1 in 2,000 packets |
+| High           | Between 1 in 2,000 - 1 in 4,000 packets |
 
 As a general rule, customers may begin to notice a loss in data accuracy (depending on their network volume) as their network flow sampling rate climbs above 1 in 5,000 packets.

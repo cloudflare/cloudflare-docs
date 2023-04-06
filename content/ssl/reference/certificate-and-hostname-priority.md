@@ -14,7 +14,7 @@ When a new certificate is created, Cloudflare first deploys the certificate and 
 
 ## Certificate deployment
 
-For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) apply to that hostname:
+For any given hostname, Cloudflare uses the following order to determine which certificate (and associated TLS settings) to apply to that hostname:
 
 1.  **Hostname specificity**: A specific subdomain certificate (`www.example.com`) would take precedence over a wildcard certificate (`*.example.com`) for requests to `www.example.com`.
 

@@ -100,11 +100,11 @@ DNS 选项卡提供的指标面板包括：
 
 ### 日志
 
-“日志”选项卡不是指标功能。不过，Enterprise 计划客户可以启用 [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/) 服务。通过 Logpush 服务，您可以使用自选的任何分析工具来下载和分析数据。
+“日志”选项卡不是指标功能。不过，Enterprise 计划客户可以启用 [Cloudflare Logs Logpush](/logs/about/) 服务。通过 Logpush 服务，您可以使用自选的任何分析工具来下载和分析数据。
 
 ___
 
 ## 相关资源
 
--   [Cloudflare Analytics：快速概览](https://developers.cloudflare.com/analytics)
--   [Cloudflare Analytics GraphQL API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics：快速概览](/analytics)
+-   [Cloudflare Analytics GraphQL API](/analytics/)

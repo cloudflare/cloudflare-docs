@@ -8,7 +8,7 @@ weight: 9
 
 {{<Aside type="note">}}
 
-Many of these limits will increase during Queues' public beta period. [Follow our changelog](https://developers.cloudflare.com/queues/changelog/) or join the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
+Many of these limits will increase during Queues' public beta period. [Follow our changelog](/queues/changelog/) or join the [`#queues-beta`](https://discord.gg/rrZXVVcKQF) channel in our Developer Discord to keep up-to-date with changes.
 
 {{</Aside>}}
 

@@ -154,10 +154,6 @@ When [SCIM synchronization is enabled](#synchronize-users-and-groups), the Azure
 
 ![Azure group names displayed in the Access policy builder](/cloudflare-one/static/documentation/identity/azure/azure-scim-groups.png)
 
-{{<Aside type="note">}}
-The Gateway policy builder does not currently show group names from the SCIM integration. To use an Azure group in a Gateway policy, you still need to [manually enter](#manual-entry) the group's `Object Id`.
-{{</Aside>}}
-
 ### Manual entry
 
 You can create Access and Gateway policies for groups that are not synchronized with SCIM. Azure AD exposes directory groups in a format that consists of random strings, the `Object Id`, that is distinct from the `Name`.
