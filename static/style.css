@@ -1634,6 +1634,28 @@ code.InlineCode-is-nowrap,
 #MobileSearch {
   background: var(--background-color);
   border-radius: 5px;
+  border: none;
+  color: var(--color);
+  cursor: pointer;
+  height: 28px;
+  margin-right: .8em;
+  width: 28px;
+}
+
+@media (min-width: 768px) {
+  #MobileSearch {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #MobileSearch {
+    width: 40px;
+  }
+
+  #MobileSearch svg {
+    width: 24px;
+  }
 }
 
 #MobileSearch:hover {
