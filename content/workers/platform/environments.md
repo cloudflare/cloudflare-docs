@@ -228,9 +228,11 @@ Published my-worker
   https://my-worker.<your-subdomain>.workers.dev
 ```
 
-### Bindings and Environments
+### Non-inheritable keys and environments
 
-Bindings are defined per environment and are not shared between environments.  Below is an example of a service binding for a dev and production environment:
+[Non-inheritable keys](/workers/wrangler/configuration/#non-inheritable-keys) cannot be inherited by environments and must be specified for each environment.
+
+Below is an example of a service binding for the default target and production environment:
 
 ```toml
 ---
@@ -241,15 +243,13 @@ name = "my-worker-dev"
 [[ services ]]
 binding = "SERVICE_WORKER"
 service = "service-worker"
-environment = "dev"
 
 [env.production]
 name = "my-worker"
 
 [[ env.production.services ]]
 binding = "SERVICE_WORKER"
-service = "service-worker"
-environment = "production"
+service = "service-worker-production"
 ```
 
 {{<Aside type="note">}}
