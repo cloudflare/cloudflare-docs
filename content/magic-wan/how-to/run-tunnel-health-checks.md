@@ -7,7 +7,7 @@ meta:
 
 # Configure tunnel health checks
 
-By default, to check for [tunnel](/magic-wan/reference/tunnels-and-encapsulation/) health Cloudflare sends a [health check](/magic-wan/reference/health-checks/) probe consisting of ICMP (Internet Control Message Protocol) reply packets to your network. The source IP address of these ICMP reply packets is set to the tunnel endpoint IP address of the router at your origin by default, and has a Cloudflare public IP address as their destination.
+By default, to check for [tunnel](/magic-wan/reference/tunnels-and-encapsulation/) health Cloudflare sends a [health check](/magic-wan/reference/health-checks/) probe consisting of ICMP (Internet Control Message Protocol) reply packets to your network. By default, the source IP address of these ICMP reply packets is set to the tunnel endpoint IP address of the router at your origin, and has a Cloudflare public IP address as their destination.
 
 Cloudflare encapsulates the ICMP reply packet and sends the probe across the tunnel to the origin router. When the probe reaches the origin router, the router forwards the decapsulated ICMP reply to its specified destination IP. The probe is successful when Cloudflare receives the reply.
 
