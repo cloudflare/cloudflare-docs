@@ -5,11 +5,15 @@ title: Node.js Compatibility
 
 # Node.js Compatibility
 
-The following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as [Runtime APIs](/workers/runtime-apis/nodejs), with no need to add polyfills to your own code:
+Most Workers import one or more packages of JavaScript or TypeScript code from [NPM](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
+
+To ensure compatibility with a wider set of NPM packages, and make it easier for you to run existing applications on Cloudflare Workers, the following subset of APIs from Node.js are available directly as [Runtime APIs](/workers/runtime-apis/nodejs) in your Cloudflare Worker:
 
 {{<directory-listing folderDirectory="/workers/runtime-apis/nodejs/" >}}
 
-Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the NPM packages you depend on.
+These APIs are available directly in the Workers runtime, without the need to add polyfills to your own code via the previous [`node_compat`](/workers/wrangler/configuration/#add-polyfills-using-wrangler) option in Wrangler.
+
+Node.js APIs in Workers are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the NPM packages you depend on.
 
 ```js
 // Do this:
