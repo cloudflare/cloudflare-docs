@@ -32,7 +32,7 @@ To get started, refer to our [CASB documentation](/cloudflare-one/applications/s
 
 ### Size
 
-The maximum file size is 100 MB. Size limitation is assessed against the file after unzipping. Files can be recursively zipped a maximum of 10 times.
+The maximum file size is 100 MB. Size limitation is assessed against the file after unzipping. ZIP files can be recursively compressed a maximum of 10 times.
 
 ## Feature availability
 
