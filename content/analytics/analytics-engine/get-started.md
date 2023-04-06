@@ -46,7 +46,7 @@ analytics_engine_datasets = [
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
 
-A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](../sql-api/#sampling) key.
+A double is just a number type field that can be aggregated in some way – for example, it could be summed, averaged, or quantiled. A blob is a string type field that can be used for grouping or filtering. Indexes are strings that will be used as a [sampling](/analytics/analytics-engine/sql-api/#sampling) key.
 
 For example, suppose you are collecting air quality samples. Each data point would represent a reading from your weather sensor. Doubles might include numbers like the temperature or air pressure reading. The blobs could include the location of the sensor and the hardware identifier of the sensor.
 
@@ -67,7 +67,7 @@ In our initial version, developers are responsible for **providing fields in a c
 
 ## 4. Query data using GraphQL and SQL API
 
-Data can be queried using either [GraphQL](/analytics/graphql-api/) or the [SQL API](../sql-api/).
+Data can be queried using either [GraphQL](/analytics/graphql-api/) or the [SQL API](/analytics/analytics-engine/sql-api/).
 
 The GraphQL API powers our dashboard and is better suited for building interactive dashboards. At this time, the GraphQL API exposes a highly simplified schema, though we plan to support a richer schema over time.
 
@@ -79,7 +79,7 @@ The SQL API is available as an HTTP endpoint at `https://api.cloudflare.com/clie
 
 In the following example, we use the SQL API to query the top 10 cities that had the highest average humidity readings when the temperature was above zero.
 
-Here is how we represent that as SQL. We are using a custom averaging function to take into account [sampling](../sql-api/#sampling):
+Here is how we represent that as SQL. We are using a custom averaging function to take into account [sampling](/analytics/analytics-engine/sql-api/#sampling):
 
 ```sql
 SELECT 
@@ -100,7 +100,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/anal
 
 Note that, for our initial version, blobs and doubles are accessed via names that have 1-based indexing. In the future, when developers will be able to name blobs and doubles in their binding, these names will also be available via the SQL API.
 
-Refer to the [SQL API docs](../sql-api/) for more information on connecting to and querying SQL API and the [Workers Analytics Engine SQL Reference](../sql-reference/) for a full list of supported SQL functionality.
+Refer to the [SQL API docs](/analytics/analytics-engine/sql-api/) for more information on connecting to and querying SQL API and the [Workers Analytics Engine SQL Reference](/analytics/analytics-engine/sql-reference/) for a full list of supported SQL functionality.
 
 ### Working with time series
 
@@ -121,7 +121,7 @@ ORDER BY t, avg_humidity DESC
 
 This query first rounds the `timestamp` field to the nearest five minutes. Then we group by that field and city, and calculate the average humidity in each city for a five minute period.
 
-Refer to [Querying Workers Analytics Engine from Grafana](../grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
+Refer to [Querying Workers Analytics Engine from Grafana](/analytics/analytics-engine/grafana/) for more details on how to create efficient Grafana queries against Workers Analytics Engine.
 
 ## Limits
 

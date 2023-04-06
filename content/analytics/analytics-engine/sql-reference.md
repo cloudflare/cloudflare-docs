@@ -52,7 +52,7 @@ SELECT <expression_list>
 [FORMAT <format>]
 ```
 
-Below you can find the syntax of each clause. Refer to the [SQL API docs](../sql-api/) for some example queries.
+Below you can find the syntax of each clause. Refer to the [SQL API docs](/analytics/analytics-engine/sql-api/) for some example queries.
 
 ### SELECT clause
 
@@ -382,7 +382,7 @@ Usage:
 quantileWeighted(q, column_name, weight_column_name)
 ```
 
-`quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](../sql-api/#sampling), for more information).
+`quantileWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](/analytics/analytics-engine/sql-api/#sampling), for more information).
 
 Example:
 ```SQL
