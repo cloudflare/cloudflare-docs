@@ -4468,6 +4468,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   width: auto;
 }
 
+.DocSearch-Hit-Tree {
+  height: var(--docsearch-hit-height) !important;
+  width: 24px;
+}
+
 .DocSearch-Search-Icon,
 .DocSearch-Logo svg {
   height: auto;

@@ -5196,6 +5196,11 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     color: rgb(var(--gray-0-rgb));
 }
 
+.DocSearch-Hit-Tree {
+    height: var(--docsearch-hit-height) !important;
+    width: 24px;
+}
+
 .DocSearch-Search-Icon,
 .DocSearch-Container svg,
 .DocSearch-Logo svg {
