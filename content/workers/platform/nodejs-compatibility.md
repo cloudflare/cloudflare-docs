@@ -1,9 +1,9 @@
 ---
 pcx_content_type: concept
-title: Node.js Compatibility
+title: Node.js compatibility
 ---
 
-# Node.js Compatibility
+# Node.js compatibility
 
 Most Workers import one or more packages of JavaScript or TypeScript code from [NPM](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
 
@@ -19,11 +19,11 @@ Node.js APIs in Workers are available under the `node:` prefix, and this prefix 
 // Do this:
 import { Buffer } from 'node:buffer';
 
-// Not this:
+//  Do not do this:
 import { Buffer } from 'buffer';
 ```
 
-## How to enable with Workers
+## Enable Node.js with Workers
 
 Add the [`nodejs_compat`](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/platform/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
 
@@ -37,9 +37,9 @@ compatibility_flags = [ "nodejs_compat" ]
 <!-- Add once https://github.com/cloudflare/cloudflare-docs/pull/8322 is merged -->
 <!-- {{<render file="_nodejs-compat-local-dev.md">}} -->
 
-## How to enable with Pages Functions
+## Enable Node.js with Pages Functions
 
-### Using Wrangler
+### Enable with Wrangler
 
 To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
 
@@ -49,9 +49,11 @@ $ wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat" --exper
 
 For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
 
-### Using the Cloudflare dashboard
+### Enable Node.js from the Cloudflare dashboard
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+To enable Node.js for your Pages Function from the Cloudflare dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Pages** and select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
-4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments
+4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
