@@ -97,3 +97,7 @@ Managed networks are now enabled. Every time a device in your organization conne
 {{<Aside type="note">}}
 The WARP client scans all managed networks on the list every time it detects a network change event from the operating system. To minimize performance impact, we recommend reusing the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
 {{</Aside>}}
+
+{{<Aside type="note">}}
+WARP Clients 2023.3.381+ will auto-exclude managed networks on client devices to facilitate alternate network detection checks. 
+{{</Aside>}}
