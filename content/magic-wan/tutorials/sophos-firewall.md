@@ -210,9 +210,14 @@ curl --request PUT \
 }'
 ```
 
-2. ICMP reply from SFOS should go back via the same tunnel on which the probe packets are received. You will need to create an additional SD-WAN policy route.
 
-![Configure an SD-WAN route so the ICMP reply goes back to Cloudflare via the same tunnel.](/magic-wan/static/sophos-firewall/2-icmp-probe-reply.png)
+2. Go to **Configure** > **Network** > **Interfaces** > **Add alias**. Add the IP address provided by Cloudflare for the ICMP probe traffic. This is needed to prevent Sophos firewall from dropping them as spoof packets. This is not the same IP used to create VPN. This is the special IP address for probe traffic only.
+
+![Add the IP address provided by Cloudflare to prevent the probe from being dropped by the firewall.](/magic-wan/static/sophos-firewall/2-icmp-probe-firewall.png)
+
+3. ICMP reply from SFOS should go back via the same tunnel on which the probe packets are received. You will need to create an additional SD-WAN policy route.
+
+![Configure an SD-WAN route so the ICMP reply goes back to Cloudflare via the same tunnel.](/magic-wan/static/sophos-firewall/3-icmp-probe-reply.png)
 
 Packet flow will look like the following:
 
