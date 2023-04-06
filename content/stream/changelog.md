@@ -319,7 +319,7 @@ Cloudflare Stream now delivers video using 3-10x less bandwidth, with no reducti
 
 ### Tus support for direct creator uploads
 
-You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.
+You can now use the [tus protocol](/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos) when allowing creators (your end users) to upload their own videos directly to Cloudflare Stream.
 
 In addition, all uploads to Cloudflare Stream made using tus are now faster and more reliable as part of this change.
 

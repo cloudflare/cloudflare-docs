@@ -64,7 +64,7 @@ The WARP client will now show **Disabled by Admin Override** and the time when t
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Windows, macOS, Linux | Gateway with WARP, Proxy mode                                                        | All plans                                                     |
 
