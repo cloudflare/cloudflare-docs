@@ -148,6 +148,8 @@ When an HTTP request results in an error, the first 512 bytes of the request are
 | **User Agent**               | User agent header sent in the request by the originating device.                                                                                             |
 | **Uploaded/downloaded file** | {{<render file="gateway/_uploaded-downloaded-file.md">}}                                                                                                     |
 | **Policy details**           | Policy corresponding to the decision Gateway made based on the traffic criteria of the request.                                                              |
+| **DLP Profile**              | Name of the matched DLP profile, if any.                                                                                                                     |
+| **DLP Entries**              | Name of the matched DLP entries, if any.                                                                                                                     |
 
 {{</table-wrap>}}
 
