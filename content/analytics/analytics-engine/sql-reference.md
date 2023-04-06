@@ -10,7 +10,7 @@ meta:
 
 ## SHOW TABLES statement
 
-`SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](/analytics/get-started/), for more information). The table is automatically created when you write event data in your worker.
+`SHOW TABLES` can be used to list the tables on your account. The table name is the name you specified as `dataset` when configuring the workers binding (refer to [Get started with Workers Analytics Engine](/analytics/analytics-engine/get-started/), for more information). The table is automatically created when you write event data in your worker.
 
 ```SQL
 SHOW TABLES
