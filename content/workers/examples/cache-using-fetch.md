@@ -200,7 +200,6 @@ export default {
   const customCacheKey = `${newRequest.hostname}${newRequest.pathname}`
   const queryCacheKey = `${newRequest.hostname}${newRequest.pathname}${newRequest.search}`
 
-  // Set all variables needed to manipulate Cloudflare's cache using the fetch API in the `cf` object. You will be passing these variables in the objects down below.
   const cacheAssets = [
       {asset: 'video', key: customCacheKey, regex: /(.*\/Video)|(.*\.(m4s|mp4|ts|avi|mpeg|mpg|mkv|bin|webm|vob|flv|m2ts|mts|3gp|m4v|wmv|qt))/, info: 0, ok: 31556952, redirects: 30, clientError: 10, serverError: 0 },
       {asset: 'image', key: queryCacheKey, regex: /(.*\/Images)|(.*\.(jpg|jpeg|png|bmp|pict|tif|tiff|webp|gif|heif|exif|bat|bpg|ppm|pgn|pbm|pnm))/, info: 0, ok: 3600, redirects: 30, clientError: 10, serverError: 0 },
