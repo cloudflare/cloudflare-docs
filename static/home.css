@@ -424,10 +424,6 @@ html[is-site-page] .DocsContent {
     fill: #6d767b
 }
 
-[theme=dark] .ProductGrid--link span {
-    <<<<<<< HEAD font-weight: 450=======font-weight: 500
-}
-
 [theme=dark] .ProductGrid--link svg path,
 [theme=dark] .ProductGrid--link svg rect {
     fill: #888f96
