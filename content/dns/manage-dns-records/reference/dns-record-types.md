@@ -94,6 +94,8 @@ header: Response
 
 {{<render file="_cname-definition.md">}}
 
+{{<render file="_cname-flattening-callout.md">}}
+
 These records include the following fields:
 
 - **Name**: A subdomain or the root domain, which must:
