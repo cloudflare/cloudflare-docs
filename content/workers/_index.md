@@ -3,7 +3,7 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   title: Cloudflare Workers
 ---
@@ -42,7 +42,7 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 {{<feature header="Playground" href="/workers/learning/playground/">}}
 
-The Playground is a sandbox which gives an instant way to preview and test a Workers script directly in the browser against any site. No setup required.
+The Playground is a sandbox which gives you an instant way to preview and test a Workers script directly in the browser against any site. No setup required.
 
 {{</feature>}}
 
