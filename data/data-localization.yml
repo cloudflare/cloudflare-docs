@@ -5,6 +5,7 @@ product:
   title: Data Localization Suite
   url: /data-localization/
   group: Cloudflare essentials
+  additional_groups: [Analytics, Application performance, Application security, Cloudflare One, Developer platform, Network services, Storage]
  
 meta:
   title: Data Localization Suite docs
