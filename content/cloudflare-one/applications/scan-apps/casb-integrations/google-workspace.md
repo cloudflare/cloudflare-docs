@@ -30,6 +30,8 @@ These permissions follow the principle of least privilege to ensure that only th
 
 The Google Workspace integration currently scans for the following findings, or security risks.
 
+To stay up-to-date with new CASB findings as they are added, bookmark this page or subscribe to its RSS feed.
+
 ### User account settings
 
 | Finding                                       | Severity | Description |
@@ -59,6 +61,15 @@ The Google Workspace integration currently scans for the following findings, or 
 | File Shared Company Wide Read and Write       | Medium   | A Google Drive file is shared with the entire company with read and write permissions. |
 | File Shared Company Wide Read Only            | Medium   | A Google Drive file is shared with the entire company with read permissions. |
 | Google Workspace Calendar Publicly Accessible | Medium   | A user's Google Calendar is publicly accessible on the Internet that anyone can read. |
+
+### Data Loss Prevention (optional)
+
+These findings will only appear if you [added DLP profiles](/cloudflare-one/applications/scan-apps/casb-dlp/) to your CASB integration.
+
+| Finding                                       | Severity | Description |
+|-----------------------------------------------|----------|------------ |
+| File Publicly Accessible Read and Write with DLP Profile match | Critical |  A Google Drive file contains sensitive data that anyone on the Internet can read or write. |
+| File Publicly Accessible Read Only with DLP Profile match | Critical |  A Google Drive file contains sensitive data that anyone on the Internet can read. |
 
 ### Third-party apps
 

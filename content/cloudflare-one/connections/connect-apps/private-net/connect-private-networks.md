@@ -44,7 +44,7 @@ If your network's IP/CIDR is in a range commonly used by home networks (such as 
 
 To configure Split Tunnels for private network access:
 
-1. First, check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude** or **Include** mode.
+1. First, check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) is set to **Exclude** or **Include** mode.
 2. If you are using **Include** mode, add your network's IP/CIDR range to the list.
 3. If you are using **Exclude** mode:
    1. Delete your network's IP/CIDR range from the list.

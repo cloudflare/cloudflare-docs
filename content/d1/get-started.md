@@ -67,7 +67,7 @@ You must create a binding for your Worker to connect to your D1 database. [Bindi
 To bind your D1 database to your Worker, add the following to your `wrangler.toml` file:
 
 ```toml
-[[ d1_databases ]]
+[[d1_databases]]
 binding = "<BINDING_NAME>"
 database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
