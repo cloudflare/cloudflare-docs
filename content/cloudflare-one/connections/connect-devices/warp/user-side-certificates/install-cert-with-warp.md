@@ -58,6 +58,6 @@ $ update-ca-certificates
 
 ## Uninstall the certificate
 
-If the certificate was installed by the WARP client, it is automatically removed when you disable **Install CA to system certificate store** or [uninstall WARP](/cloudflare-one/connections/connect-devices/warp/remove-warp/).
+If the certificate was installed by the WARP client, it is automatically removed when you disable **Install CA to system certificate store** or [uninstall WARP](/cloudflare-one/connections/connect-devices/warp/remove-warp/). WARP does not remove certificates that were installed manually (for example, certificates added to third-party applications).
 
-To manually remove the certificate, refer to the instructions supplied by your operating system.
+To manually remove the certificate, refer to the instructions supplied by your operating system or the third-party application.
