@@ -96,7 +96,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 | -------  | -------- | ------|
 | Managed network | is | `<NETWORK-NAME>` |
 4. Save the profile.
-5. Verify that the profile has a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) which excludes the TLS endpoint's IP address. This rule blocks remote users from accessing the TLS endpoint through the WARP tunnel.
+5. Verify that the profile has a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) which excludes the TLS endpoint's IP address. This auto-generated rule blocks remote users from accessing the TLS endpoint through the WARP tunnel.
 
 Managed networks are now enabled. Every time a device in your organization connects to a network (for example, when waking up the device or changing WiFi networks), the WARP client will determine its network location and apply the corresponding settings profile.
 
