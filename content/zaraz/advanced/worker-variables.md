@@ -158,7 +158,7 @@ export default {
 
     const { email } = client;
 
-    return new Response(await digestMessage(text));
+    return new Response(await digestMessage(email));
   },
 };
 ```
