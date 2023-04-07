@@ -168,26 +168,23 @@ Windows offers two options to install the certificate, each having a different i
 
 2. Right-click the certificate file.
 
-3. Click **Open**.\
-    If you see a Security Warning window, click **Open**.
+3. Click **Open**. If you see a Security Warning, click **Open** to proceed.
 
 4. The **Certificate** window will appear. Click **Install Certificate**.
 
 ![Window for Cloudflare certificate](/cloudflare-one/static/documentation/connections/windows_install_cert.png)
 
-5. Now choose a Store Location.
+5. Now choose a Store Location. If you see a Security Warning, click **Yes** to proceed.
 
-6. Click **Next**.
+6. On the next screen, click **Browse**.
 
-7. On the next screen, click **Browse**.
+7. Choose the **Trusted Root Certification Authorities** store.
 
-8. Choose the **Trusted Root Certification Authorities** store.
-
-9. Click **OK**.
+8. Click **OK**.
 
 ![Window for selecting certificate store location](/cloudflare-one/static/documentation/connections/windows_cert_location.png)
 
-10. Click **Finish**.
+9. Click **Finish**.
 
 ![Window for finishing certificate installation](/cloudflare-one/static/documentation/connections/windows_cert_install_finished.png)
 
