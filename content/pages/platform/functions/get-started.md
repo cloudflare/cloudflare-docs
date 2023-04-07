@@ -60,7 +60,10 @@ After you have set up your Function, deploy your Pages project. Deploy your proj
 
 * Connecting your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages).
 * Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
-* Note: Using [Direct Uploads](/pages/platform/direct-upload/) from the Cloudflare dashboard is currently **not supported** with Functions.
+
+{{<Aside type="note">}}
+Using [Direct Uploads](/pages/platform/direct-upload/) from the Cloudflare dashboard is currently **not supported** with Functions.
+{{</Aside>}}
 
 ## Related resources
 
