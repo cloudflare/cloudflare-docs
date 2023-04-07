@@ -99,5 +99,5 @@ The WARP client scans all managed networks on the list every time it detects a n
 {{</Aside>}}
 
 {{<Aside type="note">}}
-WARP Clients 2023.3.381+ will auto-exclude managed networks on client devices to facilitate alternate network detection checks. 
+WARP Clients 2023.3.381+ will auto-exclude the managed networks TLS endpoint from split tunnel configuration.
 {{</Aside>}}
