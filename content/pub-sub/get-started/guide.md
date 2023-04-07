@@ -40,7 +40,7 @@ Pub/Sub support in Wrangler requires wrangler `2.0.16` or above. If you're using
 
 Installing `wrangler`, the Workers command-line interface (CLI), allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
 
-To install [`wrangler`](https://github.com/cloudflare/wrangler2), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
+To install [`wrangler`](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions. Then run:
 
 ```sh
 $ npm install -g wrangler
@@ -54,8 +54,8 @@ $ yarn global add wrangler
 
 Validate that you have a version of `wrangler` that supports Pub/Sub:
 
-```
-wrangler --version
+```sh
+$ wrangler --version
 2.0.16 # should show 2.0.16 or greater - e.g. 2.0.17 or 2.1.0
 ```
 

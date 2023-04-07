@@ -16,7 +16,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 
 | Role | Description |
 | --- | --- |
-| Administrator | Can access the full account, except for membership management and billing. |
+| Administrator | Can access the full account including subscriptions, except for membership management and billing. |
 | Super Administrator - All Privileges | Can edit any Cloudflare setting, make purchases, update billing, and manage memberships. Super Administrators can revoke the access of other Super Administrators. |
 | Administrator Read Only | Can access the full account in read-only mode. |
 | Analytics | Can read Analytics. |
@@ -33,7 +33,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Firewall](/fundamentals/global-configurations/lists/ip-lists/), and [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Firewall](/fundamentals/global-configurations/lists/ip-lists/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |
@@ -47,7 +47,8 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Trust & Safety | Can access trust and safety related services. |
 | Waiting Room Admin | Can edit [Waiting Room](/waiting-room/) configuration. |
 | Waiting Room Read  | Can read [Waiting Room](/waiting-room/) configuration. |
-| Zaraz Admin | Can edit [Zaraz](/zaraz/) configuration. |
+| Zaraz Admin | Can edit and publish [Zaraz](/zaraz/) configuration.
+| Zaraz Edit | Can edit [Zaraz](/zaraz/) configuration. |
 | Zaraz Read | Can read [Zaraz](/zaraz/) configuration. |
 | Zone Versioning (Account-Wide) | Can view and edit [Zone Versioning](/version-management/) for all domains in account. |
 | Zone Versioning Read (Account-Wide) | Can view [Zone Versioning](/version-management/) for all domains in account. |

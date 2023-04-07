@@ -23,8 +23,8 @@ The Cloudflare WARP client is compatible with most third-party VPN configuration
 We recommend the following workflow when configuring WARP alongside a third-party VPN service.
 
 1. Disable DNS configuration in your third-party VPN.
-2. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
-3. In your Split Tunnels configuration, [add the following IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-an-ip-address) to your Exclude list:
+2. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) is set to **Exclude IPs and domains**.
+3. In your Split Tunnels configuration, [add the following IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to your Exclude list:
 
     * The IP address of the server your third-party VPN connects to.
     * The private IP address space your third-party VPN exposes.

@@ -120,8 +120,6 @@ To add support for module Workers to an existing project, update your `wrangler.
 
 ```toml
 name = "my-worker"
-type = "javascript"
-workers_dev = true
 main = "src/index.js"
 
 # Uncomment if you have a build script.

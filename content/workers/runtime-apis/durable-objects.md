@@ -119,7 +119,7 @@ export class Example {
 
 A Durable Object may be evicted from memory any time, causing a loss of all transient (in-memory) state. To persistently store state your Durable Object might need in the future, use the Transactional Storage API.
 
-A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 30 seconds of inactivity.
+A Durable Object is given 30 seconds of additional CPU time for every request it processes, including WebSocket messages. In the absence of failures, in-memory state should not be reset after less than 10 seconds of inactivity.
 
 ### Transactional storage API
 
@@ -286,7 +286,7 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `alarm()` handler method
 
-The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception.
+The system calls the `alarm()` handler method when a scheduled alarm time is reached. The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at 2 seconds delay for up to 6 retries. Retries will be performed if the method fails with an uncaught exception. Calling `deleteAlarm()` inside the `alarm()` handler may prevent retries on a best-effort basis, but is not guaranteed. 
 
 The method takes no parameters, does not return a result, and can be `async`.
 
@@ -506,7 +506,7 @@ Any uncaught exceptions thrown by the Durable Object's `fetch()` handler will be
 
 ## Listing Durable Objects
 
-The Cloudflare REST API supports retrieving a [list of Durable Objects](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](https://developers.cloudflare.com/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
+The Cloudflare REST API supports retrieving a [list of Durable Objects](/api/operations/durable-objects-namespace-list-objects) within a namespace and a [list of namespaces](/api/operations/durable-objects-namespace-list-namespaces) associated with an account.
 
 ## Related resources
 

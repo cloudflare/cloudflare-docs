@@ -3,7 +3,7 @@ pcx_content_type: faq
 title: Tunnels
 weight: 4
 meta:
-    description: Review frequently asked questions about tunnels in Cloudflare Zero Trust.
+  description: Review frequently asked questions about tunnels in Cloudflare Zero Trust.
 structured_data: true
 ---
 
@@ -115,13 +115,13 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured from the Zero Trust dashboard?" >}}
+{{<faq-question level=2 text="How can I troubleshoot a Tunnel that was configured from Zero Trust?" >}}
 
 {{<faq-answer>}}
 
 ### Ensure that only one instance of `cloudflared` is installed as a service
 
-If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel.  Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
+If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
 
 ### Check your DNS records
 
@@ -129,7 +129,7 @@ If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME r
 
 ### Run Tunnel with debug logging
 
-If you created a Cloudflare Tunnel from the Zero Trust dashboard, the tunnel runs as a service on your OS. You can modify the Cloudflare Tunnel service with one or more configuration options. To learn more, refer to our [remote management](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/) documentation.
+If you created a Cloudflare Tunnel from Zero Trust, the tunnel runs as a service on your OS. You can modify the Cloudflare Tunnel service with one or more configuration options. To learn more, refer to our [remote management](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/) documentation.
 
 {{</faq-answer>}}
 {{</faq-item>}}

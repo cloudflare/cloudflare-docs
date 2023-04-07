@@ -40,7 +40,7 @@ curl -X POST \
     },
     "action": "block"
   }
-]' 
+]'
 ```
 
 ```json

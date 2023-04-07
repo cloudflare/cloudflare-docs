@@ -7,7 +7,7 @@ meta:
 
 # JavaScript and web standards
 
-The Workers runtime provides the following standardized APIs for use by Workers running at the edge.
+The Workers runtime provides the following standardized APIs for use by Workers running on Cloudflare's global network.
 
 ---
 
@@ -117,15 +117,13 @@ The default URL class behavior differs from the URL Spec documented above.
 
 A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/platform/compatibility-dates/#compatibility-flags).
 
-If you would like to use another URL implementation, you can [shim the URL class using webpack](/workers/wrangler/cli-wrangler/webpack/#shimming-globals).
-
 {{</Aside>}}
 
 ---
 
 ## Compression Streams
 
-The `CompressionStream` and `DecompressionStream` classes support gzip and deflate compression methods.
+The `CompressionStream` and `DecompressionStream` classes support the deflate, deflate-raw and gzip compression methods.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
 
@@ -137,4 +135,4 @@ The URLPattern API provides a mechanism for matching URLs based on a convenient 
 
 ## `navigator.userAgent`
 
-When the [`global_navigator`](/workers/platform/compatibility-dates/#global_navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.
+When the [`global_navigator`](/workers/platform/compatibility-dates/#global-navigator) compatibility flag is set, the [`navigator.userAgent`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgent) property is available with the value `'Cloudflare-Workers'`. This can be used, for example, to reliably determine that code is running within the Workers environment.

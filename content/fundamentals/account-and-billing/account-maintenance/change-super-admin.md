@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Change Super Admininstrator
+title: Change Super Administrator
 weight: 4
 ---
 
-# Change Super Admininstrator
+# Change Super Administrator
 
 If you or someone in your organization leaves or loses access to email, you can add another Super Administrator.
 

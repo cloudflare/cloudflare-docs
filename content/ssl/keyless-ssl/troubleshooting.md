@@ -1,9 +1,10 @@
 ---
 title: Troubleshooting
-pcx_content_type: faq
+pcx_content_type: troubleshooting
 weight: 6
 meta:
   title: Troubleshooting Keyless SSL
+  description: Review how to troubleshoot issues when using Cloudflare Keyless SSL.
 ---
 
 # Troubleshooting Keyless SSL
@@ -82,6 +83,12 @@ You will need to either provide a certificate for only those hosts or change the
 We currently only provide packages for the supported GNU/Linux distributions as per https://pkg.cloudflare.com/.
 
 However, the key server is open source so you may attempt to build and deploy a binary, but running on Windows is not a supported configuration so you may experience problems that we will not be able to help with.
+
+## Key server multi-domain support
+
+You can use the same key server for multiple domains.
+
+ However, if you do, you will need to add the hostname and the Zone ID of the new domain to the `gokeyless.yaml` file.
 
 ## Additional questions
 

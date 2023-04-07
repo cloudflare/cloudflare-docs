@@ -11,7 +11,7 @@ In this guide, you will get started with Cloudflare Pages, and deploy your first
 
 There are three ways to set up a Pages project:
 
-1. Connecting your [Git provider](/pages/get-started/#connecting-your-git-provider-to-pages) to Pages.
+1. Connecting your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages) to Pages.
 2. Deploying your prebuilt assets right to Pages with [Direct Uploads](/pages/platform/direct-upload/).
 3. Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
@@ -124,7 +124,7 @@ To delete your Pages project:
 
 {{<Aside type="warning">}}
 
-For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](#deleting-a-custom-domain) for instructions.
+For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](/pages/platform/custom-domains/#delete-a-custom-domain) for instructions.
 
 For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
 

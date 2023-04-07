@@ -6,6 +6,7 @@ tags:
 title: SAML Attribute
 weight: 4
 layout: example
+pcx_content_type: configuration
 ---
 
 ```json

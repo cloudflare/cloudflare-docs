@@ -4,6 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M36.8
 product:
   title: Railgun
   url: /railgun/
+  group: Application performance
 
 meta:
   title: Cloudflare Railgun docs
@@ -11,7 +12,7 @@ meta:
     personalized web pages, dramatically reducing bandwidth usage and improving
     download times.
   author: '@cloudflare'
-  image: /core-services-preview.png
+  
 
 externals:
   - title: Cloudflare homepage

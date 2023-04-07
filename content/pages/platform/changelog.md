@@ -6,9 +6,13 @@ rss: file
 
 # Changelog
 
-## 2022-01-05
+## 2023-02-14
 
-* Added support for [Queues](/queues/) producer to Functions.
+* Added support for [Analytics Engine](/analytics/analytics-engine/) in Functions.
+
+## 2023-01-05
+
+* Added support for [Queues](/queues/) producer in Functions.
 
 ## 2022-12-15
 
@@ -33,7 +37,7 @@ rss: file
 * Functions billing is now available.
   * You can [view details here](/pages/platform/functions/pricing).
 * The [Unbound usage model](/workers/platform/limits/#unbound-usage-model) is now available for Functions.
-* [Secrets](/pages/platform/functions/bindings/#secrets) are now avaible.
+* [Secrets](/pages/platform/functions/bindings/#secrets) are now available.
 * Functions tailing is now available.
   * You can tail within the dash here: https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/functions.
   * Or with Wrangler - `wrangler pages deployment tail`.
@@ -64,7 +68,7 @@ rss: file
 ## 2022-09-08
 
 * Support `_routes.json`.
-  * Documentation [available here](/pages/platform/functions/routing/#function-invocation-routes).
+  * Documentation [available here](/pages/platform/functions/routing/#functions-invocation-routes).
 
 ## 2022-08-25
 

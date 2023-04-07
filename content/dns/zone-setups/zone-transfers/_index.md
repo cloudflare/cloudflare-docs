@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: concept
 title: DNS Zone transfers
 weight: 3
 meta:
@@ -21,7 +21,7 @@ With zone transfers, you have two configuration options:
 
 Peer DNS servers can be used as primary and secondary external DNS servers. The same peer can be linked to multiple primary and secondary zones. Each peer can be associated with only one Transaction Signature (TSIG).
 
-You can manage peers via the [API](https://developers.cloudflare.com/api/operations/secondary-dns-(-peer)-list-peers) or the dashboard by going to **Manage Account** > **Configurations** > **DNS Zone Transfers**.
+You can manage peers via the [API](/api/operations/secondary-dns-(-peer)-list-peers) or the dashboard by going to **Manage Account** > **Configurations** > **DNS Zone Transfers**.
 
 Depending on the usage of the peer, the fields are interpreted in a different way:
 

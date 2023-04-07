@@ -62,9 +62,9 @@ No. Cloudflare expects the HEC network port to be configured to `:443` or `:8088
 
 Yes. Refer to [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501/) for more information. As long as you ingest logs using the `cloudflare:json` source type, you can use the Cloudflare Splunk App.
 
-## How can I update my Logpush job from v1 to v2?
+## How can I upgrade my Logpush job from v1 to v2?
 
-Simply updating a Logpush job does not push the job from v1 to v2. To upgrade a job to v2, you must use the API. You will need to use the `logstream` parameter and set it to true to upgrade to v2:
+Simply updating a Logpush job does not push the job from v1 to v2. To upgrade a job to v2, you must use the API. You will need to use the `logstream` parameter and set it to true:
 
 ```bash
 $ curl -sX PUT https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/logpush/jobs/<JOB_ID> \

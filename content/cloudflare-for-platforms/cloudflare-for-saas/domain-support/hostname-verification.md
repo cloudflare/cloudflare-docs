@@ -57,7 +57,7 @@ When you are adding a new custom hostname to Cloudflare, the few seconds Cloudfl
 
 ## TXT
 
-Each API call to [create a Custom Hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname) provides a TXT _ownership_verification_ record for your customer to add to their DNS for ownership validation of the Custom Hostname.
+Each API call to [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname) provides a TXT _ownership_verification_ record for your customer to add to their DNS for ownership validation of the Custom Hostname.
 
 ```json
 {
@@ -89,7 +89,7 @@ Each API call to create a Custom Hostname also provides an HTTP _ownership_verif
 
 To get and use an HTTP ownership_verification record:
 
-1.  Make an API call to [create a Custom Hostname](https://developers.cloudflare.com/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
+1.  Make an API call to [create a Custom Hostname](/api/operations/custom-hostname-for-a-zone-create-custom-hostname).
 
 2.  In the response, copy the `http_url` and `http_body` from the `ownership_verification_http` object:
 
@@ -204,7 +204,7 @@ Applicable hostname verification status includes:
 </tr>
 <tr>
 <td>Moved</td>
-<td>Custom hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule.</td>
+<td>Custom hostname is not active after <em>Pending</em> for the entirety of the Validation Backoff Schedule, or it no longer points to the fallback origin.</td>
 </tr>
 <tr>
 <td>Deleted</td>

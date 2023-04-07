@@ -46,13 +46,13 @@ It is ideal for projects that require:
 * Storage for files which are infrequently accessed.
 * Large object storage (for example, gigabytes or more per object).
 * Strong consistency per object.
-* Asset storage for websites (refer to [caching guide](https://developers.cloudflare.com/r2/data-access/public-buckets/#caching))
+* Asset storage for websites (refer to [caching guide](/r2/buckets/public-buckets//#caching))
 
 To get started with R2:
 
 * Read the [Get started guide](/r2/get-started/).
-* Learn about R2 [Limits](/r2/platform/limits/).
-* Review the [R2 Workers API](/r2/data-access/workers-api/workers-api-reference/).
+* Learn about R2 [Limits](/r2/reference/limits/).
+* Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
 
 ## Durable Objects
@@ -80,11 +80,11 @@ To get started with Durable Objects:
 
 {{<Aside type="note">}}
 
-D1 is currently in [public (open) alpha](https://developers.cloudflare.com/workers/platform/betas/).
+D1 is currently in [public (open) alpha](/workers/platform/betas/).
 
 {{</Aside>}}
 
-Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+Built on SQLite, D1 is Cloudflare’s first [serverless, queryable relational database](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
 
@@ -94,15 +94,15 @@ D1 is ideal for:
 
 To get started with D1:
 
-* Read [the documentation](https://developers.cloudflare.com/d1)
-* Follow the [Get started guide](https://developers.cloudflare.com/d1/get-started/) to provision your first D1 database.
-* Learn the [D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
+* Read [the documentation](/d1)
+* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
+* Learn the [D1 client API](/d1/platform/client-api/).
 
 ## Queues
 
 {{<Aside type="note">}}
 
-Queues is currently in [public (open) beta](https://developers.cloudflare.com/workers/platform/betas/).
+Queues is currently in [public (open) beta](/workers/platform/betas/).
 
 {{</Aside>}}
 
@@ -112,12 +112,12 @@ Queues is ideal for:
 
 * Offloading work from a request to schedule later.
 * Send data from Worker to Worker (inter-Service communication).
-* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](https://developers.cloudflare.com/queues/examples/send-errors-to-r2/)
+* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](/queues/examples/send-errors-to-r2/)
 
 To get started with Queues:
 
-* [Set up your first queue](https://developers.cloudflare.com/queues/get-started/)
-* Learn more [about how Queues works](https://developers.cloudflare.com/queues/learning/how-queues-works/)
+* [Set up your first queue](/queues/get-started/)
+* Learn more [about how Queues works](/queues/learning/how-queues-works/)
 
 
 ## Comparison
@@ -136,7 +136,7 @@ The following table highlights the primary differences and behaviours of KV, R2 
 | Maximum metadata per key                      | 1,024 bytes  | 2,048 bytes  | N/A                  |
 | Maximum size per value                        | 25 MiB       | 5 TiB        | 128 KiB per value    |
 | Consistency model                             | Eventual     | Strong       | Transactional for multiple keys in a single DO |
-| Cached                                        | Always       | Programatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/data-access/public-buckets) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
+| Cached                                        | Always       | Programatically using the [Worker Cache API](/workers/runtime-apis/cache/) or configure a custom [public bucket](/r2/buckets/public-buckets/) domain. | Possible when using [Cache API](/workers/runtime-apis/cache/) |
 | S3-compatible API                             | No           | Yes          | No                   |
 | TTL expiration                                | Object-level | Not currently available | Not automatic, but possible using [alarms](/workers/learning/using-durable-objects/#alarms-in-durable-objects) |
 | Maximum operations per second                 | Unlimited cached reads |  10,000+ reads/s per bucket, 1,000+ writes/s per bucket<sup>3</sup> | 150 requests/second per DO<sup>3</sup> |

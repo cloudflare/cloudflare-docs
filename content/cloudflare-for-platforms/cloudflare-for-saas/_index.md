@@ -10,6 +10,8 @@ weight: 6
 
 As a SaaS provider, you may want to support subdomains under your own zone in addition to letting your customers use their own domain names with your services. For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. Cloudflare for SaaS allows you to increase security, performance, and reliability of your customers' domains.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Benefits
 
 When you use Cloudflare for SaaS, it helps you to:
@@ -41,7 +43,7 @@ Custom hostnames are routed to a default origin server called fallback origin. T
 
 ### Cloudflare for SaaS with Apex Proxying:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is available as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is available as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-proxying).
 
 ![Advanced case](/cloudflare-for-platforms/static/use-cases/Advanced.png)
 

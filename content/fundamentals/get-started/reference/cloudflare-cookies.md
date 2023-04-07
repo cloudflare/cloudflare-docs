@@ -9,7 +9,7 @@ Cloudflare uses various cookies to maximize network resources, manage traffic, a
 
 ## Understanding the Cloudflare Cookies
 
-As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), the `__cflb`, `__cf_bm`, `cf_ob_info` and `cf_use_ob`, `__cfwaitingroom`, and `__cfruid` cookies are strictly necessary to provide the services requested by our customers.
+As defined in our [Privacy Policy](https://www.cloudflare.com/privacypolicy/), all the cookies listed below are strictly necessary to provide the services requested by our customers, unless otherwise stated.
 
 As mentioned in our Privacy Policy, Cloudflare encourages our customers to disclose the use of these cookies to their end users and, in some jurisdictions, customers may be required by law to disclose these cookies to their end users.
 

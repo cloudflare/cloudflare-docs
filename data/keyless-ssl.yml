@@ -1,0 +1,7 @@
+name: Keyless SSL
+
+product:
+  title: Keyless SSL
+  group: Application security
+  url: /ssl/keyless-ssl/
+  grid_placeholder: true

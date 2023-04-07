@@ -23,11 +23,11 @@ Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels,
  
 ## Features
  
-{{<feature header="Health checks" href="/magic-wan/about/health-checks/">}}
+{{<feature header="Health checks" href="/magic-wan/reference/health-checks/">}}
 Magic WAN health checks monitor network status and the health of specific network components.
 {{</feature>}}
 
-{{<feature header="Traffic steering" href="/magic-wan/about/traffic-steering/">}}
+{{<feature header="Traffic steering" href="/magic-wan/reference/traffic-steering/">}}
 Magic WAN steers traffic along tunnel routes based on priorities you define during the onboarding process.
 {{</feature>}}
 
@@ -39,14 +39,14 @@ Network analytics allows you to check traffic patterns and DDoS attacks in near 
 
 ## Related products
  
+{{<related header="Cloudflare Zero Trust" href="/cloudflare-one/" product="cloudflare-one">}}
+Cloudflare Zero Trust replaces legacy security perimeters with our global edge, making the Internet faster and safer for teams around the world.
+{{</related>}}
+
 {{<related header="Magic Firewall" href="/magic-firewall/" product="magic-firewall">}}
 Magic Firewall is a firewall-as-a-service (FWaaS) delivered from the Cloudflare global network to protect office networks and cloud infrastructure with advanced, and scalable protection.
 {{</related>}}
 
 {{<related header="Cloudflare Network Interconnect" href="/network-interconnect/" product="network-interconnect">}}
 Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
-{{</related>}}
-
-{{<related header="Cloudflare Magic Network Monitoring" href="/magic-network-monitoring/" product="magic-network-monitoring">}}
-Magic Network Monitoring provides visibility into your network traffic by analyzing network flow data sent from a customer’s routers.
 {{</related>}}

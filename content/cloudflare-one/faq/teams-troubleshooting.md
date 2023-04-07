@@ -3,7 +3,7 @@ pcx_content_type: troubleshooting
 title: Troubleshooting
 weight: 4
 meta:
-    description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
+  description: Review common troubleshooting scenarios for Cloudflare Zero Trust.
 ---
 
 [❮ Back to FAQ](/cloudflare-one/faq/)
@@ -26,18 +26,14 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/#list-of-cors-settings).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
+To install the Cloudflare root certificate, follow the steps found [here](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/).
 
 ## I see error 526 when browsing to a website.
-
-<div class="medium-img">
-  <img alt="Example of a Gateway 526 error page." src="/cloudflare-one/static/documentation/faq/http-error-page.png" />
-</div>
 
 Gateway presents an **HTTP Response Code: 526** error page in the following cases:
 
@@ -49,19 +45,27 @@ Gateway presents an **HTTP Response Code: 526** error page in the following case
   - The common name on the certificate does not match the URL you are trying to reach.
   - The common name on the certificate contains invalid characters (such as underscores). Gateway uses [BoringSSL](https://csrc.nist.gov/projects/cryptographic-module-validation-program/validated-modules/search?SearchMode=Basic&Vendor=Google&CertificateStatus=Active&ValidationYear=0) to validate certificates. Chrome's [validation logic](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/cert/x509_certificate.cc#429) allows non-RFC 1305 compliant certificates, which is why the website may load when you turn off WARP.
 
-- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins that only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+- **The connection from Gateway to the origin is insecure.** Gateway does not trust origins which:
 
-  If you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance), Gateway will only connect if the origin supports [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Only offer insecure cipher suites (such as RC4, RC4-MD5, or 3DES). You can use the [SSL Server Test tool](https://www.ssllabs.com/ssltest/index.html) to check which ciphers are supported by the origin.
+  - Do not support [FIPS-compliant ciphers](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#cipher-suites) (if you have enabled [FIPS compliance mode](/cloudflare-one/policies/filtering/http-policies/tls-decryption/#fips-compliance)). In order to load the page, you can either disable FIPS mode or create a Do Not Inspect policy for this host (which has the effect of disabling FIPS compliance for this origin).
+  - Redirect all HTTPS requests to HTTP.
 
 If none of the above scenarios apply, contact Cloudflare support with the following information:
-  - Operating System (Windows 10, macOS 10.x, iOS 14.x)
-  - Web browser (Chrome, Firefox, Safari, Edge)
-  - URL of the request
-  - Screenshot or copy/paste of the content from the error page
+
+- Operating System (Windows 10, macOS 10.x, iOS 14.x)
+- Web browser (Chrome, Firefox, Safari, Edge)
+- URL of the request
+- Screenshot or copy/paste of the content from the error page
 
 ## I see error 504 when browsing to a website.
 
-Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), or contact your account team to revert all devices to preferring IPv4.
+Gateway presents an **HTTP response code: 504** error page when the website publishes an `AAAA` (IPv6) DNS record but does not respond over IPv6. When Gateway attempts to connect over IPv6, the connection will timeout. This issue is caused by a misconfiguration on the origin you are trying to reach. We are working on adding Happy Eyeballs support to Gateway, which will automatically fallback to IPv4 if IPv6 fails. In the meantime, you can either add the domain to your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) or create a [Gateway DNS policy](/cloudflare-one/policies/filtering/dns-policies/) to block the query record type `AAAA` for the specific domain. For example:
+
+| Selector          | Operator | Value         | Action |
+| ----------------- | -------- | ------------- | ------ |
+| Host              | is       | `example.com` | Block  |
+| Query Record Type | is       | `AAAA`        |        |
 
 ## I see an error in the Gateway Overview page, and no analytics are displayed.
 
@@ -85,7 +89,7 @@ A browser isolation session is a connection from your local browser to a remote 
 
 ## I see `SAML Verify: Invalid SAML response, SAML Verify: No certificate selected to verify` when testing a SAML identity provider.
 
-This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to the Zero Trust dashboard.  For the integration to work, you will need to configure your identity provider to add the public key.
+This error occurs when the identity provider has not included the signing public key in the SAML response. While not required by the SAML 2.0 specification, Cloudflare Access always checks that the public key provided matches the **Signing certificate** uploaded to Zero Trust. For the integration to work, you will need to configure your identity provider to add the public key.
 
 ## I see an error: x509: certificate signed by unknown authority.
 
@@ -99,8 +103,8 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
 
-1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/#6-run-the-tunnel)).
+1.  Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-apps/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
+2.  Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/#6-run-the-tunnel)).
 
 For more information, here is a [comprehensive list](https://support.cloudflare.com/hc/en-us/articles/360029779472-Troubleshooting-Cloudflare-1XXX-errors#h_W81O7hTPalZtYqNYkIHgH) of Cloudflare 1xxx errors.
 
@@ -125,9 +129,9 @@ Those three components are bundled into a single PEM file that is downloaded one
 
 The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
-## Firefox shows network protocol violation when using the WARP client
+## Firefox shows a network protocol violation when I use the WARP client
 
-You may have to disable the DNS over HTTPs setting in Firefox. To do so, navigate to Firefox Preferences, scroll down to **Network Settings**, and uncheck **Enable DNS over HTTPS > OK**.
+If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
 ## `cloudflared access` shows an error `websocket: bad handshake`
 
@@ -141,7 +145,7 @@ There are a few different possible root causes behind the `websocket: bad handsh
 - WebSockets are not enabled. To enable them, navigate to `dash.cloudflare.com` > **Network**.
 - Your Cloudflare account has Universal SSL enabled and the SSL/TLS encryption mode is set to _Off_. To resolve, set the SSL/TLS encryption mode to any setting other than _Off_.
 - Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/pro/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
-- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/users/session-management/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
+- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
 
 ## Connections are timing out after 270 seconds
 
@@ -157,5 +161,5 @@ If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run
 
 ## I see `Access api error auth_domain_cannot_be_updated_dash_sso`.
 
-This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
+This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.

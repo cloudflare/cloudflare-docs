@@ -40,7 +40,7 @@ For this tutorial, you will need:
 
 ## Configure Cloudflare
 
-1.  In a separate tab or window, open the [Zero Trust Dashboard](https://dash.teams.cloudflare.com) and navigate to **Access** > **Applications**.
+1.  In a separate tab or window, open [Zero Trust](https://one.dash.cloudflare.com) and navigate to **Access** > **Applications**.
 
 1.  Select _SaaS_ as the application type to begin creating a SaaS application.
 

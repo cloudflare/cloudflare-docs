@@ -2,6 +2,7 @@
 title: Overview
 pcx_content_type: overview
 weight: 1
+layout: single
 meta:
   title: Cloudflare Firewall Rules
 ---
@@ -17,11 +18,9 @@ Cloudflare Firewall Rules allows you to create rules that inspect incoming traff
 
 ## Availability
 
-Cloudflare Firewall Rules is available to all customers. However, the number of active firewall rules you can have and support for the *Log* action and regular expressions depend on your Cloudflare plan.
-
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
-{{<feature-table id="security.firewall_rules">}}
+{{<feature-table id="security.x_firewall_rules">}}
 
 ## Next steps
 
@@ -34,7 +33,7 @@ This table outlines the Firewall Rules features and entitlements available with 
 
 * You can also manage firewall rules through Terraform. For more information, refer to [Getting Started with Terraform](https://blog.cloudflare.com/getting-started-with-terraform-and-cloudflare-part-1/).
 
-## Related resources 
+## Related resources
 
 For additional information, refer to the following pages:
 

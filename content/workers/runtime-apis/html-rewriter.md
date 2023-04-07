@@ -110,7 +110,8 @@ class UserElementHandler {
 async function handleRequest(req) {
   const res = await fetch(req);
 
-  return new HTMLRewriter().on('div:user_info', new UserElementHandler()).transform(res);
+  // run the user element handler via HTMLRewriter on a div with ID `user_info`
+  return new HTMLRewriter().on('div#user_info', new UserElementHandler()).transform(res);
 }
 ```
 

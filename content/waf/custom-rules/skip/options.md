@@ -41,8 +41,8 @@ The available skip options in custom rules are the following:
 
   - | Product name in the dashboard                                                                | API value       |
     | -------------------------------------------------------------------------------------------- | --------------- |
-    | [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131)                     | `zoneLockdown`  |
-    | [User Agent Blocking](https://support.cloudflare.com/hc/articles/115001856951)               | `uaBlock`       |
+    | [Zone Lockdown](/waf/tools/zone-lockdown/)                                                   | `zoneLockdown`  |
+    | [User Agent Blocking](/waf/tools/user-agent-blocking/)                                       | `uaBlock`       |
     | [Browser Integrity Check](https://support.cloudflare.com/hc/articles/200170086)              | `bic`           |
     | [Hotlink Protection](https://support.cloudflare.com/hc/articles/200170026)                   | `hot`           |
     | [Security Level](https://support.cloudflare.com/hc/articles/200170056)                       | `securityLevel` |

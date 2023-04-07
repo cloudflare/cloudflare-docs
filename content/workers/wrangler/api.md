@@ -23,7 +23,7 @@ By default, `unstable_dev` will perform integration tests against a local server
 
 The `unstable_dev()` function has an `unstable_` prefix because the API may change in the future. 
 
-There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/wrangler2/issues/new/choose) and we will review the issue.
+There are no known bugs at the moment and it is safe to use. If you discover any bugs, please open a [GitHub Issue](https://github.com/cloudflare/workers-sdk/issues/new/choose) and we will review the issue.
 
 
 {{</Aside>}}

@@ -16,7 +16,7 @@ AV scanning of files requires organizations to enable Proxy mode under **Setting
 
 To enable AV scanning:
 
-1.  On the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), navigate to **Settings > Network**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to **Settings > Network**.
 
 1.  In the section titled **AV Scanning**, toggle whether to scan files for malicious payloads during uploads, downloads, or both.
 
@@ -58,7 +58,7 @@ The following files cannot be scanned and will be blocked or allowed based on wh
 
 When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. All [HTTP selectors](/cloudflare-one/policies/filtering/http-policies/#selectors) can be used to opt HTTP traffic out from AV scanning using the Do Not Scan action. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
 
-| Selector | Operator      | Value           | Action       |
+| Selector | Operator      | Value           | Action      |
 | -------- | ------------- | --------------- | ----------- |
 | Hostname | Matches Regex | `.*example.com` | Do Not Scan |
 

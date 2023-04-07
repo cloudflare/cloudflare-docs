@@ -5,7 +5,7 @@ title: Direct Uploads
 
 # Direct Uploads
 
-Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare edge network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
+Direct Uploads enable you to upload your prebuilt assets to the Pages platform and deploy them to the Cloudflare global network. This guide will instruct you how to upload your assets using Wrangler or the Drag and Drop method.
 
 ## Upload methods
 
@@ -30,7 +30,7 @@ Below is the supported file types for each Direct Upload options:
 
 ### Set up Wrangler
 
-To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/). Note that Pages relies on Wrangler 2.
+To begin, [install and set up the latest version of Wrangler](/workers/wrangler/install-and-update/). Note that Pages relies on Wrangler v2.
 
 #### Create your project
 

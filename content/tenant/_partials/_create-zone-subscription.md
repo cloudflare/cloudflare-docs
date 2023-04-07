@@ -7,7 +7,7 @@ _build:
 
 {{<definitions>}}
 
-To create a zone subscription, send a [POST](https://developers.cloudflare.com/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
+To create a zone subscription, send a [POST](/api/operations/zone-subscription-create-zone-subscription) request to the `/zones/<ZONE_ID>/subscription` endpoint and include the following values:
 
 - `rate_plan` {{<type>}}object{{</type>}}
 
@@ -16,6 +16,10 @@ To create a zone subscription, send a [POST](https://developers.cloudflare.com/a
 - `component_values` {{<type>}}array{{</type>}}
 
     - Additional services depending on your reseller agreement, such as additional `page_rules`.
+
+- `frequency` {{<type>}}string{{</type>}}
+
+    - How often the subscription is renewed automatically (defaults to `"monthly"`)
 
 {{</definitions>}}
 
@@ -30,7 +34,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/subscription'
 -d '{
    "rate_plan": {
       "id": "<RATE_PLAN>"
-   }
+   },
+   "frequency": "annual"
 }'
 ```
 

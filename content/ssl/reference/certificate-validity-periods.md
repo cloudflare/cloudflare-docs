@@ -4,20 +4,29 @@ pcx_content_type: reference
 weight: 8
 meta:
   title: Certificate validity periods
+  description: Review information about available validity periods for your Cloudflare Advanced Certificates.
 ---
 
 # Certificate validity periods
 
+## Universal SSL
+
+{{<render file="_universal-ssl-validity.md">}}
+
+## Advanced certificates
+
 When you order an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can select the following values for the **Certificate validity period**:
 
-- **1 year** (soon to be [deprecated](/ssl/reference/migration-guides/digicert-update/))
-- **3 months**
-- **1 month**
-- **2 weeks**
+| Certificate validity period | Auto renewal period | Notes |
+| --- | --- | --- |
+| 1 year | 30 days | Soon to be [deprecated](/ssl/reference/migration-guides/digicert-update/) |
+| 3 months | 30 days |
+| 1 month | 7 days |
+| 2 weeks | 3 days |
 
 {{<Aside type="note">}}
 
-For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](https://developers.cloudflare.com/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack).
+For more details on the `validity_days` parameter used in API calls, refer to [Order Advanced Certificate Pack](/api/operations/certificate-packs-order-advanced-certificate-manager-certificate-pack).
 
 {{</Aside>}}
 

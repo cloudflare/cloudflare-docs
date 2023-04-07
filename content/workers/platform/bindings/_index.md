@@ -41,17 +41,31 @@ Durable Object bindings for communication between a Worker and a Durable Object.
 
 R2 bucket bindings for communication between a Worker and an R2 bucket.
 
-* Learn more about [R2 bucket bindings](/r2/data-access/workers-api/workers-api-reference/#create-a-binding).
+* Learn more about [R2 bucket bindings](/r2/api/workers/workers-api-reference/#create-a-binding).
 * Configure R2 bucket bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#r2-buckets).
 
 ### Queue bindings
 
 [Queue](/queues) bindings allow for communication between a Worker and a Queue.
 
-* Configure Queue bindings via your [`wrangler.toml` file](/queues/configuration/).
+* Configure Queue bindings via your [`wrangler.toml` file](/queues/platform/configuration/).
 
 ### Dispatch namespace bindings (Workers for Platforms)
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-* Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dynamic-dispatch-worker).
+* Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/).
+
+### mTLS certificate bindings
+
+mTLS certificate bindings enable Worker subrequests to present a client certificate when communicating with a service that requires client authentication.
+
+* Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
+* Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).
+
+### Email bindings
+
+Email bindings allow you to send emails from your Worker. This is useful for when you want to know about certain types of events being triggered, for example.
+
+- Learn more about [email bindings](/email-routing/email-workers/send-email-workers/).
+- Configure email bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings).

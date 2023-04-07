@@ -10,7 +10,7 @@ weight: 1
 Consider using [Cloudflare Pages](/pages/) for hosting static applications instead of Workers Sites.
 {{</Aside>}}
 
-Workers Sites require [Wrangler](https://github.com/cloudflare/wrangler2) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
+Workers Sites require [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
 
 To deploy a pre-existing static site project, start with a pre-generated site. Workers Sites works with all static site generators, for example:
 
@@ -122,7 +122,7 @@ async function handleEvent(event) {
     $ wrangler publish
     ```
 
-6.  Publish your site to a [custom domain](/workers/get-started/guide/#optional-configure-for-deploying-to-a-registered-domain) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
+6.  Publish your site to a [custom domain](/workers/platform/triggers/custom-domains/) that you own and have already attached as a Cloudflare zone. Add a `route` property to the `wrangler.toml` file.
 
     ```toml
     route = "https://example.com/*"
@@ -132,4 +132,4 @@ async function handleEvent(event) {
 Refer to the documentation on [Routes](/workers/platform/triggers/routes/) to configure a `route` properly.
     {{</Aside>}}
 
-Learn more about [configuring your project](/workers/get-started/guide/#7-configure-your-project-for-deployment).
+Learn more about [configuring your project](/workers/wrangler/configuration/).

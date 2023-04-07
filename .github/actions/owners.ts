@@ -24,11 +24,13 @@ export const OWNERS: Record<string, string[]> = {
   d1: ["deadlypants1973"],
   "data-localization": ["angelampcosta"],
   "ddos-protection": ["pedrosousa"],
-  dns: ["kodster28"],
+  "dmarc-management": ["marciocloudflare"],
+  dns: ["RebeccaTamachiro"],
   "email-routing": ["marciocloudflare"],
   "email-security": ["marciocloudflare"],
   firewall: ["pedrosousa"],
   fundamentals: ["kodster28"],
+  "health-checks": ["patriciasantaana"],
   images: ["dcpena"],
   "learning-paths": ["kodster28"],
   "load-balancing": ["patriciasantaana"],
@@ -55,7 +57,7 @@ export const OWNERS: Record<string, string[]> = {
   spectrum: ["angelampcosta"],
   ssl: ["kodster28"],
   stream: ["dcpena"],
-  support: ["kodster28"],
+  support: ["jedecf"],
   tenant: ["kodster28"],
   terraform: ["ranbel"],
   "time-services": ["kodster28"],
@@ -70,12 +72,12 @@ export const OWNERS: Record<string, string[]> = {
 };
 
 export const REVIEWERS: Record<string, string[]> = {
-  analytics: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov", "jimhawkridge", "46bit"],
+  analytics: ["jherre", "bharatnc", "victor-perov", "jimhawkridge", "46bit"], // todo: re-add "soheiokamoto", "tlozoot"
   d1: ["nevikashah", "WalshyDev"],
-  "data-localization": ["soheiokamoto", "tlozoot"],
+  "data-localization": [], // todo: re-add "soheiokamoto", "tlozoot"
   radar: ["meddulla", "G4brym"],
-  logs: ["soheiokamoto", "jherre", "tlozoot", "bharatnc", "victor-perov"],
+  logs: ["jherre", "bharatnc", "victor-perov"], // todo: re-add "soheiokamoto", "tlozoot"
   pages: ["WalshyDev"],
-  turnstile: ["migueldemoura", "punkeel", "worenga"],
+  turnstile: ["migueldemoura", "punkeel"], // todo: re-add "worenga"
   "waiting-room": ["aolache"],
 };

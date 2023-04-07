@@ -46,4 +46,4 @@ Using [filters](/logs/reference/filters/), you can send set sample rates (or not
 
 Filtering is available for [all Cloudflare datasets](/logs/reference/log-fields/zone/).
 
-{{<render file="../../logs/_partials/_filtering-limitations.md">}}
+{{<render file="_filtering-limitations.md" productFolder="logs" >}}

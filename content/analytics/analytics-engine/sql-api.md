@@ -30,7 +30,7 @@ Use the dashboard to create a token with permssion to read analytics data on you
 
 ## Querying the API
 
-Submit the query text in the body of a `POST` request to the API address. The format of the data returned can be selected using the [`FORMAT` option](../sql-reference/#format-clause) in your query.
+Submit the query text in the body of a `POST` request to the API address. The format of the data returned can be selected using the [`FORMAT` option](/analytics/analytics-engine/sql-reference/#format-clause) in your query.
 
 You can use cURL to test the API as follows, replacing the `<account_id>` with your 32 character account ID (available in the dashboard) and the `<token>` with the token string you generated above.
 
@@ -44,7 +44,7 @@ If you have already published some data, you might try executing the following t
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql" -H "Authorization: Bearer <token>" -d "SHOW TABLES"
 ```
 
-Refer to the Workers Analytics Engine [SQL reference](../sql-reference/), for the full supported query syntax.
+Refer to the Workers Analytics Engine [SQL reference](/analytics/analytics-engine/sql-reference/), for the full supported query syntax.
 
 ## Table structure
 
@@ -84,7 +84,7 @@ The rate at which the data is sampled is exposed via the `_sample_interval` colu
 
 {{</table-wrap>}}
 
-Additionally, the [QUANTILEWEIGHTED function](../sql-reference/#quantileweighted) is designed to be used with sample interval as the third argument.
+Additionally, the [QUANTILEWEIGHTED function](/analytics/analytics-engine/sql-reference/#quantileweighted) is designed to be used with sample interval as the third argument.
 
 ## Example queries
 
