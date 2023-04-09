@@ -19,10 +19,9 @@ The Application Check device posture attribute checks that a specific applicatio
 3.  Select **Application Check**.
 
 4.  You will be prompted for the following information:
-
-        1. **Name**: Enter a unique name for this device posture check.
-        2. **Operating system**: Select your operating system.
-        3. **Application path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
+    1. **Name**: Enter a unique name for this device posture check.
+    2. **Operating system**: Select your operating system.
+    3. **Application path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
 
     {{<Aside type="note">}}
 
@@ -60,7 +59,8 @@ When setting up new device posture checks, we recommend first testing them witho
 2. Run the following command to extract certificates for the WARP application:
 
    ```sh
-   ~/Desktop/tmp $ codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP" Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
+   ~/Desktop/tmp $ codesign -d --extract-certificates "/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP"
+   Executable=/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP
    ```
 
 3. Next, run the following command to extract the SHA1 thumbprint:
