@@ -118,7 +118,7 @@ Start by configuring a GRE tunnel between SFOS and the Cloudflare Anycast IP add
 
     ![Access the CLI to configure a GRE tunnel](/magic-wan/static/sophos-firewall/1-gre-connection.png)
 
-    For more details, refer to [KB-000035813](https://support.sophos.com/support/s/article/KB-000035813?language=en_US).
+    For more details, refer to the [Sophos Firewall knowledge base](https://support.sophos.com/support/s/article/KB-000035813?language=en_US).
 
 ### 2. Add a GRE or SD-WAN route to redirect traffic through the GRE tunnel
 
