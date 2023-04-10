@@ -5202,6 +5202,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
     width: auto;
 }
 
+[theme="dark"] .DocSearch-Logo svg>* {
+    fill: white;
+}
+
 .DocSearch-Screen-Icon svg {
     height: auto;
     width: auto;
