@@ -1,0 +1,51 @@
+{{- $tutorials := (where .Site.Pages ".Params.pcx_content_type" "tutorial" ) -}}
+{{- $sections := slice -}}
+{{- $filteredTutorials := slice -}}
+
+{{- range $tutorials -}}
+{{- $sections = $sections | append .Section -}}
+{{- $title := "" -}}
+{{- with .Params.meta.title -}}
+{{- $title = . -}}
+{{- else -}}
+{{- $title = .Title -}}
+{{- end -}}
+{{- $filteredTutorials = $filteredTutorials | append (dict "title" $title "section" .Section "url" .RelPermalink ) }}
+{{- end -}}
+
+{{- $sections = $sections | uniq | sort -}}
+
+{{- range $sections -}}
+{{- $currentSection := . -}}
+
+<span style="font-size:1.25em;text-align:center">
+    <h2 id="{{.}}">
+        <span class="DocsMarkdown--header-anchor-positioner">
+        <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#analytics" aria-hidden="true">​</a>
+        </span>
+        <span>{{replace . "-" " " | upper }}</span>
+    </h2>
+    </span>
+    <div class="listContainer">
+    <ul>
+        {{- range $filteredTutorials -}}
+        {{- if eq .section $currentSection -}}
+        <li><a href="{{- .url -}}">{{- .title -}}</a></li>
+        {{- end -}}
+        {{- end -}}
+    </ul>
+</div>
+
+{{- end -}}
+
+<style>
+ .listContainer {
+    text-align: center;
+}
+
+li {
+    font-size: 1.2em;
+    list-style-type: none;
+}
+</style>
+
