@@ -4456,7 +4456,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 [theme="dark"] .DocSearch-Container {
-  background: var(--background-color);
+  background: rgba(var(--background-color-rgb), .7);
 }
 
 #algolia {
