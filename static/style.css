@@ -4480,6 +4480,12 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin: 0 auto;
 }
 
+.DocSearch-Screen-Icon svg {
+  height: auto;
+  width: auto;
+  margin: 0 auto;
+}
+
 [theme="dark"] .DocSearch-Logo svg > * {
   fill: white;
 }
@@ -4497,7 +4503,7 @@ blockquote .DocsMarkdown--header-anchor-positioner {
 }
 
 [theme=dark] .DocSearch-Title {
-  color: rgb(var(--background-color-rgb));
+  color: var(--color-rgb);
 }
 
 [theme=dark] .DocSearch-Button .DocSearch-Search-Icon {
