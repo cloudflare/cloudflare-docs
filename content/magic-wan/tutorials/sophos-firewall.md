@@ -15,11 +15,11 @@ This tutorial shows you how to use Magic WAN with the following versions of the 
     - SFOS  Version 19.0 MR2-Build 472
     - SFOS  Version 19.5.1 MR1-Build 278
 
-You can connect through Generic Routing Encapsulation (GRE) or IPsec tunnels to Magic WAN.
+You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/magic-wan/get-started/configure-tunnels/) to Magic WAN.
 
 ## IPsec connection
 
-The following instructions show how to setup an IPSec connection on your Sophos Firewall device.
+The following instructions show how to setup an IPSec connection on your Sophos Firewall device. Settings not explicitly mentioned can be left with their default values.
 
 ### 1. Add an IPsec Profile
 
@@ -71,7 +71,7 @@ You must use an interface address from the `/31` subnet required to [configure t
 
 1. Go to **Configure** > **Network**.
 2. In **Interfaces**, select the corresponding interface to the IPsec tunnel you created in [step 2](#2-create-ipsec-connection-tunnel).
-3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/). 
+3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/). When you are finished, it should look similar to the following:
 
 ![Configure a XFRM interface.](/magic-wan/static/sophos-firewall/3-xfrm-interface.png)
 
@@ -151,7 +151,7 @@ Go to **Configure** > **Routing** > **Static routes** to add an XFRM interface-b
 
 ![Go to Gateways to add an XFRM interface-based route](/magic-wan/static/sophos-firewall/1-sd-wan-gateway.png)
 
-2. In **Configure** > **Routing** > **SD-WAN routes**, select **Add** to add the desired networks and services in the route to redirect traffic to Cloudflare. Enter a descriptive name for your connection, and pay attention to the **Incoming interface**, **Source networks** and **Primary gateway options**.
+2. In **Configure** > **Routing** > **SD-WAN routes**, select **Add** to add the desired networks and services in the route to redirect traffic to Cloudflare. Enter a descriptive name for your connection, and the IP addresses you set up for your IPsec tunnels in **Incoming interface** and **Source networks**. Do not forget to choose the correct **Primary gateway** option.
 
 ![Go to SD-WAN to add the desired networks and services in the route.](/magic-wan/static/sophos-firewall/2-sd-wan-routes.png)
 
