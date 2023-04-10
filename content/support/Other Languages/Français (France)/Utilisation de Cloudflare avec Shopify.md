@@ -45,7 +45,7 @@ Lorsqu'elles sont utilisées avec O2O, certaines fonctions de Cloudflare peuvent
 -   Soyez prudent avec les fonctions suivantes de Cloudflare :
     -   [Règles Page Rules](https://support.cloudflare.com/hc/articles/218411427) : Les règles de page incorrectement configurées qui correspondent au sous-domaine utilisé pour Shopify peuvent bloquer ou fausser le flux des visiteurs de commerce électronique sur votre site Web.
     -   [Workers](/workers/) : À l'instar des règles Page Rules, Workers peut interrompre le flux de trafic vers votre site web et, ainsi, grever vos revenus. Intégrez Workers avec prudence. Il est recommandé d'exclure le sous-domaine utilisé avec Shopify de l'itinéraire Workers.
-    -   [Enregistrement DNS CAA](/ssl/edge-certificates/custom-certificates/caa-records) : Shopify utilise Let's Encrypt pour émettre des certificats SSL/TLS pour les domaines de commerce. Si vous ajoutez des enregistrements DNS CAA, vous devez sélectionner Let's Encrypt comme autorité de certification (CA), faute de quoi les connexions HTTPS risquent d'échouer.
+    -   [Enregistrement DNS CAA](/ssl/edge-certificates/caa-records/) : Shopify utilise Let's Encrypt pour émettre des certificats SSL/TLS pour les domaines de commerce. Si vous ajoutez des enregistrements DNS CAA, vous devez sélectionner Let's Encrypt comme autorité de certification (CA), faute de quoi les connexions HTTPS risquent d'échouer.
 
 ___
 
