@@ -45,7 +45,7 @@ O2Oで使用する場合、Cloudflareの特定の機能がShopifyストアへの
 -   以下のCloudflareの機能には注意が必要です。
     -   [Page rules](https://support.cloudflare.com/hc/articles/218411427): Shopifyに使用されているサブドメインにマッチするページルールが正しく設定されていないと、Webサイトへのeコマース訪問者の流れを妨げたり、歪めたりする可能性があります。
     -   [Workers](/workers/)：Page Rulesと同様にWorkersもWebサイトへのトラフィックのフローを中断し、結果的に減益につながる可能性があります。Workersの書き込みは慎重に行ってください。WorkersのルーティングからShopifyで使われるサブドメインを除外することをお勧めします。
-    -   [DNS CAAレコード](/ssl/edge-certificates/custom-certificates/caa-records)：ShopifyはLet's Encryptを使って、出店者ドメインにSSL/TLS証明書を発行します。DNS CAAレコードを追加する場合、Let's Encryptを認証局（CA）に選択しなければなりません。そうしないと、HTTPS接続に失敗します。
+    -   [DNS CAAレコード](/ssl/edge-certificates/caa-records/)：ShopifyはLet's Encryptを使って、出店者ドメインにSSL/TLS証明書を発行します。DNS CAAレコードを追加する場合、Let's Encryptを認証局（CA）に選択しなければなりません。そうしないと、HTTPS接続に失敗します。
 
 ___
 

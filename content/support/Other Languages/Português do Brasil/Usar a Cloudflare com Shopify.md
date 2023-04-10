@@ -45,7 +45,7 @@ Quando usados com O2O, certos recursos da Cloudflare podem interromper o fluxo d
 -   Tenha cuidado com os seguintes recursos da Cloudflare:
     -   [Page Rules](https://support.cloudflare.com/hc/articles/218411427): Page Rules configuradas incorretamente que correspondem ao subdomínio usado pelo Shopify podem bloquear ou distorcer o fluxo de visitantes de comércio eletrônico em seu site.
     -   [Workers](/workers/): de modo semelhante ao Page Rules, o Workers pode interromper o fluxo de tráfego para o seu site e, consequentemente, reduzir a receita. Insira o Workers com cautela. É aconselhável excluir o subdomínio usado com a Shopify da rota do Workers.
-    -   [Registros DNS CAA](/ssl/edge-certificates/custom-certificates/caa-records): a Shopify emite certificados SSL/TLS para domínios de lojistas usando a Let's Encrypt. Se você adicionar algum registro de DNS CAA, deverá selecionar a Let's Encrypt como autoridade de certificação (CA) ou as conexões HTTPS poderão falhar.
+    -   [Registros DNS CAA](/ssl/edge-certificates/caa-records/): a Shopify emite certificados SSL/TLS para domínios de lojistas usando a Let's Encrypt. Se você adicionar algum registro de DNS CAA, deverá selecionar a Let's Encrypt como autoridade de certificação (CA) ou as conexões HTTPS poderão falhar.
 
 ___
 
