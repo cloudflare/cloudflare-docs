@@ -1,11 +1,11 @@
 ---
 title: Sophos Firewall
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 ---
 
 # Sophos Firewall
 
-This tutorial will show you how to use Magic WAN with the following versions of the Sophos Firewall:
+This tutorial shows you how to use Magic WAN with the following versions of the Sophos Firewall:
 
 - **Sophos form factor tested:**
     - Sophos Firewall XGS and XG series hardware
