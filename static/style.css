@@ -4480,6 +4480,10 @@ blockquote .DocsMarkdown--header-anchor-positioner {
   margin: 0 auto;
 }
 
+[theme="dark"] .DocSearch-Logo svg > * {
+  fill: white;
+}
+
 /* hide docssearch on mobile */
 @media (max-width:768px) {
   #algolia {
