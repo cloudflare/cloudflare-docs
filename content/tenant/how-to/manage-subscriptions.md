@@ -42,4 +42,4 @@ To update a subscription on an account, send a [`PUT`](/api/operations/account-s
 
 ### Delete account subscription
 
-To delete a subscription on an account, send a [`DELETE`](hhttps://developers.cloudflare.com/api/operations/account-subscriptions-delete-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions/<SUBSCRIPTION_ID>` endpoint.
+To delete a subscription on an account, send a [`DELETE`](/api/operations/account-subscriptions-delete-subscription) request to the `/accounts/<ACCOUNT_ID>/subscriptions/<SUBSCRIPTION_ID>` endpoint.
