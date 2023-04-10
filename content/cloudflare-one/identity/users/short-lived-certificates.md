@@ -12,6 +12,8 @@ Cloudflare Access can replace traditional SSH key models with short-lived certif
 
 Cloudflare Access removes the burden on the end user of generating a key, while also improving security of access to infrastructure with ephemeral certificates.
 
+Note: Short-Lived Certificate authentication is not compatible with the [Access Binding Cookie]#(cloudflare-one/identity/authorization-cookie/#binding-cookie).
+
 ## 1. Secure a server behind Cloudflare Access
 
 Cloudflare Access short-lived certificates can work with any modern SSH server, whether it is behind Access or not. However, we recommend putting your server behind Access for added security and features, such as auditability and browser-based terminals.
