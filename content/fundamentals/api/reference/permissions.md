@@ -125,7 +125,7 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Bot Management Edit              | Grants write access to Bot Management.                                   |
 | Cache Purge                      | Grants access to purge cache.                                            |
 | DNS Read                         | Grants read access to DNS.                                               |
-| DNS Edit                         | Grants write access to DNS.                                              |
+| DNS Write                        | Grants write access to DNS.                                              |
 | Dynamic Redirect Read            | Grants read access to zone-level Single Redirects.                       |
 | Dynamic Redirect Edit            | Grants write access to zone-level Single Redirects.                      |
 | Email Routing Rules Read         | Grants read access to Email Routing Rules.                               |
@@ -148,8 +148,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | SSL and Certificates Edit        | Grants write access to SSL configuration and certificate management.     |
 | Sanitize Read                    | Grants read access to sanitization.                                      |
 | Sanitize Edit                    | Grants write access to sanitization.                                     |
-| Waiting Room Read               | Grants read access to Waiting Room.                                     |
-| Waiting Room Edit               | Grants write access to Waiting Room.                                    |
+| Waiting Room Read                | Grants read access to Waiting Room.                                      |
+| Waiting Room Edit                | Grants write access to Waiting Room.                                     |
 | Web3 Hostnames Read              | Grants read access to Web3 Hostnames.                                    |
 | Web3 Hostnames Edit              | Grants write access to Web3 Hostnames.                                   |
 | Workers Routes Read              | Grants read access to Cloudflare Workers and Workers KV Storage.         |
