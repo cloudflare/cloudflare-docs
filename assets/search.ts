@@ -16,6 +16,12 @@
       appId: '8MU1G3QO9P',
       apiKey: '045e8dbec8c137a52f0f56e196d7abe0',
       container: '#algolia',
+      transformItems: items => {
+        return items.filter(item => {
+          const url = new URL(item.url)
+          return url.pathname.endsWith('/')
+        })
+      }
     });
 
     // instantiate mobile search button
