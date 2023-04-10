@@ -394,7 +394,7 @@ span a img {
       {{- end -}}
       
   </div>
-  <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="/search/">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
+  <p id="emptyState" class="emptyState" style="display: none">Not finding what you need? Use our <a href="javascript:triggerSearch();">full search</a> or <a href="javascript:resetFilters();">reset the filters</a>.</p>
   </div>
 
 <script>
@@ -472,13 +472,15 @@ function filterList() {
   if (!visibleItems) {
     emptyStateMessage.style.display = "";
     emptyStateMessage.children[0].style.display = "";
-    emptyStateMessage.children[0].setAttribute('href', "/search/#q=" + 
-    searchTerm.toLowerCase() + "&t=Docs" );
     productGridContent.style.display = "none";
   } else {
     emptyStateMessage.style.display = "none";
     productGridContent.style.display = "grid";
   }
+}
+
+function triggerSearch() {
+  document.querySelector(".DocSearch.DocSearch-Button").click()
 }
 
 function resetFilters() {
