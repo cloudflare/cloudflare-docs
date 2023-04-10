@@ -80,6 +80,10 @@ Using a wildcard in the middle of the **Path** field covers multiple segments of
 - At most one wildcard in between each dot in the **Subdomain**. For example, `foo*bar*baz.example.com` is not allowed.
 - At most one wildcard in between each slash in the **Path**. For example, `example.com/foo*bar*baz` is not allowed.
 
+## Subdomain setups
+
+[Subdomain setups](/dns/zone-setups/subdomain-setup/) allow you to manage a child domain separately from its parent domain. In Access application paths, your configured child domains will appear in the **Domain** dropdown menu. If you [split out a subdomain](/dns/zone-setups/subdomain-setup/setup/) which already has an Access application, you will need to re-save the Access application to associate it with the new child domain.
+
 ## Unsupported URLs
 
 ### Port numbers
