@@ -3,7 +3,7 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: overview
+layout: list
 meta:
   title: Cloudflare Workers
 ---
