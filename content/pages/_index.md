@@ -38,9 +38,9 @@ Rollbacks allow you to instantly revert your project to a previous production de
 
 {{</feature>}}
 
-{{<feature header="Custom Domains" href="/pages/platform/custom-domains/">}}
+{{<feature header="Redirects" href="/pages/platform/redirects/">}}
 
-Set up a custom domain (or subdomain) for your Cloudflare Pages site.
+Set up redirects for your Cloudflare Pages project.
 
 {{</feature>}}
 
