@@ -127,7 +127,7 @@ ___
 
 {{</Aside>}}
 
-**How to disable BFM****/SBFM feature?**
+**How to disable BFM/SBFM feature?**
 
 If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under **Security** > **Bots**.
 
