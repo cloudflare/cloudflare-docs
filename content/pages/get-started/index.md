@@ -108,6 +108,12 @@ After you have finished setting your build configuration, select **Save and Depl
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
+{{<Aside type="warning" header="DNS errors">}}
+
+If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. Wait for the DNS to propagate, or try another device or network to resolve the error. 
+
+{{</Aside>}}
+
 ## Manage your site
 
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
