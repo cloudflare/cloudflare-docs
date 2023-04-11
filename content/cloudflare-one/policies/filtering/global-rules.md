@@ -7,7 +7,7 @@ weight: 6
 
 # Global rules
 
-Cloudflare Zero Trust applies a set of **global rules** to all accounts.
+Cloudflare Zero Trust applies a set of global rules to all accounts.
 
 ## DNS rules
 
