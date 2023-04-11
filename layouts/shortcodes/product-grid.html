@@ -408,6 +408,31 @@ span a img {
   </div>
 
 <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedGroups = urlParams.get('product-group');
+  if (selectedGroups) {
+    const selectedGroupList = selectedGroups.split(',');
+    const productGroups = document.querySelectorAll('input[name="product-group"]');
+    productGroups.forEach((productGroup) => {
+      if (selectedGroupList.includes(productGroup.id)) {
+        productGroup.checked = true;
+      }
+    });
+  }
+
+  const previewMatch = urlParams.get('preview-available');
+  if (previewMatch) {
+    const previewMatchList = previewMatch;
+    console.log(previewMatchList)
+    const matchBoxes = document.querySelectorAll('input[name="preview-available"]');
+    matchBoxes.forEach((matchBox) => {
+      if (previewMatchList.includes(matchBox.id)) {
+        matchBox.checked = true;
+      }
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', filterList);
   document.addEventListener('DOMContentLoaded', function() {
     // Listen for changes on all checkboxes
     let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
@@ -479,6 +504,25 @@ function filterList() {
     emptyStateMessage.style.display = "none";
     productGridContent.style.display = "grid";
   }
+
+  // Add parameters to URL
+  const urlParams = new URLSearchParams(window.location.search);
+  if (groupIdValues.length > 0) {
+    let selectedGroups = groupIdValues.join(',');
+    urlParams.set('product-group', selectedGroups);
+  } else {
+    urlParams.delete('product-group');
+  }
+
+  if (matchIdValues.length > 0) {
+    let checkedPreview = matchIdValues.join('');
+    urlParams.set('preview-available', checkedPreview);
+  } else {
+    urlParams.delete('preview-available');
+  }
+
+  const newUrl = window.location.pathname + '?' + urlParams.toString();
+  history.pushState({}, '', newUrl);
 }
 
 function resetFilters() {
