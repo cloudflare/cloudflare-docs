@@ -1,15 +1,15 @@
 ---
 pcx_content_type: reference
-title: Global rules
+title: Global policies
 layout: single
 weight: 6
 ---
 
-# Global rules
+# Global policies
 
-Cloudflare Zero Trust applies a set of global rules to all accounts.
+Cloudflare Zero Trust applies a set of global policies to all accounts.
 
-## DNS rules
+## DNS policies
 
 | Criteria | Value                                                                                                                                                                                             | Action | Description                                            |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------ |
@@ -19,7 +19,7 @@ Cloudflare Zero Trust applies a set of global rules to all accounts.
 | Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows L4 access for Zero Trust applications.          |
 | Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows L4 access for Cloudflare Access applications.   |
 
-## Proxy rules
+## Network proxy policies
 
 | Criteria         | Value                       | Action | Description                                                                                                                                    |
 | ---------------- | --------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,7 +27,7 @@ Cloudflare Zero Trust applies a set of global rules to all accounts.
 | Hostname         | `help.teams.cloudflare.com` | allow  | Used by the WARP client to check if Gateway is on by inspecting the certificate and checking if it is properly installed on the client device. |
 | Content Category | Child Abuse                 | block  | Blocks child abuse materials.                                                                                                                  |
 
-## HTTP inspection rules
+## HTTP inspection policies
 
 | Criteria       | Value                                                        | Action    | Description                                                                                                     |
 | -------------- | ------------------------------------------------------------ | --------- | --------------------------------------------------------------------------------------------------------------- |
@@ -40,9 +40,9 @@ Cloudflare Zero Trust applies a set of global rules to all accounts.
 | Hostname       | `*.dash.cloudflare.com`                                      | bypass    | Bypasses the Cloudflare dashboard and subdomains.                                                               |
 | Hostname       | `blocked.teams.cloudflare.com`                               | bypass    | Prevents an infinite loop on the Gateway block page.                                                            |
 | Hostname       | `developers.cloudflare.com` and `help.cloudflarebrowser.com` | noisolate | Prevents isolation of Cloudflare developer docs and help pages to help users troubleshoot configuration issues. |
-| Hostname       | `*.assets.browser.run`                                       | bypass    | Required for [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/).             |
-| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | bypass    | Required for RBI.                                                                                        |
-| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | isolate   | Required for RBI.                                                                                        |
+| Hostname       | `*.assets.browser.run`                                       | bypass    | Required for [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/).                     |
+| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | bypass    | Required for RBI.                                                                                               |
+| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | isolate   | Required for RBI.                                                                                               |
 | Hostname       | `speed.cloudflare.com`                                       | noscan    | Allows files transferred by the Cloudflare speed test.                                                          |
 | Request Header | `Accept: text/html`                                          | noisolate | Ensures only browsers will be isolated. Browsers issue an `Accept:` HTTP header that begins with `text/html`.   |
 | Application    | Online Certificate Status Protocol                           | bypass    | Enables OCSP stapling.                                                                                          |
