@@ -798,10 +798,10 @@ html[is-site-page] .DocsContent {
     border-left: 5px solid #F6821F;
     padding: .5em 1.8em;
     height: 22em;
-    width: 25em;
+    width: 15em;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1100px) {
     .TriBlock {
         width: unset;
         margin-bottom: 20px;
