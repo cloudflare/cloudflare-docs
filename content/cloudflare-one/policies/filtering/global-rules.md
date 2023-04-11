@@ -9,6 +9,24 @@ weight: 6
 
 Cloudflare Zero Trust applies a set of **global rules** to all accounts.
 
+## DNS rules
+
+| Criteria | Value                      | Action | Description                                            |
+| -------- | -------------------------- | ------ | ------------------------------------------------------ |
+| Hostname | `*.nel.cloudflare.com`     | allow  | Allows L4 access to SNI domains for WARP registration. |
+| Hostname | `*.cloudflareclient.com`   | allow  | Allows L4 access for clients.                          |
+| Hostname | `*.cloudflare-gateway.com` | allow  | Allows L4 access for the Gateway proxy with PAC files. |
+| Hostname |                            | allow  | Allows L4 access for Zero Trust applications.          |
+| Hostname | `*.cloudflareaccess.com`   | allow  | Allows L4 access for Cloudflare Access applications.   |
+
+## Proxy rules
+
+| Criteria         | Value                       | Action | Description                                                                                                                                    |
+| ---------------- | --------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hostname         | `*.cloudflareaccess.com`    | allow  | Allows L7 security for Cloudflare Access applications.                                                                                         |
+| Hostname         | `help.teams.cloudflare.com` | allow  | Used by the WARP client to check if Gateway is on by inspecting the certificate and checking if it is properly installed on the client device. |
+| Content Category | Child Abuse                 | block  | Blocks child abuse materials.                                                                                                                  |
+
 ## HTTP inspection rules
 
 | Criteria       | Value                                                        | Action    | Description                                                                                                     |
@@ -28,21 +46,3 @@ Cloudflare Zero Trust applies a set of **global rules** to all accounts.
 | Hostname       | `speed.cloudflare.com`                                       | noscan    | Allows files transferred by the Cloudflare speed test.                                                          |
 | Request Header | `Accept: text/html`                                          | noisolate | Ensures only browsers will be isolated. Browsers issue an `Accept:` HTTP header that begins with `text/html`.   |
 | Application    | Online Certificate Status Protocol                           | bypass    | Enables OCSP stapling.                                                                                          |
-
-## DNS rules
-
-| Criteria | Value                      | Action | Description                                            |
-| -------- | -------------------------- | ------ | ------------------------------------------------------ |
-| Hostname | `*.nel.cloudflare.com`     | allow  | Allows L4 access to SNI domains for WARP registration. |
-| Hostname | `*.cloudflareclient.com`   | allow  | Allows L4 access for clients.                          |
-| Hostname | `*.cloudflare-gateway.com` | allow  | Allows L4 access for the Gateway proxy with PAC files. |
-| Hostname |                            | allow  | Allows L4 access for Zero Trust applications.          |
-| Hostname | `*.cloudflareaccess.com`   | allow  | Allows L4 access for Cloudflare Access applications.   |
-
-## Proxy rules
-
-| Criteria         | Value                       | Action | Description                                                                                                                                    |
-| ---------------- | --------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Hostname         | `*.cloudflareaccess.com`    | allow  | Allows L7 security for Cloudflare Access applications.                                                                                         |
-| Hostname         | `help.teams.cloudflare.com` | allow  | Used by the WARP client to check if Gateway is on by inspecting the certificate and checking if it is properly installed on the client device. |
-| Content Category | Child Abuse                 | block  | Blocks child abuse materials.                                                                                                                  |
