@@ -11,13 +11,13 @@ Cloudflare Zero Trust applies a set of **global rules** to all accounts.
 
 ## DNS rules
 
-| Criteria | Value                      | Action | Description                                            |
-| -------- | -------------------------- | ------ | ------------------------------------------------------ |
-| Hostname | `*.nel.cloudflare.com`     | allow  | Allows L4 access to SNI domains for WARP registration. |
-| Hostname | `*.cloudflareclient.com`   | allow  | Allows L4 access for clients.                          |
-| Hostname | `*.cloudflare-gateway.com` | allow  | Allows L4 access for the Gateway proxy with PAC files. |
-| Hostname |                            | allow  | Allows L4 access for Zero Trust applications.          |
-| Hostname | `*.cloudflareaccess.com`   | allow  | Allows L4 access for Cloudflare Access applications.   |
+| Criteria | Value                                                                                                                                                                                                                                                     | Action | Description                                            |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------ |
+| Hostname | `*.nel.cloudflare.com`                                                                                                                                                                                                                                    | allow  | Allows L4 access to SNI domains for WARP registration. |
+| Hostname | `*.cloudflareclient.com`                                                                                                                                                                                                                                  | allow  | Allows L4 access for clients.                          |
+| Hostname | `*.cloudflare-gateway.com`                                                                                                                                                                                                                                | allow  | Allows L4 access for the Gateway proxy with PAC files. |
+| Hostname | <ul><li>`dash.teams.cloudflare.com`</li><li>`help.teams.cloudflare.com`</li><li>`blocked.teams.cloudflare.com`</li><li>`api.cloudflare.com`</li><li>`cloudflarestatus.com`</li><li>`www.cloudflarestatus.com`</li><li>`one.dash.cloudflare.com`</li></ul> | allow  | Allows L4 access for Zero Trust applications.          |
+| Hostname | `*.cloudflareaccess.com`                                                                                                                                                                                                                                  | allow  | Allows L4 access for Cloudflare Access applications.   |
 
 ## Proxy rules
 
