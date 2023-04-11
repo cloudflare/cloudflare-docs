@@ -63,7 +63,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/custom_certif
      {
         "certificate":"certificate",
         "private_key":"<PRIVATE_KEY>",
-        "policy":"EU and (not country: FR)", 
+        "policy":"(region: EU) and (not country: FR)", 
         "type": "sni_custom"
      }'
 ```
