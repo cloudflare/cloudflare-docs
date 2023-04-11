@@ -6,35 +6,28 @@
 {{- $productName :=  replace .Name ".yml" "" -}}
 {{- $productData := index $.Site.Data $productName -}}
 {{- with index $productData "product" -}}
-
 {{- $additional_groups := slice -}}
-{{- with .additional_groups -}}
-{{- range . -}}
-{{- $additional_groups = $additional_groups | append . -}}
-{{- end -}}
+{{- range .additional_groups -}}
+  {{- $additional_groups = $additional_groups | append . -}}
 {{- end -}}
 
 {{- $dataArray = $dataArray | append 
 (dict "group" .group "title" .title  "show" (default true .show) "url" 
 .url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
-"additional_groups" (default ("") ($additional_groups))) -}}
+"additional_groups" (default (slice) ($additional_groups))) -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
 
 {{- range $dataArray -}}
-{{- with .group -}}
+  {{- with .group -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
 
-{{- $availableOptions = $availableOptions | append . -}}
-{{- end -}}
-{{- if ne .additional_groups "" -}}
+  {{- range .additional_groups -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
 
-{{- range .additional_groups -}}
-
-{{- $availableOptions = $availableOptions | append . -}}
-
-{{- end -}}
-{{- end -}}
 {{- end -}}
 
 {{- $availableOptions = $availableOptions | uniq | sort -}}
@@ -402,8 +395,7 @@ span a img {
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
-          data-product-group="{{- .group -}}{{- if ne .additional_groups "" -}}
-          {{- range .additional_groups -}}|{{.}}{{- end -}}{{- end -}}"
+          data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
         >
           <span>{{ .title }}</span>
