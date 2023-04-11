@@ -1,6 +1,6 @@
 ---
 title: Cisco SD-WAN
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 2
 ---
 
