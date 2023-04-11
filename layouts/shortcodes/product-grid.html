@@ -397,6 +397,7 @@ span a img {
           href="{{ .url }}"
           data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
           data-preview-tryout="{{- .preview_tryout -}}"
+          style="display: none"
         >
           <span>{{ .title }}</span>
         </a>
@@ -432,7 +433,7 @@ span a img {
     });
   }
 
-  window.addEventListener('DOMContentLoaded', filterList);
+  document.addEventListener('DOMContentLoaded', filterList);
   document.addEventListener('DOMContentLoaded', function() {
     // Listen for changes on all checkboxes
     let checkboxes = document.getElementsByClassName("ProductCheckboxItem");
@@ -507,6 +508,7 @@ function filterList() {
 
   // Add parameters to URL
   const urlParams = new URLSearchParams(window.location.search);
+
   if (groupIdValues.length > 0) {
     let selectedGroups = groupIdValues.join(',');
     urlParams.set('product-group', selectedGroups);
@@ -521,7 +523,9 @@ function filterList() {
     urlParams.delete('preview-available');
   }
 
-  const newUrl = window.location.pathname + '?' + urlParams.toString();
+  let urlParamsString = urlParams.toString();
+  let suffix = urlParamsString.length > 0 ? '?' : '';
+  const newUrl = window.location.pathname + suffix + urlParams.toString();
   history.pushState({}, '', newUrl);
 }
 
