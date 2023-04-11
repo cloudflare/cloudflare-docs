@@ -40,9 +40,9 @@ Cloudflare Zero Trust applies a set of global rules to all accounts.
 | Hostname       | `*.dash.cloudflare.com`                                      | bypass    | Bypasses the Cloudflare dashboard and subdomains.                                                               |
 | Hostname       | `blocked.teams.cloudflare.com`                               | bypass    | Prevents an infinite loop on the Gateway block page.                                                            |
 | Hostname       | `developers.cloudflare.com` and `help.cloudflarebrowser.com` | noisolate | Prevents isolation of Cloudflare developer docs and help pages to help users troubleshoot configuration issues. |
-| Hostname       | `*.assets.browser.run`                                       | bypass    | Required for [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/) access.              |
-| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | bypass    | Required for RBI access.                                                                                        |
-| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | isolate   | Required for RBI access.                                                                                        |
+| Hostname       | `*.assets.browser.run`                                       | bypass    | Required for [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/).             |
+| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | bypass    | Required for RBI.                                                                                        |
+| Hostname       | `*.edge.browser.run` and `*.cloudflarebrowser.com`           | isolate   | Required for RBI.                                                                                        |
 | Hostname       | `speed.cloudflare.com`                                       | noscan    | Allows files transferred by the Cloudflare speed test.                                                          |
 | Request Header | `Accept: text/html`                                          | noisolate | Ensures only browsers will be isolated. Browsers issue an `Accept:` HTTP header that begins with `text/html`.   |
 | Application    | Online Certificate Status Protocol                           | bypass    | Enables OCSP stapling.                                                                                          |
