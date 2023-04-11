@@ -131,3 +131,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Zola        | (requires environment variable)             | Any version from 0.5.0 to 0.14.0  | `ZOLA_VERSION`       |
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
+
+## Build environment
+
+Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container. The operating system is Ubuntu `20.04.5`. The architecture is `x86`.
