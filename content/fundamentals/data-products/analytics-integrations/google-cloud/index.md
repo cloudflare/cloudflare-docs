@@ -23,7 +23,7 @@ The following diagram depicts how data flows from Cloudflare Logs through the di
 
 ![Data flow from Cloudflare Logpush to Google Cloud Platform](/fundamentals/static/images/google/cf-logpush-to-google-cloud-platform.png)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 
 Google Cloud is offering a credit towards a new Google Cloud account to help you get started. To learn more, visit [Google Cloud Platform Partner Credit](https://cloud.google.com/partners/partnercredit/?PCN=a0n60000003kp9MAAQ).
 

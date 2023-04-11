@@ -65,7 +65,7 @@ ___
 
 ## Troubleshooting DNSSEC Validation using DNSViz
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 DNSViz is a public, free online tool to visualize and help discover
 issues with your DNSSEC configuration. It is **not** associated
 Cloudflare. Only [contact Cloudflare

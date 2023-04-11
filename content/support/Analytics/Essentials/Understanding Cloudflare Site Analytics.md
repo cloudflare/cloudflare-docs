@@ -10,9 +10,9 @@ title: Understanding Cloudflare Site Analytics
 
 The Cloudflare dashboard (Site) **Analytics** app is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Read [Cloudflare Analytics: A quick
-overview](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: A quick overview")
+overview](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: A quick overview")
 for general information about all of Cloudflare's analytics offerings.
 You can also understand the characteristics of the data that Cloudflare
 captures and processes.
