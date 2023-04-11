@@ -134,4 +134,4 @@ If you want to set a specific version of a framework your Cloudflare Pages proje
 
 ## Build environment
 
-Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container. The operating system is Ubuntu `20.04.5`. The architecture is `x86`.
+Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container. The operating system is Ubuntu `20.04.5`. The architecture is `x86_64`.
