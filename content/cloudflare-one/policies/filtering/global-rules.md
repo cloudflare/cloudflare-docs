@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Global rules
 layout: single
-weight: 3
+weight: 6
 ---
 
 # Global rules
