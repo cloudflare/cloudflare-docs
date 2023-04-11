@@ -1,6 +1,6 @@
 ---
 title: Aruba EdgeConnect Enterprise
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 1
 ---
 
