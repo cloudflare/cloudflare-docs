@@ -5,6 +5,7 @@ product:
   title: R2
   url: /r2/
   group: Developer platform
+  additional_groups: [Storage]
 
 meta:
   title: Cloudflare R2 docs

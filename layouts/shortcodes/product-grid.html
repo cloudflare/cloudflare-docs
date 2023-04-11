@@ -6,18 +6,28 @@
 {{- $productName :=  replace .Name ".yml" "" -}}
 {{- $productData := index $.Site.Data $productName -}}
 {{- with index $productData "product" -}}
+{{- $additional_groups := slice -}}
+{{- range .additional_groups -}}
+  {{- $additional_groups = $additional_groups | append . -}}
+{{- end -}}
+
 {{- $dataArray = $dataArray | append 
 (dict "group" .group "title" .title  "show" (default true .show) "url" 
-.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) ) -}}
+.url "wrap" (default false .wrap) "preview_tryout" (default false .preview_tryout) 
+"additional_groups" (default (slice) ($additional_groups))) -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
 
 {{- range $dataArray -}}
-{{- with .group -}}
+  {{- with .group -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
 
-{{ $availableOptions = $availableOptions | append . }}
-{{- end -}}
+  {{- range .additional_groups -}}
+  {{- $availableOptions = $availableOptions | append . -}}
+  {{- end -}}
+
 {{- end -}}
 
 {{- $availableOptions = $availableOptions | uniq | sort -}}
@@ -385,8 +395,8 @@ span a img {
           class="ProductGrid--link"
           data-wrap-title="{{ $wrap }}"
           href="{{ .url }}"
-          data-product-group="{{ .group }}"
-          data-preview-tryout="{{ .preview_tryout }}"
+          data-product-group="{{- delimit (union (slice .group) .additional_groups) "|" -}}"
+          data-preview-tryout="{{- .preview_tryout -}}"
         >
           <span>{{ .title }}</span>
         </a>
@@ -443,21 +453,11 @@ function filterList() {
   }
 
   for (let k = 0; k < listItems.length; k++) {
-    let groupMatch = true;
-    let previewMatch = true;
-    let searchMatch = true;
+    let groupTags = listItems[k].getAttribute('data-product-group').split("|").filter(x => x !== '');
+    let groupMatch = groupIdValues.length === 0 || groupTags.some(tag => groupIdValues.includes(tag));
 
-    if (groupIdValues.length > 0) {
-      groupMatch = (groupIdValues.indexOf(listItems[k].getAttribute('data-product-group')) >= 0);
-    } 
-
-    if (matchIdValues.length > 0) {
-      previewMatch = (matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0);
-    }
-
-    if (searchTerm !== '') {
-      searchMatch = (listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0);
-    }
+    let previewMatch = matchIdValues.length === 0 || matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0;
+    let searchMatch = searchTerm === '' || listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0;
     
     if (groupMatch && searchMatch && previewMatch) {
       listItems[k].style.display = '';
