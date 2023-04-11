@@ -16,7 +16,7 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 | Hostname | `*.nel.cloudflare.com`                                                                                                                                                                            | allow  | Allows L4 access to SNI domains for WARP registration. |
 | Hostname | `*.cloudflareclient.com`                                                                                                                                                                          | allow  | Allows L4 access for clients.                          |
 | Hostname | `*.cloudflare-gateway.com`                                                                                                                                                                        | allow  | Allows L4 access for the Gateway proxy with PAC files. |
-| Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows L4 access for Zero Trust applications.          |
+| Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows L4 access for Cloudflare Zero Trust services.   |
 | Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows L4 access for Cloudflare Access applications.   |
 
 ## Network proxy policies
