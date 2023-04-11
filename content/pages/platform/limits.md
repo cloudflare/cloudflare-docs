@@ -15,7 +15,7 @@ You can request adjustments to limits that conflict with your project goals by c
 
 ## Builds
 
-Each time you push new code to your Git repository, Pages will build and deploy your site. You can deploy up to 500 times per month on the Free plan. Refer to the Pro and Business plans in [Pricing](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently.
+Each time you push new code to your Git repository, Pages will build and deploy your site. You can build up to 500 times per month on the Free plan. Refer to the Pro and Business plans in [Pricing](https://pages.cloudflare.com/#pricing) if you need to deploy more frequently.
 
 Builds will timeout after 20 minutes.
 
