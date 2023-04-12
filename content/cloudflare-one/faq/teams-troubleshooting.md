@@ -129,7 +129,7 @@ Those three components are bundled into a single PEM file that is downloaded one
 
 The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
 
-## Firefox shows a network protocol violation when I use the WARP client
+## Firefox shows a network protocol violation when I use the WARP client.
 
 If you see this warning, you may have to disable DNS over HTTPs setting in Firefox. If you need help doing that, see [these instructions](https://support.mozilla.org/en-US/kb/firefox-dns-over-https#w_manually-enabling-and-disabling-dns-over-https).
 
@@ -163,3 +163,19 @@ If your [Cloudflare Tunnel logs](/cloudflare-one/faq/cloudflare-tunnels-faq/#run
 
 This error appears if you try to change your [team domain](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domain/team-name) while the [Cloudflare dashboard SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/) feature is enabled on your account.
 Cloudflare dashboard SSO does not currently support team domain changes. Contact your account team for more details.
+
+## WARP on Linux shows `DNS connectivity check failed` with reason `DNSLookupFailed`.
+
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. To solve the issue:
+
+1. Add the following line to `/etc/systemd/resolved.conf`:
+
+  ```txt
+  ResolveUnicastSingleLabel=yes
+  ```
+
+2. Restart the service:
+
+  ```sh
+  $ sudo systemctl restart systemd-resolved.service
+  ```
