@@ -14,7 +14,7 @@ Logpull is considered a legacy feature and we recommend using [Logpush](/logs/ab
 
 {{</Aside>}}
 
-Review the following content to learn more about Logpull. should use Logpush.
+Review the following content to learn more about Logpull.
 
 {{<directory-listing>}}
 
