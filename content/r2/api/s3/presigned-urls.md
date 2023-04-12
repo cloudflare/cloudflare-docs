@@ -46,6 +46,7 @@ Another potential use case for presigned URLs is debugging. For example, if you 
 R2 currently supports the following methods when generating a presigned URL:
 
 - `GET`: allows a user to fetch an object from a bucket
+- `HEAD`: allows a user to fetch an object's metadata from a bucket
 - `PUT`: allows a user to upload an object to a bucket
 - `DELETE`: allows a user to delete an object from a bucket
 
