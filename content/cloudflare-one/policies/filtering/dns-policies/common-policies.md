@@ -38,4 +38,6 @@ Force users to connect with IPv6.
 | ------ |
 | Block  |
 
+Additionally, you can pair these policies with an [egress policy](/cloudflare-one/policies/filtering/egress-policies/) to control which IP is used to egress to the origin.
+
 Refer to the [DNS policies page](/cloudflare-one/policies/filtering/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
