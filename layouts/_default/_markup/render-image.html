@@ -1,18 +1,12 @@
 {{- $img := resources.Get .Destination -}}
-
+{{- $destination := .Destination -}}
 {{- with $img -}}
-<script>
-    console.log({{$img.Width}})
-    console.log({{$img.Height}})
-</script>
+{{- if not (in $destination ".gif") -}}
 {{- if gt $img.Width 900 -}}
     {{- $img = $img.Resize ("900x q90") -}}
 {{- else -}}
     {{- $img = $img.Resize (printf "%dx%d q75" $img.Width $img.Height) -}}
-    <script>
-        console.log({{$img.Width}})
-        console.log({{$img.Height}})
-    </script>
+{{- end -}}
 {{- end -}}
 
 <figure class="image-caption">
