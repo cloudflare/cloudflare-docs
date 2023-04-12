@@ -29,7 +29,7 @@ When determining what size and timeout settings to configure, you will want to c
 
 ### Batch settings
 
-The following batch-level settings can be configured to adjust how Queues delivers batches to your configured consumer:
+The following batch-level settings can be configured to adjust how Queues delivers batches to your configured consumer.
 
 {{<table-wrap>}}
 
