@@ -375,8 +375,9 @@ span a img {
         <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
-        <input class="ProductCheckboxItem" type="checkbox" id="true" name="preview-available">
-        <label class="CheckboxLabel" for="true">True</label>
+        <!-- We should use value to store the 'true' value -->
+        <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available">
+        <label class="CheckboxLabel" for="preview-available">True</label>
       </div>
   </fieldset>
     </div>
@@ -422,15 +423,11 @@ span a img {
   }
 
   const previewMatch = urlParams.get('preview-available');
-  if (previewMatch) {
-    const previewMatchList = previewMatch;
-    console.log(previewMatchList)
-    const matchBoxes = document.querySelectorAll('input[name="preview-available"]');
-    matchBoxes.forEach((matchBox) => {
-      if (previewMatchList.includes(matchBox.id)) {
-        matchBox.checked = true;
-      }
-    });
+  // We don't really need to check the exact value - if the checkbox is unchecked, we won't have the param in the URL.
+  // However, we're using a specific value below, and things could break (better safe than sorry).
+  if (previewMatch === 'true') {
+    // obtaining a single element because we don't have several preview-related checkboxes
+    document.querySelector('input[name="preview-available"]').checked = true;
   }
 
   document.addEventListener('DOMContentLoaded', filterList);
@@ -448,8 +445,9 @@ span a img {
 
 function filterList() {
   let checkedGroups = document.querySelectorAll('input[name="product-group"]:checked');
-  let checkedPreview = document.querySelectorAll('input[name="preview-available"]:checked');
-  let numCheckboxes = checkedGroups.length + checkedPreview.length;
+  // obtain a single element, and count it as 1 checkbox if it exists
+  let checkedPreview = document.querySelector('input[name="preview-available"]:checked');
+  let numCheckboxes = checkedGroups.length + (checkedPreview ? 1 : 0);
   let searchBox = document.getElementById('search');
   
   // Get all checked checkboxes
@@ -473,16 +471,16 @@ function filterList() {
   for (let checkbox of checkedGroups) {
     groupIdValues.push(checkbox.id);
   }
-  let matchIdValues = [];
-  for (let checkbox of checkedPreview) {
-      matchIdValues.push(checkbox.id);
+  let previewValue = '';
+  if (checkedPreview) {
+    previewValue = 'true';
   }
 
   for (let k = 0; k < listItems.length; k++) {
     let groupTags = listItems[k].getAttribute('data-product-group').split("|").filter(x => x !== '');
     let groupMatch = groupIdValues.length === 0 || groupTags.some(tag => groupIdValues.includes(tag));
 
-    let previewMatch = matchIdValues.length === 0 || matchIdValues.indexOf(listItems[k].getAttribute('data-preview-tryout')) >= 0;
+    let previewMatch = previewValue === '' || previewValue === listItems[k].getAttribute('data-preview-tryout');
     let searchMatch = searchTerm === '' || listItems[k].textContent.toLowerCase().indexOf(searchTerm) >= 0;
     
     if (groupMatch && searchMatch && previewMatch) {
@@ -506,27 +504,22 @@ function filterList() {
     productGridContent.style.display = "grid";
   }
 
-  // Add parameters to URL
-  const urlParams = new URLSearchParams(window.location.search);
+  // Update URL parameters
+  const newUrl = new URL(window.location);
 
   if (groupIdValues.length > 0) {
-    let selectedGroups = groupIdValues.join(',');
-    urlParams.set('product-group', selectedGroups);
+    newUrl.searchParams.set('product-group', groupIdValues.join(','));
   } else {
-    urlParams.delete('product-group');
+    newUrl.searchParams.delete('product-group');
   }
 
-  if (matchIdValues.length > 0) {
-    let checkedPreview = matchIdValues.join('');
-    urlParams.set('preview-available', checkedPreview);
+  if (previewValue.length > 0) {
+    newUrl.searchParams.set('preview-available', previewValue);
   } else {
-    urlParams.delete('preview-available');
+    newUrl.searchParams.delete('preview-available');
   }
 
-  let urlParamsString = urlParams.toString();
-  let suffix = urlParamsString.length > 0 ? '?' : '';
-  const newUrl = window.location.pathname + suffix + urlParams.toString();
-  history.pushState({}, '', newUrl);
+  history.pushState({}, '', newUrl.toString());
 }
 
 function resetFilters() {
