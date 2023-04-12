@@ -60,7 +60,7 @@ ___
 
 ## Schritt 2: Aktivierung der **Web Application Firewall** (WAF)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Die WAF ist nur für Domains mit kostenpflichtigen Tarifen verfügbar.
 {{</Aside>}}
 
@@ -99,7 +99,7 @@ Firewall-Updates werden innerhalb von 2 Minuten wirksam.
 -   die Ressourcen, auf die bei dem Angriff zugegriffen wird, und
 -   allgemeine Merkmale des Angriffs (IP-Adressen, User-Agents, Länder oder ASNs usw.)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare bietet auch **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** an, um
 das Anfragevolumen an Ihren Server unter Kontrolle zu halten.  [**Rate

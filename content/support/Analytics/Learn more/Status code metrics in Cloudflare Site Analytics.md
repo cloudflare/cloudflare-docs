@@ -8,7 +8,7 @@ title: Status code metrics in Cloudflare Site Analytics
 
 ## Overview
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Status Codes analytics by data center is exclusive to the [enterprise
 level of service](https://www.cloudflare.com/plans/enterprise/contact/).
 {{</Aside>}}

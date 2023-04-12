@@ -86,7 +86,7 @@ To decide which country or IPs to block or challenge, check your log files. Cont
 -   the resources being accessed by the attack, and
 -   common characteristics of the attack (IP addresses, User Agents, countries, or ASNs, etc).
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare also offers **[Rate
 Limiting](https://support.cloudflare.com/hc/articles/235240767)** to
 help control the flow of requests to your server. [**Rate Limiting** is

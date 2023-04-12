@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/360037684251-Cloudflare-Site-Analytics-verstehen
-title: Cloudflare Site Analytics verstehen 
+title: Cloudflare Site Analytics verstehen
 ---
 
-# Cloudflare Site Analytics verstehen 
+# Cloudflare Site Analytics verstehen
 
 
 
@@ -31,9 +31,9 @@ Kunden mit den Tarifen Pro, Business und Enterprise sehen die neuesten Web Analy
 
 ![Screenshot der Benutzeroberfläche im Cloudflare Analytics-Dashboard für Pro-, Business- und Enterprise-Kunden.](/support/static/hc-dash-analytics-web_traffic.png)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Im Artikel [„Cloudflare Analytics: Ein kurzer
-Überblick"](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: Ein kurzer Überblick")
+Überblick"](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: Ein kurzer Überblick")
 erhalten Sie allgemeine Informationen über alle Analytics-Angebote von
 Cloudflare. Sie lernen auch die Eigenschaften der von Cloudflare
 erfassten und verarbeiteten Daten besser kennen.

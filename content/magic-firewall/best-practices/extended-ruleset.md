@@ -110,7 +110,7 @@ The following is an example of suggested rules, but you should only make changes
 ### Suggested rules
 
 **Rule ID**: 1 <br/>
-**Description**: Allows inbound HTTP/S traffic from the internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
+**Description**: Allows inbound HTTP/S traffic from the Internet with SYN-only or ACK-only flag (not SYN/ACKs) <br/>
 **Match**: `ip.proto eq "tcp" and tcp.srcport in {32768..60999} and ip.dst in $web_servers and tcp.dstport in {80, 443} and not (tcp.flags.syn and tcp.flags.ack)` <br/>
 **Action**: Allow <br/>
 

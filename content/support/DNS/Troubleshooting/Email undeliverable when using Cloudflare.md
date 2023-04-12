@@ -48,7 +48,7 @@ Follow these guidelines to ensure successful delivery of your mail traffic:
 -   Use separate IP addresses for mail traffic and HTTP/HTTPS traffic. Cloudflare recommends using non-contiguous IPs from different IP ranges.
 -   Since mail traffic cannot be proxied through Cloudflare by default, you will expose your origin web server’s IP address. Information on your origin IP address would allow attackers to bypass Cloudflare security features and attack your web server directly.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 When you set up mail records in Cloudflare, you may notice a new
 dc-\#\#\#\#\# subdomain record in your zone. Refer to [Why do I have a
 dc-\#\#\#\#\#\#\#\#\#

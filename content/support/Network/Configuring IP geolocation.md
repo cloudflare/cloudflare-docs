@@ -49,7 +49,7 @@ log_format cloudflare_custom '"$http_cf_ipcountry"';
 ```
 _More about_ [_NGINX log\_format_](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 The above configuration examples will **only** capture the CF-IPCountry
 information. Alternatively, server administrators often append the log
 variable cf-ipcountry to their existing log configuration with other

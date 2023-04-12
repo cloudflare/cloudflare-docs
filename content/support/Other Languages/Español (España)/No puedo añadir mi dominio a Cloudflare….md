@@ -13,7 +13,7 @@ title: No puedo añadir mi dominio a Cloudflare…
 
 Cloudflare no puede proporcionar una resolución de DNS autoritativo para un dominio cuando **DNSSEC** está habilitado en tu registrar de dominio. Puedes volver a habilitar **DNSSEC** después de que el dominio esté _Activo_ en Cloudflare, pero debes configurar **DNSSEC** mediante el uso de los [requisitos](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS) [DNSSEC](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS) de [Cloudflare.](https://support.cloudflare.com/hc/en-us/articles/360006660072-Understanding-and-Configuring-DNSSEC-in-Cloudflare-DNS)
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 **DNSSEC** solo debe estar deshabilitado para los dominios con
 configuración Completo, donde los servidores de nombres de Cloudflare
 serán autoritativos.
@@ -88,8 +88,7 @@ _Error con la solicitud de Cloudflare: \[1105\] Esta zona está prohibida de man
 
 Antes de ponerte en contacto con el equipo de asistencia de Cloudflare, espera tres horas antes de intentar añadir nuevamente el dominio a Cloudflare.
 
-###   
-Eliminación de una prohibición permanente
+### Eliminación de una prohibición permanente
 
 Presenta una solicitud ante el equipo de asistencia de Cloudflare si observas uno de los siguientes errores al añadir un dominio:
 

@@ -10,7 +10,7 @@ title: Understanding Query String Sort
 
 ## Overview
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Query String Sort is only available to Enterprise customers.
 {{</Aside>}}
 
