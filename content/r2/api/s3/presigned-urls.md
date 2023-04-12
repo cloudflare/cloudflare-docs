@@ -41,6 +41,16 @@ The central application can be, for example, a Cloudflare Worker. Worker secrets
 
 Another potential use case for presigned URLs is debugging. For example, if you are debugging your application and want to grant temporary access to a specific test object in a production environment, you can do this without needing to share the underlying token and remembering to revoke it.
 
+## Supported HTTP methods
+
+R2 currently supports the following methods when generating a presigned URL:
+
+- `GET`: allows a user to fetch an object from a bucket
+- `PUT`: allows a user to upload an object to a bucket
+- `DELETE`: allows a user to delete an object from a bucket
+
+`POST`, which performs uploads via native HTML forms, is not currently supported.
+
 ## Generate presigned URLs
 
 Generate a presigned URL by referring to the following examples:
