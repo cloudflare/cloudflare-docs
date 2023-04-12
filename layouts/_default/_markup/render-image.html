@@ -18,7 +18,8 @@
 
 {{- else -}}
 <p class="md__image">
-    <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }} title="{{ . }}"{{ end }} />
+    <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" loading="lazy"
+    {{ with .Title }} title="{{ . }}"{{ end }} />
 </p>
 {{- end -}}
 
