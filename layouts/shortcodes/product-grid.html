@@ -375,7 +375,6 @@ span a img {
         <span><a href="/fundamentals/account-and-billing/non-contract-products/" target="_blank"><img src="/icons/help.svg" alt="More details" title="More details"></a></span>
       </legend>
       <div>
-        <!-- We should use value to store the 'true' value -->
         <input class="ProductCheckboxItem" type="checkbox" id="preview-available" value="true" name="preview-available">
         <label class="CheckboxLabel" for="preview-available">True</label>
       </div>
@@ -426,7 +425,6 @@ span a img {
   // We don't really need to check the exact value - if the checkbox is unchecked, we won't have the param in the URL.
   // However, we're using a specific value below, and things could break (better safe than sorry).
   if (previewMatch === 'true') {
-    // obtaining a single element because we don't have several preview-related checkboxes
     document.querySelector('input[name="preview-available"]').checked = true;
   }
 
