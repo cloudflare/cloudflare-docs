@@ -18,13 +18,11 @@ For example, you might already have an active Cloudflare zone for `example.com`.
 
 When you enable a zone hold, no one else can [add your zone](/fundamentals/get-started/setup/add-site/) to their Cloudflare account. If they attempt to, they will receive the following message:
 
-```txt
-The zone name provided is subject to a hold which disallows the creation of this zone. Please contact the domain owner to have this hold removed.
-```
+_The zone name provided is subject to a hold which disallows the creation of this zone. Please contact the domain owner to have this hold removed._
 
 To enable a zone hold:
 
-1. Log into the [Cloduflare dashboard](https://dash.cloudflare.com).
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and zone.
 3. On the zone homepage, go to **Quick Actions**.
 4. For **Zone Hold**, switch the toggle to **On**.
@@ -37,7 +35,7 @@ You may want to temporarily release a zone hold to allow another team to [regist
 
 To release a zone hold:
 
-1. Log into the [Cloduflare dashboard](https://dash.cloudflare.com).
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Select your account and zone.
 3. On the zone homepage, go to **Quick Actions**.
 4. For **Zone Hold**, switch the toggle to **Off**.
