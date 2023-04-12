@@ -422,9 +422,7 @@ span a img {
   }
 
   const previewMatch = urlParams.get('preview-available');
-  // We don't really need to check the exact value - if the checkbox is unchecked, we won't have the param in the URL.
-  // However, we're using a specific value below, and things could break (better safe than sorry).
-  if (previewMatch === 'true') {
+  if (previewMatch) {
     document.querySelector('input[name="preview-available"]').checked = true;
   }
 
