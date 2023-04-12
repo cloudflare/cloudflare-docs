@@ -46,8 +46,6 @@ The Playground is a sandbox which gives you an instant way to preview and test a
 
 {{</feature>}}
 
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
-
 ---
 
 ## Related products
