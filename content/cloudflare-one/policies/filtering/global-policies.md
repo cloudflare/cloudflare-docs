@@ -11,19 +11,19 @@ Cloudflare Zero Trust applies a set of global policies to all accounts.
 
 ## DNS policies
 
-| Criteria | Value                                                                                                                                                                                             | Action | Description                                            |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------ |
-| Hostname | `*.nel.cloudflare.com`                                                                                                                                                                            | allow  | Allows L4 access to SNI domains for WARP registration. |
-| Hostname | `*.cloudflareclient.com`                                                                                                                                                                          | allow  | Allows L4 access for clients.                          |
-| Hostname | `*.cloudflare-gateway.com`                                                                                                                                                                        | allow  | Allows L4 access for the Gateway proxy with PAC files. |
-| Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows L4 access for Cloudflare Zero Trust services.   |
-| Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows L4 access for Cloudflare Access applications.   |
+| Criteria | Value                                                                                                                                                                                             | Action | Description                               |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------------------------- |
+| Hostname | `*.nel.cloudflare.com`                                                                                                                                                                            | allow  | Allows SNI domains for WARP registration. |
+| Hostname | `*.cloudflareclient.com`                                                                                                                                                                          | allow  | Allows Zero Trust client.                 |
+| Hostname | `*.cloudflare-gateway.com`                                                                                                                                                                        | allow  | Allows Gateway proxy with PAC files.      |
+| Hostname | `dash.teams.cloudflare.com`, `help.teams.cloudflare.com`, `blocked.teams.cloudflare.com`, `api.cloudflare.com`, `cloudflarestatus.com`, `www.cloudflarestatus.com`, and `one.dash.cloudflare.com` | allow  | Allows Cloudflare Zero Trust services.    |
+| Hostname | `*.cloudflareaccess.com`                                                                                                                                                                          | allow  | Allows Cloudflare Access applications.    |
 
 ## Network proxy policies
 
 | Criteria         | Value                       | Action | Description                                                                                                                                    |
 | ---------------- | --------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Hostname         | `*.cloudflareaccess.com`    | allow  | Allows L7 security for Cloudflare Access applications.                                                                                         |
+| Hostname         | `*.cloudflareaccess.com`    | allow  | Allows Cloudflare Access applications.                                                                                                         |
 | Hostname         | `help.teams.cloudflare.com` | allow  | Used by the WARP client to check if Gateway is on by inspecting the certificate and checking if it is properly installed on the client device. |
 | Content Category | Child Abuse                 | block  | Blocks child abuse materials.                                                                                                                  |
 
