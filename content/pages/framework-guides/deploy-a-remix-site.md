@@ -18,9 +18,13 @@ $ npx create-remix@latest
 
 ```
 
-After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses Cloudflare Pages.
+After running the above command, you will be prompted to name your project in your terminal and select your deploy method. This guide uses the _Cloudflare Pages_ deployment option.
 
-By selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your folder will have a `functions/[[path]].ts` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+By selecting _Cloudflare Pages_ as your deployment option in the terminal drop-down menu, your Remix Project will generate a `functions/[[path]].js` file. The `[[path]]` filename indicates that this file will handle requests to all incoming URLs; refer to [Path segments](/pages/platform/functions/routing/#dynamic-routes) to learn more.
+
+{{<Aside type="note" header="Note">}}
+The `functions/[[path]].js` file will not be generated until you interact with Remix the first time, via `remix dev` or `remix build`, and thus will not function as expected if you attempt to deploy your site before running one of these commands.
+{{</Aside>}}
 
 After selecting your deployment option, change the directory to your project and render your project by running the following command:
 
