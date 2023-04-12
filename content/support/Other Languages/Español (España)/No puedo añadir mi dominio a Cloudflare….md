@@ -88,8 +88,7 @@ _Error con la solicitud de Cloudflare: \[1105\] Esta zona está prohibida de man
 
 Antes de ponerte en contacto con el equipo de asistencia de Cloudflare, espera tres horas antes de intentar añadir nuevamente el dominio a Cloudflare.
 
-###
-Eliminación de una prohibición permanente
+### Eliminación de una prohibición permanente
 
 Presenta una solicitud ante el equipo de asistencia de Cloudflare si observas uno de los siguientes errores al añadir un dominio:
 
