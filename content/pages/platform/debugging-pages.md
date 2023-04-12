@@ -21,7 +21,7 @@ Possible errors in your build log are included in the following sections.
 
 ### Initializing build environment
 
-Possible errors in this step could be caused by improper installation during git integration.
+Possible errors in this step could be caused by improper installation during Git integration.
 
 To fix this in GitHub:
 1. Log in to your Github account.
@@ -82,15 +82,15 @@ If you are experiencing issues with new content not being shown, go to **Rules**
 
 If you are experiencing errors on your custom domain but not on your `pages.dev` domain, go to **DNS** > **Records** in the Cloudflare dashboard and set the DNS record for your project to be **DNS Only** (grey cloud). If the error persists, review your zone's configuration.
 
-## Domain stuck Verifying
+## Domain stuck in verification
 
-If your [Custom Domain](/pages/platform/custom-domains/) is stuck saying "Verifying" in the Cloudflare dashboard then there are a few debugging steps which can be done to find the issue.
+If your [custom domain](/pages/platform/custom-domains/) has not moved from the **Verifying** stage in the Cloudflare dashboard, refer to the following debugging steps.
 
-### Things blocking HTTP validation
+### Blocked HTTP validation
 
-Pages uses HTTP validation which means we need to hit a HTTP endpoint, if something is in the way (such as Access, a redirect, a Worker, etc.) then it means the validation cannot be completed.
+Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/policies/access/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
 
-To check this, simply run a curl against your domain hitting `/.well-known/acme-challenge/randomstring`, example:
+To check this, run a `curl` against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 ```sh
 $ curl -I https://example.com/.well-known/acme-challenge/randomstring
 
@@ -103,15 +103,15 @@ server: cloudflare
 cf-ray: 7b1ffdaa8ad60693-MAN
 ```
 
-As we can see in the example above, we're redirecting to Cloudflare Access (as shown by the `Location` header). In this case, we will need to disable Access over the domain until it's verified. Once it's verified, Access can be re-applied above.
+In the example above, you are redirecting to Cloudflare Access (as shown by the `Location` header). In this case, you need to disable Access over the domain until it the domain is verified. After it the domain is verified, Access can be reenabled.
 
 You will need to do the same kind of thing for Redirect Rules or a Worker example too.
 
 ### Missing CAA records
 
-If nothing is blocking the HTTP validation, then you may be missing CAA records. If you have disabled [Universal SSL](/ssl/edge-certificates/universal-ssl/) or use an external provider then this is likely.
+If nothing is blocking the HTTP validation, then you may be missing Certification Authority Authorization (CAA) records. This is likely if you have disabled [Universal SSL](/ssl/edge-certificates/universal-ssl/) or use an external provider.
 
-To check, we can do a `dig` on the custom domain's apex (or zone if this is a liberated zone). For example:
+To check this, run a `dig` on the custom domain's apex (or zone, if this is a liberated zone). For example:
 
 ```
 $ dig example.com
@@ -138,9 +138,9 @@ example.com.	300	IN	CAA	0 issue "amazon.com"
 ;; MSG SIZE  rcvd: 76
 ```
 
-As we can see in this example, there's only a single CAA record which is allowing Amazon to issue ceritficates.
+In the above example, there is only a single CAA record which is allowing Amazon to issue ceritficates.
 
-To resolve this, you will need to add the following CAA records which allows all of the CAs we use to issue ceritificates:
+To resolve this, you will need to add the following CAA records which allows all of the Certificate Authorities (CAs) Cloudflare uses to issue ceritificates:
 ```
 example.com.            300     IN      CAA     0 issue "comodoca.com"
 example.com.            300     IN      CAA     0 issue "digicert.com; cansignhttpexchanges=yes"
