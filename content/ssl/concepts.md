@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Concepts
+weight: 2
 meta: 
     title: SSL concepts 
 ---
