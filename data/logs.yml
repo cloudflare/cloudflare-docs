@@ -5,6 +5,7 @@ product:
   title: Logs
   url: /logs/
   group: Cloudflare essentials
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Logs docs

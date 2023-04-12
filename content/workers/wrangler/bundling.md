@@ -19,7 +19,7 @@ Bundling your Worker code takes multiple modules and bundles them into one. Some
 - `.txt`
 - `.html`
 - `.bin`
-- `.wasm`
+- `.wasm` and `.wasm?module`
 
 Refer to [Bundling configuration](/workers/wrangler/configuration/#bundling) to customize these file types.
 

@@ -31,7 +31,7 @@ Customers will be notified via email and dashboard prior to a new Machine Learni
 
 ### Risks of not updating
 
-By not updating to the latest version, you will be using a Machine Learning model no longer maintained or monitored by our engineering team. As internet traffic changes and new trends evolve, scoring accuracy by older versions may degrade.
+By not updating to the latest version, you will be using a Machine Learning model no longer maintained or monitored by our engineering team. As Internet traffic changes and new trends evolve, scoring accuracy by older versions may degrade.
 
 ### Model versions and release notes
 

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Identity-based policies
-weight: 6
+weight: 9
 ---
 
 # Identity-based policies

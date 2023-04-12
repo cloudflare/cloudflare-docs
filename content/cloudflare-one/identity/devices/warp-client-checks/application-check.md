@@ -22,7 +22,6 @@ The Application Check device posture attribute checks that a specific applicatio
     1. **Name**: Enter a unique name for this device posture check.
     2. **Operating system**: Select your operating system.
     3. **Application path**: Enter the file path for the executable that will be running (for example, `c:\my folder\myfile.exe`).
-
     {{<Aside type="note">}}
 
 - Be sure to enter the binary file path, not the application launch path. When checking for an application on macOS, a common mistake is to enter `/Applications/ApplicationName.app`. This will not work as `ApplicationName.app` is a folder. The executable file that will be running is located within the folder, for example `ApplicationName.app/Contents/MacOS/ApplicationName`.
@@ -30,7 +29,6 @@ The Application Check device posture attribute checks that a specific applicatio
 
 {{</Aside>}}
     4. **Signing certificate thumbprint (recommended)**: Enter the [thumbprint of the publishing certificate](#determine-the-signing-thumbprint) used to sign the binary. Adding this information will enable the check to ensure that the application was signed by the expected software developer.
-
     5. **SHA-256 (optional)**: Enter the [SHA-256 value](#determine-the-sha-256-value) of the binary. This is used to ensure the integrity of the binary file on the device.
 
 5. Select **Save**.
