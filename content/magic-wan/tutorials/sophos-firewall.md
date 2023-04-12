@@ -21,7 +21,7 @@ You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels](/
 
 The following instructions show how to setup an IPsec connection on your Sophos Firewall device. Settings not explicitly mentioned can be left with their default values.
 
-### 1. Add an IPsec Profile
+### 1. Add an IPsec profile
 
 1. Go to **System** > **Profiles**.
 2. In **IPsec profiles**, select **Add**.
