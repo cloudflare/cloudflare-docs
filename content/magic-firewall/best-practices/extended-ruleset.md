@@ -74,7 +74,7 @@ Follow the best practices for internal routers or firewall interface IP addresse
 
 1.  Create [an IP List](/fundamentals/global-configurations/lists/ip-lists/), **Internal routers** for example, list your IP addresses.
 2.  Block ICMP if it is not needed.
-3.  Permit GRE/ESP as needed if the devices have GRE/IPSEC tunnels via the Internet.
+3.  Permit GRE/ESP as needed if the devices have GRE/IPsec tunnels via the Internet.
 
 ### Suggested rules
 
