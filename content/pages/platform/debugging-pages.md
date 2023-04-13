@@ -152,9 +152,11 @@ example.com.            300     IN      CAA     0 issuewild "letsencrypt.org"
 example.com.            300     IN      CAA     0 issuewild "pki.goog; cansignhttpexchanges=yes"
 ```
 
-### Still having trouble?
+{{<Aside type="warning" header="Still having issues">}}
 
-If you've done the steps above and your domain is still stuck pending after 15 minutes, please contact support through the [Support Portal](https://dash.cloudflare.com/?to=/:account/support).
+If you have done the steps above and your domain is still verifying after 15 minutes, join our [Discord](https://discord.cloudflare.com) for support or contact our support team through the [Support Portal](https://dash.cloudflare.com/?to=/:account/support).
+
+{{</Aside>}}
 
 ## Resources
 
