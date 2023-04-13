@@ -10,7 +10,7 @@ Cloudflare Logpull is a REST API for consuming request logs over HTTP. These log
 
 {{<Aside type="warning">}}
 
-Logpull is considered a legacy feature and we recommend using [Logpush](/logs/about/) instead for better performance and functionality.
+Logpull is considered a legacy feature and we recommend using [Logpush](/logs/about/) or [Logs Engine](/logs/r2-log-retrieval/) instead for better performance and functionality.
 
 {{</Aside>}}
 
