@@ -125,11 +125,13 @@ import { learning_paths as paths } from "./json-collector";
     if (bodyLinks) {
       for (const item of bodyLinks) {
         const currentHref = item.getAttribute("href");
+        if (currentHref.includes('/learning-paths/modules/')) {
         item.setAttribute(
           "href",
           currentHref + "?learning_path=" + currentLearningPath
         );
       }
+    }
     }
   }
 })();
