@@ -1,6 +1,8 @@
 {{- $img := resources.Get .Destination -}}
+<!-- This value will only be computed if the image lives in the top-level /assets folder -->
 {{- $destination := .Destination -}}
 {{- with $img -}}
+<!-- .gifs can't be resized the same way -->
 {{- if not (in $destination ".gif") -}}
 {{- if gt $img.Width 900 -}}
     {{- $img = $img.Resize ("900x q90") -}}
@@ -17,6 +19,7 @@
 </figure>
 
 {{- else -}}
+<!-- If the image lives w/in a product folder, only apply lazy loading -->
 <p class="md__image">
     <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" loading="lazy"
     {{ with .Title }} title="{{ . }}"{{ end }} />
