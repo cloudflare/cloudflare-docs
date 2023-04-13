@@ -17,12 +17,6 @@ To enable Auto-updates:
 3. Select **Configure Bot Management**.
 4. Enable **Auto-updates to the Machine Learning Model**.
 
-{{<Aside type="note" header="Note">}}
-
-If you enable Auto-updates for the Machine Learning model, you will be upgraded to the latest version immediately. You can toggle the button off within 24 hours to revert to the previous version. After 24 hours, you will remain on the current Machine Learning model version and will need to contact support for any changes.
-
-{{</Aside>}}
-
 ### What will change
 
 If you are on an older Machine Learning model, you will see a score change to requests scored by the **Machine Learning** source instantly. If you are already on the latest model, you will see changes only after a new Machine Learning model becomes the global default. 
