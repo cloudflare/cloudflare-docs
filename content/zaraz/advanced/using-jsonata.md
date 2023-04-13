@@ -16,7 +16,7 @@ To use JSONata inside Zaraz, follow these steps:
 2. Go to **Zaraz** > **Tools configuration** > **Tools**.
 3. Select **Edit** next to a tool that you have already configured.
 3. Select an action or add a new one.
-4. Choose the field you want to use JSONata in, and wrap your JSONata expression with double curly brackets, like `{{ expression }}`.
+5. Choose the field you want to use JSONata in, and wrap your JSONata expression with double curly brackets, like `{{ expression }}`.
 
 JSONata can also be used inside Triggers, Tool Settings, and String Variables.
 
