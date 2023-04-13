@@ -239,7 +239,7 @@ async function task(file: string) {
 
       if (target && target.includes("/support/other-languages")) {
         return;
-      } else if (target && target.startsWith("/api/")) {
+      } else if (target && (target.startsWith("/api/") || target === "/api")) {
         return;
       }
 
