@@ -10,7 +10,7 @@ For advanced use cases, it is sometimes useful to be able to retrieve a value in
 
 Cloudflare Zaraz uses JSONata to enable you to perform complex operations on your data. With JSONata, you can evaluate expressions against the [Zaraz Context](/zaraz/reference/context/), allowing you to access and manipulate a wide range of values. To learn more about the values available and how to access them, consult the [full reference](/zaraz/reference/context/). You can also refer to the [complete JSONata documentation](https://docs.jsonata.org/) for more information about JSONata's capabilities.
 
-To use JSONata inside Zaraz, follow these easy steps:
+To use JSONata inside Zaraz, follow these steps:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Zaraz** > **Tools configuration** > **Tools**.
