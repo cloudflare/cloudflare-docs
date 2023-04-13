@@ -115,9 +115,9 @@ The `AllowedOrigins` specify the web server being used, and `localhost:3000` is 
 ]
 ```
 
-In general, a good strategy for making sure you've set the correct CORS rules is to look at the network request that is being blocked by your browser.
+In general, a good strategy for making sure you have set the correct CORS rules is to look at the network request that is being blocked by your browser.
 
-- Make sure the rule's `AllowedOrigins` includes the origin where the request is being made from. (like `localhost:3000` or `yourdomain.com`)
+- Make sure the rule's `AllowedOrigins` includes the origin where the request is being made from. (like `http://localhost:3000` or `https://yourdomain.com`)
 - Make sure the rule's `AllowedMethods` includes the blocked request's method.
 - Make sure the rule's `AllowedHeaders` includes the blocked request's headers.
 
