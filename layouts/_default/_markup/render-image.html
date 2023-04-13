@@ -1,14 +1,9 @@
 {{- $img := resources.Get .Destination -}}
 <!-- This value will only be computed if the image lives in the top-level /assets folder -->
-{{- $destination := .Destination -}}
 {{- with $img -}}
 <!-- .gifs can't be resized the same way -->
-{{- if not (in $destination ".gif") -}}
-{{- if gt $img.Width 900 -}}
-    {{- $img = $img.Resize ("900x q90") -}}
-{{- else -}}
+{{- if not (in $.Destination ".gif") -}}
     {{- $img = $img.Resize (printf "%dx%d q75" $img.Width $img.Height) -}}
-{{- end -}}
 {{- end -}}
 
 <figure class="image-caption">
