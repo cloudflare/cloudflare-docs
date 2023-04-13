@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Allow a specific email address.
+summary: Override one hostname with another.
 tags:
   - Network policy
 title: Network policy

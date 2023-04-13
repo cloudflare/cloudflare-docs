@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Allow a specific email address.
+summary: Block users in a group from accessing a site.
 tags:
   - DNS policy
 title: DNS policy

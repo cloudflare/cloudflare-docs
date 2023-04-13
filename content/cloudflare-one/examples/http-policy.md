@@ -1,6 +1,6 @@
 ---
 type: example
-summary: Allow a specific email address.
+summary: Block specific users from accessing a site.
 tags:
   - HTTP policy
 title: HTTP policy
@@ -11,7 +11,7 @@ pcx_content_type: configuration
 
 ```json
 {
-  "name": "Block reddit.com",
+  "name": "Block example.com",
   "conditions": [
     {
       "type": "traffic",
@@ -21,7 +21,7 @@ pcx_content_type: configuration
             "lhs": {
               "splat": "http.request.domains"
             },
-            "rhs": "reddit.com"
+            "rhs": "example.com"
           }
         }
       }
@@ -31,7 +31,7 @@ pcx_content_type: configuration
       "expression": {
         "in": {
           "lhs": "identity.email",
-          "rhs": ["john@example.com", "mary@example.com"]
+          "rhs": ["user@example1.com"]
         }
       }
     }
@@ -39,7 +39,7 @@ pcx_content_type: configuration
   "action": "block",
   "precedence": 50000,
   "enabled": true,
-  "description": "Block users john@example.com and mary@example.com from accessing reddit.com",
+  "description": "Block user@example1.com from accessing example.com",
   "rule_settings": {
     "block_page_enabled": false,
     "block_reason": "This website is blocked",
