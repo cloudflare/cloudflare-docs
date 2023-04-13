@@ -36,7 +36,7 @@ Different [certificate authorities (CAs)](#certificate-authority) support differ
 
 A [certificate authority (CA)](/ssl/reference/certificate-authorities/) is a trusted third party that generates and gives out SSL certificates. The CA digitally signs the certificates with their own private key, allowing client devices - such as your visitor's browser - to verify that the certificate is trustworthy.
 
-This means that, besides not being expired, an SSL certificate should be issued by a certificate authority (CA) in order to avoid warnings or errors.
+As explained in the article about [what is an ssl certificate](https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/), this means that, besides not being expired, an SSL certificate should be issued by a certificate authority (CA) in order to avoid warnings or errors.
 
 ## Validation level
 
@@ -48,12 +48,12 @@ Certificates issued through Cloudflare - [Universal](/ssl/edge-certificates/univ
 
 When visitors request content from your website or application, Cloudflare first attempts to [serve content from the cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). If this attempt fails, Cloudflare sends a request back to your origin web server to get the content. This request between Cloudflare and your origin web server is called origin pull.
 
-This relates to the difference between [edge certificates](#edge-certificate) and [origin certificates](#origin-certificate), and also explains why some options such as [cipher suites](#cipher-suites) can be configured differently depending on whether they refer to the connection between Cloudflare and your visitor's browser or between Cloudflare and your origin server.
+This relates to the difference between [edge certificates](#edge-certificate) and [origin certificates](#origin-certificate), and also explains why some options such as supported [cipher suites](#cipher-suites) can be configured differently depending on whether they refer to the connection between Cloudflare and your visitor's browser or between Cloudflare and your origin server.
 
 ## Cipher suites
 
+Besides the authentication and integrity aspects that valid certificates guarantee, the other important aspect of SSL/TLS certificates is encryption. Cipher suites determine the set of algorithms that can be used for encryption/decryption and that will be negotiated during an [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
-
-## Backup certificate
+For the purpose of this documentation, keep in mind that [cipher suites supported at Cloudflare's network](/ssl/reference/cipher-suites/supported-cipher-suites/) may not be the same as [cipher suites presented by Cloudflare to your origin server](http://localhost:5173/ssl/origin-configuration/cipher-suites/).
 
 ## Trust store
