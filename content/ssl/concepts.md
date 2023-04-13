@@ -16,15 +16,15 @@ This page defines and articulates key concepts that are relevant to Cloudflare S
 
 ## Edge certificate
 
-Keeping in mind that [Cloudflare's global network](https://www.cloudflare.com/network/) is at the core of several products and services that Cloudflare offers, what this implies in terms of SSL is that, "in every request", there are"can be" actually two SSL certificates involved: an edge certificate and an origin certificate.
+Since [Cloudflare's global network](https://www.cloudflare.com/network/) is at the core of several products and services that Cloudflare offers, what this implies in terms of SSL is that, instead of only one certificate, there can actually be two certificates involved in a request that goes through Cloudflare: an edge certificate and an origin certificate.
 
 The [edge certificates](/ssl/edge-certificates/) are the ones that Cloudflare presents to your visitors and that you manage through the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
 ## Origin certificate
 
-[Origin certificates](/ssl/origin-configuration) are complementary to edge certificates in the sense that they guarantee the security and authentication "on the other side of the network", between Cloudflare and the origin server of your website or application.
+[Origin certificates](/ssl/origin-configuration) are complementary to edge certificates in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application.
 
-[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control how Cloudflare will work with both these ceritifcates and you can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
+[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control how Cloudflare will work with both these ceritifcates. You can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
 
 ## Validity period
 
@@ -40,13 +40,19 @@ This means that, besides not being expired, an SSL certificate should be issued 
 
 ## Validation level
 
-SSL certificates also vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
+SSL certificates vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
 
-Whereas certificates issued by Cloudflare - [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) - are Domain Validated (DV) certificates, you can [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) if your organization needs OV or EV.
+Certificates issued through Cloudflare - [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates - are Domain Validated (DV). You can [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) if your organization needs OV or EV certificates.
 
 ## Origin pull
 
+When visitors request content from your website or application, Cloudflare first attempts to [serve content from the cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). If this attempt fails, Cloudflare sends a request back to your origin web server to get the content. This request between Cloudflare and your origin web server is called origin pull.
+
+This relates to the difference between [edge certificates](#edge-certificate) and [origin certificates](#origin-certificate), and also explains why some options such as [cipher suites](#cipher-suites) can be configured differently depending on whether they refer to the connection between Cloudflare and your visitor's browser or between Cloudflare and your origin server.
+
 ## Cipher suites
+
+
 
 ## Backup certificate
 
