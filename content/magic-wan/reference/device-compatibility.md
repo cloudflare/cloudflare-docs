@@ -25,7 +25,7 @@ Velocloud                                                     | Compatibility on
 Versa                                                         | Specifications compatible* | Compatibility on roadmap
 [VyOS](/magic-wan/tutorials/vyos)                             | –                          | ✅
 
-VPN               | GRE tunnel                  |  IPsec tunnel 
+VPN               | GRE tunnel                  | IPsec tunnel 
 ------------------|-----------------------------|---------------
 AWS VPN           | Compatibility on roadmap    | Incompatible natively.</br> **Workaround:** Set up VM as an IPsec tunnel endpoint with replay protection** disabled.
 Azure VPN Gateway | Compatibility on roadmap    | Specifications compatible*.
