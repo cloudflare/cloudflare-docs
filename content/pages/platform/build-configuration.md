@@ -128,7 +128,7 @@ Many common tools have been pre-installed as well. The environment variable avai
 | Pipenv      | Latest version                            |                                   |                      |
 | sqlite3     | Version 3.11.0                            |                                   |                      |
 | Yarn        | Version 1.22.4                            | Any version from 0.2.0 to 1.22.19 | `YARN_VERSION`       |
-| Zola        | (requires environment variable)           | Any version from 0.5.0 upwards    | `ZOLA_VERSION`       |
+| Zola        | (requires environment variable)           | Any version from 0.5.0 and up     | `ZOLA_VERSION`       |
 
 If you want to set a specific version of a framework your Cloudflare Pages project is using, note that Pages will respect your package manager of choice during your build process. For example, if you use Gatsby.js, your `package.json` should indicate a version of the `gatsby` npm package, which will be installed using `npm install` as your project builds on Cloudflare Pages.
 
