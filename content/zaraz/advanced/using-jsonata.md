@@ -6,7 +6,7 @@ weight: 10
 
 # Using JSONata
 
-For advanced use cases, it is sometimes useful to be able to retrieve a value in a particular way. For instance, you might be using zaraz.track to send a list of products to Zaraz, but the third-party tool you want to send this data to requires the total cost of the products. Alternatively, you may want to manipulate a value, such as converting it to lowercase.
+For advanced use cases, it is sometimes useful to be able to retrieve a value in a particular way. For instance, you might be using `zaraz.track` to send a list of products to Zaraz, but the third-party tool you want to send this data to requires the total cost of the products. Alternatively, you may want to manipulate a value, such as converting it to lowercase.
 
 Cloudflare Zaraz uses JSONata to enable you to perform complex operations on your data. With JSONata, you can evaluate expressions against the [Zaraz Context](/zaraz/reference/context/), allowing you to access and manipulate a wide range of values. To learn more about the values available and how to access them, consult the [full reference](/zaraz/reference/context/). You can also refer to the [complete JSONata documentation](https://docs.jsonata.org/) for more information about JSONata's capabilities.
 
