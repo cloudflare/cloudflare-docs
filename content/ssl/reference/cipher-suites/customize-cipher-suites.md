@@ -15,7 +15,13 @@ With [**Advanced Certificate Manager**](/ssl/edge-certificates/advanced-certific
 
 ## Cipher suite values
 
+### TLS 1.2 or lower
+
 To specify certain cipher suites, include an array of applicable cipher suites used for TLS 1.2 or lower in the `value` field. Cloudflare offers a list of [recommended ciphers by security requirements](/ssl/reference/cipher-suites/recommendations/), but you can also refer to the [full list](/ssl/reference/cipher-suites/supported-cipher-suites/) of supported ciphers.
+
+### TLS 1.3
+
+{{<render file="_tls-1.3-cipher-limitations.md">}}
 
 ## Reset to default values
 
