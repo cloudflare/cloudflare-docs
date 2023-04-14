@@ -111,7 +111,7 @@ You will need to do the same kind of thing for Redirect Rules or a Worker exampl
 
 If nothing is blocking the HTTP validation, then you may be missing Certification Authority Authorization (CAA) records. This is likely if you have disabled [Universal SSL](/ssl/edge-certificates/universal-ssl/) or use an external provider.
 
-To check this, run a `dig` on the custom domain's apex (or zone, if this is a liberated zone). For example:
+To check this, run a `dig` on the custom domain's apex (or zone, if this is a [subdomain zone](/dns/zone-setups/subdomain-setup/)). For example:
 
 ```sh
 $ dig CAA example.com
