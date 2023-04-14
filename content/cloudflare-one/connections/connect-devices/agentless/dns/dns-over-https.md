@@ -99,6 +99,17 @@ As of today, Safari does not support DNS over HTTPS.
 
 Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/policies/filtering/dns-policies/#dns-location) selector.
 
+### Configure operating system for DoH
+
+<details>
+<summary>Windows Server 2022</summary>
+<div>
+
+To enable DoH in Windows Server 2022, refer to [Microsoft's guide](https://learn.microsoft.com/en-us/windows-server/networking/dns/doh-client-support).
+
+</div>
+</details>
+
 ## Filter DoH requests by user
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.
@@ -153,7 +164,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/access/o
      -H "Content-Type: application/json" \
 ```
 
-If you get an `access.api.error.service_token_not_found` error,  check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
+If you get an `access.api.error.service_token_not_found` error, check that `<SERVICE_TOKEN_ID>` is the value of `id` and not `client_id`.
 
 <details>
 <summary>Example response</summary>
@@ -307,4 +318,3 @@ If the site is blocked and you have enabled [**Display block page**](/cloudflare
 </details>
 
 You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/analytics/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/policies/filtering/identity-selectors/).
-
