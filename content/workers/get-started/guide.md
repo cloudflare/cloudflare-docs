@@ -47,7 +47,7 @@ $ cd my-project
 In your project directory, `wrangler init` has generated the following files:
 
 1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
-2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax. Only generated if you indicate `y` to the question `Would you like to use git to manage this Worker? (y/n)` and `y` to the question `No package.json found. Would you like to create one? (y/n)`.
+2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax. This is the file where you will write your Worker's code. An `index.ts` file will be generated instead if you indicated `y` to the `Would you like to use TypeScript? (y/n)` question.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command. Only generated if indicated in `wrangler init` command.
 4. [`package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json): A file that locks any associated dependencies to a specific version and that prevents accidental dependency version updating. Only generated if indicated in `wrangler init` command.
 5. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://www.npmjs.com/package/@cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
