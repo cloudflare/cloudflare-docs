@@ -18,17 +18,22 @@ Routes are comprised of:
 Requests are routed through a Worker when the URL matches a route pattern assigned to that Worker. To add a route on a custom domain, you must have:
 
 1. An active Cloudflare zone.
-2. A valid proxied (orange-clouded) DNS record.
+2. A valid proxied (orange-clouded) DNS record. 
+
+{{<Aside type="note">}}
+If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
+{{</Aside>}}
+
 3. A Worker to invoke.
 4. A certificate covering the relevant DNS record.
 
-Route patterns can be added with the Cloudflare API or in **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add route** in the Cloudflare dashboard.
+Route patterns can be added with the Cloudflare dashboard or the Cloudflare API. To add a route using the API, refer to the [Create Route API for more information](https://developers.cloudflare.com/api/operations/worker-routes-create-route).
 
-The Routes REST API documentation can be found [in the Workers API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes).
+To add a route through the Cloudflare dashboard:
 
-If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
-
-* _A zone that you have registered with some registrar (not workers.dev) and setup Cloudflare to serve as [a reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)._
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. In **Account Home** > select **Workers**.
+3. Select your Worker > **Triggers** > **Add route**.
 
 ## Routes with `*.workers.dev`
 
@@ -98,7 +103,7 @@ If your zone is `example.com`, then the simplest possible route pattern you can 
 
 For example, `https://example.com/?anything` is not a valid route pattern.
 
-#### Route patterns may optionally begin with http:// or https://
+#### Route patterns may optionally begin with `http://` or `https://`
 
 If you omit a scheme in your route pattern, it will match both `http://` and `https://` URLs. If you include `http://` or `https://`, it will only match HTTP or HTTPS requests, respectively.
 
@@ -128,10 +133,10 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 #### Subdomains must have a DNS Record
 
-All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 {{<Aside type="warning">}}
 
-If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [Custom Domain](/workers/platform/triggers/custom-domains/) pointing to your Worker instead.
+If you have previously used the Cloudflare dashboard to add an `AAAA` record for `myname` to `example.com`, pointing to `100::` (the [reserved IPv6 discard prefix](https://tools.ietf.org/html/rfc6666)), Cloudflare recommends creating a [custom domain](/workers/platform/triggers/custom-domains/) pointing to your Worker instead.
 
 {{</Aside>}}
