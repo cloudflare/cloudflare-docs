@@ -30,13 +30,13 @@ Terraform v0.11.6
 
 ## Linux
 
-The `terraform` binary can be installed via your distribution's package manager, eg:
+You can install the `terraform` binary via your distribution's package manager. For example:
 
 ```sh
 $ sudo apt install terraform
 ```
 
-You can also fetch a specific version directly and place the binary in your `PATH`:
+Alternatively, you can fetch a specific version directly and place the binary in your `PATH`:
 
 ```sh
 $ wget -q https://releases.hashicorp.com/terraform/1.4.5/terraform_1.4.5_linux_amd64.zip
