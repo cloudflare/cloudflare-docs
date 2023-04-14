@@ -34,11 +34,11 @@ For more details, refer to [What is a TLS handshake?](https://www.cloudflare.com
 
 **Standard TLS handshake**
 
-![Diagram showing the Standard TLS handshake](/ssl/static/client-auth-tls-standard.png)
+![Diagram showing the Standard TLS handshake](/images/ssl/client-auth-tls-standard.png)
 
 **Client authenticated TLS handshake**
 
-![Diagram showing the client authenticated TLS handshake](/ssl/static/client-auth-tls-handshake.png)
+![Diagram showing the client authenticated TLS handshake](/images/ssl/client-auth-tls-handshake.png)
 
 ### Comparison diagrams
 
