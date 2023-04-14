@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-Ensure **Log Share** permissions are enabled, before attempting to read or configure a Logpush job. For more informatio refer to the [Roles section](/logs/get-started/permissions/#roles).
+Ensure **Log Share** permissions are enabled, before attempting to read or configure a Logpush job. For more information refer to the [Roles section](/logs/get-started/permissions/#roles).
