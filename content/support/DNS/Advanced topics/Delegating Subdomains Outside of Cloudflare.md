@@ -17,7 +17,7 @@ DNS delegation is not possible for Cloudflare domains using a [partial
 setup](/dns/zone-setups/partial-setup).
 {{</Aside>}}
 
-For instance, consider _example.com_ as a Cloudflare domain with w_ww.example.com_ managed in Cloudflare’s **DNS** app and _internal.example.com_ delegated to nameservers outside of Cloudflare. In this example, _internal.example.com_ can now be managed by individuals who do not have access to Cloudflare credentials for the _example.com_ domain.
+For instance, consider _example.com_ as a Cloudflare domain with _www.example.com_ managed in Cloudflare’s **DNS** app and _internal.example.com_ delegated to nameservers outside of Cloudflare. In this example, _internal.example.com_ can now be managed by individuals who do not have access to Cloudflare credentials for the _example.com_ domain.
 
 {{<Aside type="warning">}}
 Cloudflare's CDN and security services are not applied to delegated
