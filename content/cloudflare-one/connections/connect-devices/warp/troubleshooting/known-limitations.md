@@ -8,16 +8,16 @@ weight: 9
 
 Below, you will find information on devices, software, and configurations that are incompatible with Cloudflare WARP.
 
-## Windows WARP and specific split tunnel addresses in exclude mode are required
-Windows WARP version 2023.3 and higher require the following addresses to be exluded from the tunnel or the WARP Client will be unable to connect. If you have modified the default exclude split tunnel configuration they will need to be re-added. Our engineering team is investigating if this is a long term requirement.
-```
-  224.0.0.0/4
-  ff01::/16
-  ff02::/16
-  ff03::/16
-  ff04::/16
-  ff05::/16
-```
+## Split Tunnel exclusions on Windows
+
+Windows WARP version 2023.3 and higher require the following addresses to be excluded from the WARP tunnel, or else the client will be unable to connect. If you removed these routes from the default [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list, they will need to be re-added:
+
+- `224.0.0.0/4`
+- `ff01::/16`
+- `ff02::/16`
+- `ff03::/16`
+- `ff04::/16`
+- `ff05::/16`
 
 ## Windows Server
 
