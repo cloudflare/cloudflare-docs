@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Concepts
 weight: 2
 meta: 
-    title: SSL concepts 
+    description: This page defines and articulates key concepts that are relevant to Cloudflare SSL/TLS and are used in the Cloudflare SSL/TLS documentation.
 ---
 
 # Concepts
@@ -22,7 +22,7 @@ The [edge certificates](/ssl/edge-certificates/) are the ones that Cloudflare pr
 
 ## Origin certificate
 
-[Origin certificates](/ssl/origin-configuration) are complementary to edge certificates in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application.
+[Origin certificates](/ssl/origin-configuration/) are complementary to [edge certificates](#edge-certificate) in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application.
 
 [SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control how Cloudflare will work with both these ceritifcates. You can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
 
@@ -48,12 +48,18 @@ Certificates issued through Cloudflare - [Universal](/ssl/edge-certificates/univ
 
 When visitors request content from your website or application, Cloudflare first attempts to [serve content from the cache](https://www.cloudflare.com/learning/cdn/what-is-caching/). If this attempt fails, Cloudflare sends a request back to your origin web server to get the content. This request between Cloudflare and your origin web server is called origin pull.
 
-This relates to the difference between [edge certificates](#edge-certificate) and [origin certificates](#origin-certificate), and also explains why some options such as supported [cipher suites](#cipher-suites) can be configured differently depending on whether they refer to the connection between Cloudflare and your visitor's browser or between Cloudflare and your origin server.
+This relates to the difference between [edge certificates](#edge-certificate) and [origin certificates](#origin-certificate), and also explains why some specifications such as [cipher suites](#cipher-suites) can be set differently depending on whether they refer to the connection between Cloudflare and your visitor's browser or between Cloudflare and your origin server.
 
 ## Cipher suites
 
 Besides the authentication and integrity aspects that valid certificates guarantee, the other important aspect of SSL/TLS certificates is encryption. Cipher suites determine the set of algorithms that can be used for encryption/decryption and that will be negotiated during an [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/).
 
-For the purpose of this documentation, keep in mind that [cipher suites supported at Cloudflare's network](/ssl/reference/cipher-suites/supported-cipher-suites/) may not be the same as [cipher suites presented by Cloudflare to your origin server](http://localhost:5173/ssl/origin-configuration/cipher-suites/).
+For the purpose of this documentation, keep in mind that [cipher suites supported at Cloudflare's network](/ssl/reference/cipher-suites/supported-cipher-suites/) may not be the same as [cipher suites presented by Cloudflare to your origin server](/ssl/origin-configuration/cipher-suites/).
 
 ## Trust store
+
+The list of [CA](#certificate-authority-ca) and intermediate certificates that are trusted by operating systems, web browsers or any software program that interacts with a certificate is called trust store. Cloudflare maintains its trust store on a public [GitHub repository](https://github.com/cloudflare/cfssl_trust).
+
+While for most cases you do not have to worry about this list or how it is used when a client checks your certificate validity, some features such as [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/), and processes such as [bundle methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), are directly related to it.
+
+## Chain of trust
