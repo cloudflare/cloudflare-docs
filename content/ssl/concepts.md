@@ -12,19 +12,19 @@ This page defines and articulates key concepts that are relevant to Cloudflare S
 
 ## SSL/TLS certificate
 
-
+SSL/TLS certificates are what enables websites and applications to establish secure connections. Via SSL/TLS, a client - such as a browser - can verify the authenticity and integrity of the server it is connecting with and exchange information using encryption.
 
 ## Edge certificate
 
-Since [Cloudflare's global network](https://www.cloudflare.com/network/) is at the core of several products and services that Cloudflare offers, what this implies in terms of SSL is that, instead of only one certificate, there can actually be two certificates involved in a request that goes through Cloudflare: an edge certificate and an origin certificate.
+Since [Cloudflare's global network](https://www.cloudflare.com/network/) is at the core of several products and services that Cloudflare offers, what this implies in terms of SSL/TLS is that, instead of only one certificate, there can actually be two certificates involved in a request that goes through Cloudflare: an edge certificate and an origin certificate.
 
-The [edge certificates](/ssl/edge-certificates/) are the ones that Cloudflare presents to your visitors and that you manage through the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
+The [edge certificates](/ssl/edge-certificates/) are the ones that Cloudflare presents to clients visiting your website or application, and that you manage through the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
 ## Origin certificate
 
 [Origin certificates](/ssl/origin-configuration/) are complementary to [edge certificates](#edge-certificate) in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application.
 
-[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control how Cloudflare will work with both these ceritifcates. You can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
+[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control how Cloudflare will work with both these ceritifcates, and you can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
 
 ## Validity period
 
@@ -58,8 +58,9 @@ For the purpose of this documentation, keep in mind that [cipher suites supporte
 
 ## Trust store
 
-The list of [CA](#certificate-authority-ca) and intermediate certificates that are trusted by operating systems, web browsers or any software program that interacts with a certificate is called trust store. Cloudflare maintains its trust store on a public [GitHub repository](https://github.com/cloudflare/cfssl_trust).
+The list of [certificate authority (CA)](#certificate-authority-ca) and intermediate certificates that are trusted by operating systems, web browsers or other software that interacts with SSL/TLS certificates is called trust store. Cloudflare maintains its trust store on a public [GitHub repository](https://github.com/cloudflare/cfssl_trust).
 
 While for most cases you do not have to worry about this list or how it is used when a client checks your certificate validity, some features such as [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/), and processes such as [bundle methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), are directly related to it.
 
 ## Chain of trust
+
