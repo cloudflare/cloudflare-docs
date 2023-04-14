@@ -44,7 +44,9 @@ Applying rate limiting rules to verified bots might affect Search Engine Optimiz
 
 ## Availability
 
-Rate limiting rules are available to all customers. The available features depend on the exact plan:
+Rate limiting rules are available to all customers. Enterprise customers require a separate add-on.
+
+The available features depend on the exact plan:
 
 {{</content-column>}}
 
@@ -52,7 +54,7 @@ Rate limiting rules are available to all customers. The available features depen
 
 Feature | Free | Pro | Business | Enterprise with WAF Essential | Enterprise with Advanced Rate Limiting |
 ---|---|---|---|---|---
-Available fields<br/>in rule expression | Path, [Verified Bot](/ruleset-engine/rules-language/fields/#field-cf-bot_management-verified_bot) | Host, URI, Path, Full URI, Query, Verified Bot | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent, Verified Bot | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Verified Bot), other Bot Management fields<sup>1</sup> | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Verified Bot), other Bot Management fields<sup>1</sup>, [request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)<sup>2</sup>
+Available fields<br/>in rule expression | Path, [Verified Bot](/ruleset-engine/rules-language/fields/#field-cf-bot_management-verified_bot) | Host, URI, Path, Full URI, Query, Verified Bot | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent, Verified Bot | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Verified Bot), other Bot Management fields<sup>1</sup> | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Verified Bot), other Bot Management fields<sup>1</sup>, [request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)<sup>2</sup>
 Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>1</sup>, JSON body field<sup>2</sup>, Body<sup>2</sup>
 Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
 Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
