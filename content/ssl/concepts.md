@@ -60,7 +60,8 @@ For the purpose of this documentation, keep in mind that [cipher suites supporte
 
 The list of [certificate authority (CA)](#certificate-authority-ca) and intermediate certificates that are trusted by operating systems, web browsers or other software that interacts with SSL/TLS certificates is called trust store. Cloudflare maintains its trust store on a public [GitHub repository](https://github.com/cloudflare/cfssl_trust).
 
-While for most cases you do not have to worry about this list or how it is used when a client checks your certificate validity, some features such as [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/), and processes such as [bundle methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), are directly related to it.
+While for most cases you do not have to worry about this list or how it is used when a client checks your SSL/TLS certificate, some features such as [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/), and processes such as [bundle methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), are directly related to it.
 
 ## Chain of trust
 
+Depending on your organization requirements, or if you have to troubleshoot an issue with your certificates for example, you might come across the terms root certificate, intermediate certificate and leaf certificate. These terms refer to the way in which the certificate presented to a client - the leaf certificate - has to be traceable back to a trusted certificate authority (CA) certificate - the [root certificate](https://en.wikipedia.org/wiki/Root_certificate). This process is structured arround a [chain of trust](https://en.wikipedia.org/wiki/Chain_of_trust).
