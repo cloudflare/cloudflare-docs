@@ -7,11 +7,30 @@ title: Routes
 
 Routes allow users to map a URL pattern to a Worker. This enables Workers to run in front of [custom comains](/workers/platform/triggers/custom-domains/) or their own external application servers. Customers must manually create DNS records and certificates for routes to invoke over HTTP(S).
 
+There are three types of routes:
+
+1. Custom domain routes: Routes to a domain (such as `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
+2. Pattern routes: Routes that are set within a Cloudflare zone where your origin server, if you have one, is sitting behind a Worker that the Worker can communicate with.
+3. `workers.dev` route: A route between your Worker is the origin.
+
 Routes are comprised of:
 
 - Route URL (refer to [Matching Behavior](#matching-behavior)).
 - Worker script to execute on matching requests.
 - Failure mode for rate-limited accounts on the Free plan (refer to [daily request limits](/workers/platform/limits/#request-limits)).
+
+## Customize your routes
+
+Route setting will be different if your origin is Worker or origin server.
+
+### Worker is origin
+
+#### wrangler.toml
+#### dashboard
+### Origin server is origin
+
+#### wrangler.toml
+#### dashboard
 
 ## Routes with custom domains
 
