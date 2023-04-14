@@ -45,11 +45,12 @@ To enable the Cloudflare Logpush service:
 
 Once connected, Cloudflare lists Microsoft Azure as a connected service under **Logs** > **Logpush**. Edit or remove connected services from here.
 
-## Manage via API
+## Create and get access to a Blob Storage container
 
 Cloudflare uses a shared access signature (SAS) token to gain access to your Blob Storage container. You will need to provide `Write` permission and an expiration period of at least five years, which will allow you to not worry about the SAS token expiring.
 
 {{<render file="_enable-read-permissions.md">}}
+<br/>
 
 To enable Logpush to Azure:
 
