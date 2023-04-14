@@ -102,6 +102,18 @@ Your DNS queries will now be sent to Gateway for filtering. To filter these requ
 ### Configure operating system for DoH
 
 <details>
+<summary>Windows 11</summary>
+<div>
+
+1. Go to **Settings** > **Network & Internet** and choose your active network connection.
+2. Under **DNS server assignment**, select **Edit**.
+3. In the drop-down menu, select **Manual**, then enable **IPv4**.
+4. In the **Preferred DNS** field, enter `https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query`. Select **Save**.
+
+</div>
+</details>
+
+<details>
 <summary>Windows Server 2022</summary>
 <div>
 
