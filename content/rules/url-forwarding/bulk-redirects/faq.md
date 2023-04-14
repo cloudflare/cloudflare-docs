@@ -24,6 +24,8 @@ Each account has a maximum number of URL redirects across all lists which depend
 
 Use the `raw.http.request.full_uri` field both in the rule expression and in the key, instead of the default field `http.request.full_uri`. This will take the raw version of the URL into account, that is, the URL received on the Cloudflare global network before applying normalization. Refer to [Concepts: Bulk Redirect Rules](/rules/url-forwarding/bulk-redirects/concepts/#bulk-redirect-rules) for more information on using a custom rule expression and a custom key.
 
-## Do Bulk Redirects take precedence over Page Rules?
+## What is the precedence of Bulk Redirects?
 
-Yes. Bulk Redirects take precedence over Page Rules redirects.
+1. Single Redirects
+2. Bulk Redirects
+3. Page Rules
