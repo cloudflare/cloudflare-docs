@@ -50,7 +50,7 @@ You will receive a response similar to this:
   "result": {
     "id": "2cdc28f0-017a-49c4-9ed7-87056c83901",
     "metadata": {
-      "key": "value":
+      "key": "value"
     },
     "uploaded": "2022-01-31T16:39:28.458Z",
     "requireSignedURLs": true,
