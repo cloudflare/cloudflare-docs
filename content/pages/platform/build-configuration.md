@@ -85,7 +85,7 @@ Cloudflare Pages' build environment has broad support for a variety of languages
 
 If you need to use a specific version of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
 
-Here are the pinned versions for tools included in the Cloudflare Workers build environment, and how to override them as relevant:
+Here are the pinned versions for tools included in the Cloudflare Pages build environment, and how to override them as relevant:
 
 {{<table-wrap>}}
 
