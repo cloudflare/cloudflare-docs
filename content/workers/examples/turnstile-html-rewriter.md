@@ -116,7 +116,6 @@ async function handlePost(request) {
         body: formData,
         method: 'POST',
     });
-    const outcome = await result.json();
 
     const outcome = await result.json();
 
