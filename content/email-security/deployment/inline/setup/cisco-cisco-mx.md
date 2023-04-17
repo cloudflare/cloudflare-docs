@@ -30,7 +30,7 @@ To add a new Sender Group:
     * **DNS Lists**: Leave blank.
     * **Connecting Host DNS Verification**: Leave all options unchecked.
 
-4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+4. Select **Submit and Add Senders**, and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). If you need to process emails in the EU or India regions for compliance purposes, add those IP addresses as well.
 
 ![Sender group](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step1.png)
 
@@ -52,6 +52,8 @@ To add a new SMTP Route:
     `10`     | `mailstream-west.mxrecord.io`    | `25`
 
 ![Edit SMTP route](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step2.png)
+
+{{<Aside type="note">}}If you are located in India, the EU or GDPR applies to your organization you will have to replace these MX records with the appropriate ones to process emails in the appropriate geographic location. Refer to the [Geographic locations](#5-geographic-locations) table for more information.{{</Aside>}}
 
 ## 3. Create Incoming Content Filters
 
@@ -90,7 +92,7 @@ To create a new Content Filter:
     * **Name**: `A1S_to_ESA`
     * **Description**: `Area 1 inspected messages for final delivery`
     * **Order**: This filter must come before the previously created filter.
-    * **Conditions**: Add seven conditions of type **Remote IP/Hostname** with the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/): 
+    * **Conditions**: Add conditions of type **Remote IP/Hostname** with all the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). For example: 
     Order | Condition            | Rule
     ----- | -------------------- | ---
     `1`   | `Remote IP/Hostname` | `52.11.209.211`
@@ -100,7 +102,7 @@ To create a new Content Filter:
     `5`   | `Remote IP/Hostname` | `104.30.32.0/19`
     `6`   | `Remote IP/Hostname` | `158.51.64.0/26`
     `7`   | `Remote IP/Hostname` | `158.51.65.0/26`
-        * Ensure that the *Apply rule:* dropdown is set to **If one or more conditions match**.
+    * Ensure that the *Apply rule:* dropdown is set to **If one or more conditions match**.
     * **Actions**: Select **Add Action**, and add the following:
     Order | Action          | Rule
     --- | -------------------- | ---
@@ -111,3 +113,19 @@ To create a new Content Filter:
 ## 4. Add the Incoming Content Filter to the Inbound Policy table
 
 Assign the Incoming Content Filters created in [step 3](#3-create-incoming-content-filters) to your primary mail policy in the Incoming Mail Policy table. Then, commit your changes to activate the email redirection.
+
+## 5. Geographic locations
+
+Select from the following MX records to keep email processing in the correct geographic location.
+
+{{<table-wrap>}}
+
+Host | Location | Note
+--- | --- | ---
+`mailstream-central.mxrecord.mx` <br /> `mailstream-east.mxrecord.io` <br /> `mailstream-west.mxrecord.io` | USA
+`mailstream-eu1.mxrecord.io` | EU | Prioritizes email flow through Germany.
+`mailstream-bom.mxrecord.mx` | India | Best option to ensure data stays in India. For compliance purposes use this MX record. Note, however, there is no redundancy should something go wrong.
+`mailstream-india-primary.mxrecord.mx` | India | Same as `mailstream-bom.mxrecord.mx`, with fallback to US servers.
+`mailstream-asia.mxrecord.mx` | India | Best option for companies with a broader Asia presence.
+
+{{</table-wrap>}}
