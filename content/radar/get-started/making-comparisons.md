@@ -125,7 +125,7 @@ The `result` property should return a response like this:
 
 This shows how traffic dropped to almost zero during the outage. If we chart it and set the end date to January 18 to make it clearer, we get the following:
 
-![Tonga October vs January 2022](/radar/static/tonga_outage.png)
+![Tonga October vs January 2022](/images/radar/tonga_outage.png)
 
 ## Next steps
 
