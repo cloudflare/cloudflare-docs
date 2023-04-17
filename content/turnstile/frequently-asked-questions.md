@@ -195,7 +195,7 @@ Yes, you can find the API for managing Turnstile widgets [here](https://develope
 {{<faq-question level=2 text="I am seeing a 401 error in your console during a Turnstile security check, is this a problem?" >}}
 {{<faq-answer>}}
 
-You can safely ignore the error, it's requesting a PAT but your device/browser does not support PATs yet, so you see the error.
+You can safely ignore the error. It is requesting a PAT that your device or browser does not support yet.
 Learn more: https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/
 
 {{</faq-answer>}}
