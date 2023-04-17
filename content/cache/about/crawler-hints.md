@@ -11,7 +11,7 @@ Crawler Hints aims to increase the proportion of relevant crawls and limit crawl
 
 Search engines and similar services operate massive networks of bots that crawl the Internet to identify the content most relevant to a user query. Content on the web is always changing though, and search engine crawlers must continually wander the Internet and guess how frequently they should check a site for content updates.
 
-With Crawler Hints, Cloudflare can proactively tell a crawler about the best time to index or when content changes. Additionally, Crawler Hints supports [IndexNow](https://www.indexnow.org/), which allows websites to notify search engines whenever content on their website content is created, updated, or deleted.
+With Crawler Hints, Cloudflare can proactively tell a crawler about the best time to index or when content changes. Additionally, Crawler Hints supports [IndexNow](https://www.indexnow.org/), which allows websites to notify search engines whenever content on their website content is created, updated, or deleted. Crawler hints uses cache-status `MISS` to recognize the content update, but if the URL responds with some HTTP status code above the 4xx, the Crawler hints won't report that to [IndexNow](https://www.indexnow.org/).
 
 ## Benefits
 
