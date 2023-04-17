@@ -15,7 +15,7 @@ For more details about load balancers, refer to [Load balancers](/load-balancing
 
 {{<Aside type="note">}}
 
-This set up is only applicable if the target zone is on a full DNS set up. It is not supported if the target zone is on a `CNAME` set up.
+Load balancing is only applicable if the target zone is on a full DNS setup. It is not supported if the target zone is on a `CNAME` setup.
 
 {{</Aside>}}
 
