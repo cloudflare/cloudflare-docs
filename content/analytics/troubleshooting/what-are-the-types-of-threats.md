@@ -45,7 +45,7 @@ Requests from specific IP addresses that were blocked based on the [user configu
 
 ### IP range block (/16)
 
-A /16 IP range that was blocked based on the [user configuration]((/waf/tools/ip-access-rules/)) set within the Firewall app.
+A /16 IP range that was blocked based on the [user configuration](/waf/tools/ip-access-rules/) set within the Firewall app.
 
 ### IP range block (/24)
 
