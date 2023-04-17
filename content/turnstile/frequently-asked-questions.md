@@ -186,7 +186,7 @@ You can find special sitekeys to be used for testing in the [testing](/turnstile
 
 {{<faq-answer>}}
 
-Yes, you can find the API for managing Turnstile widgets [here](https://developers.cloudflare.com/api/operations/accounts-turnstile-widgets-list).
+Yes, you can refer to the [Turnstile API documentation](/api/operations/accounts-turnstile-widgets-list) to manage your widgets.
 
 {{</faq-answer>}}
 {{</faq-item>}}
