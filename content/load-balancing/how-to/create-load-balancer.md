@@ -13,6 +13,12 @@ meta:
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/understand-basics/load-balancers/).
 
+{{<Aside type="note">}}
+
+Load balancing is only applicable if the target zone is on a full DNS setup. It is not supported if the target zone is on a `CNAME` setup.
+
+{{</Aside>}}
+
 ## Create a load balancer
 
 {{<tabs labels="Dashboard | API">}}
