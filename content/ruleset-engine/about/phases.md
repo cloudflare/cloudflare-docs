@@ -36,3 +36,7 @@ The `kind` field of a phase entry point ruleset has one of the following values:
 - `zone` for a phase entry point ruleset at the zone level
 
 {{</Aside>}}
+
+## Super Bot Fight Mode
+
+Currently, super bot fight mode configurations are controlled using the managed rules in the `http_request_sbfm` phase. We are changing the way that super bot fight mode rules are configured. **No action is need at this time**. However, be aware that we will be deprecating the ability to modify the `http_request_sbfm` phase via the public API.
