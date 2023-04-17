@@ -36,7 +36,7 @@ The descriptions below detail the fields available for `firewall_events`.
 | EdgeColoCode | The airport code of the Cloudflare datacenter that served this request. | string |
 | EdgeResponseStatus | HTTP response status code returned to browser. | int |
 | Kind | The kind of event, currently only possible values are: <em>firewall</em>. | string |
-| MatchIndex | Rules match index in the chain. | int |
+| MatchIndex | Rules match index in the chain. Larger MatchIndex value means more preceded detection. If you have the multiple detections for the same RayID of the request, MatchIndex starts from 0 with the last rule that triggered and increases for any previous rules that also matched.  | int |
 | Metadata | Additional product-specific information. Metadata is organized in key:value pairs. Key and Value formats can vary by Cloudflare security product and can change over time. | object |
 | OriginResponseStatus | HTTP origin response status code returned to browser. | int |
 | OriginatorRayID | The RayID of the request that issued the challenge/jschallenge. | string |
