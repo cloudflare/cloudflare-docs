@@ -95,4 +95,4 @@ Cloudflare Streamの視聴分数を確認するには、次の手順に従いま
 ___
 
 -   [Cloudflare Streamの動画プラットフォーム](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Cloudflare Streamの開発者向けドキュメント](https://developers.cloudflare.com/stream/getting-started/)
+-   [Cloudflare Streamの開発者向けドキュメント](/stream/getting-started/)

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: WARP session duration
-weight: 7
+weight: 12
 ---
 
 # Enforce WARP session duration

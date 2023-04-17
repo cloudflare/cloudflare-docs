@@ -8,13 +8,20 @@ weight: 9
 
 Below, you will find information on devices, software, and configurations that are incompatible with Cloudflare WARP.
 
+## Split Tunnel exclusions on Windows
+
+Windows WARP version 2023.3 and higher require the following addresses to be excluded from the WARP tunnel, or else the client will be unable to connect. If you removed these routes from the default [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude list, they will need to be re-added:
+
+- `224.0.0.0/4`
+- `ff01::/16`
+- `ff02::/16`
+- `ff03::/16`
+- `ff04::/16`
+- `ff05::/16`
+
 ## Windows Server
 
 The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) for a list of supported operating systems.
-
-## Windows Subsystem for Linux 2
-
-The WARP client does not run on Windows Subsystem for Linux 2 (WSL2). To use WARP, fall back to Windows Subsystem for Linux 1 (WSL1).
 
 ## Multi-user support on Windows
 

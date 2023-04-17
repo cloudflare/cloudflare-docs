@@ -222,6 +222,12 @@ Refer to [How do I create an exception to exclude certain requests from being bl
 
 [Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that Cloudflare Firewall Rules currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to true.
 
+{{<Aside type="note">}}
+
+There is no functional difference between known and verified bots. However, the known bots field is available for all customers, while the verified bots field is available for Enterprise customers.
+
+{{</Aside>}}
+
 If you need to submit a friendly bot to be verified, use [our online form](https://docs.google.com/forms/d/e/1FAIpQLSdqYNuULEypMnp4i5pROSc-uP6x65Xub9svD27mb8JChA_-XA/viewform?usp=sf_link).
 
 ## Challenges

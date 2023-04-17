@@ -5,6 +5,7 @@ product:
   title: Waiting Room
   url: /waiting-room/
   group: Application performance
+  preview_tryout: true
 
 meta:
   title: Cloudflare Waiting Room docs

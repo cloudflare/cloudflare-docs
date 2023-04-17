@@ -1,4 +1,35 @@
 {
+  "account": {
+    "title": "Account options",
+    "single_sign_on": {
+      "title": "Cloudflare dashboard single sign-on",
+      "link": "/cloudflare-one/applications/configure-apps/dash-sso-apps/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes (with Standard or Premium Success plans)"
+        }
+      }
+    },
+    "zone_holds": {
+      "title": "Zone holds",
+      "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    }
+  },
   "analytics": {
     "title": "Analytics",
     "graphql": {

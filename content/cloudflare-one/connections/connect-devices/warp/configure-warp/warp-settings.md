@@ -58,6 +58,21 @@ To turn off the WARP client on a user device:
 
 The WARP client will now show **Disabled by Admin Override** and the time when the override code expires. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn off WARP until Admin override times out.
 
+### Install CA to system certificate store
+
+<details>
+<summary>Feature availability</summary>
+<div>
+
+| Operating Systems     | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows, macOS, Linux | Gateway with WARP, Proxy mode                                                        | All plans                                                     |
+
+</div>
+</details>
+
+When `Enabled`, the WARP client will [automatically install](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/) your organization's root certificate on the device.
+
 ## Device settings
 
 ### Captive portal detection

@@ -37,7 +37,7 @@ Look for traffic groups that _should not_ be blocked — commonly API or mobile 
 
 {{<render file="_bot-analytics-traffic-characteristics.md" productFolder="bots">}}
 
-For more details, refer to [Understand your site's traffic](/learning-paths/modules/security/bot-management-planning/site-traffic/?learning_path=bot-management).
+For more details, refer to [Understand your site's traffic](/learning-paths/modules/security/bot-management-planning/site-traffic/).
 
 ---
 
@@ -45,7 +45,7 @@ For more details, refer to [Understand your site's traffic](/learning-paths/modu
 
 Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12. 
 
-![Example of a bot score distribution](/bots/static/bot-score-distribution.png)
+![Example of a bot score distribution](/images/bots/bot-score-distribution.png)
 
 Note the common characteristics of these requests, looking at the same information as for [automated and likely automated traffic](#automated-and-likely-automated-traffic). These requests may be from sources you do not want to block.
 

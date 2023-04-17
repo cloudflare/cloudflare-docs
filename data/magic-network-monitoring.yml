@@ -6,6 +6,7 @@ product:
   url: /magic-network-monitoring/
   wrap: true
   group: Network services
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Magic Network Monitoring docs

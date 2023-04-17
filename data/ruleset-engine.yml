@@ -5,6 +5,7 @@ product:
   title: Ruleset Engine
   url: /ruleset-engine/
   group: Cloudflare essentials
+  additional_groups: [Application performance, Application security, Network services]
 
 meta:
   title: Cloudflare Ruleset Engine docs

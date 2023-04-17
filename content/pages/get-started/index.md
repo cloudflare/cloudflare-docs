@@ -11,7 +11,7 @@ In this guide, you will get started with Cloudflare Pages, and deploy your first
 
 There are three ways to set up a Pages project:
 
-1. Connecting your [Git provider](/pages/get-started/#connecting-your-git-provider-to-pages) to Pages.
+1. Connecting your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages) to Pages.
 2. Deploying your prebuilt assets right to Pages with [Direct Uploads](/pages/platform/direct-upload/).
 3. Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
@@ -107,6 +107,12 @@ After you have finished setting your build configuration, select **Save and Depl
 ![Deployment details in the Cloudflare dashboard](/pages/get-started/images/deploy-log.png)
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
+
+{{<Aside type="warning" header="DNS errors">}}
+
+If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error. 
+
+{{</Aside>}}
 
 ## Manage your site
 

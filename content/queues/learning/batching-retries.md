@@ -8,7 +8,7 @@ weight: 3
 
 ## Batching
 
-When configuring a [consumer Worker](https://developers.cloudflare.com/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
+When configuring a [consumer Worker](/queues/learning/how-queues-works#consumers) for a queue, you can also define how messages are batched as they are delivered.
 
 Batching can:
 
@@ -25,7 +25,20 @@ Both `max_batch_size` and `max_batch_timeout` work together. Whichever limit is 
 
 For example, a `max_batch_size = 30` and a `max_batch_timeout = 10` means that if 30 messages are written to the queue, the consumer will deliver a batch of 30 messages. However, if it takes longer than 10 seconds for those 30 messages to be written to the queue, then the consumer will get a batch of messages that contains however many messages were on the queue at the time (somewhere between 1 and 29, in this case).
 
-When determining what size and timeout settings to configure, you will want to consider latency (how long can you wait to receive messages?), overall batch size (when writing to external systems), and cost (fewer-but-larger batches). 
+When determining what size and timeout settings to configure, you will want to consider latency (how long can you wait to receive messages?), overall batch size (when writing to external systems), and cost (fewer-but-larger batches).
+
+### Batch settings
+
+The following batch-level settings can be configured to adjust how Queues delivers batches to your configured consumer.
+
+{{<table-wrap>}}
+
+| Setting                                   | Default       | Minimum      | Maximum       |
+| ----------------------------------------- | ------------- | ------------ | ------------- |
+| Maximum Batch Size `max_batch_size`       | 10 messages   | 1 message    | 100 messages  |
+| Maximum Batch Timeout `max_batch_timeout` | 5 seconds     | 0 seconds    | 30 seconds    |
+  
+{{</table-wrap>}}
 
 ## Explicit acknowledgement
 
@@ -84,7 +97,7 @@ When a message is failed to be delivered, the default behaviour is to retry deli
 
 {{<Aside type="note">}}
 
-Each retry counts as an additional read operation per [Queues pricing](https://developers.cloudflare.com/queues/pricing).
+Each retry counts as an additional read operation per [Queues pricing](/queues/platform/pricing/).
 
 {{</Aside>}}
 

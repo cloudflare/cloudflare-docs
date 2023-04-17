@@ -55,7 +55,7 @@ ___
 
 _No se encuentran registros A, AAAA o CNAME_ significa que la aplicación **DNS** de Cloudflare carece de registros apropiados para la resolución DNS.
 
-[Añade los registros DNS que faltan](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) a tu dominio.
+[Añade los registros DNS que faltan](/dns/manage-dns-records/how-to/create-dns-records) a tu dominio.
 
 {{<Aside type="note">}}
 En general, los sitios tienen al menos un *registro A* que apunta a la

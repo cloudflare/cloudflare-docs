@@ -80,11 +80,11 @@ To get started with Durable Objects:
 
 {{<Aside type="note">}}
 
-D1 is currently in [public (open) alpha](https://developers.cloudflare.com/workers/platform/betas/).
+D1 is currently in [public (open) alpha](/workers/platform/betas/).
 
 {{</Aside>}}
 
-Built on SQLite, D1 is Cloudflare’s first [queryable relational database at the edge](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
+Built on SQLite, D1 is Cloudflare’s first [serverless, queryable relational database](https://blog.cloudflare.com/introducing-d1/). With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
 D1 is ideal for:
 
@@ -94,15 +94,15 @@ D1 is ideal for:
 
 To get started with D1:
 
-* Read [the documentation](https://developers.cloudflare.com/d1)
-* Follow the [Get started guide](https://developers.cloudflare.com/d1/get-started/) to provision your first D1 database.
-* Learn the [D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
+* Read [the documentation](/d1)
+* Follow the [Get started guide](/d1/get-started/) to provision your first D1 database.
+* Learn the [D1 client API](/d1/platform/client-api/).
 
 ## Queues
 
 {{<Aside type="note">}}
 
-Queues is currently in [public (open) beta](https://developers.cloudflare.com/workers/platform/betas/).
+Queues is currently in [public (open) beta](/workers/platform/betas/).
 
 {{</Aside>}}
 
@@ -112,12 +112,12 @@ Queues is ideal for:
 
 * Offloading work from a request to schedule later.
 * Send data from Worker to Worker (inter-Service communication).
-* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](https://developers.cloudflare.com/queues/examples/send-errors-to-r2/)
+* Buffering or batching data before writing to upstream systems, including third-party APIs or [Cloudflare R2](/queues/examples/send-errors-to-r2/)
 
 To get started with Queues:
 
-* [Set up your first queue](https://developers.cloudflare.com/queues/get-started/)
-* Learn more [about how Queues works](https://developers.cloudflare.com/queues/learning/how-queues-works/)
+* [Set up your first queue](/queues/get-started/)
+* Learn more [about how Queues works](/queues/learning/how-queues-works/)
 
 
 ## Comparison

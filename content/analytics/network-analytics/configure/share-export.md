@@ -14,7 +14,7 @@ When you add filters and specify a time range in the **Network Analytics** page,
 
 To share your view of the data, copy the URL and send it to other users so that they can work with the same view.
 
-![Share your URL with other users so that they can work with the same Network Analytics view.](/analytics/static/images/network-analytics/share-url.png)
+![Share your URL with other users so that they can work with the same Network Analytics view.](/images/analytics/network-analytics/share-url.png)
 
 ## Export activity log data
 

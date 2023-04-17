@@ -32,7 +32,7 @@ Then, create a Cloudflare Tunnel.
 
 In these steps, you should choose the option to **Connect a network** and use the private IP address of your key server.
 
-After you create the Tunnel, use the Cloudflare API to [List tunnel routes](https://developers.cloudflare.com/api/operations/tunnel-route-list-tunnel-routes), saving the following values for a future step:
+After you create the Tunnel, use the Cloudflare API to [List tunnel routes](/api/operations/tunnel-route-list-tunnel-routes), saving the following values for a future step:
 
 - `"virtual_network_id"`
 - `"network"`
@@ -41,7 +41,7 @@ After you create the Tunnel, use the Cloudflare API to [List tunnel routes](http
 
 {{<render file="_keyless-upload-preamble.md">}}
 
-To upload a Keyless certificate with the API, send a [`POST`](https://developers.cloudflare.com/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request that includes a `"tunnel"` object.
+To upload a Keyless certificate with the API, send a [`POST`](/api/operations/keyless-ssl-for-a-zone-create-keyless-ssl-configuration) request that includes a `"tunnel"` object.
 
 ```json
 "tunnel": {

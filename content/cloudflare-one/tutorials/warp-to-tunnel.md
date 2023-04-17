@@ -108,7 +108,7 @@ Users can reach this private service by logging in to their Zero Trust account a
 
 By default, Cloudflare WARP excludes traffic bound for RFC 1918 space and certain other routes as part of its [Split Tunnel feature](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/). To use this feature the IPs that you specified for your Tunnel must be included which will send traffic for those destinations through the WARP client and to the Tunnel.
 
-1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels) is set to **Exclude IPs and domains**.
+1. Ensure that your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) is set to **Exclude IPs and domains**.
 
 2. In the list of Split Tunnels entries, choose the range being used for this private connection and delete it. For example, if your network uses the default AWS range of `172.31.0.0/16`, delete `172.16.0.0/12`.
 
@@ -148,9 +148,9 @@ This will tell Cloudflare to begin proxying any traffic from enrolled devices, e
 
 ## (Optional) Enable HTTPS inspection
 
-1. [Download and install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/) on your devices.
+1. [Install the Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on your devices.
 
-   Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through an MDM provider or install it manually.
+    Installing the certificate is not a requirement for private network routing. However, the certificate allows Cloudflare Gateway to inspect and secure HTTPS traffic to your private network. You can distribute this certificate through the WARP client, use an MDM tool, or install it manually.
 
 2. Go to **Settings** > **Network** and enable **TLS decryption**.
 

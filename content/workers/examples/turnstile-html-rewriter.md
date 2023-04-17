@@ -85,7 +85,7 @@ export default handler;
 {{</tabs>}}
 
 {{<Aside type= "Note">}}
-This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
+This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 {{</Aside>}}
 
 
@@ -116,7 +116,6 @@ async function handlePost(request) {
         body: formData,
         method: 'POST',
     });
-    const outcome = await result.json();
 
     const outcome = await result.json();
 
