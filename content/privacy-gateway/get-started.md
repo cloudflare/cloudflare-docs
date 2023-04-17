@@ -20,27 +20,11 @@ Privacy Gateway is currently in closed beta. If you’re interested, [contact us
 
 ---
 
-## Step 1 - Configure your client
-
-As a customer of the Privacy Gateway, you need to set up client-side support for the gateway. Clients are responsible for encrypting requests, sending them to the Cloudflare Privacy Gateway, and then decrypting the corresponding responses.
-
-Additionally, app developers need to [configure the client](#resources) to fetch or otherwise discover the gateway’s public key configuration. How this is done depends on how the gateway makes its public key configuration available. If you need help with this configuration, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
-
-### Resources
-
-Use the following resources for help with client configuration:
-
-- **Objective C**: [Sample application](https://github.com/cloudflare/privacy-gateway-client-demo)
-- **Rust**: [Client library](https://github.com/martinthomson/ohttp/tree/main/ohttp-client)
-- **Javascript / Typescript**: [Client library](https://github.com/chris-wood/ohttp-js)
-
----
-
-## Step 2 - Configure your server
+## Step 1 - Configure your server
 
 As a customer of the Privacy Gateway, you also need to add server support for OHTTP by implementing an application gateway server. The application gateway is responsible for decrypting incoming requests, forwarding the inner requests to their destination, and encrypting the corresponding response back to the client.
 
-The [server implementation](#resources-1) will handle incoming requests and produce responses, and it will also advertise its public key configuration for clients to access. The public key configuration is generated securely and made available via an API. Refer to the [README](https://github.com/cloudflare/privacy-gateway-server-go#readme) for details about configuration.
+The [server implementation](#resources) will handle incoming requests and produce responses, and it will also advertise its public key configuration for clients to access. The public key configuration is generated securely and made available via an API. Refer to the [README](https://github.com/cloudflare/privacy-gateway-server-go#readme) for details about configuration.
 
 Applications can also implement this functionality themselves. Details about [public key configuration](https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-05#section-3), HTTP message [encryption and decryption](https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-05#section-4), and [server-specific details](https://datatracker.ietf.org/doc/html/draft-ietf-ohai-ohttp-05#section-5) can be found in the OHTTP specification.  
 
@@ -53,6 +37,22 @@ Use the following resources for help with server configuration:
     - [Gateway library](https://github.com/chris-wood/ohttp-go)
 - **Rust**: [Gateway library](https://github.com/martinthomson/ohttp/tree/main/ohttp-server)
 - **Javascript / Typescript**: [Gateway library](https://github.com/chris-wood/ohttp-js)
+
+---
+
+## Step 2 - Configure your client
+
+As a customer of the Privacy Gateway, you need to set up client-side support for the gateway. Clients are responsible for encrypting requests, sending them to the Cloudflare Privacy Gateway, and then decrypting the corresponding responses.
+
+Additionally, app developers need to [configure the client](#resources-1) to fetch or otherwise discover the gateway’s public key configuration. How this is done depends on how the gateway makes its public key configuration available. If you need help with this configuration, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
+
+### Resources
+
+Use the following resources for help with client configuration:
+
+- **Objective C**: [Sample application](https://github.com/cloudflare/privacy-gateway-client-demo)
+- **Rust**: [Client library](https://github.com/martinthomson/ohttp/tree/main/ohttp-client)
+- **Javascript / Typescript**: [Client library](https://github.com/chris-wood/ohttp-js)
 
 ---
 
