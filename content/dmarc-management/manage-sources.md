@@ -6,7 +6,11 @@ pcx_content_type: how-to
 
 # Manage sources
 
-You can approve sources to send emails from your domain. If you mark a source as **approved**, that source will be added to your SPF record automatically. On the other hand, if you mark it as **unapproved**, it will be automatically deleted from your SPF record. When you feel confident that you have covered every source that is legitimately sending emails from your domain, Cloudflare can help you set your DMARC policy to **quarantine** or **reject**, so that potential targets stop receiving emails from impersonators.
+You can approve sources to send emails from your domain: 
+- If you mark a source as **Approved**, Cloudflare will include the IP ranges for that source in your SPF record and flatten as needed.
+- If you mark a source as **Unapproved**, Cloudflare it will delete the IP ranges for that source from your SPF record.
+
+When you feel confident that you have covered every source that is legitimately sending emails from your domain, Cloudflare can help you set your DMARC policy to **quarantine** or **reject**, so that potential targets stop receiving emails from impersonators.
 
 Under **Top 10 Sources** you have access to lists of approved or unapproved sources sending email on your behalf, and how they fared relative to different policies. 
 
