@@ -932,6 +932,11 @@
 /workers/wrangler/migration/* /workers/wrangler-legacy/migration/:splat 301
 /workers/wrangler/cli-wrangler/* /workers/wrangler-legacy/:splat 301
 
+# Support migration
+/support/caching/configuration/* /cache/troubleshooting/:splat 301
+/support/caching/learn-more/* /cache/troubleshooting/:splat 301
+/support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/best-practice-caching-everything-while-ignoring-query-strings/ 301
+
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
 /ssl/ssl-for-saas/custom-certificates/* /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/ 301
