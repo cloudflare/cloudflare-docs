@@ -182,6 +182,9 @@
 /ddos-protection/managed-rulesets/tcp-protection/configure-dashboard/ /ddos-protection/tcp-protection/setup/ 301
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/override-expressions/ 301
+/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /ddos-protection/troubleshooting/best-practices-ddos-preventative-measures/ 301
+/support/about-cloudflare/attack-preparation-and-response/responding-to-ddos-attacks/ /ddos-protection/troubleshooting/responding-to-ddos-attacks/ 301
+/support/about-cloudflare/attack-preparation-and-response/understanding-cloudflare-ddos-protection/ /ddos-protection/troubleshooting/understanding-cloudflare-ddos-protection/ 301
 
 # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
