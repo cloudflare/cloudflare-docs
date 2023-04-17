@@ -6,7 +6,7 @@ title: Cloudflare analytics with Workers
 
 # Cloudflare analytics with Workers
 
-
+Intro text
 
 ## What is a subrequest?
 
