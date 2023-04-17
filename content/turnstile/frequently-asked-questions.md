@@ -180,3 +180,23 @@ You can find special sitekeys to be used for testing in the [testing](/turnstile
 
 {{</faq-answer>}}
 {{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="Is there an API to create or managed Turnstile Widgets?" >}}
+
+{{<faq-answer>}}
+
+Yes, you can find the API for managing Turnstile widgets [here](https://developers.cloudflare.com/api/operations/accounts-turnstile-widgets-list).
+
+{{</faq-answer>}}
+{{</faq-item>}}
+
+{{<faq-item>}}
+{{<faq-question level=2 text="I am seeing a 401 error in your console during a Turnstile security check, is this a problem?" >}}
+{{<faq-answer>}}
+
+You can safely ignore the error, it's requesting a PAT but your device/browser does not support PATs yet, so you see the error.
+Learn more: https://blog.cloudflare.com/eliminating-captchas-on-iphones-and-macs-using-new-standard/
+
+{{</faq-answer>}}
+{{</faq-item>}}
