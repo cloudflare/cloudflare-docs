@@ -159,6 +159,7 @@
 /byoip/irr-records/verify-irr-entries/ /byoip/how-to/verify-irr-entries/ 301
 /byoip/loa/ /byoip/about/loa/ 301
 /byoip/loa/loa-template/ /byoip/about/loa/ 301
+/support/network/troubleshooting-for-byoip/ /byoip/troubleshooting/troubleshooting-for-byoip/ 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
