@@ -20,11 +20,18 @@ Since [Cloudflare's global network](https://www.cloudflare.com/network/) is at t
 
 The [edge certificates](/ssl/edge-certificates/) are the ones that Cloudflare presents to clients visiting your website or application. You can manage edge certificates through the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
+```mermaid
+flowchart LR
+        accTitle: Edge certificate and origin certificate
+        accDescr: Diagram showing how edge certificates are positioned between Cloudflare and the browser whereas origin certificates sit between Cloudflare and the origin server.
+        A[Browser] <--Edge certificate--> B((Cloudflare))<--Origin certificate--> C[(Origin server)]
+```
+
 ### Origin certificate
 
-[Origin certificates](/ssl/origin-configuration/) are complementary to [edge certificates](#edge-certificate) in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application.
+[Origin certificates](/ssl/origin-configuration/) are complementary to [edge certificates](#edge-certificate) in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application. Origin cetificates are managed on your origin server.
 
-[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control how Cloudflare will work with both these ceritifcates. You can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
+[SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control whether and how Cloudflare will use both these ceritifcates, and you can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
 
 ## Validity period
 
