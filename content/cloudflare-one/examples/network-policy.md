@@ -2,8 +2,8 @@
 type: example
 summary: Override one hostname with another.
 tags:
-  - Network policy
-title: Network policy
+  - Gateway Network policy
+title: Gateway Network policy
 weight: 4
 layout: example
 pcx_content_type: configuration

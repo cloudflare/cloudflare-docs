@@ -2,8 +2,8 @@
 type: example
 summary: Block users in a group from accessing a site.
 tags:
-  - DNS policy
-title: DNS policy
+  - Gateway DNS policy
+title: Gateway DNS policy
 weight: 4
 layout: example
 pcx_content_type: configuration
