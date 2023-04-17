@@ -24,6 +24,7 @@ You should [create CAA records](#create-caa-records) in Cloudflare if each of th
 - You uploaded your own custom origin server certificate (not provisioned by Cloudflare).
 - That certificate was issued by a CA (not self-signed).
 - Your domain is on a full setup (not a [CNAME setup](/dns/zone-setups/partial-setup)).
+- When adding new Custom Hostname and they have an existing CAA records. In this case, you should remove the existing CAA records or add the missing CAA record.
 
 ## CAA records added by Cloudflare
 
