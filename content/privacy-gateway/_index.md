@@ -13,9 +13,9 @@ Implements the Oblivious HTTP IETF standard to improve client privacy.
 
 {{<plan type="enterprise">}}
 
-[Privacy Gateway](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/) is a managed gateway service deployed on Cloudflare’s edge network that implements the [Oblivious HTTP IETF](https://www.ietf.org/archive/id/draft-thomson-http-oblivious-01.html) standard to improve client privacy when connecting to an application backend.
+[Privacy Gateway](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/) is a managed service deployed on Cloudflare’s edge network that implements part of the [Oblivious HTTP (OHTTP) IETF](https://www.ietf.org/archive/id/draft-thomson-http-oblivious-01.html) standard. The goal of Privacy Gateway and Oblivious HTTP is to hide the client's IP address when interacting with an application backend.
 
-OHTTP introduces a trusted third party between client and server, called a relay, whose purpose is to forward requests from client to server, and likewise to forward responses from server to client. These messages are encrypted between client and server such that the relay learns nothing of the application data, beyond the server the client is interacting with.
+OHTTP introduces a trusted third party between client and server, called a relay, whose purpose is to forward encrypted requests and responses between client and server. These messages are encrypted between client and server such that the relay learns nothing of the application data, beyond the length of the encrypted message and the server the client is interacting with.
 
 ---
 

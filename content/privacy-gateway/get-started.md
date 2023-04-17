@@ -8,8 +8,8 @@ weight: 3
 
 Privacy Gateway implementation consists of three main parts:
 
-1. Client configuration (operated by you).
-2. Application Gateway Server/backend configuration (operated by you).
+1. Application Gateway Server/backend configuration (operated by you).
+2. Client configuration (operated by you).
 3. Connection to a Privacy Gateway Relay Server (operated by Cloudflare).
 
 ---
@@ -58,7 +58,7 @@ Use the following resources for help with server configuration:
 
 ## Step 3 - Review your application
 
-After you have configured your client and server, review your application to make sure you are only sending intended data to Cloudflare:
+After you have configured your client and server, review your application to make sure you are only sending intended data to Cloudflare and the application backend. In particular, application data should not contain anything unique to an end-user, as this would invalidate the benefits that OHTTP provides.
 
 - Applications should scrub identifying user data from requests forwarded through the Privacy Gateway. This includes, for example, names, email addresses, phone numbers, etc.
 - Applications should encourage users to disable crash reporting when using Privacy Gateway. Crash reports can contain sensitive user information and data, including email addresses.
