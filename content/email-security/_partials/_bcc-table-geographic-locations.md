@@ -7,7 +7,6 @@ _build:
 
 Select from the following BCC addresses to keep email processing in the correct geographic location.
 
-
 Host | Location | Note
 --- | --- | ---
 `<customer_name>@mxrecord.io` | USA | 
@@ -16,4 +15,3 @@ Host | Location | Note
 `<customer_name>@mailstream-bom.mxrecord.mx` | India | Best option to ensure data stays in India.
 `<customer_name>@mailstream-india-primary.mxrecord.mx` | India | Same as `mailstream-bom.mxrecord.mx`, with fallback to US servers.
 `<customer_name>@mailstream-asia.mxrecord.mx` | India | Best option for companies with a broader Asia presence.
-
