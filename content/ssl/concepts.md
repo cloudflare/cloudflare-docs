@@ -29,25 +29,25 @@ flowchart LR
 
 ### Origin certificate
 
-[Origin certificates](/ssl/origin-configuration/) are complementary to [edge certificates](#edge-certificate) in the sense that they guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application. Origin cetificates are managed on your origin server.
+[Origin certificates](/ssl/origin-configuration/) guarantee the security and authentication on the other side of the network, between Cloudflare and the origin server of your website or application. Origin cetificates are managed on your origin server.
 
 [SSL/TLS encryption modes](/ssl/origin-configuration/ssl-modes/) control whether and how Cloudflare will use both these ceritifcates, and you can choose between different modes on the [SSL/TLS overview page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls).
 
 ## Validity period
 
-One common aspect of every SSL certificate is that they must have a fixed expiration date. If a certificate is expired, clients - such as your visitor's browser - will consider that a secure connection cannot be established, resulting in warnings or errors.
+One common aspect of every SSL/TLS certificate is that they must have a fixed expiration date. If a certificate is expired, clients - such as your visitor's browser - will consider that a secure connection cannot be established, resulting in warnings or errors.
 
-Different [certificate authorities (CAs)](#certificate-authority) support different validity periods and Cloudlfare works with them to guarantee that both [Universal](/ssl/edge-certificates/universal-ssl/) and [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) edge certificates are always renewed.
+Different [certificate authorities (CAs)](#certificate-authority) support different validity periods. Cloudlfare works with them to guarantee that both [Universal](/ssl/edge-certificates/universal-ssl/) and [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) edge certificates are always renewed.
 
 ## Certificate authority (CA)
 
-A [certificate authority (CA)](/ssl/reference/certificate-authorities/) is a trusted third party that generates and gives out SSL certificates. The CA digitally signs the certificates with their own private key, allowing client devices - such as your visitor's browser - to verify that the certificate is trustworthy.
+A [certificate authority (CA)](/ssl/reference/certificate-authorities/) is a trusted third party that generates and gives out SSL/TLS certificates. The CA digitally signs the certificates with their own private key, allowing client devices - such as your visitor's browser - to verify that the certificate is trustworthy.
 
-As explained in the article about [what is an ssl certificate](https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/), this means that, besides not being expired, an SSL certificate should be issued by a certificate authority (CA) in order to avoid warnings or errors.
+As explained in the article about [what is an ssl certificate](https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/), this means that, besides not being expired, an SSL/TLS certificate should be issued by a certificate authority (CA) in order to avoid warnings or errors.
 
 ## Validation level
 
-SSL certificates vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
+SSL/TLS certificates vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL/TLS certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
 
 Certificates issued through Cloudflare - [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates - are Domain Validated (DV). You can [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) if your organization needs OV or EV certificates.
 
