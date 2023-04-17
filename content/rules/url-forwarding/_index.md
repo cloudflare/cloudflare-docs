@@ -32,3 +32,7 @@ Bulk Redirects features and quotas are per account and they depend on the highes
 {{<feature-table id="rules.single_redirects">}}
 
 Single Redirects features and quotas are per zone and depend on the zone plan.
+
+## Execution order
+
+{{<render file="_product_execution_order.md">}}
