@@ -159,7 +159,6 @@
 /byoip/irr-records/verify-irr-entries/ /byoip/how-to/verify-irr-entries/ 301
 /byoip/loa/ /byoip/about/loa/ 301
 /byoip/loa/loa-template/ /byoip/about/loa/ 301
-/support/network/troubleshooting-for-byoip/ /byoip/troubleshooting/troubleshooting-for-byoip/ 301
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
@@ -654,7 +653,6 @@
 /workers/cli-wrangler/webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
 /workers/wrangler-legacy/migration/migrating-from-wrangler-1/ /workers/wrangler-legacy/migration/ 301
-
 /workers/deploying-workers/serverless/ /workers/learning/integrations/ 301
 /workers/deploying-workers/terraform/ /workers/learning/integrations/ 301
 /workers/examples/rustwasm/ /workers/tutorials/hello-world-rust/ 301
@@ -882,13 +880,13 @@
 /cloudflare-one/policies/data-loss-prevention/custom-profile/advanced-settings/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ 301
-
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
-
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 
 # Support
+# - BYOIP
+/support/network/troubleshooting-for-byoip/ /byoip/troubleshooting/ 301
 # - KB: https://support.cloudflare.com/hc/*/articles/5995821690637
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/other-languages/deutsch/migration-von-waf-verwalteten-regeln-zu-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
