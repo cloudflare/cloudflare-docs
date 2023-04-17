@@ -23,7 +23,7 @@ Turnstile also includes machine learning models that detect common features of e
 
 Customers are able to choose the widget type via Turnstile. This helps avoid [CAPTCHAs](https://www.cloudflare.com/learning/bots/how-captchas-work/), which also reduces the lifetimes of human time spent solving CAPTCHAs across the Internet.
 
-Turnstile can be embedded into various shapes or forms in an application from a visual widget into a completely invisibile widget running in the background.
+Turnstile can be embedded in various forms in an application, from a visual widget to a completely invisible widget running in the background.
 
 Turnstile [widget types](/turnstile/reference/widget-types/) include:
 
