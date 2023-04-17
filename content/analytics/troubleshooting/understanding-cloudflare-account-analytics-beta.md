@@ -1,21 +1,14 @@
 ---
-pcx_content_type: troubleshooting
-source: https://support.cloudflare.com/hc/en-us/articles/360037857831-Understanding-Cloudflare-Account-Analytics-beta-
+pcx_content_type: concept
 title: Understanding Cloudflare Account Analytics (beta)
 ---
 
 # Understanding Cloudflare Account Analytics (beta)
 
-## Overview
-
-The Cloudflare dashboard (Account) **Analytics** app is a major component of the overall Cloudflare analytics product line.  Specifically, you can access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
+The Cloudflare dashboard (Account) **Analytics** app is a major component of the overall Cloudflare analytics product line. Specifically, you can access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
 {{<Aside type="note">}}
-Read [Cloudflare Analytics: A quick
-overview](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: A quick overview")
-for general information about all of Cloudflare's analytics offerings.
-You can also understand the characteristics of the data that Cloudflare
-captures and processes.
+For general information about all of Cloudflare's analytics offerings, refer to [About Cloudflare Analytics](/fundamentals/data-products/about-analytics/).
 {{</Aside>}}
 
 ___
@@ -24,11 +17,11 @@ ___
 
 To view metrics for your site:
 
-1\. Log in to the Cloudflare dashboard.
+1. Log in to the Cloudflare dashboard.
 
-2\. Select the appropriate Cloudflare account.
+2. Select the appropriate Cloudflare account.
 
-3\. Under the **Home** tab, click **Analytics** to the right of the list of sites. 
+3. Under the **Home** tab, click **Analytics** to the right of the list of sites. 
 
 ![Selecting Analytics on the list of sites](/support/static/hc-dash-analytics-button-on-home-screen.png)
 
@@ -56,7 +49,7 @@ Also, note that:
 
 Below is a brief description of the major elements comprising the metrics available.
 
-HTTP Traffic
+#### HTTP Traffic
 
 These charts aggregate data for HTTP traffic, and include:
 
@@ -66,43 +59,36 @@ These charts aggregate data for HTTP traffic, and include:
 -   An interactive map that breaks down the number of requests by country
 -   A table combining numerical and spark line data, sorted by total number of requests per country
 
-Security
+#### Security
 
 ![Panel displaying lines highlighting encryption metrics: requests, requests rate, bandwidth, and bandwidth rate](/support/static/hc-dash-account-analytics_security_panel.png)
 
 This panel features spark lines highlighting various encryption metrics, including: _requests_, _requests rate_, _bandwidth_, and _bandwidth rate_.  These also include a comparative percentage change based on the previous period.
 
-Cache
+#### Cache
 
 ![Panel displaying lines for caching metrics: requests, requests rate, bandwidth, and bandwidth rate](/support/static/hc-dash-account-analytics_cache_card.png)
 
 This panel features spark lines for various caching metrics, including: _requests_, _requests rate_, _bandwidth_, and _bandwidth rate_.  These also include a comparative percentage change based on the previous equivalent period.  For example, if you selected _Last week_ as your time period, the previous period refers to the _week_ before.
 
-Errors
+#### Errors
 
 ![Panel displaying lines for 4xx and 5xx error rates](/support/static/hc-account-analytics_errors_card.png)
 
-This panel displays spark lines for 4xx and 5xx error rates, respectively.  Learn more about [HTTP Status Codes](https://support.cloudflare.com/hc/articles/115003014432-HTTP-Status-Codes). 
+This panel displays spark lines for 4xx and 5xx error rates, respectively. Learn more about [HTTP Status Codes](https://support.cloudflare.com/hc/articles/115003014432-HTTP-Status-Codes). 
 
-Network
+#### Network
 
 ![Statistics showing the percentage of requests that use a specific version of HTTP](/support/static/hc-dash-account-analytics_network_card.png)
 
-Client HTTP Version Used
+#### Client HTTP Version Used
 
 These statistics show the percentage of requests that use a specific version of HTTP.
 
-Traffic Served Over SSL
+#### Traffic Served Over SSL
 
 These statistics show the percentage of traffic that is encrypted using a specific version of SSL or TLS.
 
-Content Type Breakdown
+#### Content Type Breakdown
 
 These statistics show the number of requests based on the resource content type.
-
-___
-
-## Related resources
-
--   [Cloudflare Analytics: A quick overview](/analytics/)
--   [The Cloudflare Analytics GraphQL API](/analytics/)

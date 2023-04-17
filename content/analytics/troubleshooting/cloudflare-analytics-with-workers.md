@@ -1,12 +1,11 @@
 ---
 pcx_content_type: troubleshooting
-source: https://support.cloudflare.com/hc/en-us/articles/360007553512-Cloudflare-analytics-with-Workers
 title: Cloudflare analytics with Workers
 ---
 
 # Cloudflare analytics with Workers
 
-Intro text
+Learn how Cloudflare analytics tracks requests made by [Cloudflare Workers](/workers/).
 
 ## What is a subrequest?
 
