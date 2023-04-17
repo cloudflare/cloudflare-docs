@@ -7,7 +7,7 @@ weight: 4
 
 # Framework guides
 
-* [Deploy a Blazor Site](/pages/framework-guides/deploy-a-blazor-site/)
+* [Deploy a Blazor site](/pages/framework-guides/deploy-a-blazor-site/)
 * [Deploy a Brunch site](/pages/framework-guides/deploy-a-brunch-site/)
 * [Deploy a Docusaurus site](/pages/framework-guides/deploy-a-docusaurus-site/)
 * [**Deploy a Gatsby site**](/pages/framework-guides/deploy-a-gatsby-site/)
