@@ -1,0 +1,32 @@
+{
+    "modules": [ 
+        {
+            "folder": "security",
+            "uid": "ddos-concepts"
+        },
+        {
+            "folder": "security",
+            "uid": "ddos-baseline"
+        },
+        {
+            "folder": "security",
+            "uid": "ddos-intermediate"
+        },
+        {
+            "folder": "security",
+            "uid": "ddos-advanced"
+        }
+    ],
+    "title": "Prevent DDoS attacks",
+    "uid": "prevent-ddos-attacks",
+    "path": "/learning-paths/prevent-ddos-attacks/",
+    "priority": 2,
+    "description": "Protect your application from denial of service attacks.",
+    "products": [
+      "Cache",
+      "DDoS protection",
+      "SSL/TLS",
+      "Firewall"
+    ],
+    "category": ["Security", "Reliability"]
+}
