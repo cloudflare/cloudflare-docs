@@ -165,7 +165,7 @@
 /cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
 
 # china network
-/support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ 
+/support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ 301
 
 # cloudflare for platforms
 /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301
