@@ -182,7 +182,7 @@ You can find special sitekeys to be used for testing in the [testing](/turnstile
 {{</faq-item>}}
 
 {{<faq-item>}}
-{{<faq-question level=2 text="Is there an API to create or managed Turnstile Widgets?" >}}
+{{<faq-question level=2 text="Is there an API to create or manage Turnstile widgets?" >}}
 
 {{<faq-answer>}}
 
