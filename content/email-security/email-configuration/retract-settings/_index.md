@@ -16,15 +16,15 @@ Once you set up retraction, you can retract messages manually or set up automati
 
 ## Retraction metrics
 
-Setting up retraction also gives you access to metrics regarding this feature. After logging in to your Area 1 dashboard, search for the **Retractions** card. Metrics for retractions include information such as:
+Setting up retraction also gives you access to metrics for this feature. After logging in to your [Area 1 dashboard](https://horizon.area1security.com), search for the **Retractions** card. Metrics for retractions include information such as:
 
-- **Total retractions**: The total amount of retractions performed.
+- **Total retractions**: Displays the total amount of retractions performed.
 - **Success**: Shows the percentage of messages Area 1 was able to find and retract successfully.
-- **Fail**: Shows the percentage of messages Area 1 was not successfully able to retract. Reasons for failure include:
+- **Fail**: Displays the percentage of messages Area 1 was not successfully able to retract. Reasons for failure include:
     - The user has already deleted or marked the message as junk, either manually or via a mailbox filter.
-    - The specific copy of the message being retracted was sent to a distribution list address that may not exist as a mailbox, and so retraction will fail. Separate copies of the message that are sent to each member of that distribution list will be retracted.
+    - The specific copy of the message being retracted was sent to a distribution list address that may not exist as a mailbox, and so the retraction will fail. Separate copies of the message that are sent to each member of that distribution list will be retracted.
     - The retraction is not, or is no longer, authorized.
 - **Unread/Read**: Refers to the state of the message at the time it was retracted. For automated retractions, Area 1 tries to perform retraction as quickly as possible so the user has no time to see or open the message. Manual retraction might happen at a later time, and so the messages are more likely to have already been read.
-- **Auto/Manual**: Refers to the percentage of messages retracted through the auto/manual modes.
+- **Auto/Manual**: Refers to the percentage of messages retracted through the automatic/manual modes.
 
 Selecting **View details** will perform a search for retracted emails for the selected time interval.
