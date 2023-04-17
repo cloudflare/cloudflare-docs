@@ -165,10 +165,6 @@ access:
     - aud2 <Optional-additional-tags>
 ```
 
-{{<Aside type="note">}}
-The `access` rule is currently not available for tunnels managed through the dashboard.
-{{</Aside>}}
-
 ### connectTimeout
 
 Default: `30s`
