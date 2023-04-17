@@ -1,3 +1,4 @@
+{{- if (not (urls.Parse .Destination).IsAbs) -}}
 {{- $img := resources.Get .Destination -}}
 <!-- This value will only be computed if the image lives in the top-level /assets folder -->
 {{- with $img -}}
@@ -20,4 +21,10 @@
     {{ with .Title }} title="{{ . }}"{{ end }} />
 </p>
 {{- end -}}
-
+{{- else -}}
+<!-- If the image URL has a scheme (e.g., https://), do not perform any optimizations -->
+<p class="md__image">
+    <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" loading="lazy"
+    {{ with .Title }} title="{{ . }}"{{ end }} />
+</p>
+{{- end -}}
