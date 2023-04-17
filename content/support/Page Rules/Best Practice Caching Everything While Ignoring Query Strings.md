@@ -36,11 +36,13 @@ ___
 
 ## Option 1 - Use Cloudflare Cache Keys in Page Rules
 
-Once your cache key is activated for your Enterprise domain, you can add it to Page Rules as shown below:
+Adding the Page Rule setting `Custom Cache Key`, Enterprise customers can specify that query string should be ignored for this rule:
 
-![Old URL: https://support.cloudflare.com/hc/article_attachments/360021142052/cf-page-rules-custom-cache-key.png
-Article IDs: 360023040812 | Best Practice: Caching Everything While Ignoring Query Strings
-](/support/static/hc-import-cf_page_rules_custom_cache_key.png)
+![](https://pub-b11cfa59cb7d4012a2aa719519d4bc47.r2.dev/page-rules-query-string-setting.png)
+
+After the Page Rule is created, it will be added to the list of Page Rules in your zone, showing that it has a Custom Cache Key:
+
+![](https://pub-b11cfa59cb7d4012a2aa719519d4bc47.r2.dev/page-rules-with-custom-cache-key.png)
 
 In this example, the rule enforces the ignore query string cache key (${uri\_iqs) behaviour for all HTML pages and allows the rule creator to set the **Cache Level**: _Cache Everything_ setting that is also needed.
 
