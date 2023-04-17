@@ -17,19 +17,13 @@ ___
 
 To view metrics for your site:
 
-1. Log in to the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 2. Select the appropriate Cloudflare account.
 
-3. Under the **Home** tab, click **Analytics** to the right of the list of sites. 
+3. Go to **Analytics & Logs** > **Account Analytics**.
 
-![Selecting Analytics on the list of sites](/support/static/hc-dash-analytics-button-on-home-screen.png)
-
-Alternatively under **Menu**, locate the **Products** section and select **Analytics**. 
-
-![Under Menu, selecting Analytics in the Products section](/support/static/hc-dash-account-level-analytics_button.png)
-
-Once it loads, the Account Analytics app displays a collection of categorized charts with aggregated metrics for your account.  To understand the various metrics available, refer to _Review your account metrics_ below.
+Once it loads, the Account Analytics app displays a collection of categorized charts with aggregated metrics for your account. To understand the various metrics available, refer to _Review your account metrics_ below.
 
 ___
 
