@@ -15,7 +15,7 @@ This can be set up [with the API](/api/operations/magic-i-psec-tunnels-update-i-
 
 ```bash
 $ curl --request PUT \
- --url https://api.cloudflare.com/client/v4/accounts/<account_identifier>/magic/ipsec_tunnels/<tunnel_identifier> \
+ --url https://api.cloudflare.com/client/v4/accounts/{account_identifier}/magic/ipsec_tunnels/{tunnel_identifier} \
  --header 'Content-Type: application/json' \
  --header 'X-Auth-Email: <YOUR_EMAIL> ' \
  --data '{
@@ -135,6 +135,7 @@ Although the IPsec tunnel is working as is, we need to create Policy Based Routi
 To accomplish this, the tutorial uses [iproute2](https://en.wikipedia.org/wiki/Iproute2) to route IP packets from `172.63.240.252` to the tunnel interface.
 
 1. Go to `/etc/iproute2/`.
+
 2. Edit the `rt_tables` file to add a routing table number and name. In this example, we used `viatunicmp` as the name and `200` as the number for the routing table.
 
 ```txt
