@@ -5,54 +5,67 @@ title: Routes
 
 # Routes
 
-Routes allow users to map a URL pattern to a Worker. This enables Workers to run in front of [custom comains](/workers/platform/triggers/custom-domains/) or their own external application servers. Customers must manually create DNS records and certificates for routes to invoke over HTTP(S).
+Routes allow users to map a URL pattern to a Worker.
 
 There are three types of routes:
 
-1. Custom domain routes: Routes to a domain (such as `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
-2. Pattern routes: Routes that are set within a Cloudflare zone where your origin server, if you have one, is sitting behind a Worker that the Worker can communicate with.
-3. `workers.dev` route: A route between your Worker is the origin.
-
-Routes are comprised of:
-
-- Route URL (refer to [Matching Behavior](#matching-behavior)).
-- Worker script to execute on matching requests.
-- Failure mode for rate-limited accounts on the Free plan (refer to [daily request limits](/workers/platform/limits/#request-limits)).
+1. Pattern routes: Routes that are set within a proxied (orange-clouded) Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
+2. Custom domain routes: Routes to a domain (such as `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
+3. `workers.dev` route: The `workers.dev` subdomain route automatically created for your Worker that you can disable.
 
 ## Customize your routes
 
-Route setting will be different if your origin is Worker or origin server.
+Route setup will differ depending on if your application's origin is a Worker or not. When your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/). When your Worker is not the origin but is communicating with your origin, set up a pattern route by following the instructions below.
 
-### Worker is origin
+### Set up a route
 
-#### wrangler.toml
-#### dashboard
-### Origin server is origin
+To configure routes on a Worker that is not your origin server, you must have a valid, proxied (orange-clouded) domain on your Cloudflare zone that points to your origin.
 
-#### wrangler.toml
-#### dashboard
+Routes can also be created via the API. Refer to the [Workers Routes API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes) for more information. 
 
-## Routes with custom domains
+#### Set up a route in the dashboard
 
-Requests are routed through a Worker when the URL matches a route pattern assigned to that Worker. To add a route on a custom domain, you must have:
+To set up a route in the dashboard:
 
-1. An active Cloudflare zone.
-2. A valid proxied (orange-clouded) DNS record. 
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Workers** and select your Worker.
+3. Go to **Triggers** > **Routes** > **Add route**.
+4. Enter the pattern route and select the zone it applies to.
 
-{{<Aside type="note">}}
-If your route is configured to a hostname, you will need to add a DNS record to Cloudflare to ensure that the hostname can be resolved externally. If your Worker acts as your origin (that is, the request terminates in a Worker), you must add a DNS record.
+#### Set up a route in `wrangler.toml`
+
+To configure a route using your `wrangler.toml` file, use the following syntax and add the `zone_name` or `zone_id` option after each route. The - and - options are interchangeable and you can use whatever you want. Find the zone id in ---.
+
+```toml
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" },
+    // or
+	{ pattern = "subdomain-two.example.com/example", zone_id =" "aa00a000a0a0000000aaa0a0a0aa0aa0" }
+]
+```
+
+{{<Aside type="note" header="zone_id or zone_name">}}
+The `zone_id` and `zone_name` options are interchangeable. However, if using Cloudflare for SaaS with a `*/*` pattern, to avoid errors, use the `zone_name` options. Currently, [publishing `*/*` routes with a `zone_id` option fails with an `Invalid URL` error](https://github.com/cloudflare/workers-sdk/issues/2953).
 {{</Aside>}}
 
-3. A Worker to invoke.
-4. A certificate covering the relevant DNS record.
+### Set up a route (custom domains)
 
-Route patterns can be added with the Cloudflare dashboard or the Cloudflare API. To add a route using the API, refer to the [Create Route API for more information](https://developers.cloudflare.com/api/operations/worker-routes-create-route).
+If your Worker is the origin, the easiest way to set up a route is via Custom Domains. The use of pattern routes is available but more tedious. Refer to [Custom Domains] for [dashboard setup] and `wrangler.toml` setup instructions.
 
-To add a route through the Cloudflare dashboard:
+#### dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In **Account Home** > select **Workers**.
-3. Select your Worker > **Triggers** > **Add route**.
+Go to your Worker > Triggers > Custom Domains > Add custom domains. Add the custom domain you want. Cloudflare created the DNS record for you. This is the route that your Worker runs on. You can add multiple custom domain routes using the Custom Domains feature. 
+
+#### wrangler.toml
+
+To create a Custom Domain route in your `wrangler.toml` file, following the following syntax and make sure to add the `custom_domain=true` option on each route. For example, multiple Custom Domains may be configured like so:
+
+```toml
+routes = [
+	{ pattern = "subdomain.example.com", custom_domain = true },
+	{ pattern = "subdomain-two.example.com", custom_domain = true }
+]
+```
 
 ## Routes with `*.workers.dev`
 
@@ -60,7 +73,9 @@ Cloudflare Workers accounts come with a `*.workers.dev` subdomain that is config
 
 To claim a `*.workers.dev` subdomain, such as `<YOUR_SUBDOMAIN>.workers.dev`, go to **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **Your subdomain**. The `name` field in your Worker configuration is used as the preview subdomain for the deployed script, (for example, `my-worker.<YOUR_SUBDOMAIN>.workers.dev.`).
 
-### Matching behavior
+Some features are not available on the `workers.dev` route, such as the cache API. The `workers.dev` route is automatically set up. You can check this in the dashboard under Routes. To disable the `workers.dev` route, wrangler.toml way -> the dashboard will change to disabled. If you do a dashboard disable, the next time you publish and do not include workers_dev = false, it will re-enable. 
+
+## Matching behavior
 
 Route patterns look like this:
 
@@ -98,19 +113,7 @@ A route can be specified without being associated with a Worker. This will act t
 
 In this example, all requests destined for example.com and whose paths are prefixed by `/images/` would be routed to `worker-script`, _except_ for `/images/cat.png`, which would bypass Workers completely. Requests with a path of `/images/cat.png?foo=bar` would be routed to `worker-script`, due to the presence of the query string.
 
-## Configure your `wrangler.toml`
-
-To configure a route in your `wrangler.toml`, add the following to your environment:
-
-```toml
-routes = [
-    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
-]
-```
-
-If you have specified your zone ID in the environment of your `wrangler.toml`, you will not need to write it again in object form.
-
-### Validity
+## Validity
 
 The following set of rules govern route pattern validity.
 
