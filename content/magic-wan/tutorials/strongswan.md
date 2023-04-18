@@ -83,8 +83,8 @@ conn cloudflare-ipsec
     leftid=<YOUR_TUNNEL_ID>.ipsec.cloudflare.com
     leftsubnet=0.0.0.0/0
     # Cloudflare anycast IP
-    right=162.159.67.88
-    rightid=162.159.67.88
+    right=<YOUR_CLOUDFLARE_ANYCAST_IP>
+    rightid=<YOUR_CLOUDFLARE_ANYCAST_IP>
     rightsubnet=0.0.0.0/0
     rightauth=psk
     ike=aes256-sha256-modp2048!
