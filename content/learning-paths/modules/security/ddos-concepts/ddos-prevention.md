@@ -23,7 +23,7 @@ Requests can come to your origin server in two ways, from your web application a
 
 ---
 
-## Reduce application requests
+## Reduce application requests to the origin
 
 ### Caching
 
