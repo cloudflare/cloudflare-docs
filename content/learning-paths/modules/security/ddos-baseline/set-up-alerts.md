@@ -7,8 +7,6 @@ layout: learning-unit
 
 Another part of preparing for DDoS attacks is knowing when your application is being attacked.
 
-Cloudflare offers [notifications for DDoS attacks](/fundamentals/notifications/notification-available/#ddos-protection), which you can set up on your account.
+Cloudflare offers notifications for DDoS attacks, which you can set up on your account.
 
-To set up a DDoS notification:
-
-{{<render file="_create-notification.md" productFolder="fundamentals" withParameters="**DDoS Protection**">}}
+{{<render file="_create-notification.md" productFolder="ddos-protection">}}

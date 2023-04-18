@@ -30,3 +30,5 @@ This obscurity makes it harder for someone to connect directly to your origin, w
 ## Additional resources
 
 For more information about how to proxy DNS records and potential limitations, refer to [Proxy status](/dns/manage-dns-records/reference/proxied-dns-records/).
+
+Before proxying your records, you should likely [allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
