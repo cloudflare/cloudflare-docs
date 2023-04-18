@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;anycastURL;;trafficRoutesAPI;;renderPartial
+inputParameters: productName;;anycastURL;;trafficRoutesAPI
 ---
 
 # Configure static routes
