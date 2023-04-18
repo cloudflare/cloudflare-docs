@@ -12,7 +12,7 @@ This page defines and articulates key concepts that are relevant to Cloudflare S
 
 ## SSL/TLS certificate
 
-An SSL/TLS certificate is what enables websites and applications to establish secure connections. Via SSL/TLS, a client - such as a browser - can verify the authenticity and integrity of the server it is connecting with, and use encryption to exchange information.
+An SSL/TLS certificate is what enables websites and applications to establish secure connections. With SSL/TLS, a client - such as a browser - can verify the authenticity and integrity of the server it is connecting with, and use encryption to exchange information.
 
 Since [Cloudflare's global network](https://www.cloudflare.com/network/) is at the core of several products and services that Cloudflare offers, what this implies in terms of SSL/TLS is that, instead of only one certificate, there can actually be two certificates involved in a single request: an edge certificate and an origin certificate.
 
@@ -71,6 +71,6 @@ While for most cases you do not have to worry about this list or how it is used 
 
 ## Chain of trust
 
-Depending on your organization requirements, or if you have to troubleshoot an issue with your certificates for example, you might come across the terms root certificate, intermediate certificate and leaf certificate.
+Depending on your organization requirements, or if you have to troubleshoot an issue with your certificates, for example, you might come across the terms root certificate, intermediate certificate and leaf certificate.
 
 These terms refer to the way in which the certificate presented to a client - the leaf certificate - has to be traceable back to a trusted certificate authority (CA) certificate - the [root certificate](https://en.wikipedia.org/wiki/Root_certificate). This process is structured arround a [chain of trust](https://en.wikipedia.org/wiki/Chain_of_trust).
