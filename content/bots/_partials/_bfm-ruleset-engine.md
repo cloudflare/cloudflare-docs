@@ -7,8 +7,8 @@ _build:
 
 Super Bot Fight Mode runs during the `http_request_sbfm` phase of the [Ruleset Engine](/ruleset-engine/about/phases/).
 
-<Aside type='warning' header='Changes to SBFM Rulesets are incoming'>
+<Aside type='warning' header='Change notice for Super Bot Fight Mode rulesets'>
 
-We are changing the way that Super Bot Fight Mode rules are configured. **No action is need at this time**. However, be aware that we will be deprecating the ability to modify the `http_request_sbfm` phase via the public API.
+Cloudflare is changing the way you configure Super Bot Fight Mode rules. No action is need at this time. However, Cloudflare will deprecate the ability to modify the `http_request_sbfm` phase via the public Cloudflare API.
 
 </Aside>
