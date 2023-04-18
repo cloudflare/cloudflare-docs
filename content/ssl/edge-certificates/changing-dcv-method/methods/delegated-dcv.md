@@ -48,6 +48,7 @@ For example, a certificate covering `example.com`, `*.example.com`, and `sub.exa
 
 ```txt
 _acme-challenge.example.com CNAME .example.com.<COPIED_HOSTNAME>.
+_acme-challenge.example.com CNAME *.example.com.<COPIED_HOSTNAME>.
 _acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_HOSTNAME>.
 ```
 
