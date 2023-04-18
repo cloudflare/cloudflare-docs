@@ -16,7 +16,7 @@ Privacy Gateway implementation consists of three main parts:
 
 ## Before you begin
 
-Privacy Gateway is currently in closed beta. If you’re interested, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
+Privacy Gateway is currently in closed beta. If you are interested, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
 
 ---
 
