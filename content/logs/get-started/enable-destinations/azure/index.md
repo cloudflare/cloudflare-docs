@@ -23,7 +23,7 @@ To enable the Cloudflare Logpush service:
 
 3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Add Logpush job**. A modal window opens where you will need to complete several steps.
 
 5.  Select the data set you want to push to a storage service.
 
@@ -60,7 +60,7 @@ To enable Logpush to Azure:
 
     - Logpush requires a service-level SAS or an account-level SAS token.
     - To create a SAS token:
-      - Service-level SAS token: 
+      - Service-level SAS token:
         1. Navigate to `Storage Explorer (preview)` under storage account.
         2. Choose relevant blob container, and generate SAS token:
           - Provide expiry time at least five years into the future (from now).
