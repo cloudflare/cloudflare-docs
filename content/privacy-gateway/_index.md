@@ -31,6 +31,6 @@ Privacy Gateway is currently in closed beta – available to select privacy-orie
 Learn how to set up Privacy Gateway for your application.
 {{</feature>}}
 
-{{<feature header="About" href="/privacy-gateway/about/" cta="Learn more">}}
+{{<feature header="Legal" href="/privacy-gateway/reference/legal/" cta="Learn more">}}
 Learn about the different parties and data shared in Privacy Gateway.
 {{</feature>}}

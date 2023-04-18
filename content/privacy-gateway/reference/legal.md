@@ -19,3 +19,8 @@ While Cloudflare will never see the contents of the encrypted application HTTP r
 ## What Cloudflare stores
 
 Cloudflare retains the Privacy Gateway Logs information for the most recent quarter plus one month (approximately 124 days).
+
+## What Privacy Gateway customers see
+
+- The application content of requests.
+- The IP address and associated metadata of the Cloudflare Privacy Gateway server the request came from.
