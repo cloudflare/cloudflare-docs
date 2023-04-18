@@ -15,14 +15,13 @@ export async function onRequestGet() {
 
       Object.keys(schema.paths).forEach(key => {
         const path = schema.paths[key]
-        const endpoint = Object.values(path)[0]
-        if (endpoint) {
+        const tag = Object.values(path).find(endpoint => {
           const tags = endpoint.tags
-          const tag = tags && tags.length ? tags[0] : null
-          if (tag) {
-            if (!pathsByTag[tag]) pathsByTag[tag] = []
-            pathsByTag[tag].push({ path, key })
-          }
+          return tags && tags.length && tags[0]
+        })
+        if (tag) {
+          if (!pathsByTag[tag]) pathsByTag[tag] = []
+          pathsByTag[tag].push({ path, key })
         }
       })
 
