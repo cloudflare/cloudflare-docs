@@ -108,4 +108,4 @@ ___
 
 -   [Increasing Cache Hit Rates with Query String Sort](https://blog.cloudflare.com/increasing-cache-hit-rates-with-query-string-sort/)
 -   [Caution When Enabling Query String Sort With WordPress Admin Pages](https://support.cloudflare.com/hc/en-us/articles/360031777052-Caution-when-enabling-Query-String-Sort-with-WordPress-admin-pages)
--   [Best Practice: Caching Everything While Ignoring Query Strings](https://support.cloudflare.com/hc/en-us/articles/360023040812-Best-Practice-Caching-Everything-While-Ignoring-Query-Strings)
+-   [Best Practice: Caching Everything While Ignoring Query Strings](/cache/troubleshooting/best-practice-caching-everything-while-ignoring-query-strings/)

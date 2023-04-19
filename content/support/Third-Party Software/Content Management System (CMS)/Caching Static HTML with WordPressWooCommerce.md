@@ -44,7 +44,7 @@ ___
 4\. Select the appropriate settings to cache static HTML:
 
 -   _Cache Everything_ instructs Cloudflare to cache static HTML.
--   When the _Bypass Cache on Cookie_ rule matches the criteria you set, Cloudflare won't cache HTML (([whilst static images and other files will still be cached](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)). Depending on whether you're using raw WordPress, or WooCommerce, you should use one of the configurations below:
+-   When the _Bypass Cache on Cookie_ rule matches the criteria you set, Cloudflare won't cache HTML ([though static images and other files will still be cached](/cache/about/default-cache-behavior/)). Depending on whether you're using raw WordPress, or WooCommerce, you should use one of the configurations below:
 
 {{<Aside type="warning">}}
 

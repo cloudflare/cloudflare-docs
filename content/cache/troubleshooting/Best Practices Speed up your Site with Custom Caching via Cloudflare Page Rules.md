@@ -26,11 +26,11 @@ When configuring caching settings in the **Page Rules** app, you’re essentia
 
 For background information on Cloudflare’s caching tools and options, consult:
 
--   [Which file extensions does Cloudflare cache for static content?](https://support.cloudflare.com/hc/articles/200172516)
--   [Getting started with Cloudflare caching](https://support.cloudflare.com/hc/articles/360021806811)
+-   [Which file extensions does Cloudflare cache for static content?](/cache/about/default-cache-behavior/)
+-   [Getting started with Cloudflare caching](/cache/get-started/)
 -   [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427)
--   [What are Cloudflare's caching levels?](https://support.cloudflare.com/hc/articles/200168256-What-are-Cloudflare-s-caching-levels-)
--   [How can I tell if Cloudflare is caching my site or a specific file?](https://support.cloudflare.com/hc/articles/200172516)
+-   [What are Cloudflare's caching levels?](/cache/how-to/set-caching-levels)
+-   [How can I tell if Cloudflare is caching my site or a specific file?](/cache/about/default-cache-behavior/)
 
 ___
 
@@ -49,7 +49,7 @@ To add a _Cache Everything_ page rule:
 5.  Select the _Cache Everything_ setting value.
 6.  Save and deploy the rule.
 
-In conclusion, this recommendation is only appropriate for HTML pages that are static and anonymous. To learn more, refer to [How do I use Cache Everything with Cloudflare?](https://support.cloudflare.com/hc/articles/202775670)
+In conclusion, this recommendation is only appropriate for HTML pages that are static and anonymous. To learn more, refer to [How do I use Cache Everything with Cloudflare?](/cache/best-practices/customize-cache/)
 
 ___
 
@@ -59,22 +59,22 @@ Customers with Business and Enterprise domains have additional Page Rules settin
 
 Below, we provide links to articles with specific instructions on implementing this recommendation. However, we can summarize the process as follows:
 
-1\. Create a new page rule for the desired URL pattern.
+1. Create a new page rule for the desired URL pattern.
 
-2\. Add the following three settings:
+2. Add the following three settings:
 
 -   _Cache Everything_ \- to act as catch all for static, anonymous content
 -   _Bypass Cache on Cookie_ (available to Business and Enterprise domains only) - to bypass caching everything if the request has a matching cookie
 -   _Edge Cache TTL_ \- to specify how long Cloudflare should keep the cached resource in our edge network before asking the origin for it again
 
-3\. Save and deploy your new rule
+3. Save and deploy your new rule
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 As an alternative to *Edge Cache TTL* (third bullet point in item 2
 above), you could use the\* Origin Cache Control\* setting if you
 believe the cache-control headers set in your origin server are
 appropriate. *Learn more about [Origin Cache
-Control](https://support.cloudflare.com/hc/en-us/articles/115003206852 "Understanding Origin Cache-Control").*
+Control](/cache/about/cache-control/).*
 {{</Aside>}}
 
 To learn more about the technique described, consult:
@@ -82,6 +82,6 @@ To learn more about the technique described, consult:
 -   [Caching Anonymous Page Views](https://blog.cloudflare.com/caching-anonymous-page-views/)
 -   [Caching Anonymous Page Views with WordPress or WooCommerce](https://support.cloudflare.com/hc/articles/236166048)
 -   [Caching Anonymous Page Views with Magento 1 and Magento 2](https://support.cloudflare.com/hc/articles/236168808)
--   [How do I cache static HTML?](https://support.cloudflare.com/hc/articles/202775670)
+-   [How do I cache static HTML?](/cache/best-practices/customize-cache/)
 
-Note that the Cloudflare **Caching** app allows you to purge the cache so that new requests are sent to the origin for re-fetching. To learn more, refer to [How do I purge my cache?](https://support.cloudflare.com/hc/articles/200169246-)
+Note that the Cloudflare **Caching** app allows you to purge the cache so that new requests are sent to the origin for re-fetching. To learn more, refer to [How do I purge my cache?](/cache/how-to/purge-cache/)
