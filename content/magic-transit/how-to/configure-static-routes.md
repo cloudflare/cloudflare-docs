@@ -8,4 +8,4 @@ weight: 2
 
 {{<render file="_static-routes2-prefixes-smaller-24.md">}}
 
-{{<render file="_static-routes3.md" withParameters="**Magic Transit** > **Manage Magic Transit configuration** > **Configure**">}}
+{{<render file="_static-routes3.md" withParameters="**Magic Transit** > **Manage Magic Transit configuration** > **Configure**;;/magic-transit/how-to/configure-tunnels/">}}

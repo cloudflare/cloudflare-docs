@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: createPath
+inputParameters: createPath;;tunnelEndpoints
 ---
 
 ## Scoped routes for Anycast GRE or IPsec tunnels
@@ -50,7 +50,7 @@ Configure scoping for your traffic in the Region code section when adding or edi
 3. Select **Static Routes** > **Create** to add a new route.
 4. Enter a descriptive name for your route in **Description**.
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
-6. In **Tunnel/Next hop** select which tunnel you want your route to go through.
+6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in [Configure tunnel endpoints]($2).
 7. Choose the **Priority** and, optionally, a **Weight** for your route. Refer to [Edge routing configuration example](#edge-routing-configuration-example) for examples of this.
 8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
 9. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
