@@ -58,6 +58,8 @@ To check your Wrangler version, run:
 
 ```sh
 $ wrangler --version
+// or run:
+$ wrangler version
 ```
 
 ### Update Wrangler locally
