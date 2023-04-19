@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: Troubleshooting Caching
+title: Troubleshooting
 weight: 5
 ---
 
