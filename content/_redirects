@@ -659,8 +659,8 @@
 /workers/examples/signed-request/ /workers/examples/signing-requests/ 301
 /workers/faq/ /workers/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
-/workers/kv/reading-data/ /workers/platform/storage-objects/ 301
-/workers/kv/writing-data/ /workers/platform/storage-objects/ 301
+/workers/kv/reading-data/ /workers/platform/storage-options/ 301
+/workers/kv/writing-data/ /workers/platform/storage-options/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
 /workers/learning/profiling-workers/ /workers/learning/ 301
@@ -695,13 +695,13 @@
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
 /workers/reference/request-attributes/ /workers/runtime-apis/request/ 301
 /workers/reference/runtime/apis/ /workers/runtime-apis/ 301
-/workers/reference/storage/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/api/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/limitations/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/namespaces/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/overview/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/reading-data/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/writing-data/ /workers/platform/storage-objects/ 301
+/workers/reference/storage/ /workers/platform/storage-options/ 301
+/workers/reference/storage/api/ /workers/platform/storage-options/ 301
+/workers/reference/storage/limitations/ /workers/platform/storage-options/ 301
+/workers/reference/storage/namespaces/ /workers/platform/storage-options/ 301
+/workers/reference/storage/overview/ /workers/platform/storage-options/ 301
+/workers/reference/storage/reading-data/ /workers/platform/storage-options/ 301
+/workers/reference/storage/writing-data/ /workers/platform/storage-options/ 301
 /workers/reference/tooling/ /workers/wrangler/ 301
 /workers/reference/tooling/api/ /api/operations/worker-script-list-workers 301
 /workers/reference/workers-concepts/using-cache/ /workers/learning/how-the-cache-works/ 301
@@ -769,7 +769,7 @@
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
-/workers/get-started/storage-objects/ /workers/platform/storage-objects 301
+/workers/get-started/storage-options/ /workers/platform/storage-options 301
 /workers/platform/routing/ /workers/learning/how-routing-works/ 301
 /workers/platform/routing/custom-domains/ /workers/platform/triggers/custom-domains/ 301
 /workers/platform/routing/routes/ /workers/platform/triggers/routes/ 301
@@ -777,6 +777,7 @@
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 /workers/runtime-apis/headers/ /workers/platform/headers/ 301
+/workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 
 # zaraz
 
