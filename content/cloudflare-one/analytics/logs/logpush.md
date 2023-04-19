@@ -44,5 +44,5 @@ Refer to the Logpush documentation for a list of available fields.
 | [Audit Logs](/logs/reference/log-fields/account/audit_logs/)                    | Authentication events through Cloudflare Access                |
 | [Access Requests](/logs/reference/log-fields/account/access_requests/)          | HTTP requests to sites protected by Cloudflare Access          |
 | [CASB Findings](/logs/reference/log-fields/account/casb_findings/)              | Security issues detected by Cloudflare CASB                    |
-| Device Posture                                                                  | Device posture status from the WARP client                     |
+| [Device Posture](/logs/reference/log-fields/account/device_posture_results/)    | Device posture status from the WARP client                     |
 | [Session Logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) | Network session logs for traffic proxied by Cloudflare Gateway |
