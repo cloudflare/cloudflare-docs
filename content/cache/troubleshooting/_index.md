@@ -4,6 +4,6 @@ title: Troubleshooting
 weight: 5
 ---
 
-# Troubleshooting Caching
+# Troubleshooting
 
 {{<directory-listing>}}
