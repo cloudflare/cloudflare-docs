@@ -35,11 +35,11 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 
 {{<table-wrap>}}
 
-| Language | Template                                                                                          |
-| -------- | ------------------------------------------------------------------------------------------------- |
-| Rust     | [cloudflare/rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template)     |
-| C        | [cloudflare/workers-sdk/templates/worker-emscripten](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-emscripten) |
-| Cobol    | [cloudflare/cobol-worker-template](https://github.com/cloudflare/cobol-worker-template)           |
+| Language | Details                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------- |
+| Rust     | [Guide](/workers/platform/web-assembly/rust/)                                                            |
+| C        | [Template](https://github.com/cloudflare/workers-sdk/tree/main/templates/experimental/worker-emscripten) |
+| Cobol    | [Template](https://github.com/cloudflare/cobol-worker-template)                                          |
 
 {{</table-wrap>}}
 

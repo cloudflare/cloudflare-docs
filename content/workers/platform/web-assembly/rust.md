@@ -8,7 +8,7 @@ meta:
 
 # Rust WebAssembly Guide
 
-This guide will show how to get started with using Rust to build WebAssembly Workers. There are many configurations that can be used to produce WASM binaries which are compatible with Workers, but this guide will focus on using [`workers-rs`](https://github.com/cloudflare/workers-rs), which provides the most fully-featured experience. 
+This guide will show how to get started with using Rust to build WebAssembly Workers. There are many configurations that can be used to produce Wasm binaries which are compatible with Workers, but this guide will focus on using [`workers-rs`](https://github.com/cloudflare/workers-rs), which provides the most fully-featured experience. 
 
 This guide assumes that you have the following installed:
 * A recent version of [`Rust`](https://rustup.rs/) 
@@ -35,10 +35,10 @@ $ cd hello-world-rust
 
 Here you will find the following files and folders:
 
-* `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for WASM on Workers.
+* `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
-* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (See [bundling](/workers/get-started/web-assembly/rust/#bundling-worker-build)).
+* `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (See [bundling](/workers/platform/web-assembly/rust/#bundling-worker-build)).
 * `src` - Rust source directory, pre-populated with simple "Hello World" Worker.
 
 ## 2. Develop Locally
@@ -75,7 +75,7 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
 There is some magic going on here:
 
 1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers. 
-1. `async` is not generally supported by WASM, but you are able to use `async` in a `workers-rs` project (see [`async`](/workers/get-started/web-assembly/rust/#async-wasm-bindgen-futures)). 
+1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (see [`async`](/workers/platform/web-assembly/rust/#async-wasm-bindgen-futures)). 
 {{</Aside>}}
 
 ### Runtime API Tour
@@ -143,12 +143,12 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 ## How This Works
 
-WASM Workers are invoked from a JavaScript entrypoint script which is created automatically for you when using `workers-rs`. 
+Wasm Workers are invoked from a JavaScript entrypoint script which is created automatically for you when using `workers-rs`. 
 
 ### JavaScript Plumbing (`wasm-bindgen`)
 
-To access platform features such as bindings, WASM Workers must be able to access methods from the JavaScript runtime API. 
-This interoperability is achieved using [`wasm-bindgen`](https://rustwasm.github.io/wasm-bindgen/), which provides the glue code needed to import runtime APIs to, and export event handlers from, the WASM module. `wasm-bindgen` also provides [`js-sys`](https://docs.rs/js-sys/latest/js_sys/),
+To access platform features such as bindings, Wasm Workers must be able to access methods from the JavaScript runtime API. 
+This interoperability is achieved using [`wasm-bindgen`](https://rustwasm.github.io/wasm-bindgen/), which provides the glue code needed to import runtime APIs to, and export event handlers from, the Wasm module. `wasm-bindgen` also provides [`js-sys`](https://docs.rs/js-sys/latest/js_sys/),
 which implements types for interacting with JavaScript objects. In practice, this is an implementation detail, as `workers-rs`'s API handles conversion to and from JavaScript objects, and interaction with imported JavaScript runtime APIs for you.
 
 ### Async (`wasm-bindgen-futures`)
@@ -159,7 +159,7 @@ into a single JavaScript Promise and run on the JavaScript event loop. Calls to 
 
 ### Bundling (`worker-build`)
 
-To run the resulting WASM binary on Workers, `workers-rs` includes a build tool called [`worker-build`](https://github.com/cloudflare/workers-rs/tree/main/worker-build) which: 
+To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool called [`worker-build`](https://github.com/cloudflare/workers-rs/tree/main/worker-build) which: 
 
 1. Creates a JavaScript entrypoint script that properly invokes the module using `wasm-bindgen`'s JavaScript API.  
 2. Invokes `web-pack` to minify and bundle the JavaScript code.
@@ -169,7 +169,7 @@ To run the resulting WASM binary on Workers, `workers-rs` includes a build tool 
 
 ### Binary Size (`wasm-opt`)
 
-Unoptimized Rust WASM binaries can be large and may exceed Worker bundle size limits or experience long startup times. The template project pre-configures several useful size optimizations in your `Cargo.toml` file:
+Unoptimized Rust Wasm binaries can be large and may exceed Worker bundle size limits or experience long startup times. The template project pre-configures several useful size optimizations in your `Cargo.toml` file:
 
 ```toml
 [profile.release]
@@ -182,4 +182,4 @@ Finally, `worker-bundle` automatically invokes [`wasm-opt`](https://github.com/b
 
 ## Useful Links
 
-* [Rust WASM Book](https://rustwasm.github.io/book/introduction.html)
+* [Rust Wasm Book](https://rustwasm.github.io/book/introduction.html)

@@ -6,6 +6,9 @@ weight: 2
 
 # WebAssembly (WASM)
 
+[WebAssembly](https://webassembly.org/) (abbreviated Wasm) is a binary instruction format for a stack-based virtual machine.
+Many [languages](http://localhost:5174/workers/platform/languages/#wasm-supported) can be compiled to Wasm and run on Workers.
+
 Guides are available for the following languages:
 
 {{<directory-listing>}}
@@ -22,7 +25,7 @@ SIMD is supported on Workers. For more information on using SIMD in WebAssembly,
 
 Threading is not possible in Workers because each Worker runs in a single thread to mitigate timing attacks, and the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) API is not supported.
 
-## Considerations
+## Binary Size
 
 WebAssembly tends to produce larger Workers bundles than JavaScript Workers. Cloudflare limits the size of Workers bundles for performance reasons. This limit will increase over time, however larger bundle size may still impact script startup time. You should
 use tools like [`wasm-opt`](https://github.com/brson/wasm-opt-rs) to optimize the WASM binary, and limit the number of dependencies
