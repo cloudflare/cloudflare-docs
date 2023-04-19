@@ -6,13 +6,9 @@ title: Best practices Speed up your Site with Custom Caching via Cloudflare Page
 
 # Best practices: Speed up your Site with Custom Caching via Cloudflare Page Rules
 
+Caching is a fundamental feature of the Cloudflare Content Delivery Network (CDN). As such, our global network automatically caches a lot of content around the world. When visitors request a cached resource, it is served from the data center closest to them and therefore, the content loads faster.
 
-
-## Overview
-
-Edge caching is a fundamental feature of the Cloudflare Content Delivery Network (CDN). As such, our edge network automatically caches a lot of content around the world. When visitors request a cached resource, it is served from the data center closest to them and therefore, the content loads faster.
-
-You can speed up your site’s performance even further thanks to the multiple caching settings available in **Cloudflare Page Rules**. Beyond the automatic caching Cloudflare offers by default, these additional best practices help you achieve even greater performance.
+You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/about/cache-rules/) or [Page rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). Beyond the automatic caching Cloudflare offers by default, these additional best practices help you achieve even greater performance.
 
 ___
 
@@ -70,11 +66,9 @@ Below, we provide links to articles with specific instructions on implementing t
 3. Save and deploy your new rule
 
 {{<Aside type="note">}}
-As an alternative to *Edge Cache TTL* (third bullet point in item 2
-above), you could use the\* Origin Cache Control\* setting if you
+As an alternative to *Edge Cache TTL*, you could use the [Origin Cache Control](/cache/about/cache-control/) setting if you
 believe the cache-control headers set in your origin server are
-appropriate. *Learn more about [Origin Cache
-Control](/cache/about/cache-control/).*
+appropriate.
 {{</Aside>}}
 
 To learn more about the technique described, consult:

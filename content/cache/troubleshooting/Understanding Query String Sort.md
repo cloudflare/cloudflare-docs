@@ -6,20 +6,14 @@ title: Understanding Query String Sort
 
 # Understanding Query String Sort
 
+**Query String Sort** increases cache-hit rates by first sorting query strings into a consistent order before checking the Cloudflare cache.
 
-
-## Overview
-
-{{<Aside type="note">}}
-Query String Sort is only available to Enterprise customers.
-{{</Aside>}}
-
-By default, Cloudflare’s cache treats resources as distinct if their URL query strings are in a different order.  For instance, these resources are cached separately:
+By default, Cloudflare’s cache treats resources as distinct if their URL query strings are in a different order. For instance, these resources are cached separately:
 
 -   `/video/48088296?title=0&byline=0&portrait=0&color=51a516`
 -   `/video/48088296?byline=0&color=51a516&portrait=0&title=0`
 
-**Query String Sort** increases cache-hit rates by first sorting query strings into a consistent order before checking the Cloudflare cache. If two query strings exist with the same name, the URL is sorted by the parameter value.  For example:
+Query String Sort changes this behavior. If two query strings exist with the same name, the URL is sorted by the parameter value. For example:
 
 `/example/file?word=alpha&word=beta and /example/file?word=beta&word=alpha`
 
@@ -27,18 +21,20 @@ are sorted to:
 
 `/example/file?word=alpha&word=beta`
 
+{{<Aside type="note">}}
+Query String Sort is only available to Enterprise customers.
+{{</Aside>}}
+
 ___
 
 ## Enable Query String Sort
 
-**Query String Sort** is available in the Cloudflare dashboard under the **Caching** app.
+To enable Query String Sort:
 
-1.  Log into your Cloudflare account.
-2.  Choose the appropriate domain for which you want to enable Query String Sort.
-3.  Click the **Caching** app.
-4.  Scroll down to **Enable Query String Sort**
-
-Toggle the switch to _On_.
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and zone.
+3. Go to **Caching** > **Configuration**.
+4. For **Enable Query String Sort**, switch the toggle to **On**.
 
 ___
 
@@ -61,7 +57,7 @@ ___
 
 The screenshot below shows an example where resources in the Media Library are not rendered correctly and the browser debugging console reveals that the page is throwing an error:
 
-![](/support/static/media_library_enabling_query.png)
+![Resources in the Media Library are not rendered correctly](/support/static/media_library_enabling_query.png)
 
 When the page `load-scripts.php` loads, the browser sends a request to Cloudflare for:
 
@@ -107,5 +103,4 @@ ___
 ## Related resources
 
 -   [Increasing Cache Hit Rates with Query String Sort](https://blog.cloudflare.com/increasing-cache-hit-rates-with-query-string-sort/)
--   [Caution When Enabling Query String Sort With WordPress Admin Pages](https://support.cloudflare.com/hc/en-us/articles/360031777052-Caution-when-enabling-Query-String-Sort-with-WordPress-admin-pages)
 -   [Best Practice: Caching Everything While Ignoring Query Strings](/cache/troubleshooting/best-practice-caching-everything-while-ignoring-query-strings/)
