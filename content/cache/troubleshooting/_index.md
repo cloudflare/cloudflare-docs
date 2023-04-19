@@ -6,4 +6,6 @@ weight: 5
 
 # Troubleshooting
 
+The following topics are useful for troubleshooting Cache issues.
+
 {{<directory-listing>}}
