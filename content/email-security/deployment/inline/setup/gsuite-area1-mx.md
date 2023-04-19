@@ -161,9 +161,10 @@ MX Priority | Host
 `10`          | `alt3.aspmx.l.google.com`
 `10`          | `alt4.aspmx.l.google.com`
 
-To update your MX records with Area 1, use the following:
+You need to update your MX records with Area 1. For example:
 
 {{<render file="_mx-deployment-values.md">}}
+{{<render file="_mx-geographic-locations.md">}}
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 

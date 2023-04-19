@@ -116,16 +116,4 @@ Assign the Incoming Content Filters created in [step 3](#3-create-incoming-conte
 
 ## 5. Geographic locations
 
-Select from the following MX records to keep email processing in the correct geographic location.
-
-{{<table-wrap>}}
-
-Host | Location | Note
---- | --- | ---
-`mailstream-central.mxrecord.mx` <br /> `mailstream-east.mxrecord.io` <br /> `mailstream-west.mxrecord.io` | USA
-`mailstream-eu1.mxrecord.io` | EU | Prioritizes email flow through Germany.
-`mailstream-bom.mxrecord.mx` | India | Best option to ensure data stays in India. For compliance purposes use this MX record. Note, however, there is no redundancy should something go wrong.
-`mailstream-india-primary.mxrecord.mx` | India | Same as `mailstream-bom.mxrecord.mx`, with fallback to US servers.
-`mailstream-asia.mxrecord.mx` | India | Best option for companies with a broader Asia presence.
-
-{{</table-wrap>}}
+{{<render file="_mx-geographic-locations.md">}}

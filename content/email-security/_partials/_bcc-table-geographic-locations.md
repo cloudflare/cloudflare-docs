@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Select from the following BCC addresses to keep email processing in the correct geographic location.
+Select from the following BCC addresses to process email in the correct geographic location.
 
 Host | Location | Note
 --- | --- | ---
