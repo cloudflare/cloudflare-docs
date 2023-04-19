@@ -14,7 +14,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 {{<definitions>}}
 
-- {{<code>}}addEventListener(type, listener){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}addEventListener(type, listener){{</code>}} : {{<type>}}void{{</type>}}
 
   - If multiple `"fetch"` listeners are registered, when one does not call [`event.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith), the runtime delivers the event to the next registered listener.
   - A `"fetch"` listener, `"scheduled"` listener, and `"queue"` listener can be registered in the same script.
@@ -22,7 +22,7 @@ The `addEventListener` function defines triggers for a Worker script to execute.
 
 {{</definitions>}}
 
-### Properties
+### Parameters
 
 {{<definitions>}}
 

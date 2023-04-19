@@ -35,15 +35,15 @@ addEventListener('fetch', event => {
 
   - The incoming HTTP request.
 
-- {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}event.respondWith(response{{<type-link href="/runtime-apis/response">}}Response{{</type-link>}}|<span style="margin-left:-6px">{{<param-type>}}Promise{{</param-type>}}</span>){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`respondWith`](#respondwith).
 
-- {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}event.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`waitUntil`](#waituntil).
 
-- {{<code>}}event.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}event.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`passThroughOnException`](#passthroughonexception).
 
@@ -79,11 +79,11 @@ export default {
 
   - The [bindings](/workers/platform/environment-variables/) assigned to the Worker. As long as the environment has not changed, the same object (equal by identity) is passed to all requests.
 
-- {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}context.waitUntil(promise{{<param-type>}}Promise{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`waitUntil`](#waituntil).
 
-- {{<code>}}context.passThroughOnException(){{</code>}} {{<type>}}void{{</type>}}
+- {{<code>}}context.passThroughOnException(){{</code>}} : {{<type>}}void{{</type>}}
 
   - Refer to [`passThroughOnException`](#passthroughonexception).
 

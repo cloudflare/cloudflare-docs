@@ -47,7 +47,7 @@ async function eventHandler(event) {
 
 {{<definitions>}}
 
-- {{<code>}}fetch(){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response>`}{{</type-link>}}
+- {{<code>}}fetch(request, init {{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type-link href="/runtime-apis/response">}}Promise`<Response>`{{</type-link>}}
 
   - Fetch returns a promise to a Response.
 
@@ -55,7 +55,7 @@ async function eventHandler(event) {
 
 ---
 
-## Properties
+## Parameters
 
 {{<definitions>}}
 
