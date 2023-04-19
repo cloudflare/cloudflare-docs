@@ -1,16 +1,16 @@
 ---
 type: overview
 pcx_content_type: configuration
-title: Access API examples
+title: API examples
 weight: 4
 layout: list
 ---
 
-# Access API examples
+# API examples
 
 {{<content-column>}}
 
-Access users can create policies, including individual rule blocks inside of group or policy bodies. For example, this policy allows all Cloudflare email account users to reach the application with the exception of one account:
+Zero Trust users can create policies, including individual rule blocks inside of group or policy bodies. For example, this Access policy allows all Cloudflare email account users to reach the application with the exception of one account:
 
 ```json
 {
