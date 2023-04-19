@@ -68,4 +68,4 @@ B->>C: Protocol <br> IP <br> GRE <br> IP
 
 {{<render file="_clear-dont-fragment.md">}}
 
-{{<render file="_router-vendor-guidelines-mss-settings-origin.md" withParameters="Run the following command on the servers egressing the prefixes you want to add to Magic Transit to verify that your routers have the correct MSS setting (1436 bytes) at your origin.">}}
+{{<render file="_router-vendor-guidelines-mss-settings-origin.md">}}
