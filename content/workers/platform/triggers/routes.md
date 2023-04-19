@@ -44,12 +44,22 @@ To configure a route using your `wrangler.toml` file, refer to the following exa
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com/*", zone_name = "example.com" },
-	{ pattern = "subdomain-two.example.com/example", zone_id =" "aa00a000a0a0000000aaa0a0a0aa0aa0" }
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
+	// or
+	{ pattern = "subdomain.example.com/*", zone_id =" "aa00a000a0a0000000aaa0a0a0aa0aa0" }
 ]
 ```
 
 Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable. If using `zone_id`, find your zone ID by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > select your website > find the **Zone ID** in the lefthand side of **Overview**.
+
+To add multiple routes:
+
+```toml
+routes = [
+	{ pattern = "subdomain.example.com/*", zone_name = "example.com" },
+	{ pattern = "subdomain-two.example.com/example", zone_id =" "aa00a000a0a0000000aaa0a0a0aa0aa0" }
+]
+```
 
 {{<Aside type="note">}}
 The `zone_id` and `zone_name` options are interchangeable. However, if using Cloudflare for SaaS with a `*/*` pattern, use the `zone_name` option to avoid errors. Currently, [publishing `*/*` routes with a `zone_id` option fails with an `Invalid URL` error](https://github.com/cloudflare/workers-sdk/issues/2953).
