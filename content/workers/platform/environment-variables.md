@@ -5,7 +5,7 @@ title: Environment variables
 
 # Environment variables
 
-In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
+In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings.
 
 ## Environment variables with module Workers
 
