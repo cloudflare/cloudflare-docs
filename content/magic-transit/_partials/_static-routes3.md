@@ -47,7 +47,23 @@ Configure scoping for your traffic in the Region code section when adding or edi
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 2. Select $1.
-3. Select the **Static Routes** tab > **Create** to add a new route.
-Enter the information for your route.
-(Optional) We highly recommend testing your route before adding it by selecting Test routes.
-If your test was successful, select Add routes when you are done.
+3. Select **Static Routes** > **Create** to add a new route.
+4. Enter a descriptive name for your route in **Description**.
+5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
+6. Select which tunnel you want your route to go through. in **Tunnel/Next hop**.
+7. Choose the priority and weight you want the static route to have.
+8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
+9. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+10. If your test was successful, select Add routes when you are done.
+
+## ​​Edit a static route
+
+1. In **Static routes**, select **Edit** next to the route you want to modify.
+2. Enter the updated route information.
+3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+4. Select **Edit routes** to save the new information when you are done.
+
+## ​​Delete static route
+
+1. In **Static routes**, locate the static route you want to modify and select **Delete**.
+2. Confirm the action by selecting the checkbox and select **Delete**.
