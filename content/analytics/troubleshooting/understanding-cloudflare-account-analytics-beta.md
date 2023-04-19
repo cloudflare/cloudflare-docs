@@ -1,5 +1,6 @@
 ---
 pcx_content_type: concept
+source: https://support.cloudflare.com/hc/en-us/articles/360037857831-Understanding-Cloudflare-Account-Analytics-beta-
 title: Understanding Cloudflare Account Analytics (beta)
 ---
 

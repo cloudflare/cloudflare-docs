@@ -1,5 +1,6 @@
 ---
 pcx_content_type: reference
+source: https://support.cloudflare.com/hc/en-us/articles/206973867-Status-code-metrics-in-Cloudflare-Site-Analytics
 title: Status code metrics in Cloudflare Site Analytics
 ---
 

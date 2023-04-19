@@ -1,5 +1,6 @@
 ---
 pcx_content_type: reference
+source: https://support.cloudflare.com/hc/en-us/articles/204191238-What-are-the-types-of-Threats-
 title: Types of threats
 ---
 
