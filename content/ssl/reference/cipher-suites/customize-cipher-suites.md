@@ -13,6 +13,10 @@ With [**Advanced Certificate Manager**](/ssl/edge-certificates/advanced-certific
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
 
+{{<Aside type="note">}}
+When you customize cipher suites for a zone, the restriction affects all certificates within the zone, regardless of each certificate type.
+{{</Aside>}}
+
 ## Cipher suite values
 
 ### TLS 1.2 or lower

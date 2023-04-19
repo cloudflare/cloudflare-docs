@@ -2,6 +2,7 @@
 title: Match on origin
 pcx_content_type: how-to
 weight: 8
+layout: list
 meta:
   title: Match on origin — Edge certificates
 ---
