@@ -283,109 +283,30 @@ Network Analytics v1 (NAv1) uses GraphQL nodes to roll up data into 1 minute, 1 
 
 To identify the range of historical data you can query in NAv1, refer to this table. Use the _**notOlderThan**_ column as an indicator of retention time.
 
-| 
-GraphQL data node
+GraphQL data nodes:
 
- | 
+- `ipFlows1mGroups`
+    - **maxDuration**[^1]: 25 hours
+    - **notOlderThan**[^2]: 30 days
+    - **Time range selection** and **Number of data points**:
+        - 30 minutes - 30 data points
+        - 6 hours - 71 data points
+        - 12 hours - 48 data points
+        - 24 hours - 96 data points
+        - 1 week - 168 data points
+- `ipFlows1dGroups`
+    - **maxDuration**[^1]: 6 months
+    - **notOlderThan**[^2]: 1 year
+    - **Time range selection** and **Number of data points**:
+        - 30 minutes - 30 data points
+        - 6 hours - 71 data points
+        - 12 hours - 48 data points
+        - 24 hours - 96 data points
+        - 1 week - 168 data points
 
-maxDuration\*
+[^1]: maxDuration defines the time window that can be requested in one query (varies by data node).
 
- | 
-
-notOlderThan\*\*
-
- | 
-
-time range selections in Network Analytics
-
- | 
-
-Number of data points
-
- |
-| --- | --- | --- | --- | --- |
-| 
-
-ipFlows1mGroups
-
- | 
-
-25 hours
-
- | 
-
-30 days
-
- | 
-
-30 minutes
-
- | 
-
-30
-
- |
-| 
-
-6 hours
-
- | 
-
-71
-
- |
-| 
-
-12 hours
-
- | 
-
-48
-
- |
-| 
-
-24 hours
-
- | 
-
-96
-
- |
-| 
-
-ipFlows1dGroups
-
- | 
-
-6 months
-
- | 
-
-1 year
-
- | 
-
-1 week
-
- | 
-
-168
-
- |
-| 
-
-1 month
-
- | 
-
-30
-
- |
-
-_**\*maxDuration**_ _defines the time window that can be requested in one query (varies by data node)._
-
-_**\*\*notOlderThan**_ _limits how far back in the record a query can search. It is indicative of how long the data stays in our database._ 
+[^2]: notOlderThan limits how far back in the record a query can search. It is indicative of how long the data stays in our database.
 
 When working with attack logs in the dashboard, keep the following in mind:
 
