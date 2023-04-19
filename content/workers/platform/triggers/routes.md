@@ -19,11 +19,11 @@ There are three types of routes:
 
 ## Set up a route
 
-Route setup will differ depending on if your application's origin is a Worker or not. When your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/).
+Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/).
 
-When your Worker is not your application's origin, set up a pattern route by following the instructions below.
+If your Worker is not your application's origin, follow the instructions below to set up a pattern route.
 
-To configure routes on a Worker that is not your application's origin, you must have a valid, proxied (orange-clouded) domain on your Cloudflare zone that points to your origin.
+Before setting up a pattern route, you must have a valid, proxied (orange-clouded) domain on your Cloudflare zone that points to your origin.
 
 {{<Aside type="note">}}
 Routes can also be created via the API. Refer to the [Workers Routes API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes) for more information.
