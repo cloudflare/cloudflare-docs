@@ -20,28 +20,28 @@ To configure scoping for your traffic, you must provide static routes to Cloudfl
 
 Prefix          | NextHop      | Priority | Region code
 ---             | ---          | ---      | ---
-10.10.10.100/24 | TUNNEL_1_IAD | 100      | AFR
-10.10.10.100/24 | TUNNEL_2_IAD | 100      | EEUR
-10.10.10.100/24 | TUNNEL_3_ATL | 100      | ENAM
-10.10.10.100/24 | TUNNEL_4_ATL | 100      | ME
-
-Cloudflare has nine geographic regions across the world which are listed below.
+`10.10.10.100/24` | `TUNNEL_1_IAD` | `100`      | _AFR_
+`10.10.10.100/24` | `TUNNEL_2_IAD` | `100`      | _EEUR_
+`10.10.10.100/24` | `TUNNEL_3_ATL` | `100`      | _ENAM_
+`10.10.10.100/24` | `TUNNEL_4_ATL` | `100`      | _ME_
 
 **Region codes and associated regions**
 
+Cloudflare has nine geographic regions across the world which are listed below.
+
 Region code | Region
 ---         | ---
-AFR         | Africa
-APAC        | Asia Pacific
-EEUR        | Eastern Europe
-ENAM        | Eastern North America
-ME          | Middle East
-OC          | Oceania
-SAM         | South America
-WEUR        | Western Europe
-WNAM        | Western North America
+_AFR_         | Africa
+_APAC_        | Asia Pacific
+_EEUR_        | Eastern Europe
+_ENAM_        | Eastern North America
+_ME_          | Middle East
+_OC_          | Oceania
+_SAM_         | South America
+_WEUR_        | Western Europe
+_WNAM_        | Western North America
 
-Configure scoping for your traffic in the Region code section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) more information on this.
+Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information on this.
 
 ## ​​Create a static route
 
@@ -51,10 +51,11 @@ Configure scoping for your traffic in the Region code section when adding or edi
 4. Enter a descriptive name for your route in **Description**.
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
 6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in [Configure tunnel endpoints]($2).
-7. Choose the **Priority** and, optionally, a **Weight** for your route. Refer to [Edge routing configuration example](#edge-routing-configuration-example) for examples of this.
-8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
-9. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-10. If your test was successful, select Add routes when you are done.
+7. Choose the **Priority** for your route. Lower numbers have higher priorities.
+8. (Optional) Choose a **Weight** for your route. Refer to [Edge routing configuration example](#edge-routing-configuration-example) for examples on this.
+9. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
+10. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+11. If your test was successful, select **Add routes** when you are done.
 
 ## ​​Edit a static route
 

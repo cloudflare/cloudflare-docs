@@ -11,7 +11,7 @@ You must provide your prefixes and the tunnels that should be mapped to in order
 
 Prefix          | NextHop 
 ---             | ---
-`103.21.244.0/29` | TUNNEL_1_IAD
-`103.21.244.8/29` | TUNNEL_2_ATL
+`103.21.244.0/29` | `TUNNEL_1_IAD`
+`103.21.244.8/29` | `TUNNEL_2_ATL`
 
-The minimum advertising prefix is `/24`, but because Cloudflare uses Anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that `/24` to different tunnel end points. For example, you can send `x.x.x.0/29` to Datacenter 1 and `x.x.x.8/29` to Datacenter 2. This is helpful when you operate in an environment with constrained IP resources.
+The minimum advertising prefix is `/24`, but because Cloudflare uses Anycast tunnels as an outer wrapper for your traffic, we can route prefixes within that `/24` to different tunnel endpoints. For example, you can send `x.x.x.0/29` to Datacenter 1 and `x.x.x.8/29` to Datacenter 2. This is helpful when you operate in an environment with constrained IP resources.

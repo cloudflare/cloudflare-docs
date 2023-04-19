@@ -22,21 +22,21 @@ $3
 
 Prefix            | NextHop      | Priority
 ---               | ---          | ---
-`10.10.10.100/24` | TUNNEL_1_IAD | `100`
-`10.10.10.100/24` | TUNNEL_2_IAD | `100`
-`10.10.10.100/24` | TUNNEL_3_ATL | `100`
-`10.10.10.100/24` | TUNNEL_4_ATL | `100`
-`10.10.10.100/24` | TUNNEL_1_IAD | `200`
-`10.10.10.100/24` | TUNNEL_2_IAD | `200`
-`10.10.10.100/24` | TUNNEL_3_ATL | `100`
-`10.10.10.100/24` | TUNNEL_4_ATL | `100`
+`10.10.10.100/24` | `TUNNEL_1_IAD` | `100`
+`10.10.10.100/24` | `TUNNEL_2_IAD` | `100`
+`10.10.10.100/24` | `TUNNEL_3_ATL` | `100`
+`10.10.10.100/24` | `TUNNEL_4_ATL` | `100`
+`10.10.10.100/24` | `TUNNEL_1_IAD` | `200`
+`10.10.10.100/24` | `TUNNEL_2_IAD` | `200`
+`10.10.10.100/24` | `TUNNEL_3_ATL` | `100`
+`10.10.10.100/24` | `TUNNEL_4_ATL` | `100`
 
-Optionally, weights can also be added to better distribute traffic amongst multiple tunnels. In the below example `TUNNEL_2_IAD` is likely to received twice as much traffic as TUNNEL_1_IAD
+Optionally, weights can also be added to better distribute traffic amongst multiple tunnels. In the below example `TUNNEL_2_IAD` is likely to received twice as much traffic as `TUNNEL_1_IAD`.
 
 
 Prefix            | NextHop      | Priority | Weight
 ---               | ---          | ---      | ---
-`10.10.10.100/24` | TUNNEL_1_IAD | `100`    | `100`
-`10.10.10.100/24` | TUNNEL_2_IAD | `100`    | `200`
-`10.10.10.100/24` | TUNNEL_3_ATL | `100`    | `300`
-`10.10.10.100/24` | TUNNEL_4_ATL | `100`    | `400`
+`10.10.10.100/24` | `TUNNEL_1_IAD` | `100`    | `100`
+`10.10.10.100/24` | `TUNNEL_2_IAD` | `100`    | `200`
+`10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    | `300`
+`10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    | `400`
