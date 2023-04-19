@@ -19,12 +19,12 @@ If you plan to run Keyless SSL in a [high availability setup](/ssl/keyless-ssl/r
 #### Debian/Ubuntu packages
 
 1.  Add the Cloudflare Package Repository as per https://pkg.cloudflare.com/.
-2.  Update your OS’ package listings, e.g., `apt-get update`.
-3.  Install the gokeyless server (min version used should be 1.5.3): `sudo apt-get install gokeyless`.
+2.  Update your OS’ package listings with `apt-get update`.
+3.  Install the `gokeyless` server (minimum version used should be `1.5.3`): `sudo apt-get install gokeyless`.
 
 #### RHEL/CentOS packages
     
-You could use either of the following examples to install the `gokeyless` package for RHEL or CentOS.
+Use either of the following examples to install the `gokeyless` package for RHEL or CentOS.
 
 **Option 1**
 
