@@ -12,14 +12,12 @@ You can approve sources to send emails from your domain:
 
 When you feel confident that you have covered every source that is legitimately sending emails from your domain, Cloudflare can help you set your DMARC policy to **quarantine** or **reject**, so that potential targets stop receiving emails from impersonators.
 
-Under **Top 10 Sources** you have access to lists of approved or unapproved sources sending email on your behalf, and how they fared relative to different policies. 
-
 To approve or disallow a third party source:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Select **Email** > **DMARC Management**.
-3. Go to **Top 10 sources**.
-4. Select the **Approved** or **Unapproved** columns depending on whether you want to check for sources that are approved or unapproved to send emails from your domain.
+3. Go to **Top 10 sources** > **View all**.
+4. Select the **Approved** or **Unapproved** tabs depending on whether you want to check for sources that are approved or unapproved to send emails from your domain.
 5. Find the third party you want to change, and select the three dots next to it.
 6. Select **Mark as approved** or **Mark as unapproved**.
 7. Confirm your choice.
