@@ -157,7 +157,7 @@ ___
 
 ### A Cloudflare oferece suporte à autenticação de cliente TLS?
 
-A Autenticação de Cliente TLS valida que um certificado apresentado por um cliente foi assinado pelo certificado raiz de Autoridade de Certificação da empresa.  Como esse certificado é validado em cada solicitação, o acesso pode ficar limitado às conexões de clientes autorizados.  Para habilitar a autenticação de cliente TLS por meio da Cloudflare, consulte a nossa documentação sobre [Autenticação Mútua de TLS](https://developers.cloudflare.com/access/setting-up-access/mtls/).
+A Autenticação de Cliente TLS valida que um certificado apresentado por um cliente foi assinado pelo certificado raiz de Autoridade de Certificação da empresa.  Como esse certificado é validado em cada solicitação, o acesso pode ficar limitado às conexões de clientes autorizados.  Para habilitar a autenticação de cliente TLS por meio da Cloudflare, consulte a nossa documentação sobre [Autenticação Mútua de TLS](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 

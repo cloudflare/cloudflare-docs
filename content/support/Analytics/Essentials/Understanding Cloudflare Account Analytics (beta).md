@@ -10,9 +10,9 @@ title: Understanding Cloudflare Account Analytics (beta)
 
 The Cloudflare dashboard (Account) **Analytics** app is a major component of the overall Cloudflare analytics product line.  Specifically, you can access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Read [Cloudflare Analytics: A quick
-overview](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: A quick overview")
+overview](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: A quick overview")
 for general information about all of Cloudflare's analytics offerings.
 You can also understand the characteristics of the data that Cloudflare
 captures and processes.

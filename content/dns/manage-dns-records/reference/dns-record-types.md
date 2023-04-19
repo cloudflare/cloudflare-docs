@@ -234,7 +234,7 @@ The **Content** for TXT records at Cloudflare must be 2048 characters or less.
 
 ### CAA
 
-A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/custom-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
+A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
 
 {{<render file="_api-field-definitions.md">}}
 

@@ -13,9 +13,9 @@ title: Cloudflare Site Analytics
 
 La aplicación (Site) **Analytics** del panel de control de Cloudflare es un componente importante de la línea general de productos de Cloudflare Analytics. En concreto, esta aplicación te da acceso a una amplia variedad de métricas, recabadas a nivel de sitio web o de dominio.
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Consulta [Cloudflare Analytics: vista
-rápida](https://support.cloudflare.com/hc/articles/360037684111https:// "Cloudflare Analytics: vista rápida")
+rápida](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: vista rápida")
 que incluye información general sobre toda la oferta de análisis de
 Cloudflare. También podrás conocer las características de los datos que
 capturamos y procesamos.
@@ -115,11 +115,11 @@ Este panel muestra las métricas de Cloudflare Workers. Para saber más, consult
 
 ### Registros
 
-La pestaña Registros no es una función de métricas. En su lugar, los clientes del plan Enterprise pueden habilitar el servicio [Logpush de Cloudflare](https://developers.cloudflare.com/logs/about/). Puedes usar Logpush para descargar y analizar datos utilizando cualquier herramienta de análisis de tu elección.
+La pestaña Registros no es una función de métricas. En su lugar, los clientes del plan Enterprise pueden habilitar el servicio [Logpush de Cloudflare](/logs/about/). Puedes usar Logpush para descargar y analizar datos utilizando cualquier herramienta de análisis de tu elección.
 
 ___
 
 ## Recursos relacionados
 
--   [Cloudflare Analytics: vista rápida](https://developers.cloudflare.com/analytics)
--   [Cloudflare GraphQL Analytics API](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: vista rápida](/analytics)
+-   [Cloudflare GraphQL Analytics API](/analytics/)

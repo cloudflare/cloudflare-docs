@@ -157,7 +157,7 @@ ___
 
 ### Cloudflare 是否支持 TLS 客户端身份验证？
 
-TLS 客户端身份验证可验证客户端提供的证书是否由公司的根证书的证书颁发机构签名。  通过在每个请求中验证此证书，可以将访问限制为授权的客户端连接。  要通过 Cloudflare 启用 TLS 客户端身份验证，请参阅有关[相互 TLS 身份验证](https://developers.cloudflare.com/access/setting-up-access/mtls/)的文档。
+TLS 客户端身份验证可验证客户端提供的证书是否由公司的根证书的证书颁发机构签名。  通过在每个请求中验证此证书，可以将访问限制为授权的客户端连接。  要通过 Cloudflare 启用 TLS 客户端身份验证，请参阅有关[相互 TLS 身份验证](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/)的文档。
 
 ___
 

@@ -23,9 +23,9 @@ As part of Regional Services, Cloudflare Gateway will only perform [TLS decrypti
 
 #### Data Loss Prevention (DLP) 
 
-You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/) and encrypt them with your public key so that only you can examine them later.
+You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/) and encrypt them with your public key so that only you can examine them later.
 
-[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/#data-privacy).
+[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/#data-privacy).
 
 ### Network policies
 

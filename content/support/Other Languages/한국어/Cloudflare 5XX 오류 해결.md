@@ -176,7 +176,7 @@ ___
 -   원본 웹 서버 오류 로그를 검토해 웹 서버 애플리케이션 충돌이나 중단을 파악
 -   [Cloudflare IP 주소](https://www.cloudflare.com/ips)가 차단되거나 속도 제한이 걸려있지 않은지 확인
 -   원본 웹 서버 방화벽이나 다른 보안 소프트웨어에서 모든 [Cloudflare IP 범위](https://www.cloudflare.com/ips) 허용
--   **SSL/TLS 모드**를 **Full** 또는 **Full (Strict**)로 설정한 경우 [Cloudflare 원본 인증서](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)를 설치했는지 확인
+-   **SSL/TLS 모드**를 **Full** 또는 **Full (Strict**)로 설정한 경우 [Cloudflare 원본 인증서](/ssl/origin-configuration/origin-ca)를 설치했는지 확인
 -   [Cloudflare 커뮤니티](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461)에서 문제 해결에 관한 추가 정보 검색
 
 ___
@@ -198,7 +198,7 @@ ___
 -   Cloudflare **DNS** 앱의 실제 IP 주소가 호스팅 공급자가 원본 웹 서버에 제공한 현재 IP 주소와 일치하지 않습니다.
 -   원본 웹 서버에서 패킷이 누락되었습니다.
 
-[Cloudflare Pages](https://developers.cloudflare.com/pages/)를 사용하고 있는 경우 사용자 지정 도메인 설정이 있고 CNAME 레코드가 사용자 지정 Pages 도메인을 가리키고 있는지 확인하세요. 사용자 지정 Pages 도메인 설정 지침은 [여기](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain)에 있습니다.
+[Cloudflare Pages](/pages/)를 사용하고 있는 경우 사용자 지정 도메인 설정이 있고 CNAME 레코드가 사용자 지정 Pages 도메인을 가리키고 있는지 확인하세요. 사용자 지정 Pages 도메인 설정 지침은 [여기](/pages/getting-started#adding-a-custom-domain)에 있습니다.
 
 위의 방법으로도 문제를 해결하지 못할 경우, 호스팅 공급자나 사이트 관리자에게 다음의 정보를 요청한 후 [Cloudflare 지원팀에 문의](https://support.cloudflare.com/hc/articles/200172476)하는 것이 좋습니다.
 
@@ -239,7 +239,7 @@ ___
     -   원본 웹 서버에서 오랫동안 실행되는 프로세스
     -   원본 웹 서버의 과부하
 
--   Enterprise 요금제 고객은 [proxy\_read\_timeout API 엔트포인트](https://developers.cloudflare.com/api/operations/zone-settings-change-proxy_read_timeout-setting)를 이용해 524 오류의 제한 시간을 6000초까지 늘릴 수 있습니다.
+-   Enterprise 요금제 고객은 [proxy\_read\_timeout API 엔트포인트](/api/operations/zone-settings-change-proxy_read_timeout-setting)를 이용해 524 오류의 제한 시간을 6000초까지 늘릴 수 있습니다.
 -   데이터를 대규모로 내보내는 작업처럼, 완료하는 데 100초 이상이 걸리는 HTTP 요청을 자주 실행하는 경우, 이러한 프로세스를, Cloudflare **DNS** 앱에서 프록시 역할을 하지 않는 하위 도메인 뒤로 이동하세요.
 -   Cloudflare Railgun을 사용하는 도메인에 524 오류가 발생할 경우, _lan.timeout_을 기본값인 30초보다 높게 설정한 후 Railgun 서비스를 재시작하세요.
 
@@ -250,7 +250,7 @@ ___
 525 오류는 Cloudflare와 원본 웹 서버 사이의 SSL 핸드셰이크가 실패했음을 나타냅니다. 이 오류는 다음의 두 가지 조건에 모두 해당하는 경우에 발생합니다.
 
 1.  Cloudflare와 원본 웹 서버 간 [SSL 핸드셰이크](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)가 실패
-2.  Cloudflare **SSL/TLS** 앱의 **개요** 탭에 [_Full_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) 또는 _Full(Strict)_ **SSL/TLS**가 설정되어 있음
+2.  Cloudflare **SSL/TLS** 앱의 **개요** 탭에 [_Full_](/ssl/origin-configuration/ssl-modes) 또는 _Full(Strict)_ **SSL/TLS**가 설정되어 있음
 
 **문제 해결**
 
@@ -259,12 +259,12 @@ ___
 -   유효한 SSL 인증서가 설치되지 않음
 -   443 포트(또는 다른 사용자 지정 보안 포트)가 열려 있지 않음
 -   [SNI](https://support.cloudflare.com/hc/articles/360026016272)가 지원되지 않음
--   Cloudflare가 허용한 [암호 그룹](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)이 원본 웹 서버에서 지원되는 암호 그룹과 일치하지 않음
+-   Cloudflare가 허용한 [암호 그룹](/ssl/ssl-tls/cipher-suites)이 원본 웹 서버에서 지원되는 암호 그룹과 일치하지 않음
 
 **추가 확인 사항**
 
--   원본 서버에 인증서를 설치했는지 확인합니다. 일부 테스트의 실행 방법은 [이 문서](https://support.cloudflare.com/hc/ko/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)를 참고하시기 바랍니다. 인증서가 없는 경우에는 무료인 [Cloudflare 원본 CA 인증서](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)를 생성하여 설치해도 됩니다. 원본 CA 인증서를 사용하면 Cloudflare와 원본 웹 서버 사이 트래픽을 암호화할 수 있습니다.
--   고객의 서버가 이용하는 [암호 그룹을 검토](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)하여 Cloudflare가 지원하는 암호 그룹과 일치하는지 확인합니다.
+-   원본 서버에 인증서를 설치했는지 확인합니다. 일부 테스트의 실행 방법은 [이 문서](https://support.cloudflare.com/hc/ko/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)를 참고하시기 바랍니다. 인증서가 없는 경우에는 무료인 [Cloudflare 원본 CA 인증서](/ssl/origin-configuration/origin-ca)를 생성하여 설치해도 됩니다. 원본 CA 인증서를 사용하면 Cloudflare와 원본 웹 서버 사이 트래픽을 암호화할 수 있습니다.
+-   고객의 서버가 이용하는 [암호 그룹을 검토](/ssl/ssl-tls/cipher-suites)하여 Cloudflare가 지원하는 암호 그룹과 일치하는지 확인합니다.
 -   525 오류가 발생한 타임스탬프의 서버 오류 로그를 검토하여 SSL 핸드셰이크 중 연결을 재설정할 오류가 있는지 여부를 확인합니다.
 
 ___
@@ -274,7 +274,7 @@ ___
 526 오류는 다음의 두 가지 조건에 모두 해당하는 경우에 발생합니다.
 
 1.  Cloudflare가 원본 웹 서버의 SSL 인증서의 유효성을 확인할 수 없음
-2.  Cloudflare **SSL/TLS** 앱의 **개요** 탭에 [_Full SSL (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **SSL**이 설정되어 있습니다.
+2.  Cloudflare **SSL/TLS** 앱의 **개요** 탭에 [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes#full-strict) **SSL**이 설정되어 있습니다.
 
 **문제 해결**
 
@@ -289,7 +289,7 @@ ___
 
 ![오류가 없는 SSL 인증서가 표시된 화면](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-원본 서버가 자체적으로 서명한 인증서를 사용하는 경우, 도메인이 _Full SSL(Strict)_ 대신 _Full_ _SSL_을 사용하도록 설정하세요. 원본 서버에서 SSL을 설정하는 방법은 [SSL 설정 권장 사항](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)을 참조할 수 있습니다.
+원본 서버가 자체적으로 서명한 인증서를 사용하는 경우, 도메인이 _Full SSL(Strict)_ 대신 _Full_ _SSL_을 사용하도록 설정하세요. 원본 서버에서 SSL을 설정하는 방법은 [SSL 설정 권장 사항](/ssl/origin-configuration/ssl-modes)을 참조할 수 있습니다.
 
 ___
 
@@ -365,7 +365,7 @@ TLS/SSL 오류가 발생할 경우, 원본 웹 서버에서 다음을 확인하�
 -   443 포트가 열려 있음
 -   SSL 인증서가 원본 웹 서버로부터 제공됨
 -   원본 웹 서버 SSL 인증서의 일반 이름과 주체 대체 이름에, 요청되거나 대상이 되는 호스트 이름이 포함되어 있음
--   Cloudflare **SSL/TLS** 앱의 **개요** 탭에 **SSL**이 [Full 또는Full(Strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)로 설정되어 있음
+-   Cloudflare **SSL/TLS** 앱의 **개요** 탭에 **SSL**이 [Full 또는Full(Strict)](/ssl/origin-configuration/ssl-modes)로 설정되어 있음
 
 ___
 

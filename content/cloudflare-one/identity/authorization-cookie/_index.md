@@ -11,7 +11,7 @@ When you protect a site with Cloudflare Access, Cloudflare checks every HTTP req
 
 ## Access JWTs
 
-The `CF_Authorization` cookie contains the user's identity in the form of a JSON Web Token (JWT).Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
+The `CF_Authorization` cookie contains the user's identity in the form of a JSON Web Token (JWT). Cloudflare securely creates these tokens through the OAUTH or SAML integration between Cloudflare Access and the configured identity provider.
 
 Two tokens are generated:
 

@@ -10,6 +10,8 @@ meta:
 
 Cloudflare Waiting Room protects websites by queueing site visitors when a website experiences unmanageable surges in legitimate traffic that may otherwise bring an application down.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Benefits
 
 Waiting Room protects **your origin server** by preventing surges in legitimate traffic that may overload your origin.
@@ -33,7 +35,7 @@ Once you have [created and activated a waiting room](/waiting-room/get-started/)
   - When a user exits the waiting room and reaches your application, they can leave and re-enter without waiting for the length of time specified by the [session duration](/waiting-room/reference/configuration-settings/#session-duration).
   - Because waiting rooms support dynamic inflow and [outflow](/waiting-room/reference/configuration-settings/#session-duration), new spots appear more quickly and estimated wait times are lower and more accurate.
 
-![Waiting Room process flow showing how a request is managed by Cloudflare and placed in a waiting room before reaching the origin website](/waiting-room/static/waiting-room-process-flow.png)
+![Waiting Room process flow showing how a request is managed by Cloudflare and placed in a waiting room before reaching the origin website](/images/waiting-room/waiting-room-process-flow.png)
 
 ## Availability
 

@@ -5,6 +5,7 @@ product:
   title: API Shield
   url: /api-shield/
   group: Application security
+  preview_tryout: true
 
 meta:
   title: Cloudflare API Shield docs

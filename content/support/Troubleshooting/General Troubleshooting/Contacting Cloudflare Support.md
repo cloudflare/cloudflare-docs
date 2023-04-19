@@ -174,5 +174,4 @@ Below are definitions of the priority levels Cloudflare assigns to tickets and t
 
 ### SLOs for other plans
 
--   Pro SLO - 5 days for all priority levels
--   Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).
+-   Pro and Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).

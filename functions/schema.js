@@ -6,35 +6,46 @@ export async function onRequestGet() {
   const cache = caches.default
   let response = await cache.match(req)
 
-  if (!response) {
-    response = await fetch(req)
-    let schema = await response.json()
+  try {
+    if (!response) {
+      response = await fetch(req)
+      let schema = await response.json()
 
-    const pathsByTag = {}
+      const pathsByTag = {}
 
-    Object.keys(schema.paths).forEach(key => {
-      const path = schema.paths[key]
-      const tag = Object.values(path)[0].tags[0]
-      if (!pathsByTag[tag]) pathsByTag[tag] = []
-      pathsByTag[tag].push({ path, key })
-    })
-
-    const sortedPaths = {}
-    const sortedTags = Object.keys(pathsByTag).sort()
-    sortedTags.forEach(tag => {
-      const tagArray = pathsByTag[tag]
-      tagArray.forEach(({ key, path }) => {
-        if (sortedPaths[key]) console.log('key already exists')
-        sortedPaths[key] = path
+      Object.keys(schema.paths).forEach(key => {
+        const path = schema.paths[key]
+        const tag = Object.values(path).find(endpoint => {
+          const tags = endpoint.tags
+          return tags && tags.length && tags[0]
+        })
+        if (tag) {
+          if (!pathsByTag[tag]) pathsByTag[tag] = []
+          pathsByTag[tag].push({ path, key })
+        }
       })
-    })
 
-    let sortedSchema = Object.assign({}, schema, { paths: sortedPaths })
+      const sortedPaths = {}
+      const sortedTags = Object.keys(pathsByTag).sort()
+      sortedTags.forEach(tag => {
+        const tagArray = pathsByTag[tag]
+        tagArray.forEach(({ key, path }) => {
+          if (sortedPaths[key]) console.log('key already exists')
+          sortedPaths[key] = path
+        })
+      })
 
-    response = new Response(JSON.stringify(sortedSchema), {
-      headers: { 'Content-type': 'application/json' }
-    })
+      let sortedSchema = Object.assign({}, schema, { paths: sortedPaths })
+
+      response = new Response(JSON.stringify(sortedSchema), {
+        headers: { 'Content-type': 'application/json' }
+      })
+    }
+
+    return response
+  } catch (err) {
+    console.log(err)
+    return fetch(req)
   }
 
-  return response
 }

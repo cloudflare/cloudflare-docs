@@ -176,7 +176,7 @@ Les deux causes les plus courantes des erreurs 521 sont les suivantes :
 -   Consultez les journaux d'erreurs du serveur web d'origine pour identifier les blocages (crashs) ou les pannes d'applications du serveur web.
 -   Vérifiez que les [adresses IP Cloudflare](https://www.cloudflare.com/ips) ne sont pas bloquées ou limitées en débit.
 -   Autorisez toutes les [plages d'adresses IP Cloudflare](https://www.cloudflare.com/ips) dans le pare-feu de votre serveur web d'origine ou tout autre logiciel de sécurité.
--   Vérifiez que — vous avez votre **mode SSL/TLS** défini sur **Full** or **Full (Strict**) — vous avez installé un [certificat d'origine Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)
+-   Vérifiez que — vous avez votre **mode SSL/TLS** défini sur **Full** or **Full (Strict**) — vous avez installé un [certificat d'origine Cloudflare](/ssl/origin-configuration/origin-ca)
 -   Accédez à des informations de dépannage supplémentaires dans la [communauté Cloudflare](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461).
 
 ___
@@ -198,7 +198,7 @@ Une erreur 522 se produit lorsque Cloudflare dépasse le délai de connexion ave
 -   L'adresse IP d'origine de votre application **DNS** Cloudflare ne correspond pas à l'adresse IP actuellement allouée à votre serveur web d'origine par votre fournisseur d’hébergement.
 -   Des paquets ont été abandonnés au niveau de votre serveur web d'origine.
 
-Si vous utilisez [Cloudflare Pages](https://developers.cloudflare.com/pages/), vérifiez que vous avez un domaine personnalisé et que votre enregistrement CNAME pointe vers votre domaine Pages personnalisé. Des instructions sur la configuration d'un domaine Pages personnalisé sont disponibles [ici](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain).
+Si vous utilisez [Cloudflare Pages](/pages/), vérifiez que vous avez un domaine personnalisé et que votre enregistrement CNAME pointe vers votre domaine Pages personnalisé. Des instructions sur la configuration d'un domaine Pages personnalisé sont disponibles [ici](/pages/getting-started#adding-a-custom-domain).
 
 Si rien de ce qui précède ne permet de résoudre le problème, demandez les informations suivantes à votre fournisseur d’hébergement ou à l'administrateur du site avant de [contacter le support Cloudflare](https://support.cloudflare.com/hc/articles/200172476) :
 
@@ -250,7 +250,7 @@ ___
 Une erreur 525 indique que la négociation SSL entre Cloudflare et le serveur web d’origine a échoué. Les erreurs 525 se produisent lorsque ces deux conditions sont vraies :
 
 1.  La [négociation SSL](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) entre Cloudflare et le serveur web d’origine a échoué, et
-2.  [_Full_ ou _Full (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) **SSL** est défini dans l'onglet **Overview** (Aperçu) de votre application Cloudflare **SSL/TLS**.
+2.  [_Full_ ou _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL** est défini dans l'onglet **Overview** (Aperçu) de votre application Cloudflare **SSL/TLS**.
 
 **Résolution**
 
@@ -259,12 +259,12 @@ Une erreur 525 indique que la négociation SSL entre Cloudflare et le serveur we
 -   Aucun certificat SSL valide n'est installé
 -   Le port 443 (ou un autre port sécurisé personnalisé) n'est pas ouvert
 -   Pas de prise en charge [SNI](https://support.cloudflare.com/hc/articles/360026016272)
--   Les [suites de chiffrement](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) acceptées par Cloudflare ne correspondent pas aux suites de chiffrement prises en charge par le serveur web d'origine.
+-   Les [suites de chiffrement](/ssl/ssl-tls/cipher-suites) acceptées par Cloudflare ne correspondent pas aux suites de chiffrement prises en charge par le serveur web d'origine.
 
 **Vérifications supplémentaires**
 
--   Vérifiez si vous avez un certificat installé sur votre serveur d'origine. Vous pouvez consulter [cet article](https://support.cloudflare.com/hc/fr-fr/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) pour en savoir plus sur la procédure pour exécuter certains tests. Si vous n'avez aucun certificat, vous pouvez créer et installer notre [certificat CA d'origine Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) gratuit. L'utilisation de certificats Cloudflare Origin CA vous permet de chiffrer le trafic entre Cloudflare et votre serveur web d’origine.
--   [Vérifiez les suites de chiffrement](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) qu'utilise votre serveur pour vous assurer qu'elles correspondent à ce que prend en charge Cloudflare.
+-   Vérifiez si vous avez un certificat installé sur votre serveur d'origine. Vous pouvez consulter [cet article](https://support.cloudflare.com/hc/fr-fr/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) pour en savoir plus sur la procédure pour exécuter certains tests. Si vous n'avez aucun certificat, vous pouvez créer et installer notre [certificat CA d'origine Cloudflare](/ssl/origin-configuration/origin-ca) gratuit. L'utilisation de certificats Cloudflare Origin CA vous permet de chiffrer le trafic entre Cloudflare et votre serveur web d’origine.
+-   [Vérifiez les suites de chiffrement](/ssl/ssl-tls/cipher-suites) qu'utilise votre serveur pour vous assurer qu'elles correspondent à ce que prend en charge Cloudflare.
 -   Vérifiez les journaux d'erreurs de votre serveur à partir des moments où ont été relevées des erreurs 525 pour vérifier la présence de problèmes qui pourraient entraîner une réinitialisation de la connexion lors de la négociation SSL.
 
 ___
@@ -274,7 +274,7 @@ ___
 Les erreurs 526 se produisent lorsque ces deux conditions sont vraies :
 
 1.  Cloudflare ne parvient pas à valider le certificat SSL sur votre serveur web d'origine, et
-2.  [_Full SSL (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **SSL** est défini dans l'onglet **Overview** (Aperçu) de votre application Cloudflare **SSL/TLS**.
+2.  [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes#full-strict) **SSL** est défini dans l'onglet **Overview** (Aperçu) de votre application Cloudflare **SSL/TLS**.
 
 **Résolution**
 
@@ -289,7 +289,7 @@ Demandez à votre administrateur de serveur ou à votre hébergeur de vérifier 
 
 ![Écran affichant un certificat SSL sans erreur.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-Si le serveur d'origine utilise un certificat auto-signé, configurez le domaine pour utiliser _Full_ _SSL_ au lieu de _Full SSL (Strict)_. Consultez les [paramètres SSL recommandés pour votre serveur d'origine](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Si le serveur d'origine utilise un certificat auto-signé, configurez le domaine pour utiliser _Full_ _SSL_ au lieu de _Full SSL (Strict)_. Consultez les [paramètres SSL recommandés pour votre serveur d'origine](/ssl/origin-configuration/ssl-modes).
 
 ___
 
@@ -365,7 +365,7 @@ Si des erreurs TLS/SSL se produisent, vérifiez les points suivants sur le serve
 -   Le port 443 soit ouvert
 -   Un certificat SSL soit présenté par le serveur web d'origine
 -   le SAN ou le Nom Commun du certificat SSL du serveur web d'origine contient le nom d'hôte demandé ou cible
--   **SSL** est défini sur [Full ou Full (Strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) dans l'onglet **Overview** (Aperçu) de l'application Cloudflare **SSL/TLS**.
+-   **SSL** est défini sur [Full ou Full (Strict)](/ssl/origin-configuration/ssl-modes) dans l'onglet **Overview** (Aperçu) de l'application Cloudflare **SSL/TLS**.
 
 ___
 

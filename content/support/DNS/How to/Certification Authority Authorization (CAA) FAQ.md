@@ -12,7 +12,7 @@ title: Certification Authority Authorization (CAA) FAQ
 
 A Certificate Authority Authorization (CAA) record allows domain owners to restrict issuance to specified Certificate Authorities (CAs). 
 
-For more details and instructions on how to create these records, refer to our [developer documentation](/ssl/edge-certificates/custom-certificates/caa-records).
+For more details and instructions on how to create these records, refer to our [developer documentation](/ssl/edge-certificates/caa-records/).
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 ## What records are added to keep Universal SSL enabled?
 
-If you use Cloudflare’s free Universal SSL certificates, [several CAA records are added by Cloudflare](/ssl/edge-certificates/custom-certificates/caa-records#caa-records-added-by-cloudflare).
+If you use Cloudflare’s free Universal SSL certificates, [several CAA records are added by Cloudflare](/ssl/edge-certificates/caa-records/#caa-records-added-by-cloudflare).
 
 {{<Aside type="warning">}}
 Do not use the *Only allow wildcards* option for the root record (which

@@ -31,9 +31,9 @@ View HTTP request logs instantly in the Cloudflare dashboard or the CLI.
 
 {{</feature>}}
 
-{{<feature header="Logpull" href="/logs/logpull/">}}
+{{<feature header="Logs Engine" href="/logs/r2-log-retrieval/">}}
 
-Use Logpull if you only want to have access to HTTP request logs. The data from Logpull and Logpush is exactly the same.
+Use Logs Engine to store your logs in R2 and query them directly.
 
 {{</feature>}}
 

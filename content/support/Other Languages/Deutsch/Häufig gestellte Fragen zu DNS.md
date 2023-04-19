@@ -55,7 +55,7 @@ ___
 
 Wenn _kein A-, AAAA- oder CNAME-Eintrag gefunden wird_, bedeutet das, dass in der Cloudflare-App **DNS** keine korrekten Einträge für die DNS-Auflösung vorhanden sind.
 
-Fügen Sie die [fehlenden DNS-Einträge](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) Ihrer Domain hinzu.
+Fügen Sie die [fehlenden DNS-Einträge](/dns/manage-dns-records/how-to/create-dns-records) Ihrer Domain hinzu.
 
 {{<Aside type="note">}}
 Websites haben im Allgemeinen mindestens einen *A-Eintrag* , der auf die

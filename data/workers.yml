@@ -5,6 +5,7 @@ product:
   title: Workers
   url: /workers/
   group: Developer platform
+  preview_tryout: true
 
 meta:
   title: Cloudflare Workers docs

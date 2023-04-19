@@ -42,7 +42,7 @@ _`An A, AAAA, CNAME, or MX record is pointed to your origin server exposing your
 
 _`This record is exposing your origin server’s IP address, potentially exposing it to denial of service.`_
 
-{{<Aside type="info">}}
+{{<Aside type="note">}}
 Cloudflare now supports proxying wildcard \'\*\' record for DNS
 management in all customer plans. This used to only be offered to
 Enterprise plans.
