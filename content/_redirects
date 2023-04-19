@@ -91,6 +91,7 @@
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
+/support/analytics/ /analytics/troubleshooting/ 301
 
 # area1
 /email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
