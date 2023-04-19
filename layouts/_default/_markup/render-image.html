@@ -1,6 +1,7 @@
-{{- if (not (urls.Parse .Destination).IsAbs) -}}
+{{- if and (not (urls.Parse .Destination).IsAbs) (not (in .Destination ".svg")) -}}
 {{- $img := resources.Get .Destination -}}
 <!-- This value will only be computed if the image lives in the top-level /assets folder -->
+
 {{- with $img -}}
 <!-- .gifs can't be resized the same way -->
 {{- if not (in $.Destination ".gif") -}}
@@ -22,7 +23,7 @@
 </p>
 {{- end -}}
 {{- else -}}
-<!-- If the image URL has a scheme (e.g., https://), do not perform any optimizations -->
+<!-- If the image URL has a scheme (e.g., https://) or is an SVG, do not perform any optimizations -->
 <p class="md__image">
     <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" loading="lazy"
     {{ with .Title }} title="{{ . }}"{{ end }} />
