@@ -41,7 +41,7 @@ SAM         | South America
 WEUR        | Western Europe
 WNAM        | Western North America
 
-Configure scoping for your traffic in the Region code section when adding or editing a static route. Refer to [Create a static route](#​​create-a-static-route) or [Edit a static route for](#​​edit-a-static-route) more information on this.
+Configure scoping for your traffic in the Region code section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) more information on this.
 
 ## ​​Create a static route
 
