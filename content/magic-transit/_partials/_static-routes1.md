@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;anycastURL;;trafficRoutesAPI
+inputParameters: productName;;anycastURL;;trafficSteering;;trafficRoutesAPI
 ---
 
 # Configure static routes
@@ -13,9 +13,9 @@ $1 uses a static configuration to route your traffic through [Anycast tunnels]($
 You must assign a route priority to each tunnel–subnet pair in your configuration, as follows:
 
 - Lower values have greater priority.
-- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic.
+- When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. For more on how Cloudflare uses ECMP packet forwarding, refer to [Traffic steering]($3).
 
-$3
+$4
 
 ## Edge routing configuration example
 
