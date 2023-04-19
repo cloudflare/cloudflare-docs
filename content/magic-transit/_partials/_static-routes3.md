@@ -41,7 +41,7 @@ _SAM_         | South America
 _WEUR_        | Western Europe
 _WNAM_        | Western North America
 
-Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information on this.
+Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to [Create a static route](#create-a-static-route) and [Edit a static route](#edit-a-static-route) more information.
 
 ## ​​Create a static route
 
@@ -52,10 +52,10 @@ Configure scoping for your traffic in the **Region code** section when adding or
 5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
 6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in [Configure tunnel endpoints]($2).
 7. Choose the **Priority** for your route. Lower numbers have higher priorities.
-8. (Optional) Choose a **Weight** for your route. Refer to [Edge routing configuration example](#edge-routing-configuration-example) for examples on this.
+8. (Optional) Choose a **Weight** for your route. Refer to [Edge routing configuration example](#edge-routing-configuration-example) for examples.
 9. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
 10. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-11. If your test was successful, select **Add routes** when you are done.
+11. Select **Add routes** when you are done.
 
 ## ​​Edit a static route
 
