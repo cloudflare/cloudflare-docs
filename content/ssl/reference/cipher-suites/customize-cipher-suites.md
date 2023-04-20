@@ -13,7 +13,7 @@ With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
 
-When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all certificates within the zone, regardless of certificate type. For example: if you have an advanced certificate for `domain.test`, a universal certificate for `*.domain.test`, and custom certificates for `*.*.domain.test`, all of them should only used the specified cipher suites. To check the different certificates you have in a zone, go to **SSL/TLS** > **Edge Certificates** on the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
+When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all certificates within the zone, regardless of certificate type. For example: if you have an advanced certificate for `domain.test`, a universal certificate for `*.domain.test`, and custom certificates for `*.sub.domain.test`, all of them should only use the specified cipher suites. To check the different certificates you have in a zone, go to **SSL/TLS** > **Edge Certificates** on the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
 ## Cipher suite values
 
