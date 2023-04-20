@@ -42,7 +42,7 @@ Deleting your account is permanent. Any accounts where you are the primary owner
 
 2. Select **My Profile**.
 
-3. Select **Delete this user**
+3. Select **Delete this user**.
 
     ![To delete your account, select Delete this user on your profile page.](/images/fundamentals/get-started/delete-account.png)
 
