@@ -6,7 +6,7 @@ weight: 8
 
 # Access an SMB drive through Cloudflare Tunnel
 
-The Server Message Block (SMB) protocol allows users to read, write, and access shared resources on a network. Due to security risks, firewalls and ISPs usually block public connections to an SMB file share.  With Cloudflare Tunnel, you can provide secure and simple SMB access to users outside of your network.
+The Server Message Block (SMB) protocol allows users to read, write, and access shared resources on a network. Due to security risks, firewalls and ISPs usually block public connections to an SMB file share. With Cloudflare Tunnel, you can provide secure and simple SMB access to users outside of your network.
 
 Cloudflare Zero Trust offers two solutions for connecting to SMB servers:
 
@@ -43,6 +43,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 2. Enter `smb://<smb-server-ip-address>/sambashare`.
 
    ![Connect to SMB server in macOS](/cloudflare-one/static/documentation/connections/connect-apps/use-cases/smb-connect.png)
+
 3. Sign in with the username and password created while setting up the server.
 
 #### Windows
@@ -63,7 +64,7 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `smb.example.com`).
 
-3. For **Service**,  select _TCP_ and enter the SMB listening port (for example, `localhost:445`). SMB drives listen on port `139` or `445` by default.
+3. For **Service**, select _TCP_ and enter the SMB listening port (for example, `localhost:445`). SMB drives listen on port `139` or `445` by default.
 
 4. Select **Save hostname**.
 
@@ -74,13 +75,13 @@ In order for devices to connect to your Zero Trust organization, you will need t
 1. [Install `cloudflared`](/cloudflare-one/connections/connect-apps/install-and-setup/installation/) on the client machine.
 2. Run the following command to open an SMB listening port. You can specify any available port on the client machine.
 
-    ```sh
+   ```sh
    $ cloudflared access tcp --hostname smb.example.com --url localhost:8445
    ```
 
    This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
-3. [Open your SMB client](/cloudflare-one/connections/connect-apps/use_cases/smb/#3-connect-as-a-user) and configure the client to point to `smb://localhost:8445/sambashare`. Do not input the hostname.
+3. [Open your SMB client](/cloudflare-one/connections/connect-apps/use-cases/smb/#3-connect-as-a-user) and configure the client to point to `smb://localhost:8445/sambashare`. Do not input the hostname.
 
 4. Sign in with the username and password created while setting up the server.
 
