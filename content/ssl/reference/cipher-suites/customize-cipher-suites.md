@@ -8,14 +8,12 @@ meta:
 
 # Customize cipher suites — Edge certificates
 
-With [**Advanced Certificate Manager**](/ssl/edge-certificates/advanced-certificate-manager/) or within [**SSL for SaaS**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections to specific cipher suites. Currently, this functionality is only available when using the API:
+With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections to specific cipher suites. Currently, this functionality is only available when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
 
-{{<Aside type="note">}}
-When you customize cipher suites for a zone, the restriction affects all certificates within the zone, regardless of each certificate type.
-{{</Aside>}}
+When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all certificates within the zone, regardless of certificate type. For example: if you have an advanced certificate for `domain.test`, a universal certificate for `*.domain.test`, and custom certificates for `*.*.domain.test`, all of them should only used the specified cipher suites. To check the different certificates you have in a zone, go to **SSL/TLS** > **Edge Certificates** on the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
 ## Cipher suite values
 
