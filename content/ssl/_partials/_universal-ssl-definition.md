@@ -5,4 +5,4 @@ _build:
   list: never
 ---
 
-By default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all Cloudflare domains.
+By default, Cloudflare issues — and renews — free, unshared, publicly trusted SSL certificates to all active domains added to Cloudflare.
