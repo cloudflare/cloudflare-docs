@@ -1,12 +1,13 @@
 ---
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/360037857831-Understanding-Cloudflare-Account-Analytics-beta-
-title: Understanding Cloudflare Account Analytics (beta)
+title: Account analytics (beta)
+weight: 2
 ---
 
-# Understanding Cloudflare Account Analytics (beta)
+# Account analytics (beta)
 
-The Cloudflare dashboard (Account) **Analytics** app is a major component of the overall Cloudflare analytics product line. Specifically, you can access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
+Cloudflare account analytics lets you access a wide range of aggregated metrics from all the sites under a specific Cloudflare account.
 
 {{<Aside type="note">}}
 For general information about all of Cloudflare's analytics offerings, refer to [About Cloudflare Analytics](/fundamentals/data-products/about-analytics/).

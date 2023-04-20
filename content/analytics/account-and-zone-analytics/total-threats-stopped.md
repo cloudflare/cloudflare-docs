@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/204964927-How-does-Cloudflare-calculate-Total-threats-stopped-
-title: How does Cloudflare calculate Total threats stopped
+title: Total threats stopped
 ---
 
-# How does Cloudflare calculate "Total threats stopped"?
+# Total threats stopped
 
 Total Threats Stopped measures the number of “suspicious” and “bad” requests that were aimed at your site. Requests receive these labels by our IP Reputation Database as they enter Cloudflare’s network:
 

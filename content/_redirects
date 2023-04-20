@@ -91,7 +91,16 @@
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
-/support/analytics/ /analytics/troubleshooting/ 301
+/support/analytics/ /analytics/ 301
+/support/analytics/learn-more/ /analytics/ 301
+/support/analytics/essentials/ /analytics/ 301
+/support/analytics/essentials/understanding-cloudflare-account-analytics-beta/ /analytics/account-and-zone-analytics/account-analytics/ 301
+/support/analytics/essentials/understanding-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/zone-analytics/ 301
+/support/analytics/learn-more/cloudflare-analytics-with-workers/ /analytics/account-and-zone-analytics/analytics-with-workers/ 301
+/support/analytics/learn-more/how-does-cloudflare-calculate-total-threats-stopped/ /analytics/account-and-zone-analytics/total-threats-stopped/ 301
+/support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
+/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
+/support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 
 # area1
 /email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
@@ -931,9 +940,6 @@
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
 /workers/wrangler/migration/* /workers/wrangler-legacy/migration/:splat 301
 /workers/wrangler/cli-wrangler/* /workers/wrangler-legacy/:splat 301
-# Support migration
-/support/analytics/learn-more/* /analytics/troubleshooting/:splat 301
-/support/analytics/essentials/* /analytics/troubleshooting/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301

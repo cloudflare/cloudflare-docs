@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/206973867-Status-code-metrics-in-Cloudflare-Site-Analytics
-title: Status code metrics in Cloudflare Site Analytics
+title: Status codes
 ---
 
-# Status code metrics in Cloudflare Site Analytics
+# Status codes
 
 {{<Aside type="note">}}
 Status Codes analytics by data center is exclusive to the [enterprise level of service](https://www.cloudflare.com/plans/enterprise/contact/).

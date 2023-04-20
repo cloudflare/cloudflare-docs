@@ -1,14 +1,13 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: overview
 source: https://support.cloudflare.com/hc/en-us/articles/360037684251-Understanding-Cloudflare-Site-Analytics
-title: Understanding Cloudflare Site Analytics
+title: Zone Analytics
+weight: 1
 ---
 
-# Understanding Cloudflare Site Analytics
+# Zone Analytics
 
-## Overview
-
-The Cloudflare dashboard (Site) **Analytics** app is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
+The Cloudflare zone analytics is a major component of the overall Cloudflare Analytics product line.  Specifically, this app gives you access to a wide range of metrics, collected at the website or domain level.
 
 {{<Aside type="note">}}
 Read [Cloudflare Analytics](/fundamentals/data-products/about-analytics/)
@@ -52,7 +51,7 @@ Below is a summary of each Analytics app tab.
 
 These metrics include legitimate user requests as well as crawlers and threats. The Traffic tab features the following panels: 
 
--   **Web Traffic** - Displays metrics for _Requests_, _Bandwidth_, _Unique Visitors_, and [_Status Codes_](/analytics/troubleshooting/status-code-metrics-in-cloudflare-site-analytics/). Note that if you use Cloudflare Workers, subrequest analytics are available under the **Workers** tab.
+-   **Web Traffic** - Displays metrics for _Requests_, _Bandwidth_, _Unique Visitors_, and [_Status Codes_](/analytics/account-and-zone-analytics/status-codes/). Note that if you use Cloudflare Workers, subrequest analytics are available under the **Workers** tab.
 -   **Web Traffic Requests by Country** - Is an interactive map that breaks down the number of requests by country.  This panel also includes a data table for **Top Traffic Countries / Regions** that display the countries with the most number of requests (up to five, if the data exists).
 -   **Share Your Stats -** Lets you share actual site statistics on social media (Twitter) for: _Bytes saved,_ _SSL requests served_, and _attacks blocked_.
 
