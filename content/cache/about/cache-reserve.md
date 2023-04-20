@@ -1,9 +1,9 @@
 ---
-title: Cache Reserve (beta)
+title: Cache Reserve
 pcx_content_type: concept
 ---
 
-{{<beta>}} Cache Reserve {{</beta>}}
+# Cache Reserve
 
 Cache Reserve is a large, persistent data store [implemented on top of R2](https://blog.cloudflare.com/r2-open-beta/). By pushing a single button in the dashboard, your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](https://blog.cloudflare.com/introducing-smarter-tiered-cache-topology-generation/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/about/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
 
@@ -24,12 +24,10 @@ You can enable Cache Reserve from the dashboard or [via API](/api/operations/zon
 To enable Cache Reserve through the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2.  Navigate to **Caching**.
-3.  Enable **Cache Reserve**.
+2.  Navigate to **Caching** > **Cache Reserve**
+3.  Select **Enable storage sync**.
 
 {{<Aside type="note" header="Note">}}You can pause Cache Reserve at any time. Pausing Cache Reserve means that Cloudflare’s network will no longer use Cache Reserve to serve data, but resources will remain in storage until they are purged or expired.{{</Aside>}}
-
-![Cache Reserve enablement in the dashboard](/images/cache/cache-reserve-dash.png)
 
 If you are an Enterprise customer and are interested in Cache Reserve, contact your account team to get help with your configuration.
 
