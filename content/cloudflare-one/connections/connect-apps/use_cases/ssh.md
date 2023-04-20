@@ -68,11 +68,13 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 ### 2. Set up the client
 
-In order for devices to connect to your Zero Trust organization, you will need to:
-
 {{<render file="_warp-to-tunnel-client.md">}}
 
-### 3. Connect as a user
+### 3. Route private network IPs through WARP
+
+{{<render file="_warp-to-tunnel-route-ips.md">}}
+
+### 4. Connect as a user
 
 Once you have set up the application and the user device, the user can now SSH into the machine using its private IP address.  If your SSH server requires an SSH key, the key should be included in the command.
 

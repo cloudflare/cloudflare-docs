@@ -35,7 +35,11 @@ In order for devices to connect to your Zero Trust organization, you will need t
 
 {{<render file="_warp-to-tunnel-client.md">}}
 
-### 3. Connect as a user
+### 3. Route private network IPs through WARP
+
+{{<render file="_warp-to-tunnel-route-ips.md">}}
+
+### 4. Connect as a user
 
 #### macOS
 
