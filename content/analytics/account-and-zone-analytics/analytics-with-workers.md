@@ -6,7 +6,7 @@ title: Cloudflare analytics with Workers
 
 # Cloudflare analytics with Workers
 
-
+Learn how Cloudflare analytics tracks requests made by [Cloudflare Workers](/workers/).
 
 ## What is a subrequest?
 

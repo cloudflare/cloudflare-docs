@@ -90,7 +90,7 @@
     },
     "traffic": {
       "title": "Traffic analytics",
-      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -501,7 +501,7 @@
     },
     "dns_analytics": {
       "title": "DNS Analytics",
-      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
