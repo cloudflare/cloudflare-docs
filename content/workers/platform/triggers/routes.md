@@ -7,23 +7,24 @@ title: Routes
 
 ## Background
 
-Routes allow users to map a URL pattern to a Worker. When a request comes in that matches the specified URL pattern, your Worker will execute on that route.
+Routes allow users to map a URL pattern to a Worker. When a request comes in to the Cloudflare network that matches the specified URL pattern, your Worker will execute on that route.
 
 ## Types of routes
 
 There are three types of routes:
 
-1. Pattern routes: Routes that are set within a proxied (orange-clouded) Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
-2. Custom Domain routes: Routes to a domain (such as `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
-3. `workers.dev` route: The `workers.dev` subdomain route automatically created for your Worker that you can disable.
+* Routes: Routes that are set within a Cloudflare zone where your origin server, if you have one, is behind a Worker that the Worker can communicate with.
+* Custom Domains: Routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.`
+* `workers.dev`: The `workers.dev` subdomain route automatically created for your Worker that you can disable.
 
 ## Set up a route
 
+{{<Aside type="warning">}}
 Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/).
+{{</Aside>}}
+If your Worker is not your application's origin, follow the instructions below to set up a route.
 
-If your Worker is not your application's origin, follow the instructions below to set up a pattern route.
-
-Before setting up a pattern route, you must have a valid, proxied (orange-clouded) domain on your Cloudflare zone that points to your origin.
+Before setting up a route, you must have a valid, proxied (orange-clouded) domain or subdomain on your Cloudflare zone that points to your origin.
 
 {{<Aside type="note">}}
 Routes can also be created via the API. Refer to the [Workers Routes API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes) for more information.
@@ -36,7 +37,8 @@ To set up a route in the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Go to **Workers** and select your Worker.
 3. Go to **Triggers** > **Routes** > **Add route**.
-4. Enter the pattern route and select the zone it applies to.
+4. Enter the route and select the zone it applies to.
+5. Select **Add route**.
 
 ### Set up a route in `wrangler.toml`
 
@@ -45,8 +47,8 @@ To configure a route using your `wrangler.toml` file, refer to the following exa
 ```toml
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
-	// or
-	{ pattern = "subdomain.example.com/*", zone_id =" "aa00a000a0a0000000aaa0a0a0aa0aa0" }
+	# or
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID" }
 ]
 ```
 
@@ -57,7 +59,7 @@ To add multiple routes:
 ```toml
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_name = "example.com" },
-	{ pattern = "subdomain-two.example.com/example", zone_id =" "aa00a000a0a0000000aaa0a0a0aa0aa0" }
+	{ pattern = "subdomain-two.example.com/example", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
@@ -167,9 +169,9 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 {{</Aside>}}
 
-#### Subdomains must have a DNS Record
+#### Domains and subdomains must have a DNS Record
 
-All subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All domains and subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 {{<Aside type="warning">}}
 

@@ -18,7 +18,7 @@ To add a Custom Domain, you must have:
 
 The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. Custom Domains can be attached to your Worker via API, Wrangler, or the Cloudflare dashboard.
 
-### Set up a custom domain in the dashboard
+### Set up a Custom Domain in the dashboard
 
 To set up a Custom Domain in the dashboard:
 
@@ -26,17 +26,26 @@ To set up a Custom Domain in the dashboard:
 2. Select **Workers** and select your Worker.
 3. Go to **Triggers** > **Custom Domains** > **Add Custom Domain**.
 4. Enter the domain you want to configure for your Worker.
+5. Select **Add Custom Domain**.
 
-After you have added the domain, Cloudflare will create a new DNS record for you. You can add multiple Custom Domains.
+After you have added the domain or subdomain, Cloudflare will create a new DNS record for you. You can add multiple Custom Domains.
 
-### Set up a custom domain in your `wrangler.toml`
+### Set up a Custom Domain in your `wrangler.toml`
 
-To configure a subdomain for a Custom Domain in your `wrangler.toml`, add the `custom_domain=true` option on each pattern under `routes`. For example, to configure multiple Custom Domains:
+To configure a Custom Domain in your `wrangler.toml`, add the `custom_domain=true` option on each pattern under `routes`. For example, to configure a Custom Domain:
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true },
-	{ pattern = "subdomain-two.example.com", custom_domain = true }
+	{ pattern = "shop.example.com", custom_domain = true }
+]
+```
+
+To configure multiple Custom Domains:
+
+```toml
+routes = [
+	{ pattern = "shop.example.com", custom_domain = true },
+	{ pattern = "shop-two.example.com", custom_domain = true }
 ]
 ```
 
