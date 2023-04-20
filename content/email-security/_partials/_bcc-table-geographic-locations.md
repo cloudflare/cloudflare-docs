@@ -9,7 +9,7 @@ Select from the following BCC addresses to process email in the correct geograph
 
 Host | Location | Note
 --- | --- | ---
-`<customer_name>@journaling.mxrecord.io` | USA | 
+`<customer_name>@journaling.mxrecord.io` | USA | Use these servers to process email in the US.
 `<customer_name>@journaling.mailstream-eu-primary.mxrecord.io` | EU | Prioritizes email processing in Germany, with failover to US data centers.
 `<customer_name>@journaling.mailstream-eu1.mxrecord.io` | EU | Processes emails in the EU without failover to the USA.
 `<customer_name>@journaling.mailstream-bom.mxrecord.mx ` | India | Best option to ensure data stays in India.
