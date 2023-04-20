@@ -1,21 +1,23 @@
 ---
 pcx_content_type: concept
-title: WebAssembly (WASM)
-weight: 2
+title: WebAssembly (Wasm)
 ---
 
-# WebAssembly (WASM)
+# WebAssembly (Wasm)
 
-[WebAssembly](https://webassembly.org/) (abbreviated Wasm) is a binary instruction format for a stack-based virtual machine.
-Many [languages](http://localhost:5174/workers/platform/languages/#wasm-supported) can be compiled to Wasm and run on Workers.
+[WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
 
-Guides are available for the following languages:
+On Workers, you can use WebAssembly to:
+- Execute code written in a language other than JavaScript, via `WebAssembly.instantiate()` ([example](/workers/platform/web-assembly/javascript/#use-from-javascript)).
+- Write an entire Cloudflare Worker in Rust, using bindings that make Workers' JavaScript APIs available directly from Rust.
+
+Most programming languages can be compiled to Wasm, although support varies across languages and compilers. Guides are available for the following:
 
 {{<directory-listing>}}
 
 ## Supported Proposals
 
-WebAssembly includes [many proposed APIs](https://webassembly.org/roadmap/) which are in various stages of development. In general, Workers supports "standardized" features which have been implemented by V8, except where the feature may pose a security risk.
+WebAssembly is a rapidly evolving set of standards, with [many proposed APIs](https://webassembly.org/roadmap/) which are in various stages of development. In general, Workers supports the same set of features that are available in Google Chrome.
 
 ### SIMD
 
@@ -27,9 +29,7 @@ Threading is not possible in Workers because each Worker runs in a single thread
 
 ## Binary Size
 
-WebAssembly tends to produce larger Workers bundles than JavaScript Workers. Cloudflare limits the size of Workers bundles for performance reasons. This limit will increase over time, however larger bundle size may still impact script startup time. You should
-use tools like [`wasm-opt`](https://github.com/brson/wasm-opt-rs) to optimize the WASM binary, and limit the number of dependencies
-included in your Worker.
+Compiling to WebAssembly often requires including additional runtime dependencies. As a result, Workers that use WebAssembly are typically larger than an equivalent Worker written in JavaScript. The larger your Worker is, the longer it may take your Worker to [start](https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time). We recommend using tools like [`wasm-opt`](https://github.com/brson/wasm-opt-rs) to optimize the size of your Wasm binary.
 
 ## WASI
 

@@ -1,16 +1,17 @@
 ---
 title: Rust
 pcx_content_type: rust-wasm-guide
-weight: 1
+weight: 2
 meta:
   title: Rust WebAssembly guide
 ---
 
 # Rust WebAssembly Guide
 
-This guide will show how to get started with using Rust to build WebAssembly Workers. There are many configurations that can be used to produce Wasm binaries which are compatible with Workers, but this guide will focus on using [`workers-rs`](https://github.com/cloudflare/workers-rs), which provides the most fully-featured experience. 
+This guide will show how to get started with using Rust to build WebAssembly Workers. There are many configurations that can be used to produce Wasm binaries which are compatible with Workers, but this guide will focus on using [`workers-rs`](https://github.com/cloudflare/workers-rs), which makes APIs and bindings like Workers KV, R2, and Queues available directly from Rust. 
 
-This guide assumes that you have the following installed:
+## Prerequisites
+
 * A recent version of [`Rust`](https://rustup.rs/) 
 * [`npm`](https://docs.npmjs.com/getting-started)
 * The Rust `wasm32-unknown-unknown` toolchain:
