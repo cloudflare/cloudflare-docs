@@ -18,4 +18,4 @@ To setup Area 1 phishing risk assessment for Gmail:
 
 ## Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md" withParameters="<customer_name>@mxrecord.io;;<customer_name>@mailstream-eu-primary.mxrecord.io;;<customer_name>@mailstream-eu1.mxrecord.io;;<customer_name>@mailstream-bom.mxrecord.mx;;<customer_name>@mailstream-india-primary.mxrecord.mx;;<customer_name>@mailstream-asia.mxrecord.mx">}}
+{{<render file="_bcc-table-geographic-locations.md">}}
