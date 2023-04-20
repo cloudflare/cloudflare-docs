@@ -1,12 +1,10 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360038696631-Understanding-Cloudflare-Network-Analytics-v1
-title: Understanding Cloudflare Network Analytics v1
+title: Cloudflare Network Analytics v1
 ---
 
-# Understanding Cloudflare Network Analytics v1
-
-## Overview
+# Cloudflare Network Analytics v1
 
 Access to Network Analytics requires the following:
 
@@ -17,13 +15,10 @@ Cloudflare’s **Network Analytics** view provides near real-time visibility int
 
 {{<Aside type="note">}}
 -   **The Network Analytics v2 (NAv2) dashboard is now available.** For
-    more information, refer to [Cloudflare Network
-    Analytics](/analytics/network-analytics/)
-    in the developer documentation.
+    more information, refer to [Cloudflare Network Analytics](/analytics/network-analytics/).
 -   There is also new version of the Network Analytics GraphQL API. If
     you are still using NAv1, you should migrate from NAv1 to NAv2 by
-    following the [migration
-    guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+    following the [migration guide](/analytics/graphql-api/migration-guides/network-analytics-v2/).
 {{</Aside>}}
 
 ![Analytics panel showing packets summary per type](/support/static/na-main-dashboard.png)
@@ -146,17 +141,17 @@ Other types of Network Analytics filters will not be added to the new rule defin
 
 Do the following:
 
-1\. Apply one or more filters in Network Analytics.
+1. Apply one or more filters in Network Analytics.
 
-2\. Click **Create Magic Firewall rule**. 
+2. Click **Create Magic Firewall rule**. 
 
 ![Creating a Firewall Rule link in Network Analytics](/support/static/hc-dash-Network_Analytics-create_firewall_rule.png)
 
 The Magic Firewall rule editor displays with the selected filters and values.
 
-3\. Review the rule definition in the Magic Firewall rule editor.
+3. Review the rule definition in the Magic Firewall rule editor.
 
-4\. Click **Add new**.
+4. Click **Add new**.
 
 ### Supported filter fields, operators, and values 
 
@@ -276,16 +271,6 @@ Network Analytics currently has these limitations:
 
 ___
 
-## Related resources
-
--   [Cloudflare Network Analytics v2](/analytics/network-analytics/)
--   [Migrating from Network Analytics v1 to Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL API](/analytics/graphql-api/)
--   [Cloudflare Analytics: a quick overview](https://support.cloudflare.com/hc/articles/360037684111)
--   [IANA port numbers and service names](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
-
-___
-
 ## Frequently asked questions
 
 ### How long does Cloudflare retain data in the Network Analytics portal?
@@ -296,109 +281,30 @@ Network Analytics v1 (NAv1) uses GraphQL nodes to roll up data into 1 minute, 1 
 
 To identify the range of historical data you can query in NAv1, refer to this table. Use the _**notOlderThan**_ column as an indicator of retention time.
 
-| 
-GraphQL data node
+GraphQL data nodes:
 
- | 
+- `ipFlows1mGroups`
+    - **maxDuration**[^1]: 25 hours
+    - **notOlderThan**[^2]: 30 days
+    - **Time range selection** and **Number of data points**:
+        - 30 minutes - 30 data points
+        - 6 hours - 71 data points
+        - 12 hours - 48 data points
+        - 24 hours - 96 data points
+        - 1 week - 168 data points
+- `ipFlows1dGroups`
+    - **maxDuration**[^1]: 6 months
+    - **notOlderThan**[^2]: 1 year
+    - **Time range selection** and **Number of data points**:
+        - 30 minutes - 30 data points
+        - 6 hours - 71 data points
+        - 12 hours - 48 data points
+        - 24 hours - 96 data points
+        - 1 week - 168 data points
 
-maxDuration\*
+[^1]: maxDuration defines the time window that can be requested in one query (varies by data node).
 
- | 
-
-notOlderThan\*\*
-
- | 
-
-time range selections in Network Analytics
-
- | 
-
-Number of data points
-
- |
-| --- | --- | --- | --- | --- |
-| 
-
-ipFlows1mGroups
-
- | 
-
-25 hours
-
- | 
-
-30 days
-
- | 
-
-30 minutes
-
- | 
-
-30
-
- |
-| 
-
-6 hours
-
- | 
-
-71
-
- |
-| 
-
-12 hours
-
- | 
-
-48
-
- |
-| 
-
-24 hours
-
- | 
-
-96
-
- |
-| 
-
-ipFlows1dGroups
-
- | 
-
-6 months
-
- | 
-
-1 year
-
- | 
-
-1 week
-
- | 
-
-168
-
- |
-| 
-
-1 month
-
- | 
-
-30
-
- |
-
-_**\*maxDuration**_ _defines the time window that can be requested in one query (varies by data node)._
-
-_**\*\*notOlderThan**_ _limits how far back in the record a query can search. It is indicative of how long the data stays in our database._ 
+[^2]: notOlderThan limits how far back in the record a query can search. It is indicative of how long the data stays in our database.
 
 When working with attack logs in the dashboard, keep the following in mind:
 
@@ -409,6 +315,6 @@ For more information on querying and accessing log data, refer to the [GraphQL A
 
 ### Why does Network Analytics say the destination IP is “unavailable”?
 
-The destination IP is indicated as _Unavailable_, when the destination IP was not included in the real-time signature generated by our [DDoS protection systems](https://blog.cloudflare.com/mitigating-a-754-million-pps-ddos-attack-automatically/). 
+The destination IP is indicated as _Unavailable_, when the destination IP was not included in the real-time signature generated by our [DDoS protection systems](/ddos-protection/). 
 
 To view the destination IP, filter by **Attack ID** and scroll to the **Destination** section in the top items lists. When you filter on a specific Attack ID, the entire Network Analytics dashboard becomes an attack report.
