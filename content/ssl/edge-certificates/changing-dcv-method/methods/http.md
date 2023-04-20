@@ -12,6 +12,12 @@ When you choose HTTP DCV, Cloudflare automatically adds a verification HTTP toke
 
 Only use this method if your domain can tolerate a few minutes of downtime.
 
+{{<Aside type="note">}}
+
+If you encounter issues with HTTP DCV, refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+{{</Aside>}}
+
 ## Limitations
 
 HTTP DCV is only available for [proxied domains](/dns/manage-dns-records/reference/proxied-dns-records/).
