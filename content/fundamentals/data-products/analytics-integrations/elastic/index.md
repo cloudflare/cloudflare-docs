@@ -269,7 +269,7 @@ If you run into any other issues, take note of the exact return message and cont
 To analyze the health status of the Lambda function from Kibana:
 
 1.  From Elastic Cloud, launch the Kibana console.
-    ![Lauching Elastic Cloud Kibana console](/images/fundamentals/elastic/screenshots/elastic-cloud-console.png)
+    ![Launching Elastic Cloud Kibana console](/images/fundamentals/elastic/screenshots/elastic-cloud-console.png)
 2.  Find the **Dev Tools** app on the left navigation bar.
 3.  Under the **Console** tab, type the following into the left pane: _GET \_cat/indices?v\&s=index_.
 4.  In the right pane, you should see a table of indices with the column headings: **health status index**, **uuid**, **pri**, **rep**, **docs.count**, **docs.deleted**, **store.size**, and **pri.store.size**.
