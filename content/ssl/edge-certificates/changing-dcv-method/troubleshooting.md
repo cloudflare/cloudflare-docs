@@ -12,11 +12,7 @@ When performing Domain Control Validation (DCV) for partial domains using Univer
 
 If these issues occur while using HTTP DCV, review the following settings:
 
-- **Cloudflare Firewall Rules**: Review your [firewall rules](/firewall/) to ensure that your rules _do not_:
-
-  - Block requests from the United States
-  - Block requests from the issuing Certificate Authority's IP addresses
-  - Enable interactive challenge on the validation URL
+- **Cloudflare Firewall Rules**: Review your [firewall rules](/firewall/) to ensure that your rules _do not_ enable interactive challenge on the validation URL
 
 - **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](https://support.cloudflare.com/hc/articles/200170076) and [Page Rules](https://support.cloudflare.com/hc/articles/218411427) to ensure you have not enabled **I'm Under Attack Mode** on the validation URL.
 
