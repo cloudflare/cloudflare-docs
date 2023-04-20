@@ -24,7 +24,7 @@ You can enable Cache Reserve from the dashboard or [via API](/api/operations/zon
 To enable Cache Reserve through the dashboard:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2.  Navigate to **Caching** > **Cache Reserve**
+2.  Go to **Caching** > **Cache Reserve**.
 3.  Select **Enable storage sync**.
 
 {{<Aside type="note" header="Note">}}You can pause Cache Reserve at any time. Pausing Cache Reserve means that Cloudflare’s network will no longer use Cache Reserve to serve data, but resources will remain in storage until they are purged or expired.{{</Aside>}}
