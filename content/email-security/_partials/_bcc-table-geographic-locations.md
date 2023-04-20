@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: address1;;address2;;address3;;address4;;address5;;address6;;
+inputParameters: address1;;address2;;address3;;address4;;address5;;address6
 ---
 
 Select from the following BCC addresses to process email in the correct geographic location.
