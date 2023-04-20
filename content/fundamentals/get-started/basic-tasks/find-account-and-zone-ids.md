@@ -15,7 +15,7 @@ To find your zone and account IDs:
 
     ![Screenshot of the Overview page with the API section highlighted](/images/fundamentals/get-started/dash-overview-api-highlighted.png)
 
-3. The **API** section contains your **Zone ID** and **Account ID**. To copy these values for API commands or other tasks, click **Click to copy**.
+3. The **API** section contains your **Zone ID** and **Account ID**. To copy these values for API commands or other tasks, select **Click to copy**.
 
     ![Screenshot of the API section on the Overview page of a zone](/images/fundamentals/get-started/dash-overview-api-close-view.png)
 
