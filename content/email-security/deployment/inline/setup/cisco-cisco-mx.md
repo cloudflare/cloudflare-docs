@@ -44,16 +44,9 @@ To add a new SMTP Route:
 
 3. Configure the new SMTP Route as follows:
     * **Receiving Domain**: `a1s.mailstream`
-    * In **Destination Hosts**, select **Add Row**, and add the following values to the respective rows:
-    Priority | Destination                      | Port
-    -------- | -------------------------------- | ---
-    `5`      | `mailstream-central.mxrecord.mx` | `25`
-    `10`     | `mailstream-east.mxrecord.io`    | `25`
-    `10`     | `mailstream-west.mxrecord.io`    | `25`
+    * In **Destination Hosts**, select **Add Row**, and add the Area 1 MX hosts. Refer to the [Geographic locations](#5-geographic-locations) table for more information on what MX hosts to use.
 
 ![Edit SMTP route](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step2.png)
-
-{{<Aside type="note">}}If you are located in India, the EU or GDPR applies to your organization you will have to replace these MX records with the appropriate ones to process emails in the appropriate geographic location. Refer to the [Geographic locations](#5-geographic-locations) table for more information.{{</Aside>}}
 
 ## 3. Create Incoming Content Filters
 
