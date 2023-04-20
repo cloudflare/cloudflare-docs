@@ -18,4 +18,4 @@ For customers using Microsoft Office 365, setting up Area 1 via journaling is qu
 
 ## Geographic locations
 
-{{<render file="_bcc-table-geographic-locations.md">}}
+{{<render file="_bcc-table-geographic-locations.md" withParameters="<customer_name>@journaling.mxrecord.io;;<customer_name>@journaling.mailstream-eu-primary.mxrecord.io;;<customer_name>@journaling.mailstream-eu1.mxrecord.io;;<customer_name>@journaling.mailstream-bom.mxrecord.mx;;<customer_name>@journaling.mailstream-india-primary.mxrecord.mx;;<customer_name>@journaling.mailstream-asia.mxrecord.mx">}}
