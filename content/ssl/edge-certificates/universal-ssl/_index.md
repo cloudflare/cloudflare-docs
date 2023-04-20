@@ -15,7 +15,7 @@ For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/univer
 
 {{<Aside type="note">}}
 
-For sites that require an SSL certificate prior to migrating traffic to Cloudflare or need to disable certain cipher suites, purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) before proxying traffic to Cloudflare.
+If your website or application requires an SSL certificate prior to migrating traffic to Cloudflare, or if you need to [customize cipher suites](/ssl/reference/cipher-suites/customize-cipher-suites/), refer to [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) or [Custom](/ssl/edge-certificates/custom-certificates/) certificates.
 
 {{</Aside>}}
 
