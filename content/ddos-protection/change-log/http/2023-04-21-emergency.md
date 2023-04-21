@@ -24,7 +24,7 @@ layout: list
       <td>HTTP requests trying to impersonate browsers.</td>
       <td>ddos_dynamic</td>
       <td>ddos_dynamic</td>
-      <td>Remove some rare false positives</td>
+      <td>Remove some rare false positives.</td>
     </tr>
 <tr>
       <td>...d3fb9259</td>
