@@ -20,7 +20,7 @@ Right now, Zaraz is compatible with Google Analytics 3 (Universal Analytics), Go
 
 ## Enable e-commerce tracking
 
-You do not need to map e-commerce events to triggers. Zaraz will automatically forward data using the right format to the tools with e-commerce support.
+You do not need to map e-commerce events to triggers. Zaraz automatically forwards data using the right format to the tools with e-commerce support.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Select **Zaraz** > **Settings**.
