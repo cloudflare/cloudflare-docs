@@ -279,7 +279,7 @@
     },
     "csam": {
       "title": "CSAM Scanning Tool",
-      "link": "/cache/troubleshooting/understanding-the-csam-scanning-tool/",
+      "link": "/cache/reference/csam-scanning/",
       "properties": {
         "availability": {
           "title": "Availability",
