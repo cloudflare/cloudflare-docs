@@ -9,7 +9,7 @@ meta:
 
 # Rate limiting (previous version) deprecation notice
 
-**The [previous version of rate limiting rules](https://support.cloudflare.com/hc/articles/115001635128) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until DATE. After this date all remaining active rules will stop working.
+**The [previous version of rate limiting rules](/support/firewall/tools/configuring-cloudflare-rate-limiting/) is now deprecated.** If you have rules in the previous version, the Cloudflare dashboard will show the configuration for both new (**A**) and old (**B**) rate limiting rules in **Security** > **WAF** > **Rate limiting rules**. The rate limiting rules interface for the previous version will only be available in the dashboard until 2024-05-01. After this date all remaining active rules will stop working.
 
 ![The Cloudflare dashboard showing both versions of rate limiting rules under WAF.](/waf/static/reference/rate-limiting-both-versions.png)
 
@@ -37,12 +37,14 @@ To learn more about what you can do with the new rate limiting, refer to the [Ra
 
     {{<table-wrap>}}
 
-Product | Free | Professional | Business | Enterprise w/ Rate Limiting add-on, or<br>equivalent plan
+Product | Free | Professional | Business | Enterprise w/ Rate Limiting add-on, <br>or equivalent plan
 ---|:---:|:---:|:---:|:---:|:---:
 Rate Limiting (previous version) | 1 | 10 | 15 | 100
 Rate Limiting (new version)      | 1 | 2  | 5  | 100
 
     {{</table-wrap>}}
+
+    Enterprise customers without Rate Limiting on their plan will not get any rate limiting rules.
 
 For more details on the differences between old and new rate limiting rules, refer to [our blog post](https://blog.cloudflare.com/unmetered-ratelimiting/).
 
@@ -56,13 +58,13 @@ If you had access to the previous version of Cloudflare Rate Limiting, you will 
 
 The new rate limiting rules are based on the [Ruleset Engine](/ruleset-engine/). Therefore, to configure these rules via API you must use the [Rulesets API](/ruleset-engine/rulesets-api/). The Rulesets API is used on all recent Cloudflare security products to provide a uniform user experience when interacting with our API.
 
-**The [previous Rate Limiting API](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after DATE.
+**The [previous Rate Limiting API](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits) is now deprecated.** You will not be able to perform any API calls after 2024-05-01.
 
 ### Relevant changes for Terraform users
 
 To configure the new rate limiting rules with Terraform you must use the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource. Refer to the Terraform documentation for [examples of configuring the new rate limiting rules using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
 
-**The [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource is now deprecated.** You will not be able to perform configuration updates via Terraform using this resource after DATE.
+**The [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource is now deprecated.** You will not be able to perform configuration updates via Terraform using this resource after 2024-05-01.
 
 ## Migrating to the new rate limiting rules
 
@@ -76,16 +78,14 @@ If you were using the previous version of rate limiting rules, you will have acc
 
 The previous version of Rate Limiting was billed based on usage ($5 per million requests) while the new rate limiting rules are included in your plan and you will not have additional charges for using this feature.
 
-If you have any rules configured in the previous version of rate limiting rules, these rules will continue to run and you will still be charged based on usage. You should migrate your rules to the new system before DATE.
+If you have any rules configured in the previous version of rate limiting rules, these rules will continue to run and you will still be charged based on usage. You should migrate your rules to the new system before 2024-05-01.
 
 Once you have deleted all rules from the previous version of rate limiting rules, the Cloudflare dashboard will only show the new version.
 
 ### Enterprise customers
 
-By default, all Enterprise customers receive the same rule quota as Business customers.
+Enterprise contracts that included the previous version of Cloudflare Rate Limiting were based on the "good requests model", where customers were billed based on the predicted usage of the feature. If you were using the previous version of Cloudflare Rate Limiting, you will have access to both products with the same number of rules at no additional cost, and they will both apply to your incoming traffic (in this case, the new Rate Limiting will run first).
 
-Enterprise contracts that included the previous version of Cloudflare Rate Limiting were based on the "good requests model", where customers were billed based on the predicted usage of the feature. If you were using the previous version of Cloudflare Rate Limiting, you will have access to both products with the same number of rules at no additional cost, and they will both apply to your incoming traffic.
-
-You should migrate your rules to the new system before DATE.
+You should migrate your rules to the new system before 2024-05-01. Once you have deleted all rules from the previous version of rate limiting rules, the Cloudflare dashboard will only show the new version.
 
 As an Enterprise customer, you can also upgrade to [Advanced Rate Limiting](https://blog.cloudflare.com/advanced-rate-limiting/), a more feature-rich version of the new Rate Limiting implementation. Reach out to your account team to learn more about Advanced Rate Limiting.
