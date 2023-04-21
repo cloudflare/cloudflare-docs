@@ -210,5 +210,3 @@ You will receive a response like the following:
 
 </div>
 </details>
-
-
