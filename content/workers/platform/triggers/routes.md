@@ -32,6 +32,8 @@ Routes can also be created via the API. Refer to the [Workers Routes API documen
 
 ### Set up a route in the dashboard
 
+Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+
 To set up a route in the dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
@@ -41,6 +43,8 @@ To set up a route in the dashboard:
 5. Select **Add route**.
 
 ### Set up a route in `wrangler.toml`
+
+Before you set up a route, make sure you have a DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
 
 To configure a route using your `wrangler.toml` file, refer to the following example.
 
@@ -171,7 +175,7 @@ There is a well-known bug associated with path matching concerning wildcards (`*
 
 #### Domains and subdomains must have a DNS Record
 
-All subdomains must have a [DNS record](/dns/manage-dns-records/how-to/create-dns-records/) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
+All domains and subdomains must have a [DNS record](https://support.cloudflare.com/hc/en-us/articles/360019093151#h_60566325041543261564371) to be proxied on Cloudflare and used to invoke a Worker. For example, if you want to put a Worker on `myname.example.com`, and you have added `example.com` to Cloudflare but have not added any DNS records for `myname.example.com`, any request to `myname.example.com` will result in the error `ERR_NAME_NOT_RESOLVED`.
 
 {{<Aside type="warning">}}
 
