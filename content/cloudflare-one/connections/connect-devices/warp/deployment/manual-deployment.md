@@ -49,7 +49,7 @@ The device is now protected by your organization's Zero Trust policies. For more
 
 ### iOS, Android, and ChromeOS
 
-1. Launch the 1.1.1.1 application.
+1. Launch the **Cloudflare One Agent** application.
 2. Select the menu bar icon.
 3. Select **Account**.
 4. Select **Login with Cloudflare Zero Trust**.
