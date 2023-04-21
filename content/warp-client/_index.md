@@ -22,7 +22,7 @@ If you are looking for the enterprise version of WARP, refer to the [Cloudflare 
 ## Features
 
 {{<feature header="WARP modes" href="/warp-client/warp-modes/">}}
-The WARP client has several modes to better suit your connection needs
+The WARP client has several modes to better suit your connection needs.
 {{</feature>}}
 
 {{<feature header="OS clients" href="/warp-client/get-started/">}}
@@ -37,6 +37,6 @@ WARP is available to several operating systems, including iOS and Android.
 1.1.1.1 is Cloudflare’s public DNS resolver. It offers a fast and private way to browse the Internet.
 {{</related>}}
 
-{{<related header="WARP" href="/cloudflare-one/connections/connect-devices/warp/" product="cloudflare-one">}}
-Refer to the Cloudflare Zero Trust documentation if you are looking for the enterprise version of WARP. 
+{{<related header="Zero Trust WARP client" href="/cloudflare-one/connections/connect-devices/warp/" product="cloudflare-one">}}
+The enterprise version of WARP enables Zero Trust network access and traffic filtering to secure your corporate resources.
 {{</related>}}
