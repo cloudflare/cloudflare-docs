@@ -172,7 +172,15 @@
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
-/cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
+/cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/support/caching/ /cache/troubleshooting/ 301
+/support/caching/configuration/ /cache/how-to/ 301
+/support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
+/support/caching/configuration/understanding-query-string-sort/ /cache/about/query-string-sort/ 301
+/support/caching/learn-more/ /cache/about/ 301
+/support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
+/support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
+/support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
 
 # cloudflare for platforms
 /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301

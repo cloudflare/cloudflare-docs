@@ -1,14 +1,10 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360046106112-Understanding-the-CSAM-Scanning-Tool
-title: Understanding the CSAM Scanning Tool
+title: CSAM Scanning Tool
 ---
 
-# Understanding the CSAM Scanning Tool
-
-
-
-## Overview
+# CSAM Scanning Tool
 
 The Child Sexual Abuse Material (CSAM) Scanning Tool allows website owners to proactively identify and take action on CSAM located on their website. By enabling this tool, Cloudflare will compare content served for your website through the Cloudflare cache to known lists of CSAM. These lists are provided to Cloudflare by leading child safety advocacy groups such as the National Center for Missing and Exploited Children (NCMEC).
 
@@ -24,9 +20,14 @@ ___
 
 ## Configuring the CSAM scanning tool
 
-To enable the tool, go to the [Cache Configuration](https://dash.cloudflare.com/?to=/:account/:zone/caching/configuration) section of the dashboard. When enabling the tool, you must provide an email address and NCMEC CyberTipline credentials for reporting purposes.
+To enable the tool:
 
-![The Caching tab from the Cloudflare dashboard displaying the CSAM Scanning Tool configuration page.](/support/static/image2.png)
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and zone.
+3. Go to **Caching** > **Configuration**.
+4. For **CSAM Scanning Tool**, select **Configure**.
+
+When enabling the tool, you must provide an email address and NCMEC CyberTipline credentials for reporting purposes.
 
 This email address will be used to both notify you in the event Cloudflare detects a positive match, and to provide NCMEC in case they or law enforcement need more information about the content reported to them.
 
@@ -49,7 +50,7 @@ Three things happen when a potential match is detected with the tool:
     -   The ID of the report that was filed with NCMEC
     -   The date and time the report was filed 
 
-3\. If possible, a firewall block is placed to prevent further serving of the matched content. If a firewall block fails, we will indicate that the content has not been blocked in the email.
+3. If possible, a firewall block is placed to prevent further serving of the matched content. If a firewall block fails, we will indicate that the content has not been blocked in the email.
 
 ___
 
