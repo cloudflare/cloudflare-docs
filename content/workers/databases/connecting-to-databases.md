@@ -1,11 +1,16 @@
 ---
 pcx_content_type: concept
-title: Databases
+title: Connecting to Databases
+weight: 1
 ---
 
-# Databases
+# Connecting to Databases
 
-Use Cloudflare Workers to connect your application to external databases, such as Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, Prisma, and more. To use these Cloudflare Workers integrations, you need to install the relevant packages for the databases you want to use.
+Cloudflare Workers can connect to and query external databases, including Postgres, MySQL, FaunaDB, Supabase, MongoDB Atlas, PlanetScale, and Prisma, allowing you to build full-stack applications directly on Cloudflare.
+
+## Database Drivers
+
+The following table lists databases and their currently supported connection methods:
 
 {{<table-wrap>}}
 
@@ -31,7 +36,7 @@ Once you have installed the necessary packages, use the APIs provided by these p
 
 ## Authentication
 
-If your database requires authentication, use Wrangler secrets to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
+If your database requires authentication, use [Secrets](/workers/platform/environment-variables/#add-secrets-to-your-project) to securely store your credentials. To do this, create a secret in your Cloudflare Workers project using the following [`wrangler secret`](/workers/wrangler/commands/#secret) command:
 
 ```sh
 wrangler secret put SECRET_NAME
@@ -45,4 +50,4 @@ const secretValue = env.SECRET_NAME;
 
 Use the secret value to authenticate with the external service. For example, if the external service requires an API key or database username and password for authentication, include these in using the relevant service's library or API.
 
-For services that require mTLS authentication, use [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate.
+For services that require Mutual TLS (mTLS) authentication, use Worker's support for [mTLS certificates](/workers/runtime-apis/mtls) to present a client certificate to the upstream server.
