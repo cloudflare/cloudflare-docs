@@ -36,7 +36,9 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 7. Configure the **Use of connector** setting as follows:
     * Select **Only when email messages are sent to these domains**.
-    * In the text field, enter `journaling.mxrecord.io`, and select **+** to add the domain.
+    * In the text field, enter the appropriate host address, and select **+** to add the domain. The correct host address depends on the geographic region where you want emails to be processed. For example, `journaling.mxrecord.io`. Refer to the [Geographic locations](#geographic-locations) table for more information.
+
+    {{<Aside type="note">}}You only need the host portion of the address, not the full address. For example, use `journaling.mxrecord.*io`, not `<customer_name>@journaling.mxrecord.io`{{</Aside>}}
 
     ![Configure use of connector](/email-security/static/deployment/api-setup/journaling/step7-use-of-connector.png)
 
