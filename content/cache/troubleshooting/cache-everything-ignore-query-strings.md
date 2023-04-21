@@ -1,12 +1,12 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360023040812-Best-Practice-Caching-Everything-While-Ignoring-Query-Strings
-title: Best Practice Caching Everything While Ignoring Query Strings
+title: Cache Everything while ignoring query strings
 ---
 
-# Best Practice: Caching Everything While Ignoring Query Strings
+# Cache Everything while ignoring query strings
 
-There might be times when you wish to cache content resources that are not in the [list of file extensions that Cloudflare caches by default](/cache/about/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (form.html) associated with the following URLs is cached in the Cloudflare edge network:
+There might be times when you wish to cache content resources that are not in the list of file extensions that Cloudflare [caches by default](/cache/about/default-cache-behavior/), such as HTML files. But you would also like to maximize caching a resource even when it’s served via a URL that contains varying query strings. For example, you want to ensure that the resource (`form.html`) associated with the following URLs is cached in the Cloudflare edge network:
 
 `https://www.example.com/support/form.html?param1=abc&param2=def`
 
@@ -37,7 +37,7 @@ Once your cache key is activated for your Enterprise domain, you can add it to P
 ![Best Practice: Caching Everything While Ignoring Query Strings
 ](/support/static/hc-import-cf_page_rules_custom_cache_key.png)
 
-In this example, the rule enforces the ignore query string cache key (${uri\_iqs) behaviour for all HTML pages and allows the rule creator to set the **Cache Level**: _Cache Everything_ setting that is also needed.
+In this example, the rule enforces the ignore query string cache key `${uri\_iqs` behaviour for all HTML pages and allows the rule creator to set the **Cache Level**: _Cache Everything_ setting that is also needed.
 
 ___
 

@@ -1,36 +1,34 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/360021023712-Best-Practices-Speed-up-your-Site-with-Custom-Caching-via-Cloudflare-Page-Rules
-title: Best practices Speed up your Site with Custom Caching via Cloudflare Page Rules
+title: Customize Caching
 ---
 
-# Best practices: Speed up your Site with Custom Caching via Cloudflare Page Rules
+# Customize Caching with Cloudflare Rules
 
 Caching is a fundamental feature of the Cloudflare Content Delivery Network (CDN). As such, our global network automatically caches a lot of content around the world. When visitors request a cached resource, it is served from the data center closest to them and therefore, the content loads faster.
 
-You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/about/cache-rules/) or [Page rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/). Beyond the automatic caching Cloudflare offers by default, these additional best practices help you achieve even greater performance.
+You can speed up your site’s performance even further thanks to the multiple caching settings available in [Cache rules](/cache/about/cache-rules/) or [Page rules](/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/).
 
 ___
 
-## Before getting started
+## Before you begin
 
 Cloudflare does not cache HTML resources automatically. This prevents us from unintentionally caching pages that often contain dynamic elements. For example, the content on certain HTML pages may change based on specific visitor characteristics, such as authentication, personalization, and shopping cart information.
 
 However, you can configure HTML caching through specific Cloudflare Page Rules settings. The degree of HTML caching flexibility varies based on your domain plan as described in the best practice sections below.
 
-When configuring caching settings in the **Page Rules** app, you’re essentially manipulating certain options of the **Caching** app. The difference lies in that through **Page Rules**, you apply the caching settings at the URL level (not the entire site), after matching a specific pattern defined in a custom page rule. That way, you have fine-grained control over which specific resources to cache.
+When configuring caching settings in the **Page Rules** app, you are essentially manipulating certain options of the **Caching** app. The difference lies in that through **Page Rules**, you apply the caching settings at the URL level (not the entire site), after matching a specific pattern defined in a custom page rule. That way, you have fine-grained control over which specific resources to cache.
 
 For background information on Cloudflare’s caching tools and options, consult:
 
 -   [Which file extensions does Cloudflare cache for static content?](/cache/about/default-cache-behavior/)
 -   [Getting started with Cloudflare caching](/cache/get-started/)
--   [Understanding and Configuring Cloudflare Page Rules](https://support.cloudflare.com/hc/articles/218411427)
 -   [What are Cloudflare's caching levels?](/cache/how-to/set-caching-levels)
--   [How can I tell if Cloudflare is caching my site or a specific file?](/cache/about/default-cache-behavior/)
 
 ___
 
-## Best Practice 1: Cache static, anonymous HTML (all domains)
+## Cache static, anonymous HTML (all domains)
 
 All domain plans can use the _Cache Everything_ setting in the **Page Rules** app.
 
@@ -49,7 +47,7 @@ In conclusion, this recommendation is only appropriate for HTML pages that are s
 
 ___
 
-## Best Practice 2 - Cache HTML selectively (Business and Enterprise domains)
+## Cache HTML selectively (Business and Enterprise domains)
 
 Customers with Business and Enterprise domains have additional Page Rules settings that can be combined to selectively cache HTML content based on whether the page contains dynamic information.
 
@@ -66,9 +64,7 @@ Below, we provide links to articles with specific instructions on implementing t
 3. Save and deploy your new rule
 
 {{<Aside type="note">}}
-As an alternative to *Edge Cache TTL*, you could use the [Origin Cache Control](/cache/about/cache-control/) setting if you
-believe the cache-control headers set in your origin server are
-appropriate.
+As an alternative to *Edge Cache TTL*, you could use the [Origin Cache Control](/cache/about/cache-control/) setting if you believe the cache-control headers set in your origin server are appropriate.
 {{</Aside>}}
 
 To learn more about the technique described, consult:

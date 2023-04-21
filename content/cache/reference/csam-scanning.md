@@ -1,10 +1,10 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/360046106112-Understanding-the-CSAM-Scanning-Tool
-title: Understanding the CSAM Scanning Tool
+title: CSAM Scanning Tool
 ---
 
-# Understanding the CSAM Scanning Tool
+# CSAM Scanning Tool
 
 The Child Sexual Abuse Material (CSAM) Scanning Tool allows website owners to proactively identify and take action on CSAM located on their website. By enabling this tool, Cloudflare will compare content served for your website through the Cloudflare cache to known lists of CSAM. These lists are provided to Cloudflare by leading child safety advocacy groups such as the National Center for Missing and Exploited Children (NCMEC).
 

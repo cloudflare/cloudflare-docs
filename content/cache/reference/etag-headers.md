@@ -1,24 +1,19 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/218505467-Using-ETag-Headers-with-Cloudflare
 title: Using ETag Headers with Cloudflare
 ---
 
 # Using ETag Headers with Cloudflare
 
-ETag headers identify whether the version of a resource cached in the browser is the same as the resource at the web server.  A visitor’s browser stores ETags. When a visitor revisits a site, the browser compares each ETag to the one it stored. Matching values cause a _304 Not-Modified HTTP_ response that indicates the cached resource version is current. Cloudflare supports both strong and weak ETags configured at your origin web server.
+ETag headers identify whether the version of a resource cached in the browser is the same as the resource at the web server. A visitor’s browser stores ETags. When a visitor revisits a site, the browser compares each ETag to the one it stored. Matching values cause a `304 Not-Modified HTTP` response that indicates the cached resource version is current. Cloudflare supports both strong and weak ETags configured at your origin web server.
 
 ## Weak ETags
 
 Weak ETag headers indicate a cached resource is semantically equivalent to the version on the web server but not necessarily byte-for-byte identical. Cloudflare supports weak ETag headers on all plans.
 
 {{<Aside type="note">}}
-When using weak ETag headers, disable [Email
-Obfuscation](https://support.cloudflare.com/hc/articles/200170016) and
-[Automatic HTTPS
-Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/)
-to ensure Cloudflare does not remove the ETag headers set by your origin
-web server.
+When using weak ETag headers, disable [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to ensure Cloudflare does not remove the ETag headers set by your origin web server.
 {{</Aside>}}
 
 ## Strong ETags
@@ -32,19 +27,9 @@ Without a Page Rule, Cloudflare preserves strong ETags set by the origin web ser
 -   [Rocket Loader](/fundamentals/speed/rocket-loader/), [Minification](https://support.cloudflare.com/hc/articles/200168196), [Email Obfuscation](https://support.cloudflare.com/hc/articles/200170016), and [Railgun](/railgun/) features are disabled.
 
 {{<Aside type="note">}}
-Enabling Strong ETags via Cloudflare automatically disables Rocket
-Loader, Minification, Email Obfuscation, and Railgun.
+Enabling Strong ETags via Cloudflare automatically disables Rocket Loader, Minification, Email Obfuscation, and Railgun.
 {{</Aside>}}
 
 {{<Aside type="note">}}
-If a resource is cacheable and there is a cache miss, Cloudflare does
-not send ETag headers to the origin. This is because Cloudflare requires
-the full response body to fill its cache.
+If a resource is cacheable and there is a cache miss, Cloudflare does not send ETag headers to the origin. This is because Cloudflare requires the full response body to fill its cache.
 {{</Aside>}}
-
-___
-
-## Related resources
-
--   [Understanding Cloudflare’s CDN](/cache/about/default-cache-behavior/)
--   [Controlling Cloudflare’s cache](/cache/best-practices/customize-cache/)

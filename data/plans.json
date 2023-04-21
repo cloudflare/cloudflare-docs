@@ -328,7 +328,7 @@
     },
     "etag_headers": {
       "title": "ETag Headers",
-      "link": "/cache/troubleshooting/using-etag-headers-with-cloudflare/",
+      "link": "/cache/reference/etag-headers/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -363,7 +363,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "/cache/troubleshooting/understanding-query-string-sort/",
+      "link": "/cache/about/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
