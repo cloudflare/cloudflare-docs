@@ -1788,7 +1788,7 @@ mtls_certificates = [
 ]
 ```
 
-Note that the certificate and private key must be in separate (typically `.pem`) files when uploading
+Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 {{</Aside>}}
 
 ### `list`
