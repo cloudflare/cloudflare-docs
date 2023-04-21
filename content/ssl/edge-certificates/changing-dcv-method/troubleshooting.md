@@ -22,3 +22,5 @@ If these issues occur while using HTTP DCV, review the following settings:
 
   - [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) is configured correctly.
   - Your [CAA records](/ssl/edge-certificates/caa-records/) allow Cloudflare's partner Certificate Authorities can issue certificates on your behalf.
+
+- The HTTP verification process is done preferably over **IPv6**, so if any `AAAA` record exists and does not point to the same dual-stack location as the `A` record, the validation will fail. 
