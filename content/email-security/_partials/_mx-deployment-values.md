@@ -7,8 +7,7 @@ _build:
 
 MX Priority | Host
 ---  | ---
-`5`  | `mailstream-central.mxrecord.mx`
-`10` | `mailstream-east.mxrecord.io`
-`10` | `mailstream-west.mxrecord.io`
-
-When configuring the Area 1 MX records, it is important to configure hosts with the correct MX priority. This will allow mail flows to the preferred hosts and fail over as needed.
+`5`  | `mailstream-eu1.mxrecord.io`
+`10` | `mailstream-central.mxrecord.mx`
+`20` | `mailstream-east.mxrecord.io`
+`20` | `mailstream-west.mxrecord.io`

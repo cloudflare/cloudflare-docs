@@ -5,7 +5,9 @@ _build:
   list: never
 ---
 
-You can choose and order from the following Area 1 MX hosts. If you are located outside the US, you can use MX servers based in the EU or India to process email in the correct geographic location. Do not forget to configure the correct MX priority as well:
+When configuring the Area 1 MX records, it is important to configure hosts with the correct MX priority. This will allow mail flows to the preferred hosts and fail over as needed.
+
+Choose from the following Area 1 MX hosts, and order them by priority. For example, if you are located outside the US and want to prioritize email processing in the EU, add `mailstream-eu1.mxrecord.io` as your first host, and then the US servers.
 
 {{<table-wrap>}}
 
