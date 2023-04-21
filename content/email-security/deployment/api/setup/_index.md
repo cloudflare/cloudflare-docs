@@ -14,14 +14,14 @@ When you first get started with Area 1, you will need to set up a way to connect
 
 Send messages to Area 1 via BCC configurations within your email provider:
 
-   - [Google Workspace BCC Setup](/email-security/deployment/api/setup/gsuite-bcc-setup)
-   - [Microsoft Exchange BCC Setup](/email-security/deployment/api/setup/exchange-bcc-setup)
+   - [Google Workspace BCC setup](/email-security/deployment/api/setup/gsuite-bcc-setup/)
+   - [Microsoft Exchange BCC setup](/email-security/deployment/api/setup/exchange-bcc-setup/)
 
 ## Journaling setup
 
  Send messages to Area 1 via a Journaling configuration within your email provider:
 
-   - [Office 365 journaling Setup](/email-security/deployment/api/setup/office365-journaling)
+   - [Office 365 journaling setup](/email-security/deployment/api/setup/office365-journaling/)
 
 ## Microsoft Graph API
 
