@@ -68,7 +68,7 @@ For customers in Europe, add all our US IP addresses. Additionally, you need to 
 
 ## India
 
-For customers in India, add all our US IP addresses. Additionally, you need to add the following IP range for our Indian data centers:
+For customers in India, add all our US IP addresses. Additionally, you need to add the following IP range for our data centers in India:
 
 `134.195.26.0/23`
 
