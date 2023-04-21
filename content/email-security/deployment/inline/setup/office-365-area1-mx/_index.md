@@ -275,7 +275,7 @@ This step should not be performed until 24 hours after all domains (excluding yo
 13. Select **Next**.
 14. Review your settings and select **Create connector**.
 
-## 6: Execute `Enable-OrganizationCustomization` (if required)
+## 6 Execute `Enable-OrganizationCustomization` (if required)
 
 The following steps are only required if you have not previously customized your Office 365 instance. If you received the message to run this cmdlet in any of the previous steps, you will need to execute it in order to proceed with the configuration. This change may take as long as 24 hours to take effect.
 
