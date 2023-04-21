@@ -52,7 +52,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 
 ## Response limits
 
-Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](/cache/about/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
 ## Worker limits
 
