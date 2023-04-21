@@ -36,9 +36,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 7. Configure the **Use of connector** setting as follows:
     * Select **Only when email messages are sent to these domains**.
-    * In the text field, enter the appropriate host address, and select **+** to add the domain. The correct host address depends on the geographic region where you want emails to be processed. For example, `journaling.mxrecord.io`. Refer to the [Geographic locations](#geographic-locations) table for more information.
-
-    {{<Aside type="note">}}You only need the host portion of the address, not the full address. For example, use `journaling.mxrecord.*io`, not `<customer_name>@journaling.mxrecord.io`{{</Aside>}}
+    * In the text field, enter `journaling.mxrecord.io` as the host address, and select **+** to add the domain.
 
     ![Configure use of connector](/email-security/static/deployment/api-setup/journaling/step7-use-of-connector.png)
 
@@ -46,11 +44,7 @@ On the other hand, if your email architecture requires outbound messages to trav
 
 9. Configure the **Routing** setting as follows:
     * Select **Route email through these smart hosts**.
-    * In the text field, enter the following[ smart hosts](https://en.wikipedia.org/wiki/Smart_host). Select the **+** button after each host to add it to the configuration:
-        * `mailstream-east.mxrecord.io`
-        * `mailstream-west.mxrecord.io`
-    * If there is a requirement to enforce traffic through the EU region, use the following smart host instead:
-        * `mailstream-eu1.mxrecord.io`
+    * In the text field, enter `journaling.mxrecord.io` as the [smart host](https://en.wikipedia.org/wiki/Smart_host) address, and select **+** to add the domain.
 
     ![Configure the routing setting](/email-security/static/deployment/api-setup/journaling/step9-routing.png)
 
@@ -102,7 +96,7 @@ Your connector is now active. You can find it in **Exchange admin center** > **M
 
 7. Select **New rule** to configure a journaling rule, and configure it as follows:
 
-    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). For example, `<customer_name>@journaling.mxrecord.io`. Refer to the [Geographic locations](#geographic-locations) table for more information on what address you should use for different geographic regions.
+    * **Send journal reports to**: This address is specific to each customer tenant, and can be found in your [Area 1 dashboard](https://horizon.area1security.com/support/service-addresses). For example, `<customer_name>@journaling.mxrecord.io`.
     * **Journal Rule Name**: `Journal Messages to CloudflareArea 1`
     * **Journal messages sent or received from**: _Everyone_
     * **Type of message to journal**: _External messages only_
