@@ -147,7 +147,7 @@ ___
 
 ### Unterstützt Cloudflare die TLS-Client-Authentifizierung?
 
-TLS-Client-Authentifizierung überprüft, ob ein von einem Client vorgelegtes Zertifikat vom Root-Zertifizierungsstellenzertifikat des Unternehmens signiert ist.  Durch Überprüfung dieses Zertifikats bei jeder Anfrage kann der Zugriff auf autorisierte Clientverbindungen beschränkt werden.  Informationen zum Aktivieren der TLS-Client-Authentifizierung über Cloudflare finden Sie in unserer Dokumentation zu [Gegenseitige TLS-Authentifizierung](https://developers.cloudflare.com/access/setting-up-access/mtls/).
+TLS-Client-Authentifizierung überprüft, ob ein von einem Client vorgelegtes Zertifikat vom Root-Zertifizierungsstellenzertifikat des Unternehmens signiert ist.  Durch Überprüfung dieses Zertifikats bei jeder Anfrage kann der Zugriff auf autorisierte Clientverbindungen beschränkt werden.  Informationen zum Aktivieren der TLS-Client-Authentifizierung über Cloudflare finden Sie in unserer Dokumentation zu [Gegenseitige TLS-Authentifizierung](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 

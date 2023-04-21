@@ -29,6 +29,9 @@ Support by product and region is summarized in the following table:
 | Australia | &#x2705;[^25] | &#x2705; | ✘ |
 | Japan | &#x2705;[^25] | &#x2705; | ✘ |
 | India | &#x2705;[^25] | &#x2705; | ✘ |
+| ISO 27001 Certified European Union | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
+| Germany | &#x2705;[^25] | &#x2705; | Can use EU metadata boundary. |
+| Singapore | &#x2705;[^25] | &#x2705; | ✘ |
 
 Overview by product-behavior is summarized in the following table. Below you can find the table legend to help you read the table:
 
@@ -56,7 +59,7 @@ Overview by product-behavior is summarized in the following table. Below you can
 | | Page Shield | ✅ | ✅ | ✘[^6] |
 | | Rate Limiting | ✅ | ✅ | 🚧[^1] |
 | | SSL | ✅ | ✅ | ✅ |
-| | Cloudflare for SaaS | ✅ | ✅ | ✅ |
+| | Cloudflare for SaaS | ✘ | ✅ | ✅ |
 | | Turnstile | ⚫️ | ✘ | ✘ |
 | | WAF/L7 Firewall | ✅ | ✅ | ✅ |
 | Developer Platform | Cloudflare Images | ⚫️ | ✘ | ✘ |

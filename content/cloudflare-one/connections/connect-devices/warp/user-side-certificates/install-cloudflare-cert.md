@@ -1,7 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Install the Cloudflare certificate
-weight: 1
+title: Install certificate manually
+weight: 2
+meta:
+    description: Manually add the Cloudflare certificate to mobile devices and individual applications.
 ---
 
 # Install the Cloudflare certificate
@@ -12,7 +14,7 @@ This procedure is only required to enable specific Cloudflare Zero Trust feature
 
 {{</Aside>}}
 
-Installing the Cloudflare certificate allows you to apply [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) to encrypted websites, display [custom block pages](/cloudflare-one/policies/filtering/configuring-block-page/), and more. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/), you can manually install the Cloudflare certificate. You will need to add the certificate to both the [system keychain](#add-the-certificate-to-your-system) and to [individual application stores](#add-the-certificate-to-applications). These steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 ## Download the Cloudflare root certificate
 
@@ -59,7 +61,7 @@ You will need to install the root certificate in the **Keychain Access** applica
 | Local Items | Cached iCloud passwords |
 | System      | All users on the system |
 
-Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System keychain affects all users who have access to that machine.
+Installing the certificate in the Login keychain will result in only the logged in user trusting the Cloudflare certificate. Installing it in the System Keychain affects all users who have access to that machine.
 
 To install the certificate in **Keychain Access**:
 
@@ -109,7 +111,9 @@ $ echo | sudo cat - Cloudflare_CA.pem >> /usr/local/etc/openssl/cert.pem
 
 ### iOS
 
-1. [Download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
+iOS only allows the Safari browser to open and install certificates.
+
+1. Open Safari and [download the Cloudflare certificate](#download-the-cloudflare-root-certificate). The device will show a message: _This website is trying to download a configuration profile. Do you want to allow this?_
 
 ![iOS popup message asking for permission to download certificate](/cloudflare-one/static/documentation/connections/ios_cert_download.PNG)
 
@@ -164,26 +168,23 @@ Windows offers two options to install the certificate, each having a different i
 
 2. Right-click the certificate file.
 
-3. Click **Open**.\
-    If you see a Security Warning window, click **Open**.
+3. Click **Open**. If you see a Security Warning, click **Open** to proceed.
 
 4. The **Certificate** window will appear. Click **Install Certificate**.
 
 ![Window for Cloudflare certificate](/cloudflare-one/static/documentation/connections/windows_install_cert.png)
 
-5. Now choose a Store Location.
+5. Now choose a Store Location. If you see a Security Warning, click **Yes** to proceed.
 
-6. Click **Next**.
+6. On the next screen, click **Browse**.
 
-7. On the next screen, click **Browse**.
+7. Choose the **Trusted Root Certification Authorities** store.
 
-8. Choose the **Trusted Root Certification Authorities** store.
-
-9. Click **OK**.
+8. Click **OK**.
 
 ![Window for selecting certificate store location](/cloudflare-one/static/documentation/connections/windows_cert_location.png)
 
-10. Click **Finish**.
+9. Click **Finish**.
 
 ![Window for finishing certificate installation](/cloudflare-one/static/documentation/connections/windows_cert_install_finished.png)
 
@@ -307,6 +308,10 @@ nixOS does not use the system certificate store for self updating and instead re
 Some packages, development tools, and other applications provide options to trust root certificates that will allow for the traffic inspection features of Gateway to work without breaking the application.
 
 All of the applications below first require downloading the Cloudflare certificate with the instructions above. On Mac, the default path is `/Library/Keychains/System.keychain Cloudflare_CA.crt`. On Windows, the default path is `\Cert:\CurrentUser\Root`.
+
+{{<Aside type="note">}}
+Some applications require the use of a publicly trusted certificate — they do not trust the system certificate, nor do they have a configurable private store. For these applications to function, you must add a [Do Not Inspect policy](/cloudflare-one/policies/filtering/http-policies/#do-not-inspect) for the domains or IPs that the application relies on.
+{{</Aside>}}
 
 ### Firefox
 

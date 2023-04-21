@@ -1,5 +1,5 @@
 ---
-pcx-content-type: how-to
+pcx_content_type: reference
 title: Pricing
 weight: 12
 ---

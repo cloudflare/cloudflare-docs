@@ -28,7 +28,7 @@ Invoking this method creates a new version of the ruleset.
 
 ## Example
 
-The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List zone rulesets](https://developers.cloudflare.com/api/operations/zone-rulesets-list-zone-rulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
+The following example adds a rule to ruleset `<RULESET_ID>` of zone `<ZONE_ID>`. The ruleset ID was previously obtained using the [List zone rulesets](/api/operations/zone-rulesets-list-zone-rulesets) operation, and corresponds to the entry point ruleset for the `http_request_firewall_custom` phase.
 
 <details open>
 <summary>Request</summary>

@@ -33,14 +33,14 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
   <tbody>
     <tr>
       <td>
-        <strong>Legacy CAPTCHA</strong><br />
+        <strong>Interactive Challenge</strong><br />
         <br />
         API value:<br />
         <code>challenge</code>
       </td>
       <td>
         <p>Useful for ensuring that the visitor accessing the site is human, not automated.</p>
-        <p>The client that made the request must pass a CAPTCHA challenge.</p>
+        <p>The client that made the request must pass an interactive challenge.</p>
         <p>If successful, Cloudflare accepts the matched request; otherwise, it is blocked.</p>
       </td>
       <td>Yes</td>
@@ -80,7 +80,6 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
         <ul>
           <li>Show a non-interactive challenge page (similar to the current JS Challenge).</li>
           <li>Show a custom interactive challenge (such as click a button).</li>
-          <li>Show a CAPTCHA challenge.</li>
         </ul>
       </td>
       <td>Yes</td>

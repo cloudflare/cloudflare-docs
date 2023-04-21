@@ -13,6 +13,12 @@ meta:
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/understand-basics/load-balancers/).
 
+{{<Aside type="note">}}
+
+Load balancing is only applicable if the target zone is on a full DNS setup. It is not supported if the target zone is on a `CNAME` setup.
+
+{{</Aside>}}
+
 ## Create a load balancer
 
 {{<tabs labels="Dashboard | API">}}
@@ -53,7 +59,7 @@ To edit a load balancer in the dashboard:
  
 When you edit a load balancer with the API, your request type depends on how much you want to edit.
 
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](https://developers.cloudflare.com/api/operations/load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](https://developers.cloudflare.com/api/operations/load-balancers-update-load-balancer) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/operations/load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](/api/operations/load-balancers-update-load-balancer) request.
  
 {{</tab>}}
 {{</tabs>}}
@@ -75,7 +81,7 @@ To delete a load balancer in the dashboard:
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To delete a load balancer using the API, send a [DELETE](https://developers.cloudflare.com/api/operations/load-balancers-delete-load-balancer) request.
+To delete a load balancer using the API, send a [DELETE](/api/operations/load-balancers-delete-load-balancer) request.
  
 {{</tab>}}
 {{</tabs>}}

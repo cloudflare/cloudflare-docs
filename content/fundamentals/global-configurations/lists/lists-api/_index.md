@@ -7,7 +7,7 @@ layout: single
 
 # Lists API
 
-The [Lists API](https://developers.cloudflare.com/api/operations/lists-get-lists) provides an interface for programmatically managing the following types of lists:
+The [Lists API](/api/operations/lists-get-lists) provides an interface for programmatically managing the following types of lists:
 
 * [IP Lists](/fundamentals/global-configurations/lists/ip-lists/): Contain IP addresses that you can reference collectively, by name, in rule expressions.
 

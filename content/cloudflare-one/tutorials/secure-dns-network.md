@@ -62,7 +62,7 @@ The rule will appear in your DNS policies list.
 
 You will need to make a one-time change to your router to use Cloudflare Gateway for DNS filtering for all devices in your network.
 
-Instructions to change your router's DNS settings are available in the Zero Trust dashboard. Navigate to **Gateway** > **DNS Locations** and expand the location you want to configure. Click `Setup instructions`.
+Instructions to change your router's DNS settings are available in Zero Trust. Navigate to **Gateway** > **DNS Locations** and expand the location you want to configure. Click `Setup instructions`.
 
 ![Expand Location](/cloudflare-one/static/secure-web-gateway/secure-dns-network/expand-location.png)
 

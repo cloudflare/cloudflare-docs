@@ -110,7 +110,7 @@ Advanced Layer 3/4 DDoS Attack Alert |        –        |        –        | Y
 
 The following image shows an example notification delivered via email:
 
-![Example notification email of a DDoS attack](/ddos-protection/static/ddos-notification-example.png)
+![Example notification email of a DDoS attack](/images/ddos-protection/ddos-notification-example.png)
 
 To investigate a possibly ongoing attack, select **View Dashboard**. To go to the rule details in the Cloudflare dashboard, select **View Rule**.
 

@@ -288,8 +288,7 @@
           "title": "Cloudflare DNS"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/360037684251",
+          "url_path": "/analytics/account-and-zone-analytics/zone-analytics/",
           "title": "Understanding Cloudflare Analytics"
         },
         {

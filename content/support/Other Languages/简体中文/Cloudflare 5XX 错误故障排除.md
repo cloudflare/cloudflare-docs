@@ -176,7 +176,7 @@ ___
 -   查看源站 Web 服务器错误日志，以确定 Web 服务器应用程序崩溃或中断。
 -   确认没有阻止 [Cloudflare IP 地址](https://www.cloudflare.com/ips)或对其施加速率限制
 -   在您的源站 Web 服务器的防火墙或其他安全软件中允许所有 [Cloudflare IP 范围](https://www.cloudflare.com/ips)
--   确认您是否将 **SSL/TLS 模式**设置为 **Full** 或 **Full (Strict**)，以及您是否安装了 [Cloudflare Origin 证书](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)
+-   确认您是否将 **SSL/TLS 模式**设置为 **Full** 或 **Full (Strict**)，以及您是否安装了 [Cloudflare Origin 证书](/ssl/origin-configuration/origin-ca)
 -   查找 [Cloudflare 社区](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461)的更多故障排除信息。
 
 ___
@@ -198,7 +198,7 @@ Cloudflare 联系源站 Web 服务器时超时会发生 522 错误。 有两种�
 -   Cloudflare **DNS** 应用中的源站 IP 地址与主机提供商当前为您的源站 Web 服务器置备的 IP 地址不匹配。
 -   您的源站 Web 服务器上丢弃了数据包。
 
-如果您使用的是 [Cloudflare Pages](https://developers.cloudflare.com/pages/)，请确认您已经设置了自定义域，并且您的 CNAME 记录指向您的自定义 Pages 域。如需了解如何设置自定义 Pages 域，请点击[此处](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain)。
+如果您使用的是 [Cloudflare Pages](/pages/)，请确认您已经设置了自定义域，并且您的 CNAME 记录指向您的自定义 Pages 域。如需了解如何设置自定义 Pages 域，请点击[此处](/pages/getting-started#adding-a-custom-domain)。
 
 如果上述原因都未能促成解决方案，请向主机提供商或站点管理员索取以下信息，然后[联系 Cloudflare 支持](https://support.cloudflare.com/hc/articles/200172476)：
 
@@ -250,7 +250,7 @@ ___
 525 错误表示 Cloudflare 与源站 Web 服务器之间的 SSL 握手失败。满足以下两个条件时会发生 525 错误：
 
 1.  Cloudflare 与源站 Web 服务器之间的 [SSL 握手](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)失败，以及
-2.  Cloudflare **SSL/TLS** 应用的**概述**选项卡中设置了 [_Full_ 或 _Full (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) **SSL**。
+2.  Cloudflare **SSL/TLS** 应用的**概述**选项卡中设置了 [_Full_ 或 _Full (Strict)_](/ssl/origin-configuration/ssl-modes) **SSL**。
 
 **解决方案**
 
@@ -259,12 +259,12 @@ ___
 -   未安装有效的 SSL 证书
 -   未开启 443 端口（或其他自定义安全端口）
 -   无 [SNI](https://support.cloudflare.com/hc/articles/360026016272) 支持
--   Cloudflare 接受的加密套件与源站 Web 服务器支持的[加密套件](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)不匹配。
+-   Cloudflare 接受的加密套件与源站 Web 服务器支持的[加密套件](/ssl/ssl-tls/cipher-suites)不匹配。
 
 **其他检查**
 
--   检查您的源站服务器上是否安装了证书。您可以查看[这篇文章](https://support.cloudflare.com/hc/zh-cn/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)，详细了解如何运行一些测试。如果您没有任何证书，你可以创建并安装免费的 [Cloudflare Origin CA 证书](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)。使用 Origin CA 证书，您就加密 Cloudflare 与源站 Web 服务器之间的流量。
--   [检查服务器使用的密码套件](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites)以确保它们与 Cloudflare 支持的密码套件匹配。
+-   检查您的源站服务器上是否安装了证书。您可以查看[这篇文章](https://support.cloudflare.com/hc/zh-cn/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)，详细了解如何运行一些测试。如果您没有任何证书，你可以创建并安装免费的 [Cloudflare Origin CA 证书](/ssl/origin-configuration/origin-ca)。使用 Origin CA 证书，您就加密 Cloudflare 与源站 Web 服务器之间的流量。
+-   [检查服务器使用的密码套件](/ssl/ssl-tls/cipher-suites)以确保它们与 Cloudflare 支持的密码套件匹配。
 -   根据看到的 525 的时间戳检查服务器的错误日志，以确保有错误可能导致在 SSL 握手期间重置连接。
 
 ___
@@ -274,7 +274,7 @@ ___
 满足以下两个条件时会发生 526 错误：
 
 1.  Cloudflare 无法验证您的源站 Web 服务器上的 SSL 证书；
-2.  Cloudflare **SSL/TLS** 应用的**概述**选项卡中设置了 [_Full SSL (Strict)_](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **SSL**。
+2.  Cloudflare **SSL/TLS** 应用的**概述**选项卡中设置了 [_Full SSL (Strict)_](/ssl/origin-configuration/ssl-modes#full-strict) **SSL**。
 
 **解决方案**
 
@@ -289,7 +289,7 @@ ___
 
 ![该屏幕显示了没有错误的 SSL 证书。](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-如果源站服务器使用自签名证书，请将域配置为使用 _Full_ _SSL_ 而非 _Full SSL (Strict)_。请参考[适用于您的源站的 SSL 推荐设置](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)。
+如果源站服务器使用自签名证书，请将域配置为使用 _Full_ _SSL_ 而非 _Full SSL (Strict)_。请参考[适用于您的源站的 SSL 推荐设置](/ssl/origin-configuration/ssl-modes)。
 
 ___
 
@@ -365,7 +365,7 @@ ___
 -   已开启 443 端口
 -   源站 Web 服务器出示了 SSL 证书
 -   源站 Web 服务器的 SSL 证书的 SAN 或 Common Name 中包含请求的主机名或目标主机名
--   在 Cloudflare **SSL/TLS** 应用的**概述**选项卡中将 **SSL** 设为 [Full 或 Full (Strict)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes)
+-   在 Cloudflare **SSL/TLS** 应用的**概述**选项卡中将 **SSL** 设为 [Full 或 Full (Strict)](/ssl/origin-configuration/ssl-modes)
 
 ___
 

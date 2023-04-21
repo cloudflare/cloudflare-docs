@@ -25,6 +25,10 @@ When creating a DNS policy, you can select as many security risk categories and 
 If you are using the legacy DNS policy builder, we recommend migrating your rules to the new policy builder in order to take full advantage of the DNS filtering options described below. Once you have recreated your rules in the **DNS** tab, you can delete the old rules from the **DNS (legacy)** tab.
 {{</Aside>}}
 
+{{<Aside type="warning">}}
+Gateway will not properly filter traffic sent through third-party VPNs or other Internet filtering software, such as [iCloud Private Relay](https://support.apple.com/en-us/HT212614). To ensure your DNS policies apply to your traffic, we recommend restricting software that may interfere with Gateway.
+{{</Aside>}}
+
 ## Actions
 
 Just like actions in HTTP policies, actions in DNS policies allow you to choose what to do with a given set of elements. You can assign one action per policy.
@@ -107,7 +111,7 @@ Use this selector to match against the IP address of the authoritative name serv
 
 ### Content Categories
 
-Use this selector to block domains (and optionally, [IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category)) belonging to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories).
+Use this selector to block domains belonging to specific [content categories](/cloudflare-one/policies/filtering/domain-categories/#content-categories). When using an Allow or Block action, you can optionally [block IP addresses](/cloudflare-one/policies/filtering/domain-categories/#filter-by-resolved-ip-category).
 
 | UI name            | API example                           |
 | ------------------ | ------------------------------------- |
@@ -120,6 +124,10 @@ Use this selector to filter DNS responses by their `CNAME` records.
 | UI name                  | API example                                                   |
 | ------------------------ | ------------------------------------------------------------- |
 | DNS CNAME Response Value | `any(dns.response.cname[*] in {"www.apple.com.edgekey.net"})` |
+
+{{<Aside>}}
+If one CNAME record points to another CNAME record, each record in the chain will be evaluated. For example, if `abc.example.com` points to `xyz.example.com`, then your DNS policy will evaluate both `abc.example.com` and `xyz.example.com`.
+{{</Aside>}}
 
 ### DNS MX Record
 

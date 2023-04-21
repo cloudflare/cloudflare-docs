@@ -39,6 +39,12 @@ ___
 
 Sigue los siguientes pasos para habilitar gRPC:
 
+{{<Aside type="note">}}
+[Coloca en la nube naranja el
+dominio](https://support.cloudflare.com/hc/articles/200169626) que aloja
+tu servidor de gRPC.
+{{</Aside>}}
+
 1.  Inicia sesión en tu cuenta de Cloudflare.
 2.  Selecciona la cuenta de Cloudflare correspondiente.
 3.  Haz clic en la aplicación **Red** .

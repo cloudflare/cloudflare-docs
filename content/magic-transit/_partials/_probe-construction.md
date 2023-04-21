@@ -12,7 +12,7 @@ A tunnel health check probe contains an [ICMP (Internet Control Message Protocol
 
 Cloudflare encapsulates the ICMP reply packet and sends the probe across the tunnel to the origin. When the probe reaches the origin router, the router decapsulates the ICMP reply and forwards it to the specified destination IP. The probe is successful when Cloudflare receives the reply.
 
-Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel [with the API](https://developers.cloudflare.com/api/operations/magic-gre-tunnels-update-gre-tunnel).
+Every Cloudflare data center configured to process your traffic sends tunnel health check probes. The rate at which these health check probes are sent varies based on tunnel and location. This rate can also be tuned up or down on a per tunnel basis by modifying the `health_check` rate of a tunnel [with the API](/api/operations/magic-gre-tunnels-update-gre-tunnel).
 
 When a probe attempt fails for a [healthy](#health-state-and-prioritization) tunnel, each server detecting the failure quickly probes up to two more times to obtain an accurate result. We also do the same if a tunnel has been down and probes start returning success. Because Cloudflare global network servers send probes up to every second, you can expect your network to receive several hundred health check packets per second — each Cloudflare data center will only send one health check packet as part of a probe. This represents a relatively trivial amount of traffic.
 
@@ -28,7 +28,7 @@ To avoid control plane policies enforced by the origin network, tunnel health ch
 </summary>
   <div class="special-class" markdown="1">
 
-![Wireshark example for tunnel health checks with ICMP reply packet](/magic-transit/static/tunnel-health-check-packets.png)
+![Wireshark example for tunnel health checks with ICMP reply packet](/images/magic-transit/tunnel-health-check-packets.png)
 
 </div>
 </details>

@@ -60,7 +60,7 @@ ___
 
 _找不到 A、AAAA 或 CNAME 记录_ 表示 Cloudflare **DNS** 应用缺少适当的 DNS 解析记录。
 
-[将缺少的 DNS 记录添加](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)到您的域中。
+[将缺少的 DNS 记录添加](/dns/manage-dns-records/how-to/create-dns-records)到您的域中。
 
 ___
 

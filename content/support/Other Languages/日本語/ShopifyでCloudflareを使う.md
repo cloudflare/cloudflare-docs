@@ -36,16 +36,16 @@ ___
 O2Oで使用する場合、Cloudflareの特定の機能がShopifyストアへのトラフィックの流れを妨げたり、訪問者に誤ったデータを表示したりする可能性があるため、注意が必要です。次の対策をおすすめします：
 
 -   以下のCloudflareの機能を使用しない。
-    -   [HTMLキャッシング](https://developers.cloudflare.com/cache/)
-    -   [カスタムのファイアウォールルール](https://developers.cloudflare.com/firewall/)
+    -   [HTMLキャッシング](/cache/)
+    -   [カスタムのファイアウォールルール](/firewall/)
     -   [レート制限](https://support.cloudflare.com/hc/articles/115001635128)
     -   [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
-    -   [負荷分散](https://developers.cloudflare.com/load-balancing/)
+    -   [負荷分散](/load-balancing/)
     -   [IPv6](https://support.cloudflare.com/hc/articles/229666767)
 -   以下のCloudflareの機能には注意が必要です。
     -   [Page rules](https://support.cloudflare.com/hc/articles/218411427): Shopifyに使用されているサブドメインにマッチするページルールが正しく設定されていないと、Webサイトへのeコマース訪問者の流れを妨げたり、歪めたりする可能性があります。
-    -   [Workers](https://developers.cloudflare.com/workers/)：Page Rulesと同様にWorkersもWebサイトへのトラフィックのフローを中断し、結果的に減益につながる可能性があります。Workersの書き込みは慎重に行ってください。WorkersのルーティングからShopifyで使われるサブドメインを除外することをお勧めします。
-    -   [DNS CAAレコード](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records)：ShopifyはLet's Encryptを使って、出店者ドメインにSSL/TLS証明書を発行します。DNS CAAレコードを追加する場合、Let's Encryptを認証局（CA）に選択しなければなりません。そうしないと、HTTPS接続に失敗します。
+    -   [Workers](/workers/)：Page Rulesと同様にWorkersもWebサイトへのトラフィックのフローを中断し、結果的に減益につながる可能性があります。Workersの書き込みは慎重に行ってください。WorkersのルーティングからShopifyで使われるサブドメインを除外することをお勧めします。
+    -   [DNS CAAレコード](/ssl/edge-certificates/caa-records/)：ShopifyはLet's Encryptを使って、出店者ドメインにSSL/TLS証明書を発行します。DNS CAAレコードを追加する場合、Let's Encryptを認証局（CA）に選択しなければなりません。そうしないと、HTTPS接続に失敗します。
 
 ___
 

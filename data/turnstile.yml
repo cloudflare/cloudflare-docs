@@ -3,7 +3,8 @@ logo: <svg width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2
 product:
   title: Turnstile
   url: /turnstile/
-  group: Security
+  group: Application security
+  additional_groups: [Developer platform]
 
 meta:
   title: Cloudflare Turnstile docs

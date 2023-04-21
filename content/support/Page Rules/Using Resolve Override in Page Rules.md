@@ -49,3 +49,8 @@ To configure resolve override in Page Rules, do the following:
     -   **If the URL matches:** `example.com/app/*`
     -   **Setting:** _Resolve Override_ | **Value:** `resolve.example.com`
     -   **Setting:** _Host Header Override_ | **Value:** `examplebucket.s3.amazonaws.com`
+
+{{<Aside type="warning">}}
+Please note that the _Resolve Override_ Page Rule setting only allows override of the hostname, not the path!
+If you need to modify the path also, you'll need to either use a [Worker](/workers/runtime-apis/request/#requestinitcfproperties) or combine the Page Rule with a [Transform Rule](/rules/transform/url-rewrite/)
+{{</Aside>}}

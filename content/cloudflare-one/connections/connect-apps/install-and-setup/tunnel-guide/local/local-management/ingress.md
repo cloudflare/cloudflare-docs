@@ -146,7 +146,7 @@ To set both top-level configurations and origin-specific configurations, you can
 - [disableChunkedEncoding](#disablechunkedencoding)
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
-- [proxyType](#proxyyype)
+- [proxyType](#proxytype)
 
 ### access
 
@@ -164,10 +164,6 @@ access:
     - aud1 <Access-application-audience-tag> 
     - aud2 <Optional-additional-tags>
 ```
-
-{{<Aside type="note">}}
-The `access` rule is currently not available for tunnels managed through the dashboard.
-{{</Aside>}}
 
 ### connectTimeout
 

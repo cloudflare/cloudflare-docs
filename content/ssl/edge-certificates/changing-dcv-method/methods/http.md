@@ -1,7 +1,7 @@
 ---
 title: HTTP
 pcx_content_type: how-to
-weight: 3
+weight: 4
 meta:
   title: HTTP method — Domain Control Validation — SSL/TLS
 ---
@@ -11,6 +11,12 @@ meta:
 When you choose HTTP DCV, Cloudflare automatically adds a verification HTTP token to your domain.
 
 Only use this method if your domain can tolerate a few minutes of downtime.
+
+{{<Aside type="note">}}
+
+If you encounter issues with HTTP DCV, refer to the [troubleshooting guide](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+{{</Aside>}}
 
 ## Limitations
 

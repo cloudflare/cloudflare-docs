@@ -27,7 +27,7 @@ ___
 -   에이전시나 IT 컨설팅 회사로서 고객을 대신하여 여러 도메인을 관리하는 경우(주의: Cloudflare [Partner 프로그램](https://www.cloudflare.com/partners/)을 참조하시기 바랍니다)
 -   기존 사이트를 Cloudflare로 이전하는 경우
 
-특히 [이름 서버를 변경하는 방법](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)이나 [DNS 레코드를 추가하는 방법](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)에 이미 친숙한 경우, API를 사용하면 여러 사이트를 신속하고 효율적으로 추가할 수 있습니다.
+특히 [이름 서버를 변경하는 방법](/dns/zone-setups/full-setup/setup)이나 [DNS 레코드를 추가하는 방법](/dns/manage-dns-records/how-to/create-dns-records)에 이미 친숙한 경우, API를 사용하면 여러 사이트를 신속하고 효율적으로 추가할 수 있습니다.
 
 ___
 

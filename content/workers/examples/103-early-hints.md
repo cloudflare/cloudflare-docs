@@ -9,6 +9,7 @@ title: 103 Early Hints
 weight: 1001
 layout: example
 ---
+
 To ensure Early Hints are enabled:
 
 1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
@@ -23,6 +24,7 @@ Currently, `103 Early Hints` are only supported in Chrome 103 or later. To view 
 
 {{<tabs labels="js/esm | ts/esm">}}
 {{<tab label="js/esm" default="true">}}
+
 ```js
 const CSS = "body { color: red; }";
 const HTML = `
@@ -57,11 +59,13 @@ export default {
         },
       });
     }
-  }
-}
+  },
+};
 ```
+
 {{</tab>}}
 {{<tab label="ts/esm">}}
+
 ```js
 const CSS = "body { color: red; }";
 const HTML = `
@@ -96,10 +100,11 @@ const handler: ExportedHandler = {
         },
       });
     }
-  }
+  },
 };
 
 export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}

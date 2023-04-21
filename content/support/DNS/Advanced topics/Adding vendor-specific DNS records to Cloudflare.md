@@ -59,6 +59,8 @@ set to *Full* in the **SSL/TLS** app of the Cloudflare dashboard.
 
 ### **Amazon**
 
+#### Amazon Route53
+
 AWS customers must update their domain's nameservers to point to the Cloudflare nameservers listed in the **Overview** app of the Cloudflare dashboard:
 
 1.  Log into AWS.
@@ -73,6 +75,9 @@ AWS customers must update their domain's nameservers to point to the Cloudflare 
 -   Click **Registered domains**.
 -   Select the domain to update with Cloudflare's nameservers.
 -   Click **Add or edit name servers**.
+
+
+#### Amazon S3 bucket
 
 Consult Amazon’s documentation on how to [c](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html)[reate an Amazon S3 bucket](https://docs.aws.amazon.com/quickstarts/latest/s3backup/step-1-create-bucket.html).
 
@@ -102,6 +107,8 @@ The above TXT record content is an example. Use the correct content
 provided by Amazon SES.
 {{</Aside>}}
 
+#### Amazon ELB configuration
+
 Refer to [Amazon's ELB help content](http://docs.amazonwebservices.com/ElasticLoadBalancing/latest/DeveloperGuide/using-domain-names-with-elb.html) for guidance on ELB configuration at Amazon.
 
 {{<Aside type="note">}}
@@ -112,6 +119,8 @@ root domain to point to an Elastic Load Balancer.
 1.  Add a _CNAME record_ to Cloudflare for the hostname; for example: _elb_
 2.  In the Cloudflare **DNS** app, replace **Domain name** with the ELB target: _<AWS hostname>.<region>._elb.amazonaws.com is the proper _CNAME_ target format (for example: _my-cool-cachepp-1344276401.eu-west-1._elb.amazonaws.com).
 3.  Reach out to AWS support to determine _AWS hostname_ or _region_.
+  
+  
 
 ### **Microsoft**
 
@@ -258,11 +267,8 @@ After ensuring that your domain nameservers are set to Cloudflare, 
 2.  Click the appropriate Cloudflare account for the domain where you will add records.
 3.  Ensure the proper domain is selected.
 4.  Click the **DNS** app.
-5.  Ensure that all four (4) A records and the www CNAME from Squarespace are mark _Proxied_ (as shown below).
-6.  Ensure that the 'verify.squarespace.com' CNAME record is marked _DNS Only_ (as shown below).
-
-![screenshot of the cloudflarecontent.com DNS records from Squarespace
-](/support/static/dns_ui_update_squarespace_records.png)
+5.  Ensure that all four (4) A records and the `www` CNAME from Squarespace are mark _Proxied_.
+6.  Ensure that the `verify.squarespace.com` CNAME record is marked _DNS Only_.
 
 {{<Aside type="warning">}}
 Squarespace's console may indicate issues (as pictured below in red
@@ -271,11 +277,9 @@ that Squarespace is compatible with Cloudflare when using a
 configuration as described below.
 {{</Aside>}}
 
-If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**. 
+If set up properly, your Squarespace DNS Settings page will now indicate that your 'Settings contain problems.' **This is the expected behavior**.
 
-![Old URL: https://support.cloudflare.com/hc/article_attachments/360039675171/squarespace_dns_settings.png
-Article IDs: 360020991331 | Adding vendor-specific DNS records to Cloudflare
-](/support/static/hc-import-squarespace_dns_settings.png)
+![Screenshot of error warnings in squarespace](/support/static/hc-import-squarespace_dns_settings-test-2.png)
 
 Now that your traffic is being sent through Cloudflare, Squarespace and your site's visitors will see Cloudflare IP addresses. This causes Squarespace console to assume your site is misconfigured as Cloudflare IPs are returned instead of Squarespace assigned addresses. As long as you've configured Cloudflare DNS appropriately (above steps 1-6), your Squarespace site should now be working through Cloudflare.
 
@@ -286,7 +290,10 @@ Tumblr's systems are not compatible with Cloudflare's proxy services and
 Tumblr customers cannot use Cloudflare\'s SSL services.
 {{</Aside>}}
 
-{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">example.com  A  66.6.44.4</span></div></span><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">www.example.com  CNAME  domains.tumblr.com</span></div></span></span></span></code></pre>{{</raw>}}
+```txt
+example.com  A  66.6.44.4
+www.example.com  CNAME  domains.tumblr.com
+```
 
 {{<Aside type="warning">}}
 Disable Cloudflare's proxying for any DNS record related to Tumblr.
@@ -298,4 +305,4 @@ ___
 ## Related resources
 
 -   [Managing Cloudflare DNS records](/dns/manage-dns-records/how-to/create-dns-records)
--   [CNAME Flattening](/dns/additional-options/cname-flattening)
+-   [CNAME Flattening](/dns/cname-flattening/)

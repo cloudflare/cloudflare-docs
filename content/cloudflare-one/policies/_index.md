@@ -10,9 +10,10 @@ meta:
 
 With Cloudflare Zero Trust, you can create:
 
-*   [**Secure Web Gateway**](/cloudflare-one/policies/filtering/) policies to inspect outbound traffic to the Internet, with [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway).
-*   [**Access**](/cloudflare-one/policies/access/) policies to secure inbound traffic to your applications with [Cloudflare Access](/cloudflare-one/glossary/#cloudflare-access).
-*   [**Browser Isolation**](/cloudflare-one/policies/browser-isolation/) policies to protect your organization's devices from threats on the Internet, and to prevent data loss.
+* [**Secure Web Gateway**](/cloudflare-one/policies/filtering/) policies to inspect outbound traffic to the Internet, with [Cloudflare Gateway](/cloudflare-one/glossary/#cloudflare-gateway).
+* [**Access**](/cloudflare-one/policies/access/) policies to secure inbound traffic to your applications with [Cloudflare Access](/cloudflare-one/glossary/#cloudflare-access).
+* [**Browser Isolation**](/cloudflare-one/policies/browser-isolation/) policies to protect your organization's devices from threats on the Internet, and to prevent data loss.
+* [**Data Loss Prevention**](/cloudflare-one/policies/data-loss-prevention/) policies to detect and secure your sensitive data.
 
 ## Related tutorials
 

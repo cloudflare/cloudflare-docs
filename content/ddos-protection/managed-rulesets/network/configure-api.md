@@ -20,10 +20,9 @@ When configuring the Network-layer DDoS Attack Protection managed ruleset, use o
 
 {{<Aside type="warning" header="Important">}}
 
-The Network-layer DDoS Attack Protection managed ruleset is always enabled. You cannot disable its rules using an override with `"enabled": false`.
-
-You can only define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level.
-
+* The Network-layer DDoS Attack Protection managed ruleset is always enabled. You cannot disable its rules using an override with `"enabled": false`.
+* {{<render file="managed-rulesets/_read-only-rules-note.md">}}
+* You can only define overrides for the Network-layer DDoS Attack Protection managed ruleset at the account level.
 {{</Aside>}}
 
 ## Example

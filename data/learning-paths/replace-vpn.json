@@ -81,7 +81,7 @@
         "pages": [
           {
             "external_link": true,
-            "url_path": "http://dash.teams.cloudflare.com/onboarding",
+            "url_path": "https://one.dash.cloudflare.com/onboarding",
             "link_title": "Choose a team name",
             "additional_description": "The <a href='/cloudflare-one/glossary#team-name'>team name</a> is used to create a unique subdomain for your application portal."
           },

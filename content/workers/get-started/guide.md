@@ -18,7 +18,7 @@ The quickest way to experiment with Cloudflare Workers is in the [Playground](ht
 
 ## 1. Start a new project with Wrangler (the Workers CLI)
 
-The Workers command-line interface, Wrangler, allows you to [`init`](/workers/wrangler/commands/#init), [`dev`](/workers/wrangler/commands/#dev), and [`publish`](/workers/wrangler/commands/#publish) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/#init), [test](/workers/wrangler/commands/#dev), and [deploy](/workers/wrangler/commands/#publish) your Workers projects.
 
 To use [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler), ensure you have [`npm` installed](https://docs.npmjs.com/getting-started), preferably using a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm). Using a version manager helps avoid permission issues and allows you to easily change Node.js versions.
 
@@ -44,12 +44,14 @@ To start developing your Worker, `cd` into your new project directory:
 $ cd my-project
 ``` 
 
-In your project directory, `wrangler init` has generated the following files:
+In your project directory, `wrangler init` has generated the following:
 
-1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#example) configuration file.
-2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax.
+1. `wrangler.toml`: Your [Wrangler](/workers/wrangler/configuration/#sample-wranglertoml-configuration) configuration file.
+2. `index.js` (in `/src`): A minimal Hello World Worker written in JavaScript module syntax. This is the file where you will write your code. An `index.ts` file will be generated instead if you indicated `y` to the `Would you like to use TypeScript? (y/n)` question.
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
-4. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://www.npmjs.com/package/@cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
+4. [`package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json): A file that locks any associated dependencies to a specific version and prevents accidental dependency version updating. Only generated if indicated in `wrangler init` command.
+5. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://www.npmjs.com/package/@cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
+6. `/node_modules`: Refer to the [NPM documentation on `/node_modules`](https://docs.npmjs.com/cli/v9/configuring-npm/folders#node-modules) for more information.
 
 ---
 
@@ -107,7 +109,7 @@ To experiment with more premade Workers, refer to [Workers Examples](/workers/ex
 
 ## 4. Publish your project
 
-With your project configured, you can now publish your Worker, to a `*.workers.dev` subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
+With your project configured, you can now publish your Worker, to a `*.workers.dev` subdomain, or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 ---

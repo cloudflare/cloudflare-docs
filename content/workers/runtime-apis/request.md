@@ -69,7 +69,7 @@ let request = new Request(input [, init])
 
 *   `cf` {{<type-link href="#requestinitcfproperties">}}RequestInitCfProperties{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s edge handles the request.
+    *   Cloudflare-specific properties that can be set on the `Request` that control how Cloudflare’s global network handles the request.
 
 *   `method` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -175,7 +175,7 @@ All properties of an incoming `Request` object (that is, `event.request`) are re
 
 *   `cf` {{<type-link href="#incomingrequestcfproperties">}}IncomingRequestCfProperties{{</type-link>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
-    *   An object containing properties about the incoming request provided by Cloudflare’s edge network.
+    *   An object containing properties about the incoming request provided by Cloudflare’s global network.
 
 *   `headers` {{<type>}}Headers{{</type>}} {{<prop-meta>}}read-only{{</prop-meta>}}
 
@@ -205,7 +205,7 @@ If the response is a redirect and the redirect mode is set to `follow` (see belo
 
 ### `IncomingRequestCfProperties`
 
-In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s edge.
+In addition to the properties on the standard [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) object, the `request.cf` object on an inbound `Request` contains information about the request provided by Cloudflare’s global network.
 
 All plans have access to:
 
@@ -352,7 +352,7 @@ addEventListener("fetch", event => {
 
 ### When passing a promise to fetch event `.respondWith()`
 
-If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#methods) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
+If you pass a Response promise to the fetch event [`.respondWith()`](/workers/runtime-apis/fetch-event/#respondwith) method, the request context is active during any asynchronous tasks which run before the Response promise has settled. You can pass the event to an async handler, for example:
 
 ```js
 addEventListener("fetch", event => {

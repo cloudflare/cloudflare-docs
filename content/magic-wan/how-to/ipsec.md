@@ -29,13 +29,13 @@ Review the information below to learn more about phases to establish IPsec conne
 
 ## 1. Create IPsec tunnels
 
-Create a POST request using the API to [Create IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
+Create a POST request using the API to [Create IPsec tunnels](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels).
 
 ## 2. Generate the PSK for the IPsec tunnels
 
 You can provide your own PSK or use the command below to have Cloudflare generate a PSK for you.
 
-Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](https://developers.cloudflare.com/api/operations/magic-i-psec-tunnels-generate-pre-shared-key-(-psk)-for-i-psec-tunnels) and initiate your session.
+Create a POST request using the API to [Generate Pre Shared Key (PSK) for IPsec tunnels](/api/operations/magic-i-psec-tunnels-generate-pre-shared-key-(-psk)-for-i-psec-tunnels) and initiate your session.
 
 ## 3. Set up static routes
 
@@ -70,6 +70,7 @@ Below you will find the configuration parameters Magic WAN supports for the diff
   - AES-CBC with 256-bit key length
 
 - **Integrity** (sometimes referred to as Authentication):
+  {{<Aside type="note">}}When using AES-GCM-16, either with 128-bit or 256-bit key lengths, Authentication is not required.{{</Aside>}}
   - SHA2-256
   - SHA-1
 
