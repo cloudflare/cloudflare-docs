@@ -12,6 +12,14 @@ The following policies are commonly used to secure DNS traffic.
 
 {{<render file="/gateway/_policies-optional.md">}}
 
+## Block sites by top-level domain
+
+Block sites with a specific top-level domain (TLD).
+
+| Selector | Operator      | Value     | Action |
+| -------- | ------------- | --------- | ------ |
+| Domain   | matches regex | `[.]fail` | Block  |
+
 ## Control IP version
 
 Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/filtering/egress-policies/) to control which IP address is used to egress to the origin server.
