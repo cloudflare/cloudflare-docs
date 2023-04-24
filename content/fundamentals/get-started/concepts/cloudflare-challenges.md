@@ -93,7 +93,7 @@ When observing a Cloudflare Challenge page, a visitor could:
 ---
 ## Detecting a challenge page response
 
-When request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitaged`-header present and set to `challenge`. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
+When request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated`-header present and set to `challenge`. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
 
 Note that regardless of the requested resource-type the content-type of a challenge will be `text/html`
 
