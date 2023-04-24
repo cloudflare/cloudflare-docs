@@ -82,8 +82,8 @@ The following fields are now deprecated and they will be removed from the HTTP R
 Deprecated field name | Notes
 ----------------------|----------------------------------------------------------------------
 `WAFProfile`          | Used in the previous version of WAF managed rules (now deprecated).
-`EdgeRateLimitAction` | Used in the previous version of rate limiting rules.
-`EdgeRateLimitID`     | Used in the previous version of rate limiting rules.
+`EdgeRateLimitAction` | Used in the previous version of rate limiting rules (now deprecated).
+`EdgeRateLimitID`     | Used in the previous version of rate limiting rules (now deprecated).
 `SecurityLevel`       | N/A
 
 {{</table-wrap>}}
