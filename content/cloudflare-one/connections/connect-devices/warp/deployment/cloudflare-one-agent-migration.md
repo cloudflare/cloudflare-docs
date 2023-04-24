@@ -6,7 +6,7 @@ weight: 12
 
 # Migrate to the Cloudflare One Agent
 
-Cloudflare has started splitting the [Zero Trust WARP client](/cloudflare-one/connections/connect-devices/warp/) and the [consumer WARP client](warp-client/) into two separate applications. Users who are logged in to a Zero Trust organization on the WARP client will need to migrate to the new Cloudflare One Agent. Users who are running the WARP client in consumer / 1.1.1.1 mode are not impacted by this change.
+Cloudflare has started splitting the [Zero Trust WARP client](/cloudflare-one/connections/connect-devices/warp/) and the [consumer WARP client](/warp-client/) into two separate applications. Users who are logged in to a Zero Trust organization on the WARP client will need to migrate to the new Cloudflare One Agent. Users who are running the WARP client in consumer / 1.1.1.1 mode are not impacted by this change.
 
 ## macOS, Windows, and Linux
 
