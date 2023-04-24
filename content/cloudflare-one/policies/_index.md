@@ -22,7 +22,7 @@ With Cloudflare Zero Trust, you can create:
 - [Inspect HTTP and block file uploads](/cloudflare-one/tutorials/block-uploads/)
 - [Block sites by host and URL](/cloudflare-one/policies/filtering/http-policies/common-policies/#block-sites)
 - [Block sites by TLD](filtering/dns-policies/common-policies/#block-sites-by-top-level-domain)
-- [Block sites for specific users](/cloudflare-one/tutorials/block-football-users/)
+- [Block sites for specific users](/cloudflare-one/policies/filtering/http-policies/common-policies/#check-user-identity)
 
 ### Zero Trust policies
 
