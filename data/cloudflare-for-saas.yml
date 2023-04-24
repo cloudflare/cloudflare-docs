@@ -10,3 +10,7 @@ product:
 
 resources:
   dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: cloudflare-for-platforms
