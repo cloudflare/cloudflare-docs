@@ -1,9 +1,11 @@
 ---
-title: Managed rule blocking Bing's Site Scan
+title: Bing's Site Scan blocked by a managed rule
 pcx_content_type: troubleshooting
+meta:
+    description: A WAF managed rule may block site scans performed by Bing Webmaster Tools.
 ---
 
-# A WAF managed rule is blocking Bing's Site Scan
+# Bing's Site Scan blocked by a WAF managed rule
 
 Microsoft [Bing Webmaster Tools](https://www.bing.com/webmaster/tools) provides a Site Scan feature that crawls your website searching for possible SEO improvements.
 
