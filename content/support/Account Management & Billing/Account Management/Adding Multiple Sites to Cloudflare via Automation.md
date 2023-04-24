@@ -48,7 +48,8 @@ Cloudflare has a fully featured API ([documentation](https://api.cloudflare.com/
 Open your terminal application (e.g. Terminal, or Terminal.app) and set your API key & email:
 
 ```sh
-$ export CF_API_EMAIL=you@example.comexport CF_API_KEY=abc123def456ghi789
+$ export CF_API_EMAIL=you@example.com
+$ export CF_API_KEY=abc123def456ghi789
 ```
 
 Then, we'll write a simple for-loop that takes each domain name 
