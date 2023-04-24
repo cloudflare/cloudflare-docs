@@ -22,4 +22,5 @@ For more details on the mechanics of `CNAME` flattening, review the [CNAME flatt
 
 ## Aspects to keep in mind
 
-{{<render file="_cname-flattening-callout.md">}}
+* `CNAME` flattening happens by default in some cases, as explained in its [Setup page](/dns/cname-flattening/set-up-cname-flattening/)
+* {{<render file="_cname-flattening-callout.md">}}

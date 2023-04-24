@@ -108,7 +108,7 @@ These records include the following fields:
 
 You can use `CNAME` records to point to other `CNAME` records (`www.example2.com` --> `www.example1.com` --> `www.example.com`), but the final record must point to a hostname with a valid IP address (and therefore a valid `A` or `AAAA` record) if this hostname is meant to proxy traffic.
 
-Cloudflare uses `CNAME` flatenning to deliver better performance. This process also supports a few features and can interact with different setups that depend on `CNAME` records. Refer to the [`CNAME` flattening section](/dns/cname-flattening/) to learn more about this.
+Cloudflare uses a process called `CNAME` flattening to deliver better performance. This process supports a few features and can interact with different setups that depend on `CNAME` records. Refer to the [`CNAME` flattening section](/dns/cname-flattening/) to learn more about this.
 
 #### Example API call
 
