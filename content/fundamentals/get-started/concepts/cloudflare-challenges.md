@@ -88,3 +88,28 @@ When observing a Cloudflare Challenge page, a visitor could:
 - Request the website owner to allow their IP address.
 - Scan their computer for malicious programs (it may be infected).
 - Check their antivirus or firewall service to make sure it is not blocking access to the challenge resources (for example, images).
+
+
+---
+## Detecting a challenge page response
+
+When request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitaged`-header present and set to `challenge`. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
+
+Note that regardless of the requested resource-type the content-type of a challenge will be `text/html`
+
+Cloudflare's challenge pages include a cf-mitigated header with the value 'challenge', which can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a simple and reliable way to identify whether a response is a challenge or not, enabling you to take appropriate action based on the result.
+
+For instance, if a fetch request is challenged, a developer might want to display a captcha or temporary rate limit the request.
+
+To illustrate, here's a code snippet that demonstrates how to use the cf-mitigated header to detect whether a response was challenged:
+
+```
+fetch('/my-api-endpoint')
+  .then(response => {
+    if (response.headers.get('cf-mitigated') === 'challenge') {
+      // Handle challenged response
+    } else {
+      // Process response as usual
+    }
+  });
+```
