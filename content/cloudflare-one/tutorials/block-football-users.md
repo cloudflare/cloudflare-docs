@@ -8,7 +8,7 @@ title: Block sites for specific users
 
 # Block sites for specific users
 
-You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname. You can build these rules [globally for your entire organization](/cloudflare-one/tutorials/block-football/) or for specific users.
+You can use Cloudflare Gateway and the Cloudflare WARP client application to block attempts to reach hostnames or to block URL paths without blocking the rest of the hostname. You can build these rules [globally for your entire organization](/cloudflare-one/policies/filtering/http-policies/common-policies/#block-sites) or for specific users.
 
 **This tutorial covers how to:**
 
