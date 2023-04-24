@@ -8,6 +8,26 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
+## Block sites
+
+Block attempts to reach sites by hostname or URL paths. Different approaches may be required based on how a site is organized.
+
+### Block sites by hostname
+
+Block all subdomains that use a host.
+
+| Selector | Operator      | Value            | Action |
+| -------- | ------------- | ---------------- | ------ |
+| Host     | matches regex | `.*example\.com` | Block  |
+
+### Block sites by URL
+
+Block a section of a site without blocking the entire site.
+
+| Selector | Operator      | Value       | Action |
+| -------- | ------------- | ----------- | ------ |
+| URL      | matches regex | `/r/gaming` | Block  |
+
 {{<render file="gateway/_content-categories.md">}}
 
 {{<render file="gateway/_policies-optional.md">}}
