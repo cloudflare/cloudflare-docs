@@ -3,15 +3,23 @@ title: Customize cipher suites
 pcx_content_type: how-to
 weight: 2
 meta:
-  title: Customize cipher suites — Edge certificates
+  title: Customize cipher suites
 ---
 
-# Customize cipher suites — Edge certificates
+# Customize cipher suites
 
-With [**Advanced Certificate Manager**](/ssl/edge-certificates/advanced-certificate-manager/) or within [**SSL for SaaS**](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections to specific cipher suites. Currently, this functionality is only available when using the API:
+With [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) or within [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/), you can restrict connections between Cloudflare and clients - such as your visitor's browser - to specific cipher suites.
+
+Currently, you can only customize cipher suites when using the API:
 
 - [Zone](/api/operations/zone-settings-change-ciphers-setting)
 - [Hostname (SSL for SaaS only)](/api/operations/custom-hostname-for-a-zone-create-custom-hostname)
+
+When you customize cipher suites for a [zone](/fundamentals/get-started/concepts/accounts-and-zones/#zones), the restriction affects all hostnames within the zone.
+
+{{<Aside type="note">}}
+Note that this process only refers to connections between clients and the Cloudflare network. For connections between Cloudflare and your origin server, refer to the [Match on origin](/ssl/reference/cipher-suites/matching-on-origin/) option or to this [reference list](/ssl/origin-configuration/cipher-suites/).
+{{</Aside>}}
 
 ## Cipher suite values
 
