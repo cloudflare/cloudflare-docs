@@ -307,7 +307,7 @@ durable_objects.bindings = [
 
 ### Configuring Durable Object classes with migrations
 
-You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing class. A migration is informing the Workers platform of the changes and provide it with instructions on how to deal with those changes.
+You must initiate a migration process when you create a new Durable Object class, or rename, delete, or transfer an existing class. This process informs the Workers platform of the changes and provides it with instructions on how to deal with those changes.
 
 {{<Aside type="note">}}
 
