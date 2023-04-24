@@ -12,6 +12,20 @@ The following policies are commonly used to secure HTTP traffic.
 
 {{<render file="gateway/_policies-optional.md">}}
 
+## Skip inspection for groups of applications
+
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS inspection](/cloudflare-one/policies/filtering/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/filtering/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+
+| Selector    | Operator | Value          | Action         |
+| ----------- | -------- | -------------- | -------------- |
+| Application | in       | Do Not Inspect | Do Not Inspect |
+
+{{<Aside type="note">}}
+You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
+{{</Aside>}}
+
 ## Enforce device posture
 
 Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to the [device posture section](/cloudflare-one/identity/devices/).
