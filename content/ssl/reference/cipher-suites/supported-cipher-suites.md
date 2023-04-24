@@ -4,10 +4,10 @@ pcx_content_type: reference
 layout: list
 weight: 1
 meta:
-  title: Supported cipher suites — Edge certificates
+  title: Supported cipher suites
 ---
 
-# Supported cipher suites — Edge certificates
+# Supported cipher suites
 
 Cloudflare supports the following cipher suites by default. If needed, you can [restrict your website or application](/ssl/reference/cipher-suites/customize-cipher-suites/) to only use specific cipher suites.
 
