@@ -72,23 +72,23 @@ Cloudflare currently offers limited support for advanced redirects. More support
 
 {{</table-wrap>}}
 
-### Redirects and header matching
+## Redirects and header matching
 
 Redirects execute before headers, so in the case of a request matching rules in both files, the redirect will win out.
 
-#### Splats
+### Splats
 
 On matching, a splat (asterisk, `*`) will greedily match all characters. You may only include a single splat in the URL.
 
 The matched value can be used in the redirect location with `:splat`.
 
-#### Placeholders
+### Placeholders
 
 A placeholder can be defined with `:placeholder_name`. A colon indicates the start of a placeholder, and the placeholder name that follows may be composed of alphanumeric characters and underscores, `:\w+`. A placeholder with any given name can only be used once in the URL. Placeholders match all characters apart from the delimiter, which: when part of the host, is a period or a forward-slash; and when part of the path, is a forward-slash.
 
 Similarly, the matched value can be used in the redirect location with `:placeholder_name`.
 
-#### Proxying
+### Proxying
 
 Proxying will only support relative URLs on your site. You cannot proxy external domains.
 
@@ -109,6 +109,20 @@ For example, if you have added `/about/faq/* /about/faqs 200` to your `_redirect
   Link: </about/faqs>; rel="canonical"
 ```
 {{</Aside>}}
+
+## Surpass `_redirects` limits
+
+A [`_redirects`](/pages/platform/limits/#redirects) file has a maximum of 2,000 static redirects and 100 dynamic redirects, for a combined total of 2,100 redirects. Use [Bulk Redirects (beta)](/rules/url-forwarding/bulk-redirects/) to handle redirects that surpasses the 2,100 redirect rules limit set by Pages. 
+
+{{<Aside type="note">}}
+
+The redirects defined in the `_redirects` file of your build folder can work together with your Bulk Redirects. In case of duplicates, Bulk Redirects will run in front of your Pages project, where your other redirects live.
+
+For example, if you have Bulk Redirects set up to direct `abc.com` to `xyz.com` but also have `_redirects` set up to direct `xyz.com` to `foo.com`, a request for `abc.com` will eventually redirect to `foo.com`.
+
+{{</Aside>}}
+
+To use Bulk Redirects, refer to the [Bulk Redirects dashboard documentation](/rules/url-forwarding/bulk-redirects/create-dashboard/) or the [Bulk Redirects API documentation](/rules/url-forwarding/bulk-redirects/create-api/).
 
 ## Related resources
 
