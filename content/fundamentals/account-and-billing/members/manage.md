@@ -11,7 +11,7 @@ meta:
 Learn how to add new account members, edit or revoke their permissions and access, and resend verifications emails.
 
 {{<Aside type="note">}}
-To add or manage members requires the Super Admin role.
+{{<render file="_account-member-manage-limitation.md">}}
 {{</Aside>}}
 
 ## Add account members
