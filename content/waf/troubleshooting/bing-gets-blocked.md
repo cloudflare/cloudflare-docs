@@ -15,10 +15,14 @@ To allow Site Scan to run on your website, Cloudflare recommends that you tempor
 
 The rule you should temporarily skip is the following:
 
+{{<table-wrap>}}
+
 |                     | Name                                             | ID                                 |
 |---------------------|--------------------------------------------------|------------------------------------|
 | **Managed Ruleset** | Cloudflare Managed Ruleset                       | `efb7b8c949ac4650a09736fc376e9aee` |
 | **Rule**            | Anomaly:Header:User-Agent - Fake Bing or MSN Bot | `ae20608d93b94e97988db1bbc12cf9c8` |
+
+{{</table-wrap>}}
 
 The WAF exception, shown as a rule with a **Skip** action, must appear in the rules list before the rule executing the Cloudflare Managed Ruleset, or else nothing will be skipped.
 
