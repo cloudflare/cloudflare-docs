@@ -9,8 +9,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -45,7 +45,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {
@@ -89,7 +89,7 @@ This is only half the implementation for Turnstile. The corresponding token that
 {{</Aside>}}
 
 
-{{<tab label="js/esm" default="true">}}
+{{<tab label="js" default="true">}}
 ```js
 async function handlePost(request) {
     const body = await request.formData();
