@@ -48,7 +48,7 @@ rss: file
       <td>100558_BETA</td>
       <td>...8b036974</td>
       <td>Malware, Web Shell - Beta</td>
-      <td>This will replace 100558 and ...49e6b538</td>
+      <td>This will replace 100558 and ...8b036974</td>
     </tr>
   </tbody>
 </table>
