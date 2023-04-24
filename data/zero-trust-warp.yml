@@ -6,8 +6,3 @@ product:
   url: /cloudflare-one/connections/connect-devices/warp/
   wrap: true
   grid_placeholder: true
-
-algolia:
-  index: developers-cloudflare2
-  apikey: 045e8dbec8c137a52f0f56e196d7abe0
-  product: cloudflare-one

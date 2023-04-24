@@ -5,8 +5,3 @@ product:
   group: Application performance
   url: /cache/about/cache-reserve/
   grid_placeholder: true
-
-algolia:
-  index: developers-cloudflare2
-  apikey: 045e8dbec8c137a52f0f56e196d7abe0
-  product: cache
