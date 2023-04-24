@@ -74,27 +74,40 @@ When accessing origin servers with certificates not signed by a public certifica
 
 Block the upload or download of files based on their type.
 
-| Selector           | Operator | Value                                 | Action |
-| ------------------ | -------- | ------------------------------------- | ------ |
-| Upload File Type   | in       | Microsoft Office Word Document (docx) | Block  |
-| Download File Type | in       | PDF (pdf)                             | Block  |
+| Selector           | Operator | Value                                 | Logic | Action |
+| ------------------ | -------- | ------------------------------------- | ----- | ------ |
+| Upload File Type   | in       | Microsoft Office Word Document (docx) | And   | Block  |
+| Download File Type | in       | PDF (pdf)                             |       |        |
 
-## Block Google Drive downloads
+## Block Google Drive
 
-Block file downloads from Google Drive. You can also [Block file uploads to Google Drive](/cloudflare-one/tutorials/block-uploads/).
+To enable Gateway to HTTP inspect Google Drive, you must [add the Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#google-drive-for-desktop).
 
-| Selector         | Operator      | Value                      | Action | Operator |
-| ---------------- | ------------- | -------------------------- | ------ | -------- |
-| Application      | in            | Google Drive               | Block  | And      |
-| URL Path & Query | matches regex | `.*(e=download\|export).*` | Block  |          |
+### Block Google Drive uploads
+
+Block file uploads to Google Drive.
+
+| Selector         | Operator      | Value        | Logic | Action |
+| ---------------- | ------------- | ------------ | ----- | ------ |
+| Application      | in            | Google Drive | And   | Block  |
+| Upload Mime Type | matches regex | `.*`         |       |        |
+
+### Block Google Drive downloads
+
+Block file downloads from Google Drive.
+
+| Selector         | Operator      | Value                      | Logic | Action |
+| ---------------- | ------------- | -------------------------- | ----- | ------ |
+| Application      | in            | Google Drive               | And   | Block  |
+| URL Path & Query | matches regex | `.*(e=download\|export).*` |       |        |
 
 ## Block Gmail downloads
 
 Block file downloads from Gmail.
 
-| Selector         | Operator | Value                                   | Action | Operator |
-| ---------------- | -------- | --------------------------------------- | ------ | -------- |
-| Host             | is       | `mail-attachment.googleusercontent.com` | Block  | And      |
-| URL Path & Query | is       | `/attachment/u/0`                       | Block  |          |
+| Selector         | Operator | Value                                   | Logic | Action |
+| ---------------- | -------- | --------------------------------------- | ----- | ------ |
+| Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
+| URL Path & Query | is       | `/attachment/u/0`                       |       |        |
 
 Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
