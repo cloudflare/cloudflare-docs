@@ -16,7 +16,7 @@ _Diagnostiquer et résoudre les erreurs 5XX pour les sites mis en proxy par Clou
 -   [Error 500 : internal server error](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#500error)
 -   [Erreur 502 bad gateway ou erreur 504 gateway timeout](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#502504error)
 -   [Error 503 : service temporarily unavailable](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#503error)
--   [Error 520 : le serveur web renvoie une erreur inconnu](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#520error)
+-   [Error 520 : le serveur web renvoie une erreur inconnue](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#520error)
 -   [Erreur 521 : le serveur web est en panne](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#521error)
 -   [Error 522 : connection timed out](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#522error)
 -   [Error 523: origin is unreachable](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-R%C3%A9solution-des-erreurs-Cloudflare-5XX#523error)
@@ -133,7 +133,7 @@ L'erreur HTTP 503 se produit lorsque votre serveur web d'origine est surchargé.
 
 ___
 
-## Error 520 : le serveur web renvoie une erreur inconnu
+## Error 520 : le serveur web renvoie une erreur inconnue
 
 L'erreur 520 se produit lorsque le serveur d'origine renvoie une réponse vide, inconnue ou inattendue à Cloudflare.
 
@@ -183,7 +183,7 @@ ___
 
 ## Error 522 : connection timed out
 
-Une erreur 522 se produit lorsque Cloudflare dépasse le délai de connexion avec le serveur web d'origine. Deux dépassements de délai différents provoquent l'erreur HTTP 522 en fonction du moment où ils se produisent entre Cloudflare et du serveur web d'origine :
+Une erreur 522 se produit lorsque Cloudflare dépasse le délai de connexion avec le serveur web d'origine. Deux dépassements de délai consécutifs provoquent l'erreur HTTP 522 en fonction du moment où ils se produisent entre Cloudflare et le serveur web d'origine :
 
 1.  Avant qu'une connexion ne soit établie, le serveur web d'origine ne renvoie pas un SYN+ACK à Cloudflare dans les 15 secondes suivant l'envoi d'un SYN par Cloudflare.
 2.  Une fois la connexion établie, le serveur web d'origine n'accuse pas réception (ACK) de la requête de ressource de Cloudflare dans les 90 secondes qui suivent.
@@ -202,8 +202,8 @@ Si vous utilisez [Cloudflare Pages](/pages/), vérifiez que vous avez un domaine
 
 Si rien de ce qui précède ne permet de résoudre le problème, demandez les informations suivantes à votre fournisseur d’hébergement ou à l'administrateur du site avant de [contacter le support Cloudflare](https://support.cloudflare.com/hc/articles/200172476) :
 
--   Un [MTR ou traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) depuis votre serveur web d'origine vers une [adresse IP Cloudflare](http://www.cloudflare.com/ips) qui se connectait communément à votre serveur web d'origine avant que le problème ne survienne. Identifiez une adresse IP de connexion Cloudflare enregistrée dans les journaux du serveur web d'origine.
--   Les détails de l'enquête du fournisseur d’hébergement, comme les journaux concernés ou les conversations avec celui-ci.
+-   Un [MTR ou traceroute](https://support.cloudflare.com/hc/articles/203118044#h_b8cebafd-9243-40e9-9c44-d4b94ccd3a87) depuis votre serveur web d'origine vers une [adresse IP Cloudflare](http://www.cloudflare.com/ips) qui se connectait régulièrement à votre serveur web d'origine avant que le problème ne se produise. Identifiez une adresse IP de connexion Cloudflare enregistrée dans les journaux du serveur web d'origine.
+-   Les détails des investigations au niveau du fournisseur d’hébergement, comme les journaux concernés ou les conversations avec celui-ci.
 
 ___
 
@@ -228,19 +228,19 @@ ___
 
 ## Error 524: a timeout occurred
 
-Une erreur 524 indique que Cloudflare s’est connecté au serveur web d'origine, mais que le serveur d'origine n'a pas fourni de réponse HTTP avant que la deuxième connexion par défaut de 100 s ait expiré. Cela peut se produire si le serveur d'origine est simplement trop lent parce qu'il doit effectuer trop de tâches, par exemple parce qu'il a reçu une requête de données volumineuse ou parce qu'il a du mal à récupérer des ressources et qu'il ne parvient pas à renvoyer les données à temps.
+Une erreur 524 indique que Cloudflare s’est connecté au serveur web d'origine, mais que le serveur d'origine n'a pas fourni de réponse HTTP avant que le timeout par défaut de 100s ait expiré. Cela peut se produire si le serveur d'origine est simplement trop lent parce qu'il doit effectuer trop de tâches, par exemple parce qu'il a reçu une requête de données volumineuse ou parce qu'il a du mal à récupérer des ressources et qu'il ne parvient pas à renvoyer les données à temps.
 
 **Résolution**
 
 Nous suggérons les options suivantes pour contourner cette erreur :
 
--   Mettez en œuvre un sondage de statut des processus HTTP volumineux pour éviter de rencontrer cette erreur.
+-   Vérifiez les processus HTTP les plus volumineux pour éviter de rencontrer cette erreur.
 -   [Contactez votre fournisseur d’hébergement](https://support.cloudflare.com/hc/fr-fr/articles/115003011431-Troubleshooting-Cloudflare-5XX-errors#h_cf28c038-16c1-4841-a85f-f905240aaebe) pour exclure les causes courantes suivantes au niveau de votre serveur web d'origine :
     -   Un processus de longue durée se déroule sur le serveur web d'origine.
     -   Serveur web d’origine surchargé.
 
--   Les clients Enterprise peuvent augmenter le délai de l'erreur 524 jusqu'à 6 000 secondes à l'aide du [point de terminaison d'API proxy\_read\_timeout](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting).
--   Si vous lancez régulièrement des requêtes HTTP qui dépassent 100 secondes pour être achevées (comme des exportations de données volumineuses), déplacez ces processus derrière un sous-domaine non proxysé (en nuage gris) dans l'application **DNS** de Cloudflare.
+-   Les clients Enterprise peuvent augmenter le délai de l'erreur 524 jusqu'à 6000 secondes à l'aide du [point de terminaison d'API proxy\_read\_timeout](https://api.cloudflare.com/#zone-settings-change-proxy-read-timeout-setting).
+-   Si vous lancez régulièrement des requêtes HTTP qui dépassent 100 secondes pour être complétées (comme des exportations de données volumineuses), déplacez ces processus derrière un sous-domaine non proxysé (en nuage gris) dans l'application **DNS** de Cloudflare.
 -   Si l'erreur 524 se produit pour un domaine utilisant Cloudflare Railgun, vérifiez que le délai _lan.timeout_ est réglé plus haut que la valeur par défaut de 30 secondes et redémarrez le service railgun.
 
 ___
@@ -282,7 +282,7 @@ Demandez à votre administrateur de serveur ou à votre hébergeur de vérifier 
 
 -   Le certificat n'a pas expiré
 -   Le certificat n'est pas révoqué
--   Le certificat est signé par une [A](https://support.cloudflare.com/hc/articles/360026016272)[utorité de certification](https://support.cloudflare.com/hc/articles/360026016272) (et non auto-signé).
+-   Le certificat est signé par une [Autorité de certification](https://support.cloudflare.com/hc/articles/360026016272) (et non auto-signé).
 -   Le nom de domaine demandé ou cible et le nom d'hôte sont dans la configuration **Common Name** ou **Subject Alternative Name** (SAN) du certificat.
 -   Votre serveur web d'origine accepte les connexions via le port SSL 443
 -   [Mettez temporairement en pause Cloudflare](https://support.cloudflare.com/hc/articles/200169176) et consultez [https://www.sslshopper.com/ssl-checker.html#hostname=www.exemple.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (remplacez www.exemple.com par votre nom d'hôte et votre domaine) pour vérifier qu'aucun problème n’existe avec le certificat SSL d'origine :
@@ -371,7 +371,7 @@ ___
 
 ## Error 530
 
-L'erreur HTTP 530 est renvoyée accompagnée d'une erreur 1XXX. Recherchez l'[erreur 1XXX spécifique dans le centre d'aide de Cloudflare](https://support.cloudflare.com/hc/sections/200820298) pour des informations sur le dépannage.
+L'erreur HTTP 530 est renvoyée accompagnée d'une erreur 1016. Recherchez l'[erreur 1XXX spécifique dans le centre d'aide de Cloudflare](https://support.cloudflare.com/hc/sections/200820298) pour des informations sur le dépannage.
 
 ___
 

@@ -9,7 +9,7 @@ pcx_content_type: how-to
 
 Depending on the cache status you receive, you can make modifications to improve your cache ratio. To review the list of cache statuses, refer to [Cloudflare cache responses](/cache/about/default-cache-behavior/#cloudflare-cache-responses).
 
-- **Dynamic**: Default response for many file types including HTML. To cache additional content, refer to [custom caching with page rules](https://support.cloudflare.com/hc/articles/360021023712).
+- **Dynamic**: Default response for many file types including HTML. To cache additional content, refer to [custom caching with page rules](/cache/troubleshooting/customize-caching/).
 - **Revalidated**: To address an abnormal quantity of revalidated content, consider [increasing your Edge Cache TTLs](/cache/how-to/create-page-rules/) via a Page Rule or [max-age origin directive](/cache/about/cache-control/#cache-control-directives).
 - **Expired**: Consider [extending Edge Cache TTLs](/cache/how-to/create-page-rules/) for these resources via a Page Rule or enable revalidation at your origin.
 - **Miss**: Although tricky to optimize, there are a few potential remedies:

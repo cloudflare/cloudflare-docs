@@ -56,8 +56,7 @@ rules**.
 
 The number of allowed Rate Limiting rules depends on the domain’s plan:
 
-| Plan | \# Rules | \# Rules matching
-response headers | Actions | Action Duration | Request Period |
+| Plan | Rules | Rules matching response headers | Actions | Action Duration | Request Period |
 | --- | --- | --- | --- | --- | --- |
 | Free | 1 | 1 | Block | 1 minute or 1 hour | 10 seconds or 1 minute |
 | Pro | 10 | 1 | Block, Interactive Challenge, JS Challenge, Managed Challenge, or Log | 1 minute or 1 hour | 10 seconds or 1 minute |
