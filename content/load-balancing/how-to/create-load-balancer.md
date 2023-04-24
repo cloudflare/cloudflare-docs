@@ -21,18 +21,7 @@ Load balancing is only applicable if the target zone is on a full DNS setup. It 
 
 ## Create a load balancer
 
-{{<tabs labels="Dashboard | API">}}
-{{<tab label="dashboard" no-code="true">}}
- 
-{{<render file="_load-balancer-create.md">}}
- 
-{{</tab>}}
-{{<tab label="api" no-code="true">}}
- 
-{{<render file="_load-balancer-create-api.md">}}
- 
-{{</tab>}}
-{{</tabs>}}
+{{<render file="_create-load-balancer-full.md">}}
 
 ### Sharing your load balancer with other sites
 
