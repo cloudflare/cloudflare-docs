@@ -46,7 +46,7 @@ rss: file
       <td>2023-05-01</td>
       <td>Block</td>
       <td>100558_BETA</td>
-      <td>...8b036974</td>
+      <td>...f6a96bd1</td>
       <td>Malware, Web Shell - Beta</td>
       <td>This will replace 100558 and ...8b036974</td>
     </tr>
