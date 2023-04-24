@@ -30,7 +30,7 @@ rss: file
       <td>100582</td>
       <td>...18585d20</td>
       <td>vBulletin - Code Injection - CVE:CVE-2023-25135</td>
-      <td>New Detection</td>
+      <td>New detection</td>
     </tr>
     <tr>
       <td>2023-04-24</td>
