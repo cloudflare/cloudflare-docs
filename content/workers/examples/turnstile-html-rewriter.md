@@ -96,12 +96,6 @@ async function handlePost(request) {
     // Turnstile injects a token in `cf-turnstile-response`.
     const token = body.get('cf-turnstile-response');
     const ip = request.headers.get('CF-Connecting-IP');
-    // Validate the token by calling the `/siteverify` API.
-    let formData = new FormData();
-
-    // Turnstile injects a token in `cf-turnstile-response`.
-    const token = body.get('cf-turnstile-response');
-    const ip = request.headers.get('CF-Connecting-IP');
 
     // Validate the token by calling the `/siteverify` API.
     let formData = new FormData();
@@ -135,13 +129,9 @@ export default {
 		if (request.method === 'POST') {
 			return handlePost(request)
 		}
-		
+
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
-			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
-			.on('head', {
-				element(element) {
-
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {
