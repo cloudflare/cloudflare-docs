@@ -17,7 +17,7 @@
     "uid": "prevent-ddos-attacks",
     "path": "/learning-paths/prevent-ddos-attacks/",
     "priority": 2,
-    "description": "Protect your application from denial of service attacks.",
+    "description": "Protect your application from distributed (DDoS) and regular denial of service (DoS) attacks.",
     "products": [
       "Cache",
       "DDoS protection",
