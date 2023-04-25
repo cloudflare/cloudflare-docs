@@ -17,7 +17,7 @@ Device enrollment permissions determine which users can connect new devices to y
 5. Choose a global **Session duration** for enrolled devices. Users will need to re-authenticate their device after their session expires. To customize session durations for different users or applications, refer to [session duration policies](/cloudflare-one/policies/filtering/enforce-sessions/).
 6. Select **Save**.
 
-Your device enrollment rules are now active. To see which devices have been enrolled or revoked, go to **My Team** > **Devices**.
+Users can now [enroll their device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) by logging in to your identity provider. To see which devices have been enrolled or revoked, go to **My Team** > **Devices**.
 
 ## Example policies
 
