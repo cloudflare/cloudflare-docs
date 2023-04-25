@@ -35,15 +35,6 @@ header: DASH
 https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.mpd
 ```
 
-## Advanced player properties
-
-You can modify your video player to add your logo and set video links that direct your viewers to your website from the player itself. Use the `publicDetails` property to set the following values for your player:
-
-- `title`: The title of the video. 
-- `share_link`: A valid HTTPS URL for the video.
-- `channel_link`: The HTTPS URL users will directed to when selecting the logo from the video player. 
-- `logo`: A valid HTTPS URL for the image of your logo.
-
 ### Dashboard
 
 1. Log into the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
