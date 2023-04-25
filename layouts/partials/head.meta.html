@@ -130,7 +130,7 @@
 
   {{- if $DATA.algolia -}}
   <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
-  <meta name="algolia:product" content="{{ $DATA.algolia.product }}" />
+  <meta name="docsearch:product" content="{{ $DATA.algolia.product }}" />
   {{- end -}}
 
   {{- $coveo := index $.Context.Site.Params "coveo" -}}
