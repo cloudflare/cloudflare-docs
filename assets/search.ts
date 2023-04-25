@@ -20,9 +20,9 @@
       appId: '8MU1G3QO9P',
       apiKey,
       container: '#algolia',
-      // searchParameters: {
-      //   facetFilters
-      // },
+      searchParameters: {
+        optionalFilters: facetFilters
+      },
       transformItems: items => {
         return items.filter(item => {
           const url = new URL(item.url)
