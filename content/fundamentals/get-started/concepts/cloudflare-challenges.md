@@ -103,7 +103,7 @@ For instance, if a fetch request is challenged, a developer might want to displa
 
 To illustrate, here's a code snippet that demonstrates how to use the cf-mitigated header to detect whether a response was challenged:
 
-```
+```js
 fetch('/my-api-endpoint')
   .then(response => {
     if (response.headers.get('cf-mitigated') === 'challenge') {
