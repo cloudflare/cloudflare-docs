@@ -22,7 +22,7 @@ Block all subdomains that use a host.
 
 ### Block sites by URL
 
-Block a section of a site without blocking the entire site.
+Block a section of a site without blocking the entire site. For example, you can block a specific subreddit, such as `reddit.com/r/gaming`, without blocking `reddit.com`.
 
 | Selector | Operator      | Value       | Action |
 | -------- | ------------- | ----------- | ------ |
