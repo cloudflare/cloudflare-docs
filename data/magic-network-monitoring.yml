@@ -5,7 +5,7 @@ product:
   title: Magic Network Monitoring
   url: /magic-network-monitoring/
   wrap: true
-  group: Network services
+  group: Network security
   additional_groups: [Analytics]
 
 meta:
