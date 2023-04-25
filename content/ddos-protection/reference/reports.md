@@ -41,11 +41,11 @@ To receive real-time attack alerts, configure [DDoS alerts](/ddos-protection/ref
 
 The following image shows an example DDoS report:
 
-![Example email sent with a weekly DDoS report](/ddos-protection/static/ddos-report-email.png)
+![Example email sent with a weekly DDoS report](/images/ddos-protection/ddos-report-email.png)
 
 When Cloudflare does not detect any L3/4 DDoS attacks in the prior week, Cloudflare sends a confirmation report:
 
-![Example report email sent when Cloudflare does not detect any DDoS attack in the previous week](/ddos-protection/static/ddos-report-no-attacks.png)
+![Example report email sent when Cloudflare does not detect any DDoS attack in the previous week](/images/ddos-protection/ddos-report-no-attacks.png)
 
 ### Manage reporting subscriptions
 

@@ -72,9 +72,9 @@
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/getting-started/applications/ /cloudflare-one/applications/ 301
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
-/access/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
-/access/rdp/connect-rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
-/cloudflare-one/tutorials/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/access/rdp/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
+/access/rdp/connect-rdp/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
+/cloudflare-one/tutorials/rdp/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
@@ -82,15 +82,25 @@
 /access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/access/policy-management/ 301
 /access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
-/access/ssh/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
-/cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
-/cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
+/access/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
+/cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
+/cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
-/access/ssh/ssh-guide/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
+/access/ssh/ssh-guide/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
+/support/analytics/ /analytics/ 301
+/support/analytics/learn-more/ /analytics/ 301
+/support/analytics/essentials/ /analytics/ 301
+/support/analytics/essentials/understanding-cloudflare-account-analytics-beta/ /analytics/account-and-zone-analytics/account-analytics/ 301
+/support/analytics/essentials/understanding-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/zone-analytics/ 301
+/support/analytics/learn-more/cloudflare-analytics-with-workers/ /analytics/account-and-zone-analytics/analytics-with-workers/ 301
+/support/analytics/learn-more/how-does-cloudflare-calculate-total-threats-stopped/ /analytics/account-and-zone-analytics/total-threats-stopped/ 301
+/support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
+/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
+/support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 
 # area1
 /email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
@@ -162,7 +172,15 @@
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
-/cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
+/cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/support/caching/ /cache/troubleshooting/ 301
+/support/caching/configuration/ /cache/how-to/ 301
+/support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
+/support/caching/configuration/understanding-query-string-sort/ /cache/about/query-string-sort/ 301
+/support/caching/learn-more/ /cache/about/ 301
+/support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
+/support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
+/support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
 
 # cloudflare for platforms
 /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301
@@ -653,15 +671,14 @@
 /workers/cli-wrangler/webpack/ /workers/wrangler-legacy/migration/eject-webpack/ 301
 /workers/wrangler/compare-v1-v2/ /workers/wrangler-legacy/compare-v1-v2/ 301
 /workers/wrangler-legacy/migration/migrating-from-wrangler-1/ /workers/wrangler-legacy/migration/ 301
-
 /workers/deploying-workers/serverless/ /workers/learning/integrations/ 301
 /workers/deploying-workers/terraform/ /workers/learning/integrations/ 301
 /workers/examples/rustwasm/ /workers/tutorials/hello-world-rust/ 301
 /workers/examples/signed-request/ /workers/examples/signing-requests/ 301
 /workers/faq/ /workers/ 301
 /workers/kv/ /workers/learning/how-kv-works/ 301
-/workers/kv/reading-data/ /workers/platform/storage-objects/ 301
-/workers/kv/writing-data/ /workers/platform/storage-objects/ 301
+/workers/kv/reading-data/ /workers/platform/storage-options/ 301
+/workers/kv/writing-data/ /workers/platform/storage-options/ 301
 /workers/learning/fetch-event-lifecycle/ /workers/runtime-apis/fetch-event/ 301
 /workers/learning/getting-started/ /workers/get-started/guide/ 301
 /workers/learning/profiling-workers/ /workers/learning/ 301
@@ -696,13 +713,13 @@
 /workers/reference/cloudflare-features/ /workers/runtime-apis/request/ 301
 /workers/reference/request-attributes/ /workers/runtime-apis/request/ 301
 /workers/reference/runtime/apis/ /workers/runtime-apis/ 301
-/workers/reference/storage/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/api/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/limitations/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/namespaces/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/overview/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/reading-data/ /workers/platform/storage-objects/ 301
-/workers/reference/storage/writing-data/ /workers/platform/storage-objects/ 301
+/workers/reference/storage/ /workers/platform/storage-options/ 301
+/workers/reference/storage/api/ /workers/platform/storage-options/ 301
+/workers/reference/storage/limitations/ /workers/platform/storage-options/ 301
+/workers/reference/storage/namespaces/ /workers/platform/storage-options/ 301
+/workers/reference/storage/overview/ /workers/platform/storage-options/ 301
+/workers/reference/storage/reading-data/ /workers/platform/storage-options/ 301
+/workers/reference/storage/writing-data/ /workers/platform/storage-options/ 301
 /workers/reference/tooling/ /workers/wrangler/ 301
 /workers/reference/tooling/api/ /api/operations/worker-script-list-workers 301
 /workers/reference/workers-concepts/using-cache/ /workers/learning/how-the-cache-works/ 301
@@ -770,7 +787,7 @@
 /workers/runtime-apis/r2/ /r2/api/workers/workers-api-reference/ 301
 /workers/tutorials/deploy-a-react-app-with-create-react-app/ /pages/framework-guides/deploy-a-react-site/ 301
 /workers/examples/http2-server-push/ /workers/examples/103-early-hints/ 301
-/workers/get-started/storage-objects/ /workers/platform/storage-objects 301
+/workers/get-started/storage-options/ /workers/platform/storage-options 301
 /workers/platform/routing/ /workers/learning/how-routing-works/ 301
 /workers/platform/routing/custom-domains/ /workers/platform/triggers/custom-domains/ 301
 /workers/platform/routing/routes/ /workers/platform/triggers/routes/ 301
@@ -778,6 +795,7 @@
 /workers/tutorials/deploy-a-static-wordpress-site/ /pages/how-to/deploy-a-wordpress-site/ 301
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 /workers/runtime-apis/headers/ /workers/platform/headers/ 301
+/workers/platform/storage-objects/ /workers/platform/storage-options/ 301
 
 # zaraz
 
@@ -791,8 +809,8 @@
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/analytics/access/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
-/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
-/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
+/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
+/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
@@ -881,13 +899,13 @@
 /cloudflare-one/policies/data-loss-prevention/custom-profile/advanced-settings/ /cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ 301
-
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
-
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 
 # Support
+# - BYOIP
+/support/network/troubleshooting-for-byoip/ /byoip/troubleshooting/ 301
 # - KB: https://support.cloudflare.com/hc/*/articles/5995821690637
 /support/firewall/managed-rules-web-application-firewall-waf/migrating-from-waf-managed-rules-to-waf-managed-rulesets/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
 /support/other-languages/deutsch/migration-von-waf-verwalteten-regeln-zu-waf/ /waf/reference/migration-guides/waf-managed-rules-migration/ 301
@@ -909,6 +927,7 @@
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/:splat 301
+/cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-apps/use-cases/:splat 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
 /cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301

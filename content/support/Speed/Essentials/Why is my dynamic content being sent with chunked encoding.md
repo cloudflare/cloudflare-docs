@@ -10,7 +10,7 @@ title: Why is my dynamic content being sent with chunked encoding
 
 ## Overview
 
-If you have resources that do not have a file extension that [Cloudflare caches](https://support.cloudflare.com/hc/en-us/articles/200172516-What-file-extensions-does-CloudFlare-cache-for-static-content-) we treat that resource as dynamic HTML. We don't cache it by default, and Cloudflare's system will send that resource gzipped and with chunked encoding.  
+If you have resources that do not have a file extension that [Cloudflare caches](/cache/about/default-cache-behavior/) we treat that resource as dynamic HTML. We don't cache it by default, and Cloudflare's system will send that resource gzipped and with chunked encoding.  
 
 **Note** -- it isn't possible to have chunked encoding and content-length at the same time so this would explain why content-length would not be sent with these dynamic resource passing through Cloudflare.
 

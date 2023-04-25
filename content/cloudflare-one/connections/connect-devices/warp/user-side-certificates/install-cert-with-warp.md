@@ -12,7 +12,7 @@ The WARP client can automatically install the Cloudflare certificate (or a [cust
 
 ## Supported platforms
 
-This feature is available on Windows, macOS, and Linux. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
+This feature is available on Windows, macOS, and Linux using a client version of 2023.3.381 or higher. On mobile devices, you will need to [install the certificate manually](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/).
 
 ## Install the certificate using WARP
 
