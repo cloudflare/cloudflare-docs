@@ -21,7 +21,7 @@
       apiKey,
       container: '#algolia',
       searchParameters: {
-        facetFilters
+        optionalFilters: facetFilters
       },
       transformItems: items => {
         return items.filter(item => {
