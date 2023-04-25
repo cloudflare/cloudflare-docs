@@ -1,5 +1,5 @@
 ---
-title: Update Minimum TLS Version
+title: Update TLS Versions
 pcx_content_type: learning-unit
 weight: 3
 layout: learning-unit
