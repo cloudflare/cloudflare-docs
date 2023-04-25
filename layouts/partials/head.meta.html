@@ -128,6 +128,11 @@
     integrity="sha512-B04n6SO1wtH4RsIK/UGPnzokxldxXdy9FNFIGrXAa3rFUr0xzVuZHNRx4uile1ra9FkGDvMTB/XPxliN31OzbQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  {{- if $DATA.algolia -}}
+  <script>window.algoliaConfig = {{ $DATA.algolia }}</script>
+  <meta name="algolia:product" content="{{ $DATA.algolia.product }}" />
+  {{- end -}}
+
   {{- $coveo := index $.Context.Site.Params "coveo" -}}
   {{- if (and $coveo (eq $.Context.RelPermalink "/search/")) -}}
   <link rel="stylesheet preconnect" href="/search-coveo.css" />

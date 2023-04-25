@@ -1,0 +1,4 @@
+version: 2
+secret:
+  ignored-paths:
+    - 'data/*.yml'
