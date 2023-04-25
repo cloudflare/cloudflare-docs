@@ -79,9 +79,9 @@ Block the upload or download of files based on their type.
 | Upload File Type   | in       | Microsoft Office Word Document (docx) | And   | Block  |
 | Download File Type | in       | PDF (pdf)                             |       |        |
 
-## Block Google Drive
+## Block Google services
 
-To enable Gateway to HTTP inspect Google Drive, you must [add the Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#google-drive-for-desktop).
+To enable Gateway inspection for Google Drive traffic, you must [add the Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#google-drive-for-desktop).
 
 ### Block Google Drive uploads
 
@@ -101,7 +101,7 @@ Block file downloads from Google Drive.
 | Application      | in            | Google Drive               | And   | Block  |
 | URL Path & Query | matches regex | `.*(e=download\|export).*` |       |        |
 
-## Block Gmail downloads
+### Block Gmail downloads
 
 Block file downloads from Gmail.
 

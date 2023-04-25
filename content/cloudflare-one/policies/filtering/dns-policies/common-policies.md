@@ -14,9 +14,9 @@ The following policies are commonly used to secure DNS traffic.
 
 ## Restrict access to specific groups
 
-Filter DNS queries to only allow specific users access.
+Filter DNS queries to allow only specific users access.
 
-In the following example, the first policy will allow the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence).
+The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence).
 
 ### 1. Allow a group
 
