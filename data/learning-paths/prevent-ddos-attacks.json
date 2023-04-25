@@ -10,10 +10,6 @@
         },
         {
             "folder": "security",
-            "uid": "ddos-intermediate"
-        },
-        {
-            "folder": "security",
             "uid": "ddos-advanced"
         }
     ],

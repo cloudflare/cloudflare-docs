@@ -1,10 +1,10 @@
 ---
-title: Advanced DDoS protection
+title: Intermediate DDoS protection
 pcx_content_type: overview
-weight: 4
+weight: 3
 layout: learning-module
 ---
 
-# Advanced DDoS protection
+# Intermediate DDoS protection
 
 {{<learning-module-summary>}}
