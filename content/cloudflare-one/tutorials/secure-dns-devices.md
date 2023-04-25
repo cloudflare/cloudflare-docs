@@ -37,7 +37,7 @@ In this example, the policy will block any hostnames that Cloudflare's data inte
 
 ![Block Threats](/cloudflare-one/static/secure-web-gateway/secure-dns-devices/block-threats.png)
 
-The policy will block security threats for any DNS location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/cloudflare-one/tutorials/identity-dns/).
+The policy will block security threats for any DNS location or device in your Zero Trust deployment. You can specify that this should only apply to specific locations or to specific users and [directory groups](/cloudflare-one/policies/filtering/dns-policies/common-policies/#restrict-access-to-specific-groups).
 
 4. Choose `Block` as the action. You can optionally [enable a block page](/cloudflare-one/policies/filtering/configuring-block-page/) that will be presented to users if they have the [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/) on their devices. Click **Save policy** to conclude.
 

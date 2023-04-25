@@ -810,7 +810,6 @@
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/analytics/access/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
 /cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
-/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
@@ -887,7 +886,6 @@
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/filtering/domain-categories/ 301
 /cloudflare-one/policies/filtering/dns-policies/check-policy/ /cloudflare-one/policies/filtering/dns-policies/test-dns-filtering/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
-/cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/filtering/global-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
@@ -900,8 +898,17 @@
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
+## tutorials
+/cloudflare-one/tutorials/block-football/ /cloudflare-one/policies/filtering/http-policies/common-policies/#block-sites 301
+/cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/filtering/http-policies/common-policies/#check-user-identity 301
+/cloudflare-one/tutorials/block-tld/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#block-sites-by-top-level-domain 301
+/cloudflare-one/tutorials/block-uploads/ /cloudflare-one/policies/filtering/http-policies/common-policies/#block-google-drive-uploads 301
+/cloudflare-one/tutorials/do-not-decrypt/ /cloudflare-one/policies/filtering/http-policies/common-policies/#skip-inspection-for-groups-of-applications 301
+/cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#restrict-access-to-specific-groups 301
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
+/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
+/cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
 
 # Support
 # - BYOIP
