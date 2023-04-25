@@ -5,7 +5,7 @@ product:
   title: Network Error Logging
   url: /network-error-logging/
   wrap: true
-  group: Network services
+  group: Network security
   additional_groups: [Analytics]
 
 meta:
