@@ -103,7 +103,7 @@ Regardless of the requested resource-type, the content-type of a challenge will 
 
 For the `cf-mitigated` header `challenge` is the only valid value. The header is set for all challenge page types.
 
-To illustrate, here's a code snippet that demonstrates how to use the cf-mitigated header to detect whether a response was challenged:
+To illustrate, here is a code snippet that demonstrates how to use the `cf-mitigated` header to detect whether a response was challenged:
 
 ```js
 fetch('/my-api-endpoint')
