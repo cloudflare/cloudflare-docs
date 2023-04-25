@@ -95,7 +95,11 @@ When observing a Cloudflare Challenge page, a visitor could:
 
 When request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated`-header present and set to `challenge`. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
 
-Note that regardless of the requested resource-type the content-type of a challenge will be `text/html`
+{{<Aside type="note">}}
+
+Regardless of the requested resource-type, the content-type of a challenge will be `text/html`.
+
+{{</Aside>}}
 
 Cloudflare's challenge pages include a `cf-mitigated` header with the value 'challenge', which can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a simple and reliable way to identify whether a response is a challenge or not, enabling you to take appropriate action based on the result.
 
