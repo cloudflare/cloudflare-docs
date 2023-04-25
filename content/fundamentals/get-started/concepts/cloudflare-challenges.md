@@ -93,7 +93,7 @@ When observing a Cloudflare Challenge page, a visitor could:
 ---
 ## Detecting a challenge page response
 
-When request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated`-header present and set to `challenge`. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
+When a request encounters a Cloudflare challenge page instead of the originally anticipated response, the challenge page response (regardless of the challenge page type) will have the `cf-mitigated` header present and set to `challenge`. This header can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a simple and reliable way to identify whether a response is a challenge or not, enabling a web application to take appropriate action based on the result. For example, a front-end application encountering a response from the backend may check the presence of this header value to handle cases where challenge pages encountered unexpectedly.
 
 {{<Aside type="note">}}
 
@@ -101,9 +101,7 @@ Regardless of the requested resource-type, the content-type of a challenge will 
 
 {{</Aside>}}
 
-Cloudflare's challenge pages include a `cf-mitigated` header with the value 'challenge', which can be leveraged to detect if a response was challenged when making fetch/XHR requests. This header provides a simple and reliable way to identify whether a response is a challenge or not, enabling you to take appropriate action based on the result.
-
-For instance, if a fetch request is challenged, a developer might want to display a captcha or temporary rate limit the request.
+For the `cf-mitigated` header `challenge` is the only valid value. The header is set for all challenge page types.
 
 To illustrate, here's a code snippet that demonstrates how to use the cf-mitigated header to detect whether a response was challenged:
 
