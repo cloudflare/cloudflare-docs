@@ -14,7 +14,7 @@ The Cloudflare One Agent for desktop is coming at a later date. No action is req
 
 ## iOS and Android
 
-Users enrolled in a Zero Trust organization will need to migrate from the 1.1.1.1 app to the Cloudflare One Agent by 2023-09-30.
+Zero Trust users must migrate from the 1.1.1.1 app to the Cloudflare One Agent by 2023-09-30.
 
 ### Migration impact
 - New Zero Trust features will be added to the Cloudflare One Agent.
@@ -25,11 +25,11 @@ Users enrolled in a Zero Trust organization will need to migrate from the 1.1.1.
 
 If you deployed the WARP client with an [MDM provider](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/), perform the migration as follows:
 
-1. Update your MDM configuration to uninstall the **1.1.1.1** application.
+1. Configure your MDM to uninstall **1.1.1.1**.
 
     While both 1.1.1.1 and Cloudflare One Agent can exist on the device, iOS and Android will only allow one of these applications to run at a time.
 
-2. Update your MDM configuration to deploy the new application ID: `com.cloudflare.cloudflareoneagent`.
+2. Update your MDM configuration with the new application ID: `com.cloudflare.cloudflareoneagent`
 
     The other [WARP deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) you have configured remain the same.
 
