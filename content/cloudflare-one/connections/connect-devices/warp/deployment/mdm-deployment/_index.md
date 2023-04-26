@@ -115,7 +115,11 @@ Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/war
 
 ## iOS
 
-The Cloudflare WARP iOS client, known in the App Store as [Cloudflare One Agent](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
+{{<Aside type="note">}}
+The legacy iOS client, [1.1.1.1: Faster Internet](https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/deployment/cloudflare-one-agent-migration/).
+{{</Aside>}}
+
+The Cloudflare WARP iOS client, known in the App Store as [Cloudflare One Agent](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492), allows for an automated install via tools like Jamf, Intune, or SimpleMDM.
 
 To proceed with the installation, here is an example of the XML code you will need:
 
@@ -137,6 +141,10 @@ To proceed with the installation, here is an example of the XML code you will ne
 Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
 
 ## Android
+
+{{<Aside type="note">}}
+The legacy Android client, [1.1.1.1: Faster Internet](https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone&hl=en_US&gl=US), is becoming the Cloudflare One Agent. Learn more in our [migration guide](/cloudflare-one/connections/connect-devices/warp/deployment/cloudflare-one-agent-migration/).
+{{</Aside>}}
 
 The Cloudflare WARP Android client, known in the Google Play store as [Cloudflare One Agent](https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent&hl=en_US&gl=US), allows for an automated install via tools like Intune, Google Endpoint Manager, and others.
 

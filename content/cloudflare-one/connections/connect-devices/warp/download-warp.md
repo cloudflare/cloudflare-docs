@@ -152,7 +152,7 @@ Alternatively, download the client from one of the following links after checkin
   </tbody>
 </table>
 
-[Download from the iOS App Store](https://apps.apple.com/us/app/id1423538627) or search for “Cloudflare One Agent”.
+[Download from the iOS App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492) or search for “Cloudflare One Agent”.
 
 ## Android
 
