@@ -21,8 +21,8 @@ To configure the tunnels between Cloudflare and your locations, you must provide
   - `172.16.0.0/12`
   - `192.168.0.0/16`
   - $1
-**TTL**: Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
-**MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
+- **TTL**: Time to Live (TTL) in number of hops for the GRE tunnel. The default value is 64.
+- **MTU**: Maximum Transmission Unit (MTU) in bytes for the GRE tunnel. The default value is 1476.
 
 ## IPsec tunnels
 
@@ -71,16 +71,16 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 {{<Aside type="note">}}IPsec tunnels will not be functional without a PSK.{{</Aside>}}
 
 10. If you do not have a pre-shared key yet: 
-  1. Select **Add pre-shared key later**.
-  2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
-  3. Select **Add tunnels**.
-  4. Your tunnel will be listed with a warning in form of a triangle to let you know it is not yet functional. Select **Edit**.
-  5. Choose **Generate a new pre-shared key** > **Done**.
+    1. Select **Add pre-shared key later**.
+    2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
+    3. Select **Add tunnels**.
+    4. Your tunnel will be listed with a warning in form of a triangle to let you know it is not yet functional. Select **Edit**.
+    5. Choose **Generate a new pre-shared key** > **Done**.
 11. If you already have a pre-shared key:
-  1. Select **Use my own pre-shared key**.
-  2. Paste your key in **Your pre-shared key**.
-  3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
-  4. Select **Add tunnels**.
+    1. Select **Use my own pre-shared key**.
+    2. Paste your key in **Your pre-shared key**.
+    3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels.**
+    4. Select **Add tunnels**.
 
 </div>
 </details>
