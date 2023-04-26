@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+- Now when you [enable the `nodejs_compat` compatibility flag](/workers/platform/nodejs-compatibility/), any NPM packages you depend on will be able to use the Node.js APIs that the Workers Runtime provides, even if they access Node.js APIs as globals or without the `node:` specifier prefix (ex: `require("buffer")` rather than `require("node:buffer")`).
+- Wrangler will detect relevant dependencies and automatically bundle them using the new [`NodeJsCompatModule` module type](/workers/wrangler/configuration/#bundling).
+- If you use your own bundler, you will need to TODO???
+
 ## 2023-03-24
 
 - Fixed a bug in Wrangler tail and and live logs on the dashboard that prevented the Administrator Read-Only and Workers Tail Read roles from successfully tailing Workers.

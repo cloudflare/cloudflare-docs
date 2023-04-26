@@ -57,3 +57,9 @@ To enable Node.js for your Pages Function from the Cloudflare dashboard:
 2. Select **Pages** and select your Pages project.
 3. Select **Settings** > **Functions** > **Compatibility Flags**.
 4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
+
+### `NodeJsCompatModule` Module Type
+
+  - A `NodeJsCompatModule` is designed to maximize interoperability with NPM packages that access Node.js APIs as globals or without the `node:` specifier prefix (ex: `require("buffer")` rather than `require("node:buffer")`). Any code bundled as a `NodeJsCompatModule` is able to access the sa
+  - Note here about scope of modules
+  - Note here about unsupported module properties (https://github.com/cloudflare/workerd/pull/564/files#diff-5c49d7c3f8e98727dfe4459e20f549d69084bcf7f397a8fc54a7a706033f38fcR25-R34)

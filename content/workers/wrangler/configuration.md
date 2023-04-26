@@ -106,7 +106,7 @@ At a minimum, the `name`, `main` and `compatibility_date` keys are required to p
 
 - `rules`  {{<type-link href="#bundling">}}Rule{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-  - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` instead of `CommonJS`.
+  - An ordered list of rules that define which modules to import, and what type to import them as. You will need to specify rules to use `Text`, `Data` and `CompiledWasm` modules, or when you wish to have a `.js` file be treated as an `ESModule` or `NodeJsCompatModule` instead of `CommonJS`.
 
 - `build` {{<type-link href="#custom-builds">}}Build{{</type-link>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -561,7 +561,7 @@ You can bundle assets into your Worker using the `rules` key, making these asset
 
 - `type` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
-  - The type of asset. Must be one of: `ESModule`, `CommonJS`, `CompiledWasm`, `Text` or `Data`.
+  - The type of asset. Must be one of: `ESModule`, `CommonJS`, `NodeJsCompatModule`, `CompiledWasm`, `Text` or `Data`.
 
 - `globs` {{<type>}}string[]{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
 
