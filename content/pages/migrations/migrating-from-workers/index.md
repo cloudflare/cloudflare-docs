@@ -46,7 +46,7 @@ Make sure that static redirects are before dynamic redirects in your `_redirects
 
 {{</Aside>}}
 
-In addition to an `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/how-to/use-bulk-redirects/), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
+In addition to a `_redirects` file, Cloudflare also offers [Bulk Redirects (beta)](/pages/platform/redirects/#surpass-_redirects-limits), which handles redirects that surpasses the 2,100 redirect rules limit set by Pages.
 
 Your custom headers can also be moved into a `_headers` file in your output directory. It is important to note that custom headers defined in the `_headers` file are not currently applied to responses from Functions, even if the Function route matches the URL pattern. To learn more about handling headers, refer to [Headers](/pages/platform/headers/).
 
