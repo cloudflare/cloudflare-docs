@@ -39,4 +39,4 @@ If you downloaded and installed the WARP client manually, perform the following 
 3. [Re-enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#ios-android-and-chromeos) in your Zero Trust organization.
 4. Complete the authentication steps required by your organization.
 
-The migration process is now complete.
+Once you have enrolled, the migration process is complete.
