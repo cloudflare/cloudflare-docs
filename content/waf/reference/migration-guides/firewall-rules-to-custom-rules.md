@@ -8,7 +8,7 @@ weight: 2
 
 Cloudflare started converting existing firewall rules into [WAF custom rules](/waf/custom-rules/). With custom rules you get the same level of protection and a few additional features. Custom rules are available in the Cloudflare dashboard under **Security** > **WAF** > **Custom rules**.
 
-Cloudflare started this conversion as a phased rollout on February 28, 2023. Your zones will soon have WAF custom rules instead of firewall rules.
+Cloudflare started this conversion as a phased rollout on 2023-02-28. Your zones will soon have WAF custom rules instead of firewall rules.
 
 **Cloudflare Firewall Rules are now deprecated.** For most users, their firewall rules will now be displayed as WAF custom rules in the Cloudflare dashboard. In the future, you will no longer be able to manage firewall rules via Firewall Rules API or through firewall rules' Terraform resources. All remaining active firewall rules will be disabled.
 
@@ -78,6 +78,10 @@ In contrast, if you create two custom rules where both rules match an incoming r
 * Custom rule #2 — Action: _Skip_ (configured to skip all remaining custom rules)
 
 The request would be blocked, since custom rules are evaluated in order and the _Block_ action will stop the evaluation of other rules.
+
+{{<Aside type="note">}}
+For the custom rules converted from your existing firewall rules, Cloudflare will preserve your current order of execution.
+{{</Aside>}}
 
 ### Logs and events
 
