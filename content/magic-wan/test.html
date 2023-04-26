@@ -1,136 +1,170 @@
-<h1 id="configure-static-routes">Configure static routes</h1><p>$1 uses a static configuration to route your traffic through <a href=$2 class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Anycast tunnels</span></a> from Cloudflare’s global network to your locations.</p>
-<p>You must assign a route priority to each tunnel–subnet pair in your configuration, as follows:</p>
+<h1 id="configure-static-routes">Configure static routes</h1>
+<p>
+  $1 uses a static configuration to route your traffic through
+  <a href="$2" class="DocsMarkdown--link"
+    ><span class="DocsMarkdown--link-content">Anycast tunnels</span></a
+  >
+  from Cloudflare’s global network to your locations.
+</p>
+<p>
+  You must assign a route priority to each tunnel–subnet pair in your
+  configuration, as follows:
+</p>
 <ul>
-<li>Lower values have greater priority.</li>
-<li>When the priority values for prefix entries match, Cloudflare uses equal-cost multi-path (ECMP) packet forwarding to route traffic. For more on how Cloudflare uses ECMP packet forwarding, refer to <a href=$3 class="DocsMarkdown--link"><span class="DocsMarkdown--link-content">Traffic steering</span></a>.</li>
+  <li>Lower values have greater priority.</li>
+  <li>
+    When the priority values for prefix entries match, Cloudflare uses
+    equal-cost multi-path (ECMP) packet forwarding to route traffic. For more on
+    how Cloudflare uses ECMP packet forwarding, refer to
+    <a href="$3" class="DocsMarkdown--link"
+      ><span class="DocsMarkdown--link-content">Traffic steering</span></a
+    >.
+  </li>
 </ul>
 <p>$4</p>
 <h2 id="edge-routing-configuration-example">
-    <span class="DocsMarkdown--header-anchor-positioner">
-      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#edge-routing-configuration-example">&#8203;​</a>
-    </span>
-    <span>Edge routing configuration example</span>
-  </h2><table>
-<thead>
-<tr>
-<th>Prefix</th>
-<th>NextHop</th>
-<th>Priority</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_1_IAD</code></td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_2_IAD</code></td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_3_ATL</code></td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_4_ATL</code></td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_1_IAD</code></td>
-<td><code>200</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_2_IAD</code></td>
-<td><code>200</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_3_ATL</code></td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_4_ATL</code></td>
-<td><code>100</code></td>
-</tr>
-</tbody>
-</table>
-<p>Optionally, weights can also be added to better distribute traffic amongst multiple tunnels. In the below example, <code>TUNNEL_2_IAD</code> is likely to receive twice as much traffic as <code>TUNNEL_1_IAD</code>.</p>
+  <span class="DocsMarkdown--header-anchor-positioner">
+    <a
+      class="DocsMarkdown--header-anchor Link Link-without-underline"
+      href="#edge-routing-configuration-example"
+      >&#8203;​</a
+    >
+  </span>
+  <span>Edge routing configuration example</span>
+</h2>
 <table>
-<thead>
-<tr>
-<th>Prefix</th>
-<th>NextHop</th>
-<th>Priority</th>
-<th>Weight</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_1_IAD</code></td>
-<td><code>100</code></td>
-<td><code>100</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_2_IAD</code></td>
-<td><code>100</code></td>
-<td><code>200</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_3_ATL</code></td>
-<td><code>100</code></td>
-<td><code>300</code></td>
-</tr>
-<tr>
-<td><code>10.10.10.100/24</code></td>
-<td><code>TUNNEL_4_ATL</code></td>
-<td><code>100</code></td>
-<td><code>400</code></td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Prefix</th>
+      <th>NextHop</th>
+      <th>Priority</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_1_IAD</code></td>
+      <td><code>100</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_2_IAD</code></td>
+      <td><code>100</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_3_ATL</code></td>
+      <td><code>100</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_4_ATL</code></td>
+      <td><code>100</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_1_IAD</code></td>
+      <td><code>200</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_2_IAD</code></td>
+      <td><code>200</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_3_ATL</code></td>
+      <td><code>100</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_4_ATL</code></td>
+      <td><code>100</code></td>
+    </tr>
+  </tbody>
 </table>
-
+<p>
+  Optionally, weights can also be added to better distribute traffic amongst
+  multiple tunnels. In the below example, <code>TUNNEL_2_IAD</code> is likely to
+  receive twice as much traffic as <code>TUNNEL_1_IAD</code>.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Prefix</th>
+      <th>NextHop</th>
+      <th>Priority</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_1_IAD</code></td>
+      <td><code>100</code></td>
+      <td><code>100</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_2_IAD</code></td>
+      <td><code>100</code></td>
+      <td><code>200</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_3_ATL</code></td>
+      <td><code>100</code></td>
+      <td><code>300</code></td>
+    </tr>
+    <tr>
+      <td><code>10.10.10.100/24</code></td>
+      <td><code>TUNNEL_4_ATL</code></td>
+      <td><code>100</code></td>
+      <td><code>400</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="tabs-wrapper" tab-wrapper-id="8b7d866569e999e9">
   <nav role="navigation" class="tabs">
     <ul class="tab-active" block-id="8b7d866569e999e9">
-      
       <li class="tab-label-wrapper">
-        
-        <a class="tab-label noCodeLabel active" href="#" data-link="tab-dashboard"
-           data-id="8b7d866569e999e9">
+        <a
+          class="tab-label noCodeLabel active"
+          href="#"
+          data-link="tab-dashboard"
+          data-id="8b7d866569e999e9"
+        >
           Dashboard
         </a>
-        
       </li>
-      
+
       <li class="tab-label-wrapper">
-        
-        <a class="tab-label noCodeLabel " href="#" data-link="tab-api"
-           data-id="8b7d866569e999e9">
+        <a
+          class="tab-label noCodeLabel"
+          href="#"
+          data-link="tab-api"
+          data-id="8b7d866569e999e9"
+        >
           API
         </a>
-        
       </li>
-      
     </ul>
   </nav>
 
-  <div class="tab noCodeTab" id="tab-dashboard-8b7d866569e999e9"><h3 id="test">
-    <span class="DocsMarkdown--header-anchor-positioner">
-      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#test">&#8203;​</a>
-    </span>
-    <span>test</span>
-  </h3><p>test 2</div>
-<div class="tab noCodeTab" id="tab-api-8b7d866569e999e9">Test</div>
+  <div class="tab noCodeTab" id="tab-dashboard-8b7d866569e999e9">
+    <h3 id="test">
+      <span class="DocsMarkdown--header-anchor-positioner">
+        <a
+          class="DocsMarkdown--header-anchor Link Link-without-underline"
+          href="#test"
+          >&#8203;​</a
+        >
+      </span>
+      <span>test</span>
+    </h3>
+    <p>test 2</p>
+  </div>
 
+  <div class="tab noCodeTab" id="tab-api-8b7d866569e999e9">Test</div>
 </div>
