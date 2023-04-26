@@ -25,5 +25,5 @@ Learn how you can connect your applications, devices, and networks to Cloudflare
 
 ### Connect devices
 
-- [Filter DNS on devices](/cloudflare-one/tutorials/secure-dns-devices/)
+- [Filter DNS on devices](/cloudflare-one/policies/filtering/initial-setup/dns/)
 - [Inspect HTTP and block file uploads](/cloudflare-one/policies/filtering/http-policies/common-policies/#block-google-drive-uploads)
