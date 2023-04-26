@@ -47,7 +47,7 @@ To enable all the rules up to a specific paranoia level, create tag overrides th
 
 This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone to PL2. To perform this configuration, you must disable the tags associated with levels PL3 and PL4 (`paranoia-level-3` and `paranoia-level-4`) using tag overrides.
 
-1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/account-rulesets-list-account-rulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
+1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
 
     <details>
       <summary>Request</summary>
@@ -92,7 +92,7 @@ highlight: [4,5]
       </div>
     </details>
 
-2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get zone entry point ruleset](/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+2.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
 
     <details>
       <summary>Request</summary>
@@ -151,7 +151,7 @@ highlight: [12,14,15,16]
       </div>
     </details>
 
-3.  Update the rule you just identified using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule/) method, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
+3.  Update the rule you just identified using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding tag overrides that disable the rules with tags `paranoia-level-3` and `paranoia-level-4`.
 
      <details>
       <summary>Request</summary>
@@ -203,7 +203,7 @@ To define the score threshold value, or to specify the action to perform when th
 
 This example configures the managed ruleset score threshold and the performed action by creating a rule override for the last rule of the managed ruleset.
 
-1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/account-rulesets-list-account-rulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
+1.  Get the ID of the Cloudflare OWASP Core Ruleset using the [List account rulesets](/api/operations/listAccountRulesets) method, since WAF's managed rulesets exist at the account level. Alternatively, use the following ruleset ID directly: `4814384a9e5d4991b9815dcfc25d2f1f`.
 
     <details>
       <summary>Request</summary>
@@ -248,7 +248,7 @@ highlight: [4,5]
       </div>
     </details>
 
-2.  Get the ID of the **last rule** in the Cloudflare OWASP Core Ruleset. Use the [Get an account ruleset](/api/operations/account-rulesets-get-an-account-ruleset) method to obtain the list of rules in the ruleset. Alternatively, use the following rule ID directly: `6179ae15870a4bb7b2d480d4843b323c`.
+2.  Get the ID of the **last rule** in the Cloudflare OWASP Core Ruleset. Use the [Get an account ruleset](/api/operations/getAccountRuleset) method to obtain the list of rules in the ruleset. Alternatively, use the following rule ID directly: `6179ae15870a4bb7b2d480d4843b323c`.
 
     <details>
       <summary>Request</summary>
@@ -303,7 +303,7 @@ highlight: [12]
       </div>
     </details>
 
-3.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get zone entry point ruleset](/api/operations/zone-rulesets-get-a-zone-entry-point-ruleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
+3.  Get the ID of the rule that deploys the OWASP ruleset to your zone using the [Get a zone entry point ruleset](/api/operations/getZoneEntrypointRuleset) (in this example, `<EXECUTE_RULE_ID>`). Search for a rule with `"action": "execute"` configured with the OWASP ruleset's ID in the `action_parameters` object. This rule will only exist if you have already deployed the OWASP ruleset.
 
     <details>
       <summary>Request</summary>
@@ -362,7 +362,7 @@ highlight: [12,14,15,16]
       </div>
     </details>
 
-4.  Update the rule you just identified in the entry point ruleset using the [Patch individual rule](/ruleset-engine/rulesets-api/update-rule/) method, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
+4.  Update the rule you just identified in the entry point ruleset using the [Update a zone ruleset rule](/api/operations/updateZoneRulesetRule) operation, adding a rule override for the last rule in the OWASP ruleset (identified in step 2) with the following properties and values:
 
     *   `"score_threshold": 60`
     *   `"action": "managed_challenge"`
