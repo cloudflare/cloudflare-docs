@@ -6,10 +6,17 @@ on:
     types: [opened, reopened]
 
 jobs:
+  compile0:
+    name: Before Assign PCX
+    runs-on: ubuntu-latest
+    steps:
+      - name: Before Assign PCX Name
+        run: echo "Before Assign PCX Name 1234321"
   compile:
     name: Assign PCX
     runs-on: ubuntu-latest
     steps:
+      - run: echo "pr 1234321"
       - uses: actions/checkout@v3
       - uses: ./.github/actions/assign-pr
         with:
