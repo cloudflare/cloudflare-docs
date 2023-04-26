@@ -65,7 +65,7 @@ To add an Origin CA certificate to your origin web server
 
   {{<Aside type="note">}}If you do not see your server in the list above, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.{{</Aside>}}
 
-3.  (Required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server.
+3.  (Required for some) Upload the [Cloudflare CA root certificate](#4-required-for-some-add-cloudflare-origin-ca-root-certificates) to your origin server. This can also be referred to as the certificate chain.
 4.  Enable SSL and port 443 at your origin web server.
 
 ### 3. Change SSL/TLS mode
@@ -81,7 +81,7 @@ If you have origin hosts that are not protected by certificates, set the **SSL/T
 
 ### 4. (Required for some) Add Cloudflare Origin CA root certificates
 
-Some origin web servers require upload of the Cloudflare Origin CA root certificate. Use the following links to download either an ECC or an RSA version of the Cloudflare Origin CA root certificate:
+Some origin web servers require upload of the Cloudflare Origin CA root certificate or certificate chain. Use the following links to download either an ECC or an RSA version of the Cloudflare Origin CA root certificate:
 
 - [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
 - [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
