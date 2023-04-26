@@ -25,7 +25,7 @@ If you deployed the WARP client with an [MDM provider](/cloudflare-one/connectio
     - For Android, the bundle ID is `com.cloudflare.coudflareoneagent`.
     - For iOS, the application ID is `?`.
 
-    Your [WARP deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) can remain the same.
+    The other [WARP deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) you have configured remain the same.
 3. Push the change to install the **Cloudflare One Agent**.
 
 The user will need to re-authenticate to the new application.
