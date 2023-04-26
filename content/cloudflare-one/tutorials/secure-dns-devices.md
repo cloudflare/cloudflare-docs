@@ -93,4 +93,4 @@ Your team members can run the WARP client to enroll in your Gateway account and 
 
 ## Review logs and devices
 
-As users enroll, you can review the users and associated devices by visiting the `My Team` section of the dashboard. You can also [review logs](/cloudflare-one/tutorials/review-gateway-block/) in the `Logs` section by selecting `Gateway`. To add identity into the logs, your users will need to switch to `Gateway with WARP` mode.
+As users enroll, you can review the users and associated devices by visiting the `My Team` section of the dashboard. You can also [review logs](/cloudflare-one/analytics/logs/gateway-logs/) in the `Logs` section by selecting `Gateway`. To add identity into the logs, your users will need to switch to `Gateway with WARP` mode.

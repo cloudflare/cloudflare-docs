@@ -910,6 +910,7 @@
 /cloudflare-one/tutorials/gateway-list/ /cloudflare-one/policies/filtering/lists/ 301
 /cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#restrict-access-to-specific-groups 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
+/cloudflare-one/tutorials/require-swg/ /cloudflare-one/identity/devices/ 301
 /cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
