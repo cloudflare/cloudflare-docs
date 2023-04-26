@@ -3,7 +3,7 @@ name: PR Opened
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 on: 
   pull_request_target:
-    types: [opened, reopened, synchronize]
+    types: []
 
 jobs:
   compile:
