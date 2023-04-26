@@ -9,6 +9,7 @@ jobs:
     name: Assignee
     runs-on: ubuntu-latest
     steps:
+      - run: echo "issue 1234321"
       - uses: actions/checkout@v3
       - uses: ./.github/actions/assign-issue
         with:
