@@ -66,7 +66,7 @@ Select if you want to **Respect origin** or **Override origin**. If you wish to 
 <div>
 
 Define the request components used to define a [custom cache key](/cache/about/cache-keys/). A cache key is an identifier that Cloudflare uses for a file stored in the cache. These are the options that you can customize:
- - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/about/cache-deception-armor/), and [Ignore query string order](https://support.cloudflare.com/hc/articles/360023040812).
+ - You can switch on or off [Cache by device type](/automatic-platform-optimization/reference/cache-device-type/), [Cache deception armor](/cache/about/cache-deception-armor/), and [Ignore query string order](/cache/troubleshooting/cache-everything-ignore-query-strings/).
  - In the **Query string** section, you can select **All query string parameters**, **All query string parameters except** and enter an exception, **Only these parameters** and enter the parameters, or **Ignore query string**.
  - In the **Headers** section, you can include headers names and their values, check the presence of another header, and **Include origin header**.
  - In the **Cookie** section, you can include cookie names and their values, and check the presence of another cookie.

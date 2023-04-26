@@ -22,3 +22,8 @@ resources:
 externals:
   - title: Bot Management home
     url: https://www.cloudflare.com/products/bot-management
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: bots

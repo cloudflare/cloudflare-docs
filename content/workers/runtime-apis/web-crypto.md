@@ -50,8 +50,8 @@ The Web Crypto API differs significantly from Node’s Crypto API. If you want t
 
     **Usage:**
 {{</definitions>}}
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 ```js
 export default {
   async fetch(req) {
@@ -78,7 +78,7 @@ export default {
 }
 ```
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 ```ts
 const handler: ExportedHandler = {
   async fetch(req) {

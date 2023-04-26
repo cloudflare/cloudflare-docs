@@ -12,8 +12,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -42,7 +42,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {
@@ -105,8 +105,8 @@ Normally, Cloudflare computes the cache key for a request based on the request's
 
 {{</content-column>}}
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -128,7 +128,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {

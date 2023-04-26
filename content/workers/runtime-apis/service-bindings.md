@@ -17,8 +17,8 @@ To use Service bindings in your code, you must first create a Service binding fr
 
 ### Interface
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm"  default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js"  default="true">}}
 ```js
 export default {
 	async fetch(req, env) {
@@ -27,7 +27,7 @@ export default {
 };
 ```
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 ```ts
 interface Environment {
 	BINDING: Fetcher;
