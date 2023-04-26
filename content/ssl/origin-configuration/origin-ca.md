@@ -31,11 +31,11 @@ To create an Origin CA certificate in the dashboard:
 3.  Go to **SSL/TLS** > **Origin Server**.
 4.  Select **Create Certificate**.
 5.  Choose either:
-    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECDSA.
+    - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
     - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
 6.  List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone root and first level wildcard hostname are included by default.
-7.  Choose the [expiration date](#expiration).
-8.  Select **Next**.
+7.  Choose a **Certificate Validity** period.
+8.  Select **Create**.
 9.  Choose the **Key Format**:
     - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
     - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
@@ -108,13 +108,9 @@ Certificates may be generated with up to 100 individual Subject Alternative Name
 
 Wildcards may only cover one level, but can be used multiple times on the same certificate for broader coverage (for example, `*.example.com` and `*.secure.example.com` may co-exist).
 
-### Expiration
-
-By default, newly generated certificates are valid for 15 years. If you wish to generate shorter-lived certificates (for example, as short as seven days), use the [API](#api-calls).
-
 ## API calls
 
-To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys).
+To automate processes involving Origin CA certificates, use the following API calls with [Origin CA Keys](/fundamentals/api/get-started/ca-keys/).
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
