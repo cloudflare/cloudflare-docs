@@ -3,13 +3,17 @@ name: PR Opened
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 on: 
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   compile:
     name: Assign PCX
     runs-on: ubuntu-latest
     steps:
+
+      - name: Test
+        run: echo "${{ github.event.action }} -> this is a test"
+
       - uses: actions/checkout@v3
       - uses: ./.github/actions/assign-pr
         with:
