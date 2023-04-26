@@ -12,7 +12,7 @@ The player enhancements are automatically applied to videos using the Stream Pla
 ## Properties
 
 - `title`: The title that appears when viewers hover over the video. The title can differ from the file name of the video. 
-- `share_link`: Provides the user with a "click-to-copy" option to easily share the video URL.
+- `share_link`: Provides the user with a click-to-copy option to easily share the video URL.
 - `channel_link`: The HTTPS URL users will be directed to when selecting the logo from the video player. 
 - `logo`: A valid HTTPS URL for the image of your logo.
 
@@ -21,7 +21,7 @@ The player enhancements are automatically applied to videos using the Stream Pla
 The example below includes every property you can set via `publicDetails`.
 
 ```bash
- curl --location --request POST "https://api.cloudflare.com/client/v4/accounts/<$ACCOUNT_ID>/stream/<$VIDEO_UID>" \
+curl --location --request POST "https://api.cloudflare.com/client/v4/accounts/<$ACCOUNT_ID>/stream/<$VIDEO_UID>" \
 --header "Authorization: Bearer <$SECRET>" \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -54,7 +54,7 @@ You can also pull the JSON by using the endpoint below.
 ## Update player properties via the Cloudflare dashboard
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Click **Stream** > **Videos**.
+2. Select **Stream** > **Videos**.
 3. Select a video from the list to edit it.
 4. Select the **Public Details** tab.
 5. From **Public Details**, enter information in the text fields for the properties you want to set.
