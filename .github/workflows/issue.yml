@@ -2,7 +2,7 @@ name: Issue Opened
 
 on:
   issues:
-    types: [opened]
+    types: [opened, synchronize]
 
 jobs:
   compile:
