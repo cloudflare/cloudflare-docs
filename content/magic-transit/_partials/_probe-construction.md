@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: healthCheckFrequencyURL;;productName;;onboardingUrl
+inputParameters: healthCheckFrequencyURL;;productName;;onboardingUrl;;configureTunnelEndpoints
 ---
 
 # Probe construction
@@ -109,3 +109,21 @@ Suppose the connectivity issue that set Tunnel 1 health to down becomes resolved
 When all three probes return successfully, $2 transitions the tunnel from down to degraded. As part of this transition, Cloudflare reduces the priority penalty for that route so that its priority becomes `500,100`. Because Tunnel 2 has a priority of `200`, traffic continues to flow over Tunnel 2.
 
 Global network servers will continue probing Tunnel 1. When the health check failure rate drops below 0.1% for a five minute period, $2 sets tunnel status to healthy. Tunnel 1’s routing priority is fully restored to `100`, and traffic steering returns the data flow to Tunnel 1.
+
+## Types of health checks
+
+### Endpoint health checks
+
+Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Designed to provide a broad picture of Internet health, endpoint probes flow over available tunnels and do not inform tunnel selection or steering logic.
+
+Cloudflare global network servers issue endpoint health checks outside of customer network namespaces and typically target endpoints beyond the tunnel-terminating border router.
+
+During onboarding, you specify IP addresses to configure endpoint health checks.
+
+### ​Tunnel health checks
+
+Tunnel health checks monitor the status of the Generic Routing Encapsulation (GRE) and IPsec tunnels that route traffic from Cloudflare to your origin network. Magic Transit and Magic WAN rely on health checks to steer traffic to the best available routes.
+
+During onboarding, you [specify the tunnel endpoints]($4) the tunnel probes originating from Cloudflare’s global network will target.
+
+Tunnel health check results are exposed [via API](/analytics/graphql-api/tutorials/querying-magic-transit-tunnel-healthcheck-results/). These results are aggregated from individual health check results done on Cloudflare servers.
