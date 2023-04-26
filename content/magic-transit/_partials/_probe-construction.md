@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: healthCheckFrequencyURL;;productName;;onboardingUrl;;configureTunnelEndpoints
+inputParameters: healthCheckFrequencyURL;;productName;;onboardingURL;;configureTunnelEndpointsURL
 ---
 
 # Probe construction
