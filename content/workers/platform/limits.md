@@ -73,7 +73,9 @@ Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundl
 
 {{<Aside type="note" header="No limit* for duration">}}
 
-There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
+There is no hard limit for duration. 
+
+However, if your request is running on a server that is experiencing a weekly Workers runtime update, the server may drop your request. When a Worker runtime update is deployed, all in-flight requests are given a grace period of 30 seconds. If your request failed because of a Workers runtime update timeout, try again and the disconnect should resolve.
 
 {{</Aside>}}
 
