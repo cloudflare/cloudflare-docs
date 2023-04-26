@@ -45,7 +45,7 @@ export const OWNERS: Record<string, string[]> = {
   pages: ["deadlypants1973"],
   "privacy-gateway": ["kodster28"],
   "pub-sub": ["dcpena"],
-  queues: ["deadlypants1973"],
+  queues: ["Maddy-Cloudflare"],
   r2: ["dcpena"],
   radar: ["haleycode"],
   railgun: ["haleycode"],
