@@ -37,7 +37,7 @@ You can also configure separate load balancers for each domain and reuse monitor
 
 {{<Aside type="note">}}
 
-Sharing load balancers across sites is only supported if the target zone is on a full DNS setup. It is not supported if the target zone is on a `CNAME` setup.
+Sharing load balancers across sites is only supported if the target zone is on a [full DNS setup](/dns/zone-setups/full-setup/). It is not supported if the target zone is on a `CNAME` setup.
 
 {{</Aside>}}
 
