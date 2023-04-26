@@ -98,7 +98,7 @@ Explicitly block all traffic that does not come from [Cloudflare IP addresses](/
 - **Security**: Moderately secure.
 - **Availability**: All customers.
 - **Challenges**:
-    - Requires allowlisting Cloudflare IP ranges on Firewall
+    - Requires allowlisting Cloudflare IP ranges at your origin server.
     - Vulnerable to IP spoofing.
 
 </div>

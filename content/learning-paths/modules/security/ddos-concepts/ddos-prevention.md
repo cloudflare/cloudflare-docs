@@ -75,6 +75,6 @@ sequenceDiagram
   DDoS_Protection_Service-->>Client: Response
   
   Client->>+Origin_Server: Direct connection
-  Note over Origin_Server: DDoS Attack
+  Note over Origin_Server: Potential DDoS Attack
   Origin_Server-->>-Client: Error response
 ```
