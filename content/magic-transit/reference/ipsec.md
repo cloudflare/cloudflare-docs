@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Health checks
+title: IPsec tunnels
 ---
 
-{{<render file="_ipsec.md" withParameters="Magic Transit">}}
+{{<render file="_ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/">}}
