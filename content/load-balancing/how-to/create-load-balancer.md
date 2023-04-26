@@ -13,11 +13,6 @@ meta:
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/understand-basics/load-balancers/).
 
-{{<Aside type="note">}}
-
-Load balancing is only applicable if the target zone is on a full DNS setup. It is not supported if the target zone is on a `CNAME` setup.
-
-{{</Aside>}}
 
 ## Create a load balancer
 
@@ -39,6 +34,12 @@ Load balancing is only applicable if the target zone is on a full DNS setup. It 
 You can share your load balancer with other sites in your account by [creating a canonical name (`CNAME`) record](/dns/manage-dns-records/how-to/create-dns-records/). This is useful for sharing configurations with multiple other domains so you do not have to create new load balancers for each site.
 
 You can also configure separate load balancers for each domain and reuse monitors and pools. This is especially useful for changing the failover order for different domains, such as when your `example.co.uk` server has a different failover priority from `example.com` or `example.com.au`.
+
+{{<Aside type="note">}}
+
+Sharing load balancers across sites is only supported if the target zone is on a [full DNS setup](/dns/zone-setups/full-setup/). It is not supported if the target zone is on a `CNAME` setup.
+
+{{</Aside>}}
 
 ---
 
