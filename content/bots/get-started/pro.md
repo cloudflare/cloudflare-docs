@@ -42,3 +42,5 @@ You can see bot-related actions by going to **Security** > **Events**. Any reque
 ## Ruleset Engine
 
 {{<render file="_bfm-ruleset-engine.md">}}
+
+{{<render file="_bfm-change-notice.md">}}

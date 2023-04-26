@@ -38,3 +38,5 @@ For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).
 ## Ruleset Engine
 
 {{<render file="_bfm-ruleset-engine.md">}}
+
+{{<render file="_bfm-change-notice.md">}}
