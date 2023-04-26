@@ -1,10 +1,10 @@
 ---
 pcx_content_type: how-to
-title: Migrate to the Cloudflare One Agent
+title: Migrate to Cloudflare One Agent
 weight: 12
 ---
 
-# Migrate to the Cloudflare One Agent
+# Migrate to Cloudflare One Agent
 
 Cloudflare is moving Zero Trust functionality out of the WARP client and into a new application called the Cloudflare One Agent.  This change will allow Cloudflare to release new features to the [consumer client](/warp-client/) without impacting the stability of the [Zero Trust enterprise client](/cloudflare-one/connections/connect-devices/warp/).  The Cloudflare One Agent will continue to share the same core platform and global network as the consumer WARP client.
 
@@ -14,7 +14,7 @@ The Cloudflare One Agent for desktop is coming at a later date. No action is req
 
 ## iOS and Android
 
-Zero Trust users must migrate from the 1.1.1.1 app to the Cloudflare One Agent by 2023-09-30.
+Zero Trust users must migrate from the 1.1.1.1 app to the Cloudflare One Agent app by 2023-09-30.
 
 ### Migration impact
 - New Zero Trust features will be added to the Cloudflare One Agent.
