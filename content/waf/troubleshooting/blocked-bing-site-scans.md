@@ -9,7 +9,7 @@ meta:
 
 Microsoft [Bing Webmaster Tools](https://www.bing.com/webmaster/tools) provides a Site Scan feature that crawls your website searching for possible SEO improvements.
 
-Since Site Scan does not use the same IP address range as Bingbot (Bing's website crawler), the WAF managed rule that blocks fake Bingbot requests may trigger inadvertently for Site Scan requests. This is a known issue of Bing Webmaster Tools.
+Site Scan does not use the same IP address range as Bingbot (Bing's website crawler). Additionally, the [Verify Bingbot](https://www.bing.com/toolbox/verify-bingbot) tool does not recognize Site Scan's IP addresses as Bingbot. Due to this reason, the WAF managed rule that blocks fake Bingbot requests may trigger for Site Scan requests. This is a known issue of Bing Webmaster Tools.
 
 To allow Site Scan to run on your website, Cloudflare recommends that you temporarily skip the triggered WAF managed rule by creating a [WAF exception](/waf/managed-rules/waf-exceptions/). After the scan finishes successfully, delete the WAF exception to start blocking fake Bingbot requests again.
 
