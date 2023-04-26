@@ -14,6 +14,13 @@ Cloudflare allows search engine crawlers and bots. If you observe crawl issues o
 
 ___
 
+## Disable Anti-bot modules
+
+Search engine crawlers' requests, when proxied through Cloudflare, could have blocked by Anti-Bot modules installed on your origin server. Try disabling your anti-bot modules to help prevent blocking from your origin.
+
+
+___
+
 ## Adjust Google and Bing crawl rates
 
 To optimize CDN performance, Google and Bing assign special crawl rates to websites that use CDN services in order. Special crawl rates do not negatively affect Search Engine Optimization (SEO) and Search Engine Results Pages (SERPs). To change your crawl rates for Bing and Google, follow the guides below:
