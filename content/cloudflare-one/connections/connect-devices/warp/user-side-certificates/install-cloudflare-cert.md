@@ -469,30 +469,30 @@ Per the [`gcloud` documentation](https://cloud.google.com/sdk/gcloud/reference/b
 
 ### Google Drive for desktop
 
-To trust the Cloudflare root certificate in the Google Drive desktop application, run the following procedures for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
+To trust the Cloudflare root certificate in the Google Drive desktop application, follow the procedure for your operating system. These steps require you to [download the .pem certificate](#download-the-cloudflare-root-certificate).
 
 <details>
 <summary>macOS</summary>
 <div>
 
-1. In Finder, go to **Go** > **Go to Folder**.
-2. Enter `/Applications/Google Drive.app/Contents/Resources`. Find `roots.pem` and move it to a different location.
-3. Append the contents of `cloudflare.pem` to the end of `roots.pem` with the following command.
+1. In the Finder menu bar, go to **Go** > **Go to Folder**. Enter `/Applications/Google Drive.app/Contents/Resources`.
+2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
+3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
 
    ```sh
    $ cat ~/Downloads/Cloudflare_CA.pem >> path/to/roots.pem
    ```
 
-4. Apply the newly created root certificate to your Google Drive application with the following command.
+4. Apply the newly created root certificate to your Google Drive application.
 
    ```sh
    $ sudo defaults write /Library/Preferences/com.google.drivefs.settings TrustedRootsCertsFile -string "path/to/root.pem"
    ```
 
-You can verify the update by running the following command.
+You can verify the update with the following command.
 
 ```sh
-$ defaults read /Library/Preferences/com.google.drivefs.settings`
+$ defaults read /Library/Preferences/com.google.drivefs.settings
 ```
 
 </div>
@@ -502,20 +502,21 @@ $ defaults read /Library/Preferences/com.google.drivefs.settings`
 <summary>Windows</summary>
 <div>
  
-1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`. Find `roots.pem` and move it to a different location.
-2. Append the contents of `cloudflare.pem` to the end of `roots.pem` with the following command.
+1. In File Explorer, go to `\Program Files\Google\Drive File Stream\<version>\config\`.
+2. Find `roots.pem` and copy it to a permanent location, such as your Documents folder.
+3. Append the contents of `cloudflare.pem` to the end of `roots.pem`.
 
     ```sh
     $ cat ~\Downloads\Cloudflare_CA.pem >> path\to\roots.pem
     ```
 
-3. Update the Google Drive registry key with the following command.
+4. Update the Google Drive registry key.
 
    ```sh
    $ reg ADD "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile /t REG_SZ /d "path\to\roots.pem"
    ```
 
-You can verify the update by running the following command.
+You can verify the update with the following command.
 
 ```sh
 $ reg QUERY "HKEY_LOCAL_MACHINE\Software\Google\DriveFS" /v TrustedRootCertsFile"
