@@ -24,7 +24,7 @@ Magic WAN supports a variety of on-ramps including Anycast GRE or IPsec tunnels,
 ## Features
  
 {{<feature header="Probes" href="/magic-wan/reference/probe-construction/">}}
-Magic WAN health checks monitor network status and the health of specific network components.
+Magic WAN sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
 
 {{<feature header="Traffic steering" href="/magic-wan/reference/traffic-steering/">}}
