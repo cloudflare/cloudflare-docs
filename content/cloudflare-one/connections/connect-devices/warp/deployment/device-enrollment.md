@@ -40,7 +40,7 @@ To enroll a device using a service token:
     - `auth_client_id`: The **Client ID** of your service token.
     - `auth_client_secret`: The **Client Secret** of your service token.
 
-When you deploy the WARP client with your MDM provider, WARP will automatically connect the device to your Zero Trust organization.
+When you deploy the WARP client with your MDM provider, WARP will automatically connect the device to your Zero Trust organization. You can verify which devices have enrolled by going to **My Team** > **Devices**. Devices that enrolled using a service token (or any other Service Auth policy) will have the **Email** field show as `non_identity@<team-name>.cloudflareaccess.com`.
 
 ### Check for mTLS certificate
 
