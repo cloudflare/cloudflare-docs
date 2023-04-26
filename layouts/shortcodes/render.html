@@ -7,11 +7,14 @@
 {{- $parentPagePath := .Page.File.Path -}}
 {{- $sep := ";;" -}}
 
-{{- $parameterValues := default "" (.Get "withParameters") }}
+{{- $parameterValues := default "" (.Get "withParameters") -}}
 
 {{- with .Site.GetPage $url -}}
 
   {{- $contentPlaceholder := .Content }}
+  <script>
+    console.log({{$contentPlaceholder}})
+  </script>
   {{- $expectedParams := split .Params.inputParameters $sep -}}
 
   <!-- If parameter values are specified in input params, replace throughout partial content -->
@@ -28,7 +31,7 @@
     {{- $regexPlaceholder := "" -}}
 
     {{- range $elem_index, $elem_val := $parameterValues -}}
-      {{ $elem_val := ((default "" $elem_val) | markdownify) }}
+      {{ $elem_val := ((default "" $elem_val) | markdownify ) }}
       {{ $elem_index := add $elem_index 1 | string}}
       {{ $regexPlaceholder = print "\\$" $elem_index }}
       {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
@@ -45,5 +48,8 @@
   {{- end -}}
 
   {{ $contentPlaceholder }}
+  <script>
+    console.log({{$contentPlaceholder}})
+  </script>
 
 {{- end -}}

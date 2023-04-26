@@ -33,10 +33,24 @@ Prefix            | NextHop      | Priority
 
 Optionally, weights can also be added to better distribute traffic amongst multiple tunnels. In the below example, `TUNNEL_2_IAD` is likely to receive twice as much traffic as `TUNNEL_1_IAD`.
 
-
 Prefix            | NextHop      | Priority | Weight
 ---               | ---          | ---      | ---
 `10.10.10.100/24` | `TUNNEL_1_IAD` | `100`    | `100`
 `10.10.10.100/24` | `TUNNEL_2_IAD` | `100`    | `200`
 `10.10.10.100/24` | `TUNNEL_3_ATL` | `100`    | `300`
 `10.10.10.100/24` | `TUNNEL_4_ATL` | `100`    | `400`
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+
+### test
+
+test 2
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+Test
+
+{{</tab>}}
+{{</tabs>}}
