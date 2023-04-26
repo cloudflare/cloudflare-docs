@@ -6,7 +6,7 @@ weight: 1
 
 
 
-{{<render file="_tunnel-endpoints.md" withParameters="`169.254.244.0/20`;;Magic Transit;;**Magic Transit** > **Manage Magic Transit configuration** > **Configure**.">}}
+{{<render file="_tunnel-endpoints.md" withParameters="`169.254.244.0/20`;;Magic Transit;;**Magic Transit** > **Manage Magic Transit configuration** > **Configure**;;/magic-transit/reference/ipsec/">}}
 
 
 ## Next steps

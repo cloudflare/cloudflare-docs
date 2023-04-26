@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPath
+inputParameters: ipRange;;productName;;productPath;;ipSecProductPath
 ---
 
 #  Configure tunnel endpoints
@@ -26,7 +26,7 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 ## IPsec tunnels
 
-You can use [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel.
+You can use [IPsec]($4) as an on-ramp to connect with your entire virtual network. With an IPsec tunnel, you can route traffic from your network to Cloudflare's global network and define static routes to direct traffic down the correct tunnel.
 
 You can set up IPsec tunnels through the Cloudflare dashboard or via the API. However, if you want to use the API make sure you already have an [Account ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) and [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key) before you begin.
 
@@ -68,7 +68,7 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 8. In **Customer endpoint**, enter your router’s public IP address.
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team.
 
-{{<Aside type="note">}}IPsec tunnels will not be functional without a PSK.{{</Aside>}}
+{{<Aside type="note">}}IPsec tunnels will not be functional without a pre-shared key (PSK).{{</Aside>}}
 
 10. If you do not have a pre-shared key yet: 
     1. Select **Add pre-shared key later**.
@@ -179,7 +179,7 @@ This will generate a response like the following:
 }
 ```
 
-2. Create a `POST` request to generate a PSK. Use the tunnel ID you received from the previous command (`<YOUR_TUNNEL_ID>`):
+2. Create a `POST` request to generate a PSK. Use the tunnel `id` you received from the previous command (exemplified by `<YOUR_TUNNEL_ID>` above):
 
 ```bash
 curl --request POST \
@@ -206,7 +206,7 @@ You will receive a response like the following:
 }
 ```
 
-3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as it is automatically set.
+3. Use the above `psk` value to configure the IPsec tunnel on your equipment. You do not need to take further action to use the PSK on Cloudflare’s side, as this value is automatically set.
 
 </div>
 </details>

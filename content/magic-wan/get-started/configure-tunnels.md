@@ -4,7 +4,7 @@ pcx_content_type: how-to
 weight: 1
 ---
 
-{{<render file="_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.244.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address));;Magic WAN;;**Magic WAN** > **Manage Magic WAN configuration** > **Configure**.">}}
+{{<render file="_tunnel-endpoints.md" productFolder="magic-transit" withParameters="`169.254.244.0/20` (this address space is also a [link-local address](https://en.wikipedia.org/wiki/Link-local_address));;Magic WAN;;**Magic WAN** > **Manage Magic WAN configuration** > **Configure**;;/magic-wan/reference/ipsec/">}}
 
 ## Next steps
 
