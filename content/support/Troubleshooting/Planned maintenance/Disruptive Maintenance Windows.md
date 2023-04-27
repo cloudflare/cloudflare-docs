@@ -25,4 +25,6 @@ All dates in the calendar are in UTC Timezone.
 
 ## Unplanned Maintenance
 
-Should there be a need for unplanned or emergency maintenance, an incident will be declared or will appear on https://www.cloudflarestatus.com/.
+Should there be a need for unplanned or emergency maintenance, an incident will be declared and will appear on https://www.cloudflarestatus.com/.
+
+Unplanned or emergency data center maintenance will also appear as either an incident and/or appear as "re-routed" for that locations on https://www.cloudflarestatus.com.
