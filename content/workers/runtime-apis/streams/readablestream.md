@@ -7,8 +7,7 @@ title: ReadableStream
 
 ## Background
 
-A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers platform, `ReadableStream`
-cannot be created directly using the `ReadableStream` constructor.
+A `ReadableStream` is returned by the `readable` property inside [`TransformStream`](/workers/runtime-apis/streams/transformstream/). On the Workers ecosystem, `ReadableStream` cannot be created directly using the `ReadableStream` constructor.
 
 ## Properties
 
@@ -55,4 +54,4 @@ let reader = readable.getReader({ mode: 'byob' });
 
 - [Using Streams](/workers/learning/using-streams/)
 - [Readable streams in the WHATWG Streams API specification](https://streams.spec.whatwg.org/#rs-model)
-- [MDN’s ReadableStream documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)
+- [MDN’s `ReadableStream` documentation](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream)
