@@ -60,7 +60,7 @@ export class DurableObject {
 
     If the callback throws an exception, the Object will be terminated and reset. This ensures that the Object cannot be left stuck in an uninitialized state if something fails unexpectedly. To avoid this behavior, wrap the body of your callback in a `try`/`catch` block to ensure it cannot throw an exception.
 
-    The value returned by the callback becomes the value returned by `blockConcurrencyWhile()` itself.\
+    The value returned by the callback becomes the value returned by `blockConcurrencyWhile()` itself.
 
 {{</definitions>}}
 
