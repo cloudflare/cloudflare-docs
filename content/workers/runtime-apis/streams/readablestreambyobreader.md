@@ -28,11 +28,11 @@ const reader = readable.getReader({ mode: 'byob' });
 
 {{<definitions>}}
 
-- {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
+- {{<code>}}read(buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} : {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
   - Returns a promise with the next available chunk of data read into a passed-in buffer.
 
-- {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
+- {{<code>}}readAtLeast(minBytes, buffer{{<param-type>}}ArrayBufferView{{</param-type>}}){{</code>}} : {{<type-link href="https://streams.spec.whatwg.org/#dictdef-readablestreambyobreadresult">}}Promise\<ReadableStreamBYOBReadResult>{{</type-link>}}
 
   - Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` have been read.
 
