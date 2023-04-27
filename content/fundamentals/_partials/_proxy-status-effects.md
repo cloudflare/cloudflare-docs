@@ -36,5 +36,5 @@ This means that all requests intended for proxied hostnames will go to Cloudflar
 ```mermaid
         flowchart LR
         accTitle: Connections with Cloudflare
-        A[Visitor] <-- Connection --> B[Cloudflare Edge] <-- Connection --> C[Origin Server]
+        A[Visitor] <-- Connection --> B[Cloudflare global network] <-- Connection --> C[Origin server]
 ```

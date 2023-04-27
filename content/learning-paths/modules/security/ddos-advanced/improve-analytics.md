@@ -11,13 +11,13 @@ To augment these default analytics and gather more information about potential D
 
 ## Restore visitor IP addresses
 
-When traffic [proxied through Cloudflare](/learning-paths/modules/security/ddos-baseline/proxy-dns-records/) reaches your origin server, it will appear come from Cloudflare's IP addresses.
+When traffic [proxied through Cloudflare](/learning-paths/modules/security/ddos-baseline/proxy-dns-records/) reaches your origin server, it will come from Cloudflare's IP addresses.
 
 If needed, you can [restore the original visitor's IP address](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/) so you can have that information in your server logs.
 
 ## Cloudflare Logs
 
-Enterprise customers can set up [Logpush](/logs/about/) jobs to regularly send Cloudflare logs to the SIEM of their choice.
+Enterprise customers can set up [Logpush](/logs/about/) jobs to regularly send Cloudflare logs to the security information and event management (SIEM) system of their choice.
 
 This data can help when looking at long-term DDoS attack trends or when you need custom visualizations.
 

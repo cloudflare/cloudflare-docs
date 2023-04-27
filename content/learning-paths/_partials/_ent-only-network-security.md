@@ -10,7 +10,7 @@ _build:
 
 <div>
 
-[Cloudflare Network Interconnect](/network-interconnect/) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience
+[Cloudflare Network Interconnect](/network-interconnect/) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience.
 
 - **Security**: Very secure.
 - **Availability**: Enterprise-only.
