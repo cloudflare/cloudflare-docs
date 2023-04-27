@@ -21,9 +21,9 @@ accDescr: The example in this diagram has three tunnel routes. Tunnels 1 and 2 h
 
 subgraph Cloudflare
 direction LR
-B[Cloudflare]
-C[Cloudflare]
-D[Cloudflare]
+B[Cloudflare <br> data center]
+C[Cloudflare <br> data center]
+D[Cloudflare <br> data center]
 end
 
 A((User)) --> Cloudflare --- E[Anycast IP]
@@ -65,9 +65,9 @@ accDescr: This example has three tunnel routes, with traffic equally distributed
 
 subgraph Cloudflare
 direction LR
-B[Cloudflare]
-C[Cloudflare]
-D[Cloudflare]
+B[Cloudflare <br> data center]
+C[Cloudflare <br> data center]
+D[Cloudflare <br> data center]
 end
 
 Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
@@ -91,9 +91,9 @@ accDescr: This example has Tunnel 2 unhealthy, and all traffic prioritized to Tu
 
 subgraph Cloudflare
 direction LR
-B[Cloudflare]
-C[Cloudflare]
-D[Cloudflare]
+B[Cloudflare <br> data center]
+C[Cloudflare <br> data center]
+D[Cloudflare <br> data center]
 end
 
 Z(Tunnel health is <br> determined by <br> health checks that <br> run from all Cloudflare <br> data centers) --- Cloudflare
@@ -119,9 +119,9 @@ accDescr: This example has Tunnel 1 and 2 unhealthy, and all traffic prioritized
 
 subgraph Cloudflare
 direction LR
-B[Cloudflare]
-C[Cloudflare]
-D[Cloudflare]
+B[Cloudflare <br> data center]
+C[Cloudflare <br> data center]
+D[Cloudflare <br> data center]
 end
 
 Z(Lower-priority tunnels <br> are used when <br> higher-priority tunnels <br> are unhealthy) --- Cloudflare
