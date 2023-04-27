@@ -3,12 +3,12 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;greURL;;datacenterNetwork;;staticRoutesURL
+inputParameters: productName;;greURL;;staticRoutesURL;;ipsecURL
 ---
 
 # Traffic steering
 
-$1 uses a static configuration to route traffic through Anycast tunnels using the [Generic Routing Encapsulation (GRE)]($2) and Internet Protocol Security (IPsec) protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
+$1 uses a static configuration to route traffic through Anycast tunnels using the [Generic Routing Encapsulation (GRE)]($2) and [Internet Protocol Security (IPsec)]($4) protocols from Cloudflare’s global network to your network, and from your network to Cloudflare’s global network.
 
 $1 steers traffic along tunnel routes based on priorities you define in the Cloudflare dashboard or via API.
 
@@ -27,9 +27,9 @@ D[Cloudflare]
 end
 
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> $3 1}}
-E[Anycast IP] --> G[/Tunnel 2 / <br> priority 1/] --> J{{Customer <br> $3 2}}
-E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2/] --> K{{Customer <br> $3 3}}
+E[Anycast IP] --> F[/Tunnel 1 / <br> priority 1/] --> I{{Customer <br> datacenter/ <br> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br> priority 1/] --> J{{Customer <br> datacenter/ <br> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2/] --> K{{Customer <br> datacenter/ <br> network 3}}
 ```
 <br />
 
@@ -72,9 +72,9 @@ end
 
 Z("Load balancing for some <br> priority tunnels uses ECMP <br> (hashing on src IP, dst IP, <br> scr port, dst port)") --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/"GRE Tunnel 1 / priority 1 <br> / ~50% of flows"/] --> I{{Customer <br> $3 1}}
-E[Anycast IP] --> G[/"GRE Tunnel 2 / priority 1 <br> / ~50% of flows"/] --> J{{Customer <br> $3 2}}
-E[Anycast IP] --> H[/GRE Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> $3 3}}
+E[Anycast IP] --> F[/"GRE Tunnel 1 / <br> priority 1 / <br> ~50% of flows"/] --> I{{Customer <br> datacenter/ <br> network 1}}
+E[Anycast IP] --> G[/"GRE Tunnel 2 / <br> priority 1 / <br> ~50% of flows"/] --> J{{Customer <br> datacenter/ <br> network 2}}
+E[Anycast IP] --> H[/GRE Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> datacenter/ <br> network 3}}
 ```
 <br />
 
@@ -96,11 +96,11 @@ C[Cloudflare]
 D[Cloudflare]
 end
 
-Z(Tunnel health is determined <br> by health checks that run <br> from all Cloudflare data centers) --- Cloudflare
+Z(Tunnel health is <br> determined by <br> health checks that <br> run from all Cloudflare <br> data centers) --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP] --> F[/"Tunnel 1 / priority 1 <br> / ~100% of flows"/]:::green --> I{{Customer <br> $3 1}}
-E[Anycast IP] --> G[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x J{{Customer <br> $3 2}}
-E[Anycast IP] --> H[/Tunnel 3 / priority 2 <br> / 0% of flows/] --o K{{Customer <br> $3 3}}
+E[Anycast IP] --> F[/"Tunnel 1 / <br> priority 1 / <br> ~100% of flows"/]:::green --> I{{Customer <br> datacenter/ <br> network 1}}
+E[Anycast IP] --> G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> datacenter/ <br> network 2}}
+E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> datacenter/ <br> network 3}}
 classDef red fill:#FF0000
 classDef green fill:#00FF00
 ```
@@ -126,9 +126,9 @@ end
 
 Z(Lower-priority tunnels <br> are used when <br> higher-priority tunnels <br> are unhealthy) --- Cloudflare
 A((User)) --> Cloudflare --- E[Anycast IP]
-E[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x I{{Customer <br> $3 1}}
-E[Anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / priority 3 <br> / unhealthy / 0% of flows/]:::red --x J{{Customer <br> $3 2}}
-E[Anycast IP] -->  H[/Tunnel 3 / priority 2 <br> / 100% of flows/]:::green --> K{{Customer <br> $3 3}}
+E[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x I{{Customer <br> datacenter/ <br> network 1}}
+E[Anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> datacenter/ <br> network 2}}
+E[Anycast IP] -->  H[/Tunnel 3 / <br> priority 2 / <br> 100% of flows/]:::green --> K{{Customer <br> datacenter/ <br> network 3}}
 classDef red fill:#FF0000
 classDef green fill:#00FF00
 linkStyle 6 color:red
@@ -146,7 +146,7 @@ For example, consider a scenario with many very low-bandwidth TCP connections an
 
 {{<Aside type="note" header="Note">}}
 
-Magic $1 supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Configure static routes]($4) for more information.
+Magic $1 supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Configure static routes]($3) for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
