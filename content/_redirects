@@ -922,6 +922,7 @@
 /cloudflare-one/tutorials/ssh-cert-bastion/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
+/cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/applications/app-launcher/ 301
 /cloudflare-one/tutorials/warp-to-tunnel/ /cloudflare-one/connections/connect-apps/private-net/connect-private-networks/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
 /cloudflare-one/tutorials/zero-trust-network-access/ /cloudflare-one/connections/connect-apps/private-net/connect-private-networks/ 301
