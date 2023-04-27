@@ -5,7 +5,7 @@ title: Device compatibility
 
 # Device compatibility
 
-Magic WAN is compatible with any device that supports IPsec with the [supported configuration parameters](/magic-wan/how-to/ipsec/#supported-configuration-parameters) or supports GRE.
+Magic WAN is compatible with any device that supports IPsec with the [supported configuration parameters](/magic-wan/reference/ipsec/#supported-configuration-parameters) or supports GRE.
 
 The matrix below includes example devices and links to the integration guides.
 
