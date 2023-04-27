@@ -13,6 +13,9 @@
 
   {{- $contentPlaceholder := .Content }}
   {{- $expectedParams := split .Params.inputParameters $sep -}}
+  <script>
+    console.log({{$contentPlaceholder}})
+  </script>
 
   <!-- If parameter values are specified in input params, replace throughout partial content -->
   {{- if ne $parameterValues "" -}}
@@ -28,7 +31,7 @@
     {{- $regexPlaceholder := "" -}}
 
     {{- range $elem_index, $elem_val := $parameterValues -}}
-      {{ $elem_val := ((default "" $elem_val) | markdownify) }}
+      {{ $elem_val := (default "" $elem_val) }}
       {{ $elem_index := add $elem_index 1 | string}}
       {{ $regexPlaceholder = print "\\$" $elem_index }}
       {{ $contentPlaceholder = replaceRE $regexPlaceholder $elem_val $contentPlaceholder }}
@@ -43,7 +46,11 @@
     {{- end -}}
 
   {{- end -}}
+  
 
-  {{ $contentPlaceholder | markdownify }}
+  {{ $contentPlaceholder | .RenderString }}
+  <script>
+    console.log({{$contentPlaceholder}})
+  </script>
 
 {{- end -}}

@@ -23,7 +23,24 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 
 ## Required setup
 
+### Prerequisites
+
 {{<render file="_ssl-mode-errors.md">}}
+
+### Process
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-dashboard.md" withParameters="**Flexible**">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-api.md" withParameters="`flexible`">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 
