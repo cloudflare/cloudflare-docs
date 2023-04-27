@@ -920,7 +920,7 @@
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
 /cloudflare-one/tutorials/warp-to-tunnel/ /cloudflare-one/connections/connect-apps/private-net/connect-private-networks/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
-/cloudflare-one/tutorials/zero-trust-network-access/ /cloudflare-one/connections/connect-apps/private-net/create-private-networks/ 301
+/cloudflare-one/tutorials/zero-trust-network-access/ /cloudflare-one/connections/connect-apps/private-net/connect-private-networks/ 301
 
 # Support
 # - BYOIP
