@@ -3,7 +3,6 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: param1
 ---
 
 To change your encryption mode in the dashboard:
