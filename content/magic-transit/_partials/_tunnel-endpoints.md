@@ -99,8 +99,8 @@ Example:
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/gre_tunnels \
   --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <YOUR_EMAIL>' \
-  --header 'X-Auth-Key: <YOUR_GLOBAL_API_KEY>' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
   --data '{
     "gre_tunnels": [
       {
@@ -129,8 +129,8 @@ Example:
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels \
   --header 'Content-Type: application/json' \
-  --header 'X-Auth-Email: <YOUR_EMAIL>' \
-  --header 'X-Auth-Key: <YOUR_GLOBAL_API_KEY>' \
+  --header 'X-Auth-Email: <EMAIL>' \
+  --header 'X-Auth-Key: <API_KEY>' \
   --data '{
     "ipsec_tunnels": [
       {
@@ -184,8 +184,8 @@ This will generate a response like the following:
 ```bash
 curl --request POST \
   --url https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/magic/ipsec_tunnels/<YOUR_TUNNEL_ID>/psk_generate \
-  --header 'X-Auth-Email: <YOUR_EMAIL>' 
-  --header 'X-Auth-Key: <YOUR_GLOBAL_API_KEY>'
+  --header 'X-Auth-Email: <EMAIL>' 
+  --header 'X-Auth-Key: <API_KEY>'
 ```
 
 You will receive a response like the following:
