@@ -21,7 +21,7 @@ Learn how you can connect your applications, devices, and networks to Cloudflare
 
 ### Connect networks
 
-- [Filter DNS on a network](/cloudflare-one/tutorials/secure-dns-network/)
+- [Filter DNS on a network](/cloudflare-one/connections/connect-devices/agentless/dns/locations/)
 
 ### Connect devices
 
