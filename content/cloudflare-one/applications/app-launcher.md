@@ -33,3 +33,13 @@ To enable the App Launcher:
 5. Select **Save**.
 
 The App Launcher is now available at `<your-team-name>.cloudflareaccess.com`. You can always edit your App Launcher rules by going to **Settings** > **Authentication**.
+
+## Troubleshoot user connections
+
+You can build rules in Cloudflare Access based on identity, device, multifactor method, country, and other signals. To troubleshoot why a user cannot log in, you can gather details about their Cloudflare Access signals.
+
+Users can check their authentication status by going to the App Launcher and selecting their name menu > **Account**.
+
+Account will list everything that Cloudflare Access knows about that current user session. If the identity provider supports `amr` sharing, Access will list the user’s multifactor method.
+
+Users can copy the data to share it with an administrator. The data is structured as `json`. You can use this information to compare against application policies to determine why a user might not be able to reach an application.
