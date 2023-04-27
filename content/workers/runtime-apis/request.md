@@ -43,6 +43,8 @@ Review the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event/) for 
 
 {{</Aside>}}
 
+---
+
 ## Constructor
 
 ```js
@@ -157,7 +159,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 {{</definitions>}}
 
-***
+---
 
 ## Properties
 
@@ -303,7 +305,7 @@ The `request.cf` object is not available in the Cloudflare Workers dashboard or 
 
 {{</Aside>}}
 
-***
+---
 
 ## Methods
 
@@ -335,7 +337,7 @@ These methods are only available on an instance of a `Request` object or through
 
 {{</definitions>}}
 
-***
+---
 
 ## The `Request` context
 
@@ -398,6 +400,8 @@ A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed
 ```
 
 Using any other type of `ReadableStream` as the body of a request will result in Chunked-Encoding being used.
+
+---
 
 ## Related resources
 

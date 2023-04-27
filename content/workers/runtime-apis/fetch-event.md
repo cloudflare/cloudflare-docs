@@ -11,6 +11,8 @@ In Workers, any incoming HTTP requests are referred to as `"fetch"` events. A Wo
 
 Both the [Service Worker](#syntax-service-worker) and [Module Worker](#syntax-module-worker) formats are able to handle `"fetch"` events, but with significant differences in their authoring syntax.
 
+---
+
 ## Syntax: Service Worker
 
 In the Service Worker format, events are handled by using `addEventListener` to assign a handler to an event name. Additionally, the Service Worker specification assigns network requests to the `"fetch"` event, using the [`FetchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent) interface.
@@ -53,6 +55,8 @@ addEventListener('fetch', event => {
 
 When a Worker is deployed using the Service Worker syntax, any [bindings](/workers/platform/environment-variables/) will be made available as global runtime variables.
 
+---
+
 ## Syntax: Module Worker
 
 In the Module Worker format, events are handled by defining and exporting an object with method handlers corresponding to event names.
@@ -92,6 +96,8 @@ export default {
 ### Bindings
 
 When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](#parameters) – refer to `env` in [Parameters](#parameters).
+
+---
 
 ## Lifecycle methods
 

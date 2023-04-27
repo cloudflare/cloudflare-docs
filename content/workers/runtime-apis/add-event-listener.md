@@ -10,6 +10,8 @@ weight: 3
 
 The `addEventListener` function defines triggers for a Worker script to execute. There are currently three types of event listeners - `"fetch"` listeners which are sent a [`FetchEvent`](/workers/runtime-apis/fetch-event/), `"scheduled"` listeners which are sent a [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/) and `"queue"` listeners which are sent [`QueueEvent`](/queues/platform/javascript-apis/).
 
+---
+
 ## Syntax
 
 {{<definitions>}}
@@ -39,6 +41,8 @@ The `addEventListener` function defines triggers for a Worker script to execute.
     - The events dispatched to a Worker. Refer to [`FetchEvent`](/workers/runtime-apis/fetch-event/) or [`ScheduledEvent`](/workers/runtime-apis/scheduled-event/).
 
 {{</definitions>}}
+
+---
 
 ## Examples
 

@@ -53,9 +53,7 @@ async function eventHandler(event) {
 
 {{</definitions>}}
 
----
-
-## Parameters
+### Parameters
 
 {{<definitions>}}
 

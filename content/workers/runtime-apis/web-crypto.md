@@ -32,6 +32,8 @@ Some common uses include [signing requests](/workers/examples/signing-requests/)
 The Web Crypto API differs significantly from Node’s Crypto API. If you want to port JavaScript code that relies on Node’s Crypto API, you will need to adapt it to use Web Crypto primitives.
 {{</Aside>}}
 
+---
+
 ## Constructors
 
 {{<definitions>}}
