@@ -85,7 +85,7 @@
 /access/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 /cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 /cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
-/access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
+/access/ssh/short-live-cert-server/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 
 # analytics
