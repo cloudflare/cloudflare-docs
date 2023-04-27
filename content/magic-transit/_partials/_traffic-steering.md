@@ -144,7 +144,7 @@ For example, consider a scenario with many very low-bandwidth TCP connections an
 
 {{<Aside type="note" header="Note">}}
 
-Magic $1 supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Configure static routes]($3) for more information.
+$1 supports a weight field that you can apply to a route so that a specified percentage of traffic uses a certain tunnel rather than other equal-cost tunnels. Refer to [Configure static routes]($3) for more information.
 
 For example, in a scenario where you want to route 70% of your traffic through ISP A and 30% through ISP B, you can use the weight field to help achieve that.
 
