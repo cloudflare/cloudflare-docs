@@ -327,6 +327,7 @@
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
+/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
@@ -495,6 +496,8 @@
 /ssl/mutual-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
+
+
 
 # cloudflare for saas
 /ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301
