@@ -13,13 +13,9 @@ sequenceDiagram;
     participant Website;
     participant Server;
     participant Botnet1;
-    participant Botnet2;
-    participant Botnet3;
     User->>Website: Requests to access site
     Website->>Origin Server: Processes user requests
     Botnet1->>Origin Server: Sends a flood of traffic
-    Botnet2->>Origin Server: Sends a flood of traffic
-    Botnet3->>Origin Server: Sends a flood of traffic
     Origin Server-->>Website: Slows down due to traffic overload
     Origin Server-->>User: Unable to respond to user requests
 ```

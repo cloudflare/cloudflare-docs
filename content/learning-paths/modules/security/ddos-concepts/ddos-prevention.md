@@ -33,8 +33,8 @@ When a resource is cached - either on a user's browser or Content Delivery Netwo
 
 ```mermaid
 flowchart TD;
-    User-->|Sends Request|Cache;
-    Cache-->B[Has content?];
+    User-->|Sends Request|Application;
+    Application-->B[Has cached content?];
     B-->|Yes|User;
     B-->|No|Origin
     Origin-->|Requested content|User

@@ -27,8 +27,10 @@ Proxying your DNS records in Cloudflare also hides the IP address of your origin
 
 This obscurity makes it harder for someone to connect directly to your origin, which - by extension - also makes it harder to target your origin with a DDoS attack.
 
-## Additional resources
-
-For more information about how to proxy DNS records and potential limitations, refer to [Proxy status](/dns/manage-dns-records/reference/proxied-dns-records/).
+## How to do it
 
 Before proxying your records, you should likely [allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
+
+Then, [update your Cloudflare DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so their **Proxy status** is **Proxied**.
+
+![Proxy status affects how Cloudflare treats traffic intended for specific DNS records](/images/dns/proxy-status-screenshot.png)
