@@ -37,4 +37,4 @@ B->>C: Protocol <br> IP <br> GRE <br> IP
 
 {{<render file="_maximum-segment-size.md" productFolder="magic-transit" withParameters="Magic WAN;;To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces).">}}
 
-{{<render file="_router-vendor-guidelines-mss-settings-origin.md" productFolder="magic-transit" withParameters="To verify that your routers have the correct MSS setting (1436 bytes) at your origin, run the following command on the servers egressing the prefixes you want to add to Magic WAN:">}}
+{{<render file="_router-vendor-guidelines-mss-settings-origin.md" productFolder="magic-transit">}}

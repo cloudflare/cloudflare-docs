@@ -90,7 +90,7 @@
     },
     "traffic": {
       "title": "Traffic analytics",
-      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -279,7 +279,7 @@
     },
     "csam": {
       "title": "CSAM Scanning Tool",
-      "link": "https://support.cloudflare.com/hc/articles/360046106112",
+      "link": "/cache/reference/csam-scanning/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -328,7 +328,7 @@
     },
     "etag_headers": {
       "title": "ETag Headers",
-      "link": "https://support.cloudflare.com/hc/articles/218505467",
+      "link": "/cache/reference/etag-headers/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -363,7 +363,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "https://support.cloudflare.com/hc/articles/206776797",
+      "link": "/cache/about/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -501,7 +501,7 @@
     },
     "dns_analytics": {
       "title": "DNS Analytics",
-      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",

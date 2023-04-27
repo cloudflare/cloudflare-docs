@@ -26,7 +26,7 @@ Firewall rule expressions have a 4 KB limit (approximately 4,000 text characters
 
     Alternatively, use the [Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor) to define the rule expression.
 
-    ![Example firewall rule expression with a selected field, operator, and value](/firewall/static/firewall-rules-expression-builder-value.png)
+    ![Example firewall rule expression with a selected field, operator, and value](/images/firewall/firewall-rules-expression-builder-value.png)
 
 6. Use the **Operator** drop-down list to choose a comparison operator. For an expression to match, the value of the request **Field** and the value specified in the **Value** input must satisfy the comparison operator.
 
@@ -44,7 +44,7 @@ After you choose an option, you return to the rules list, which displays your ne
 
 Use the available options in the rules list to manage firewall rules.
 
-![The rules list interface in the dashboard where you can manage firewall rules](/firewall/static/cf-firewall-rules-list.png)
+![The rules list interface in the dashboard where you can manage firewall rules](/images/firewall/cf-firewall-rules-list.png)
 
 ### Edit rule
 
@@ -63,7 +63,7 @@ Use the toggle switch associated with a firewall rule to enable or disable it.
 
 By default, Cloudflare evaluates firewall rules in **list order**, where rules are evaluated in the order they appear in the rules list. When list ordering is enabled, the rules list allows you to drag and drop firewall rules into position, as shown below.
 
-![Animation of a user dragging and dropping a rule in the rules list to reorder it](/firewall/static/firewall-rules-expression-builder-10.gif)
+![Animation of a user dragging and dropping a rule in the rules list to reorder it](/images/firewall/firewall-rules-expression-builder-10.gif)
 
 Once there are more than 200 total rules (including inactive rules), you must manage evaluation using **priority ordering**, in which Cloudflare evaluates firewall rules in order of their **priority number**, starting with the lowest. When you cross this threshold, the firewall rules interface automatically switches to priority ordering. For more on working with priority ordering, refer to [Order and priority](/firewall/cf-firewall-rules/order-priority/).
 

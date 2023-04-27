@@ -29,7 +29,7 @@ To change the Cloudflare plan for a domain in the dashboard:
 2. Go to **Overview**.
 3. For Plan Extensions, select **Change**.
 
-    ![Screenshot of the Overview page with the Plan extension section highlighted](/fundamentals/static/images/get-started/change-plan.png)
+    ![Screenshot of the Overview page with the Plan extension section highlighted](/images/fundamentals/get-started/change-plan.png)
 
 4. Choose the appropriate plan type, then select **Continue**.
 5. Select **Confirm**.
@@ -55,11 +55,11 @@ To change the duration of your Cloudflare plan in the dashboard:
 2. Go to **Overview**.
 3. For Plan Extensions, select **Change**.
 
-    ![Screenshot of the Overview page with the Plan extension section highlighted](/fundamentals/static/images/get-started/change-plan.png)
+    ![Screenshot of the Overview page with the Plan extension section highlighted](/images/fundamentals/get-started/change-plan.png)
 
 4. Switch the toggle between **Monthly** or **Annual**.
 
-    ![Screenshot of the Plan choice with the annual or monthly toggle highlighted](/fundamentals/static/images/get-started/plan-duration.png)
+    ![Screenshot of the Plan choice with the annual or monthly toggle highlighted](/images/fundamentals/get-started/plan-duration.png)
 
 5. Choose the appropriate plan type, then select **Continue**.
 

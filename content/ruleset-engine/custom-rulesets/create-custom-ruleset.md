@@ -6,7 +6,7 @@ weight: 2
 
 # Create a custom ruleset
 
-Use the [Create account ruleset](/api/operations/account-rulesets-create-an-account-ruleset) API operation to create a custom ruleset, making sure that you:
+Use the [Create an account ruleset](/api/operations/createAccountRuleset) API operation to create a custom ruleset, making sure that you:
 
 * Set the `kind` field to `custom`.
 * Specify the name of the phase where you want to create the custom ruleset in the `phase` field.

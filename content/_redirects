@@ -72,9 +72,9 @@
 /access/configuring-identity-providers/ /cloudflare-one/identity/idp-integration/ 301
 /access/getting-started/applications/ /cloudflare-one/applications/ 301
 /access/getting-started/access-setup/ /cloudflare-one/identity/ 301
-/access/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
-/access/rdp/connect-rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
-/cloudflare-one/tutorials/rdp/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
+/access/rdp/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
+/access/rdp/connect-rdp/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
+/cloudflare-one/tutorials/rdp/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
 /access/service-auth/mtls/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /access/service-auth/service-token/ /cloudflare-one/identity/service-tokens/ 301
 /access/setting-up-access/ /cloudflare-one/identity/ 301
@@ -82,15 +82,25 @@
 /access/setting-up-access/audit-logs/ /cloudflare-one/analytics/logs/audit-logs/ 301
 /access/setting-up-access/configuring-access-policies/ /cloudflare-one/policies/access/policy-management/ 301
 /access/setting-up-access/validate-jwt-tokens/ /cloudflare-one/identity/authorization-cookie/validating-json/ 301
-/access/ssh/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
-/cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
-/cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
+/access/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
+/cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
+/cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 /access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
-/access/ssh/ssh-guide/ /cloudflare-one/connections/connect-apps/use_cases/ssh/ 301
+/access/ssh/ssh-guide/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
 /analytics/web-analytics/about/ /analytics/web-analytics/ 301
+/support/analytics/ /analytics/ 301
+/support/analytics/learn-more/ /analytics/ 301
+/support/analytics/essentials/ /analytics/ 301
+/support/analytics/essentials/understanding-cloudflare-account-analytics-beta/ /analytics/account-and-zone-analytics/account-analytics/ 301
+/support/analytics/essentials/understanding-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/zone-analytics/ 301
+/support/analytics/learn-more/cloudflare-analytics-with-workers/ /analytics/account-and-zone-analytics/analytics-with-workers/ 301
+/support/analytics/learn-more/how-does-cloudflare-calculate-total-threats-stopped/ /analytics/account-and-zone-analytics/total-threats-stopped/ 301
+/support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
+/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
+/support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 
 # area1
 /email-security/static/Deployment_and_Configuration_Guide_for_Office_365_MX.pdf /email-security/deployment/inline/setup/office-365-area1-mx/ 301
@@ -162,7 +172,15 @@
 
 # cache
 /cache/best-practices/activate-polish/ /images/polish/ 301
-/cache/reference/common-cf-published-statuses/ https://support.cloudflare.com/hc/articles/4412244347917 301
+/cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/support/caching/ /cache/troubleshooting/ 301
+/support/caching/configuration/ /cache/how-to/ 301
+/support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
+/support/caching/configuration/understanding-query-string-sort/ /cache/about/query-string-sort/ 301
+/support/caching/learn-more/ /cache/about/ 301
+/support/caching/learn-more/best-practices-speed-up-your-site-with-custom-caching-via-cloudflare-page-rules/ /cache/troubleshooting/customize-caching/ 301
+/support/caching/learn-more/using-etag-headers-with-cloudflare/ /cache/reference/etag-headers/ 301
+/support/page-rules/best-practice-caching-everything-while-ignoring-query-strings/ /cache/troubleshooting/cache-everything-ignore-query-strings/ 301
 
 # cloudflare for platforms
 /cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/get-started/ 301
@@ -346,8 +364,8 @@
 /magic-firewall/reference/magic-firewall-fields/ /ruleset-engine/rules-language/fields/#magic-firewall-fields 301
 
 # magic-transit
-/magic-transit/about/health-checks/endpoint/ /magic-transit/reference/health-checks/#endpoint-health-checks 301
-/magic-transit/about/health-checks/tunnel/ /magic-transit/reference/health-checks/#tunnel-health-checks 301
+/magic-transit/about/health-checks/endpoint/ /magic-transit/reference/probe-construction/ 301
+/magic-transit/about/health-checks/tunnel/ /magic-transit/reference/probe-construction/ 301
 /magic-transit/magic-firewall/ /magic-firewall/ 301
 /magic-transit/set-up/onboarding/ /magic-transit/get-started/ 301
 /magic-transit/set-up/provide-configuration-data/assign-tunnel-route-priorities/ /magic-transit/how-to/configure-static-routes/ 301
@@ -361,21 +379,24 @@
 /magic-transit/get-started/configure-tunnels/specify-prefixes-to-advertise/ /magic-transit/how-to/advertise-prefixes/ 301
 /magic-transit/get-started/requirements/ /magic-transit/prerequisites/ 301
 /magic-transit/about/bandwidth-measurement/ /magic-transit/reference/bandwidth-measurement/ 301
-/magic-transit/about/health-checks/ /magic-transit/reference/health-checks/ 301
+/magic-transit/about/health-checks/ /magic-transit/reference/probe-construction/ 301
 /magic-transit/about/probe-construction/ /magic-transit/reference/probe-construction/ 301
 /magic-transit/about/traffic-steering/ /magic-transit/reference/traffic-steering/ 301
 /magic-transit/about/tunnels-and-encapsulation/ /magic-transit/reference/tunnels-and-encapsulation/ 301
+/magic-transit/reference/health-checks/ /magic-transit/reference/probe-construction/ 301
 
 # magic-wan
-/magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
+/magic-wan/tutorials/ipsec/ /magic-wan/reference/ipsec/ 301
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
 /magic-wan/how-to/configure-static-routes/ /magic-wan/get-started/configure-static-routes/ 301
 /magic-wan/about/ /magic-wan/reference/ 301
-/magic-wan/about/health-checks/ /magic-wan/reference/health-checks/ 301
+/magic-wan/about/health-checks/ /magic-wan/reference/probe-construction/ 301
 /magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
 /magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels-and-encapsulation/ 301
+/magic-wan/how-to/ipsec/ /magic-wan/reference/ipsec/ 301
+/magic-wan/reference/health-checks/ /magic-wan/reference/probe-construction/ 301
 
 # pages
 /pages/getting-started/ /pages/get-started/ 301
@@ -791,8 +812,7 @@
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/analytics/logs/gateway-logs/manage-pii/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/analytics/access/ 301
 /cloudflare-one/applications/arbitrary-tcp/ /cloudflare-one/applications/non-http/arbitrary-tcp/ 301
-/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use_cases/rdp/ 301
-/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use_cases/smb/ 301
+/cloudflare-one/applications/non-HTTP/RDP/ /cloudflare-one/connections/connect-apps/use-cases/rdp/ 301
 /cloudflare-one/connections/connect-apps/configuration/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/install-and-setup/setup/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/ 301
 /cloudflare-one/connections/connect-apps/run-tunnel/deploy-cloudflared-replicas/ /cloudflare-one/connections/connect-apps/install-and-setup/deploy-cloudflared-replicas/ 301
@@ -869,7 +889,6 @@
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/filtering/domain-categories/ 301
 /cloudflare-one/policies/filtering/dns-policies/check-policy/ /cloudflare-one/policies/filtering/dns-policies/test-dns-filtering/ 301
 /cloudflare-one/policies/zero-trust/policy-management/ /cloudflare-one/policies/access/policy-management/ 301
-/cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
 /cloudflare-one/policies/filtering/http-policies/application-app-types/ /cloudflare-one/policies/filtering/application-app-types/ 301
 /cloudflare-one/policies/filtering/http-policies/global-rules/ /cloudflare-one/policies/filtering/global-policies/ 301
 /cloudflare-one/policies/filtering/dns-policies-builder/ /cloudflare-one/policies/filtering/dns-policies/ 301
@@ -882,8 +901,17 @@
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/dlp-logs/payload-logging/ /cloudflare-one/policies/data-loss-prevention/dlp-policies/payload-logging/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
+## tutorials
+/cloudflare-one/tutorials/block-football/ /cloudflare-one/policies/filtering/http-policies/common-policies/#block-sites 301
+/cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/filtering/http-policies/common-policies/#check-user-identity 301
+/cloudflare-one/tutorials/block-tld/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#block-sites-by-top-level-domain 301
+/cloudflare-one/tutorials/block-uploads/ /cloudflare-one/policies/filtering/http-policies/common-policies/#block-google-drive-uploads 301
+/cloudflare-one/tutorials/do-not-decrypt/ /cloudflare-one/policies/filtering/http-policies/common-policies/#skip-inspection-for-groups-of-applications 301
+/cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#restrict-access-to-specific-groups 301
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
+/cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
+/cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
 
 # Support
 # - BYOIP
@@ -909,6 +937,7 @@
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
 /argo-tunnel/run-tunnel/run-as-service/* /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/as-a-service/:splat 301
+/cloudflare-one/connections/connect-apps/use_cases/* /cloudflare-one/connections/connect-apps/use-cases/:splat 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/:splat 301
 /cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301

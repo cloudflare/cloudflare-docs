@@ -5,27 +5,47 @@ title: Custom Domains
 
 # Custom Domains
 
-## About Custom Domains
+## Background
 
 Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or perform any certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker, with no need for an external origin server.
 
-## Build a Custom Domain
+## Add a custom domain
 
-To create a Custom Domain, you must have:
+To add a Custom Domain, you must have:
 
 1. An active Cloudflare zone.
 2. A Worker to invoke.
 
-The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. Custom Domains can be attached to your Worker via API, Wrangler, or within the Cloudflare dashboard under **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Add Custom Domain**.
+The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. Custom Domains can be attached to your Worker via API, Wrangler, or the Cloudflare dashboard.
 
-## Configure your `wrangler.toml`
+### Set up a Custom Domain in the dashboard
 
-To configure a subdomain for a Custom Domain in your `wrangler.toml`, add the `custom_domain=true` option on each pattern under `routes`. For example, multiple Custom Domains may be configured like so:
+To set up a Custom Domain in the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Select **Workers** and select your Worker.
+3. Go to **Triggers** > **Custom Domains** > **Add Custom Domain**.
+4. Enter the domain you want to configure for your Worker.
+5. Select **Add Custom Domain**.
+
+After you have added the domain or subdomain, Cloudflare will create a new DNS record for you. You can add multiple Custom Domains.
+
+### Set up a Custom Domain in your `wrangler.toml`
+
+To configure a Custom Domain in your `wrangler.toml`, add the `custom_domain=true` option on each pattern under `routes`. For example, to configure a Custom Domain:
 
 ```toml
 routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true },
-	{ pattern = "subdomain-two.example.com", custom_domain = true }
+	{ pattern = "shop.example.com", custom_domain = true }
+]
+```
+
+To configure multiple Custom Domains:
+
+```toml
+routes = [
+	{ pattern = "shop.example.com", custom_domain = true },
+	{ pattern = "shop-two.example.com", custom_domain = true }
 ]
 ```
 
@@ -47,9 +67,9 @@ Custom Domains follow standard DNS ordering and matching logic. Custom Domains d
 
 ## Interaction with Routes
 
-Custom Domains are evaluated before Route rules, but take lower precedence. [Routes](/workers/platform/triggers/routes) defined on your Custom Domain will run first, and can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object.
+Custom Domains are evaluated before route rules, but take lower precedence. [Routes](/workers/platform/triggers/routes) defined on your Custom Domain will run first, and can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object.
 
-In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A Route added to `api.example.com/auth` can point to your Worker `auth`. A request to `api.example.com//auth` will trigger the `auth` Worker. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
+In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A route added to `api.example.com/auth` can point to your Worker `auth`. A request to `api.example.com//auth` will trigger the `auth` Worker. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
 
 ![Routes can be run in front of Custom Domains](/workers/platform/triggers/media/routes-with-custom-domains.png)
 
@@ -64,9 +84,9 @@ Custom Domains need to be configured on an appropriate zone. If you attempt to c
 ## Migrate from Routes
 
 {{<Aside type="note">}}
-If you are currently invoking a Worker using a [Route](/workers/platform/triggers/routes) with `/*`, and your DNS points to `100::` or similar, a Custom Domain is a recommended replacement. 
+If you are currently invoking a Worker using a [route](/workers/platform/triggers/routes) with `/*`, and your DNS points to `100::` or similar, a Custom Domain is a recommended replacement. 
 {{</Aside>}}
 
-To migrate the Route `app.example.com/*`, create a Custom Domain on `app.example.com`, replacing the existing record. You can then delete the route `app.example.com/*` in your **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Routes** table.
+To migrate the route `app.example.com/*`, create a Custom Domain on `app.example.com`, replacing the existing record. You can then delete the route `app.example.com/*` in your **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Routes** table.
 
 Unless that Worker acts exclusively as a proxy – meaning it will need to call `fetch(request)` on the incoming connection's HTTP request to connect to an application server defined in DNS – the Custom Domain is the recommended solution.

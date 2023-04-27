@@ -12,6 +12,33 @@ The following policies are commonly used to secure DNS traffic.
 
 {{<render file="/gateway/_policies-optional.md">}}
 
+## Restrict access to specific groups
+
+Filter DNS queries to allow only specific users access.
+
+The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/policies/filtering/order-of-enforcement/#order-of-precedence).
+
+### 1. Allow a group
+
+| Selector           | Operator | Value            | Logic | Action |
+| ------------------ | -------- | ---------------- | ----- | ------ |
+| Content Categories | in       | Social Networks  | And   | Allow  |
+| User Group Names   | in       | `marketing-team` |       |        |
+
+### 2. Block all other users
+
+| Selector           | Operator | Value           | Action |
+| ------------------ | -------- | --------------- | ------ |
+| Content Categories | in       | Social Networks | Block  |
+
+## Block sites by top-level domain
+
+Block sites with a specific top-level domain (TLD).
+
+| Selector | Operator      | Value     | Action |
+| -------- | ------------- | --------- | ------ |
+| Domain   | matches regex | `[.]fail` | Block  |
+
 ## Control IP version
 
 Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/filtering/egress-policies/) to control which IP address is used to egress to the origin server.
