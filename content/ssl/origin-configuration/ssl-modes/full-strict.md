@@ -39,10 +39,10 @@ In addition to **Full (strict)** encryption, you can also set up [Authenticated 
 
 Before enabling **Full (strict)** mode, make sure your origin:
 
-- Allows HTTPS connections on port 443.
+- Allows HTTPS connections on port `443`.
 - Presents a certificate matching the requirements above.
 
-Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).
+Otherwise, your visitors may experience a [526 error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
 
 ### Process
 
