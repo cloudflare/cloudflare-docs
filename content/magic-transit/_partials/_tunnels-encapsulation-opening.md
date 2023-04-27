@@ -14,7 +14,7 @@ To accommodate additional header data introduced by encapsulation, the maximum s
 
 For instructions, refer to [Set Maximum Segment Size]($2).
 
-This diagram illustrates the flow of traffic with $2.
+This diagram illustrates the flow of traffic with $1.
 
 ```mermaid
 sequenceDiagram
