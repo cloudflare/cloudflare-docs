@@ -3,6 +3,4 @@ pcx_content_type: concept
 title: Traffic steering
 ---
 
-
-
-{{<render file="_ecmp-flow-hashing.md">}}
+{{<render file="_probe-construction.md" withParameters="Magic Transit;;/magic-transit/reference/tunnels-and-encapsulation/;;data center;;/magic-transit/how-to/configure-static-routes/">}}
