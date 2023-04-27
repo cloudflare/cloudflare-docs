@@ -29,4 +29,4 @@ With Cloudflare Zero Trust, you can create:
 - [Require Gateway connections](/cloudflare-one/identity/devices/)
 - [Secure SSH and HTTP for GitLab](/cloudflare-one/tutorials/gitlab/)
 - [Require U2F keys with Okta](/cloudflare-one/tutorials/okta-u2f/)
-- [Require specific countries](/cloudflare-one/tutorials/country-rules/)
+- [Require specific countries](/cloudflare-one/identity/users/groups/)
