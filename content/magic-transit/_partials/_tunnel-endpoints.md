@@ -91,7 +91,7 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 <summary>GRE tunnel</summary>
 <div>
 
-Create a `POST` request using the API to create a GRE tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+Create a `POST` request [using the API](/api/operations/magic-gre-tunnels-create-gre-tunnels) to create a GRE tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 Example:
 
@@ -121,7 +121,7 @@ curl --request POST \
 <summary>IPsec tunnel</summary>
 <div>
 
-Create a `POST` request using the API to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
+Create a `POST` request [using the API](/api/operations/magic-i-psec-tunnels-create-i-psec-tunnels) to create an IPsec tunnel. You will need your [API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key).
 
 Example:
 
