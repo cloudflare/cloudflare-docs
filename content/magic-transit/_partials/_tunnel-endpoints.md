@@ -14,7 +14,7 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 - **Tunnel name**: A name with 15 or fewer characters that does not contain spaces or special characters. The name cannot be shared with other tunnels.
 - **Cloudflare endpoint address**: The public IP address of the Cloudflare side of the tunnel.
-- **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like Cloudflare Network Interconnect, you do not need to provide endpoints because Cloudflare will provide them.
+- **Customer endpoint**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf. These are generally IP addresses provided by your ISP. If you intend to use a physical or virtual connection like [Cloudflare Network Interconnect](/network-interconnect/), you do not need to provide endpoints because Cloudflare will provide them.
   - This value is not required for IPsec tunnels, unless your router is using an IKE ID of type `ID_IPV4_ADDR`.
 - **Interface address**: A 31-bit (recommended) or 30-bit subnet (`/31` or `/30` in CIDR notation) supporting two hosts, one for each side of the tunnel. Select the subnet from the following private IP space:
   - `10.0.0.0/8`
@@ -68,13 +68,13 @@ You can set up IPsec tunnels through the Cloudflare dashboard or via the API. Ho
 8. In **Customer endpoint**, enter your router’s public IP address.
 9. In **Cloudflare endpoint**, enter the Anycast address you received from your account team.
 
-{{<Aside type="note">}}IPsec tunnels will not be functional without a pre-shared key (PSK).{{</Aside>}}
+{{<Aside type="note">}}IPsec tunnels will not function without a pre-shared key (PSK).{{</Aside>}}
 
 10. If you do not have a pre-shared key yet: 
     1. Select **Add pre-shared key later**.
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels.**
     3. Select **Add tunnels**.
-    4. Your tunnel will be listed with a warning in form of a triangle to let you know it is not yet functional. Select **Edit**.
+    4. Your tunnel will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
     5. Choose **Generate a new pre-shared key** > **Done**.
 11. If you already have a pre-shared key:
     1. Select **Use my own pre-shared key**.
