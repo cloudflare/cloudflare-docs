@@ -101,7 +101,7 @@ A((User)) --> Cloudflare --- E[Anycast IP]
 E[Anycast IP] --> F[/"Tunnel 1 / <br> priority 1 / <br> ~100% of flows"/]:::green --> I{{Customer <br> datacenter/ <br> network 1}}
 E[Anycast IP] --> G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> datacenter/ <br> network 2}}
 E[Anycast IP] --> H[/Tunnel 3 / <br> priority 2 / <br> 0% of flows/] --o K{{Customer <br> datacenter/ <br> network 3}}
-classDef red fill:#FF0000
+classDef red fill:#EE4B2B
 classDef green fill:#00FF00
 ```
 <br />
@@ -129,10 +129,8 @@ A((User)) --> Cloudflare --- E[Anycast IP]
 E[Anycast IP]  -- Intermediary <br> network issue -->  F[/Tunnel 1 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x I{{Customer <br> datacenter/ <br> network 1}}
 E[Anycast IP]  -- Intermediary <br> network issue -->  G[/Tunnel 2 / <br> priority 3 / <br> unhealthy / 0% of flows/]:::red --x J{{Customer <br> datacenter/ <br> network 2}}
 E[Anycast IP] -->  H[/Tunnel 3 / <br> priority 2 / <br> 100% of flows/]:::green --> K{{Customer <br> datacenter/ <br> network 3}}
-classDef red fill:#FF0000
+classDef red fill:#EE4B2B
 classDef green fill:#00FF00
-linkStyle 6 color:red
-linkStyle 8 color:red
 ```
 <br />
 
