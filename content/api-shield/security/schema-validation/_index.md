@@ -22,15 +22,11 @@ If an Operation ID is missing, Cloudflare will generate one from the method and 
 
 ## Specifications
 
-API Shield supports API schemas using [OpenAPI Specification v3](https://swagger.io/specification/v3/).
-
 The accepted file formats are YAML (`.yml` or `.yaml` file extension) and JSON (`.json` file extension).
 
 ## Limitations
 
 Currently, API Shield cannot validate some features of API schemas, including the following: all responses, external references, non-basic path templating, or unique items.
-
-Regular expression support is a paid add-on in the Enterprise plan.
 
 ## Body inspection
 
@@ -39,12 +35,6 @@ API Shield has the ability to identify body specifications in uploaded schemas a
 The supported content-type format is `application/json`. The code must validate that no other content media ranges are uploaded. 
 
 `/`, `application/*`, and `application/json` media-ranges are valid. We will also only accept the `charset` parameter with a static value of `utf-8`.
-
-{{<Aside type="note" header="Note:">}}
-
-Customers who already use Schema Validation but uploaded their schemas prior to the implementation of this feature must re-upload their schemas to receive Body Inspection benefits.
-
-{{</Aside>}}
 
 ## Availability
 
