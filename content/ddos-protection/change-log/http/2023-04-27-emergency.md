@@ -1,18 +1,16 @@
 ---
+title: 2023-04-27 - Emergency
 pcx_content_type: changelog
-title: Scheduled changes
-weight: 2
+weight: 28008
 layout: list
 ---
 
-# Scheduled changes
+# 2023-04-27 - Emergency
 
 {{<table-wrap>}}
 <table style="width: 100%">
   <thead>
     <tr>
-      <th>Announcement Date</th>
-      <th>Change Date</th>
       <th>Rule ID</th>
       <th>Description</th>
       <th>Previous Action</th>
@@ -22,13 +20,11 @@ layout: list
   </thead>
   <tbody>
     <tr>
+      <td>...f2494447</td>
+      <td>HTTP requests attempting to bypass the cache.</td>
       <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>N/A</td>
+      <td>ddos_dynamic</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
