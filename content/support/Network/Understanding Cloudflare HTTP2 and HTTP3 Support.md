@@ -10,7 +10,7 @@ title: Understanding Cloudflare HTTP2 and HTTP3 Support
 
 ## Overview
 
-HTTP/2 and HTTP/3 accelerate page load. They are both free for all [Cloudflare plans](http://www.cloudflare.com/plans) but require an [SSL certificate at Cloudflare’s edge network](https://support.cloudflare.com/hc/articles/203295200#h_036e2e20-96d8-4199-bb1f-0fbb41b5cdd0). Configure HTTP/2 and HTTP/3 via the Cloudflare **Network** app. HTTP/2 is enabled by default and domains on Free plans cannot disable it.
+HTTP/2 and HTTP/3 accelerate page load. They are both free for all [Cloudflare plans](http://www.cloudflare.com/plans) but require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/). Configure HTTP/2 and HTTP/3 via the Cloudflare **Network** app. HTTP/2 is enabled by default and domains on Free plans cannot disable it.
 
 A browser and web server automatically negotiate the highest protocol available. Thus, when both HTTP/3 and HTTP/2 are enabled, HTTP/3 takes precedence. 
 
