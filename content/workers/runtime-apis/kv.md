@@ -207,7 +207,7 @@ This will remove the key and value from your namespace. As with any operations, 
 
 This method returns a promise that you should `await` on in order to verify successful deletion.
 
-Note that attempting to read a deleted key from KV will result in a `404 Error`.
+If you attempt to read a deleted key from KV, the promise will resolve with the literal value `null`.
 
 You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).
 
