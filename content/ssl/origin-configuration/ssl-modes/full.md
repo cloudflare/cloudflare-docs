@@ -40,7 +40,7 @@ Before enabling **Full** mode, make sure your origin allows HTTPS connections on
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
-{{<render file="_change-encryption-mode-dashboard.md">}}
+{{<render file="_change-encryption-mode-dash.md">}}
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}

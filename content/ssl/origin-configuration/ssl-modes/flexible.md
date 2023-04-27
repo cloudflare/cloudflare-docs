@@ -32,12 +32,12 @@ Choose this option when you cannot set up an SSL certificate on your origin or y
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
-{{<render file="_change-encryption-mode-dashboard.md" withParameters="**Flexible**">}}
+{{<render file="_change-encryption-mode-dash.md">}}
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-{{<render file="_change-encryption-mode-api.md" withParameters="`flexible`">}}
+{{<render file="_change-encryption-mode-api.md">}}
  
 {{</tab>}}
 {{</tabs>}}
