@@ -67,8 +67,7 @@ If you are **not** using [Cloudflare Registrar](/registrar/) for the zone that p
 
 1.  Create between two and five account-level nameservers with a [POST command](/api/operations/account-level-custom-nameservers-add-account-custom-nameserver).
 2.  If you are not using Cloudflare Registrar for your domain, add the **Custom Nameservers** and IP addresses to your domain's registrar as [glue (A and AAAA) records](https://www.ietf.org/rfc/rfc1912.txt). If you do not add these records, DNS lookups for your domain will fail.
-3.  Use a [POST command](/api/operations/account-level-custom-nameservers-verify-account-custom-nameserver-glue-records) to verify that the glue records are active.
-4.  To enable the custom nameservers on existing zones:
+3.  To enable the custom nameservers on existing zones:
 
     1.  Use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records.
 
