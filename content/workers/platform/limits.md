@@ -73,7 +73,11 @@ Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundl
 
 {{<Aside type="note" header="No limit* for duration">}}
 
-There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
+There is no hard limit for duration. 
+
+Cloudflare updates the Workers runtime a few times per week. When this happens, in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated.
+
+While your application should follow the best practice of handling disconnects by retrying requests, the scenario described above is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
 
 {{</Aside>}}
 
