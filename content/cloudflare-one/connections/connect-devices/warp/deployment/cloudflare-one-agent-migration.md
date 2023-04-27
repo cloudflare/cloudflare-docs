@@ -6,11 +6,11 @@ weight: 12
 
 # Migrate to Cloudflare One Agent
 
-Cloudflare is moving Zero Trust functionality out of the WARP client and into a new application called the Cloudflare One Agent.  This change will allow Cloudflare to release new features to the [consumer client](/warp-client/) without impacting the stability of the [Zero Trust enterprise client](/cloudflare-one/connections/connect-devices/warp/).  The Cloudflare One Agent will continue to share the same core platform and global network as the consumer WARP client.
+Cloudflare is moving Zero Trust functionality out of the WARP client and into a new application called the Cloudflare One Agent.  This change will allow Cloudflare to release new features to the [consumer client](/warp-client/) without impacting the stability of the [Zero Trust enterprise client](/cloudflare-one/connections/connect-devices/warp/).  Cloudflare One Agent will continue to share the same core platform and global network as the consumer WARP client, but will focus on supporting enterprise-specific functionality.
 
 ## macOS, Windows, and Linux
 
-The Cloudflare One Agent for desktop is coming at a later date. No action is required at this time.
+Cloudflare One Agent for desktop is coming at a later date. No action is required at this time.
 
 ## iOS and Android
 
