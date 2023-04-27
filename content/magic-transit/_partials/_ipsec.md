@@ -38,7 +38,7 @@ This is sometimes referred to as “Phase 1” due to language from IKEv1.
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
-- **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting)
+- **Pseudorandom function (PRF)** (not to be confused with PFS. PRF is often not a configurable setting.)
   - SHA2-256
   - SHA2-384
   - SHA2-512
@@ -51,12 +51,12 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
   - AES-GCM-16 with 128-bit or 256-bit key length
   - AES-CBC with 128-bit or 256-bit key length
 
-- **Integrity** (sometimes referred to as Authentication)
+- **Integrity** (sometimes referred to as Authentication.)
   - SHA2-256
   - SHA-1
   {{<Aside type="note">}}When using AES-GCM-16, an integrity algorithm is not required because AES GCM includes integrity checking (since it is an AEAD algorithm). Even when using an AEAD algorithm, however, some routers still require an integrity algorithm to be selected.{{</Aside>}}
 
-- **PFS group** (sometimes referred to as "Phase 2 Diffie-Hellman Group". Not to be confused with PRF)
+- **PFS group** (sometimes referred to as "Phase 2 Diffie-Hellman Group". Not to be confused with PRF.)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
@@ -66,7 +66,7 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
 - The IKE authentication method must be Pre-Shared Key (PSK).
 - [Anti-replay protection]($2) must be disabled.
 - If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port 4500. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
-- (_Uncommon_) Extended Sequence Numbers (ESN) must be disabled.
+- (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 
 ### Optional configuration parameters
 
@@ -74,7 +74,7 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
 
 ## Supported IKE ID formats
 
-Magic WAN supports the following IKE ID types for IPsec:
+$1 supports the following IKE ID types for IPsec:
 
 {{<table-wrap>}}
 
