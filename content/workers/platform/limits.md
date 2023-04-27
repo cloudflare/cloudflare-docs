@@ -75,7 +75,9 @@ Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundl
 
 There is no hard limit for duration. 
 
-However, if your request is running on a server that is experiencing a weekly Workers runtime update, the server may drop your request. When a Worker runtime update is deployed, all in-flight requests are given a grace period of 30 seconds. If your request failed because of a Workers runtime update timeout, try again and the disconnect should resolve.
+Cloudflare updates the Workers runtime a few times per week. When this happens, in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated.
+
+While your application should follow the best practice of handling disconnects by retrying requests, the scenario described above is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
 
 {{</Aside>}}
 
