@@ -16,6 +16,10 @@ Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), c
 * The **expression** specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
 * The **action** specifies what to perform when there is a match for the rule.
 
+{{<Aside type="note" header="Are you migrating from Cloudflare Firewall Rules?">}}
+Refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/#main-differences) to learn more about the differences between firewall rules and custom rules.
+{{</Aside>}}
+
 ---
 
 ## Next steps
