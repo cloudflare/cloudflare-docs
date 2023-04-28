@@ -24,7 +24,7 @@ ___
 
 ## Solution
 
-If the Universal SSL _does not meet your business requirements_, I would recommend you to use our _Advanced Certificate Manager_. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
+If the Universal SSL _does not meet your business requirements_, we would recommend using our _Advanced Certificate Manager_. For example, use the Advanced Certificate Manager to cover more than one level of subdomain, remove Cloudflare branding from the Universal certificate, or adjust the shortest certificate lifespan.
 
 You could restrict the Cipher Suites used for TLS using our [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager). After you subscribed to Advance Certificate Manager for your domain, you can [restrict Cipher Suites at the Zone-level requests via the API](/api/operations/zone-settings-change-ciphers-setting). Currently, restricting cipher suites could only be done via API and not available via Cloudflare Dashboard. Assuming this is just a one-time change, you could trigger the API call using curl. **Step-by-step guide:**
 
