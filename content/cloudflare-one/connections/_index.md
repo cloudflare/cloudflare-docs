@@ -14,7 +14,7 @@ Learn how you can connect your applications, devices, and networks to Cloudflare
 
 ### Connect applications
 
-- [Share development environments](/cloudflare-one/tutorials/share-new-site/)
+- [Share development environments](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/)
 - [Connect multiple HTTP origins](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/)
 - [Connect SSH and HTTP origins for GitLab](/cloudflare-one/tutorials/gitlab/)
 - [Connect MongoDB management panel](/cloudflare-one/tutorials/mongodb-tunnel/)

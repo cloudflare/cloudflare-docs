@@ -220,4 +220,4 @@ Your tunnel configuration is complete! If you want to get information on the tun
 $ cloudflared tunnel info <UUID or NAME>
 ```
 
-You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel using Cloudflare DNS.
+You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel using Cloudflare DNS or [determine who can reach your tunnel](/cloudflare-one/policies/access/) with Cloudflare Access.

@@ -921,6 +921,7 @@
 /cloudflare-one/tutorials/require-swg/ /cloudflare-one/identity/devices/ 301
 /cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/policies/filtering/initial-setup/dns/ 301
 /cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
+/cloudflare-one/tutorials/share-new-site/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/ 301
 /cloudflare-one/tutorials/single-command/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/ 301
 /cloudflare-one/tutorials/ssh-cert-bastion/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /cloudflare-one/tutorials/ssh-service-token/ /cloudflare-one/identity/service-tokens/ 301
