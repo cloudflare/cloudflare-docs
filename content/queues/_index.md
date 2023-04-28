@@ -55,6 +55,12 @@ Cloudflare R2 Storage allows developers to store large amounts of unstructured d
 
 {{</related>}}
 
+{{<related header="Workers" href="/workers/" product="workers">}}
+
+Cloudflare Workers allows developers to build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+{{</related>}}
+
 ---
 
 ## More resources
