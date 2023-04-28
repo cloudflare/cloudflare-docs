@@ -112,7 +112,7 @@ Block file downloads from Gmail.
 
 ## Filter WebSocket traffic
 
-Gateway does not inspect [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) traffic, but it does log the HTTP details used to make the WebSocket connection, as well as [session information](/logs/reference/log-fields/account/zero_trust_network_sessions/). You can filter this traffic by creating a policy with the `101` HTTP response code.
+Gateway does not inspect or log [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) traffic. Instead, Gateway will only log the HTTP details used to make the WebSocket connection, as well as [session information](/logs/reference/log-fields/account/zero_trust_network_sessions/). To filter your WebSocket traffic, create a policy with the `101` HTTP response code.
 
 | Selector      | Operator | Value                   | Action |
 | ------------- | -------- | ----------------------- | ------ |
