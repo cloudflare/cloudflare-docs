@@ -86,7 +86,7 @@ cache.put(request, response);
 
 {{<definitions>}}
 
-- {{<code>}}put(request, response){{</code>}} {{<type>}}Promise{{</type>}}
+- {{<code>}}put(request, response){{</code>}} : {{<type>}}Promise{{</type>}}
 
   - Attempts to add a response to the cache, using the given request as the key. Returns a promise that resolves to `undefined` regardless of whether the cache successfully stored the response.
 
@@ -115,9 +115,9 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 `cache.put` will throw an error if:
 
-- the `request` passed is a method other than `GET`.
-- the `response` passed has a `status` of [`206 Partial Content`](https://www.webfx.com/web-development/glossary/http-status-codes/what-is-a-206-status-code/).
-- the `response` passed contains the header `Vary: *`. The value of the `Vary` header is an asterisk (`*`). Refer to the [Cache API specification](https://w3c.github.io/ServiceWorker/#cache-put) for more information.
+- The `request` passed is a method other than `GET`.
+- The `response` passed has a `status` of [`206 Partial Content`](https://www.webfx.com/web-development/glossary/http-status-codes/what-is-a-206-status-code/).
+- The `response` passed contains the header `Vary: *`. The value of the `Vary` header is an asterisk (`*`). Refer to the [Cache API specification](https://w3c.github.io/ServiceWorker/#cache-put) for more information.
 
 #### Errors
 
@@ -131,7 +131,7 @@ cache.match(request, options);
 
 {{<definitions>}}
 
-- {{<code>}}match(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<Response | undefined>`}{{</type-link>}}
+- {{<code>}}match(request, options){{</code>}} : {{<type-link href="/runtime-apis/response">}}Promise`<Response | undefined>`{{</type-link>}}
 
   - Returns a promise wrapping the response object keyed to that request.
 
@@ -193,7 +193,7 @@ cache.delete(request, options);
 
 {{<definitions>}}
 
-- {{<code>}}delete(request, options){{</code>}} {{<type-link href="/runtime-apis/response">}}Promise{`<boolean>`}{{</type-link>}}
+- {{<code>}}delete(request, options){{</code>}} : {{<type-link href="/runtime-apis/response">}}Promise`<boolean>`{{</type-link>}}
 
 {{</definitions>}}
 
