@@ -66,7 +66,7 @@ If you are an Enterprise customer:
 
 If you are a Business customer:
 
-* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) that logs all requests with a WAF Attack Score Class of `Attack`. For example, set the rule expression to `cf.waf.score.class eq "Attack"` and the rule action to _Log_.
+* Create a [WAF custom rule](/waf/custom-rules/create-dashboard/#create-a-custom-rule) or a [firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) matching requests with a WAF Attack Score Class of _Attack_. For example, set the rule expression to `cf.waf.score.class eq "attack"` and the rule action to a challenge action (such as _Managed Challenge_) or _Block_.
 
 ### 2. Monitor domain traffic
 
@@ -74,7 +74,7 @@ Monitor the rule you created, especially in the first few days, to make sure you
 
 ### 3. Update the rule action
 
-After making sure that your rule is logging the correct requests, change the rule action to a more severe one, like _Managed Challenge_ or _Block_.
+If you are an Enterprise customer and you created a rule with _Log_ action, change the rule action to a more severe one, like _Managed Challenge_ or _Block_.
 
 ---
 
