@@ -10,12 +10,6 @@ layout: list
 
 Create custom rules in **Security** > **WAF** > **Custom rules**.
 
-{{<Aside type="note">}}
-
-This feature is only available for select customers on an Enterprise plan.
-
-{{</Aside>}}
-
 ## Create a custom rule
 
 To create a new custom rule:
