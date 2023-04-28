@@ -17,6 +17,31 @@ Schema Validation 2.0 allows all corresponding configuration calls to be made vi
 
 {{</Aside>}}
 
+## Procedure to upload schemas via the API to Schema Validation
+
+1. Upload a schema.
+2. List the schemas.
+3. Ensure that your endpoints are added in [Endpoint Management](/api-shield/management-and-monitoring/).
+4. Set the schema to active.
+5. Set the schema from `no-action` to `log`.
+6. Send test traffic that violates the schema.
+7. View test traffic in Firewall Events by filtering for **Service** > **API Shield** > **Schema Validation**.
+8. Optional:
+    - Set a single endpoint to `block`.
+    - Set all schemas zone-wide to block through default mitigation action.
+    - Override all schemas zone-wide to `none`.
+    - Remove the override.
+
+Cloudflare recommends you to rerun test traffic and monitor the HTTP response codes after every settings change to ensure Schema Validation is operating as expected.
+
+Settings changes may take a few minutes to implement.
+
+{{<Aside type="note">}}
+
+Endpoints must be listed in Endpoint Management for Schema Validation to match requests.
+
+{{</Aside>}}
+
 ## Use cases
 
 ### Upload and activate a schema

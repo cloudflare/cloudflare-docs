@@ -14,10 +14,6 @@ For help configuring Schema Validation for one or more hosts using the dashboard
 
 ## Operation IDs
 
-For more control with Schema Validation, include unique Operations IDs for each endpoint and method pair defined in the schema. Cloudflare supports Operation IDs with a maximum size of 32 characters.
-
-These IDs are used to keep track of changes to the same endpoints when updating schemas and also to label logs in Security Events with the right endpoint and method.
-
 If an Operation ID is missing, Cloudflare will generate one from the method and path.
 
 ## Specifications
@@ -34,7 +30,7 @@ API Shield has the ability to identify body specifications in uploaded schemas a
 
 The supported content-type format is `application/json`. The code must validate that no other content media ranges are uploaded. 
 
-`/`, `application/*`, and `application/json` media-ranges are valid. We will also only accept the `charset` parameter with a static value of `utf-8`.
+`*/*`, `application/*`, and `application/json` media-ranges are valid. We will also only accept the `charset` parameter with a static value of `utf-8`.
 
 ## Availability
 
