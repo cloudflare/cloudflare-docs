@@ -6,6 +6,10 @@ weight: 300
 
 # 2023-02-01 - Updates to security fields in Cloudflare Logs
 
+{{<Aside type="note">}}
+In order to apply the following new security field settings to the existing Logpush jobs, you will have to edit Logpush option of jobs and make sure the new field is checked at **Select data fields**, then **Save changes**.
+{{</Aside>}}
+
 Cloudflare will deploy some updates to security-related fields in Cloudflare Logs. These updates will affect the following datasets:
 
 * [HTTP Requests](/logs/reference/log-fields/zone/http_requests/)
