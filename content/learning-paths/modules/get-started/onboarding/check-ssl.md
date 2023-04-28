@@ -33,14 +33,14 @@ If you have any deeper subdomains (`test.www.example.com`), also try visiting th
 Sometimes, domains added to Cloudflare can experience issues in SSL/TLS certificates.
 
 ```mermaid
-flowchart LR
+flowchart TD
 accTitle: Potential SSL/TLS issues
 A[Request to <code>https://example.com</code>] --> B[<code>ERR_SSL_VERSION_OR_CIPHER_MISMATCH</code>]
 B --> C[Domain or subdomain not covered by certificate]
 A --> D[<code>ERR_TOO_MANY_REDIRECTS</code>]
 D --> E[Redirect loop between <code>http</code> and <code>https</code>]
 A --> F[Error <code>525</code> or <code>526</code>]
-F --> G[Mismatch between origin server settings and Cloudflare encryption mode]
+F --> G[Mismatch origin and Cloudflare settings]
 ```
 </br>
 
@@ -51,3 +51,4 @@ For more details on these errors and how to fix them, refer to the following res
 - [Cloudflare 5xx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/)
 - [Common SSL/TLS errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/)
 - [Universal SSL/TLS certificates](/ssl/edge-certificates/universal-ssl/)
+- [Cloudflare Encryption Modes](/ssl/origin-configuration/ssl-modes/)
