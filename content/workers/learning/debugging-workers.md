@@ -16,7 +16,13 @@ Debugging is a critical part of developing a new application — whether running
 
 When you are developing your Workers application, the [`wrangler dev`](/workers/wrangler/commands/#dev) command can significantly reduce the time it takes to test and debug new features. It can help you get feedback quickly while iterating, by easily exposing logs on `localhost`, and allows you to experiment without deploying to production.
 
-To get started, run `wrangler dev` in your Workers project directory. The `wrangler dev` command will deploy your application to the preview service, and make it available for access on `localhost`:
+This command will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the [Miniflare](https://miniflare.dev/) simulator.
+
+In addition to testing Workers locally, the use of Miniflare allows you to test other Developer Platform products such as: R2, KV, D1, and Durable Objects. For more information on how to test these, refer to the [Miniflare docs](https://miniflare.dev/).
+
+### Local testing against remote resources
+
+While `wrangler dev` runs locally by default, you can run `wrangler dev --remote` to deploy your application to the edge preview service, and make it available for access on `localhost`:
 
 ```sh
 $ wrangler dev
@@ -31,42 +37,15 @@ $ wrangler dev
 [2020-05-28 10:42:36] GET example.com/sw.js HTTP/1.1 200 OK
 ```
 
-In the output above, you can begin to see log lines for the URLs being requested locally.
+In the output above, you can begin to see log lines for the URLs being requested locally. 
 
-To help you further debug your code, `wrangler dev` also supports `console.log` statements, so you can see output from your application in your local terminal:
+{{<Aside type="info">}}
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+Unlike `wrangler dev`, which provides local instances of resources to develop against, `wrangler dev --remote` will leverage remote resources specified in your `wrangler.toml`.
 
-```js
-export default {
-  async fetch(request) {
-    console.log(`Received new request: ${request.url}`);
-  }
-}
-```
+{{</Aside>}}
 
-{{</tab>}}
-{{<tab label="js/sw">}}
-
-```js
-addEventListener('fetch', event => {
-  console.log(`Received new request: ${event.request.url}`);
-  event.respondWith(handleEvent(event));
-});
-```
-{{</tab>}}
-{{</tabs>}}
-
-
-```sh
-$ wrangler dev
-
-[2020-05-28 10:42:33] GET example.com/ HTTP/1.1 200 OK
-Received new request to url: https://example.com/
-```
-
-Inserting `console.log` lines throughout your code can help you understand the state of your application in various stages until you reach the desired output.
+### Additional info
 
 You can customize how `wrangler dev` works to fit your needs. Refer to [the `wrangler dev` documentation](/workers/wrangler/commands/#dev) for available configuration options.
 
@@ -75,3 +54,9 @@ You can customize how `wrangler dev` works to fit your needs. Refer to [the `wra
 There is a bug associated with `wrangler dev` documented in the [Known issues section](/workers/platform/known-issues/#wrangler-dev).
 
 {{</Aside>}}
+
+## Getting logs from deployed Workers
+
+If you need more insight into currently deployed Workers, you can start a new session to livestream logs by running `wrangler tail`.
+
+TBD: Insert screenshot.
