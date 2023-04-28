@@ -24,7 +24,7 @@ This error occurs when your domain or subdomain is not covered by an SSL/TLS cer
 flowchart TD
 accTitle: Troubleshooting ERR_SSL_VERSION_OR_CIPHER_MISMATCH decision tree
 A>Is your certificate active?] -- Yes --> B>Is the DNS record proxied?]
-A -- No --> C[Wait for certificate to activate]
+A -- No --> C[Wait for certificate to activate or pause Cloudflare]
 B -- No --> D[Proxy the DNS record]
 B -- Yes --> E>Are you using a custom certificate?]
 E -- Yes --> F[Custom certificate may be expired]
