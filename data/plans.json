@@ -1363,11 +1363,11 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Certain Enterprise plans"
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
