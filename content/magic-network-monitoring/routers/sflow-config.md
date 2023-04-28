@@ -1,5 +1,5 @@
 ---
-title: sFlow/jFlow configuration
+title: sFlow configuration
 pcx_content_type: how-to
 weight: 4
 meta:
