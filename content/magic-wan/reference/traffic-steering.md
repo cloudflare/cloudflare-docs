@@ -1,6 +1,8 @@
 ---
 pcx_content_type: concept
 title: Traffic steering
+meta:
+    description: Magic WAN uses a static configuration to route traffic through Anycast tunnels using the Generic Routing Encapsulation (GRE) and Internet Protocol Security (IPsec) protocols from Cloudflare’s global network to your network.
 ---
 
 
