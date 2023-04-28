@@ -3,12 +3,14 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: productName;;productURL
+inputParameters: productName;;productURL;;tunnelEndpoints
 ---
 
 # IPsec tunnels
 
 [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that are used together to set up encrypted connections between devices. It helps keep data sent over public networks secure. IPsec is often used to set up VPNs, and it works by encrypting IP packets, along with authenticating the source where the packets come from.
+
+If you are looking for information on how to set up an IPsec tunnel, refer to [Configure tunnel endpoints]($3). To learn more about the configuration parameters $1 uses to create an IPsec tunnel, keep reading.
 
 ## How IKEv2 is used to establish an IPsec tunnel
 
