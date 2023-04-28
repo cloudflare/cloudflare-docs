@@ -78,9 +78,9 @@ The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-va
 
 {{<definitions>}}
 
-- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` : {{<type>}}Promise{{</type>}}
 
-- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` : {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 
