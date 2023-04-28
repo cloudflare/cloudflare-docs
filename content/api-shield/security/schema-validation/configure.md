@@ -20,17 +20,16 @@ Schema Validation 2.0 allows all corresponding configuration calls to be made vi
 ## Procedure to upload schemas via the API to Schema Validation
 
 1. Upload a schema.
-2. List the schemas.
-3. Ensure that your endpoints are added in [Endpoint Management](/api-shield/management-and-monitoring/).
-4. Set the schema to active.
-5. Set the schema from `no-action` to `log`.
-6. Send test traffic that violates the schema.
-7. View test traffic in Firewall Events by filtering for **Service** > **API Shield** > **Schema Validation**.
-8. Optional:
+2. Ensure that your endpoints are added in Endpoint Management.
+3. Set the schema to `active` if it is not already done.
+4. Set the Schema Validation zone-wide action from `none` to `log`.
+5. Send test traffic that violates the schema.
+6. View test traffic in Firewall Events by filtering for **Service** > **API Shield** > **Schema Validation**.
+7. Optional:
     - Set a single endpoint to `block`.
-    - Set all schemas zone-wide to block through default mitigation action.
-    - Override all schemas zone-wide to `none`.
-    - Remove the override.
+    - Set the Schema Validation zone-wide to `block`.
+    - Temporarily override all schemas zone-wide to `none`.
+    - Remove the temporary override.
 
 Cloudflare recommends you to rerun test traffic and monitor the HTTP response codes after every settings change to ensure Schema Validation is operating as expected.
 
@@ -247,6 +246,29 @@ header: Result
 }
 ```
 </div>
+
+You can add all operations in a schema that do not already exist in Endpoint Management by combining two commands as one.
+
+<div>
+
+```sh
+---
+header: Example using cURL
+---
+$ curl -s -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
+  -H "Authorization: Bearer REDACTED" \
+  -H 'Content-Type: application/json' \
+  -d "$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info" \
+  -H "Authorization: Bearer REDACTED" \
+  -H 'Content-Type: application/json' | jq ".result.new_operations")"
+```
+</div>
+
+{{<Aside type="note">}}
+
+If you run this command again immediately, it will result in an error as all `new_operations` are now `existing_operations`.
+
+{{</Aside>}}
 
 ### Change the default and operation-specific mitigation action
 
