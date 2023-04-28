@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Tunnels & encapsulation
+title: Tunnels and encapsulation
 ---
 
 {{<render file="_tunnels-encapsulation-opening.md" withParameters="Magic Transit;;/magic-transit/prerequisites/#set-maximum-segment-size">}}
