@@ -31,12 +31,12 @@ export class DurableObject {
 
 ### Parameters
 
+- `env`
+  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers (not using Modules syntax), these same bindings appear as global variables within the Workers script. Workers that export Durable Object classes always use the Modules syntax and have bindings delivered to the constructor rather than placed in global variables.
+
 - `state`
 
   - Passed from the runtime to provide access to the Durable Object's storage as well as various metadata about the Object.
-
-- `env`
-  - Contains environment bindings configured for the Worker script, such as KV namespaces, secrets, and other Durable Object namespaces. Note that in traditional Workers (not using Modules syntax), these same bindings appear as global variables within the Workers script. Workers that export Durable Object classes always use the Modules syntax and have bindings delivered to the constructor rather than placed in global variables.
 
 #### Properties of `state`
 
@@ -256,13 +256,13 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
   - Deletes all keys and associated values, effectively deallocating all storage used by the Durable Object. In the event of a failure while the `deleteAll()` operation is still in flight, it may be that only a subset of the data is properly deleted.
 
-    **Supported options:** Same as `put()`, above.
+    <br/>**Supported options:** Same as `put()`, above.
 
 - {{<code>}}getAlarm(){{</code>}} : {{<type>}}Promise\<Number | null>{{</type>}}
 
   - Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns null.
 
-    **Supported options:** Like `get()` above, but without `noCache`.
+    <br/>**Supported options:** Like `get()` above, but without `noCache`.
 
 - {{<code>}}setAlarm(scheduledTime{{<param-type>}}Date | number{{</param-type>}}){{</code>}} : {{<type>}}Promise{{</type>}}
 

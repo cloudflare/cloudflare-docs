@@ -9,6 +9,8 @@ meta:
 
 The Workers runtime provides the following standardized APIs for use by Workers running on Cloudflare's global network.
 
+---
+
 ## JavaScript standards
 
 Cloudflare Workers uses the V8 JavaScript engine from Google Chrome. The Workers runtime is updated at least once a week, to at least the version that is currently used by Chrome's stable release. This means you can safely use the latest JavaScript features, with no need for transpilers.
@@ -18,6 +20,8 @@ All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/
 - `eval()` is not allowed for security reasons.
 - `new Function` is not allowed for security reasons.
 - `Date.now()` returns the time of the last I/O; it does not advance during code execution.
+
+---
 
 ## Web global APIs
 
@@ -89,6 +93,8 @@ The Fetch API is only available inside of [the Request Context](/workers/runtime
 
 {{</Aside>}}
 
+---
+
 ## Encoding API
 
 Both `TextEncoder` and `TextDecoder` support UTF-8 encoding/decoding.
@@ -96,6 +102,8 @@ Both `TextEncoder` and `TextDecoder` support UTF-8 encoding/decoding.
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API).
 
 The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoderStream) and [`TextDecoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoderStream) classes are also available.
+
+---
 
 ## URL API
 
@@ -111,6 +119,7 @@ A new spec-compliant implementation of the URL class can be enabled using the `u
 
 {{</Aside>}}
 
+---
 
 ## Compression Streams
 
@@ -118,11 +127,15 @@ The `CompressionStream` and `DecompressionStream` classes support the deflate, d
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
 
+---
+
 ## URLPattern API
 
 The `URLPattern` API provides a mechanism for matching URLs based on a convenient pattern syntax.
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
+
+---
 
 ## `navigator.userAgent`
 

@@ -55,6 +55,8 @@ Any data not yet written is lost upon abort.
 
 {{</definitions>}}
 
+---
+
 ## Related resources
 
 - [Using Streams.](/workers/learning/using-streams/)

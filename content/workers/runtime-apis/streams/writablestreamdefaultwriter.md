@@ -75,6 +75,8 @@ await someResponse.body.pipeTo(writable);
 
 {{</definitions>}}
 
+---
+
 ## Related resources
 
 - [Using Streams](/workers/learning/using-streams/)

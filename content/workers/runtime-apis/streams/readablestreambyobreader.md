@@ -24,6 +24,8 @@ const { readable, writable } = new TransformStream();
 const reader = readable.getReader({ mode: 'byob' });
 ```
 
+---
+
 ## Methods
 
 {{<definitions>}}
@@ -38,6 +40,8 @@ const reader = readable.getReader({ mode: 'byob' });
 
 {{</definitions>}}
 
+---
+
 ## Common issues
 
 {{<Aside type="warning" header="Warning">}}
@@ -49,6 +53,8 @@ In practice, the Workers team has found that `read` typically fills only 1% of t
 `readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read.
 
 {{</Aside>}}
+
+---
 
 ## Related resources
 

@@ -50,6 +50,8 @@ let reader = readable.getReader({ mode: 'byob' });
 
 {{</definitions>}}
 
+---
+
 ## Related resources
 
 - [Using Streams](/workers/learning/using-streams/)

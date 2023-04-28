@@ -104,6 +104,8 @@ let [client, server] = Object.values(new WebSocketPair());
 
 {{</definitions>}}
 
+---
+
 ## Events
 
 {{<definitions>}}
@@ -129,6 +131,8 @@ let [client, server] = Object.values(new WebSocketPair());
 - `type` {{<type>}}string{{</type>}} - Defaults to `message`.
 
 {{</definitions>}}
+
+---
 
 ## Related resources
 

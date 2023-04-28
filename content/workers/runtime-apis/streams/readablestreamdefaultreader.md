@@ -20,6 +20,8 @@ const { readable, writable } = new TransformStream();
 const reader = readable.getReader();
 ```
 
+---
+
 ## Properties
 
 {{<definitions>}}
@@ -51,6 +53,8 @@ Any data not yet read is lost.
   - Releases the lock on the readable stream. A lock cannot be released if the reader has pending read operations. A `TypeError` is thrown and the reader remains locked.
 
 {{</definitions>}}
+
+---
 
 ## Related resources
 
