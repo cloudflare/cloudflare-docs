@@ -6,7 +6,7 @@ meta:
     description: A step-by-step configuration guide for exporting sFlow data to Cloudflare’s network.
 ---
 
-# sFlow/jFlow configuration
+# sFlow configuration
 
 1. Log in to your router's configuration application.
 2. Open your router's sFlow configuration menu.
