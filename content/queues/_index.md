@@ -69,9 +69,13 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 {{<resource header="Plans" href="/workers/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
 
 {{<resource header="Limits" href="/workers/platform/limits/" icon="documentation-clipboard">}}Learn about plan limits (Free plans get 100,000 requests per day).{{</resource>}}
+
 {{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
+
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
+
 {{<resource header="Configuration" href="https://developers.cloudflare.com/queues/platform/configuration/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
+
 {{<resource header="JavaScript APIs" href="https://developers.cloudflare.com/queues/platform/javascript-apis/" icon="learning-center-book">}}Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.{{</resource>}}
 {{</resource-group>}}
 
