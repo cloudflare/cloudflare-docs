@@ -107,7 +107,7 @@ Refer to SendGrid's documentation for how to [make SendGrid compatible with Clou
 
 {{<Aside type="note">}}
 
-You may need to refer to [Cloudflare's documentation](/) for updated navigation instructions.
+You may need to refer to Cloudflare's documentation for updated navigation instructions regarding [adding DNS records](/dns/manage-dns-records/how-to/create-dns-records/) and creating [Configuration rules](/rules/configuration-rules/create-dashboard/).
 
 {{</Aside>}}
 
