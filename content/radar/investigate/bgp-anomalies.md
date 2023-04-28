@@ -1,10 +1,10 @@
 ---
 pcx_content_type: reference
-title: BGP Anomalies
+title: BGP anomalies
 weight: 3
 ---
 
-# BGP Anomalies
+{{<beta>}}BGP anomalies{{</beta>}}
 
 Access Cloudflare Radar BGP Anomaly Detection results.
 
