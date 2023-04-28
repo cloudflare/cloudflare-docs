@@ -4,7 +4,7 @@ pcx_content_type: reference
 weight: 8
 meta:
   title: Certificate validity periods
-  description: Review information about available validity periods for your Cloudflare Advanced Certificates.
+  description: Review information about available validity periods for your Cloudflare SSL certificates.
 ---
 
 # Certificate validity periods
@@ -21,8 +21,8 @@ When you order an [advanced certificate](/ssl/edge-certificates/advanced-certifi
 | --- | --- | --- |
 | 1 year | 30 days | Soon to be [deprecated](/ssl/reference/migration-guides/digicert-update/) |
 | 3 months | 30 days |
-| 1 month | 7 days |
-| 2 weeks | 3 days |
+| 1 month | 7 days | Not supported by [Let's Encrypt](/ssl/reference/certificate-authorities/#main-features)
+| 2 weeks | 3 days | Not supported by [Let's Encrypt](/ssl/reference/certificate-authorities/#main-features)
 
 {{<Aside type="note">}}
 
