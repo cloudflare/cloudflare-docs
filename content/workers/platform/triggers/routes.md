@@ -52,7 +52,7 @@ To configure a route using your `wrangler.toml` file, refer to the following exa
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
 	# or
-	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID" }
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
