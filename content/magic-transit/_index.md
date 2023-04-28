@@ -16,9 +16,9 @@ meta:
 Magic Transit is a network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks. 
 
 ---
- 
+
 ## Features
- 
+
 {{<feature header="Probes" href="/magic-transit/reference/probe-construction/">}}
 Magic Transit sends health check probes to monitor network status and the health of specific network components.
 {{</feature>}}
