@@ -6,22 +6,17 @@ meta:
   title: Wasm in JavaScript
 ---
 
-# Invoking Wasm in JavaScript
+# Invoking Wasm from JavaScript
 
 Wasm can be used from within a Worker written in JavaScript or TypeScript by importing a Wasm module, 
-and instantiating an instance of of this module using `[WebAssembly.instantiate()](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate)`.
-This can be used to accelerate computationally intensive operations which do not involve significant I/O.
+and instantiating an instance of of this module using [`WebAssembly.instantiate()`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate). This can be used to accelerate computationally intensive operations which do not involve significant I/O.
 
-This guide demonstrates how to invoke a Wasm module
-from an existing JavaScript or TypeScript Worker using a simple Wasm binary that
-is compiled and used with the JavaScript WebAssembly API, demonstrating the basics of
-Wasm and JavaScript interoperability. 
+This guide demonstrates the basics of Wasm and JavaScript interoperability.
 
 ## Simple Wasm Module
 
 In this guide, we will use the WebAssembly Text Format to create a simple Wasm module so that you can
-understand how imports and exports work under the hood. In practice, you would not work with this format,
-and use the programming language of your choice to compile directly to WebAssembly Binary Format (`.wasm`).
+understand how imports and exports work under the hood. In practice, you would not write code in this format — you would instead use the programming language of your choice, and compile directly to WebAssembly Binary Format (`.wasm`).
 
 Here is our example module (`;;` denotes a comment):
 
@@ -53,13 +48,11 @@ wat2wasm src/simple.wat -o src/simple.wasm
 
 ## Bundling
 
-Wrangler will bundle any Wasm module that ends in `.wasm` or `.wasm?module`, so that it is available at runtime within your Worker. 
-This is done using a default bundling rule which can be customized in `wrangler.toml`. For more information, see [Bundling](/workers/wrangler/bundling/).
-
+Wrangler will bundle any Wasm module that ends in `.wasm` or `.wasm?module`, so that it is available at runtime within your Worker. This is done using a default bundling rule which [can be customized](/workers/wrangler/bundling/) in `wrangler.toml`.
 
 ## Use from JavaScript
 
-Next, import and use the Wasm module in your existing JavaScript Worker (TypeScript in this case):
+Next, import and use the Wasm module in your existing JavaScript or TypeScript Worker:
 
 ```typescript
 import mod from './simple.wasm'
@@ -92,8 +85,7 @@ Wasm methods with arguments from JavaScript and vice versa.
 
 ## Next Steps
 
-In practice, you will likely compile a language of your choice (such as Rust) to WebAssembly binaries. Many languages provide a bindgen to simplify the interaction between JavaScript and Wasm. These tools may integrate with your JavaScript bundler, and provide an API other than
-the WebAssembly API for initializing and invoking your Wasm module. As an example, see the [documentation](https://rustwasm.github.io/wasm-bindgen/examples/without-a-bundler.html) for Rust's `wasm-bindgen`.
+In practice, you will likely compile a language of your choice (such as Rust) to WebAssembly binaries. Many languages provide a bindgen to simplify the interaction between JavaScript and Wasm. These tools may integrate with your JavaScript bundler, and provide an API other than the WebAssembly API for initializing and invoking your Wasm module. As an example, see the [documentation](https://rustwasm.github.io/wasm-bindgen/examples/without-a-bundler.html) for Rust's `wasm-bindgen`.
 
-If you want to skip JavaScript and write your entire Worker in Rust, Workers provides the same rich runtime API when using the `workers-rs` crate. For more information, see the [Rust guide](/workers/platform/web-assembly/rust/).
+Alternatively, if you want write your entire Worker in Rust, Workers provides many of the same [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/platform/bindings/) when using the `workers-rs` crate. For more information, see the [Rust guide](/workers/platform/web-assembly/rust/).
 
