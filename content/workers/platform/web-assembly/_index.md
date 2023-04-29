@@ -8,8 +8,8 @@ title: WebAssembly (Wasm)
 [WebAssembly](https://webassembly.org/) (abbreviated Wasm) allows you to compile languages like Rust, Go, or C to a binary format that can run in a wide variety of environments, including [web browsers](https://developer.mozilla.org/en-US/docs/WebAssembly#browser_compatibility), Cloudflare Workers, and other WebAssembly runtimes.
 
 On Workers, you can use WebAssembly to:
-- Execute code written in a language other than JavaScript, via `WebAssembly.instantiate()` ([example](/workers/platform/web-assembly/javascript/#use-from-javascript)).
-- Write an entire Cloudflare Worker in Rust, using bindings that make Workers' JavaScript APIs available directly from Rust.
+- Execute code written in a language other than JavaScript, via `WebAssembly.instantiate()`
+- Write an entire Cloudflare Worker in Rust, using bindings that make Workers' JavaScript APIs available directly from your Rust code.
 
 Most programming languages can be compiled to Wasm, although support varies across languages and compilers. Guides are available for the following:
 
@@ -25,12 +25,14 @@ SIMD is supported on Workers. For more information on using SIMD in WebAssembly,
 
 ### Threading
 
-Threading is not possible in Workers because each Worker runs in a single thread to mitigate timing attacks, and the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) API is not supported.
+Threading is not possible in Workers. Each Worker runs in a single thread, and the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) API is not supported.
 
 ## Binary Size
 
 Compiling to WebAssembly often requires including additional runtime dependencies. As a result, Workers that use WebAssembly are typically larger than an equivalent Worker written in JavaScript. The larger your Worker is, the longer it may take your Worker to [start](https://developers.cloudflare.com/workers/platform/limits/#worker-startup-time). We recommend using tools like [`wasm-opt`](https://github.com/brson/wasm-opt-rs) to optimize the size of your Wasm binary.
 
-## WASI
+## WebAssembly System Interface (WASI)
 
-WASI support is experimental, with only some syscalls implemented. See our open source implementation [here](https://github.com/cloudflare/workers-wasi), and [blog post](https://blog.cloudflare.com/announcing-wasi-on-workers/) demonstrating its use. 
+The [WebAssembly System Interface](https://wasi.dev/) (abbreviated WASI) is a modular system interface for WebAssembly that standardizes a set of underlying system calls for networking, file system access, and more, that applications can depend on to behave identically across host environments and operating systems.
+
+WASI is an even earlier and more rapidly evolving set of standards than Wasm, and WASI support is experimental on Cloudflare Workers, with only some syscalls implemented. See our open source implementation [here](https://github.com/cloudflare/workers-wasi), and [blog post](https://blog.cloudflare.com/announcing-wasi-on-workers/) demonstrating its use. 
