@@ -23,6 +23,8 @@ When your DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dn
 
 Caching is the process of storing copies of files in a cache, or temporary storage location, so that they can be accessed more quickly.
 
+When Cloudflare stores content in its cache, the request never needs to go to your application or origin server, which reduces the number of requests and ges content to the user more quickly.
+
 {{<render file="_cache-basic-diagram.md">}}
 <br/>
 
