@@ -8,7 +8,11 @@ weight: 5
 
 Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. Inspecting HTTP/3 inspection requires traffic to proxied over UDP.
 
-To enable HTTP/3 inspection, go to **Settings** > **Network**, enable **Proxy**, and select **UDP**.
+To enable HTTP/3 inspection:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+2. Under **Firewall**, enable **Proxy** and select **UDP**.
+3. Enable **TLS decryption**.
 
 ## Browser limitations
 
