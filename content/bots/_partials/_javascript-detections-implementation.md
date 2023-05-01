@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Once you enable JavaScript detection, you can use the `cf.bot_management.js_detection.passed` field in Firewall rules (or the `request.cf.botManagement.js_detection.passed` variable in Workers).
+Once you enable JavaScript detections, you can use the `cf.bot_management.js_detection.passed` field in Firewall rules (or the `request.cf.botManagement.js_detection.passed` variable in Workers).
 
 When adding this field to Firewall rules, use it:
 
@@ -15,8 +15,8 @@ When adding this field to Firewall rules, use it:
 
 ### Prerequisites
 
-- You must have JavaScript detection enabled on your zone. 
-- You must have [updated your Content Security Policy headers](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp) for JavaScript detection.
+- You must have JavaScript detections enabled on your zone. 
+- You must have [updated your Content Security Policy headers](/bots/reference/javascript-detections/#if-you-have-a-content-security-policy-csp) for JavaScript detections.
 - You must not run this field on websocket endpoints. 
 - You must use the field in a custom rules expression that expects only browser traffic.
 - The action should always be a managed challenge in case a legitimate user has not received the challenge for network or browser reasons.

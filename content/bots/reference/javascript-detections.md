@@ -5,11 +5,11 @@ title: JavaScript detection
 weight: 0
 ---
 
-# JavaScript detection
+# JavaScript detections
 
 {{<render file="_javascript-detections-definition.md" withParameters=" " >}}
 
-## Enable JavaScript detection
+## Enable JavaScript detections
 
 For Free customers (Bot Fight Mode), JavaScript detection are automatically enabled and cannot be disabled.
 
@@ -19,7 +19,7 @@ For all other customers (Super Bot Fight Mode and Bot Management for Enterprise)
 
 For more details on how to set up bot protection, see [Get started](/bots/get-started/).
 
-## Enforcing execution of JavaScript detection
+## Enforcing execution of JavaScript detections
 
 {{<render file="_javascript-detections-implementation.md">}}
 
