@@ -33,12 +33,12 @@ Once the group is set up, you can use it to configure rules within your applicat
 
 To create and manage groups:
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com), navigate to the **Access** section.
-1.  Open the Access Groups tab.
-1.  Click **Add a Group**.
-1.  Enter a name for the group.
-1.  Specify as many rules as needed to define your user group.
-1.  Click **Save**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access**.
+2. Open the Access Groups tab.
+3. Select **Add a Group**.
+4. Enter a name for the group.
+5. Specify as many rules as needed to define your user group.
+6. Select **Save**.
 
 ## Group criteria
 

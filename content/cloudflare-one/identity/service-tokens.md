@@ -31,7 +31,7 @@ You can now use the service token in your [Access policies](/cloudflare-one/poli
 
 ## Connect your service to Access
 
-To authenticate to an Access application using your service token, add the following to the headers of any request:
+To authenticate to an Access application using your service token, add the following to the headers of any HTTP request:
 
 `CF-Access-Client-Id: <Client ID>`
 
