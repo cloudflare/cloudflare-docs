@@ -82,4 +82,4 @@ The following system environment variables are injected by default (but can be o
 
 ## Language support and tools
 
-Moved to [Langauge support and tools](/pages/platform/language-support-and-tools/).
+Moved to [Language support and tools](/pages/platform/language-support-and-tools/).
