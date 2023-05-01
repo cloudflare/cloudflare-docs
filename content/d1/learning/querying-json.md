@@ -36,24 +36,23 @@ The following table outlines the JSON functions built into D1, as well as exampl
 | Function                                  | Description                                         | Example                 |
 | ----------------------------------------- | --------------------------------------------------- | ----------------------- |
 | `json(json)`                              | Validates the provided string is JSON and returns a minified version of that JSON object. | `json('{"hello":["world" ,"there"] }')` returns `{"hello":["world","there"]}`  |
-| `json_array(value1, value2, value3, ...)` |                                                     |                         |
-| `json_array_length(json)` - `json_array_length(json, path)` | 
+| `json_array(value1, value2, value3, ...)` | Return a JSON array from the values. | `json_array(1, 2, 3)` returns `[1, 2, 3]` |
+| `json_array_length(json)` - `json_array_length(json, path)` | Return the length of the JSON array | `json_array_length('{"data":["x", "y", "z"]}', '$.data')` returns `3` |
 | `json_extract(json, path)`                | Extract the value(s) at the given path using `$.path.to.value` syntax. | `json_extract('{"temp":"78.3", "sunset":"20:44"}', '$.temp')` returns `"78.3"` |
 | `json -> path`                            | Extract the value(s) at the given path using path syntax and return it as JSON. |                         |
 | `json ->> path`                           | Extract the value(s) at the given path using path syntax and return it as a SQL type. |                         |
 | `json_insert(json, path, value)`          | Insert a value at the given path. Does not overwrite an existing value. |                         |
 | `json_object(label1, value1, ...)`        | Accepts pairs of (keys, values) and returns a JSON object. | `json_object('temp', 45, 'wind_speed_mph', 13)` returns `{"temp":45,"wind_speed_mph":13}` |
-| `json_patch(json1, json2)`                |                                                     |                         |
+| `json_patch(target, patch)`                | Uses a JSON [MergePatch](https://tools.ietf.org/html/rfc7396) approach to merge the provided patch into the target JSON object. |                        |
 | `json_remove(json, path, ...)`            | Remove the key and value at the specified path. | `json_remove('[60,70,80,90]', '$[0]')` returns `70,80,90]` |
 | `json_replace(json, path, value)`         | Insert a value at the given path. Overwrites an existing value, but does not create a new key if it doesn't exist. |                         |
 | `json_set(json, path, value)`             | Insert a value at the given path. Overwrites an existing value. |                        |
-| `json_type(json)` - `json_type(json, path)`|                                                    |                         |
+| `json_type(json)` - `json_type(json, path)`| Return the type of the provided value or value at the specified path. Returns one of `null`, `true`, `false`, `integer`, `real`, `text`, `array`, or `object`. | `json_type('{"temperatures":[73.6, 77.8, 80.2]}', '$.temperatures')` returns `array` |
 | `json_valid(json)`                        | Returns 0 (false) for invalid JSON, and 1 (true) for valid JSON. | `json_valid(`{invalid:json})` returns `0` |
-| `json_quote(value)`                       |                                                     |                         |
-| `json_group_array(value)`                 |                                                     |                         |
-| `json_group_object(value)`                |                                                     |                         |
-| `json_each(json)` - `json_each(json, path)`|                                                     |                         |
-| `json_tree(json)` - `json_tree(json, path)`|                                                     |                         |
+| `json_quote(value)`                       | Converts the provided SQL value into its JSON representation. |  `json_quote('[1, 2, 3]')` returns `[1,2,3]` |
+| `json_group_array(value)`                 | Returns the provided value(s) as a JSON array. |              |
+| `json_each(value)` - `json_each(value, path)` | Returns each element within the object as an individual row. It will only traverse the top-level object. |               |
+| `json_tree(value)` - `json_tree(value, path)` | Returns each element within the object as an individual row. It traverses the full object. |               |
  
 The SQLite [JSON extension](https://www.sqlite.org/json1.html), on which D1 builds on, has additional usage examples.
 
@@ -118,7 +117,7 @@ You can get the length of a JSON array in two ways:
 1. By calling `json_array(value)` directly
 2. By calling `json_array(value, path)` to specify the array size of a 
 
-For example, given the following JSON object stored in a column called `login_history`, I could get a count of the last logins directly:
+For example, given the following JSON object stored in a column called `login_history`, we could get a count of the last logins directly:
 
 ```json
 {
@@ -132,3 +131,65 @@ json_array(login_history, '$.previous_logins') --> returns 3 as an INTEGER
 ```
 
 You can also use `json_array` as a predicate in a more complex query - e.g. `WHERE json_array(some_column, '$.path.to.value') >= 5`.
+
+### Insert a value into an existing object
+
+You can insert a value into an existing JSON object or array using `json_insert()`. For example, if you have a `TEXT` column called `login_history` in a `users` table containing the following object:
+
+```json
+{"history": ["2023-05-13T15:13:02+00:00", "2023-05-14T07:11:22+00:00", "2023-05-15T15:03:51+00:00"]}
+```
+
+To add a new timestamp to the `history` array within our `login_history` column, we'd write a query resembling the following:
+
+```sql
+UPDATE users
+SET login_history = json_insert(login_history, '$.history[#]', '2023-05-15T20:33:06+00:00')
+WHERE user_id = 'aba0e360-1e04-41b3-91a0-1f2263e1e0fb'
+```
+
+We provide three arguments to `json_insert`: the name of our column containing the JSON we want to modify, the path to the key within the object to modify, and the JSON value to insert. Using `[#]` tells `json_insert` to append to the end of our array.
+
+To replace an existing value, using `json_replace()`, which will overwrite an existing key-value pair if one already exists. To set a value regardless of whether it already exists, use `json_set()`.
+
+### Expanding arrays for IN queries
+
+You can use `json_each` to expand an array into multiple rows, which can be useful when composing a `WHERE column IN (?)` query over several values. For example, if we wanted to update a list of users by their integer `id`, we can use `json_each` to return a table with each value as a column called `value`:
+
+```sql
+UPDATE users 
+SET last_audited = '2023-05-16T11:24:08+00:00'
+WHERE id IN (SELECT value FROM json_each('[183183, 13913, 94944]'))
+```
+
+This would extract only the `value` column from the table returned by `json_each`, with each row representing the user IDs we passed in as an array.
+
+`json_each` effectively returns a table with multiple columns, with the most relevant being:
+
+* `key` - the key (or index).
+* `value` - the literal value of each element parsed by `json_each`.
+* `type` - the type of the value: one of `null`, `true`, `false`, `integer`, `real`, `text`, `array`, or `object`.
+* `fullkey` - the full path to the element: e.g. `$[1]` for the second element in an array, or `$.path.to.key` for a nested object.
+* `path` - the top-level path - `$` as the path for an element with a `fullkey` of `$[0]`.
+
+In this example, `SELECT * FROM json_each('[183183, 13913, 94944]')` would return a table resembling the below:
+
+```sql
+key|value|type|id|fullkey|path
+0|183183|integer|1|$[0]|$
+1|13913|integer|2|$[1]|$
+2|94944|integer|3|$[2]|$
+```
+
+You can use `json_each` with D1's [client API](/d1/platform/client-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/platform/client-api/#parameter-binding):
+
+```ts
+const stmt = context.env.DB
+    .prepare("UPDATE users SET last_audited = ? WHERE id IN (SELECT value FROM json_each(?1))")
+const resp = await stmt.bind(
+    "2023-05-16T11:24:08+00:00",
+    JSON.stringify([183183, 13913, 94944])
+    ).run()
+```
+
+This would only update rows in our `users` table where the `id` matches one of the three provided.

@@ -13,14 +13,17 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 
 {{<table-wrap>}}
 
-| Feature                                            | Limit                                   |
-| -------------------------------------------------- | --------------------------------------- |
-| Databases                                          | 10 per account <sup>1</sup>             |
-| Database size                                      | 100 MB <sup>2</sup>                     |
-| Maximum [database backups](/d1/learning/backups/)  | 24 hours (backups are hourly)           |
-| Maximum number of columns per table                | 100                                     |
-| Maximum string, `BLOB` or table row size           | 1,000,000 bytes (1MB)                   |
-| Maximum SQL statement length                       | 100,000 bytes (100KB)                   |
+| Feature                                            | Limit                                        |
+| -------------------------------------------------- | -------------------------------------------- | 
+| Databases                                          | 10 per account <sup>1</sup>                  |
+| Database size                                      | 100 MB <sup>2</sup>                          |
+| Time Travel duration (point-in-time recovery)      | 30 days (Workers Paid) / 7 days (Free)       |
+| Maximum [database backups](/d1/learning/backups/)  | 24 hours (backups are hourly) (alpha only)   |
+| Maximum number of columns per table                | 100                                          |
+| Maximum string, `BLOB` or table row size           | 1,000,000 bytes (1MB)                        |
+| Maximum SQL statement length                       | 100,000 bytes (100KB)                        |
+| Maximum bound parameters per query                 | 100                                          |
+| Maximum arguments per SQL function                 | 8                                            |
 
 {{</table-wrap>}}
 
