@@ -18,6 +18,9 @@ Many of these limits will increase during D1's [public alpha](/workers/platform/
 | Databases                                          | 10 per account <sup>1</sup>             |
 | Database size                                      | 100 MB <sup>2</sup>                     |
 | Maximum [database backups](/d1/learning/backups/)  | 24 hours (backups are hourly)           |
+| Maximum number of columns per table                | 100                                     |
+| Maximum string, `BLOB` or table row size           | 1,000,000 bytes (1MB)                   |
+| Maximum SQL statement length                       | 100,000 bytes (100KB)                   |
 
 {{</table-wrap>}}
 
@@ -29,5 +32,5 @@ Refer to the [Storage options guide](/workers/platform/storage-options/) to revi
 
 {{</Aside>}}
 
-* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team.
+* <sup>1</sup> Request adjustments to limits that conflict with your project goals by contacting Cloudflare. To make a request, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform), or speak to your account team. Note that not all limits can be increased.
 * <sup>2</sup> This is an alpha-only limit, and we intend to increase this as D1 moves towards General Availability (GA).
