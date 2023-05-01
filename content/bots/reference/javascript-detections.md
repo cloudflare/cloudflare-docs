@@ -1,7 +1,7 @@
 ---
 type: overview
 pcx_content_type: reference
-title: JavaScript detection
+title: JavaScript detections
 weight: 0
 ---
 
