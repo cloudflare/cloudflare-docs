@@ -8,7 +8,6 @@ layout: learning-unit
 Cloudflare offers a variety of add-on products to improve application security, including:
 
 - [WAF Managed Rules](/waf/managed-rules/)
-- [Rate limiting](/waf/rate-limiting-rules/)
 - [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/)
 - [Page Shield](/page-shield/)
 - [Turnstile](/turnstile/)
