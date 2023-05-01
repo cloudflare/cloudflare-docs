@@ -1,15 +1,18 @@
 ---
-pcx_content_type: overview
-type: overview
 title: Overview
+type: overview
+pcx_content_type: overview
 weight: 1
+layout: list
 meta:
   title: Cloudflare Queues
 ---
 
+{{<content-column>}}
+
 # Cloudflare Queues
 
-Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
+Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers/) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
 
 {{<Aside>}}
 
@@ -30,3 +33,5 @@ Cloudflare Queues enable you to build applications that can:
 - **Offload work from a request**. If a Worker needs to do more processing, but should not block the entire request -- a durable, observable alternative to using `waitUntil()`.
 - **Send data from Worker to Worker**. You can configure producer and consumer Workers that can send data between each other.
 - **Buffer or batch data**. If a service has bursty load, you can send that load to a Queue, then process it in predictable batches.
+
+{{</content-column>}}

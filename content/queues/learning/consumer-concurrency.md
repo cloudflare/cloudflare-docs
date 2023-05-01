@@ -14,16 +14,6 @@ Note that queue producers are always scalable, up to the [maximum supported mess
 
 ## Enable concurrency
 
-{{<Aside type="warning">}}
-
-Queue consumers will soon automatically scale up concurrently as a queues' backlog grows in order to keep overall message processing latency down. Concurrency will be enabled on all existing queues by 2023-03-28.
-
-**To opt-out, or to configure a fixed maximum concurrency**, set `max_concurrency = 1` in your `wrangler.toml` file or via [the queues dashboard](https://dash.cloudflare.com/?to=/:account/queues).
-
-**To opt-in to concurrency, you do not need to take any action**: your consumer will begin to scale out as needed to keep up with your message backlog. It will scale back down as the backlog shrinks, and/or if a consumer starts to generate a higher rate of errors. To learn more about how consumers scale, refer to the [consumer concurrency](/queues/learning/consumer-concurrency/) documentation.
-
-{{</Aside>}}
-
 By default, all queues have concurrency enabled. Queue consumers will automatically scale up [to the maximum concurrent invocations](/queues/platform/limits/) as needed to manage a queue's backlog and/or error rates. 
 
 ## How concurrency works 
@@ -101,7 +91,7 @@ $ wrangler queues consumer update <script-name>
 -->
 ## Billing
 
-When multiple consumer Workers are invoked, each Worker invocation incurs [duration costs](https://developers.cloudflare.com/workers/platform/pricing/#workers).
+When multiple consumer Workers are invoked, each Worker invocation incurs [duration costs](/workers/platform/pricing/#workers).
 
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).

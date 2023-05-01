@@ -1,4 +1,35 @@
 {
+  "account": {
+    "title": "Account options",
+    "single_sign_on": {
+      "title": "Cloudflare dashboard single sign-on",
+      "link": "/cloudflare-one/applications/configure-apps/dash-sso-apps/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes (with Standard or Premium Success plans)"
+        }
+      }
+    },
+    "zone_holds": {
+      "title": "Zone holds",
+      "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    }
+  },
   "analytics": {
     "title": "Analytics",
     "graphql": {
@@ -59,7 +90,7 @@
     },
     "traffic": {
       "title": "Traffic analytics",
-      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -248,7 +279,7 @@
     },
     "csam": {
       "title": "CSAM Scanning Tool",
-      "link": "https://support.cloudflare.com/hc/articles/360046106112",
+      "link": "/cache/reference/csam-scanning/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -297,7 +328,7 @@
     },
     "etag_headers": {
       "title": "ETag Headers",
-      "link": "https://support.cloudflare.com/hc/articles/218505467",
+      "link": "/cache/reference/etag-headers/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -332,7 +363,7 @@
     },
     "query_string_sort": {
       "title": "Query string sort",
-      "link": "https://support.cloudflare.com/hc/articles/206776797",
+      "link": "/cache/about/query-string-sort/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -434,7 +465,7 @@
     "link": "/dns/",
     "cname_flattening": {
       "title": "CNAME Flattening",
-      "link": "/dns/additional-options/cname-flattening/",
+      "link": "/dns/cname-flattening/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -470,7 +501,7 @@
     },
     "dns_analytics": {
       "title": "DNS Analytics",
-      "link": "https://support.cloudflare.com/hc/articles/360037684251",
+      "link": "/analytics/account-and-zone-analytics/zone-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1185,6 +1216,13 @@
           "biz": "All",
           "ent": "All"
         },
+        "dashboard_show_account": {
+          "title": "Account-level dashboard",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        },
         "historical_data": {
           "title": "Historical time",
           "free": "Up to the last 24 hours",
@@ -1203,6 +1241,20 @@
           "title": "Print report",
           "free": "No",
           "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        }
+      }
+    },
+    "security_analytics": {
+      "title": "Security Analytics",
+      "link": "/waf/security-analytics/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Business and above",
+          "free": "No",
+          "pro": "No",
           "biz": "Yes",
           "ent": "Yes"
         }
@@ -1311,11 +1363,11 @@
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Enterprise-only",
-          "free": "No",
-          "pro": "No",
-          "biz": "No",
-          "ent": "Certain Enterprise plans"
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
         },
         "z_custom_rulesets": {
           "title": "Custom rulesets",
@@ -1475,7 +1527,7 @@
     },
     "x_user_agent_rules": {
       "title": "User Agent Blocking",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001856951",
+      "link": "/waf/tools/user-agent-blocking/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1498,11 +1550,11 @@
     },
     "x_zone_lockdown_rules": {
       "title": "Zone Lockdown",
-      "link": "https://support.cloudflare.com/hc/en-us/articles/115001595131",
+      "link": "/waf/tools/zone-lockdown/",
       "properties": {
         "availability": {
           "title": "Availability",
-          "summary": "Available on all plans",
+          "summary": "Available on all paid plans",
           "free": "No",
           "lite": "Yes",
           "pro": "Yes",

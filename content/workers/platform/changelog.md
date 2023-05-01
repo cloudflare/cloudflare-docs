@@ -8,6 +8,10 @@ rss: file
 
 # Changelog
 
+## 2023-03-24
+
+- Fixed a bug in Wrangler tail and and live logs on the dashboard that prevented the Administrator Read-Only and Workers Tail Read roles from successfully tailing Workers.
+
 ## 2023-03-09
 
 - No externally-visible changes
@@ -75,7 +79,7 @@ rss: file
 
 ## 2022-06-24
 
-- `wrangler dev` in edge preview mode now supports scheduling alarms.
+- `wrangler dev` in global network preview mode now supports scheduling alarms.
 - R2 GET requests made with the `range` option now contain the returned range in the `GetObject`’s `range` parameter.
 - Some Web Cryptography API error messages include more information now.
 - Updated V8 from 10.2 to 10.3.
@@ -600,7 +604,7 @@ New this week:
 Runtime release notes covering the past few weeks:
 
 - Increased total per-request `Cache.put()` limit to 5GiB.
-- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal cache limits (<https://support.cloudflare.com/hc/en-us/articles/200172516-Understanding-Cloudflare-s-CDN>).
+- Increased individual `Cache.put()` limits to the lesser of 5GiB or the zone’s normal [cache limits](/cache/about/default-cache-behavior/).
 - Added a helpful error message explaining AES decryption failures.
 - Some overload errors were erroneously being reported as daemonDown (1105) errors. They have been changed to exceededCpu (1102) errors, which better describes their cause.
 - More “internal errors” were converted to useful user-facing errors.

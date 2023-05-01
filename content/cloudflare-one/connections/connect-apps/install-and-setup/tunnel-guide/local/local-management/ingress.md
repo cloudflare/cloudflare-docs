@@ -57,7 +57,7 @@ ingress:
     path: \.(jpg|png|css|js)$
     service: https://localhost:8001
   # Rules can match the request's hostname to a wildcard character:
-  - hostname: '*.example.com'
+  - hostname: "*.example.com"
     service: https://localhost:8002
   # An example of a catch-all rule:
   - service: https://localhost:8003
@@ -89,17 +89,17 @@ ingress:
 
 With the catch-all rule, you can set `cloudflared` to respond to traffic with an HTTP status.
 
-| Service                 | Description                                                                                      | Example `service` value           |
-| ----------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------- |
-| HTTP/S                  | Incoming HTTP requests are proxied directly to your local service.                               | `https://localhost:8000`          |
-| HTTP over Unix socket | Just like HTTP, but using a Unix socket instead.                                               | `unix:/home/production/echo.sock` |
-| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                               | `unix+tls:/home/production/echo.sock` |
-| TCP                     | TCP connections are proxied to your local service.                                               | `tcp://localhost:2222`            |
-| SSH                     | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/ssh/). | `ssh://localhost:22`              |
-| RDP                     | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use_cases/rdp/). | `rdp://localhost:3389`            |
-| kubectl bastion mode    | `cloudflared` will act like a jumphost, allowing access to any local address.                    | `bastion`                         |
-| Hello World             | Test server for validating your Cloudflare Tunnel setup.                                         | `hello_world`                     |
-| HTTP status             | Responds to all requests with the given HTTP status.                                             | `http_status:404`                 |
+| Service                | Description                                                                                                               | Example `service` value               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| HTTP/S                 | Incoming HTTP requests are proxied directly to your local service.                                                        | `https://localhost:8000`              |
+| HTTP over Unix socket  | Just like HTTP, but using a Unix socket instead.                                                                          | `unix:/home/production/echo.sock`     |
+| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                                                         | `unix+tls:/home/production/echo.sock` |
+| TCP                    | TCP connections are proxied to your local service.                                                                        | `tcp://localhost:2222`                |
+| SSH                    | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use-cases/ssh/). | `ssh://localhost:22`                  |
+| RDP                    | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-apps/use-cases/rdp/). | `rdp://localhost:3389`                |
+| kubectl bastion mode   | `cloudflared` will act like a jumphost, allowing access to any local address.                                             | `bastion`                             |
+| Hello World            | Test server for validating your Cloudflare Tunnel setup.                                                                  | `hello_world`                         |
+| HTTP status            | Responds to all requests with the given HTTP status.                                                                      | `http_status:404`                     |
 
 ## Origin configuration
 
@@ -146,7 +146,7 @@ To set both top-level configurations and origin-specific configurations, you can
 - [disableChunkedEncoding](#disablechunkedencoding)
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
-- [proxyType](#proxyyype)
+- [proxyType](#proxytype)
 
 ### access
 
@@ -161,13 +161,9 @@ access:
   required: true
   teamName: <your-team-name>
   audTag:
-    - aud1 <Access-application-audience-tag> 
+    - aud1 <Access-application-audience-tag>
     - aud2 <Optional-additional-tags>
 ```
-
-{{<Aside type="note">}}
-The `access` rule is currently not available for tunnels managed through the dashboard.
-{{</Aside>}}
 
 ### connectTimeout
 

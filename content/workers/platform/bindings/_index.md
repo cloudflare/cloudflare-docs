@@ -6,7 +6,7 @@ layout: single
 
 # Bindings
 
-Bindings allow your Workers to interact with resources on the Workers platform. 
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform. 
 
 There are multiple types of bindings available today.
 
@@ -54,7 +54,7 @@ R2 bucket bindings for communication between a Worker and an R2 bucket.
 
 Dispatch namespace bindings allow for communication between a dynamic dispatch Worker and a dispatch namespace. Dispatch namespace bindings are used in [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/). Workers for Platforms helps you deploy serverless functions programmatically on behalf of your customers.
 
-* Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dynamic-dispatch-worker).
+* Configure dispatch namespace bindings via your [`wrangler.toml` file](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/).
 
 ### mTLS certificate bindings
 
@@ -62,3 +62,10 @@ mTLS certificate bindings enable Worker subrequests to present a client certific
 
 * Learn more about [mTLS certificate bindings](/workers/runtime-apis/mtls/).
 * Configure mTLS certificate bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#mtls-certificates).
+
+### Email bindings
+
+Email bindings allow you to send emails from your Worker. This is useful for when you want to know about certain types of events being triggered, for example.
+
+- Learn more about [email bindings](/email-routing/email-workers/send-email-workers/).
+- Configure email bindings via your [`wrangler.toml` file](/workers/wrangler/configuration/#email-bindings).

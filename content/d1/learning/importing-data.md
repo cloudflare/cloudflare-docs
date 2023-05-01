@@ -12,7 +12,7 @@ D1 allows you to import existing SQLite tables and their data directly, enabling
 
 To import an existing SQLite database into D1, you must have:
 
-1. The Cloudflare [Wrangler CLI installed](https://developers.cloudflare.com/workers/wrangler/install-and-update/).
+1. The Cloudflare [Wrangler CLI installed](/workers/wrangler/install-and-update/).
 2. A database to use as the target
 3. An existing SQLite (version 3.0+) database file to import.
 
@@ -74,7 +74,7 @@ $ wrangler d1 execute example-db --command "SELECT * FROM users LIMIT 100;"
 
 Note that we apply a `LIMIT 100` clause here as a precaution: if you were importing a larger database with hundreds or thousands of rows, you may not want to output every row to the terminal.
 
-From here, you can now query our new table from our Worker [using the D1 client API](https://developers.cloudflare.com/d1/platform/client-api/).
+From here, you can now query our new table from our Worker [using the D1 client API](/d1/platform/client-api/).
 
 ## Converting SQLite database files
 
@@ -105,5 +105,5 @@ If you receive an error when trying to import an existing schema and/or dataaset
 ## Next Steps
 
 * Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation
-* Learn how to [use the D1 client API](https://developers.cloudflare.com/d1/platform/client-api/) from within a Worker
-* Understand how [database migrations work](https://developers.cloudflare.com/d1/platform/migrations/) with D1
+* Learn how to [use the D1 client API](/d1/platform/client-api/) from within a Worker
+* Understand how [database migrations work](/d1/platform/migrations/) with D1

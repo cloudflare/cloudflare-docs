@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-For a full list of properties, refer to [Create Pool](https://developers.cloudflare.com/api/operations/account-load-balancer-pools-create-pool). If you need help with API authentication, refer to [Cloudflare API documentation](/fundamentals/api/).
+For a full list of properties, refer to [Create Pool](/api/operations/account-load-balancer-pools-create-pool). If you need help with API authentication, refer to [Cloudflare API documentation](/fundamentals/api/).
 
 ```json
 ---
@@ -120,7 +120,7 @@ header: Response
 }
 ```
 
-After creating the pool, you would also want to [create a new notification](https://developers.cloudflare.com/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
+After creating the pool, you would also want to [create a new notification](/api/operations/notification-policies-create-a-notification-policy) with the following parameters specified:
 
 ```json
 "alert_type": "load_balancing_health_alert",

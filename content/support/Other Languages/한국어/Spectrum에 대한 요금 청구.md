@@ -37,7 +37,7 @@ Spectrum은 유료 요금제 유형에 따라 최대 5GB 또는 10GB 트래픽�
 
 ### 요금제별 가격
 
-[Spectrum을 활성화하면](https://developers.cloudflare.com/spectrum/getting-started/getting-started/) 다음과 같이 가격이 적용됩니다.
+[Spectrum을 활성화하면](/spectrum/getting-started/getting-started/) 다음과 같이 가격이 적용됩니다.
 
 | 요금제 | 프로토콜 | 무료 제공 | 무료 제공 이후 요금 | 최대 동시 연결 |
 | --- | --- | --- | --- | --- |
@@ -49,4 +49,4 @@ ___
 
 ## 관련 자료
 
--   [Spectrum 개발자 문서](https://developers.cloudflare.com/spectrum/getting-started/)
+-   [Spectrum 개발자 문서](/spectrum/getting-started/)

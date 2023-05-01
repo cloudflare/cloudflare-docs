@@ -157,7 +157,7 @@ ___
 
 ### Cloudflare prend-il en charge l’authentification TLS du client ?
 
-L’authentification TLS du client confirme que le certificat présenté par un client est signé par le certificat de l’autorité de certification racine de la société.  En validant ce certificat sur chaque requête, l’accès peut être limité aux connexions client autorisées.  Pour activer l’authentification TLS du client via Cloudflare, reportez-vous à notre documentation sur [l’authentification TLS mutuelle.](https://developers.cloudflare.com/access/setting-up-access/mtls/).
+L’authentification TLS du client confirme que le certificat présenté par un client est signé par le certificat de l’autorité de certification racine de la société.  En validant ce certificat sur chaque requête, l’accès peut être limité aux connexions client autorisées.  Pour activer l’authentification TLS du client via Cloudflare, reportez-vous à notre documentation sur [l’authentification TLS mutuelle.](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 

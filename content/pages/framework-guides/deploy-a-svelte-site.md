@@ -109,7 +109,7 @@ To solve this issue, provide a `CF_PAGES` variable to SvelteKit so that the adap
 
 - [`@sveltejs/adapter-static`](https://www.npmjs.com/package/@sveltejs/adapter-static)
   Only produces client-side static assets (no server-side rendering) and is compatible with Cloudflare Pages.
-  Review the [official SvelteKit documentation](https://kit.svelte.dev/docs/adapter-static) for instructions on how to set up the adapter. Keep in mind that if you decide to use this adapter, the build directory, instead of `.svelte-kit/cloudflare`, becomes `.build`. You must also configure your Cloudflare Pages application's build directory accordingly.
+  Review the [official SvelteKit documentation](https://kit.svelte.dev/docs/adapter-static) for instructions on how to set up the adapter. Keep in mind that if you decide to use this adapter, the build directory, instead of `.svelte-kit/cloudflare`, becomes `build`. You must also configure your Cloudflare Pages application's build directory accordingly.
 
 {{</Aside>}}
 
@@ -164,7 +164,7 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 In SvelteKit, functions are written as endpoints. Functions contained in the `/functions` directory at the project's root will not be included in the deployment, which compiles to a single `_worker.js` file.
 
-To have the functionality equivalent to Pages Functions [`onRequests`](https://developers.cloudflare.com/pages/platform/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
+To have the functionality equivalent to Pages Functions [`onRequests`](/pages/platform/functions/api-reference/#onrequests), you need to write standard request handlers in SvelteKit. For example, the following TypeScript file behaves like an `onRequestGet`:
 
 ```ts
 ---

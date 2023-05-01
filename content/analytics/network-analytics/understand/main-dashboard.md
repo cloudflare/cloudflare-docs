@@ -14,7 +14,7 @@ The following sections are a guide on the different sections of the main Network
 
 The side panels in the Network Analytics page provide a summary of activity over the period selected in the timeframe drop-down list.
 
-![Available high-level metrics in the Network Analytics dashboard.](/analytics/static/images/network-analytics/high-level-metrics.png)
+![Available high-level metrics in the Network Analytics dashboard.](/images/analytics/network-analytics/high-level-metrics.png)
 
 Clicking one of the metrics in the sidebar will define the base unit (packets or bits) for the data displayed in the Network Analytics dashboard.
 

@@ -10,7 +10,7 @@ meta:
 # Cloudflare Email Routing
 
 {{<description>}}
-Create any number of custom email addresses, and use them whenever you do not want to share your primary email address.
+Create custom email addresses for your domain and route incoming emails to your preferred mailbox.
 {{</description>}}
 
 {{<plan id="email.email_routing.properties.availability.summary">}}

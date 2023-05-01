@@ -226,7 +226,7 @@ highlight: [36]
 
 ## tus
 
-Add the Creator ID via the `Upload-Creator` header. For more information, refer to [Using tus](/stream/uploading-videos/direct-creator-uploads/#using-tus-recommended-for-videos-over-200mb).
+Add the Creator ID via the `Upload-Creator` header. For more information, refer to [Using tus](/stream/uploading-videos/direct-creator-uploads/#advanced-upload-flow-using-tus-for-large-videos).
 
 ## Query by Creator ID with GraphQL
 

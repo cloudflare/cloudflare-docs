@@ -18,7 +18,7 @@ Create HTTP Request Header Modification Rules in the **Modify Request Header** t
 
 4. Select **Create rule**.
 
-    ![The HTTP Request Header Modification Rule creation page in the Cloudflare dashboard.](/rules/static/transform/create-request-header-modification-rule.png)
+    ![The HTTP Request Header Modification Rule creation page in the Cloudflare dashboard.](/images/rules/transform/create-request-header-modification-rule.png)
 
 5. In the rule creation page, enter a descriptive name for the rule in **Rule name**.
 
@@ -42,7 +42,7 @@ Check the [available fields and functions](/rules/transform/request-header-modif
 
     The following example includes the modification of three headers:
 
-    ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/rules/static/transform/request-header-modification-example.png)
+    ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](/images/rules/transform/request-header-modification-example.png)
 
 11.  To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 

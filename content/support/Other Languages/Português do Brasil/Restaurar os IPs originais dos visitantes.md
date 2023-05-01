@@ -26,7 +26,7 @@ ___
 
 Quando o [tráfego do seu site é roteado pela rede da Cloudflare](https://support.cloudflare.com/hc/articles/205177068), atuamos como um proxy reverso. Dessa forma, a Cloudflare pode diminuir o tempo de carregamento da página, roteando pacotes com mais eficiência e armazenando em cache os recursos estáticos (imagens, JavaScript, CSS etc.). Como resultado, ao responder a solicitações e registrá-las, seu servidor de origem retorna um [endereço de IP da Cloudflare](https://www.cloudflare.com/ips/).
 
-Por exemplo, se você instalar aplicativos que dependem do endereço de IP de entrada original do visitante, um endereço de IP da Cloudflare é registrado por padrão.O endereço de IP original do visitante aparece em um cabeçalho HTTP anexado chamado [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Seguindo nossas [instruções do servidor web](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), você pode registrar o endereço de IP original do visitante em seu servidor de origem.Se este cabeçalho HTTP não estiver disponível quando as solicitações chegarem a seu servidor de origem, verifique sua configuração [Regras de transformação](https://developers.cloudflare.com/rules/transform/) e [Transformações gerenciadas](https://developers.cloudflare.com/rules/transform/managed-transforms/).
+Por exemplo, se você instalar aplicativos que dependem do endereço de IP de entrada original do visitante, um endereço de IP da Cloudflare é registrado por padrão.O endereço de IP original do visitante aparece em um cabeçalho HTTP anexado chamado [_CF-Connecting-IP_](https://support.cloudflare.com/hc/articles/200170986). Seguindo nossas [instruções do servidor web](https://support.cloudflare.com/hc/articles/200170786#JUxJSMn3Ht5c5yq), você pode registrar o endereço de IP original do visitante em seu servidor de origem.Se este cabeçalho HTTP não estiver disponível quando as solicitações chegarem a seu servidor de origem, verifique sua configuração [Regras de transformação](/rules/transform/) e [Transformações gerenciadas](/rules/transform/managed-transforms/).
 
 O diagrama a seguir descreve as diferentes maneiras de gerenciar endereços IP com e sem o Cloudflare.
 
@@ -324,5 +324,5 @@ ___
 
 ## Recursos relacionados
 
--   [Cabeçalhos de solicitação HTTP](https://developers.cloudflare.com/fundamentals/get-started/http-request-headers)
--   [Regras de transformação](https://developers.cloudflare.com/rules/transform/)
+-   [Cabeçalhos de solicitação HTTP](/fundamentals/get-started/http-request-headers)
+-   [Regras de transformação](/rules/transform/)

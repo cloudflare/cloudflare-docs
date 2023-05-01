@@ -23,7 +23,7 @@ In this tutorial you learn how to store and retrieve data in your Cloudflare Wor
 - How to use Wrangler to store secrets securely.
 - How to use [Worktop][worktop] to add routing to your Workers.
 
-Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop and reason about your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
+Building with Fauna, Workers, and Worktop enables you to create a globally distributed, strongly consistent, fully serverless REST API in a single repository. You can develop your application as if it were a monolith but gain the resilience and reduced latency of a distributed application running at the edge.
 
 ![Fauna architecture connecting to Cloudflare's network to create super fast applications](./media/fauna-cf-workers-diagram.jpg)
 

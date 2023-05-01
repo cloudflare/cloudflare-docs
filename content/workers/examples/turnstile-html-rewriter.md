@@ -9,8 +9,9 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | js/sw">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
+
 ```js
 export default {
 	async fetch(request, env) {
@@ -42,16 +43,14 @@ export default {
 	}
 }
 ```
-{{</tab>}}
-{{<tab label="js/sw">}}
-```js
-addEventListener('fetch', event => {
-    return event.respondWith(handleRequest(event.request));
-})
 
-	async function handleRequest (request) {
-		// Service  Workers secrets are global variables
-		const SITE_KEY = SITE_KEY
+{{</tab>}}
+{{<tab label="ts">}}
+
+```ts
+const handler: ExportedHandler = {
+	async fetch(request: Request, env: Env) {
+		const SITE_KEY = env.SITE_KEY
 		let res = await fetch(request)
 
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
@@ -78,20 +77,22 @@ addEventListener('fetch', event => {
 		return newRes
 	}
 }
+
+export default handler;
 ```
+
 {{</tab>}}
 {{</tabs>}}
 
 {{<Aside type= "Note">}}
-This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
+This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 {{</Aside>}}
 
 
-{{<tab label="js/esm" default="true">}}
+{{<tab label="js" default="true">}}
 ```js
 async function handlePost(request) {
     const body = await request.formData();
-
     // Turnstile injects a token in `cf-turnstile-response`.
     const token = body.get('cf-turnstile-response');
     const ip = request.headers.get('CF-Connecting-IP');
@@ -128,10 +129,9 @@ export default {
 		if (request.method === 'POST') {
 			return handlePost(request)
 		}
-		
+
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
-
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {
@@ -142,7 +142,6 @@ export default {
 			})
 			.on('div', {
 				element(element) {
-
 					// You are using the `getAttribute` method here to retrieve the `id` or `class` of an element
 					if (element.getAttribute('id') === <NAME_OF_ATTRIBUTE>) {
 						element.append(`<div class="cf-turnstile" data-sitekey="${SITE_KEY}" data-theme="light"></div>`, { html: true });

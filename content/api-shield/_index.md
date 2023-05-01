@@ -12,6 +12,8 @@ meta:
 
 Cloudflare offers a range of products to help identify and address API vulnerabilities.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Why care about API security?
 
 APIs have become the [backbone of popular web services](https://blog.postman.com/intro-to-apis-history-of-apis/), helping the Internet become more accessible and useful.
@@ -33,8 +35,6 @@ Cloudflare offers the following features to help secure your APIs:
 ## Availability
 
 Cloudflare API Security products are available to Enterprise customers only, though anyone can set up [Mutual TLS](/api-shield/security/mtls/) with a Cloudflare-managed certificate authority.
-
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Related products
 

@@ -460,7 +460,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_ip">
         <td><code>cf.edge.server_ip</code><br />{{<type>}}IP Address{{</type>}}</td>
         <td>
-          <p>Represents the edge IP address to which the HTTP request has resolved to.
+          <p>Represents the global network's IP address to which the HTTP request has resolved to.
           </p>
           <p>This field is only meaningful for <a href="/byoip/">BYOIP customers</a>.
           </p>
@@ -469,7 +469,7 @@ The Cloudflare Rules language supports these dynamic fields:
     <tr id="field-cf-edge-server_port">
         <td><code>cf.edge.server_port</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
-          <p>Represents the port number at which Cloudflare's network received the request.
+          <p>Represents the port number at which the Cloudflare global network received the request.
           </p>
           <p>Use this field to filter traffic on a specific port. The value is a port number in the range 1–65535.</p>
         </td>
@@ -541,6 +541,13 @@ The Cloudflare Rules language supports these dynamic fields:
         <td><code>cf.waf.score.rce</code><br />{{<type>}}Number{{</type>}}</td>
         <td>
           <p>An attack score from 1 to 99 classifying the command injection or Remote Code Execution (RCE) attack vector.
+          </p>
+        </td>
+    </tr>
+    <tr id="field-cf-waf-score-class">
+        <td><code>cf.waf.score.class</code><br />{{<type>}}String{{</type>}}</td>
+        <td>
+          <p>The attack score class of the current request, based on the WAF attack score.<br/>Can have one of the following values: <code>attack</code>, <code>likely_attack</code>, <code>likely_clean</code>, <code>clean</code>.
           </p>
         </td>
     </tr>

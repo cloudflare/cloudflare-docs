@@ -29,6 +29,8 @@ Super Bot Fight Mode is included in your Business or Enterprise subscription. Wh
 
 {{<render file="_disable-sbfm.md">}}
 
+{{<render file="_flexible-sbfm.md">}}
+
 ## Analytics
 
 For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).
@@ -36,3 +38,5 @@ For more on analytics, see [Bot Analytics](/bots/bot-analytics/biz-and-ent/).
 ## Ruleset Engine
 
 {{<render file="_bfm-ruleset-engine.md">}}
+
+{{<render file="_bfm-change-notice.md">}}

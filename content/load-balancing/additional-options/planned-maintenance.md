@@ -39,14 +39,14 @@ To remove a server from rotation while still preserving session continuity, set 
 1.  On a new or existing load balancer, go to the **Hostname** step.
 2.  Make sure you have enabled **Session Affinity**.
 3.  For **Origin drain duration**, enter a time in seconds. If this value is less than the **Session TTL** value, you will affect existing sessions.
-    ![Example configuration of session affinity with origin drain](/load-balancing/static/images/session-affinity-3.png)
+    ![Example configuration of session affinity with origin drain](/images/load-balancing/session-affinity-3.png)
 4.  Save your changes to the load balancer.
 5.  Click **Manage Pools**.
 6.  Disable an origin. Your load balancer will gradually drain sessions from that origin.
 7.  On your load balancer, expand your pools to find the disabled origin. You will see the estimated **Drain Time** counting down.
-    ![Example showing load balancer draining in progress](/load-balancing/static/images/session-affinity-4.png)
+    ![Example showing load balancer draining in progress](/images/load-balancing/session-affinity-4.png)
 8.  When a drain is **Complete**, there are no longer any connections to that origin.
-    ![Example showing load balancer draining complete](/load-balancing/static/images/session-affinity-5.png)
+    ![Example showing load balancer draining complete](/images/load-balancing/session-affinity-5.png)
 9.  Perform your required maintenance or upgrades.
 10. To bring your origin back online, re-enable the origin.
 

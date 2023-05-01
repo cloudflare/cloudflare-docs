@@ -17,5 +17,6 @@ Name | Description
 `esp` | Rules for DDoS attacks related to the Encapsulating Security Payload (ESP) protocol, which is part of the IPSec secure network protocol suite.
 `advanced` | Rules related to features available to Enterprise customers, such as [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/).
 `generic` | Rules for detecting and mitigating floods of packets. These rules are useful for mitigating attacks that have no known signatures, but they may also trigger on unusually high volumes of legitimate traffic. To reduce the risk of false positives, their packet per second (pps) activation threshold is higher. These rules rate-limit traffic by default, but you can override them to block traffic if necessary.
+`read-only` | {{<render file="managed-rulesets/_read-only-rules-description.md">}}
 
 {{</table-wrap>}}

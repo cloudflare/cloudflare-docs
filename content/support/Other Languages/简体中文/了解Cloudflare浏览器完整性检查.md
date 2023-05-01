@@ -19,7 +19,7 @@ ___
 
 Cloudflare **浏览器完整性检查 (BIC)** 的操作类似于[恶意行为](https://bad-behavior.ioerror.us/)，查找垃圾邮件发送者最常滥用的常见 HTTP 标头并拒绝其访问您的页面。 它还质询没有用户代理或具有非标准用户代理的访问者，例如滥用自动程序、网络爬虫或访问者常用的。
 
-默认情况下，**BIC** 是通过 Cloudflare **防火墙**应用的**设置**选项卡启用的。 您可以使用[防火墙 BYPASS 规则](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/#supported-actions)禁用 **BIC**。 此外，使用[页面规则](https://support.cloudflare.com/hc/articles/218411427)有选择地为您网站的某些部分启用或禁用此功能。 例如，[为您的 API 流量禁用 **BIC**](https://support.cloudflare.com/hc/articles/200504045) 。
+默认情况下，**BIC** 是通过 Cloudflare **防火墙**应用的**设置**选项卡启用的。 您可以使用[防火墙 BYPASS 规则](/firewall/cf-firewall-rules/actions/#supported-actions)禁用 **BIC**。 此外，使用[页面规则](https://support.cloudflare.com/hc/articles/218411427)有选择地为您网站的某些部分启用或禁用此功能。 例如，[为您的 API 流量禁用 **BIC**](https://support.cloudflare.com/hc/articles/200504045) 。
 
 ___
 

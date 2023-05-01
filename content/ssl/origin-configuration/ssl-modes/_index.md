@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: Encryption modes
 weight: 2
+meta:
+    description: Encryption modes allow you to control how Cloudflare connects to your origin web server and how certificates presented by your origin are validated.
 ---
 
 # Encryption modes
@@ -20,25 +22,19 @@ If you are not sure which encryption mode to use, enable the [SSL/TLS Recommende
 
 ## Available encryption modes
 
-{{<directory-listing>}}
+{{<directory-listing showDescriptions=true char_limit=300 >}}
 
 ## Update your encryption mode
 
 {{<tabs labels="Dashboard | API">}}
 {{<tab label="dashboard" no-code="true">}}
  
-To change your encryption mode in the dashboard:
-
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2.  Go to **SSL/TLS**.
-3.  Choose an encryption mode.
+{{<render file="_change-encryption-mode-dash.md">}}
  
 {{</tab>}}
 {{<tab label="api" no-code="true">}}
  
-To adjust your encryption mode with the API, send a [`PATCH`](https://developers.cloudflare.com/api/operations/zone-settings-change-ssl-setting) request with the `value` parameter set to your desired setting (`off`, `flexible`, `full`, `strict`).
-
-Your available values depend on your zone's plan level.
+{{<render file="_change-encryption-mode-api.md">}}
  
 {{</tab>}}
 {{</tabs>}}

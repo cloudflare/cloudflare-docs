@@ -16,7 +16,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 
 | Role | Description |
 | --- | --- |
-| Administrator | Can access the full account, except for membership management and billing. |
+| Administrator | Can access the full account including subscriptions, except for membership management and billing. |
 | Super Administrator - All Privileges | Can edit any Cloudflare setting, make purchases, update billing, and manage memberships. Super Administrators can revoke the access of other Super Administrators. |
 | Administrator Read Only | Can access the full account in read-only mode. |
 | Analytics | Can read Analytics. |
@@ -33,7 +33,7 @@ If you are adding members whose [role scope](/fundamentals/account-and-billing/m
 | Cloudflare Zero Trust Read Only | Can access [Cloudflare for Zero Trust](/cloudflare-one/) read only mode. |
 | Cloudflare Zero Trust Reporting | Can access [Cloudflare for Zero Trust](/cloudflare-one/) reporting data. |
 | DNS | Can edit [DNS records](/dns/manage-dns-records/). |
-| Firewall | Can edit [WAF](/waf/), [IP Firewall](/fundamentals/global-configurations/lists/ip-lists/), and [Zone Lockdown](https://support.cloudflare.com/hc/articles/115001595131) settings. |
+| Firewall | Can edit [WAF](/waf/), [IP Firewall](/fundamentals/global-configurations/lists/ip-lists/), and [Zone Lockdown](/waf/tools/zone-lockdown/) settings. |
 | Load Balancer | Can edit [Load Balancers](/load-balancing/), Pools, Origins, and Health Checks. |
 | Log Share | Can edit [Log Share](/logs/) configuration. |
 | Log Share Reader | Can read Enterprise [Log Share](/logs/). |

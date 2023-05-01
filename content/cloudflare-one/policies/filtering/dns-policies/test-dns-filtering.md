@@ -24,11 +24,11 @@ For example, if you created a policy to block `example.com`, you can do the foll
 
 3. If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is disabled for the policy, you should see `REFUSED` in the answer section:
 
-    ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
+   ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-disabled.png)
 
-    If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
+   If the [block page](/cloudflare-one/policies/filtering/configuring-block-page/) is enabled for the policy, you should see `NOERROR` in the answer section and `162.159.36.12` and `162.159.46.12` as the answers:
 
-    ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-enabled.png)
+   ![Verify that a domain is blocked when the block page is disabled.](/cloudflare-one/static/documentation/faq/blocked-enabled.png)
 
 ### Test a security or content category
 
@@ -40,15 +40,15 @@ Once you have configured your Gateway policy to block the category, the test dom
 
 - **One-word category** — For categories with one-word names (for example, _Malware_), the test domain uses the following format:
 
-    ```txt
-    <NAME_OF_CATEGORY>.testcategory.com
-    ```
+  ```txt
+  <NAME_OF_CATEGORY>.testcategory.com
+  ```
 
 - **Multi-word category** — For categories with multiple words in the name (for example, _Parked & For Sale Domains_), the test domain uses the following format:
 
-    - Remove any spaces between the words
-    - Replace `&` with `and`
-    - Lowercase all letters
+  - Remove any spaces between the words
+  - Replace `&` with `and`
+  - Lowercase all letters
 
 #### Common test domains
 
@@ -72,57 +72,57 @@ If you [enabled EDNS client subnet](/cloudflare-one/connections/connect-devices/
 
 1. Obtain your DNS location's DOH subdomain:
 
-    1. In the [Zero Trust dashboard](https://dash.teams.cloudflare.com), go to **Gateway** > **DNS Locations**.
-    2. Select the DNS location you are testing.
-    3. Note the value of **DNS over HTTPS**.
+   1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **DNS Locations**.
+   2. Select the DNS location you are testing.
+   3. Note the value of **DNS over HTTPS**.
 
 2. Open a terminal and run the following command:
 
-    ```sh
-    $ curl 'https://<DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
-    ```
+   ```sh
+   $ curl 'https://<DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query?type=TXT&name=o-o.myaddr.google.com' -H 'Accept: application/dns-json' | json_pp
+   ```
 
-    The output should contain your EDNS client subnet:
+   The output should contain your EDNS client subnet:
 
-    ```json
-    ---
-    highlight: [12]
-    ---
-    {
-    "AD" : false,
-    "Answer" : [
-        {
-            "TTL" : 60,
-            "data" : "\"108.162.218.211\"",
-            "name" : "o-o.myaddr.google.com",
-            "type" : 16
-        },
-        {
-            "TTL" : 60,
-            "data" : "\"edns0-client-subnet 136.62.0.0/24\"",
-            "name" : "o-o.myaddr.google.com",
-            "type" : 16
-        }
-    ],
-    "CD" : false,
-    "Question" : [
-        {
-            "name" : "o-o.myaddr.google.com",
-            "type" : 16
-        }
-    ],
-    "RA" : true,
-    "RD" : true,
-    "Status" : 0,
-    "TC" : false
-    }
-    ```
+   ```json
+   ---
+   highlight: [12]
+   ---
+   {
+   "AD" : false,
+   "Answer" : [
+       {
+           "TTL" : 60,
+           "data" : "\"108.162.218.211\"",
+           "name" : "o-o.myaddr.google.com",
+           "type" : 16
+       },
+       {
+           "TTL" : 60,
+           "data" : "\"edns0-client-subnet 136.62.0.0/24\"",
+           "name" : "o-o.myaddr.google.com",
+           "type" : 16
+       }
+   ],
+   "CD" : false,
+   "Question" : [
+       {
+           "name" : "o-o.myaddr.google.com",
+           "type" : 16
+       }
+   ],
+   "RA" : true,
+   "RD" : true,
+   "Status" : 0,
+   "TC" : false
+   }
+   ```
 
 3. To verify your EDNS client subnet, obtain your source IP address:
 
-    ```sh
-    $ curl ifconfig.me
-    136.62.12.156%
-    ```
+   ```sh
+   $ curl ifconfig.me
+   136.62.12.156%
+   ```
 
-    The source IP address should fall within the /24 range specified by your EDNS client subnet.
+   The source IP address should fall within the /24 range specified by your EDNS client subnet.

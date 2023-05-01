@@ -18,11 +18,11 @@ Currently, phases at the account level are only available in Enterprise plans.
 
 The following diagram outlines the request handling process where requests go through the available phases:
 
-![Diagram showing the request handling process. The user request goes through several request phases until it eventually reaches the origin server (the request can also be blocked). The origin returns a response, which goes through several response phases until it reaches the user.](/ruleset-engine/static/rulesets-phases.png)
+![Diagram showing the request handling process. The user request goes through several request phases until it eventually reaches the origin server (the request can also be blocked). The origin returns a response, which goes through several response phases until it reaches the user.](/images/ruleset-engine/rulesets-phases.png)
 
 Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
 
-Refer to [Phases list](/ruleset-engine/reference/phases-list) for a list of phases and their corresponding Cloudflare products.
+Refer to [Phases list](/ruleset-engine/reference/phases-list/) for a list of phases and their corresponding Cloudflare products.
 
 ## Phase entry point ruleset
 

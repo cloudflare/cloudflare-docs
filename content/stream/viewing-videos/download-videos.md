@@ -1,6 +1,7 @@
 ---
 title: Download videos
 weight: 6
+pcx_content_type: how-to
 ---
 
 # Download videos
