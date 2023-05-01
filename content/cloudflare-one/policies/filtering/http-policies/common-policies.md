@@ -110,12 +110,4 @@ Block file downloads from Gmail.
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
 
-## Filter WebSocket traffic
-
-Gateway does not inspect or log [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) traffic. Instead, Gateway will only log the HTTP details used to make the WebSocket connection, as well as [session information](/logs/reference/log-fields/account/zero_trust_network_sessions/). To filter your WebSocket traffic, create a policy with the `101` HTTP response code.
-
-| Selector      | Operator | Value                   | Action |
-| ------------- | -------- | ----------------------- | ------ |
-| HTTP Response | in       | 101 SWITCHING_PROTOCOLS | Allow  |
-
 Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
