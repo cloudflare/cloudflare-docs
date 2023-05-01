@@ -8,12 +8,6 @@ weight: 6
 
 Manage custom rules in **Security** > **WAF** > **Custom rules**.
 
-{{<Aside type="note">}}
-
-This feature is only available for select customers on an Enterprise plan.
-
-{{</Aside>}}
-
 The custom rules interface allows you to:
 
 - [Create custom rules](/waf/custom-rules/create-dashboard/)

@@ -41,6 +41,8 @@ Your zone settings are split up into two areas: **Global Settings** and differen
     - Editable when not applied to a [read-only environment](/version-management/reference/read-only-environments/).
     - Applied when [associated with an environment](/version-management/how-to/environments/#change-environment-version).
 
+### Editable versions
+
 {{<render file="_edit-version.md">}}
 
 {{<Aside type="note">}}
@@ -48,6 +50,16 @@ Your zone settings are split up into two areas: **Global Settings** and differen
 To change the version associated with an environment, you need to update settings on the [Environment](/version-management/how-to/environments/#change-environment-version) itself.
 
 {{</Aside>}}
+
+### Read-only versions
+
+{{<render file="_production-read-only-default.md">}}
+<br/>
+
+In order to change settings in a version associated with a [read-only environment](/version-management/reference/read-only-environments/), either:
+
+- [Change the environment version](/version-management/how-to/environments/#change-environment-version) to another version and then make changes to your version.
+- [Edit](/version-management/how-to/environments/#edit-environment) the environment's settings to remove the **Read-only environment** setting. Then, make changes to your version.
 
 ---
 

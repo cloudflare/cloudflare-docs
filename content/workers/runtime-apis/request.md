@@ -43,6 +43,8 @@ Review the [`FetchEvent` documentation](/workers/runtime-apis/fetch-event/) for 
 
 {{</Aside>}}
 
+---
+
 ## Constructor
 
 ```js
@@ -125,7 +127,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 *   `cacheTtlByStatus` {{<type>}}{ \[key: string]: number }{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
-    *   This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, 404: 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
+    *   This option is a version of the `cacheTtl` feature which chooses a TTL based on the response’s status code. If the response to this request has a status code that matches, Cloudflare will cache for the instructed time and override cache instructives sent by the origin. For example: `{ "200-299": 86400, "404": 1, "500-599": 0 }`. The value can be any integer, including zero and negative integers. A value of `0` indicates that the cache asset expires immediately. Any negative value instructs Cloudflare not to cache at all. This option applies to `GET` and `HEAD` request methods only.
 
 *   `image` {{<type>}}Object | null{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
@@ -157,7 +159,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 {{</definitions>}}
 
-***
+---
 
 ## Properties
 
@@ -303,7 +305,7 @@ The `request.cf` object is not available in the Cloudflare Workers dashboard or 
 
 {{</Aside>}}
 
-***
+---
 
 ## Methods
 
@@ -313,35 +315,35 @@ These methods are only available on an instance of a `Request` object or through
 
 {{<definitions>}}
 
-*   `clone()` {{<type>}}Promise\<Request>{{</type>}}
+*   `clone()` : {{<type>}}Promise\<Request>{{</type>}}
 
     *   Creates a copy of the `Request` object.
 
-*   `arrayBuffer()` {{<type>}}Promise\<ArrayBuffer>{{</type>}}
+*   `arrayBuffer()` : {{<type>}}Promise\<ArrayBuffer>{{</type>}}
 
     *   Returns a promise that resolves with an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) representation of the request body.
 
-*   `formData()` {{<type>}}Promise\<FormData>{{</type>}}
+*   `formData()` : {{<type>}}Promise\<FormData>{{</type>}}
 
     *   Returns a promise that resolves with a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) representation of the request body.
 
-*   `json()` {{<type>}}Promise\<Object>{{</type>}}
+*   `json()` : {{<type>}}Promise\<Object>{{</type>}}
 
     *   Returns a promise that resolves with a JSON representation of the request body.
 
-*   `text()` {{<type>}}Promise\<string>{{</type>}}
+*   `text()` : {{<type>}}Promise\<string>{{</type>}}
 
     *   Returns a promise that resolves with a string (text) representation of the request body.
 
 {{</definitions>}}
 
-***
+---
 
-## The request context
+## The `Request` context
 
-The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the request context.
+The `Request` context is the context of the `"fetch"` event callback. It is important to note that due to how Workers are executed, asynchronous tasks (for example, `fetch`) can only be run inside the `Request` context.
 
-The request context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
+The `Request` context is available inside of the [`FetchEvent` handler](/workers/runtime-apis/fetch-event/):
 
 ```js
 addEventListener("fetch", event => {
@@ -398,6 +400,8 @@ A `FixedLengthStream` is an identity `TransformStream` that permits only a fixed
 ```
 
 Using any other type of `ReadableStream` as the body of a request will result in Chunked-Encoding being used.
+
+---
 
 ## Related resources
 

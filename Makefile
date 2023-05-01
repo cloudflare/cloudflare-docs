@@ -9,3 +9,7 @@ hugo:
 build: download hugo
 	npm run build:local
 	./minify -r public -o .
+
+tools:
+	@echo "==> Installing development tooling..."
+	go generate -tags tools tools/tools.go

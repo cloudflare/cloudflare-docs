@@ -110,7 +110,7 @@ binding = 'MY_BUCKET' # <~ valid JavaScript variable name
 bucket_name = '<YOUR_BUCKET_NAME>'
 ```
 
-Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler-legacy/configuration/).
+Find more detailed information on configuring your Worker in the [Wrangler Configuration documentation](/workers/wrangler/configuration/).
 
 ## 5. Access your R2 bucket from your Worker
 

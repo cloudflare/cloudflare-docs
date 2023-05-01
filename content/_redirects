@@ -85,7 +85,7 @@
 /access/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 /cloudflare-one/tutorials/ssh/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 /cloudflare-one/tutorials/ssh-browser/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
-/access/ssh/short-live-cert-server/ /cloudflare-one/tutorials/ssh-cert-bastion/ 301
+/access/ssh/short-live-cert-server/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /access/ssh/ssh-guide/ /cloudflare-one/connections/connect-apps/use-cases/ssh/ 301
 
 # analytics
@@ -205,6 +205,7 @@
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/support/dns/advanced-topics/adding-vendor-specific-dns-records-to-cloudflare/ /dns/manage-dns-records/reference/vendor-specific-records/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -327,6 +328,7 @@
 
 # learning-paths
 /learning-paths/technology-partner-integrations/ /fundamentals/partners/ 301
+/support/about-cloudflare/attack-preparation-and-response/best-practices-ddos-preventative-measures/ /learning-paths/prevent-ddos-attacks/
 
 # load-balancing
 /load-balancing/about/ /load-balancing/ 301
@@ -386,7 +388,7 @@
 /magic-transit/reference/health-checks/ /magic-transit/reference/probe-construction/ 301
 
 # magic-wan
-/magic-wan/tutorials/ipsec/ /magic-wan/how-to/ipsec/ 301
+/magic-wan/tutorials/ipsec/ /magic-wan/reference/ipsec/ 301
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
@@ -395,6 +397,7 @@
 /magic-wan/about/health-checks/ /magic-wan/reference/probe-construction/ 301
 /magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
 /magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels-and-encapsulation/ 301
+/magic-wan/how-to/ipsec/ /magic-wan/reference/ipsec/ 301
 /magic-wan/reference/health-checks/ /magic-wan/reference/probe-construction/ 301
 
 # pages
@@ -497,6 +500,8 @@
 /ssl/mutual-authentication/ /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
+
+
 
 # cloudflare for saas
 /ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301
@@ -905,12 +910,22 @@
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/filtering/http-policies/common-policies/#check-user-identity 301
 /cloudflare-one/tutorials/block-tld/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#block-sites-by-top-level-domain 301
 /cloudflare-one/tutorials/block-uploads/ /cloudflare-one/policies/filtering/http-policies/common-policies/#block-google-drive-uploads 301
-/cloudflare-one/tutorials/do-not-decrypt/ /cloudflare-one/policies/filtering/http-policies/common-policies/#skip-inspection-for-groups-of-applications 301
-/cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#restrict-access-to-specific-groups 301
 /cloudflare-one/tutorials/corp-device-tag/ /cloudflare-one/identity/devices/ 301
+/cloudflare-one/tutorials/country-rules/ /cloudflare-one/identity/users/groups/ 301
+/cloudflare-one/tutorials/do-not-decrypt/ /cloudflare-one/policies/filtering/http-policies/common-policies/#skip-inspection-for-groups-of-applications 301
+/cloudflare-one/tutorials/gateway-list/ /cloudflare-one/policies/filtering/lists/ 301
+/cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/filtering/dns-policies/common-policies/#restrict-access-to-specific-groups 301
+/cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
+/cloudflare-one/tutorials/require-swg/ /cloudflare-one/identity/devices/ 301
+/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/policies/filtering/initial-setup/dns/ 301
+/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
+/cloudflare-one/tutorials/single-command/ /cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/ 301
+/cloudflare-one/tutorials/ssh-cert-bastion/ /cloudflare-one/identity/users/short-lived-certificates/ 301
 /cloudflare-one/tutorials/smb/ /cloudflare-one/connections/connect-apps/use-cases/smb/ 301
 /cloudflare-one/tutorials/split-tunnel/ /cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/ 301
+/cloudflare-one/tutorials/warp-to-tunnel/ /cloudflare-one/connections/connect-apps/private-net/connect-private-networks/ 301
 /cloudflare-one/tutorials/warp-to-tunnel-internal-dns/ /cloudflare-one/connections/connect-apps/private-net/private-hostnames-ips/ 301
+/cloudflare-one/tutorials/zero-trust-network-access/ /cloudflare-one/connections/connect-apps/private-net/connect-private-networks/ 301
 
 # Support
 # - BYOIP
