@@ -51,7 +51,7 @@ You can customize how `wrangler dev` works to fit your needs. Refer to [the `wra
 
 {{<Aside type="warning">}}
 
-There is a bug associated with `wrangler dev` documented in the [Known issues section](/workers/platform/known-issues/#wrangler-dev).
+There is a bug associated with `wrangler dev --remote` documented in the [Known issues section](/workers/platform/known-issues/#wrangler-dev).
 
 {{</Aside>}}
 
