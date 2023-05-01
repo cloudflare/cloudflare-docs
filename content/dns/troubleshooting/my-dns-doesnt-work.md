@@ -45,7 +45,7 @@ Learn more about setting up A and CNAME [DNS records](/dns/manage-dns-records/h
 
 ### DNSSEC wasn't disabled before the domain was added to Cloudflare
 
-DNS resolution failures occur if [DNSSEC is not disabled](https://support.cloudflare.com/hc/articles/205359838#h_94453043811540417238269) at your domain provider before you add the domain to Cloudflare.
+DNS resolution failures occur if [DNSSEC is not disabled](/dns/additional-options/dnssec/#disable-dnssec) at your domain provider before you add the domain to Cloudflare.
 
 ### Nameservers no longer point to Cloudflare
 

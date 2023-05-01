@@ -108,5 +108,4 @@ ___
 
 If any errors were returned in this process, the domain may not be registered (or only just registered), be a subdomain, or otherwise been invalid. The following articles cover the most common cases: 
 
--   [Why can't I add my domain to Cloudflare?](https://support.cloudflare.com/hc/en-us/articles/205359838-I-cannot-add-my-domain-to-Cloudflare-)
--   [Site Banned](https://support.cloudflare.com/hc/articles/205359838#h_874829316161540417303369)
+-   [Why can't I add my domain to Cloudflare?](/dns/zone-setups/troubleshooting/cannot-add-domain/)
