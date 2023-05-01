@@ -7,15 +7,15 @@ pcx_content_type: concept
 
 {{<Aside type="note">}}
 
-We want to encourage you to build any application you can dream up, and realize that doesn't always fit within our limits. 
+We want to encourage you to build any application you can dream up, but we realize that does not always fit within our limits. 
 
-To increase any of our limits, [please fill out our form!](https://forms.gle/ukpeZVLWLnKeixDu7)
+To increase any of our limits, fill out the [Limit Increase Request form](https://forms.gle/ukpeZVLWLnKeixDu7).
 
 {{</Aside>}}
 
 ## Rate limiting on managed public buckets through `r2.dev`
 
-Managed public bucket access through an `r2.dev` subdomain is not intended for production usage, and has a rate limit applied to it. When exceeding this rate limit, requests through your `r2.dev` subdomain will be temporarily throttled, and receive a `429 Too Many Requests` response. For production use cases, consider linking a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket.
+Managed public bucket access through an `r2.dev` subdomain is not intended for production usage and has a rate limit applied to it. If you exceed the rate limit, requests through your `r2.dev` subdomain will be temporarily throttled and you will receive a `429 Too Many Requests` response. For production use cases, consider linking a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your bucket.
 
 ## Account plan limits
 
