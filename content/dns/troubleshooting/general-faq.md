@@ -1,5 +1,5 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
 title: General FAQ
 ---
