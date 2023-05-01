@@ -31,14 +31,7 @@ A cache stores copies of frequently accessed resources (images, CSS files).
 
 When a resource is cached - either on a user's browser or Content Delivery Network (CDN) server - requests for that resource do not have to go to your origin server. Instead, these resources are served directly by the cache.
 
-```mermaid
-flowchart TD;
-    User-->|Sends Request|Application;
-    Application-->B[Has cached content?];
-    B-->|Yes|User;
-    B-->|No|Origin
-    Origin-->|Requested content|User
-```
+{{<render file="_cache-basic-diagram.md">}}
 <br/>
 
 In the context of DDoS attacks, caching reduces the number of requests going to your origin server, which makes it harder for your server to get overwhelmed by traffic.
