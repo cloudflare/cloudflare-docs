@@ -24,12 +24,12 @@ Below are the most common customer questions and issues experienced when getting
 - [SSL isn't working for my second-level subdomain (i.e. dev.www.example.com)](https://support.cloudflare.com/hc/articles/200170566#h_55e4d315-c60d-4798-9c4c-c75d9baed1b7)
 - [Why is my site content not properly rendering? Why am I receiving mixed content errors?](https://support.cloudflare.com/hc/articles/200170476)
 - [My domain’s email stopped working](https://support.cloudflare.com/hc/articles/200168876)
-- [Why was my domain deleted from Cloudflare?](https://support.cloudflare.com/hc/articles/221327488)
+- [Why was my domain deleted from Cloudflare?](/dns/zone-setups/troubleshooting/domain-deleted/)
 
 ## Related resources
 
 - [SSL FAQ](https://support.cloudflare.com/hc/articles/204144518)
-- [DNS FAQ](https://support.cloudflare.com/hc/articles/360017421192)
+- [DNS FAQ](/dns/troubleshooting/general-faq/)
 - [Understanding the Cloudflare dashboard](https://support.cloudflare.com/hc/articles/205075117)
 - [Gathering information to troubleshoot site issues](https://support.cloudflare.com/hc/articles/203118044)
 - [Contacting Cloudflare support](https://support.cloudflare.com/hc/articles/200172476)

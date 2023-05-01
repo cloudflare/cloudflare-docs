@@ -67,10 +67,7 @@ ___
 
 For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare’s nameservers for DNS resolution. If Cloudflare's nameservers are not used, the domain status is updated from _Active_ to _Moved_ in the Cloudflare **Overview** app and an email is sent to the customer.  Any domain _Moved_ for more than 7 days is deleted unless the domain again becomes _Active_.
 
-Steps to resolve the issue require updating the DNS at your domain registrar to utilize the Cloudflare nameservers:
-
-1.  Follow steps 2 and 3 within our [domain troubleshooting article](https://support.cloudflare.com/hc/en-us/articles/221327488-Why-was-my-domain-deleted-from-Cloudflare-).
-2.  Click **Re-check Now** in the Cloudflare UI **Overview** app.
+{{<render file="_recover-deleted-domain.md">}}
 
 ___
 
