@@ -5,13 +5,12 @@ weight: 7
 layout: learning-unit
 ---
 
-Cloudflare offers a variety of add-on products to improve application performance, including:
+Cloudflare offers a variety of add-on products to improve application security, including:
 
-- [Argo Smart Routing](/argo-smart-routing/)
-- [Load Balancing](/load-balancing/)
-- [Stream](/stream/)
-- [Images](/images/)
-- [Automatic Platform Optimization](/automatic-platform-optimization/)
-- [Zaraz](/zaraz/)
+- [WAF Managed Rules](/waf/managed-rules/)
+- [Rate limiting](/waf/rate-limiting-rules/)
+- [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/)
+- [Page Shield](/page-shield/)
+- [Turnstile](/turnstile/)
 
-For an full list of performance-based products, refer to the [Product Catalog](/products/?product-group=Application+performance).
+For an full list, refer to the [Product Catalog](/products/?product-group=Application+security).

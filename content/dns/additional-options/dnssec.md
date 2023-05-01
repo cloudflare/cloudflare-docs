@@ -6,9 +6,7 @@ weight: 3
 
 # DNSSEC
 
-DNS Security Extensions (DNSSEC) adds an extra layer of authentication to DNS, ensuring requests are not routed to a spoofed domain.
-
-For additional background on DNSSEC, visit the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/dns-security/).
+{{<render file="_dnssec-definition.md">}}
 
 ---
 
@@ -24,16 +22,11 @@ When you enable DNSSEC, Cloudflare signs your zone, publishes your public signin
 
 ### Step 1 - Activate DNSSEC in Cloudflare
 
-1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2.  Go to **DNS** > **Settings**.
-3.  For **DNSSEC**, click **Enable DNSSEC**.
-4.  In the dialog, you have access to several necessary values to help you create a **DS** record at your registrar. Once you close the dialog, you can access this information by clicking **DS record** on the **DNSSEC** card.
+{{<render file="_dnssec-cloudflare-steps.md">}}
 
 ### Step 2 — Add DS record to your registrar
 
-You now need to add a **DS** record to your registrar. If Algorithm 13 - Cloudflare's preferred cipher choice - is not listed by your registrar, it may also be called *ECDSA Curve P-256 with SHA-256*.
-
-{{<render file="_dnssec-providers.md">}}
+{{<render file="_dnssec-registrar-steps.md">}}
 
 {{<Aside type="note" header="Note:">}}
 

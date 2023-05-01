@@ -5,13 +5,16 @@ weight: 6
 layout: learning-unit
 ---
 
-Cloudflare offers a variety of add-on products to improve application performance, including:
+{{<render file="_security-center-definition.md" productFolder="security-center">}}
 
-- [Argo Smart Routing](/argo-smart-routing/)
-- [Load Balancing](/load-balancing/)
-- [Stream](/stream/)
-- [Images](/images/)
-- [Automatic Platform Optimization](/automatic-platform-optimization/)
-- [Zaraz](/zaraz/)
+{{<Aside type="note">}}
 
-For an full list of performance-based products, refer to the [Product Catalog](/products/?product-group=Application+performance).
+For additional details and help, refer to the [Security Center documentation](/security-center/)
+
+{{</Aside>}}
+
+## Setup
+
+To enable **Security Insights** and perform an initial security scan:
+
+{{<render file="_setup.md" productFolder="security-center">}}

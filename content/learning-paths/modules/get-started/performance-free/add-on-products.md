@@ -14,4 +14,4 @@ Cloudflare offers a variety of add-on products to improve application performanc
 - [Automatic Platform Optimization](/automatic-platform-optimization/)
 - [Zaraz](/zaraz/)
 
-For an full list of performance-based products, refer to the [Product Catalog](/products/?product-group=Application+performance).
+For an full list, refer to the [Product Catalog](/products/?product-group=Application+performance).
