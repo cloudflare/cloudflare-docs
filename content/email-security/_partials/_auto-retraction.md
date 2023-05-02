@@ -24,3 +24,10 @@ To set up automatic retraction:
     {{<Aside type="warning" header="Important">}}If you choose the hard delete retraction for Gmail, email messages will be permanently deleted. These messages cannot be recovered, even by admins.{{</Aside>}}
 
 6. Select **Update Auto-retract Settings**.
+
+## Post delivery retractions
+
+You can enable Area 1 to retract malicious messages after they have already been delivery to your users. You have two options: 
+
+- **Post Delivery Response**:  Area 1 will continue re-evaluating emails already delivered to your users’s inboxes in search for phishing sites or campaigns not previously known to our systems. If any email messages are found, Area 1 retracts them.
+- **Phish Submission Response**: Area 1 will retract emails already delivered that are reported by your users and are found to be malicious.
