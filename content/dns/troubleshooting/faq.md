@@ -1,10 +1,11 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ
-title: General FAQ
+title: FAQ
+weight: 1
 ---
 
-# General FAQ
+# FAQ
 
 ## Is Cloudflare a free DNS (domain nameserver) provider?
 
@@ -186,3 +187,42 @@ ___
 ## What IP should I use for parked domain / redirect-only / originless setup?
 
 In the case a placeholder address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0` in your Cloudflare DNS to create a proxied DNS record that can use Cloudflare Page Rules or Cloudflare Workers.
+
+## Why are DNS queries returning incorrect results?
+
+Third-party tools can sometimes fail to return correct DNS results if a recursive DNS cache fails to refresh. In this circumstance, purge your public DNS cache via these methods:
+
+-   [Purging your DNS cache at OpenDNS](http://www.opendns.com/support/cache/)
+-   [Purging your DNS cache at Google](https://developers.google.com/speed/public-dns/cache)
+-   [Purging your DNS cache locally](https://documentation.cpanel.net/display/CKB/How%2BTo%2BClear%2BYour%2BDNS%2BCache)
+
+___
+
+## No A, AAAA or CNAME record found?
+
+`No A, AAAA or CNAME record found` means the Cloudflare **DNS** app lacks proper records for DNS resolution.
+
+[Add the missing DNS records](/dns/manage-dns-records/how-to/create-dns-records) to your domain.
+
+{{<Aside type="note">}}
+Sites generally have at least an `A` record that points to the origin
+server IP address, typically for the `www` subdomain and the root domain.
+{{</Aside>}}
+
+___
+
+## Why have I received an email: Your Name Servers have Changed?
+
+For domains where Cloudflare hosts the DNS, Cloudflare continuously checks whether the domain uses Cloudflare’s nameservers for DNS resolution. If Cloudflare's nameservers are not used, the [domain status](/dns/zone-setups/reference/domain-status/) is updated from _Active_ to _Moved_ in the Cloudflare **Overview** app and an email is sent to the customer.
+
+This is important because - if a domain is in a *Moved* state for a [long enough period of time](/dns/zone-setups/reference/domain-status/) - it will be deleted from Cloudflare.
+
+{{<render file="_recover-deleted-domain.md">}}
+
+___
+
+## Why can't I add certain TLDs via the DNS API?
+
+The DNS API cannot be used for domains with `.cf`, `.ga`, `.gq`, `.ml`, or `.tk` TLDs. Use the Cloudflare Dashboard for managing such TLDs.
+
+Enterprise customer can [contact Cloudflare Support](/support/troubleshooting/general-troubleshooting/contacting-cloudflare-support/) to remove this limitation.

@@ -20,7 +20,7 @@ If you do not disable **DNSSEC** before changing your nameservers, you might e
 -   DNS query response status is `SERVFAIL`.
 -   The domain remains in a [Pending status](/dns/zone-setups/reference/domain-status/).
 
-If you experience these issues, refer to [Configuring DNSSEC](/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](https://support.cloudflare.com/hc/articles/360021111972-Troubleshooting-DNSSEC).
+If you experience these issues, refer to [Configuring DNSSEC](/dns/additional-options/dnssec) and [Troubleshooting DNSSEC](/dns/additional-options/dnssec/troubleshooting/).
 
 ___
 

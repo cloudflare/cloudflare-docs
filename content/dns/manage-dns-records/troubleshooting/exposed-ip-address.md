@@ -6,7 +6,7 @@ title: Exposed IP addresses
 
 # Exposed IP addresses
 
-When your DNS records are [proxied](/dns/manage-dns-records/reference/proxy-dns-records/), Cloudflare speeds up and protects your site.
+When your DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dns-records/), Cloudflare speeds up and protects your site.
 
 A `dig` query against your proxied root domain returns a Cloudflare IP address. This way, your origin server’s IP address remains concealed from the public. Remember that orange cloud benefits only apply to HTTP traffic.
 
@@ -24,7 +24,7 @@ If you receive the following warning:
 
 `This record is exposing your origin server’s IP address. To hide your origin IP address, and increase your server security, click on the grey cloud to change it to orange.`
 
-Cloudflare recommends [proxying](/dns/manage-dns-records/reference/proxy-dns-records/) the record so that any `dig` query against that record returns a Cloudflare IP address and your origin server IP address remains concealed from the public.
+Cloudflare recommends [proxying](/dns/manage-dns-records/reference/proxied-dns-records/) the record so that any `dig` query against that record returns a Cloudflare IP address and your origin server IP address remains concealed from the public.
 
 To take advantage of Cloudflare’s performance and security benefits, we recommend you proxy DNS records that handle HTTP traffic, including `A`, `AAAA`, and `CNAME` records.
 

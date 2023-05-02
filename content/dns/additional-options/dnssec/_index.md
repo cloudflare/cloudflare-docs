@@ -51,10 +51,6 @@ If you want to set up DNSSEC on a subdomain zone, refer to [Subdomain DNSSEC](/d
 
 ---
 
-## Troubleshooting
-
-For more help with DNSSEC, refer to [Troubleshooting DNSSEC](https://support.cloudflare.com/hc/articles/360021111972).
-
 ## Limitations
 
 If your registrar does not support DNSSEC with Cloudflare's preferred cipher choice (Algorithm 13), you have several options:

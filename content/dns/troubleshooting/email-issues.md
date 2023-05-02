@@ -32,6 +32,36 @@ Cloudflare does not proxy traffic on port 25 (SMTP) unless [Cloudflare Spectrum
 
 If your email does not work shortly after editing DNS records, contact your mail administrator or mail provider for further assistance in troubleshooting so that data about the issue can be provided to Cloudflare support.
 
+## dc-######### subdomain
+
+The dc-##### subdomain is added to overcome a conflict created when your `SRV` or `MX` record resolves to a domain configured to [proxy](/dns/manage-dns-records/reference/proxied-dns-records) to Cloudflare.
+
+Therefore, Cloudflare will create a `dc-#####` DNS record that resolves to the origin IP address. The `dc-#####` record ensures that traffic for your `MX` or `SRV` record is not proxied (it directly resolves to your origin IP) while the Cloudflare proxy works for all other traffic.
+
+For example, before using Cloudflare, suppose your DNS records for mail are as follows:
+
+`example.com MX example.com` `example.com A 192.0.2.1`
+
+After using Cloudflare and proxying the `A` record, Cloudflare will provide DNS responses with a Cloudflare IP (`203.0.113.1` in the example below):
+
+`example.com MX example.com` `example.com A 203.0.113.1`
+
+Since proxying mail traffic to Cloudflare would break your mail services, Cloudflare detects this situation and creates a `dc-#####` record:
+
+`example.com MX dc-1234abcd.example.com` `dc-1234abcd.example.com A 192.0.2.1` `example.com A 203.0.113.1`
+
+Removing the `dc-######` record is only possible via one of these methods:
+
+-   If no mail is received for the domain, delete the `MX` record.
+-   If mail is received for the domain, update the `MX` record to resolve to a separate `A` record for a mail subdomain that is not proxied by Cloudflare:
+
+`example.com MX mail.example.com` `mail.example.com A 192.0.2.1` `example.com A 203.0.113.1`
+
+{{<Aside type="warning">}}
+If your mail server resides on the same IP as your web server, your MX
+record will expose your origin IP address.
+{{</Aside>}}
+
 ___
 
 ## Best practices for MX records on Cloudflare
