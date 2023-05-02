@@ -64,7 +64,7 @@ For more information on these actions, refer to the [Actions](/ruleset-engine/ru
 
 ## HTTP Requests dataset changes
 
-The following fields will be renamed in the [HTTP Requests](/logs/reference/log-fields/zone/firewall_events/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
+The following fields will be renamed in the [HTTP Requests](/logs/reference/log-fields/zone/http_requests/) dataset according to the two-phase strategy outlined in the [timeline](#timeline):
 
 {{<table-wrap>}}
 
