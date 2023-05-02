@@ -2,9 +2,9 @@
 type: example
 summary: Block specific users from accessing a site.
 tags:
-  - Gateway HTTP policy
-title: Gateway HTTP policy
-weight: 4
+  - HTTP policy
+title: HTTP policy
+weight: 3
 layout: example
 pcx_content_type: configuration
 ---
