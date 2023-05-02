@@ -1,8 +1,8 @@
 ---
 pcx_content_type: navigation
-title: Tunnel monitoring
+title: Monitor tunnels
 weight: 6
 ---
-# Tunnel monitoring
+# Monitor tunnels
 
 {{<directory-listing>}}
