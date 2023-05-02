@@ -148,7 +148,7 @@ Follow the instructions in [Updating log_pull options](/logs/tutorials/examples/
 
 ### Update Logpush job via Terraform
 
-If you are already managing Logpush jobs via Terraform, update the `logpull_options` in your existing `cloudflare_logpush_job` Terraform resource. For example:
+If you are already managing Logpush jobs via Terraform, update the `logpull_options` in your existing [`cloudflare_logpush_job`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/logpush_job) Terraform resource. For example:
 
 ```diff
   resource "cloudflare_logpush_job" "example_job" {
