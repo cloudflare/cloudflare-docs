@@ -62,9 +62,7 @@ To learn what these Page Rules do, refer to [Understanding and configuring Cloud
 
 {{<Aside type="note" header="Same zone versus other zone">}}
 
-If a Worker on running on `example.com` makes a subrequest to `example.com/bananas`, this is considered a same zone request.
-<br/>If a Worker on running on `example.com` makes a subrequest to `other.com`, this is considered an other zone request.
-<br/>If a Worker on running on `example.com` makes a subrequest to `shop.example.com`, this is considered an other zone request.
+A same zone subrequest is a request the Worker makes to an orange-clouded hostname in the same zone the Worker runs on. Depending on your DNS configuration, any request that falls outside that definition may be considered an other zone request by the Cloudflare network.
 
 {{</Aside>}}
 
