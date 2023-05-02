@@ -12,7 +12,7 @@ However — so long as you also have [journaling](/email-security/deployment/api
 
 ## Retraction options
 
-Once you set up retraction, you can retract messages manually or set up automatic retractions to move messages matching certain dispositions to specific folders within a user’s mailbox. One of the automatic features allows you to re-evaluate messages previously delivered against new information gathered by Area 1. If Area 1 becomes aware of new phishing campaigns, you can retract any messages previously delivered that now match this new information.
+Once you set up retraction, you can retract messages manually or set up automatic retractions to move messages matching certain dispositions to specific folders within a user’s mailbox. You can also enable Post Delivery Response and Phish Submission Response to re-evaluate messages previously delivered against new information gathered by Area 1. Scanned emails that were previously delivered and now match this new phishing information will be retracted.
 
 Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information regarding these options.
 
