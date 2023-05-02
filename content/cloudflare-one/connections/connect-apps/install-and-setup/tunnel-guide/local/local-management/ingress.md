@@ -134,6 +134,7 @@ To set both top-level configurations and origin-specific configurations, you can
 
 - [access](#access)
 - [connectTimeout](#connecttimeout)
+- [noTLSVerify](#notlsverify)
 - [tlsTimeout](#tlstimeout)
 - [http2Origin](#http2origin)
 - [tcpKeepAlive](#tcpkeepalive)
@@ -143,7 +144,7 @@ To set both top-level configurations and origin-specific configurations, you can
 - [httpHostHeader](#httphostheader)
 - [originServerName](#originservername)
 - [caPool](#capool)
-- [noTLSVerify](#notlsverify)
+
 - [disableChunkedEncoding](#disablechunkedencoding)
 - [proxyAddress](#proxyaddress)
 - [proxyPort](#proxyport)
@@ -173,6 +174,12 @@ Default: `30s`
 Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to
 establish TLS, which is controlled by tlsTimeout.
 
+### noTLSVerify
+
+Default: `false`
+
+Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
+
 ### tlsTimeout
 
 Default: `10s`
@@ -183,7 +190,7 @@ Timeout for completing a TLS handshake to your origin server, if you have chosen
 
 Default: `false`
 
-When enabled, `cloudflared` will attempt to connect to your origin server using HTTP/2.0 instead of HTTP/1.1. HTTP/2.0 is a faster protocol for high traffic origins but requires you to deploy an SSL certificate on the origin.
+When enabled, `cloudflared` will attempt to connect to your origin server using HTTP/2.0 instead of HTTP/1.1. HTTP/2.0 is a faster protocol for high traffic origins but requires you to deploy an SSL certificate on the origin. We recommend using this setting in conjunction with [noTLSVerify](#notlsverify) so that you can use a self-signed certificate.
 
 ### tcpKeepAlive
 
@@ -226,12 +233,6 @@ Hostname that `cloudflared` should expect from your origin server certificate.
 Default: `""`
 
 Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare.
-
-### noTLSVerify
-
-Default: `false`
-
-Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
 
 ### disableChunkedEncoding
 
