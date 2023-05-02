@@ -12,7 +12,9 @@ However — so long as you also have [journaling](/email-security/deployment/api
 
 ## Retraction options
 
-Once you set up retraction, you can retract messages manually or set up automatic retractions to move messages matching certain dispositions to specific folders within a user’s mailbox. Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information regarding these options.
+Once you set up retraction, you can retract messages manually or set up automatic retractions to move messages matching certain dispositions to specific folders within a user’s mailbox. You can also enable features that will automatically retract email messages if Area 1 becomes aware of new phishing site or campaigns.
+
+Refer to [Gmail](/email-security/email-configuration/retract-settings/gmail-retraction/) and [Office 365](/email-security/email-configuration/retract-settings/office365-retraction/) guides for detailed information regarding these options.
 
 ## Retraction metrics
 
