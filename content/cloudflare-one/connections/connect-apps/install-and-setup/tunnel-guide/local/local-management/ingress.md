@@ -135,6 +135,7 @@ To set both top-level configurations and origin-specific configurations, you can
 - [access](#access)
 - [connectTimeout](#connecttimeout)
 - [tlsTimeout](#tlstimeout)
+- [http2Origin](#http2origin)
 - [tcpKeepAlive](#tcpkeepalive)
 - [noHappyEyeballs](#nohappyeyeballs)
 - [keepAliveConnections](#keepaliveconnections)
@@ -177,6 +178,12 @@ establish TLS, which is controlled by tlsTimeout.
 Default: `10s`
 
 Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server.
+
+### http2Origin
+
+Default: `false`
+
+When enabled, `cloudflared` will attempt to connect to your origin server using HTTP/2.0 instead of HTTP/1.1. HTTP/2.0 is a faster protocol for high traffic origins but requires you to deploy an SSL certificate on the origin.
 
 ### tcpKeepAlive
 
