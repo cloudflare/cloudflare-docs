@@ -42,6 +42,11 @@ layout: list
           <li><code>cf-ipcontinent</code>: The visitor's continent (value from the <code>ip.geoip.continent</code> field).</li>
           <li><code>cf-iplongitude</code>: The visitor's longitude (value from the <code>ip.src.lon</code> field).</li>
           <li><code>cf-iplatitude</code>: The visitor's latitude (value from the <code>ip.src.lat</code> field).</li>
+          <li><code>cf-region-code</code>: The code of the visitor's <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> first-level region (value from the <code>ip.src.region_code</code> field).</li>
+          <li><code>cf-metro-code</code>: The visitor's metro code (value from the <code>ip.src.metro_code</code> field).</li>
+          <li><code>cf-postal-code</code>: The visitor's postal code (value from the <code>ip.src.postal_code</code> field).</li>
+          <li><code>cf-timezone</code>: The name of the visitor's timezone (value from the <code>ip.src.timezone.name</code> field).</li>
+          <li><code>cf-region</code>: The name of the visitor's <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> first-level region (value from the <code>ip.src.subdivision_2_iso_code</code> field).</li>
         </ul>
       </td>
     </tr>
