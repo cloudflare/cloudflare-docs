@@ -25,7 +25,7 @@ To set up automatic retraction:
 
 6. Select **Update Auto-retract Settings**.
 
-## Post delivery retractions
+### Post delivery retractions
 
 You can enable Area 1 to retract malicious messages after they have already been delivery to your users. You have two options: 
 
