@@ -25,7 +25,7 @@ To configure Schema Validation in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Select **Security** > **API Shield**.
-3. Navigate to **Schema Validation** and select **Add schema**.
+3. Go to **Schema Validation** and select **Add schema**.
 4. Enter a descriptive name for your policy and optionally edit the expression to trigger Schema Validation.
 
     For example, if your API is available at `http://api.example.com/v1`, include a check for the _Hostname_ field — equal to `api.example.com` — and a check for the _URI Path_ field using a regular expression — matching the regex `^/v1`.
@@ -46,5 +46,5 @@ After deploying your API Shield rule, Cloudflare displays a summary of all API e
 
 1. In the **Endpoint action** dropdown, select an action for every request that targets a protected endpoint and fails Schema Validation.
 2. In the **Fallthrough action** dropdown, select an action for every request that targets an unprotected endpoint.
-3. Optionally, you can save the endpoints to Endpoint Management at the same time the Schema is saved by selecting **Save new endpoints to endpoint management**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published live.
+3. Optionally, you can save the endpoints to Endpoint Management at the same time the Schema is saved by selecting **Save new endpoints to [endpoint management](/api-shield/management-and-monitoring/)**. Endpoints will be saved regardless of whether the Schema is saved as a draft or published live.
 4. Select **Done**.

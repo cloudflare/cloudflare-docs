@@ -6,6 +6,6 @@ weight: 4
 
 # Reference
 
-See the following pages for more information about API Shield:
+Refer to the following pages for more information about API Shield:
 
 {{<directory-listing>}}
