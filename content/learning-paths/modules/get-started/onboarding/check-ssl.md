@@ -1,7 +1,7 @@
 ---
 title: Check domain SSL/TLS
 pcx_content_type: learning-unit
-weight: 3
+weight: 4
 layout: learning-unit
 ---
 
@@ -11,7 +11,7 @@ Once you [add and activate](/learning-paths/modules/get-started/onboarding/add-a
 <summary>What are SSL/TLS certificates?</summary>
 <div>
 
-SSL/TLS certificates are what enable websites to move from HTTP to HTTPS. HTTPS is good for website security, user privacy, SEO, and much more.
+SSL/TLS certificates let websites use `https` at the start of the URL (instead of `http`), which is a more secure connection protocol. HTTPS is good for website security, user privacy, SEO, and much more.
 
 For more details on SSL/TLS, refer to the [Learning Center](https://www.cloudflare.com/learning/ssl/what-is-ssl/).
 

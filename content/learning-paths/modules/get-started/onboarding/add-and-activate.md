@@ -33,9 +33,19 @@ Registrar simplifies your Cloudflare setup - and is often cheaper than other reg
 
 ## Existing domain
 
-If you already have a domain, the easiest way to get set up with Cloudflare is to [transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/) to Cloudflare Registrar. Just like with buying a domain name through Cloudflare, this option simplifies your Cloudflare setup. `.uk` domains work too, just with a [slightly different setup](/registrar/get-started/transfer-uk-domain/).
+### Transfer to Cloudflare
 
-If you cannot transfer your domain, your setup has a few more steps:
+If you already have a domain, the easiest way to get set up with Cloudflare is to [transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/) to Cloudflare Registrar. Just like with buying a domain name through Cloudflare, this option simplifies your Cloudflare setup.
+
+{{<Aside type="note">}}
+
+`.uk` domains work too, just with a [slightly different setup](/registrar/get-started/transfer-uk-domain/).
+
+{{</Aside>}}
+
+### Keep current registrar
+
+If you cannot transfer your domain or want to keep your current registrar, your setup has a few more steps:
 
 1. [Add your site](/fundamentals/get-started/setup/add-site/).
 2. (*Optional*) If your domain is sensitive to downtime, you may have a [few additional steps](/fundamentals/get-started/setup/minimize-downtime/).

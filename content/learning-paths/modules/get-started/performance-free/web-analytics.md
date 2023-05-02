@@ -15,8 +15,6 @@ If you already use third-party tools on your website, check out [Cloudflare Zara
 
 {{<render file="_zaraz-definition.md" productFolder="zaraz">}}
 
----
-
 ## Replace third-party tools
 
 If you want analytics without using third-party tools, check out [Cloudflare Web Analytics](/analytics/web-analytics/).

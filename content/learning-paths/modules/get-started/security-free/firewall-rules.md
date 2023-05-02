@@ -17,8 +17,6 @@ In the [security section](https://dash.cloudflare.com/?to=/:account/:zone/securi
 - [User Agent Blocking rules](/waf/tools/user-agent-blocking/)
 - Various [Security settings](/support/firewall/settings/)
 
----
-
 ## Scrape Shield
 
 In the [Scrape Shield section](https://dash.cloudflare.com/?to=/:account/:zone/content-protection) of your Cloudflare dashboard, review the following settings:

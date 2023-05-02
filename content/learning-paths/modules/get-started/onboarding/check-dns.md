@@ -1,24 +1,11 @@
 ---
 title: Check domain DNS
 pcx_content_type: learning-unit
-weight: 2
+weight: 3
 layout: learning-unit
 ---
 
 Once you [add and activate](/learning-paths/modules/get-started/onboarding/add-and-activate/) your domain at Cloudflare, check that all your DNS records are set up correctly.
-
-<details>
-<summary>What is DNS?</summary>
-<div>
-
-DNS stands for Domain Name System.
-
-Without DNS, we would have to remember long strings of numbers to access our favorite websites. Not sure about you, but I would much rather prefer typing out `example.com` to `192.0.2.1`.
-
-For more details on DNS, refer to the [Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
-
-</div>
-</details>
 
 ## Can you visit your website?
 
@@ -49,6 +36,7 @@ For more details on these errors and how to fix them, refer to the following res
 - [Cloudflare 1xxx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-1xxx-errors/)
 - [Add a root domain](/dns/manage-dns-records/how-to/create-root-domain/)
 - [Add a subdomain](/dns/manage-dns-records/how-to/create-subdomain/)
+- [Allow Cloudflare IP addresses](/fundamentals/get-started/setup/allow-cloudflare-ip-addresses/)
 
 ## Does your domain's email still work?
 

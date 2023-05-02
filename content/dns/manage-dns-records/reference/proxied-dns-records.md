@@ -14,9 +14,7 @@ The **Proxy status** of a DNS record affects how Cloudflare treats incoming traf
 
 ## Proxied records
 
-When an `A`, `AAAA`, or `CNAME` record is **Proxied** — also known as being orange-clouded — DNS queries for these will resolve to Cloudflare Anycast IPs instead of their original DNS target. This means that all requests intended for proxied hostnames will go to Cloudflare first and then be forwarded to your origin server.
-
-This behavior allows Cloudflare to [optimize, cache, and protect](/fundamentals/get-started/concepts/how-cloudflare-works/) all requests to your application, as well as protect your origin server from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
+{{<render file="_proxied-records-definition.md">}}
 
 {{<render file="_mix-proxied-and-unproxied.md">}}
 

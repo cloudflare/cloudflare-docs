@@ -7,8 +7,6 @@ layout: learning-unit
 
 Beyond caching, Cloudflare lets all customers adjust the following settings to improve site performance.
 
----
-
 ## Speed
 
 In the [Speed section](https://dash.cloudflare.com/?to=/:account/:zone/speed/optimization) of your Cloudflare dashboard, review the following settings:
@@ -20,8 +18,6 @@ In the [Speed section](https://dash.cloudflare.com/?to=/:account/:zone/speed/opt
 Within the **Speed** section, you can also run periodic [Speed Tests](/fundamentals/speed/speed-test/) to assess the peformance of your website.
 
 {{</Aside>}}
-
----
 
 ## Network
 
