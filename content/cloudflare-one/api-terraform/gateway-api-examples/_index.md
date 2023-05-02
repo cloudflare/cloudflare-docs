@@ -8,14 +8,8 @@ layout: list
 
 # Gateway API examples
 
-{{<content-column>}}
-
-Gateway users can create DNS, network, and HTTP policies.
-
-{{</content-column>}}
+Gateway users can create DNS, network, and HTTP policies, including policies with multiple traffic, identity, and device posture conditions.
 
 ## Example policies
-
-These are commonly used firewall policies.
 
 {{<list-examples directory="/cloudflare-one/api-terraform/gateway-api-examples/">}}
