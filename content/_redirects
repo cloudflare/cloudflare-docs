@@ -213,7 +213,7 @@
 /support/dns/dnssec/troubleshooting-dnssec/ /dns/additional-options/dnssec/troubleshooting/ 301
 /support/dns/how-to/warning-about-exposing-your-origin-ip-address-via-dns-records/ /dns/manage-dns-records/troubleshooting/exposed-ip-address/ 301
 /support/dns/troubleshooting/cloudflare-dns-faq/ /dns/troubleshooting/faq/ 301
-support/dns/troubleshooting/dns-troubleshooting-faq/ /dns/troubleshooting/general-faq/ 301
+/support/dns/troubleshooting/dns-troubleshooting-faq/ /dns/troubleshooting/faq/ 301
 /support/dns/troubleshooting/email-undeliverable-when-using-cloudflare/ /dns/troubleshooting/email-issues/ 301
 /support/dns/troubleshooting/error-when-adding-secondary-nameservers-nsxxxx.secondary.cloudflare.com-at-registrar/ /dns/zone-setups/zone-transfers/troubleshooting/ 301
 /support/dns/troubleshooting/i-cannot-add-my-domain-to-cloudflare/ /dns/zone-setups/troubleshooting/cannot-add-domain/ 301
