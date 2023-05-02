@@ -17,7 +17,7 @@ You can use Area 1 logs to review actions performed on your account:
 
 You can use the Preview feature in Audit logs to preview how Area 1 handles post delivery retractions. With Audit logs Preview, Area 1 shows you the emails that would have been retracted with Post Delivery Response or Phish Submissions Response enabled.
 
-Refer to [Gmail retration](/email-security/email-configuration/retract-settings/gmail-retraction/#post-delivery-retractions) or [Office 365 retractions](/email-security/email-configuration/retract-settings/office365-retraction/#post-delivery-retractions) to learn more about this feature.
+Refer to **Post delivery retractions for new threats** for [Gmail retration](/email-security/email-configuration/retract-settings/gmail-retraction/#post-delivery-retractions) or [Office 365 retractions](/email-security/email-configuration/retract-settings/office365-retraction/#post-delivery-retractions) to learn more about this feature.
 
 To review preview logs:
 
