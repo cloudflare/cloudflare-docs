@@ -64,6 +64,6 @@ After saving the tunnel, you will be redirected to the **Tunnels** page. Look fo
 
 {{<Aside type="note" header="Troubleshooting">}}
 
-If you run into issues during the remote setup process, refer to the [Tunnel FAQ](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-i-troubleshoot-a-tunnel-that-was-configured-through-the-cli) for troubleshooting tips.
+If you run into issues while setting up your tunnel, refer to the [troubleshooting FAQ](/cloudflare-one/faq/cloudflare-tunnels-faq/#how-can-i-troubleshoot-a-tunnel-that-was-configured-from-zero-trust).
 
 {{</Aside>}}

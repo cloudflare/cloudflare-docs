@@ -119,10 +119,6 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 
 {{<faq-answer>}}
 
-### View debug logs
-
-[Stream real-time logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-a-remote-machine) for your tunnel from any client machine.
-
 ### Ensure that only one instance of `cloudflared` is installed as a service
 
 If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
@@ -130,6 +126,10 @@ If you are unable to create a Tunnel using the installation script ("cloudflared
 ### Check your DNS records
 
 If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+### View debug logs
+
+Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -141,7 +141,7 @@ If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME r
 
 ### View debug logs
 
-[Stream real-time logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-a-remote-machine) for your tunnel from any client machine, or run the tunnel with [debug logging](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-the-server) enabled.
+Refer to [Tunnel logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/) for information about obtaining `cloudflared` logs.
 
 ### Check SSL/TLS encryption mode
 
