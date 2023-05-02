@@ -6,7 +6,25 @@ weight: 1
 
 # Tunnel logs
 
-Tunnel logs record all activity between a `cloudflared` instance and Cloudflare's global network, as well as all activity between `cloudflared` and your origin server. These logs allow you to investigate connectivity or performance issues with a Cloudflare Tunnel. You can stream real-time logs for a tunnel from any client machine, or you can configure your server to store persistent logs.
+Tunnel logs record all activity between a `cloudflared` instance and Cloudflare's global network, as well as all activity between `cloudflared` and your origin server. These logs allow you to investigate connectivity or performance issues with a Cloudflare Tunnel. You can configure your server to store persistent logs, or you can stream real-time logs from any client machine.
+
+## View logs on the server
+
+If you have access to the origin server, you can enable logging when you start the tunnel:
+
+```sh
+$ cloudflared tunnel --loglevel debug run <UUID>
+```
+
+The [`--loglevel` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#loglevel) indicates the logging level for the local `cloudflared` instance, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
+
+### Write logs to file
+
+By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can use the [`--logfile` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) to save your logs to a file:
+
+```sh
+$ cloudflared tunnel --logfile mytunnel.log run <UUID>
+```
 
 ## View logs on a client
 
@@ -18,7 +36,7 @@ The `cloudflared` daemon can stream logs from any tunnel in your account to the 
 
 #### Prerequisites
 
-- `cloudflared` version 2023.4.2 or higher is installed on both your local machine and the origin server.
+- `cloudflared` version 2023.5.0 or higher is installed on both your local machine and the origin server.
 - The tunnel is active and able to receive requests.
 
 #### View logs
@@ -68,23 +86,5 @@ If you are running multiple `cloudflared` instances for the same tunnel (also kn
 
 ### Performance considerations
 
-- The logging session will only be held open for one hour. All logging systems introduce some level of performance overhead, and this limitation helps prevent longterm impact to your tunnel's end-to-end latencies.
-- When streaming logs for a high throughput tunnel, Cloudflare intentionally prioritizes service stability over log delivery. Therefore, some log events may be dropped to avoid overloading the server. To work around the issue, try [filtering your logs](#filter-logs) or [store your logs to file](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-the-server).
-
-## View logs on the server
-
-If you have access to the server that is running the tunnel, you can view logs without the [limitations of remote streaming](#limitations):
-
-```sh
-$ cloudflared tunnel --loglevel debug run <UUID>
-```
-
-The [`--loglevel` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#loglevel) indicates the logging level for the local `cloudflared` instance, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, note that this can expose sensitive information in your logs.
-
-### Write logs to file
-
-By default, `cloudflared` prints logs to stdout and does not store logs on the server. You can use the [`--logfile` flag](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/local/local-management/arguments/#logfile) to save your logs to a file:
-
-```sh
-$ cloudflared tunnel --logfile mytunnel.log run <UUID>
-```
+- The logging session will only be held open for one hour. All logging systems introduce some level of performance overhead, and this limit helps prevent longterm impact to your tunnel's end-to-end latencies.
+- When streaming logs for a high throughput tunnel, Cloudflare intentionally prioritizes service stability over log delivery. To reduce the number of dropped logs, try [requesting fewer logs](#filter-logs). To ensure that you are seeing all logs, [view logs on the server](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-the-server) instead of streaming the logs remotely.
