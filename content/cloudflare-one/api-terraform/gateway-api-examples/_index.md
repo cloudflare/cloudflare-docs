@@ -14,8 +14,8 @@ Gateway users can create DNS, network, and HTTP policies.
 
 {{</content-column>}}
 
-## Example rule configurations
+## Example policies
 
-These are commonly used rule configurations.
+These are commonly used firewall policies.
 
-{{<list-examples type="gateway">}}
+{{<list-examples directory="/cloudflare-one/api-terraform/gateway-api-examples/">}}
