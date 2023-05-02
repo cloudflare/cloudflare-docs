@@ -27,9 +27,9 @@ To set up automatic retraction:
 
 ### Post delivery retractions for new threats
 
-Sometimes, new information arises regarding new threats or phishing campains. This means that your users might have email messages that were scanned by Area 1 but not retracted because, at the time of scan, they had not been identified as a threat. However, Area 1 offers you tools to continue monitoring inboxes for any new threats that Area 1 finds at a later stage. Email messages that fit these new threats will be retracted.
+Sometimes, new information arises regarding new threats or phishing campaigns. This means that your users might have email messages that were scanned by Area 1 but not retracted because, at the time of scan, they had not been identified as a threat. However, Area 1 offers you tools to continue re-evaluating email messages based on knowledge Area 1 may acquire since the initial delivery. Any email messages that fit this new threat knowledge will be retracted.
 
 You have two options you can enable: 
 
-- **Post Delivery Response**:  Area 1 will continue re-evaluating emails already delivered to your users’s inboxes in search for phishing sites or campaigns not previously known to our systems. If any email messages fitting these new criteria are found, Area 1 retracts them.
-- **Phish Submission Response**: Area 1 will retract emails already delivered that are reported by your users as phishing, and are found to be malicious.
+- **Post Delivery Response**:  Area 1 will continue re-evaluating emails already delivered to your users’ inboxes in search for phishing sites or campaigns not previously known to our systems. If any email messages fitting these new criteria are found, Area 1 retracts them.
+- **Phish Submission Response**: Area 1 will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Area 1. Retraction will occur according to your configuration.
