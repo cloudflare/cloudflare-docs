@@ -143,11 +143,3 @@ ___
 ## Next steps
 
 If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the _DS record_ matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](https://support.cloudflare.com/hc/articles/360006660072).
-
-___
-
-## Related resources
-
--   [How DNSSEC works](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/)
--   [DNS security](https://www.cloudflare.com/learning/dns/dns-security/)
--   [Configuring DNSSEC with Cloudflare](/dns/additional-options/dnssec)

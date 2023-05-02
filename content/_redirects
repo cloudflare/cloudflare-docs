@@ -208,7 +208,7 @@
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
 /support/dns/advanced-topics/ /dns/ 301
 /support/dns/dnssec/ /dns/additional-options/dnssec/ 301
-/support/dns/troubleshooting/ /dns/troubleshooting/
+/support/dns/troubleshooting/ /dns/troubleshooting/ 301
 /support/dns/advanced-topics/adding-vendor-specific-dns-records-to-cloudflare/ /dns/manage-dns-records/reference/vendor-specific-records/ 301
 /support/dns/how-to/warning-about-exposing-your-origin-ip-address-via-dns-records/ /dns/manage-dns-records/troubleshooting/exposed-ip-address/ 301
 /support/dns/troubleshooting/cloudflare-dns-faq/ /dns/troubleshooting/general-faq/ 301
