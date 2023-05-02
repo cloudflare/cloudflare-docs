@@ -20,7 +20,7 @@ When using Page Rules with Workers, the following workflow is applied.
 4. Worker executes.
 5. Worker makes a same-zone or other-zone subrequest. Because this is a Worker route, Cloudflare disables a number of features, including some that would be set by Page Rules.
 
-Page Rules are evaluated both at the client to Worker request stage and the Worker subrequest stage.
+Page Rules are evaluated both at the client-to-Worker request stage (step 2) and the Worker subrequest stage (step 5).
 
 If you are experiencing Page Rule errors when running Workers, contact your Cloudflare account team or [Cloudflare Support](https://support.cloudflare.com/hc/en-us/articles/200172476-Contacting-Cloudflare-Support).
 
