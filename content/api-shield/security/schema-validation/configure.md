@@ -192,13 +192,13 @@ header: cURL command
 $ curl -X POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H 'Content-Type: application/json' \
-  -d '  [
-            {
-                "method": "GET",
-                "host": "example.com",
-                "endpoint": "/pets",
-            }
-        ]'
+  -d '[
+    {
+      "method": "GET",
+      "host": "example.com",
+      "endpoint": "/pets",
+     }
+  ]'
 ```
 
 ```json
@@ -285,8 +285,8 @@ $ curl -X PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/
   -H "Authorization: Bearer <API_TOKEN>" \
   -H 'Content-Type: application/json' \
   -d '{
-        "validation_default_mitigation_action": "block"
-    }
+    "validation_default_mitigation_action": "block"
+  }'
 ```
 
 ```json
