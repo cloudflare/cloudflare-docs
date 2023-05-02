@@ -119,6 +119,10 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 
 {{<faq-answer>}}
 
+### View debug logs
+
+[Stream real-time logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-a-remote-machine) for your tunnel from any client machine.
+
 ### Ensure that only one instance of `cloudflared` is installed as a service
 
 If you are unable to create a Tunnel using the installation script ("cloudflared service is already installed"), ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing Tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
@@ -126,10 +130,6 @@ If you are unable to create a Tunnel using the installation script ("cloudflared
 ### Check your DNS records
 
 If you are unable to save your Tunnel's public hostname ("An A, AAAA, or CNAME record with that host already exists"), choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
-
-### Run Tunnel with debug logging
-
-If you created a Cloudflare Tunnel from Zero Trust, the tunnel runs as a service on your OS. You can modify the Cloudflare Tunnel service with one or more configuration options. To learn more, refer to our [remote management](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/remote/remote-management/) documentation.
 
 {{</faq-answer>}}
 {{</faq-item>}}
@@ -139,15 +139,9 @@ If you created a Cloudflare Tunnel from Zero Trust, the tunnel runs as a service
 
 {{<faq-answer>}}
 
-### Run Tunnel with debug logging
+### View debug logs
 
-Use the following command to run your Tunnel in the debug mode:
-
-```sh
-$ cloudflared tunnel --loglevel debug run
-```
-
-The `--loglevel` flag indicates the logging level, which can be one of {`debug`, `info`, `warn`, `error`, `fatal`} (default: `info`). At the `debug` level, `cloudflared` will log and display the request URL, method, protocol, content length, as well as all request and response headers. However, please note that this can expose sensitive information in your logs.
+[Stream real-time logs](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-a-remote-machine) for your tunnel from any client machine, or run the tunnel with [debug logging](/cloudflare-one/connections/connect-apps/monitor-tunnels/logs/#view-logs-on-the-server) enabled.
 
 ### Check SSL/TLS encryption mode
 
