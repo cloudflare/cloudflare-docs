@@ -15,11 +15,11 @@ You can use Area 1 logs to review actions performed on your account:
 
 ## Logs preview
 
-You can use the Preview feature in Audit logs to check how Area 1 handles post delivery retractions. This functionality might be useful if you are not ready to deploy this automated feature to your organization.
+You can use the Preview feature in Audit logs to preview how Area 1 handles post delivery retractions. With Audit logs Preview, Area 1 shows you the emails that would have been retracted with Post Delivery Response or Phish Submissions Response enabled.
 
-When you review this type of audit log, Area 1 shows you the emails that would have been retracted post-delivery, with Post Delivery Response or Phish Submissions Response enabled. Refer to [Gmail retration](/email-security/email-configuration/retract-settings/gmail-retraction/#post-delivery-retractions) or [Office 365 retractions](/email-security/email-configuration/retract-settings/office365-retraction/#post-delivery-retractions) to learn more.
+Refer to [Gmail retration](/email-security/email-configuration/retract-settings/gmail-retraction/#post-delivery-retractions) or [Office 365 retractions](/email-security/email-configuration/retract-settings/office365-retraction/#post-delivery-retractions) to learn more about this feature.
 
-To review these preview logs:
+To review preview logs:
 
 1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
