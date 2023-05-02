@@ -1,7 +1,7 @@
 ---
 title: Analytics
 pcx_content_type: learning-unit
-weight: 2
+weight: 3
 layout: learning-unit
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Other product lines
 pcx_content_type: learning-unit
-weight: 6
+weight: 7
 layout: learning-unit
 ---
 
