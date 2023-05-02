@@ -64,8 +64,6 @@ If you are running multiple `cloudflared` instances for the same tunnel (also kn
     $ cloudflared tail --connector-id <CONNECTOR ID> <UUID>
     ```
 
-### Dashboard
-
 ### Limitations
 
 - The logging session will only be held open for one hour. All logging systems introduce some level of performance overhead, and this limitation helps prevent longterm impact to your tunnel's end-to-end latencies.
