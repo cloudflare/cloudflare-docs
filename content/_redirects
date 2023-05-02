@@ -210,6 +210,7 @@
 /support/dns/dnssec/ /dns/additional-options/dnssec/ 301
 /support/dns/troubleshooting/ /dns/troubleshooting/ 301
 /support/dns/advanced-topics/adding-vendor-specific-dns-records-to-cloudflare/ /dns/manage-dns-records/reference/vendor-specific-records/ 301
+/support/dns/advanced-topics/delegating-subdomains-outside-of-cloudflare/ /dns/manage-dns-records/how-to/subdomains-outside-cloudflare/ 301
 /support/dns/dnssec/troubleshooting-dnssec/ /dns/additional-options/dnssec/troubleshooting/ 301
 /support/dns/how-to/warning-about-exposing-your-origin-ip-address-via-dns-records/ /dns/manage-dns-records/troubleshooting/exposed-ip-address/ 301
 /support/dns/troubleshooting/cloudflare-dns-faq/ /dns/troubleshooting/faq/ 301
@@ -218,7 +219,7 @@
 /support/dns/troubleshooting/error-when-adding-secondary-nameservers-nsxxxx.secondary.cloudflare.com-at-registrar/ /dns/zone-setups/zone-transfers/troubleshooting/ 301
 /support/dns/troubleshooting/i-cannot-add-my-domain-to-cloudflare/ /dns/zone-setups/troubleshooting/cannot-add-domain/ 301
 /support/dns/troubleshooting/my-dns-doesnt-work/ /dns/troubleshooting/dns-issues/ 301
-
+/dns/zone-setups/troubleshooting/domain-deleted/ /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
