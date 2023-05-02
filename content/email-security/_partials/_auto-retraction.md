@@ -27,9 +27,9 @@ To set up automatic retraction:
 
 ### Post delivery retractions for new threats
 
-Sometimes, new information arises regarding new threats or phishing campaigns. This means that your users might have email messages that were scanned by Area 1 but not retracted because, at the time of scan, they had not been identified as a threat. However, Area 1 offers you tools to continue re-evaluating email messages based on knowledge Area 1 may acquire since the initial delivery. Any email messages that fit this new threat knowledge will be retracted.
+Area 1 is continuously gathering new information about phishing campaigns. Users might have email messages that were scanned by Area 1 but not retracted because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Area 1 offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
 
 You have two options you can enable: 
 
-- **Post Delivery Response**:  Area 1 will continue re-evaluating emails already delivered to your users’ inboxes in search for phishing sites or campaigns not previously known to our systems. If any email messages fitting these new criteria are found, Area 1 retracts them.
+- **Post Delivery Response**:  Area 1 will continue re-evaluating emails already delivered to your users’ inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Area 1 retracts them.
 - **Phish Submission Response**: Area 1 will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Area 1. Retraction will occur according to your configuration.
