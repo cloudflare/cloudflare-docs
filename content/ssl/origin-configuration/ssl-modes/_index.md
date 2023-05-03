@@ -8,7 +8,8 @@ meta:
 
 # Encryption modes
 
-The modes listed below control the scheme (`http://` or `https://`) that Cloudflare uses to connect to your origin web server and how SSL certificates presented by your origin will be validated.
+{{<render file="_encryption-mode-definition.md">}}
+<br/>
 
 If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
 

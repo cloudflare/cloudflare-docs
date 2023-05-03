@@ -727,7 +727,7 @@
     },
     "grpc": {
       "title": "gRPC",
-      "link": "https://support.cloudflare.com/hc/articles/360050483011",
+      "link": "/support/network/understanding-cloudflare-grpc-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -741,7 +741,7 @@
     },
     "http2": {
       "title": "HTTP/2",
-      "link": "https://support.cloudflare.com/hc/articles/200168076",
+      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -777,7 +777,7 @@
     },
     "http3": {
       "title": "HTTP/3 (with QUIC)",
-      "link": "https://www.cloudflare.com/learning/performance/what-is-http3/",
+      "link": "/support/network/understanding-cloudflare-http2-and-http3-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -791,7 +791,7 @@
     },
     "ip_geolocation": {
       "title": "IP Geolocation",
-      "link": "https://support.cloudflare.com/hc/articles/200168236",
+      "link": "/support/network/configuring-ip-geolocation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -805,7 +805,7 @@
     },
     "ipv6": {
       "title": "IPv6 Compatibility",
-      "link": "https://support.cloudflare.com/hc/articles/229666767",
+      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -849,7 +849,7 @@
     },
     "onion_routing": {
       "title": "Onion Routing",
-      "link": "https://support.cloudflare.com/hc/articles/203306930",
+      "link": "/support/firewall/learn-more/understanding-cloudflare-tor-support-and-onion-routing/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -863,7 +863,7 @@
     },
     "pseudo_ipv4": {
       "title": "Pseudo IPv4",
-      "link": "https://support.cloudflare.com/hc/articles/229666767",
+      "link": "/support/network/understanding-and-configuring-cloudflares-ipv6-support/#enable-pseudo-ipv4",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -905,7 +905,7 @@
     },
     "websockets": {
       "title": "WebSockets",
-      "link": "https://support.cloudflare.com/hc/articles/200169466",
+      "link": "/support/network/using-cloudflare-with-websockets/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1036,7 +1036,7 @@
     },
     "page_rules": {
       "title": "Page Rules",
-      "link": "https://support.cloudflare.com/hc/articles/218411427",
+      "link": "/support/page-rules/understanding-and-configuring-cloudflare-page-rules-page-rules-tutorial/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1577,7 +1577,7 @@
     "title": "Scrape Shield",
     "email_obfuscation": {
       "title": "Email Address Obfuscation",
-      "link": "https://support.cloudflare.com/hc/articles/200170016",
+      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/what-is-email-address-obfuscation/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1591,7 +1591,7 @@
     },
     "hotlink_protection": {
       "title": "Hotlink Protection",
-      "link": "https://support.cloudflare.com/hc/articles/200170026",
+      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/understanding-cloudflare-hotlink-protection/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1605,7 +1605,7 @@
     },
     "server_side_excludes": {
       "title": "Server-side Excludes",
-      "link": "https://support.cloudflare.com/hc/articles/200170036",
+      "link": "/support/more-dashboard-apps/cloudflare-scrape-shield/what-does-server-side-excludes-sse-do/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1721,7 +1721,7 @@
     },
     "auto_minify": {
       "title": "Auto Minify",
-      "link": "https://support.cloudflare.com/hc/articles/200168196",
+      "link": "/support/speed/optimization-file-size/using-cloudflare-auto-minify/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1735,7 +1735,7 @@
     },
     "brotli": {
       "title": "Brotli compression",
-      "link": "https://support.cloudflare.com/hc/articles/200168396",
+      "link": "/support/speed/optimization-file-size/what-will-cloudflare-compress/",
       "properties": {
         "availability": {
           "title": "Availability",
@@ -1808,7 +1808,7 @@
     },
     "mobile_redirect": {
       "title": "Mobile redirect",
-      "link": "https://support.cloudflare.com/hc/articles/200168336",
+      "link": "/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/",
       "properties": {
         "availability": {
           "title": "Availability",

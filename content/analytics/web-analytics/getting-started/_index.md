@@ -28,12 +28,11 @@ For more information on how many sites you can track, refer to [Limits](/analyti
 
 ## Sites proxied through Cloudflare
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select the **Analytics & Logs** drop-down and choose **Web Analytics**.
-3. Under **Quick Actions**, select **Add a site**.
-4. Select a hostname from the drop-down menu > **Done**.
+{{<render file="_web-analytics-proxied-setup.md">}}
 
-Your website is now using Web Analytics through the automatic setup, which is enabled by default. To set up Web Analytics manually:
+Your website is now using Web Analytics through the automatic setup, which is enabled by default. 
+
+To set up Web Analytics manually:
 1. After step 4 (above), expand **Advanced options**.
 2. Select **Disable automatic setup**.
 3. Copy the JS snippet.
