@@ -8,11 +8,11 @@ meta:
 
 # Get started with Bot Fight Mode
 
-{{<render file="_bot-fight-mode-definition">}}
+{{<render file="_bot-fight-mode-definition.md">}}
 
 ## Enable Bot Fight Mode
 
-{{<render file="_bot-fight-mode-enable">}}
+{{<render file="_bot-fight-mode-enable.md">}}
 
 ## Disable Bot Fight Mode
 

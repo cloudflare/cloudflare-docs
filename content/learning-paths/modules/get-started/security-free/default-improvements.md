@@ -11,9 +11,9 @@ When your DNS records are [proxied](/dns/manage-dns-records/reference/proxied-dn
 
 {{<render file="_ddos-definition-and-diagram.md">}}
 
-For more information about DDoS attacks and Cloudflare DDoS protection, refer to [Prevent DDoS Attacks](/learning-paths/prevent-ddos-attacks/).
+For more information about DDoS attacks and Cloudflare DDoS protection, refer to [Prevent DDoS attacks](/learning-paths/prevent-ddos-attacks/).
 
-## WAF Managed Rulesets
+## Managed rulesets
 
 All customers have access to the Cloudflare Free Managed Ruleset, which provides mitigations against high and wide-impacting vulnerabilities.
 

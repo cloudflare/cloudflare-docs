@@ -12,4 +12,4 @@ Cloudflare offers a variety of add-on products to improve application security, 
 - [Page Shield](/page-shield/)
 - [Turnstile](/turnstile/)
 
-For an full list, refer to the [Product Catalog](/products/?product-group=Application+security).
+For a full list, refer to the [Product Catalog](/products/?product-group=Application+security).

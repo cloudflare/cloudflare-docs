@@ -51,4 +51,4 @@ For more details on these errors and how to fix them, refer to the following res
 - [Cloudflare 5xx errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/)
 - [Common SSL/TLS errors](/support/ssl-tls/troubleshooting/troubleshooting-ssl-errors/)
 - [Universal SSL/TLS certificates](/ssl/edge-certificates/universal-ssl/)
-- [Cloudflare Encryption Modes](/ssl/origin-configuration/ssl-modes/)
+- [Cloudflare encryption modes](/ssl/origin-configuration/ssl-modes/)

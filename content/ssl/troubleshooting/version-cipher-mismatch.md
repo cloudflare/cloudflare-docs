@@ -15,7 +15,7 @@ This error occurs when your domain or subdomain is not covered by an SSL/TLS cer
 
 - A [delay in certificate activation](#certificate-activation).
 - An [unproxied domain or subdomain DNS record](#proxied-dns-records).
-- An [expired Custom certificate](#certificate-expiration)
+- An [expired Custom certificate](#certificate-expiration).
 - A [multi-level subdomain](#multi-level-subdomains) (`test.dev.example.com`).
 
 ## Decision tree

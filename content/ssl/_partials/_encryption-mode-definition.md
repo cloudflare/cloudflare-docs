@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Your zone's **SSL/TLS Encryption Mode** controls how Cloudflare manages two connections: one between your visitors and Cloudflare and the other between Cloudflare and your origin server.
+Your zone's **SSL/TLS Encryption Mode** controls how Cloudflare manages two connections: one between your visitors and Cloudflare, and the other between Cloudflare and your origin server.
 
 ```mermaid
 flowchart LR

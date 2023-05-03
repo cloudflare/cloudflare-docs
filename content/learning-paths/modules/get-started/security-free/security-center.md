@@ -9,7 +9,7 @@ layout: learning-unit
 
 {{<Aside type="note">}}
 
-For additional details and help, refer to the [Security Center documentation](/security-center/)
+For additional details and help, refer to the [Security Center documentation](/security-center/).
 
 {{</Aside>}}
 

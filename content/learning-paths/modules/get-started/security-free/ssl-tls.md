@@ -14,7 +14,7 @@ Once you make sure that your Cloudflare SSL/TLS [is working correctly](/learning
 {{<render file="_encryption-mode-definition.md" productFolder="ssl">}}
 <br/>
 
-### Easy setup
+### Basic setup
 
 The simplest way to choose your encryption mode is to enable the **SSL/TLS Recommender**, which scans your domain and recommends the appropriate setting.
 

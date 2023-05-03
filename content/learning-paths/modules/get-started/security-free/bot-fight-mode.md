@@ -12,7 +12,7 @@ layout: learning-unit
 Bot Fight Mode has a few limitations, including that it:
 
 - Protects entire domains without endpoint restrictions.
-- Cannot be customized, adjusted, or reconfigured via [Firewall rules](/learning-paths/modules/get-started/security-free/firewall-rules/).
+- Cannot be customized, adjusted, or reconfigured via [WAF custom rules](/learning-paths/modules/get-started/security-free/firewall-rules/).
 
 If these limitations could cause issues with your application, do not enable this feature.
 

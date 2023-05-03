@@ -29,7 +29,7 @@ D --Verification period--> E
 
 If you do not already have a domain name, purchase one through [Cloudflare Registrar](/registrar/get-started/register-domain/).
 
-Registrar simplifies your Cloudflare setup - and is often cheaper than other registrars - so it's our recommended option for most customers.
+Registrar simplifies your Cloudflare setup - and is often cheaper than other registrars - so it is our recommended option for most customers.
 
 ## Existing domain
 

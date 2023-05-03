@@ -11,7 +11,7 @@ Beyond default improvements, SSL/TLS, and DNSSEC, Cloudflare lets all customers 
 
 In the [security section](https://dash.cloudflare.com/?to=/:account/:zone/security) of your Cloudflare dashboard, review the following settings:
 
-- [Custom firewall rules](/waf/custom-rules/)
+- [WAF custom rules](/waf/custom-rules/)
 - [Rate limiting rules](/waf/rate-limiting-rules/)
 - [IP access rules](/waf/tools/ip-access-rules/)
 - [User Agent Blocking rules](/waf/tools/user-agent-blocking/)

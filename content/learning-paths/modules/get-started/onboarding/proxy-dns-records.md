@@ -41,7 +41,7 @@ DNS records are instructions that live in authoritative DNS servers and provide 
 
 - [Reverse proxy (definition)](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)
 - [How Cloudflare works](/fundamentals/get-started/concepts/how-cloudflare-works/)
-- [Record Proxy Status](/dns/manage-dns-records/reference/proxied-dns-records/)
+- [DNS record proxy status](/dns/manage-dns-records/reference/proxied-dns-records/)
 
 </div>
 </details>
