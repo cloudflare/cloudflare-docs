@@ -8,7 +8,7 @@ layout: list
 
 # Gateway API examples
 
-Gateway users can create DNS, network, and HTTP policies, including policies with multiple traffic, identity, and device posture conditions.
+You can use the Cloudflare Gateway API to create DNS, network, and HTTP policies, including policies with multiple traffic, identity, and device posture conditions.
 
 ## Example policies
 
