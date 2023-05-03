@@ -59,7 +59,7 @@ routes = [
 
 On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/triggers/routes/#set-up-a-route), or on a [`workers.dev`](http://localhost:5173/workers/platform/triggers/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
 
-On the same zone, a target Worker is running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed.
+On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 
 For example, consider the following scenario, where both Workers are running on the `example.com` Cloudflare zone:
 
@@ -89,11 +89,16 @@ Custom Domains do not support [wildcard DNS records](/dns/manage-dns-records/ref
 
 ![Custom Domains follow standard DNS ordering and matching logic](/workers/platform/triggers/media/custom-domains-api-gateway.png)
 
-## Interaction with [Routes](/workers/platform/triggers/routes/#set-up-a-route)
+## Interaction with Routes
 
 A Worker running on a Custom Domain is treated as an origin. Any Workers running on routes before your Custom Domain can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object. That means that you are able to set up Workers to run before a request gets to your Custom Domain Worker. In other words, you can chain together two Workers in the same request.
 
-For example, a Custom Domain for `api.example.com` can point to your Worker `api-worker`. A route added to `api.example.com/auth` can point to your Worker `auth-worker`. A request to `api.example.com/auth` will trigger the `auth-worker` Worker. Using `fetch(request)` within the Worker `auth-worker` will invoke the Worker `api-worker`, as if it was a normal application server.
+For example, consider the following workflow:
+
+1. A Custom Domain for `api.example.com` points to your `api-worker` Worker. 
+2. A route added to `api.example.com/auth` points to your `auth-worker` Worker. 
+3. A request to `api.example.com/auth` will trigger your `auth-worker` Worker. 
+4. Using `fetch(request)` within the `auth-worker` Worker will invoke the `api-worker` Worker, as if it was a normal application server.
 
 ```js
 ---
