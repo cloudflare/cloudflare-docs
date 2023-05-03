@@ -71,20 +71,21 @@ In the runtime API documentation, you can find  information about the [variables
 
 ```js
 env.EXAMPLE_DATASET.writeDataPoint({
-    'blobs': [ 
-        request.cf.colo, 
-        request.cf.country, 
-        request.cf.city, 
-        request.cf.region, 
-        request.cf.timezone],
-    'doubles': [
-        request.cf.metroCode, 
-        request.cf.longitude, 
-        request.cf.latitude, 
-    ],
-    'indexes': [
-        request.cf.postalCode
-    ] 
+  'blobs': [ 
+    request.cf.colo, 
+    request.cf.country, 
+    request.cf.city, 
+    request.cf.region, 
+    request.cf.timezone
+  ],
+  'doubles': [
+    request.cf.metroCode, 
+    request.cf.longitude, 
+    request.cf.latitude
+  ],
+  'indexes': [
+    request.cf.postalCode
+  ] 
 });
 ```
 
