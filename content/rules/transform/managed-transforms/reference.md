@@ -46,7 +46,6 @@ layout: list
           <li><code>cf-metro-code</code>: The visitor's metro code (value from the <code>ip.src.metro_code</code> field).</li>
           <li><code>cf-postal-code</code>: The visitor's postal code (value from the <code>ip.src.postal_code</code> field).</li>
           <li><code>cf-timezone</code>: The name of the visitor's timezone (value from the <code>ip.src.timezone.name</code> field).</li>
-          <li><code>cf-region</code>: The visitor's <a href="https://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2</a> first-level region (value from the <code>ip.src.subdivision_1_iso_code</code> field).</li>
         </ul>
       </td>
     </tr>
