@@ -42,7 +42,7 @@ For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare
 
 Once you have chosen your edge certificate, [choose an encryption mode](/ssl/origin-configuration/ssl-modes/).
 
-Encryption modes specify how Cloudflare encrypts connections between (a) visitors and Cloudflare and (b) Cloudflare and your origin server. For more context about this two-part process refer to the [concepts page](/ssl/concepts/#ssltls-certificate).
+Encryption modes specify how Cloudflare encrypts connections between (a) visitors and Cloudflare, and (b) Cloudflare and your origin server. For more context about this two-part process refer to the [concepts page](/ssl/concepts/#ssltls-certificate).
 
 Note that some encryption modes will require you to have a valid [origin certificate](/ssl/concepts/#origin-certificate), which is managed on your origin server. Each encryption mode setup page lists out this and other requirements and you can also [consider other Cloudflare options to use with your origin server](/ssl/origin-configuration/), such as [Origin CA certificates](/ssl/origin-configuration/origin-ca/).
 
