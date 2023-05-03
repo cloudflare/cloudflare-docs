@@ -7,7 +7,7 @@ title: Custom Domains
 
 ## Background
 
-Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you setup a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/triggers/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
+Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/triggers/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
 
 ## Add a Custom Domain
 
@@ -57,7 +57,7 @@ routes = [
 
 ## Worker to Worker communication
 
-On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/triggers/routes/#set-up-a-route), or on a [`workers.dev`](http://localhost:5173/workers/platform/triggers/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/triggers/routes/#set-up-a-route), or on a [`workers.dev`](/workers/platform/triggers/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
 
 On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 
