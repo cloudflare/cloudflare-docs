@@ -11,6 +11,12 @@ layout: single
 Requires [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/).
 {{</Aside>}}
 
+{{<Aside type="warn">}}
+  This feature is not current compatible with the follow Cloudflare products: Automatic Platform Optimization (APO) for WordPress, Zaraz, and
+Automatic Signed Exchanges (SXGs). If any of these are enable, a "double isolation" error will be shown.
+{{</Aside>}}  
+
+
 With Access policies, you can require users to open self-hosted applications in a secure [remote browser](/cloudflare-one/policies/browser-isolation/). Because the remote browser is directly integrated into our Secure Web Gateway platform, [HTTP policies](/cloudflare-one/policies/filtering/http-policies/) can be applied to isolated applications without needing to install the WARP client. This allows you to distribute internal applications to unmanaged users while retaining control over sensitive data.
 
 ## Enable Browser Isolation
