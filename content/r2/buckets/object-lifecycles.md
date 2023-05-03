@@ -16,7 +16,7 @@ For example, you can create an object lifecycle rule to delete objects after 30 
 - An object is no longer billable once it has been deleted.
 - Buckets have a default lifecycle policy to expire multipart uploads seven days after initiation.
 
-## Add a rule from the Cloudflare dashboard
+## Add an object lifecycle rule from the Cloudflare dashboard
 
 1. From the Cloudflare dashboard, select **R2**.
 2. Locate and select your bucket from the list.
