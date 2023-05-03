@@ -71,19 +71,21 @@ In the runtime API documentation, you can find  information about the [variables
 
 ```js
 env.EXAMPLE_DATASET.writeDataPoint({
-            'blobs': [ 
-                request.cf.colo, 
-                request.cf.country, 
-                request.cf.city, 
-                request.cf.region, 
-                request.cf.timezone],
-            'doubles': [
-                request.cf.metroCode, 
-                request.cf.longitude, 
-                request.cf.latitude, 
-                ],
-            'indexes': [request.cf.postalCode] 
-          });
+    'blobs': [ 
+        request.cf.colo, 
+        request.cf.country, 
+        request.cf.city, 
+        request.cf.region, 
+        request.cf.timezone],
+    'doubles': [
+        request.cf.metroCode, 
+        request.cf.longitude, 
+        request.cf.latitude, 
+    ],
+    'indexes': [
+        request.cf.postalCode
+    ] 
+});
 ```
 
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
@@ -98,7 +100,7 @@ SQL API is better suited for writing ad hoc queries and integrating with externa
 
 The SQL API is available as an HTTP endpoint at `https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql` using the `POST` and `GET` method. You need to include an `Authorization: Bearer _____` token where the underscores should be replaced with a Cloudflare [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
 
-If you prefer a web interface, you can use [Postman](https://www.postman.com/) to connect to the SQL API endpoint and run your query. Postman is an API platform that can be used to test SQL APIs. You can use the endpoint mentioned above using the `POST` and `GET` method.
+If you prefer a graphical interface, you can use [Postman](https://www.postman.com/) to connect to the SQL API endpoint and run your query. Postman is an application that can be used to test APIs. You can use the endpoint mentioned above using the `POST` and `GET` methods.
 
 ### Example of querying data with the SQL API
 
