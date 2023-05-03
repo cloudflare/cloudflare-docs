@@ -24,7 +24,7 @@ Schema Validation 2.0 allows all corresponding configuration calls to be made vi
 3. Set the schema to `active` if it is not already done.
 4. Set the Schema Validation zone-wide action from `none` to `log`.
 5. Send test traffic that violates the schema.
-6. View test traffic in Firewall Events by filtering for **Service** > **API Shield** > **Schema Validation**.
+6. View test traffic in Security Events by filtering for **Service** > **API Shield - Schema Validation**.
 7. Optional:
     - Set a single endpoint to `block`.
     - Set the Schema Validation zone-wide to `block`.
