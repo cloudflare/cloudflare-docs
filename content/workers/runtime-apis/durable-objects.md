@@ -302,7 +302,7 @@ The method takes a [`Request`](/workers/runtime-apis/request/) as the parameter 
 
 If the method fails with an uncaught exception, the exception will be thrown into the calling Worker that made the `fetch()` request.
 
-### WebSockets Hibernation API
+### WebSockets Hibernation API (beta)
 
 Durable Objects WebSockets support includes extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow a Durable Object that is not currently running an event handler to be removed from memory while keeping its WebSockets connected ("hibernation").
 
@@ -324,10 +324,6 @@ Hibernation does not persist WebSocket connections across [code updates](/worker
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
-- {{<code>}}state.setEventTimeout(timeoutMs{{<param-type>}}number{{</param-type>}}){{</code>}}
-
-  - Set the maximum amount of time that a single event of any type is allowed to run before the event will be canceled. This is useful for ensuring that a Durable Object cannot be held open by a hanging event leading to unexpected duration billing. This is provided as a safety measure; carefully-written code does not need it. When a WebSocket is accepted using `state.acceptWebSocket()`, the timeout applies to a single message delivery, not to the whole connection.
-
 #### `webSocketMessage` handler method
 
 The system calls the `webSocketMessage` method when an accepted WebSocket receives a message. The method is not called for WebSocket control frames; the system will respond to an incoming [WebSocket protocol ping](https://www.rfc-editor.org/rfc/rfc6455#section-5.5.2) automatically without interrupting hibernation. The method takes `(ws: WebSocket, message: String | ArrayBuffer)` as parameters. It does not return a result and can be `async`.
@@ -338,7 +334,7 @@ The system calls the `webSocketClose` method when a WebSocket is closed. The met
 
 #### `webSocketError` handler method
 
-The system calls the `webSocketError` method for any non-disconnection related errors. The method takes an `Error` as the parameter. It does not return a result and can be `async`.
+The system calls the `webSocketError` method for any non-disconnection related errors. The method takes `(ws: WebSocket, error: any)` as parameters. It does not return a result and can be `async`.
 
 ---
 
