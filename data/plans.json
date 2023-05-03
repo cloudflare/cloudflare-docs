@@ -15,6 +15,20 @@
         }
       }
     },
+    "version_management": {
+      "title": "Version Management",
+      "link": "/version-management/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Enterprise-only",
+          "free": "No",
+          "pro": "No",
+          "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
     "zone_holds": {
       "title": "Zone holds",
       "link": "/fundamentals/account-and-billing/account-security/zone-holds/",
@@ -673,6 +687,20 @@
           "free": "No",
           "pro": "No",
           "biz": "No",
+          "ent": "Yes"
+        }
+      }
+    },
+    "subdomain_delegation": {
+      "title": "Subdomain delegation",
+      "link": "/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/",
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "All plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
           "ent": "Yes"
         }
       }
@@ -2309,6 +2337,22 @@
         }
       }
     },
+    "delegated_dcv": {
+      "title": "Delegated DCV",
+      "link": "/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/",
+      "paid_add_on": true,
+      "paid_add_on_plans": ["free", "pro", "biz", "ent"],
+      "properties": {
+        "availability": {
+          "title": "Availability",
+          "summary": "Delegated DCV is available for domains that have purchased [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) and are currently using a [full DNS setup](/dns/zone-setups/full-setup/).",
+          "free": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "pro": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "biz": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)",
+          "ent": "Included with [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/)"
+        }
+      }
+    },
     "universal_certificates": {
       "title": "Universal Certificates",
       "link": "/ssl/edge-certificates/universal-ssl/",
@@ -2661,6 +2705,15 @@
       "properties": {
         "availability": {
           "title": "Availability",
+          "summary": "Available on all plans",
+          "free": "Yes",
+          "pro": "Yes",
+          "biz": "Yes",
+          "ent": "Yes"
+        },
+        "consent_management": {
+          "title": "Consent Management",
+          "link": "/zaraz/consent-management/",
           "summary": "Available on all plans",
           "free": "Yes",
           "pro": "Yes",
