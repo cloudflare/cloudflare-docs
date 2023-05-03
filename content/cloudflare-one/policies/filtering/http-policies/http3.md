@@ -6,9 +6,9 @@ weight: 5
 
 # HTTP/3 inspection
 
-Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. Inspecting HTTP/3 inspection requires traffic to be proxied over UDP.
+Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. HTTP/3 inspection requires traffic to be proxied over UDP.
 
-If you don't enable UDP in ZT settings, you'll have to enforce a management policy to disable QUIC on the client's browser. If you don't disable QUIC on the client side, their traffic will bypass Gateway and you won't be able to inspect it.
+## Enable HTTP/3 inspection
 
 To enable HTTP/3 inspection:
 
@@ -16,7 +16,9 @@ To enable HTTP/3 inspection:
 2. Under **Firewall**, enable **Proxy** and select **UDP**.
 3. Enable **TLS decryption**.
 
-## Browser limitations
+### Application limitations
+
+Gateway can inspect HTTP/3 traffic from Microsoft Edge, as well as other HTTP applications, such as cURL.
 
 The following browsers do not support HTTP/3 inspection:
 
@@ -24,21 +26,55 @@ The following browsers do not support HTTP/3 inspection:
 - Safari
 - Firefox
 
-If QUIC is enabled in these browsers, Gateway will force all traffic to fall back to HTTP/2, allowing you to enforce your HTTP policies.
-
-You can enable UDP proxy in settings to inspect H3 traffic, but at the moment Gateway can inspect HTTP/3 traffic from Microsoft Edge, as well as other HTTP applications, such as cURL.
+If the UDP proxy is enabled in Zero Trust and QUIC is enabled in these browsers, Gateway will force all traffic to fall back to HTTP/2, allowing you to enforce your HTTP policies.
 
 ## Disable QUIC
 
-If you don't enable UDP in ZT settings, you'll have to enforce a management policy to disable QUIC on the client's browser. If you don't disable QUIC on the client side, their traffic will bypass Gateway and you won't be able to inspect it.
+If the UDP proxy is not enabled, HTTP/3 traffic will bypass inspection. To avoid this behavior, disable QUIC in your users' browsers.
 
-QUIC must be turned off in the browser.
+<details>
+<summary>Google Chrome</summary>
+<div>
 
-| Browser         | Procedure                                                                              |
-| --------------- | -------------------------------------------------------------------------------------- |
-| Google Chrome   | Go to `chrome://flags` and disable **Experimental QUIC protocol**.                     |
-| Mozilla Firefox | Go `about:config` and disable **network.http.http3.enabled**.                          |
-| Microsoft Edge  | Go to `edge://flags` and disable **Experimental QUIC protocol**.                       |
-| Apple Safari    | In the menu bar, go to **Develop** > **Experimental Features** and disable **HTTP/3**. |
+1. Go to `chrome://flags`
+2. Disable **Experimental QUIC protocol**.
+3. Relaunch Chrome.
+
+</div>
+</details>
+
+<details>
+<summary>Safari</summary>
+<div>
+
+1. Go to **Safari** > **Settings** > **Advanced** and enable **Show Develop menu in menu bar**, then relaunch Safari.
+2. Go to **Develop** > **Experimental Features** and disable **HTTP/3**.
+3. Relaunch Safari.
+
+</div>
+</details>
+
+<details>
+<summary>Firefox</summary>
+<div>
+
+1. Go to `about:config`.
+2. If you receive a warning, select **Accept the Risk and Continue**.
+3. Disable **network.http.http3.enable**.
+4. Relaunch Firefox.
+
+</div>
+</details>
+
+<details>
+<summary>Microsoft Edge</summary>
+<div>
+
+1. Go to `edge://flags`
+2. Disable **Experimental QUIC protocol**.
+3. Relaunch Edge.
+
+</div>
+</details>
 
 To disable QUIC on mobile devices, enforce a policy in your mobile device management software.
