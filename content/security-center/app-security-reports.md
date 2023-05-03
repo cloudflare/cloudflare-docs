@@ -40,5 +40,6 @@ A Cloudflare user must have one of the following [roles](/fundamentals/account-a
 ## Number of mitigated requests
 
 The number of mitigated requests in each report is a sum of the following requests:
+
 * Blocked requests
 * Challenged requests that were not solved or bypassed (that is, not issued again because the visitor had previously passed a similar challenge)
