@@ -178,7 +178,7 @@ establish TLS, which is controlled by tlsTimeout.
 
 Default: `false`
 
-Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted.
+Disables TLS verification of the certificate presented by your origin. This will allow any certificate from the origin to be accepted.
 
 ### tlsTimeout
 
