@@ -8,7 +8,7 @@ weight: 3
 
 To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `User:User Details` permission. All the following examples should work with a free-tier Cloudflare account.
 
-## Search BGP Hijack Events
+## Search BGP hijack events
 
 In the following example, we will request the most recent BGP origin hijacks originated by or affecting `AS64512` (example ASN).
 
@@ -92,10 +92,11 @@ Users can further filter out low-confidence events by attaching a `minConfidence
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10&minConfidence=8" \
      -H "Authorization: Bearer <API_TOKEN>"
+```
 
-## Search BGP Route Leak Events
+## Search BGP route leak events
 
-BGP route leak is another type of BGP anomalies that Cloudflare Radar detects. Currently, we focus on detecting specifcally
+BGP route leak is another type of BGP anomalies that Cloudflare Radar detects. Currently, we focus on detecting specifically
 the `provider-customer-provider` type of route leak. You can learn more about our design and methodology in [our blog post][route-leak-blog-post].
 
 [route-leak-blog-post]: https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/
@@ -156,7 +157,7 @@ In the response we can learn about the following information about each event:
 - `peer_count`: the number of route collector peers observed the leak
 - `prefix_count` and `origin_count`: the number of prefixes and origin ASes affected by the leak
 
-## Send Alerts for BGP Hijacks
+## Send alerts for BGP hijacks
 
 In this example, we will show you how you can build a simple Cloudflare Workers app that sends out alerts for BGP hijacks
 relevant to a given ASN using webhook (works for Google Hangouts, Discord, Telegram, etc) or Emails.
@@ -168,7 +169,7 @@ For the app, we would like it to do the following things:
 2. check against Cloudflare KV to know what events are new
 3. construct messages for new hijacks and send out alerts via webhook triggers
 
-### Worker App Setup
+### Worker app setup
 
 We will start with setting up a Cloudflare Worker app using `wrangler`.
 
@@ -220,7 +221,7 @@ async function apiFetch (env, paramsStr) {
   return await (res).json()
 }
 ```
-The `env` parameter is passed in from the caller and we do not need to worry about construct it. The `paramsStr` is a
+The `env` parameter is passed in from the caller, and we do not need to worry about construct it. The `paramsStr` is a
 string variable that holds the query parameters in a query URL.
 
 Now in our main cron trigger function, we will need to construct the query parameters and call the API fetch function.
@@ -329,8 +330,55 @@ Note that the webhook is considered secret and should be set to the environment 
 The last step is to publish the app with command `wrangler publish` and the app should be up and running on your Cloudflare
 account, and will be triggered to execute every five minutes.
 
+### Send email alerts from Workers
+
+If your app's domain has enabled [Email Routing][email-routing] feature, you can also send email alerts directly from
+your Workers app. You can learn more about the email-sending feature following [this tutorial][email-workers-tutorial].
+
+For this alerter app, you will need to add the `Emails binding` to the [`wrangler.toml`][wrangler-send-email] file.
+
+```toml
+send_email = [
+    {type = "send_email", name = "SEND_EMAIL_BINDING", destination_address = "<YOUR_EMAIL>@example.com"},
+]
+```
+
+Then you can create an email sending function like the follows to send alert emails to your configured destination address.
+```javascript
+async function send_email_alert(hijacker, prefixes, victims) {
+  const msg = createMimeMessage();
+  msg.setSender({ name: "BGP Hijack Alerter", addr: "<YOUR_APP>@<YOUR_APP_DOMAIN>" });
+  msg.setRecipient("<YOUR_EMAIL>@example.com");
+  msg.setSubject("BGP hijack alert");
+  msg.addMessage({
+    contentType: 'text/plain',
+    data: `BGP hijack detected:
+    Detected origin: ${hijacker}
+    Expected origins: ${victims.join(" ")}
+    Prefixes: ${prefixes.join(" ")}
+    `
+  })
+
+  var message = new EmailMessage(
+    "<YOUR_APP>@<YOUR_APP_DOMAIN>",
+    "<YOUR_EMAIL>@example.com",
+    msg.asRaw()
+  );
+  try {
+    await env.SEND_EMAIL_BINDING.send(message);
+  } catch (e) {
+    return new Response(e.message);
+  }
+}
+```
+
+[email-routing]: https://developers.cloudflare.com/email-routing/
+[email-workers-tutorial]: https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
+[wrangler-send-email]: https://developers.cloudflare.com/workers/wrangler/configuration/#email-bindings
+
+
 ## Next steps
 
-Refer to our [API documentationl][api-portal] for more information on these topics.
+Refer to our [API documentation][api-portal] for more information on these topics.
 
-[api-portal]: https://developers.cloudflare.com/api/
+[api-portal]: https://developers.cloudflare.com/api/operations/radar_get_js
