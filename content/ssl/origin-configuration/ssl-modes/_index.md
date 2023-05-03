@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Encryption modes
-weight: 2
+weight: 1
 meta:
     description: Encryption modes allow you to control how Cloudflare connects to your origin web server and how certificates presented by your origin are validated.
 ---
