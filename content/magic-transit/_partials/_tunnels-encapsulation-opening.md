@@ -98,7 +98,7 @@ In summary, an IKE SA is created that uses certain cryptographic transforms. Tha
 
 #### IKE SA
 
-This is sometimes referred to as “Phase 1” due to language from IKEv1.
+This is sometimes referred to as Phase 1 as per IKEv1 language.
 
 - **Encryption**
   - AES-GCM-16 with 128-bit or 256-bit key length
@@ -118,7 +118,7 @@ This is sometimes referred to as “Phase 1” due to language from IKEv1.
 
 #### IPsec
 
-The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
+The Child SA. Sometimes referred to as Phase 2 as per IKEv1 language.
 
 - **Encryption**: 
   - AES-GCM-16 with 128-bit or 256-bit key length
@@ -129,7 +129,7 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
   - SHA-1
   {{<Aside type="note">}}When using AES-GCM-16, an integrity algorithm is not required because AES GCM includes integrity checking (since it is an AEAD algorithm). Even when using an AEAD algorithm, however, some routers still require an integrity algorithm to be selected.{{</Aside>}}
 
-- **PFS group** (sometimes referred to as "Phase 2 Diffie-Hellman Group". Not to be confused with PRF.)
+- **PFS group** (sometimes referred to as Phase 2 Diffie-Hellman Group. Not to be confused with PRF.)
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
@@ -138,7 +138,7 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
 - The IKE version must be IKEv2.
 - The IKE authentication method must be Pre-Shared Key (PSK).
 - [Anti-replay protection]($3) must be disabled.
-- If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port 4500. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
+- If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port `4500`. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 
 #### Optional configuration parameters
