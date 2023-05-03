@@ -1,15 +1,12 @@
 ---
 pcx_content_type: reference
-title: BGP anomalies
+title: BGP anomalies (beta)
 weight: 3
 ---
 
 {{<beta>}}BGP anomalies{{</beta>}}
 
-Access Cloudflare Radar BGP Anomaly Detection results.
-
-You will need to first create an API token that has `User:User Details` permission included. All the following examples
-should work with a free-tier Cloudflare account.
+To access Cloudflare Radar BGP Anomaly Detection results, you will first need to create an API token that includes a `User:User Details` permission. All the following examples should work with a free-tier Cloudflare account.
 
 ## Search BGP Hijack Events
 
@@ -78,23 +75,23 @@ The result shows the most recent 10 BGP hijack events that affects `AS64512`.
 ```
 
 In the response we can learn about the following information about each event:
-- `hijack_msg_count`: the number of potential BGP hijack messages observed from all peers
-- `peer_asns`: the AS numbers of the route collector peers who observed the hijack messages
-- `prefixes`: the affected prefixes
-- `hijacker_asn` and `victim_asns`: the potential hijacker ASN and victim ASNs
-- `confidence_score`: a quantitative score describing how confident the system is for this event being a hijack
-  - 1-3: low confidence
-  - 4-7: medium confidence
-  - 8-above: high confidence
-- `tags`: the evidence collected for the events, each is also associated with a score that affects the overall confidence score
-  - a positive score indicates that the event is *more likely* to be a hijack
-  - a negative score indicates that the event is *less likely* to be a hijack
+- `hijack_msg_count`: the number of potential BGP hijack messages observed from all peers.
+- `peer_asns`: the AS numbers of the route collector peers who observed the hijack messages.
+- `prefixes`: the affected prefixes.
+- `hijacker_asn` and `victim_asns`: the potential hijacker ASN and victim ASNs.
+- `confidence_score`: a quantitative score describing how confident the system is for this event being a hijack:
+  - 1-3: low confidence.
+  - 4-7: medium confidence.
+  - 8-above: high confidence.
+- `tags`: the evidence collected for the events. Each `tag` is also associated with a score that affects the overall confidence score:
+  - a positive score indicates that the event is *more likely* to be a hijack.
+  - a negative score indicates that the event is *less likely* to be a hijack.
 
-Users can further filter out low-confidence events by attaching a `minConfidence=8` parameter, which will return only the events with `confidence_score` to be 8 our higher.
+Users can further filter out low-confidence events by attaching a `minConfidence=8` parameter, which will return only events with a `confidence_score` of `8` or higher.
+
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/radar/bgp/hijacks/events?invlovedAsn=64512&format=json&per_page=10&minConfidence=8" \
      -H "Authorization: Bearer <API_TOKEN>"
-```
 
 ## Search BGP Route Leak Events
 
@@ -283,6 +280,7 @@ while(true) {
 
 
 Now that we have all the newly detected events saved in `new_events` variable, we can then send out alerts:
+
 ```javascript
 // sort events by increasing ID order
 new_events.sort((a,b)=>a.id - b.id);
@@ -325,13 +323,14 @@ Peer Count: *${event.peer_ip_count}*
 	});
 }
 ```
+
 Note that the webhook is considered secret and should be set to the environment via `wrangler secret put WEBHOOK_URL` command.
 
 The last step is to publish the app with command `wrangler publish` and the app should be up and running on your Cloudflare
-account, and will be triggered to execute every 5 minutes.
+account, and will be triggered to execute every five minutes.
 
 ## Next steps
 
-Please check out our [developer portal][api-portal] for detailed API documentation.
+Refer to our [API documentationl][api-portal] for more information on these topics.
 
-[api-portal]: https://developers.cloudflare.com/api
+[api-portal]: https://developers.cloudflare.com/api/
