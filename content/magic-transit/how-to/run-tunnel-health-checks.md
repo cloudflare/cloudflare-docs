@@ -8,7 +8,7 @@ meta:
 
 # Configure bidirectional tunnel health checks for egresss traffic
 
-If you are using egress traffic through Magic Transit, you can set up a Cloudflare public IP address as the `target` for your [health checks](/magic-transit/reference/probe-construction/) instead of using Direct Server Return (DSR). In this type of setup, the packets necessary for Cloudflare to check tunnel health are sent and received though your [GRE or IPsec tunnel](/magic-transit/reference/tunnels-and-encapsulation/). This avoids DSR replies through the Internet which might fail.
+If you are using egress traffic through Magic Transit, you can set up a Cloudflare public IP address as the `target` for your [health checks](/magic-transit/reference/probe-construction/) instead of using Direct Server Return (DSR). In this type of setup, the packets necessary for Cloudflare to check tunnel health are sent and received though your [GRE or IPsec tunnel](/magic-transit/reference/tunnels/). This avoids DSR replies through the Internet which might fail.
 
 Bidirectional tunnel health checks will work for both reply-style (default) and request-style health checks. For request-style health checks, you need to assign the target IP to a device in your network that can respond to the health check requests.
 

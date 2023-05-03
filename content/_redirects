@@ -401,11 +401,12 @@
 /magic-transit/about/health-checks/ /magic-transit/reference/probe-construction/ 301
 /magic-transit/about/probe-construction/ /magic-transit/reference/probe-construction/ 301
 /magic-transit/about/traffic-steering/ /magic-transit/reference/traffic-steering/ 301
-/magic-transit/about/tunnels-and-encapsulation/ /magic-transit/reference/tunnels-and-encapsulation/ 301
+/magic-transit/about/tunnels-and-encapsulation/ /magic-transit/reference/tunnels/ 301
 /magic-transit/reference/health-checks/ /magic-transit/reference/probe-construction/ 301
+/magic-transit/reference/ipsec/ /magic-transit/reference/tunnels/#ipsec-tunnels 301
 
 # magic-wan
-/magic-wan/tutorials/ipsec/ /magic-wan/reference/ipsec/ 301
+/magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/tutorials/aruba-edgeconnect/ 301
 /magic-wan/tutorials/ipsec/strongswan/ /magic-wan/tutorials/strongswan/ 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/get-started/configure-tunnels/ 301
@@ -413,8 +414,8 @@
 /magic-wan/about/ /magic-wan/reference/ 301
 /magic-wan/about/health-checks/ /magic-wan/reference/probe-construction/ 301
 /magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
-/magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels-and-encapsulation/ 301
-/magic-wan/how-to/ipsec/ /magic-wan/reference/ipsec/ 301
+/magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels/ 301
+/magic-wan/how-to/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/reference/health-checks/ /magic-wan/reference/probe-construction/ 301
 
 # pages
