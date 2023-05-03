@@ -18,6 +18,10 @@ For instance, consider `example.com` as a Cloudflare domain with `www.example.
 Cloudflare's CDN and security services are not applied to delegated subdomains.
 {{</Aside>}}
 
+## Availability
+
+{{<feature-table id="dns.subdomain_delegation">}}
+
 ___
 
 ## Delegate a subdomain

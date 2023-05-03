@@ -29,7 +29,7 @@ Ensure that you have the necessary DNS records in the **DNS** app of your Clou
 -   The [root domain](/dns/manage-dns-records/how-to/create-root-domain/) (e.g., `example.com`)
 -   Existing [subdomains](/dns/manage-dns-records/how-to/create-subdomain/) (`www.example.com`, `blog.example.com`)
 
-{{<Aside type="tip">}}
+{{<Aside type="note">}}
 If you have a [partial zone setup](/dns/zone-setups/partial-setup), ensure your DNS records also exist in your authoritative nameservers.
 {{</Aside>}}
 
