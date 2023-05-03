@@ -45,5 +45,5 @@ If your domain supported email beforehand, try sending a few emails to your doma
 If those emails cannot be delivered, the issue is usually with your domain's `MX` DNS records. For help, refer to the following resources:
 
 - [Vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/)
-- [Troubleshooting email issues](/support/dns/troubleshooting/email-undeliverable-when-using-cloudflare/)
+- [Troubleshooting email issues](/dns/troubleshooting/email-issues/)
 - [Add email records](/dns/manage-dns-records/how-to/email-records/)
