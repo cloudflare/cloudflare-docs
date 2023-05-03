@@ -6,7 +6,9 @@ weight: 5
 
 # HTTP/3 inspection
 
-Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. Inspecting HTTP/3 inspection requires traffic to proxied over UDP.
+Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. Inspecting HTTP/3 inspection requires traffic to be proxied over UDP.
+
+If you don't enable UDP in ZT settings, you'll have to enforce a management policy to disable QUIC on the client's browser. If you don't disable QUIC on the client side, their traffic will bypass Gateway and you won't be able to inspect it.
 
 To enable HTTP/3 inspection:
 
@@ -22,9 +24,13 @@ The following browsers do not support HTTP/3 inspection:
 - Safari
 - Firefox
 
-Gateway will automatically force all traffic from these browsers to fall back to HTTP/2, thus allowing you to enforce your HTTP policies.
+If QUIC is enabled in these browsers, Gateway will force all traffic to fall back to HTTP/2, allowing you to enforce your HTTP policies.
+
+You can enable UDP proxy in settings to inspect H3 traffic, but at the moment Gateway can inspect HTTP/3 traffic from Microsoft Edge, as well as other HTTP applications, such as cURL.
 
 ## Disable QUIC
+
+If you don't enable UDP in ZT settings, you'll have to enforce a management policy to disable QUIC on the client's browser. If you don't disable QUIC on the client side, their traffic will bypass Gateway and you won't be able to inspect it.
 
 QUIC must be turned off in the browser.
 
