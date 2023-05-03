@@ -28,7 +28,7 @@ The following browsers do not support HTTP/3 inspection:
 
 If the UDP proxy is enabled in Zero Trust and QUIC is enabled in these browsers, Gateway will force all traffic to fall back to HTTP/2, allowing you to enforce your HTTP policies.
 
-## Disable QUIC
+## Prevent inspection bypass
 
 If the UDP proxy is not enabled, HTTP/3 traffic will bypass inspection. To avoid this behavior, disable QUIC in your users' browsers.
 
