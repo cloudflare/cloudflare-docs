@@ -150,37 +150,39 @@ The result shows the most recent 10 BGP route leak events that affects `AS64512`
 ```
 
 In the response we can learn about the following information about each event:
-- `leak_asn`: the AS who potentially caused the leak
-- `leak_seg`: the AS path segment observed and believed to be a leak
-- `min_ts` and `max_ts`: the earliest and latest timestamps of the leak announcements
-- `leak_count`: the total number of BGP route leak announcements observed
-- `peer_count`: the number of route collector peers observed the leak
-- `prefix_count` and `origin_count`: the number of prefixes and origin ASes affected by the leak
+- `leak_asn`: the AS who potentially caused the leak.
+- `leak_seg`: the AS path segment observed and believed to be a leak.
+- `min_ts` and `max_ts`: the earliest and latest timestamps of the leak announcements.
+- `leak_count`: the total number of BGP route leak announcements observed.
+- `peer_count`: the number of route collector peers observed the leak.
+- `prefix_count` and `origin_count`: the number of prefixes and origin ASes affected by the leak.
 
 ## Send alerts for BGP hijacks
 
-In this example, we will show you how you can build a simple Cloudflare Workers app that sends out alerts for BGP hijacks
-relevant to a given ASN using webhook (works for Google Hangouts, Discord, Telegram, etc) or Emails.
+In this example, we will show you how you can build a simple Cloudflare Workers app that sends out alerts for BGP hijacks relevant to a given ASN using webhooks (works for Google Hangouts, Discord, Telegram, etc) or email.
 
 We will use Cloudflare Workers as the platform and use its Cron Triggers to periodically check for new alerts.
 
 For the app, we would like it to do the following things:
-1. fetch from Cloudflare API with a given API token
-2. check against Cloudflare KV to know what events are new
-3. construct messages for new hijacks and send out alerts via webhook triggers
+- Fetch from Cloudflare API with a given API token.
+- Check against Cloudflare KV to know what events are new.
+- Construct messages for new hijacks and send out alerts via webhook triggers.
 
 ### Worker app setup
 
 We will start with setting up a Cloudflare Worker app using `wrangler`.
 
-Let's first create a new workers app in a local directory
+First, create a new Workers app in a local directory:
+
 ```bash
 wrangler init hijack-alerts
 ```
-When prompt to select a type of worker, choose ` Scheduled handler`.
+
+When prompted to select a type of Worker, choose ` Scheduled handler`.
 
 In your `wrangler.toml` file, change the default checking frequency (once per hour) to what you like. Here is an example
 of configuring the workers to run the script five minutes.
+
 ```toml
 name = "hijack-alerts"
 main = "src/index.js"
@@ -190,8 +192,8 @@ compatibility_date = "2023-04-27"
 crons = [ "*/5 * * * *" ]
 ```
 
-In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new.
-Once you have created a KV (it's free!), you can head back to the `wranglers.toml` file and add the following sections in.
+In this example, we will also need to use Cloudflare KV to save the latest checked event IDs which allows us to know what events are new. Once you have created a KV, you can head back to the `wranglers.toml` file and add the following sections:
+
 ```toml
 [[kv_namespaces]]
 binding = "HIJACKS_KV"
@@ -201,10 +203,11 @@ preview_id = "TEMPORARY_KV_FOR_DEV_ENVIRONMENT"
 
 ### Fetch for newly detected BGP hijacks
 
-Let's start with the API fetching function.
+Start with the API fetching function.
 
 The following `apiFetch(env, paramsStr)` handles taking in a request parameters string, construct proper headers and
 fetch from the Cloudflare API BGP hijacks endpoint.
+
 ```javascript
 async function apiFetch (env, paramsStr) {
   const config = {
@@ -226,6 +229,7 @@ string variable that holds the query parameters in a query URL.
 
 Now in our main cron trigger function, we will need to construct the query parameters and call the API fetch function.
 The default cron trigger worker script is defined as the follows:
+
 ```javascript
 
 export default {
@@ -234,18 +238,21 @@ export default {
     }
 }
 ```
+
 In our example, we use the `env` variables to get the runtime variables like the TOKEN and ASN of interest, and Cloudflare
 KV bindings. We do not use of the `contorller` and `ctx` variables in this example.
 
 First, we will need to learn about what are the new events. We define new events as the events the app has not yet processed.
 We use the Cloudflare KV bucket previously created and defined (`HIJACKS_KV`) to save and retrieve the most recent
 processed event ID.
+
 ```javascript
 let kv_latest_id = parseInt(await env.HIJACKS_KV.get("latest_id"));
 const first_batch = isNaN(kv_latest_id);
 ```
 
-The main loop that checks for the most recent events looks like this. (Some of the validation code is skipped.)
+The main loop that checks for the most recent events looks like this (some of the validation code is skipped):
+
 ```javascript
 let new_events = [];
 let page = 1;
