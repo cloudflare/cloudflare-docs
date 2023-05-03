@@ -3,16 +3,20 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   title: Cloudflare Queues
 ---
 
-{{<content-column>}}
-
 # Cloudflare Queues
 
-Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers/) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
+{{<description>}}
+
+Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. 
+
+{{</description>}}
+
+{{<plan type="paid">}}
 
 {{<Aside>}}
 
@@ -20,16 +24,7 @@ Cloudflare Queues allows developers to send and receive messages with guaranteed
 
 {{</Aside>}}
 
-Cloudflare Queues is available on [Workers Paid plan](/workers/platform/pricing/).
-
-Cloudflare Queues enable you to build applications that can:
-
-- **Guarantee delivery**: If your application cannot lose data, Queues will guarantee that each message is stored on-disk and processed at-least once.
-- **Offload work from a request**: If a Worker needs to do more processing, but should not block the entire request -- a durable, observable alternative to using `waitUntil()`.
-- **Send data from Worker to Worker**: You can configure producer and consumer Workers that can send data between each other.
-- **Buffer or batch data**: If a service has bursty load, you can send that load to a Queue, then process it in predictable batches.
-
-{{</content-column>}}
+Cloudflare Queues enable you to build applications that can [guarantee delivery](/queues/learning/delivery-guarantees/), offload work from a request, [send data from Worker to Worker](/queues/learning/consumer-concurrency/), [buffer or batch data](/queues/learning/batching-retries/).
 
 ---
 
@@ -62,15 +57,16 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 {{<resource-group>}}
 
-{{<resource header="Plans" href="/queues/platform/pricing/" icon="price">}}Learn about Free and Paid plans.{{</resource>}}
+{{<resource header="Pricing" href="/queues/platform/pricing/" icon="price">}}Learn about pricing.{{</resource>}}
 
-{{<resource header="Limits" href="/queues/platform/limits/" icon="documentation-clipboard">}}Learn about plan limits (Free plans get 100,000 requests per day).{{</resource>}}
+{{<resource header="Limits" href="/queues/platform/limits/" icon="documentation-clipboard">}}Learn about Queues limits (100 Queues per account).{{</resource>}}
 
-{{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
+{{<resource header="Try the Demo" href="https://github.com/Electroid/queues-demo#cloudflare-queues-demo" icon="learning-center-book">}}Try Cloudflare Queues which can run on your local machine.{{</resource>}}
 
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
 
-{{<resource header="Try the Demo" href="https://github.com/Electroid/queues-demo#cloudflare-queues-demo" icon="learning-center-book">}}Try Cloudflare Queues which can run on your local machine.{{</resource>}}
+{{<resource header="Developer Discord" href="https://discord.gg/cloudflaredev" icon="logo-Discord">}}Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.{{</resource>}}
+
 
 {{<resource header="Configuration" href="/queues/platform/configuration/" icon="learning-center-book">}}Learn how to configure Cloudflare Queues using Wrangler.{{</resource>}}
 
@@ -78,4 +74,6 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 
 {{</resource-group>}}
+
+
 
