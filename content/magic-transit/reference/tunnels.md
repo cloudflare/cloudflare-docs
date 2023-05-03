@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-title: Tunnels and encapsulation
+title: Tunnels
 meta:
     description: Magic Transit uses Generic Routing Encapsulation (GRE) and IPsec tunnels to transmit packets from Cloudflare’s global network to your origin network.
 ---
