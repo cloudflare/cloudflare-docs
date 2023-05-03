@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: SSL/TLS Recommender
-weight: 4
+weight: 2
 ---
 
 # SSL/TLS Recommender

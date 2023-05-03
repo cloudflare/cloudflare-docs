@@ -23,4 +23,4 @@ Review these records to make sure they do not contain origin IP information or u
 
 ## Evaluate mail infrastructure
 
-If possible, do not host a mail service on the same server as the web resource you want to protect, since emails sent to non-existent addresses get bounced back to the attacker and reveal the mail server IP address.
+{{<render file="_email-record-origin-ip.md">}}

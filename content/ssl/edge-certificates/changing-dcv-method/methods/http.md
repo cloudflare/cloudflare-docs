@@ -28,8 +28,6 @@ If you want to use wildcard certificates or pre-validate your certificate — ei
 
 Based on your chosen Certificate Authority, you may also not be able to use HTTP verification with [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
 
-{{<render file="_lets-encrypt-advanced-limitations.md">}}
-
 ## Setup
 
 ### Specify DCV method

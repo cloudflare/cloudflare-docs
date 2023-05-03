@@ -33,10 +33,11 @@ This is also the basis of Wasm support with Wrangler. To use a Wasm module in a 
 
 ```js
 import wasm from "./example.wasm"; // Where `example.wasm` is a file in your local directory
+const instance = await WebAssembly.instantiate(wasm); // Instantiate Wasm modules in global scope, not within the fetch() handler
 
 export default {
   fetch(request) {
-    const module = WebAssembly.instantiate(wasm);
+    const result = instance.exports.exported_func();
   },
 };
 ```

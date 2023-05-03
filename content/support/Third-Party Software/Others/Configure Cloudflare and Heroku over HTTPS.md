@@ -34,7 +34,7 @@ To start, log in to your Cloudflare account, navigate to the **DNS** app and a
 
 Adding a root or apex domain on Heroku also requires using a CNAME record pointed from your root. You cannot use A records on Heroku because no IP addresses are exposed for Heroku users to use.
 
-Fortunately, Cloudflare offers [CNAME flattening](https://support.cloudflare.com/hc/en-us/articles/360017421192-Cloudflare-DNS-FAQ#h_41430356531541184358992) to resolve requests for your root domain.
+Fortunately, Cloudflare offers [CNAME flattening](/dns/cname-flattening/) to resolve requests for your root domain.
 
 Add a CNAME record for your root (e.g. example.com) and point it to DNS target you obtained in Step 1 above for your domain.
 

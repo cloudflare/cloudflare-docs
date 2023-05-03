@@ -8,6 +8,20 @@ rss: file
 
 # Changelog
 
+## 2023-04-28
+
+- The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
+- The global `connect` method has been moved to a `cloudflare:sockets` module.
+
+## 2023-04-14
+
+- No externally-visible changes this week.
+
+## 2023-04-10
+
+- `URL.canParse(...)` is a new standard API for testing that an input string can be parsed successfully as a URL without the additional cost of creating and throwing an error.
+- The Workers-specific `IdentityTransformStream` and `FixedLengthStream` classes now support specifying a `highWaterMark` for the writable-side that is used for backpressure signaling using the standard `writer.desiredSize`/`writer.ready` mechanisms.
+
 ## 2023-03-24
 
 - Fixed a bug in Wrangler tail and and live logs on the dashboard that prevented the Administrator Read-Only and Workers Tail Read roles from successfully tailing Workers.
