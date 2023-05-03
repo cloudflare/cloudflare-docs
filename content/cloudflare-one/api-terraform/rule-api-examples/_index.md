@@ -2,7 +2,7 @@
 type: overview
 pcx_content_type: configuration
 title: Access API examples
-weight: 4
+weight: 1
 layout: list
 ---
 
@@ -38,6 +38,4 @@ Access users can create policies, including individual rule blocks inside of gro
 
 ## Example rule configurations
 
-These are commonly used rule configurations.
-
-{{<list-examples>}}
+{{<list-examples directory="/cloudflare-one/api-terraform/rule-api-examples/">}}
