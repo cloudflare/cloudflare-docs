@@ -7,9 +7,9 @@ title: Custom Domains
 
 ## Background
 
-Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you setup a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/triggers/routes/#set-up-a-route), Custom Domains point the _entirety_ of a domain or subdomain at your Worker, with no URL matching.
+Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you setup a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/triggers/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
 
-## Add a custom domain
+## Add a Custom Domain
 
 To add a Custom Domain, you must have:
 
@@ -55,16 +55,18 @@ routes = [
 ]
 ```
 
-## External communication
+## Worker to Worker communication
 
-When running a Worker on a [route](/workers/platform/triggers/routes/#set-up-a-route), or on a [`workers.dev`](http://localhost:5173/workers/platform/triggers/routes/#routes-with-workersdev) subdomain, the only way to communicate with _other_ Workers on the same zone is via [service bindings](/workers/platform/bindings/about-service-bindings/). With a Worker running on a Custom Domain that limitation is removed and other Workers running on the same zone can send fetch requests to Workers running on a Custom Domain.
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/triggers/routes/#set-up-a-route), or on a [`workers.dev`](http://localhost:5173/workers/platform/triggers/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
+
+On the same zone, a target Worker is running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed.
 
 For example, consider the following scenario, where both Workers are running on the `example.com` Cloudflare zone:
 
-- `worker-a` running on the [route](/workers/platform/triggers/routes/#set-up-a-route) `auth.example.com/*`
-- `worker-b` running on the [route](/workers/platform/triggers/routes/#set-up-a-route) `shop.example.com/*`
+- `worker-a` running on the [route](/workers/platform/triggers/routes/#set-up-a-route) `auth.example.com/*`.
+- `worker-b` running on the [route](/workers/platform/triggers/routes/#set-up-a-route) `shop.example.com/*`.
 
-If `worker-a` sends a fetch request to `worker-b`, the request will fail, because of the limitation on same-zone fetch requests:
+If `worker-a` sends a fetch request to `worker-b`, the request will fail, because of the limitation on same-zone fetch requests. `worker-a` must have a service binding to `worker-b` for this request to resolve.
 
 ```js
 ---
@@ -83,13 +85,13 @@ However, if `worker-b` was instead set up to run on the Custom Domain `shop.exam
 
 ## Request matching behaviour
 
-Custom Domains do not support wildcard DNS records; as such, an incoming request must exactly match the domain or subdomain your Custom Domain is registered to. Other parts of the URL are not considered when executing this matching logic. For example, if you create a Custom Domain on `api.example.com` attached to your `api-gateway` Worker, a request to either `api.example.com/login` or `api.example.com/user` would invoke the same `api-gateway` Worker.
+Custom Domains do not support [wildcard DNS records](/dns/manage-dns-records/reference/wildcard-dns-records/). An incoming request must exactly match the domain or subdomain your Custom Domain is registered to. Other parts (path, query parameters) of the URL are not considered when executing this matching logic. For example, if you create a Custom Domain on `api.example.com` attached to your `api-gateway` Worker, a request to either `api.example.com/login` or `api.example.com/user` would invoke the same `api-gateway` Worker.
 
 ![Custom Domains follow standard DNS ordering and matching logic](/workers/platform/triggers/media/custom-domains-api-gateway.png)
 
 ## Interaction with [Routes](/workers/platform/triggers/routes/#set-up-a-route)
 
-A Worker running on a Custom Domain is treated as an origin. That means that you're able to setup Workers to run before a request gets to your Custom Domain Worker (in other words, you can chain together two Workers in the same request). Any Workers running on routes before your Custom Domain can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object.
+A Worker running on a Custom Domain is treated as an origin. Any Workers running on routes before your Custom Domain can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object. That means that you are able to set up Workers to run before a request gets to your Custom Domain Worker. In other words, you can chain together two Workers in the same request.
 
 For example, a Custom Domain for `api.example.com` can point to your Worker `api-worker`. A route added to `api.example.com/auth` can point to your Worker `auth-worker`. A request to `api.example.com/auth` will trigger the `auth-worker` Worker. Using `fetch(request)` within the Worker `auth-worker` will invoke the Worker `api-worker`, as if it was a normal application server.
 
