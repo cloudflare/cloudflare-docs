@@ -6,13 +6,13 @@ _build:
 inputParameters: productName;;productURL;;tunnelEndpoints
 ---
 
-# IPsec tunnels
+## IPsec tunnels
 
 [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that are used together to set up encrypted connections between devices. It helps keep data sent over public networks secure. IPsec is often used to set up VPNs, and it works by encrypting IP packets, along with authenticating the source where the packets come from.
 
 For information on how to set up an IPsec tunnel, refer to [Configure tunnel endpoints]($3). To learn more about the configuration parameters $1 uses to create an IPsec tunnel, keep reading.
 
-## How IKEv2 is used to establish an IPsec tunnel
+### How IKEv2 is used to establish an IPsec tunnel
 
 $1 uses the following stages to establish an IPsec tunnel:
 
@@ -23,9 +23,9 @@ $1 uses the following stages to establish an IPsec tunnel:
 
 In summary, an IKE SA is created that uses certain cryptographic transforms. That IKE SA is then used to create a Child SA which itself uses certain cryptographic transforms. The configuration section below details which of these transforms for IKE SAs and Child SAs are currently supported by $1.
 
-## Supported configuration parameters
+### Supported configuration parameters
 
-### IKE SA
+#### IKE SA
 
 This is sometimes referred to as “Phase 1” due to language from IKEv1.
 
@@ -45,7 +45,7 @@ This is sometimes referred to as “Phase 1” due to language from IKEv1.
   - SHA2-384
   - SHA2-512
 
-### IPsec
+#### IPsec
 
 The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
 
@@ -62,7 +62,7 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
   - DH group 14 (2048-bit MODP group)
   - DH group 5 (1536-bit MODP group)
 
-### Required configuration parameters
+#### Required configuration parameters
 
 - The IKE version must be IKEv2.
 - The IKE authentication method must be Pre-Shared Key (PSK).
@@ -70,11 +70,11 @@ The Child SA. Sometimes referred to as “Phase 2” due to language from IKEv1.
 - If your router is behind NAT and requires NAT traversal (NAT-T), then your router must initiate IKE communication on port 4500. Most devices support configuring NAT-T to begin on port `4500` (exceptions include at least some versions of the Cisco ASA). NAT-T is not supported for IKE sessions which begin on port `500` and then switch to port `4500`.
 - (Uncommon) Extended Sequence Numbers (ESN) must be disabled.
 
-### Optional configuration parameters
+#### Optional configuration parameters
 
 - **Null encryption for IPsec:** This option should not be used unless necessary as it reduces security because IPsec traffic is not encrypted. You must explicitly opt in to use this option.
 
-## Supported IKE ID formats
+### Supported IKE ID formats
 
 $1 supports the following IKE ID types for IPsec:
 
