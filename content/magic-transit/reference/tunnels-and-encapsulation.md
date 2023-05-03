@@ -7,5 +7,6 @@ meta:
 
 {{<render file="_tunnels-encapsulation-opening.md" withParameters="Magic Transit;;/magic-transit/prerequisites/#set-maximum-segment-size">}}
 
-{{<render file="_tunnels-encapsulation-mt-network-analytics.md">}}
+{{<render file="_ipsec.md" withParameters="Magic Transit;;/magic-transit/reference/anti-replay-protection/;;/magic-transit/how-to/configure-tunnels/">}}
 
+{{<render file="_tunnels-encapsulation-mt-network-analytics.md">}}
