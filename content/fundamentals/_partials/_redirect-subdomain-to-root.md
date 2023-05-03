@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-Sometimes, you might want to create a subdomain (`www.example.com`) that simply redirects traffic to your root domain (`example.com`).
+Sometimes, you might want all traffic to a subdomain (`www.example.com`)  to actually go to your root domain (`example.com`).
 
 1.  Create a [proxied DNS A record](/dns/manage-dns-records/how-to/create-dns-records/) for your subdomain. This record can point to any IP address since all traffic will be redirected prior to reaching the address.
 
@@ -13,8 +13,19 @@ Sometimes, you might want to create a subdomain (`www.example.com`) that simply 
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `www`    | `192.0.2.1`      | Proxied          |
 
-2.  Use [Bulk redirects](/rules/url-forwarding/bulk-redirects/) to forward traffic from your subdomain to your root domain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `www.example.com/examples` go to `example.com/examples`.
+2.  Create a [Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to forward traffic from your subdomain to your root domain.
 
-    | **Source URL**    | **Target URL**        | **Status** | **Selected parameters**                       |
-    | ----------------- | --------------------- | ---------- | --------------------------------------------- |
-    | `www.example.com` | `https://example.com` | 301        | _Subpath matching_ and _Preserve path suffix_ |
+{{<example>}}
+
+**When incoming requests match**
+
+Using the Expression Editor:<br>
+`(http.request.full_uri contains "www.example.com")`
+
+**Then**
+
+* **Type:** _Dynamic_
+* **Expression:** `concat("https://","example.com",http.request.uri.path)`
+* **Status code:** _301_
+
+{{</example>}}

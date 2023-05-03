@@ -13,7 +13,7 @@ As you get started with Cloudflare, use the following resources.
 | --- | --- |
 | [Product docs](/) | Read product how-to guides and developer quickstarts. |
 | [API docs](/api/) | RESTful API based on HTTPS requests and JSON responses. |
-| [Learning center](https://www.cloudflare.com/learning/) | Get resources on cyber security and how the Internet works. |
+| [Cloudflare Learning Center](https://www.cloudflare.com/learning/) | Get resources on cyber security and how the Internet works. |
 
 ## Communities
 

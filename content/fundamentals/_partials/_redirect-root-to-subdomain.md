@@ -15,8 +15,19 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `@`      | `192.0.2.1`      | Proxied          |
 
-3.  Use [Bulk redirects](/rules/url-forwarding/bulk-redirects/) to forward traffic from your root domain to your subdomain. You will likely want to include **Subpath matching** and **Preserve path suffix** to ensure requests to `example.com/examples` go to `www.example.com/examples`.
+3.  Create a [Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to forward traffic from your subdomain to your root domain.
 
-    | **Source URL** | **Target URL**            | **Status** | **Selected parameters**                       |
-    | -------------- | ------------------------- | ---------- | --------------------------------------------- |
-    | `example.com`  | `https://www.example.com` | 301        | _Subpath matching_ and _Preserve path suffix_ |
+{{<example>}}
+
+**When incoming requests match**
+
+Using the Expression Editor:<br>
+`(http.request.full_uri contains "example.com")`
+
+**Then**
+
+* **Type:** _Dynamic_
+* **Expression:** `concat("https://","www.example.com",http.request.uri.path)`
+* **Status code:** _301_
+
+{{</example>}}

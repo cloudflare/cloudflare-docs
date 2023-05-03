@@ -26,7 +26,7 @@ When Cloudflare stores content in its cache, the request never needs to go to yo
 {{<render file="_cache-basic-diagram.md">}}
 <br/>
 
-For more details, refer to the [Cloudflare learning center](https://www.cloudflare.com/learning/cdn/what-is-caching/).
+For more details, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/cdn/what-is-caching/).
 
 </div>
 </details>
