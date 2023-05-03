@@ -16,7 +16,7 @@ ___
 
 ## Disable Anti-bot modules
 
-Search engine crawlers' requests, when proxied through Cloudflare, could have blocked by Anti-Bot modules installed on your origin server. Try disabling your anti-bot modules to help prevent blocking from your origin.
+Search engine crawlers' requests, when proxied through Cloudflare, can blocked by Anti-Bot modules installed on your origin server. Try disabling any anti-bot modules to prevent your origin from blocking these requests.
 
 
 ___
