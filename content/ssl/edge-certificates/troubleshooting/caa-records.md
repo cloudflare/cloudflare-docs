@@ -24,7 +24,7 @@ ___
 `CAA` records are evaluated by a CA, not by Cloudflare.
 
 {{<Aside type="note">}}
-Setting a `CAA` record to specify one or more particular CAs does not effect which CA(s) Cloudflare uses to issue a Universal or Advanced SSL certificate for your domain.
+Setting a `CAA` record to specify one or more particular CAs does not affect which CA(s) Cloudflare uses to issue a Universal or Advanced SSL certificate for your domain.
 
 You can specify CAs associated with Cloudflare certificates when [ordering an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/). 
 
