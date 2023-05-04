@@ -12,7 +12,7 @@ Cloudflare Analytics is a comprehensive product that encompasses all metadata ge
 
 ### Account Analytics (beta)
 
-Available under **Analytics & Logs** in your Cloudflare dashboard when you log in, Account Analytics (beta) shows you an [overview of traffic for all sites](https://support.cloudflare.com/hc/articles/360037857831) on your Cloudflare account, such as requests and bandwidth by country, information related to security, cache, and errors, among others. To access Account Analytics, [log in to the Cloudflare dashboard](https://dash.cloudflare.com/login), select the appropriate account, and go to **Analytics & Logs** > **Account Analytics**.
+Available under **Analytics & Logs** in your Cloudflare dashboard when you log in, Account Analytics (beta) shows you an [overview of traffic for all sites](/analytics/account-and-zone-analytics/account-analytics/) on your Cloudflare account, such as requests and bandwidth by country, information related to security, cache, and errors, among others. To access Account Analytics, [log in to the Cloudflare dashboard](https://dash.cloudflare.com/login), select the appropriate account, and go to **Analytics & Logs** > **Account Analytics**.
 
 ### Network Analytics
 
@@ -58,4 +58,4 @@ Beyond the analytics provided for your properties, you can also access analytics
 
 ## GraphQL APIs
 
-If you would like to have more control over how you visualize the analytic and log information available on the Cloudflare dashboard, use the [GraphQL Analytics API](/analytics/graphql-api/) to build customized views. This API replaces and expands on the previous [Zone Analytics API](https://developers.cloudflare.com/api/operations/zone-analytics-(-deprecated)-get-dashboard).
+If you would like to have more control over how you visualize the analytic and log information available on the Cloudflare dashboard, use the [GraphQL Analytics API](/analytics/graphql-api/) to build customized views. This API replaces and expands on the previous [Zone Analytics API](/api/operations/zone-analytics-(-deprecated)-get-dashboard).

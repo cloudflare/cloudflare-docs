@@ -38,4 +38,4 @@ If you wish to host a marketing-related website, you only need an ICP filing.
 
 After you obtain an ICP number, you must display it in the footer of your website, like in the following example:
 
-![An ICP number displayed in the footer of a website.](/china-network/static/icp-number-in-footer.png)
+![An ICP number displayed in the footer of a website.](/images/china-network/icp-number-in-footer.png)

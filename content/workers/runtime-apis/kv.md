@@ -1,10 +1,6 @@
 ---
 pcx_content_type: configuration
 title: KV
-product_grid:
-  show: true
-  title: KV
-  group: Developer platform
 ---
 
 # KV
@@ -48,15 +44,15 @@ This method returns a `Promise` that you should `await` on in order to verify a 
 
 The maximum size of a value is 25 MiB.
 
-You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [write data via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [write data via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 Due to the eventually consistent nature of Workers KV, concurrent writes can end up overwriting one another. It is a common pattern to write data from a single process via Wrangler or the API. This avoids competing, concurrent writes because of the single stream. All data is still readily available within all Workers bound to the namespace.
 
-Writes are immediately visible to other requests in the same edge location, but can take up to 60 seconds to be visible in other parts of the world. Refer to [How KV works](/workers/learning/how-kv-works/) for more information on this topic.
+Writes are immediately visible to other requests in the same global network location, but can take up to 60 seconds to be visible in other parts of the world. Refer to [How KV works](/workers/learning/how-kv-works/) for more information on this topic.
 
 #### Writing data in bulk
 
-You can [write more than one key-value pair at a time with Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
+You can [write more than one key-value pair at a time with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-write-multiple-key-value-pairs). The bulk API can accept up to 10,000 KV pairs at once.
 
 A `key` and `value` are required for each KV pair. The entire request size must be less than 100 megabytes. As of January 2022, Cloudflare does not support bulk writes from within a Worker.
 
@@ -82,15 +78,15 @@ The `put` method described [previously](/workers/runtime-apis/kv/#writing-key-va
 
 {{<definitions>}}
 
-- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expiration: secondsSinceEpoch})` : {{<type>}}Promise{{</type>}}
 
-- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` {{<type>}}Promise{{</type>}}
+- `NAMESPACE.put(key, value, {expirationTtl: secondsFromNow})` : {{<type>}}Promise{{</type>}}
 
 {{</definitions>}}
 
 These assume that `secondsSinceEpoch` and `secondsFromNow` are variables defined elsewhere in your Worker code.
 
-You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
+You can also [write with an expiration on the command line via Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-write-key-value-pair-with-metadata).
 
 #### Metadata
 
@@ -154,7 +150,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [from the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-read-key-value-pair).
+You can [read key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) and [from the API](/api/operations/workers-kv-namespace-read-key-value-pair).
 
 #### Types
 
@@ -183,7 +179,7 @@ The `get` options object also accepts a `cacheTtl` parameter:
 NAMESPACE.get(key, { cacheTtl: 3600 });
 ```
 
-The `cacheTtl` parameter must be an integer that is greater than or equal to `60`, which is the default. It defines the length of time in seconds that a KV result is cached in the edge location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other edge locations will not be visible until the cached value expires.
+The `cacheTtl` parameter must be an integer that is greater than or equal to `60`, which is the default. It defines the length of time in seconds that a KV result is cached in the global network location that it is accessed from. This can be useful for reducing cold read latency on keys that are read relatively infrequently. It is especially useful if your data is write-once or write-rarely. It is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
 
 The effective Cache TTL of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to `60` seconds.
 
@@ -207,11 +203,13 @@ To delete a key-value pair, call the `delete` method on any namespace you have b
 await NAMESPACE.delete(key);
 ```
 
-This will remove the key and value from your namespace. As with any operations, it may take some time to see that they key has been deleted from various points at the edge.
+This will remove the key and value from your namespace. As with any operations, it may take some time to see that they key has been deleted from various points in the Cloudflare global network.
 
 This method returns a promise that you should `await` on in order to verify successful deletion.
 
-You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-delete-key-value-pair).
+If you attempt to read a deleted key from KV, the promise will resolve with the literal value `null`.
+
+You can also [delete key-value pairs from the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-delete-key-value-pair).
 
 ### Listing keys
 
@@ -249,7 +247,7 @@ async function handleRequest(request) {
 {{</tab>}}
 {{</tabs>}}
 
-You can also [list keys on the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](https://developers.cloudflare.com/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
+You can also [list keys on the command line with Wrangler](/workers/wrangler/workers-kv/) or [via the API](/api/operations/workers-kv-namespace-list-a-namespace'-s-keys).
 
 Changes may take up to 60 seconds to be visible when listing keys.
 
@@ -352,7 +350,7 @@ Note that checking for an empty array in `keys` is not sufficient to determine w
 
 ### Referencing KV from Workers
 
-A KV namespace is a key-value database that is replicated to Cloudflare's edge. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
+A KV namespace is a key-value database that is replicated to Cloudflare's global network. To connect to a KV namespace from within a Worker, you must define a binding that points to the namespace's ID.
 
 The name of your binding does not need to match the KV namespace's name. Instead, the binding should be a valid JavaScript identifier because it will exist as a global variable within your Worker.
 
@@ -372,7 +370,7 @@ kv_namespaces = [
 ]
 ```
 
-With this, the deployed Worker will have a `TODO` global variable. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
+With this, the deployed Worker will have a `TODO` binding on the `env` parameter in Modules format, and a `TODO` global variable in Service Worker format. Any methods on the `TODO` binding will map to the KV namespace with an ID of `06779da6940b431db6e566b4846d64db` – which you called `My Tasks` earlier.
 
 {{<tabs labels="js/esm | js/sw">}}
 {{<tab label="js/esm" default="true">}}

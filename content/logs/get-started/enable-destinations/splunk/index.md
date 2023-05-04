@@ -23,7 +23,7 @@ To enable the Cloudflare Logpush service:
 
 3.  Go to **Analytics & Logs** > **Logs**.
 
-4.  Click **Connect a service**. A modal window opens where you will need to complete several steps.
+4.  Click **Add Logpush job**. A modal window opens where you will need to complete several steps.
 
 5.  Select the dataset you want to push to a storage service.
 
@@ -78,7 +78,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
   - **\<INSECURE_SKIP_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
 {{<Aside type="note" header="Note">}}
-Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the [Logpush FAQ](/logs/faq/#logpush-faq) for more information.
+Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the [Logpush FAQ](/logs/faq/logpush/) for more information.
 {{</Aside>}}
 
 - `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
@@ -156,7 +156,7 @@ Response:
 }
 ```
 
-Refer to the [Logpush FAQ](/logs/faq/#logpush-faq) for troubleshooting information.
+Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.
 
 ### 3. Create firewall rule for Splunk HEC endpoint (optional)
 

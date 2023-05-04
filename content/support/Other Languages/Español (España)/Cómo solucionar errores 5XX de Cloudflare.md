@@ -150,7 +150,7 @@ El error 520 ocurre cuando el servidor de origen devuelve una respuesta vacía, 
 {{<Aside type="note">}}
 Una solución rápida mientras se investigan más a fondo los errores 520
 es configurar el registro como
-[DNS-solo](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)
+[DNS-solo](/dns/manage-dns-records/reference/proxied-dns-records)
 en la aplicación Cloudflare **DNS** o bien [detener temporalmente
 Cloudflare](https://support.cloudflare.com/hc/articles/203118044#h_8654c523-e31e-4f40-a3c7-0674336a2753).
 {{</Aside>}}
@@ -197,7 +197,7 @@ Las dos causas más comunes de los errores 521 son:
 -   Analiza los registros de error del servidor web de origen para identificar los fallos o interrupciones de la aplicación del servidor web.
 -   Confirma que [las direcciones IP de Cloudflare](https://www.cloudflare.com/ips) no estén bloqueadas o limitadas
 -   Permite todos los [rangos de direcciones IP de Cloudflare](https://www.cloudflare.com/ips) en el firewall de tu servidor web de origen u otro software de seguridad
--   Confirma que, si tienes el modo **SSL/TLS** configurado en **Completo** o **Completo (Estricto**) — has instalado un [certificado de origen de Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca)
+-   Confirma que, si tienes el modo **SSL/TLS** configurado en **Completo** o **Completo (Estricto**) — has instalado un [certificado de origen de Cloudflare](/ssl/origin-configuration/origin-ca)
 -   Consulta más información sobre la solución de problemas en la [Comunidad de Cloudflare](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461).
 
 ___
@@ -225,7 +225,7 @@ conexión, pero no envía una respuesta a tiempo.
 -   La dirección IP de origen en tu aplicación  **DNS** de Cloudflare no coincide con la dirección IP que actualmente proporcionó tu proveedor de alojamiento a tu servidor web de origen.
 -   Los paquetes se descartaron en tu servidor web de origen.
 
-Si utilizas [Cloudflare Pages](https://developers.cloudflare.com/pages/), comprueba que tienes configurado un dominio personalizado y que tu registro CNAME apunta a tu dominio Pages personalizado. Las instrucciones sobre cómo configurar un dominio Pages personalizado están disponibles [aquí](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain).
+Si utilizas [Cloudflare Pages](/pages/), comprueba que tienes configurado un dominio personalizado y que tu registro CNAME apunta a tu dominio Pages personalizado. Las instrucciones sobre cómo configurar un dominio Pages personalizado están disponibles [aquí](/pages/getting-started#adding-a-custom-domain).
 
 Si nada de lo anterior soluciona el problema, solicita la siguiente información a tu proveedor de alojamiento o administrador del sitio antes de ponerte en [contacto con Soporte de Cloudflare](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -247,7 +247,7 @@ El error 523 se produce cuando Cloudflare no puede contactar con su servidor web
 Si tu proveedor de alojamiento cambia con frecuencia la dirección IP de
 tu servidor web de origen, consulta la documentación de Cloudflare en
 [actualizaciones de DNS
-dinámicas](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
+dinámicas](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
 {{</Aside>}}
 
 Si nada de lo anterior permite una solución, solicita la siguiente información a tu proveedor de alojamiento o administrador del sitio:
@@ -295,7 +295,7 @@ ___
 Los errores 525 indican que el protocolo de enlace SSL entre Cloudflare y el servidor web de origen ha fallado. El error 525 ocurre cuando estas dos condiciones son auténticas:
 
 1.  El [protocolo de enlace SSL](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) falla entre Cloudflare y el servidor web de origen, y
-2.  [_El modo SSL_ _Completo_ o](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) **Completo (Estricto)** está configurado en la pestaña **Información general** de tu aplicación **SSL/TLS de Cloudflare**.
+2.  [_El modo SSL_ _Completo_ o](/ssl/origin-configuration/ssl-modes) **Completo (Estricto)** está configurado en la pestaña **Información general** de tu aplicación **SSL/TLS de Cloudflare**.
 
 **Solución**
 
@@ -304,7 +304,7 @@ Los errores 525 indican que el protocolo de enlace SSL entre Cloudflare y el ser
 -   Ningún certificado SSL válido instalado
 -   El puerto 443 (u otro puerto seguro) no está abierto
 -   Sin soporte [SNI](https://support.cloudflare.com/hc/articles/360026016272)
--   Las [suites de cifrado](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) aceptadas por Cloudflare no coinciden con las suites de cifrado admitidas por el servidor web de origen
+-   Las [suites de cifrado](/ssl/ssl-tls/cipher-suites) aceptadas por Cloudflare no coinciden con las suites de cifrado admitidas por el servidor web de origen
 
 {{<Aside type="tip">}}
 Si ocurren errores 525 de manera intermitente, analiza los registros de
@@ -318,8 +318,8 @@ registro](https://docs.nginx.com/nginx/admin-guide/monitoring/logging/).
 
 **Controles adicionales**
 
--   Comprueba si tienes un certificado instalado en tu servidor de origen. Puedes consultar [este artículo](https://support.cloudflare.com/hc/es-es/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) para obtener más detalles sobre cómo realizar algunas pruebas. En caso de que no tengas ningún certificado, puedes crear e instalar el [certificado CA de origen de Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca) gratuito. Utiliza los certificados CA de origen para cifrar el tráfico entre Cloudflare y tu servidor web de origen.
--   [Revisa las suites de cifrado](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) que utiliza tu servidor para asegurarte de que coinciden con lo que admite Cloudflare.
+-   Comprueba si tienes un certificado instalado en tu servidor de origen. Puedes consultar [este artículo](https://support.cloudflare.com/hc/es-es/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) para obtener más detalles sobre cómo realizar algunas pruebas. En caso de que no tengas ningún certificado, puedes crear e instalar el [certificado CA de origen de Cloudflare](/ssl/origin-configuration/origin-ca) gratuito. Utiliza los certificados CA de origen para cifrar el tráfico entre Cloudflare y tu servidor web de origen.
+-   [Revisa las suites de cifrado](/ssl/ssl-tls/cipher-suites) que utiliza tu servidor para asegurarte de que coinciden con lo que admite Cloudflare.
 -   Revisa en los registros de errores de tu servidor las marcas de tiempo en que aparecen en los errores 525 para comprobar si hay errores que puedan estar causando que la conexión se restablezca durante el protocolo de enlace SSL.
 
 ___
@@ -329,7 +329,7 @@ ___
 El error 526 ocurre cuando estas dos condiciones son auténticas:
 
 1.  Cloudflare no puede validar el certificado SSL en tu servidor web de origen, y
-2.  [_SSL_)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) **Completo (Estricto)** está configurado en la pestaña **Información general** de tu aplicación **SSL/TLS** de Cloudflare.
+2.  [_SSL_)](/ssl/origin-configuration/ssl-modes#full-strict) **Completo (Estricto)** está configurado en la pestaña **Información general** de tu aplicación **SSL/TLS** de Cloudflare.
 
 **Solución**
 
@@ -351,7 +351,7 @@ solicita a tu administrador de servidor o proveedor de alojamiento que analice l
 
 ![Pantalla que muestra un certificado SSL sin errores.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-Si el servidor de origen utiliza un certificado autofirmado, configura el dominio para utilizar _SSL_ _Completo_ en lugar de _SSL Completo (Estricto)_. Consulta las [configuraciones SSL recomendadas para tu origen](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Si el servidor de origen utiliza un certificado autofirmado, configura el dominio para utilizar _SSL_ _Completo_ en lugar de _SSL Completo (Estricto)_. Consulta las [configuraciones SSL recomendadas para tu origen](/ssl/origin-configuration/ssl-modes).
 
 ___
 
@@ -433,7 +433,7 @@ Si ocurren errores TLS/SSL, verifica lo siguiente en el servidor web de origen y
 -   El puerto 443 esté abierto
 -   El servidor web de origen presente un certificado SSL
 -   El SAN o nombre común del certificado SSL del servidor web de origen contenga el nombre de servidor solicitado
--   **SSL** está configurado como [Completo  o Completo (Estricto)](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) en la pestaña **Información general** de la aplicación Cloudflare **SSL/TLS** 
+-   **SSL** está configurado como [Completo  o Completo (Estricto)](/ssl/origin-configuration/ssl-modes) en la pestaña **Información general** de la aplicación Cloudflare **SSL/TLS** 
 
 {{<Aside type="tip">}}
 Si el certificado SSL de tu servidor web de origen está autofirmado,

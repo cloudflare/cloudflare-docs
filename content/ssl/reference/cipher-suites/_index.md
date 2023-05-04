@@ -12,7 +12,7 @@ meta:
 
 Cloudflare publishes a [public repository of our SSL/TLS configurations](https://github.com/cloudflare/sslconfig) on GitHub. You can find changes in the commit history.
 
-We no longer support [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-road-for-rc4/) or [SSLv3](https://blog.cloudflare.com/sslv3-support-disabled-by-default-due-to-vulnerability/).
+Cloudflare no longer supports [RC4 cipher suites](https://blog.cloudflare.com/end-of-the-road-for-rc4/) or [SSLv3](https://blog.cloudflare.com/sslv3-support-disabled-by-default-due-to-vulnerability/).
 
 ## Related resources
 

@@ -40,7 +40,7 @@ Cloudflareダッシュボードの **DNS** アプリに必要なDNSレコー�
 -   ルートドメイン（_example.com_など）
 -   既存のサブドメイン（ _www.example.com、blog.example.com_など）など）
 
-AおよびCNAMEの [DNSレコード](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)の設定についてご確認ください。
+AおよびCNAMEの [DNSレコード](/dns/manage-dns-records/how-to/create-dns-records)の設定についてご確認ください。
 
 ### ドメインをCloudflareに追加する前にDNSSECを無効にしなかった
 
@@ -52,4 +52,4 @@ Cloudflareのダッシュボードで **DNS** アプリを介してDNSレコ�
 
 ### 未解決のIPアドレス
 
-まれに、URLを要求しているクライアントのDNSリゾルバーが、有効なIPアドレスへのDNSレコードの解決に失敗することがあります。 問題が解消するかどうかを確認するために、少し待ってからページを再読み込みします。 Cloudflareはこの問題とは関係ありませんが、 [CloudflareのDNS リゾルバ―](https://developers.cloudflare.com/1.1.1.1/setup/) の使用が役立つかもしれません。 現在のDNSリゾルバーについて追加の支援が必要な場合は、ホスティングプロバイダーに連絡してください。
+まれに、URLを要求しているクライアントのDNSリゾルバーが、有効なIPアドレスへのDNSレコードの解決に失敗することがあります。 問題が解消するかどうかを確認するために、少し待ってからページを再読み込みします。 Cloudflareはこの問題とは関係ありませんが、 [CloudflareのDNS リゾルバ―](/1.1.1.1/setup/) の使用が役立つかもしれません。 現在のDNSリゾルバーについて追加の支援が必要な場合は、ホスティングプロバイダーに連絡してください。

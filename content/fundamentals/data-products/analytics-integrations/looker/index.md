@@ -59,7 +59,7 @@ To create your new LookML project:
 9.  Next, open the project.
 
 10. Click **Deploy from Remote** to pull all remote changes into your local version of the repository.
-    ![LookML projects page highlighting Develop menu and Manage LookML Projects and New LookML Project options](/fundamentals/static/images/looker/screenshots/develop-look-ml-project.png)
+    ![LookML projects page highlighting Develop menu and Manage LookML Projects and New LookML Project options](/images/fundamentals/looker/screenshots/develop-look-ml-project.png)
 
 ## Task 3 - Update the connection name
 
@@ -82,37 +82,37 @@ There are five dashboards to help you analyze Cloudflare logs. You can also use 
 
 This is a quick overview of the most important metrics from your Cloudflare logs, including total number of requests, top visitors by country, client IP, user agent, traffic type, total number of threats, and bandwidth usage.
 
-![Looker dashboard highlighting Cloudflare metrics including Web Traffic Overview and Web Traffic Types](/fundamentals/static/images/looker/dashboards/snapshot-cloudflare-dashboard-looker.png)
+![Looker dashboard highlighting Cloudflare metrics including Web Traffic Overview and Web Traffic Types](/images/fundamentals/looker/dashboards/snapshot-cloudflare-dashboard-looker.png)
 
 #### Security
 
 This dashboard provides insights on threat identification and mitigation through our Web Application Firewall (WAF) and IP Firewall. Metrics include total threats stopped, threat traffic source, blocked IPs, and user agents, top threat requests, WAF events (SQL injections, XSS, etc.), and rate limiting. Use this data to fine tune the firewall to target obvious threats and prevent false positives.
 
-![Looker dashboard highlighting Cloudflare metrics including Threats and Threats Over time](/fundamentals/static/images/looker/dashboards/security-cloudflare-dashboard-looker.png)
+![Looker dashboard highlighting Cloudflare metrics including Threats and Threats Over time](/images/fundamentals/looker/dashboards/security-cloudflare-dashboard-looker.png)
 
 #### Performance
 
 This dashboard helps you identify and address issues like slow pages and caching misconfigurations. Metrics include total vs. cached bandwidth, cache ratio, top uncached requests, static vs. dynamic content, slowest URIs, and more.
 
-![Looker dashboard highlighting Cloudflare metrics including Requests, Bandwidth, and Cache](/fundamentals/static/images/looker/dashboards/performance-cloudflare-dashboard-looker.png)
+![Looker dashboard highlighting Cloudflare metrics including Requests, Bandwidth, and Cache](/images/fundamentals/looker/dashboards/performance-cloudflare-dashboard-looker.png)
 
 #### Reliability
 
 This dashboard provides insights on the availability of your websites and applications. Metrics include origin response error ratio, origin response status over time, percentage of 3xx/4xx/5xx errors over time, and more.
 
-![Looker dashboard highlighting Cloudflare metrics including Edge and Origin Response Status Over time and Error Ratios](/fundamentals/static/images/looker/dashboards/reliability-cloudflare-dashboard-looker.png)
+![Looker dashboard highlighting Cloudflare metrics including Edge and Origin Response Status Over time and Error Ratios](/images/fundamentals/looker/dashboards/reliability-cloudflare-dashboard-looker.png)
 
 #### Bot Management
 
 This dashboard allows to reliably detect and mitigate bad bots to prevent credential stuffing, spam registration, content scraping, click fraud, inventory hoarding, and other malicious activities. Use these insights to tune Cloudflare and prevent bots from excessive usage and abuse across websites, applications, and API endpoints.
 
-![Looker dashboard highlighting Cloudflare metrics including Global Traffic, False Detected Bots, and Bad Bots](/fundamentals/static/images/looker/dashboards/bot-management-cloudflare-dashboard-looker.png)
+![Looker dashboard highlighting Cloudflare metrics including Global Traffic, False Detected Bots, and Bad Bots](/images/fundamentals/looker/dashboards/bot-management-cloudflare-dashboard-looker.png)
 
 ### Filters
 
 All dashboard have a set of filters that you can apply to the entire dashboard, as shown in the following example. The filters apply across the entire dashboard.
 
-![List of the available filters from the Looker dashboard](/fundamentals/static/images/looker/screenshots/cloudflare-looker-dashboard-filters.png)
+![List of the available filters from the Looker dashboard](/images/fundamentals/looker/screenshots/cloudflare-looker-dashboard-filters.png)
 
 The default time interval is set to 24 hours. Note that for correct calculations, by default, filters exclude Worker subrequests (**WorkerSubrequest** = _false_) and purge requests (**ClientRequestMethod** is not _PURGE_).
 

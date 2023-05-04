@@ -29,7 +29,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`whoami`](#whoami) - Retrieve your user information and test your authentication configuration.
 - [`deployments`](#deployments) - Retrieve details for recent deployments.
 - [`rollback`](#rollback) - Rollback to a recent deployment.
-- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](https://developers.cloudflare.com/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
+- [`dispatch-namespace`](#dispatch-namespace) - Interact with a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/#dispatch-namespace).
 - [`mtls-certificate`](#mtls-certificate) - Manage certificates used for mTLS connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 
@@ -1764,7 +1764,7 @@ $ wrangler mtls-certificate upload [OPTIONS]
 - `--cert` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
   - A path to the TLS certificate to upload. Certificate chains are supported
 - `--key` {{<type>}}string{{</type>}} {{<prop-meta>}}required{{</prop-meta>}}
-  - A path the private key to upload.
+  - A path to the private key to upload.
 - `--name` {{<type>}}string{{</type>}} {{<prop-meta>}}optional{{</prop-meta>}}
 
 {{</definitions>}}
@@ -1787,6 +1787,8 @@ mtls_certificates = [
   { binding = "MY_CERT", certificate_id = "99f5fef1-6cc1-46b8-bd79-44a0d5082b8d" }
 ]
 ```
+
+Note that the certificate and private keys must be in separate (typically `.pem`) files when uploading.
 {{</Aside>}}
 
 ### `list`

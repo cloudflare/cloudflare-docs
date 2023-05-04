@@ -33,14 +33,14 @@ Domains in Enterprise Plans können die IPv6 Compatibility im Cloudflare-Dashboa
 {{<Aside type="tip">}}
 Kunden mit Domains in den Free, Pro und Business Plans müssen die **IPv6
 Compatibility** über die
-[Cloudflare-API](https://api.cloudflare.com/#zone-settings-change-ipv6-setting)
+[Cloudflare-API](/api/operations/zone-settings-change-i-pv6-setting)
 aktualisieren.
 {{</Aside>}}
 
 Beachten Sie, dass Domains selbst bei deaktiviertem IPv6 IPv6-Traffic über das Tor-Netzwerk empfangen. Den gesamten IPv6-Traffic vollständig deaktivieren können Sie folgendermaßen:
 
 -   Deaktivieren Sie **Onion Routing** über die Registerkarte **Edge-Zertifikate** in der Cloudflare **SSL/TLS**\-App. Lesen Sie [Cloudflare Tor-Support und Onion Routing verstehen](https://support.cloudflare.com/hc/articles/203306930).
--   Verwenden Sie eine Firewall-Regel, um _0:0:0:0:0:0:0:0/0_ mithilfe des Filters `ip.src in {::/0}` zu blockieren. Erfahren Sie, wie sie [in Cloudflare Firewall-Regeln erstellen](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/).
+-   Verwenden Sie eine Firewall-Regel, um _0:0:0:0:0:0:0:0/0_ mithilfe des Filters `ip.src in {::/0}` zu blockieren. Erfahren Sie, wie sie [in Cloudflare Firewall-Regeln erstellen](/firewall/cf-dashboard/create-edit-delete-rules/).
 
 ___
 

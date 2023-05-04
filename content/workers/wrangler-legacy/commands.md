@@ -228,7 +228,7 @@ To publish your code to multiple domains, refer to the [documentation for enviro
 
 ## dev
 
-`wrangler dev` is a command that establishes a connection between `localhost` and an edge server that operates your Worker in development. A cloudflared tunnel forwards all requests to the edge server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects, etc. This is a great way to easily test your Worker while developing.
+`wrangler dev` is a command that establishes a connection between `localhost` and a global network server that operates your Worker in development. A `cloudflared` tunnel forwards all requests to the global network server, which continuously updates as your Worker code changes. This allows full access to Workers KV, Durable Objects and other Cloudflare developer platform products. The `dev` command is a way to test your Worker while developing.
 
 ```sh
 $ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host>] [--local-protocol <http|https>] [--upstream-protocol <http|https>]
@@ -397,7 +397,7 @@ Default values indicated by {{<type>}}=value{{</type>}}.
 
 {{</definitions>}}
 
-This command will forward the JSON response from the [List Routes API](https://developers.cloudflare.com/api/operations/worker-routes-list-routes). Each object within the JSON list will include the route id, route pattern, and the assigned Worker name for the route. Piping this through a tool such as `jq` will render the output nicely.
+This command will forward the JSON response from the [List Routes API](/api/operations/worker-routes-list-routes). Each object within the JSON list will include the route id, route pattern, and the assigned Worker name for the route. Piping this through a tool such as `jq` will render the output nicely.
 
 ```sh
 $ wrangler route delete $ID [--env $ENVIRONMENT_NAME]

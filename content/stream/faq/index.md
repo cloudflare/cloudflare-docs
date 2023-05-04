@@ -8,9 +8,6 @@ meta:
 
 # Frequently asked questions about Cloudflare Stream
 
-- [Stream](#stream)
-- [Stream Live](#stream-live)
-
 ## Stream
 
 ### What formats and quality levels are delivered through Cloudflare Stream?

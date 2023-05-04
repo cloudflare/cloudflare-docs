@@ -29,9 +29,9 @@ ___
 O acesso à Análise de Dados de rede exige o seguinte:
 
 -   Um plano Empresarial da Cloudflare
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) ou [Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Cloudflare [Magic Transit](/magic-transit/) ou [Spectrum](/spectrum/).
 
-A tela do **Network Analytics** da Cloudflare fornece visibilidade quase em tempo real dos padrões de tráfego das camadas de transporte e de rede e dos ataques de DDoS O Network Analytics exibe dados em nível de bits e pacotes, os mesmos dados disponíveis por meio da [API do GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/).
+A tela do **Network Analytics** da Cloudflare fornece visibilidade quase em tempo real dos padrões de tráfego das camadas de transporte e de rede e dos ataques de DDoS O Network Analytics exibe dados em nível de bits e pacotes, os mesmos dados disponíveis por meio da [API do GraphQL Analytics](/analytics/graphql-api/).
 
 ![O painel de análise de dados mostra um resumo dos pacotes por tipo](/support/static/na-main-dashboard.png)
 
@@ -134,7 +134,7 @@ Nesse exemplo, clicar no botão **Filtro** restringe o escopo da visualização 
 
 ### Crie uma regra de Magic Firewall com os filtros aplicados
 
-É possível criar uma regra do [Magic Firewall](https://developers.cloudflare.com/magic-firewall) para bloquear todo o tráfego correspondente aos filtros selecionados na Análise de Dados de Rede. Os filtros compatíveis no momento são:
+É possível criar uma regra do [Magic Firewall](/magic-firewall) para bloquear todo o tráfego correspondente aos filtros selecionados na Análise de Dados de Rede. Os filtros compatíveis no momento são:
 
 -   IP de destino
 -   Protocolo
@@ -463,7 +463,7 @@ ___
 
 ## Visualizar o log de atividades
 
-O **log de atividades** do Network Analytics mostra até 500 eventos de log no intervalo de tempo selecionado atualmente, paginados com 10 resultados por página por visualização de intervalo de tempo (a [API do GraphQL Analytics](https://developers.cloudflare.com/analytics/graphql-api/) não tem essa limitação). 
+O **log de atividades** do Network Analytics mostra até 500 eventos de log no intervalo de tempo selecionado atualmente, paginados com 10 resultados por página por visualização de intervalo de tempo (a [API do GraphQL Analytics](/analytics/graphql-api/) não tem essa limitação). 
 
 Para exibir detalhes do evento, clique no widget de expansão associado aos eventos.
 
@@ -520,9 +520,9 @@ ___
 
 ## Recursos relacionados
 
--   [Análise de Dados de rede da Cloudflare v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [Migrar da da Análise de Dados de Rede v1 para a Análise de Dados de Rede v2](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [API do GraphQL da Cloudflare](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Análise de Dados de rede da Cloudflare v2](/analytics/network-analytics/)
+-   [Migrar da da Análise de Dados de Rede v1 para a Análise de Dados de Rede v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [API do GraphQL da Cloudflare](/analytics/graphql-api/)
 -   [Análise de Dados da Cloudflare: uma rápida visão geral](https://support.cloudflare.com/hc/articles/360037684111)
 -   [Números de porta e nomes de serviço do IANA](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -647,7 +647,7 @@ Ao trabalhar com logs de ataque no painel, tenha em mente o seguinte:
 -   Os logs de ataque são armazenados com carimbos de data/hora de início e término, estatísticas de pacotes e bits para a taxa de dados mínima, máxima e média, bem como totais, tipo de ataque e ação realizada. 
 -   Os endereços de IP de origem são considerados informações que permitem identificação pessoal. Portanto, a Cloudflare os armazena apenas por 30 dias. Após 30 dias, os endereços de IP de origem são descartados e os logs são distribuídos primeiro em grupos de 1 hora, depois em grupos de 1 dia. As distribuições de 1 hora ficam armazenadas por 6 meses. As distribuições de um dia ficam armazenadas por 1 ano.
 
-Para saber mais sobre como consultar e acessar dados de log, consulte a [API de Análise de Dados do GraphQL](https://developers.cloudflare.com/analytics/graphql-api/limits).
+Para saber mais sobre como consultar e acessar dados de log, consulte a [API de Análise de Dados do GraphQL](/analytics/graphql-api/limits).
 
 ### Por que a Análise de Dados de rede indica que o IP de destino está "indisponível"?
 

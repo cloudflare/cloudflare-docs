@@ -13,7 +13,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting 
 
 {{<Aside type="note">}}
 
-For API guidance on the previous version of rate limiting rules, refer to the [Cloudflare API documentation](https://developers.cloudflare.com/api/operations/rate-limits-for-a-zone-list-rate-limits).
+For API guidance on the previous version of rate limiting rules, refer to the [Cloudflare API documentation](/api/operations/rate-limits-for-a-zone-list-rate-limits).
 
 {{</Aside>}}
 

@@ -2,11 +2,6 @@
 pcx_content_type: concept
 title: Automated exposed credentials check
 weight: 9
-product_grid:
-  show: true
-  title: Exposed credentials check
-  group: Application security
-  wrap: true
 ---
 
 # Automated exposed credentials check

@@ -182,14 +182,17 @@ async function testREDIRECTS(file: string) {
     let exists = false;
     if (!line.startsWith("#")) {
       const result = line.match(destinationURLRegex);
-
       if (result !== null) {
         const match = result[1];
-        let local = join(PUBDIR, match);
-        exists = existsSync(local);
+        if (match.startsWith('/api/')) {
+          return;
+        } else {
+          let local = join(PUBDIR, match);
+          exists = existsSync(local);
 
-        if (!exists) {
-          REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
+          if (!exists) {
+            REDIRECT_ERRORS.push(`\n  ✘ ${result[0]}`);
+          }
         }
       }
     }
@@ -235,6 +238,8 @@ async function task(file: string) {
       }
 
       if (target && target.includes("/support/other-languages")) {
+        return;
+      } else if (target && (target.startsWith("/api/") || target === "/api")) {
         return;
       }
 

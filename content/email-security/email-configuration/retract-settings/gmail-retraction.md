@@ -119,7 +119,7 @@ For Area 1 to be able to retract messages from Gmail inboxes, you first need to 
 
     ![Enter the required information](/email-security/static/email-retraction/gmail/step22-clientid-oauth.png)
 
-23. Return to the Google Cloud Platform (GCP) console, and select **Service Accounts** to return to the service account screen.
+23. Return to the Google Cloud Platform (GCP) console, and select **IAM & Admin** > **Service Accounts** to return to the service account screen.
 
     ![Select Service accounts](/email-security/static/email-retraction/gmail/step23-service-accounts.png)
 

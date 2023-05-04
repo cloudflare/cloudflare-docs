@@ -108,7 +108,7 @@ Server denies the request because the resource failed to meet the conditions spe
 
 For an example of version control, a client is modifying an existing resource and thus sets the `If-Unmodified-Since` header to match the date that the client downloaded the resource and began edits. If the resource was edited (likely by another client) after this date and before the upload of the edits, this response will be generated since the date of the last edit will come after the date set in `If-Unmodified-Since` by the client.
 
-Cloudflare will serve this response. For more information, refer to: [ETag Headers](https://support.cloudflare.com/hc/en-us/articles/218505467)
+Cloudflare will serve this response. For more information, refer to: [ETag Headers](/cache/reference/etag-headers/)
 
 ### **413 Payload Too Large  (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 

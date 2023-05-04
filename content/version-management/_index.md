@@ -19,7 +19,9 @@ By using Version Management, you can:
 
 ## Availability
 
-Version Management is available to all Enterprise customers. For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
+{{<feature-table id="account.version_management">}}
+
+For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
 
 {{<Aside type="warning" header="Warning">}}
 

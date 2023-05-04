@@ -17,7 +17,7 @@ Bindings for your dynamic dispatch Worker or any user Workers can be defined on 
 
 {{<Aside type="warning">}}
 
-Any product-specific limits still apply to your account (for example, the [100 KV namespace limit](/workers/platform/limits/#kv-limits)). You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+Any product-specific limits still apply to your account (for example, the [100 KV namespace limit](/workers/platform/limits/#kv-limits)). You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 {{</Aside>}}
 

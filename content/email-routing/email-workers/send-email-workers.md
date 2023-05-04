@@ -34,16 +34,6 @@ Refer to the example below to learn how to construct a Worker capable of sending
 import { EmailMessage } from "cloudflare:email";
 import { createMimeMessage } from "mimetext";
 
-function toReadableStream(value) {
- return new ReadableStream({
-   start(controller) {
-     var enc = new TextEncoder();
-     controller.enqueue(enc.encode(value));
-     controller.close();
-   },
- });
-}
-
 export default {
  async fetch(request, env) {
    const msg = createMimeMessage();
@@ -58,7 +48,7 @@ export default {
    var message = new EmailMessage(
      "<SENDER>@example.com",
      "<RECIPIENT>@example.com",
-     toReadableStream(msg.asRaw())
+     msg.asRaw()
    );
    try {
      await env.SEB.send(message);

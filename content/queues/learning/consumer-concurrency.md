@@ -91,7 +91,7 @@ $ wrangler queues consumer update <script-name>
 -->
 ## Billing
 
-When multiple consumer Workers are invoked, each Worker invocation incurs [duration costs](https://developers.cloudflare.com/workers/platform/pricing/#workers).
+When multiple consumer Workers are invoked, each Worker invocation incurs [duration costs](/workers/platform/pricing/#workers).
 
 * If you intend to process all messages written to a queue, _the effective overall cost is the same_, even with concurrency enabled.
 * Enabling concurrency simply brings those costs forward, and can help prevent messages from reaching the [message retention limit](/queues/platform/limits/).

@@ -7,7 +7,7 @@ _build:
 
 When retraction is enabled, you can manually retract messages that were not automatically retracted.
 
-1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/), and select **Settings** (the gear icon). 
+1. Log in to the [Area 1 dashboard](https://horizon.area1security.com/). 
 
 2. Select the search bar. From the drop-down menu, select [**Mail Trace**](/email-security/reporting/search/mailtrace/).
 

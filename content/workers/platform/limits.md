@@ -25,7 +25,7 @@ title: Limits
 
 {{<Aside type="note">}}
 
-You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 {{</Aside>}}
 
@@ -52,7 +52,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 
 ## Response limits
 
-Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](https://support.cloudflare.com/hc/articles/200172516#h_51422705-42d0-450d-8eb1-5321dcadb5bc). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
+Cloudflare does not enforce response limits, but cache limits for [Cloudflare's CDN are observed](/cache/about/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
 ## Worker limits
 
@@ -73,7 +73,11 @@ Workers on the Bundled Usage Model are intended for use cases below 50 ms. Bundl
 
 {{<Aside type="note" header="No limit* for duration">}}
 
-There is no hard limit for duration. However, after 30 seconds, there is a higher chance of eviction.
+There is no hard limit for duration. 
+
+Cloudflare updates the Workers runtime a few times per week. When this happens, in-flight requests are given a grace period of 30 seconds to finish. If a request does not finish within this time, it is terminated.
+
+While your application should follow the best practice of handling disconnects by retrying requests, the scenario described above is extremely improbable. To encounter it, you would need to have a request that takes longer than 30 seconds that also happens to intersect with the exact time an update to the runtime is happening.
 
 {{</Aside>}}
 
@@ -142,7 +146,7 @@ Durable Objects are only available on the Workers Paid plan.
 
 ## Request
 
-Workers automatically scale onto thousands of Cloudflare edge servers around the world. There is no general limit to the number of requests per second Workers can handle.
+Workers automatically scale onto thousands of Cloudflare global network servers around the world. There is no general limit to the number of requests per second Workers can handle.
 
 Cloudflare’s abuse protection methods do not affect well-intentioned traffic. However, if you send many thousands of requests per second from a small number of client IP addresses, you can inadvertently trigger Cloudflare’s abuse protection. If you expect to receive `1015` errors in response to traffic or expect your application to incur these errors, contact your Cloudflare account team to increase your limit.
 
@@ -176,7 +180,7 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 ## Memory
 
-Only one Workers instance runs on each of the many global Cloudflare network edge servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
+Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes; note however, that nodes are occasionally evicted from memory.
 
 If a Worker processes a request that pushes the Worker over the 128MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages, go to [**Workers**](https://dash.cloudflare.com/?to=/:account/workers) on the Cloudflare dashboard > **Manage Workers** > select the Worker you would like to investigate > scroll down to **Invocation Statuses** and examine _Exceeded Resources_.
 
@@ -260,11 +264,11 @@ Each environment variable has a size limitation of 5 KB.
 
 ## Worker size
 
-A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker can be up to 5 MB in size after compression, and up to 1 MB for free accounts. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To increase a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 200 ms. Script size can impact startup because there's more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well. You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. To request an increase to a limit, complete the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7) and we will contact you with next steps.
 
 ## Number of Workers
 
@@ -298,7 +302,7 @@ Workers KV supports:
 
 Workers KV read performance is determined by the amount of read-volume a given key receives. Maximum performance for a key is not reached unless that key is being read at least a couple times per minute in any given data center.
 
-Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds before reads in all edge locations are guaranteed to see the new value.
+Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds or more before reads in all global network locations are guaranteed to see the new value.
 
 ---
 

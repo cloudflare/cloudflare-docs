@@ -20,7 +20,7 @@ This guide covers how to:
 ## Prerequisites
 
 - [Install the Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
-- [Define device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#set-device-enrollment-permissions).
+- [Define device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/).
 - [Enroll your devices](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) in your Zero Trust organization.​​
 
 ## Enable the WARP-to-WARP configuration
@@ -28,7 +28,7 @@ This guide covers how to:
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Enable **Proxy**.
 3. Enable **Warp-to-Warp**.
-4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#set-up-split-tunnels), ensure that traffic to `100.64/10` is going through WARP:
+4. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to `100.64/10` is going through WARP:
 
 - If using **Exclude** mode, remove `100.64/10` from your list.
 - If using **Include** mode, add `100.64/10` to your list.
