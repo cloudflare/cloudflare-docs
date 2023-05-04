@@ -22,6 +22,11 @@ By design, replicas do not offer any level of traffic steering (random, hash, or
 - To update the configuration of a tunnel without downtime.
 
 ### Deploy `cloudflared` replicas
+{{<Aside type="note" header="If your tunnel was created in the dashboard">}}
+
+To install another replica connector for a tunnel created from the instructions via the dashboard, simply re-run the same command in the Overview section of the tunnel in the dashboard on each host. This will create a replica for that tunnel.
+  
+{{</Aside>}}
 
 To deploy multiple instances of `cloudflared`, you can create and configure one tunnel and run it as multiple different processes.
 
