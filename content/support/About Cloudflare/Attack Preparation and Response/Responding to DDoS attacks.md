@@ -66,18 +66,14 @@ ___
 
 Under **Security**, you can block traffic via the following methods:
 
--   [**IP Access Rules**](/waf/tools/ip-access-rules/) \- Recommended for blocking multiple IP addresses, /16 or /24 IP ranges, or Autonomous System Numbers (ASNs).
--   [**Firewall rules**](/firewall/cf-dashboard/create-edit-delete-rules/) \- Recommended for blocking a country, any valid IP range, or more complex attack patterns.
-
-{{<Aside type="tip">}}
-[**Firewall rules**](/firewall/cf-firewall-rules/) have limits but are more flexible and allow matching upon a wider variety of [fields](/ruleset-engine/rules-language/fields/) and [expressions](/ruleset-engine/rules-language/expressions/) than **IP Access Rules**.
-{{</Aside>}}
-
+-   [**IP Access rules**](/waf/tools/ip-access-rules/) \- Recommended for blocking multiple IP addresses, /16 or /24 IP ranges, or Autonomous System Numbers (ASNs).
+-   [**WAF custom rules**](/waf/custom-rules/) (or firewall rules, if you do not have access to custom rules) \- Recommended for blocking a country, any valid IP range, or more complex attack patterns.
 -   [**Zone Lockdown**](/waf/tools/zone-lockdown/) \- Recommended to allow only trusted IP addresses or ranges to a portion of your site.
 -   [**User Agent Blocking**](/waf/tools/user-agent-blocking/) \- Recommended for blocking suspicious [User-Agent headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for your entire domain.
 
-{{<Aside type="note">}}
-Firewall updates take effect within two minutes.
+{{<Aside type="note" header="Notes">}}
+* [WAF custom rules](/waf/custom-rules/) (and firewall rules) are more flexible and allow matching upon a wider variety of [fields](/ruleset-engine/rules-language/fields/) and [expressions](/ruleset-engine/rules-language/expressions/) than IP Access rules.
+* Updates to WAF custom rules take effect within two minutes.
 {{</Aside>}}
 
 To decide which country or IPs to block or challenge, check your log files. Contact your hosting provider to help identify:

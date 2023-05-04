@@ -153,7 +153,11 @@ ___
 
 If you block countries or IP addresses with [IP Access Rules](https://support.cloudflare.com/hc/articles/217074967), affected visitors will get a `1005` error and see your **IP/Country Block** custom page.
 
-If you block countries or IP addresses with [firewall rules](/firewall/), affected visitors will see your **1000 Class Errors page**.
+If you block countries or IP addresses with [firewall rules](/firewall/) (now deprecated), affected visitors will see your **1000 Class Errors page**.
+
+If you block countries or IP addresses with [WAF custom rules](/waf/custom-rules/), affected visitors will see your **WAF Block** page.
+
+If you block requests due to [rate limiting](/waf/rate-limiting-rules/), affected visitors will see your **429 Errors** page displaying a Cloudflare `1015` error.
 
 ### 1xxx errors
 
@@ -177,7 +181,9 @@ ___
 
 ## Related Resources
 
--   [Cloudflare Firewall Rules](/firewall/cf-firewall-rules/)
--   [Configuring IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)
+-   [IP Access rules](/waf/tools/ip-access-rules/)
 -   [Cloudflare Errors](https://support.cloudflare.com/hc/sections/200820298-Error-Pages)
 -   [Collapsify](https://github.com/cloudflare/collapsify)
+-   [WAF custom rules](/waf/custom-rules/)
+-   [Rate limiting rules](/waf/rate-limiting-rules/)
+-   [Firewall rules](/firewall/cf-firewall-rules/) (deprecated)
