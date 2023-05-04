@@ -12,7 +12,7 @@ meta:
 
 {{<description>}}
 
-Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. 
+Send and receive messages with guaranteed delivery and no charges for egress bandwidth.
 
 {{</description>}}
 
