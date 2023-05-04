@@ -37,11 +37,12 @@
 /1.1.1.1/fun-stuff/dns-over-discord/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-discord/ 301
 /1.1.1.1/fun-stuff/dns-over-email/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
 /1.1.1.1/fun-stuff/dns-over-sms/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
-/1.1.1.1/fun-stuff/dns-over-telegram/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-telegram/ 301
+/1.1.1.1/fun-stuff/dns-over-telegram/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
 /1.1.1.1/fun-stuff/dns-over-tor/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/ 301
 /1.1.1.1/ipv6-networks/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/network-operators/ /1.1.1.1/infrastructure/network-operators/ 301
 /1.1.1.1/nitty-gritty-details/ /1.1.1.1/faq/ 301
+/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-telegram/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
 /1.1.1.1/privacy/firefox/ /1.1.1.1/privacy/cloudflare-resolver-firefox/ 301
 /1.1.1.1/setting-up-1.1.1.1/ /1.1.1.1/setup/ 301
 /1.1.1.1/setting-up-1.1.1.1/android/ /1.1.1.1/setup/android/ 301
