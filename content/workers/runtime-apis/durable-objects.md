@@ -304,7 +304,7 @@ If the method fails with an uncaught exception, the exception will be thrown int
 
 ### WebSockets Hibernation API (beta)
 
-Durable Objects WebSockets support includes extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow a Durable Object that is not currently running an event handler to be removed from memory while keeping its WebSockets connected ("hibernation").
+Durable Objects WebSockets support includes Cloudflare-specific extensions to the standard WebSocket interface, related methods on the `state` object, and handler methods that a Durable Object can implement for processing WebSocket events. These APIs allow a Durable Object that is not currently running an event handler to be removed from memory while keeping its WebSockets connected ("hibernation").
 
 Hibernation does not persist WebSocket connections across [code updates](/workers/learning/using-durable-objects/#global-uniqueness). If an event occurs for a hibernated Durable Object's corresponding handler method, it will return to memory. This will call the Durable Object's constructor, so it is best to minimize work in the constructor when using WebSocket hibernation.
 
@@ -312,7 +312,7 @@ Hibernation does not persist WebSocket connections across [code updates](/worker
 
 - {{<code>}}WebSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  - All WebSockets have this method. It keeps a copy of any serializable `value` in memory such that it will survive hibernation. If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [storage api](/workers/runtime-apis/durable-objects/#transactional-storage-api) and pass the corresponding key to this method so it can be retrieved later.
+  - Keeps a copy of `value` in memory such that it will survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [storage api](/workers/runtime-apis/durable-objects/#transactional-storage-api) and pass the corresponding key to this method so it can be retrieved later.
 
 - {{<code>}}WebSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
