@@ -34,7 +34,7 @@ For even more details, refer to the [introductory blog post](https://blog.cloudf
 
 ## Opt in and out
 
-Alerts are turned off by default. If you want to receive alerts, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) and enable **Certificate Transparency Monitoring**. If you are in a Business or Enterprise account, select **Add Email**.
+Alerts are turned off by default. If you want to receive alerts, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) and enable **Certificate Transparency Monitoring**. If you are in a Business or Enterprise zone, select **Add Email**.
 
 {{<feature-table id="ssl.cert_transparency">}}
 
