@@ -155,6 +155,6 @@ header: Custom rule example
 
 {{<Aside type="note">}}
 
-You are not able to configure which endpoints the GraphQL parsing runs on. Requests are parsed if they are targeting a path ending in /graphql.
+You are not able to configure which endpoints the GraphQL parsing runs on. Requests are parsed if they are targeting a path ending in `/graphql`.
 
 {{</Aside>}}
