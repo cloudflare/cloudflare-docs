@@ -42,7 +42,7 @@ analytics_engine_datasets = [
 ]
 ```
 
-Save the changes that you made to your `wrangler.toml` file. Republish your worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
+Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
 
 ## 3. Write data from your Worker
 
@@ -67,10 +67,10 @@ This is how it translates into code:
 
 Besides writing static data points, a common use case of Workers Analytics Engine is to capture information about incoming HTTP requests.
 
-In the runtime API documentation, you can find  information about the [variables](/workers/runtime-apis/request/) that are available in the runtime. Because these variables are already available in the runtime, you will not need to define them. In other words, you can directly use `request.cf.<variable name>` as a blob or double field. Using this adaptation of this Worker [example](/workers/examples/geolocation-hello-world/) template, you can write the geolocation variables to Analytics Engine.
+In the runtime API documentation, you can find  information about the [variables](/workers/runtime-apis/request/). Because these variables are already available in the runtime, you will not need to define them. In other words, you can directly use `request.cf.<variable name>` as a blob or double field. Using this adaptation of this Worker [example](/workers/examples/geolocation-hello-world/) template, you can write the geolocation variables to Analytics Engine.
 
 ```js
-env.EXAMPLE_DATASET.writeDataPoint({
+env.<EXAMPLE_DATASET>.writeDataPoint({
   'blobs': [ 
     request.cf.colo, 
     request.cf.country, 
