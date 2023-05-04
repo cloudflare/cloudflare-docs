@@ -28,7 +28,6 @@ header: GraphQL query
       terminalField4
     }
   }
-
 ```
 
 ## Gather GraphQL statistics
