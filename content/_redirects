@@ -207,8 +207,10 @@
 /dns/faq/ /dns/troubleshooting/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
+/support/dns/ /dns/ 301
 /support/dns/advanced-topics/ /dns/ 301
 /support/dns/dnssec/ /dns/additional-options/dnssec/ 301
+/support/dns/how-to/
 /support/dns/troubleshooting/ /dns/troubleshooting/ 301
 /support/dns/advanced-topics/adding-vendor-specific-dns-records-to-cloudflare/ /dns/manage-dns-records/reference/vendor-specific-records/ 301
 /support/dns/advanced-topics/delegating-subdomains-outside-of-cloudflare/ /dns/manage-dns-records/how-to/subdomains-outside-cloudflare/ 301
@@ -520,6 +522,7 @@
 /ssl/reference/certificate-validation-options/ /ssl/concepts/#validation-level 301
 /ssl/universal-ssl/ /ssl/edge-certificates/universal-ssl/ 301
 /ssl/universal-ssl/changing-dcv-method/ /ssl/edge-certificates/changing-dcv-method/ 301
+/support/dns/how-to/certification-authority-authorization-caa-faq/ /ssl/edge-certificates/troubleshooting/caa-records/ 301
 
 # cloudflare for saas
 /ssl/ssl-for-saas/status-codes/custom-hostnames/ /cloudflare-for-platforms/cloudflare-for-saas/reference/status-codes/custom-hostnames/ 301
