@@ -123,7 +123,7 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v14 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `14` or greater.
+4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
 
 {{<Aside type="note" header="Note">}}
 
