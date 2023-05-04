@@ -76,5 +76,3 @@ If the UDP proxy is not enabled, HTTP/3 traffic will bypass inspection. To avoid
 
 </div>
 </details>
-
-To disable QUIC on mobile devices, enforce a policy in your mobile device management software.
