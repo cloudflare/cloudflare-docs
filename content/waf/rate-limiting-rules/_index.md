@@ -41,7 +41,7 @@ Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) to learn
 The rule quota and the available features depend on your Cloudflare plan.
 
 {{<Aside type="note">}}
-Enterprise customers must have a WAF plan or Advanced Rate Limiting to get access to rate limiting rules.
+Enterprise customers must have application security on their contract to get access to rate limiting rules.
 {{</Aside>}}
 
 {{</content-column>}}
