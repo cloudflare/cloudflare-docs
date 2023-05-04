@@ -8,7 +8,7 @@ meta:
 
 # Rust WebAssembly Guide
 
-This guide demonstrates how to build a Worker entirely in the Rust programming language, using the `workers-rs` crate, which which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/platform/bindings/) like Workers KV, R2, and Queues available directly from your Rust code.
+This guide demonstrates how to build a Worker entirely in the Rust programming language, using the `workers-rs` crate, which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/platform/bindings/) like Workers KV, R2, and Queues available directly from your Rust code.
 
 ## Prerequisites
 

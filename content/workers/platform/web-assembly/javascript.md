@@ -9,7 +9,7 @@ meta:
 # Invoking Wasm from JavaScript
 
 Wasm can be used from within a Worker written in JavaScript or TypeScript by importing a Wasm module, 
-and instantiating an instance of of this module using [`WebAssembly.instantiate()`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate). This can be used to accelerate computationally intensive operations which do not involve significant I/O.
+and instantiating an instance of this module using [`WebAssembly.instantiate()`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate). This can be used to accelerate computationally intensive operations which do not involve significant I/O.
 
 This guide demonstrates the basics of Wasm and JavaScript interoperability.
 
@@ -66,11 +66,13 @@ const importObject = {
   },
 };
 
+// Create instance of WebAssembly Module `mod`, supplying
+// the expected imports in `importObject`. This should be
+// done at the top level of the script to avoid instantiation on every request.
+const instance = await WebAssembly.instantiate(mod, importObject);
+    
 export default {
   async fetch() {
-    // Create instance of WebAssembly Module `mod`, supplying
-    // the expected imports in `importObject`
-    const instance = await WebAssembly.instantiate(mod, importObject);
     // Invoke the `exported_func` from our Wasm Instance with
     // an argument.
     const retval = instance.exports.exported_func(42);
