@@ -310,17 +310,21 @@ Hibernation does not persist WebSocket connections across [code updates](/worker
 
 #### WebSocket extensions
 
-- {{<code>}}WebSocket.attachment{{</code>}} {{<type>}}Any{{</type>}}
+- {{<code>}}WebSocket.serializeAttachment(value{{<param-type>}}any{{</param-type>}}){{</code>}} : {{<type>}}void{{</type>}}
 
-  -  All WebSockets have this property. It starts out null but can be assigned to any serializable value. The property will survive hibernation. Size is limited to 2048 bytes.
+  - All WebSockets have this method. It keeps a copy of any serializable `value` in memory such that it will survive hibernation. If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [storage api](/workers/runtime-apis/durable-objects/#transactional-storage-api) and pass the corresponding key to this method so it can be retrieved later.
+
+- {{<code>}}WebSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
+
+  - Retrieve the most recent value passed to `serializeAttachment`, or null if none exists.
 
 #### `state` methods for WebSockets
 
-- {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}}
+- {{<code>}}state.acceptWebSocket(ws{{<param-type>}}WebSocket{{</param-type>}}, tags{{<param-type>}}Array\<string>{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}void{{</type>}}
 
   - Adds a WebSocket to the set attached to this object. `ws.accept()` must NOT have been called separately. Once called, any incoming messages will be delivered by calling the Durable Object's webSocketMessage() handler, and webSocketClose() will be invoked upon disconnect. After calling this, the WebSocket is accepted, so its send() and close() methods can be used to send messages, but its addEventListener() method won't ever receive any events as they'll be delivered to the DurableObject instead. `tags` are optional string tags which can be used to look up the WebSocket with getWebSockets().
 
-- {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} {{<type>}}Array\<WebSocket>{{</type>}}
+- {{<code>}}state.getWebSockets(tag{{<param-type>}}string{{</param-type>}}{{<prop-meta>}}optional{{</prop-meta>}}){{</code>}} : {{<type>}}Array\<WebSocket>{{</type>}}
 
   - Gets an array of accepted WebSockets matching the given tag. Disconnected WebSockets are automatically removed from the list. Calling `getWebSockets()` with no `tag` argument will return all WebSockets.
 
