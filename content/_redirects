@@ -210,7 +210,7 @@
 /support/dns/ /dns/ 301
 /support/dns/advanced-topics/ /dns/ 301
 /support/dns/dnssec/ /dns/additional-options/dnssec/ 301
-/support/dns/how-to/
+/support/dns/how-to/ /dns/ 301
 /support/dns/troubleshooting/ /dns/troubleshooting/ 301
 /support/dns/advanced-topics/adding-vendor-specific-dns-records-to-cloudflare/ /dns/manage-dns-records/reference/vendor-specific-records/ 301
 /support/dns/advanced-topics/delegating-subdomains-outside-of-cloudflare/ /dns/manage-dns-records/how-to/subdomains-outside-cloudflare/ 301
