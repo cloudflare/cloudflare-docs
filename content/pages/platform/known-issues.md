@@ -87,25 +87,25 @@ If you do not configure an Access policy for your custom domain, an Access authe
 
 If you have an issue that you do not see listed, let the team know in the Cloudflare Workers Discord. Get your invite at [discord.gg/cloudflaredev](https://discord.gg/cloudflaredev), and share your bug report in the #pages-general channel.
 
-## Delete a project with many deployments
+## Delete a project with a high amount of deployments
 
-You may not be able to delete your Pages project if it has a high amount of deployments. The Cloudflare team is tracking this issue.
+You may not be able to delete your Pages project if it has a high amount (over 800) of deployments. The Cloudflare team is tracking this issue.
 
 As a workaround, review the following steps to delete all deployments in your Pages project. After you delete your deployments, you will be able to delete your Pages project.
 
 1. Download the `delete-all-deployments.zip` file by going to the following link: https://pub-505c82ba1c844ba788b97b1ed9415e75.r2.dev/delete-all-deployments.zip.
-2. Open the `delete-all-deployments.zip` file.
+2. Extract the `delete-all-deployments.zip` file.
 3. Open your terminal and `cd` into the `delete-all-deployments` directory.
 4. In the `delete-all-deployments` directory, run `npm install` to install dependencies.
 5. Review the following commands to decide which deletion you would like to proceed with:
 
-* To delete all deployments except for the live production deployment (excluding aliased deployments): 
+* To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases)): 
 
 ```
 $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> npm start
 ```
 
-* To delete all deployments except for the live production deployment (INCLUDING aliased deployments, for example `my-branch.exampleproj.pages.dev`):
+* To delete all deployments except for the live production deployment (including [aliased deployments](https://developers.cloudflare.com/pages/platform/preview-deployments/#preview-aliases), for example, `staging.example.pages.dev`):
 
 ```
 $ CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> CF_DELETE_ALIASED_DEPLOYMENTS=true npm start
