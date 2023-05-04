@@ -9,7 +9,7 @@ The following APIs from the [Node.js runtime](https://nodejs.org/en/about) are a
 
 {{<directory-listing>}}
 
-Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the NPM packages you depend on.
+Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the npm packages you depend on.
 
 ```js
 // Do this:

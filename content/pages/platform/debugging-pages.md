@@ -24,10 +24,10 @@ Possible errors in your build log are included in the following sections.
 Possible errors in this step could be caused by improper installation during Git integration.
 
 To fix this in GitHub:
-1. Log in to your Github account.
+1. Log in to your GitHub account.
 2. Go to **Settings**  from your user icon > find **Applications** under Integrations.
 3. Find **Cloudflare Pages** > **Configure** > scroll down and select **Uninstall**.
-4. Re-authorize your Github user/organisation on the Cloudflare dashboard.
+4. Re-authorize your GitHub user/organisation on the Cloudflare dashboard.
 
 To fix this in GitLab:
 1. Log in to your GitLab account.
