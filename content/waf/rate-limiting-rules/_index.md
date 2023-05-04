@@ -11,14 +11,6 @@ layout: list
 
 Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
-{{<Aside type="note">}}
-
-Rate limiting rules is an unmetered feature available on all plans. Refer to [Availability](#availability) for details.
-
-For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
-
-{{</Aside>}}
-
 ## Rule parameters
 
 Like other rules evaluated by Cloudflare's Ruleset Engine, rate limiting rules have an associated **expression** and an **action**.
@@ -75,8 +67,6 @@ Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
-For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](/support/firewall/tools/configuring-cloudflare-rate-limiting/#rate-limiting-allowances-per-plan).
-
 ## Next steps
 
 You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.
@@ -88,3 +78,9 @@ To configure rate limiting rules in the Cloudflare dashboard, refer to the follo
 You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.
 
 {{</content-column>}}
+
+---
+
+## Related resources
+
+For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting](/support/firewall/tools/configuring-cloudflare-rate-limiting/).
