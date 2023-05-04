@@ -57,7 +57,7 @@ Cloudflare sends this alert when certificates move from a status of `pending_val
 
 ### Validation failed
 
-Cloudflare sends this alert when certificates move from a status of `pending_validation` to `pending_validation`.
+Cloudflare sends this alert when certificates remain in a `pending_validation` status.
 
 ```json
 {
@@ -152,7 +152,7 @@ Cloudflare sends this alert when certificates move from a status of `pending_val
 
 ### Issuance failed
 
-Cloudflare sends this alert when certificates move from a status of `pending_validation` or `pending_issuance` to `pending_deployment`.
+Cloudflare sends this alert when certificates remain in a state of `pending_issuance`.
 
 ```json
 {
@@ -247,7 +247,7 @@ Cloudflare sends this alert when certificates move from a status of `pending_dep
 
 ### Deployment failed
 
-Cloudflare sends this alert when certificates move from a status of `pending_deployment` to `pending_deployment`.
+Cloudflare sends this alert when certificates remain in a state of `pending_deployment`.
 
 ```json
 {
@@ -329,7 +329,7 @@ Cloudflare sends this alert when certificates move from a status of `pending_del
 
 ### Deletion failed
 
-Cloudflare sends this alert when certificates move from a status of `pending_deletion` to `pending_deletion`.
+Cloudflare sends this alert when certificates remain in status of `pending_deletion`.
 
 ```json
 {
