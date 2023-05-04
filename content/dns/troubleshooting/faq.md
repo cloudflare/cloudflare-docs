@@ -169,13 +169,13 @@ Error seems to be misleading, as the error was found to be in customer code synt
 
 **Solution**
 
-Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`. A more detailed use case can be found in [this](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) Github thread.
+Make sure the argument `zone_id = data.cloudflare_zones.example_com.zones[0].id`. A more detailed use case can be found in [this](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub thread.
 
 ___
 
 ## Why am I getting hundreds of random DNS records after adding my domain?
 
-This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record). 
+This can happen when you had a wildcard \* record configured at your previous authoritative DNS. You can remove these records in bulk [using the API](https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record).
 
 You can also:
 1. [Remove your domain](/fundamentals/get-started/basic-tasks/manage-domains/remove-domain/) from Cloudflare.
