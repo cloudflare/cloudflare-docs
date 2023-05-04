@@ -33,7 +33,7 @@ header: GraphQL query
 
 ## Gather GraphQL statistics
 
-Using the new `apiGatewayGraphqlQueryAnalyticsGroups` node in the Cloudflare GraphQL API, customers can retrieve `apiGatewayGraphqlQuerySize` and `apiGatewayGraphqlQueryDepth` dimensions. 
+Using the new `apiGatewayGraphqlQueryAnalyticsGroups` node in the Cloudflare GraphQL API, you can retrieve `apiGatewayGraphqlQuerySize` and `apiGatewayGraphqlQueryDepth` dimensions. 
 
 ```graphql
 ---
@@ -94,9 +94,9 @@ You can use the response to compute percentiles across the attributes and set a 
 
 Here is a simple Python script that will report query size and depth p-levels given the GraphQL API response output above (as a JSON file):
 
-```graphql
+```python
 ---
-header: GraphQL query
+header: Python script
 ---
 
 #!/usr/bin/env python3
@@ -120,7 +120,7 @@ with open(args.response) as f:
     print('\n'.join([f"Query size {int(q * 100)}th percentile is {v}" for q, v in zip(quantiles, np.quantile(query_sizes, quantiles))]))
     print('\n'.join([f"Query depth {int(q * 100)}th percentile is {v}" for q, v in zip(quantiles, np.quantile(query_depths, quantiles))]))
 ```
-```graphql
+```json
 ---
 header: Example output
 ---
