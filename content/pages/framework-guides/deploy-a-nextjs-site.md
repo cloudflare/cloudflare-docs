@@ -5,7 +5,12 @@ title: Deploy a Next.js site
 
 # Deploy a Next.js site
 
-[Next.js](https://nextjs.org/) is an open-source React framework for creating websites and apps. In this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
+[Next.js](https://nextjs.org/) is an open-source React framework for creating websites and apps. By following this guide, you will create a new Next.js application and deploy it using Cloudflare Pages.
+
+When deploying a Next.js site, choose between:
+
+* Creating [a project using the Edge Runtime]().
+* Creating [a static project]().
 
 ## Consider if you need the Edge Runtime
 
@@ -107,9 +112,9 @@ Refer to [Next.js' documentation about the Edge Runtime](https://nextjs.org/docs
 
 ### Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. In **Account Home**, select **Pages** > **Create a project**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Next.js_ as your **Framework preset**. Your selection will provide the following information.
 
@@ -123,7 +128,9 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v16 or later to build successfully. To set your Node version, go to **Settings** in your Pages project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `16` or greater.
+4. Next.js requires Node.js version environment variable build successfully. To set your Node version, check the required Node version in [Next.js Get started Installation](https://nextjs.org/docs/getting-started/installation). Then go to your Pages project > **Settings** > **Environment Variables (advanced)** and add a `NODE_VERSION` variable with a value of the required Node.js version.
+
+For example, a Next.js system requirement of Node.js `16.8` or later would be a `NODE_VERSION` variable with a value of `16` in the Cloudflare dashboard.
 
 {{<Aside type="note" header="Note">}}
 
@@ -149,7 +156,7 @@ After creating your project, a new `my-app` directory will be generated using th
 
 ### Deploy with Cloudflare Pages
 
-Deploy your site to Pages:
+To deploy your site to Pages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
 2. In **Account Home**, select **Pages** > **Create a project**.
@@ -165,9 +172,9 @@ Deploy your site to Pages:
 
    {{</table-wrap>}}
 
-4. Next.js requires Node.js v12.22.0 or later to build successfully. To set your Node version, go to **Settings** in your Workers project > **Environment Variables (advanced)** section and add a `NODE_VERSION` variable with a value of `12.22.0` or greater.
+4. Next.js requires Node.js version environment variable build successfully. To set your Node version, check the required Node version in [Next.js Get started Installation](https://nextjs.org/docs/getting-started/installation). Then go to your Pages project > **Settings** > **Environment Variables (advanced)** and add a `NODE_VERSION` variable with a value of the required Node.js version.
 
-After configuring your site, you can begin your first deploy. You should see Cloudflare Pages installing `next`, your project dependencies, and building your site before deploying it.
+For example, a Next.js system requirement of Node.js `16.8` or later would be a `NODE_VERSION` variable with a value of `16` in the Cloudflare dashboard.
 
 ## Preview your site
 
