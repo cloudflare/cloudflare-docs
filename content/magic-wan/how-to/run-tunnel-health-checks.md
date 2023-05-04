@@ -20,4 +20,6 @@ To accomplish this, we recommend that you:
 
 You can configure the tunnel health check target IP address by updating your [GRE tunnels](/api/operations/magic-gre-tunnels-update-gre-tunnel) or [IPsec tunnels](/api/operations/magic-i-psec-tunnels-update-i-psec-tunnel).
 
+{{<render file="_icmp-mfirewall.md" productFolder="magic-transit">}}
+
 {{<render file="_update-tunnel-health-checks-frequency.md" productFolder="magic-transit" withParameters="/magic-wan/reference/probe-construction/" >}}
