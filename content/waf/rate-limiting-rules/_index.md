@@ -46,9 +46,11 @@ Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) to learn
 
 ## Availability
 
-Rate limiting rules are available to all customers. Enterprise customers require a separate add-on.
+The rule quota and the available features depend on your Cloudflare plan.
 
-The available features depend on the exact plan:
+{{<Aside type="note">}}
+Enterprise customers must have a WAF plan or Advanced Rate Limiting to get access to rate limiting rules.
+{{</Aside>}}
 
 {{</content-column>}}
 
