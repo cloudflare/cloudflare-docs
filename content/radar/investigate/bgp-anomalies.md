@@ -339,10 +339,9 @@ account, and will be triggered to execute every five minutes.
 
 ### Send email alerts from Workers
 
-If your app's domain has enabled [Email Routing][email-routing] feature, you can also send email alerts directly from
-your Workers app. You can learn more about the email-sending feature following [this tutorial][email-workers-tutorial].
+If you have [Email Routing][email-routing] enabled for your domain, you can also send email alerts directly from Workers. Refer to [Send emails from Workers][email-workers-tutorial] to learn more.
 
-For this alerter app, you will need to add the `Emails binding` to the [`wrangler.toml`][wrangler-send-email] file.
+For this alert to work, you will need to configure the proper email bindings in the [`wrangler.toml`][wrangler-send-email] file.
 
 ```toml
 send_email = [
@@ -350,7 +349,8 @@ send_email = [
 ]
 ```
 
-Then you can create an email sending function like the follows to send alert emails to your configured destination address.
+Then, you can create an email-sending function to send alert emails to your configured destination address:
+
 ```javascript
 async function send_email_alert(hijacker, prefixes, victims) {
   const msg = createMimeMessage();
