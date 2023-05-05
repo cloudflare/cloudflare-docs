@@ -43,9 +43,10 @@ document.querySelectorAll('body *').forEach((element) => {
     element.remove();
   }
   });
-  document.body.style.setProperty('visibility', 'visible', 'important');
+  const page = document.getElementById('DocsPage');
+  page.style.visibility = "visible"
   }
 
 };
 
-setTimeout(cuePresentationMode, 800);
+setTimeout(cuePresentationMode, 500);
