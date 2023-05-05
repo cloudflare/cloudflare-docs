@@ -48,4 +48,4 @@ document.querySelectorAll('body *').forEach((element) => {
 
 };
 
-setTimeout(cuePresentationMode, 400);
+setTimeout(cuePresentationMode, 800);
