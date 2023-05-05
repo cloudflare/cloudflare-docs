@@ -3,6 +3,10 @@ html {
     overflow-anchor: auto;
 }
 
+body {
+    visibility: hidden;
+}
+
 .numTrails {
     opacity: 70%;
     margin-top: 0;

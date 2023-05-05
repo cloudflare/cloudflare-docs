@@ -133,5 +133,8 @@ import { learning_paths as paths } from "./json-collector";
       }
     }
     }
+
+    const body = document.querySelector('body');
+    body.style.visibility = 'visible';
   }
 })();

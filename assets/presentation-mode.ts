@@ -44,9 +44,9 @@ document.querySelectorAll('body *').forEach((element) => {
   }
   });
   const body = document.querySelector('body');
-  body.classList.remove('hidden');
+  body.style.visibility = 'visible';
   }
 
 };
 
-setTimeout(cuePresentationMode, 1000);
+cuePresentationMode()
