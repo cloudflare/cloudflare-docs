@@ -38,6 +38,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 - Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
 - Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/about/cdn-cache-control/) origin response headers, [Edge Cache TTL](/cache/about/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/about/cache-rules/)),
 - Have a Content-Length response header.
+- When used with [Image Resizing](https://developers.cloudflare.com/images/image-resizing/), original files are eligible for Cache Reserve, but resized files are ineligible. 
 
 ## Limits
 
