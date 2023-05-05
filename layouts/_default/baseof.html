@@ -8,10 +8,14 @@
     {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
     {{- if hugo.IsProduction -}}
-      <link rel="preload" href="/learning-paths.css" as="style" />
+    {{- if or (eq $.Params.layout "learning-module") (eq $.Params.layout "learning-unit") -}}
+      <link rel="preload" href="/learning-paths-presentation-mode.css" as="style" />
+    {{- end -}}
       <link rel="preload" href="/style.css" as="style" />
     {{- else -}}
-      <link rel="stylesheet preconnect" href="/learning-paths.css" />
+    {{- if or (eq $.Params.layout "learning-module") (eq $.Params.layout "learning-unit") -}}
+      <link rel="stylesheet preconnect" href="/learning-paths-presentation-mode.css" />
+    {{- end -}}
       <link rel="stylesheet preconnect" href="/style.css" />
     {{- end -}}
 

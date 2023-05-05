@@ -3,10 +3,6 @@ html {
     overflow-anchor: auto;
 }
 
-body {
-    visibility: hidden;
-}
-
 .numTrails {
     opacity: 70%;
     margin-top: 0;
@@ -300,8 +296,4 @@ label {
   
   [theme="dark"] .learningSummary a:hover {
     --background-color-alpha: 0.1;
-  }
-
-  .hidden {
-    visibility: hidden;
   }
