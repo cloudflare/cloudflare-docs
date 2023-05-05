@@ -135,8 +135,7 @@ import { learning_paths as paths } from "./json-collector";
     }
     }
     if (!presentationMode) {
-    const body = document.querySelector('body');
-    body.style.visibility = 'visible';
+    document.body.style.setProperty('visibility', 'visible', 'important');
   }
   }
 })();

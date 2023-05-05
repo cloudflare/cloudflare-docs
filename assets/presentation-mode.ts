@@ -43,8 +43,7 @@ document.querySelectorAll('body *').forEach((element) => {
     element.remove();
   }
   });
-  const body = document.querySelector('body');
-  body.style.visibility = 'visible';
+  document.body.style.setProperty('visibility', 'visible', 'important');
   }
 
 };
