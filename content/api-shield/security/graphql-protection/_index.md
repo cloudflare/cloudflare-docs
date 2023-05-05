@@ -4,7 +4,7 @@ title: GraphQL Malicious Query Protection
 weight: 5
 ---
 
-# GraphQL Malicious Query Protection.
+# GraphQL Malicious Query Protection
 
 GraphQL is a query language for APIs. In addition to protecting RESTful APIs, Cloudflare can also protect GraphQL APIs. 
 
