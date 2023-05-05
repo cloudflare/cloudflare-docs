@@ -23,6 +23,8 @@ Cache rules are unique, unlike Page Rules. This is how they are applied:
 
 3. If you have Page Rules implemented for caching on the same path, Cache Rules will take precedence by design. In the near future, Cloudflare plans on releasing a one-click migration tool for Page Rules.
 
+For an example of a similar scenario where multiple rules match, refer to the [Origin Rules FAQ](/rules/origin-rules/faq/#what-happens-if-more-than-one-origin-rule-matches-the-current-request).
+
 ## Create Cache Rules in the dashboard
 
 To create a new cache rule:
