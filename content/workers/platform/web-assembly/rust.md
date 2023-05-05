@@ -42,7 +42,7 @@ You will find the following files and folders in the `hello-world-rust` director
 * `README.md` - Boilerplate readme for working with the template project.
 * `package.json` - NPM configuration for the template project which specifies useful commands (`dev` and `deploy`), and [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) as a dev-dependency.
 * `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/platform/web-assembly/rust/#bundling-worker-build)).
-* `src` - Rust source directory, pre-populated with simple "Hello World" Worker.
+* `src` - Rust source directory, pre-populated with simple Hello World Worker.
 
 ## 2. Develop locally
 
@@ -75,7 +75,7 @@ async fn main(req: Request, env: Env, ctx: Context) -> Result<Response> {
 
 {{<Aside type="note">}}
 
-There is some magic going on here:
+There is some counterintuitive behavior going on here:
 
 1. `workers-rs` provides an `event` macro which expects a handler function signature identical to those seen in JavaScript Workers. 
 1. `async` is not generally supported by Wasm, but you are able to use `async` in a `workers-rs` project (refer to [`async`](/workers/platform/web-assembly/rust/#async-wasm-bindgen-futures)). 
@@ -127,7 +127,7 @@ Implements convenient [routing API](https://docs.rs/worker/latest/worker/struct.
 
 ## 4. Publish your Worker project
 
-With your project configured, deploy your Worker by running the following command. You can publish your Worker to a `*.workers.dev` subdomain or a [custom domain](/workers/platform/triggers/custom-domains/), if you have one configured.
+With your project configured, you can now deploy your Worker, to a *.workers.dev subdomain, or a [custom domain](https://developers.cloudflare.com/workers/platform/triggers/custom-domains/), if you have one configured. If you have not configured any subdomain or domain, Wrangler will prompt you during the publish process to set one up.
 
 ```sh
 $ npx wrangler publish
