@@ -22,7 +22,7 @@
       "Cache",
       "DDoS protection",
       "SSL/TLS",
-      "Firewall"
+      "WAF"
     ],
     "category": ["Security", "Reliability"]
 }

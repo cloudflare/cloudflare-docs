@@ -8,7 +8,7 @@ title: Understanding the Cloudflare Browser Integrity Check
 
 The Cloudflare **Browser Integrity Check (BIC)** operates similar to [Bad Behavior](https://bad-behavior.ioerror.us/) and looks for common HTTP headers abused most commonly by spammers and denies access to your page.  It also challenges visitors without a user agent or with a non-standard user agent such as commonly used by abusive bots, crawlers, or visitors.
 
-**BIC** is enabled by default, and you can configure it in **Security** > **Settings**.  You can disable the **BIC** using a [WAF custom rule with Skip action](/waf/custom-rules/skip/) to selectively disable this feature for certain sections of your website. For example, you could disable BIC for your API traffic. If you do not have access to WAF custom rules, create a firewall rule with the [_Bypass_ action](/firewall/cf-firewall-rules/actions/#supported-actions).
+**BIC** is enabled by default, and you can configure it in **Security** > **Settings**.  You can disable the **BIC** using a [WAF custom rule with Skip action](/waf/custom-rules/skip/). If you do not have access to WAF custom rules, create a firewall rule with the [_Bypass_ action](/firewall/cf-firewall-rules/actions/#supported-actions). Also, use a [Configuration Rule](/rules/configuration-rules/) to selectively enable or disable this feature for certain sections of your website using a filter expression (such as a matching hostname or request URL path).
 
 ___
 

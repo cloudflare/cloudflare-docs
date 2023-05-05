@@ -81,7 +81,7 @@ When a Worker receives a `fetch` event, the script must use `event.respondWith` 
 
 ## Build
 
-Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, NPM packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. You can [build full applications](/workers/tutorials/build-a-slackbot/), or [serverless functions](/workers/tutorials/build-a-qr-code-generator/) on Workers using the same tooling and process as what you will be building with this tutorial.
+Any project you publish to Cloudflare Workers can make use of modern JavaScript tooling like ES modules, npm packages, and [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions to build your application. You can [build full applications](/workers/tutorials/build-a-slackbot/), or [serverless functions](/workers/tutorials/build-a-qr-code-generator/) on Workers using the same tooling and process as what you will be building with this tutorial.
 
 The Cloudflare Workers project built in this tutorial will be a serverless function that runs on a wildcard route and receives requests. When the serverless function receives an incoming request, it should parse the URL, find what asset is being requested and serve it from the configured Cloud Storage bucket.
 

@@ -22,7 +22,7 @@ At a high level, Magic Transit works as follows:
 * **Protect and Process:** All customer traffic is inspected for attacks. Advanced and automated mitigation techniques are applied immediately upon detecting an attack. Additional functions such as load balancing, next-generation firewall, content caching, and serverless compute are also available as a service.
 
 
-* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/reference/tunnels-and-encapsulation/).
+* **Accelerate:** Clean traffic is routed over Cloudflare’s low-latency network links for optimal throughput and handed off over IP tunnels (either GRE or IPsec) or private network interconnects (PNI) to the origin network. Magic Transit uses Anycast IP addresses for Cloudflare’s tunnel endpoints, meaning that any server in any data center is capable of encapsulating and decapsulating packets for the same tunnel. More details specifically on tunnels and encapsulation can be found [here](/magic-transit/reference/tunnels/).
 
 ### Baking resilience into our network using Anycast
 

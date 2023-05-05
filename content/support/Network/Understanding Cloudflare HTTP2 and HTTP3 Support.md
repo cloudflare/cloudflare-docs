@@ -33,7 +33,7 @@ ___
 
 HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better. Enable HTTP/3 via the Cloudflare **Network** app. 
 
-For more information, refer to the [Learning center](https://www.cloudflare.com/learning/performance/what-is-http3/).
+For more information, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/performance/what-is-http3/).
 
 ___
 

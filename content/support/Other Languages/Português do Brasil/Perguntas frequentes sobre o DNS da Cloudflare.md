@@ -209,7 +209,7 @@ O erro parece enganoso, pois foi encontrado na sintaxe do código do cliente, es
 
 **Solução**
 
-Confira o argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Um caso de uso mais detalhado pode ser encontrado [neste](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) thread do Github.
+Confira o argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Um caso de uso mais detalhado pode ser encontrado [neste](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) thread do GitHub.
 
 ___
 

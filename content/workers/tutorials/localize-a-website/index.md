@@ -165,7 +165,7 @@ To implement this:
 2.  Pass a `countryStrings` object into our `ElementHandler`, so that it can be used during the parsing process.
 3.  Grab the `Accept-Language` header from an incoming request, parse it, and pass the parsed language to `ElementHandler`.
 
-To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) NPM package:
+To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) npm package:
 
 ```sh
 ---

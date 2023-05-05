@@ -48,14 +48,8 @@ Note that some encryption modes will require you to have a valid [origin certifi
 
 ## Step 3 — Enforce HTTPS connections
 
-Even if your application has an active edge certificate, visitors can still access resources over unsecured HTTP connections.
-
-Using various Cloudflare settings, however, you can force all or most visitor connections to [use HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/).
+{{<render file="_enforce-https-recommendation.md">}}
 
 ## Step 4 (optional) — Enable additional features
 
-After you have chosen your edge certificate and updated your encryption mode, review the following Cloudflare settings:
-
-- [Edge certificates](/ssl/edge-certificates/additional-options/): Customize different aspects of your edge certificates, from enabling **Opportunistic Encryption** to specifying a **Minimum TLS Version**.
-- [Authenticated origin pull](/ssl/origin-configuration/authenticated-origin-pull/): Ensure all requests to your origin server originate from the Cloudflare network.
-- [Notifications](/fundamentals/notifications/notification-available/): Set up alerts related to certificate validation status, issuance, deployment, renewal, and expiration.
+{{<render file="_get-started-additional-features.md">}}

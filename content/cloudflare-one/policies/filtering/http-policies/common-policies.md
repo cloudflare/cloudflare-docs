@@ -8,6 +8,8 @@ weight: 1
 
 The following policies are commonly used to secure HTTP traffic.
 
+Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+
 ## Block sites
 
 Block attempts to reach sites by hostname or URL paths. Different approaches may be required based on how a site is organized.
@@ -109,5 +111,3 @@ Block file downloads from Gmail.
 | ---------------- | -------- | --------------------------------------- | ----- | ------ |
 | Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
 | URL Path & Query | is       | `/attachment/u/0`                       |       |        |
-
-Refer to the [HTTP policies page](/cloudflare-one/policies/filtering/http-policies/) for a comprehensive list of other selectors, operators, and actions.

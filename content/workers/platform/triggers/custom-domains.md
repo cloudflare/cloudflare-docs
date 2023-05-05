@@ -7,16 +7,22 @@ title: Custom Domains
 
 ## Background
 
-Custom Domains allow you to connect your Worker to a hostname, without having to make changes to your DNS settings or perform any certificate management. Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker, with no need for an external origin server.
+Custom Domains allow you to connect your Worker to a domain or subdomain, without having to make changes to your DNS settings or perform any certificate management. After you set up a Custom Domain for your Worker, Cloudflare will create DNS records and issue necessary certificates on your behalf. The created DNS records will point directly to your Worker. Unlike [Routes](/workers/platform/triggers/routes/#set-up-a-route), Custom Domains point all paths of a domain or subdomain to your Worker.
 
-## Add a custom domain
+## Add a Custom Domain
 
 To add a Custom Domain, you must have:
 
-1. An active Cloudflare zone.
+1. An [active Cloudflare zone](/dns/zone-setups/).
 2. A Worker to invoke.
 
-The interface provides active feedback on valid and invalid entries. Valid entries are hostnames on an active Cloudflare zone. Custom Domains can be attached to your Worker via API, Wrangler, or the Cloudflare dashboard.
+Custom Domains can be attached to your Worker via the [Cloudflare dashboard](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-the-dashboard), [Wrangler](/workers/platform/triggers/custom-domains/#set-up-a-custom-domain-in-your-wranglertoml) or the [API](https://developers.cloudflare.com/api/operations/worker-domain-list-domains).
+
+{{<Aside type="warning">}}
+
+You cannot create a Custom Domain on a hostname with an existing CNAME DNS record or on a zone you do not own.
+
+{{</Aside>}}
 
 ### Set up a Custom Domain in the dashboard
 
@@ -49,44 +55,101 @@ routes = [
 ]
 ```
 
-## Fetch
+## Worker to Worker communication
 
-Custom Domains are considered the origin for your request. This means calling `fetch()` on the incoming request object is an anti-pattern. Instead, create new `Request` objects to reference any external dependencies, or use Cloudflare's built in primitives via bindings.
+On the same zone, the only way for a Worker to communicate with another Worker running on a [route](/workers/platform/triggers/routes/#set-up-a-route), or on a [`workers.dev`](/workers/platform/triggers/routes/#routes-with-workersdev) subdomain, is via [service bindings](/workers/platform/bindings/about-service-bindings/). 
 
-![Workers can use the fetch API to request external dependencies](/workers/platform/triggers/media/custom-domains-dependencies.png)
+On the same zone, if a Worker is attempting to communicate with a target Worker running on a Custom Domain rather than a route, the limitation is removed. Fetch requests sent on the same zone from one Worker to another Worker running on a Custom Domain will succeed without a service binding.
 
-Another benefit of integration with Cloudflare DNS is that you can use your Custom Domains like you would any external dependency. Your Workers can `fetch()` Custom Domains and invoke their associated Worker, even if the Worker is on the same Cloudflare zone. The newly invoked Worker is treated like a new top-level request and will execute in a separate thread.
+For example, consider the following scenario, where both Workers are running on the `example.com` Cloudflare zone:
 
-![Custom Domains can stack on top of each other, like any external dependencies](/workers/platform/triggers/media/custom-domains-subrequest.png)
+- `worker-a` running on the [route](/workers/platform/triggers/routes/#set-up-a-route) `auth.example.com/*`.
+- `worker-b` running on the [route](/workers/platform/triggers/routes/#set-up-a-route) `shop.example.com/*`.
 
-## Ordering
+If `worker-a` sends a fetch request to `worker-b`, the request will fail, because of the limitation on same-zone fetch requests. `worker-a` must have a service binding to `worker-b` for this request to resolve.
 
-Custom Domains follow standard DNS ordering and matching logic. Custom Domains do not support wildcard records; as such, an incoming request must match the hostname your Custom Domain is registered to. Other parts of the URI are not considered when executing this matching logic. For example, if you create a Custom Domain on `api.example.com` attached to your `api-gateway` Worker, a request to either `api.example.com/login` or `api.example.com/user` would invoke the same `api-gateway` Worker.
+```js
+---
+header: worker-a
+highlight: [4]
+---
+export default {
+	fetch(request) {
+		// This will fail
+		return fetch("https://shop.example.com")
+	}
+}
+```
+
+However, if `worker-b` was instead set up to run on the Custom Domain `shop.example.com`, the fetch request would succeed.
+
+## Request matching behaviour
+
+Custom Domains do not support [wildcard DNS records](/dns/manage-dns-records/reference/wildcard-dns-records/). An incoming request must exactly match the domain or subdomain your Custom Domain is registered to. Other parts (path, query parameters) of the URL are not considered when executing this matching logic. For example, if you create a Custom Domain on `api.example.com` attached to your `api-gateway` Worker, a request to either `api.example.com/login` or `api.example.com/user` would invoke the same `api-gateway` Worker.
 
 ![Custom Domains follow standard DNS ordering and matching logic](/workers/platform/triggers/media/custom-domains-api-gateway.png)
 
 ## Interaction with Routes
 
-Custom Domains are evaluated before route rules, but take lower precedence. [Routes](/workers/platform/triggers/routes) defined on your Custom Domain will run first, and can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object.
+A Worker running on a Custom Domain is treated as an origin. Any Workers running on routes before your Custom Domain can optionally call the Worker registered on your Custom Domain by issuing `fetch(request)` with the incoming `Request` object. That means that you are able to set up Workers to run before a request gets to your Custom Domain Worker. In other words, you can chain together two Workers in the same request.
 
-In the example above, a Custom Domain for `api.example.com` can point to your Worker `api`. A route added to `api.example.com/auth` can point to your Worker `auth`. A request to `api.example.com//auth` will trigger the `auth` Worker. Using `fetch(request)` within the Worker `auth` will invoke the Worker `api`, as if it was a normal application server. This means you can run your Workers in series, creating layers of proxy Workers and application Workers.
+For example, consider the following workflow:
 
-![Routes can be run in front of Custom Domains](/workers/platform/triggers/media/routes-with-custom-domains.png)
+1. A Custom Domain for `api.example.com` points to your `api-worker` Worker. 
+2. A route added to `api.example.com/auth` points to your `auth-worker` Worker. 
+3. A request to `api.example.com/auth` will trigger your `auth-worker` Worker. 
+4. Using `fetch(request)` within the `auth-worker` Worker will invoke the `api-worker` Worker, as if it was a normal application server.
+
+```js
+---
+header: auth-worker
+highlight: [8]
+---
+export default {
+	fetch(request) {
+		const url = new URL(request.url)
+		if(url.searchParams.get("auth") !== "SECRET_TOKEN") {
+			return new Response(null, { status: 401 })
+		} else {
+			// This will invoke `api-worker`
+			return fetch(request)
+		}
+	}
+}
+```
 
 ## Certificates
 
-Creating a Custom Domain will also generate an Advanced Certificate on your target zone, with a Subject Name of the target hostname. These certificates are generated with default settings. To override these settings, delete the generated certificate and create your own certificate in the Cloudflare Dashboard or via API.
+Creating a Custom Domain will also generate an [Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/) on your target zone for your target hostname.
 
-## Configuring your Custom Domain
-
-Custom Domains need to be configured on an appropriate zone. If you attempt to create a Custom Domain on a hostname with an existing DNS record, Cloudflare will confirm that you would like to replace the existing record. If you attempt to create a Custom Domain on a zone you do not own, the attempt will fail.
+These certificates are generated with default settings. To override these settings, delete the generated certificate and create your own certificate in the Cloudflare dashboard. Refer to [Manage advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) for instructions.
 
 ## Migrate from Routes
 
-{{<Aside type="note">}}
-If you are currently invoking a Worker using a [route](/workers/platform/triggers/routes) with `/*`, and your DNS points to `100::` or similar, a Custom Domain is a recommended replacement. 
-{{</Aside>}}
+If you are currently invoking a Worker using a [route](/workers/platform/triggers/routes) with `/*`, and you have a CNAME record pointing to `100::` or similar, a Custom Domain is a recommended replacement.
 
-To migrate the route `app.example.com/*`, create a Custom Domain on `app.example.com`, replacing the existing record. You can then delete the route `app.example.com/*` in your **Account Home** > [**Workers**](https://dash.cloudflare.com/?zone=workers) > **your Worker** > **Triggers** > **Routes** table.
+### Migrate from Routes via the dashboard
 
-Unless that Worker acts exclusively as a proxy – meaning it will need to call `fetch(request)` on the incoming connection's HTTP request to connect to an application server defined in DNS – the Custom Domain is the recommended solution.
+To migrate the route `example.com/*`:
+
+1. Log in to the [Cloudflare dashboard](https://dash.clouflare.com) and select your account.
+2. Go to **DNS** and delete the CNAME record for `example.com`.
+3. Go to **Account Home** > **Workers** > select your Worker > **Triggers**.
+4. Select **Add Custom Domain** and add `example.com`.
+5. Delete the route `example.com/*` located in your Worker > **Triggers** > **Routes**.
+
+### Migrate from Routes via Wrangler
+
+To migrate the route `example.com/*` in your `wrangler.toml`:
+
+1. Log in to the [Cloudflare dashboard](https://dash.clouflare.com) and select your account.
+2. Go to **DNS** and delete the CNAME record for `example.com`.
+3. Add the following to your `wrangler.toml` file:
+
+```toml
+routes = [
+	{ pattern = "example.com", custom_domain = true }
+]
+```
+
+4. Run `wrangler publish` to create the Custom Domain your Worker will run on.

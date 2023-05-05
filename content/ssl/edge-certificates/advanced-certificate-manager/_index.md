@@ -18,10 +18,11 @@ Advanced certificates allow you multiple customization options:
 
 *   Include the zone apex and up to 50 hosts as covered hostnames.
 *   Cover more than one level of subdomain.
+*   Access to [Total TLS](/ssl/edge-certificates/additional-options/total-tls/).
 *   Choose the certificate authority (CA) to issue the certificate.
-*   Select the preferred validation method (HTTP, TXT, or Email).
-*   Choose the certificate validity period (14, 30, or 90 days).
-*   Remove Cloudflare branding that is normally present on Universal certificates.
+*   Select the preferred validation method and includes access to [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/).
+*   Choose the certificate validity period.
+*   Remove Cloudflare branding that is normally present on [Universal certificates](/ssl/edge-certificates/universal-ssl/).
 *   Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
 *   Control [cipher suites used for TLS](/ssl/reference/cipher-suites/customize-cipher-suites/).
 

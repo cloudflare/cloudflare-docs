@@ -23,10 +23,10 @@ _Trouvez des réponses aux questions courantes concernant l’application **SSL/
 -   [Je veux que Cloudflare utilise un certificat SSL que j’ai acheté ailleurs](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_406415940571548960012266)
 -   [Comment forcer mon site à utiliser uniquement HTTPS/SSL ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_999722138611548960019807)
 -   [Le projet Galileo inclut-il la prise en charge SSL ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_745887958641548960026645)
--   [L’activation de Cloudflare affecte-t-elle les exigences TLS 1.2 de PayPal ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_100356045661548960034406) 
+-   [L’activation de Cloudflare affecte-t-elle les exigences TLS 1.2 de PayPal ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_100356045661548960034406)
 -   [Comment puis-je servir un certificat SSL depuis les datacenters de Cloudflare en Chine ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_853db670-78aa-4c98-99d4-3aa3d38f8d59)
 -   [Cloudflare prend-il en charge l’authentification TLS du client ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_db0bcd71-24f9-4b0c-8cfc-7a5ed0f27649)
--   [Comment activer Universal SSL avec Github ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
+-   [Comment activer Universal SSL avec GitHub ?](https://support.cloudflare.com/hc/fr-fr/articles/204144518-FAQ-sur-le-SSL#h_4e7e3537-ade2-431c-abe7-2dfe26e1cb9a)
 
 ___
 
@@ -36,9 +36,9 @@ Les certificats Cloudflare sont hiérarchisés par [type de certificat](https://
 
 -   [SSL personnalisé](https://support.cloudflare.com/hc/articles/200170466)
 -   [Dedicated SSL](https://support.cloudflare.com/hc/articles/228009108)
--   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)   
+-   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)
 
-Les exceptions à la priorisation générale se produisent en fonction de la spécificité du nom d’hôte.  Les certificats qui mentionnent un nom d’hôte spécifique sont préférés aux certificats joker.  Par exemple, un certificat Universal SSL qui mentionne explicitement _www.exemple.com_ a la priorité sur un certificat qui correspond au nom d’hôte _www_ via un caractère joker tel que _\*.exemple.com._  
+Les exceptions à la priorisation générale se produisent en fonction de la spécificité du nom d’hôte.  Les certificats qui mentionnent un nom d’hôte spécifique sont préférés aux certificats joker.  Par exemple, un certificat Universal SSL qui mentionne explicitement _www.exemple.com_ a la priorité sur un certificat qui correspond au nom d’hôte _www_ via un caractère joker tel que _\*.exemple.com._
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 ### Que signifie une vérification de marque SSL non valide ?
 
-Certains domaines ne sont pas admissibles au certificat Universal SSL s’ils contiennent des mots en conflit avec des domaines de marque déposée.  
+Certains domaines ne sont pas admissibles au certificat Universal SSL s’ils contiennent des mots en conflit avec des domaines de marque déposée.
 
 Pour résoudre ce problème, vous pouvez soit  :
 
@@ -161,6 +161,6 @@ L’authentification TLS du client confirme que le certificat présenté par un 
 
 ___
 
-### Comment activer Universal SSL avec Github ?  
+### Comment activer Universal SSL avec GitHub ?
 
 Reportez-vous à l’article de blog Cloudflare sur [l’utilisation du certificat Universal SSL de Cloudflare avec GitHub Pages](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).
