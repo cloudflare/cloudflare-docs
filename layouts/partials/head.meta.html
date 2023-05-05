@@ -33,6 +33,7 @@
   {{- $title = print .Context.Title " | Training" -}}
 
   {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
+  {{- partial "script" (dict "src" "presentation-mode.ts" "defer" true) -}}
 
   {{- else -}}
   {{- $title = printf "%s · %s" $pt $DATA.meta.title -}}

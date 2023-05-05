@@ -11,7 +11,11 @@ After all, what good would it be if your load balancer and pools send a request 
 
 That's where another part of the load balancing equation comes in: monitors and health checks.
 
+<div id="presentationMode">
+
 {{<render file=_health-check-diagram.md productFolder="load-balancing">}}
+
+</div>
 
 ## How it works
 

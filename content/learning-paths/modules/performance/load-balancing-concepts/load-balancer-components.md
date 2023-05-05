@@ -20,6 +20,8 @@ With a load balancer, requests first go through the load balancer. Your load bal
 {{<render file=_load-balancing-diagram.md productFolder="load-balancing">}}
 <br/>
 
+<div id="presentationMode">
+
 Within each pool, requests then go to individual servers. And that server is what responds to the request.
 
 ```mermaid
@@ -33,5 +35,6 @@ Within each pool, requests then go to individual servers. And that server is wha
       end
 ```
 <br/>
+</div>
 
 This progression of load balancer --> pool --> server is the core part of how a load balancer works.
