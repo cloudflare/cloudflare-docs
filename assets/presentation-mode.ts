@@ -49,4 +49,4 @@ document.querySelectorAll('body *').forEach((element) => {
 
 };
 
-cuePresentationMode()
+setTimeout(cuePresentationMode, 400);
