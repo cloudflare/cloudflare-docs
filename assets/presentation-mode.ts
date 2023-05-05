@@ -1,8 +1,10 @@
 import { learning_paths as paths } from "./json-collector";
 
 const params = new URLSearchParams(document.location.search);
-  const currentLearningPath = params.get("learning_path");
-  let currentPathData;
+const presentationMode = params.get("presentation_mode");
+
+const currentLearningPath = params.get("learning_path");
+let currentPathData;
 
   if (currentLearningPath !== null) {
     for (const path in paths) {
@@ -16,9 +18,7 @@ function hasChildInArray(element, array) {
   return Array.from(element.querySelectorAll('*')).some((child) => array.includes(child));
 }
 
-(function () {
-  const params = new URLSearchParams(document.location.search);
-  const presentationMode = params.get("presentation_mode");
+function cuePresentationMode () {
   
   if (presentationMode) {
 
@@ -42,7 +42,11 @@ document.querySelectorAll('body *').forEach((element) => {
   if (!elementsToKeep.includes(element) && !hasChildInArray(element, elementsToKeep)) {
     element.remove();
   }
-});
+  });
+  const body = document.querySelector('body');
+  body.classList.remove('hidden');
   }
 
-})();
+};
+
+setTimeout(cuePresentationMode, 1000);

@@ -32,6 +32,7 @@
   {{- if or (eq .Context.Params.layout "learning-module") (eq .Context.Params.layout "learning-unit") -}}
   {{- $title = print .Context.Title " | Training" -}}
 
+  {{- partial "script" (dict "src" "presentation-mode-preeval.ts" "defer" false) -}}
   {{- partial "script" (dict "src" "learning-path-navigation.ts" "defer" true) -}}
   {{- partial "script" (dict "src" "presentation-mode.ts" "defer" true) -}}
 
