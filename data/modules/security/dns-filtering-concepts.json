@@ -1,0 +1,13 @@
+{
+    "summary": "Learn the basic concepts behind DNS filtering.",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Explain the purpose of a DNS lookup. </li>\n<li>Describe what DNS filtering is and how it affects which websites users can access. </li>\n<li>Understand the benefits of using Cloudflare Gateway to filter DNS traffic. </li>\n</ul>\n",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Concepts",
+    "url": "/learning-paths/modules/security/dns-filtering-concepts/"
+}
