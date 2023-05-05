@@ -4,16 +4,16 @@ pcx_content_type: how-to
 type: overview
 layout: list
 meta:
-  title: Configure GraphQL Malicious Query Protection
+  title: Configure GraphQL malicious query protection
 ---
 
-# Configure GraphQL Malicious Query Protection
+# Configure GraphQL malicious query protection
 
 Use the Cloudflare GraphQL API to gather data about your GraphQL API’s current usage and configure Cloudflare’s GraphQL malicious query protection to log or block malicious queries.
 
 ## Introduction
 
-Query size is defined as the number of terminal fields ("leaves") in the query, whereas query depth is the deepest level at which a leaf is present. For example, the size of this query will be reported as `4 (terminalField[1-4] all contribute to this counter)`, and the depth will be reported as `3 (terminalField3 and terminalField4 are at depth level 3)`.
+Query size is defined as the number of terminal fields (leaves) in the query, whereas query depth is the deepest level at which a leaf is present. For example, the size of this query will be reported as `4 (terminalField[1-4] all contribute to this counter)`, and the depth will be reported as `3 (terminalField3 and terminalField4 are at depth level 3)`.
 
 ```graphql
 ---
@@ -28,6 +28,7 @@ header: GraphQL query
       terminalField4
     }
   }
+}
 ```
 
 ## Gather GraphQL statistics
@@ -52,6 +53,9 @@ query ApiGatewayGraphqlQueryAnalytics($zoneTag: string, $datetimeStart: Time, $d
   }
 }
 ```
+
+With the above query, you will get the following response:
+
 ```json
 ---
 header: Response
@@ -85,11 +89,11 @@ header: Response
 }
 ```
 
-In the response example, Cloudflare observed 10 requests with depth 1 and size 11 and 10 requests with depth 1 and size 2 in the selected timeframe.
+In the response example, Cloudflare observed 10 requests with depth 1 and size 11, and 10 requests with depth 1 and size 2 in the selected timeframe.
 
 ## Analyze GraphQL statistics
 
-You can use the response to compute percentiles across the attributes and set a threshold on what is allowed. For example, you can use a simple heuristic like 1.5 * p99 for query size or depth. 
+You can use the response to compute percentiles across the attributes and set a threshold on what is allowed. For example, you can use a simple heuristic like `1.5 * p99` for query size or depth. 
 
 Here is a simple Python script that will report query size and depth p-levels given the GraphQL API response output above (as a JSON file):
 
@@ -119,6 +123,9 @@ with open(args.response) as f:
     print('\n'.join([f"Query size {int(q * 100)}th percentile is {v}" for q, v in zip(quantiles, np.quantile(query_sizes, quantiles))]))
     print('\n'.join([f"Query depth {int(q * 100)}th percentile is {v}" for q, v in zip(quantiles, np.quantile(query_depths, quantiles))]))
 ```
+
+With the above query, you will get the following output:
+
 ```json
 ---
 header: Example output
@@ -136,15 +143,13 @@ Query depth 50th percentile is 1.0
 
 ## Set limits on incoming GraphQL queries
 
-Three new fields are now available to API Shield customers in custom rules:
+API Shield customers now have three new fields available in custom rules:
 
 - `cf.api_gateway.graphql.query_size` describes the size of a GraphQL query.
 - `cf.api_gateway.graphql.query_depth` describes the depth of a GraphQL query.
-- `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. 
-    
-    This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules. 
-
-    For example, you can deploy the following rule via the API or the dashboard to block queries that are deeply nested but ask for a few fields.
+- `cf.api_gateway.graphql.parsed_successfully` describes whether Cloudflare was able to parse the query. Presently, we run best-effort parsing, meaning we might not be able to parse some valid queries. This means that you must use a `and cf.api_gateway.graphql.parsed_successfully` filter in your custom rules when deploying GraphQL security rules. 
+<br />
+For example, you can deploy the following rule via the API or the dashboard to block queries that are deeply nested but ask for a few fields.
 
 ```
 ---
