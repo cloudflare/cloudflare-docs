@@ -4,6 +4,7 @@ import { learning_paths as paths } from "./json-collector";
   const currentLocation = window.location.href;
   const params = new URLSearchParams(document.location.search);
   const currentLearningPath = params.get("learning_path");
+  const presentationMode = params.get("presentation_mode");
   let currentPathData;
 
   if (currentLearningPath !== null) {
@@ -133,8 +134,9 @@ import { learning_paths as paths } from "./json-collector";
       }
     }
     }
-
+    if (!presentationMode) {
     const body = document.querySelector('body');
     body.style.visibility = 'visible';
+  }
   }
 })();
