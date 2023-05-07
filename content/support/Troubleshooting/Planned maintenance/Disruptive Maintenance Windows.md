@@ -27,4 +27,4 @@ All dates in the calendar are in UTC Timezone.
 
 Should there be a need for unplanned or emergency maintenance, an incident will be declared and will appear on https://www.cloudflarestatus.com/.
 
-Unplanned or emergency colo maintenance will aos be raised as an incident and/or appear as "re-routed" on https://www.cloudflarestatus.com for the impacted locations.
+Unplanned or emergency colo maintenance will also be raised as an incident and/or appear as "re-routed" on https://www.cloudflarestatus.com for the impacted locations.
