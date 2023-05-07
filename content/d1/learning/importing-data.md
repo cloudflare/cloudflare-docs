@@ -89,7 +89,7 @@ If you have an existing SQLite database from another system, you can import its 
 For example, if you have a raw SQLite dump called `db_dump.sqlite3`, run the following `sqlite` command to convert it:
 
 ```sh
-$ sqlite3 db_dump.sqlite3 .dump > db.sql`.
+$ sqlite3 db_dump.sqlite3 .dump > db.sql
 ```
 
 You can then follow the steps to [import an existing database](#import-an-existing-database) into D1 by using the `.sql` file you generated from the database dump as the input to `wrangler d1 execute`.
@@ -101,6 +101,7 @@ If you receive an error when trying to import an existing schema and/or dataaset
 * Ensure you are importing data in SQL format (typically with a `.sql`) file extension. See [how to convert SQLite files](#converting-sqlite-database-files) if you have a `.sqlite3` database dump.
 * Make sure the schema is [SQLite3](https://www.sqlite.org/docs.html) compatible. You cannot import data from a MySQL or PostgreSQL database into D1, as the types and SQL syntax are not directly compatible.
 * If you have foreign key relationships between tables, ensure you are importing the tables in the right order. You can't refer to a table that doesn't yet exist.
+* If you get "cannot start a transaction within a transaction", ensure you've removed `BEGIN TRANSACTION` and `COMMIT` from your dumped SQL statements.
 
 ## Next Steps
 
