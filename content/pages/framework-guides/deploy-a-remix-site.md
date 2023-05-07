@@ -85,7 +85,7 @@ The following code block shows an example of accessing a KV namespace in Remix.
 ```typescript
 ---
 filename: app/routes/products/$productId.tsx
-highlight: [9,10,11,12,13,17,24]
+highlight: 9-13,17,24
 ---
 import type { LoaderArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
