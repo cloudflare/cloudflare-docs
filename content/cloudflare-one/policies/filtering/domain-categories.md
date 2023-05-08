@@ -74,7 +74,7 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | Category      | Definition                                                             |
 | ------------- | ---------------------------------------------------------------------- |
 | Login Screens | Sites hosting login screens that are not included in other categories. |
-| Miscellaneous | Miscellaneous sites.                                                   |
+| Miscellaneous | Sites that do not belong to other content categories.                  |
 | No Content    | Sites that have no content.                                            |
 | Redirect      | Domains that redirect to other sites.                                  |
 | Unreachable   | Domains that resolve to unreachable IP addresses.                      |
