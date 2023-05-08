@@ -82,9 +82,11 @@ flowchart LR
 accTitle: Border Gateway Control advertisements
 accDescr: Use BGP to control the status of your prefix.
 
+
 a(User)-- Ingress -->b(Clouflare global <br> Anycast network) == Anycast <br> GRE tunnel ==> c((Route Reflector))
 b(Clouflare global <br> Anycast network)-.-z(BPG announcement <br> to Internet)
-b(Clouflare global <br> Anycast network) --- d(EMEA <br> route reflector) & e(APAC <br> route reflector) & f(NAMER <br> route reflector) --- x[BGP] --- c((Route Reflector))
+b(Clouflare global <br> Anycast network) --- d(EMEA <br> route reflector) & e(APAC <br> route reflector) & f(NAMER <br> route reflector)-- BGP ---c((Route Reflector))
+
 c((Route Reflector))-- "Egress <br> (Direct Server Return)" -->a(User)
 
 classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
