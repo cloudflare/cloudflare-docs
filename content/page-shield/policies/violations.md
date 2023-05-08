@@ -12,11 +12,9 @@ Shortly after you configure Page Shield policies, the Cloudflare dashboard will 
 
 ## Using the dashboard
 
-The policy violation information is available in **Security** > **Page Shield** > **Policies**.
+The policy violation information is available in **Security** > **Page Shield** > **Policies**. It includes the following:
 
-The displayed information includes the following:
-
-* A sparkline next to the policy name, based on the policy violations in the past seven days.
+* A sparkline next to the policy name, showing policy violations in the past seven days.
 * For policies with associated violations, an expandable details section for each policy, with the top resources present in policy violation events and a sparkline per top resource.
 
 ## Using the GraphQL API
