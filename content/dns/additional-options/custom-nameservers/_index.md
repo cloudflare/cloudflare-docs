@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Custom nameservers
-weight: 1
+weight: 2
 ---
 
 # Custom nameservers
