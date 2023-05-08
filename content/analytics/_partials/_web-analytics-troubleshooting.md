@@ -24,13 +24,13 @@ header: index.html
 ---
 <!DOCTYPE html>
 <html>
-<head>
-<title>Title</title>
-</head>
-<body>
+	<head>
+		<title>Title</title>
+	</head>
+	<body>
 
-<p>Hello world.</p>
+		<p>Hello world.</p>
 
-</body>
+	</body>
 </html>
 ```
