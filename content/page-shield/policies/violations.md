@@ -35,7 +35,7 @@ For an introduction to GraphQL querying, refer to [Querying basics](/analytics/g
 
 ```graphql
 ---
-header: Example query
+header: Example GraphQL query
 ---
 query PageShieldReports($zoneTag: string, $datetimeStart: string, $datetimeEnd: string) {
   viewer {
