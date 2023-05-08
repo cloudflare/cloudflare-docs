@@ -5,7 +5,7 @@ pcx-content-type: how-to
 
 # Transparent decompression
 
-Transparent decompression reduces the size of stored files, which can help with reducing bandwidth to your origin. With transparent decompression, files are automatically decompressed, but you can still access and use the files or data in their original format. When supported, Cloudflare will always request the compressed content from your web server.
+Transparent decompression reduces the size of stored files stored in your buckets. With transparent decompression, compressed files are automatically decompressed, but you can still access and use the files or data in their original format.
 
 ## Accept-Encoding
 
@@ -13,7 +13,7 @@ The `Accept-Encoding` request HTTP header indicates support for compressed conte
 
 {{<Aside type="note">}}
 
-The `Content-Encoding` header is optional, but if you want Cloudflare to return a `gzip` compressed file, you must remove the header.
+The `Content-Encoding` header is optional. If an object does not contain the `Content-Encoding` header in the metadata, the object is returned as is. When the `Content-Encoding: gzip` header is set, a `gzip` compressed file is returned if the request from the client contains an `Accept-Encoding: gzip` header. 
 
 {{</Aside>}}
 
