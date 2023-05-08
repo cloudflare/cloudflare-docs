@@ -83,7 +83,7 @@ ___
 
 ## Why might the ja3hash be empty in HTTP logs?
 
-The JA3 Fingerprint can be null/empty in some cases. The most common case is when for HTTP requests (because JA3 is calculated in TLS) but can also be empty due to the following:
+The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
 
 - Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone)
 
