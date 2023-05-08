@@ -11,7 +11,6 @@ The Dropbox integration detects a variety of data loss prevention, account misco
 ## Integration prerequisites
 
 - A Dropbox Business plan (Standard, Advanced, Enterprise, or Education)
-
 - Access to a Dropbox Business account with Team admin permissions
 
 ## Integration permissions
@@ -68,7 +67,7 @@ Detect when suspicious Dropbox applications are linked by members.
 
 ### User access and account misconfigurations
 
-Flag user access issues, including account misuse and users not following best practices.
+Flag user access issues, including users misusing accounts or not following best practices.
 
 | Finding                                                             | Severity |
 | ------------------------------------------------------------------- | -------- |
