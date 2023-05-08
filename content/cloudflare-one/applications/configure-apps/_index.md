@@ -18,4 +18,4 @@ You can protect two types of web applications: SaaS and self-hosted.
 
 * [**Cloudflare Dashboard SSO**](/cloudflare-one/applications/configure-apps/dash-sso-apps/) are a special type of SaaS application that manages SSO settings for the Cloudflare dashboard and has limited permissions for administrator edits.
 
-* [**Private networks**](/cloudflare-one/connections/connect-apps/private-net/) are when you have two internal networks that are connected to each other through Cloudflare, without exposing either to traffic from the public Internet.
+* [**Private network applications**](/cloudflare-one/connections/connect-apps/private-net/) are self-hosted applications that do not have public DNS records, meaning they are not reachable from the public Internet. To allow remote users to access these applications, you must [connect the private network](/cloudflare-one/connections/connect-apps/private-net/connect-private-networks/) to Cloudflare.
