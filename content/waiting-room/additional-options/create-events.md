@@ -18,6 +18,9 @@ Any properties set on the event will override the default property on the waitin
 2.  Expand a waiting room  and select **Schedule event**.
 3.  Customize the details for your event: name the event, add a description (optional), and select a Start Date Time and an End Date Time.
 4.  You can also enable the pre-queueing — in this case you need to define a pre-queueing time. And you can also select **Shuffle at event start** and all users in the pre-queue will be randomly admitted at event start.
+
+    {{<Aside type="note">}}Enabling pre-queuing will send all new users to your pre-queue during the pre-queuing time period. If you would like to also pre-queue users already active, make the pre-queuing time period longer than the session duration and disable session renewal. Once active users sessions expire, they will be placed into the pre-queue before your event starts.{{</Aside>}}
+
 5.  Select **Next**.
 6.  In the **Settings** section, you can define new values for your Total active users, New users per minute, Session duration, Session Renewal, and Queueing Method. For each of these settings you also have the option to always inherit the values defined in your waiting room. With this option, if you change the settings of your base waiting room, the corresponding Event setting will update as well.
 
