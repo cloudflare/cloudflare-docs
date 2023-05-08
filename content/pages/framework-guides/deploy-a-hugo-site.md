@@ -206,4 +206,10 @@ To use a [specific version of Hugo](https://github.com/gohugoio/hugo/releases), 
 
 For example, `HUGO_VERSION`: `0.110.0`.
 
+{{<Aside type="note">}}
+
+If you plan to use [preview deployments](/pages/platform/preview-deployments/), make sure you also add environment variables to your **Preview** environment.
+
+{{</Aside>}}
+
 {{<render file="_learn-more.md" withParameters="Hugo">}}
