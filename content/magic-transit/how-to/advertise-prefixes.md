@@ -77,27 +77,6 @@ Prefixes can be advertised from Cloudflare’s network in a supported on-demand 
 
 ![BGP diagram for Magic Transit](/images/magic-transit/bgp-diagram.png)
 
-```mermaid
-flowchart LR
-accTitle: Border Gateway Control advertisements
-accDescr: Use BGP to control the status of your prefix.
-
-
-a(User)-- Ingress -->b(Clouflare global <br> Anycast network) == Anycast <br> GRE tunnel ==> c((Route Reflector))
-b(Clouflare global <br> Anycast network)-.-z(BPG announcement <br> to Internet)
-b(Clouflare global <br> Anycast network) --- d(EMEA <br> route reflector) & e(APAC <br> route reflector) & f(NAMER <br> route reflector)-- BGP ---c((Route Reflector))
-
-c((Route Reflector))-- "Egress <br> (Direct Server Return)" -->a(User)
-
-classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
-classDef blue stroke:blue,stroke-width:3px
-linkStyle 0 stroke:green
-linkStyle 1 stroke-width:5px
-class d,e,f orangestroke
-class b orangestroke
-```
-<br />
-
 To begin using BGP control, contact your account team with the following information:
 
 - BGP endpoint IP addresses
