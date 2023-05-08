@@ -30,11 +30,11 @@ Access to Smart Placement is enabled on a per-account basis. To sign up for Smar
 
 Smart Placement is enabled on a per-Worker level. To enable Smart Placement:
 
-1. Make sure that you have `wrangler@2.12.0` or later [installed](/workers/wrangler/install-and-update/).
+1. Make sure that you have `wrangler@2.20.0` or later [installed](/workers/wrangler/install-and-update/).
 2. Add the following to your Worker project's `wrangler.toml` file:
 
     ```toml
-    [unsafe.metadata.placement]
+    [placement]
     mode = "smart"
     ```
 
