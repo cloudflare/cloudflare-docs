@@ -168,7 +168,7 @@ set policy-options policy-statement BGP-CONTROL-OUT then reject
 
 #### Juniper MX (Junos OS XML format)
 
-```xml
+```txt
 @rtr01> show configuration routing-instances STAGE protocols bgp group CF_ROUTE_REFLECTORS
 type external;
 multihop {
