@@ -18,7 +18,7 @@ A JSON response for the [Lists API](/api/operations/lists-get-lists) has this st
   "id": "2c0fc9fa937b11eaa1b71c4d701ab86e",
   "name": "my_list_name",
   "description": "List description.",
-  "kind": "(ip|hostname|redirect)",
+  "kind": "(ip|hostname|asn|redirect)",
   "num_items": 10,
   "num_referencing_filters": 2,
   "created_on": "2021-01-01T08:00:00Z",
@@ -64,7 +64,7 @@ This table summarizes the object properties:
         <tr>
             <td><code>kind</code><br />{{<type>}}String{{</type>}}</td>
             <td>The type of data in the list.</td>
-            <td>Valid values: <code class="InlineCode">ip</code>, <code class="InlineCode">hostname</code>, <code class="InlineCode">redirect</code></td>
+            <td>Valid values: <code class="InlineCode">ip</code>, <code class="InlineCode">hostname</code>, <code class="InlineCode">asn</code>, <code class="InlineCode">redirect</code>.</td>
         </tr>
         <tr>
             <td><code>num_items</code><br />{{<type>}}Number{{</type>}}</td>
@@ -92,7 +92,7 @@ This table summarizes the object properties:
 
 ## List item object structure and properties
 
-Each list type (IP address, hostname, redirects) can only contain items of the same type.
+Each list type (IP address, hostname, ASN, redirects) can only contain items of the same type.
 
 A fully populated JSON object for an IP address list item has the following structure:
 
@@ -114,6 +114,17 @@ A fully populated JSON object for a hostname list item has the following structu
   "hostname": {
     "url_hostname": "*.example.com"
   },
+  "created_on": "2021-10-11T12:39:02Z",
+  "modified_on": "2021-10-11T12:39:02Z"
+}
+```
+
+A fully populated JSON object for an ASN list item has the following structure:
+
+```json
+{
+  "id": "7c5dae5552338874e5053f2534d2767a",
+  "asn": 13335,
   "created_on": "2021-10-11T12:39:02Z",
   "modified_on": "2021-10-11T12:39:02Z"
 }
@@ -189,6 +200,11 @@ The JSON object properties for a list item are defined as follows:
             <td><code>hostname</code><br />{{<type>}}Object{{</type>}}</td>
             <td>An object containing a <code>url_hostname</code> property with a hostname value. Refer to <a href="/fundamentals/global-configurations/lists/custom-lists/#lists-with-hostnames">Custom lists</a> for details on the supported hostname values.</td>
             <td><p>Applies only to custom lists with hostnames.</p></td>
+        </tr>
+        <tr>
+            <td><code>asn</code><br />{{<type>}}Integer{{</type>}}</td>
+            <td>An ASN value.</td>
+            <td>Applies only to custom lists with ASNs.</td>
         </tr>
         <tr>
             <td><code>created_on</code><br />{{<type>}}String{{</type>}}</td>

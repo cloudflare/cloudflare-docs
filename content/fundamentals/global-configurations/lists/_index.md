@@ -23,7 +23,7 @@ Cloudflare stores your lists at the account level. You can use the same list in 
 
 Cloudflare supports the following lists:
 
-* [Custom lists](/fundamentals/global-configurations/lists/custom-lists/): Includes custom IP lists and hostname lists.
+* [Custom lists](/fundamentals/global-configurations/lists/custom-lists/): Includes custom IP lists, hostname lists, and ASN lists.
 * [Managed Lists](/fundamentals/global-configurations/lists/managed-lists/): Lists managed and updated by Cloudflare, such as Managed IP Lists.
 
 Refer to each page for details.

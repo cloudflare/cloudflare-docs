@@ -6,11 +6,12 @@ weight: 2
 
 # Custom lists
 
-A custom list contains one or more items of the same type (for example, IP addresses or hostnames) that you can reference collectively, by name, in rule expressions.
+A custom list contains one or more items of the same type (for example, IP addresses, hostnames, or ASNs) that you can reference collectively, by name, in rule expressions.
 
 Cloudflare supports the following custom list types:
 * Lists with IP addresses (also known as IP lists)
 * Lists with hostnames
+* Lists with [autonomous system numbers](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) (ASNs)
 
 Each type has its own properties and CSV file format. Refer to the following sections for details.
 
@@ -32,8 +33,9 @@ The fields you can use vary according to the list item type:
 
 List item type | Available fields
 ---------------|-----------------------------------------------------------------------------------------
-Hostname       | `http.host`
 IP address     | Fields with type `IP address` listed in [Fields](/ruleset-engine/rules-language/fields/)
+Hostname       | `http.host`
+ASN            | `ip.src.asnum`
 
 For more information on using a custom list in the Cloudflare dashboard, refer to [Use lists in expressions](/fundamentals/global-configurations/lists/use-in-expressions/).
 
@@ -80,6 +82,16 @@ However, `example.com/path/subfolder` would not be a valid entry.
 
 You can add any valid hostname (a valid FQDN) to a custom list with hostnames. The hostnames do not need to belong to the current Cloudflare account.
 
+### Lists with ASNs
+
+List items in custom lists with ASNs must be integer values.
+
+For example, the following entries would be valid for a list with ASNs:
+
+- `1`
+- `13335`
+- `64512`
+
 ## CSV file format for bulk import operations
 
 The exact format of CSV file entries varies according to the type of list items you are importing.
@@ -102,4 +114,13 @@ When uploading items to a custom list with hostnames via CSV file, use the follo
 ```txt
 <HOSTNAME_1>
 <HOSTNAME_2>
+```
+
+### Lists with ASNs
+
+When uploading items to a custom list with ASNs via CSV file, use the following file format:
+
+```txt
+<ASN_1>
+<ASN_2>
 ```
