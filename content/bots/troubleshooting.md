@@ -85,7 +85,7 @@ ___
 
 The JA3 Fingerprint can be null or empty in some cases. The most common case is for HTTP requests, because JA3 is calculated in TLS, but can also be empty due to the following:
 
-- Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone)
+- Orange to Orange zones (Cloudflare Zone proxied to another Cloudflare Zone).
 
 - Worker sending requests within the same zone or to a zone that is not proxied (or a 3rd party).
 
