@@ -6,7 +6,7 @@ meta:
   title: Troubleshooting
 ---
 
-# General FAQs
+# Troubleshooting SSL/TLS
 
 For FAQs and other troubleshooting information, refer to the following resources:
 
