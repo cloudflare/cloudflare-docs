@@ -84,6 +84,10 @@ No, you can only use the [automatic setup] with JS snippet injection if traffic 
 
 If you have a DNS-only domain, you will have to do a [manual setup] instead.
 
+### What prevents the JS Snippet from being added to a page?
+
+{{<render file="_web-analytics-troubleshooting.md">}}
+
 ---
 
 ## Functionality
