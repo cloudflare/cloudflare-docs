@@ -26,7 +26,6 @@ The Cloudflare for WordPress plugin automatically purges all cache variations fo
 
 - [WP Touch (Free Version)](https://wordpress.org/plugins/wptouch/)
 - [Wp Mobile Detect](https://wordpress.org/plugins/wp-mobile-detect/)
-- [wiziApp](https://wordpress.org/plugins/wiziapp-create-your-own-native-iphone-app)
 - [WordPress Mobile Pack](https://wordpress.org/plugins/wordpress-mobile-pack/)
 - [WP-Mobilizer](https://wordpress.org/plugins/wp-mobilizer/)
 - [Device Theme Switcher](https://wordpress.org/plugins/device-theme-switcher/)

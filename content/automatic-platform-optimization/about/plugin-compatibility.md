@@ -36,7 +36,6 @@ The Cloudflare APO Wordpress plugin does not support multisite WordPress install
 - [Any Mobile Theme Switcher](https://wordpress.org/plugins/any-mobile-theme-switcher/)
 - [Easy Social Share Buttons](https://codecanyon.net/item/easy-social-share-buttons-for-wordpress/6394476)
 - [Jetpack (Mobile Theme)](https://wordpress.org/plugins/jetpack/)
-- [wiziApp](https://wordpress.org/plugins/wiziapp-create-your-own-native-iphone-app)
 - [WPML](https://wpml.org/)
 - [Hummingbird](https://wordpress.org/plugins/hummingbird-performance/)
 - [Imunify360](https://docs.imunify360.com/features/#webshield)
