@@ -42,7 +42,7 @@ export class DurableObject {
 
 - `state.id` {{<type>}}DurableObjectId{{</type>}}
 
-  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method.
+  - The ID of this Durable Object. It can be converted into a hex string using its `.toString()` method. Inside a Durable Object, the `state.id.name` property is not defined. If you need access to the name, explicitly pass it in the fetch request to the Durable Object, e.g. as a query parameter in the URL. 
 
 - `state.waitUntil`
 
