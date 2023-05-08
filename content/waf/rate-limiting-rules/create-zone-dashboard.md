@@ -3,25 +3,17 @@ pcx_content_type: how-to
 type: overview
 title: Create in the dashboard for a zone
 weight: 14
+meta:
+  title: Create a rate limiting rule in the dashboard for a zone
 ---
 
-# Create rate limiting rules in the dashboard for a zone
-
-Create rate limiting rules for a zone in **Security** > **WAF** > **Rate limiting rules**.
-
-{{<Aside type="note">}}
-
-For guidance on the previous version of rate limiting rules, refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
-
-{{</Aside>}}
-
-## Create a rate limiting rule
+# Create a rate limiting rule in the dashboard for a zone
 
 To create a new rate limiting rule:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2. Navigate to **Security** > **WAF** > **Rate limiting rules**.
+2. Go to **Security** > **WAF** > **Rate limiting rules**.
 
 3. Select **Create rule**.
 

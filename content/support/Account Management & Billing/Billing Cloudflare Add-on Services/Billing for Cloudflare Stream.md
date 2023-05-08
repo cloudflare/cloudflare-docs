@@ -72,8 +72,6 @@ To view your Stream minutes watched, 
 4.  In the left navigation, click **Billable Usage**. A graph that displays your current daily traffic appears.
 5.  Choose **Previous month** from the dropdown above the graph and click **Month to date** to view your previous month’s usage.
 
-![The Billing tab from the Cloudflare Dashboard showing the Billable Usage section and an increasing amount of usage over three weeks.](/support/static/hc-import-stream_billing_subcriptions_previous_month.png)
-
 {{<Aside type="note">}}
 In the near future, Cloudflare plans to include total storage in the
 Cloudflare dashboard.
@@ -81,4 +79,4 @@ Cloudflare dashboard.
 ___
 
 -   [Cloudflare Stream video platform](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Cloudflare Stream developer documentation](https://developers.cloudflare.com/stream/getting-started/)
+-   [Cloudflare Stream developer documentation](/stream/get-started/)

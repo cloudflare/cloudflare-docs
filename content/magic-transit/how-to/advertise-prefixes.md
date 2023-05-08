@@ -75,7 +75,25 @@ Use BGP to control the status of your prefix — advertised or withdrawn — fro
 
 To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
 
-![Ingress traffic moving through Cloudflare network using BGP to control prefix status](/magic-transit/static/bgp-control-diagram.png)
+```mermaid
+flowchart LR
+accTitle: Border Gateway Control advertisements
+accDescr: Use BGP to control the status of your prefix.
+
+a(User)-- Ingress -->b(Clouflare global <br> Anycast network) == Anycast <br> GRE tunnel ==> c((BGP))
+b(Clouflare global <br> Anycast network)-.-z(BPG announcement <br> to Internet)
+b(Clouflare global <br> Anycast network) --- d("Routing configuration <br> endpoint #1") & e("Routing configuration <br> endpoint #2") & f("Routing configuration <br> endpoint #3") --- c((BGP))
+c((BGP))-- "Egress <br> (Direct Server Return)" -->a(User)
+
+classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
+classDef blue stroke:blue,stroke-width:3px
+linkStyle 0 stroke:green
+linkStyle 1 stroke-width:5px
+class d,e,f orangestroke
+class a,c blue
+class b orangestroke
+```
+<br />
 
 To begin using BGP control, contact your account team with the following information:
 

@@ -19,13 +19,33 @@ ___
 
 Una CA evalúa los _registros de CAA_, no Cloudflare.
 
+{{<Aside type="note">}}
+Configurar un *registro de CAA* para especificar una o más CA
+particulares no afecta qué CA utilizará Cloudflare para emitir un
+certificado Universal SSL o dedicado para tu dominio.
+{{</Aside>}}
+
 ___
 
 ## ¿Por qué debo deshabilitar Universal SSL si mis _registros de CAA_ excluyen la emisión de Universal SSL?
 
 Ya que los certificados Universal SSL se comparten entre clientes, tus _registros de CAA_ pueden evitar la emisión de Universal SSL de otro cliente. Por este motivo, Cloudflare debe deshabilitar Universal SSL para tu dominio con el fin de asegurar que tus _registros de CAA_ no afectan a otros clientes.
 
+{{<Aside type="note">}}
+Si Universal SSL de Cloudflare está habilitada en tu dominio, los
+proveedores de CA de Universal SSL comodoca.com, digicert.com
+y letsencrypt.org añaden automáticamente los *registros de CAA*.
+{{</Aside>}}
+
 Si no necesitas Universal SSL de Cloudflare, **deshabilita Universal SSL** en la aplicación **SSL/TLS**.
+
+'{{<Aside type="warning">}}
+Deshabilitar Universal SSL dejará tus registros DNS habilitados para
+Cloudflare sin compatibilidad con SSL, a menos que hayas cargado un
+[certificado SSL
+personalizado](https://support.cloudflare.com/hc/en-us/articles/200170466-How-do-I-upload-a-custom-SSL-certificate-Business-or-Enterprise-only-)
+(requiere un plan Business o Enterprise).
+{{</Aside>}}
 
 ___
 
@@ -35,6 +55,12 @@ Los siguientes registros DNS se configuran automáticamente si continúas usando
 
 
 {{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">ejemplo.com. IN CAA 0 issue &quot;comodoca.com&quot;ejemplo.com. IN CAA 0 issue &quot;digicert.com&quot;ejemplo.com. IN CAA 0 issue &quot;letsencrypt.org&quot;ejemplo.com. IN CAA 0 issuewild &quot;comodoca.com&quot;ejemplo.com. IN CAA 0 issuewild &quot;digicert.com&quot;ejemplo.com. IN CAA 0 issuewild &quot;letsencrypt.org&quot;</span></div></span></span></span></code></pre>{{</raw>}}
+
+{{<Aside type="warning">}}
+No uses la opción *Solo permitir comodines* para el registro raíz (que
+solo devuelve registros *issuewild*) para cualquier dominio que use
+Universal SSL de Cloudflare.
+{{</Aside>}}
 
 Utilizado de manera independiente, _issuewild_ solo permite la emisión de comodines.  Por este motivo, Cloudflare no puede añadir tu dominio raíz al certificado, a menos que especifiques la opción _Permitir comodines y nombres de host específicos_ en el menú desplegable **Etiqueta**:  
 

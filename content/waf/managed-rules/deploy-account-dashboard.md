@@ -22,7 +22,7 @@ To deploy a managed ruleset for a single zone, refer to [Deploy a managed rulese
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Navigate to Account Home > **WAF** > **Managed rulesets**.
+2. Go to Account Home > **WAF** > **Managed rulesets**.
 
 3. Next to **Deployed managed rulesets**, select **Deploy** > **Deploy managed ruleset**.
 
@@ -67,7 +67,7 @@ To configure rule field values for all the rules in a managed ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Navigate to Account Home > **WAF** > **Managed rulesets**.
+2. Go to Account Home > **WAF** > **Managed rulesets**.
 
 3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the managed ruleset you want to configure, select **Edit**.
 
@@ -89,7 +89,7 @@ To view the rules of a managed ruleset:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
-2. Navigate to Account Home > **WAF** > **Managed rulesets**.
+2. Go to Account Home > **WAF** > **Managed rulesets**.
 
 3. Under **Deployed managed rulesets**, next to the _Execute_ rule that deploys the managed ruleset you want to browse, select **Edit**.
 
@@ -108,6 +108,6 @@ To view the rules of a managed ruleset:
 ### Delete a managed ruleset deployment rule or a WAF exception
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Navigate to Account Home > **WAF** > **Managed rulesets**.
+2. Go to Account Home > **WAF** > **Managed rulesets**.
 3. Under **Deployed managed rulesets** and next to the rule you want to delete, select **Edit**.
 4. Select **Delete deployment** (or **Delete exception**) and confirm the operation.

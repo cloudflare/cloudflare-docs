@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/204144518-H%C3%A4ufige-Fragen-zu-SSL
-title: Häufige Fragen zu SSL 
+title: Häufige Fragen zu SSL
 ---
 
-# Häufige Fragen zu SSL 
+# Häufige Fragen zu SSL
 
 
 
@@ -15,9 +15,9 @@ Cloudflare-Zertifikate werden nach [Zertifikatstyp](https://support.cloudflare.c
 
 -   [Benutzerdefinierte SSL](https://support.cloudflare.com/hc/articles/200170466)
 -   [Dedicated SSL](https://support.cloudflare.com/hc/articles/228009108)
--   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)   
+-   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)
 
-Ausnahmen von der allgemeinen Priorisierung erfolgen basierend auf der Spezifität des Hostnamens.  Zertifikate, die einen bestimmten Hostnamen erwähnen, werden Wildcard-Zertifikaten vorgezogen.  Beispielsweise hat ein universelles SSL-Zertifikat, das _www.example.com_ explizit erwähnt, Vorrang vor einem Zertifikat, das mit dem Hostnamen _www_ über eine Wildcard wie _\*.example.com_ übereinstimmt.  
+Ausnahmen von der allgemeinen Priorisierung erfolgen basierend auf der Spezifität des Hostnamens.  Zertifikate, die einen bestimmten Hostnamen erwähnen, werden Wildcard-Zertifikaten vorgezogen.  Beispielsweise hat ein universelles SSL-Zertifikat, das _www.example.com_ explizit erwähnt, Vorrang vor einem Zertifikat, das mit dem Hostnamen _www_ über eine Wildcard wie _\*.example.com_ übereinstimmt.
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 ### Was bedeutet eine ungültige SSL-Markenprüfung?
 
-Einige Domains sind nicht für das universelle SSL berechtigt, wenn sie Wörter enthalten, die mit markenrechtlich geschützten Domains in Konflikt stehen.  
+Einige Domains sind nicht für das universelle SSL berechtigt, wenn sie Wörter enthalten, die mit markenrechtlich geschützten Domains in Konflikt stehen.
 
 Um dieses Problem zu beheben, können Sie entweder:
 
@@ -75,6 +75,11 @@ mit einer _Umleitungs-URL_ von
 
 leitet Anfragen für die Root-Domain von _example.com_ unter Beibehaltung des URL-Verzeichnisses auf die Subdomain _www.example.com_ um.
 
+{{<Aside type="note">}}
+Die Aktion *Immer HTTPS verwenden* wird nur angezeigt, wenn in Ihrer
+Zone ein Cloudflare-SSL-Zertifikat aktiv ist.
+{{</Aside>}}
+
 Erzwingen von HTTPS löst keine Probleme mit [gemischtem Inhalt](https://support.cloudflare.com/hc/en-us/articles/200170476-How-do-I-fix-the-SSL-Mixed-Content-Error-Message-), da Browser das Protokoll der enthaltenen Ressourcen überprüfen, bevor Sie eine Anfrage senden. Sie müssen nur relative Links oder HTTPS-Links auf Seiten verwenden, die Sie nach HTTPS zwingen. Cloudflare kann einige Links mit gemischtem Inhalt automatisch mit unserer Funktionalität [Automatic HTTPS Rewrites](https://support.cloudflare.com/hc/en-us/articles/227227647-How-do-I-use-Automatic-HTTPS-Rewrites-) auflösen.
 
 ___
@@ -82,6 +87,12 @@ ___
 ### Funktioniert SSL auch bei Hosting-Partnern?
 
 Für alle neuen Cloudflare-Domains, die über einen Hosting-Partner über CNAME- und Full DNS-Integrationen hinzugefügt wurden, ist ein kostenloses universelles SSL-Zertifikat verfügbar.
+
+{{<Aside type="note">}}
+Bei Domains, die vor dem 9. Dezember 2016 zu Cloudflare hinzugefügt
+wurden, muss der Hosting-Partner die Domain löschen und erneut zu
+Cloudflare hinzufügen, um das SSL-Zertifikat bereitzustellen.
+{{</Aside>}}
 
 Stellen Sie über Cloudflare einen Proxy für eine Unterdomain bereit, um das Free Universal SSL-Zertifikat bereitzustellen.
 
@@ -136,10 +147,10 @@ ___
 
 ### Unterstützt Cloudflare die TLS-Client-Authentifizierung?
 
-TLS-Client-Authentifizierung überprüft, ob ein von einem Client vorgelegtes Zertifikat vom Root-Zertifizierungsstellenzertifikat des Unternehmens signiert ist.  Durch Überprüfung dieses Zertifikats bei jeder Anfrage kann der Zugriff auf autorisierte Clientverbindungen beschränkt werden.  Informationen zum Aktivieren der TLS-Client-Authentifizierung über Cloudflare finden Sie in unserer Dokumentation zu [Gegenseitige TLS-Authentifizierung](https://developers.cloudflare.com/access/setting-up-access/mtls/).
+TLS-Client-Authentifizierung überprüft, ob ein von einem Client vorgelegtes Zertifikat vom Root-Zertifizierungsstellenzertifikat des Unternehmens signiert ist.  Durch Überprüfung dieses Zertifikats bei jeder Anfrage kann der Zugriff auf autorisierte Clientverbindungen beschränkt werden.  Informationen zum Aktivieren der TLS-Client-Authentifizierung über Cloudflare finden Sie in unserer Dokumentation zu [Gegenseitige TLS-Authentifizierung](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 
-### Wie aktiviere ich Universal-SSL mit Github?  
+### Wie aktiviere ich Universal-SSL mit GitHub?
 
 Weitere Informationen zur [Verwendung von Cloudflares Universal SSL mit GitHub-Seiten finden Sie im Cloudflare-Blogbeitrag](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).

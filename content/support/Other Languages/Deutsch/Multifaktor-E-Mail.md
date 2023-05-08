@@ -27,6 +27,12 @@ Artikel-IDs: 115003614752 | Multifaktor-E-Mail-Authentifizierung
 
 Wenn Sie „Diesen Computer merken“ ankreuzen, werden die Anmeldungen von diesem Gerät/Browser aus im Rahmen der MFA bis zu 14 Tage lang nicht mehr angezweifelt. Nach 14 Tagen beginnt Cloudflare erneut, die IP-Adresse bei Anmeldungen von diesem Gerät/Browser aus zu überprüfen.
 
+{{<Aside type="note">}}
+Die E-Mail-MFA kann nur durch die Aktivierung der
+[Zwei-Faktor-Authentifizierung](https://support.cloudflare.com/hc/de/articles/200167906)
+deaktiviert werden.
+{{</Aside>}}
+
 ___
 
 ## Fehlerbehebung bei MFA

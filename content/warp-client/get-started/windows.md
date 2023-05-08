@@ -8,8 +8,8 @@ meta:
 
 # Windows desktop client
 
-1. [Download Cloudflare WARP for Windows](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release).
-2. Navigate to your predefined download folder and open the executable file to install WARP.
+1. Download Cloudflare WARP for Windows from [Microsoft App Center](https://install.appcenter.ms/orgs/cloudflare/apps/1.1.1.1-windows-1/distribution_groups/release) or [1.1.1.1](https://1.1.1.1/).
+2. Go to your predefined download folder and open the executable file to install WARP.
 3. Follow the instructions to complete installation. Cloudflare WARP will automatically launch and appear in your menu bar with the Cloudflare logo.
 4. Select **Next** and **Accept** Cloudflare's privacy policy.
 5. Turn on the toggle to enable WARP.

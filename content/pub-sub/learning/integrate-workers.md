@@ -173,7 +173,7 @@ const worker = {
     // Retrieve this from your Broker's "publicKey" field.
     //
     // Each Broker has a unique key to distinguish between your Broker vs. others
-    // We store these keys in environmental variables (https://developers.cloudflare.com/workers/platform/environment-variables/)
+    // We store these keys in environmental variables (/workers/platform/environment-variables/)
     // to avoid needing to fetch them on every request.
     let publicKeys = env.BROKER_PUBLIC_KEYS;
 

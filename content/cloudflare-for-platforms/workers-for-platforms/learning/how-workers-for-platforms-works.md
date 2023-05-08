@@ -13,7 +13,7 @@ Workers for Platforms is built on top of [Cloudflare Workers](/workers/). The sa
 The Workers configuration API was initially built around managing a relatively small number of Workers on each account. This leads to some difficulties when using Workers as a platform for your own users, including: 
 
 * Frequently needing to increase script limits.
-* Ading an ever-increasing number of routes. 
+* Adding an ever-increasing number of routes. 
 * Managing logic in a central place if your own logic is supposed to come before your customers' logic.
 
 Workers for Platforms extends the capabilities of Workers for SaaS businesses that want to deploy Worker scripts on behalf of their customers or that want to let their users write Worker scripts directly.
@@ -48,7 +48,7 @@ User Workers are written by your end users (end developers). End developers depl
 
 Below you will find an example request lifecycle in the Workers for Platforms architecture.
 
-![The request lifecycle is described below.](../media/wfp.png)
+![The request lifecycle is described below.](/images/cloudflare-for-platforms/workers-for-platforms.png)
 
 In the above diagram:
 

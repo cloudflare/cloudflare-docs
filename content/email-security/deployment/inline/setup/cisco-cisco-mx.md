@@ -30,7 +30,7 @@ To add a new Sender Group:
     * **DNS Lists**: Leave blank.
     * **Connecting Host DNS Verification**: Leave all options unchecked.
 
-4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+4. Select **Submit and Add Senders**, and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). If you need to process emails in the EU or India regions for compliance purposes, add those IP addresses as well.
 
 ![Sender group](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step1.png)
 
@@ -44,12 +44,7 @@ To add a new SMTP Route:
 
 3. Configure the new SMTP Route as follows:
     * **Receiving Domain**: `a1s.mailstream`
-    * In **Destination Hosts**, select **Add Row**, and add the following values to the respective rows:
-    Priority | Destination                      | Port
-    -------- | -------------------------------- | ---
-    `5`      | `mailstream-central.mxrecord.mx` | `25`
-    `10`     | `mailstream-east.mxrecord.io`    | `25`
-    `10`     | `mailstream-west.mxrecord.io`    | `25`
+    * In **Destination Hosts**, select **Add Row**, and add the Area 1 MX hosts. Refer to the [Geographic locations](#5-geographic-locations) table for more information on what MX hosts to use.
 
 ![Edit SMTP route](/email-security/static/deployment/inline-setup/cisco-cisco-mx/step2.png)
 
@@ -90,7 +85,7 @@ To create a new Content Filter:
     * **Name**: `A1S_to_ESA`
     * **Description**: `Area 1 inspected messages for final delivery`
     * **Order**: This filter must come before the previously created filter.
-    * **Conditions**: Add seven conditions of type **Remote IP/Hostname** with the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/): 
+    * **Conditions**: Add conditions of type **Remote IP/Hostname** with all the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/). For example: 
     Order | Condition            | Rule
     ----- | -------------------- | ---
     `1`   | `Remote IP/Hostname` | `52.11.209.211`
@@ -100,7 +95,7 @@ To create a new Content Filter:
     `5`   | `Remote IP/Hostname` | `104.30.32.0/19`
     `6`   | `Remote IP/Hostname` | `158.51.64.0/26`
     `7`   | `Remote IP/Hostname` | `158.51.65.0/26`
-        * Ensure that the *Apply rule:* dropdown is set to **If one or more conditions match**.
+    * Ensure that the *Apply rule:* dropdown is set to **If one or more conditions match**.
     * **Actions**: Select **Add Action**, and add the following:
     Order | Action          | Rule
     --- | -------------------- | ---
@@ -111,3 +106,7 @@ To create a new Content Filter:
 ## 4. Add the Incoming Content Filter to the Inbound Policy table
 
 Assign the Incoming Content Filters created in [step 3](#3-create-incoming-content-filters) to your primary mail policy in the Incoming Mail Policy table. Then, commit your changes to activate the email redirection.
+
+## 5. Geographic locations
+
+{{<render file="_mx-geographic-locations.md">}}

@@ -1,5 +1,5 @@
 ---
-pcx_content_type: overview
+pcx_content_type: concept
 title: Keyless SSL
 weight: 6
 ---

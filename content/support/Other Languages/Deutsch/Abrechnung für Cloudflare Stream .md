@@ -71,7 +71,7 @@ Die kostenpflichtigen Minuten entsprechen der Videozeit, die von Cloudflare an I
 
 Wenn der Besucher ein Video lädt, ohne es sich anzusehen, berechnet Cloudflare die Übertragung des Videos trotzdem. Wenn der Browser des Besuchers das Video jedoch lokal zwischenspeichert, berechnet Cloudflare nicht die Zeit, die er mit dem Betrachten des Videos verbringt. Mit anderen Worten, wenn der Besucher sich das Video mehrmals ansieht, berechnen wir die weiteren Male nicht mehr.
 
-Wenn Sie das Attribut _Preload_ (beschrieben in der [API-Dokumentation](https://developers.cloudflare.com/stream/video-playback/player-api/) für Stream) im Einbettungscode angeben, berechnen wir die Zeit für das Vorabladen des Videos. Beachten Sie, dass das Preload-Verhalten je nach Browser unterschiedlich ist. Manche Browser laden nur einige Sekunden des Videos vorab, andere laden das ganze Video. Dieses Vorabladen kann zur Optimierung der Videoqualität zwar sinnvoll sein, Sie sollten aber überlegen, ob es in Ihrem Anwendungsfall angemessen ist.
+Wenn Sie das Attribut _Preload_ (beschrieben in der [API-Dokumentation](/stream/video-playback/player-api/) für Stream) im Einbettungscode angeben, berechnen wir die Zeit für das Vorabladen des Videos. Beachten Sie, dass das Preload-Verhalten je nach Browser unterschiedlich ist. Manche Browser laden nur einige Sekunden des Videos vorab, andere laden das ganze Video. Dieses Vorabladen kann zur Optimierung der Videoqualität zwar sinnvoll sein, Sie sollten aber überlegen, ob es in Ihrem Anwendungsfall angemessen ist.
 
 Sie können die kostenpflichtigen Minuten für Cloudflare Stream im Cloudflare Dashboard ansehen und damit schätzen, wie hoch die Gebühren für die übertragenen Minuten sein werden.
 
@@ -83,7 +83,12 @@ Wenn Sie sich ansehen möchten, wie viele Stream-Minuten betrachtet wurden, gehe
 4.  Klicken Sie im linken Navigationsbereich auf **Kostenpflichtige Nutzung**. Sie sehen eine Grafik, die Ihren momentanen täglichen Traffic wiedergibt.
 5.  Wählen Sie im Dropdown über der Grafik **Vormonat** aus und klicken Sie auf **Monat bisher**. Nun sehen Sie die Nutzung im Vormonat.![stream_billing_subcriptions_previous_month.png](/support/static/stream_billing_subcriptions_previous_month.png)
 
+{{<Aside type="note">}}
+Wir planen, in naher Zukunft auch die gesamte Speicherbelegung im
+Cloudflare Dashboard darzustellen.
+{{</Aside>}}
+
 ___
 
 -   [Die Videoplattform Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Entwicklerdokumentation zu Cloudflare Stream](https://developers.cloudflare.com/stream/getting-started/)
+-   [Entwicklerdokumentation zu Cloudflare Stream](/stream/getting-started/)

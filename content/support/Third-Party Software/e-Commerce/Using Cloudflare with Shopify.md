@@ -20,7 +20,7 @@ ___
 
 Enabling O2O is only available on the Cloudflare Enterprise plan.
 
-To enable O2O on your account, you need either an A or CNAME DNS record that points your shop’s domain to the domain shops.myshopify.com. Orange cloud the record.
+To enable O2O on your account, you need a CNAME DNS record that points your shop’s domain to the domain shops.myshopify.com. Orange cloud the record.
 
 After adding the DNS record with proxy enabled, contact your account team to enable O2O on your shop domain.
 
@@ -31,16 +31,16 @@ ___
 When used with O2O, certain Cloudflare features can interrupt the flow of traffic to your Shopify store or display incorrect data to your visitors, meaning you should:
 
 -   Not use the following Cloudflare features:
-    -   [HTML caching](https://developers.cloudflare.com/cache/)
-    -   [Custom firewall rules](https://developers.cloudflare.com/firewall/)
+    -   [HTML caching](/cache/)
+    -   [Custom firewall rules](/firewall/)
     -   [Rate limiting](https://support.cloudflare.com/hc/articles/115001635128)
     -   [Argo Smart Routing](https://support.cloudflare.com/hc/articles/115000224552)
-    -   [Load Balancing](https://developers.cloudflare.com/load-balancing/)
+    -   [Load Balancing](/load-balancing/)
     -   [IPv6](https://support.cloudflare.com/hc/articles/229666767)
 -   Be careful with the following Cloudflare features:
     -   [Page rules](https://support.cloudflare.com/hc/articles/218411427): Incorrectly configured Page Rules that match the subdomain used for Shopify may block or distort the flow of ecommerce visitors to your website.
-    -   [Workers](https://developers.cloudflare.com/workers/): Similar to Page Rules, Workers may interrupt the flow of traffic to your website and consequently reduce revenue. Write Workers with caution. It is advisable to exclude the subdomain used with Shopify from the Worker route.
-    -   [DNS CAA records](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/caa-records): Shopify issues SSL/TLS certificates for merchant domains using Let’s Encrypt. If you add any DNS CAA records, you must select Let’s Encrypt as the Certificate Authority (CA) or HTTPS connections may fail.
+    -   [Workers](/workers/): Similar to Page Rules, Workers may interrupt the flow of traffic to your website and consequently reduce revenue. Write Workers with caution. It is advisable to exclude the subdomain used with Shopify from the Worker route.
+    -   [DNS CAA records](/ssl/edge-certificates/caa-records/): Shopify issues SSL/TLS certificates for merchant domains using Let’s Encrypt. If you add any DNS CAA records, you must select Let’s Encrypt as the Certificate Authority (CA) or HTTPS connections may fail.
 
 {{<Aside type="note">}}
 Cloudflare cannot fix any configuration issues with the above features

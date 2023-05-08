@@ -12,12 +12,6 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule vi
 
 You must deploy custom rules to the `http_request_firewall_custom` phase entry point ruleset.
 
-{{<Aside type="note">}}
-
-This feature is only available for select customers on an Enterprise plan.
-
-{{</Aside>}}
-
 ## Create a custom rule
 
 To create a custom rule, add a rule to the `http_request_firewall_custom` phase entry point ruleset.

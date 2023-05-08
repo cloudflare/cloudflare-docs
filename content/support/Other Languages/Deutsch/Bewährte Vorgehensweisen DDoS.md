@@ -20,7 +20,7 @@ Angreifer versuchen, Ihre Ursprungs-IP-Adresse zu identifizieren, um Ihren Urspr
 Stellen Sie mit den folgenden Schritten maximalen Schutz für Ihre DNS-Einträge her:
 
 1.  [Aktivieren Sie den Cloudflare-Proxy (orangefarbene Wolke).](https://support.cloudflare.com/hc/articles/200169626)
-2.  Entfernen Sie DNS-Einträge, die für FTP oder SSH verwendet werden, und verwenden Sie stattdessen Ihre Ursprungs-IP, um FTP- oder SSH-Anfragen direkt auszuführen. Nutzen Sie alternativ [Cloudflare Spectrum](https://developers.cloudflare.com/spectrum/getting-started/) als Proxy für FTP und SSH.
+2.  Entfernen Sie DNS-Einträge, die für FTP oder SSH verwendet werden, und verwenden Sie stattdessen Ihre Ursprungs-IP, um FTP- oder SSH-Anfragen direkt auszuführen. Nutzen Sie alternativ [Cloudflare Spectrum](/spectrum/getting-started/) als Proxy für FTP und SSH.
 3.  [Markieren Sie A-, AAAA- oder CNAME-Einträge für Ihren E-Mail-Server mit einer grauen Wolke.](https://support.cloudflare.com/hc/articles/200168876)
 4.  Entfernen Sie Platzhalter-Einträge in Free-, Pro- oder Business-Domains, da diese Ihre Ursprungs-IP-Adresse offenlegen. [Cloudflare schützt Platzhalter-Einträge nur für Domains im Enterprise Plan](https://support.cloudflare.com/hc/articles/360017421192#CloudflareDNSFAQ-DoesCloudflaresupportwildcardDNSentries).
 
@@ -35,6 +35,12 @@ Um die tatsächlichen IPs hinter einem Angriff anzuzeigen, müssen Sie [die ursp
 ### Ändern Sie die Server-IP-Adressen, nachdem Sie die Website zu Cloudflare verschoben haben
 
 Cloudflare verbirgt die IP-Adressen Ihres Ursprungsservers für den Traffic, für den Sie Cloudflare als Proxy verwenden. Als zusätzliche Sicherheitsmaßnahme empfehlen wir, dass Sie sich an Ihren Hosting-Provider wenden und neue Ursprungsserver-IPs anfordern.
+
+{{<Aside type="note">}}
+Für diese Maßnahme kann eine Gebühr anfallen, weshalb Sie dies auf
+Grundlage des Risikos eines Angriffs auf Ihre Website mit Ihrem
+Hosting-Provider besprechen sollten.
+{{</Aside>}}
 
 ### Verwenden Sie Rate Limiting, um Brute-Force- und Layer-7-DDoS-Angriffe zu verhindern
 

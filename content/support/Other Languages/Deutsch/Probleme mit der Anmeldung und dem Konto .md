@@ -25,6 +25,11 @@ Wenn Sie die mit Ihrer Anwendung verknüpfte E-Mail-Adresse vergessen haben:
 
 3\. Cloudflare sendet eine E-Mail an die Adresse, die Ihrem Domain-Namen zugeordnet ist. Wenn Sie nicht innerhalb von 20 Minuten eine E-Mail erhalten, überprüfen Sie Ihren Spam-Ordner. Die Nachricht wird von `no-reply@cloudflare.com` oder `noreply@notify.cloudflare.com` gesendet.
 
+{{<Aside type="note">}}
+Dieser Vorgang hat keine Auswirkungen auf Ihr Konto und Ihre
+E-Mail-Adresse wird an niemanden weitergegeben.
+{{</Aside>}}
+
 Wenn Sie immer noch nicht auf die mit Ihrem Cloudflare-Konto verknüpfte E-Mail-Adresse zugreifen können, müssen Sie [Ihre Domain auf ein anderes Konto verschieben](https://support.cloudflare.com/hc/articles/204615358).
 
 Dies ist notwendig, damit Cloudflare das Hijacking von Konten verhindern kann.
@@ -43,6 +48,21 @@ Wenn Sie Ihr Kontopasswort vergessen haben:
 
 4\. Klicken Sie auf den Link zum Zurücksetzen des Passworts. Dieser Link läuft nach zwei Stunden ab.
 
+{{<Aside type="tip">}}
+Cloudflare empfiehlt starke Passwörter. Die Mindestanforderungen sind:
+
+-   Das Passwort muss mindestens 8 Zeichen lang sein.
+-   Das Passwort muss eine Ziffer enthalten.
+-   Das Passwort muss ein Sonderzeichen enthalten.
+{{</Aside>}}
+
+{{<Aside type="note">}}
+Wenn Sie immer noch keinen Zugriff auf Ihr Konto haben, schauen Sie sich
+in der
+[Cloudflare-Community](https://community.cloudflare.com/t/i-cannot-login-to-my-account/27823)
+nach Hilfe um.
+{{</Aside>}}
+
 ___
 
 ## Probleme mit der Zwei-Faktor-Authentifizierung?
@@ -53,6 +73,13 @@ Es kann vorkommen, dass ein Mobilgerät, ein Sicherheitsschlüssel oder ein Auth
 
 In der Regel können Sie diese Probleme dadurch lösen, dass Sie einen Backup-Code verwenden oder einen Backup-Code von Ihrer bevorzugten Authentifizierungs-App abrufen.
 
+{{<Aside type="tip">}}
+In der Dokumentation von Google finden Sie Informationen zur
+[Übertragung von „Google Authenticator"-Codes von einem Android-Gerät
+auf ein
+anderes](https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DAndroid&hl=en&oco=0).
+{{</Aside>}}
+
 Nach der Einrichtung der 2FA wurden Sie gebeten, Ihre Backup-Codes an einem sicheren Ort aufzubewahren. So stellen Sie den Zugang mit einem Backup-Code von Cloudflare wieder her:
 
 1\. Rufen Sie den Backup-Code von dem Ort ab, an dem Sie ihn gespeichert haben.
@@ -60,6 +87,10 @@ Nach der Einrichtung der 2FA wurden Sie gebeten, Ihre Backup-Codes an einem sich
 2\. Rufen Sie die Cloudflare-Anmeldeseite auf.
 
 3\. Tragen Sie den Backup-Code im Anmeldebildschirm ein und klicken Sie dann auf **Anmelden**.
+
+{{<Aside type="note">}}
+Ein Backup-Code wird ungültig, wenn er benutzt wurde.
+{{</Aside>}}
 
 #### **2FA deaktivieren**
 
@@ -126,11 +157,17 @@ So ändern Sie die E-Mail-Adresse, die mit Ihrem Cloudflare Konto verknüpft ist
 
 5\. Ändern Sie Ihr Passwort und klicken Sie auf **Speichern**.
 
+{{<Aside type="note">}}
+Sie sollten außerdem in Betracht ziehen, Ihre [API-Schlüssel und
+-Token](https://support.cloudflare.com/hc/articles/200167836) zu ändern,
+um Ihr Konto besser zu schützen.
+{{</Aside>}}
+
 ___
 
 ## Ein kompromittiertes Konto wieder sicher machen
 
-Wenn Sie verdächtige Aktivitäten innerhalb Ihres Cloudflare-Kontos bemerken, sollten Sie Ihr Konto mit [diesen Schritten](https://developers.cloudflare.com/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/) absichern.
+Wenn Sie verdächtige Aktivitäten innerhalb Ihres Cloudflare-Kontos bemerken, sollten Sie Ihr Konto mit [diesen Schritten](/fundamentals/get-started/basic-tasks/account-security/securing-a-compromised-account/) absichern.
 
 ___
 
@@ -139,10 +176,15 @@ ___
 Sie können sich auf dem [Cloudflare-Dashboard](https://dash.cloudflare.com/login) auf verschiedene Arten anmelden:
 
 -   **E-Mail und Passwort**: Geben Sie zur Anmeldung Ihre E-Mail Adresse und Ihr Passwort ein.
--   **Single Sign On (SSO):** Geben Sie Ihre E-Mail-Adresse ein (vorausgesetzt, Ihr Administrator hat [SSO als Anmeldeoption konfiguriert](https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
+-   **Single Sign On (SSO):** Geben Sie Ihre E-Mail-Adresse ein (vorausgesetzt, Ihr Administrator hat [SSO als Anmeldeoption konfiguriert](/cloudflare-one/applications/configure-apps/dash-sso-apps/)).
 -   **Mit Apple anmelden**:
     -   _E-Mail-Adresse des Cloudflare-Kontos ist auch die Apple-ID:_: Sie können sich entweder mit Ihrer E-Mail-Adresse und Ihrem Passwort oder mit Apple anmelden.
     -   _E-Mail-Adresse des Cloudflare-Kontos ist nicht die Apple-ID_: Es wird ein neues Cloudflare-Konto erstellt, wenn Sie sich mit Apple anmelden. Wenn Sie sich bei einem bestehenden Konto anmelden möchten, [ändern Sie Ihre E-Mail-Adresse](https://support.cloudflare.com/hc/de/articles/203471284-Probleme-mit-der-Anmeldung-und-dem-Konto#12345679) so, dass sie mit der Adresse Ihrer Apple-ID übereinstimmt.
+
+{{<Aside type="note">}}
+Wenn Sie sich bei Ihrem Cloudflare-Nutzerkonto mit Single Sign-On (SSO)
+anmelden, können Sie sich nicht mit Apple anmelden.
+{{</Aside>}}
 
 ___
 

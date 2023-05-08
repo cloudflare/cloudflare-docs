@@ -50,6 +50,10 @@ For more information on the available parameters and allowed values, refer to [R
 
     To configure more than one rule, select the rules using the row checkboxes and update the fields for the selected rules using the dropdowns displayed before the table. You can also configure all the rules with a given tag. For more information, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
+    {{<Aside type="note">}}
+{{<render file="managed-rulesets/_read-only-rules-note.md">}}
+    {{</Aside>}}
+
 9. Select **Next**.
 
 10. Enter a name for your override in **Rule description**.

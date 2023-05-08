@@ -27,7 +27,7 @@ In the command line, create your Workers project, cloning the [rustwasm-worker-t
 
 This command creates a directory called `rustwasm-markdown-parser` which you can now `cd` into.
 
-Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/get-started/quickstarts/#templates), there is a variety of options to help you get started.
+Wrangler templates are git repositories. If you want to create your own templates, or use one from the [Template Gallery](/workers/examples/), there is a variety of options to help you get started.
 
 ## Workers Playground
 
@@ -37,7 +37,7 @@ You can test how your Workers function will execute when it is deployed by using
 rustwasm-markdown-parser $ wrangler dev
 ```
 
-Using the `dev` command will establish a connection between localhost and an edge server that operates your Worker in development.
+Using the `dev` command will establish a connection between `localhost` and an global network server that operates your Worker in development.
 
 ## Building
 

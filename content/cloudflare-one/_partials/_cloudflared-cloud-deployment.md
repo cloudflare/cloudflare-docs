@@ -23,7 +23,7 @@ _build:
     $ vim config.yml
     ```
 
-1. Type `i` to begin editing the file and copy-paste the following settings in it.
+1.  Type `i` to begin editing the file and copy-paste the following settings in it.
 
     ```text
     tunnel: <Tunnel ID/name>
@@ -38,9 +38,9 @@ _build:
     transport-loglevel: info
     ```
 
-1. Press `esc` and then type `:x` to save and exit.
+1.  Press `esc` and then type `:x` to save and exit.
 
-1. Run `cloudflared` as a service.
+1.  Run `cloudflared` as a service.
 
 ```sh
 $ cloudflared service install
@@ -54,4 +54,4 @@ $ systemctl start cloudflared
 $ systemctl status cloudflared
 ```
 
-Next, visit the Zero Trust dashboard and ensure your new tunnel shows as **active**. Optionally, begin creating [Access policies](/cloudflare-one/policies/access/) to secure your private resources.
+Next, visit Zero Trust and ensure your new tunnel shows as **active**. Optionally, begin creating [Access policies](/cloudflare-one/policies/access/) to secure your private resources.

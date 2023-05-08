@@ -14,9 +14,20 @@ title: Cloudflare Network Analytics v1 verstehen
 Um die Network-Analytics-Ansicht aufzurufen, brauchen Sie:
 
 -   einen Cloudflare Enterprise Plan
--   Cloudflare [Magic Transit](https://developers.cloudflare.com/magic-transit/) oder [Spectrum](https://developers.cloudflare.com/spectrum/).
+-   Cloudflare [Magic Transit](/magic-transit/) oder [Spectrum](/spectrum/).
 
-Die Cloudflare-Ansicht **Network Analytics** bietet nahezu in Echtzeit Einblick in Traffic-Muster der Netzwerk- und Transport-Ebene sowie DDoS-Angriffe. Mit Network Analytics werden Daten auf Paket- und Bitebene visualisiert – dieselben Daten, die über die [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/) verfügbar sind.
+Die Cloudflare-Ansicht **Network Analytics** bietet nahezu in Echtzeit Einblick in Traffic-Muster der Netzwerk- und Transport-Ebene sowie DDoS-Angriffe. Mit Network Analytics werden Daten auf Paket- und Bitebene visualisiert – dieselben Daten, die über die [GraphQL Analytics API](/analytics/graphql-api/) verfügbar sind.
+
+{{<Aside type="note">}}
+-   Hinweise zum neuen Network Analytics v2 (NAv2) Dashboard, das in der
+    Beta-Version verfügbar ist, finden Sie unter [Cloudflare Network
+    Analytics](/analytics/network-analytics/)
+    in der Entwicklerdokumentation.
+-   Es gibt auch eine neue Version der Network Analytics GraphQL API.
+    Wenn Sie noch NAv1 verwenden, sollten Sie von NAv1 auf NAv2
+    migrieren. Befolgen Sie dazu die
+    [Migrationsanleitung](/analytics/graphql-api/migration-guides/network-analytics-v2/).
+{{</Aside>}}
 
 ![Analytics-Bereich mit Zusammenfassung der Pakete pro Typ](/support/static/na-main-dashboard.png)
 
@@ -48,6 +59,11 @@ So rufen Sie die Ansicht **Network Analytics** auf:
 1.  Melden Sie sich bei Ihrem Cloudflare-Konto an.
 2.  Wenn Sie mehrere Konten haben, wählen Sie ein Konto, das Zugriff auf Magic Transit oder Spectrum hat.
 3.  Klicken Sie auf der **Startseite** des Kontos auf **Network Analytics**.
+
+{{<Aside type="note">}}
+Quell-IPs werden 30 Tage lang gespeichert. Berichtzeiträume, die älter
+als 30 Tage sind, enthalten keine Quell-IP-Daten.
+{{</Aside>}}
 
 ___
 
@@ -119,7 +135,11 @@ In diesem Beispiel wird durch Klicken auf die Schaltfläche **Filter** der Berei
 
 ### Eine Magic Firewall-Regel aus den angewendeten Filtern erstellen
 
-Sie können eine [Magic Firewall](https://developers.cloudflare.com/magic-firewall)\-Regel erstellen, die den gesamten Traffic blockiert, der mit den ausgewählten Filtern in Network Analytics übereinstimmt. Die derzeit unterstützten Filter sind:
+{{<Aside type="note">}}
+Dieses Feature ist nur für Magic Transit-Nutzer verfügbar.
+{{</Aside>}}
+
+Sie können eine [Magic Firewall](/magic-firewall)\-Regel erstellen, die den gesamten Traffic blockiert, der mit den ausgewählten Filtern in Network Analytics übereinstimmt. Die derzeit unterstützten Filter sind:
 
 -   Ziel-IP
 -   Protokoll
@@ -436,6 +456,11 @@ Sie können aus folgenden Optionen wählen:
 -   Quell-Port
 -   TCP-Flag
 
+{{<Aside type="note">}}
+Die Daten für Quell-ASN, Quell-IP, Quell-Port und TCP-Flag sind nur für
+die letzten 24 Stunden verfügbar.
+{{</Aside>}}
+
 ### Netzwerkanalyse-Filter teilen 
 
 Wenn Sie auf der Network-Analytics-Seite Filter hinzufügen und einen Zeitbereich angeben, ändert sich die URL, um diese Parameter widerzuspiegeln.
@@ -448,7 +473,7 @@ ___
 
 ## Aktivitätsprotokoll betrachten
 
-Das Network-Analytics-**Aktivitätsprotokoll** zeigt bis zu 500 Protokollereignisse im aktuell ausgewählten Zeitbereich, paginiert mit 10 Ergebnissen pro Seite und Zeitbereichsansicht. (Bei der [GraphQL-Analytics-API](https://developers.cloudflare.com/analytics/graphql-api/) gibt es diese Einschränkung nicht.) 
+Das Network-Analytics-**Aktivitätsprotokoll** zeigt bis zu 500 Protokollereignisse im aktuell ausgewählten Zeitbereich, paginiert mit 10 Ergebnissen pro Seite und Zeitbereichsansicht. (Bei der [GraphQL-Analytics-API](/analytics/graphql-api/) gibt es diese Einschränkung nicht.) 
 
 Ereignisdetails erreichen Sie über das Erweiterungs-Widget, das mit den Ereignissen verbunden ist.
 
@@ -505,9 +530,9 @@ ___
 
 ## Verwandte Ressourcen
 
--   [Cloudflare Network Analytics v2](https://developers.cloudflare.com/analytics/network-analytics/)
--   [Umstellung von Network Analytics v1 auf Network Analytics v2](https://developers.cloudflare.com/analytics/graphql-api/migration-guides/network-analytics-v2)
--   [Cloudflare GraphQL-API](https://developers.cloudflare.com/analytics/graphql-api/)
+-   [Cloudflare Network Analytics v2](/analytics/network-analytics/)
+-   [Umstellung von Network Analytics v1 auf Network Analytics v2](/analytics/graphql-api/migration-guides/network-analytics-v2)
+-   [Cloudflare GraphQL-API](/analytics/graphql-api/)
 -   [Cloudflare Analytics: Ein kurzer Überblick](https://support.cloudflare.com/hc/articles/360037684111)
 -   [IANA-Portnummern und Dienstnamen](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=1)
 
@@ -632,7 +657,7 @@ Wenn Sie mit Angriffsprotokollen im Dashboard arbeiten, sollten Sie Folgendes be
 -   Wir speichern Angriffsprotokolle mit Start- und Endzeitstempeln, Paketen- und Bitstatistiken für die minimale, maximale und durchschnittliche Datenrate sowie Gesamtsummen, Angriffstypen und Aktionen. 
 -   Quell-IP-Adressen werden als personenbezogene Daten betrachtet. Daher speichert Cloudflare sie nur 30 Tage lang. Nach 30 Tagen werden die Quell-IP-Adressen verworfen und die Protokolle werden zunächst in 1-Stunden-Gruppen und dann in 1-Tages-Gruppen zusammengefasst. Die 1-stündigen Roll-Ups werden für 6 Monate gespeichert. Die eintägigen Roll-Ups werden 1 Jahr lang aufbewahrt.
 
-Weitere Informationen zur Abfrage und zum Zugriff auf Protokolldaten finden Sie unter [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/limits) . 
+Weitere Informationen zur Abfrage und zum Zugriff auf Protokolldaten finden Sie unter [GraphQL Analytics API](/analytics/graphql-api/limits) . 
 
 ### Warum ist die Ziel-IP laut Network Analytics „nicht verfügbar“?
 

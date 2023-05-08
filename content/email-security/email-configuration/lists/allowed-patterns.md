@@ -32,7 +32,8 @@ To create a new allowed pattern:
     
     - **Notes**: Provide additional notes about the allowed pattern.
 
-6. Choose whether to **Verify Sender**, which applies the `Spoof` [disposition](/email-security/reference/dispositions-and-attributes/#available-values) for emails failing the SPF/DKIM/DMARC domain policy (only applicable for *Trusted Sender* and *Acceptable Sender*). 
+6. If you chose *Trusted Sender* or *Acceptable Sender* in the previous step, you will be able to choose whether to verify the sender. When the **Verify Sender** option is selected, the allow list entry will only be honored if it aligns with a passing authentication by DMARC or SPF or DKIM.
+
 7. Select **Save**.
 
 ### CSV uploads

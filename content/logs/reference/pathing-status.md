@@ -165,7 +165,7 @@ Cloudflare Firewall Rules triggers actions based on matching customer-defined ru
 
 ## Firewall User-Agent Block
 
-Challenge (Captcha or JavaScript) or block visitors who use a browser for which the User-Agent name matches a specific string.
+Challenge (Interactive or Non-Interactive) or block visitors who use a browser for which the User-Agent name matches a specific string.
 
 {{<table-wrap>}}
 
@@ -219,7 +219,7 @@ The macro stage is comprised of many different paths. They are categorized by th
 
 | EdgePathingStatus | Description                                                                                                                                                                                                                            | EdgePathingOp | EdgePathingSrc |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------------- | ----------- |
-| `nr`              | There is no reputation data for the IP and no action is being taken (if IUAM is on, a JS challenge is served).                                                                                                                         | `wl`          | `macro`        |
+| `nr`              | There is no reputation data for the IP and no action is being taken.                                                                                                                         | `wl`          | `macro`        |
 | `wl`              | IP is explicitly allowlisted.                                                                                                                                                                                                          | `wl`          | `macro`        |
 | `scan`            | IP is explicitly allowlisted and categorized as a security scanner.                                                                                                                                                                    | `wl`          | `macro`        |
 | `mon`             | IP is explicitly allowlisted and categorized as a Monitoring Service.                                                                                                                                                                  | `wl`          | `macro`        |

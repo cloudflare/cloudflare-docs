@@ -71,7 +71,7 @@ Los minutos facturables representan el tiempo dedicado a entregar videos de Clou
 
 Si un visitante del sitio carga un video y no lo ve, Cloudflare seguirá facturando por la entrega del video. Sin embargo, si el navegador del visitante almacena en caché el video a nivel local, Cloudflare no factura el tiempo que se dedique para verlo. En otras palabras, si el visitante ve el video varias veces, no cobraremos por las vistas posteriores.
 
-Si usa el atributo de _precarga_ (descrito en la documentación de [API de Stream](https://developers.cloudflare.com/stream/video-playback/player-api/)) en el código de inserción, facturaremos el tiempo dedicado a precargar el video. Toma en cuenta que el comportamiento de precarga varía según el navegador. Algunos navegadores precargan unos segundos de video mientras que otros precargan todo el video. Aunque la precarga es útil para optimizar la disponibilidad de video, considera si es apropiado para tu caso de uso.
+Si usa el atributo de _precarga_ (descrito en la documentación de [API de Stream](/stream/video-playback/player-api/)) en el código de inserción, facturaremos el tiempo dedicado a precargar el video. Toma en cuenta que el comportamiento de precarga varía según el navegador. Algunos navegadores precargan unos segundos de video mientras que otros precargan todo el video. Aunque la precarga es útil para optimizar la disponibilidad de video, considera si es apropiado para tu caso de uso.
 
 Puedes ver los minutos facturables de Cloudflare Stream en el panel de control de Cloudflare para calcular el cargo por los minutos entregados.
 
@@ -83,7 +83,12 @@ Para ver tus minutos de Stream vistos, 
 4.  En la navegación izquierda, haz clic en **Uso facturable**. Verás un gráfico que muestra tu tráfico diario actual.
 5.  Elige **Mes anterior** en el menú desplegable sobre el gráfico y haz clic en **Mes hasta la fecha** para ver el uso de tu mes anterior. ![argo_billing_subcriptions_previous_month.png](/support/static/stream_billing_subcriptions_previous_month.png)
 
+{{<Aside type="note">}}
+En un futuro próximo, Cloudflare planea incluir almacenamiento total en
+el panel de control de Cloudflare.
+{{</Aside>}}
+
 ___
 
 -   [Plataforma de video Cloudflare Stream](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Documentación del desarrollador de Cloudflare Stream](https://developers.cloudflare.com/stream/getting-started/)
+-   [Documentación del desarrollador de Cloudflare Stream](/stream/getting-started/)

@@ -12,34 +12,31 @@ meta:
 <summary>Feature availability</summary>
 <div>
 
-| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/#warp-client-modes) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| All systems       | WARP with Gateway                                                                         | All plans                                                     |
+| Operating Systems | [WARP mode required](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | WARP with Gateway                                                                                 | All plans                                                     |
 
 </div>
 </details>
 
 With Require Gateway, you can allow access to your applications only to devices enrolled in your organization's instance of Gateway. Unlike [Require WARP](/cloudflare-one/identity/devices/warp-client-checks/require-warp/), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 
-## 1. Enable the Gateway check
+## Enable the Gateway check
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Settings** > **WARP Client**.
-2. Scroll down to **WARP client checks** and select **Add new**.
-3. Select **Gateway**.
-4. Select **Save**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
-You are now ready to start requiring Gateway for your Access applications.
+2. In **WARP client checks**, select **Add new**.
 
-## 2. Add the check to an Access policy
+3. Select **Gateway**, then select **Save**.
 
-1. In the [Zero Trust Dashboard](https://dash.teams.cloudflare.com), go to **Access > Applications**.
+## Add the check to an Access policy
 
-2. Locate the application for which you want to require Gateway.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 
-3. Select **Edit**.
+2. Select the application for which you want to require Gateway, then select **Configure**.
 
-4. To have an existing policy require Gateway, select **Edit** for that specific policy. Then, add an **Include** or **Require** rule which uses the _Gateway_ selector.
+3. To create a new Access policy, select **Add a policy**. To require Gateway for an existing policy, select a policy, then select **Configure**.
 
-5. Select **Save rule**.
+4. Add an Include or Require rule which uses the Gateway selector. Select **Save policy**.
 
 Before granting access to the application, your policy will now check that the device is running the WARP client and enrolled in your Zero Trust organization.

@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/200169906-Fehlerbehebung-bei-fehlenden-Bildern
-title: Fehlerbehebung bei fehlenden Bildern 
+title: Fehlerbehebung bei fehlenden Bildern
 ---
 
-# Fehlerbehebung bei fehlenden Bildern 
+# Fehlerbehebung bei fehlenden Bildern
 
 
 
@@ -18,11 +18,16 @@ Wenn auf Ihrer Website Bilder fehlen, sollten Sie die folgenden Schritte durchf�
 -   Deaktivieren Sie **Rocket Loader** über die **Speed**\-App des Cloudflare Dashboards.
 -   Deaktivieren Sie **Mirage** über die **Speed**\-App des Cloudflare Dashboards.
 
+{{<Aside type="note">}}
+**Mirage** ist nur für Domains mit einem kostenpflichtigen
+Cloudflare-Plan verfügbar.
+{{</Aside>}}
+
 -   [Informieren Sie den Cloudflare-Support](https://support.cloudflare.com/hc/articles/200172476) über das Problem und ob es durch Deaktivierung von **Rocket Loader** oder **Mirage** gelöst wird.
 
 ___
 
 ## Verwandte Ressourcen
 
-[Welche Funktion hat Rocket Loader?](https://support.cloudflare.com/hc/articles/200168056)  
+[Welche Funktion hat Rocket Loader?](https://support.cloudflare.com/hc/articles/200168056)
 [Welche Funktion hat Mirage?](https://support.cloudflare.com/hc/articles/200403554)

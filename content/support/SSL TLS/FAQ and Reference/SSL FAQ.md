@@ -12,7 +12,7 @@ title: SSL FAQ
 
 Cloudflare certificates are prioritized by [](https://support.cloudflare.com/hc/articles/203295200)certificate type and also by most specific hostname.
 
-Exceptions to general prioritization occur based on hostname specificity.  Certificates that mention a specific hostname are preferred to wildcard certificates. For example, a Universal SSL certificate that explicitly mentions _www.example.com_ takes priority over a certificate that matches the _www_ hostname via a wildcard such as _\*.example.com._ 
+Exceptions to general prioritization occur based on hostname specificity.  Certificates that mention a specific hostname are preferred to wildcard certificates. For example, a Universal SSL certificate that explicitly mentions _www.example.com_ takes priority over a certificate that matches the _www_ hostname via a wildcard such as _\*.example.com._
 
 {{<Aside type="warning">}}
 When dealing with a child zone, a certificate uploaded whose subject or
@@ -21,7 +21,7 @@ being ONLY for the Apex hostname in the domain. Otherwise, the UI will
 include with the wildcard (\*) symbol as expect.
 {{</Aside>}}
 
-For more details on hostname priority, refer to our [developer documentation](https://developers.cloudflare.com/ssl/ssl-tls/certificate-and-hostname-priority).
+For more details on hostname priority, refer to our [developer documentation](/ssl/reference/certificate-and-hostname-priority/).
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 ## How long does it take for Cloudflare's SSL to activate?
 
-If Cloudflare is your [authoritative DNS provider](https://developers.cloudflare.com/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.  Alternatively, if you use [Cloudflare services via CNAME records](https://developers.cloudflare.com/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) at your authoritative DNS provider.  [Advanced SSL certificates](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager) also typically issue within 15 minutes.
+If Cloudflare is your [authoritative DNS provider](/dns/zone-setups/full-setup), Universal SSL certificates typically issue within 15 minutes of domain activation at Cloudflare and do not require further customer action after domain activation.  Alternatively, if you use [Cloudflare services via CNAME records](/dns/zone-setups/partial-setup) set at your authoritative DNS provider, provisioning your Universal SSL certificate requires manual addition of [DNS verification records](/ssl/edge-certificates/universal-ssl/enable-universal-ssl#non-authoritative-partial-domains) at your authoritative DNS provider.  [Advanced SSL certificates](/ssl/edge-certificates/advanced-certificate-manager) also typically issue within 15 minutes.
 
 If the Certificate Authority requires a manual review of brand, phishing, or TLD requirements, a Universal SSL certificate can take longer than 24 hours to issue.
 
@@ -43,12 +43,12 @@ ___
 
 ## What does SSL invalid brand check mean?
 
-Some domains are not eligible for the Universal SSL if they contain words that conflict with trademarked domains.  
+Some domains are not eligible for the Universal SSL if they contain words that conflict with trademarked domains.
 
 To resolve this issue, you can either:
 
--   [Upload your own certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/uploading) if the domain is on a Business or Enterprise plan, or
--   Purchase an [advanced certificate](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager)
+-   [Upload your own certificate](/ssl/edge-certificates/custom-certificates/uploading) if the domain is on a Business or Enterprise plan, or
+-   Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 ## How do I redirect all visitors to HTTPS/SSL?
 
-Refer to [Encrypt all visitor traffic](https://developers.cloudflare.com/ssl/edge-certificates/encrypt-visitor-traffic/).
+Refer to [Encrypt all visitor traffic](/ssl/edge-certificates/encrypt-visitor-traffic/).
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 ## I want Cloudflare to use an SSL certificate I've purchased elsewhere
 
-Domains on Business and Enterprise plans are allowed to upload a [Custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates).
+Domains on Business and Enterprise plans are allowed to upload a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates).
 
 ___
 
@@ -104,20 +104,20 @@ ___
 
 ## How can I serve an SSL certificate from Cloudflare's China data centers?
 
-Cloudflare [Universal SSL](https://developers.cloudflare.com/ssl/edge-certificates/universal-ssl) and [advanced](https://developers.cloudflare.com/ssl/edge-certificates/advanced-certificate-manager) certificates are not deployed in China.  If your domain is on an Enterprise plan and has been granted access to China data centers, Cloudflare's data centers in China only serve a SSL certificate for your domain under the following conditions:
+Cloudflare [Universal SSL](/ssl/edge-certificates/universal-ssl) and [advanced](/ssl/edge-certificates/advanced-certificate-manager) certificates are not deployed in China.  If your domain is on an Enterprise plan and has been granted access to China data centers, Cloudflare's data centers in China only serve a SSL certificate for your domain under the following conditions:
 
-1.  You have uploaded a [Custom SSL certificate](https://developers.cloudflare.com/ssl/edge-certificates/custom-certificates/uploading).
+1.  You have uploaded a [Custom SSL certificate](/ssl/edge-certificates/custom-certificates/uploading).
 2.  **Allow Private Keys in China (Custom Certificates)** is set to _On_ in the **Edge Certificates** tab of the Cloudflare **SSL/TLS** app.
 
 ___
 
 ## Does Cloudflare support TLS client authentication?
 
-TLS Client Authentication validates that a certificate presented by a client is signed by the company’s root Certificate Authority certificate.  By validating this certificate on each request, access can be limited to authorized client connections.  To enable TLS client authentication via Cloudflare, refer to our documentation on [Mutual TLS authentication](https://developers.cloudflare.com/access/service-auth/mtls/).
+TLS Client Authentication validates that a certificate presented by a client is signed by the company’s root Certificate Authority certificate.  By validating this certificate on each request, access can be limited to authorized client connections.  To enable TLS client authentication via Cloudflare, refer to our documentation on [Mutual TLS authentication](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/).
 
 ___
 
-## How do I enable Universal SSL with Github?
+## How do I enable Universal SSL with GitHub?
 
 Refer to the Cloudflare blog post about [using Cloudflare's Universal SSL with GitHub Pages](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).
 
@@ -125,7 +125,7 @@ ___
 
 ## How do I obtain an SSL certificate for customers on partial (CNAME) setup?
 
-For more details, refer to [Domain Control Validation](https://developers.cloudflare.com/ssl/edge-certificates/changing-dcv-method/methods/).
+For more details, refer to [Domain Control Validation](/ssl/edge-certificates/changing-dcv-method/methods/).
 
 ___
 
@@ -133,7 +133,7 @@ ___
 
 No. Multiple industry leaders — including [Digicert](https://www.digicert.com/blog/certificate-pinning-what-is-certificate-pinning) and [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning) — have discouraged certificate pinning because of security concerns.
 
-For a safer alternative, use [Certificate Transparency Monitoring](https://developers.cloudflare.com/ssl/edge-certificates/certificate-transparency-monitoring).
+For a safer alternative, use [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/).
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 To learn more about SSL, go to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/ssl/what-is-ssl/).
 
-For SSL terms and definitions, go to the [Cloudflare Glossary](https://developers.cloudflare.com/fundamentals/glossary).
+For SSL terms and definitions, go to the [Cloudflare Glossary](/fundamentals/glossary).
 
 ___
 

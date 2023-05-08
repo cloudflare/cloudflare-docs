@@ -16,7 +16,7 @@ You can perform the following operations in the **Transform Rules** page:
 - Delete rules.
 - Reorder rules.
 
-![The Transform Rules page in the Cloudflare dashboard](/rules/static/transform/transform-rules-tab.png)
+![The Transform Rules page in the Cloudflare dashboard](/images/rules/transform/transform-rules-tab.png)
 
 ## Create rules
 
@@ -32,7 +32,7 @@ Refer to each linked section for details on creating each rule type.
 
 Manage your existing Transform Rules using the toggle and the links located on the right of the rule you want to change, or by using the handle located on the left of the rule.
 
-![For each rule in the rules list, you can change its order, enable/disable the rule, edit the rule, or delete the rule.](/rules/static/transform/rule-operations.png)
+![For each rule in the rules list, you can change its order, enable/disable the rule, edit the rule, or delete the rule.](/images/rules/transform/rule-operations.png)
 
 ### Enable or disable a rule
 

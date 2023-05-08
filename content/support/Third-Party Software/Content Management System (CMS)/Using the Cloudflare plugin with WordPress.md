@@ -10,7 +10,7 @@ title: Using the Cloudflare plugin with WordPress
 
 ## Overview
 
-[WordPress](https://wordpress.com/) [](https://wordpress.com/)is a free and open-source content management system. Many WordPress sites use Cloudflare to increase site speed with our [free CDN](https://www.cloudflare.com/cdn) and protect site resources with our [security features](https://www.cloudflare.com/security/).
+[WordPress](https://wordpress.com/) is a free and open-source content management system. Many WordPress sites use Cloudflare to increase site speed with our [free CDN](https://www.cloudflare.com/cdn) and protect site resources with our [security features](https://www.cloudflare.com/security/).
 
 After [creating a Cloudflare account and adding a website](https://support.cloudflare.com/hc/en-us/articles/201720164-Step-2-Create-a-CloudFlare-account-and-add-a-website), using Cloudflare with WordPress requires installing the Cloudflare plugin and configuring security and performance settings.
 
@@ -22,7 +22,7 @@ ___
 The [Automatic Platform Optimization
 (APO)](https://www.cloudflare.com/automatic-platform-optimization/wordpress/)
 feature requires that you be on a [Full
-Setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/)
+Setup](/dns/zone-setups/full-setup/)
 using Cloudflare nameservers.
 {{</Aside>}}
 

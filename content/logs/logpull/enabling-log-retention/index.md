@@ -18,7 +18,7 @@ There are two endpoints for managing log retention:
 
 {{<Aside type="note" header="Note">}}
 
-To make a `POST` call, you must have a Cloudflare account role with `edit` permissions, such as Super Administrator, Administrator, or Log Share.
+To make a `POST` call, you must have zone-scoped `edit` permissions, such as Super Administrator, Administrator, or Log Share.
 
 {{</Aside>}}
 

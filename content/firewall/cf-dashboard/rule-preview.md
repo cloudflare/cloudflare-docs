@@ -27,13 +27,13 @@ Rule Preview is only available to customers on an Enterprise plan.
 1. Locate the desired rule in the rules list and select **Edit** (wrench icon).
 2. Select **Test rule** to trigger the test.
 
-![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/firewall/static/firewall-rules-preview-1.png)
+![The Test Rule button next to the Action drop-down list allows you to check the traffic that would be affected by the current firewall rule](/images/firewall/firewall-rules-preview-1.png)
 
 The results of the test are displayed in a plot that simulates how many of the total requests in the last 72 hours would have matched the tested expression.
 
 In this screenshot, a rule that matches all User-Agents that contain the string `Mozilla` would block about 8% of requests to the zone:
 
-![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/firewall/static/cf-firewall-rules-preview-rule-plot-chart.png)
+![Example chart of a rule preview operation, stating that about 8% of the zone requests would be blocked by the current rule](/images/firewall/cf-firewall-rules-preview-rule-plot-chart.png)
 
 ## Important notes
 

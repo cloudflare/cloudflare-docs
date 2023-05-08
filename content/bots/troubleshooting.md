@@ -7,29 +7,21 @@ weight: 11
 
 # Frequently Asked Questions
 
-## Overview
-
-Cloudflare’s bot solutions identify and mitigate automated traffic to protect your domain from bad bots.
-
-For more information about these bot solutions and how to set them up, refer to the [developer documentation](/bots/).
-
-___
-
 ## How does Cloudflare detect bots?
 
-Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Cloudflare bot products](/bots/plans).
+Cloudflare uses multiple methods to detect bots, but these vary by plan. For more details, refer to [Plans](/bots/plans).
 
 ___
 
 ## How do I know what's included in my plan?
 
-To know what's included in your plan, refer to our [developer documentation](/bots/plans).
+To know what's included in your plan, refer to our [Plans](/bots/plans).
 
 ___
 
 ## How do I set up my bot product?
 
-To learn how to set up your bot product, refer to our [developer documentation](/bots/get-started).
+To learn how to set up your bot product, refer to [Get started](/bots/get-started).
 
 ___
 
@@ -40,7 +32,7 @@ Yandex updates their bots very frequently, you may see more false positives whil
 **Workarounds:**
 
 -   Disable the WAF managed rule with id 100203 temporarily,
--   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [developer documentation](/firewall/cf-firewall-rules/actions).
+-   or create a firewall rule with the _Bypass_ action to bypass WAF managed rules when a request is coming from the **Yandex IP** and the user-agent contains **Yandex.** Refer to our [Firewall actions](/firewall/cf-firewall-rules/actions).
 
 **Solution:**
 
@@ -52,7 +44,7 @@ ___
 
 Supervised machine learning takes certain variables (X) like gender and age and predicts another variable (Y) like income.
 
-In Bot Management and Super Bot Fight Mode, the X variables are request features, while the Y variable represents the probability of solving a Captcha based on X values.
+In Bot Management and Super Bot Fight Mode, the X variables are request features, while the Y variable represents the probability of solving a challenge based on X values.
 
 Cloudflare uses data from millions of requests and re-train the system on a periodic basis. You can learn about this data from your own request logs such as Cloudflare Logpull and Logpush as well as the Firewall API.
 
@@ -113,7 +105,7 @@ Please follow instructions in the following questions on how to disable BFM and 
 
 -   RayIDs
 -   IP addresses
--   Firewall Rule IDs, rule expression, CAPTCHA solve rates
+-   Firewall Rule IDs, rule expression, Challenge solve rates
 -   Common user-agents among false positives
 -   Common ASNs among false positives
 -   Screenshots of strange activity from the firewall, such as a huge spike in challenged traffic on the graph
@@ -135,13 +127,15 @@ ___
 
 {{</Aside>}}
 
-**How to disable BFM****/SBFM feature?**
+**How to disable BFM/SBFM feature?**
 
 If you encounter any issues with BFM/SBFM feature (e.g. false positive), you can disable it under **Security** > **Bots**.
 
 -   For **Free** plans, toggle the **Bot Fight Mode** option to **Off**
 -   For **Pro** plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
 -   For **Business** and **Enterprise** (with no Bot Management add-on) plans, click the **Configure Super Bot Fight Mode** link and set each of **Definitely automated**, **Likely automated** and **Verified bots** features to **Allow**, and toggle the **Static resource protection** and **JavaScript Detections** options to **Off**
+
+{{<render file="_flexible-sbfm.md">}}
 
 ___
 
@@ -169,4 +163,4 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/zones/zone_id/rulesets/rule
     -H "Content-Type: application/json"
 ```
 
-Note that you need to replace <key> with your own API key, which can be obtained from [API tokens](https://dash.cloudflare.com/profile/api-tokens).
+Note that you need to replace <key> with your own [API key](/fundamentals/api/get-started/keys/).

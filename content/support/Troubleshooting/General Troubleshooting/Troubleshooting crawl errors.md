@@ -14,6 +14,13 @@ Cloudflare allows search engine crawlers and bots. If you observe crawl issues o
 
 ___
 
+## Disable Anti-bot modules
+
+Search engine crawlers' requests, when proxied through Cloudflare, can blocked by anti-bot modules installed on your origin server. Try disabling any anti-bot modules to prevent your origin from blocking these requests.
+
+
+___
+
 ## Adjust Google and Bing crawl rates
 
 To optimize CDN performance, Google and Bing assign special crawl rates to websites that use CDN services in order. Special crawl rates do not negatively affect Search Engine Optimization (SEO) and Search Engine Results Pages (SERPs). To change your crawl rates for Bing and Google, follow the guides below:
@@ -35,7 +42,7 @@ Review the following recommendations to prevent crawler errors:
     -   [Monitor.Us](http://www.monitor.us/)
     -   [Updown](https://updown.io/)
 
--   Do not block Google crawler IP addresses via **firewall rules** or **IP Access Rules** within the **Security** app. If you are using [rate limiting rules](https://developers.cloudflare.com/waf/rate-limiting-rules/) (new version), make sure they do not apply to the Google crawler.
+-   Do not block Google crawler IP addresses via **firewall rules** or **IP Access Rules** within the **Security** app. If you are using [rate limiting rules](/waf/rate-limiting-rules/) (new version), make sure they do not apply to the Google crawler.
 
 Confirm an IP address belongs to Google by consulting Google’s documentation on [verifying googlebot IP addresses](https://support.google.com/webmasters/bin/answer.py?answer=80553).
 

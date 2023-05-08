@@ -14,7 +14,7 @@ title: 4xx Client Error
 
 -   4xx codes can be used as a response to any request method.
 -   Origin server should include an explanation which should be displayed by User-Agent, with the exception of a `HEAD` request
--   [Custom rules](https://developers.cloudflare.com/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with _Block_ action and configured a custom response code. Refer to custom response](https://developers.cloudflare.com/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for more details.
+-   [Custom rules](/waf/custom-rules/) can return any response code in the range 400-499 in your HTML page, if the site owner has created a rule with _Block_ action and configured a custom response code. Refer to custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for more details.
 
 The following are common 4xx codes and their definitions:
 
@@ -108,7 +108,7 @@ Server denies the request because the resource failed to meet the conditions spe
 
 For an example of version control, a client is modifying an existing resource and thus sets the `If-Unmodified-Since` header to match the date that the client downloaded the resource and began edits. If the resource was edited (likely by another client) after this date and before the upload of the edits, this response will be generated since the date of the last edit will come after the date set in `If-Unmodified-Since` by the client.
 
-Cloudflare will serve this response. For more information, refer to: [ETag Headers](https://support.cloudflare.com/hc/en-us/articles/218505467)
+Cloudflare will serve this response. For more information, refer to: [ETag Headers](/cache/reference/etag-headers/)
 
 ### **413 Payload Too Large  (**[**RFC7231**](https://tools.ietf.org/html/rfc7231)**)**
 

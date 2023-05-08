@@ -1,6 +1,6 @@
 ---
 title: Cisco SD-WAN
-pcx_content_type: tutorial
+pcx_content_type: integration-guide
 weight: 2
 ---
 
@@ -101,6 +101,6 @@ A matching blocked log line is visible from the Cloudflare logs.
 
 ## Add new tunnels using IPsec
 
-IPSec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/tutorials/cisco-ios-xe/) for more information. 
+IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE](/magic-wan/tutorials/cisco-ios-xe/) for more information. 
 
 **Coming soon: IPsec tunnel creation in SD-WAN mode.**
