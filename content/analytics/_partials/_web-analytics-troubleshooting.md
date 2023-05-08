@@ -5,7 +5,7 @@ _build:
   list: never
 ---
 
-For Cloudflare to automatically add the JavaScript snippet, your pages needs to generate a valid HTML page and contain opening and closing `<body>` tags.
+For Cloudflare to automatically add the JavaScript snippet, your pages need to have valid HTML.
 
 For example, Cloudflare would not be able to enable Web Analytics on a page like this:
 
@@ -16,7 +16,7 @@ header: index.html
 Hello world.
 ```
 
-Your HTML needs more structure for Web Analytics to correctly insert the JavaScript snippet, such as:
+For Web Analytics to correctly insert the JavaScript snippet, you would need valid HTML output, such as:
 
 ```html
 ---
