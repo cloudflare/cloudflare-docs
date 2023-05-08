@@ -9,13 +9,7 @@ Web analytics let you measure user behavior - pageviews, sessions, and custom ev
 
 Cloudflare offers two ways to improve the privacy and performance of the way you gather these analytics.
 
-## Optimize third-party tools
-
-If you already use third-party tools on your website, check out [Cloudflare Zaraz](/zaraz/).
-
-{{<render file="_zaraz-definition.md" productFolder="zaraz">}}
-
-## Replace third-party tools
+## Cloudflare Web Analytics
 
 If you want analytics without using third-party tools, check out [Cloudflare Web Analytics](/analytics/web-analytics/).
 
@@ -39,3 +33,11 @@ Once you have enabled Web Analytics, you can review analytics at any time:
 ### Notifications
 
 {{<render file="_web-analytics-notifications.md" productFolder="analytics">}}
+
+---
+
+## Cloudflare Zaraz
+
+If you already use third-party tools on your website, check out [Cloudflare Zaraz](/zaraz/).
+
+{{<render file="_zaraz-definition.md" productFolder="zaraz">}}
