@@ -1,8 +1,10 @@
 ---
+title: Guide
 pcx_content_type: get-started
-title: Get started
+weight: 1
 layout: single
-weight: 2
+meta:
+  title: Get started guide
 ---
 
 # Get started
@@ -110,7 +112,7 @@ When your project has finished deploying, you will receive a unique URL to view 
 
 {{<Aside type="warning" header="DNS errors">}}
 
-If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error. 
+If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error.
 
 {{</Aside>}}
 
