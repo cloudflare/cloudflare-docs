@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Google Workspace
+rss: file
 ---
 
 # Google Workspace

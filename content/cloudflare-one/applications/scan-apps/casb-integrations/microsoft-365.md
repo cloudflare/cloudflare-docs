@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Microsoft 365
+rss: file
 ---
 
 # Microsoft 365
