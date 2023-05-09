@@ -7,7 +7,7 @@ meta:
 
 # Run `traceroute`
 
-If you have a Magic WAN client connected through [GRE, IPsec](/magic-wan/get-started/configure-tunnels/), [CNI](/network-interconnect/) or [WARP](/magic-wan/tutorials/warp/) and want to perform a `traceroute` to an endpoint behind a [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), there are a couple of settings you need to have in mind for the command to return useful information.
+If you have a Magic WAN client connected through [GRE, IPsec](/magic-wan/get-started/configure-tunnels/), [CNI](/network-interconnect/) or [WARP](/magic-wan/tutorials/warp/) and want to perform a `traceroute` to an endpoint behind a [Cloudflare Tunnel](/cloudflare-one/connections/connect-apps/), the following settings must be applied for the command to return useful information.
 
 ## Inherited TTL value
 
