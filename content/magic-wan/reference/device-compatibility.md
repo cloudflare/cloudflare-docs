@@ -16,7 +16,8 @@ Appliance                                                     | GRE tunnel      
 Cisco Meraki                                                  | Compatibility on roadmap   | Compatibility on roadmap
 Cisco ASA                                                     | Compatibility on roadmap   | Specifications compatible*
 [Fortinet](/magic-wan/tutorials/fortinet/)                    | Specifications compatible* | Specifications compatible*
-[pfSense](/magic-wan/tutorials/pfsense/)                       | ✅                         | ✅
+PAN-OS                                                        | ✅                         | ✅
+[pfSense](/magic-wan/tutorials/pfsense/)                      | ✅                         | ✅
 Prisma SD-WAN (Palo Alto)                                     | Specifications compatible* | Specifications compatible*
 Riverbed                                                      | Specifications compatible* | Specifications compatible*
 [Sophos Firewall](/magic-wan/tutorials/sophos-firewall/)      | ✅                         | ✅
