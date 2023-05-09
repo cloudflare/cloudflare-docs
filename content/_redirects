@@ -419,6 +419,7 @@
 /magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
 /magic-wan/about/tunnels-and-encapsulation/ /magic-wan/reference/tunnels/ 301
 /magic-wan/how-to/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
+/magic-wan/reference/ipsec/#ipsec-tunnels /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/reference/health-checks/ /magic-wan/reference/probe-construction/ 301
 
 # pages
