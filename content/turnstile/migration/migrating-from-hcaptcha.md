@@ -9,7 +9,7 @@ layout: single
 
 Customers using hCaptcha today can switch seamlessly to Cloudflare Turnstile. Follow the step-by-step guide below to assist with the upgrade process.
 
-To complete the migration, you must obtain the [sitekey and secret key](turnstile/get-started/#get-a-sitekey-and-secret-key).
+To complete the migration, you must obtain the [sitekey and secret key](/turnstile/get-started/#get-a-sitekey-and-secret-key).
 
 ## Client-side integration
 
