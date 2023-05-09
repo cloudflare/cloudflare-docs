@@ -117,8 +117,9 @@ The Okta IdP supports user and group synchronization with [SCIM](/cloudflare-one
 
 ### Generic IdP
 
-If your IdP is not listed above, here is how you can determine which Gateway selector to use:
+If your IdP is not listed above and setup as a SAML provider, use the SAML Attribute:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Access Groups**.
-2. Select **Add a Group**.
-3. In the **Include** dropdown, select your IdP group. A text field will appear and prompt for either group names, group IDs, or SAML attributes. You can use this field as the **Selector** when creating a [Gateway firewall policy](/cloudflare-one/policies/filtering/initial-setup/).
+| Selector        | Attribute name | Attribute value |
+| --------------- | -------------- | --------------- |
+| SAML Attributes | `name`         | `Marketing`     |
+
