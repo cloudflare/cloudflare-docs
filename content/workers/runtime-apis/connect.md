@@ -118,6 +118,31 @@ const socket = connect(address, { secureTransport: "starttls" });
 const secureSocket = socket.startTls();
 ```
 
+## Error handling
+
+- TODO - show what happens when the server closes the connection, and how to handle it gracefully.
+
+```typescript
+import { connect } from "cloudflare:sockets"
+
+const connectionUrl = "<URL>";
+
+export default {
+  async fetch(req, env) {
+
+    try {
+      const socket = connect(connectionUrl);
+
+      //...
+
+      return new Response(socket.readable, { headers: { "Content-Type": "text/plain" } });
+    } catch (error) {
+      return new Response("Socket connection failed: " + error, { status: 500 });
+    }
+  }
+};
+```
+
 Note the following:
 
 - `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
