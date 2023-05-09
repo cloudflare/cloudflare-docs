@@ -19,7 +19,7 @@ There are four major concepts to understand with Queues:
 
 A queue is a buffer or list that automatically scales as messages are written to it, and allows a consumer Worker to pull messages from that same queue.
 
-Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumer) has successfully consumed the message.
+Queues are designed to be reliable, and messages written to a queue should never be lost once the write succeeds. Similarly, messages are not deleted from a queue until the [consumer](#consumers) has successfully consumed the message.
 
 Developers can create multiple queues. Creating multiple queues can be useful to:
 
