@@ -23,7 +23,7 @@ Review definitions for Cloudflare Zero Trust terms.
 
 ## Cloudflare CASB
 
-[Cloudflare CASB](https://www.cloudflare.com/products/zero-trust/casb/) provides comprehensive visibility and control over SaaS apps so you can easily prevent data leaks and compliance violations. With Cloudflare CASB, you can block insider threats, Shadow IT, risky data sharing, and bad actors.
+[Cloudflare CASB](https://www.cloudflare.com/products/zero-trust/casb/) provides comprehensive visibility and control over SaaS apps so you can easily prevent data leaks and compliance violations. With Cloudflare CASB, you can detect insider threats, Shadow IT, risky data sharing, and bad actors.
 
 ## Cloudflare Tunnel
 
