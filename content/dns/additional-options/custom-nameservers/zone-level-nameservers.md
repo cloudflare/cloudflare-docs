@@ -6,9 +6,9 @@ weight: 3
 
 # Zone-level nameservers
 
-With zone-level custom nameservers, each custom hostname must be a subdomain of the zone where the custom nameservers are configured.
+With zone-level custom nameservers, each custom nameserver name must be a subdomain of the zone where the custom nameservers are configured.
 
-For example, for a zone `domain.test`, the custom nameservers can be `ns1.domain.test` and `ns2.domain.test` but they cannot use a different TLD such as `ns1.domain.org`.
+For example, for a zone `domain.test`, the custom nameservers can be `ns1.domain.test` and `ns2.domain.test` but they cannot use a different TLD (`ns1.domain.org`) nor a different domain (`ns1.example.com`).
 
 ## Create zone-level nameservers
 
@@ -18,7 +18,7 @@ To add custom nameservers to a specific zone:
 
 1.  Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2.  Go to **DNS** > **Records**.
-3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the nameserver hostnames (like ns1, ns2, ns3).
+3.  On **Custom Nameservers**, click **Add Custom Nameservers** and enter the subdomains used for the nameserver hostnames (for example, `ns1`, `ns2`, `ns3`).
 4.  Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records (visible after you refresh the page).
 5.  The next step depends on whether you are using [Cloudflare Registrar](/registrar/) for your domain:
     - If you are using Cloudflare Registrar for your domain, no further action is required. Glue records will be added automatically on your behalf.
