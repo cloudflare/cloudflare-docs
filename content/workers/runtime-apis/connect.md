@@ -122,3 +122,7 @@ Note the following:
 
 - `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
 - Once `startTls()` is called, the initial socket is closed and no longer usable. In the example above, one would would use the newly created `secureSocket`.
+
+### Considerations
+
+- TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
