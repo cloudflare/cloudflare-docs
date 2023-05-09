@@ -16,7 +16,7 @@ When using [subdomain support](/dns/zone-setups/subdomain-setup/), a parent and 
 
 ## Configuration scope
 
-{{<directory-listing showDescriptions=true >}}
+{{<directory-listing showDescriptions=true char_limit=300 >}}
 
 ## Availability
 
