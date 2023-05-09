@@ -143,6 +143,34 @@ export default {
 };
 ```
 
+### Closing TCP connections
+
+You can close a TCP connection by calling `close()` on the socket. By default, unless the `allowHalfOpen` is explicitly set to `true`, this will close both the readable and writeable sides of the socket
+
+```typescript
+import { connect } from "cloudflare:sockets"
+
+const socket = connect("my-url.com:70");
+const reader = socket.readable.getReader();
+socket.close();
+
+// After close() is called, you can no longer read from the readable side of the socket
+const reader = socket.readable.getReader(); // This fails
+```
+
+If you need to create a socket that is compatible with existing code that assumes the pattern from Node.js, where the readable side of a socket remains open after `socket.end()` is called, you can set the `allowHalfOpen` option when creating a socket.
+
+```typescript
+import { connect } from "cloudflare:sockets"
+
+const socket = connect("my-url.com:70", { allowHalfOpen: true });
+const reader = socket.readable.getReader();
+socket.close();
+
+// After close() is called, you can continue to read from the readable side of the socket
+const reader = socket.readable.getReader(); // This works
+```
+
 Note the following:
 
 - `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
