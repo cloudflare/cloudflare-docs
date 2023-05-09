@@ -46,7 +46,7 @@ If you are **not** using [Cloudflare Registrar](/registrar/) for the zone that p
 
     1.  Use a [PUT command](/api/operations/account-level-custom-nameservers-usage-for-a-zone-set-account-custom-nameserver-related-zone-metadata) on each zone. Cloudflare will assign an IPv4 and IPv6 address to each custom nameserver hostname and automatically create the associated `A` or `AAAA` records.
     {{<render file="_ns-set-omission-callout.md">}}
-    2.  Update the name servers at the registrar to use the custom nameserver names.
+    2.  Update the nameservers at the registrar to use the custom nameserver names.
 
 To make this custom nameserver the default for all new zones added to your account from now on, use a [PUT command](/api/operations/accounts-update-account) on an account and set the value of `use_account_custom_ns_by_default` to `true`.
 
