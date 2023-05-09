@@ -44,18 +44,18 @@ Identify files and folders that have been shared in a potentially insecure fashi
 
 | Finding                                                               | Severity |
 | --------------------------------------------------------------------- | -------- |
-| Dropbox folder shared company-wide                                    | Medium   |
-| Dropbox folder member policy set to 'Can share folders with Anyone'   | Medium   |
-| Dropbox folder join policy set to 'Can join folders shared by Anyone' | Medium   |
-| Dropbox group creation policy set to 'Admins and Members'             | Medium   |
-| Dropbox shared folder policy set to default 'Anyone'                  | Medium   |
-| Dropbox shared link create policy set to default 'Public'             | High     |
-| Dropbox shared link create policy set to default 'Team-wide'          | Low      |
-| Dropbox folder publicly accessible                                    | High     |
-| Dropbox file publicly accessible with view access                     | High     |
 | Dropbox file publicly accessible with edit access                     | Critical |
 | Dropbox file shared team-wide with edit access                        | High     |
+| Dropbox file publicly accessible with view access                     | High     |
+| Dropbox folder publicly accessible                                    | High     |
+| Dropbox shared link create policy set to default 'Public'             | High     |
 | Dropbox file shared team-wide with view access                        | Medium   |
+| Dropbox shared folder policy set to default 'Anyone'                  | Medium   |
+| Dropbox group creation policy set to 'Admins and Members'             | Medium   |
+| Dropbox folder join policy set to 'Can join folders shared by Anyone' | Medium   |
+| Dropbox folder member policy set to 'Can share folders with Anyone'   | Medium   |
+| Dropbox folder shared company-wide                                    | Medium   |
+| Dropbox shared link create policy set to default 'Team-wide'          | Low      |
 
 ### Suspicious applications
 
@@ -71,9 +71,9 @@ Flag user access issues, including users misusing accounts or not following best
 
 | Finding                                                             | Severity |
 | ------------------------------------------------------------------- | -------- |
-| Dropbox user with secondary email configured                        | Low      |
-| Suspended Dropbox user                                              | Low      |
-| Invited Dropbox user                                                | Low      |
-| Dropbox user with unverified email                                  | Medium   |
-| Dropbox user with admin permissions and restricted directory access | Medium   |
 | Dropbox user with admin permissions and unverified secondary email  | Medium   |
+| Dropbox user with admin permissions and restricted directory access | Medium   |
+| Dropbox user with unverified email                                  | Medium   |
+| Invited Dropbox user                                                | Low      |
+| Suspended Dropbox user                                              | Low      |
+| Dropbox user with secondary email configured                        | Low      |
