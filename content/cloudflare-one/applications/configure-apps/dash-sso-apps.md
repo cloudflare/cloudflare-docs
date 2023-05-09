@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Cloudflare dashboard SSO application
-weight: 4
+weight: 3
 ---
 
 # Set up Cloudflare dashboard SSO
