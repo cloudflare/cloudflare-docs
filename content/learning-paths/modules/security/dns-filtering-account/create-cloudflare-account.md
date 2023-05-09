@@ -1,5 +1,5 @@
 ---
-title: Create your first policy
+title: Create a Cloudflare account
 pcx_content_type: learning-unit
 weight: 2
 layout: learning-unit

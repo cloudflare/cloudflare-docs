@@ -1,6 +1,6 @@
 ---
-title: Create your first policy
+title: Test policy without an agent
 pcx_content_type: learning-unit
-weight: 2
+weight: 3
 layout: learning-unit
 ---

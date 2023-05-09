@@ -6,6 +6,10 @@
         },
         {
             "folder": "security",
+            "uid": "dns-filtering-account"
+        },
+        {
+            "folder": "security",
             "uid": "dns-filtering-test-policy"
         }
     ],
