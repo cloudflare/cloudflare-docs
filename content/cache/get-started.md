@@ -63,4 +63,4 @@ Resolve common caching concerns.
 
 - [Learn about Cloudflare's cache response statuses](/cache/about/default-cache-behavior/#cloudflare-cache-responses)
 - [Investigate Cloudflare's cache response with cURL](https://support.cloudflare.com/hc/articles/203118044#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4)
-- [Diagnose Always Online issues](/cache/best-practices/always-online/)
+- [Diagnose Always Online issues](/cache/troubleshooting/always-online/)
