@@ -8,27 +8,16 @@ weight: 2
 
 With custom (or vanity) nameservers, a domain can use Cloudflare DNS without using the hostnames of Cloudflare-assigned nameservers. For instance, you can configure `ns1.example.com` and `ns2.example.com` as nameservers for `example.com`.
 
-{{<Aside type="note">}}
-
-When using [subdomain support](/dns/zone-setups/subdomain-setup/), a parent and child zone cannot share the same nameserver names.
-
-{{</Aside>}}
-
 ## Configuration scope
 
 {{<directory-listing showDescriptions=true char_limit=300 >}}
 
 ## Availability
 
-Cloudflare domains on Business or Enterprise plans can set Custom Nameservers at Cloudflare:
-
-- Enterprise plans:
-  - Create account-level nameservers via the [API](/api/operations/account-level-custom-nameservers-list-account-custom-nameservers)
-  - Create zone-level nameservers via the dashboard or [API](/api/operations/zone-edit-zone)
-- Business plans:
-  - Create account-level nameservers via the [API](/api/operations/account-level-custom-nameservers-add-account-custom-nameserver) (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476))
-  - Create zone-level nameservers via the dashboard or [API](/api/operations/zone-edit-zone)
+- Zone-level custom nameservers are available for zones on Business or Enterprise plans. Via API or on the Dashboard.
+- Account-level custom  nameservers are available for zones on Business (after [contacting Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476)) or Enterprise plans. Via API only.
+- Tenant-level custom nameservers, if created by the tenant owner, will be available to any account that is part of the tenant. Via API only.
 
 ## Restrictions
 
-For both account-level and zone-level custom nameservers, you have to configure at least two custom nameservers and no more than five.
+For all levels of custom nameservers, you have to configure at least two and no more than five custom nameserver names per nameserver set.
