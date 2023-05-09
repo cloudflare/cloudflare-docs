@@ -141,6 +141,8 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 {{</Aside>}}
 
+After completing these steps, you will have a basic Rust-based Worker deployed. From here, you can add crate
+dependencies and write code in Rust to implement your Worker application. If you would like to know more about the inner workings of how Rust compiled to Wasm is supported by Workers, the next section outlines the libraries and tools involved.
 
 ## How this deployment works
 
