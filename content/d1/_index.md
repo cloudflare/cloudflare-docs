@@ -19,7 +19,7 @@ Create a new SQLite database.
 
 Built on SQLite, D1 is Cloudflare’s first [queryable relational database](https://blog.cloudflare.com/introducing-d1/). Create a database by [importing data](/d1/learning/importing-data/) or [defining your tables](/d1/get-started/#5-run-a-query-against-your-d1-database) and [write queries within a Worker](/d1/get-started/#write-queries-within-your-worker).
 
-With D1, you can interact with and push changes to your database directly through Wrangler, create and modify your database directly from the Cloudflare dashboard, store backups of your database in R2 and export your backups to download to your local machine.
+With D1, you can [interact with and push changes to your database directly through Wrangler](/d1/get-started/#1-install-and-authenticate-wrangler), create and modify your database directly from the Cloudflare dashboard, store backups of your database in R2 and [export your backups to download to your local machine](/d1/learning/backups/).
 
 {{<Aside type="warning" header="Public Alpha">}}
 
