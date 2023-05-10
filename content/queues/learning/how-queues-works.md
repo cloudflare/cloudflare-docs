@@ -58,6 +58,8 @@ Additionally, multiple queues can be bound to a single Worker. That single Worke
 
 ## Consumers
 
+### Create a consumer
+
 A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
 
 ```ts
@@ -117,6 +119,9 @@ export default {
   },
 };
 ```
+### Remove a consumer
+
+To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in `wrangler.toml` file.
 
 ## Messages
 
