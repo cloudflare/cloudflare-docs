@@ -10,7 +10,7 @@ The following limitations apply to different protocols supported by Spectrum.
 
 ## UDP
 
-At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge. 
+At the moment, Cloudflare does not support packet fragmentation for UDP packets. If packets are fragmented, they will be dropped at Cloudflare’s edge.
 
 ## Minecraft
 
