@@ -58,7 +58,7 @@ Additionally, multiple queues can be bound to a single Worker. That single Worke
 
 ## Consumers
 
-### Creating a consumer
+### Create a consumer
 
 A consumer is the term for a client that is subscribing to or _consuming_ messages from a queue. In its most basic form, a consumer is defined by creating a `queue` handler in a Worker:
 
