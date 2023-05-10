@@ -7,7 +7,9 @@
 {{- $moduleObjectives := index $moduleData "abstract" -}}
 {{- $modulePrereqs := index $moduleData "prereqs" -}}
 
-{{- $moduleSummary | .Page.RenderString -}}
+<div id="presentationMode">
+<p>{{- $moduleSummary | .Page.RenderString -}}</p>
+</div>
 
 <h2>Objectives</h2>
 <div class="learningSummary">

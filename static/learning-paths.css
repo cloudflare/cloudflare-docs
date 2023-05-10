@@ -305,3 +305,31 @@ label {
     color: var(--orange);
     fill: var(--orange)
 }
+
+.PresentationMode {
+    --docs-sidebar-width: 10rem;
+    --docs-header-height: .5rem;
+}
+
+.PresentationMode h1 {
+    font-size: 3.5em !important;
+}
+
+.PresentationMode #presentationMode {
+    width: 98%;
+    font-size: 1.4em;
+    margin: 1.5em auto
+}
+
+.PresentationMode .mermaid {
+    width: 100%;
+    margin: 1em
+}
+
+.PresentationMode .mermaid svg {
+    max-width: 600px !important;
+}
+
+.PresentationMode .progressIndicator {
+    margin: 1em auto;
+}

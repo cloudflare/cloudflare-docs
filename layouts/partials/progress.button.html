@@ -21,9 +21,11 @@
 {{- if eq $layout "learning-module" -}}
     {{- $placeholder := index (index $moduleData "units") 0  -}}
     {{- $nextUnit := $placeholder.RelPermalink -}}
+    <div class="progressIndicator">
     <a href="{{$nextUnit}}" class="learningNavigation  Button Button-is-docs-primary">
         <span class="DocsMarkdown--link-content">Start module</span>
     </a>
+    </div>
 {{- else -}}
     {{- range $index, $item := (index $moduleData "units") -}}
         {{- if eq $currentLocation $item.RelPermalink -}}

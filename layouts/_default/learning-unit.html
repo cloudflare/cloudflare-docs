@@ -1,4 +1,9 @@
 {{ define "main" }}
+<noscript>
+  <p>
+    JavaScript is disabled in your browser. You must enable it in order to use our learning paths.
+  </p>
+</noscript>
   <div class="DocsPage" id="DocsPage" style="visibility: hidden;">
     {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
@@ -9,7 +14,7 @@
       {{- partial "topbar.tools" . -}}
     </div>
 
-    <main class="DocsBody">
+    <main class="DocsBody" id="DocsBody">
       {{ partial "sidebar.toc" . }}
 
       <div id="docs-content" data-reach-skip-nav-content></div>

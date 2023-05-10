@@ -1,5 +1,10 @@
 {{ define "main" }}
-  <div class="DocsPage">
+<noscript>
+  <p>
+    JavaScript is disabled in your browser. You must enable it in order to use our learning paths.
+  </p>
+</noscript>
+  <div class="DocsPage" id="DocsPage" style="visibility: hidden;">
     {{- partial "skipcontent" . -}}
     {{- partial "topbar.mobile" . -}}
     {{- partial "learning.module.sidebar.nav" . -}}
@@ -9,7 +14,7 @@
       {{- partial "topbar.tools" . -}}
     </div>
 
-    <main class="DocsBody">
+    <main class="DocsBody" id="DocsBody">
 
       <div id="docs-content" data-reach-skip-nav-content></div>
       {{- partial "learning.path.breadcrumbs" . -}}
