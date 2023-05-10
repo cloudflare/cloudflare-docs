@@ -186,7 +186,7 @@
     },
     "cache_analytics": {
       "title": "Cache analytics",
-      "link": "/cache/about/cache-analytics/",
+      "link": "/cache/performance-review/cache-analytics/",
       "properties": {
         "availability": {
           "title": "Availability",

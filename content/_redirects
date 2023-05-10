@@ -175,6 +175,8 @@
 /cache/best-practices/activate-polish/ /images/polish/ 301
 /cache/best-practices/always-online/ /cache/troubleshooting/always-online/ 301
 /cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/cache/best-practices/cache-performance/ /cache/performance-review/cache-performance/ 301
+/cache/about/cache-analytics/ /cache/performance-review/cache-analytics/ 301
 /support/caching/ /cache/troubleshooting/ 301
 /support/caching/configuration/ /cache/how-to/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
