@@ -62,11 +62,11 @@ layout: list
       <td>
         <p>Adds HTTP request headers with location information for the visitor's IP address. The added headers are:</p>
         <ul>
-          <li><code>cf-ipcity</code>: The visitor's city (value from the <code>ip.src.city</code> field).</li>
-          <li><code>cf-ipcountry</code>: The visitor's country (value from the <code>ip.src.country</code> field).</li>
-          <li><code>cf-ipcontinent</code>: The visitor's continent (value from the <code>ip.geoip.continent</code> field).</li>
-          <li><code>cf-iplongitude</code>: The visitor's longitude (value from the <code>ip.src.lon</code> field).</li>
-          <li><code>cf-iplatitude</code>: The visitor's latitude (value from the <code>ip.src.lat</code> field).</li>
+          <li><code>cf-ipcity</code>: The visitor's city (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-city"><code>ip.src.city</code></a> field).</li>
+          <li><code>cf-ipcountry</code>: The visitor's country (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-country"><code>ip.src.country</code></a> field).</li>
+          <li><code>cf-ipcontinent</code>: The visitor's continent (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-geoip-continent"><code>ip.geoip.continent</code></a> field).</li>
+          <li><code>cf-iplongitude</code>: The visitor's longitude (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-lon"><code>ip.src.lon</code></a> field).</li>
+          <li><code>cf-iplatitude</code>: The visitor's latitude (value from the <a href="/ruleset-engine/rules-language/fields/#field-ip-src-lat"><code>ip.src.lat</code></a> field).</li>
         </ul>
       </td>
     </tr>
