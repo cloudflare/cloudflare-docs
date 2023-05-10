@@ -17,15 +17,17 @@ Create new serverless SQL databases to query from your Workers and Pages project
 
 {{</description>}}
 
-Built on SQLite, D1 is Cloudflare’s first [queryable relational database](https://blog.cloudflare.com/introducing-d1/). Create a database by [importing data](/d1/learning/importing-data/) or [defining your tables](/d1/get-started/#5-run-a-query-against-your-d1-database). [Write queries within a Worker](/d1/get-started/#write-queries-within-your-worker) or [Pages project](/pages/platform/functions/bindings/#d1-databases).
+{{<plan type="all">}}
+
+Built on SQLite, D1 is Cloudflare’s first queryable relational database. Create a database by [importing data](/d1/learning/importing-data/) or [defining your tables](/d1/get-started/#5-run-a-query-against-your-d1-database). [Write queries within a Worker](/d1/get-started/#write-queries-within-your-worker) or [Pages project](/pages/platform/functions/bindings/#d1-databases).
 
 With D1, you can [interact with and push changes to your database directly through Wrangler](/d1/get-started/#1-install-and-authenticate-wrangler), create and modify your database directly from the Cloudflare dashboard, store backups of your database in R2 and [export your backups to download to your local machine](/d1/learning/backups/).
 
-{{<Aside type="warning" header="Public Alpha">}}
+{{<Aside type="warning" header="Open Alpha">}}
 
-While in the Alpha period, there is a possibility of breaking changes. The Alpha is meant for testing purposes and using it for Production traffic is not recommended.
+While in the [Open Alpha](https://blog.cloudflare.com/d1-open-alpha/) period, there is a possibility of breaking changes. The Alpha is meant for testing purposes and using it for production traffic is not recommended.
 
-With D1 currently in Alpha, go full-stack and build applications like eCommerce sites, accounting software, SaaS solutions, and CRMs.
+With D1 currently in Alpha, go full-stack and build applications like e-commerce sites, accounting software, SaaS solutions, and CRMs.
 
 To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85). To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev). If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 
