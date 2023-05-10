@@ -51,9 +51,9 @@ Deploy dynamic front-end applications.
 
 {{</feature>}}
 
-## Features (coming soon)
+## Coming soon
 
-* **Larger databases**: During the alpha period, database size is limited to 100 MB. We will be looking to support larger databases in the future. If your use case requires a larger database, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform) and we will contact you.
+* **Larger databases**: During the alpha period, database size is limited to 100 MB. We plan to support larger databases in the future. If your use case requires a larger database, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform) and we will contact you.
 
 * **Read replication**: D1 will create and distribute read-only clones of your data across the Cloudflare global network. Cloudflare distributes your data close to where your users are and keeps your read-only clones up to date with changes.
 
