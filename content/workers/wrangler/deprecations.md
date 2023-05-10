@@ -135,7 +135,7 @@ The `wrangler route` command is no longer available to configure a route for a W
 
 Routes are specified in the `wrangler.toml` configuration file.
 
-### Other deprecated behaviour
+### Other deprecated behavior
 
 - Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your `wrangler.toml` file.
 
