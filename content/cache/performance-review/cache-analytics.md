@@ -11,7 +11,7 @@ First, determine whether to focus on Requests or Data Transfer. The default view
 
 You can toggle between Requests and Data Transfer while keeping other analytics filters enabled.
 
-For best practices related to Cache Analytics, refer to [Cache performance](/cache/best-practices/cache-performance/).
+For best practices related to Cache Analytics, refer to [Cache performance](/cache/performance-review/cache-performance/).
 
 ## Availability
 
