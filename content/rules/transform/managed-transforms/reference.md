@@ -73,7 +73,7 @@ layout: list
     <tr>
       <td><strong>Add "True-Client-IP" header</strong></td>
       <td>
-        <p>Adds a <code>True-Client-IP</code> request header with the visitor's IP address.</p>
+        <p>Adds a <code>true-client-ip</code> request header with the visitor's IP address.</p>
         <p>Only available on Enterprise plans.</p>
         <p>Unavailable when <strong>Remove visitor IP headers</strong> is enabled.</p>
       </td>
@@ -128,11 +128,11 @@ With **Remove visitor IP headers** enabled, the `x-forwarded-for` header sent to
       <td>
         <p>Adds several security-related HTTP response headers. The added response headers and values are the following:</p>
         <ul>
-          <li><code>X-Content-Type-Options: nosniff</code></li>
-          <li><code>X-XSS-Protection: 1; mode=block</code></li>
-          <li><code>X-Frame-Options: SAMEORIGIN</code></li>
-          <li><code>Referrer-Policy: same-origin</code></li>
-          <li><code>Expect-CT: max-age=86400, enforce</code></li>
+          <li><code>x-content-type-options: nosniff</code></li>
+          <li><code>x-xss-protection: 1; mode=block</code></li>
+          <li><code>x-frame-options: SAMEORIGIN</code></li>
+          <li><code>referrer-policy: same-origin</code></li>
+          <li><code>expect-ct: max-age=86400, enforce</code></li>
         </ul>
         <p>To increase protection, <a href="/ssl/edge-certificates/additional-options/http-strict-transport-security/">enable HTTP Strict Transport Security (HSTS)</a> for your website.</p>
       </td>
