@@ -55,8 +55,6 @@ Note that if you are writing messages to a queue faster than you can process the
 
 ### Set concurrency settings via `wrangler.toml`
 
-{{</Aside>}}
-
 To set a fixed maximum number of concurrent consumer invocations for a given queue, configure a `max_concurrency` in your `wrangler.toml` file:
 
 ```toml
