@@ -46,30 +46,22 @@ to_Router_C	| 192.0.2.10 | 198.51.100.202 | 10.255.255.5/31 | 172.16.0.0/12 | 10
 
 ## Add Anycast GRE or IPsec tunnel
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Select **Magic Transit** > **Manage Magic Transit configuration** > **Configure**.
-3. In the **Tunnels** tab, select **Create**.
-4. Select **GRE tunnel** or **IPsec tunnel** > **Next**.
-5. Fill out the information for the Anycast GRE or IPsec tunnel.
-6. (Optional) We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
-7. To add multiple tunnels, select **Add GRE tunnel** / **Add IPsec tunnel** for each new tunnel.
-8. When you are done, select **Add tunnels**.
-
-In keeping with the example scenario, the list of tunnels should match the example below.
+1. Follow the instructions in [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/#add-tunnels) to create a new GRE tunnel.
+2. In keeping with the example scenario, fill out the tunnel information to match the example below.
 
 ![Tunnel configuration for each branch office, including interface address, Customer and Cloudflare GRE endpoints, and TTL and MTU](/magic-wan/static/gre-tunnel-values.png)
 
 ## Add static routes
 
-1.  From **Magic Transit**, select **Manage Magic Transit configuration**.
-2.  On the **Static Routes** tab, select **Create** to add a new route.
-3.  Enter the information for your route.
-4.  While optional, we highly recommend testing your route before adding it by selecting **Test routes**.
-5.  If your test was successful, select **Add routes** when you are done.
-
-In keeping with the example scenario, the list of static routes should match the example below.
+1. Follow the instructions in [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) to create a new static route.
+2. In keeping with the example scenario, the list of static routes should match the example below.
 
 ![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
+
+{{<Aside type="note">}}
+When you create a GRE tunnel the TTL and MTU fields are auto-populated. The default MTU value of 1476 bytes for the GRE tunnel takes into account the 24-byte GRE encapsulation overhead (20-byte outer IP header plus a 4-byte mandatory GRE header) that will be added to the original (inner) IP packet when they are sent over
+the GRE tunnel. Refer to [Set maximum segment size](/magic-wan/prerequisites/#set-maximum-segment-size) for more information.
+{{</Aside>}}
 
 ## Cloudflare Gateway configuration
 
