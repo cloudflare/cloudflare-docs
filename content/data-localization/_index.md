@@ -10,7 +10,7 @@ meta:
 
 {{<Aside type="note">}}
 
-This feature is only available as a paid add-on for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information.
+This feature is available as a paid add-on for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information.
 
 {{</Aside>}}
 
