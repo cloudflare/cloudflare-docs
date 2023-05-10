@@ -47,3 +47,5 @@ Refer to [Deploy WARP to your organization](/cloudflare-one/connections/connect-
 You should be able to access Private IP addresses specified in the Split Tunnel configuration.
 
 {{<Aside type="note">}}You must log out and log back in with at least one WARP device to ensure the configuration updates on your device.{{</Aside>}}
+
+{{<render file="_traceroute.md">}}

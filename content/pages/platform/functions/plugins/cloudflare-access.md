@@ -51,7 +51,7 @@ export const onRequest: PagesFunction<unknown, any, PluginData> = async ({
 };
 ```
 
-The [entire JWT payload](/cloudflare-one/identity/authorization-cookie/validating-json/#payload) will be made available on `data.cloudflareAccess.JWT.payload`. Be aware that the fields available differ between identity authorizations (for example, a user in a browser) and non-identity authorizations (for example, a service token).
+The [entire JWT payload](/cloudflare-one/identity/authorization-cookie/application-token/#payload) will be made available on `data.cloudflareAccess.JWT.payload`. Be aware that the fields available differ between identity authorizations (for example, a user in a browser) and non-identity authorizations (for example, a service token).
 
 ### Look up identity
 

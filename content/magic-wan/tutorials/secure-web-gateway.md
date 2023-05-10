@@ -70,3 +70,5 @@ After setting up the Anycast GRE and static routes, configure your Cloudflare Ga
 The Cloudflare Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
 
 After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare global network.
+
+{{<render file="_traceroute.md">}}

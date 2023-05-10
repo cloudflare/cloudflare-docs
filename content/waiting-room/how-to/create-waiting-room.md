@@ -3,10 +3,10 @@ title: Create a waiting room
 pcx_content_type: how-to
 weight: 1
 meta:
-  title: Create a waiting room 
+  title: Create a waiting room
 ---
 
-# Create a waiting room 
+# Create a waiting room
 
 A waiting room can be created from the dashboard or via API.
 
@@ -20,7 +20,7 @@ A waiting room can be created from the dashboard or via API.
 4.  Select **Next**.
 5.  If you can [customize your waiting room](/waiting-room/how-to/customize-waiting-room/), update the HTML and CSS as needed. If you are using this waiting room to manage traffic for your mobile app or API, enable the JSON response toggle. Make sure that you have set up a [JSON friendly response](/waiting-room/how-to/json-response/) for your client (mobile or web app).
 6.  Select **Next**.
-7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room/).
+7.  Review your settings before saving. If you customized your waiting room, make sure to [preview the result](/waiting-room/how-to/customize-waiting-room/#preview-waiting-room).
 8.  Select **Save**. Your new waiting room will be enabled by default.
 
 

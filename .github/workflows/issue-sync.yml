@@ -1,7 +1,7 @@
 name: Sync issues internally
 on:
   issues:
-    types: [created]
+    types: [opened]
   workflow_dispatch:
     inputs:
       issue_number:

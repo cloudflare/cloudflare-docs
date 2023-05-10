@@ -71,29 +71,11 @@ You can only delete a prefix with an **Unapproved** status. To delete prefixes w
 
 ## Border Gateway Protocol (BGP) control for advertisements
 
-Use BGP to control the status of your prefix — advertised or withdrawn — from Cloudflare's global network for more flexibility and control over your routes. The BGP controlled advertisement system works by establishing BGP sessions to Cloudflare's routing endpoints, which propagate BGP routes globally across all the locations at Cloudflare's global network.
+Use BGP to control the advertisement status of your prefix — advertised or withdrawn — from Cloudflare’s global network for on-demand deployment scenarios. BGP Control works by establishing BGP sessions to Cloudflare’s globally distributed Route Reflectors, which will initiate propagation of your prefix advertisement across Cloudflare's global network.
 
-To prevent unexpected behavior, you must use either BGP control or dynamic advertisement for your prefixes but you cannot use both.
+Prefixes can be advertised from Cloudflare’s network in a supported on-demand method such as BGP Control, or dynamically via the UI, API, or [Flow-based monitoring](/magic-transit/flow-based-monitoring/). Prefixes advertised via BGP Control cannot be advertised dynamically as this method is configured during the onboarding of your prefix.
 
-```mermaid
-flowchart LR
-accTitle: Border Gateway Control advertisements
-accDescr: Use BGP to control the status of your prefix.
-
-a(User)-- Ingress -->b(Clouflare global <br> Anycast network) == Anycast <br> GRE tunnel ==> c((BGP))
-b(Clouflare global <br> Anycast network)-.-z(BPG announcement <br> to Internet)
-b(Clouflare global <br> Anycast network) --- d("Routing configuration <br> endpoint #1") & e("Routing configuration <br> endpoint #2") & f("Routing configuration <br> endpoint #3") --- c((BGP))
-c((BGP))-- "Egress <br> (Direct Server Return)" -->a(User)
-
-classDef orangestroke fill:white,stroke:#f96,stroke-width:3px
-classDef blue stroke:blue,stroke-width:3px
-linkStyle 0 stroke:green
-linkStyle 1 stroke-width:5px
-class d,e,f orangestroke
-class a,c blue
-class b orangestroke
-```
-<br />
+![BGP diagram for Magic Transit](/images/magic-transit/bgp-diagram.png)
 
 To begin using BGP control, contact your account team with the following information:
 
@@ -101,4 +83,90 @@ To begin using BGP control, contact your account team with the following informa
 - Prefixes you want to use with BGP control
 - Your ASN for the BGP session
 
-After receiving your information, Cloudflare updates firewall filters to establish the BGP session and provides you with the BGP endpoints to control your prefixes.
+After receiving your information, Cloudflare will update firewall filters to establish the BGP session and provide you with the BGP endpoints to control your prefixes.
+
+### Regional settings
+
+Magic Transit requires static routing to steer traffic from Cloudflare’s network over one of your configured tunnel off-ramps (GRE, IPsec or CNI). Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally. The default setting for static route regions is **All Regions**. Refer to [Configure static routes](/magic-transit/how-to/configure-static-routes/) for more information.
+
+## Example router configurations
+
+Below you can find example peering configurations for [Cisco IOS](https://www.cisco.com/c/en/us/td/docs/ios/fundamentals/command/reference/cf_book.html) and [Juniper Junos OS](https://www.juniper.net/documentation/us/en/software/junos/cli/index.html) for on-demand deployments leveraging BGP Control. The IP addresses used are from Cloudflare's route reflectors and should be left as is.
+
+
+#### Cisco IOS
+
+```txt
+ip route {{ <YOUR-MAGIC-TRANSIT-PREFIX> }} Null0
+ip prefix-list magic-transit-prefix seq 5 permit {{ <YOUR-MAGIC-TRANSIT-PREFIX> }}
+ 
+route-map cloudflare-magic-transit-out permit 1
+match ip address prefix-list magic-transit-prefix
+!
+route-map cloudflare-magic-transit-out deny 99
+ 
+route-map reject-all deny 99
+ 
+router bgp {{ <YOUR-ASN> }}
+neighbor 141.101.67.22 remote-as 13335
+neighbor 141.101.67.22 ebgp-multihop 64
+neighbor 141.101.67.22 timers 60 900
+neighbor 162.158.160.22 remote-as 13335
+neighbor 162.158.160.22 ebgp-multihop 64
+neighbor 162.158.160.22 timers 60 900
+neighbor 173.245.63.66  remote-as 13335
+neighbor 173.245.63.66  ebgp-multihop 64
+neighbor 173.245.63.66  timers 60 900
+!
+address-family ipv4 unicast
+redistribute static
+neighbor 141.101.67.22 route-map cloudflare-magic-transit-out out
+neighbor 141.101.67.22 route-map reject-all in
+neighbor 162.158.160.22 route-map cloudflare-magic-transit-out out
+neighbor 162.158.160.22 route-map reject-all in
+neighbor 173.245.63.66  route-map cloudflare-magic-transit-out out
+neighbor 173.245.63.66  route-map reject-all in
+exit-address-family
+```
+
+#### Juniper MX (Junos OS set commands)
+
+```txt
+set protocols bgp group CF_ROUTE_REFLECTORS neighbor 162.158.160.22 description "CF RR#1 SIN"
+set protocols bgp group CF_ROUTE_REFLECTORS neighbor 173.245.63.66 description "CF RR#2 IAD"
+set protocols bgp group CF_ROUTE_REFLECTORS neighbor 141.101.67.22 description "CF RR#3 CDG"
+set protocols bgp group CF_ROUTE_REFLECTORS peer-as 13335
+set protocols bgp group CF_ROUTE_REFLECTORS import REJECT-ALL
+set protocols bgp group CF_ROUTE_REFLECTORS export BGP-CONTROL-OUT
+ 
+set policy-options policy-statement REJECT-ALL then reject
+set policy-options policy-statement BGP-CONTROL-OUT term <TERM-NAME> from route-filter 104.245.62.0/24 exact
+set policy-options policy-statement BGP-CONTROL-OUT term <TERM-NAME> from protocol static
+set policy-options policy-statement BGP-CONTROL-OUT term <TERM-NAME> from route-type internal
+set policy-options policy-statement BGP-CONTROL-OUT term <TERM-NAME> then accept
+set policy-options policy-statement BGP-CONTROL-OUT then reject
+```
+
+#### Juniper MX (Junos OS XML format)
+
+```txt
+@rtr01> show configuration routing-instances STAGE protocols bgp group CF_ROUTE_REFLECTORS
+type external;
+multihop {
+    ttl 64;
+}
+local-address {{customer router IP}}
+import NONE;
+export NONE;
+peer-as 13335;
+local-as {{customer AS}} loops 2;
+neighbor 162.158.160.22 {
+    description "CF RR#1 SIN";
+}
+neighbor 173.245.63.66 {
+    description "CF RR#2 IAD";
+}
+neighbor 141.101.67.22 {
+    description "CF RR#3 CDG";
+}
+```
