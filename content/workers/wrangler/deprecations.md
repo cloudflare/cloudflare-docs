@@ -8,6 +8,36 @@ weight: 2
 
 Review the difference between Wrangler versions, specifically deprecations and breaking changes.
 
+## Wrangler v3
+
+### Deprecated commands
+
+The following commands are deprecated in Wrangler as of Wrangler v3. They will be fully removed in v4.
+
+### `generate`
+
+The `wrangler generate` command is deprecated, but still active in v3. It will be fully removed in v4.
+
+Try using `npm create cloudflare` for new Workers and Pages projects.
+
+#### `init`
+
+The `wrangler init` command is deprecated, but still active in v3. It will be fully removed in v4.
+
+Try using `npm create cloudflare` to create new Workers and Pages projects. For existing Workers projects, continue using `wrangler init --from-dash <WORKER_NAME>`. This will be replaced by another command in v4.
+
+### `publish`
+
+The `wrangler publish` command is deprecated, but still active in v3. It will be fully removed in v4.
+
+Try using `wrangler deploy` to deploy Workers.
+
+### `pages publish`
+
+The `wrangler pages publish` command is deprecated, but still active in v3. It will be fully removed in v4.
+
+Try using `wrangler pages deploy` to deploy Pages.
+
 ## Wrangler v2
 
 Wrangler v2 introduces new fields for configuration and new features for developing and deploying a Worker, while deprecating some redundant fields.
