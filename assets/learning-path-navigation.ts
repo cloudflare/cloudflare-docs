@@ -76,7 +76,7 @@ import { learning_paths as paths } from "./json-collector";
             "?learning_path=" +
             currentLearningPath
         );
-        nextModuleLink.innerHTML = "Continue to next module >";
+        nextModuleLink.innerHTML = "Next module >";
       }
     }
 
