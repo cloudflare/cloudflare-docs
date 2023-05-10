@@ -143,11 +143,11 @@ To enable access management, Cache and bot management features, you must set up 
 
 ![Select settings](/r2/static/public-buckets-settings.png)
 
-4. In **Settings**, go to **Bucket Access**.
+4. In **Settings**, go to **Public access**.
 
-![Select bucket access](/r2/static/public-buckets-not-allowed.png)
+![Select public access](/r2/static/public-buckets-not-allowed.png)
 
-5. Under **Bucket Access**, select **Allow Access**.
+5. Under **R2.dev subdomain**, select **Allow Access**.
 
 ![Allow access](/r2/static/public-buckets-allow-access.png)
 
