@@ -118,6 +118,8 @@ If you are a customer with access to both products, you will see both tabs in th
 
 If you are currently using the [Firewall Rules API](/firewall/api/cf-firewall-rules/) and [Filters API](/firewall/api/cf-filters/), you can keep using these APIs for now. Cloudflare will internally convert your API calls into the corresponding [Rulesets API](/waf/custom-rules/create-api/) calls. However, going forward you will only be able to manage WAF custom rules via API using the [Rulesets API](/waf/custom-rules/create-api/).
 
+The rule IDs will be different between firewall rules and custom rules, which may affect any automated processes you may have set up with specific rule IDs.
+
 **The [Firewall Rules API](/firewall/api/cf-firewall-rules/) and the associated [Cloudflare Filters API](/firewall/api/cf-filters/) are now deprecated.** These APIs will stop working on 2024-05-01. You must migrate any automation based on the Firewall Rules API or Cloudflare Filters API to the Rulesets API before this date to prevent any issues.
 
 For the time being, all three APIs will be available (Firewall Rules API, Filters API, and Rulesets API). There will be a single list of rules for both firewall rules and WAF custom rules. Some new features of WAF custom rules, like custom responses for blocked requests and the _Skip_ action, are not supported in the Firewall Rules API. To take advantage of the new features, Cloudflare recommends that you use the custom rules page in the Cloudflare dashboard or the Rulesets API.
