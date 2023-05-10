@@ -35,7 +35,7 @@ layout: list
     <tr>
       <td><strong>Add TLS client auth headers</strong></td>
       <td>
-        <p>Adds HTTP request headers with <a href="/api-shield/security/mtls/">Mutual TLS</a> (mTLS) related values:</p>
+        <p>Adds HTTP request headers with <a href="/api-shield/security/mtls/">Mutual TLS</a> (mTLS) client authentication values:</p>
         <ul>
           <li><code>cf-cert-revoked</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_revoked"><code>cf.tls_client_auth.cert_revoked</code></a> field.</li>
           <li><code>cf-cert-verified</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_verified"><code>cf.tls_client_auth.cert_verified</code></a> field.</li>
