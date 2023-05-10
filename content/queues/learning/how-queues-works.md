@@ -119,7 +119,7 @@ export default {
   },
 };
 ```
-### Removing a consumer
+### Remove a consumer
 
 To remove a queue from your project, run `wrangler queues consumer remove <queue-name> <script-name>` and then remove the desired queue below the `[[queues.consumers]]` in `wrangler.toml` file.
 
