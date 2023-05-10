@@ -53,8 +53,15 @@
 <p class="DocsMarkdown--button-group">
   <span class="DocsMarkdown--button-group-content">
     <a href="{{- print $firstModuleURL "?learning_path=" $pathUID -}}" class="getStartedButton learningNavigation Button Button-is-docs-primary">
-      <span class="getStarted DocsMarkdown--link-content">Start path</span>
+      <span style="color: #1d1f20" class="getStarted DocsMarkdown--link-content">Read</span>
+      {{- partialCached "book.icon" . -}}
     </a>
+    {{- with $pathData.video_link -}}
+    <a href="{{- . -}}" class="Button Button-is-docs-secondary">
+      <span class="getStarted DocsMarkdown--link-content">Watch</span>
+      {{- partialCached "video.icon" . -}}
+    </a>
+    {{- end -}}
 </span>
 </p>
 </div>

@@ -166,10 +166,6 @@ html {
     align-self: center;
 }
 
-.Button-is-docs-primary .DocsMarkdown--link-content {
-    color: #fff;
-}
-
 [theme="dark"] .getStarted {
     color: #1d1f20;
 }
@@ -297,3 +293,15 @@ label {
   [theme="dark"] .learningSummary a:hover {
     --background-color-alpha: 0.1;
   }
+
+  .DocsMarkdown--link-icon {
+    display: inline-block;
+    height: 36px;
+    width: 36;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    margin-left: 10px;
+    color: var(--orange);
+    fill: var(--orange)
+}
