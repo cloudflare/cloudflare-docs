@@ -327,9 +327,16 @@ label {
 }
 
 .PresentationMode .mermaid svg {
-    max-width: 600px !important;
+    max-width: 650px !important;
 }
 
 .PresentationMode .progressIndicator {
-    margin: 1em auto;
+    position: fixed;
+    bottom: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    padding: 1em;
+    border: 1px solid #404242;
+    background: #404242;
 }
