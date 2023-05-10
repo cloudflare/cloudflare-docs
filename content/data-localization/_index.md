@@ -8,9 +8,13 @@ meta:
 
 # Data Localization Suite
 
-The Data Localization Suite (DLS) is a set of products that helps customers who want to maintain local control over their traffic while retaining the security benefits of a global network.
+{{<Aside type="note">}}
 
-DLS is currently available for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information about purchasing DLS.
+This feature is only available as a paid add-on for customers on the Enterprise plan. Reach out to your Customer Success Manager for more information.
+
+{{</Aside>}}
+
+The Data Localization Suite (DLS) is a set of products that helps customers who want to maintain local control over their traffic while retaining the security benefits of a global network.
 
 The Data Localization Suite consists of the following products:
 
