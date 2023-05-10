@@ -89,4 +89,3 @@ Here is an example of some warnings and errors:
 ## Deprecations
 
 Refer to [Deprecations](/workers/wrangler/deprecations/) for more details on what is no longer supported.
-
