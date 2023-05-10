@@ -27,7 +27,7 @@ A redirect rule must have:
 * `action` set to `redirect`
 * An `action_parameters` object with additional configuration settings — refer to [Available settings](/rules/url-forwarding/single-redirects/settings/) for details.
 
-The following request of the [Create zone ruleset](/api/operations/zone-rulesets-create-a-zone-ruleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
+The following request of the [Create a zone ruleset](/api/operations/createZoneRuleset) operation creates a phase entry point ruleset for the `http_request_dynamic_redirect` phase at the zone level, and defines a single redirect rule with a dynamic URL redirect. Use this operation if you have not created a phase entry point ruleset for the `http_request_dynamic_redirect` phase yet.
 
 ```json
 curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
@@ -98,7 +98,7 @@ curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets" \
 </div>
 </details>
 
-If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update zone ruleset](/api/operations/zone-rulesets-update-a-zone-ruleset) operation instead, like in the following example:
+If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update a zone ruleset](/api/operations/updateZoneRuleset) operation instead, like in the following example:
 
 ```json
 curl -X PUT \

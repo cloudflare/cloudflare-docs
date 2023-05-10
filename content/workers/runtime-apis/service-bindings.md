@@ -58,7 +58,7 @@ Service bindings live on the environment context. This means Service bindings ca
 
 ### Limits
 
-Service bindings have a few important limits:
+Service bindings have the following limits:
 
 * Each request to a Worker via Service bindings count toward your [subrequest limit](/workers/platform/limits/#subrequests).
 * Nested calls to child Workers increase the depth of your Worker Pipeline. Maximum Pipeline depth is 32, including the first Worker. Subsequent calls will throw an exception.

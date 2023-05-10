@@ -1,1 +1,1 @@
-[{"kind": "PLANNED", "rule_id": "...d2f294d7", "rule_ref": "UR0012", "description": "HTTP requests trying to impersonate browsers.", "comments": "Expand the filter to catch more attacks.", "previous_action": "ddos_dynamic", "new_action": "ddos_dynamic", "announcement_date": "2023-04-17", "release_date": "2023-04-24"}]
+[]

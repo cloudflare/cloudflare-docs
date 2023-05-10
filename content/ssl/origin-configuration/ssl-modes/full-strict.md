@@ -35,7 +35,29 @@ In addition to **Full (strict)** encryption, you can also set up [Authenticated 
 
 ## Required setup
 
-Before enabling **Full (strict)** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate matching the requirements above. Otherwise, your visitors may experience a [526 error](https://support.cloudflare.com/hc/articles/115003011431#526error).
+### Prerequisites
+
+Before enabling **Full (strict)** mode, make sure your origin:
+
+- Allows HTTPS connections on port `443`.
+- Presents a certificate matching the requirements above.
+
+Otherwise, your visitors may experience a [526 error](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-526-invalid-ssl-certificate).
+
+### Process
+
+{{<tabs labels="Dashboard | API">}}
+{{<tab label="dashboard" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-dash.md">}}
+ 
+{{</tab>}}
+{{<tab label="api" no-code="true">}}
+ 
+{{<render file="_change-encryption-mode-api.md">}}
+ 
+{{</tab>}}
+{{</tabs>}}
 
 ## Limitations
 

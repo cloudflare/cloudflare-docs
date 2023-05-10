@@ -19,7 +19,9 @@ By using Version Management, you can:
 
 ## Availability
 
-Version Management is available to all Enterprise customers. For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
+{{<feature-table id="account.version_management">}}
+
+For access, [enable](/version-management/how-to/enable/) Zone Versioning in the Cloudflare dashboard.
 
 {{<Aside type="warning" header="Warning">}}
 
@@ -35,12 +37,12 @@ To use Version Management, the following must all be true:
 - Your zone is in an [active](/dns/zone-setups/reference/domain-status/) state.
 - Your zone uses [WAF managed rules](https://support.cloudflare.com/hc/articles/5995821690637).
 - Your account uses the [new WAF](https://blog.cloudflare.com/new-cloudflare-waf/) (if not, contact your account team).
-- Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/#view-your-api-key)).
+- Your user account must have an API Key provisioned (if not, [view your API Key](/fundamentals/api/get-started/keys/#view-your-global-api-key)).
 - You must use the dashboard to manage versioning.
-  
+
 {{<Aside type="note">}}
- 
+
 Currently, API support is not available for versioning. Deploying Workers used by zones with versioning enabled via Wrangler is also not supported.
- 
+
 {{</Aside>}}
 

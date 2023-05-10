@@ -62,6 +62,7 @@ The available rate limiting rule parameters are the following:
     | _JSON string value of_ (enter key)        | `lookup_json_string(http.request.body.raw, "<key>")` |
     | _Body_                                    | `http.request.body.raw`                              |
     | _Body size_ (select operator, enter size) | `http.request.body.size`                             |
+    | _Form input value of_ (enter field name)  | `http.request.body.form["<input_field_name>"]`       |
 
   - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
   - You cannot use both _IP with NAT support_ and _IP_ as characteristics of the same rate limiting rule.

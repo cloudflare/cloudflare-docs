@@ -207,7 +207,7 @@ ___
 
 **解决方案**
 
-请确保参数是 `zone_id = data.cloudflare_zones.example_com.zones[0].id`。更详细的使用案例可以在[此](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) Github 线程中找到。
+请确保参数是 `zone_id = data.cloudflare_zones.example_com.zones[0].id`。更详细的使用案例可以在[此](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) GitHub 线程中找到。
 
 ___
 

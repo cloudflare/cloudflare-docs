@@ -13,8 +13,8 @@ Follow this step-by-step guide to get your first tunnel up and running using the
 
 Before you start, make sure you:
 
-* [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
-* [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
+- [Add a website to Cloudflare](/fundamentals/get-started/setup/add-site/).
+- [Change your domain nameservers to Cloudflare](https://support.cloudflare.com/hc/en-us/articles/205195708).
 
 ## 1. Download and install `cloudflared`
 
@@ -141,7 +141,7 @@ $ cloudflared tunnel list
 
 ## 4. Create a configuration file
 
-Create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice. 
+Create a [configuration file](/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-useful-terms/#configuration-file) in your `.cloudflared` directory using any text editor. This file will configure the tunnel to route traffic from a given origin to the hostname of your choice.
 
 Add the following fields to the file:
 
@@ -200,7 +200,7 @@ Run the tunnel to proxy incoming traffic from the tunnel to any number of servic
 $ cloudflared tunnel run <UUID or NAME>
 ```
 
-If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag and specify the path.  
+If your configuration file has a custom name or is not in the `.cloudflared` directory, add the `--config` flag and specify the path.
 
 ```sh
 $ cloudflared tunnel --config /path/your-config-file.yaml run
@@ -219,3 +219,5 @@ Your tunnel configuration is complete! If you want to get information on the tun
 ```sh
 $ cloudflared tunnel info <UUID or NAME>
 ```
+
+You can now [route traffic](/cloudflare-one/connections/connect-apps/routing-to-tunnel/) to your tunnel using Cloudflare DNS or [determine who can reach your tunnel](/cloudflare-one/policies/access/) with Cloudflare Access.

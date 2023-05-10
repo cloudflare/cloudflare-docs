@@ -44,26 +44,6 @@ You can also use the Resource Public Key Infrastructure (RPKI) as an additional 
 
 To check your prefixes, you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator).
 
-## Set maximum segment size
-
-```mermaid
-sequenceDiagram
-accTitle: Magic Transit
-accDescr: Maximum segment size
-participant A as Client machine
-participant B as Cloudflare Magic Transit
-participant C as Origin router
-A->>B: MSS = 1460 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes)
-Note left of A: SYN
-B->>C: MSS = 1436 bytes <br> Protocol (20 bytes) <br> IP header (20 bytes) <br> GRE header (4 bytes) <br> IP header (20 bytes)
-C->>A: MSS = 1436 <br> IP <br> Protocol
-Note right of C: SYN-ACK
-A->>B: MSS = 1436 bytes <br> Protocol <br> IP
-Note left of A: ACK
-B->>C: Protocol <br> IP <br> GRE <br> IP
-```
-<br />
-
 {{<render file="_maximum-segment-size.md" withParameters="Magic Transit;;To accommodate the additional header data, you must set the MSS value to 1436 bytes at your physical egress interfaces — not the tunnel interfaces. For Magic Transit egress traffic, the MSS should be set via the tunnel’s interface for egress traffic.">}}
 
 {{<render file="_clear-dont-fragment.md">}}

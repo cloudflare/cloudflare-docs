@@ -831,9 +831,13 @@ html[is-site-page] .DocsContent {
 
 .TriBlock li {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 10px;
     padding: 6px 0;
+}
+
+.TriBlock li p {
+    margin-bottom: initial;
 }
 
 .TriBlock img {
@@ -850,6 +854,7 @@ html[is-site-page] .DocsContent {
 
 .DocsMarkdown .TriBlock ul {
     padding-left: 0;
+    margin-bottom: 1em;
 }
 
 .DocsMarkdown .TriBlockHeader p {

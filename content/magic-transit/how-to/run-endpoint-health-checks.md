@@ -6,7 +6,7 @@ weight: 4
 
 # Run endpoint health checks
 
-Magic Transit uses endpoint health checks to determine the overall health of your [inter-network connections](/magic-transit/reference/tunnels-and-encapsulation/). Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network, beyond the tunnel-terminating border router. These “long distance” probes are purely diagnostic.
+Magic Transit uses endpoint health checks to determine the overall health of your [inter-network connections](/magic-transit/reference/tunnels/). Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network, beyond the tunnel-terminating border router. These “long distance” probes are purely diagnostic.
 
 When choosing which endpoint IP addresses to monitor with health checks, use these guidelines:
 
@@ -22,4 +22,4 @@ Refer to the table below for an example of an endpoint health check configuratio
 | `103.21.244.0/24` | `103.21.244.100`    | 
 | `103.21.245.0/24` | `103.21.245.100`    |
 
-Refer to [Health checks](/magic-transit/reference/health-checks/) for more information on this topic.
+Refer to [Probe construction](/magic-transit/reference/probe-construction/) for more information on this topic.

@@ -9,7 +9,9 @@ title: TransformStream
 
 A transform stream consists of a pair of streams: a writable stream, known as its writable side, and a readable stream, known as its readable side. Writes to the writable side result in new data being made available for reading from the readable side.
 
-The Workers platform currently only implements an identity transform stream, a type of transform stream which forwards all chunks written to its writable side to its readable side, without any changes.
+Workers currently only implements an identity transform stream, a type of transform stream which forwards all chunks written to its writable side to its readable side, without any changes.
+
+---
 
 ## Constructor
 
@@ -35,6 +37,8 @@ let { readable, writable } = new TransformStream();
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
+
+---
 
 ## `IdentityTransformStream`
 
@@ -67,6 +71,8 @@ let { readable, writable } = new IdentityTransformStream();
 
 {{</definitions>}}
 
+---
+
 ## `FixedLengthStream`
 
 The `FixedLengthStream` is a specialization of `IdentityTransformStream` that limits the total number of bytes that the stream will passthrough. It is useful primarily because, when using `FixedLengthStream` to produce either a `Response` or `Request`, the fixed length of the stream will be used as the `Content-Length` header value as opposed to use chunked encoding when using any other type of stream. An error will occur if too many, or too few bytes are written through the stream.
@@ -96,6 +102,8 @@ let { readable, writable } = new FixedLengthStream(1000);
   - An instance of a `WritableStream`.
 
 {{</definitions>}}
+
+---
 
 ## Related resources
 

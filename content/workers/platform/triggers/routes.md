@@ -19,12 +19,17 @@ There are three types of routes:
 
 ## Set up a route
 
+To add a route, you must have:
+
+1. An [active Cloudflare zone](/dns/zone-setups/).
+2. A Worker to invoke.
+3. An orange-clouded DNS record set up for the [domain](/dns/manage-dns-records/how-to/create-root-domain/) or [subdomain](/dns/manage-dns-records/how-to/create-subdomain/) you would like to route to.
+
 {{<Aside type="warning">}}
 Route setup will differ depending on if your application's origin is a Worker or not. If your Worker is your application's origin, use [Custom Domains](/workers/platform/triggers/custom-domains/).
 {{</Aside>}}
-If your Worker is not your application's origin, follow the instructions below to set up a route.
 
-Before setting up a route, you must have a valid, proxied (orange-clouded) domain or subdomain on your Cloudflare zone that points to your origin.
+If your Worker is not your application's origin, follow the instructions below to set up a route.
 
 {{<Aside type="note">}}
 Routes can also be created via the API. Refer to the [Workers Routes API documentation](https://developers.cloudflare.com/api/operations/worker-routes-list-routes) for more information.
@@ -52,7 +57,7 @@ To configure a route using your `wrangler.toml` file, refer to the following exa
 routes = [
 	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
 	# or
-	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID" }
+	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
 ]
 ```
 
