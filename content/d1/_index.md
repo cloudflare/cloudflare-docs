@@ -13,7 +13,7 @@ meta:
 
 {{<description>}}
 
-Create new serverless SQL databases.
+Create new serverless SQL databases to query from your Workers and Pages projects.
 
 {{</description>}}
 
@@ -39,13 +39,25 @@ Manage your database with Workers. The Workers command-line interface, Wrangler,
 
 {{</feature>}}
 
+{{<feature header="Workers" href="/workers/">}}
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+{{</feature>}}
+
+{{<feature header="Pages" href="/pages/">}}
+
+Deploy dynamic front-end applications.
+
+{{</feature>}}
+
 ## Features (coming soon)
 
 * **Larger databases**: During the alpha period, database size is limited to 100 MB. We will be looking to support larger databases in the future. If your use case requires a larger database, complete the [Limit Increase Request Form](https://docs.google.com/forms/d/e/1FAIpQLSd_fwAVOboH9SlutMonzbhCxuuuOmiU1L_I5O2CFbXf_XXMRg/viewform) and we will contact you.
 
-* **Read replication**: D1 will create read-only clones of your data and distribute across the Cloudflare global network — close to where your users are — and keep them up to date with changes.
+* **Read replication**: D1 will create and distribute read-only clones of your data across the Cloudflare global network. Cloudflare distributes your data close to where your users are and keeps your read-only clones up to date with changes.
 
-* **Transactions**: Define a chunk of your Worker code that runs directly next to the database, giving you total control and maximum performance. Each request first hits your Worker near your users, but depending on the operation, can hand off to another Worker deployed alongside a replica or your primary D1 instance to complete its work.
+* **Transactions**: Define a chunk of your Worker code that runs directly next to the database, giving you total control and maximum performance. Each request first hits your Worker near your users. Depending on the operation, your Worker can hand off to another Worker deployed alongside a replica, or your primary D1 instance, to complete its work.
 
 ## More resources
  
