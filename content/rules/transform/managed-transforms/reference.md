@@ -33,6 +33,31 @@ layout: list
       </td>
     </tr>
     <tr>
+      <td><strong>Add TLS client auth headers</strong></td>
+      <td>
+        <p>Adds HTTP request headers with <a href="/api-shield/security/mtls/">Mutual TLS</a> (mTLS) related values:</p>
+        <ul>
+          <li><code>cf-cert-revoked</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_revoked"><code>cf.tls_client_auth.cert_revoked</code></a> field.</li>
+          <li><code>cf-cert-verified</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_verified"><code>cf.tls_client_auth.cert_verified</code></a> field.</li>
+          <li><code>cf-cert-presented</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_presented"><code>cf.tls_client_auth.cert_presented</code></a> field.</li>
+          <li><code>cf-cert-issuer-dn</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_issuer_dn"><code>cf.tls_client_auth.cert_issuer_dn</code></a> field.</li>
+          <li><code>cf-cert-subject-dn</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_subject_dn"><code>cf.tls_client_auth.cert_subject_dn</code></a> field.</li>
+          <li><code>cf-cert-issuer-dn-rfc2253</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_issuer_dn_rfc2253"><code>cf.tls_client_auth.cert_issuer_dn_rfc2253</code></a> field.</li>
+          <li><code>cf-cert-subject-dn-rfc2253</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_subject_dn_rfc2253"><code>cf.tls_client_auth.cert_subject_dn_rfc2253</code></a> field.</li>
+          <li><code>cf-cert-issuer-dn-legacy</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_issuer_dn_legacy"><code>cf.tls_client_auth.cert_issuer_dn_legacy</code></a> field.</li>
+          <li><code>cf-cert-subject-dn-legacy</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_subject_dn_legacy"><code>cf.tls_client_auth.cert_subject_dn_legacy</code></a> field.</li>
+          <li><code>cf-cert-serial</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_serial"><code>cf.tls_client_auth.cert_serial</code></a> field.</li>
+          <li><code>cf-cert-issuer-serial</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_issuer_serial"><code>cf.tls_client_auth.cert_issuer_serial</code></a> field.</li>
+          <li><code>cf-cert-fingerprint-sha256</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_fingerprint_sha256"><code>cf.tls_client_auth.cert_fingerprint_sha256</code></a> field.</li>
+          <li><code>cf-cert-fingerprint-sha1</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_fingerprint_sha1"><code>cf.tls_client_auth.cert_fingerprint_sha1</code></a> field.</li>
+          <li><code>cf-cert-not-before</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_not_before"><code>cf.tls_client_auth.cert_not_before</code></a> field.</li>
+          <li><code>cf-cert-not-after</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_not_after"><code>cf.tls_client_auth.cert_not_after</code></a> field.</li>
+          <li><code>cf-cert-ski</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_ski"><code>cf.tls_client_auth.cert_ski</code></a> field.</li>
+          <li><code>cf-cert-issuer-ski</code>: Value from the <a href="/ruleset-engine/rules-language/fields/#field-cf-tls_client_auth-cert_issuer_ski"><code>cf.tls_client_auth.cert_issuer_ski</code></a> field.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
       <td><strong>Add visitor location headers</strong></td>
       <td>
         <p>Adds HTTP request headers with location information for the visitor's IP address. The added headers are:</p>
