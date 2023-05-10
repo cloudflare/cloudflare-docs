@@ -13,9 +13,9 @@
             "uid": "dns-filtering-test-policy"
         }
     ],
-    "title": "Replace your DNS filtering software",
-    "uid": "replace-dns",
-    "path": "/learning-paths/replace-dns/",
+    "title": "Get started with DNS filtering",
+    "uid": "dns-filtering",
+    "path": "/learning-paths/dns-filtering/",
     "priority": 5,
     "description": "Protect corporate devices from malware, phishing, and other prohibited content.",
     "products": [

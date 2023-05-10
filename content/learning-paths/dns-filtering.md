@@ -5,8 +5,8 @@ layout: home
 new_learning_path: true
 pcx_content_type: learning-path
 meta:
-    title: Replace your DNS filtering software
+    title: Get started with DNS filtering
     description: Protect corporate devices from malware, phishing, and other prohibited content.
 ---
 
-{{<learning-path file="replace-dns.json">}}
+{{<learning-path file="dns-filtering.json">}}
