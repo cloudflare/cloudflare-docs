@@ -1,14 +1,20 @@
 ---
 pcx_content_type: reference
-title: Digital Experience Monitoring
+title: Fleet status
 weight: 1
 ---
 
-# Digital Experience Monitoring
+# Fleet status
 
-Digital Experience Monitoring provides visibility into device, network, and application performance across your Zero Trust organization.  This information enables you to understand the state of your WARP client deployment and quickly resolve issues impacting end-user productivity.
+With DEX, you can monitor your users' devices and connection status.
 
-To view an overview of all enrolled devices, go to **DEX** > **Analytics**. You will see the following metrics:
+## View metrics
+
+To view an overview of all enrolled devices, go to **DEX** > **Monitoring**. The **Fleet status** tab will show real-time and historical connectivity metrics for all devices in your organization.
+
+To view analytics on a per-device level, go to **My Team** > **Devices**. The **DEX** tab will show real-time and historical connectivity metrics for the selected device.
+
+## Available metrics
 
 - **Devices connected by colo**: Number of devices that are connected to a given [Cloudflare data center](https://www.cloudflarestatus.com/).
 - **Connectivity status**: Percentage of devices in a given WARP client state.
@@ -28,4 +34,3 @@ To view an overview of all enrolled devices, go to **DEX** > **Analytics**. You 
 - **Device Status Over Time**: WARP client connection status over the selected time period.
 - **Connection Methods Over Time**: WARP mode used by the device over the selected time period.
 
-You can view this data on a per-device level by going to **My Team** > **Devices**. The **DEX** tab will show real-time and historical connectivity metrics for the selected device.
