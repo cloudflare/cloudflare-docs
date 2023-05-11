@@ -1,23 +1,12 @@
 ---
-title: Migration to Wrangler v2
+title: 2. Update to Wrangler v2
+order: 1
 pcx_content_type: how-to
-meta:
-  title: Migration
 ---
 
-# Migration to Wrangler v2
+# Migrate from Wrangler v1 to Wrangler v2
 
-{{<Aside type="note">}}
-
-Wrangler v2 is a major update to Wrangler.
-Find out more about how to migrate from Wrangler v1.
-
-{{</Aside>}}
-
-{{<directory-listing>}}
-
-
-This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2.
+This document describes the steps to migrate a project from Wrangler v1 to Wrangler v2. Before updating your Wrangler version, review and compelte [Migrate webpack projects from Wrangler version 1](/workers/wrangler/migration/v1-to-v2/eject-webpack/) if it applies to your project.
 
 Wrangler v2 ships with new features and improvements that may require some changes to your configuration.
 
@@ -26,7 +15,7 @@ The CLI itself will guide you through the upgrade process.
 <div style="position: relative; padding-top: 56.25%;"><iframe src="https://iframe.videodelivery.net/2a60561afea1159f7dd270fd9dce999f?poster=https%3A%2F%2Fcloudflarestream.com%2F2a60561afea1159f7dd270fd9dce999f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe></div>
 
 {{<Aside type="note">}}
-To learn more about the improvements to Wrangler, refer to the [Comparing Wrangler v1 & v2 page](/workers/wrangler-legacy/compare-v1-v2/).
+To learn more about the improvements to Wrangler, refer to [Wrangler v1 and v2 comparison](/workers/wrangler/deprecations/#wrangler-v1-and-v2-comparison-tables).
 {{</Aside>}}
 
 ## Update Wrangler version
