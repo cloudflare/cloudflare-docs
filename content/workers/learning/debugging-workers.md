@@ -14,11 +14,11 @@ Debugging is a critical part of developing a new application — whether running
 
 ## Local testing with `wrangler dev`
 
-When you are developing your Workers application, the [`wrangler dev`](/workers/wrangler/commands/#dev) command can significantly reduce the time it takes to test and debug new features. It can help you get feedback quickly while iterating, by easily exposing logs on `localhost`, and allows you to experiment without deploying to production.
+The [`wrangler dev`](/workers/wrangler/commands/#dev) command starts a local server for developing your Worker. `wrangler dev` allows you to get feedback quickly while iterating by exposing logs on `localhost` and to experiment without deploying to production. `wrangler dev` can significantly reduce the time it takes to test and debug new features.
 
-This command will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the [Miniflare](https://miniflare.dev/) simulator.
+`wrangler dev` will run the preview of the Worker directly on your local machine using the open source Cloudflare Workers runtime, [workerd](https://github.com/cloudflare/workerd) and the Miniflare simulator.
 
-In addition to testing Workers locally, the use of Miniflare allows you to test other Developer Platform products such as: R2, KV, D1, and Durable Objects. For more information on how to test these, refer to the [Miniflare docs](https://miniflare.dev/).
+In addition to testing Workers locally with `wrangler dev`, the use of Miniflare allows you to test other Developer Platform products, such as [R2](/r2/), [KV](/workers/runtime-apis/kv/), [D1](/d1/), and [Durable Objects](/workers/learning/using-durable-objects/).
 
 ### Local testing against remote resources
 
@@ -37,11 +37,11 @@ $ wrangler dev
 [2020-05-28 10:42:36] GET example.com/sw.js HTTP/1.1 200 OK
 ```
 
-In the output above, you can begin to see log lines for the URLs being requested locally. 
+In the output above, you can begin to see log lines for the URLs being requested locally.
 
 {{<Aside type="info">}}
 
-Unlike `wrangler dev`, which provides local instances of resources to develop against, `wrangler dev --remote` will leverage remote resources specified in your `wrangler.toml`.
+Unlike `wrangler dev`, which provides local instances of resources to develop against, `wrangler dev --remote` will leverage remote production resources specified in your `wrangler.toml`. These resources will use production data, and will count towards account usage for billing purposes.
 
 {{</Aside>}}
 
