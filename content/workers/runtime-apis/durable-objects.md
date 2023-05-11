@@ -314,7 +314,7 @@ Hibernation does not persist WebSocket connections across [code updates](/worker
 
   - Keeps a copy of `value` in memory such that it will survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [storage api](/workers/runtime-apis/durable-objects/#transactional-storage-api) and pass the corresponding key to this method so it can be retrieved later.
 
-- {{<code>}}WebSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
+- {{<code>}}webSocket.deserializeAttachment(){{</code>}} : {{<type>}}any{{</type>}}
 
   - Retrieve the most recent value passed to `serializeAttachment`, or null if none exists.
 
