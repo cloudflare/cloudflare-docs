@@ -23,23 +23,9 @@ For more background and to understand how Smart Placement works visit [Smart Pla
 
 ## Enable Smart Placement (beta)
 
-Smart Placement is avaiable users on all plans. 
+Smart Placement is available users on all plans. 
 
-### To enable Smart Placement using wrangler:
-
-1. Make sure that you have `wrangler@2.12.0` or later [installed](/workers/wrangler/install-and-update/).
-2. Add the following to your `wrangler.toml` file:
-
-    ```toml
-    [placement]
-    mode = "smart"
-    ```
-3. Send some initial traffic (approximately 20-30 requests) to your function. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
-
-4. View [request duration metrics](/workers/learning/metrics-and-analytics) about your Function under Functions Metrics.
-
-
-### To enable Smart Placement on the dashboard:
+### Enable Smart Placement on the dashboard:
 1. Log in to the Cloudflare dashboard.
 2. In Account Home, select Pages.
 3. Select a Pages project
@@ -47,8 +33,6 @@ Smart Placement is avaiable users on all plans.
 5. Under 'Placement' enable 'Smart' mode 
 6. . Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
 7. View [request duration metrics](/workers/learning/metrics-and-analytics) about your Function under Functions Metrics.
-
-
 
 
 

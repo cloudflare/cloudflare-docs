@@ -42,7 +42,7 @@ There are some back-end services that, are not considered by our Smart Placement
 
 ## Enable Smart Placement (beta)
 
-Smart Placement is avaiable users on all Workers plans. 
+Smart Placement is available users on all Workers plans. 
 
 ### To enable Smart Placement using wrangler:
 
