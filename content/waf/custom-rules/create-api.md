@@ -14,15 +14,7 @@ You must deploy custom rules to the `http_request_firewall_custom` [phase entry 
 
 ## Create a custom rule
 
-To create a custom rule for a zone, add a rule to the `http_request_firewall_custom` phase entry point ruleset:
-
-1. Invoke the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rulesets in your zone. You will need the [zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for this operation.
-
-2. Search for an entry point ruleset for the `http_request_firewall_custom` phase in the response. Such a ruleset would have the following properties: `"kind": "zone"` and `"phase": "http_request_firewall_custom"`. If you find the ruleset, take note of its ID for the next step.
-
-3. If the entry point ruleset already exists, invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation to add a rule to the existing ruleset. By default, the rule will be added at the end of the list of rules already in the ruleset. Refer to the examples below for details.
-
-    If the entry point ruleset does not exist, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) API operation to create the entry point ruleset with the new custom rule.
+{{<render file="_api-generic-create-rule-procedure.md" withParameters="custom rule;;;;http_request_firewall_custom">}}
 
 ### Example A
 
