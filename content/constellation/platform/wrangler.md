@@ -6,11 +6,11 @@ weight: 30
 
 # Wrangler Support
 
-[Wrangler](https://developers.cloudflare.com/workers/wrangler/) our command-line tool for configuring, building and deploying applications with Cloudflare developer products. You can use Wrangler to manipulate your Constellation AI projects and machine-learning models or search for verified models in our catalog.
+[Wrangler](https://developers.cloudflare.com/workers/wrangler/) our command-line tool for configuring, building and deploying applications with Cloudflare developer products. You can use Wrangler to manipulate your Constellation projects and machine-learning models or search for verified models in our catalog.
 
 ## Installation
 
-Wrangler for Constellation AI is still in Beta. To install it, do:
+Wrangler for Constellation is still in Beta. To install it, do:
 
 ```bash
 $ npm install wrangler@beta --save-dev
@@ -22,7 +22,7 @@ Test it with [npx](https://github.com/npm/npx):
 $ npx wrangler constellation
 wrangler constellation
 
-🤖 Interact with Constellation AI models
+🤖 Interact with Constellation models
 
 Commands:
   wrangler constellation project  Manage your projects

@@ -8,7 +8,7 @@ weight: 40
 
 The client API allows developers to interact with the inference engine using the models configured for each project. Inference is the process of running data inputs on a machine-learning model and generating an output or a "prediction."
 
-Once you have Constellation AI enabled and the project bindings configured, you'll have access to the client API in your Worker.
+Once you have Constellation enabled and the project bindings configured, you'll have access to the client API in your Worker.
 
 ## Tensor class
 

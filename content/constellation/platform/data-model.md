@@ -20,7 +20,7 @@ You can have as many projects as you want under your account.
 
 ## Models
 
-The models are user-uploaded files that are attached to a specific project. The model has a name, a description, and an Id. It needs to be compatible with the machine-learning runtime defined in the project it belongs to. For instance, you should only upload the model.onnx file to a project configured for ONNX runtime.
+The models are user-uploaded files that are attached to a specific project. The model has a name, a description, and an Id. It needs to be compatible with the machine-learning [runtime](/constellation/platform/runtimes/) defined in the project it belongs to. For instance, you should only upload the model.onnx file to a project configured for ONNX runtime.
 
 The name can only have alphanumeric, minus (-) and underscore (_) characters (```/^[a-zA-Z0-9-_]+$/```).
 
@@ -32,7 +32,7 @@ Currently, during the private beta, we only support models that are smaller than
 
 ## Catalog
 
-Not everyone will want to train models or browse the Internet for models they didn't test yet and upload them. Cloudflare will maintain a curated list of tested models that are known to work with the Constellation AI APIs out of the box.
+Not everyone will want to train models or browse the Internet for models they didn't test yet and upload them. Cloudflare will maintain a curated list of tested models that are known to work with the Constellation APIs out of the box.
 
 For each machine-learning runtime we support, developers can search for ready-to-use permanent models in our catalog and use them for some of the most popular tasks without additional configurations or file uploads.
 
