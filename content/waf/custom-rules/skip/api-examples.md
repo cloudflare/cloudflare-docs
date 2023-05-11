@@ -12,15 +12,15 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to configure custom rules 
 
 The `skip` action supports different [skip options](/waf/custom-rules/skip/options/), according to the security features or products that you wish to skip.
 
-The following sections provide examples for the different skip rule scenarios available for custom rules.
+## Before you continue
 
-Take the following into account regarding the provided examples:
+This page contains examples of different skip rule scenarios for custom rules. Take the following into account:
 
 * The `{zone_id}` value is the [ID of the zone](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) where you want to add the rule.
 
 * The `{ruleset_id}` value is the ID of the [entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset) of the `http_request_firewall_custom` phase. For details on obtaining this ruleset ID, refer to [List and view rulesets](/ruleset-engine/rulesets-api/view/). The API examples in this page add a skip rule to an existing ruleset using the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) operation.
 
-    However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) API operation to create the entry point ruleset with a skip rule.
+    However, the entry point ruleset may not exist yet. In this case, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) API operation to create the entry point ruleset with a skip rule. Refer to [Create ruleset](/ruleset-engine/rulesets-api/create/#example---create-a-zone-level-phase-entry-point-ruleset) for an example.
 
 * Although each example only includes one action parameter, you can use several skip options in the same rule by specifying the `ruleset`, `phases`, and `products` action parameters simultaneously.
 
