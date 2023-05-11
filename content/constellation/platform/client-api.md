@@ -8,7 +8,15 @@ weight: 40
 
 The client API allows developers to interact with the inference engine using the models configured for each project. Inference is the process of running data inputs on a machine-learning model and generating an output or a "prediction."
 
-Once you have Constellation enabled and the project bindings configured, you'll have access to the client API in your Worker.
+Before you use the Constellation client API, you need to:
+
+* Have a Cloudflare account with Constellation enabled.
+* Create a Constellation project and configure the binding.
+* Import the <code>@cloudflare/constellation</code> library in your code.
+
+```javascript
+   import { Tensor, run } from "@cloudflare/constellation";
+```
 
 ## Tensor class
 
@@ -31,7 +39,7 @@ export type Tensor = {
 
 **type**
 
-Defines the type of data represented in the Tensor. Options are: ```float32```, ```float64```, ```int32```, ```int64```, ```string``` or ```bool```
+Defines the type of data represented in the Tensor. Options are: <code>float32</code>, <code>float64</code>, <code>int32</code>, <code>int64</code>, <code>string</code> or <code>bool</code>
 
 **shape**
 
@@ -46,7 +54,7 @@ Click [here](https://www.tensorflow.org/guide/tensor) to know more about shapes.
 
 **value**
 
-This is data for the tensor. See examples:
+This is tensor's data. See examples:
 
 * scalar: 4
 * vector: [1, 2, 3]
