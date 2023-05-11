@@ -7,7 +7,7 @@ title: path
 
 {{<render file="_nodejs-compat-howto.md">}}
 
-The [`node:path`](https://nodejs.org/api/path.html) module provides utilities for working with file and directory paths. It can be accessed using:
+The [`node:path`](https://nodejs.org/api/path.html) module provides utilities for working with file and directory paths. The `node:path` module can be accessed using:
 
 ```js
 const path = require('node:path'); 
