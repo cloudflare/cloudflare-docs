@@ -13,7 +13,8 @@ This is a concept known as routing.
 
 ## How it works
 
-<div id="presentationMode">
+{{<presentation-mode demo="true">}}
+{{</presentation-mode>}}
 
 Generally, there are five questions involved with routing:
 
@@ -22,8 +23,6 @@ Generally, there are five questions involved with routing:
 3. Within a pool, which servers are healthy?
 4. Within a load balancer, which pools are healthy?
 5. Are there any specialized routing rules?
-
-</div>
 
 ### Distributing requests to pools
 

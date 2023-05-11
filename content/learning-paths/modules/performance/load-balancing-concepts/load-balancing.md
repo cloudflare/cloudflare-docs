@@ -23,10 +23,11 @@ Much in the same way, a load balancer distributes traffic across many servers. W
 
 A load balancer spreads requests across your servers, which prevents any one server from working too hard. Load balancing also makes your servers more efficient and lets them respond faster to incoming requests.
 
-<div id="presentationMode">
+{{<presentation-mode hidden="true">}}
 
 ![A load balancer distributes traffic across your servers](/learning-paths/modules/performance/static/with-load-balancing-diagram.png)
-</div>
+
+{{</presentation-mode>}}
 
 ## Related resources
 

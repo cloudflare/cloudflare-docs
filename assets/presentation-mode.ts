@@ -54,12 +54,15 @@ function cuePresentationMode() {
       }
     });
 
+    // Apply presentation-specific styles
     const docBody = document.getElementById("DocsBody")
-    
-
     docBody.classList.add("PresentationMode")
 
+    //If hidden, unhide the presentation content
+    const presentationModeContent = document.getElementById("presentationMode")
+    presentationModeContent.style.setProperty("display", "block", "important");
 
+    // Unhide the page now that transitions are done
     const page = document.getElementById("DocsPage");
     page.style.visibility = "visible";
   }

@@ -318,7 +318,7 @@ label {
 .PresentationMode #presentationMode {
     width: 98%;
     font-size: 1.4em;
-    margin: 1.5em auto
+    margin: 1.5em auto;
 }
 
 .PresentationMode .mermaid {
@@ -339,4 +339,13 @@ label {
     padding: 1em;
     border: 1px solid #404242;
     background: #404242;
+}
+
+.PresentationMode .demo {
+    font-size: 3em;
+    margin: 1.5em 2em;
+    padding: 1em;
+    border-radius: 10px;
+    border: 1px solid var(--orange);
+    text-align: center;
 }

@@ -1,0 +1,17 @@
+{{- $inner := .Inner -}}
+
+{{- with .Get "demo" -}}
+<div id="presentationMode" style="display: none;">
+    <p class="demo">Walkthrough</p>
+</div>
+{{- else -}}
+{{- with .Get "hidden" -}}
+<div id="presentationMode" style="display: none;">
+      {{- $.Page.RenderString $inner -}}
+</div>
+{{- else -}}
+<div id="presentationMode">
+    {{- $.Page.RenderString $inner -}}
+</div>
+{{- end -}}
+{{- end -}}
