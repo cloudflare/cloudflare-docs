@@ -16,7 +16,8 @@ Deploy dynamic front-end applications in record time.
 
 {{<plan type="all">}}
 
-Cloudflare Pages is super fast, always up to date, and deployed directly from [your Git provider](/pages/get-started/#connect-your-git-provider-to-pages).
+Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Uploads](/pages/platform/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
  
