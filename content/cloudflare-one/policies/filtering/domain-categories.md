@@ -99,7 +99,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 
 | Category ID | Category Name          | Subcategory ID | Subcategory Name                           |
 | ----------- | ---------------------- | -------------- | ------------------------------------------ |
-| 1           | Ads                    | 66             | Advertisements                             |
 | 2           | Adult Themes           | 67             | Adult Themes                               |
 | 2           | Adult Themes           | 125            | Nudity                                     |
 | 2           | Adult Themes           | 133            | Pornography                                |
@@ -172,7 +171,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 22          | Shopping & Auctions    | 82             | Coupons                                    |
 | 22          | Shopping & Auctions    | 88             | Ecommerce                                  |
 | 22          | Shopping & Auctions    | 148            | Shopping                                   |
-| 24          | Society & Lifestyle    | 65             | Abortion                                   |
 | 24          | Society & Lifestyle    | 71             | Arts & Crafts                              |
 | 24          | Society & Lifestyle    | 72             | Astrology                                  |
 | 24          | Society & Lifestyle    | 78             | Clothing                                   |
@@ -183,7 +181,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 24          | Society & Lifestyle    | 97             | Food & Drink                               |
 | 24          | Society & Lifestyle    | 104            | Hobbies & Interests                        |
 | 24          | Society & Lifestyle    | 105            | Home & Garden                              |
-| 24          | Society & Lifestyle    | 112            | Jewelry                                    |
 | 24          | Society & Lifestyle    | 114            | Lifestyle                                  |
 | 24          | Society & Lifestyle    | 130            | Pets                                       |
 | 24          | Society & Lifestyle    | 132            | Photography                                |
@@ -192,7 +189,6 @@ You can block security and content categories by creating DNS or HTTP policies. 
 | 24          | Society & Lifestyle    | 149            | Social Networks                            |
 | 24          | Society & Lifestyle    | 154            | Swimsuits                                  |
 | 24          | Society & Lifestyle    | 158            | Tobacco                                    |
-| 24          | Society & Lifestyle    | 171            | LGBTQ                                      |
 | 24          | Society & Lifestyle    | 173            | Body Art                                   |
 | 24          | Society & Lifestyle    | 174            | Lingerie & Bikini                          |
 | 25          | Sports                 | 152            | Sports                                     |
