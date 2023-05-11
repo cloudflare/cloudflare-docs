@@ -1,10 +1,10 @@
 ---
-title: Create a DNS policy
+title: Explore DNS policies
 pcx_content_type: overview
 weight: 1
 layout: learning-module
 ---
 
-# Create a DNS policy
+# Explore DNS policies
 
 {{<learning-module-summary>}}

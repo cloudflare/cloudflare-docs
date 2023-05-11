@@ -1,6 +1,6 @@
 ---
-title: Other ways to add a policy
+title: MDM deployment
 pcx_content_type: learning-unit
-weight: 3
+weight: 4
 layout: learning-unit
 ---

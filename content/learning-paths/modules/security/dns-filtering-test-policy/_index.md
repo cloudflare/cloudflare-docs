@@ -1,10 +1,10 @@
 ---
-title: Test a DNS policy
+title: Test DNS filtering
 pcx_content_type: overview
 weight: 1
 layout: learning-module
 ---
 
-# Test a DNS policy
+# Test DNS filtering
 
 {{<learning-module-summary>}}

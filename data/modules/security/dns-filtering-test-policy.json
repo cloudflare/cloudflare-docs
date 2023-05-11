@@ -1,6 +1,6 @@
 {
-    "summary": "Test a DNS policy on your device.",
-    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li> </li>\n <li> R <li>  </li>\n</ul>\n",
+    "summary": "Test a simple DNS policy on a single device.",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li> Validate that DNS policies are being applied to your traffic. </li> \n <li> Create a custom block page to display to users. </li> \n </ul>\n",
     "levels": [
         "beginner"
     ],
@@ -8,6 +8,6 @@
         "network admin"
     ],
     "type": "module",
-    "title": "Test a DNS policy",
+    "title": "Test DNS filtering",
     "url": "/learning-paths/modules/security/dns-filtering-test-policy/"
 }
