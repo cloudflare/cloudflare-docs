@@ -10,14 +10,34 @@
         },
         {
             "folder": "security",
+            "uid": "dns-filtering-create-policy"
+        },
+        {
+            "folder": "security",
+            "uid": "dns-filtering-connect-locations"
+        },
+        {
+            "folder": "security",
+            "uid": "dns-filtering-connect-devices"
+        },
+        {
+            "folder": "security",
             "uid": "dns-filtering-test-policy"
+        },
+        {
+            "folder": "security",
+            "uid": "dns-filtering-plan-deployment"
+        },
+        {
+            "folder": "security",
+            "uid": "dns-filtering-deploy"
         }
     ],
     "title": "Get started with DNS filtering",
     "uid": "dns-filtering",
     "path": "/learning-paths/dns-filtering/",
     "priority": 5,
-    "description": "Protect corporate devices from malware, phishing, and other prohibited content.",
+    "description": "Protect corporate devices from malware, phishing, and other prohibited web content.",
     "products": [
         "Cloudflare Gateway",
         "WARP"

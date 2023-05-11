@@ -35,7 +35,7 @@ C --> D[(Nameservers)]
 flowchart TD
 accTitle: DNS filtering logic
 A[Blocked by DNS policy?] --Yes --> B[Block page is configured?] --Yes--> C[Return IP of block page]
-B--No-->E[Refuse to respond]
+B--No-->E[Return 0.0.0.0]
 A --No --> D[Return IP of www.example.com]
 ```
 
@@ -52,14 +52,12 @@ Secure Web Gateways (SWGs) offer a greater set of capabilities, including:
 - [Data loss prevention](https://www.cloudflare.com/learning/access-management/what-is-dlp/)
 - [Browser isolation](https://www.cloudflare.com/learning/access-management/what-is-browser-isolation/)
 
-However, this can make SWGs more complex and expensive to deploy. Therefore, many companies will start with DNS filtering as an initial layer of defense against Internet threats. 
+However, this can make SWGs more complex and expensive to deploy. Therefore, many organizations will start with DNS filtering as an initial layer of defense against Internet threats.
 
 ## Related resources
 
 - For more background information on DNS filtering, refer to our [Learning Center](
 https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/).
-- Learn about the [benefits](https://www.cloudflare.com/products/zero-trust/cloudflare-vs-cisco-umbrella/
-) of replacing your DNS filtering software with Cloudflare Gateway.
 
 ## Next steps
 In the remaining modules, you will learn how to set up DNS filtering on your devices using Cloudflare Gateway.

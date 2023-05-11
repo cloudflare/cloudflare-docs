@@ -1,6 +1,6 @@
 ---
-title: Test policy without an agent
+title: Understand the policy builder
 pcx_content_type: learning-unit
-weight: 3
+weight: 2
 layout: learning-unit
 ---

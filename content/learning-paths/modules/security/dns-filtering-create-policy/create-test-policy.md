@@ -1,6 +1,6 @@
 ---
 title: Create your first policy
 pcx_content_type: learning-unit
-weight: 2
+weight: 1
 layout: learning-unit
 ---

@@ -1,0 +1,13 @@
+{
+    "summary": "Forward DNS requests to Cloudflare Gateway by changing the resolver settings in your router, browser, or OS. Use this option if: \n<ul>\n <li> You want to try out DNS filtering without installing software. </li> \n <li> The Cloudflare One Agent is not supported for your OS. </li> \n<li> You want to apply blanket DNS policies to all devices in a physical location, such as a retail store or office. </li> </ul>\n",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Send DNS traffic to Gateway for filtering. </li>\n </ul>\n",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Connect to Gateway without an agent",
+    "url": "/learning-paths/modules/security/dns-filtering-connect-locations/"
+}

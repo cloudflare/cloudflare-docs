@@ -1,0 +1,13 @@
+{
+    "summary": "Forward DNS requests to Cloudflare Gateway by installing the Cloudflare One Agent on your device. Use this option if: \n<ul>\n <li> You want to create DNS policies based on user identity. </li> \n <li> You want to apply consistent policies for both remote and on-site users. </li> <li> You are interested in progressing from DNS-only security to the advanced protection offered by a Secure Web Gateway. </li> \n </ul>\n ",
+    "abstract": "<p>By the end of this module, you will be able to:</p>\n<ul>\n<li>Set up a Cloudflare account. </li>\n<li>Create a Zero Trust organization to manage your devices and policies. </li>\n</ul>\n",
+    "levels": [
+        "beginner"
+    ],
+    "roles": [
+        "network admin"
+    ],
+    "type": "module",
+    "title": "Connect to Gateway with the Cloudflare One Agent",
+    "url": "/learning-paths/modules/security/dns-filtering-connect-devices/"
+}
