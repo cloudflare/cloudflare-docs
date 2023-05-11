@@ -3,12 +3,10 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   title: Cloudflare Pages documentation
 ---
-
-{{<content-column>}}
 
 # Cloudflare Pages
 
@@ -83,5 +81,3 @@ Built on SQLite, D1 is Cloudflare’s first queryable relational database. Creat
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
  
 {{</resource-group>}}
-
-{{</content-column>}}
