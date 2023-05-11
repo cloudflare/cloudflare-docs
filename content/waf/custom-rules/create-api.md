@@ -23,7 +23,7 @@ This example request, which covers step 3 in the rule creation procedure, adds a
 The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a threat score greater than `10`:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
 -d '{
@@ -45,7 +45,7 @@ The new rule, which will be the last rule in the ruleset, includes the definitio
 ---
 highlight: 8-12
 ---
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules" \
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
 -H "Authorization: Bearer <API_TOKEN>" \
 -H "Content-Type: application/json" \
 -d '{
