@@ -10,64 +10,60 @@ layout: list
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a Custom Rule via API.
 
-You must deploy custom rules to the `http_request_firewall_custom` phase entry point ruleset.
+You must deploy custom rules to the `http_request_firewall_custom` [phase entry point ruleset](/ruleset-engine/about/phases/#phase-entry-point-ruleset).
 
 ## Create a custom rule
 
-To create a custom rule, add a rule to the `http_request_firewall_custom` phase entry point ruleset.
+To create a custom rule for a zone, add a rule to the `http_request_firewall_custom` phase entry point ruleset:
 
-1.  Invoke the [View ruleset](/ruleset-engine/rulesets-api/view/#view-a-specific-ruleset) method to obtain the list of rules already present in the `http_request_firewall_custom` phase entry point ruleset. If the entry point ruleset does not exist, proceed to step 2, since adding a rule to the entry point ruleset will create the ruleset if it does not exist.
+1. Invoke the [List zone rulesets](/api/operations/listZoneRulesets) method to obtain the list of rulesets in your zone. You will need the [zone ID](/fundamentals/get-started/basic-tasks/find-account-and-zone-ids/) for this operation.
 
-2.  Invoke the [Update ruleset](/ruleset-engine/rulesets-api/update/) method to update the list of rules in the phase entry point ruleset with a new rule. You must include the rule ID of all the rules you wish to keep in the ruleset (all other fields are optional).
+2. Search for an entry point ruleset for the `http_request_firewall_custom` phase in the response. Such a ruleset would have the following properties: `"kind": "zone"` and `"phase": "http_request_firewall_custom"`. If you find the ruleset, take note of its ID for the next step.
+
+3. If the entry point ruleset already exists, invoke the [Create a zone ruleset rule](/api/operations/createZoneRulesetRule) API operation to add a rule to the existing ruleset. By default, the rule will be added at the end of the list of rules already in the ruleset. Refer to the examples below for details.
+
+    If the entry point ruleset does not exist, invoke the [Create a zone ruleset](/api/operations/createZoneRuleset) API operation to create the entry point ruleset with the new custom rule.
 
 ### Example A
 
-This example request **replaces all rules** in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule that challenges requests from the United Kingdom or France with a threat score greater than `10`:
+This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`. The new rule, which will be the last rule in the ruleset, will challenge requests from the United Kingdom or France with a threat score greater than `10`:
 
-```json
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_custom/entrypoint" \
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules" \
 -H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
-  "rules": [
-    {
-      "description": "My custom rule",
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 10",
-      "action": "challenge"
-    }
-  ]
+  "description": "My custom rule",
+  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 10",
+  "action": "challenge"
 }'
 ```
 
-{{<render file="_api-add-rule-to-ruleset.md">}}
+{{<render file="_api-create-ruleset-with-rule.md">}}
 
 ### Example B
 
-This example request **replaces all rules** in the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`, defining a single custom rule with a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
+This example request, which covers step 3 in the rule creation procedure, adds a rule to the `http_request_firewall_custom` phase entry point ruleset for the zone with ID `{zone_id}`. The entry point ruleset already exists, with ID `{ruleset_id}`. The new rule, which will be the last rule in the ruleset, includes the definition of a [custom response](/waf/custom-rules/create-dashboard/#configuring-a-custom-response-for-blocked-requests) for blocked requests:
 
-```json
+```bash
 ---
-highlight: [10,11,12,13,14,15,16]
+highlight: 8-12
 ---
-curl -X PUT \
-"https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/rulesets/phases/http_request_firewall_custom/entrypoint" \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules" \
 -H "Authorization: Bearer <API_TOKEN>" \
+-H "Content-Type: application/json" \
 -d '{
-  "rules": [
-    {
-      "description": "My custom rule with plain text response",
-      "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 50",
-      "action": "block",
-      "action_parameters": {
-        "response": {
-          "status_code": 403,
-          "content": "Your request was blocked.",
-          "content_type": "text/plain"
-        }
-      }
+  "description": "My custom rule with plain text response",
+  "expression": "(ip.geoip.country eq \"GB\" or ip.geoip.country eq \"FR\") and cf.threat_score > 50",
+  "action": "block",
+  "action_parameters": {
+    "response": {
+      "status_code": 403,
+      "content": "Your request was blocked.",
+      "content_type": "text/plain"
     }
-  ]
+  }
 }'
 ```
 
-{{<render file="_api-add-rule-to-ruleset.md">}}
+{{<render file="_api-create-ruleset-with-rule.md">}}
