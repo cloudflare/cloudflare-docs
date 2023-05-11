@@ -46,10 +46,15 @@ to_Router_C	| 192.0.2.10 | 198.51.100.202 | 10.255.255.5/31 | 172.16.0.0/12 | 10
 
 ## Add Anycast GRE or IPsec tunnel
 
-1. Follow the instructions in [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/#add-tunnels) to create a new GRE tunnel.
+1. Follow the instructions in [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/#add-tunnels) to create the GRE tunnels. Follow the instructions to add the multiple tunnels, for routers A, B, and C.
 2. In keeping with the example scenario, fill out the tunnel information to match the example below.
 
 ![Tunnel configuration for each branch office, including interface address, Customer and Cloudflare GRE endpoints, and TTL and MTU](/magic-wan/static/gre-tunnel-values.png)
+
+{{<Aside type="note">}}
+When you create a GRE tunnel the TTL and MTU fields are auto-populated. The default MTU value of 1476 bytes for the GRE tunnel takes into account the 24-byte GRE encapsulation overhead (20-byte outer IP header plus a 4-byte mandatory GRE header) that will be added to the original (inner) IP packet when they are sent over
+the GRE tunnel. Refer to [Set maximum segment size](/magic-wan/prerequisites/#set-maximum-segment-size) for more information.
+{{</Aside>}}
 
 ## Add static routes
 
@@ -58,10 +63,6 @@ to_Router_C	| 192.0.2.10 | 198.51.100.202 | 10.255.255.5/31 | 172.16.0.0/12 | 10
 
 ![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
 
-{{<Aside type="note">}}
-When you create a GRE tunnel the TTL and MTU fields are auto-populated. The default MTU value of 1476 bytes for the GRE tunnel takes into account the 24-byte GRE encapsulation overhead (20-byte outer IP header plus a 4-byte mandatory GRE header) that will be added to the original (inner) IP packet when they are sent over
-the GRE tunnel. Refer to [Set maximum segment size](/magic-wan/prerequisites/#set-maximum-segment-size) for more information.
-{{</Aside>}}
 
 ## Cloudflare Gateway configuration
 
