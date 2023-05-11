@@ -7,7 +7,7 @@ title: StringDecoder
 
 {{<render file="_nodejs-compat-howto.md">}}
 
-The [`node:string_decoder`](https://nodejs.org/api/string_decoder.html) is a legacy utility module that predates the WHATWG standard [TextEncoder](/workers/runtime-apis/encoding/#textencoder) and [TextDecoder](/workers/runtime-apis/encoding/#textdecoder) API. In most cases, you should use `TextEncoder` and `TextDecoder` instead — `StringDecoder` is available in the Workers runtime primarily for compatibility with existing NPM packages that rely on it. It can be accessed using:
+The [`node:string_decoder`](https://nodejs.org/api/string_decoder.html) is a legacy utility module that predates the WHATWG standard [TextEncoder](/workers/runtime-apis/encoding/#textencoder) and [TextDecoder](/workers/runtime-apis/encoding/#textdecoder) API. In most cases, you should use `TextEncoder` and `TextDecoder` instead. `StringDecoder` is available in the Workers runtime primarily for compatibility with existing npm packages that rely on it. `StringDecoder` can be accessed using:
 
 ```js
 const { StringDecoder } = require('node:string_decoder'); 
