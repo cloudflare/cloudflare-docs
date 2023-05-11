@@ -7,7 +7,7 @@ meta:
 
 # Connect to Cloudflare Gateway with Magic WAN
 
-You can route traffic through Magic WAN and [Cloudflare Gateway](/cloudflare-one/policies/filtering/) to secure Internet browsing and SaaS application access from internal users and devices.
+You can route traffic through Magic WAN and [Cloudflare Gateway](/cloudflare-one/policies/filtering/). Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering. Each policy serves different use cases, and we recommend that you [read the Gateway documentation](/cloudflare-one/policies/filtering/) to learn more.
 
 In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Cloudflare Gateway, from enterprise site routers.
 
@@ -32,9 +32,10 @@ For the purpose of this tutorial, setup will reference a scenario where an enter
 - Branch office is assigned `10.0.1.0/24` network, and Router B is the site router terminating the Anycast GRE or IPsec tunnel
 - Data center is assigned with `172.16.0.0/12` network, and Router C is the site router terminating the Anycast GRE or IPsec tunnel
 
-Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`. The table below summarizes the Anycast GRE or IPsec tunnel configuration and route table entries for the Magic WAN topology.
+Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`.
 
-### Configuration examples
+The table below summarizes the Anycast GRE or IPsec tunnel configuration and route table entries for the Magic WAN topology.
+
 {{<table-wrap>}}
 
 Tunnel name | Cloudflare GRE endpoint | Customer GRE endpoint | Interface address | MWAN prefix | MWAN next hop | MWAN route priority
@@ -45,7 +46,7 @@ to_Router_C	| 192.0.2.10 | 198.51.100.202 | 10.255.255.5/31 | 172.16.0.0/12 | 10
 
 {{</table-wrap>}}
 
-### 1. Add Anycast GRE or IPsec tunnel
+## 1. Add Anycast GRE or IPsec tunnel
 
 1. Follow the instructions in [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/#add-tunnels) to create all the GRE tunnels for routers A, B, and C.
 2. In keeping with the example scenario, fill out the tunnel information to match the example below.
@@ -56,7 +57,7 @@ to_Router_C	| 192.0.2.10 | 198.51.100.202 | 10.255.255.5/31 | 172.16.0.0/12 | 10
 When you create a GRE tunnel the TTL and MTU fields are auto-populated. The default MTU value of 1476 bytes takes into account the GRE encapsulation overhead of 24 bytes (20 bytes for the outer IP header plus 4 bytes for the mandatory GRE header) that will be added to the original (inner) IP packet when they are sent over the GRE tunnel. Refer to [Set maximum segment size](/magic-wan/prerequisites/#set-maximum-segment-size) for more information.
 {{</Aside>}}
 
-### 2. Add static routes
+## 2. Add static routes
 
 1. Follow the instructions in [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) to create a new static route.
 2. The **Priority** and **Region code** fields are auto-populated. Tunnels with lower priority numbers will be chosen first. You can also steer traffic to a certain region to reduce latency by scoping your tunnel to specific Cloudflare data center regions. Refer to [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for more information.
@@ -64,11 +65,11 @@ When you create a GRE tunnel the TTL and MTU fields are auto-populated. The defa
 
 ![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
 
-### 3. Setup site routers
+## 3. Setup site routers
 
-After setting up tunnels on Magic WAN side, you need to configure your site routers. In keeping with this example, refer to the [Configuration examples](#configuration-examples) table to find the IP addresses you should use.
+After setting up tunnels on Magic WAN side, you need to configure your site routers. In keeping with this example, refer to the table in the [Example scenario](#example-scenario) to find the IP addresses you should use.
 
-### 4. Set up Cloudflare Gateway
+## 4. Set up Cloudflare Gateway
 
 The last step is to configure your Cloudflare Gateway policies from the [Zero Trust](https://one.dash.cloudflare.com/) dashboard. To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
 
