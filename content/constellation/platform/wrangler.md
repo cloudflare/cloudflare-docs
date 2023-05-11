@@ -172,7 +172,7 @@ workers_dev = false
 route = { pattern = "example.org/*", zone_name = "example.org" }
 
 constellation = [
-    {binding = 'AI', project = '9d478427-dea6-4988-9b16-f6f8888d974c'},
-    {binding = 'SENTIMENT_AI', project = '8128ac62-0010-5441-beaf-c001e1ee5939'}
+    {binding = 'AI', project_id = '9d478427-dea6-4988-9b16-f6f8888d974c'},
+    {binding = 'SENTIMENT_AI', project_id = '8128ac62-0010-5441-beaf-c001e1ee5939'}
 ]
 ```
