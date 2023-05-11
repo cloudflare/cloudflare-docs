@@ -54,7 +54,7 @@ curl -X PUT \
 }'
 ```
 
-{{<render file="_api-add-rule-to-ruleset.md">}}
+{{<render file="_api-create-ruleset-with-rule.md">}}
 
 ### Example B - Rate limiting with a custom response
 
@@ -97,7 +97,7 @@ curl -X PUT \
 }'
 ```
 
-{{<render file="_api-add-rule-to-ruleset.md">}}
+{{<render file="_api-create-ruleset-with-rule.md">}}
 
 ### Example C - Rate limiting ignoring cached assets
 
@@ -134,7 +134,7 @@ curl -X PUT \
 }'
 ```
 
-{{<render file="_api-add-rule-to-ruleset.md">}}
+{{<render file="_api-create-ruleset-with-rule.md">}}
 
 ### Example D - Complexity-based rate limiting rule
 
@@ -175,4 +175,4 @@ curl -X PUT \
 }'
 ```
 
-{{<render file="_api-add-rule-to-ruleset.md">}}
+{{<render file="_api-create-ruleset-with-rule.md">}}
