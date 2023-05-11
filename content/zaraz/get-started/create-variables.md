@@ -6,11 +6,17 @@ weight: 4
 
 # Create a variable
 
-Variables are reusable blocks of information. They allow you to have one source of data you can reuse across tools and triggers in the dashboard. You can then update this data in a single place. 
+Variables are reusable blocks of information. They allow you to have one source of data you can reuse across tools and triggers in the Zaraz dashboard. You can then update this data in a single place. 
 
 For example, instead of typing a specific user ID in multiple fields, you can create a variable with that information instead. If there is a change and you have to update the user ID, you just need to update the variable and the change will be reflected across the dashboard.
 
 Worker Variables are a special type of variable that generates value dynamically. Learn more about Worker Variables [here](/zaraz/advanced/worker-variables/).
+
+{{<Aside type="note" header="Note">}}
+
+Currently variables in Zaraz can only be used on the Zaraz dashboard.
+
+{{</Aside>}}
 
 ## Create a new variable
 
@@ -18,10 +24,11 @@ Worker Variables are a special type of variable that generates value dynamically
 2. Go to **Zaraz** > **Tools Configuration** > **Variables**.
 3. Select **Create variable**, and give it a name.
 4. In **Variable type** select between `String`, `Secret` or `Worker` from the drop-down menu. Use `Secret` when you have a private value that you do not want to share, such as an API token.
-5. In **Variable value** enter the value of your variable.
+5. In **Variable value** enter the value of your variable, or you can select a predefined variable value using the plus(+) sign in the field.
+
 6. Select **Save**.
 
-Your variable is now ready to be used with tools and triggers.
+Your variable is now ready to be used with tools and triggers on Zaraz Dashboard, by clicking the plus(+) sign in the relevant fields, and choose the variables you want to utilize. 
 
 ## Next steps
 
