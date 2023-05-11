@@ -72,8 +72,6 @@ This example invokes the [Create a zone ruleset rule](/api/operations/createZone
 * Skips the `http_ratelimit` phase
 * Disables event logging for the current rule
 
-For requests matching the rule expression.
-
 ```bash
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
 -H "Authorization: Bearer <API_TOKEN>" \
