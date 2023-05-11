@@ -72,7 +72,7 @@ After setting up tunnels on Magic WAN side, you need to configure your site rout
 
 The last step is to configure your Cloudflare Gateway policies from the [Zero Trust](https://one.dash.cloudflare.com/) dashboard. To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
 
-The Cloudflare Gateway upgrade supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
+Cloudflare Gateway supports all TCP and UDP ports, traffic sourced from RFC, and BYOIP.
 
 After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare global network.
 
