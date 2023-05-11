@@ -24,7 +24,7 @@ Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against
 
 ### HTTP/3 traffic
 
-For proxied HTTP/3 traffic, Gateway applies your policies in the following order:
+For proxied [HTTP/3 traffic](/cloudflare-one/policies/filtering/http-policies/http3/), Gateway applies your policies in the following order:
 
 1. DNS
 2. Network
