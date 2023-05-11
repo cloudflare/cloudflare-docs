@@ -35,7 +35,7 @@ The **Documentation Explorer** opens and displays a list of available objects:
 
 Objects in the **Documentation Explorer** use this syntax:
 
-```code
+```txt
   object-name: object-type-definition
 ```
 
@@ -122,15 +122,15 @@ For more information on using GraphiQL, please visit this [guide][16].
 [2]: <https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme>
 [3]: <https://altairgraphql.dev/#download>
 [4]: </analytics/graphql-api/getting-started/authentication/graphql-client-headers/>
-[5]: </analytics/static/images/graphiql-docs-link.png>
-[6]: </analytics/static/images/graphiql-doc-explorer.png>
-[7]: </analytics/static/images/graphiql-doc-explorer-query-mutations.png>
-[8]: </analytics/static/images/graphiql-doc-explorer-view-cost.png>
-[9]: </analytics/static/images/graphiql-doc-explorer-viewer-fields.png>
-[10]: </analytics/static/images/graphiql-doc-explorer-zones.png>
-[11]: </analytics/static/images/graphiql-doc-explorer-zone-fields.png>
-[12]: </analytics/static/images/graphiql-doc-explorer-find-firewall.png>
-[13]: </analytics/static/images/graphiql-doc-explorer-firewallevents-definition.png>
-[14]: </analytics/static/images/graphiql-doc-explorer-firewall-type-definition.png>
-[15]: </analytics/static/images/graphiql-doc-explorer-firewall-fields.png>
+[5]: </images/analytics/graphiql-docs-link.png>
+[6]: </images/analytics/graphiql-doc-explorer.png>
+[7]: </images/analytics/graphiql-doc-explorer-query-mutations.png>
+[8]: </images/analytics/graphiql-doc-explorer-view-cost.png>
+[9]: </images/analytics/graphiql-doc-explorer-viewer-fields.png>
+[10]: </images/analytics/graphiql-doc-explorer-zones.png>
+[11]: </images/analytics/graphiql-doc-explorer-zone-fields.png>
+[12]: </images/analytics/graphiql-doc-explorer-find-firewall.png>
+[13]: </images/analytics/graphiql-doc-explorer-firewallevents-definition.png>
+[14]: </images/analytics/graphiql-doc-explorer-firewall-type-definition.png>
+[15]: </images/analytics/graphiql-doc-explorer-firewall-fields.png>
 [16]: </analytics/graphql-api/getting-started/compose-graphql-query/>

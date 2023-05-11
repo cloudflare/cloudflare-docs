@@ -8,7 +8,7 @@ weight: 1
 
 ## Network layer
 
-Network-layer phases apply to received packets at the edge.
+Network-layer phases apply to packets received on the Cloudflare global network.
 
 {{<table-wrap>}}
 
@@ -21,7 +21,7 @@ Phase name      | Used in product/feature
 
 ## Application layer
 
-Application-layer phases apply to received requests at the edge.
+Application-layer phases apply to requests received on the Cloudflare global network.
 
 ### Request phases
 
@@ -49,6 +49,8 @@ The phases execute in the order they appear in the table.
 {{</table-wrap>}}
 
 \* _This phase is for configuration purposes only — the corresponding rules will not be executed at this stage in the request handling process._
+
+{{<render productFolder="bots" file="_bfm-change-notice.md">}}
 
 ### Response phases
 

@@ -53,10 +53,10 @@ ___
 
 L’application**Firewall** de Cloudflare facilite le blocage du trafic en ayant recours aux méthodes suivantes :
 
-**[IP Access Rules](https://support.cloudflare.com/hc/articles/217074967)(Règles d’accès aux adresses IP)** \- Recommandé pour bloquer plusieurs adresses IP, les plages IP /16 ou /24 ou les Autonomous System Numbers (ASN).   
-**[Firewall Rules](https://developers.cloudflare.com/firewall/cf-dashboard/create-edit-delete-rules/) (Règles de pare-feu)**\- Recommandé pour bloquer un pays, une plage IP valide ou des modèles d'attaque plus complexes.  
-**[Zone Lockdown](https://support.cloudflare.com/hc/en-us/articles/115001595131-How-do-I-Lockdown-URLs-in-Cloudflare-) (Verrouillage de zone)**\- Recommandé pour n'autoriser que des adresses IP ou des plages d'adresses IP de confiance sur une partie de votre site.  
-**[User Agent Blocking](https://support.cloudflare.com/hc/en-us/articles/115001856951-How-do-I-block-malicious-User-Agents-with-Cloudflare-)(Blocage d’agents utilisateurs)** \- Recommandé pour bloquer les [en-têtes d'agents-utilisateurs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) suspects sur l'ensemble de votre domaine.
+**[IP Access Rules](/waf/tools/ip-access-rules/)(Règles d’accès aux adresses IP)** \- Recommandé pour bloquer plusieurs adresses IP, les plages IP /16 ou /24 ou les Autonomous System Numbers (ASN). 
+**[Firewall Rules](/firewall/cf-dashboard/create-edit-delete-rules/) (Règles de pare-feu)**\- Recommandé pour bloquer un pays, une plage IP valide ou des modèles d'attaque plus complexes.
+**[Zone Lockdown](/waf/tools/zone-lockdown/) (Verrouillage de zone)**\- Recommandé pour n'autoriser que des adresses IP ou des plages d'adresses IP de confiance sur une partie de votre site.
+**[User Agent Blocking](/waf/tools/user-agent-blocking/)(Blocage d’agents utilisateurs)** \- Recommandé pour bloquer les [en-têtes d'agents-utilisateurs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) suspects sur l'ensemble de votre domaine.
 
 Pour décider des pays ou adresses IP à bloquer ou à tester, vérifiez vos fichiers journaux. Contactez votre fournisseur d’hébergement pour vous aider à identifier :
 

@@ -10,6 +10,8 @@ weight: 6
 
 As a SaaS provider, you may want to support subdomains under your own zone in addition to letting your customers use their own domain names with your services. For example, a customer may want to use their vanity domain `app.customer.com` to point to an application hosted on your Cloudflare zone `service.saas.com`. Cloudflare for SaaS allows you to increase security, performance, and reliability of your customers' domains.
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ## Benefits
 
 When you use Cloudflare for SaaS, it helps you to:
@@ -37,25 +39,23 @@ As the SaaS provider, you can extend Cloudflare's products to customer-owned cus
 
 Custom hostnames are routed to a default origin server called fallback origin. This configuration is available on all plans.
 
-![Standard case](/cloudflare-for-platforms/static/use-cases/Standard.png)
+![Standard case](/images/cloudflare-for-platforms/use-cases/Standard.png)
 
 ### Cloudflare for SaaS with Apex Proxying:
 
-This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is available as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-verification).
+This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. This is available as an add-on for Enterprise plans. For more details, refer to [Apex Proxying](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-verification/#apex-proxying).
 
-![Advanced case](/cloudflare-for-platforms/static/use-cases/Advanced.png)
+![Advanced case](/images/cloudflare-for-platforms/use-cases/Advanced.png)
 
 ### Cloudflare for SaaS with BYOIP:
 
 This allows you to support apex domains even if your customers are using a DNS provider that does not allow a CNAME at the apex. Also, you can point to your own IPs if you want to bring an IP range to Cloudflare (instead of Cloudflare provided IPs). This is available as an add-on for Enterprise plans.
 
-![Pro Case](/cloudflare-for-platforms/static/use-cases/Pro.png)
+![Pro Case](/images/cloudflare-for-platforms/use-cases/Pro.png)
 
 ## Availability
 
 Cloudflare for SaaS is bundled with non-Enterprise plans and available as an add-on for Enterprise plans. For more details, refer to [Plans](/cloudflare-for-platforms/cloudflare-for-saas/plans/).
-
-{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
 ## Next steps
 

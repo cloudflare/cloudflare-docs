@@ -82,7 +82,7 @@ ___
 
 如果网站访问者加载了视频却没有观看，Cloudflare 仍会为视频传输付费。但是，如果访问者的浏览器在本地缓存视频，则 Cloudflare 不会为观看视频的时间计费。换句话说，如果访问者多次观看视频，我们不会收取后续观看费用。
 
-如果您在嵌入代码中使用 _preload_ 属性（在 Stream [API 文档](https://developers.cloudflare.com/stream/video-playback/player-api/)中进行了描述），我们将对预加载视频花费的时间计费。请注意，预加载行为因浏览器而异。一些浏览器会预加载几秒钟的视频，而其他浏览器会预加载整个视频。尽管预加载对于优化视频可用性很有用，但请考虑它是否适合您的用例。
+如果您在嵌入代码中使用 _preload_ 属性（在 Stream [API 文档](/stream/video-playback/player-api/)中进行了描述），我们将对预加载视频花费的时间计费。请注意，预加载行为因浏览器而异。一些浏览器会预加载几秒钟的视频，而其他浏览器会预加载整个视频。尽管预加载对于优化视频可用性很有用，但请考虑它是否适合您的用例。
 
 您可以在 Cloudflare 管理面板中查看 Cloudflare Stream 计费分钟，以估算传输分钟的费用。
 
@@ -97,4 +97,4 @@ ___
 ___
 
 -   [Cloudflare Stream 视频平台](https://support.cloudflare.com/hc/en-us/articles/360017801091)
--   [Cloudflare Stream 开发人员文档](https://developers.cloudflare.com/stream/getting-started/)
+-   [Cloudflare Stream 开发人员文档](/stream/getting-started/)

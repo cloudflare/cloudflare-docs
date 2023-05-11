@@ -16,3 +16,8 @@ To confirm the Cloudflare IPs associated with your domain are blocked in China, 
 -   The results from the [Great Firewall Checker](http://www.greatfirewallofchina.org/).
 -   DNS resolution response for the domain from a location in China.  Consider using a tool like [DNS Checker](https://dnschecker.org/).
 -   The type of content hosted on your site.  China does censor certain content including pornography, gambling, and specific types of political discussion.
+
+{{<Aside type="note">}}
+Cloudflare Support can only confirm if a domain is blocked by China and
+has no control over unblocking.
+{{</Aside>}}

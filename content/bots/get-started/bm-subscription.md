@@ -56,7 +56,7 @@ For **automated** traffic, sort through the IP addresses, ASNs, and other data p
 
 Use the slider tool to identify **other traffic groups**. For example, you may find that traffic from your mobile app is routinely scored at 12.
 
-![Example of a bot score distribution](/bots/static/bot-score-distribution.png)
+![Example of a bot score distribution](/images/bots/bot-score-distribution.png)
 
 At the end of your analysis, you should:
 
@@ -126,3 +126,7 @@ Some automated traffic is good! To allow good bots like Google or Bing, use the 
 ### Mobile traffic
 
 To treat mobile traffic differently, use the `user agent` or `IP address` fields when creating your firewall rules.
+
+### `Skip` action
+
+{{<render file="_flexible-sbfm.md">}}

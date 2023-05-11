@@ -24,7 +24,7 @@ When resizing fails, the response body contains an error message explaining the 
 
 -   9401 — Missing or invalid required arguments in `{cf:image{…}}` options, for example `width` is not a number.
 -   9402 — Download of the original image failed, for example because the image was too large or the connection was interrupted.
--   9403 — [Request loop](https://developers.cloudflare.com/images/image-resizing/resize-with-workers#prevent-request-loops). The service was asked to resize an already-resized image, or the Worker has fetched its own URL.
+-   9403 — [Request loop](/images/image-resizing/resize-with-workers#prevent-request-loops). The service was asked to resize an already-resized image, or the Worker has fetched its own URL.
 -   9406 & 9419 — Invalid image URL specified (for example, contains spaces, unescaped Unicode, or non-HTTP/S URL).
 -   9407 — Origin domain name lookup error.
 -   9404 — Origin returned 404 HTTP status code. The image does not exist on the origin server, or a wrong URL was given to resize.
@@ -52,7 +52,7 @@ ___
 
 Image requests to the origin will be anonymized (no cookies, no auth, no custom headers). This is because we have to have one public cache for resized images, and it would be unsafe to share images that are personalized for individual visitors.
 
-However, in cases where customers agree to store such images in public cache, Cloudflare supports resizing images through Workers [on authenticated origins](https://developers.cloudflare.com/images/image-resizing/control-origin-access#authenticated-origin).
+However, in cases where customers agree to store such images in public cache, Cloudflare supports resizing images through Workers [on authenticated origins](/images/image-resizing/control-origin-access#authenticated-origin).
 
 ___
 

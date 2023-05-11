@@ -11,4 +11,4 @@ When a client visits your application, Cloudflare directs their request to a hea
 
 Cloudflare performs layer 7 load balancing when traffic to your hostname is **proxied** through Cloudflare. In the **Load Balancing** dashboard, these load balancers are marked with an orange cloud.
 
-![DNS-only load balancers are marked with an orange cloud](/load-balancing/static/images/proxied-load-balancer.png)
+![DNS-only load balancers are marked with an orange cloud](/images/load-balancing/proxied-load-balancer.png)

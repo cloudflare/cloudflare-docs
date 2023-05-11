@@ -24,7 +24,7 @@ A Web Application Firewall or WAF creates a shield between a web app and the Int
 Refer to the [Ruleset Engine](/ruleset-engine/about/rules/) documentation for more information on the following concepts:
 
 * [Rule](/ruleset-engine/about/rules/): Defines a filter and an action to perform on the incoming requests that match the filter.
-* [Ruleset](/ruleset-engine/about/rulesets/): An ordered set of rules that you can apply to traffic at the edge.
+* [Ruleset](/ruleset-engine/about/rulesets/): An ordered set of rules that you can apply to traffic on the Cloudflare global network.
 
 ## WAF Managed Rules
 

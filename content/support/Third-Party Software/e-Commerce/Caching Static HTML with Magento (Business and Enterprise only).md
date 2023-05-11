@@ -10,6 +10,13 @@ title: Caching Static HTML with Magento (Business and Enterprise only)
 
 ## Overview
 
+{{<Aside type="note">}}
+All Cloudflare customers can configure caching HTML files. However, only
+customers in the Business and Enterprise plans are able to bypass HTML
+caching when a cookie is sent with Bypass Cache on Cookie request using
+Cloudflare **Page Rules**.
+{{</Aside>}}
+
 Business and Enterprise customers using Magento can cache anonymous page views with our _Bypass Cache on Cookie_ page rule. This setting caches static HTML at the Cloudflare edge with no need for regeneration from request to request.
 
 Before logging in to the Magento admin panel or adding something to a shopping cart, the page view is anonymized and it's possible to cache the requests so that Magento doesn't need to constantly regenerate the HTML at your origin server.
@@ -33,7 +40,7 @@ With this setting in place, you can set the necessary Page Rules to cache anonym
 5\. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is www.orangeclouded.com.
 
 -   _Cache Everything_ will instruct Cloudflare to cache static HTML.
--   When the _Bypass Cache on Cookie_ rule matches the criteria we set, Cloudflare won't cache HTML ([whilst static images and other files will still be cached](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-)). Depending on whether you're using Magento 1 or Magento 2, you will need a different rule:
+-   When the _Bypass Cache on Cookie_ rule matches the criteria we set, Cloudflare won't cache HTML ([though static images and other files will still be cached](/cache/about/default-cache-behavior/)). Depending on whether you're using Magento 1 or Magento 2, you will need a different rule:
 
 `Magento 1    external_no_cache=.*|PHPSESSID=.*|adminhtml=.* Magento 2    admin=.*|PHPSESSID=.*|private_content_version=.*`
 
@@ -42,6 +49,12 @@ With this setting in place, you can set the necessary Page Rules to cache anonym
 ![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](/support/static/hc-import-page_rules_caching_static_html_with_magento.png)
 
 6\. Click **Save and Deploy**.
+
+{{<Aside type="note">}}
+Enterprise Cloudflare customers can use Custom Cache Keys to take their
+performance further, contact your Customer Success Manager if
+interested.
+{{</Aside>}}
 
 ___
 
@@ -73,4 +86,4 @@ ___
 
 ## Related resources
 
--   [Understanding Cloudflare's CDN](https://support.cloudflare.com/hc/en-us/articles/200172516)
+-   [Understanding Cloudflare's CDN](/cache/about/default-cache-behavior/)

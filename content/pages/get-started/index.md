@@ -11,7 +11,7 @@ In this guide, you will get started with Cloudflare Pages, and deploy your first
 
 There are three ways to set up a Pages project:
 
-1. Connecting your [Git provider](/pages/get-started/#connecting-your-git-provider-to-pages) to Pages.
+1. Connecting your [Git provider](/pages/get-started/#connect-your-git-provider-to-pages) to Pages.
 2. Deploying your prebuilt assets right to Pages with [Direct Uploads](/pages/platform/direct-upload/).
 3. Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
@@ -108,6 +108,12 @@ After you have finished setting your build configuration, select **Save and Depl
 
 When your project has finished deploying, you will receive a unique URL to view your deployed site.
 
+{{<Aside type="warning" header="DNS errors">}}
+
+If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error. 
+
+{{</Aside>}}
+
 ## Manage your site
 
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
@@ -124,7 +130,7 @@ To delete your Pages project:
 
 {{<Aside type="warning">}}
 
-For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](#deleting-a-custom-domain) for instructions.
+For projects with a custom domain, you must first delete the CNAME record associated with your Pages project. Failure to do so may leave the DNS records active, causing your domain to point to a Pages project that no longer exists. Refer to [Deleting a custom domain](/pages/platform/custom-domains/#delete-a-custom-domain) for instructions.
 
 For projects without a custom domain (any project on a `*.pages.dev` subdomain), your project can be deleted in the project's settings.
 
@@ -134,9 +140,8 @@ For projects without a custom domain (any project on a `*.pages.dev` subdomain),
 
 In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your Git configuration, or updating your build command, build directory or environment variables.
 
-![Configuring your Pages project settings in the Cloudflare dashboard](/pages/get-started/images/settings.png)
-
 ## Related resources
 
-- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/)
-- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access)
+- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/).
+- Enable [Cloudflare Web Analytics](/pages/how-to/web-analytics/).
+- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access).

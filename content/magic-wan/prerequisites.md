@@ -15,6 +15,6 @@ Magic WAN relies on GRE and IPsec tunnels to transmit packets from Cloudflare’
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support maximum segment size (MSS) clamping.
 
-{{<render file="_maximum-segment-size.md" productFolder="magic-transit" withParameters="/magic-wan/static/mss-values-and-packet.png;;Magic WAN;;To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces).">}}
+{{<render file="_maximum-segment-size.md" productFolder="magic-transit" withParameters="Magic WAN;;To accommodate the additional header data, **you must set the MSS value to 1436 bytes at your tunnel interfaces** (not the physical interfaces).">}}
 
-{{<render file="_router-vendor-guidelines-mss-settings-origin.md" productFolder="magic-transit" withParameters="To verify that your routers have the correct MSS setting (1436 bytes) at your origin, run the following command on the servers egressing the prefixes you want to add to Magic WAN:">}}
+{{<render file="_router-vendor-guidelines-mss-settings-origin.md" productFolder="magic-transit">}}

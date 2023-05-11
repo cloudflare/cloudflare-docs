@@ -34,6 +34,11 @@ Das Entfernen des dc-######-Eintrags ist nur mit einer der folgenden Methoden m�
 
 `example.com MX mail.example.com``mail.example.com A 192.0.2.1``example.com A 203.0.113.1`
 
+{{<Aside type="warning">}}
+Befindet sich Ihr Mailserver auf derselben IP-Adresse wie Ihr Webserver,
+wird in Ihrem MX-Eintrag Ihre Ursprungs-IP-Adresse angezeigt.
+{{</Aside>}}
+
 ___
 
 ## Warum geben DNS-Abfragen falsche Ergebnisse zurück?
@@ -50,7 +55,13 @@ ___
 
 Wenn _kein A-, AAAA- oder CNAME-Eintrag gefunden wird_, bedeutet das, dass in der Cloudflare-App **DNS** keine korrekten Einträge für die DNS-Auflösung vorhanden sind.
 
-Fügen Sie die [fehlenden DNS-Einträge](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records) Ihrer Domain hinzu.
+Fügen Sie die [fehlenden DNS-Einträge](/dns/manage-dns-records/how-to/create-dns-records) Ihrer Domain hinzu.
+
+{{<Aside type="note">}}
+Websites haben im Allgemeinen mindestens einen *A-Eintrag* , der auf die
+IP-Adresse des Ursprungsservers verweist, normalerweise für die
+Subdomain www und die Root-Domain.
+{{</Aside>}}
 
 ___
 

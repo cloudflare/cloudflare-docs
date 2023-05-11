@@ -14,6 +14,11 @@ Mobile Redirect allows you to automatically redirect mobile device visitors to a
 
 You must have Cloudflare's performance service enabled (["orange clouded"](https://support.cloudflare.com/hc/articles/200169626) in the **DNS** Settings) for the redirect to be active.
 
+{{<Aside type="note">}}
+The mobile redirect service is not available to domains signed up
+through hosting partners initially. Want to be notified when it is? [Let
+us know](https://support.cloudflare.com/requests/new).
+{{</Aside>}}
 ___
 
 ## Enable Mobile Redirect
@@ -31,6 +36,12 @@ ___
 6\. Select the subdomain that you would like to redirect from the drop down list.
 
 7\. Choose **Keep Path** or **Drop Path**_._
+
+{{<Aside type="note">}}
+**Keep Path** will redirect all mobile requests to the same resource
+hosted on your mobile-optimized website. **Drop Path** will redirect all
+mobile requests to your mobile-optimized website homepage.
+{{</Aside>}}
 
 8\. Toggle switch to **On**.
 
@@ -52,6 +63,11 @@ Browsers from the following mobile devices are redirected to the mobile-optimize
 -   Opera mini
 -   AvantGo
 -   Docomo
+
+{{<Aside type="note">}}
+The iPad and Android tablet user agents will not match and trigger the
+mobile redirect feature.
+{{</Aside>}}
 
 ___
 

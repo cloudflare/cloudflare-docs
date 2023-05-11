@@ -21,7 +21,7 @@ Below is a list of all the components you can inspect:
 - **Processing** (`domComplete` - `domInteractive`): How long it took to render the page. This includes loading any resources that block page rendering, including images, scripts, and style sheets. If this number is big, optimize your document architecture, resource size, or configure settings in the Cloudflare Speed app, such as Auto Minify the source code. This document process can be drilled down more with `domInteractive`, `domContentLoadedEventStart`, `domContentLoadedEventEnd`, and `domComplete`.
 - **Load Event** (`loadEventEnd` - `loadEventStart`): An event triggered by the browser when a document and its resources finish loading. The Load Event duration may be a useful metric if you have additional functions or any logic for the load event.
 
-![Web Analytics load time summary page](/analytics/static/images/web-analytics/dash-web_analytics-page_load_time.png)
+![Web Analytics load time summary page](/images/analytics/web-analytics/dash-web_analytics-page_load_time.png)
 
 ## Data collected for Paint Timings
 

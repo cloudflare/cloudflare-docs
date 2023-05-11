@@ -176,7 +176,7 @@ As duas causas mais comuns de erros 521 são:
 -   Analise os logs de erro do servidor de origem para identificar falhas ou indisponibilidades da aplicação do servidor da internet.
 -   Confirme se os [endereços de IP da Cloudflare](https://www.cloudflare.com/ips) não estão bloqueados ou com limite de taxa
 -   Inclua todas as [faixas de IP da Cloudflare](https://www.cloudflare.com/ips) na lista de permissões do firewall ou outro software de segurança do seu servidor de origem
--   Se tiver seu **modo SSL/TLS** configurado como **Full** \[Completo\] ou **Full (Strict)** \[Completo (Rigoroso)\], confirme que você instalou o [Certificado de Origem da Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca).
+-   Se tiver seu **modo SSL/TLS** configurado como **Full** \[Completo\] ou **Full (Strict)** \[Completo (Rigoroso)\], confirme que você instalou o [Certificado de Origem da Cloudflare](/ssl/origin-configuration/origin-ca).
 -   Encontre informações adicionais de solução de problemas na [Comunidade da Cloudflare](https://community.cloudflare.com/t/community-tip-fixing-error-521-web-server-is-down/42461).
 
 ___
@@ -198,7 +198,7 @@ O erro 522 ocorre quando o tempo limite para a Cloudflare entrar em contato com 
 -   O endereço de IP do servidor de origem no seu aplicativo de **DNS** da Cloudflare não corresponde ao endereço de IP atualmente provisionado para o seu servidor de origem por seu provedor de hospedagem.
 -   Os pacotes foram descartados no seu servidor de origem.
 
-Se estiver usando o [Cloudflare Pages](https://developers.cloudflare.com/pages/), verifique se você está com uma configuração de domínio personalizada e se o seu registro CNAME está apontado para o seu domínio nas Páginas Personalizadas. Instruções sobre como configurar um domínio nas Páginas Personalizadas podem ser encontradas [aqui](https://developers.cloudflare.com/pages/getting-started#adding-a-custom-domain).
+Se estiver usando o [Cloudflare Pages](/pages/), verifique se você está com uma configuração de domínio personalizada e se o seu registro CNAME está apontado para o seu domínio nas Páginas Personalizadas. Instruções sobre como configurar um domínio nas Páginas Personalizadas podem ser encontradas [aqui](/pages/getting-started#adding-a-custom-domain).
 
 Se nenhuma das causas acima levar a uma resolução, solicite as seguintes informações do seu provedor de hospedagem ou administrador do site antes de [entrar em contato com o suporte da Cloudflare](https://support.cloudflare.com/hc/articles/200172476):
 
@@ -250,7 +250,7 @@ ___
 Os erros 525 indicam que o handshake de SSL entre a Cloudflare e o servidor de origem falhou. O erro 525 ocorre quando essas duas condições forem verdadeiras:
 
 1.  Falha do [handshake de SSL](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) entre a Cloudflare e o servidor de origem; e
-2.  [Uma configuração de **SSL** _Full_ \[Completo\] ou _Full (Strict)_\[Completo (Rigoroso)\]](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) na guia **Visão Geral**  do seu aplicativo de **SSL/TLS** na Cloudflare.
+2.  [Uma configuração de **SSL** _Full_ \[Completo\] ou _Full (Strict)_\[Completo (Rigoroso)\]](/ssl/origin-configuration/ssl-modes) na guia **Visão Geral**  do seu aplicativo de **SSL/TLS** na Cloudflare.
 
 **Solução**
 
@@ -259,12 +259,12 @@ Os erros 525 indicam que o handshake de SSL entre a Cloudflare e o servidor de o
 -   Não existe um certificado SSL válido instalado
 -   A porta 443 (ou outra porta segura personalizada) não está aberta
 -   Não há compatibilidade com [SNI](https://support.cloudflare.com/hc/articles/360026016272)
--   Os [conjuntos de cifras](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) aceitos pela Cloudflare não correspondem aos conjuntos de cifras compatíveis com o servidor de origem
+-   Os [conjuntos de cifras](/ssl/ssl-tls/cipher-suites) aceitos pela Cloudflare não correspondem aos conjuntos de cifras compatíveis com o servidor de origem
 
 **Verificações adicionais**
 
--   Verifique se você tem um certificado instalado no seu servidor de origem. Você pode conferir [esse artigo](https://support.cloudflare.com/hc/pt-br/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) para obter mais detalhes sobre como executar alguns testes. Caso não tenha nenhum certificado, você pode criar e instalar nosso [certificado de CA de origem gratuito da Cloudflare](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca). O uso de certificados de CA de origem permite que você criptografe o tráfego entre a Cloudflare e seu servidor de origem.
--   [Revise os conjuntos de cifras](https://developers.cloudflare.com/ssl/ssl-tls/cipher-suites) que seu servidor está usando para se certificar de que correspondam aos que são compatíveis com a Cloudflare.
+-   Verifique se você tem um certificado instalado no seu servidor de origem. Você pode conferir [esse artigo](https://support.cloudflare.com/hc/pt-br/articles/203118044-Gathering-information-for-troubleshooting-sites#h_0c7f48b3-fc29-4266-8c63-477fe61a11c4) para obter mais detalhes sobre como executar alguns testes. Caso não tenha nenhum certificado, você pode criar e instalar nosso [certificado de CA de origem gratuito da Cloudflare](/ssl/origin-configuration/origin-ca). O uso de certificados de CA de origem permite que você criptografe o tráfego entre a Cloudflare e seu servidor de origem.
+-   [Revise os conjuntos de cifras](/ssl/ssl-tls/cipher-suites) que seu servidor está usando para se certificar de que correspondam aos que são compatíveis com a Cloudflare.
 -   Verifique os logs de erros do seu servidor a partir dos registros de data e hora nos quais você vê os erros 525 para se certificar de que existem erros que possam estar fazendo com que a conexão seja reiniciada durante o handshake de SSL.
 
 ___
@@ -274,7 +274,7 @@ ___
 O erro 526 ocorre quando essas duas condições forem verdadeiras:
 
 1.  A Cloudflare não consegue validar o certificado SSL no servidor de origem; e
-2.  [Seu **SSL** está configurado como _Full (Strict)_ \[Completo (Rigoroso)\]](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes#full-strict) na guia **Visão Geral** do seu aplicativo de **SSL/TLS** da Cloudflare.
+2.  [Seu **SSL** está configurado como _Full (Strict)_ \[Completo (Rigoroso)\]](/ssl/origin-configuration/ssl-modes#full-strict) na guia **Visão Geral** do seu aplicativo de **SSL/TLS** da Cloudflare.
 
 **Solução**
 
@@ -289,7 +289,7 @@ Solicite ao administrador do seu servidor ou ao seu provedor de hospedagem que a
 
 ![A tela mostra um certificado SSL sem nenhum erro.](/support/static/hc-import-troubleshooting_5xx_errors_sslshopper_output.png)
 
-Se o servidor de origem usar um certificado autoassinado, configure o domínio para usar um _SSL_ _Full_ \[Completo\] ao invés de um SSL _Full SSL (Strict)_ \[Completo (Estrito)\]. Consulte as [configurações de SSL recomendadas para o seu servidor de origem](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes).
+Se o servidor de origem usar um certificado autoassinado, configure o domínio para usar um _SSL_ _Full_ \[Completo\] ao invés de um SSL _Full SSL (Strict)_ \[Completo (Estrito)\]. Consulte as [configurações de SSL recomendadas para o seu servidor de origem](/ssl/origin-configuration/ssl-modes).
 
 ___
 
@@ -365,7 +365,7 @@ Se ocorrerem erros de TLS/SSL, verifique o seguinte no servidor de origem, e cer
 -   A porta 443 está aberta
 -   Um certificado SSL seja apresentado pelo servidor de origem
 -   o SAN ou Nome Comum do certificado SSL do servidor de origem contêm o nome de host solicitado ou de destino
--   O **SSL** está configurado como [Full \[Completo\] ou Full (Script) \[Completo (Estrito)\]](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes) na guia **Visão Geral** do seu aplicativo de **SSL/TLS** na Cloudflare
+-   O **SSL** está configurado como [Full \[Completo\] ou Full (Script) \[Completo (Estrito)\]](/ssl/origin-configuration/ssl-modes) na guia **Visão Geral** do seu aplicativo de **SSL/TLS** na Cloudflare
 
 ___
 

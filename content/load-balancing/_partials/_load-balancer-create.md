@@ -19,7 +19,7 @@ To create a load balancer in the dashboard:
 4.  Click **Next**.
 
 5.  On the **Add an Origin Pool** page:
-    *   Select one or more existing pools or [create a new pool](/load-balancing/how-to/create-pool/#via-the-dashboard).
+    *   Select one or more existing pools or [create a new pool](/load-balancing/how-to/create-pool/#create-a-pool).
     *   If you are going to set [traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/) to **Off**, re-order the pools in your load balancer to adjust the fallback order.
     *   If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools).
     *   If you choose to set traffic steering to **Random**, you can set [Weights](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#random-steering) (via the API) to your pools to determine the percentage of traffic sent to each pool.
@@ -28,7 +28,7 @@ To create a load balancer in the dashboard:
 
 7.  On the **Monitors** page:
     *   Review the monitors attached to your pools.
-    *   If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/how-to/create-monitor/#via-the-dashboard).
+    *   If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/how-to/create-monitor/#create-a-monitor).
 
 8.  Click **Next**.
 

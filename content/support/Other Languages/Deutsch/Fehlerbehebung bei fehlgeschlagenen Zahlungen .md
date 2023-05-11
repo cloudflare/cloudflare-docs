@@ -13,6 +13,13 @@ title: Fehlerbehebung bei fehlgeschlagenen Zahlungen
 
 Unten finden Sie die häufigsten Gründe dafür, warum Transaktionen scheitern, wenn Cloudflare versucht, Ihre Zahlung zu bearbeiten. Wenn Ihre Zahlung neun (9) Tage lang scheitert, wird Ihr Konto automatisch auf einen Free Plan zurückgestuft. 
 
+{{<Aside type="note">}}
+Durch die Rückstufung auf den Free Plan wird der Betrieb Ihrer Website
+nicht ausgesetzt. Allerdings gehen Ihnen alle Abonnements oder
+Add-On-Dienste verloren, die mit Pro-, Business- oder Enterprise-Plänen
+verbunden sind.
+{{</Aside>}}
+
 Wenn Sie Ihre Zahlungsmethode aktualisiert haben, empfehlen wir, im Cloudflare Dashboard [Ihren Tariftyp und Ihre Add-On-Dienste manuell zu aktualisieren](https://support.cloudflare.com/hc/en-us/articles/360033922371).
 
 ___
@@ -28,6 +35,12 @@ Wenden Sie sich an Ihre Bank und prüfen Sie, ob Cloudflare durch irgendeine Ein
 ### Ihre Abrechnungsdaten sind nicht aktuell
 
 Die bei Cloudflare gespeicherten Abrechnungsdaten sind nicht korrekt oder unvollständig. Möglicherweise ist auch die gespeicherte Kreditkarte abgelaufen.
+
+{{<Aside type="note">}}
+Geschenkkarten und Prepaid-Karten werden möglicherweise nicht als
+Zahlungsmethode akzeptiert, weil sie nicht mit einer Rechnungsadresse
+verknüpft sind.
+{{</Aside>}}
 
 Unter [Aktualisierung Ihrer Cloudflare-Abrechnungsdaten](https://support.cloudflare.com/hc/en-us/articles/200170236-How-do-I-update-my-billing-information-) finden Sie Hinweise zu aktuellen und korrekten Abrechnungsdaten.
 

@@ -7,13 +7,13 @@ title: Environment variables
 
 In the Workers platform, environment variables, secrets, and KV namespaces are known as bindings. Regardless of type, bindings are always available as global variables within your Worker script.
 
-## Environmental variables with module workers
+## Environment variables with module Workers
 
 When deploying a Module Worker, any [bindings](/workers/platform/environment-variables/) will not be available as global runtime variables. Instead, they are passed to the handler as a [parameter](/workers/runtime-apis/fetch-event/#parameters) – refer to the `FetchEvent` [documentation for further comparisons and examples](/workers/runtime-apis/fetch-event/#bindings-1).
 
 ## Environment variables via wrangler
 
-### Adding environment variables via wrangler
+### Add environment variables via Wrangler
 
 Environment variables are defined via the `[vars]` configuration in your `wrangler.toml` file and are always plaintext values.
 
@@ -51,6 +51,23 @@ console.log(STRIPE_TOKEN);
 //=> (env.production) "pk_xyz1234"
 ```
 
+If using [module Workers](/workers/learning/migrating-to-module-workers/), your environment variables are available on the [`env` parameter](/workers/runtime-apis/fetch-event/#parameters) passed to your Worker's [`fetch` event handler](/workers/runtime-apis/fetch-event/#syntax-module-worker). Refer to the following example:
+
+```ts
+export interface Env {
+  API_TOKEN: string;
+}
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    console.log(env.API_TOKEN)
+  }
+}
+```
+
 ### Add secrets to your project
 
 #### Secrets in development
@@ -86,13 +103,13 @@ filename: wrangler.toml
 # Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
 ```
 
-{{<Aside type="warning">}}
+{{<Aside type="warning" header="Use secrets for sensitive information">}}
 
-\* **Warning:** Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) instead.
+Do not use plaintext environment variables to store sensitive information. Use [`wrangler secret put`](/workers/wrangler/commands/#secret) instead.
 
 {{</Aside>}}
 
-### Adding KV namespaces via wrangler
+### Add KV namespaces via Wrangler
 
 KV namespaces are defined via the [`kv_namespaces`](/workers/wrangler/configuration/#kv-namespaces) configuration in your `wrangler.toml` and are always provided as [KV runtime instances](/workers/runtime-apis/kv/).
 
@@ -116,7 +133,7 @@ id = "<PRODUCTION KV NAMESPACEID>"
 
 ## Environment variables via the dashboard
 
-### Adding environment variables via the dashboard
+### Add environment variables via the dashboard
 
 Add environment variables by logging in to [Cloudflare dashboard](https://dash.cloudflare.com/) > **Account Home** > **Workers** and select your **Workers script**.
 
@@ -136,7 +153,7 @@ Do not select **Encrypt** when adding environment variables if your variable is 
 
 {{</Aside>}}
 
-### Adding KV namespace bindings via the dashboard
+### Add KV namespace bindings via the dashboard
 
 To add KV namespace bindings:
 
@@ -152,6 +169,6 @@ Your completed Workers dashboard, with environment variables and KV namespace bi
 
 ![After creating your environment variable and KV namespace binding, your dashboard will show a summary of variables and bindings you configured](../media/envvarssecret-detail-page.jpeg)
 
-## Comparing secrets and environment variables
+## Compare secrets and environment variables
 
 Secrets are environment variables. The difference is secret values are not visible within Wrangler or dashboard interfaces after you define them. This means that sensitive data, including passwords or API tokens, should always be encrypted to prevent data leaks. To your Worker, there is no difference between an environment variable and a secret. The secret's value is passed through as defined.

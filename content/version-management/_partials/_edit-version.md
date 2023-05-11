@@ -16,6 +16,6 @@ To change between different versions of your zone:
 
 You can also change which version you are in from any page by using the sidebar dropdown.
 
-![Select a version from the Versions page or the sidebar dropdown](/version-management/static/change-version.png)
+![Select a version from the Versions page or the sidebar dropdown](/images/version-management/change-version.png)
 
 From within a version, you can update settings just as you would with your normal zone settings. Any changes are saved automatically.

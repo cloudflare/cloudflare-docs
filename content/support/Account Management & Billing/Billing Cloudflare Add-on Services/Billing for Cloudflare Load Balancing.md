@@ -20,6 +20,15 @@ For example:
 
 Note that the first 500,000 queries are based on all active Load Balancers in your account, not per site (domain), as Load Balancers can be shared across sites by configuring a CNAME record.
 
+{{<Aside type="note">}}
+To monitor the usage of Cloudflare add-ons or subscriptions, you can
+[enable email
+notifications](https://support.cloudflare.com/hc/en-us/articles/115004555148/#11aoHZtimmL8WRIrA1jmD0).
+When enabled, you will receive a notification to the billing email
+address on file when the traffic, queries, requests, or minutes watched
+exceed your desired threshold.
+{{</Aside>}}
+
 ___
 
 You can configure Load Balancing to fit your specific requirements based on the number of origins, health check frequency, the number of regions checked from, and geo-routing.
@@ -31,6 +40,11 @@ For larger configurations, contact [our sales team](https://www.cloudflare.com/l
 ___
 
 ## Load Balancing billable usage
+
+{{<Aside type="warning">}}
+Customers with China network access should not use the Load Balancer or
+HTTP 530 errors will occur.
+{{</Aside>}}
 
 Usage is counted as authoritative [DNS queries](https://en.wikipedia.org/wiki/Domain_Name_System) against Cloudflare's nameservers for each of the Load Balanced hostnames you have configured.
 

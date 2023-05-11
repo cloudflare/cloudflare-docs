@@ -93,5 +93,5 @@ ___
 ## 関連リソース
 
 -   [セカンダリネームサーバー](https://support.cloudflare.com/hc/en-us/articles/360001356152-How-do-I-setup-and-manage-Secondary-DNS-)（Enterpriseプランの機能）
--   [CNAMEセットアップ](https://developers.cloudflare.com/dns/zone-setups/partial-setup)（BusinessプランとEnterpriseプランの機能）
--   [ネームサーバーをCloudflareに変更する方法](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)
+-   [CNAMEセットアップ](/dns/zone-setups/partial-setup)（BusinessプランとEnterpriseプランの機能）
+-   [ネームサーバーをCloudflareに変更する方法](/dns/zone-setups/full-setup/setup)

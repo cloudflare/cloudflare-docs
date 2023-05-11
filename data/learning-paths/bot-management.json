@@ -16,11 +16,11 @@
     "title": "Bot management",
     "uid": "bot-management",
     "path": "/learning-paths/bot-management/",
-    "priority": 2,
+    "priority": 3,
     "description": "Stop bad bots with threat intelligence at scale.",
     "products": [
       "Bots",
-      "Firewall"
+      "WAF"
     ],
     "category": ["Security"]
 }

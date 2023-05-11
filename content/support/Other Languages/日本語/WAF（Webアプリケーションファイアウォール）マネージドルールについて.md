@@ -37,7 +37,7 @@ Cloudflare WAF（Webアプリケーションファイアウォール）の機能
 -   **パッケージ：OWASP ModSecurity Core Rule Set**
 -   **お客様のリクエストによるルールセット** 
 
-ブロックした脅威は、[ファイアウォール分析](https://developers.cloudflare.com/waf/analytics/)**アクティビティログ**で確認できます。**セキュリティ**\>**概要**からアクセスします。
+ブロックした脅威は、[ファイアウォール分析](/waf/analytics/)**アクティビティログ**で確認できます。**セキュリティ**\>**概要**からアクセスします。
 
 ### 考慮すべき重要事項
 
@@ -48,7 +48,7 @@ Cloudflare WAF（Webアプリケーションファイアウォール）の機能
 -   マネージドルールがJSONレスポンスを解析し、APIで対象となる脆弱性を特定します。JSONペイロード解析は、128KBに制限されます。
 -   マネージドルールは、パディングテクニックを軽減します。当社では、以下をおすすめしています。
     1.  ルール_100048_をONにしてください。このルールは現在、パディングタイプの攻撃から保護しますが、デフォルトでデプロイされていないため、お客様の環境で多くの誤検知を引き起こします。しかし、お客様がマネージドルール設定をチューニングすることは大切です。Cloudflareはより良いソリューションに向けて長期的に取り組んでおります。
-    2.  より大きなペイロード（> 128 KB）をブロックするためにヘッダーおよび／またはボディを確認する必要がある場合は、[Expression Editor](https://developers.cloudflare.com/firewall/cf-dashboard/edit-expressions/#expression-editor)を利用してファイアウォールルールを１つ作成してください。これは誤検知を生成しやすいため、はじめに_Log_モードでファイアウォールルールをテストしてください。
+    2.  より大きなペイロード（> 128 KB）をブロックするためにヘッダーおよび／またはボディを確認する必要がある場合は、[Expression Editor](/firewall/cf-dashboard/edit-expressions/#expression-editor)を利用してファイアウォールルールを１つ作成してください。これは誤検知を生成しやすいため、はじめに_Log_モードでファイアウォールルールをテストしてください。
         -   _http.request.body.truncated_
         -   _http.request.headers.truncated_
 -   Cloudflareダッシュボードで**マネージドルール**が_Off_になっていても、ルールID_WP0025B_や_100043A_、_100030_といったCloudflareが無効にしないマネージドルールが一部あります。
@@ -66,18 +66,18 @@ ___
 
 疑わしいコンテンツであるかどうかの定義は、主観的でWebサイトによって違います。 Webサイトに掲載されたPHPコードを例にすると、Webサイトがコード化する方法を教え、訪問者にPHPコードの提出を求めない限り、それは疑わしいと言えます。 そのため、このようなWebサイトでは、通常の動作を妨げる関連WAFルールを無効にする必要があります。
 
-誤検知のテストをするために、WAFマネージドルールを**シミュレート**モードに設定し、チャレンジやブロックをせずに潜在的な攻撃へのレスポンスを記録します。さらに、ファイアウォール分析[**アクティビティログ**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log)を使って、どのWAFルールが誤検知の原因となっているのかを判断します。
+誤検知のテストをするために、WAFマネージドルールを**シミュレート**モードに設定し、チャレンジやブロックをせずに潜在的な攻撃へのレスポンスを記録します。さらに、ファイアウォール分析[**アクティビティログ**](/waf/analytics/paid-plans#activity-log)を使って、どのWAFルールが誤検知の原因となっているのかを判断します。
 
 [従来型WAF](https://support.cloudflare.com/hc/ja/articles/200172016-Understanding-the-Cloudflare-Web-Application-Firewall-WAF-)が原因の誤検知を確認した場合、解決策がいくつか考えられます。
 
 -   **クライアントのIP アドレスを**[**Ip Access ルール**](https://support.cloudflare.com/hc/articles/217074967)**許可リストに追加する**：ブラウザ、またはクライアントが同じIP アドレスからの訪問である場合、許可することが推奨されます。
 -   当該の[**マネージドルール**](https://support.cloudflare.com/hc/articles/200172016)**を無効にする**： 誤検知のブロックやチャレンジを停止しますが、サイト全体のセキュリティも低下します。WAFルールID_981176_でブロックされたリクエストは、OWASPルールを参照します。OWASPの感度を下げて、問題を解決します。
--   **ファイアウォールルールでWAFマネージドルールをバイパスする：** **バイパス**処理を行うファイアウォールルールを作成し、パラメーターの特定の組み合わせに対するWAFマネージドルールを無効にします。たとえば、特定のURLと特定のIP アドレス、またはユーザーエージェントに関する[マネージドルールをバイパス](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/)します。
+-   **ファイアウォールルールでWAFマネージドルールをバイパスする：** **バイパス**処理を行うファイアウォールルールを作成し、パラメーターの特定の組み合わせに対するWAFマネージドルールを無効にします。たとえば、特定のURLと特定のIP アドレス、またはユーザーエージェントに関する[マネージドルールをバイパス](/firewall/cf-firewall-rules/actions/)します。
 -   **（非推奨）１つのURLへのトラフィックのWAFを無効にする：**  特定のURLエンドポイントでセキュリティを弱めます。[Page Rules](https://support.cloudflare.com/hc/ja/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-)経由で設定されます。
 
 [新しいWAF](https://blog.cloudflare.com/new-cloudflare-waf/)が原因の誤検知を確認した場合、いくつか解決策が考えられます。
 
-1.  **WAF例外を追加する：** [Cloudflareダッシュボード](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-dashboard)または[ルールセットAPI](https://developers.cloudflare.com/waf/managed-rulesets/waf-exceptions/define-api)を使用してWAF例外を定義することができます。
+1.  **WAF例外を追加する：** [Cloudflareダッシュボード](/waf/managed-rulesets/waf-exceptions/define-dashboard)または[ルールセットAPI](/waf/managed-rulesets/waf-exceptions/define-api)を使用してWAF例外を定義することができます。
 2.  当該の[**マネージドルール**](https://support.cloudflare.com/hc/articles/200172016)**を無効にする**： 誤検知のブロックやチャレンジを停止しますが、サイト全体のセキュリティも低下します。WAFルールID_949110_によってブロックされたリクエストは、[新しいOWASPルール](https://blog.cloudflare.com/new-cloudflare-waf/)を参照します。OWASPの感度を下げて、問題を解決します。
 
 **注意：**予想通りにWAFマネージドルールがトリガーするかどうかを確認するために、[Cloudflareサポートにお問い合わせ](https://support.cloudflare.com/hc/articles/200172476)いただく場合、懸念される当該のリクエストが送信される間にキャプチャされた[HARファイルを1つご提供](https://support.cloudflare.com/hc/articles/203118044#h_8c9c815c-0933-49c0-ac00-b700700efce7)ください。
@@ -97,8 +97,8 @@ ___
     -   たとえば、Cloudflareはデフォルトでユーザーエージェントが空になっているリクエストを許可します。ユーザーエージェントが空になっているリクエストをブロックするには、WAFルールの**モード**を**ブロック**に切り替えます。
     -   もう1つの例としては、軽減されていないSQLインジェクション攻撃をブロックしようと試みる場合に、関連するSQLi ルールが有効になっていて、**Cloudflare スペシャル**グループで**ブロック**に設定するようにします。
 -   HTTPトラフィックを提供するDNSレコードは、Cloudflareを介してプロキシされているか？
--   [**ファイアウォールルール**がマネージドルールをバイパス](https://developers.cloudflare.com/firewall/cf-firewall-rules/actions/#supported-actions)していますか？
--   [**IP Access ルール**](https://support.cloudflare.com/hc/articles/217074967)または[**ファイアウォールルール**](https://developers.cloudflare.com/firewall/cf-firewall-rules/)で許可された国、ASN、IP範囲、またはIPが攻撃のトラフィックと一致していますか？
+-   [**ファイアウォールルール**がマネージドルールをバイパス](/firewall/cf-firewall-rules/actions/#supported-actions)していますか？
+-   [**IP Access ルール**](https://support.cloudflare.com/hc/articles/217074967)または[**ファイアウォールルール**](/firewall/cf-firewall-rules/)で許可された国、ASN、IP範囲、またはIPが攻撃のトラフィックと一致していますか？
 -   悪意のあるトラフィックは、オリジンIPアドレスに向けられ、Cloudflare保護をバイパスしていますか？オリジンWebサーバーで、[CloudflareのIP アドレス](https://www.cloudflare.com/ips/)からのトラフィックを除くすべてのトラフィックがブロックされます。
 
 ___
@@ -117,9 +117,9 @@ ___
 -   _無効化（Disable）-_ グループ内で特定のルールをOffにします**。**
 -   _ブロック_ (Block)- リクエストを破棄します。
 -   _従来型のCAPTCHA_ - 訪問者にCAPTCHAチャレンジページを送信します。
--   _シミュレート_ - リクエストは許可されますが、[**アクティビティログ**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log)に記録されます。
+-   _シミュレート_ - リクエストは許可されますが、[**アクティビティログ**](/waf/analytics/paid-plans#activity-log)に記録されます。
 
-Cloudflareの[WAF changelog](https://developers.cloudflare.com/waf/change-log/scheduled-changes/)では、お客様が**Cloudflareマネージドルールセット**に対して実行中の変更をモニタリングできます。
+Cloudflareの[WAF changelog](/waf/change-log/scheduled-changes/)では、お客様が**Cloudflareマネージドルールセット**に対して実行中の変更をモニタリングできます。
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 -   _ブロック_ - リクエストを破棄します。
 -   _チャレンジ_ - 訪問者に対してCAPTCHAチャレンジページを送信します。
--   _シミュレート_ - リクエストは許可されますが、[**アクティビティログ**](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log)に記録されます。
+-   _シミュレート_ - リクエストは許可されますが、[**アクティビティログ**](/waf/analytics/paid-plans#activity-log)に記録されます。
 
 特定の**感度**のために、WAFのトリガーが必要になる感度スコアは次の通りです：
 
@@ -145,7 +145,7 @@ Ajax リクエストの場合は、代わりに次のスコアが適用されま
 -   _中_ - 80以上
 -   _高_ - 65以上
 
-[アクティビティログ](https://developers.cloudflare.com/waf/analytics/paid-plans#activity-log)を表示して、最終スコアとトリガーされたルールをそれぞれ確認します。
+[アクティビティログ](/waf/analytics/paid-plans#activity-log)を表示して、最終スコアとトリガーされたルールをそれぞれ確認します。
 
 ### CloudflareのOWASPパッケージの管理
 
@@ -162,6 +162,6 @@ ___
 
 ## 関連リソース
 
--   [ファイアウォール分析](https://developers.cloudflare.com/waf/analytics/)
--   [Cloudflare ファイヤウォールルール](https://developers.cloudflare.com/firewall/cf-firewall-rules/)
--   [Cloudflare WAF changelog](https://developers.cloudflare.com/waf/change-log/scheduled-changes/)
+-   [ファイアウォール分析](/waf/analytics/)
+-   [Cloudflare ファイヤウォールルール](/firewall/cf-firewall-rules/)
+-   [Cloudflare WAF changelog](/waf/change-log/scheduled-changes/)

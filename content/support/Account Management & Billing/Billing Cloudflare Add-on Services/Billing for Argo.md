@@ -12,7 +12,21 @@ Argo analyzes and optimizes web traffic routing decisions to increase the loadin
 
 Argo is charged per domain, so you will be billed for the amount of data transferred (both upload and download bandwidth) between Cloudflare and your visitors on each domain using Argo.
 
+{{<Aside type="note">}}
+You will not be charged for any web traffic related to a DDoS attack or
+traffic that is blocked by Firewall Rules.
+{{</Aside>}}
+
 Argo is also usage-based, so each invoice reflects the prior month's usage. For example, your September invoice will include charges for Argo usage in August.
+
+{{<Aside type="note">}}
+To monitor the usage of Cloudflare add-ons or subscriptions, you can
+[enable email
+notifications](https://support.cloudflare.com/hc/en-us/articles/115004555148/#11aoHZtimmL8WRIrA1jmD0).
+When enabled, you will receive a notification to the billing email
+address on file when the traffic, queries, requests, or minutes watched
+exceed your desired threshold.
+{{</Aside>}}
 
 ___
 

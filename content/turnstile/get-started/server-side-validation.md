@@ -82,6 +82,12 @@ Check out the [full demo on GitHub](https://github.com/cloudflare/turnstile-demo
 | `response` | Required | The response provided by the Turnstile client-side render on your site. |
 | `remoteip` | Optional | The user's IP address. |
 
+{{<Aside type="note">}}
+
+Remote IP helps prevent abuses by ensuring that the current visitor is the one who received the token.
+
+{{</Aside>}}
+
 The siteverify endpoint behaves similar to reCAPTCHA’s or hCaptcha's siteverify endpoint.
 The API accepts `application/x-www-form-urlencoded` and `application/json` requests, but the response type will always be `application/json`.
 

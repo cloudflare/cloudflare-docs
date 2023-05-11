@@ -107,4 +107,4 @@ To build rules through the dashboard:
 
 4. Once the rule is active, you should see it under the applicable tab (firewall rules, rate limiting, or managed rules).
 
-![Rule Active](/ssl/static/active-rule.png)
+![Rule Active](/images/cloudflare-for-platforms/active-rule.png)

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200170016-What-is-Email-Address-Obfuscation-
-title: What is Email Address Obfuscation
+title: What is Email Address Obfuscation?
 ---
 
 # What is Email Address Obfuscation?
@@ -15,6 +15,13 @@ Email harvesters and other bots roam the Internet looking for email addresses to
 Web administrators have come up with clever ways to protect against this by writing out email addresses (i.e., help \[at\] cloudflare \[dot\] com) or by using embedded images of the email address. However, you lose the convenience of clicking on the email address to automatically send an email. By enabling Cloudflare Email Address Obfuscation, email addresses on your web page will be obfuscated (hidden) from bots, while keeping them visible to humans. In fact, there are no visible changes to your website for visitors.
 
  For email address obfuscation to work in Cloudflare, a page must have a MIME type (Content-Type) of "text/html" or "application/xhtml+xml". 
+
+{{<Aside type="note">}}
+Dedicated email support is available for all Pro, Business, and
+Enterprise Plan users. Business and Enterprise plan users also have
+access to chat support. If you require additional support, explore [our
+plans](https://www.cloudflare.com/plans/).
+{{</Aside>}}
 
 ___
 
@@ -37,11 +44,11 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
 
 -   Any HTML tag attribute, except for the _href_ attribute of the _a_ tag.
 -   Other HTML tags:
-    -   _script_ tags: <script></script>
-    -   _noscript_ tags: <noscript></noscript>
-    -   _textarea_ tags: <textarea></textarea>
-    -   _xmp_ tags: <xmp></xmp>
-    -   _head_ tags: <head></head>
+    -   _script_ tags: `<script></script>`
+    -   _noscript_ tags: `<noscript></noscript>`
+    -   _textarea_ tags: `<textarea></textarea>`
+    -   _xmp_ tags: `<xmp></xmp>`
+    -   _head_ tags: `<head></head>`
 -   Any page that does not have a MIME type of "text/html" or "application/xhtml+xml"
 
 **Please Note** that Email Obfuscation will **not take affect** if you're using the `Cache-Control: no-transform` header.

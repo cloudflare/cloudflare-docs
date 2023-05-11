@@ -22,6 +22,12 @@ Why should you restore visitor IP?
 
 If you receive a lot of comments or spam on your blog, you may mistakenly believe that Cloudflare is spamming you. Some other Joomla plugins or extensions  may also rely on the original visitor IP for the  services to work properly and reduce false alerts.
 
+{{<Aside type="note">}}
+You don't need to worry about this if you activated through a hosting
+partner, since they already restore visitor IP addresses on their
+servers by default.
+{{</Aside>}}
+
 ___
 
 ## Create a PageRule to exclude Joomla
@@ -46,6 +52,14 @@ Log in to your Cloudflare Threat Control panel and allow IP addresses you want t
 Why do this?
 
 If Cloudflare has an IP address with a high threat score going to your site, or if you have [Cloudflare's Web Application Firewall](https://cloudflare.com/waf) turned on, you may get challenged working in your back end and/or services you want to access your site may get challenged. Taking the steps to allow in the beginning will help prevent future surprises on your site.
+
+{{<Aside type="note">}}
+We allow all known search engine and social media crawlers in our macro
+list. If you decide to block countries in Threat Control, please use
+care because you may end up inadvertently blocking their crawlers
+(blocking the USA, for example, could mean that their crawler gets
+challenged).
+{{</Aside>}}
 
 ___
 

@@ -25,6 +25,10 @@ In this example, `<ACCOUNT_HASH>`, `<IMAGE_ID>` and `<VARIANT_NAME>` are the sam
 
 * `example.com`: Cloudflare proxied domain under the same account as the Cloudflare Images.
 * `/cdn-cgi/imagedelivery`: Path to trigger `cdn-cgi` image proxy.
-* `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash.
+* `ZWd9g1K7eljCn_KDTu_MWA`: The Images account hash. This can be found in the Cloudflare Images Dashboard.
 * `083eb7b2-5392-4565-b69e-aff66acddd00`: The image ID.
 * `public`: The variant name.
+
+## Limitations
+When using a custom domain, it is not possible to directly set up WAF rules that act on requests hitting the `/cdn-cgi/imagedelivery/` path. If you need to set up WAF rules, you can:
+* Use a Cloudflare Worker to access your images and a Route using your domain to execute the worker. For an example worker, refer to [Serve private images using signed URL tokens](https://developers.cloudflare.com/images/cloudflare-images/serve-images/serve-private-images-using-signed-url-tokens/).

@@ -61,7 +61,7 @@ Cloudflare cacheable file limits:
 
 ## Cloudflare cache responses
 
-The output of the `CF-Cache-Status header` shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
+The output of the `CF-Cache-Status` header shows whether or not a resource is cached. To investigate cache responses returned by the `CF-Cache-Status` header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome’s Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
 
 {{<table-wrap>}}
 <table>
@@ -134,7 +134,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
       </td>
       <td colspan="5" rowspan="1">
         The resource is served from Cloudflare’s cache but is stale. The resource was revalidated by
-        either an <code>If-Modified-Since</code> header or an <code>If-None-Match header</code>.
+        either an <code>If-Modified-Since</code> header or an <code>If-None-Match</code> header.
       </td>
     </tr>
     <tr>
@@ -153,7 +153,7 @@ The output of the `CF-Cache-Status header` shows whether or not a resource is ca
       <td colspan="5" rowspan="1">
         Cloudflare does not consider the asset eligible to cache and your Cloudflare settings do not
         explicitly instruct Cloudflare to cache the asset. Instead, the asset was requested from the
-        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> to implement
+        origin web server. Use <a href="/cache/how-to/create-page-rules/">Page Rules</a> or <a href="/cache/about/cache-rules/">Cache Rules</a> to implement
         custom caching options.
       </td>
     </tr>

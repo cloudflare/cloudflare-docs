@@ -21,7 +21,7 @@ ___
 
 ## Use Cloudflare Page Rules to customize caching
 
-By default Cloudflare [caches static content](https://support.cloudflare.com/hc/en-us/articles/200172516-Which-file-extensions-does-CloudFlare-cache-for-static-content-) like images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-).
+By default Cloudflare [caches static content](/cache/about/default-cache-behavior/) like images, CSS and JavaScript; however, you can extend Cloudflare caching to work with HTML by creating custom [Page Rules](https://support.cloudflare.com/hc/en-us/articles/218411427-Understanding-and-Configuring-Cloudflare-Page-Rules-Page-Rules-Tutorial-).
 
 ### Cache everything
 
@@ -89,7 +89,7 @@ Before the high traffic event occurs, you must [open a Support ticket](https://
 -   Target IPs/range/zones/hostnames/full URLs
 -   Contact in case of emergency
 
-[****](https://developers.cloudflare.com/ddos-protection/reference/simulate-ddos-attack/#for-magic-transit-and-spectrum-customers)**For Magic Transit and Spectrum customers**
+[****](/ddos-protection/reference/simulate-ddos-attack/#for-magic-transit-and-spectrum-customers)**For Magic Transit and Spectrum customers**
 
 -   Traffic origin region
 -   Traffic duration

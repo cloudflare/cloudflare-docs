@@ -7,39 +7,39 @@ title: Languages
 
 ## Background
 
-Workers is a polyglot platform. You can write Workers with a language you likely already know. Cloudflare built Workers to execute JavaScript and WebAssembly and has continuously added support for new languages.
+Workers is a polyglot platform. You can write Workers in JavaScript, TypeScript, or any programming language that compiles to [WebAssembly](/workers/platform/web-assembly/).
 
 ## JavaScript / TypeScript
 
-The Workers platform fully supports JavaScript. Cloudflare recommends using JavaScript and TypeScript. Find up-to-date [type definitions on GitHub](https://github.com/cloudflare/workers-types) and npm.
+The Workers platform fully supports JavaScript standards, as defined by [TC39](https://tc39.es/) (ECMAScript). Cloudflare recommends writing Workers using JavaScript or TypeScript, and publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
 
 {{<table-wrap>}}
 
 | Language   | Template                                                                                          |
 | ---------- | ------------------------------------------------------------------------------------------------- |
-| JavaScript | [cloudflare/worker-template](https://github.com/cloudflare/worker-template)                       |
+| JavaScript | [cloudflare/workers-sdk/templates/worker](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker)                       |
 | TypeScript | [cloudflare/workers-sdk/templates/worker-typescript](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-typescript) |
 
 {{</table-wrap>}}
 
-### Resources on JavaScript / Typescript
+### Resources
 
 - [Quickstarts](/workers/get-started/quickstarts/) – More example repos to use as a basis for your projects
 - [TypeScript type definitions](https://github.com/cloudflare/workers-types)
 - [JavaScript and web standard APIs](/workers/runtime-apis/web-standards/)
 - [Tutorials](/workers/tutorials/)
 
-## Wasm-supported
+## WebAssembly (Wasm)
 
-[WebAssembly](https://webassembly.org/) — abbreviated Wasm — is a binary format that many languages target during their compilation. This allows developers to write Workers using languages like C, C++, Rust, and more.
+[WebAssembly](https://webassembly.org/) (abbreviated as "Wasm") is a binary format that many languages can be compiled to. This allows you to write Workers using programming language beyond JavaScript, such as Rust, C, C++, Go and more.
 
 {{<table-wrap>}}
 
-| Language | Template                                                                                          |
-| -------- | ------------------------------------------------------------------------------------------------- |
-| Rust     | [cloudflare/rustwasm-worker-template](https://github.com/cloudflare/rustwasm-worker-template)     |
-| C        | [cloudflare/workers-sdk/templates/worker-emscripten](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker-emscripten) |
-| Cobol    | [cloudflare/cobol-worker-template](https://github.com/cloudflare/cobol-worker-template)           |
+| Language | Details                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------- |
+| Rust     | [Guide](/workers/platform/web-assembly/rust/)                                                            |
+| C        | [Template](https://github.com/cloudflare/workers-sdk/tree/main/templates/experimental/worker-emscripten) |
+| Cobol    | [Template](https://github.com/cloudflare/cobol-worker-template)                                          |
 
 {{</table-wrap>}}
 
@@ -48,7 +48,7 @@ The Workers platform fully supports JavaScript. Cloudflare recommends using Java
 - [Serverless Rust with Cloudflare Workers](https://blog.cloudflare.com/cloudflare-workers-as-a-serverless-rust-platform/)
 - [WebAssembly on Cloudflare Workers](https://blog.cloudflare.com/webassembly-on-cloudflare-workers/)
 
-## Compiled to JavaScript
+## Compile languages to JavaScript
 
 You can write Workers with any language that can compile to JavaScript, including the languages below.
 

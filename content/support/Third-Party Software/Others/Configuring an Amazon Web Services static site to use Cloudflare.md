@@ -56,11 +56,11 @@ To set up your policy:
 
 1.  Follow these instructions from Amazon to [Add an S3 Bucket Policy](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html).
 2.  For the step where you enter the policy in the **Bucket policy editor**, use this sample to fill out the needed JSON code, making sure to replace:
-    -   `www.example.com` (appearing in `"Resource": "arn:aws:s3:::www.example.com/*"`) with the S3 bucket name for your subdomain URL.
+    -   `www.example.com` (appearing in `"Resource": "arn:aws:s3:www.example.com/*"`) with the S3 bucket name for your subdomain URL.
     -   The placeholder IP addresses with the current list of [Cloudflare IP addresses](https://www.cloudflare.com/ips)
 
-```
-╰─➤  curl -I -L example.com
+```sh
+$ curl -I -L example.com
 HTTP/1.1 301 Moved Permanently
 Date: Tue, 23 Jan 2018 23:17:44 GMT
 Connection: keep-alive
@@ -76,6 +76,13 @@ ___
 ## Upload static content to your S3 bucket
 
 To add static content to your S3 bucket, follow Amazon's instructions for [Uploading Files and Folders to an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/upload-objects.html).
+
+{{<Aside type="warning">}}
+When uploading static content, you must select the correct properties
+and permissions. Also for each uploaded resource, enter the most
+appropriate value for the *Content-Type* header as this affects the way
+your content displays.
+{{</Aside>}}
 
 ___
 

@@ -20,3 +20,79 @@ In this situation the Origin Rule parameters will override the [Page Rule](https
 ## Will Cloudflare automatically migrate my Page Rules with Host header and DNS record overrides to Origin Rules?
 
 No. This is currently a manual process, since your Page Rules may include additional settings that Origin Rules do not currently support.
+
+## What happens if more than one Origin Rule matches the current request?
+
+If two or more Origin Rules match a request, the configuration of those rules is merged. While merging two configurations, the settings of later rules will override the settings defined in previous rules, updating or adding configuration properties. The final configuration applied by Cloudflare will be this merged version.
+
+For example, if you configure the following two [Origin Rules](/rules/origin-rules/) and both rules match, Cloudflare will use the destination port set by the first rule, and the DNS hostname override and `Host` header value set by the second rule.
+
+{{<example>}}
+
+**Origin Rule #1**
+
+Parameter              | Value
+-----------------------|--------------
+Set `Host` header      | `example.com`
+Set destination port   | `8081`
+
+{{</example>}}
+
+{{<example>}}
+
+**Origin Rule #2**
+
+Parameter          | Value
+-------------------|--------------
+Set `Host` header  | `example.net`
+Set DNS hostname   | `example.net`
+
+{{</example>}}
+
+<details>
+<summary>JSON example for API users</summary>
+<div>
+
+When [using the API](/rules/origin-rules/create-api/), you configure Origin Rule parameters in an `action_parameters` object.
+
+```json
+{
+  "rules": [
+    {
+      "expression": "http.request.uri.query contains \"/eu/\"",
+      "description": "Origin Rule #1",
+      "action": "route",
+      "action_parameters": {
+        "host_header": "example.com",
+        "origin": {
+          "port": 8081
+        }
+      }
+    },
+    {
+      "expression": "http.request.uri.query contains \"/eu/\"",
+      "description": "Origin Rule #2",
+      "action": "route",
+      "action_parameters": {
+        "host_header": "example.net",
+        "origin": {
+          "host": "example.net",
+        }
+      }
+    }
+  ]
+}
+```
+
+</div>
+</details>
+
+The merged configuration to apply would be the following:
+
+Parameter            | Value
+---------------------|--------------
+Set `Host` header    | `example.net`
+Set destination port | `8081`
+Set DNS hostname     | `example.net`
+
+If you also configured a destination port in rule #2, that value would override the `8081` destination port defined in rule #1.

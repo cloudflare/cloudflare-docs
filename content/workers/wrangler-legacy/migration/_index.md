@@ -33,7 +33,7 @@ To learn more about the improvements to Wrangler, refer to the [Comparing Wrangl
 
 ### 1. Uninstall Wrangler v1
 
-If you had previously installed Wrangler v1 globally using NPM, you can uninstall it with:
+If you had previously installed Wrangler v1 globally using npm, you can uninstall it with:
 
 ```sh
 $ npm uninstall -g @cloudflare/wrangler

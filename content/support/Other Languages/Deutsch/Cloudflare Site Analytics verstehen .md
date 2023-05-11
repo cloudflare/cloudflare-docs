@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/360037684251-Cloudflare-Site-Analytics-verstehen
-title: Cloudflare Site Analytics verstehen 
+title: Cloudflare Site Analytics verstehen
 ---
 
-# Cloudflare Site Analytics verstehen 
+# Cloudflare Site Analytics verstehen
 
 
 
@@ -31,6 +31,14 @@ Kunden mit den Tarifen Pro, Business und Enterprise sehen die neuesten Web Analy
 
 ![Screenshot der Benutzeroberfläche im Cloudflare Analytics-Dashboard für Pro-, Business- und Enterprise-Kunden.](/support/static/hc-dash-analytics-web_traffic.png)
 
+{{<Aside type="note">}}
+Im Artikel [„Cloudflare Analytics: Ein kurzer
+Überblick"](https://support.cloudflare.com/hc/articles/360037684111 "Cloudflare Analytics: Ein kurzer Überblick")
+erhalten Sie allgemeine Informationen über alle Analytics-Angebote von
+Cloudflare. Sie lernen auch die Eigenschaften der von Cloudflare
+erfassten und verarbeiteten Daten besser kennen.
+{{</Aside>}}
+
 ___
 
 ## Ihre Website-Metriken betrachten
@@ -54,6 +62,11 @@ Diese Metriken umfassen sowohl legitime Nutzeranfragen als auch Crawler und Bedr
 
 #### Pro, Business und Enterprise Plan
 
+{{<Aside type="note">}}
+Datenschutzgerechte Web-Traffic-Analytics sind in den Tarifen Pro,
+Business und Enterprise verfügbar.
+{{</Aside>}}
+
 Die Analytics basieren auf den Edge-Protokollen von Cloudflare, sodass keine Skripte oder Tracker von Drittanbietern erforderlich sind. Die Registerkarte „Traffic“ enthält die folgenden Metriken:
 
 -   **Besuche** – Ein Besuch ist definiert als ein Seitenaufruf, der von einer anderen Website oder einem direkten Link ausgeht. Cloudflare prüft, wo der HTTP-Referent nicht mit dem Hostnamen übereinstimmt. Ein Besuch kann aus mehreren Seitenaufrufen bestehen. 
@@ -64,6 +77,12 @@ Die Analytics basieren auf den Edge-Protokollen von Cloudflare, sodass keine Skr
 Für detailliertere Metriken können Sie **Filter hinzufügen**. Sie können jede Metrik auch nach nach folgenden Kategorien filtern: **Referer**, **Host**, **Land**, **Pfad**, **Statuscode**, **Statuscode des Ursprungs**, **Browser**, **Betriebssystem** oder **Gerätetyp**. 
 
 Um den Zeitraum zu ändern, verwenden Sie das Dropdown-Menü auf der rechten Seite über dem Diagramm. Sie können das Diagramm auch durch Ziehen vergrößern.
+
+{{<Aside type="note">}}
+Wenn Sie sich von den neuen Web-Traffic-Analytics abmelden möchten,
+klicken Sie im linken Teil der Seite auf **Zurück zur alten Erfahrung
+wechseln**.
+{{</Aside>}}
 
 ### Sicherheit
 
@@ -96,11 +115,11 @@ Dieser Bereich enthält Metriken für Cloudflare Workers. Weitere Informationen 
 
 ### Protokolle
 
-Die Registerkarte „Protokolle“ ist kein Feature der Metriken. Aber Kunden des Enterprise Plans können den Dienst [Cloudflare Logs Logpush](https://developers.cloudflare.com/logs/about/) aktivieren. Mit Logpush können Sie Daten herunterladen und mit einem Analysetool Ihrer Wahl analysieren.
+Die Registerkarte „Protokolle“ ist kein Feature der Metriken. Aber Kunden des Enterprise Plans können den Dienst [Cloudflare Logs Logpush](/logs/about/) aktivieren. Mit Logpush können Sie Daten herunterladen und mit einem Analysetool Ihrer Wahl analysieren.
 
 ___
 
 ## Verwandte Ressourcen
 
--   [Cloudflare Analytics: Ein kurzer Überblick](https://developers.cloudflare.com/analytics)
--   [Die GraphQL-API der Cloudflare Analytics](https://developers.cloudflare.com/analytics/)
+-   [Cloudflare Analytics: Ein kurzer Überblick](/analytics)
+-   [Die GraphQL-API der Cloudflare Analytics](/analytics/)
