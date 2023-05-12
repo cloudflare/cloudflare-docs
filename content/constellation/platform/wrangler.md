@@ -40,7 +40,7 @@ Flags:
 
 ## Manage Projects
 
-You can use Wrangler to list, create or delete your [projects](/constellation/platform/data-model/#projects).
+Use Wrangler to [list, create or delete your projects](/constellation/platform/data-model/#projects).
 
 ```bash
 $ npx wrangler constellation project --help
