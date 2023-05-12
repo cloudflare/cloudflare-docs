@@ -34,6 +34,6 @@ Some examples of applications you can deploy leveraging Constellation are:
 ## Features
 
 {{<feature header="Make your first ML app" href="/radar/get-started/first-request/" cta="Make your first ML app">}}
-Use Constellation from a Cloudflare Worker
+Use Constellation from a Cloudflare Worker.
 {{</feature>}}
 
