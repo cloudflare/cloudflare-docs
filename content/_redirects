@@ -1010,8 +1010,6 @@
 /ssl/ssl-tls/* /ssl/reference/:splat 301
 /tenant/tutorial/* /tenant/get-started/ 301
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
-/workers/wrangler/migration/* /workers/wrangler-legacy/migration/:splat 301
-/workers/wrangler/cli-wrangler/* /workers/wrangler-legacy/:splat 301
 
 # Cloudflare for SaaS
 /ssl/ssl-for-saas/common-tasks/* /cloudflare-for-platforms/cloudflare-for-saas/ 301
