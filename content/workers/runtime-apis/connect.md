@@ -68,7 +68,7 @@ export default {
 
 - `allowHalfOpen` {{<type>}}boolean{{</type>}} — Defaults to `false`
   - Defines whether the writable side of the TCP socket will automatically close on EOF. When set to `false`, the writable side of the TCP socket will automatically close on EOF. When set to `true`, the writable side of the TCP socket will remain open on EOF.
-  - This option allows for interoperability with TCP socket implementations in Node.js and Deno, which currently behave differently.
+  - This option is similar to that offered by the Node.js [`net` module](https://nodejs.org/api/net.html) and allows interoperability with code which utilises it.
 
 {{</definitions>}}
 
@@ -83,7 +83,7 @@ export default {
   - Returns the writable side of the TCP socket.
 
 - `closed()` {{<type>}}`Promise<void>`{{</type>}}
-  - TODO
+  - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
 
 - `close()` {{<type>}}`Promise<void>`{{</type>}}
   - Closes the TCP socket. If [`allowHalfOpen`](/workers/runtime-apis/connect/#socketoptions) is set to `true`, only the writeable side of the socket will be closed, and the readable side of the socket will remain readable.
@@ -102,9 +102,9 @@ export default {
 
 {{</definitions>}}
 
-## How to implement the startTLS pattern
+## How to implement Opportunistic TLS (StartTLS)
 
-Many TCP-based systems, including databases and email servers, require that clients use a pattern called StartTLS when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then "upgrades" it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
+Many TCP-based systems, including databases and email servers, require that clients use opportunistic TLS (otherwise known as [StartTLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then "upgrades" it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
 
 ```typescript
 import { connect } from "cloudflare:sockets"
@@ -119,7 +119,24 @@ const secureSocket = socket.startTls();
 
 ## Error handling
 
-- TODO - show what happens when the server closes the connection, and how to handle it gracefully.
+import { connect } from 'cloudflare:sockets';
+
+const connectionUrl = "nonexistinghostname.invalid:1234";
+
+export interface Env { }
+
+export default {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    try {
+      const socket = connect(connectionUrl);
+
+      // This will throw because the `closed` promise is rejected with an exception.
+      await socket.closed;
+    } catch (error) {
+      return new Response("Socket connection failed: " + error, { status: 500 });
+    }
+  }
+};
 
 ```typescript
 import { connect } from "cloudflare:sockets"
