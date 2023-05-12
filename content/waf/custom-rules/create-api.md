@@ -43,7 +43,7 @@ The new rule, which will be the last rule in the ruleset, includes the definitio
 
 ```bash
 ---
-highlight: 8-12
+highlight: 9-13
 ---
 curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules \
 -H "Authorization: Bearer <API_TOKEN>" \
