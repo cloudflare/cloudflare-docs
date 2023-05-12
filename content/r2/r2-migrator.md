@@ -6,7 +6,7 @@ weight: 3
 
 {{<beta heading="h1">}} Super Slurper{{</beta>}}
 
-Data Migration (also known as [Super Slurper](https://blog.cloudflare.com/cloudflare-r2-super-slurper/)) allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
+Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
 {{<Aside type="note">}}
 
@@ -14,16 +14,16 @@ This feature is currently in beta. If you have feedback, reach out to us on the 
 
 {{</Aside>}}
 
-Migration jobs created by Data Migration:
+Migration jobs:
 
 - Preserve custom object metadata from source bucket by copying them on the migrated objects on R2.
 - Do not delete any objects from source bucket.
 - Overwrite objects in the destination R2 bucket when an object being copied from the source storage bucket matches the path of an existing object in the destination bucket.
 - Uses TLS encryption over HTTPS connections for safe and private object transfers.
 
-## When to use Data Migration
+## When to use Super Slurper
 
-Using Data Migration as part of your strategy can be a good choice if your use case meets the following criteria:
+Using Super Slurper as part of your strategy can be a good choice if your use case meets the following criteria:
 
 - The cloud storage bucket you are migrating consists primarily of objects less than 10 GB (1000³ bytes). Objects greater than 10 GB will be skipped and need to be copied separately.
 - The cloud storage bucket you are migrating has fewer than 200 million objects. During the beta, migration jobs can copy around 250 small objects per second.
@@ -42,7 +42,7 @@ You can view the status of your migration job at any time by selecting your migr
 
 ## Create Amazon S3 credentials
 
-To migrate objects from Amazon S3, Data Migration requires access permissions to your bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions with the Data Migration, Cloudflare recommends you create a user with a narrow set of permissions.
+To migrate objects from Amazon S3, Super Slurper requires access permissions to your bucket. While you can use any AWS Identity and Access Management (IAM) user credentials with the correct permissions, Cloudflare recommends you create a user with a narrow set of permissions.
 
 To create credentials with the correct permissions:
 
