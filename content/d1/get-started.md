@@ -77,7 +77,7 @@ The value (string) you set for `<BINDING_NAME>` will be used to reference this d
 
 Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [client API](/d1/platform/client-api/) is exposed on this binding.
 
-You will find the values for `database_name` and `database_id` in your terminal after you run the `create` command in step 3.
+Find the values for `database_name` and `database_id` in your terminal after you run the `create` command in [step 3](/d1/get-started/#3-create-your-database).
 
 {{<Aside type="note">}}
 
