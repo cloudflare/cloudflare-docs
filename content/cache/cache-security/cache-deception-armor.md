@@ -31,7 +31,7 @@ In the newsfeed example above, if `http://www.example.com/newsfeed` is a script 
 
 To enable Cache Deception Armor, you need to start by creating a Page Rule. Follow the steps bellow for guidance:
 
-1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
+1.  Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2.  Select **Rules**.
 3.  From the **Page Rules** tab, select **Create Page Rule**.
 4.  Enter the URL information and choose the **Cache Deception Armor** setting.
