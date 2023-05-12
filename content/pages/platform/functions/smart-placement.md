@@ -33,15 +33,13 @@ For more background and to understand how Smart Placement works visit [Smart Pla
 Smart Placement is available users on all plans. 
 
 ### Enable Smart Placement on the dashboard:
-1. Log in to the Cloudflare dashboard.
-2. In Account Home, select Pages.
-3. Select a Pages project
-4. Select Settings > Functions.
-5. Under 'Placement' enable 'Smart' mode 
-6. . Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
-7. View [request duration metrics](/workers/learning/metrics-and-analytics) about your Function under Functions Metrics.
-
-
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In Account Home, select **Workers & Pages**.
+3. Select your Pages project.
+4. Select **Settings** > **Functions**.
+5. Under **Placement**, enable **Smart** mode.
+6. Send some initial traffic (approximately 20-30 requests) to your Pages Functions. It takes a few minutes after you have sent traffic to your Pages Function for Smart Placement to take effect. 
+7. View your Function's [request duration metrics](/workers/learning/metrics-and-analytics) under Functions Metrics.
 
 ## Best practices
 
