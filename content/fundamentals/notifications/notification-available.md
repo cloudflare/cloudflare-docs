@@ -531,6 +531,35 @@ Confirm your traffic is healthy: reach out to your transit providers to ensure y
 </div>
 </details>
 
+## Scheduled Maintenance
+
+<details>
+<summary>Maintenance Notification</summary>
+<div>
+
+**Who is it for?**
+
+Customers interested in knowing about planned [Cloudflare maintenance](/support/troubleshooting/planned-maintenance/disruptive-maintenance-windows/) for specific data centers.
+
+Specifically, the notification lets you know when maintenance on a data center has been scheduled, changed, or canceled.
+
+**Other options / filters**
+
+None.
+
+**Included with**
+
+All plans.
+
+**What should you do if you receive one?**
+
+If the notification is announcing new scheduled maintenance, you may want to add the maintenance to your calendar.
+
+During these maintenance windows, you may experience a slight increase in latency to the edge location which is under maintenance.
+
+</div>
+</details>
+
 ## SSL/TLS
 
 <details>
