@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: First Constellation Worker
 meta:
-    title: First Constellation Worker
+    title: Make your first Constellation Worker
 weight: 1
 ---
 
