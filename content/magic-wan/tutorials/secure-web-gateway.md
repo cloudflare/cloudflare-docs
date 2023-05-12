@@ -71,7 +71,15 @@ When you create a GRE tunnel the TTL and MTU fields are auto-populated. The defa
 2. The **Priority** and **Region code** fields are auto-populated. Tunnels with lower priority numbers will be chosen first. You can also steer traffic to a certain region to reduce latency by scoping your tunnel to specific Cloudflare data center regions. Refer to [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for more information.
 3. In keeping with the example scenario, the list of static routes should match the example below.
 
-![Static route configuration with defined prefixes, next hops, and priorities](/magic-wan/static/static-route-values.png)
+
+
+Prefix | Tunnel/Next hop | Priority | Region code
+--- | --- | --- | --- 
+`192.168.0.0/16` | `10.255.255.0` | `100` | `All regions`
+`10.0.1.0/24` | `10.255.255.2` | `100` | `All regions`
+`172.16.0.0/12` | `10.255.255.4` | `100` | `All regions` 
+
+
 
 ## 3. Setup site routers
 
