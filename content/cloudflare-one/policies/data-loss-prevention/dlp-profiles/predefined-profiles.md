@@ -10,24 +10,24 @@ Cloudflare Zero Trust provides predefined DLP profiles for common types of sensi
 
 ## Financial information
 
-Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. Credit card numbers must adhere to Luhn's algorithm as a method of validation.
+Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. CVVs are not validated.
 
 {{<table-wrap>}}
 
-| Detection entry                  | Notes                                                                |
-| -------------------------------- | -------------------------------------------------------------------- |
-| American Express Card Number     |                                                                      |
-| American Express Text            | Text matching `amex` or `american express`.                          |
-| Diners Club Card Number          |                                                                      |
-| Generic CVV Card Number          |                                                                      |
-| Mastercard Card Number           |                                                                      |
-| Mastercard Text                  | Text matching `mastercard`.                                          |
-| Union Pay Card Number            |                                                                      |
-| Union Pay Text                   | Text matching `union pay`.                                           |
-| Visa Card Number                 |                                                                      |
-| Visa Text                        | Text matching `visa`.                                                |
-| United States ABA Routing Number | ABA routing numbers are validated algorithmically with check digits. |
-| IBAN                             | IBAN are validated algorithmically with check digits.                |
+| Detection entry                  | Notes                                                                             |
+| -------------------------------- | --------------------------------------------------------------------------------- |
+| American Express Card Number     | Validated using [Luhn's algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm). |
+| American Express Text            | Text matching `amex` or `american express`.                                       |
+| Diners Club Card Number          | Validated using Luhn's algorithm.                                                 |
+| Generic CVV Card Number          |                                                                                   |
+| Mastercard Card Number           | Validated using Luhn's algorithm.                                                 |
+| Mastercard Text                  | Text matching `mastercard`.                                                       |
+| Union Pay Card Number            | Validated using Luhn's algorithm.                                                 |
+| Union Pay Text                   | Text matching `union pay`.                                                        |
+| Visa Card Number                 | Validated using Luhn's algorithm.                                                 |
+| Visa Text                        | Text matching `visa`.                                                             |
+| United States ABA Routing Number | Validated algorithmically with checksum.                                          |
+| IBAN                             | Validated with checksum.                                                          |
 
 {{</table-wrap>}}
 
@@ -41,12 +41,12 @@ Detections are validated algorithmically when possible.
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | United States SSN Numeric Detection                  | Commonly used separators are required to match the detection entry. For example, `000-00-0000` matches but `000000000` does not. Social security numbers do not adhere to algorithmic validation. |
 | Social Security Number Text                          | Text matching `ssn` or `social security`.                                                                                                                                                         |
-| Australia Tax File Number                            |                                                                                                                                                                                                   |
-| Canada Social Insurance Number                       |                                                                                                                                                                                                   |
+| Australia Tax File Number                            | Validated with checksum.                                                                                                                                                                          |
+| Canada Social Insurance Number                       | Validated using Luhn's algorithm.                                                                                                                                                                 |
 | France Social Security Number                        |                                                                                                                                                                                                   |
 | Singapore National Registration Identity Card Number |                                                                                                                                                                                                   |
-| Taiwan National Identification Number                |                                                                                                                                                                                                   |
-| United Kingdom NHS Number                            |                                                                                                                                                                                                   |
+| Taiwan National Identification Number                | Validated with checksum.                                                                                                                                                                          |
+| United Kingdom NHS Number                            | Validated with checksum.                                                                                                                                                                          |
 | United Kingdom National Insurance Number             |                                                                                                                                                                                                   |
 
 {{</table-wrap>}}
