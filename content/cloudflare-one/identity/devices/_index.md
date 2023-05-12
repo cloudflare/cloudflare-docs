@@ -41,7 +41,7 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 Access detects changes in device posture at the same rate as the [polling frequency](#polling-frequency) configured for the posture check.
 
-Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device.
+Because Gateway evaluates network and HTTP policies on every request, it maintains a local cache of posture results that is only updated every five minutes. Therefore, Gateway policies are subject to an additional five-minute delay. For example, if you set your polling frequency to 10 minutes, it may take up to 15 minutes for Gateway to detect posture changes on a device. The expiration for the service provider check (i.e. posture rule) can be set with the [expiration field](https://developers.cloudflare.com/api/operations/device-posture-rules-update-device-posture-rule#request-body).
 
 ### Polling frequency
 
@@ -51,4 +51,4 @@ By default, the WARP client polls the device for status changes every five minut
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. The polling frequency also sets the expiration time for the device posture result.
+When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. 
