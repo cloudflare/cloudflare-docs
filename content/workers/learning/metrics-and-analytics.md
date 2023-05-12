@@ -63,7 +63,7 @@ Workers on the [Bundled Usage Model](/workers/platform/pricing/#usage-models) ma
 
 The request duration per execution chart is currently only available when your Worker has [Smart Placement](/workers/platform/smart-placement) enabled. Request duration shows how long it took your Worker to respond to requests, including execution duration and network latency. 
 
-The data is broken down to show the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis. 
+The data shows the duration for requests with Smart Placement enabled compared to those with Smart Placement disabled (by default 1% of requests are routed with Smart Placement disabled). The chart shows a histogram with duration across the x-axis and the percentage of requests that fall into the corresponding duration on the y-axis. 
 
 
 ### Egress Data
