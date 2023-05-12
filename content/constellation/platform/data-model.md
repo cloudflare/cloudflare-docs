@@ -14,7 +14,7 @@ The three fundamental concepts of our model are Projects, Models, and the Catalo
 
 The Project has a name, a machine-learning runtime, and an Id.
 
-The runtime has to be one of our supported engines; [click here](/constellation/platform/runtimes/) for the complete list. The Id is what binds the project to the Worker Script.
+The runtime has to be one of our supported engines. Refer to [Constellation Runtimes](/constellation/platform/runtimes/) for the complete list. The ID is what binds the project to the Worker.
 
 The name can only have alphanumeric, minus (-) and underscore (_) characters (```/^[a-zA-Z0-9-_]+$/```) and it helps organize things and is used for certain operations in [Wrangler](/constellation/concepts/wrangler-support/) and the APIs.
 
