@@ -11,20 +11,20 @@ The matrix below includes example devices and links to the integration guides.
 
 Appliance                                                     | GRE tunnel                 | IPsec tunnel
 ------------------------------------------------------------- | -------------------------- | ---
-[Aruba EdgeConnect](/magic-wan/tutorials/aruba-edgeconnect/)   | ✅                         | ✅
-[Cisco Viptela](/magic-wan/tutorials/viptela/)                 | ✅                         | ✅
+[Aruba EdgeConnect](/magic-wan/thirt-party/aruba-edgeconnect/)   | ✅                         | ✅
+[Cisco Viptela](/magic-wan/thirt-party/viptela/)                 | ✅                         | ✅
 Cisco Meraki                                                  | Compatibility on roadmap   | Compatibility on roadmap
 Cisco ASA                                                     | Compatibility on roadmap   | Specifications compatible*
-[Fortinet](/magic-wan/tutorials/fortinet/)                    | Specifications compatible* | Specifications compatible*
+[Fortinet](/magic-wan/thirt-party/fortinet/)                    | Specifications compatible* | Specifications compatible*
 PAN-OS                                                        | ✅                         | ✅
-[pfSense](/magic-wan/tutorials/pfsense/)                      | ✅                         | ✅
+[pfSense](/magic-wan/thirt-party/pfsense/)                      | ✅                         | ✅
 Prisma SD-WAN (Palo Alto)                                     | Specifications compatible* | Specifications compatible*
 Riverbed                                                      | Specifications compatible* | Specifications compatible*
-[Sophos Firewall](/magic-wan/tutorials/sophos-firewall/)      | ✅                         | ✅
-[strongSwan](/magic-wan/tutorials/strongswan/)                 | –                          | ✅
+[Sophos Firewall](/magic-wan/thirt-party/sophos-firewall/)      | ✅                         | ✅
+[strongSwan](/magic-wan/thirt-party/strongswan/)                 | –                          | ✅
 Velocloud                                                     | Compatibility on roadmap   | Compatibility on roadmap
 Versa                                                         | Specifications compatible* | Compatibility on roadmap
-[VyOS](/magic-wan/tutorials/vyos/)                             | –                          | ✅
+[VyOS](/magic-wan/thirt-party/vyos/)                             | –                          | ✅
 
 VPN               | GRE tunnel                  | IPsec tunnel 
 ------------------|-----------------------------|---------------
