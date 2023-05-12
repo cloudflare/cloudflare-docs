@@ -7,7 +7,7 @@ meta:
 
 # Connect to Cloudflare Gateway with Magic WAN
 
-You can route traffic through Magic WAN and [Cloudflare Gateway](/cloudflare-one/policies/filtering/). Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering. Each policy serves different use cases, and we recommend that you [read the Gateway documentation](/cloudflare-one/policies/filtering/) to learn more.
+You can route traffic through Magic WAN and filter it with [Cloudflare Gateway](/cloudflare-one/policies/filtering/). Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering. Each policy serves different use cases, and we recommend that you [read the Gateway documentation](/cloudflare-one/policies/filtering/) to learn more.
 
 In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Cloudflare Gateway, from enterprise site routers.
 
@@ -15,11 +15,11 @@ In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunne
 
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, make sure that you already have:
 
-- Purchased Magic WAN and Gateway
-- Added a [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) if you are not using [WARP](/cloudflare-one/connections/connect-devices/warp/)
-- Talked to your Cloudflare team to provision the combination of Magic WAN and Gateway
-- Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN
-- Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI)
+- Purchased Magic WAN and Gateway.
+- Added a [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) to the client machine you are accessing the network with, if you do not have [WARP](/cloudflare-one/connections/connect-devices/warp/) installed.
+- Talked to your Cloudflare team to provision the combination of Magic WAN and Gateway.
+- Received the Cloudflare GRE endpoint (Anycast IP address) assigned to Magic WAN.
+- Established connectivity between site edge routers and the Cloudflare GRE endpoint via the Internet or Cloudflare Network Interconnect (CNI).
 - Chosen site routers that support Anycast GRE or IPsec tunnels and Policy-based Routing (PBR). This is required so that specific Internet-bound traffic from the sites' private networks can be routed over the Anycast GRE or IPsec tunnel to Magic WAN, and subsequently Gateway, to enforce a user's specific web access policies.
 
 You should also make sure that your site routers use proper routing techniques such as policy-based routing. This is needed to match relevant Internet-bound traffic from the site’s appropriate local private subnets and route them over the GRE tunnel to Cloudflare Magic WAN and Gateway for processing. Otherwise, such Internet-bound traffic would likely be routed straight out of the physical uplink of the site router without the protection enforced by Cloudflare Gateway.
@@ -28,9 +28,9 @@ You should also make sure that your site routers use proper routing techniques s
 
 For the purpose of this tutorial, setup will reference a scenario where an enterprise has three sites: headquarters, a branch office, and a data center. Each site has a local private network with RFC 1918 address assignments:
 
-- Headquarters is assigned a `192.168.0.0/16` network, and Router A is the site router terminating the Anycast GRE or IPsec tunnel
-- Branch office is assigned `10.0.1.0/24` network, and Router B is the site router terminating the Anycast GRE or IPsec tunnel
-- Data center is assigned with `172.16.0.0/12` network, and Router C is the site router terminating the Anycast GRE or IPsec tunnel
+- Headquarters is assigned a `192.168.0.0/16` network, and Router A is the site router terminating the Anycast GRE or IPsec tunnel.
+- Branch office is assigned `10.0.1.0/24` network, and Router B is the site router terminating the Anycast GRE or IPsec tunnel.
+- Data center is assigned with `172.16.0.0/12` network, and Router C is the site router terminating the Anycast GRE or IPsec tunnel.
 
 Each site's private network has an on-ramp to Cloudflare's Anycast network using Anycast GRE or IPsec tunnels, and the Cloudflare tunnel endpoint IP address is `192.0.2.10`.
 
@@ -46,10 +46,20 @@ to_Router_C	| 192.0.2.10 | 198.51.100.202 | 10.255.255.5/31 | 172.16.0.0/12 | 10
 
 {{</table-wrap>}}
 
-## 1. Add Anycast GRE or IPsec tunnel
+## 1. Add the GRE tunnels
 
-1. Follow the instructions in [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/#add-tunnels) to create all the GRE tunnels for routers A, B, and C.
-2. In keeping with the example scenario, fill out the tunnel information to match the example below.
+1. Follow the instructions in [Configure tunnel endpoints](/magic-wan/get-started/configure-tunnels/#add-tunnels) to create all the tunnels for routers A, B, and C. This example creates GRE tunnels, but you can also follow the same steps to add IPsec tunnels.
+2. In keeping with the example scenario, fill out the tunnel information to match the example below. You can leave any default values not mentioned here.
+
+{{<table-wrap>}}
+
+GRE tunnel name | Description | Interface address | Customer GRE endpoint | Cloudflare GRE endpoint
+--- | --- | --- | --- | --- 
+`to_Router_A` | To HQ router A | `10.255.255.1/31` | `198.51.100.10` | `192.0.2.10`
+`to_Router_B` | To branch router B | `10.255.255.3/31` | `198.51.100.202` | `192.0.2.10`
+`to_Router_C` | To data center router C | `10.255.255.5/31` | `198.51.100.202` | `192.0.2.10`
+
+{{</table-wrap>}}
 
 ![Tunnel configuration for each branch office, including interface address, Customer and Cloudflare GRE endpoints, and TTL and MTU](/magic-wan/static/gre-tunnel-values.png)
 
