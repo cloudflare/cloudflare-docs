@@ -17,7 +17,7 @@ You have a user in Sydney, Australia who is accessing an application running on 
 
 ![A user located in Sydney, AU connecting to a Worker in the same region which then makes multiple round trips to a database located in Frankfurt, DE. ](../media/workers-smart-placement-disabled.png)
 
-The bottleneck is the time that it takes the Worker to perform multiple round trips to the database. Instead of request being processed close to the user, with Smart Placement enabled would process it in a data center closest to the database instead. 
+The blockage is the time that it takes the Worker to perform multiple round trips to the database. Instead of the request being processed close to the user, with Smart Placement enabled, the network would process the request in a data center closest to the database. 
 
 ![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](../media/workers-smart-placement-enabled.png)
 
