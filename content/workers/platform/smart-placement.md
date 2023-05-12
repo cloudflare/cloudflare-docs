@@ -56,7 +56,7 @@ Smart Placement is available users on all Workers plans.
 
 3. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
 
-4. View [request duration analytics](/workers/learning/metrics-and-analytics) about your Worker
+4. View your Worker's [request duration analytics](/workers/learning/metrics-and-analytics).
 
 
 ### To enable Smart Placement on the dashboard:
