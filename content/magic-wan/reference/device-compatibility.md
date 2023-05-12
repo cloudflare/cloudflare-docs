@@ -11,20 +11,20 @@ The matrix below includes example devices and links to the integration guides.
 
 Appliance                                                     | GRE tunnel                 | IPsec tunnel
 ------------------------------------------------------------- | -------------------------- | ---
-[Aruba EdgeConnect](/magic-wan/thirt-party/aruba-edgeconnect/)   | ✅                         | ✅
-[Cisco Viptela](/magic-wan/thirt-party/viptela/)                 | ✅                         | ✅
+[Aruba EdgeConnect](/magic-wan/third-party/aruba-edgeconnect/)   | ✅                         | ✅
+[Cisco Viptela](/magic-wan/third-party/viptela/)                 | ✅                         | ✅
 Cisco Meraki                                                  | Compatibility on roadmap   | Compatibility on roadmap
 Cisco ASA                                                     | Compatibility on roadmap   | Specifications compatible*
-[Fortinet](/magic-wan/thirt-party/fortinet/)                    | Specifications compatible* | Specifications compatible*
+[Fortinet](/magic-wan/third-party/fortinet/)                    | Specifications compatible* | Specifications compatible*
 PAN-OS                                                        | ✅                         | ✅
-[pfSense](/magic-wan/thirt-party/pfsense/)                      | ✅                         | ✅
+[pfSense](/magic-wan/third-party/pfsense/)                      | ✅                         | ✅
 Prisma SD-WAN (Palo Alto)                                     | Specifications compatible* | Specifications compatible*
 Riverbed                                                      | Specifications compatible* | Specifications compatible*
-[Sophos Firewall](/magic-wan/thirt-party/sophos-firewall/)      | ✅                         | ✅
-[strongSwan](/magic-wan/thirt-party/strongswan/)                 | –                          | ✅
+[Sophos Firewall](/magic-wan/third-party/sophos-firewall/)      | ✅                         | ✅
+[strongSwan](/magic-wan/third-party/strongswan/)                 | –                          | ✅
 Velocloud                                                     | Compatibility on roadmap   | Compatibility on roadmap
 Versa                                                         | Specifications compatible* | Compatibility on roadmap
-[VyOS](/magic-wan/thirt-party/vyos/)                             | –                          | ✅
+[VyOS](/magic-wan/third-party/vyos/)                             | –                          | ✅
 
 VPN               | GRE tunnel                  | IPsec tunnel 
 ------------------|-----------------------------|---------------
