@@ -70,7 +70,7 @@ To enable Smart Placement via the dashboard:
 5. Under **Placement**, enable **Smart** mode.
 6. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
 
-7. View [request duration analytics](/workers/learning/metrics-and-analytics) about your Worker
+7. View your Worker's [request duration analytics](/workers/learning/metrics-and-analytics).
 
 ## Best practices
 - split up your application: frontend and backend connected via SB, backend with smart palcement enabled 
