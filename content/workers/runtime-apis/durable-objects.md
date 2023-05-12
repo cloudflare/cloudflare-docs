@@ -338,7 +338,7 @@ The system calls the `webSocketClose()` method when a WebSocket is closed. The m
 
 #### `webSocketError()` handler method
 
-The system calls the `webSocketError` method for any non-disconnection related errors. The method takes `(ws: WebSocket, error: any)` as parameters. It does not return a result and can be `async`.
+The system calls the `webSocketError()` method for any non-disconnection related errors. The method takes `(ws: WebSocket, error: any)` as parameters. It does not return a result and can be `async`.
 
 ---
 
