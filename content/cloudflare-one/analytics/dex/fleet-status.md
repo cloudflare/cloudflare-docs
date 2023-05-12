@@ -23,7 +23,7 @@ To view analytics on a per-device level, go to **My Team** > **Devices**. The **
 |-------------------|-------------|
 | Connected    |  WARP has successfully established a connection to the Cloudflare global network.  |
 | Disconnected | WARP has been intentionally or unintentionally disconnected from the Cloudflare global network.  |
-| Paused       | A user or administrator has taken an explicit action to temporarily disconnect WARP, for example by entering an [Admin Override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) code.|
+| Paused       | A user or administrator has taken an explicit action to temporarily turn off WARP, for example by entering an [Admin Override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) code.  Paused clients will [auto-connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) after a timeout period. |
 | Connecting   | WARP is pending connection, but is actively trying to establish a connection to the Cloudflare global network. |
 {{</table-wrap>}}
 
