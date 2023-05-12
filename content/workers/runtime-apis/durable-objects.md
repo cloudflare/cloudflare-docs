@@ -336,7 +336,7 @@ The system calls the `webSocketMessage()` method when an accepted WebSocket rece
 
 The system calls the `webSocketClose()` method when a WebSocket is closed. The method takes `(ws: WebSocket, code: number, reason: string, wasClean: boolean)` as parameters. `wasClean` is true if the connection closed cleanly, false otherwise. The method does not return a result and can be `async`.
 
-#### `webSocketError` handler method
+#### `webSocketError()` handler method
 
 The system calls the `webSocketError` method for any non-disconnection related errors. The method takes `(ws: WebSocket, error: any)` as parameters. It does not return a result and can be `async`.
 
