@@ -61,8 +61,6 @@ GRE tunnel name | Description | Interface address | Customer GRE endpoint | Clou
 
 {{</table-wrap>}}
 
-![Tunnel configuration for each branch office, including interface address, Customer and Cloudflare GRE endpoints, and TTL and MTU](/magic-wan/static/gre-tunnel-values.png)
-
 {{<Aside type="note">}}
 When you create a GRE tunnel the TTL and MTU fields are auto-populated. The default MTU value of 1476 bytes takes into account the GRE encapsulation overhead of 24 bytes (20 bytes for the outer IP header plus 4 bytes for the mandatory GRE header) that will be added to the original (inner) IP packet when they are sent over the GRE tunnel. Refer to [Set maximum segment size](/magic-wan/prerequisites/#set-maximum-segment-size) for more information.
 {{</Aside>}}
