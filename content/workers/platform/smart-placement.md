@@ -30,7 +30,7 @@ Smart Placement is only active for Workers that **make multiple roundtrips (two 
 
 Smart Placement is a best-effort attempt. Smart Placement will not take action unless it's more performant than the default (running the Worker at the data center closest to the user).
 
-### Supported backends
+### Supported back-end services
 
 There are some back-end services that are not considered by the Smart Placement algorithm:
 
