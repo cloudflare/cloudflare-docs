@@ -4,7 +4,7 @@ pcx_content_type: navigation
 weight: 5
 meta:
     title: Cloudflare Zero Trust integration tutorials
-    description: Learn how to integrate Magic WAN with other Cloudflare Zero Trust products, such as Cloudflare Gateway and Cloudflare WARP.
+    description: Learn how to integrate Cloudflare Magic WAN with other Cloudflare Zero Trust products, such as Cloudflare Gateway and Cloudflare WARP.
 ---
 
 # Cloudflare Zero Trust integration tutorials
