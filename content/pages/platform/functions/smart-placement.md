@@ -26,8 +26,6 @@ For more background and to understand how Smart Placement works visit [Smart Pla
 
 {{</Aside>}}
 
-
-
 ## Enable Smart Placement (beta)
 
 Smart Placement is available users on all plans. 
