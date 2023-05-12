@@ -32,10 +32,6 @@ The setup of your Logpush integration is now complete. Logpush will send updated
 
 You can configure multiple destinations and add additional fields to your logs by returning to the **Logpush** page.
 
-## Parsing RData files
-
-RData provides the full response for a DNS query in a [base64-encoded binary format](https://datatracker.ietf.org/doc/html/rfc1035#section-3.3).
-
 ## Zero Trust datasets
 
 Refer to the Logpush documentation for a list of available fields.
