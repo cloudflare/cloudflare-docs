@@ -67,8 +67,8 @@ When you create a GRE tunnel the TTL and MTU fields are auto-populated. The defa
 
 ## 2. Add static routes
 
-1. Follow the instructions in [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) to create a new static route.
-2. The **Priority** and **Region code** fields are auto-populated. Tunnels with lower priority numbers will be chosen first. You can also steer traffic to a certain region to reduce latency by scoping your tunnel to specific Cloudflare data center regions. Refer to [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for more information.
+1. Follow the instructions in [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) to create the static routes.
+2. The **Priority** and **Region code** fields are auto-populated. Tunnels with lower priority numbers will be chosen first. You can also steer traffic to a certain geographic region to reduce latency. Refer to [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for more information.
 3. In keeping with the example scenario, the list of static routes should match the example below.
 
 Prefix | Tunnel/Next hop | Priority | Region code
@@ -77,15 +77,11 @@ Prefix | Tunnel/Next hop | Priority | Region code
 `10.0.1.0/24` | `10.255.255.2` | `100` | `All regions`
 `172.16.0.0/12` | `10.255.255.4` | `100` | `All regions` 
 
-## 3. Setup site routers
-
-After setting up tunnels on Magic WAN side, you need to configure your site routers. In keeping with this example, refer to the table in the [Example scenario](#example-scenario) to find the IP addresses you should use.
-
-## 4. Set up Cloudflare Gateway
+## 3. Set up Cloudflare Gateway
 
 The last step is to configure your Cloudflare Gateway policies from the [Zero Trust](https://one.dash.cloudflare.com/) dashboard. To set up the policies, refer to our [Gateway documentation](/cloudflare-one/policies/filtering/).
 
-Cloudflare Gateway supports all TCP and UDP ports, traffic sourced from private IP addresses on TCP/IP networks, and Bringing Your Own IPs to Cloudflare ([BYOIP][/byoip/]).
+Cloudflare Gateway supports all TCP and UDP ports, traffic sourced from private IP addresses on TCP/IP networks, and [BYOIP](/byoip/).
 
 After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare global network.
 
