@@ -13,7 +13,7 @@ You may benefit from Smart Placement if you are making multiple round trips to a
 ## Background
 The following example walks through how moving your Worker close to your backend services could decrease application latency:
 
-You have a user in Sydney, Australia who’s accessing an application running on Workers. This application makes multiple round trips to a database located in Frankfurt, Germany in order to serve the user’s request. 
+You have a user in Sydney, Australia who is accessing an application running on Workers. This application makes multiple round trips to a database located in Frankfurt, Germany in order to serve the user’s request. 
 
 ![A user located in Sydney, AU connecting to a Worker in the same region which then makes multiple round trips to a database located in Frankfurt, DE. ](../media/workers-smart-placement-disabled.png)
 
