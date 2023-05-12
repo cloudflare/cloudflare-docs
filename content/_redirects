@@ -429,7 +429,7 @@
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/thirt-party/aruba-edgeconnect/ 301
 /magic-wan/tutorials/viptela/ /magic-wan/third-party/viptela/ 301
 /magic-wan/tutorials/cisco-ios-xe/ /magic-wan/third-party/cisco-ios-xe/ 301
-/magic-wan/tutorials/secure-web-gateway/ /magic-wan/zero-trust/secure-web-gateway/ 301
+/magic-wan/tutorials/secure-web-gateway/ /magic-wan/zero-trust/cloudflare-gateway/ 301
 /magic-wan/tutorials/fortinet/ /magic-wan/third-party/fortinet/ 301
 /magic-wan/tutorials/pfsense/ /magic-wan/third-party/pfsense/ 301
 /magic-wan/tutorials/sophos-firewall/ /magic-wan/third-party/sophos-firewall/ 301
