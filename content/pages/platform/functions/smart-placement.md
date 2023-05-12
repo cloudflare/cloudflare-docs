@@ -5,7 +5,7 @@ title: Smart Placement (beta)
 
 {{<beta>}}Smart Placement{{</beta>}}
 
-Smart Placement (beta) automatically places your workloads in an optimal location that minimizes latency and speeds up your applications. By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Pages Function, it may be more performant to run that Pages Function closer to your back-end infrastructure rather than the end user. 
+By default, [Workers](/workers/) and [Pages Functions](/pages/platform/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Pages Function, it may be more performant to run that Pages Function closer to your back-end infrastructure rather than the end user. Smart Placement (beta) automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
 
 You may benefit from Smart Placement if you are making multiple round trips to a centralized database, API or origin server in a Pages Function.
 
@@ -38,9 +38,6 @@ Smart Placement is available on all plans.
 5. Under **Placement**, enable **Smart** mode.
 6. Send some initial traffic (approximately 20-30 requests) to your Pages Functions. It takes a few minutes after you have sent traffic to your Pages Function for Smart Placement to take effect. 
 7. View your Function's [request duration metrics](/workers/learning/metrics-and-analytics) under Functions Metrics.
-
-## Best practices
-
 
 ## Give feedback on Smart Placement
 
