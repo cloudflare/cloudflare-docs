@@ -11,6 +11,8 @@ You can route traffic through Magic WAN and filter it with [Cloudflare Gateway](
 
 In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Cloudflare Gateway, from enterprise site routers.
 
+{{<render file="_traceroute.md">}}
+
 ## Prerequisites
 
 Before you can configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, make sure that you already have:
@@ -84,5 +86,3 @@ The last step is to configure your Cloudflare Gateway policies from the [Zero Tr
 Cloudflare Gateway supports all TCP and UDP ports, traffic sourced from private IP addresses on TCP/IP networks, and [BYOIP](/byoip/).
 
 After you have configured Cloudflare Gateway, enterprise users and devices from each of the sites mentioned in the example scenario will be able to safely browse or access Internet resources under the protection of the Cloudflare global network.
-
-{{<render file="_traceroute.md">}}
