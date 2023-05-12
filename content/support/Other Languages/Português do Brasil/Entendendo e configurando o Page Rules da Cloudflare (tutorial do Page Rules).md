@@ -300,7 +300,7 @@ Armadura contra Fraude do Cache
 
  | 
 
-Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/about/cache-deception-armor)
+Proteja-se contra ataques de fraude do cache da web e, ao mesmo tempo, continue permitindo que ativos estáticos sejam armazenados em cache. Essa configuração verifica se a extensão da URL corresponde ao _Content-Type_ retornado. [Saiba mais.](/cache/cache-security/cache-deception-armor/)
 
  | 
 
