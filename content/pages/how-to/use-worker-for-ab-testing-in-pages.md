@@ -46,7 +46,7 @@ const abTest = async ({request, next, env}) => {
   /*
   Todo: 
   1. Conditional statements to check for the cookie
-  2. Assign cookies based on percentage, then sever 
+  2. Assign cookies based on percentage, then serve 
   */
 }
 
@@ -89,7 +89,7 @@ const newHomepagePathName = "/test"
 const abTest = async ({request, next, env}) => {
   /*
   Todo: 
-  1. Assign cookies based on randomly genrated percentage, then serve
+  1. Assign cookies based on randomly generated percentage, then serve
   */
 
   const url = new URL(request.url)
@@ -125,7 +125,7 @@ A Function is a Worker that executes on your Pages project to add dynamic functi
 ```js
 ---
 filename: /functions/_middleware.js
-highlight: [20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]
+highlight: 20-36
 ---
 const cookieName = "ab-test-cookie"
 const newHomepagePathName = "/test"

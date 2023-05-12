@@ -2,10 +2,10 @@
 pcx_content_type: troubleshooting
 language_tag: german
 source: https://support.cloudflare.com/hc/de/articles/204144518-H%C3%A4ufige-Fragen-zu-SSL
-title: Häufige Fragen zu SSL 
+title: Häufige Fragen zu SSL
 ---
 
-# Häufige Fragen zu SSL 
+# Häufige Fragen zu SSL
 
 
 
@@ -15,9 +15,9 @@ Cloudflare-Zertifikate werden nach [Zertifikatstyp](https://support.cloudflare.c
 
 -   [Benutzerdefinierte SSL](https://support.cloudflare.com/hc/articles/200170466)
 -   [Dedicated SSL](https://support.cloudflare.com/hc/articles/228009108)
--   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)   
+-   [Universal SSL](https://support.cloudflare.com/hc/articles/204151138)
 
-Ausnahmen von der allgemeinen Priorisierung erfolgen basierend auf der Spezifität des Hostnamens.  Zertifikate, die einen bestimmten Hostnamen erwähnen, werden Wildcard-Zertifikaten vorgezogen.  Beispielsweise hat ein universelles SSL-Zertifikat, das _www.example.com_ explizit erwähnt, Vorrang vor einem Zertifikat, das mit dem Hostnamen _www_ über eine Wildcard wie _\*.example.com_ übereinstimmt.  
+Ausnahmen von der allgemeinen Priorisierung erfolgen basierend auf der Spezifität des Hostnamens.  Zertifikate, die einen bestimmten Hostnamen erwähnen, werden Wildcard-Zertifikaten vorgezogen.  Beispielsweise hat ein universelles SSL-Zertifikat, das _www.example.com_ explizit erwähnt, Vorrang vor einem Zertifikat, das mit dem Hostnamen _www_ über eine Wildcard wie _\*.example.com_ übereinstimmt.
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 ### Was bedeutet eine ungültige SSL-Markenprüfung?
 
-Einige Domains sind nicht für das universelle SSL berechtigt, wenn sie Wörter enthalten, die mit markenrechtlich geschützten Domains in Konflikt stehen.  
+Einige Domains sind nicht für das universelle SSL berechtigt, wenn sie Wörter enthalten, die mit markenrechtlich geschützten Domains in Konflikt stehen.
 
 Um dieses Problem zu beheben, können Sie entweder:
 
@@ -151,6 +151,6 @@ TLS-Client-Authentifizierung überprüft, ob ein von einem Client vorgelegtes Ze
 
 ___
 
-### Wie aktiviere ich Universal-SSL mit Github?  
+### Wie aktiviere ich Universal-SSL mit GitHub?
 
 Weitere Informationen zur [Verwendung von Cloudflares Universal SSL mit GitHub-Seiten finden Sie im Cloudflare-Blogbeitrag](https://blog.cloudflare.com/secure-and-fast-github-pages-with-cloudflare/).

@@ -80,7 +80,7 @@ conn cloudflare-ipsec
     # Private IP of the VM
     left=%any
     # Tunnel ID from dashboard, in this example FQDN is used
-    leftid=<YOUR_TUNNEL_ID>.ipsec.cloudflare.com
+    leftid=<YOUR_TUNNEL_ID>.<YOUR_ACCOUNT_ID>.ipsec.cloudflare.com
     leftsubnet=0.0.0.0/0
     # Cloudflare anycast IP
     right=<YOUR_CLOUDFLARE_ANYCAST_IP>

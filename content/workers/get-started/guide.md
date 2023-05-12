@@ -32,7 +32,7 @@ In your terminal, you will be asked a series of questions related to your projec
 
 {{<Aside type="note" header="TypeScript">}}
 
-`wrangler init` will prompt you to choose y/n to `Would you like to use TypeScript? (y/n)`. If you indicate yes, you will get an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project. 
+`wrangler init` will prompt you to choose y/n to `Would you like to use TypeScript? (y/n)`. If you indicate yes, you will get an `index.ts` file instead of a `index.js` file and Wrangler will also generate a `tsconfig.json` file in the root of your project.
 
 {{</Aside>}}
 
@@ -42,7 +42,7 @@ To start developing your Worker, `cd` into your new project directory:
 
 ```sh
 $ cd my-project
-``` 
+```
 
 In your project directory, `wrangler init` has generated the following:
 
@@ -51,13 +51,13 @@ In your project directory, `wrangler init` has generated the following:
 3. `package.json`: A minimal Node dependencies configuration file. Only generated if indicated in `wrangler init` command.
 4. [`package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json): A file that locks any associated dependencies to a specific version and prevents accidental dependency version updating. Only generated if indicated in `wrangler init` command.
 5. `tsconfig.json`: TypeScript configuration that includes [Workers types](https://www.npmjs.com/package/@cloudflare/workers-types). Only generated if indicated in `wrangler init` command.
-6. `/node_modules`: Refer to the [NPM documentation on `/node_modules`](https://docs.npmjs.com/cli/v9/configuring-npm/folders#node-modules) for more information.
+6. `/node_modules`: Refer to the [npm documentation on `/node_modules`](https://docs.npmjs.com/cli/v9/configuring-npm/folders#node-modules) for more information.
 
 ---
 
 ## 2. Run your development server
 
-After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development. 
+After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command to start a local server for developing your Worker. This will allow you to test your Worker in development.
 
 ```sh
 $ npx wrangler dev
@@ -93,7 +93,7 @@ This code block consists of four parts:
 
 2. The event handler: `async fetch(request)`
 
-This event handler will be called when your Worker receives a [`fetch` event](/workers/runtime-apis/fetch-event/). You can define additional event handlers in the exported object to respond to different types of events. For example, add an `async scheduled(event) {}` function definition to respond to [`scheduled` events](/workers/runtime-apis/scheduled-event/). 
+This event handler will be called when your Worker receives a [`fetch` event](/workers/runtime-apis/fetch-event/). You can define additional event handlers in the exported object to respond to different types of events. For example, add an `async scheduled(event) {}` function definition to respond to [`scheduled` events](/workers/runtime-apis/scheduled-event/).
 
 3. Parameters: `request`, `env`, `context`
 
@@ -130,7 +130,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 We recommend writing tests against your Worker. One way to do this is with the [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API in Wrangler. `unstable_dev` is used for writing integration and end-to-end tests.
 
-After running the `wrangler init` command, you will be prompted with questions asking `would you like us to write your first test?`, and `which test runner you will like to use?`. If you indicate yes and select either `vitest` or `jest` as your test runner, an `index.test.js` file will be created with the following block of code included in the file: 
+After running the `wrangler init` command, you will be prompted with questions asking `would you like us to write your first test?`, and `which test runner you will like to use?`. If you indicate yes and select either `vitest` or `jest` as your test runner, an `index.test.js` file will be created with the following block of code included in the file:
 
 ```js
 const { unstable_dev } = require("wrangler");
@@ -166,7 +166,7 @@ The code block consists of 4 parts:
 
 3. The `afterAll()` function, which calls `await worker.stop()` for stopping the dev server after it runs the test suite.
 
-4. The `await worker.fetch()` function, for checking the response received corresponds with what you were expecting. 
+4. The `await worker.fetch()` function, for checking the response received corresponds with what you were expecting.
 
 ## Next steps
 

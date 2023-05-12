@@ -20,9 +20,11 @@ This feature is available on Windows, macOS, and Linux using a client version of
 2. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
 3. Enable **Install CA to system certificate store**.
 4. [Install](/cloudflare-one/connections/connect-devices/warp/download-warp/) the WARP client on the device.
-5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device) in your Zero Trust organization.
+5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/#enroll-a-device-manually) in your Zero Trust organization.
 
 If a custom certificate is not provided, WARP will install the default [Cloudflare certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#download-the-cloudflare-root-certificate) in the system keychain for all users. If you uploaded a custom certificate, the WARP client will deploy your custom certificate instead of the Cloudflare certificate.
+
+Next, [verify](#view-the-installed-certificate) that the certificate was successfully installed.
 
 {{<Aside type="note" header="Important">}}
 WARP only installs the system certificate — it does not install the certificate on individual applications. You will need to [manually add the certificate](/cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/#add-the-certificate-to-applications) to applications that rely on their own certificate store.
@@ -43,8 +45,10 @@ The default Cloudflare certificate is named **Cloudflare for Teams ECC Certifica
 
 1. Open **Keychain Access**.
 2. Go to **System** > **Certificates**.
-
-The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.
+3. Double-click your certificate. (The default Cloudflare certificate is named **Cloudflare for Teams ECC Certificate Authority**.)
+4. You should see **This certificate is marked as trusted for all users**. If the certificate is not trusted:
+    1. Select **Trust**.
+    2. Set **When using this certificate** to _Always Trust_.
 
 ### Linux
 

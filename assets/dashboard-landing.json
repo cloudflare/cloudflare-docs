@@ -123,8 +123,7 @@
           "title": "Change your nameservers"
         },
         {
-          "external_link": true,
-          "url_path": "https://support.cloudflare.com/hc/articles/205359838",
+          "url_path": "/dns/zone-setups/troubleshooting/cannot-add-domain/",
           "title": "Cannot add domain to Cloudflare"
         }
       ]

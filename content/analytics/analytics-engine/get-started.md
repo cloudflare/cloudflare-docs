@@ -42,6 +42,8 @@ analytics_engine_datasets = [
 ]
 ```
 
+Save the changes that you made to your `wrangler.toml` file. Republish your Worker by running `wrangler publish` from the Terminal window to update the changes. In the dashboard, you can also verify if your deployment was successful.
+
 ## 3. Write data from your Worker
 
 Once a binding is declared in Wrangler and your worker is deployed, you get a new environment variable in the Workers runtime that represents your Workers Analytics Engine dataset. This variable has a method, `writeDataPoint()`. A data point is a structured event which consists of a vector of blobs and a vector of doubles. Calls to `writeDataPoint` will return immediately while processing of the data point continues in the background.
@@ -63,6 +65,30 @@ This is how it translates into code:
   }
 ```
 
+Besides writing static data points, a common use case of Workers Analytics Engine is to capture information about incoming HTTP requests.
+
+In the runtime API documentation, you can find  information about the [variables](/workers/runtime-apis/request/). Because these variables are already available in the runtime, you will not need to define them. In other words, you can directly use `request.cf.<variable name>` as a blob or double field. Using this adaptation of this Worker [example](/workers/examples/geolocation-hello-world/) template, you can write the geolocation variables to Analytics Engine.
+
+```js
+env.<EXAMPLE_DATASET>.writeDataPoint({
+  'blobs': [ 
+    request.cf.colo, 
+    request.cf.country, 
+    request.cf.city, 
+    request.cf.region, 
+    request.cf.timezone
+  ],
+  'doubles': [
+    request.cf.metroCode, 
+    request.cf.longitude, 
+    request.cf.latitude
+  ],
+  'indexes': [
+    request.cf.postalCode
+  ] 
+});
+```
+
 In our initial version, developers are responsible for **providing fields in a consistent order**, so that they have the same semantics when querying. In a future iteration, we plan to let developers name their blobs and doubles in the binding, and then use these names when writing data points in the runtime.
 
 ## 4. Query data using GraphQL and SQL API
@@ -74,6 +100,8 @@ The GraphQL API powers our dashboard and is better suited for building interacti
 SQL API is better suited for writing ad hoc queries and integrating with external tools like Grafana. At this time, the SQL API only supports the `SELECT` statement and a limited subset of SQL functionality.
 
 The SQL API is available as an HTTP endpoint at `https://api.cloudflare.com/client/v4/accounts/YOUR_ACCOUNT_ID/analytics_engine/sql` using the `POST` and `GET` method. You need to include an `Authorization: Bearer _____` token where the underscores should be replaced with a Cloudflare [API Token](https://dash.cloudflare.com/profile/api-tokens) that has the `Account Analytics Read` permission.
+
+If you prefer a graphical interface, you can use [Postman](https://www.postman.com/) to connect to the SQL API endpoint and run your query. Postman is an application that can be used to test APIs. You can use the endpoint mentioned above using the `POST` and `GET` methods.
 
 ### Example of querying data with the SQL API
 

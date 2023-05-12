@@ -140,9 +140,8 @@ For projects without a custom domain (any project on a `*.pages.dev` subdomain),
 
 In the **Settings** section, you can configure advanced settings, such as changing your project name, updating your Git configuration, or updating your build command, build directory or environment variables.
 
-![Configuring your Pages project settings in the Cloudflare dashboard](/pages/get-started/images/settings.png)
-
 ## Related resources
 
-- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/)
-- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access)
+- Set up a [custom domain for your Pages project](/pages/platform/custom-domains/).
+- Enable [Cloudflare Web Analytics](/pages/how-to/web-analytics/).
+- Set up Access policies to [manage who can view your deployment previews](/pages/platform/preview-deployments/#customizing-preview-deployments-access).

@@ -1,6 +1,11 @@
 {{- $target := printf "%sexamples/" .Page.FirstSection.RelPermalink -}}
 {{- $pages := (where .Site.Pages "Section" .Page.Section) -}}
 
+{{- with .Get "directory" -}}
+  {{- $target = . -}}
+{{- end -}}
+
+
 <ul class="DocsCodeExamplesOverview" style="list-style: none">
   {{- range $pages.ByWeight -}}
     {{- $x := .RelPermalink -}}

@@ -89,19 +89,19 @@ The Workers Unbound Usage Model has a significantly higher limit than the Bundle
 
 {{<table-wrap>}}
 
-| Feature                               | Free                  | Paid       |
-| ------------------------------------- | --------------------- | ---------- |
-| [Reads/second](#kv)                   | 100,000 reads per day | unlimited  |
-| [Writes/second (different keys)](#kv) | 1,000 writes per day  | unlimited  |
-| [Writes/second (same key)](#kv)       | 1                     | 1          |
-| [Operations/worker invocation](#kv)   | 1000                  | 1000       |
-| [Namespaces](#kv)                     | 100                   | 100        |
-| [Storage/account](#kv)                | 1 GB                  | unlimited  |
-| [Storage/namespace](#kv)              | 1 GB                  | unlimited  |
-| [Keys/namespace](#kv)                 | unlimited             | unlimited  |
-| [Key size](#kv)                       | 512 bytes             | 512 bytes  |
-| [Key metadata](#kv)                   | 1024 bytes            | 1024 bytes |
-| [Value size](#kv)                     | 25 MiB                | 25 MiB     |
+| Feature                               | Free                  | Paid        |
+| ------------------------------------- | --------------------- | ----------  |
+| Reads                                 | 100,000 reads per day | unlimited   |
+| Writes to different keys              | 1,000 writes per day  | unlimited   |
+| Writes to same key                    | 1 per second          | 1 per second|
+| Operations/worker invocation          | 1000                  | 1000        |
+| Namespaces                            | 100                   | 100         |
+| Storage/account                       | 1 GB                  | unlimited   |
+| Storage/namespace                     | 1 GB                  | unlimited   |
+| Keys/namespace                        | unlimited             | unlimited   |
+| Key size                              | 512 bytes             | 512 bytes   |
+| Key metadata                          | 1024 bytes            | 1024 bytes  |
+| Value size                            | 25 MiB                | 25 MiB      |
 
 {{</table-wrap>}}
 
@@ -283,26 +283,6 @@ App Workers do not count towards this limit.
 ## Number of routes per zone
 
 Each zone has a limit of 1,000 [routes](/workers/platform/triggers/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit by completing the [Limit Increase Request Form](https://forms.gle/ukpeZVLWLnKeixDu7).
-
----
-
-## KV
-
-Workers KV supports:
-
-- Up to 100 namespaces per account
-- Unlimited keys per namespace
-- Unlimited storage per namespace (except on the free tier, which is limited to 1 GB total across all namespaces in an account)
-- Keys of up to 512 bytes
-- Values of up to 25 MiB
-- Metadata of up to 1024 bytes per key
-- Unlimited reads per second
-- Unlimited writes per second, if they are to different keys
-- Up to one write per second to any particular key
-
-Workers KV read performance is determined by the amount of read-volume a given key receives. Maximum performance for a key is not reached unless that key is being read at least a couple times per minute in any given data center.
-
-Workers KV is an eventually consistent system, meaning that reads will sometimes reflect an older state of the system. While writes will often be visible globally immediately, it can take up to 60 seconds or more before reads in all global network locations are guaranteed to see the new value.
 
 ---
 

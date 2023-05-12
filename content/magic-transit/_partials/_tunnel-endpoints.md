@@ -3,7 +3,7 @@ _build:
   publishResources: false
   render: never
   list: never
-inputParameters: ipRange;;productName;;productPath;;ipSecProductPath
+inputParameters: ipRange;;productName;;productPathDash;;ipSecProductPath;;staticRoutesPath;;tunnelsPath
 ---
 
 #  Configure tunnel endpoints
@@ -210,3 +210,9 @@ You will receive a response like the following:
 
 </div>
 </details>
+
+## Next steps
+
+Now that you have set up your tunnel endpoints, you need to configure [static routes]($5) to route your traffic through Cloudflare.
+
+Refer to [Tunnels]($6) for more information on how $2 tunnels work.

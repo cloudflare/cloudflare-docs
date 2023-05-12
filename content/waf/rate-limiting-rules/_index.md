@@ -11,14 +11,6 @@ layout: list
 
 Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
-{{<Aside type="note">}}
-
-Rate limiting rules is an unmetered feature available on all plans. Refer to [Availability](#availability) for details.
-
-For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting](https://support.cloudflare.com/hc/articles/115001635128).
-
-{{</Aside>}}
-
 ## Rule parameters
 
 Like other rules evaluated by Cloudflare's Ruleset Engine, rate limiting rules have an associated **expression** and an **action**.
@@ -46,9 +38,11 @@ Refer to [Determining the rate](/waf/rate-limiting-rules/request-rate/) to learn
 
 ## Availability
 
-Rate limiting rules are available to all customers. Enterprise customers require a separate add-on.
+The rule quota and the available features depend on your Cloudflare plan.
 
-The available features depend on the exact plan:
+{{<Aside type="note">}}
+Enterprise customers must have application security on their contract to get access to rate limiting rules.
+{{</Aside>}}
 
 {{</content-column>}}
 
@@ -57,7 +51,7 @@ The available features depend on the exact plan:
 Feature | Free | Pro | Business | Enterprise with WAF Essential | Enterprise with Advanced Rate Limiting |
 ---|---|---|---|---|---
 Available fields<br/>in rule expression | Path, [Verified Bot](/ruleset-engine/rules-language/fields/#field-cf-bot_management-verified_bot) | Host, URI, Path, Full URI, Query, Verified Bot | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent, Verified Bot | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Verified Bot), other Bot Management fields<sup>1</sup> | [Standard fields](/ruleset-engine/rules-language/fields/#standard-fields), [request header fields](/ruleset-engine/rules-language/fields/#http-request-header-fields), [dynamic fields](/ruleset-engine/rules-language/fields/#dynamic-fields) (including Verified Bot), other Bot Management fields<sup>1</sup>, [request body fields](/ruleset-engine/rules-language/fields/#http-request-body-fields)<sup>2</sup>
-Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>1</sup>, JSON body field<sup>2</sup>, Body<sup>2</sup>
+Counting characteristics | IP | IP | IP | IP, IP with NAT support | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3 Fingerprint<sup>1</sup>, JSON field value<sup>2</sup>, Body<sup>2</sup>, Form input value<sup>2</sup>
 Available fields<br/>in counting expression | N/A | N/A | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers | All rule expression fields, Response code, Response headers
 Counting model | Number of requests | Number of requests | Number of requests | Number of requests | Number of requests,<br/>[complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)
 Counting periods | 10 s | 10 s, 1 min | 10 s, 1 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min | 10 s, 1 min, 2 min, 5 min, 10 min, 1 h
@@ -73,8 +67,6 @@ Number of rules | 1 | 2 | 5 | 100 | 100
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
 
-For availability information related to the previous version of rate limiting rules, refer to [Rate Liming allowances per plan](/support/firewall/tools/configuring-cloudflare-rate-limiting/#rate-limiting-allowances-per-plan).
-
 ## Next steps
 
 You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.
@@ -86,3 +78,9 @@ To configure rate limiting rules in the Cloudflare dashboard, refer to the follo
 You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.
 
 {{</content-column>}}
+
+---
+
+## Related resources
+
+For guidance on the previous version of rate limiting rules (billed based on usage), refer to [Configuring Cloudflare Rate Limiting](/support/firewall/tools/configuring-cloudflare-rate-limiting/).

@@ -11,7 +11,7 @@ meta:
 
 {{<plan type="all">}}
 
-Cloudflare Rules allows you to make adjustments to requests and responses, configure Cloudflare settings, and trigger specific actions for matching requests.
+{{<render file="_rules-definition.md">}}
 
 ---
 

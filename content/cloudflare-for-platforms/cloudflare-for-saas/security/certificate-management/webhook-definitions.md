@@ -16,6 +16,8 @@ Before a Certificate Authority will issue a certificate for a domain, the reques
 
 ### Validation succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_validation` to `pending_issuance`.
+
 ```json
 {
   "metadata": {
@@ -54,6 +56,8 @@ Before a Certificate Authority will issue a certificate for a domain, the reques
 ```
 
 ### Validation failed
+
+Cloudflare sends this alert each time a certificate remains in a `pending_validation` status during [DCV retries](/ssl/reference/validation-backoff-schedule/).
 
 ```json
 {
@@ -107,6 +111,8 @@ Once validated, certificates are issued by Cloudflare in conjunction with your c
 
 ### Issuance succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_validation` or `pending_issuance` to `pending_deployment`.
+
 ```json
 {
   "metadata": {
@@ -145,6 +151,8 @@ Once validated, certificates are issued by Cloudflare in conjunction with your c
 ```
 
 ### Issuance failed
+
+Cloudflare sends this alert each time a certificate remains in a status of `pending_issuance` during [DCV retries](/ssl/reference/validation-backoff-schedule/).
 
 ```json
 {
@@ -198,6 +206,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 ### Deployment succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_deployment` to `active`.
+
 ```json
 {
   "metadata": {
@@ -236,6 +246,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 ```
 
 ### Deployment failed
+
+Cloudflare sends this alert each time a certificate remains in a status of `pending_deployment` during [DCV retries](/ssl/reference/validation-backoff-schedule/).
 
 ```json
 {
@@ -280,6 +292,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 
 ### Deletion succeeded
 
+Cloudflare sends this alert when certificates move from a status of `pending_deletion` to `deleted`.
+
 ```json
 {
   "metadata": {
@@ -314,6 +328,8 @@ Once issued, certificates are deployed to Cloudflare's global edge network.
 ```
 
 ### Deletion failed
+
+Cloudflare sends this alert each time a certificate remains in status of `pending_deletion` during [DCV retries](/ssl/reference/validation-backoff-schedule/).
 
 ```json
 {
@@ -402,6 +418,8 @@ The actions that you need to perform to renew certificates depend on your [valid
 
 ### Renewal succeeded
 
+Cloudflare sends this alert when certificates move from a status of `active` to `pending_deployment`.
+
 ```json
 {
   "metadata": {
@@ -440,6 +458,8 @@ The actions that you need to perform to renew certificates depend on your [valid
 ```
 
 ### Renewal failed
+
+Cloudflare sends this alert when certificates move from a status of `active` to `pending_issuance`.
 
 ```json
 {

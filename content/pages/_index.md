@@ -3,12 +3,10 @@ title: Overview
 type: overview
 pcx_content_type: overview
 weight: 1
-layout: list
+layout: overview
 meta:
   title: Cloudflare Pages documentation
 ---
-
-{{<content-column>}}
 
 # Cloudflare Pages
 
@@ -18,7 +16,8 @@ Deploy dynamic front-end applications in record time.
 
 {{<plan type="all">}}
 
-Cloudflare Pages is super fast, always up to date, and deployed directly from [your Git provider](/pages/get-started/#connect-your-git-provider-to-pages).
+Cloudflare Pages is super fast, always up to date. Deploy your project by connecting to [your Git provider](/pages/get-started/#connect-your-git-provider-to-pages), uploading prebuilt assets directly to Pages with [Direct Uploads](/pages/platform/direct-upload/) or using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+
 
 {{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
  
@@ -83,5 +82,3 @@ Built on SQLite, D1 is Cloudflare’s first queryable relational database. Creat
 {{<resource header="@CloudflareDev" href="https://twitter.com/cloudflaredev" icon="twitter">}}Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.{{</resource>}}
  
 {{</resource-group>}}
-
-{{</content-column>}}

@@ -49,7 +49,7 @@ As explained in the article about [what is an ssl certificate](https://www.cloud
 
 SSL/TLS certificates vary in terms of the level to which a CA has validated them. As explained in the article about [types of certificates](https://www.cloudflare.com/learning/ssl/types-of-ssl-certificates/), SSL/TLS certificates can be DV (Domain Validated), OV (Organization Validated) or EV (Extended Validation).
 
-Certificates issued through Cloudflare - [Universal](/ssl/edge-certificates/universal-ssl/), [Advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) certificates - are Domain Validated (DV). You can [upload a custom certificate](/ssl/edge-certificates/custom-certificates/) if your organization needs OV or EV certificates.
+{{<render file="_validation-level-note.md">}}
 
 ## Origin pull
 
