@@ -6,7 +6,7 @@ weight: 4
 
 # connect()
 
-The `connect()` API provides a programming interface for creating an outbound [TCP connection](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from a Cloudflare Worker. It returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data, allowing you to read and write data on an ongoing basis, as long as the connection remains open.
+The Workers runtime provides an API, `connect()`, for creating a outbound [TCP connections](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/) from Workers. It returns a TCP socket, with both a [readable](/workers/runtime-apis/streams/readablestream/) and [writable](/workers/runtime-apis/streams/writablestream/) stream of data, allowing you to read and write data on an ongoing basis, as long as the connection remains open.
 
 Many application-layer protocols are built on top of TCP, and require an underlying TCP socket API in order to work, including SSH, MQTT, SMTP, FTP, IRC, and most database wire protocols including MySQL, PostgreSQL, MongoDB and more. `connect()` is the lower-level API that allows these protocols to work on Cloudflare Workers.
 
@@ -86,7 +86,7 @@ export default {
   - This promise is resolved when the socket is closed and is rejected if the socket encounters an error.
 
 - `close()` {{<type>}}`Promise<void>`{{</type>}}
-  - Closes the TCP socket. If [`allowHalfOpen`](/workers/runtime-apis/connect/#socketoptions) is set to `true`, only the writeable side of the socket will be closed, and the readable side of the socket will remain readable.
+  - Closes the TCP socket. Both the readable and writable streams are forcibly closed.
 
 - {{<code>}}startTls(options?: {{<prop-meta>}}optional{{</prop-meta>}} {{<type-link href="/workers/runtime-apis/connect/#tlsoptions">}}TlsOptions{{</type-link>}}){{</code>}} : {{<type-link href="/workers/runtime-apis/connect/#socket">}}Socket{{</type-link>}}
   - Upgrades an insecure socket to a secure one that uses TLS, returning a new [Socket](/workers/runtime-apis/connect#socket). Note that in order to call `startTls()`, you must set [`secureTransport`](/workers/runtime-apis/connect/#socketoptions) to `starttls` when initially calling `connect()` to create the socket.
@@ -161,7 +161,7 @@ export default {
 
 ### Closing TCP connections
 
-You can close a TCP connection by calling `close()` on the socket. By default, unless the `allowHalfOpen` is explicitly set to `true`, this will close both the readable and writeable sides of the socket
+You can close a TCP connection by calling `close()` on the socket. This will close both the readable and writeable sides of the socket.
 
 ```typescript
 import { connect } from "cloudflare:sockets"
@@ -174,18 +174,6 @@ socket.close();
 const reader = socket.readable.getReader(); // This fails
 ```
 
-If you need to create a socket that is compatible with existing code that assumes the pattern from Node.js, where the readable side of a socket remains open after `socket.end()` is called, you can set the `allowHalfOpen` option when creating a socket.
-
-```typescript
-import { connect } from "cloudflare:sockets"
-
-const socket = connect("my-url.com:70", { allowHalfOpen: true });
-const reader = socket.readable.getReader();
-socket.close();
-
-// After close() is called, you can continue to read from the readable side of the socket
-const reader = socket.readable.getReader(); // This works
-```
 
 Note the following:
 
