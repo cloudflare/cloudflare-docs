@@ -86,7 +86,7 @@ Deleted 'mldemo' successfully.
 
 ## Manage Models
 
-You can use Wrangler to list, create or delete your [models](/constellation/platform/data-model/#models).
+You can use Wrangler to [list, create or delete your models](/constellation/platform/data-model/#models).
 
 ```bash
 $ npx wrangler constellation model --help
