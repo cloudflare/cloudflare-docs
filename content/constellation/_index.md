@@ -21,12 +21,13 @@ Cloudflare provides a curated list of verified models, or you can train and uplo
 
 Functionality you can deploy to your application with Constellation includes:
 
-* Image or audio classification or object detection
-* Anomaly Detection in Data
+* Image or audio classification
+* Object detection
+* Anomaly detection
 * Text translation, summarization, or similarity analysis
-* Natural Language Processing
-* Sentiment Analysis
-* Speech Recognition or Text to Speech
+* Natural language processing (NLP)
+* Sentiment analysis
+* Speech recognition (or text to speech)
 * Question answering
 
 ---
