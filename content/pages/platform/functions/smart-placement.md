@@ -28,7 +28,7 @@ For more background and to understand how Smart Placement works visit [Smart Pla
 
 ## Enable Smart Placement (beta)
 
-Smart Placement is available users on all plans. 
+Smart Placement is available on all plans. 
 
 ### Enable Smart Placement on the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
