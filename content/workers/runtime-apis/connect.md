@@ -88,17 +88,8 @@ export default {
 - `close()` {{<type>}}`Promise<void>`{{</type>}}
   - Closes the TCP socket. Both the readable and writable streams are forcibly closed.
 
-- {{<code>}}startTls(options?: {{<prop-meta>}}optional{{</prop-meta>}} {{<type-link href="/workers/runtime-apis/connect/#tlsoptions">}}TlsOptions{{</type-link>}}){{</code>}} : {{<type-link href="/workers/runtime-apis/connect/#socket">}}Socket{{</type-link>}}
+- {{<code>}}startTls(){{</code>}} : {{<type-link href="/workers/runtime-apis/connect/#socket">}}Socket{{</type-link>}}
   - Upgrades an insecure socket to a secure one that uses TLS, returning a new [Socket](/workers/runtime-apis/connect#socket). Note that in order to call `startTls()`, you must set [`secureTransport`](/workers/runtime-apis/connect/#socketoptions) to `starttls` when initially calling `connect()` to create the socket.
-
-{{</definitions>}}
-
-### `TlsOptions`
-
-{{<definitions>}}
-
-- `expectedServerHostname` {{<type>}}string{{</type>}}
-  - TODO
 
 {{</definitions>}}
 
