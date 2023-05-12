@@ -12,17 +12,16 @@ Many application-layer protocols are built on top of TCP, and require an underly
 
 `connect()` is provided as a [Runtime API](/workers/runtime-apis/), and is accessed by importing the `connect` function from `cloudflare:sockets`, akin to how one imports built-in modules in Node.js. A simple example of creating a TCP socket, writing to it, and returning the readable side of the socket as a response, is shown below:
 
-
 ```typescript
 import { connect } from 'cloudflare:sockets';
 
-const connectionUrl = "<URL>";
-
 export default {
-  async fetch(req, env) {
+  async fetch(req: Request) {
+    const gopherAddr = "gopher.floodgap.com:70";
+    const url = new URL(req.url);
 
     try {
-      const socket = connect(connectionUrl);
+      const socket = connect(gopherAddr);
 
       const writer = socket.writable.getWriter()
       const encoder = new TextEncoder();
@@ -178,4 +177,5 @@ Note the following:
 
 ### Considerations
 
+- When developing locally with [Wrangler](/workers/wrangler/), you must pass the [`--experimental-local`](/workers/wrangler/commands/#dev) flag, instead of the `--local` flag, in order to use `connect()`.
 - TCP sockets must be created within the [`fetch()` handler](/workers/get-started/guide/#3-write-code) of a Worker. TCP sockets cannot be created in global scope and shared across requests. 
