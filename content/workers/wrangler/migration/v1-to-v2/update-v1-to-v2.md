@@ -1,7 +1,7 @@
 ---
 title: 2. Update to Wrangler v2
-order: 1
 pcx_content_type: how-to
+weight: 3
 ---
 
 # Migrate from Wrangler v1 to Wrangler v2

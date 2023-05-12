@@ -1,8 +1,7 @@
 ---
 pcx_content_type: how-to
-order: 0
 title: 1. Migrate webpack projects
-weight: 3
+weight: 2
 ---
 
 # Migrate webpack projects from Wrangler version 1

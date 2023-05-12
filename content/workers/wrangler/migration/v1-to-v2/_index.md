@@ -1,6 +1,7 @@
 ---
 title: Migrate from Wrangler v1 to v2
 pcx_content_type: how-to
+weight: 1
 ---
 
 # Migrate from Wrangler v1 to v2
