@@ -9,6 +9,6 @@ meta:
 
 # Cloudflare Zero Trust integration tutorials
 
-Review the tutorials to learn more about how you can use Magic WAN.
+Review the tutorials to learn more about how you can use Magic WAN with the following Cloudflare Zero Trust products.
 
 {{<directory-listing>}}
