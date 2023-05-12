@@ -14,11 +14,11 @@ You can start a live stream using the Stream dashboard or the API. After you sub
 
 **Step 1:** [Create a live input via the Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create).
 
-![Create live input field from dashboard](/stream/static/create-live-input-from-stream-dashboard.png)
+![Create live input field from dashboard](/images/stream/create-live-input-from-stream-dashboard.png)
 
 **Step 2:** Copy the RTMPS URL and key, and use them with your live streaming application. We recommend using [Open Broadcaster Software (OBS)](https://obsproject.com/) to get started.
 
-![Example of RTMPS URL field](/stream/static/copy-rtmps-url-from-stream-dashboard.png)
+![Example of RTMPS URL field](/images/stream/copy-rtmps-url-from-stream-dashboard.png)
 
 **Step 3:** Go live and preview your live stream in the Stream Dashboard
 
@@ -64,7 +64,7 @@ header: Response
 
 #### Optional API parameters
 
-[API Reference Docs for `/live_inputs`](https://developers.cloudflare.com/api/operations/stream-live-inputs-create-a-live-input)
+[API Reference Docs for `/live_inputs`](/api/operations/stream-live-inputs-create-a-live-input)
 
 {{<definitions>}}
 

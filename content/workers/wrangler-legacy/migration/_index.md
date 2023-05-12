@@ -33,7 +33,7 @@ To learn more about the improvements to Wrangler, refer to the [Comparing Wrangl
 
 ### 1. Uninstall Wrangler v1
 
-If you had previously installed Wrangler v1 globally using NPM, you can uninstall it with:
+If you had previously installed Wrangler v1 globally using npm, you can uninstall it with:
 
 ```sh
 $ npm uninstall -g @cloudflare/wrangler
@@ -65,7 +65,7 @@ $ wrangler --version
 
 Now you will test that Wrangler v2 can build your Wrangler v1 project. In most cases, it will build just fine. If there are errors, the command line should instruct you with exactly what to change to get it to build.
 
-If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler v2 to error, refer to [Deprecations](/workers/wrangler-legacy/migration/deprecations/).
+If you would like to read more on the deprecated `wrangler.toml` fields that cause Wrangler v2 to error, refer to [Deprecations](/workers/wrangler/deprecations/).
 
 Run the `wrangler dev` command. This will show any warnings or errors that should be addressed.
 Note that in most cases, the messages will include actionable instructions on how to resolve the issue.
@@ -99,5 +99,5 @@ Here is an example of some warnings and errors:
 
 ## Deprecations
 
-Refer to the [deprecations guide](/workers/wrangler-legacy/migration/deprecations/) for more details on what is no longer supported.
+Refer to [Deprecations](/workers/wrangler/deprecations/) for more details on what is no longer supported.
 

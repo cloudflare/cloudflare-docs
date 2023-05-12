@@ -4,7 +4,7 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m10.7
 product:
   title: Magic Transit
   url: /magic-transit/
-  group: Network services
+  group: Network security
 
 meta:
   title: Cloudflare Magic Transit docs
@@ -27,3 +27,8 @@ externals:
     url: https://blog.cloudflare.com/magic-transit/
   - title: Cloudflare homepage
     url: https://cloudflare.com
+
+algolia:
+  index: developers-cloudflare2
+  apikey: 045e8dbec8c137a52f0f56e196d7abe0
+  product: magic-transit

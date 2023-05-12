@@ -17,8 +17,8 @@ Use one of the following API endpoints:
 | [Update an account ruleset rule][ur-account] | `PATCH /accounts/<ACCOUNT_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
 | [Update a zone ruleset rule][ur-zone] | `PATCH /zones/<ZONE_ID>/rulesets/<RULESET_ID>/rules/<RULE_ID>` |
 
-[ur-account]: https://developers.cloudflare.com/api/operations/account-rulesets-update-an-account-ruleset-rule
-[ur-zone]: https://developers.cloudflare.com/api/operations/zone-rulesets-update-a-zone-ruleset-rule
+[ur-account]: /api/operations/updateAccountRulesetRule
+[ur-zone]: /api/operations/updateZoneRulesetRule
 
 You can update the definition of the rule, changing its fields, or change the order of the rule in the ruleset. Invoking this method creates a new version of the ruleset.
 
@@ -181,7 +181,7 @@ curl -X PATCH \
   "position": {
     "index": 3
   }
-}
+}'
 ```
 
 In this case, the new rule order would be:

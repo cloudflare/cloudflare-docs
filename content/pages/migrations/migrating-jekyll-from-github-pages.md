@@ -109,7 +109,7 @@ With your GitHub Pages project now explicitly specifying its dependencies, you c
 
 {{<Aside type="note">}}
 
-If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/pages/get-started/#connect-to-github), which explains how to connect your existing GitHub repository to Cloudflare Pages.
+If you are configuring your Cloudflare Pages site for the first time, refer to the [Get started guide](/pages/get-started/#connect-your-git-provider-to-pages), which explains how to connect your existing GitHub repository to Cloudflare Pages.
 
 {{</Aside>}}
 
@@ -141,7 +141,7 @@ If you are using a [custom domain with GitHub Pages](https://docs.github.com/en/
 
 Note that it may take some time for DNS caches to expire and for this change to be reflected, depending on the DNS TTL (time-to-live) value you set when you originally created the record.
 
-Refer to the [adding a custom domain](/pages/get-started/#adding-a-custom-domain) section of the Get started guide for a list of detailed steps.
+Refer to the [adding a custom domain](/pages/platform/custom-domains/#add-a-custom-domain) section of the Get started guide for a list of detailed steps.
 
 ## What's next?
 

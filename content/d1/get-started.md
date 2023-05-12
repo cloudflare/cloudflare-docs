@@ -67,7 +67,7 @@ You must create a binding for your Worker to connect to your D1 database. [Bindi
 To bind your D1 database to your Worker, add the following to your `wrangler.toml` file:
 
 ```toml
-[[ d1_databases ]]
+[[d1_databases]]
 binding = "<BINDING_NAME>"
 database_name = "<DATABASE_NAME>"
 database_id = "<UUID>"
@@ -160,7 +160,7 @@ To test that your database is running successfully, add `/api/beverages` to the 
 
 ## 7. Deploy your database
 
-To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#bootstrap-your-d1-database) steps without the `--local` flag to give your Worker data to read.
+To deploy your database to production, you must first repeat the [database bootstrapping](/d1/get-started/#configure-your-d1-database) steps without the `--local` flag to give your Worker data to read.
 
 First, bootstrap your database with the `schema.sql` file you created in step 4:
 

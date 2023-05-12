@@ -11,7 +11,7 @@ In this guide, you will create a new Vue application and deploy it using Cloudfl
 
 ## Setting up a new project
 
-First, install the Vue CLI using NPM, and then run `vue create` in your terminal to create a new project called `my-vue-app`:
+First, install the Vue CLI using npm, and then run `vue create` in your terminal to create a new project called `my-vue-app`:
 
 ```sh
 $ npm install -g @vue/cli

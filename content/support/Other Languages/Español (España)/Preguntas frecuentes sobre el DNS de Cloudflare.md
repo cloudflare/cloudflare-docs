@@ -38,7 +38,7 @@ ___
 
 ## ¿Dónde cambio mis servidores de nombres para que apunten a Cloudflare?
 
-Realiza el cambio en el registrador, que puede o no ser tu proveedor de alojamiento. Si no sabes quién es el registrador del dominio, puedes encontrarlo buscando en [WHOIS](http://www.whois.net/). Sigue las instrucciones que encontrarán en [cambiar los servidores de nombre a Cloudflare](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup).
+Realiza el cambio en el registrador, que puede o no ser tu proveedor de alojamiento. Si no sabes quién es el registrador del dominio, puedes encontrarlo buscando en [WHOIS](http://www.whois.net/). Sigue las instrucciones que encontrarán en [cambiar los servidores de nombre a Cloudflare](/dns/zone-setups/full-setup/setup).
 
 ___
 
@@ -82,13 +82,13 @@ ___
 
 Por defecto, cualquier cambio o incorporación que realices en el archivo de zona de Cloudflare se propagará en 5 minutos o menos. Ten en cuenta que la caché DNS local puede tardar más tiempo en actualizarse, por lo que la propagación generalizada puede tardar más de 5 minutos.
 
-Esta configuración está controlada por el valor tiempo de vida (TTL) de un [registro DNS](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records). Los registros redireccionados mediate proxy se actualizan en 300 segundos (de manera automática), pero el TTL para los registros que no se redireccionan mediante proxy se puede personalizar.
+Esta configuración está controlada por el valor tiempo de vida (TTL) de un [registro DNS](/dns/manage-dns-records/how-to/create-dns-records). Los registros redireccionados mediate proxy se actualizan en 300 segundos (de manera automática), pero el TTL para los registros que no se redireccionan mediante proxy se puede personalizar.
 
 ___
 
 ## ¿Ofrece Cloudflare enmascaramiento de dominio?
 
-Cloudflare no ofrece enmascaramiento de dominio ni servicios de redireccionamiento de DNS (pero tu proveedor de alojamiento puede hacerlo). Sin embargo, ofrecemos el reenvío de URL a través de [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/).
+Cloudflare no ofrece enmascaramiento de dominio ni servicios de redireccionamiento de DNS (pero tu proveedor de alojamiento puede hacerlo). Sin embargo, ofrecemos el reenvío de URL a través de [Bulk Redirects](/rules/url-forwarding/bulk-redirects/).
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 ## ¿Debe ser el icono de la nube situado junto a mi registro DNS naranja o gris?
 
-De forma predeterminada, solo los registros A y CNAME que gestionan tráfico web (HTTP y HTTPs) se pueden redireccionar mediante proxy a Cloudflare. El resto de registros DNS se debe cambiar a una nube gris. Si necesitas más información, consulta nuestra [guía de Soporte](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records).
+De forma predeterminada, solo los registros A y CNAME que gestionan tráfico web (HTTP y HTTPs) se pueden redireccionar mediante proxy a Cloudflare. El resto de registros DNS se debe cambiar a una nube gris. Si necesitas más información, consulta nuestra [guía de Soporte](/dns/manage-dns-records/reference/proxied-dns-records).
 
 ___
 
@@ -182,13 +182,13 @@ El error es confuso, ya que al parecer está en la sintaxis del código del clie
 
 **Solución**
 
-Comprobar el argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Se puede encontrar un caso de uso más detallado en [este](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) hilo de Github.
+Comprobar el argumento `zone_id = data.cloudflare_zones.example_com.zones[0].id`. Se puede encontrar un caso de uso más detallado en [este](https://github.com/cloudflare/terraform-provider-cloudflare/issues/913) hilo de GitHub.
 
 ___
 
 ## ¿Por qué veo cientos de registros DNS aleatorios después de añadir mi dominio?
 
-Esto puede ocurrir cuando se ha configurado un registro comodín \* en tu anterior DNS autoritativo. Puedes eliminar estos registros de forma masiva utilizando la API: https://api.cloudflare.com/#dns-records-for-a-zone-delete-dns-record. También puedes eliminar tu dominio desde el panel de control de Cloudflare, luego eliminar el registro comodín de tu DNS autoritativo, y después volver a añadir el dominio de nuevo.
+Esto puede ocurrir cuando se ha configurado un registro comodín \* en tu anterior DNS autoritativo. Puedes eliminar estos registros de forma masiva utilizando la API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-record. También puedes eliminar tu dominio desde el panel de control de Cloudflare, luego eliminar el registro comodín de tu DNS autoritativo, y después volver a añadir el dominio de nuevo.
 
 ___
 

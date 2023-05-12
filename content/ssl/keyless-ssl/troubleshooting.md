@@ -84,6 +84,12 @@ We currently only provide packages for the supported GNU/Linux distributions as 
 
 However, the key server is open source so you may attempt to build and deploy a binary, but running on Windows is not a supported configuration so you may experience problems that we will not be able to help with.
 
+## Key server multi-domain support
+
+You can use the same key server for multiple domains.
+
+ However, if you do, you will need to add the hostname and the Zone ID of the new domain to the `gokeyless.yaml` file.
+
 ## Additional questions
 
 Contact your account team or [Cloudflare Support](https://support.cloudflare.com/hc/articles/200172476).

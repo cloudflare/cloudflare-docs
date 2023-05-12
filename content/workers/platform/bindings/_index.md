@@ -6,7 +6,7 @@ layout: single
 
 # Bindings
 
-Bindings allow your Workers to interact with resources on the Workers platform. 
+Bindings allow your Workers to interact with resources on the Cloudflare developer platform. 
 
 There are multiple types of bindings available today.
 

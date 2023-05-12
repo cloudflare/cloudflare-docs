@@ -98,11 +98,11 @@ Esse painel apresenta métricas para o Cloudflare Workers. Para saber mais, leia
 
 ### Logs
 
-A guia Logs não é um recurso de métricas. Em vez disso, os Clientes no plano Empresarial podem ativar o serviço [Logpush do Cloudflare Logs](https://developers.cloudflare.com/logs/about/). É possível usar o Logpush para baixar e analisar dados usando qualquer ferramenta de análise de dados de sua escolha. 
+A guia Logs não é um recurso de métricas. Em vez disso, os Clientes no plano Empresarial podem ativar o serviço [Logpush do Cloudflare Logs](/logs/about/). É possível usar o Logpush para baixar e analisar dados usando qualquer ferramenta de análise de dados de sua escolha. 
 
 ___
 
 ## Recursos relacionados
 
--   [Análise de Dados da Cloudflare: uma rápida visão geral](https://developers.cloudflare.com/analytics)
--   [A API GraphQL da Análise de Dados da Cloudflare](https://developers.cloudflare.com/analytics/)
+-   [Análise de Dados da Cloudflare: uma rápida visão geral](/analytics)
+-   [A API GraphQL da Análise de Dados da Cloudflare](/analytics/)

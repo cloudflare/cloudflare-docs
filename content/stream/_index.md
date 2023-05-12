@@ -26,6 +26,8 @@ Cloudflare Stream runs on [Cloudflare’s global cloud network](https://www.clou
 {{<button type="secondary" href="https://dash.cloudflare.com/?to=/:account/stream">}}Stream dashboard{{</button>}}
 {{</button-group>}}
 
+{{<render file="_non-contract-enablement.md" productFolder="fundamentals" >}}
+
 ---
 
 ## Features

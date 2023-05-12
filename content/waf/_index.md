@@ -21,7 +21,6 @@ Get automatic protection from vulnerabilities and the flexibility to create cust
 ## Features
 
 {{<feature header="Custom rules" href="/waf/custom-rules/">}}
-{{<plan id="security.waf_b_custom_rules.properties.availability.summary">}}
 Create your own custom rules to protect your website and your APIs from malicious incoming traffic. Use advanced features like [WAF attack score](/waf/about/waf-attack-score/) and [uploaded content scanning](/waf/about/content-scanning/) in your custom rules.
 {{</feature>}}
 

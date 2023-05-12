@@ -20,7 +20,7 @@ To get the URL for a specific piece of content on a webpage:
 3. Right click on the content you wish to report (often a video or image).
 4. Select **Inspect Element**.
 5. In the **DevTools** panel, look for the **src** attribute in the selected the image, video, or iFrame.
-    ![Look for the URL in the src attribute of the video or image](/fundamentals/static/images/get-started/identify-url.png)
+    ![Look for the URL in the src attribute of the video or image](/images/fundamentals/get-started/identify-url.png)
 
 6. Copy the URL.
 

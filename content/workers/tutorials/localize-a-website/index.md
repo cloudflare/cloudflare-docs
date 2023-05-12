@@ -15,7 +15,7 @@ layout: single
 
 ## Overview
 
-The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML at the Cloudflare edge. This gives developers the ability to efficiently and transparently customize their Workers applications.
+The [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) class built into the Cloudflare Workers runtime allows for parsing and rewriting of HTML on the Cloudflare global network. This gives developers the ability to efficiently and transparently customize their Workers applications.
 
 In this tutorial, you will build an example internationalization and localization engine (commonly referred to as **i18n** and **l10n**) for your application, serve the content of your site, and automatically translate the content based your visitors’ location in the world.
 
@@ -165,7 +165,7 @@ To implement this:
 2.  Pass a `countryStrings` object into our `ElementHandler`, so that it can be used during the parsing process.
 3.  Grab the `Accept-Language` header from an incoming request, parse it, and pass the parsed language to `ElementHandler`.
 
-To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) NPM package:
+To parse the `Accept-Language` header, install the [`accept-language-parser`](https://www.npmjs.com/package/accept-language-parser) npm package:
 
 ```sh
 ---

@@ -19,12 +19,6 @@ The following sitekeys and secret keys are available for testing.
 | `2x00000000000000000000BB` | Always blocks | invisible |
 | `3x00000000000000000000FF` | Forces an interactive challenge | visible |
 
-{{<Aside type="note">}}
-
-There are currently no sitekeys for testing invisible mode.
-
-{{</Aside>}}
-
 | Secret key | Description |
 | --- | --- |
 | `1x0000000000000000000000000000000AA` | Always passes |

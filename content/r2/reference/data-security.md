@@ -19,7 +19,7 @@ Objects are encrypted using [AES-256](https://www.cloudflare.com/learning/ssl/wh
 
 Data transfer between a client and R2 is secured using the same [Transport Layer Security](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/) (TLS/SSL) supported on all Cloudflare domains.
 
-Access over plaintext HTTP (without TLS/SSL) can be disabled by connecting a [custom domain](https://developers.cloudflare.com/r2/buckets/public-buckets/#custom-domains) to your R2 bucket and enabling [Always Use HTTPS](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https/).
+Access over plaintext HTTP (without TLS/SSL) can be disabled by connecting a [custom domain](/r2/buckets/public-buckets/#custom-domains) to your R2 bucket and enabling [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/).
 
 ## Compliance
 

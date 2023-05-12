@@ -63,7 +63,7 @@ ___
 
 ## どこでCloudflareのネームサーバーを指すようネームサーバーを変更するのですか？
 
-ホスティングプロバイダーである場合とそうでない場合がありますが、お客様のレジストラーで変更を加えます。ドメインのレジストラーがどこかわからない場合、 [WHOIS検索](http://www.whois.net/)を実行して見つけることができます。  [ネームサーバーをCloudflareに変更する方法](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup)を参照してください。
+ホスティングプロバイダーである場合とそうでない場合がありますが、お客様のレジストラーで変更を加えます。ドメインのレジストラーがどこかわからない場合、 [WHOIS検索](http://www.whois.net/)を実行して見つけることができます。  [ネームサーバーをCloudflareに変更する方法](/dns/zone-setups/full-setup/setup)を参照してください。
 
 ___
 
@@ -107,13 +107,13 @@ ___
 
 デフォルトでは、Cloudflareゾーンのファイルへの変更や追加は5分以内に反映されます。ローカルDNSキャッシュの場合は更新により長い時間がかかることがあります。そのため、伝播に5分以上の時間がかかる場合があります。
 
-この設定は、 [DNSレコード](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records)のTTL（Time-to-Live）値によって制御されます。プロキシされたレコードは300秒以内に更新されますが（Auto）、プロキシされないレコードのTTLはカスタマイズ可能です。
+この設定は、 [DNSレコード](/dns/manage-dns-records/how-to/create-dns-records)のTTL（Time-to-Live）値によって制御されます。プロキシされたレコードは300秒以内に更新されますが（Auto）、プロキシされないレコードのTTLはカスタマイズ可能です。
 
 ___
 
 ## Cloudflareはドメインマスキングを提供しますか？
 
-CloudflareはドメインマスキングやDNSリダイレクトサービスを提供していません（ホスティングプロバイダーが提供している場合があります）。ただし、 [Bulk Redirects](https://developers.cloudflare.com/rules/url-forwarding/bulk-redirects/) を使って、URL転送を行うことは可能です。
+CloudflareはドメインマスキングやDNSリダイレクトサービスを提供していません（ホスティングプロバイダーが提供している場合があります）。ただし、 [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) を使って、URL転送を行うことは可能です。
 
 ___
 
@@ -185,7 +185,7 @@ ___
 
 ## DNSレコードの横のマークはオレンジ色とグレー色のどちらであるべきですか？
 
-デフォルトでは、Webトラフィック（HTTPおよびHTTPS）を処理するAレコードとCNAMEレコードのみを Cloudflareにプロキシできます。そのほかのすべてのDNSレコードはグレー色の雲マークに切り替えてください。詳細については[サポートガイド](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records)を参照してください。
+デフォルトでは、Webトラフィック（HTTPおよびHTTPS）を処理するAレコードとCNAMEレコードのみを Cloudflareにプロキシできます。そのほかのすべてのDNSレコードはグレー色の雲マークに切り替えてください。詳細については[サポートガイド](/dns/manage-dns-records/reference/proxied-dns-records)を参照してください。
 
 ___
 
@@ -213,7 +213,7 @@ ___
 
 ## ドメインを追加した後、何百ものランダムなDNSレコードが表示されるのはなぜですか？
 
-これは、以前の権威DNSでワイルドカード（\*）レコードが設定されていた場合に発生する可能性があります。これらのレコードは、APIを使用して一括して削除することができます： https://api.cloudflare.com/#dns-records-for-a-zone-delete-dns-recordまたは、Cloudflareダッシュボードからドメインを削除し、権威DNSからワイルドカードレコードを削除してから、ドメインを再追加することもできます。
+これは、以前の権威DNSでワイルドカード（\*）レコードが設定されていた場合に発生する可能性があります。これらのレコードは、APIを使用して一括して削除することができます： https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-delete-dns-recordまたは、Cloudflareダッシュボードからドメインを削除し、権威DNSからワイルドカードレコードを削除してから、ドメインを再追加することもできます。
 
 ___
 

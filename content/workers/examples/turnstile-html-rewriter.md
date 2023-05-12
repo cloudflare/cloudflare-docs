@@ -9,8 +9,8 @@ weight: 1001
 layout: example
 ---
 
-{{<tabs labels="js/esm | ts/esm">}}
-{{<tab label="js/esm" default="true">}}
+{{<tabs labels="js | ts">}}
+{{<tab label="js" default="true">}}
 
 ```js
 export default {
@@ -45,7 +45,7 @@ export default {
 ```
 
 {{</tab>}}
-{{<tab label="ts/esm">}}
+{{<tab label="ts">}}
 
 ```ts
 const handler: ExportedHandler = {
@@ -85,20 +85,14 @@ export default handler;
 {{</tabs>}}
 
 {{<Aside type= "Note">}}
-This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
+This is only half the implementation for Turnstile. The corresponding token that is a result of a widget being rendered also needs to be verified using the [siteverify API](/turnstile/get-started/server-side-validation/). Refer to the example below for one such implementation.
 {{</Aside>}}
 
 
-{{<tab label="js/esm" default="true">}}
+{{<tab label="js" default="true">}}
 ```js
 async function handlePost(request) {
     const body = await request.formData();
-    // Turnstile injects a token in `cf-turnstile-response`.
-    const token = body.get('cf-turnstile-response');
-    const ip = request.headers.get('CF-Connecting-IP');
-    // Validate the token by calling the `/siteverify` API.
-    let formData = new FormData();
-
     // Turnstile injects a token in `cf-turnstile-response`.
     const token = body.get('cf-turnstile-response');
     const ip = request.headers.get('CF-Connecting-IP');
@@ -116,7 +110,6 @@ async function handlePost(request) {
         body: formData,
         method: 'POST',
     });
-    const outcome = await result.json();
 
     const outcome = await result.json();
 
@@ -136,13 +129,9 @@ export default {
 		if (request.method === 'POST') {
 			return handlePost(request)
 		}
-		
+
 		// Instantiate the API to run on specific elements, for example, `head`, `div`
 		let newRes = new HTMLRewriter()
-			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
-			.on('head', {
-				element(element) {
-
 			// `.on` attaches the element handler and this allows you to match on element/attributes or to use the specific methods per the API
 			.on('head', {
 				element(element) {

@@ -17,13 +17,13 @@ La red de Cloudflare está diseñada para supervisar y mitigar  [ataques DDoS](
 
 Además, Cloudflare ayuda a mitigar los ataques DDoS más pequeños:
 
--   Para las zonas de cualquier plan, cuando la tasa de errores HTTP está por encima del nivel de sensibilidad _Alta_ (por defecto) del umbral de tasa de 1.000 errores por segundo. Puedes disminuir el nivel de sensibilidad [configurando el conjunto de reglas administradas de protección contra ataques DDoS HTTP](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http).
+-   Para las zonas de cualquier plan, cuando la tasa de errores HTTP está por encima del nivel de sensibilidad _Alta_ (por defecto) del umbral de tasa de 1.000 errores por segundo. Puedes disminuir el nivel de sensibilidad [configurando el conjunto de reglas administradas de protección contra ataques DDoS HTTP](/ddos-protection/managed-rulesets/http).
 
 -   Para las zonas de los planes Business y Enterprise, Cloudflare realiza una comprobación adicional para mejorar la precisión de la detección: la tasa de errores por segundo también debe ser al menos cinco veces superior a los niveles de tráfico normales.
 
 Cloudflare determina la tasa de error basándose en todos los errores HTTP en el rango 52X (error interno del servidor) y en el rango 53X, excepto [error 530](https://support.cloudflare.com/hc/articles/115003011431#530error).
 
-Las mitigaciones de ataques de inundaciones HTTP se muestran en el panel de control de análisis de firewall como eventos DDoS HTTP. Estos eventos también están disponibles en los [registros de Cloudflare](https://developers.cloudflare.com/logs/).
+Las mitigaciones de ataques de inundaciones HTTP se muestran en el panel de control de análisis de firewall como eventos DDoS HTTP. Estos eventos también están disponibles en los [registros de Cloudflare](/logs/).
 
 Actualmente, para las mitigaciones de DDoS basadas en la tasa de error HTTP, los clientes no pueden excluir códigos de error HTTP específicos.
 
@@ -37,9 +37,9 @@ El conjunto de reglas administradas de DDoS HTTP de Cloudflare es un conjunto de
 
 Si esperas grandes picos de tráfico legítimo, plantéate la posibilidad de personalizar la configuración de tu protección DDoS para evitar falsos positivos, donde el tráfico legítimo se identifica erróneamente como tráfico de ataque y, en consecuencia, se bloquea o cuestiona.
 
-Puedes encontrar más información sobre el conjunto de reglas administradas de DDoS HTTP de Cloudflare y los ajustes de configuración en el [portal para desarrolladores de Cloudflare](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http).
+Puedes encontrar más información sobre el conjunto de reglas administradas de DDoS HTTP de Cloudflare y los ajustes de configuración en el [portal para desarrolladores de Cloudflare](/ddos-protection/managed-rulesets/http).
 
-Para más información sobre las acciones llevadas a cabo por los sistemas de protección de ataques DDoS HTTP, consulta [Parámetros de protección de ataques DDoS HTTP: Acción](https://developers.cloudflare.com/ddos-protection/managed-rulesets/http/override-parameters#action).
+Para más información sobre las acciones llevadas a cabo por los sistemas de protección de ataques DDoS HTTP, consulta [Parámetros de protección de ataques DDoS HTTP: Acción](/ddos-protection/managed-rulesets/http/override-parameters#action).
 
 ___
 
@@ -47,9 +47,9 @@ ___
 
 El conjunto de reglas administradas de protección contra ataques DDoS en la capa de red de Cloudflare es un conjunto de reglas preconfiguradas que se utilizan para coincidir con vectores de ataque DDoS conocidos en los niveles 3 y 4 del modelo OSI. El conjunto de reglas está disponible para los clientes suscritos a cualquier plan de Cloudflare y se activa por defecto.
 
-Puedes encontrar más información sobre el conjunto de reglas administradas de protección contra ataques DDoS en la capa de red de Cloudflare y los ajustes de configuración en el [portal para desarrolladores de Cloudflare](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network).
+Puedes encontrar más información sobre el conjunto de reglas administradas de protección contra ataques DDoS en la capa de red de Cloudflare y los ajustes de configuración en el [portal para desarrolladores de Cloudflare](/ddos-protection/managed-rulesets/network).
 
-Para más información sobre las acciones llevadas a cabo por los sistemas de protección contra ataques DDoS a las capas 3 y 4, consulta [Parámetros de protección contra ataques DDoS de la capa de red: Acción](https://developers.cloudflare.com/ddos-protection/managed-rulesets/network/override-parameters#action).
+Para más información sobre las acciones llevadas a cabo por los sistemas de protección contra ataques DDoS a las capas 3 y 4, consulta [Parámetros de protección contra ataques DDoS de la capa de red: Acción](/ddos-protection/managed-rulesets/network/override-parameters#action).
 
 ___
 
