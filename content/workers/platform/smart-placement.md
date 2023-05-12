@@ -59,13 +59,15 @@ Smart Placement is available users on all Workers plans.
 4. View your Worker's [request duration analytics](/workers/learning/metrics-and-analytics).
 
 
-### To enable Smart Placement on the dashboard:
-1. Log in to the Cloudflare dashboard.
-2. In Account Home, select Workers.
-3. Select a Worker.
-4. Select Settings > General.
-5. Under 'Placement' enable 'Smart' mode 
+### Enable Smart Placement via the dashboard
 
+To enable Smart Placement via the dashboard:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. In **Account Home**, select **Workers & Pages**.
+3. Select your Worker.
+4. Select **Settings** > **General**.
+5. Under **Placement**, enable **Smart** mode.
 6. Send some initial traffic (approximately 20-30 requests) to your Worker. It takes a few minutes after you have sent traffic to your Worker for Smart Placement to take effect. 
 
 7. View [request duration analytics](/workers/learning/metrics-and-analytics) about your Worker
