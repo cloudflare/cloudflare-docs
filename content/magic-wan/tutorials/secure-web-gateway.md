@@ -7,7 +7,7 @@ meta:
 
 # Connect to Cloudflare Gateway with Magic WAN
 
-You can route traffic through Magic WAN and filter it with [Cloudflare Gateway](/cloudflare-one/policies/filtering/). Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering. Each policy serves different use cases, and we recommend that you [read the Gateway documentation](/cloudflare-one/policies/filtering/) to learn more.
+You can route traffic through Magic WAN and filter it with [Cloudflare Gateway](/cloudflare-one/policies/filtering/). Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering. Each policy serves different use cases, and we recommend that you read the [Gateway documentation](/cloudflare-one/policies/filtering/) to learn more.
 
 In this tutorial, you will learn how to configure the Anycast GRE or IPsec tunnel on-ramp to Magic WAN, which connects to Cloudflare Gateway, from enterprise site routers.
 
@@ -69,7 +69,7 @@ When you create a GRE tunnel the TTL and MTU fields are auto-populated. The defa
 
 ## 2. Add static routes
 
-1. Follow the instructions in [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) to create the static routes.
+1. [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route).
 2. The **Priority** and **Region code** fields are auto-populated. Tunnels with lower priority numbers will be chosen first. You can also steer traffic to a certain geographic region to reduce latency. Refer to [Create a static route](/magic-wan/get-started/configure-static-routes/#create-a-static-route) for more information.
 3. In keeping with the example scenario, the list of static routes should match the example below.
 
