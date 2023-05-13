@@ -5,8 +5,8 @@ weight: 3
 layout: learning-unit
 ---
 
-## Team name
+To set up a Zero Trust organization:
 
-## (Optional) Add members to your organization
+{{<render file=_choose-team-name.md productFolder="cloudflare-one">}}
 
-https://developers.cloudflare.com/cloudflare-one/cloudflare-teams-roles-permissions/
+Welcome to Cloudflare Zero Trust!

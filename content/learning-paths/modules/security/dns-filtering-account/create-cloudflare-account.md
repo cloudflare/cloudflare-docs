@@ -5,8 +5,10 @@ weight: 2
 layout: learning-unit
 ---
 
-https://developers.cloudflare.com/fundamentals/account-and-billing/account-setup/create-account/
+To create a new Cloudflare account:
 
-If you have a Cloudflare contact (Enterprise only), ask them to set up your account as a multi-user organization after you finish this step.
+1. [Sign up](https://dash.cloudflare.com/sign-up) on the Cloudflare dashboard.
 
-## Set up two-factor authentication
+2. To secure your account, enable [two-factor authentication](/support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/).
+
+3. If you have a Cloudflare contact (Enterprise only), ask them to set up your account as a multi-user organization. Account members will need [**Gateway** permissions](/cloudflare-one/cloudflare-teams-roles-permissions/) to manage DNS filtering.
