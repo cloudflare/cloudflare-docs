@@ -1,9 +1,9 @@
 ---
 pcx_content_type: navigation
-title: Concepts
+title: Platform
 weight: 3
 ---
 
-# Concepts
+# Platform
 
 {{<directory-listing>}}
