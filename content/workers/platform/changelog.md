@@ -8,6 +8,11 @@ rss: file
 
 # Changelog
 
+## 2023-05-16 
+
+- You can now connect directly databases from Workers, starting with [PostgreSQL](/workers/databases/connect-to-postgres/).
+- Support for PostgreSQL is based on the popular `pg` driver, and allows you to connect to any PostgreSQL instance over TLS from your Worker directly.
+
 ## 2023-04-28
 
 - The Web Crypto API now supports curves Ed25519 and X25519 defined in the Secure Curves specification.
