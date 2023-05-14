@@ -40,7 +40,7 @@ Flags:
 
 ## Manage Projects
 
-You can use Wrangler to list, create or delete your [projects](/constellation/platform/data-model/#projects).
+Use Wrangler to [list, create or delete your projects](/constellation/platform/data-model/#projects).
 
 ```bash
 $ npx wrangler constellation project --help
@@ -86,7 +86,7 @@ Deleted 'mldemo' successfully.
 
 ## Manage Models
 
-You can use Wrangler to list, create or delete your [models](/constellation/platform/data-model/#models).
+You can use Wrangler to [list, create or delete your models](/constellation/platform/data-model/#models).
 
 ```bash
 $ npx wrangler constellation model --help
@@ -139,7 +139,7 @@ Deleted 'squeezenet11' successfully.
 
 ## Access the catalog
 
-The [catalog](/constellation/platform/data-model/#catalog) has ready-to-use pre-verified models for our supported runtimes that you can start using in any script without additional configurations. Here's how you interact with it from wrangler.
+The [catalog](/constellation/platform/data-model/#catalog) has ready-to-use pre-verified models for our supported runtimes that you can start using in any script without additional configurations. Review the following commands on how you interact with the catalog from Wrangler.
 
 **List catalog models**
 

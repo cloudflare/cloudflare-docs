@@ -14,7 +14,7 @@ The three fundamental concepts of our model are Projects, Models, and the Catalo
 
 The Project has a name, a machine-learning runtime, and an Id.
 
-The runtime has to be one of our supported engines; [click here](/constellation/platform/runtimes/) for the complete list. The Id is what binds the project to the Worker Script.
+The runtime has to be one of our supported engines. Refer to [Constellation Runtimes](/constellation/platform/runtimes/) for the complete list. The ID is what binds the project to the Worker.
 
 The name can only have alphanumeric, minus (-) and underscore (_) characters (```/^[a-zA-Z0-9-_]+$/```) and it helps organize things and is used for certain operations in [Wrangler](/constellation/concepts/wrangler-support/) and the APIs.
 
@@ -36,7 +36,7 @@ Currently, during the private beta, we only support models that are smaller than
 
 Not everyone will want to train models or browse the Internet for models they didn't test yet and upload them. Cloudflare will maintain a list of verified models that are known to work with the Constellation APIs out of the box.
 
-For each machine-learning runtime we support, developers can search for ready-to-use permanent models in our catalog and use them for some of the most popular tasks without additional configurations or file uploads.
+For each machine-learning runtime we support, developers can search for ready-to-use permanent models in our [catalog](/constellation/platform/data-model/#catalog) and use them for some of the most popular tasks without additional configurations or file uploads.
 
 Like user-uploaded models, the models in the catalog have a name, an Id, and a description and are associated with a parent catalog project that defines the runtime.
 

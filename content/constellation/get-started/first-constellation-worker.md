@@ -1,8 +1,8 @@
 ---
 pcx_content_type: reference
-title: First Constellation Worker
+title: Deploy a Constellation Worker
 meta:
-    title: First Constellation Worker
+    title: Deploy a Constellation Worker
 weight: 1
 ---
 
@@ -26,8 +26,17 @@ $ npx wrangler constellation project list
 └──────────────────────────────────────┴──────────────────────┴─────────┘
 ```
 
-Now let's create the wrangler.toml configuration file with the project [binding](/constellation/platform/wrangler/#bindings):
+Next, create a new Worker project. You can follow the instructions [here](/workers/get-started/guide/), or the following commands and follow the prompts:
 
+```bash
+mkdir image-classifier-worker
+cd image-classifier-worker
+wrangler generate
+```
+
+In your folder, you should now find a wrangler.toml file.
+
+Now add the Constellation configuration to the wrangler.toml configuration file with the project [binding](/constellation/platform/wrangler/#bindings):
 
 ```toml
 ---
@@ -42,6 +51,8 @@ constellation = [
     {binding = 'CLASSIFIER', project_id = '2193053a-af0a-40a6-b757-00fa73908ef6'},
 ]
 ```
+
+Make sure to substitute the `project_id` with the one enumerated when you ran `npx wrangler constellation project list`.
 
 Install the client API library:
 
@@ -65,14 +76,15 @@ $ npx wrangler constellation model list "image-classifier"
 └──────────────────────────────────────┴──────────────────────────────────────┴──────────────┘
 ```
 
-Take note of the model id.
+Take note of the id field as this will be the model id.
 
 ## Download Imagenet Classes
 
 The SqueezeNet model was trained on top of the [Imagenet](https://www.image-net.org/) dataset. Let's download the the list of 1000 image classes that it was trained for.
 
 ```bash
-$ mkdir src; cd src
+$ mkdir src
+$ cd src
 $ wget https://raw.githubusercontent.com/microsoft/onnxjs-demo/master/src/data/imagenet.ts
 ```
 
@@ -222,4 +234,4 @@ export interface Env {
 
 ```
 
-You can see this demo online [here](https://localhost/).
+You can see this demo online.
