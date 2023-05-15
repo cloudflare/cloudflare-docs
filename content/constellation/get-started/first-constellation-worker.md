@@ -55,7 +55,7 @@ Now add the Constellation configuration to the wrangler.toml configuration file 
 filename: wrangler.toml
 ---
 # Top-level configuration
-name = "image-classifier-worker"
+name = "image-classifier"
 main = "src/index.ts"
 node_compat = true
 workers_dev = true
