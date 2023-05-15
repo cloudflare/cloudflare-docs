@@ -83,7 +83,7 @@ Naming a tensor is optional, it can be a useful key for mapping operations when 
    new Tensor("int32", [2], [1, 2]);
 ```
 
-**A 3x2 float64 matrix***
+#### A 3x2 float64 matrix
 
 ```javascript
    new Tensor("float64", [3, 2], [ [0.1, 0.2], [0.3, 0.4], [0.5, 0.6] ]);
