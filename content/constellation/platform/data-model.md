@@ -34,7 +34,7 @@ Currently, during the private beta, we only support models that are smaller than
 
 ## Catalog
 
-Not everyone will want to train models or browse the Internet for models they didn't test yet and upload them. Cloudflare will maintain a list of verified models that are known to work with the Constellation APIs out of the box.
+You may not want to train models or upload models you have not tested. Cloudflare will maintain a list of verified models that are known to work with the Constellation APIs without extra configuration.
 
 For each machine-learning runtime we support, developers can search for ready-to-use permanent models in our [catalog](/constellation/platform/data-model/#catalog) and use them for some of the most popular tasks without additional configurations or file uploads.
 
