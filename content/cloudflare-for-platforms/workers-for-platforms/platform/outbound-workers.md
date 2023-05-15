@@ -9,7 +9,9 @@ Outbound Workers sit between your customer’s Workers and the public internet. 
 
 ![Outbound Workers diagram information](/images/cloudflare-for-platforms/outbound-worker-diagram.png)
 
-## Use Outbound Workers
+## General Use Cases
+
+### Use Outbound Workers
 
 To use Outbound Workers:
 
