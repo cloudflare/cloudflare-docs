@@ -111,7 +111,8 @@ const secureSocket = socket.startTls();
 #### Note the following:
 
 - `startTls()` can only be called if `secureTransport` is set to `starttls` when creating the initial TCP socket.
-- Once `startTls()` is called, the initial socket is closed and no longer usable. In the example above, one would would use the newly created `secureSocket`.
+- Once `startTls()` is called, the initial socket is closed and can no longer be read from or written to. In the example above, anytime after `startTls()` is called, you would use the newly created `secureSocket`. Any existing readers and writers based off the original socket will no longer work — you must create new readers and writers from the newly created `secureSocket`.
+- `startTls()` should only be called once on an existing socket.
 
 ## Error handling
 
