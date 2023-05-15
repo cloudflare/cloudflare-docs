@@ -175,6 +175,12 @@
 /cache/best-practices/activate-polish/ /images/polish/ 301
 /cache/best-practices/always-online/ /cache/troubleshooting/always-online/ 301
 /cache/reference/common-cf-published-statuses/ /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ 301
+/cache/best-practices/cache-performance/ /cache/performance-review/cache-performance/ 301
+/cache/best-practices/avoid-web-poisoning/ /cache/cache-security/avoid-web-poisoning/ 301
+/cache/about/cors/ /cache/cache-security/cors/ 301
+/cache/about/cache-deception-armor/ /cache/cache-security/cache-deception-armor/ 301
+/cache/how-to/enable-cache-deception-armor/ /cache/cache-security/cache-deception-armor/#enable-cache-deception-armor 301
+/cache/about/cache-analytics/ /cache/performance-review/cache-analytics/ 301
 /support/caching/ /cache/troubleshooting/ 301
 /support/caching/configuration/ /cache/how-to/ 301
 /support/caching/configuration/understanding-the-csam-scanning-tool/ /cache/reference/csam-scanning/ 301
@@ -826,6 +832,7 @@
 /workers/wrangler/get-started/ /workers/wrangler/install-and-update/ 301
 /workers/runtime-apis/headers/ /workers/platform/headers/ 301
 /workers/platform/storage-objects/ /workers/platform/storage-options/ 301
+/workers/wrangler-legacy/migration/deprecations/ /workers/wrangler/deprecations/ 301
 
 # zaraz
 

@@ -15,14 +15,14 @@ Sometimes, you might want all traffic to your root domain (`example.com`) to act
     | -------- | -------- | ---------------- | ---------------- |
     | A        | `@`      | `192.0.2.1`      | Proxied          |
 
-3.  Create a [Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to forward traffic from your subdomain to your root domain.
+3.  Create a [Single Redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to forward traffic from your root domain to your subdomain.
 
 {{<example>}}
 
 **When incoming requests match**
 
 Using the Expression Editor:<br>
-`(http.request.full_uri contains "example.com")`
+`(lower(http.host) eq "example.com")`
 
 **Then**
 

@@ -6,11 +6,13 @@ weight: 2
 
 # Deprecations
 
-This document describes the difference between Wrangler v1 and v2, specifically deprecations and breaking changes.
+Review the difference between Wrangler versions, specifically deprecations and breaking changes.
+
+## Wrangler v2
 
 Wrangler v2 introduces some new fields for configuration, while also deprecating some redundant fields.
 
-## Common deprecations
+### Common deprecations
 
 Here are common fields that are no longer required.
 
@@ -27,7 +29,7 @@ Here are common fields that are no longer required.
 - `wrangler report` - If you find a bug please report it at [Wrangler issues](https://github.com/cloudflare/workers-sdk/issues/new/choose).
 - `wrangler build` - If you wish to access the output from bundling your Worker use `wrangler publish --outdir=path/to/output`.
 
-### New fields
+#### New fields
 
 These are new fields that can be added to your `wrangler.toml`.
 
@@ -53,7 +55,7 @@ These are new fields that can be added to your `wrangler.toml`.
 
 - **`public`**: TODO -->
 
-### Non-mandatory fields
+#### Non-mandatory fields
 
 A few configuration fields which were previously required, are now optional in particular situations. They can either be inferred, or added as an optimization. No fields are required anymore when starting with Wrangler v2, and you can gradually add configuration as the need arises.
 
@@ -71,7 +73,7 @@ A few configuration fields which were previously required, are now optional in p
 
   The `workers_dev` field is used to indicate that the Worker should be published to a `*.workers.dev` subdomain. For example, for a Worker named `my-worker` and a previously configured `*.workers.dev` subdomain `username`, the Worker will get published to `my-worker.username.workers.dev.com`. This field is not mandatory, and defaults to `true` when `route` or `routes` are not configured. When routes are present, it defaults to `false`. If you want to neither publish it to a `*.workers.dev` subdomain nor any routes, set `workers_dev` to `false`. This useful when you are publishing a Worker as a standalone service that can only be accessed from another Worker with (`services`).
 
-### Deprecated fields (non-breaking)
+#### Deprecated fields (non-breaking)
 
 A few configuration fields are deprecated, but their presence is not a breaking change yet. It is recommended to read the warning messages and follow the instructions to migrate to the new configuration. They will be removed and stop working in a future version.
 
@@ -87,7 +89,7 @@ A few configuration fields are deprecated, but their presence is not a breaking 
   - `build.upload.rules` is replaced by the `rules` field and is applicable to both service worker format and modules format Workers.
   - `build.upload.format` is no longer specified and is automatically inferred by `wrangler`.
 
-### Deprecated fields (breaking)
+#### Deprecated fields (breaking)
 
 A few configuration fields are deprecated and will not work as expected anymore. It is recommended to read the error messages and follow the instructions to migrate to the new configuration.
 
@@ -99,41 +101,41 @@ A few configuration fields are deprecated and will not work as expected anymore.
 
   The `type` configuration was used to specify the type of Worker. It has since been made redundant and is now inferred from usage. If you were using `type = "webpack"` (and the optional `webpack_config` field), you should read the [webpack migration guide](/workers/wrangler-legacy/migration/eject-webpack/) to modify your project and use a custom build instead.
 
-## Deprecated commands
+### Deprecated commands
 
 The following commands are deprecated in Wrangler as of Wrangler v2.
 
-### `build`
+#### `build`
 
 The `wrangler build` command is no longer available for building the Worker.
 
 The equivalent functionality can be achieved by `wrangler publish --dry-run --outdir=path/to/build`.
 
-### `config`
+#### `config`
 
 The `wrangler config` command is no longer available for authenticating via an API token.
 
 Use `wrangler login` / `wrangler logout` to manage OAuth authentication, or provide an API token via the `CLOUDFLARE_API_TOKEN` environment variable.
 
-### `preview`
+#### `preview`
 
 The `wrangler preview` command is no longer available for creating a temporary preview instance of the Worker.
 
 Try using `wrangler dev` to try out a worker during development.
 
-### subdomain
+#### subdomain
 
 The `wrangler subdomain` command is no longer available for creating a `workers.dev` subdomain.
 
 Create the `workers.dev` subdomain on your Workers dashboard.
 
-### route
+#### route
 
 The `wrangler route` command is no longer available to configure a route for a Worker.
 
 Routes are specified in the `wrangler.toml` configuration file.
 
-## Other deprecated behaviour
+### Other deprecated behavior
 
 - Cloudflare dashboard-defined routes will not be added alongside Wrangler-defined routes. Wrangler-defined routes are the `route` or `routes` key in your `wrangler.toml`. If both are defined, only routes defined in `wrangler.toml` will be valid. To manage routes via the Cloudflare dashboard only, remove any `route` and `routes` keys from and add `workers_dev = false` to your `wrangler.toml` file.
 
