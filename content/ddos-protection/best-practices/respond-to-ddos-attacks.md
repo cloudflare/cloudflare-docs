@@ -1,5 +1,5 @@
 ---
-pcx_content_type: troubleshooting
+pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/200170196-Responding-to-DDoS-attacks
 title: Respond to DDoS attacks
 ---
