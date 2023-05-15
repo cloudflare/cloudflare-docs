@@ -12,14 +12,14 @@ In this guide, you will build an [image classification](https://developers.googl
 
 ## Prerequisites
 
-Before continuing, make you have:
+Before continuing, make sure you have:
 
 * Made a [Cloudflare account](https://dash.cloudflare.com/sign-up).
 * Installed [Wrangler](/workers/wrangler/install-and-update/).
 
 ## Create a new Constellation project
 
-Generate your a new Constellation project named `image-classifier` by running the [`create`](/constellation/platform/wrangler/#manage-projects) command. Then run `list` to review the details of your newly created project:
+Generate a new Constellation project named `image-classifier` by running the [`create`](/constellation/platform/wrangler/#manage-projects) command. Then run `list` to review the details of your newly created project:
 
 ```bash
 $ npx wrangler constellation project create "image-classifier" ONNX
