@@ -16,7 +16,7 @@ Wrangler for Constellation is still in Beta. To install Wrangler, run:
 $ npm install wrangler@beta --save-dev
 ```
 
-Test it with [npx](https://github.com/npm/npx):
+Test Wrangler with [npx](https://github.com/npm/npx):
 
 ```bash
 $ npx wrangler constellation
