@@ -6,7 +6,7 @@ weight: 2
 
 # Connect to PostgreSQL (beta)
 
-Cloudflare Workers supports direct connectivity to PostgreSQL instances over TCP using the [Socket API](/workers/runtime-apis/connect), as well as via serverless drivers that enable HTTP access.
+Cloudflare Workers supports direct connectivity to PostgreSQL instances over TCP using the [Socket API](/workers/runtime-apis/tcp-sockets), as well as via serverless drivers that enable HTTP access.
 
 This guide demonstrates how to use the Socket API and the `pg` JavaScript driver to connect to a PostgreSQL server from your Workers.
 
@@ -20,7 +20,7 @@ Ensure you are using `pg` (node-postgres) version 8.11.0 or higher. Earlier vers
 
 To connect to a Postgres database from a Worker:
 
-* Install the `pg` library. The [node-postgres](https://node-postgres.com/) (often referred to as `pg`) library has built-in support for the Workers [Socket API](/workers/runtime-apis/connect).
+* Install the `pg` library. The [node-postgres](https://node-postgres.com/) (often referred to as `pg`) library has built-in support for the Workers [Socket API](/workers/runtime-apis/tcp-sockets).
 * Ensure your database is reachable from public IP addresses (see [caveats](#caveats))
 * Confirm that [SSL is configured](https://www.postgresql.org/docs/current/libpq-ssl.html#LIBPQ-SSL-PROTECTION) on your Postgres instance for security
 
@@ -183,5 +183,5 @@ Follow the [changelog](/workers/platform/changelog/) for updates to these caveat
 ## Next steps
 
 * Visit the list of [supported database integrations](/workers/learning/integrations/databases/) to understand other ways to connect to existing databases.
-* Learn more about how to use the [Socket API](/workers/runtime-apis/connect) in a Worker
+* Learn more about how to use the [Socket API](/workers/runtime-apis/tcp-sockets) in a Worker
 * Understand the [protocols supported by Workers](/workers/platform/protocols).
