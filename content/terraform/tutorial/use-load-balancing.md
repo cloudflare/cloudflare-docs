@@ -164,6 +164,7 @@ Switched to branch 'step4-loadbalance'
 $ cat >> cloudflare.tf <<'EOF'
 
 resource "cloudflare_load_balancer_monitor" "get-root-https" {
+  account_id     = var.account_id
   expected_body  = "alive"
   expected_codes = "200"
   method         = "GET"
@@ -191,8 +192,9 @@ Note the reference to the monitor that you added in the last step. When applying
 $ cat >> cloudflare.tf <<'EOF'
 
 resource "cloudflare_load_balancer_pool" "www-servers" {
-  name    = "www-servers"
-  monitor = cloudflare_load_balancer_monitor.get-root-https.id
+  account_id = var.account_id
+  name       = "www-servers"
+  monitor    = cloudflare_load_balancer_monitor.get-root-https.id
   origins {
     name    = "www-us"
     address = "203.0.113.10"
@@ -204,7 +206,8 @@ resource "cloudflare_load_balancer_pool" "www-servers" {
   description        = "www origins"
   enabled            = true
   minimum_origins    = 1
-  check_regions  = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
+  notification_email = "you@example.com"
+  check_regions      = ["WNAM", "ENAM", "WEU", "EEU", "SEAS", "NEAS"]
 }
 EOF
 ```
